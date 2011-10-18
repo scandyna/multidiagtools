@@ -1,23 +1,17 @@
-# Fichier de projet pour Multi X Diag Tools
-# Tests unitaires
+# CMake project file for Multi X Diag Tools
+# * Unit test root file *
+# * Directory: tests *
 
-# Ressources CMake:
-#  http://www.cmake.org/cmake/help/cmake_tutorial.html
-#  http://www.cmake.org/Wiki/CMake_Useful_Variables
 
-# Projet
+# Project
 project (multixdiagtools)
 
-# Accès aux fichiers d'include du projet
+# Access to project's include files
+include_directories("${PROJECT_SOURCE_DIR}/mdttest")
 include_directories("${PROJECT_SOURCE_DIR}/../src")
 
-# Fichiers sources
-set (SOURCES
-          mdtutils/essaisTest.cpp
-    )
+# Add the unit test tools directory
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdttest")
 
 # * mdtutils *
-add_executable (essaisTest "${SOURCES}")
-# Libraires à lier
-target_link_libraries(essaisTest "mdtutils")
-target_link_libraries(essaisTest ${QT_LIBRARIES})
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutils")

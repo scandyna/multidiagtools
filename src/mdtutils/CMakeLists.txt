@@ -13,24 +13,24 @@ set (LIB_DEST_DIR "${PROJECT_SOURCE_DIR}/../../bin")
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
-                essais.h
-               )
+          essais.h
+    )
 
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
-                essais.cpp
-               )
+          essais.cpp
+    )
 
 # Liste des fichiers ui
 set (FORM_FILES
 
-              )
+    )
 
 # Liste des fichiers rcc (ressources)
 set (RESOURCE_FILES
 
-              )
+    )
 
 # Fichiers à traiter par le compilateur moc
 QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})

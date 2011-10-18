@@ -1,6 +1,6 @@
 format 76
 "multiDiagTools"
-  revision 1
+  revision 2
   modified_by 2 "philippe"
 
 
@@ -39,4 +39,10 @@ format 76
   mark_for_import
   
   package_ref 128002 // mdtutils
+
+  package_ref 134530 // mdtTest
+
+  package_ref 134786 // Qt4
+
+  package_ref 134658 // src
 end

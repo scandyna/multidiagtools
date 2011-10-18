@@ -1,15 +1,18 @@
 # Fichier de projet pour Multi X Diag Tools
 
-# Ressources CMake:
+# CMake ressources:
 #  http://www.cmake.org/cmake/help/cmake_tutorial.html
 #  http://www.cmake.org/Wiki/CMake_Useful_Variables
 #  http://qt-quarterly.developpez.com/qq-34/cmake/
 #  http://matthieu-brucher.developpez.com/tutoriels/cpp/qt/compilation/
 
+# CMake project file for Multi X Diag Tools
+# * root project file *
+
 # Version requise de CMake
 cmake_minimum_required ( VERSION 2.6 )
 
-# Projet
+# Project
 project (multixdiagtools)
 
 # Utilisation des assertions , positionner à 0 pour désactiver
@@ -62,4 +65,4 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 
 # ** Exécution des tests unitaires **
 enable_testing()
-add_test (essaisTest ${CMAKE_CURRENT_BINARY_DIR}/tests/essaisTest)
+add_test (essaisTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/essaisTest)
