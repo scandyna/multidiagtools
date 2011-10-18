@@ -1,0 +1,194 @@
+class zmsComm
+!!!130178.cpp!!!	zmsComm()
+
+  string header;
+
+  // Attribut mémoire pour reOpen()
+  pvPortNumber = 0;
+  pvByteTxWaitTime = 0;
+  pvRxFrameMaxLen = 0;
+  pvEofChar = '\0';
+  pvPortOpenOk = false;
+  // Journalisation et rapport
+  pvDiagFrameLogEnabled = false;
+  pvDeviceErrorLogEnabled = false;
+  pvHtmlReportEnabled = false;
+  // Tampon d'affichage des erreurs
+  pvDeviceErrorDisplayBuffer.init(20);
+  header = "Datum und Zeit           | Init   | Nr     | Fehler Text\n";
+  header += "----------------------------------------------------------\n";
+  pvDeviceErrorDisplayBuffer.setHeader(header);
+!!!130306.cpp!!!	~zmsComm()
+
+  close();
+!!!130434.cpp!!!	open(in portNumber : int, in byteTxWaitTime : int, in rxFrameMaxLen : uint, in eofChar : char) : bool
+
+  if(!pvSerialPort.open(portNumber, byteTxWaitTime)){
+    return false;
+  }
+  // Initialement on choisi une taille de 1024 pour la tramme d'émission
+  // Si une taille suppérieure s'avère nécessaire, on redimensionnera à la volée
+  if(!pvTxFrame.init(1024)){
+    return false;
+  }
+  if(!pvRxFrame.init(rxFrameMaxLen, eofChar)){
+    return false;
+  }
+
+  return true;
+!!!130562.cpp!!!	reOpen(in portNumber : int, in byteTxWaitTime : int, in rxFrameMaxLen : uint, in eofChar : char) : bool
+
+  if((portNumber != pvPortNumber)||(byteTxWaitTime != pvByteTxWaitTime)||(rxFrameMaxLen != pvRxFrameMaxLen)||(eofChar != pvEofChar)){
+    pvPortNumber = portNumber;
+    pvByteTxWaitTime = byteTxWaitTime;
+    pvRxFrameMaxLen = rxFrameMaxLen;
+    pvEofChar = eofChar;
+    close();
+    pvPortOpenOk = open(portNumber, byteTxWaitTime, rxFrameMaxLen, eofChar);
+  }
+  return pvPortOpenOk;
+!!!130690.cpp!!!	close() : void
+
+  pvSerialPort.close();
+!!!130818.cpp!!!	send(in frame : char) : bool
+
+  assert(frame != 0);
+  size_t len;
+
+  // Préparation de la trame
+  len = strlen(frame)+1;
+  if(!pvTxFrame.init(len)){
+    return false;
+  }
+  // Effacement de la trame d'émission
+  pvTxFrame.clear();
+  // On dépose dans le buffer sans le caractère terminal
+  pvTxFrame.put(frame, len-1);
+  // Ajout du <CR>
+  pvTxFrame.putOne(0x0D);
+  // début de l'envois
+  pvSerialPort.flushRxTx();
+  pvSerialPort.sendFrame(pvTxFrame);
+
+  return true;
+!!!130946.cpp!!!	receiveBegin(in timeout : int) : void
+
+  // On efface les données précédentes
+  pvRxFrame.clear();
+  // Début de réception
+  pvSerialPort.receiveFrameBegin(pvRxFrame, timeout);
+!!!131074.cpp!!!	receiveTerminate() : zms_error_t
+
+  string timestamp;
+
+  // Validité de la trame recue
+  if(!pvRxFrame.isValid()){
+    // zmsSerialPort contient l'erreur de réception
+    return pvSerialPort.lastRxError();
+  }
+  // Décodage
+  if(!pvRxFrame.decode()){
+    pvRxFrame.clear();
+    return ZMS_ERROR_FRAME_DECODE_FAIL;
+  }
+  // Retour d'erreur du ZMS - NOTE: doit être adapté, autant ici que sous LabView
+  if(pvRxFrame.deviceError() != 0){
+    return ZMS_ERROR_FRAME_DECODE_FAIL;
+  }
+  // Données
+  if(pvRxFrame.type() == zmsResultFrame::DIAG_FRAME){
+    // Datation
+    timestamp = zmsLog::getTimestamp();
+    // Erreurs ZMS
+    pvDeviceError.setDiagFrame(pvRxFrame);
+    // Génération de la liste d'erreurs au format CSV
+    pvDeviceError.setCsvErrorList(timestamp, " | ");
+    // Ajout au tampon d'affichage
+    pvDeviceErrorDisplayBuffer.append(pvDeviceError.csvErrorList());
+    // Journalisation des erreurs
+    if(pvDeviceErrorLogEnabled){
+      // Génération de la liste d'erreurs au format CSV
+      pvDeviceError.setCsvErrorList(timestamp, "\t");
+      if(!pvDeviceErrorLog.addError(pvDeviceError)){
+        return ZMS_ERROR_FILE_WRITE_FAIL;
+      }
+    }
+    // Journalisation de la trame de diagnostic
+    if(pvDiagFrameLogEnabled){
+      // Ajout de la trame au fichier de journalisation
+      if(!pvFrameLog.addFrame(pvRxFrame, timestamp)){
+        return ZMS_ERROR_FILE_WRITE_FAIL;
+      }
+    }
+    // Ajout des erreurs ZMS au rapport HTML
+    if(pvHtmlReportEnabled){
+      if(!pvHtmlReport.addError(pvDeviceError, timestamp)){
+        return ZMS_ERROR_FILE_WRITE_FAIL;
+      }
+    }
+  }
+  // Ici, tout est ok
+  return ZMS_NO_ERROR;
+!!!131202.cpp!!!	serialPortObj() : zmsSerialPort
+
+  return pvSerialPort;
+!!!131330.cpp!!!	RxFrame() : zmsDiagFrame
+
+  return pvRxFrame;
+!!!131458.cpp!!!	computeTrainComposition() : zms_error_t
+
+  pvTrainComposition.setZSTdiagFrame(&pvRxFrame);
+  if(!pvTrainComposition.decode(false)){
+    return pvTrainComposition.lastError();
+  }
+  return ZMS_NO_ERROR;
+!!!131586.cpp!!!	trainComposition() : zmsTrainComposition
+
+  return pvTrainComposition;
+!!!131714.cpp!!!	decodedFrame() : string
+
+  return pvRxFrame.decodedFrame();
+!!!131842.cpp!!!	receivedFrameStr() : string
+
+  return pvRxFrame.getStr();
+!!!131970.cpp!!!	createDiagFrameLogFile(in filePath : string) : zms_error_t
+
+  // Création du fichier si nécessaire
+  if(!pvFrameLog.createFile(filePath)){
+    return ZMS_ERROR_FILE_WRITE_FAIL;
+  }
+  return ZMS_NO_ERROR;
+!!!132098.cpp!!!	enableDiagFrameLog(in enable : bool) : void
+
+  pvDiagFrameLogEnabled = enable;
+!!!132226.cpp!!!	openDiagFrameLogFile(in filePath : string) : zms_error_t
+
+  if(!pvFrameLog.openFile(filePath)){
+    return ZMS_ERROR_FILE_READ_FAIL;
+  }
+  return ZMS_NO_ERROR;
+!!!132354.cpp!!!	readDiagFrameLogLine() : bool
+
+  pvRxFrame = pvFrameLog.readLine();
+  return !pvFrameLog.endOfFile();
+!!!132482.cpp!!!	frameLog() : zmsFrameLog
+
+  return pvFrameLog;
+!!!132610.cpp!!!	zmsDeviceErrorObj() : zmsDeviceError
+
+  return pvDeviceError;
+!!!132738.cpp!!!	deviceErrorDisplayBufferObj() : zmsDisplayBuffer
+
+  return pvDeviceErrorDisplayBuffer;
+!!!132866.cpp!!!	enableDiagDeviceErrorLog(in enable : bool) : void
+
+  pvDeviceErrorLogEnabled = enable;
+!!!132994.cpp!!!	zmsDeviceErrorLogObj() : zmsDeviceErrorLog
+
+  return pvDeviceErrorLog;
+!!!133122.cpp!!!	enableHtmlReport(in enable : bool) : void
+
+  pvHtmlReportEnabled = enable;
+!!!133250.cpp!!!	htmlReportObj() : zmsHtmlReport
+
+  return pvHtmlReport;

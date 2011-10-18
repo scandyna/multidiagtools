@@ -1,0 +1,36 @@
+class zmsDisplayBuffer
+!!!144130.cpp!!!	zmsDisplayBuffer()
+  pvCapacity = 0;
+  pvHeader = "";
+!!!144258.cpp!!!	~zmsDisplayBuffer()
+  pvBuffer.clear();
+!!!144386.cpp!!!	init(in size : size_t) : void
+  pvBuffer.clear();
+  pvCapacity = size;
+!!!144514.cpp!!!	setHeader(in header : string) : void
+  pvHeader = header;
+!!!144642.cpp!!!	append(in data : string) : void
+  // Si on a une chaine non vide ...
+  if(data.size()>0){
+    // On vérifie que le 1er caractère ne soit pas un fin de ligne ou un espace
+    if((data.at(0)!=' ')&&(data.at(0)!='\n')&&(data.at(0)!='\t')){
+      // Si le tampon est plein, on retire l'élément le plus ancien
+      if(full()){
+        pvBuffer.pop_front();
+      }
+      // Ajout du nouvel élément
+      pvBuffer.push_back(data);
+    }
+  }
+!!!144770.cpp!!!	full() : bool
+  return (pvBuffer.size() >= pvCapacity);
+!!!144898.cpp!!!	displayData() : string
+  deque<string>::const_iterator it;
+  string str;
+
+  str = pvHeader;
+  for(it = pvBuffer.begin(); it != pvBuffer.end(); *it++){
+    str += *it;
+  }
+
+  return str;

@@ -1,0 +1,15 @@
+class zmsDeviceErrorLog
+!!!136322.cpp!!!	zmsDeviceErrorLog()
+  pvHeader = "Datum und Zeit       \tInit\tFehler\tFehler Text";
+  //pvHeader = "Datum und Zeit      | Init   | Nr     | Fehler Text\n";
+  //pvHeader += "----------------------------------------------------------\n";
+!!!136450.cpp!!!	addError(inout deviceError : zmsDeviceError) : bool
+  // Génération de la chaine CSV des erreurs
+  //deviceError.setCsvErrorList(timestamp);
+  // Ajout au fichier
+  if(!addData(deviceError.csvErrorList(), false, false)){
+    cerr << "zmsErrorLog::addDeviceError(): unable to add errors to log file" << endl;
+    return false;
+  }
+
+  return true;
