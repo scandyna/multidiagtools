@@ -1,25 +1,23 @@
-# Fichier de projet pour Multi X Diag Tools
-# partie librairie d'utilitaires
+# CMake project file for Multi X Diag Tools
+# * Part: mdtutils *
+# * Directory: mdutils *
 
-# Ressources CMake:
-#  http://www.cmake.org/cmake/help/cmake_tutorial.html
-#  http://www.cmake.org/Wiki/CMake_Useful_Variables
+# Project
+project (multixdiagtools)
 
-# Projet
-project (mdtutils)
-
-# Répertoire de destination
+# Libraries install directory
 set (LIB_DEST_DIR "${PROJECT_SOURCE_DIR}/../../bin")
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
-          essais.h
+          
     )
 
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
-          essais.cpp
+          mdtBuffer.cpp
+          mdtTime.cpp
     )
 
 # Liste des fichiers ui
@@ -43,9 +41,11 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Librairie du projet
 add_library (mdtutils SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+target_link_libraries(mdtutils ${QT_LIBRARIES})
 
 # Version statique
-add_library ("mdtutils_static" STATIC ${SOURCES_FILES} )
+add_library (mdtutils_static STATIC ${SOURCES_FILES} )
+target_link_libraries(mdtutils_static ${QT_LIBRARIES})
 #set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
 
 # Destinations

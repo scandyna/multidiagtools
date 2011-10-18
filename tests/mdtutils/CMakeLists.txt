@@ -7,13 +7,14 @@ project (multixdiagtools)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
-          
+          mdtBufferTest.h
     )
 
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
-          essaisTest.cpp
+          mdtBufferTest.cpp
+          main.cpp
     )
 
 
@@ -29,8 +30,8 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Exécutable
-add_executable (essaisTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+add_executable (mdtUtilsTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraires à lier
-target_link_libraries(essaisTest "mdtutils")
-target_link_libraries(essaisTest "mdttest")
-target_link_libraries(essaisTest ${QT_LIBRARIES})
+target_link_libraries(mdtUtilsTest "mdtutils")
+target_link_libraries(mdtUtilsTest "mdttest")
+target_link_libraries(mdtUtilsTest ${QT_LIBRARIES})

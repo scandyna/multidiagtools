@@ -1,9 +1,9 @@
 
-#include "zmsBuffer.h"
+#include "mdtBuffer.h"
 #include <cstring>
 #include <string>
 
-template <class T> zmsBuffer<T>::zmsBuffer()
+template <class T> mdtBuffer<T>::mdtBuffer()
 {
   pvBufferStart = 0;
   pvCapacity = 0;
@@ -12,7 +12,7 @@ template <class T> zmsBuffer<T>::zmsBuffer()
   pvTokenReached = false;
 }
 
-template <class T> zmsBuffer<T>::zmsBuffer(zmsBuffer<T> &src)
+template <class T> mdtBuffer<T>::mdtBuffer(mdtBuffer<T> &src)
 {
   // Initialisation
   pvBufferStart = 0;
@@ -30,7 +30,7 @@ template <class T> zmsBuffer<T>::zmsBuffer(zmsBuffer<T> &src)
   delete[] buffer;
 }
 
-template <class T> zmsBuffer<T> &zmsBuffer<T>::operator=(zmsBuffer<T> &src)
+template <class T> mdtBuffer<T> &mdtBuffer<T>::operator=(mdtBuffer<T> &src)
 {
   // On effectue la copie uniquement si la source est une autre instance
   if(&src != this){
@@ -47,14 +47,14 @@ template <class T> zmsBuffer<T> &zmsBuffer<T>::operator=(zmsBuffer<T> &src)
   return *this;
 }
 
-template <class T> zmsBuffer<T>::~zmsBuffer()
+template <class T> mdtBuffer<T>::~mdtBuffer()
 {
   if(pvBufferStart != 0){
     delete[] pvBufferStart;
   }
 }
 
-template <class T> bool zmsBuffer<T>::init(size_t size)
+template <class T> bool mdtBuffer<T>::init(size_t size)
 {
   // (Ré-)allocation mémoire si nécessaire
   if(size > pvCapacity){
@@ -76,7 +76,7 @@ template <class T> bool zmsBuffer<T>::init(size_t size)
   return true;
 }
 
-template <class T> void zmsBuffer<T>::clear()
+template <class T> void mdtBuffer<T>::clear()
 {
   //size_t i;
 
@@ -95,7 +95,7 @@ template <class T> void zmsBuffer<T>::clear()
   pvTokenReached = false;
 }
 
-template <class T> size_t zmsBuffer<T>::put(const T *data, size_t len)
+template <class T> size_t mdtBuffer<T>::put(const T *data, size_t len)
 {
   assert(data != 0);
   assert(pvBufferStart != 0);
@@ -143,7 +143,7 @@ template <class T> size_t zmsBuffer<T>::put(const T *data, size_t len)
   return len;
 }
 
-template <class T> bool zmsBuffer<T>::putOne(T data)
+template <class T> bool mdtBuffer<T>::putOne(T data)
 {
   // Nombre d'éléments qu'il est possible de stocker
   if(pvRemainCapacity < 1){
@@ -163,7 +163,7 @@ template <class T> bool zmsBuffer<T>::putOne(T data)
   return true;
 }
 
-template <class T> size_t zmsBuffer<T>::putUntil(const T *data, T token, size_t maxLen, bool IgnoreNullValues)
+template <class T> size_t mdtBuffer<T>::putUntil(const T *data, T token, size_t maxLen, bool IgnoreNullValues)
 {
   assert(data != 0);
 
@@ -204,32 +204,32 @@ template <class T> size_t zmsBuffer<T>::putUntil(const T *data, T token, size_t 
   return written;
 }
 
-template <class T> bool zmsBuffer<T>::tokenReached()
+template <class T> bool mdtBuffer<T>::tokenReached()
 {
   return pvTokenReached;
 }
 
-template <class T> size_t zmsBuffer<T>::capacity()
+template <class T> size_t mdtBuffer<T>::capacity()
 {
   return pvCapacity;
 }
 
-template <class T> size_t zmsBuffer<T>::remainCapacity()
+template <class T> size_t mdtBuffer<T>::remainCapacity()
 {
   return pvRemainCapacity;
 }
 
-template <class T> bool zmsBuffer<T>::full()
+template <class T> bool mdtBuffer<T>::full()
 {
   return pvRemainCapacity == 0;
 }
 
-template <class T> size_t zmsBuffer<T>::available()
+template <class T> size_t mdtBuffer<T>::available()
 {
   return pvAvailable;
 }
 
-template <class T> size_t zmsBuffer<T>::get(T *data, size_t len)
+template <class T> size_t mdtBuffer<T>::get(T *data, size_t len)
 {
   // Curseurs temporaires
   T *c = data;
@@ -268,7 +268,7 @@ template <class T> size_t zmsBuffer<T>::get(T *data, size_t len)
   return len;
 }
 
-template <class T> size_t zmsBuffer<T>::take(T *data, size_t len)
+template <class T> size_t mdtBuffer<T>::take(T *data, size_t len)
 {
   // Curseurs temporaires
   T *c = data;
@@ -314,7 +314,7 @@ template <class T> size_t zmsBuffer<T>::take(T *data, size_t len)
   return len;
 }
 
-template <class T>  T zmsBuffer<T>::takeOne()
+template <class T>  T mdtBuffer<T>::takeOne()
 {
   T c;
 
@@ -341,38 +341,38 @@ template <class T>  T zmsBuffer<T>::takeOne()
 
 // Instantiation explicite des templates (patrons) de fonctions (requis pour g++)
 
-template zmsBuffer<char>::zmsBuffer();
-template zmsBuffer<char>::zmsBuffer(zmsBuffer<char> &src);
-template zmsBuffer<char> &zmsBuffer<char>::operator=(zmsBuffer<char> &src);
-template zmsBuffer<char>::~zmsBuffer();
-template bool zmsBuffer<char>::init(size_t size);
-template void zmsBuffer<char>::clear();
-template size_t zmsBuffer<char>::put(const char *data, size_t len);
-template bool zmsBuffer<char>::putOne(char data);
-template size_t zmsBuffer<char>::putUntil(const char *data, char token, size_t maxLen, bool IgnoreNullValues);
-template bool zmsBuffer<char>::tokenReached();
-template size_t zmsBuffer<char>::capacity();
-template size_t zmsBuffer<char>::remainCapacity();
-template bool zmsBuffer<char>::full();
-template size_t zmsBuffer<char>::available();
-template size_t zmsBuffer<char>::get(char *data, size_t len);
-template size_t zmsBuffer<char>::take(char *data, size_t len);
-template char zmsBuffer<char>::takeOne();
+template mdtBuffer<char>::mdtBuffer();
+template mdtBuffer<char>::mdtBuffer(mdtBuffer<char> &src);
+template mdtBuffer<char> &mdtBuffer<char>::operator=(mdtBuffer<char> &src);
+template mdtBuffer<char>::~mdtBuffer();
+template bool mdtBuffer<char>::init(size_t size);
+template void mdtBuffer<char>::clear();
+template size_t mdtBuffer<char>::put(const char *data, size_t len);
+template bool mdtBuffer<char>::putOne(char data);
+template size_t mdtBuffer<char>::putUntil(const char *data, char token, size_t maxLen, bool IgnoreNullValues);
+template bool mdtBuffer<char>::tokenReached();
+template size_t mdtBuffer<char>::capacity();
+template size_t mdtBuffer<char>::remainCapacity();
+template bool mdtBuffer<char>::full();
+template size_t mdtBuffer<char>::available();
+template size_t mdtBuffer<char>::get(char *data, size_t len);
+template size_t mdtBuffer<char>::take(char *data, size_t len);
+template char mdtBuffer<char>::takeOne();
 
 // Template std::string
-template zmsBuffer<std::string>::zmsBuffer();
-template zmsBuffer<std::string>::~zmsBuffer();
-template bool zmsBuffer<std::string>::init(size_t size);
-template void zmsBuffer<std::string>::clear();
-template size_t zmsBuffer<std::string>::put(const std::string *data, size_t len);
-template bool zmsBuffer<std::string>::putOne(std::string data);
-template size_t zmsBuffer<std::string>::putUntil(const std::string *data, std::string token, size_t maxLen, bool IgnoreNullValues);
-template bool zmsBuffer<std::string>::tokenReached();
-template size_t zmsBuffer<std::string>::capacity();
-template bool zmsBuffer<std::string>::full();
-template size_t zmsBuffer<std::string>::remainCapacity();
-template bool zmsBuffer<std::string*>::full();
-template size_t zmsBuffer<std::string>::available();
-template size_t zmsBuffer<std::string>::get(std::string *data, size_t len);
-template size_t zmsBuffer<std::string>::take(std::string *data, size_t len);
-template std::string zmsBuffer<std::string>::takeOne();
+template mdtBuffer<std::string>::mdtBuffer();
+template mdtBuffer<std::string>::~mdtBuffer();
+template bool mdtBuffer<std::string>::init(size_t size);
+template void mdtBuffer<std::string>::clear();
+template size_t mdtBuffer<std::string>::put(const std::string *data, size_t len);
+template bool mdtBuffer<std::string>::putOne(std::string data);
+template size_t mdtBuffer<std::string>::putUntil(const std::string *data, std::string token, size_t maxLen, bool IgnoreNullValues);
+template bool mdtBuffer<std::string>::tokenReached();
+template size_t mdtBuffer<std::string>::capacity();
+template bool mdtBuffer<std::string>::full();
+template size_t mdtBuffer<std::string>::remainCapacity();
+template bool mdtBuffer<std::string*>::full();
+template size_t mdtBuffer<std::string>::available();
+template size_t mdtBuffer<std::string>::get(std::string *data, size_t len);
+template size_t mdtBuffer<std::string>::take(std::string *data, size_t len);
+template std::string mdtBuffer<std::string>::takeOne();

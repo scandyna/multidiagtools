@@ -42,25 +42,25 @@ template <class T> class mdtBuffer
    *
    *  Constructeur, utiliser init() avant tout autre opération
    */
-  zmsBuffer();
+  mdtBuffer();
 
   /*! \brief Constructeur de copie
    *
    *  Constructeur de copie. Effectue une copie des données vers l'autre instance
    */
-  zmsBuffer(zmsBuffer<T> &src);
+  mdtBuffer(mdtBuffer<T> &src);
 
   /*! \brief Opérateur de copie
    *
    *  Opérateur de copie. Effectue une copie des données vers l'autre instance
    */
-  zmsBuffer<T> &operator=(zmsBuffer<T> &src);
+  mdtBuffer<T> &operator=(mdtBuffer<T> &src);
 
   /*! \brief Destructeur
    *
    *  Destructeur
    */
-  ~zmsBuffer();
+  ~mdtBuffer();
 
   /*! \brief  Initialisation du tampon
    *

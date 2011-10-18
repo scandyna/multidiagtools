@@ -174,56 +174,59 @@ mdtutils_static/fast:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/build
 .PHONY : mdtutils_static/fast
 
-essais.o: essais.cpp.o
-.PHONY : essais.o
+mdtBuffer.o: mdtBuffer.cpp.o
+.PHONY : mdtBuffer.o
 
 # target to build an object file
-essais.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/essais.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/essais.cpp.o
-.PHONY : essais.cpp.o
+mdtBuffer.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.o
+.PHONY : mdtBuffer.cpp.o
 
-essais.i: essais.cpp.i
-.PHONY : essais.i
+mdtBuffer.i: mdtBuffer.cpp.i
+.PHONY : mdtBuffer.i
 
 # target to preprocess a source file
-essais.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/essais.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/essais.cpp.i
-.PHONY : essais.cpp.i
+mdtBuffer.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.i
+.PHONY : mdtBuffer.cpp.i
 
-essais.s: essais.cpp.s
-.PHONY : essais.s
+mdtBuffer.s: mdtBuffer.cpp.s
+.PHONY : mdtBuffer.s
 
 # target to generate assembly for a file
-essais.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/essais.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/essais.cpp.s
-.PHONY : essais.cpp.s
+mdtBuffer.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.s
+.PHONY : mdtBuffer.cpp.s
 
-moc_essais.o: moc_essais.cxx.o
-.PHONY : moc_essais.o
+mdtTime.o: mdtTime.cpp.o
+.PHONY : mdtTime.o
 
 # target to build an object file
-moc_essais.cxx.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_essais.cxx.o
-.PHONY : moc_essais.cxx.o
+mdtTime.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.o
+.PHONY : mdtTime.cpp.o
 
-moc_essais.i: moc_essais.cxx.i
-.PHONY : moc_essais.i
+mdtTime.i: mdtTime.cpp.i
+.PHONY : mdtTime.i
 
 # target to preprocess a source file
-moc_essais.cxx.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_essais.cxx.i
-.PHONY : moc_essais.cxx.i
+mdtTime.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.i
+.PHONY : mdtTime.cpp.i
 
-moc_essais.s: moc_essais.cxx.s
-.PHONY : moc_essais.s
+mdtTime.s: mdtTime.cpp.s
+.PHONY : mdtTime.s
 
 # target to generate assembly for a file
-moc_essais.cxx.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_essais.cxx.s
-.PHONY : moc_essais.cxx.s
+mdtTime.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
+.PHONY : mdtTime.cpp.s
 
 # Help Target
 help:
@@ -240,12 +243,12 @@ help:
 	@echo "... mdtutils_static"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... essais.o"
-	@echo "... essais.i"
-	@echo "... essais.s"
-	@echo "... moc_essais.o"
-	@echo "... moc_essais.i"
-	@echo "... moc_essais.s"
+	@echo "... mdtBuffer.o"
+	@echo "... mdtBuffer.i"
+	@echo "... mdtBuffer.s"
+	@echo "... mdtTime.o"
+	@echo "... mdtTime.i"
+	@echo "... mdtTime.s"
 .PHONY : help
 
 

@@ -1,11 +1,28 @@
-window_sizes 1272 993 217 1049 794 120
+window_sizes 1024 722 350 668 528 120
 diagrams
-  active  classdiagram_ref 128002 // mdtSerialPort
-    1049 794 100 4 0 0
+  classdiagram_ref 141442 // QAbstractItemModel
+    739 627 100 4 0 0
+  classdiagram_ref 141570 // QAbstractListModel
+    739 627 100 4 0 0
+  classdiagram_ref 141698 // QAbstractTableModel
+    739 627 100 4 0 0
+  classdiagram_ref 141826 // QModelIndex
+    739 627 100 4 0 0
+  classdiagram_ref 141954 // QTime
+    739 627 100 4 0 0
+  classdiagram_ref 142082 // mdtTime
+    739 627 100 4 0 0
+  active  classdiagram_ref 142210 // mdtBufferTest
+    668 528 100 4 0 0
 end
 show_stereotypes
-selected attribute_ref 128002 // pvBaudRate
 open
-  class_ref 128130 // mdtSerialPortConfig
+  attribute_ref 161282 // pvElapsed
+  operation_ref 178050 // stop
+  operation_ref 178178 // elapsed
+  operation_ref 177922 // elapsedSec
+  class_ref 139010 // mdtBufferTest
+  
+  package_ref 135042 // tests
 end
 end

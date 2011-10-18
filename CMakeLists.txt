@@ -36,6 +36,7 @@ configure_file (
 ADD_DEFINITIONS( "-Wall -ansi -lm" )
 
 # Support de Qt4
+SET(QT_USE_QTTEST TRUE)
 FIND_PACKAGE(Qt4 REQUIRED)
 INCLUDE(${QT_USE_FILE})
 ADD_DEFINITIONS(${QT_DEFINITIONS})
@@ -45,12 +46,12 @@ include_directories ("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories ("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
 # Exécutable
-add_executable (unMain src/main.cpp)
+#add_executable (unMain src/main.cpp)
 # Librairies à lier
-target_link_libraries(unMain "mdtutils")
-target_link_libraries(unMain ${QT_LIBRARIES})
+#target_link_libraries(unMain "mdtutils")
+#target_link_libraries(unMain ${QT_LIBRARIES})
 
-install (TARGETS "unMain" DESTINATION "${PROJECT_SOURCE_DIR}/bin")
+#install (TARGETS "unMain" DESTINATION "${PROJECT_SOURCE_DIR}/bin")
 
 # *** Partie librairies ***
 
@@ -65,4 +66,4 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 
 # ** Exécution des tests unitaires **
 enable_testing()
-add_test (essaisTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/essaisTest)
+add_test (mdtUtilsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtUtilsTest)
