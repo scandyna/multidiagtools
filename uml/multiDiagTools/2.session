@@ -1,4 +1,4 @@
-window_sizes 1024 722 350 668 528 120
+window_sizes 1280 978 350 924 784 120
 diagrams
   classdiagram_ref 141442 // QAbstractItemModel
     739 627 100 4 0 0
@@ -10,18 +10,17 @@ diagrams
     739 627 100 4 0 0
   classdiagram_ref 141954 // QTime
     739 627 100 4 0 0
-  classdiagram_ref 142082 // mdtTime
-    739 627 100 4 0 0
-  active  classdiagram_ref 142210 // mdtBufferTest
+  active  classdiagram_ref 142082 // mdtTime
+    924 784 100 4 0 0
+  classdiagram_ref 142210 // mdtBufferTest
     668 528 100 4 0 0
 end
 show_stereotypes
+selected classview_ref 141826 // mdtTime
 open
-  attribute_ref 161282 // pvElapsed
-  operation_ref 178050 // stop
-  operation_ref 178178 // elapsed
-  operation_ref 177922 // elapsedSec
-  class_ref 139010 // mdtBufferTest
+  
+  package_ref 128002 // mdtutils
+  classview_ref 134786 // mdttest
   
   package_ref 135042 // tests
 end
