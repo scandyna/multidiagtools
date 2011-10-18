@@ -1,0 +1,11 @@
+window_sizes 1272 993 217 1049 794 120
+diagrams
+  active  classdiagram_ref 128002 // mdtSerialPort
+    1049 794 100 4 0 0
+end
+show_stereotypes
+selected attribute_ref 128002 // pvBaudRate
+open
+  class_ref 128130 // mdtSerialPortConfig
+end
+end

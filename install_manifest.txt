@@ -1,0 +1,3 @@
+/home/philippe/programmation/multixDiagTools/bin/unMain
+/home/philippe/programmation/multixDiagTools/src/mdtutils/../../bin/libmdtutils.so
+/home/philippe/programmation/multixDiagTools/src/mdtutils/../../bin/libmdtutils_static.a
