@@ -11,6 +11,8 @@ set (LIB_DEST_DIR "${PROJECT_SOURCE_DIR}/../../bin")
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           
+          # Essais
+          mdtStringListModel.h
     )
 
 
@@ -18,6 +20,8 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           mdtBuffer.cpp
           mdtTime.cpp
+          # Essais
+          mdtStringListModel.cpp
     )
 
 # Liste des fichiers ui

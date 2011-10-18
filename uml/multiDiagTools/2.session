@@ -8,19 +8,22 @@ diagrams
     739 627 100 4 0 0
   classdiagram_ref 141826 // QModelIndex
     739 627 100 4 0 0
-  classdiagram_ref 141954 // QTime
-    739 627 100 4 0 0
-  active  classdiagram_ref 142082 // mdtTime
+  active  classdiagram_ref 148738 // mdtStringListModel
     924 784 100 4 0 0
-  classdiagram_ref 142210 // mdtBufferTest
-    668 528 100 4 0 0
+  classdiagram_ref 148866 // QStringList
+    534 422 100 4 0 0
+  classdiagram_ref 149250 // QVariant
+    534 422 100 4 0 0
 end
 show_stereotypes
-selected classview_ref 141826 // mdtTime
+selected operation_ref 194690 // endRemoveRows
 open
-  
-  package_ref 128002 // mdtutils
-  classview_ref 134786 // mdttest
+  operation_ref 192770 // rowCount
+  operation_ref 193026 // data
+  operation_ref 193282 // headerData
+  operation_ref 193410 // flags
+  operation_ref 194050 // insertRows
+  operation_ref 194178 // removeRows
   
   package_ref 135042 // tests
 end

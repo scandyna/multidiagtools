@@ -201,6 +201,33 @@ mdtBuffer.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.s
 .PHONY : mdtBuffer.cpp.s
 
+mdtStringListModel.o: mdtStringListModel.cpp.o
+.PHONY : mdtStringListModel.o
+
+# target to build an object file
+mdtStringListModel.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtStringListModel.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtStringListModel.cpp.o
+.PHONY : mdtStringListModel.cpp.o
+
+mdtStringListModel.i: mdtStringListModel.cpp.i
+.PHONY : mdtStringListModel.i
+
+# target to preprocess a source file
+mdtStringListModel.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtStringListModel.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtStringListModel.cpp.i
+.PHONY : mdtStringListModel.cpp.i
+
+mdtStringListModel.s: mdtStringListModel.cpp.s
+.PHONY : mdtStringListModel.s
+
+# target to generate assembly for a file
+mdtStringListModel.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtStringListModel.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtStringListModel.cpp.s
+.PHONY : mdtStringListModel.cpp.s
+
 mdtTime.o: mdtTime.cpp.o
 .PHONY : mdtTime.o
 
@@ -228,6 +255,30 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
+moc_mdtStringListModel.o: moc_mdtStringListModel.cxx.o
+.PHONY : moc_mdtStringListModel.o
+
+# target to build an object file
+moc_mdtStringListModel.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtStringListModel.cxx.o
+.PHONY : moc_mdtStringListModel.cxx.o
+
+moc_mdtStringListModel.i: moc_mdtStringListModel.cxx.i
+.PHONY : moc_mdtStringListModel.i
+
+# target to preprocess a source file
+moc_mdtStringListModel.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtStringListModel.cxx.i
+.PHONY : moc_mdtStringListModel.cxx.i
+
+moc_mdtStringListModel.s: moc_mdtStringListModel.cxx.s
+.PHONY : moc_mdtStringListModel.s
+
+# target to generate assembly for a file
+moc_mdtStringListModel.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtStringListModel.cxx.s
+.PHONY : moc_mdtStringListModel.cxx.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -246,9 +297,15 @@ help:
 	@echo "... mdtBuffer.o"
 	@echo "... mdtBuffer.i"
 	@echo "... mdtBuffer.s"
+	@echo "... mdtStringListModel.o"
+	@echo "... mdtStringListModel.i"
+	@echo "... mdtStringListModel.s"
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
+	@echo "... moc_mdtStringListModel.o"
+	@echo "... moc_mdtStringListModel.i"
+	@echo "... moc_mdtStringListModel.s"
 .PHONY : help
 
 
