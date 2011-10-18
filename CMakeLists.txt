@@ -45,10 +45,10 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 include_directories ("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories ("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
-# Exécutable
-#add_executable (unMain src/main.cpp)
+# Exécutable pour tests
+add_executable (essais src/main.cpp)
 # Librairies à lier
-#target_link_libraries(unMain "mdtutils")
+target_link_libraries(essais "mdtutils")
 #target_link_libraries(unMain ${QT_LIBRARIES})
 
 #install (TARGETS "unMain" DESTINATION "${PROJECT_SOURCE_DIR}/bin")
