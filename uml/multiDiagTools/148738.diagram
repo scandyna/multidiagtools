@@ -1,24 +1,61 @@
 format 76
 
-classcanvas 128002 class_ref 160642 // mdtStringListModel
+classcanvas 128002 class_ref 160642 // mdtParentChildTableModel
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 108 454 2000
+  xyz 11 427 2000
 end
 classcanvas 128130 class_ref 146946 // QAbstractItemModel
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 68 98 2000
+  xyz 212 71 2000
 end
-classcanvas 128386 class_ref 147074 // QAbstractListModel
+classcanvas 128770 class_ref 167682 // mdtParentChilTableItem
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 287 366 2006
+  xyz 238 844 2000
 end
-relationcanvas 128514 relation_ref 141058 // <generalisation>
-  from ref 128386 z 2007 to ref 128130
+classcanvas 129922 class_ref 147202 // QAbstractTableModel
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 363 668 2006
+end
+relationcanvas 128898 relation_ref 161282 // <generalisation>
+  from ref 128002 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128642 relation_ref 154754 // <generalisation>
-  from ref 128002 z 2007 to ref 128386
+relationcanvas 129026 relation_ref 167810 // <directional composition>
+  from ref 128002 z 2001 to ref 128770
+  role_a_pos 391 823 3000 no_role_b
+  multiplicity_a_pos 347 823 3000 no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 167938 // <directional composition>
+  decenter_begin 209
+  decenter_end 441
+  from ref 128770 z 2001 to point 120 886
+  line 129282 z 2001 to point 120 936
+  line 129410 z 2001 to ref 128770
+  role_a_pos 145 910 3000 no_role_b
+  multiplicity_a_pos 203 937 3000 no_multiplicity_b
+end
+relationcanvas 129538 relation_ref 168066 // <directional composition>
+  decenter_begin 662
+  decenter_end 912
+  from ref 128770 z 2001 stereotype "<<QList>>" xyz 147 975 3000 to point 126 974
+  line 129666 z 2001 to point 127 1022
+  line 129794 z 2001 to ref 128770
+  role_a_pos 148 1003 3000 no_role_b
+  multiplicity_a_pos 205 1030 3000 no_multiplicity_b
+end
+relationcanvas 130050 relation_ref 141186 // <generalisation>
+  from ref 129922 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 174722 // <unidirectional association>
+  from ref 128770 z 2007 to ref 129922
+  role_a_pos 627 725 3000 no_role_b
+  multiplicity_a_pos 583 725 3000 no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 174850 // <association>
+  from ref 128002 z 2001 to ref 128770
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

@@ -1,0 +1,7 @@
+format 76
+
+note 128002 "Premiers test interactife -> DLG
+Tests suivants -> nécessitent connecter bouchon, par exemple
+"
+  xyzwh 102 102 2000 493 87
+end

@@ -255,6 +255,33 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
+mdtTreeItem.o: mdtTreeItem.cpp.o
+.PHONY : mdtTreeItem.o
+
+# target to build an object file
+mdtTreeItem.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTreeItem.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTreeItem.cpp.o
+.PHONY : mdtTreeItem.cpp.o
+
+mdtTreeItem.i: mdtTreeItem.cpp.i
+.PHONY : mdtTreeItem.i
+
+# target to preprocess a source file
+mdtTreeItem.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTreeItem.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTreeItem.cpp.i
+.PHONY : mdtTreeItem.cpp.i
+
+mdtTreeItem.s: mdtTreeItem.cpp.s
+.PHONY : mdtTreeItem.s
+
+# target to generate assembly for a file
+mdtTreeItem.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTreeItem.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTreeItem.cpp.s
+.PHONY : mdtTreeItem.cpp.s
+
 moc_mdtStringListModel.o: moc_mdtStringListModel.cxx.o
 .PHONY : moc_mdtStringListModel.o
 
@@ -303,6 +330,9 @@ help:
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
+	@echo "... mdtTreeItem.o"
+	@echo "... mdtTreeItem.i"
+	@echo "... mdtTreeItem.s"
 	@echo "... moc_mdtStringListModel.o"
 	@echo "... moc_mdtStringListModel.i"
 	@echo "... moc_mdtStringListModel.s"

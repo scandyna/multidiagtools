@@ -13,6 +13,7 @@ set (HEADER_FILES
           
           # Essais
           mdtStringListModel.h
+          # mdtTreeItem.h
     )
 
 
@@ -22,6 +23,7 @@ set (SOURCES_FILES
           mdtTime.cpp
           # Essais
           mdtStringListModel.cpp
+          mdtTreeItem.cpp
     )
 
 # Liste des fichiers ui
