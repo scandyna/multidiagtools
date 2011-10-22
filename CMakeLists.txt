@@ -17,6 +17,7 @@ project (multixdiagtools)
 
 # Utilisation des assertions , positionner à 0 pour désactiver
 set (USE_ASSERT 1)
+
 #Debug ou Release
 set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_BUILD_TYPE Release)

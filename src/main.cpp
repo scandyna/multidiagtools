@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "mdtStringListModel.h"
+#include "mdtParentChildTableModel.h"
 #include <QStringList>
 #include <QListView>
 #include <QTableView>
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
   data << line1 << line2;
 */
   // Modèle
-  mdtStringListModel m(lst);
+  mdtParentChildTableModel m;
 //  mdtTreeItem it(data);
 //  it.setHeaderData(header);
 

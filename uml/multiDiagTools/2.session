@@ -1,4 +1,4 @@
-window_sizes 1280 1003 350 924 809 120
+window_sizes 1024 720 350 668 526 120
 diagrams
   classdiagram_ref 141442 // QAbstractItemModel
     739 627 100 4 0 0
@@ -8,20 +8,8 @@ diagrams
     739 627 100 4 0 0
   classdiagram_ref 141826 // QModelIndex
     739 627 100 4 0 0
-  classdiagram_ref 148738 // mdtStringListModel
-    924 809 100 3 372 0
-  classdiagram_ref 148866 // QStringList
-    534 422 100 4 0 0
-  classdiagram_ref 149250 // QVariant
-    534 422 100 4 0 0
-  classdiagram_ref 155778 // Messages
-    739 647 100 4 0 0
-  active  objectdiagram_ref 162306 // mdtParentChildModel
-    924 809 100 4 0 0
-  classdiagram_ref 162434 // QSqlTableModel
-    739 647 100 4 0 0
-  classdiagram_ref 162562 // QSqlQueryModel
-    739 647 100 4 0 0
+  active  classdiagram_ref 148738 // mdtStringListModel
+    668 526 80 3 120 0
 end
 show_stereotypes
 selected class_ref 174210 // QSqlTableModel
@@ -29,6 +17,6 @@ open
   class_ref 167682 // mdtParentChilTableItem
   classview_ref 141698 // ModelView
   
-  package_ref 135042 // tests
+package_ref 135042 // tests
 end
 end

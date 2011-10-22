@@ -201,32 +201,59 @@ mdtBuffer.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.s
 .PHONY : mdtBuffer.cpp.s
 
-mdtStringListModel.o: mdtStringListModel.cpp.o
-.PHONY : mdtStringListModel.o
+mdtParentChildTableItem.o: mdtParentChildTableItem.cpp.o
+.PHONY : mdtParentChildTableItem.o
 
 # target to build an object file
-mdtStringListModel.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtStringListModel.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtStringListModel.cpp.o
-.PHONY : mdtStringListModel.cpp.o
+mdtParentChildTableItem.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtParentChildTableItem.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableItem.cpp.o
+.PHONY : mdtParentChildTableItem.cpp.o
 
-mdtStringListModel.i: mdtStringListModel.cpp.i
-.PHONY : mdtStringListModel.i
+mdtParentChildTableItem.i: mdtParentChildTableItem.cpp.i
+.PHONY : mdtParentChildTableItem.i
 
 # target to preprocess a source file
-mdtStringListModel.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtStringListModel.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtStringListModel.cpp.i
-.PHONY : mdtStringListModel.cpp.i
+mdtParentChildTableItem.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtParentChildTableItem.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableItem.cpp.i
+.PHONY : mdtParentChildTableItem.cpp.i
 
-mdtStringListModel.s: mdtStringListModel.cpp.s
-.PHONY : mdtStringListModel.s
+mdtParentChildTableItem.s: mdtParentChildTableItem.cpp.s
+.PHONY : mdtParentChildTableItem.s
 
 # target to generate assembly for a file
-mdtStringListModel.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtStringListModel.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtStringListModel.cpp.s
-.PHONY : mdtStringListModel.cpp.s
+mdtParentChildTableItem.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtParentChildTableItem.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableItem.cpp.s
+.PHONY : mdtParentChildTableItem.cpp.s
+
+mdtParentChildTableModel.o: mdtParentChildTableModel.cpp.o
+.PHONY : mdtParentChildTableModel.o
+
+# target to build an object file
+mdtParentChildTableModel.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtParentChildTableModel.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableModel.cpp.o
+.PHONY : mdtParentChildTableModel.cpp.o
+
+mdtParentChildTableModel.i: mdtParentChildTableModel.cpp.i
+.PHONY : mdtParentChildTableModel.i
+
+# target to preprocess a source file
+mdtParentChildTableModel.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtParentChildTableModel.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableModel.cpp.i
+.PHONY : mdtParentChildTableModel.cpp.i
+
+mdtParentChildTableModel.s: mdtParentChildTableModel.cpp.s
+.PHONY : mdtParentChildTableModel.s
+
+# target to generate assembly for a file
+mdtParentChildTableModel.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtParentChildTableModel.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableModel.cpp.s
+.PHONY : mdtParentChildTableModel.cpp.s
 
 mdtTime.o: mdtTime.cpp.o
 .PHONY : mdtTime.o
@@ -255,56 +282,53 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
-mdtTreeItem.o: mdtTreeItem.cpp.o
-.PHONY : mdtTreeItem.o
+moc_mdtParentChildTableItem.o: moc_mdtParentChildTableItem.cxx.o
+.PHONY : moc_mdtParentChildTableItem.o
 
 # target to build an object file
-mdtTreeItem.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTreeItem.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTreeItem.cpp.o
-.PHONY : mdtTreeItem.cpp.o
+moc_mdtParentChildTableItem.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableItem.cxx.o
+.PHONY : moc_mdtParentChildTableItem.cxx.o
 
-mdtTreeItem.i: mdtTreeItem.cpp.i
-.PHONY : mdtTreeItem.i
+moc_mdtParentChildTableItem.i: moc_mdtParentChildTableItem.cxx.i
+.PHONY : moc_mdtParentChildTableItem.i
 
 # target to preprocess a source file
-mdtTreeItem.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTreeItem.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTreeItem.cpp.i
-.PHONY : mdtTreeItem.cpp.i
+moc_mdtParentChildTableItem.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableItem.cxx.i
+.PHONY : moc_mdtParentChildTableItem.cxx.i
 
-mdtTreeItem.s: mdtTreeItem.cpp.s
-.PHONY : mdtTreeItem.s
+moc_mdtParentChildTableItem.s: moc_mdtParentChildTableItem.cxx.s
+.PHONY : moc_mdtParentChildTableItem.s
 
 # target to generate assembly for a file
-mdtTreeItem.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTreeItem.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTreeItem.cpp.s
-.PHONY : mdtTreeItem.cpp.s
+moc_mdtParentChildTableItem.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableItem.cxx.s
+.PHONY : moc_mdtParentChildTableItem.cxx.s
 
-moc_mdtStringListModel.o: moc_mdtStringListModel.cxx.o
-.PHONY : moc_mdtStringListModel.o
+moc_mdtParentChildTableModel.o: moc_mdtParentChildTableModel.cxx.o
+.PHONY : moc_mdtParentChildTableModel.o
 
 # target to build an object file
-moc_mdtStringListModel.cxx.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtStringListModel.cxx.o
-.PHONY : moc_mdtStringListModel.cxx.o
+moc_mdtParentChildTableModel.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableModel.cxx.o
+.PHONY : moc_mdtParentChildTableModel.cxx.o
 
-moc_mdtStringListModel.i: moc_mdtStringListModel.cxx.i
-.PHONY : moc_mdtStringListModel.i
+moc_mdtParentChildTableModel.i: moc_mdtParentChildTableModel.cxx.i
+.PHONY : moc_mdtParentChildTableModel.i
 
 # target to preprocess a source file
-moc_mdtStringListModel.cxx.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtStringListModel.cxx.i
-.PHONY : moc_mdtStringListModel.cxx.i
+moc_mdtParentChildTableModel.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableModel.cxx.i
+.PHONY : moc_mdtParentChildTableModel.cxx.i
 
-moc_mdtStringListModel.s: moc_mdtStringListModel.cxx.s
-.PHONY : moc_mdtStringListModel.s
+moc_mdtParentChildTableModel.s: moc_mdtParentChildTableModel.cxx.s
+.PHONY : moc_mdtParentChildTableModel.s
 
 # target to generate assembly for a file
-moc_mdtStringListModel.cxx.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtStringListModel.cxx.s
-.PHONY : moc_mdtStringListModel.cxx.s
+moc_mdtParentChildTableModel.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableModel.cxx.s
+.PHONY : moc_mdtParentChildTableModel.cxx.s
 
 # Help Target
 help:
@@ -324,18 +348,21 @@ help:
 	@echo "... mdtBuffer.o"
 	@echo "... mdtBuffer.i"
 	@echo "... mdtBuffer.s"
-	@echo "... mdtStringListModel.o"
-	@echo "... mdtStringListModel.i"
-	@echo "... mdtStringListModel.s"
+	@echo "... mdtParentChildTableItem.o"
+	@echo "... mdtParentChildTableItem.i"
+	@echo "... mdtParentChildTableItem.s"
+	@echo "... mdtParentChildTableModel.o"
+	@echo "... mdtParentChildTableModel.i"
+	@echo "... mdtParentChildTableModel.s"
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
-	@echo "... mdtTreeItem.o"
-	@echo "... mdtTreeItem.i"
-	@echo "... mdtTreeItem.s"
-	@echo "... moc_mdtStringListModel.o"
-	@echo "... moc_mdtStringListModel.i"
-	@echo "... moc_mdtStringListModel.s"
+	@echo "... moc_mdtParentChildTableItem.o"
+	@echo "... moc_mdtParentChildTableItem.i"
+	@echo "... moc_mdtParentChildTableItem.s"
+	@echo "... moc_mdtParentChildTableModel.o"
+	@echo "... moc_mdtParentChildTableModel.i"
+	@echo "... moc_mdtParentChildTableModel.s"
 .PHONY : help
 
 

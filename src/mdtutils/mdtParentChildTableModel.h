@@ -1,20 +1,22 @@
-#ifndef MDT_STRING_LIST_MODEL_H
-#define MDT_STRING_LIST_MODEL_H
+#ifndef MDT_PARENT_CHILD_TABLE_MODEL_H
+#define MDT_PARENT_CHILD_TABLE_MODEL_H
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
-#include <QAbstractListModel>
+//#include <QAbstractListModel>
 #include <QStringList>
-#include "mdtTreeItem.h"
+#include <QList>
+#include <QVariant>
+#include "mdtParentChildTableItem.h"
 
-class mdtStringListModel : public QAbstractItemModel
+class mdtParentChildTableModel : public QAbstractItemModel
 {
  Q_OBJECT
  
  public:
   
-  mdtStringListModel(const QStringList &strings, QObject *parent = 0);
-  ~mdtStringListModel();
+  mdtParentChildTableModel(QObject *parent = 0);
+  ~mdtParentChildTableModel();
   
   int rowCount(const QModelIndex &parent = QModelIndex()) const;
   
@@ -22,6 +24,8 @@ class mdtStringListModel : public QAbstractItemModel
 
   QVariant data(const QModelIndex &index, int role) const;
 
+  void setHeaderData(QList<QVariant> &headerData);
+  
   QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
   
   Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -34,7 +38,8 @@ class mdtStringListModel : public QAbstractItemModel
   
   void setupModelData();
    
-  mdtTreeItem *pvRootItem;
+  mdtParentChildTableItem *pvRootItem;
+  QList<QVariant> pvHeaderData;
 };
 
-#endif  // #ifndef MDT_STRING_LIST_MODEL_H
+#endif  // #ifndef MDT_PARENT_CHILD_TABLE_MODEL_H
