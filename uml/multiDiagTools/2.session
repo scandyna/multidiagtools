@@ -1,22 +1,24 @@
-window_sizes 1024 720 350 668 526 120
+window_sizes 1280 1002 350 924 808 120
 diagrams
-  classdiagram_ref 141442 // QAbstractItemModel
-    739 627 100 4 0 0
-  classdiagram_ref 141570 // QAbstractListModel
-    739 627 100 4 0 0
-  classdiagram_ref 141698 // QAbstractTableModel
-    739 627 100 4 0 0
-  classdiagram_ref 141826 // QModelIndex
-    739 627 100 4 0 0
-  active  classdiagram_ref 148738 // mdtStringListModel
-    668 526 80 3 120 0
+  classdiagram_ref 128002 // mdtSerialPort
+    739 646 100 4 0 0
+  classdiagram_ref 169090 // mdtIOWidget
+    739 646 100 4 0 0
+  active  classdiagram_ref 169346 // mdtSerialPortInterfaceManagerPosix
+    924 808 100 4 0 0
+  classdiagram_ref 169730 // mdtAlgorithms
+    739 646 100 4 0 0
+  classdiagram_ref 169858 // mdtAlgorithmsTest
+    739 646 100 4 0 0
 end
 show_stereotypes
-selected class_ref 174210 // QSqlTableModel
+selected classdiagram_ref 169218 // mdtSerialPortConfig
 open
-  class_ref 167682 // mdtParentChilTableItem
-  classview_ref 141698 // ModelView
+  attribute_ref 195074 // pvNumber
+  attribute_ref 194434 // pvVendorName
+  class_ref 182018 // mdtAbstractSerialPortInterfaceManager
+  class_ref 182274 // mdtSerialPortInterfaceManagerPosix
   
-package_ref 135042 // tests
+  package_ref 135042 // tests
 end
 end

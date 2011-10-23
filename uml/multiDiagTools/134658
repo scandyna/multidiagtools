@@ -1,6 +1,6 @@
 format 76
 "src" // src
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -108,7 +108,7 @@ ${inlines}
  \\param byteTxWaitTime Temp d'attente entre 2 émission de bytes [ms] (Conseils: choisir au minimum 50 ms, voir classe zmsSerialPort pour plus d'infos)
  \\param rxFrameMaxLen Longueur maximale de la trame de réception
  \\param eofChar Caractère de fin de trame , typiquement EOT (0x04)
- \\return true si tout s'est bien passé, false en cas d'erreur"
+ \\return true si tout s'est bien passé, false en cas d'erreur"
       end
 
       operation 130562 "reOpen"
@@ -132,7 +132,7 @@ ${inlines}
  Ré-initialise la communication série en cas de changement de paramètre
  Cette méthode peut être appelée périodiquement. La ré-initialisation aura
  lieu si un des paramètre (au minimum) est différent d'un appel à l'autre.
- Voir open() pour les détails de fonctionnement de l'initialisation"
+ Voir open() pour les détails de fonctionnement de l'initialisation"
       end
 
       operation 130690 "close"
@@ -149,7 +149,7 @@ ${inlines}
 	
 	comment "! \\brief  Termine la communication et libère les ressources
 
- Termine la communication et libère les ressources"
+ Termine la communication et libère les ressources"
       end
 
       operation 130818 "send"
@@ -173,7 +173,7 @@ ${inlines}
  Finalement, la méthode zmsSerialPort::sendFrameOk() permet de vérifier si l'envois à provoqué une erreur.
 
  \\param frame Chaine comportant les informations à envoyer
- \\return true en cas de succès, false sinon"
+ \\return true en cas de succès, false sinon"
       end
 
       operation 130946 "receiveBegin"
@@ -198,7 +198,7 @@ ${inlines}
  Ici, le timeout est un temp durant lequel aucun byte n'est reçu. Pour exemple, on peut
  avoir un timeout de 2 [s] , mais une durée de réception de 10 [s], ce qui ne provoquera pas de timeout.
 
- \\param timeout Timeout de réception"
+ \\param timeout Timeout de réception"
       end
 
       operation 131074 "receiveTerminate"
@@ -226,7 +226,7 @@ ${inlines}
  Pour obtenir la composition du train, il faut encore appeler explicitement la méthode computeTrainComposition(),
  puis récupérer le résultat avec trainComposition()
 
- \\return Une erreur listée dans zmsError.h (ZMS_NO_ERROR en cas de succès)"
+ \\return Une erreur listée dans zmsError.h (ZMS_NO_ERROR en cas de succès)"
       end
 
       operation 131202 "serialPortObj"
@@ -241,7 +241,7 @@ ${inlines}
 	
 	
 	
-	comment "! \\brief Instance de la classe de communication"
+	comment "! \\brief Instance de la classe de communication"
       end
 
       operation 131330 "RxFrame"
@@ -256,7 +256,7 @@ ${inlines}
 	
 	
 	
-	comment "! \\brief Retourne une instance de la trame de réception"
+	comment "! \\brief Retourne une instance de la trame de réception"
       end
 
       operation 131458 "computeTrainComposition"
@@ -275,7 +275,7 @@ ${inlines}
 
 Détermine la composition du train.
 
-\\return 0 si ok, une erreur listée dans zmsError.h sinon"
+\\return 0 si ok, une erreur listée dans zmsError.h sinon"
       end
 
       operation 131586 "trainComposition"
@@ -293,7 +293,7 @@ Détermine la composition du train.
 	comment "! \\brief Retourne la composition du train
 
 Retourne la composition du train.
-Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
+Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
       end
 
       operation 131714 "decodedFrame"
@@ -308,7 +308,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	
 	
-	comment "! \\brief Trame sans espaces, CR,LF et autres séparateurs"
+	comment "! \\brief Trame sans espaces, CR,LF et autres séparateurs"
       end
 
       operation 131842 "receivedFrameStr"
@@ -326,7 +326,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	comment "! \\brief Retourne une chaine contenant la trame reçue
  Retourne une chaine contenant la trame reçue et décodée avec la méthode receive()
 
- \\return Chaine de la trame reçue"
+ \\return Chaine de la trame reçue"
       end
 
       operation 131970 "createDiagFrameLogFile"
@@ -346,7 +346,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 
  Définit le fichier pour la journalisation des trames de diagnostic   *
  \\param filePath Chemin vers le fichier à créer
- \\return 0 si tout s'est bien passé ou une erreur listée dans zmsError.h en cas de problème"
+ \\return 0 si tout s'est bien passé ou une erreur listée dans zmsError.h en cas de problème"
       end
 
       operation 132098 "enableDiagFrameLog"
@@ -366,7 +366,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
  Lorsque la journalisation est active, la méthode receive() ajoutera les
  trames dans le fichier après décodage.
 
- \\param enable Si true, la journalisation devient active, inactive si false"
+ \\param enable Si true, la journalisation devient active, inactive si false"
       end
 
       operation 132226 "openDiagFrameLogFile"
@@ -386,7 +386,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
  Ouverture d'un fichier de journal en vue d'une relecture.
 
 \\param filePath Nom ou chemin du fichier à créer
-\\return 0 si tout s'est bien passé ou une erreur listée dans zmsError.h en cas de problème"
+\\return 0 si tout s'est bien passé ou une erreur listée dans zmsError.h en cas de problème"
       end
 
       operation 132354 "readDiagFrameLogLine"
@@ -404,7 +404,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	comment "! \\brief Lecture d'une ligne du fichier journal
  Lecture d'une ligne du fichier journal
 
-\\return True tant que la fin du fichier n'est pas atteinte"
+\\return True tant que la fin du fichier n'est pas atteinte"
       end
 
       operation 132482 "frameLog"
@@ -421,7 +421,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	comment "! \\brief Instance de la classe de journalisation
  Instance de la classe de journalisation
-\\return Instance de la classe de journalisation"
+\\return Instance de la classe de journalisation"
       end
 
       operation 132610 "zmsDeviceErrorObj"
@@ -438,7 +438,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	comment "! \\brief Instance de la classe des erreur ZMS
 
-\\return Instance de la classe des erreur ZMS"
+\\return Instance de la classe des erreur ZMS"
       end
 
       operation 132738 "deviceErrorDisplayBufferObj"
@@ -455,7 +455,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	comment "! \\brief Instance de la classe de tampon d0affichage des dernière erreurs ZMS
 
- \\return Instance de la classe e tampon d0affichage des dernière erreurs ZMS"
+ \\return Instance de la classe e tampon d0affichage des dernière erreurs ZMS"
       end
 
       operation 132866 "enableDiagDeviceErrorLog"
@@ -475,7 +475,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
  Lorsque la journalisation est active, la méthode receive() ajoutera les
  errurs ZMS dans le fichier.
 
- \\param enable Si true, la journalisation devient active, inactive si false"
+ \\param enable Si true, la journalisation devient active, inactive si false"
       end
 
       operation 132994 "zmsDeviceErrorLogObj"
@@ -492,7 +492,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	comment "! \\brief Instance de la classe de log des erreur ZMS
 
- \\return Instance de la classe de log des erreur ZMS"
+ \\return Instance de la classe de log des erreur ZMS"
       end
 
       operation 133122 "enableHtmlReport"
@@ -512,7 +512,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
  Lorsque la journalisation est active, la méthode receive() ajoutera les
  errurs ZMS dans le fichier html temporaire.
 
- \\param enable Si true, la journalisation devient active, inactive si false"
+ \\param enable Si true, la journalisation devient active, inactive si false"
       end
 
       operation 133250 "htmlReportObj"
@@ -529,7 +529,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	comment "! \\brief Instance de la classe de rapport HTML
 
- \\return Instance de la classe de rapport HTML"
+ \\return Instance de la classe de rapport HTML"
       end
 
       operation 133378 "zmsComm"
@@ -545,7 +545,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	
 	
 	
-	comment " On interdit la copie"
+	comment " On interdit la copie"
       end
 
       classrelation 128002 // pvSerialPort (<directional composition>)
@@ -592,7 +592,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	comment " Si true, les trames de diagnostic seront sauvegardées"
+	comment " Si true, les trames de diagnostic seront sauvegardées"
       end
 
       classrelation 128514 // pvFrameLog (<directional composition>)
@@ -607,7 +607,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
       classrelation 128642 // pvDeviceError (<directional composition>)
 	relation 128642 *-->
 	  a role_name "pvDeviceError" private
-	    comment " Erreurs ZMS"
+	    comment " Erreurs ZMS"
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 128642 // pvDeviceError (<directional composition>)
@@ -645,7 +645,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
       classrelation 129026 // pvHtmlReport (<directional composition>)
 	relation 129026 *-->
 	  a role_name "pvHtmlReport" private
-	    comment " Rapport HTML"
+	    comment " Rapport HTML"
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 129026 // pvHtmlReport (<directional composition>)
@@ -670,7 +670,7 @@ Pour plus de détails, voir les classe zmsTrainComposition et zmsTrainVehicule"
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	comment " Attributs servant de mémoire pour la méthode reOpen()"
+	comment " Attributs servant de mémoire pour la méthode reOpen()"
       end
 
       attribute 136066 "pvByteTxWaitTime"
@@ -4132,7 +4132,7 @@ ${inlines}
     class 136322 "zmsFrame"
       visibility package 
       nactuals 1
-      actual class class_ref 134914 // zmsBuffer
+      actual class class_ref 134914 // mdtBuffer
         rank 0 explicit_value "char"
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -4160,7 +4160,7 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 130306 // <realization>
-	  b parent class_ref 134914 // zmsBuffer
+	  b parent class_ref 134914 // mdtBuffer
       end
 
       operation 147202 "zmsFrame"
@@ -4966,7 +4966,7 @@ ${inlines}
  Il manque un véhicule dans une unité
  Une unité esclave de la composition se retrouve avec aucun attelage occupé, ce qui est impossible
  enum zms_error_t
-! \\brief Classe de gestion des erreurs"
+! \\brief Classe de gestion des erreurs"
       operation 145026 "zmsError"
 	preserve_cpp_body_indent public explicit_return_type ""
 	nparams 0
@@ -5018,7 +5018,7 @@ d'erreurs est de la forme d'un CSV simple:
 
 \\param filePath Fichier d'erreurs à lire
 \\param fieldSeparator Séparateur de champ à utiliser
-\\return True en cas de succès, false sinon"
+\\return True en cas de succès, false sinon"
       end
 
       operation 145410 "clear"
@@ -5035,7 +5035,7 @@ d'erreurs est de la forme d'un CSV simple:
 	
 	comment "! \\brief Efface les attributs d'erreurs
 
-Efface les attributs d'erreurs"
+Efface les attributs d'erreurs"
       end
 
       operation 145538 "text"
@@ -5058,7 +5058,7 @@ Efface les attributs d'erreurs"
 
 \\param errorNumber Numéro d'erreur
 \\param language Language
-\\return Le texte associé au numéro d'erreur ou à la langue spécifiée, ou une chaine vide"
+\\return Le texte associé au numéro d'erreur ou à la langue spécifiée, ou une chaine vide"
       end
 
       classrelation 130178 // pvAttributes (<unidirectional association>)
@@ -5298,7 +5298,7 @@ ${inlines}
       explicit_switch_type ""
       
       comment "! \\brief Décode une trame ZMS et stocke les attributs trouvés
-"
+"
       classrelation 131074 // <generalisation>
 	relation 131074 ---|>
 	  a public
@@ -5399,7 +5399,7 @@ ${items}
        explicitement appeler la méthode clear()
        avant réception et décodage d'une nouvelle trame.
 
- \\return true si tout s'est bien passé, false en cas d'erreur"
+ \\return true si tout s'est bien passé, false en cas d'erreur"
       end
 
       operation 152962 "clear"
@@ -5417,7 +5417,7 @@ ${items}
 	comment "! \\brief Efface les données décodées ainsi que la trame brut
 
  Efface les données décodées ainsi que la trame brut.
-"
+"
       end
 
       operation 153090 "decodedFrame"
@@ -5436,7 +5436,7 @@ ${items}
 
  Retourne la trame décodée
 
- \\return La trame décodée sous form de chaine"
+ \\return La trame décodée sous form de chaine"
       end
 
       operation 153218 "type"
@@ -5455,7 +5455,7 @@ ${items}
 
  Retourne le type de la trame
 
- \\return Le type de la trame"
+ \\return Le type de la trame"
       end
 
       operation 153346 "deviceError"
@@ -5474,7 +5474,7 @@ ${items}
 
  No d'erreur retourné par le ZMS
 
- \\return No d'erreur retourné par le ZMS"
+ \\return No d'erreur retourné par le ZMS"
       end
 
       operation 153474 "availableValues"
@@ -5493,7 +5493,7 @@ ${items}
 
  Nombre de valeurs disponibles
 
- \\return Nombre de valeurs disponibles"
+ \\return Nombre de valeurs disponibles"
       end
 
       operation 153602 "firstAddress"
@@ -5512,7 +5512,7 @@ ${items}
 
  Addresse de la première valeur
 
- \\return Addresse de la première valeur, ou -1 en cas d'erreur"
+ \\return Addresse de la première valeur, ou -1 en cas d'erreur"
       end
 
       operation 153730 "valueAt"
@@ -5534,7 +5534,7 @@ ${items}
 
  \\param address Adresse pour laquelle on demande la valeur
 
- \\return Valeur pour l'adresse donnée, ou -1"
+ \\return Valeur pour l'adresse donnée, ou -1"
       end
 
       operation 153858 "removeChar"
@@ -5554,7 +5554,7 @@ ${items}
 	
 	
 	
-	comment " Supprime le caractère spécifié dans la chaine passée en paramètre"
+	comment " Supprime le caractère spécifié dans la chaine passée en paramètre"
       end
 
       operation 153986 "removeSpaces"
@@ -5572,7 +5572,7 @@ ${items}
 	
 	
 	
-	comment " Supprime les espaces , agit sur la trame (instance de cette classe)"
+	comment " Supprime les espaces , agit sur la trame (instance de cette classe)"
       end
 
       operation 154114 "removeEOFchar"
@@ -5588,7 +5588,7 @@ ${items}
 	
 	
 	
-	comment " Supprime le caractère de fin de trame dans la chaine passée en paramètre"
+	comment " Supprime le caractère de fin de trame dans la chaine passée en paramètre"
       end
 
       operation 154242 "removeEOFchar"
@@ -5603,7 +5603,7 @@ ${items}
 	
 	
 	
-	comment " Supprime le caractère de fin de trame , agit directement sur la trame"
+	comment " Supprime le caractère de fin de trame , agit directement sur la trame"
       end
 
       operation 154370 "decodeValues"
@@ -5621,7 +5621,7 @@ ${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${thro
 	
 	
 	
-	comment " Décode les valeurs reçues"
+	comment " Décode les valeurs reçues"
       end
 
       operation 154498 "storeValues"
@@ -5638,13 +5638,13 @@ ${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${thro
 	
 	
 	
-	comment " Convertit et stoque les valeurs"
+	comment " Convertit et stoque les valeurs"
       end
 
       classrelation 131202 // pvType (<directional composition>)
 	relation 131202 *-->
 	  a role_name "pvType" protected
-	    comment " Type de la trame actuelle"
+	    comment " Type de la trame actuelle"
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	    classrelation_ref 131202 // pvType (<directional composition>)
@@ -5659,7 +5659,7 @@ ${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${thro
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	comment " Numéro d'erreur retourné par le ZMS"
+	comment " Numéro d'erreur retourné par le ZMS"
       end
 
       attribute 150914 "pvValues"
@@ -5671,7 +5671,7 @@ ${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${thro
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	comment " Valeurs: la clé de la map est l'adresse ( <adresse,valeur> )"
+	comment " Valeurs: la clé de la map est l'adresse ( <adresse,valeur> )"
       end
 
       attribute 151042 "pvDecodedFrame"
@@ -5682,7 +5682,7 @@ ${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${thro
 	php_decl ""
 	python_decl ""
 	idl_decl ""
-	comment " Trame décodée"
+	comment " Trame décodée"
       end
     end
 
@@ -7129,7 +7129,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 134914 // zmsBuffer
+	class_ref 134914 // mdtBuffer
       end
     end
 

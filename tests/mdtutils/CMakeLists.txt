@@ -7,13 +7,17 @@ project (multixdiagtools)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
+          mdtAlgorithmsTest.h
           mdtBufferTest.h
+          mdtSerialPortTest.h
     )
 
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
+          mdtAlgorithmsTest.cpp
           mdtBufferTest.cpp
+          mdtSerialPortTest.cpp
           main.cpp
     )
 

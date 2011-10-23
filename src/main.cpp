@@ -4,47 +4,44 @@
 #include <QListView>
 #include <QTableView>
 #include <QTreeView>
+#include <QSqlDatabase>
+#include <QDebug>
+#include <QSqlTableModel>
 
 int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
   QStringList lst;
-/*
-  QList<QVariant> header;
-  QStringList line1, line2;
-  QList<QStringList> data;
 
-  header << "A" << "B" << "C" << "D";
-  // Data
-  line1 << "01" << "02" << "03";
-  line2 << "11" << "12" << "13";
-  data << line1 << line2;
-*/
-  // Modèle
+  QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+  db.setDatabaseName("essais.db");
+  if(!db.open()){
+    qDebug() << "Could not open database 'essais.db";
+  }
+  qDebug() << "Found following tables: " << db.tables();
+
+  // Modèles
   mdtParentChildTableModel m;
-//  mdtTreeItem it(data);
-//  it.setHeaderData(header);
+  QSqlTableModel cm1, cm2;
+  
+  cm1.setTable("Contacts");
+  cm1.select();
+  cm2.setTable("address");
+  cm2.select();
 
   // Vues
-  QListView lw;
+  //QListView lw;
   QTableView tw;
   QTreeView trw;
 
-  //lw.setModel(&m);
+  //lw.setModel(&cm1);
   //lw.show();
-  //tw.setModel(&m);
-  //tw.show();
-  trw.setModel(&m);
-  trw.show();
-
-/*
-  lw.setModel(&m);
-  lw.show();
-  tw.setModel(&m);
+  tw.setModel(&cm1);
+  tw.resize(400, 300);
   tw.show();
-  trw.setModel(&m);
+  trw.setModel(&cm2);
+  trw.resize(400, 300);
   trw.show();
-*/
 
   return app.exec();
 }

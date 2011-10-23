@@ -18,8 +18,16 @@ set (HEADER_FILES
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
+          mdtAlgorithms.cpp
           mdtBuffer.cpp
           mdtTime.cpp
+          # mdtSerialPort
+          mdtAbstractSerialPortInterfaceManager.cpp
+          mdtSerialPort.cpp
+          mdtSerialPortConfig.cpp
+          mdtSerialPortInterface.cpp
+          mdtSerialPortInterfaceManager.cpp
+          mdtSerialPortInterfaceOptAttribute.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -34,6 +42,16 @@ set (FORM_FILES
 set (RESOURCE_FILES
 
     )
+
+# Platform specific files
+
+# Unix (Posix) specific files
+if(UNIX)
+  set (SOURCES_FILES ${SOURCES_FILES} 
+    mdtSerialPortInterfaceManagerPosix.cpp
+  )
+endif(UNIX)
+
 
 # Fichiers à traiter par le compilateur moc
 QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})

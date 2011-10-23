@@ -14,7 +14,7 @@
 template <class T> class mdtBufferTest : public mdtTest
 {
  public:
-   
+
   // Initialisation tests
   bool initTest();
 
