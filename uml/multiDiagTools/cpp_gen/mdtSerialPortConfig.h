@@ -11,7 +11,7 @@ class mdtSerialPortConfig {
 
     string pvInterface;
 
-    parity_bit_state_t pvParityBit;
+    parity_t pvParity;
 
     int pvDataBitCount;
 
@@ -26,6 +26,26 @@ class mdtSerialPortConfig {
      mdtSerialPortConfig();
 
      ~mdtSerialPortConfig();
+
+    void setBaudRate(int baudRate);
+
+    int baudRate();
+
+    void setParity(const parity_t & parity);
+
+    void setDataBitsCount(int n);
+
+    int dataBitsCount();
+
+    void setStopBitsCount(int n);
+
+    int stopBitsCount();
+
+    void setFlowCtl(const flow_ctl_t & flowCtl);
+
+    flow_ctl_t flowCtl();
+
+    bool isValid();
 
 };
 #endif

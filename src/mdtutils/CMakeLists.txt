@@ -22,11 +22,12 @@ set (SOURCES_FILES
           mdtBuffer.cpp
           mdtTime.cpp
           # mdtSerialPort
-          mdtAbstractSerialPortInterfaceManager.cpp
+          mdtAbstractSerialPortManager.cpp
+          mdtSerialPortManager.cpp
+          mdtAbstractSerialPort.cpp
           mdtSerialPort.cpp
           mdtSerialPortConfig.cpp
           mdtSerialPortInterface.cpp
-          mdtSerialPortInterfaceManager.cpp
           mdtSerialPortInterfaceOptAttribute.cpp
           # Essais
           mdtParentChildTableModel.cpp
@@ -47,11 +48,12 @@ set (RESOURCE_FILES
 
 # Unix (Posix) specific files
 if(UNIX)
+  message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
-    mdtSerialPortInterfaceManagerPosix.cpp
+    linux/mdtSerialPortManagerPosix.cpp
+    linux/mdtSerialPortPosix.cpp
   )
 endif(UNIX)
-
 
 # Fichiers à traiter par le compilateur moc
 QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})

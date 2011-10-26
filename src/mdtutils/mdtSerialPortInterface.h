@@ -19,24 +19,64 @@ class mdtSerialPortInterface
                         UT_16650,
                         UT_16650V2,
                         UT_16750,
-                        UT_STARTECH
-                        // NOTE: to be completed
+                        UT_STARTECH,
+                        UT_16C950,
+                        UT_16654,
+                        UT_16850,
+                        UT_RSA
                       };
    
   mdtSerialPortInterface();
   ~mdtSerialPortInterface();
+  
+  /*! \brief Define UART type
+   * */
+  void setUartType(sp_uart_type_t type);
 
+  /*! \brief Get UART type
+   * */
+  sp_uart_type_t uartType();
+  
+  /*! \brief Get UART type string
+   */
+  QString uartTypeStr();
+
+  /*! \brief Set port number
+   */
+  void setPortNumber(int portNumber);
+  
+  /*! \brief Get port number
+   */
+  int portNumber();
+
+  /*! \brief Set port name (for.ex: ttyS0 on Posix, or COM1 on Windows)
+   */
+  void setPortName(const QString &portName);
+
+  /*! \brief Get port name (for.ex: ttyS0 on Posix, or COM1 on Windows)
+   */
+  QString portName();
+
+  /*! \brief Define the available baud rates 
+   */
+  void setAvailableBaudRates(const QList<int> &availableBaudRates);
+
+  /*! \brief Get available baud rates list
+   */
+  QList<int> availableBaudRates();
+  
  private:
 
-  int pvNumber;
-  QString pvName;
+  int pvPortNumber;
+  QString pvPortName;
   QString pvVendorId;
   QString pvVendorName;
   QString pvModelId;
   QList<mdtSerialPortInterfaceOptAttribute*> pvOptAttributes;
   QString pvModelName;
   int pvIRQ;
-  QString pvUARTname;
+  sp_uart_type_t pvUartType;
+  QString pvUartTypeStr;
   QList<int> pvAvailableBaudRates;
 };
 
