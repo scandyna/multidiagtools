@@ -15,3 +15,6 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/mdttest")
 
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutils")
+
+# * mdtserialport *
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdtserialport")

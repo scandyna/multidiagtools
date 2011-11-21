@@ -46,6 +46,7 @@ ADD_DEFINITIONS(${QT_DEFINITIONS})
 # Répertoires de headers
 include_directories ("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories ("${PROJECT_SOURCE_DIR}/src/mdtutils")
+include_directories ("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # Exécutable pour tests
 add_executable (essais src/main.cpp)
@@ -60,6 +61,8 @@ target_link_libraries(essais "mdtutils")
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
+# * mdtserialport *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # *** Partie Tests unitaires ***
 
@@ -69,3 +72,4 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 # ** Exécution des tests unitaires **
 enable_testing()
 add_test (mdtUtilsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtUtilsTest)
+add_test (mdtSerialPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtSerialPortTest)

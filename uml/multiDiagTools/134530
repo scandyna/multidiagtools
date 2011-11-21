@@ -1,6 +1,6 @@
 format 76
 "mdtTest" // mdtTest
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -29,4 +29,6 @@ format 76
   package_ref 135170 // mdttest
 
   package_ref 134914 // mdtutils
+
+  package_ref 148354 // mdtserialport
 end

@@ -174,114 +174,6 @@ mdtutils_static/fast:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/build
 .PHONY : mdtutils_static/fast
 
-linux/mdtSerialPortManagerPosix.o: linux/mdtSerialPortManagerPosix.cpp.o
-.PHONY : linux/mdtSerialPortManagerPosix.o
-
-# target to build an object file
-linux/mdtSerialPortManagerPosix.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtSerialPortManagerPosix.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtSerialPortManagerPosix.cpp.o
-.PHONY : linux/mdtSerialPortManagerPosix.cpp.o
-
-linux/mdtSerialPortManagerPosix.i: linux/mdtSerialPortManagerPosix.cpp.i
-.PHONY : linux/mdtSerialPortManagerPosix.i
-
-# target to preprocess a source file
-linux/mdtSerialPortManagerPosix.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtSerialPortManagerPosix.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtSerialPortManagerPosix.cpp.i
-.PHONY : linux/mdtSerialPortManagerPosix.cpp.i
-
-linux/mdtSerialPortManagerPosix.s: linux/mdtSerialPortManagerPosix.cpp.s
-.PHONY : linux/mdtSerialPortManagerPosix.s
-
-# target to generate assembly for a file
-linux/mdtSerialPortManagerPosix.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtSerialPortManagerPosix.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtSerialPortManagerPosix.cpp.s
-.PHONY : linux/mdtSerialPortManagerPosix.cpp.s
-
-linux/mdtSerialPortPosix.o: linux/mdtSerialPortPosix.cpp.o
-.PHONY : linux/mdtSerialPortPosix.o
-
-# target to build an object file
-linux/mdtSerialPortPosix.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtSerialPortPosix.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtSerialPortPosix.cpp.o
-.PHONY : linux/mdtSerialPortPosix.cpp.o
-
-linux/mdtSerialPortPosix.i: linux/mdtSerialPortPosix.cpp.i
-.PHONY : linux/mdtSerialPortPosix.i
-
-# target to preprocess a source file
-linux/mdtSerialPortPosix.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtSerialPortPosix.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtSerialPortPosix.cpp.i
-.PHONY : linux/mdtSerialPortPosix.cpp.i
-
-linux/mdtSerialPortPosix.s: linux/mdtSerialPortPosix.cpp.s
-.PHONY : linux/mdtSerialPortPosix.s
-
-# target to generate assembly for a file
-linux/mdtSerialPortPosix.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtSerialPortPosix.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtSerialPortPosix.cpp.s
-.PHONY : linux/mdtSerialPortPosix.cpp.s
-
-mdtAbstractSerialPort.o: mdtAbstractSerialPort.cpp.o
-.PHONY : mdtAbstractSerialPort.o
-
-# target to build an object file
-mdtAbstractSerialPort.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractSerialPort.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractSerialPort.cpp.o
-.PHONY : mdtAbstractSerialPort.cpp.o
-
-mdtAbstractSerialPort.i: mdtAbstractSerialPort.cpp.i
-.PHONY : mdtAbstractSerialPort.i
-
-# target to preprocess a source file
-mdtAbstractSerialPort.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractSerialPort.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractSerialPort.cpp.i
-.PHONY : mdtAbstractSerialPort.cpp.i
-
-mdtAbstractSerialPort.s: mdtAbstractSerialPort.cpp.s
-.PHONY : mdtAbstractSerialPort.s
-
-# target to generate assembly for a file
-mdtAbstractSerialPort.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractSerialPort.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractSerialPort.cpp.s
-.PHONY : mdtAbstractSerialPort.cpp.s
-
-mdtAbstractSerialPortManager.o: mdtAbstractSerialPortManager.cpp.o
-.PHONY : mdtAbstractSerialPortManager.o
-
-# target to build an object file
-mdtAbstractSerialPortManager.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractSerialPortManager.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractSerialPortManager.cpp.o
-.PHONY : mdtAbstractSerialPortManager.cpp.o
-
-mdtAbstractSerialPortManager.i: mdtAbstractSerialPortManager.cpp.i
-.PHONY : mdtAbstractSerialPortManager.i
-
-# target to preprocess a source file
-mdtAbstractSerialPortManager.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractSerialPortManager.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractSerialPortManager.cpp.i
-.PHONY : mdtAbstractSerialPortManager.cpp.i
-
-mdtAbstractSerialPortManager.s: mdtAbstractSerialPortManager.cpp.s
-.PHONY : mdtAbstractSerialPortManager.s
-
-# target to generate assembly for a file
-mdtAbstractSerialPortManager.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractSerialPortManager.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractSerialPortManager.cpp.s
-.PHONY : mdtAbstractSerialPortManager.cpp.s
-
 mdtAlgorithms.o: mdtAlgorithms.cpp.o
 .PHONY : mdtAlgorithms.o
 
@@ -444,195 +336,6 @@ mdtParentChildTableModel.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableModel.cpp.s
 .PHONY : mdtParentChildTableModel.cpp.s
 
-mdtSerialPort.o: mdtSerialPort.cpp.o
-.PHONY : mdtSerialPort.o
-
-# target to build an object file
-mdtSerialPort.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPort.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPort.cpp.o
-.PHONY : mdtSerialPort.cpp.o
-
-mdtSerialPort.i: mdtSerialPort.cpp.i
-.PHONY : mdtSerialPort.i
-
-# target to preprocess a source file
-mdtSerialPort.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPort.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPort.cpp.i
-.PHONY : mdtSerialPort.cpp.i
-
-mdtSerialPort.s: mdtSerialPort.cpp.s
-.PHONY : mdtSerialPort.s
-
-# target to generate assembly for a file
-mdtSerialPort.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPort.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPort.cpp.s
-.PHONY : mdtSerialPort.cpp.s
-
-mdtSerialPortConfig.o: mdtSerialPortConfig.cpp.o
-.PHONY : mdtSerialPortConfig.o
-
-# target to build an object file
-mdtSerialPortConfig.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortConfig.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortConfig.cpp.o
-.PHONY : mdtSerialPortConfig.cpp.o
-
-mdtSerialPortConfig.i: mdtSerialPortConfig.cpp.i
-.PHONY : mdtSerialPortConfig.i
-
-# target to preprocess a source file
-mdtSerialPortConfig.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortConfig.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortConfig.cpp.i
-.PHONY : mdtSerialPortConfig.cpp.i
-
-mdtSerialPortConfig.s: mdtSerialPortConfig.cpp.s
-.PHONY : mdtSerialPortConfig.s
-
-# target to generate assembly for a file
-mdtSerialPortConfig.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortConfig.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortConfig.cpp.s
-.PHONY : mdtSerialPortConfig.cpp.s
-
-mdtSerialPortCtlThread.o: mdtSerialPortCtlThread.cpp.o
-.PHONY : mdtSerialPortCtlThread.o
-
-# target to build an object file
-mdtSerialPortCtlThread.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortCtlThread.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortCtlThread.cpp.o
-.PHONY : mdtSerialPortCtlThread.cpp.o
-
-mdtSerialPortCtlThread.i: mdtSerialPortCtlThread.cpp.i
-.PHONY : mdtSerialPortCtlThread.i
-
-# target to preprocess a source file
-mdtSerialPortCtlThread.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortCtlThread.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortCtlThread.cpp.i
-.PHONY : mdtSerialPortCtlThread.cpp.i
-
-mdtSerialPortCtlThread.s: mdtSerialPortCtlThread.cpp.s
-.PHONY : mdtSerialPortCtlThread.s
-
-# target to generate assembly for a file
-mdtSerialPortCtlThread.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortCtlThread.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortCtlThread.cpp.s
-.PHONY : mdtSerialPortCtlThread.cpp.s
-
-mdtSerialPortInterface.o: mdtSerialPortInterface.cpp.o
-.PHONY : mdtSerialPortInterface.o
-
-# target to build an object file
-mdtSerialPortInterface.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortInterface.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortInterface.cpp.o
-.PHONY : mdtSerialPortInterface.cpp.o
-
-mdtSerialPortInterface.i: mdtSerialPortInterface.cpp.i
-.PHONY : mdtSerialPortInterface.i
-
-# target to preprocess a source file
-mdtSerialPortInterface.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortInterface.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortInterface.cpp.i
-.PHONY : mdtSerialPortInterface.cpp.i
-
-mdtSerialPortInterface.s: mdtSerialPortInterface.cpp.s
-.PHONY : mdtSerialPortInterface.s
-
-# target to generate assembly for a file
-mdtSerialPortInterface.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortInterface.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortInterface.cpp.s
-.PHONY : mdtSerialPortInterface.cpp.s
-
-mdtSerialPortInterfaceOptAttribute.o: mdtSerialPortInterfaceOptAttribute.cpp.o
-.PHONY : mdtSerialPortInterfaceOptAttribute.o
-
-# target to build an object file
-mdtSerialPortInterfaceOptAttribute.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortInterfaceOptAttribute.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortInterfaceOptAttribute.cpp.o
-.PHONY : mdtSerialPortInterfaceOptAttribute.cpp.o
-
-mdtSerialPortInterfaceOptAttribute.i: mdtSerialPortInterfaceOptAttribute.cpp.i
-.PHONY : mdtSerialPortInterfaceOptAttribute.i
-
-# target to preprocess a source file
-mdtSerialPortInterfaceOptAttribute.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortInterfaceOptAttribute.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortInterfaceOptAttribute.cpp.i
-.PHONY : mdtSerialPortInterfaceOptAttribute.cpp.i
-
-mdtSerialPortInterfaceOptAttribute.s: mdtSerialPortInterfaceOptAttribute.cpp.s
-.PHONY : mdtSerialPortInterfaceOptAttribute.s
-
-# target to generate assembly for a file
-mdtSerialPortInterfaceOptAttribute.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortInterfaceOptAttribute.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortInterfaceOptAttribute.cpp.s
-.PHONY : mdtSerialPortInterfaceOptAttribute.cpp.s
-
-mdtSerialPortManager.o: mdtSerialPortManager.cpp.o
-.PHONY : mdtSerialPortManager.o
-
-# target to build an object file
-mdtSerialPortManager.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortManager.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortManager.cpp.o
-.PHONY : mdtSerialPortManager.cpp.o
-
-mdtSerialPortManager.i: mdtSerialPortManager.cpp.i
-.PHONY : mdtSerialPortManager.i
-
-# target to preprocess a source file
-mdtSerialPortManager.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortManager.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortManager.cpp.i
-.PHONY : mdtSerialPortManager.cpp.i
-
-mdtSerialPortManager.s: mdtSerialPortManager.cpp.s
-.PHONY : mdtSerialPortManager.s
-
-# target to generate assembly for a file
-mdtSerialPortManager.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortManager.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortManager.cpp.s
-.PHONY : mdtSerialPortManager.cpp.s
-
-mdtSerialPortThread.o: mdtSerialPortThread.cpp.o
-.PHONY : mdtSerialPortThread.o
-
-# target to build an object file
-mdtSerialPortThread.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortThread.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortThread.cpp.o
-.PHONY : mdtSerialPortThread.cpp.o
-
-mdtSerialPortThread.i: mdtSerialPortThread.cpp.i
-.PHONY : mdtSerialPortThread.i
-
-# target to preprocess a source file
-mdtSerialPortThread.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortThread.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortThread.cpp.i
-.PHONY : mdtSerialPortThread.cpp.i
-
-mdtSerialPortThread.s: mdtSerialPortThread.cpp.s
-.PHONY : mdtSerialPortThread.s
-
-# target to generate assembly for a file
-mdtSerialPortThread.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtSerialPortThread.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtSerialPortThread.cpp.s
-.PHONY : mdtSerialPortThread.cpp.s
-
 mdtTime.o: mdtTime.cpp.o
 .PHONY : mdtTime.o
 
@@ -659,30 +362,6 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.s
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
-
-moc_mdtAbstractSerialPort.o: moc_mdtAbstractSerialPort.cxx.o
-.PHONY : moc_mdtAbstractSerialPort.o
-
-# target to build an object file
-moc_mdtAbstractSerialPort.cxx.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractSerialPort.cxx.o
-.PHONY : moc_mdtAbstractSerialPort.cxx.o
-
-moc_mdtAbstractSerialPort.i: moc_mdtAbstractSerialPort.cxx.i
-.PHONY : moc_mdtAbstractSerialPort.i
-
-# target to preprocess a source file
-moc_mdtAbstractSerialPort.cxx.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractSerialPort.cxx.i
-.PHONY : moc_mdtAbstractSerialPort.cxx.i
-
-moc_mdtAbstractSerialPort.s: moc_mdtAbstractSerialPort.cxx.s
-.PHONY : moc_mdtAbstractSerialPort.s
-
-# target to generate assembly for a file
-moc_mdtAbstractSerialPort.cxx.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractSerialPort.cxx.s
-.PHONY : moc_mdtAbstractSerialPort.cxx.s
 
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.o
@@ -756,30 +435,6 @@ moc_mdtParentChildTableModel.cxx.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableModel.cxx.s
 .PHONY : moc_mdtParentChildTableModel.cxx.s
 
-moc_mdtSerialPort.o: moc_mdtSerialPort.cxx.o
-.PHONY : moc_mdtSerialPort.o
-
-# target to build an object file
-moc_mdtSerialPort.cxx.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtSerialPort.cxx.o
-.PHONY : moc_mdtSerialPort.cxx.o
-
-moc_mdtSerialPort.i: moc_mdtSerialPort.cxx.i
-.PHONY : moc_mdtSerialPort.i
-
-# target to preprocess a source file
-moc_mdtSerialPort.cxx.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtSerialPort.cxx.i
-.PHONY : moc_mdtSerialPort.cxx.i
-
-moc_mdtSerialPort.s: moc_mdtSerialPort.cxx.s
-.PHONY : moc_mdtSerialPort.s
-
-# target to generate assembly for a file
-moc_mdtSerialPort.cxx.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtSerialPort.cxx.s
-.PHONY : moc_mdtSerialPort.cxx.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -795,18 +450,6 @@ help:
 	@echo "... mdtutils_static"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... linux/mdtSerialPortManagerPosix.o"
-	@echo "... linux/mdtSerialPortManagerPosix.i"
-	@echo "... linux/mdtSerialPortManagerPosix.s"
-	@echo "... linux/mdtSerialPortPosix.o"
-	@echo "... linux/mdtSerialPortPosix.i"
-	@echo "... linux/mdtSerialPortPosix.s"
-	@echo "... mdtAbstractSerialPort.o"
-	@echo "... mdtAbstractSerialPort.i"
-	@echo "... mdtAbstractSerialPort.s"
-	@echo "... mdtAbstractSerialPortManager.o"
-	@echo "... mdtAbstractSerialPortManager.i"
-	@echo "... mdtAbstractSerialPortManager.s"
 	@echo "... mdtAlgorithms.o"
 	@echo "... mdtAlgorithms.i"
 	@echo "... mdtAlgorithms.s"
@@ -825,33 +468,9 @@ help:
 	@echo "... mdtParentChildTableModel.o"
 	@echo "... mdtParentChildTableModel.i"
 	@echo "... mdtParentChildTableModel.s"
-	@echo "... mdtSerialPort.o"
-	@echo "... mdtSerialPort.i"
-	@echo "... mdtSerialPort.s"
-	@echo "... mdtSerialPortConfig.o"
-	@echo "... mdtSerialPortConfig.i"
-	@echo "... mdtSerialPortConfig.s"
-	@echo "... mdtSerialPortCtlThread.o"
-	@echo "... mdtSerialPortCtlThread.i"
-	@echo "... mdtSerialPortCtlThread.s"
-	@echo "... mdtSerialPortInterface.o"
-	@echo "... mdtSerialPortInterface.i"
-	@echo "... mdtSerialPortInterface.s"
-	@echo "... mdtSerialPortInterfaceOptAttribute.o"
-	@echo "... mdtSerialPortInterfaceOptAttribute.i"
-	@echo "... mdtSerialPortInterfaceOptAttribute.s"
-	@echo "... mdtSerialPortManager.o"
-	@echo "... mdtSerialPortManager.i"
-	@echo "... mdtSerialPortManager.s"
-	@echo "... mdtSerialPortThread.o"
-	@echo "... mdtSerialPortThread.i"
-	@echo "... mdtSerialPortThread.s"
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
-	@echo "... moc_mdtAbstractSerialPort.o"
-	@echo "... moc_mdtAbstractSerialPort.i"
-	@echo "... moc_mdtAbstractSerialPort.s"
 	@echo "... moc_mdtErrorOut.o"
 	@echo "... moc_mdtErrorOut.i"
 	@echo "... moc_mdtErrorOut.s"
@@ -861,9 +480,6 @@ help:
 	@echo "... moc_mdtParentChildTableModel.o"
 	@echo "... moc_mdtParentChildTableModel.i"
 	@echo "... moc_mdtParentChildTableModel.s"
-	@echo "... moc_mdtSerialPort.o"
-	@echo "... moc_mdtSerialPort.i"
-	@echo "... moc_mdtSerialPort.s"
 .PHONY : help
 
 

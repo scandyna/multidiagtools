@@ -1,6 +1,6 @@
 format 76
 "multiDiagTools"
-  revision 4
+  revision 5
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -41,11 +41,12 @@ format 76
   
   package_ref 128002 // mdtutils
 
+  package_ref 148226 // mdtserialport
+
   package_ref 134530 // mdtTest
 
   package_ref 134786 // Qt4
 
   package_ref 134658 // src
 
-  package_ref 135042 // tests
 end

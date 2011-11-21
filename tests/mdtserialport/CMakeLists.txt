@@ -1,28 +1,22 @@
 # CMake project file for Multi X Diag Tools
 # * Unit test for: mdtutils *
-# * Directory: tests/mdutils *
+# * Directory: tests/mdtserialport *
 
 # Project
 project (multixdiagtools)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
-          mdtAlgorithmsTest.h
-          mdtBufferTest.h
-          mdtErrorTest.h
+          mdtSerialPortTest.h
     )
 
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
-          mdtAlgorithmsTest.cpp
-          mdtBufferTest.cpp
-          mdtErrorTest.cpp
+          mdtSerialPortTest.cpp
           main.cpp
     )
 
-
-# * mdtutils *
 
 # Fichiers à traiter par le compilateur moc
 QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
@@ -34,8 +28,9 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Exécutable
-add_executable (mdtUtilsTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+add_executable (mdtSerialPortTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraires à lier
-target_link_libraries(mdtUtilsTest "mdtutils")
-target_link_libraries(mdtUtilsTest "mdttest")
-target_link_libraries(mdtUtilsTest ${QT_LIBRARIES})
+target_link_libraries(mdtSerialPortTest "mdtutils")
+target_link_libraries(mdtSerialPortTest "mdtserialport")
+target_link_libraries(mdtSerialPortTest "mdttest")
+target_link_libraries(mdtSerialPortTest ${QT_LIBRARIES})

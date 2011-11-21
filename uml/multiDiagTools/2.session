@@ -1,31 +1,5 @@
 window_sizes 1280 1002 337 937 808 120
-diagrams
-  classdiagram_ref 169218 // mdtSerialPortManager
-    937 808 100 4 0 0
-  classdiagram_ref 169346 // mdtSerialPortInterfaceManagerPosix
-    937 808 100 4 0 0
-  classdiagram_ref 182914 // interactions
-    937 808 100 4 0 0
-  classdiagram_ref 128002 // mdtSerialPort
-    937 808 100 4 24 0
-  classdiagram_ref 215682 // mdtSerialPortThread
-    937 808 100 4 108 0
-  active  classdiagram_ref 176386 // mdtSerialPort
-    937 808 100 4 132 0
-end
 show_stereotypes
-selected classdiagram_ref 176386 // mdtSerialPort
 open
-  operation_ref 310146 // lockMutex
-  operation_ref 310274 // unlockMutex
-  class_ref 189570 // mdtAbstractSerialPort
-  class_ref 222850 // mdtSerialPortRxThread
-  class_ref 222978 // mdtSerialPortTxThread
-  operation_ref 310018 // mdtSerialPortCtlThread
-  operation_ref 316930 // stop
-  classview_ref 175106 // mdtSerialPort
-  operation_ref 308994 // isFinished
-  
-  package_ref 135042 // tests
 end
 end

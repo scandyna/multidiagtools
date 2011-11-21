@@ -12,9 +12,6 @@ set (LIB_DEST_DIR "${PROJECT_SOURCE_DIR}/../../bin")
 set (HEADER_FILES 
           # mdtError
           mdtErrorOut.h
-          # mdtSerialPort
-          mdtAbstractSerialPort.h
-          mdtSerialPort.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -29,16 +26,6 @@ set (SOURCES_FILES
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp
-          # mdtSerialPort
-          mdtAbstractSerialPortManager.cpp
-          mdtSerialPortManager.cpp
-          mdtAbstractSerialPort.cpp
-          mdtSerialPort.cpp
-          mdtSerialPortConfig.cpp
-          mdtSerialPortInterface.cpp
-          mdtSerialPortInterfaceOptAttribute.cpp
-          mdtSerialPortThread.cpp
-          mdtSerialPortCtlThread.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -53,17 +40,6 @@ set (FORM_FILES
 set (RESOURCE_FILES
 
     )
-
-# Platform specific files
-
-# Unix (Posix) specific files
-if(UNIX)
-  message("${PROJECT_SOURCE_DIR}/linux")
-  set (SOURCES_FILES ${SOURCES_FILES} 
-    linux/mdtSerialPortManagerPosix.cpp
-    linux/mdtSerialPortPosix.cpp
-  )
-endif(UNIX)
 
 # Fichiers à traiter par le compilateur moc
 QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})

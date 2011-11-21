@@ -4,7 +4,6 @@
 #include "mdtBufferTest.h"
 #include "mdtErrorOut.h"
 #include "mdtErrorTest.h"
-#include "mdtSerialPortTest.h"
 
 int main(int argc, char **argv)
 {
@@ -20,7 +19,6 @@ int main(int argc, char **argv)
   mdtAlgorithmsTest algorithmsTest;
   mdtBufferTestRun bufferTest;
   mdtErrorTest errorTest;
-  mdtSerialPortTest serialPortTest;
   
   // Run test classes
   retVal = QTest::qExec(&algorithmsTest, argc, argv);
@@ -35,11 +33,6 @@ int main(int argc, char **argv)
   if(retVal!=0){
     return retVal;
   }
-  retVal = QTest::qExec(&serialPortTest, argc, argv);
-  if(retVal!=0){
-    return retVal;
-  }
-
   
   // Enable this warning if a test is temporary diseabled
   qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";

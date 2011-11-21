@@ -1,6 +1,6 @@
 format 76
-"linux" // mdtutils::linux
-  revision 14
+"linux" // mdtserialport::linux
+  revision 15
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
