@@ -3,14 +3,18 @@
 #include "mdtSerialPortManager.h"
 #include "mdtSerialPort.h"
 #include "mdtSerialPortConfig.h"
+#include "mdtSerialPortThread.h"
+#include "mdtSerialPortCtlThread.h"
 
 #include <QTest>
+#include <cstdio>
 
 void mdtSerialPortTest::essais()
 {
   mdtSerialPortManager m;
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
+  mdtSerialPortCtlThread ctlThd;
   
   m.setSerialPortObj(&sp);
   m.scan();
@@ -22,5 +26,218 @@ void mdtSerialPortTest::essais()
   cfg.setParity(mdtSerialPortConfig::NoParity);
   cfg.enableFlowCtlXonXoff();
   cfg.enableFlowCtlRtsCts();
-  sp.setConfig(cfg);
+  sp.openPort(cfg);
+  
+  ctlThd.setSerialPort(&sp);
+  //sleep(30);
+  ctlThd.start();
+  sleep(5);
+  ctlThd.stop();
+  sleep(5);
+  qDebug() << "Main: end";
+  
+  //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));
+  //emit testSignal(true);
+/*
+  while(1){
+    sp.waitEventCtl(2000);
+  }
+
+
+  char buffer[128] = {'\0'};
+  qDebug() << "Wait on RX";
+  while(sp.waitEventRx(30000) > 0){
+    qDebug() << "Read..";
+    sp.readData(buffer, 128);
+    qDebug() << "Readen: " << buffer;
+  }
+  
+  
+  for(int i=0; i<100; i++){
+    snprintf(buffer, 128, "Un test %d\n", i);
+    qDebug() << "Wait on TX , i:" << i;
+    if(sp.waitEventTxReady(3000) > 0){
+      qDebug() << "Write...";
+      sp.writeData(buffer, strlen(buffer));
+    }
+  }
+*/
+}
+
+void mdtSerialPortTest::mdtSerialPortConfigTest()
+{
+  QFETCH(QString, interface);
+  QFETCH(QString, interfaceRef);
+  QFETCH(int, baudRate);
+  QFETCH(int, baudRateRef);
+  QFETCH(int, dataBits);
+  QFETCH(int, dataBitsRef);
+  QFETCH(int, stopBits);
+  QFETCH(int, stopBitsRef);
+  QFETCH(int, parity);
+  QFETCH(int, parityRef);
+  QFETCH(bool, flowCtlRtsCts);
+  QFETCH(bool, flowCtlRtsCtsRef);
+  QFETCH(bool, flowCtlXonXoff);
+  QFETCH(bool, flowCtlXonXoffRef);
+  QFETCH(char, xonChar);
+  QFETCH(char, xonCharRef);
+  QFETCH(char, xoffChar);
+  QFETCH(char, xoffCharRef);
+
+  // Create a new config
+  mdtSerialPortConfig cfg1, cfg2;
+  
+  // Verify default config
+#ifdef Q_OS_UNIX
+  QCOMPARE(cfg1.interface(), QString("/dev/ttyS0"));
+#elif defined Q_OS_WIN
+  QCOMPARE(cfg1.interface(), QString("COM1"));
+#else
+  QCOMPARE(cfg1.interface(), QString(""));
+#endif
+  QCOMPARE(cfg1.baudRate(), 9600);
+  QCOMPARE(cfg1.dataBitsCount(), 8);
+  QCOMPARE(cfg1.stopBitsCount(), 1);
+  QCOMPARE(cfg1.parity(), mdtSerialPortConfig::NoParity);
+  QVERIFY(!cfg1.flowCtlRtsCtsEnabled());
+  QVERIFY(!cfg1.flowCtlXonXoffEnabled());
+  QCOMPARE(cfg1.xonChar(), (char)MDT_DEF_XON);
+  QCOMPARE(cfg1.xoffChar(), (char)MDT_DEF_XOFF);
+  
+  // With default config, cfg1 and cfg2 must be the same
+  QVERIFY(cfg1 == cfg2);
+  QVERIFY(!(cfg1 != cfg2));
+
+  // Check veriety of combinaisons
+  cfg1.setInterface(interface); 
+  QCOMPARE(cfg1.interface(), interfaceRef);
+  cfg1.setBaudRate(baudRate);
+  QCOMPARE(cfg1.baudRate(), baudRateRef);
+  cfg1.setDataBitsCount(dataBits);
+  QCOMPARE(cfg1.dataBitsCount(), dataBitsRef);
+  cfg1.setStopBitsCount(stopBits);
+  QCOMPARE(cfg1.stopBitsCount(), stopBitsRef);
+  cfg1.setParity((mdtSerialPortConfig::parity_t)parity);
+  QCOMPARE((int)cfg1.parity(), parityRef);
+  if(flowCtlRtsCts){
+    cfg1.enableFlowCtlRtsCts();
+  }else{
+    cfg1.diseableFlowCtlRtsCts();
+  }
+  QCOMPARE(cfg1.flowCtlRtsCtsEnabled(), flowCtlRtsCtsRef);
+  if(flowCtlXonXoff){
+    cfg1.enableFlowCtlXonXoff(xonChar, xoffChar);
+    QCOMPARE(cfg1.xonChar(), xonCharRef);
+    QCOMPARE(cfg1.xoffChar(), xoffCharRef);
+  }else{
+    cfg1.diseableFlowCtlXonXoff();
+  }
+  QCOMPARE(cfg1.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
+
+  // Test copy
+  cfg2 = cfg1;
+  QCOMPARE(cfg2.interface(), interfaceRef);
+  QCOMPARE(cfg2.baudRate(), baudRateRef);
+  QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
+  QCOMPARE(cfg2.stopBitsCount(), stopBitsRef);
+  QCOMPARE((int)cfg2.parity(), parityRef);
+  QCOMPARE(cfg2.flowCtlRtsCtsEnabled(), flowCtlRtsCtsRef);
+  QCOMPARE(cfg2.xonChar(), xonCharRef);
+  QCOMPARE(cfg2.xoffChar(), xoffCharRef);
+  QCOMPARE(cfg2.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
+
+  // cfg1 and cfg2 must match
+  QVERIFY(cfg1 == cfg2);
+  QVERIFY(!(cfg1 != cfg2));
+
+  // Make some change on original
+  cfg1.setInterface("FAKE INTERFACE");
+  cfg1.setBaudRate(-10);
+  cfg1.setDataBitsCount(-12);
+  cfg1.setStopBitsCount(-1);
+  cfg1.enableFlowCtlXonXoff('m', 'n');
+  QCOMPARE(cfg2.interface(), interfaceRef);
+  QCOMPARE(cfg2.baudRate(), baudRateRef);
+  QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
+  QCOMPARE(cfg2.stopBitsCount(), stopBitsRef);
+  QCOMPARE((int)cfg2.parity(), parityRef);
+  QCOMPARE(cfg2.flowCtlRtsCtsEnabled(), flowCtlRtsCtsRef);
+  QCOMPARE(cfg2.xonChar(), xonCharRef);
+  QCOMPARE(cfg2.xoffChar(), xoffCharRef);
+  QCOMPARE(cfg2.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
+
+  // cfg1 and cfg2 must not match
+  QVERIFY(!(cfg1 == cfg2));
+  QVERIFY(cfg1 != cfg2);
+}
+
+void mdtSerialPortTest::mdtSerialPortConfigTest_data()
+{
+  QTest::addColumn<QString>("interface");
+  QTest::addColumn<QString>("interfaceRef");
+  QTest::addColumn<int>("baudRate");
+  QTest::addColumn<int>("baudRateRef");
+  QTest::addColumn<int>("dataBits");
+  QTest::addColumn<int>("dataBitsRef");
+  QTest::addColumn<int>("stopBits");
+  QTest::addColumn<int>("stopBitsRef");
+  QTest::addColumn<int>("parity");
+  QTest::addColumn<int>("parityRef");
+  QTest::addColumn<bool>("flowCtlRtsCts");
+  QTest::addColumn<bool>("flowCtlRtsCtsRef");
+  QTest::addColumn<bool>("flowCtlXonXoff");
+  QTest::addColumn<bool>("flowCtlXonXoffRef");
+  QTest::addColumn<char>("xonChar");
+  QTest::addColumn<char>("xonCharRef");
+  QTest::addColumn<char>("xoffChar");
+  QTest::addColumn<char>("xoffCharRef");
+
+  QTest::newRow("Config 01") << "/dev/ttyS1" << "/dev/ttyS1" /* Interface */ \
+    << 50 << 50 /* Baud rate */ \
+    << 5 << 5   /* Data bits */ \
+    << 1 << 1   /* Stop bits */ \
+    << (int)mdtSerialPortConfig::ParityOdd << (int)mdtSerialPortConfig::ParityOdd \
+    << true << true /* Flow ctl RTS/CTS */ \
+    << true << true /* Flow ctl Xon/Xoff */ \
+    << 'a' << 'a'   /* Xon char */ \
+    << 'b' << 'b'   /* Xoff char */ ;
+}
+
+void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
+{
+  mdtSerialPort sp;
+  mdtSerialPortConfig cfg;
+
+  qDebug() << "* make shure that test terminal is plugged on first serial port (ttyS0 , COM1) *";
+
+  // Setup
+#ifdef Q_OS_UNIX
+  cfg.setInterface("/dev/ttyS0");
+#elif defined Q_OS_WIN
+  cfg.setInterface("COM1");
+#endif
+  cfg.setBaudRate(9600);
+  cfg.setDataBitsCount(8);
+  cfg.setStopBitsCount(1);
+  cfg.setParity(mdtSerialPortConfig::NoParity);
+  QVERIFY(sp.openPort(cfg));
+
+  // Initial states NOTE: CAR et RNG ?
+  QVERIFY(!sp.carIsOn());
+  QVERIFY(!sp.dsrIsOn());
+  QVERIFY(!sp.ctsIsOn());
+  QVERIFY(!sp.rngIsOn());
+  
+  // RTS/CTS
+  sp.setRts(true);
+  QVERIFY(sp.ctsIsOn());
+  sp.setRts(false);
+  QVERIFY(!sp.ctsIsOn());
+
+  // DTR/DSR
+  sp.setDtr(true);
+  QVERIFY(sp.dsrIsOn());
+  sp.setDtr(false);
+  QVERIFY(!sp.dsrIsOn());
 }

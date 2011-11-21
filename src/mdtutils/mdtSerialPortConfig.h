@@ -18,7 +18,19 @@ class mdtSerialPortConfig
 
   mdtSerialPortConfig();
   ~mdtSerialPortConfig();
+  mdtSerialPortConfig(const mdtSerialPortConfig &orig);
 
+  /*! \brief Set default configuration
+   * Default configuration is:
+   *  - Interface: /dev/ttyS0 (Posix) or COM1 (Windows)
+   *  - Baud rate: 9600
+   *  - Data bits: 8
+   *  - Stop bits: 1
+   *  - Parity: none
+   *  - Flow contrôl: none
+   */
+  void setDefault();
+  
   /*! \brief Set interface
    * Interface can be /dev/ttyS0 (on Posix) ,
    * or COM1 (On Windows)
@@ -57,11 +69,20 @@ class mdtSerialPortConfig
   char xoffChar();
 
   bool isValid();
+  
+  void operator=(const mdtSerialPortConfig &orig);
+  
+  bool operator==(const mdtSerialPortConfig &other);
+  bool operator!=(const mdtSerialPortConfig &other);
 
  private:
 
-  int pvBaudRate;
+  // Copy members from orig
+  void copy(const mdtSerialPortConfig &orig);
+  bool matches(const mdtSerialPortConfig &other);
+
   QString pvInterface;    // Interface, like: /dev/ttyS0 or COM1
+  int pvBaudRate;
   parity_t pvParity;
   int pvDataBitCount;
   int pvStopBitCount;

@@ -40,13 +40,29 @@ classcanvas 130434 class_ref 128258 // mdtSerialPortManagerWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 344 366 2012
 end
+classcanvas 130946 class_ref 222850 // mdtSerialPortRxThread
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 170 415 2012
+end
+classcanvas 131330 class_ref 222978 // mdtSerialPortTxThread
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 198 540 2012
+end
+classcanvas 131714 class_ref 223106 // mdtSerialPortCtlThread
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 159 639 2012
+end
+classcanvas 132098 class_ref 222594 // mdtSerialPortThread
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 21 484 2018
+end
 relationcanvas 128514 relation_ref 181634 // <directional composition>
   from ref 128258 z 3006 stereotype "<<QList>>" xyz 694 274 3006 to ref 128386
   role_a_pos 729 300 3000 no_role_b
   multiplicity_a_pos 687 300 3000 no_multiplicity_b
 end
 relationcanvas 129026 relation_ref 182274 // <directional composition>
-  from ref 128898 z 2007 stereotype "<<QList>>" xyz 583 125.5 2007 to ref 128258
+  from ref 128898 z 2007 stereotype "<<QList>>" xyz 583 125 2007 to ref 128258
   role_a_pos 588 108 3000 no_role_b
   multiplicity_a_pos 641 135 3000 no_multiplicity_b
 end
@@ -90,5 +106,40 @@ relationcanvas 130690 relation_ref 196994 // <unidirectional association>
   from ref 128898 z 2013 to ref 129154
   role_a_pos 181 97 3000 no_role_b
   multiplicity_a_pos 181 124 3000 no_multiplicity_b
+end
+relationcanvas 131202 relation_ref 231042 // <unidirectional association>
+  from ref 128642 z 2013 to ref 130946
+  role_a_pos 289 387 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 231170 // <unidirectional association>
+  from ref 128642 z 2013 to ref 131330
+  role_a_pos 307 519 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 231298 // <unidirectional association>
+  from ref 128642 z 2013 to ref 131714
+  role_a_pos 269 618 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132226 relation_ref 237826 // <unidirectional association>
+  from ref 132098 z 2019 to ref 128002
+  role_a_pos 109 312 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132354 relation_ref 230402 // <generalisation>
+  from ref 131330 z 2019 to ref 132098
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 230274 // <generalisation>
+  from ref 130946 z 2019 to ref 132098
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132610 relation_ref 230530 // <generalisation>
+  from ref 131714 z 2019 to ref 132098
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

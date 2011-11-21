@@ -9,6 +9,7 @@ project (multixdiagtools)
 set (HEADER_FILES 
           mdtAlgorithmsTest.h
           mdtBufferTest.h
+          mdtErrorTest.h
           mdtSerialPortTest.h
     )
 
@@ -17,6 +18,7 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           mdtAlgorithmsTest.cpp
           mdtBufferTest.cpp
+          mdtErrorTest.cpp
           mdtSerialPortTest.cpp
           main.cpp
     )

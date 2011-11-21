@@ -1,37 +1,30 @@
-window_sizes 1024 674 337 681 480 120
+window_sizes 1280 1002 337 937 808 120
 diagrams
   classdiagram_ref 169218 // mdtSerialPortManager
-    937 808 100 4 132 0
+    937 808 100 4 0 0
   classdiagram_ref 169346 // mdtSerialPortInterfaceManagerPosix
     937 808 100 4 0 0
-  classdiagram_ref 128002 // mdtSerialPort
-    749 646 100 4 0 0
-  active  classdiagram_ref 176386 // mdtSerialPort
-    681 480 100 4 168 179
   classdiagram_ref 182914 // interactions
-    749 646 100 4 0 0
+    937 808 100 4 0 0
+  classdiagram_ref 128002 // mdtSerialPort
+    937 808 100 4 24 0
+  classdiagram_ref 215682 // mdtSerialPortThread
+    937 808 100 4 108 0
+  active  classdiagram_ref 176386 // mdtSerialPort
+    937 808 100 4 132 0
 end
 show_stereotypes
-selected operation_ref 257666 // xoffChar
+selected classdiagram_ref 176386 // mdtSerialPort
 open
-  attribute_ref 195586 // pvInterface
-  attribute_ref 195842 // pvParity
-  attribute_ref 222850 // pvXonChar
-  attribute_ref 222978 // pvXoffChar
-  operation_ref 256642 // setInterface
-  operation_ref 256770 // interface
-  operation_ref 256386 // parity
-  operation_ref 257026 // diseableFlowCtlRstCts
-  operation_ref 257154 // enableFlowCtlXonXoff
-  operation_ref 257282 // diseableFlowCtlXonXoff
-  operation_ref 257410 // flowCtlXonXoffEnabled
-  operation_ref 257538 // xonChar
-  operation_ref 257666 // xoffChar
+  operation_ref 310146 // lockMutex
+  operation_ref 310274 // unlockMutex
   class_ref 189570 // mdtAbstractSerialPort
-  classview_ref 168578 // mdtSerialPortInterfaceManager
-  operation_ref 248322 // setParity
-  operation_ref 248450 // parity
-  operation_ref 248066 // setFlowCtlXonXoff
+  class_ref 222850 // mdtSerialPortRxThread
+  class_ref 222978 // mdtSerialPortTxThread
+  operation_ref 310018 // mdtSerialPortCtlThread
+  operation_ref 316930 // stop
+  classview_ref 175106 // mdtSerialPort
+  operation_ref 308994 // isFinished
   
   package_ref 135042 // tests
 end

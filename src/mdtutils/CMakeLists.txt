@@ -10,6 +10,11 @@ set (LIB_DEST_DIR "${PROJECT_SOURCE_DIR}/../../bin")
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
+          # mdtError
+          mdtErrorOut.h
+          # mdtSerialPort
+          mdtAbstractSerialPort.h
+          mdtSerialPort.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -21,6 +26,9 @@ set (SOURCES_FILES
           mdtAlgorithms.cpp
           mdtBuffer.cpp
           mdtTime.cpp
+          # mdtError
+          mdtError.cpp
+          mdtErrorOut.cpp
           # mdtSerialPort
           mdtAbstractSerialPortManager.cpp
           mdtSerialPortManager.cpp
@@ -29,6 +37,8 @@ set (SOURCES_FILES
           mdtSerialPortConfig.cpp
           mdtSerialPortInterface.cpp
           mdtSerialPortInterfaceOptAttribute.cpp
+          mdtSerialPortThread.cpp
+          mdtSerialPortCtlThread.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
