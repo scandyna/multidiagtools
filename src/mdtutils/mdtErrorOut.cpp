@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QString>
 #include <QTextStream>
+#include <QMetaType>
 #include <iostream>
 
 mdtErrorOut *mdtErrorOut::pvInstance = 0;
@@ -14,6 +15,7 @@ mdtErrorOut::mdtErrorOut()
   // Default log levels
   pvLogLevelsMask = (mdtError::Warning | mdtError::Error);
   pvDialogLevelsMask = (mdtError::Warning | mdtError::Error);
+  qRegisterMetaType<mdtError>();
 }
 
 mdtErrorOut::~mdtErrorOut()
@@ -40,6 +42,8 @@ bool mdtErrorOut::init(const QString &logFile)
     return false;
   }
   pvInstance->pvLogFile.close();
+  // Make connection for the dialog output
+  connect(instance(), SIGNAL(sigShowDialog(mdtError)), instance(), SLOT(showDialog(mdtError)));
 
   return true;
 }
@@ -115,15 +119,13 @@ void mdtErrorOut::addError(mdtError &error)
         log << lineBegin << "-> File: " << error.fileName() << "\n";
         log << lineBegin << "-> Line: " << error.fileLine() << "\n";
       }
+      log.flush();
       instance()->pvLogFile.close();
     }
   }
   // Dialog output
   if(error.level() & instance()->pvDialogLevelsMask){
-    // We make signal/slot connection here, so Qt can choose between direct or queued connection depending the caller thread
-    connect(instance(), SIGNAL(sigShowDialog(mdtError&)), instance(), SLOT(showDialog(mdtError&)));
     emit instance()->sigShowDialog(error);
-    disconnect(instance(), SIGNAL(sigShowDialog(mdtError&)), instance(), SLOT(showDialog(mdtError&)));
   }
 }
 
@@ -149,7 +151,7 @@ void mdtErrorOut::destroy()
   }
 }
 
-void mdtErrorOut::showDialog(mdtError &error)
+void mdtErrorOut::showDialog(mdtError error)
 {
   QString msg, num;
 

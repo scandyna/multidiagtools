@@ -4,12 +4,11 @@
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPortConfig.h"
 
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <fcntl.h>   /* File control definitions */
-#include <errno.h>   /* Error number definitions */
-#include <termios.h> /* POSIX terminal control definitions */
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
 #include <signal.h>
 #include <pthread.h>
 #include <QObject>
@@ -26,24 +25,33 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   mdtSerialPortPosix(QObject *parent = 0);
   ~mdtSerialPortPosix();
 
+  // Open a port with a given configuration
   bool openPort(mdtSerialPortConfig &cfg);
-  
-  // Wait on RX event, with max T = timeout [ms]
-  int waitEventRx(int timeout);
+
+  // Set the RX timeout [ms]
+  void setRxTimeout(int timeout);
+
+  // Set the TX timeout [ms]
+  void setTxTimeout(int timeout);
+
+  // Wait on RX event
+  void waitEventRx();
   
   int readData(char *data, int maxLen);
   
-  int waitEventTxReady(int timeout);
+  // Wait until data TX is possible
+  void waitEventTxReady();
     
   int writeData(const char *data, int len);
-  
-  int waitEventCtl(int timeout);
-  
+
+  // Wait until a control signal (modem line state) changes
+  bool waitEventCtl();
+
   void setRts(bool on);
   
   void setDtr(bool on);
   
-  // Must be called from signal control thread
+  // Must be called from signal control thread (see mdtSerialPortCtlThread)
   void defineCtlThread(pthread_t ctlThread);
   
   // Abort the waitEventCtl() function
@@ -101,6 +109,9 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   int pvSerialPortFd;               // Serial port file descriptor
   struct termios pvTermios;         // Termios configuration structure
   struct termios pvOriginalTermios; // Original termios configuration structure to restore
+  // Timeouts
+  struct timeval pvRxTimeout;
+  struct timeval pvTxTimeout;
   // Ctl signals states memory
   int pvPreviousCarState;
   int pvPreviousDsrState;

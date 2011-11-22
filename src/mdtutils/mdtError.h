@@ -1,9 +1,15 @@
 #ifndef MDT_ERROR_H
 #define MDT_ERROR_H
 
-
-//class mdtErrorOut;
 #include <QString>
+#include <QMetaType>
+
+/*! \brief error list
+ */
+enum mdt_error_t{
+  MDT_NO_ERROR = 0,
+  MDT_UNDEFINED_ERROR
+};
 
 /*! \brief Add source information to error
  * Source informations are file, file line and function name
@@ -21,6 +27,8 @@ class mdtError
     Error = 0x04
   };
 
+  mdtError();
+  
   /*! \brief Construct new error
    */
   mdtError(int number, const QString &text, level_t level);
@@ -29,7 +37,8 @@ class mdtError
    */
   void setSystemError(int number, const QString &text);
 
-  /*! \brief Ass the source of error
+  /*! \brief Add the source of error
+   *  It's possible to use the helper macro MDT_ERROR_SET_SRC()
    */
   void setSource(const QString &fileName, int fileLine, const QString &className, const QString &functionName);
 
@@ -81,5 +90,7 @@ class mdtError
   QString pvFileName;
   int pvFileLine;
 };
+
+Q_DECLARE_METATYPE(mdtError)
 
 #endif  // #ifndef MDT_ERROR_H

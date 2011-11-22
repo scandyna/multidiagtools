@@ -1,12 +1,14 @@
 
 #include "mdtSerialPortPosix.h"
+#include "mdtError.h"
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/select.h>
 #include <sys/ioctl.h>
-#include <signal.h>
 #include <errno.h> 
+#include <cstring>
 #include <QDebug>
+#include <QString>
 
 mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
  : mdtAbstractSerialPort(parent)
@@ -35,6 +37,8 @@ mdtSerialPortPosix::~mdtSerialPortPosix()
 /// NOTE: validité config
 bool mdtSerialPortPosix::openPort(mdtSerialPortConfig &cfg)
 {
+  QString strNum;
+
   // Close previous opened port
   closePort();
   // Try to open port
@@ -43,32 +47,50 @@ bool mdtSerialPortPosix::openPort(mdtSerialPortConfig &cfg)
   //  O_NDELAY: ignore DCD signal
   pvSerialPortFd = open(cfg.interface().toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
   if(pvSerialPortFd < 0){
-    qDebug() << "mdtSerialPortPosix::setConfig(): unable to open port: " << cfg.interface();
+    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + cfg.interface(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   // Get current config and save it to pvOriginalTermios
   if(tcgetattr(pvSerialPortFd, &pvOriginalTermios) < 0){
-    qDebug() << "mdtSerialPortPosix::setConfig(): tcgetattr() failed, " << cfg.interface() << " is not a serial port, or is not available";
     close(pvSerialPortFd);
+    mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + cfg.interface() + " is not a serial port, or is not available", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   // Get current system config on "work copy"
   tcgetattr(pvSerialPortFd, &pvTermios);
   // Set baud rate
   if(!setBaudRate(cfg.baudRate())){
-    qDebug() << "mdtSerialPortPosix::setConfig(): unsupported baud rate '" << cfg.baudRate() << "' for port " << cfg.interface();
+    close(pvSerialPortFd);
+    strNum.setNum(cfg.baudRate());
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + cfg.interface(), mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   // Set local mode and enable the receiver
   pvTermios.c_cflag |= (CLOCAL | CREAD);
   // Set data bits
   if(!setDataBits(cfg.dataBitsCount())){
-    qDebug() << "mdtSerialPortPosix::setConfig(): unsupported data bits count '" << cfg.dataBitsCount() << "' for port " << cfg.interface();
+    close(pvSerialPortFd);
+    strNum.setNum(cfg.dataBitsCount());
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + cfg.interface(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   // Set stop bits
   if(!setStopBits(cfg.stopBitsCount())){
-    qDebug() << "mdtSerialPortPosix::setConfig(): unsupported stop bits count '" << cfg.stopBitsCount() << "' for port " << cfg.interface();
+    close(pvSerialPortFd);
+    strNum.setNum(cfg.stopBitsCount());
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + cfg.interface(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   // Set parity
@@ -81,55 +103,61 @@ bool mdtSerialPortPosix::openPort(mdtSerialPortConfig &cfg)
   pvTermios.c_oflag &= ~OPOST;
   // Apply the setup
   if(tcsetattr(pvSerialPortFd, TCSANOW, &pvTermios) < 0){
-    qDebug() << "mdtSerialPortPosix::setConfig(): unble to apply configuration for port " << cfg.interface();
+    close(pvSerialPortFd);
+    mdtError e(MDT_UNDEFINED_ERROR, "unable to apply configuration for port " + cfg.interface(), mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
+  }
+  // Check if configuration could really be set
+  if(!checkConfig(cfg)){
+    close(pvSerialPortFd);
     return false;
   }
 
-  return checkConfig(cfg);
+  return true;
 }
 
+void mdtSerialPortPosix::setRxTimeout(int timeout)
+{
+  pvRxTimeout.tv_sec = timeout/1000;
+  pvRxTimeout.tv_usec = 1000*(timeout%1000);
+}
 
-int mdtSerialPortPosix::waitEventRx(int timeout)
+void mdtSerialPortPosix::setTxTimeout(int timeout)
+{
+  pvTxTimeout.tv_sec = timeout/1000;
+  pvTxTimeout.tv_usec = 1000*(timeout%1000);
+}
+
+void mdtSerialPortPosix::waitEventRx()
 {
   fd_set input;
-  struct timeval sTimeout;
   int n;
-
-  // Timeout
-  sTimeout.tv_sec = timeout/1000;
-  sTimeout.tv_usec = 1000*(timeout%1000);
 
   // Init the select call
   FD_ZERO(&input);
   FD_SET(pvSerialPortFd, &input);
 
-  n = select(pvSerialPortFd+1, &input, 0, 0, &sTimeout);
-  if(n < 0){
-    switch(errno){
-      case EBADF:
-        perror("EBADF");
-        break;
-      case EINTR:
-        perror("EINTR");
-        break;
-      case EINVAL:
-        perror("EINVAL");
-        break;
-      case ENOMEM:
-        perror("ENOMEM");
-        break;
-      default:
-        qDebug() << "unknow error";
+  n = select(pvSerialPortFd+1, &input, 0, 0, &pvRxTimeout);
+  if(n == 0){
+    pvRxTimeoutOccured = true;
+  }else{
+    pvRxTimeoutOccured = false;
+    if(n < 0){
+      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
     }
   }
-
-  return n;
 }
 
 int mdtSerialPortPosix::readData(char *data, int maxLen)
 {
   int n;
-  
+
   n = read(pvSerialPortFd, data, maxLen);
   if(n < 0){
     qDebug() << "mdtSerialPortPosix::readData(): read error";
@@ -163,41 +191,27 @@ int mdtSerialPortPosix::readData(char *data, int maxLen)
   return n;
 }
 
-int mdtSerialPortPosix::waitEventTxReady(int timeout)
+void mdtSerialPortPosix::waitEventTxReady()
 {
   fd_set output;
-  struct timeval sTimeout;
   int n;
-
-  // Timeout
-  sTimeout.tv_sec = timeout/1000;
-  sTimeout.tv_usec = 1000*(timeout%1000);
 
   // Init the select call
   FD_ZERO(&output);
   FD_SET(pvSerialPortFd, &output);
-  
-  n = select(pvSerialPortFd+1, 0, &output, 0, &sTimeout);
-  if(n < 0){
-    switch(errno){
-      case EBADF:
-        perror("EBADF");
-        break;
-      case EINTR:
-        perror("EINTR");
-        break;
-      case EINVAL:
-        perror("EINVAL");
-        break;
-      case ENOMEM:
-        perror("ENOMEM");
-        break;
-      default:
-        qDebug() << "unknow error";
+
+  n = select(pvSerialPortFd+1, 0, &output, 0, &pvTxTimeout);
+  if(n == 0){
+    pvTxTimeoutOccured = true;
+  }else{
+    pvTxTimeoutOccured = false;
+    if(n < 0){
+      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
     }
   }
-
-  return n;
 }
 
 int mdtSerialPortPosix::writeData(const char *data, int len)
@@ -240,27 +254,38 @@ int mdtSerialPortPosix::writeData(const char *data, int len)
   return n;
 }
 
-int mdtSerialPortPosix::waitEventCtl(int timeout)
+bool mdtSerialPortPosix::waitEventCtl()
 {
   int event = 0;
 
   qDebug() << "Call mdtSerialPortPosix::waitEventCtl() ...";
 
-  //alarm(1);
-  // We wait until a line status change happen NOTE: blocking forever if no change happens.
+  // We wait until a line status change happen
   if(ioctl(pvSerialPortFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG)) < 0){
-    perror("mdtSerialPortPosix::waitEventCtl() , ioctl() with command TIOCMIWAIT");
-    return -1;
+    if(errno == EINTR){
+      // Probably sent by pthread_kill() to stop the thread
+      mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Info);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
+      return true;
+    }
+    // Else, we have a unhandled error
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
   }
-  //alarm(0);
-  // We have a event here
+  // We have an event here
   if(ioctl(pvSerialPortFd, TIOCMGET, &event) < 0){
-    perror("mdtSerialPortPosix::waitEventCtl() , ioctl() with command TIOCMGET");
-    return -1;
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
   }
 
-  qDebug() << "EVT !!! : " << event;
-  
   // See witch signals changed
   if((event & TIOCM_CAR) != pvPreviousCarState){
     qDebug() << "CAR (CD) changed: " << (event & TIOCM_CAR);
@@ -310,8 +335,8 @@ int mdtSerialPortPosix::waitEventCtl(int timeout)
     }
     emit rngChanged(pvRngIsOn);
   }
-  
-  return event;
+
+  return true;
 }
 
 void mdtSerialPortPosix::setRts(bool on)
@@ -773,49 +798,71 @@ bool mdtSerialPortPosix::checkConfig(mdtSerialPortConfig cfg)
 
   // Check static coded flags
   if(!(pvTermios.c_cflag & (CLOCAL | CREAD))){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): CLOCAL and CREAD are not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "CLOCAL and CREAD are not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(pvTermios.c_lflag & (ICANON | ECHO | ECHOE | ISIG)){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): raw data mode not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "raw data mode not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(pvTermios.c_oflag & OPOST){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): raw data mode not set (OPOST is on)";
+    mdtError e(MDT_UNDEFINED_ERROR, "raw data mode not set (OPOST is on)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   // Check parameters given by cfg
   if(baudRate() != cfg.baudRate()){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): baud rate is not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "baud rate is not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(dataBits() != cfg.dataBitsCount()){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): data bits count is not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "data bits count is not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(stopBits() != cfg.stopBitsCount()){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): stop bits count is not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "stop bits count is not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(parity() != cfg.parity()){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): parity is not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "parity is not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(flowCtlRtsCtsOn() != cfg.flowCtlRtsCtsEnabled()){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): Flow ctl RTS/CTS is not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "Flow ctl RTS/CTS is not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(flowCtlXonXoffOn() != cfg.flowCtlXonXoffEnabled()){
-    qDebug() << "mdtSerialPortPosix::checkConfig(): Flow ctl Xon/Xoff is not set";
+    mdtError e(MDT_UNDEFINED_ERROR, "Flow ctl Xon/Xoff is not set", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
     return false;
   }
   if(cfg.flowCtlXonXoffEnabled()){
     if(pvTermios.c_cc[VSTART] != cfg.xonChar()){
-      qDebug() << "mdtSerialPortPosix::checkConfig(): Xon char is not set";
+      mdtError e(MDT_UNDEFINED_ERROR, "Xon char is not set", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
       return false;
     }
     if(pvTermios.c_cc[VSTOP] != cfg.xoffChar()){
-      qDebug() << "mdtSerialPortPosix::checkConfig(): Xoff char is not set";
+      mdtError e(MDT_UNDEFINED_ERROR, "Xoff char is not set", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
       return false;
     }
   }

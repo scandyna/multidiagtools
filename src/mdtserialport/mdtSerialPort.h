@@ -19,6 +19,14 @@ class mdtSerialPort : public mdtSerialPortSys
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
 
+  /*! \brief Returns RX timeout state
+   */
+  bool rxTimeoutOccured();
+
+  /*! \brief Returns TX timeout state
+   */
+  bool txTimeoutOccured();
+
   /*! \brief Get the CAR (CD) state
    * \SA Signals provided in mdtAbstractSerialPort
    */

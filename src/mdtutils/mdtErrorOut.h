@@ -24,11 +24,13 @@ class mdtErrorOut : public QObject
   static bool init(const QString &logFile);
   
   /*! \brief Set the log levels mask
-   * \pre The system must be initialized. \see init()
+   *  The mask is a OR combinaison of mdtError::level_t flags
+   *  \pre The system must be initialized. \see init()
    */
   static void setLogLevelsMask(int mask);
 
   /*! \brief Set the dialog display levels mask
+   *  The mask is a OR combinaison of mdtError::level_t flags
    * \pre The system must be initialized. \see init()
    */
   static void setDialogLevelsMask(int mask);
@@ -56,11 +58,11 @@ class mdtErrorOut : public QObject
 
  private slots:
 
-  void showDialog(mdtError &error);
+  void showDialog(mdtError error);
 
  signals:
 
-  void sigShowDialog(mdtError &error);
+  void sigShowDialog(mdtError error);
 
  private:
 

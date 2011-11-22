@@ -42,6 +42,8 @@ void mdtSerialPortCtlThread::run()
   // Run...
   while(pvRunning){
     // Wait on ctl signal event
-    pvSerialPort->waitEventCtl(0);
+    if(!pvSerialPort->waitEventCtl()){
+      break;
+    }
   }
 }

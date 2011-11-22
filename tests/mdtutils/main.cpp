@@ -9,6 +9,11 @@ int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
   int retVal = 0;
+
+#ifdef Q_OS_UNIX
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
+
   // Init error system
   if(!mdtErrorOut::init("mdtutilstest.log")){
     qDebug() << "main(): unable to init the error system";

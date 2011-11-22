@@ -26,14 +26,14 @@ void mdtSerialPortTest::essais()
   cfg.setParity(mdtSerialPortConfig::NoParity);
   cfg.enableFlowCtlXonXoff();
   cfg.enableFlowCtlRtsCts();
-  sp.openPort(cfg);
-  
+  QVERIFY(sp.openPort(cfg));
+
   ctlThd.setSerialPort(&sp);
   //sleep(30);
   ctlThd.start();
-  sleep(5);
+  QTest::qWait(5000);
   ctlThd.stop();
-  sleep(5);
+  QTest::qWait(5000);
   qDebug() << "Main: end";
   
   //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));

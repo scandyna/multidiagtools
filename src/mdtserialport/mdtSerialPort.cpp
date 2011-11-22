@@ -4,12 +4,24 @@
 mdtSerialPort::mdtSerialPort(QObject *parent)
  : mdtSerialPortSys(parent)
 {
-  
+  // Set default timeouts
+  setRxTimeout(500);
+  setTxTimeout(500);
 }
 
 mdtSerialPort::~mdtSerialPort()
 {
   
+}
+
+bool mdtSerialPort::rxTimeoutOccured()
+{
+  return pvRxTimeoutOccured;
+}
+
+bool mdtSerialPort::txTimeoutOccured()
+{
+  return pvTxTimeoutOccured;
 }
 
 bool mdtSerialPort::carIsOn()

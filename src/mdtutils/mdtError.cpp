@@ -2,6 +2,10 @@
 #include "mdtError.h"
 #include "mdtErrorOut.h"
 
+mdtError::mdtError()
+{
+}
+
 mdtError::mdtError(int number, const QString &text, mdtError::level_t level)
 {
   pvNumber = number;

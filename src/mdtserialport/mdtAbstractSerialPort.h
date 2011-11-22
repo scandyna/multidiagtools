@@ -20,6 +20,22 @@ class mdtAbstractSerialPort : public QObject
    */
   virtual bool openPort(mdtSerialPortConfig &cfg) = 0;
 
+  /*! \brief Set the RX (data) timeout
+   * This method must be re-implemented in plateform specific subclass.
+   * The subclass can convert and store the value in system specific type
+   * (f.ex: timeval struct on Posix)
+   * \param timeout Timeout [ms]
+   */
+  virtual void setRxTimeout(int timeout) = 0;
+
+  /*! \brief Set the TX (data) timeout
+   * This method must be re-implemented in plateform specific subclass.
+   * The subclass can convert and store the value in system specific type
+   * (f.ex: timeval struct on Posix)
+   * \param timeout Timeout [ms]
+   */
+  virtual void setTxTimeout(int timeout) = 0;
+
   /*! \brief Enable/diseable the RTS (Request To Send) signal
    * This method must be re-implemented in plateform specific subclass.
    * \param on If true, RTS will be enabled, diseabled else
@@ -32,7 +48,21 @@ class mdtAbstractSerialPort : public QObject
    */
   virtual void setDtr(bool on) = 0;
 
+  /*! \brief Wait until a control (modem line) signal state changes
+   * This method must be re-implemented in plateform specific subclass.
+   * \return False on error, in this case, the thread will be stopped.
+   */
+  virtual bool waitEventCtl() = 0;
+
  signals:
+
+  /*!  \brief Emited when RX timeout state changed
+   */
+  void rxTimeoutStateChanged(bool state);
+
+  /*!  \brief Emited when TX timeout state changed
+   */
+  void txTimeoutStateChanged(bool state);
 
   /*! \brief Emited whenn CAR (CD) status changed
    *  \param on When true, line signal's new state is enabled (diseabled else)
@@ -56,6 +86,8 @@ class mdtAbstractSerialPort : public QObject
 
  protected:
   
+  bool pvRxTimeoutOccured;
+  bool pvTxTimeoutOccured;
   // Control signals states
   bool pvCarIsOn;
   bool pvDsrIsOn;
