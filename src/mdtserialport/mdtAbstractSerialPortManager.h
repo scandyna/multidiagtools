@@ -17,8 +17,8 @@ class mdtAbstractSerialPortManager
   /*! \brief Scan system and store a list of available devices
    * This method must be implemented in system dependent class
    */
-  bool scan();
-  
+  virtual bool scan() = 0;
+
   /*! \brief Set the serial port instance
    */
   void setSerialPortObj(mdtAbstractSerialPort *sp);

@@ -5,8 +5,12 @@
 #include "mdtSerialPortConfig.h"
 #include "mdtSerialPortThread.h"
 #include "mdtSerialPortCtlThread.h"
+#include "mdtSerialPortTxThread.h"
+#include "mdtSerialPortRxThread.h"
 
 #include <QTest>
+#include <QtGlobal>
+#include <QDateTime>
 #include <cstdio>
 
 void mdtSerialPortTest::essais()
@@ -29,12 +33,6 @@ void mdtSerialPortTest::essais()
   QVERIFY(sp.openPort(cfg));
 
   ctlThd.setSerialPort(&sp);
-  //sleep(30);
-  ctlThd.start();
-  QTest::qWait(5000);
-  ctlThd.stop();
-  QTest::qWait(5000);
-  qDebug() << "Main: end";
   
   //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));
   //emit testSignal(true);
@@ -62,6 +60,14 @@ void mdtSerialPortTest::essais()
     }
   }
 */
+}
+
+void mdtSerialPortTest::mdtSerialPortManagerTest()
+{
+  mdtSerialPortManager m;
+
+  // Verify that scan() function works
+  QVERIFY(m.scan());
 }
 
 void mdtSerialPortTest::mdtSerialPortConfigTest()
@@ -204,12 +210,36 @@ void mdtSerialPortTest::mdtSerialPortConfigTest_data()
     << 'b' << 'b'   /* Xoff char */ ;
 }
 
+void mdtSerialPortTest::mdtSerialPortStartStopTest()
+{
+  mdtSerialPort sp;
+  mdtSerialPortConfig cfg;
+  mdtSerialPortCtlThread ctlThd;
+
+  // Setup - We keep default config
+  QVERIFY(sp.openPort(cfg));
+
+  // Assign sp to the control thread
+  ctlThd.setSerialPort(&sp);
+
+  // Start control thread
+  ctlThd.start();
+  ctlThd.stop();
+  qsrand(QDateTime::currentDateTime ().toTime_t ());
+  for(int i=0; i<10; i++){
+    ctlThd.start();
+    QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
+    ctlThd.stop();
+  }
+}
+
 void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
+  mdtSerialPortCtlThread ctlThd;
 
-  qDebug() << "* make shure that test terminal is plugged on first serial port (ttyS0 , COM1) *";
+  qDebug() << "* make shure that test terminal is plugged on serial port (ttyS0 , COM1) *";
 
   // Setup
 #ifdef Q_OS_UNIX
@@ -223,21 +253,56 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
   cfg.setParity(mdtSerialPortConfig::NoParity);
   QVERIFY(sp.openPort(cfg));
 
+  // Assign sp to the control thread and start
+  ctlThd.setSerialPort(&sp);
+  ctlThd.start();
+
   // Initial states NOTE: CAR et RNG ?
-  QVERIFY(!sp.carIsOn());
-  QVERIFY(!sp.dsrIsOn());
-  QVERIFY(!sp.ctsIsOn());
-  QVERIFY(!sp.rngIsOn());
+  //QVERIFY(!sp.carIsOn());
+  //QVERIFY(!sp.dsrIsOn());
+  //QVERIFY(!sp.ctsIsOn());
+  //QVERIFY(!sp.rngIsOn());
   
   // RTS/CTS
   sp.setRts(true);
+  QTest::qWait(50);
   QVERIFY(sp.ctsIsOn());
   sp.setRts(false);
+  QTest::qWait(50);
   QVERIFY(!sp.ctsIsOn());
 
   // DTR/DSR
   sp.setDtr(true);
+  QTest::qWait(50);
   QVERIFY(sp.dsrIsOn());
   sp.setDtr(false);
+  QTest::qWait(50);
   QVERIFY(!sp.dsrIsOn());
+  
+  ctlThd.stop();
+}
+
+void mdtSerialPortTest::mdtSerialPortTxRxTest()
+{
+  mdtSerialPort sp;
+  mdtSerialPortConfig cfg;
+  mdtSerialPortRxThread rxThd;
+  mdtSerialPortTxThread txThd;
+  
+  qDebug() << "* make shure that test terminal is plugged on serial port (ttyS0 , COM1) *";
+
+  // Open port with default config
+  QVERIFY(sp.openPort(cfg));
+  
+  // Assign sp to the RX thread and start
+  rxThd.setSerialPort(&sp);
+  rxThd.start();
+  // Assign sp to the TX thread and start
+  txThd.setSerialPort(&sp);
+  txThd.start();
+
+  QTest::qWait(1000);
+  
+  rxThd.stop();
+  txThd.stop();
 }

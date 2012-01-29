@@ -48,11 +48,41 @@ class mdtAbstractSerialPort : public QObject
    */
   virtual void setDtr(bool on) = 0;
 
+  /*! \brief Wait until data is available at port
+   * This method must be re-implemented in plateform specific subclass.
+   * \return False on error, in this case, the thread will be stopped.
+   */
+  virtual bool waitEventRx() = 0;
+
+  /*! \brief Wait until data can be written to port
+   * This method must be re-implemented in plateform specific subclass.
+   * \return False on error, in this case, the thread will be stopped.
+   */
+  virtual bool waitEventTxReady() = 0;
+
   /*! \brief Wait until a control (modem line) signal state changes
    * This method must be re-implemented in plateform specific subclass.
    * \return False on error, in this case, the thread will be stopped.
    */
   virtual bool waitEventCtl() = 0;
+  
+  /*! \brief Get the control (modem line) signal states and update member flags
+   * This method must be re-implemented in plateform specific subclass.
+   * \return False on error, in this case, the thread will be stopped.
+   */
+  virtual bool getCtlStates() = 0;
+
+  /*! \brief Update the RX timeout state
+   *  This method must be called by system dependant waitEventTxReady() method
+   *  When the RX timeout state chages, the signal rxTimeoutStateChanged() is emited
+   */
+  void updateRxTimeoutState(bool state);
+
+  /*! \brief Update the TX timeout state
+   *  This method must be called by system dependant waitEventRx() method
+   *  When the TX timeout state chages, the signal txTimeoutStateChanged() is emited
+   */
+  void updateTxTimeoutState(bool state);
 
  signals:
 
@@ -87,7 +117,9 @@ class mdtAbstractSerialPort : public QObject
  protected:
   
   bool pvRxTimeoutOccured;
+  bool pvRxTimeoutOccuredPrevious;
   bool pvTxTimeoutOccured;
+  bool pvTxTimeoutOccuredPrevious;
   // Control signals states
   bool pvCarIsOn;
   bool pvDsrIsOn;

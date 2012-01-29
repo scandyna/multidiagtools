@@ -1,6 +1,6 @@
 format 76
 "linux" // mdtserialport::linux
-  revision 17
+  revision 20
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -608,6 +608,16 @@ ${inlines}
 
       attribute 292994 "pvTxTimeout"
 	private explicit_type "struct timeval"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 299522 "pvAbortingWaitEventCtl"
+	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""

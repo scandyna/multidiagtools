@@ -1,19 +1,21 @@
 window_sizes 1280 1002 337 937 808 120
 diagrams
-  classdiagram_ref 128002 // mdtSerialPort
+  classdiagram_ref 182914 // interactions
     749 646 100 4 0 0
-  active  classdiagram_ref 176386 // mdtSerialPort
-    937 808 100 4 24 0
+  active  classdiagram_ref 128002 // mdtSerialPort
+    937 808 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 331394 // waitEventCtl
+selected operation_ref 351490 // updateTxTimeoutState
 open
-  operation_ref 330882 // rxTimeoutOccured
-  operation_ref 330370 // setRxTimeout
-  operation_ref 330498 // setTxTimeout
-  operation_ref 331394 // waitEventCtl
-  operation_ref 331138 // rxTimeoutStateChanged
-  operation_ref 331266 // txTimeoutStateChanged
-  attribute_ref 292994 // pvTxTimeout
+  classview_ref 134530 // mdtBuffer
+  classview_ref 181634 // mdtFrame
+  classview_ref 161922 // mdtAlgorithms
+  operation_ref 351234 // waitEventTxReady
+  operation_ref 351362 // updateRxTimeoutState
+  operation_ref 351490 // updateTxTimeoutState
+  attribute_ref 299650 // pvRxTimeoutOccuredPrevious
+  attribute_ref 299778 // pvTxTimeoutOccuredPrevious
+  attribute_ref 272642 // pvRngIsOn
 end
 end

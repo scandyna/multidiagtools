@@ -38,7 +38,7 @@ void mdtAlgorithmsTest::stringWithNumericEndLessThanTest()
   QFETCH(QString, input1);
   QFETCH(QString, input2);
   QFETCH(bool, refOutput);
-  
+
   QCOMPARE(stringWithNumericEndLessThan(input1, input2), refOutput);
 }
 
@@ -49,12 +49,13 @@ void mdtAlgorithmsTest::stringWithNumericEndLessThanTest_data()
   QTest::addColumn<bool>("refOutput");
 
   QTest::newRow("Empty strings") << "" << "" << false;
+  QTest::newRow("Empty strings") << "" << "1" << true;
+  QTest::newRow("Empty strings") << "1" << "" << false;
   QTest::newRow("Numbers") << "1" << "2" << true;
   QTest::newRow("Numbers") << "1" << "1" << false;
   QTest::newRow("Numbers") << "2" << "1" << false;
-  // Char are not supported, result must be false
-  QTest::newRow("Numbers") << "a" << "1" << false;
-  QTest::newRow("Numbers") << "1" << "a" << false;
+  //QTest::newRow("Numbers") << "a" << "1" << false;
+  //QTest::newRow("Numbers") << "1" << "a" << true;
   // Some other values
   QTest::newRow("Numbers") << "1" << "10254" << true;
 }
@@ -81,4 +82,7 @@ void mdtAlgorithmsTest::sortStringListWithNumericEndTest_data()
   QTest::newRow("AlphaNum strings") << QString("a2;a10;a1").split(";") << QString("a1;a2;a10").split(";");
   QTest::newRow("AlphaNum strings") << QString("a5s2;a5s10;a5s1").split(";") << QString("a5s1;a5s2;a5s10").split(";");
   QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyS10;/dev/ttyS5").split(";") << QString("/dev/ttyS0;/dev/ttyS5;/dev/ttyS10;/dev/ttyS15").split(";");
+  // Found bug whenn, f.ex. ttyS0, ttyMXUSB0, ... connected
+  QTest::newRow("Paths") << QString("/dev/ttyS0;/dev/ttyS15;/dev/ttyMXUSB1;/dev/ttyS10;/dev/ttyMXUSB10;/dev/ttyMXUSB0;/dev/ttyMXUSB2").split(";") \
+                         << QString("/dev/ttyMXUSB0;/dev/ttyMXUSB1;/dev/ttyMXUSB2;/dev/ttyMXUSB10;/dev/ttyS0;/dev/ttyS10;/dev/ttyS15").split(";");
 }

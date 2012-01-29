@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 12
+  revision 13
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -143,6 +143,9 @@ ${inlines}
 
     class 160770 "QStringList"
       visibility package 
+      nactuals 1
+      actual class class_ref 160898 // QList
+        rank 0 explicit_value ""
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -169,7 +172,10 @@ ${inlines}
     end
 
     class 160898 "QList"
-      visibility package stereotype "teplate"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -180,6 +186,38 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+    end
+
+    classdiagram 222210 "QQueue"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 229634 "QQueue"
+      visibility package 
+      nformals 1
+      formal name "T" type "class" explicit_default_value ""
+        explicit_extends ""
+      nactuals 1
+      actual class class_ref 160898 // QList
+        rank 0 explicit_value ""
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 244610 // <generalisation>
+	relation 244354 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 244610 // <generalisation>
+	  b parent class_ref 160898 // QList
+      end
     end
 
     classdiagram 149122 "QString"

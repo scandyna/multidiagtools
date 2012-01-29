@@ -5,14 +5,13 @@
 
 #ifdef Q_OS_UNIX
  #include "linux/mdtSerialPortManagerPosix.h"
+ #define mdtSerialPortManagerSys mdtSerialPortManagerPosix
 #endif
 
 #include "mdtSerialPortConfig.h"
 #include "mdtSerialPortInterface.h"
 
-#ifdef Q_OS_UNIX
-class mdtSerialPortManager : public mdtSerialPortManagerPosix
-#endif
+class mdtSerialPortManager : public mdtSerialPortManagerSys
 {
  public:
 

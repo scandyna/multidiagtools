@@ -35,17 +35,20 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   void setTxTimeout(int timeout);
 
   // Wait on RX event
-  void waitEventRx();
+  bool waitEventRx();
   
   int readData(char *data, int maxLen);
   
   // Wait until data TX is possible
-  void waitEventTxReady();
+  bool waitEventTxReady();
     
   int writeData(const char *data, int len);
 
   // Wait until a control signal (modem line state) changes
   bool waitEventCtl();
+  
+  // Get the control signal (modem line) states and update member flags
+  bool getCtlStates();
 
   void setRts(bool on);
   
@@ -120,6 +123,7 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   // Members used for control signals thread kill
   pthread_t pvCtlThread;
   struct sigaction pvSigaction;
+  bool pvAbortingWaitEventCtl;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_POSIX_H

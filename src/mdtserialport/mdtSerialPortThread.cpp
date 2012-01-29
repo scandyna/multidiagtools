@@ -21,10 +21,6 @@ void mdtSerialPortThread::start()
 {
   Q_ASSERT(pvSerialPort != 0);
 
-  // Set the running flag
-  pvSerialPort->lockMutex();
-  pvRunning = true;
-  pvSerialPort->unlockMutex();
   // Start..
   QThread::start();
   // Wait until the thread started
@@ -42,7 +38,7 @@ void mdtSerialPortThread::stop()
   pvSerialPort->lockMutex();
   pvRunning = false;
   pvSerialPort->unlockMutex();
-  
+
   // Wait the end of the thread
   while(!isFinished()){
     qApp->processEvents();
@@ -50,3 +46,28 @@ void mdtSerialPortThread::stop()
   }
 }
 
+bool mdtSerialPortThread::isRunning() const
+{
+  if(!QThread::isRunning()){
+    return false;
+  }
+  pvSerialPort->lockMutex();
+  if(pvRunning){
+    pvSerialPort->unlockMutex();
+    return true;
+  }
+  pvSerialPort->unlockMutex();
+  return false;
+}
+
+bool mdtSerialPortThread::isFinished() const
+{
+  pvSerialPort->lockMutex();
+  if(pvRunning){
+    pvSerialPort->unlockMutex();
+    return false;
+  }
+  pvSerialPort->unlockMutex();
+
+  return QThread::isFinished();
+}

@@ -16,6 +16,9 @@ class mdtSerialPort : public mdtSerialPortSys
 
  public:
 
+  /*! \brief Construct a new serial port object
+   *  Rx/Tx timeouts are set to 500 ms
+   */
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
 
@@ -46,7 +49,7 @@ class mdtSerialPort : public mdtSerialPortSys
    * \SA Signals provided in mdtAbstractSerialPort
    */
   bool rngIsOn();
-  
+
   /*! \brief Lock the internal mutex
    */
   void lockMutex();

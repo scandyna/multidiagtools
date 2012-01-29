@@ -16,36 +16,68 @@ mdtSerialPort::~mdtSerialPort()
 
 bool mdtSerialPort::rxTimeoutOccured()
 {
-  return pvRxTimeoutOccured;
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvRxTimeoutOccured;
+  pvMutex.unlock();
+
+  return retVal;
 }
 
 bool mdtSerialPort::txTimeoutOccured()
 {
-  return pvTxTimeoutOccured;
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvTxTimeoutOccured;
+  pvMutex.unlock();
+
+  return retVal;
 }
 
 bool mdtSerialPort::carIsOn()
 {
-  // TODO: handle thread problems
-  return pvCarIsOn;
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvCarIsOn;
+  pvMutex.unlock();
+
+  return retVal;
 }
 
 bool mdtSerialPort::dsrIsOn()
 {
-  // TODO: handle thread problems
-  return pvDsrIsOn;
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvDsrIsOn;
+  pvMutex.unlock();
+
+  return retVal;
 }
 
 bool mdtSerialPort::ctsIsOn()
 {
-  // TODO: handle thread problems
-  return pvCtsIsOn;
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvCtsIsOn;
+  pvMutex.unlock();
+
+  return retVal;
 }
 
 bool mdtSerialPort::rngIsOn()
 {
-  // TODO: handle thread problems
-  return pvRngIsOn;
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvRngIsOn;
+  pvMutex.unlock();
+
+  return retVal;
 }
 
 void mdtSerialPort::lockMutex()
@@ -60,12 +92,14 @@ void mdtSerialPort::unlockMutex()
 
 void mdtSerialPort::setRts(bool on)
 {
-  // TODO: handle thread problems
+  pvMutex.lock();
   mdtSerialPortSys::setRts(on);
+  pvMutex.unlock();
 }
 
 void mdtSerialPort::setDtr(bool on)
 {
-  // TODO: handle thread problems
+  pvMutex.lock();
   mdtSerialPortSys::setDtr(on);
+  pvMutex.unlock();
 }

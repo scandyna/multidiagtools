@@ -21,6 +21,7 @@ mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
 
   // Control signal thread kill utils
   pvCtlThread = 0;
+  pvAbortingWaitEventCtl = false;
   // We must catch the SIGALRM signal, else the application process
   // will be killed by pthread_kill()
   sigemptyset(&(pvSigaction.sa_mask));
@@ -131,7 +132,7 @@ void mdtSerialPortPosix::setTxTimeout(int timeout)
   pvTxTimeout.tv_usec = 1000*(timeout%1000);
 }
 
-void mdtSerialPortPosix::waitEventRx()
+bool mdtSerialPortPosix::waitEventRx()
 {
   fd_set input;
   int n;
@@ -142,16 +143,19 @@ void mdtSerialPortPosix::waitEventRx()
 
   n = select(pvSerialPortFd+1, &input, 0, 0, &pvRxTimeout);
   if(n == 0){
-    pvRxTimeoutOccured = true;
+    updateRxTimeoutState(true);
   }else{
-    pvRxTimeoutOccured = false;
+    updateRxTimeoutState(false);
     if(n < 0){
       mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
       e.setSystemError(errno, strerror(errno));
       MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
       e.commit();
+      return false;
     }
   }
+
+  return true;
 }
 
 int mdtSerialPortPosix::readData(char *data, int maxLen)
@@ -160,7 +164,11 @@ int mdtSerialPortPosix::readData(char *data, int maxLen)
 
   n = read(pvSerialPortFd, data, maxLen);
   if(n < 0){
-    qDebug() << "mdtSerialPortPosix::readData(): read error";
+    mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+/*
     switch(errno){
       case EINTR:
         perror("EINTR");
@@ -186,12 +194,13 @@ int mdtSerialPortPosix::readData(char *data, int maxLen)
       default:
         qDebug() << "unknow error";
     }
+*/
   }
 
   return n;
 }
 
-void mdtSerialPortPosix::waitEventTxReady()
+bool mdtSerialPortPosix::waitEventTxReady()
 {
   fd_set output;
   int n;
@@ -202,25 +211,32 @@ void mdtSerialPortPosix::waitEventTxReady()
 
   n = select(pvSerialPortFd+1, 0, &output, 0, &pvTxTimeout);
   if(n == 0){
-    pvTxTimeoutOccured = true;
+    updateTxTimeoutState(true);
   }else{
-    pvTxTimeoutOccured = false;
+    updateTxTimeoutState(false);
     if(n < 0){
       mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
       e.setSystemError(errno, strerror(errno));
       MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
       e.commit();
+      return false;
     }
   }
+
+  return true;
 }
 
 int mdtSerialPortPosix::writeData(const char *data, int len)
 {
   int n;
-  
+
   n = write(pvSerialPortFd, data, len);
   if(n < 0){
-    qDebug() << "mdtSerialPortPosix::writeData(): write error";
+    mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+/*
     switch(errno){
       case EINTR:
         perror("EINTR");
@@ -249,6 +265,7 @@ int mdtSerialPortPosix::writeData(const char *data, int len)
       default:
         qDebug() << "unknow error";
     }
+*/
   }
 
   return n;
@@ -256,19 +273,20 @@ int mdtSerialPortPosix::writeData(const char *data, int len)
 
 bool mdtSerialPortPosix::waitEventCtl()
 {
-  int event = 0;
-
-  qDebug() << "Call mdtSerialPortPosix::waitEventCtl() ...";
-
-  // We wait until a line status change happen
+  // We wait until a line status change happens
   if(ioctl(pvSerialPortFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG)) < 0){
     if(errno == EINTR){
       // Probably sent by pthread_kill() to stop the thread
+      if(pvAbortingWaitEventCtl){
+        pvAbortingWaitEventCtl = false;
+        return true;
+      }
+      // Unhandled case that abort the thread
       mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Info);
       e.setSystemError(errno, strerror(errno));
       MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
       e.commit();
-      return true;
+      return false;
     }
     // Else, we have a unhandled error
     mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
@@ -277,8 +295,15 @@ bool mdtSerialPortPosix::waitEventCtl()
     e.commit();
     return false;
   }
-  // We have an event here
-  if(ioctl(pvSerialPortFd, TIOCMGET, &event) < 0){
+
+  return true;
+}
+
+bool mdtSerialPortPosix::getCtlStates()
+{
+  int states;
+
+  if(ioctl(pvSerialPortFd, TIOCMGET, &states) < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -287,48 +312,48 @@ bool mdtSerialPortPosix::waitEventCtl()
   }
 
   // See witch signals changed
-  if((event & TIOCM_CAR) != pvPreviousCarState){
-    qDebug() << "CAR (CD) changed: " << (event & TIOCM_CAR);
+  if((states & TIOCM_CAR) != pvPreviousCarState){
+    qDebug() << "CAR (CD) changed: " << (states & TIOCM_CAR);
     // Store new state
-    pvPreviousCarState = (event & TIOCM_CAR);
+    pvPreviousCarState = (states & TIOCM_CAR);
     // Determine current state and emit signal
-    if(event & TIOCM_CAR){
+    if(states & TIOCM_CAR){
       pvCarIsOn = true;
     }else{
       pvCarIsOn = false;
     }
     emit carChanged(pvCarIsOn);
   }
-  if((event & TIOCM_DSR) != pvPreviousDsrState){
-    qDebug() << "DSR changed: " << (event & TIOCM_DSR);
+  if((states & TIOCM_DSR) != pvPreviousDsrState){
+    qDebug() << "DSR changed: " << (states & TIOCM_DSR);
     // Store new state
-    pvPreviousDsrState = (event & TIOCM_DSR);
+    pvPreviousDsrState = (states & TIOCM_DSR);
     // Determine current state and emit signal
-    if(event & TIOCM_DSR){
+    if(states & TIOCM_DSR){
       pvDsrIsOn = true;
     }else{
       pvDsrIsOn = false;
     }
     emit dsrChanged(pvDsrIsOn);
   }
-  if((event & TIOCM_CTS) != pvPreviousCtsState){
-    qDebug() << "CTS changed: " << (event & TIOCM_CTS);
+  if((states & TIOCM_CTS) != pvPreviousCtsState){
+    qDebug() << "CTS changed: " << (states & TIOCM_CTS);
     // Store new state
-    pvPreviousCtsState = (event & TIOCM_CTS);
+    pvPreviousCtsState = (states & TIOCM_CTS);
     // Determine current state and emit signal
-    if(event & TIOCM_CTS){
+    if(states & TIOCM_CTS){
       pvCtsIsOn = true;
     }else{
       pvCtsIsOn = false;
     }
     emit ctsChanged(pvCtsIsOn);
   }
-  if((event & TIOCM_RNG) != pvPreviousRngState){
-    qDebug() << "RNG (RI) changed: " << (event & TIOCM_RNG);
+  if((states & TIOCM_RNG) != pvPreviousRngState){
+    qDebug() << "RNG (RI) changed: " << (states & TIOCM_RNG);
     // Store new state
-    pvPreviousRngState = (event & TIOCM_RNG);
+    pvPreviousRngState = (states & TIOCM_RNG);
     // Determine current state and emit signal
-    if(event & TIOCM_RNG){
+    if(states & TIOCM_RNG){
       pvRngIsOn = true;
     }else{
       pvRngIsOn = false;
@@ -341,12 +366,56 @@ bool mdtSerialPortPosix::waitEventCtl()
 
 void mdtSerialPortPosix::setRts(bool on)
 {
-  qDebug() << "setRTS called..";
+  int states;
+
+  // Get the current ctl states
+  if(ioctl(pvSerialPortFd, TIOCMGET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return;
+  }
+  // Set RTS state
+  if(on){
+    states |= TIOCM_RTS;
+  }else{
+    states &= ~TIOCM_RTS;
+  }
+  // Commit to system
+  if(ioctl(pvSerialPortFd, TIOCMSET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+  }
 }
 
 void mdtSerialPortPosix::setDtr(bool on)
 {
-  qDebug() << "set DTR called..";
+  int states;
+
+  // Get the current ctl states
+  if(ioctl(pvSerialPortFd, TIOCMGET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return;
+  }
+  // Set DTR state
+  if(on){
+    states |= TIOCM_DTR;
+  }else{
+    states &= ~TIOCM_DTR;
+  }
+  // Commit to system
+  if(ioctl(pvSerialPortFd, TIOCMSET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+  }
 }
 
 void mdtSerialPortPosix::defineCtlThread(pthread_t ctlThread)
@@ -357,7 +426,9 @@ void mdtSerialPortPosix::defineCtlThread(pthread_t ctlThread)
 void mdtSerialPortPosix::abortWaitEventCtl()
 {
   Q_ASSERT(pvCtlThread != 0);
-  
+
+  // Set aborting flag and send the signal
+  pvAbortingWaitEventCtl = true;
   pthread_kill(pvCtlThread, SIGALRM);
 }
 

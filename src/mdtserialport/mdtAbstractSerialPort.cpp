@@ -5,7 +5,9 @@ mdtAbstractSerialPort::mdtAbstractSerialPort(QObject *parent)
  : QObject(parent)
 {
   pvRxTimeoutOccured = false;
+  pvRxTimeoutOccuredPrevious = false;
   pvTxTimeoutOccured = false;
+  pvTxTimeoutOccuredPrevious = false;
   pvCarIsOn = false;
   pvDsrIsOn = false;
   pvCtsIsOn = false;
@@ -21,4 +23,22 @@ mdtAbstractSerialPort::mdtAbstractSerialPort(QObject *parent)
 
 mdtAbstractSerialPort::~mdtAbstractSerialPort()
 {
+}
+
+void mdtAbstractSerialPort::updateRxTimeoutState(bool state)
+{
+  if(state != pvRxTimeoutOccuredPrevious){
+    emit rxTimeoutStateChanged(state);
+  }
+  pvRxTimeoutOccuredPrevious = pvRxTimeoutOccured;
+  pvRxTimeoutOccured = state;
+}
+
+void mdtAbstractSerialPort::updateTxTimeoutState(bool state)
+{
+  if(state != pvTxTimeoutOccuredPrevious){
+    emit txTimeoutStateChanged(state);
+  }
+  pvTxTimeoutOccuredPrevious = pvTxTimeoutOccured;
+  pvTxTimeoutOccured = state;
 }

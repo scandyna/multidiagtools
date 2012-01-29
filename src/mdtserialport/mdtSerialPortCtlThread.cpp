@@ -9,6 +9,7 @@
 
 
 mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
+ : mdtSerialPortThread(parent)
 {
 }
 
@@ -22,7 +23,7 @@ void mdtSerialPortCtlThread::stop()
   pvRunning = false;
   pvSerialPort->abortWaitEventCtl();
   pvSerialPort->unlockMutex();
-  
+
   // Wait the end of the thread
   while(!isFinished()){
     qApp->processEvents();
@@ -34,16 +35,39 @@ void mdtSerialPortCtlThread::stop()
 void mdtSerialPortCtlThread::run()
 {
   Q_ASSERT(pvSerialPort != 0);
-  
+
 #ifdef Q_OS_UNIX
   pvSerialPort->defineCtlThread(pthread_self());
 #endif
 
+  // Set the running flag
+  pvSerialPort->lockMutex();
+  pvRunning = true;
+  pvSerialPort->unlockMutex();
+
   // Run...
-  while(pvRunning){
-    // Wait on ctl signal event
-    if(!pvSerialPort->waitEventCtl()){
+  while(1){
+    // Read thread state
+    pvSerialPort->lockMutex();
+    if(!pvRunning){
+      pvSerialPort->unlockMutex();
       break;
     }
+    pvSerialPort->unlockMutex();
+    // Wait on ctl signal event
+    if(!pvSerialPort->waitEventCtl()){
+      pvSerialPort->lockMutex();
+      pvRunning = false;
+      pvSerialPort->unlockMutex();
+      break;
+    }
+    // We have a event here, update the flags
+    pvSerialPort->lockMutex();
+    if(!pvSerialPort->getCtlStates()){
+      pvRunning = false;
+      pvSerialPort->unlockMutex();
+      break;
+    }
+    pvSerialPort->unlockMutex();
   }
 }

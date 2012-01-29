@@ -1,6 +1,7 @@
 
 #include "mdtAlgorithms.h"
 #include "mdtSerialPortManagerPosix.h"
+#include "mdtError.h"
 #include <QDir>
 #include <QFileInfo>
 #include <QStringList>
@@ -8,6 +9,8 @@
 #include <QDebug>
 #include <sys/ioctl.h>
 #include <linux/serial.h>
+#include <cerrno>
+#include <cstring>
 
 mdtSerialPortManagerPosix::mdtSerialPortManagerPosix()
 {
@@ -42,7 +45,9 @@ bool mdtSerialPortManagerPosix::scan()
   // Common device directory
   dir.setPath("/dev");
   if(!dir.exists()){
-    qDebug() << "mdtSerialPortManagerPosix::scan(): directory '" << dir.dirName() << "' not exists";
+    mdtError e(MDT_UNDEFINED_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix");
+    e.commit();
     return false;
   }
   dir.setNameFilters(extList);
@@ -76,13 +81,7 @@ bool mdtSerialPortManagerPosix::scan()
       close(portFd);
     }
   }
-  
-  qDebug() << "Nb ifaces found: " << pvInterfaces.count();
-  for(int i=0; i<pvInterfaces.count(); ++i){
-    qDebug() << "Port: " << pvInterfaces.at(i)->portName() << " , UART: " << pvInterfaces.at(i)->uartTypeStr();
-    qDebug() << "Baud rates: " << pvInterfaces.at(i)->availableBaudRates();
-  }
-  
+
   return true;
 }
 
@@ -96,7 +95,10 @@ int mdtSerialPortManagerPosix::openPort(const QString &path)
   //  O_NDELAY: ignore DCD signal
   portFd = open(path.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
   if(portFd < 0){
-    qDebug() << "mdtSerialPortManagerPosix::openPort(): can not open interface " << path;
+    mdtError e(MDT_UNDEFINED_ERROR, "can not open interface '" + path + "'", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix");
+    e.commit();
     return false;
   }
 

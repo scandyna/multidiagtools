@@ -26,6 +26,18 @@ class mdtSerialPortThread : public QThread
    */
   void stop();
 
+  /*! \brief Returns true if the thread is running
+   *  This function overloads the QThread::isRunning() function.
+   *  Note for subclass: when the thread is started and ready, the private member pvRunning
+   *  must be set to true.
+   */
+  bool isRunning() const;
+  
+  /*! \brief Returns false if the thread is running
+   *  \see isRunning()
+   */
+  bool isFinished() const;
+
  protected:
 
   volatile bool pvRunning;
