@@ -16,7 +16,7 @@ void mdtSerialPortRxThread::run()
   pvSerialPort->lockMutex();
   pvRunning = true;
   pvSerialPort->unlockMutex();
-  
+
   /// NOTE: provisiore
   char buffer[20];
 

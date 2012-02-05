@@ -282,6 +282,33 @@ mdtErrorOut.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtErrorOut.cpp.s
 .PHONY : mdtErrorOut.cpp.s
 
+mdtFrame.o: mdtFrame.cpp.o
+.PHONY : mdtFrame.o
+
+# target to build an object file
+mdtFrame.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrame.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrame.cpp.o
+.PHONY : mdtFrame.cpp.o
+
+mdtFrame.i: mdtFrame.cpp.i
+.PHONY : mdtFrame.i
+
+# target to preprocess a source file
+mdtFrame.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrame.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrame.cpp.i
+.PHONY : mdtFrame.cpp.i
+
+mdtFrame.s: mdtFrame.cpp.s
+.PHONY : mdtFrame.s
+
+# target to generate assembly for a file
+mdtFrame.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrame.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrame.cpp.s
+.PHONY : mdtFrame.cpp.s
+
 mdtParentChildTableItem.o: mdtParentChildTableItem.cpp.o
 .PHONY : mdtParentChildTableItem.o
 
@@ -462,6 +489,9 @@ help:
 	@echo "... mdtErrorOut.o"
 	@echo "... mdtErrorOut.i"
 	@echo "... mdtErrorOut.s"
+	@echo "... mdtFrame.o"
+	@echo "... mdtFrame.i"
+	@echo "... mdtFrame.s"
 	@echo "... mdtParentChildTableItem.o"
 	@echo "... mdtParentChildTableItem.i"
 	@echo "... mdtParentChildTableItem.s"

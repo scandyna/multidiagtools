@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "mdtAlgorithmsTest.h"
 #include "mdtBufferTest.h"
+#include "mdtFrameTest.h"
 #include "mdtErrorOut.h"
 #include "mdtErrorTest.h"
 
@@ -23,6 +24,7 @@ int main(int argc, char **argv)
   // Test objetcs
   mdtAlgorithmsTest algorithmsTest;
   mdtBufferTestRun bufferTest;
+  mdtFrameTest frameTest;
   mdtErrorTest errorTest;
   
   // Run test classes
@@ -31,6 +33,10 @@ int main(int argc, char **argv)
     return retVal;
   }
   //retVal = QTest::qExec(&bufferTest, argc, argv);
+  if(retVal!=0){
+    return retVal;
+  }
+  retVal = QTest::qExec(&frameTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }

@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 6
+  revision 7
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1796,23 +1796,23 @@ ${inlines}
 
       classrelation 244738 // pvRxFrames (<directional composition>)
 	relation 244482 *-->
-	  stereotype "QQueue<mdtAbstractFrame*>"
+	  stereotype "QQueue<mdtFrame*>"
 	  a role_name "pvRxFrames" multiplicity "0...*" protected
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 244738 // pvRxFrames (<directional composition>)
-	  b parent class_ref 196354 // mdtAbstractFrame
+	  b parent class_ref 196354 // mdtFrame
 	  association_type class_ref 229634 // QQueue
       end
 
       classrelation 244866 // pvRxFramesPool (<directional composition>)
 	relation 244610 *-->
-	  stereotype "QQueue<mdtAbstractFrame*>"
+	  stereotype "QQueue<mdtFrame*>"
 	  a role_name "pvRxFramesPool" multiplicity "0...*" protected
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 244866 // pvRxFramesPool (<directional composition>)
-	  b parent class_ref 196354 // mdtAbstractFrame
+	  b parent class_ref 196354 // mdtFrame
       end
     end
 

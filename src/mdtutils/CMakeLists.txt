@@ -22,6 +22,7 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           mdtAlgorithms.cpp
           mdtBuffer.cpp
+          mdtFrame.cpp
           mdtTime.cpp
           # mdtError
           mdtError.cpp
