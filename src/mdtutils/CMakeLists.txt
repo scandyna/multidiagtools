@@ -23,6 +23,7 @@ set (SOURCES_FILES
           mdtAlgorithms.cpp
           mdtBuffer.cpp
           mdtFrame.cpp
+          mdtFrameAscii.cpp
           mdtTime.cpp
           # mdtError
           mdtError.cpp

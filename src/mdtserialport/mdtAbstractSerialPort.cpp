@@ -42,3 +42,23 @@ void mdtAbstractSerialPort::updateTxTimeoutState(bool state)
   pvTxTimeoutOccuredPrevious = pvTxTimeoutOccured;
   pvTxTimeoutOccured = state;
 }
+
+QQueue<mdtFrame*> &mdtAbstractSerialPort::rxFrames()
+{
+  return pvRxFrames;
+}
+
+QQueue<mdtFrame*> &mdtAbstractSerialPort::rxFramesPool()
+{
+  return pvRxFramesPool;
+}
+
+QQueue<mdtFrame*> &mdtAbstractSerialPort::txFrames()
+{
+  return pvTxFrames;
+}
+
+QQueue<mdtFrame*> &mdtAbstractSerialPort::txFramesPool()
+{
+  return pvTxFramesPool;
+}

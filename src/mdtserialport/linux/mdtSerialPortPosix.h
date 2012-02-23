@@ -37,11 +37,19 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   // Wait on RX event
   bool waitEventRx();
   
+  // Flush RX
+  void flushRx();
+
+  // Read data from port
   int readData(char *data, int maxLen);
-  
+
   // Wait until data TX is possible
   bool waitEventTxReady();
-    
+
+  // Flush TX
+  void flushTx();
+
+  // Write data to port
   int writeData(const char *data, int len);
 
   // Wait until a control signal (modem line state) changes

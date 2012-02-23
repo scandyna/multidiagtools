@@ -13,6 +13,9 @@ class mdtFrameTest : public mdtTest
   // such as capacity, ...
   void initTest();
 
+  // Verify putData() function
+  void putDataTest();
+
   // Verify state and values by ASCII frames
   void asciiReceptionTest();
   void asciiReceptionIgnoreNullValuesTest();

@@ -5,34 +5,42 @@
 mdtFrame::mdtFrame()
 {
   pvEOFcondition = false;
+  pvIgnoreNullValues = false;
 }
 
 mdtFrame::~mdtFrame()
 {
 }
 
-void mdtFrame::putUntil(const char *data, char token, int maxLen, bool ignoreNullValues)
+void mdtFrame::setIgnoreNullValues(bool ignoreNullValues)
+{
+  pvIgnoreNullValues = ignoreNullValues;
+}
+
+int mdtFrame::putUntil(const char *data, char token, int maxLen)
 {
   Q_ASSERT(data != 0);
   Q_ASSERT(data != QByteArray::data());
 
   char *cursor = (char*)data;
   char *end = cursor + maxLen;
+  int stored = 0;
 
   // If EOF condition was reached, or frame is full, we do nothing
   if(isComplete()||isFull()){
-    return;
+    return 0;
   }
 
   // We not want to check ignoreNullValues each byte, so we make 2 loops
-  if(ignoreNullValues){
+  if(pvIgnoreNullValues){
     while(cursor < end){
       if(*cursor == token){
         pvEOFcondition = true;
-        return;
+        return stored;
       }
       if(*cursor != 0){
         append(*cursor);
+        ++stored;
       }
       ++cursor;
     }
@@ -40,39 +48,44 @@ void mdtFrame::putUntil(const char *data, char token, int maxLen, bool ignoreNul
     while(cursor < end){
       if(*cursor == token){
         pvEOFcondition = true;
-        return;
+        return (cursor - data);
       }
       append(*cursor);
       ++cursor;
+      ++stored;
     }
   }
+
+  return stored;
 }
 
-void mdtFrame::putUntil(const char *data, QByteArray &token, int maxLen, bool ignoreNullValues)
+int mdtFrame::putUntil(const char *data, QByteArray &token, int maxLen)
 {
   Q_ASSERT(data != 0);
   Q_ASSERT(data != QByteArray::data());
 
   char *cursor = (char*)data;
   char *end = cursor + maxLen;
+  int stored = 0;
   int cmpLen = token.size();
 
   // If EOF condition was reached, or frame is full, we do nothing
   if(isComplete()||isFull()){
-    return;
+    return 0;
   }
 
   // We not want to check ignoreNullValues each byte, so we make 2 loops
-  if(ignoreNullValues){
+  if(pvIgnoreNullValues){
     while(cursor < end){
       if((end-cursor) >= cmpLen){
         if(memcmp(cursor, token.data(), cmpLen) == 0){
           pvEOFcondition = true;
-          return;
+          return stored;
         }
       }
       if(*cursor != 0){
         append(*cursor);
+        ++stored;
       }
       ++cursor;
     }
@@ -81,13 +94,16 @@ void mdtFrame::putUntil(const char *data, QByteArray &token, int maxLen, bool ig
       if((end-cursor) >= cmpLen){
         if(memcmp(cursor, token.data(), cmpLen) == 0){
           pvEOFcondition = true;
-          return;
+          return stored;
         }
       }
       append(*cursor);
       ++cursor;
+      ++stored;
     }
   }
+
+  return stored;
 }
 
 bool mdtFrame::isFull()
@@ -126,6 +142,25 @@ void mdtFrame::clear()
   QByteArray::clear();
   reserve(capa);
   pvEOFcondition = false;
+}
+
+int mdtFrame::putData(char *data, int len)
+{
+  Q_ASSERT(data != 0);
+  Q_ASSERT(data != QByteArray::data());
+
+  // Get max size that can be stored and store
+  if(len > remainCapacity()){
+    len = remainCapacity();
+  }
+  append(data, len);
+
+  return len;
+}
+
+int mdtFrame::eofSeqLen()
+{
+  return 0;
 }
 
 int mdtFrame::take(char *data, int len)

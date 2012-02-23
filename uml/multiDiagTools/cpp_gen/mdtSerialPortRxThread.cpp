@@ -1,9 +1,9 @@
 
 #include "mdtSerialPortRxThread.h"
 
-void mdtSerialPortRxThread::run() {
+ mdtSerialPortRxThread::mdtSerialPortRxThread(const QObject & parent) {
 }
 
- mdtSerialPortRxThread::mdtSerialPortRxThread(const QObject & parent) {
+void mdtSerialPortRxThread::run() {
 }
 

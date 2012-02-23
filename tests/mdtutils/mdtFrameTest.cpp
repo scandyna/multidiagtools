@@ -37,6 +37,51 @@ void mdtFrameTest::initTest()
   QVERIFY2(!f.isComplete(), "Verify the complete flag after clear");
 }
 
+void mdtFrameTest::putDataTest()
+{
+  mdtFrame f;
+  char data[11] = "0123456789";
+
+  f.reserve(5);
+
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 5);
+  QVERIFY(f.bytesToStore() == 5);
+  // Put a char
+  QVERIFY(f.putData(data, 1) == 1);
+  // Check values
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 4);
+  QVERIFY(f.bytesToStore() == 4);
+  QVERIFY(f == "0");
+  // Put 4 bytes
+  QVERIFY(f.putData(&data[1], 4) == 4);
+  // Check values
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f == "01234");
+
+  // Re-init
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 5);
+  QVERIFY(f.bytesToStore() == 5);
+  // Try to put to many data
+  QVERIFY(f.putData(data, 7) == 5);
+  // Check values
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f == "01234");
+}
+
 void mdtFrameTest::asciiReceptionTest()
 {
   mdtFrame f;
@@ -56,7 +101,7 @@ void mdtFrameTest::asciiReceptionTest()
   QVERIFY(f.bytesToStore() == 5);
   QVERIFY(!f.isComplete());
   // Put a char
-  f.putUntil(data, '*', 1, false);
+  QVERIFY(f.putUntil(data, '*', 1) == 1);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -65,7 +110,7 @@ void mdtFrameTest::asciiReceptionTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0");
   // Put 2 chars
-  f.putUntil(&data[1], '*', 2, false);
+  QVERIFY(f.putUntil(&data[1], '*', 2) == 2);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -74,7 +119,7 @@ void mdtFrameTest::asciiReceptionTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "012");
   // Put EOF char
-  f.putUntil(&eof, '*', 1, false);
+  QVERIFY(f.putUntil(&eof, '*', 1) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -83,7 +128,7 @@ void mdtFrameTest::asciiReceptionTest()
   QVERIFY(f.isComplete());
   QVERIFY(f == "012");
   // Put another char, must not be stored
-  f.putUntil(data, '*', 1, false);
+  QVERIFY(f.putUntil(data, '*', 1) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -103,7 +148,7 @@ void mdtFrameTest::asciiReceptionTest()
    * Test case with EOF reached exactly 1 byte before frame becomes full
    */
   // Put data
-  f.putUntil(data, '*', 4, false);
+  QVERIFY(f.putUntil(data, '*', 4) == 4);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 1);
@@ -112,7 +157,7 @@ void mdtFrameTest::asciiReceptionTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0123");
   // Add the EOF char and check values
-  f.putUntil(&eof, '*', 1, false);
+  QVERIFY(f.putUntil(&eof, '*', 1) == 0);
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 1);
   QVERIFY(!f.isFull());
@@ -131,7 +176,7 @@ void mdtFrameTest::asciiReceptionTest()
    * Test case with EOF never reached
    */
   // Put data
-  f.putUntil(data, '*', 5, false);
+  QVERIFY(f.putUntil(data, '*', 5) == 5);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -140,7 +185,7 @@ void mdtFrameTest::asciiReceptionTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "01234");
   // Try to put more data
-  f.putUntil(data, '*', 5, false);
+  QVERIFY(f.putUntil(data, '*', 5) == 0);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -171,13 +216,14 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
    */
   eof = '*';
   // Initial values
+  f.setIgnoreNullValues(true);
   QVERIFY(f.isEmpty());
   QVERIFY(!f.isFull());
   QVERIFY(f.remainCapacity() == 5);
   QVERIFY(f.bytesToStore() == 5);
   QVERIFY(!f.isComplete());
   // Put a char
-  f.putUntil(data, '*', 1, true);
+  QVERIFY(f.putUntil(data, '*', 1) == 1);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -185,8 +231,8 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
   QVERIFY(f.bytesToStore() == 4);
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0");
-  // Put null values and chek that values are kept
-  f.putUntil(nullData, '*', 3, true);
+  // Put null values and chek that values are not stored
+  QVERIFY(f.putUntil(nullData, '*', 3) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -195,7 +241,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0");
   // Put 2 chars
-  f.putUntil(&data[1], '*', 2, true);
+  QVERIFY(f.putUntil(&data[1], '*', 2) == 2);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -204,7 +250,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "012");
   // Put EOF char
-  f.putUntil(&eof, '*', 1, true);
+  QVERIFY(f.putUntil(&eof, '*', 1) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -213,7 +259,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
   QVERIFY(f.isComplete());
   QVERIFY(f == "012");
   // Put another char, must not be stored
-  f.putUntil(data, '*', 1, true);
+  QVERIFY(f.putUntil(data, '*', 1) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -233,7 +279,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
    * Test case with EOF reached exactly 1 byte before frame becomes full
    */
   // Put data
-  f.putUntil(data, '*', 4, true);
+  QVERIFY(f.putUntil(data, '*', 4) == 4);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 1);
@@ -242,7 +288,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0123");
   // Add the EOF char and check values
-  f.putUntil(&eof, '*', 1, true);
+  QVERIFY(f.putUntil(&eof, '*', 1) == 0);
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 1);
   QVERIFY(!f.isFull());
@@ -261,7 +307,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
    * Test case with EOF never reached
    */
   // Put data
-  f.putUntil(data, '*', 5, true);
+  QVERIFY(f.putUntil(data, '*', 5) == 5);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -270,7 +316,7 @@ void mdtFrameTest::asciiReceptionIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "01234");
   // Try to put more data
-  f.putUntil(data, '*', 5, true);
+  QVERIFY(f.putUntil(data, '*', 5) == 0);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -306,7 +352,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
   QVERIFY(f.bytesToStore() == 5);
   QVERIFY(!f.isComplete());
   // Put 2 chars
-  f.putUntil(data, eof, 2, false);
+  QVERIFY(f.putUntil(data, eof, 2) == 2);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -315,7 +361,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "01");
   // Put EOF char
-  f.putUntil(eof.data(), eof, 2, false);
+  QVERIFY(f.putUntil(eof.data(), eof, 2) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -324,7 +370,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
   QVERIFY(f.isComplete());
   QVERIFY(f == "01");
   // Put another char, must not be stored
-  f.putUntil(data, eof, 1, false);
+  QVERIFY(f.putUntil(data, eof, 1) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -344,7 +390,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
    * Test case with part of EOF reached exactly 1 byte before frame becomes full
    */
   // Put data
-  f.putUntil(data, eof, 4, false);
+  QVERIFY(f.putUntil(data, eof, 4) == 4);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 1);
@@ -353,7 +399,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0123");
   // Add a part of EOF sequence and check values
-  f.putUntil(eof.data(), eof, 1, false);
+  QVERIFY(f.putUntil(eof.data(), eof, 1) == 1);
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
   QVERIFY(f.isFull());
@@ -372,7 +418,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
    * Test case with EOF reached exactly 2 byte before frame becomes full
    */
   // Put data
-  f.putUntil(data, eof, 3, false);
+  QVERIFY(f.putUntil(data, eof, 3) == 3);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 2);
@@ -381,7 +427,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "012");
   // Add EOF sequence and check values
-  f.putUntil(eof.data(), eof, 2, false);
+  QVERIFY(f.putUntil(eof.data(), eof, 2) == 0);
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 2);
   QVERIFY(!f.isFull());
@@ -400,7 +446,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
    * Test case with EOF never reached
    */
   // Put data
-  f.putUntil(data, eof, 5, false);
+  QVERIFY(f.putUntil(data, eof, 5) == 5);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -409,7 +455,7 @@ void mdtFrameTest::asciiReceptionEofStrTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "01234");
   // Try to put more data
-  f.putUntil(data, eof, 5, false);
+  QVERIFY(f.putUntil(data, eof, 5) == 0);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -431,6 +477,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   mdtFrame f;
   char data[6] = "01234";
   QByteArray eof;
+  char nullData[6] = {'\0','\0','\0','\0','\0','\0'};
 
   f.reserve(5);
 
@@ -444,8 +491,9 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(f.remainCapacity() == 5);
   QVERIFY(f.bytesToStore() == 5);
   QVERIFY(!f.isComplete());
+  f.setIgnoreNullValues(true);
   // Put 2 chars
-  f.putUntil(data, eof, 2, true);
+  QVERIFY(f.putUntil(data, eof, 2) == 2);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -453,8 +501,10 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(f.bytesToStore() == 3);
   QVERIFY(!f.isComplete());
   QVERIFY(f == "01");
+  // Put null values and chek that values are not stored
+  QVERIFY(f.putUntil(nullData, eof, 2) == 0);
   // Put EOF char
-  f.putUntil(eof.data(), eof, 2, true);
+  QVERIFY(f.putUntil(eof.data(), eof, 2) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -463,7 +513,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(f.isComplete());
   QVERIFY(f == "01");
   // Put another char, must not be stored
-  f.putUntil(data, eof, 1, true);
+  QVERIFY(f.putUntil(data, eof, 1) == 0);
   // Check values
   QVERIFY(!f.isEmpty());
   QVERIFY(!f.isFull());
@@ -483,7 +533,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
    * Test case with part of EOF reached exactly 1 byte before frame becomes full
    */
   // Put data
-  f.putUntil(data, eof, 4, true);
+  QVERIFY(f.putUntil(data, eof, 4) == 4);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 1);
@@ -492,7 +542,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "0123");
   // Add a part of EOF sequence and check values
-  f.putUntil(eof.data(), eof, 1, true);
+  QVERIFY(f.putUntil(eof.data(), eof, 1) == 1);
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
   QVERIFY(f.isFull());
@@ -511,7 +561,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
    * Test case with EOF reached exactly 2 byte before frame becomes full
    */
   // Put data
-  f.putUntil(data, eof, 3, true);
+  QVERIFY(f.putUntil(data, eof, 3) == 3);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 2);
@@ -520,7 +570,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "012");
   // Add EOF sequence and check values
-  f.putUntil(eof.data(), eof, 2, true);
+  QVERIFY(f.putUntil(eof.data(), eof, 2) == 0);
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 2);
   QVERIFY(!f.isFull());
@@ -539,7 +589,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
    * Test case with EOF never reached
    */
   // Put data
-  f.putUntil(data, eof, 5, true);
+  QVERIFY(f.putUntil(data, eof, 5) == 5);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);
@@ -548,7 +598,7 @@ void mdtFrameTest::asciiReceptionEofStrIgnoreNullValuesTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f == "01234");
   // Try to put more data
-  f.putUntil(data, eof, 5, true);
+  QVERIFY(f.putUntil(data, eof, 5) == 0);
   // check flags
   QVERIFY(!f.isEmpty());
   QVERIFY(f.remainCapacity() == 0);

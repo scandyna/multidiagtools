@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 7
+  revision 17
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -42,6 +42,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 148354 // mdtSerialPort
     classdiagram 128002 "mdtSerialPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -382,6 +383,46 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 312834 "pvRxFrameSize"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 312962 "pvRxQueueSize"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 319490 "pvFrameType"
+	private explicit_type "mdtFrame::type_t"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 319618 "pvEofSeq"
+	private type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       attribute 196354 "pvIsValid"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -696,6 +737,180 @@ ${inlines}
 
       operation 257666 "xoffChar"
 	public explicit_return_type "char"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 380546 "setRxFrameSize"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "size" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 381058 "rxFrameSize"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 380802 "setRxQueueSize"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "size" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 381314 "rxQueueSize"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 380674 "setTxFrameSize"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "size" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 381186 "txFrameSize"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 380930 "setTxQueueSize"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "size" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 381442 "txQueueSize"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 388226 "setFrameType"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "type" explicit_type "mdtFrame::type_t"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 388354 "frameType"
+	public explicit_return_type "mdtFrame::type_t"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 388482 "setEofSeq"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "eof" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 388610 "eofSeq"
+	public return_type class_ref 236162 // QByteArray
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1553,10 +1768,55 @@ ${inlines}
 	
       end
 
+      operation 395906 "flushRx"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 409986 "readData"
+	public explicit_return_type "int"
+	nparams 2
+	  param in name "data" explicit_type "char"
+	multiplicity "*"
+	  param in name "maxLen" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 351234 "waitEventTxReady"
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 410114 "writeData"
+	public explicit_return_type "int"
+	nparams 2
+	  param in name "data" explicit_type "char"
+	multiplicity "*"
+	  param in name "maxLen" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -1608,6 +1868,62 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 389122 "rxFrames"
+	public explicit_return_type "QQueue<mdtFrame*>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 389250 "rxFramesPool"
+	public explicit_return_type "QQueue<mdtFrame*>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 410242 "txFrames"
+	public explicit_return_type "QQueue<mdtFrame*>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 410370 "txFramesPool"
+	public explicit_return_type "QQueue<mdtFrame*>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1814,6 +2130,26 @@ ${inlines}
 	    classrelation_ref 244866 // pvRxFramesPool (<directional composition>)
 	  b parent class_ref 196354 // mdtFrame
       end
+
+      classrelation 264450 // pvTxFrames (<directional composition>)
+	relation 264194 *-->
+	  stereotype "QQueue<mdtFrame*>"
+	  a role_name "pvTxFrames" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 264450 // pvTxFrames (<directional composition>)
+	  b parent class_ref 196354 // mdtFrame
+      end
+
+      classrelation 264578 // pvTxFramesPool (<directional composition>)
+	relation 264322 *-->
+	  stereotype "QQueue<mdtFrame*>"
+	  a role_name "pvTxFramesPool" multiplicity "0..*" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 264578 // pvTxFramesPool (<directional composition>)
+	  b parent class_ref 196354 // mdtFrame
+      end
     end
 
     class 189698 "mdtSerialPortSys"
@@ -2010,6 +2346,35 @@ ${inlines}
 	
       end
 
+      operation 402562 "commitFrame"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "frame" type class_ref 196354 // mdtFrame
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 402690 "getNewFrame"
+	private return_type class_ref 196354 // mdtFrame
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 309378 "run"
 	private explicit_return_type "void"
 	nparams 0
@@ -2022,6 +2387,184 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    activity 128002 "rx"
+      specification operation_ref 309378 // run
+      activitydiagram 235394 "rx"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 128002 "readen = readData(bufferSize)"
+	call_operation_action
+	no_operation
+	flow 164354 "<flow>"
+	  on activityaction_ref 134530 // activity action toStore = readen
+	end
+      end
+
+      activitynode 134786 initial_node ""
+	flow 172034 "<flow>"
+	  on activityaction_ref 157186 // activity action bufferCursor = buffer
+	end
+      end
+
+      activityaction 134530 "toStore = readen"
+	call_operation_action
+	no_operation
+	flow 172418 "<flow>"
+	  on activitynode_ref 170242 // merge
+	end
+      end
+
+      activityaction 141442 "rxFrames.enqueue(frame)"
+	opaque_action
+	flow 172930 "<flow>"
+	  on activityaction_ref 170370 // activity action toStore -= frame.eofSeqLen()
+	end
+      end
+
+      activityaction 149634 "heuu"
+	call_behavior_action
+	synchronous activity_ref 141186 // getNewFrame
+      end
+
+      activityaction 150146 "frame = getNewFrame()"
+	opaque_action
+	flow 172802 "<flow>"
+	  on activityaction_ref 157058 // activity action toStore = toStore - stored
+	end
+      end
+
+      activityaction 156930 "stored = frame.putData(toStore)"
+	opaque_action
+	flow 171010 "<flow>"
+	  on activitynode_ref 169986 // decision
+	end
+      end
+
+      activityaction 157058 "toStore = toStore - stored"
+	opaque_action
+	flow 171650 "<flow>"
+	  on activitynode_ref 170114 // decision
+	end
+      end
+
+      activityaction 157186 "bufferCursor = buffer"
+	opaque_action
+	flow 172162 "<flow>"
+	  on activityaction_ref 128002 // activity action readen = readData(bufferSize)
+	end
+      end
+
+      activityaction 157314 "bufferCursor += stored"
+	opaque_action
+	flow 172674 "<flow>"
+	  on activitynode_ref 170242 // merge
+	end
+      end
+
+      activitynode 163330 activity_final ""
+      end
+
+      activitynode 169986 decision ""
+	flow 171138 "[frame.bytesToRead() == 0]"
+	  on activityaction_ref 141442 // activity action rxFrames.enqueue(frame)
+	end
+
+	flow 171394 "[else]"
+	  on activityaction_ref 157058 // activity action toStore = toStore - stored
+	end
+      end
+
+      activitynode 170114 decision ""
+	flow 171778 "[toStore > 0]"
+	  on activityaction_ref 157314 // activity action bufferCursor += stored
+	end
+
+	flow 171906 "[else]"
+	  on activitynode_ref 163330 // activity_final
+	end
+      end
+
+      activitynode 170242 merge ""
+	flow 172546 "[frame != 0]"
+	  on activityaction_ref 156930 // activity action stored = frame.putData(toStore)
+	end
+      end
+
+      activityaction 170370 "toStore -= frame.eofSeqLen()"
+	opaque_action
+	flow 173058 "<flow>"
+	  on activityaction_ref 170498 // activity action bufferCursor += frame.eofSeqLen()
+	end
+      end
+
+      activityaction 170498 "bufferCursor += frame.eofSeqLen()"
+	opaque_action
+	flow 173186 "<flow>"
+	  on activityaction_ref 150146 // activity action frame = getNewFrame()
+	end
+      end
+
+    end
+
+    activity 141186 "getNewFrame"
+      specification operation_ref 402690 // getNewFrame
+      activitydiagram 242050 "getNewFrame"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activitynode 149378 initial_node ""
+	flow 146178 "<flow>"
+	  on activityaction_ref 149762 // activity action pvRxFramesPool.size() > 0
+	end
+      end
+
+      activityaction 149762 "pvRxFramesPool.size() > 0"
+	opaque_action
+	flow 146306 "<flow>"
+	  on activitynode_ref 149506 // decision
+	end
+      end
+
+      activitynode 149506 decision ""
+	flow 146434 "[true]"
+	  on activityaction_ref 149890 // activity action frame = pvRxFramesPool.dequeue()
+	end
+
+	flow 146562 "[else]"
+	  on activityaction_ref 150018 // activity action frame = 0
+	end
+      end
+
+      activityaction 149890 "frame = pvRxFramesPool.dequeue()"
+	opaque_action
+	flow 148482 "<flow>"
+	  on activityaction_ref 150402 // activity action frame.clear()
+	end
+      end
+
+      activityaction 150018 "frame = 0"
+	opaque_action
+	flow 146818 "<flow>"
+	  on activitynode_ref 149634 // activity_final
+	end
+      end
+
+      activitynode 149634 activity_final ""
+      end
+
+      activityaction 150402 "frame.clear()"
+	opaque_action
+	flow 148610 "<flow>"
+	  on activitynode_ref 149634 // activity_final
+	end
       end
     end
 
@@ -2073,6 +2616,113 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    activity 147714 "tx"
+      specification operation_ref 309378 // run
+      activitydiagram 248706 "tx"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activitynode 170370 initial_node ""
+	flow 173314 "<flow>"
+	  on activitynode_ref 170498 // decision
+	end
+      end
+
+      activitynode 170498 decision ""
+	flow 173442 "[frame == 0]"
+	  on activityaction_ref 170626 // activity action frame = getNewFrame()
+	end
+
+	flow 174082 "[else]"
+	  on activityaction_ref 171010 // activity action written = writeData(toWrite)
+	end
+      end
+
+      activityaction 170626 "frame = getNewFrame()"
+	opaque_action
+	flow 173570 "<flow>"
+	  on activitynode_ref 170626 // decision
+	end
+      end
+
+      activitynode 170626 decision ""
+	flow 173698 "[frame == 0]"
+	  on activitynode_ref 170754 // activity_final
+	end
+
+	flow 173826 "<flow>"
+	  on activityaction_ref 170754 // activity action bufferCursor = frame.data()
+	end
+      end
+
+      activitynode 170754 activity_final ""
+      end
+
+      activityaction 170754 "bufferCursor = frame.data()"
+	opaque_action
+	flow 173954 "<flow>"
+	  on activityaction_ref 170882 // activity action toWrite = frame.size()
+	end
+      end
+
+      activityaction 170882 "toWrite = frame.size()"
+	opaque_action
+	flow 174210 "<flow>"
+	  on activityaction_ref 171010 // activity action written = writeData(toWrite)
+	end
+      end
+
+      activityaction 171010 "written = writeData(toWrite)"
+	opaque_action
+	flow 174338 "<flow>"
+	  on activityaction_ref 171138 // activity action toWrite -= written
+	end
+      end
+
+      activityaction 171138 "toWrite -= written"
+	opaque_action
+	flow 174466 "<flow>"
+	  on activityaction_ref 171266 // activity action bufferCursor += written
+	end
+      end
+
+      activityaction 171266 "bufferCursor += written"
+	opaque_action
+	flow 174594 "<flow>"
+	  on activitynode_ref 170882 // decision
+	end
+      end
+
+      activitynode 170882 decision ""
+	flow 174722 "[frame.isEmpty()]"
+	  on activityaction_ref 171394 // activity action txFramesPoll.enqueue(frame)
+	end
+
+	flow 174978 "[else]"
+	  on activitynode_ref 171010 // activity_final
+	end
+      end
+
+      activityaction 171394 "txFramesPoll.enqueue(frame)"
+	opaque_action
+	flow 174850 "<flow>"
+	  on activityaction_ref 171522 // activity action frame = getNewFrame()
+	end
+      end
+
+      activityaction 171522 "frame = getNewFrame()"
+	opaque_action
+	flow 175106 "<flow>"
+	  on activitynode_ref 171010 // activity_final
+	end
+      end
+
+      activitynode 171010 activity_final ""
       end
     end
 
@@ -2140,7 +2790,36 @@ ${inlines}
 	
       end
     end
+
   end
 
   package_ref 141698 // linux
+
+  deploymentview 148354 "mdtSerialPort"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 159746 "mdtSerialPortRxThread"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 222850 // mdtSerialPortRxThread
+      end
+    end
+  end
 end

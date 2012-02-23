@@ -309,6 +309,33 @@ mdtFrame.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrame.cpp.s
 .PHONY : mdtFrame.cpp.s
 
+mdtFrameAscii.o: mdtFrameAscii.cpp.o
+.PHONY : mdtFrameAscii.o
+
+# target to build an object file
+mdtFrameAscii.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameAscii.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameAscii.cpp.o
+.PHONY : mdtFrameAscii.cpp.o
+
+mdtFrameAscii.i: mdtFrameAscii.cpp.i
+.PHONY : mdtFrameAscii.i
+
+# target to preprocess a source file
+mdtFrameAscii.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameAscii.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameAscii.cpp.i
+.PHONY : mdtFrameAscii.cpp.i
+
+mdtFrameAscii.s: mdtFrameAscii.cpp.s
+.PHONY : mdtFrameAscii.s
+
+# target to generate assembly for a file
+mdtFrameAscii.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameAscii.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameAscii.cpp.s
+.PHONY : mdtFrameAscii.cpp.s
+
 mdtParentChildTableItem.o: mdtParentChildTableItem.cpp.o
 .PHONY : mdtParentChildTableItem.o
 
@@ -492,6 +519,9 @@ help:
 	@echo "... mdtFrame.o"
 	@echo "... mdtFrame.i"
 	@echo "... mdtFrame.s"
+	@echo "... mdtFrameAscii.o"
+	@echo "... mdtFrameAscii.i"
+	@echo "... mdtFrameAscii.s"
 	@echo "... mdtParentChildTableItem.o"
 	@echo "... mdtParentChildTableItem.i"
 	@echo "... mdtParentChildTableItem.s"

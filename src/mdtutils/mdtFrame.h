@@ -32,6 +32,14 @@ class mdtFrame : public QByteArray
   mdtFrame();
   ~mdtFrame();
 
+  enum type_t { mdtFrameTypeAscii = 1 };
+
+  /*! \brief Set the ignore null values flag.
+   * 
+   * If set true, all null values ('\0' or 0) are not stored by putUntil() methods
+   */
+  void setIgnoreNullValues(bool ignoreNullValues);
+
   /*! \brief Put data until EOF token was reached
    *
    * This function is usefull for ASCII frames reception. Whenn token is reached, the EOF condition will become true (the EOF char is not stored).<br>
@@ -40,17 +48,17 @@ class mdtFrame : public QByteArray
    * \param data Pointer to source data
    * \param token Token that represents the EOF (End Of Frame)
    * \param maxLen Length of the array pointed by data
-   * \param ignoreNullValues If true, null ('\0' or 0) values are not stored.
+   * \return The number of bytes really stored
    * \pre The data pointer must be valid, and not be the internal pointer returned by data().
    */
-  void putUntil(const char *data, char token, int maxLen, bool ignoreNullValues);
+  int putUntil(const char *data, char token, int maxLen);
 
   /*! \brief Put data until EOF token was reached
    * 
    * This is an overloaded function. The token can be a sequence of bytes.
    * \sa putUntil()
    */
-  void putUntil(const char *data, QByteArray &token, int maxLen, bool ignoreNullValues);
+  int putUntil(const char *data, QByteArray &token, int maxLen);
 
   /*! \brief Returns true if frame is full
    */
@@ -61,6 +69,7 @@ class mdtFrame : public QByteArray
   int remainCapacity();
 
   /*! \brief Returns the bytes to store into the frame
+   * 
    * Bytes to store can be the remainCapacity() value if frame is not full and EOF condition was not reached.
    * Else, it returns 0.
    */
@@ -71,17 +80,41 @@ class mdtFrame : public QByteArray
   bool isComplete();
 
   /*! \brief Overloaded function
+   * 
    * Internally, it calls QByteArray's clear() and reserve() functions.
    * The goal is to keep the same capacity and reset some mdtFrame specific flags
    */
   void clear();
 
+  /*! \brief Put data into the frame
+   * 
+   * Must be implemented by specific frame subclass.
+   * This method is called by the RX thread.
+   * Default implementation simply stores the maximum data as possible. No flags ares set.
+   * \param data Valid pointer to the data
+   * \param len Maximum number of byte to store, must not be more than data size
+   * \return Number of bytes that could really be stored
+   * \pre The data pointer must be valid, and not be the internal pointer returned by data().
+   */
+  virtual int putData(char *data, int len);
+
+  /*! \brief Get the length of the end of frame sequence
+   *  Used for ASCII frames.
+   *  Default implementation returns 0
+   */
+  virtual int eofSeqLen();
+
   /*! \brief Take some data
+   * 
    * \param data Pointer to data destination
    * \param len Number of bytes to take
    * \pre The data pointer must be valid, and not be the internal pointer returned by data().
    */
   int take(char *data, int len);
+
+ protected:
+
+  bool pvIgnoreNullValues;
 
  private:
 

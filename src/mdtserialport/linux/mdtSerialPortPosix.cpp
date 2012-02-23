@@ -158,16 +158,27 @@ bool mdtSerialPortPosix::waitEventRx()
   return true;
 }
 
+void mdtSerialPortPosix::flushRx()
+{
+  qDebug() << "mdtSerialPortPosix::flushRx() - NOT implemented !!!";
+}
+
 int mdtSerialPortPosix::readData(char *data, int maxLen)
 {
   int n;
 
   n = read(pvSerialPortFd, data, maxLen);
   if(n < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
-    e.commit();
+    switch(errno){
+      case EAGAIN:  // No data available
+        return 0;
+      default:
+        mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
+        e.setSystemError(errno, strerror(errno));
+        MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+        e.commit();
+    }
+
 /*
     switch(errno){
       case EINTR:
@@ -224,6 +235,11 @@ bool mdtSerialPortPosix::waitEventTxReady()
   }
 
   return true;
+}
+
+void mdtSerialPortPosix::flushTx()
+{
+  qDebug() << "mdtSerialPortPosix::flushTx() - NOT implemented !!!";
 }
 
 int mdtSerialPortPosix::writeData(const char *data, int len)

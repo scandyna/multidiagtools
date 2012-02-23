@@ -22,6 +22,12 @@ class mdtSerialPort : public mdtSerialPortSys
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
 
+  /*! \brief Open the serial port with given configuration
+   * \param cfg Contains the setup for the serial port to open
+   * \return True on successfull configuration and open port
+   */
+  bool openPort(mdtSerialPortConfig &cfg);
+
   /*! \brief Returns RX timeout state
    */
   bool rxTimeoutOccured();

@@ -1,16 +1,16 @@
-window_sizes 1280 1002 337 937 808 120
+window_sizes 1280 1002 394 880 808 120
 diagrams
-  classdiagram_ref 189442 // mdtFrame
-    749 646 100 4 0 0
-  active  classdiagram_ref 128002 // mdtSerialPort
-    937 808 100 4 240 0
-  classdiagram_ref 182914 // interactions
-    749 646 100 4 0 0
+  active  activitydiagram_ref 248706 // tx
+    880 808 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 128002 // mdtSerialPort
+selected activitydiagram_ref 235394 // rx
 open
-  classview_ref 128002 // mdtSerialPort
+  
+  package_ref 128002 // mdtutils
+  activityaction_ref 128002 // activity action readen = readData(bufferSize)
+  activity_ref 147714 // tx
+  classview_ref 175106 // mdtSerialPort
   
   package_ref 134530 // mdtTest
 end

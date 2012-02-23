@@ -37,7 +37,9 @@ void mdtSerialPortTxThread::run()
     // Event occured, send the data to port - Check timeout state first
     if(!pvSerialPort->txTimeoutOccured()){
       pvSerialPort->lockMutex();
-      if(!pvSerialPort->writeData("Just for test", 13)){
+      
+      
+      if(!pvSerialPort->writeData("Just for test", 14)){
         pvRunning = false;
         pvSerialPort->unlockMutex();
         break;
