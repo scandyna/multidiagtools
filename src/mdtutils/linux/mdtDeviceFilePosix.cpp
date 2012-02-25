@@ -22,8 +22,6 @@ mdtDeviceFilePosix::~mdtDeviceFilePosix()
 
 bool mdtDeviceFilePosix::open(mdtDeviceFileConfig &cfg)
 {
-  qDebug() << "mdtDeviceFilePosix::open()";
-  
   // Close previous opened device
   this->close();
   // Try to open port
@@ -44,7 +42,6 @@ bool mdtDeviceFilePosix::open(mdtDeviceFileConfig &cfg)
 void mdtDeviceFilePosix::close()
 {
   if(pvFd >= 0){
-    qDebug() << "mdtDeviceFilePosix::close() - closing FD";
     ::close(pvFd);
     pvFd = -1;
   }

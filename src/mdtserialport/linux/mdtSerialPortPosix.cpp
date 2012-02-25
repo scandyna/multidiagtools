@@ -7,8 +7,9 @@
 #include <sys/ioctl.h>
 #include <errno.h> 
 #include <cstring>
-#include <QDebug>
 #include <QString>
+
+#include <QDebug>
 
 mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
  : mdtAbstractSerialPort(parent)
@@ -38,8 +39,6 @@ mdtSerialPortPosix::~mdtSerialPortPosix()
 bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 {
   QString strNum;
-
-  qDebug() << "mdtSerialPortPosix::open()";
 
   // Close previous opened port
   close();
@@ -117,7 +116,6 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 void mdtSerialPortPosix::close()
 {
   if(pvFd >= 0){
-    qDebug() << "mdtSerialPortPosix::close(): restoring termios";
     tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
     mdtDeviceFile::close();
   }
@@ -165,7 +163,6 @@ bool mdtSerialPortPosix::getCtlStates()
 
   // See witch signals changed
   if((states & TIOCM_CAR) != pvPreviousCarState){
-    qDebug() << "CAR (CD) changed: " << (states & TIOCM_CAR);
     // Store new state
     pvPreviousCarState = (states & TIOCM_CAR);
     // Determine current state and emit signal
@@ -177,7 +174,6 @@ bool mdtSerialPortPosix::getCtlStates()
     emit carChanged(pvCarIsOn);
   }
   if((states & TIOCM_DSR) != pvPreviousDsrState){
-    qDebug() << "DSR changed: " << (states & TIOCM_DSR);
     // Store new state
     pvPreviousDsrState = (states & TIOCM_DSR);
     // Determine current state and emit signal
@@ -189,7 +185,6 @@ bool mdtSerialPortPosix::getCtlStates()
     emit dsrChanged(pvDsrIsOn);
   }
   if((states & TIOCM_CTS) != pvPreviousCtsState){
-    qDebug() << "CTS changed: " << (states & TIOCM_CTS);
     // Store new state
     pvPreviousCtsState = (states & TIOCM_CTS);
     // Determine current state and emit signal
@@ -201,7 +196,6 @@ bool mdtSerialPortPosix::getCtlStates()
     emit ctsChanged(pvCtsIsOn);
   }
   if((states & TIOCM_RNG) != pvPreviousRngState){
-    qDebug() << "RNG (RI) changed: " << (states & TIOCM_RNG);
     // Store new state
     pvPreviousRngState = (states & TIOCM_RNG);
     // Determine current state and emit signal

@@ -3,10 +3,10 @@
 #include "mdtSerialPortManager.h"
 #include "mdtSerialPort.h"
 #include "mdtSerialPortConfig.h"
-#include "mdtSerialPortThread.h"
+#include "mdtDeviceFileThread.h"
+#include "mdtDeviceFileReadThread.h"
+#include "mdtDeviceFileWriteThread.h"
 #include "mdtSerialPortCtlThread.h"
-#include "mdtSerialPortTxThread.h"
-#include "mdtSerialPortRxThread.h"
 
 #include <QTest>
 #include <QtGlobal>
@@ -32,7 +32,7 @@ void mdtSerialPortTest::essais()
   cfg.enableFlowCtlRtsCts();
   QVERIFY(sp.open(cfg));
 
-  ctlThd.setSerialPort(&sp);
+  ctlThd.setDeviceFile(&sp);
   
   //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));
   //emit testSignal(true);
@@ -264,7 +264,7 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   QVERIFY(sp.open(cfg));
 
   // Assign sp to the control thread
-  ctlThd.setSerialPort(&sp);
+  ctlThd.setDeviceFile(&sp);
 
   // Start control thread
   ctlThd.start();
@@ -298,7 +298,7 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
   QVERIFY(sp.open(cfg));
 
   // Assign sp to the control thread and start
-  ctlThd.setSerialPort(&sp);
+  ctlThd.setDeviceFile(&sp);
   ctlThd.start();
 
   // Initial states NOTE: CAR et RNG ?
@@ -330,8 +330,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
-  mdtSerialPortRxThread rxThd;
-  mdtSerialPortTxThread txThd;
+  mdtDeviceFileReadThread rxThd;
+  mdtDeviceFileWriteThread txThd;
   mdtFrame *f;
   
   qDebug() << "* make shure that test terminal is plugged on serial port (ttyS0 , COM1) *";
@@ -343,10 +343,10 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   QVERIFY(sp.open(cfg));
   
   // Assign sp to the RX thread and start
-  rxThd.setSerialPort(&sp);
+  rxThd.setDeviceFile(&sp);
   rxThd.start();
   // Assign sp to the TX thread and start
-  txThd.setSerialPort(&sp);
+  txThd.setDeviceFile(&sp);
   txThd.start();
   
   /// Note: test sans frame ...

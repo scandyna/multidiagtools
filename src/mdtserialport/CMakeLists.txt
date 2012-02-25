@@ -24,10 +24,7 @@ set (SOURCES_FILES
           mdtSerialPortConfig.cpp
           mdtSerialPortInterface.cpp
           mdtSerialPortInterfaceOptAttribute.cpp
-          mdtSerialPortThread.cpp
           mdtSerialPortCtlThread.cpp
-          mdtSerialPortRxThread.cpp
-          mdtSerialPortTxThread.cpp
     )
 
 # Liste des fichiers ui

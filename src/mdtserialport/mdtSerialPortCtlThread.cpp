@@ -1,16 +1,23 @@
 
 #include "mdtSerialPortCtlThread.h"
-#include <QDebug>
 #include <QApplication>
 
 #ifdef Q_OS_UNIX
  #include <pthread.h>
 #endif
 
-
 mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
- : mdtSerialPortThread(parent)
+ : mdtDeviceFileThread(parent)
 {
+  pvSerialPort = 0;
+}
+
+void mdtSerialPortCtlThread::setDeviceFile(mdtSerialPort *serialPort)
+{
+  Q_ASSERT(serialPort != 0);
+
+  mdtDeviceFileThread::setDeviceFile(serialPort);
+  pvSerialPort = serialPort;
 }
 
 #ifdef Q_OS_UNIX

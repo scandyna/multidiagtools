@@ -35,6 +35,9 @@ set (SOURCES_FILES
           mdtAbstractDeviceFile.cpp
           mdtDeviceFile.cpp
           mdtDeviceFileConfig.cpp
+          mdtDeviceFileThread.cpp
+          mdtDeviceFileReadThread.cpp
+          mdtDeviceFileWriteThread.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

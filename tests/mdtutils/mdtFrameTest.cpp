@@ -1,5 +1,6 @@
 #include "mdtFrameTest.h"
 #include "mdtFrame.h"
+#include "mdtFrameAscii.h"
 
 #include <QTest>
 #include <cstring>
@@ -40,8 +41,12 @@ void mdtFrameTest::initTest()
 void mdtFrameTest::putDataTest()
 {
   mdtFrame f;
+  mdtFrameAscii fa;
   char data[11] = "0123456789";
 
+  /*
+   * mdtFrame
+   */
   f.reserve(5);
 
   // Initial values
@@ -80,6 +85,49 @@ void mdtFrameTest::putDataTest()
   QVERIFY(f.remainCapacity() == 0);
   QVERIFY(f.bytesToStore() == 0);
   QVERIFY(f == "01234");
+
+  /*
+   * mdtFrameAscii
+   */
+  fa.reserve(5);
+
+  // Initial values
+  QVERIFY(fa.isEmpty());
+  QVERIFY(!fa.isFull());
+  QVERIFY(fa.remainCapacity() == 5);
+  QVERIFY(fa.bytesToStore() == 5);
+  // Put a char
+  QVERIFY(fa.putData(data, 1) == 1);
+  // Check values
+  QVERIFY(!fa.isEmpty());
+  QVERIFY(!fa.isFull());
+  QVERIFY(fa.remainCapacity() == 4);
+  QVERIFY(fa.bytesToStore() == 4);
+  QVERIFY(fa == "0");
+  // Put 4 bytes
+  QVERIFY(fa.putData(&data[1], 4) == 4);
+  // Check values
+  QVERIFY(!fa.isEmpty());
+  QVERIFY(fa.isFull());
+  QVERIFY(fa.remainCapacity() == 0);
+  QVERIFY(fa.bytesToStore() == 0);
+  QVERIFY(fa == "01234");
+
+  // Re-init
+  fa.clear();
+  QVERIFY(fa.isEmpty());
+  QVERIFY(!fa.isFull());
+  QVERIFY(fa.remainCapacity() == 5);
+  QVERIFY(fa.bytesToStore() == 5);
+  // Try to put to many data
+  QVERIFY(fa.putData(data, 7) == 5);
+  // Check values
+  QVERIFY(!fa.isEmpty());
+  QVERIFY(fa.isFull());
+  QVERIFY(fa.remainCapacity() == 0);
+  QVERIFY(fa.bytesToStore() == 0);
+  QVERIFY(fa == "01234");
+
 }
 
 void mdtFrameTest::asciiReceptionTest()

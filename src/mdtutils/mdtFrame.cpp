@@ -22,6 +22,11 @@ int mdtFrame::putUntil(const char *data, char token, int maxLen)
   Q_ASSERT(data != 0);
   Q_ASSERT(data != QByteArray::data());
 
+  // Get max size that can be stored
+  if(maxLen > remainCapacity()){
+    maxLen = remainCapacity();
+  }
+  // Init cursors
   char *cursor = (char*)data;
   char *end = cursor + maxLen;
   int stored = 0;
@@ -64,6 +69,11 @@ int mdtFrame::putUntil(const char *data, QByteArray &token, int maxLen)
   Q_ASSERT(data != 0);
   Q_ASSERT(data != QByteArray::data());
 
+  // Get max size that can be stored
+  if(maxLen > remainCapacity()){
+    maxLen = remainCapacity();
+  }
+  // Init cursors
   char *cursor = (char*)data;
   char *end = cursor + maxLen;
   int stored = 0;
