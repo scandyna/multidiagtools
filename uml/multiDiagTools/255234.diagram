@@ -20,7 +20,7 @@ end
 relationcanvas 128514 relation_ref 271234 // <directional composition>
   decenter_begin 122
   decenter_end 90
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 168.5 3000 to ref 128386
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 168 3000 to ref 128386
   role_a_pos 415 96 3000 no_role_b
   multiplicity_a_pos 497 123 3000 no_multiplicity_b
 end
@@ -34,13 +34,13 @@ end
 relationcanvas 128770 relation_ref 271490 // <directional composition>
   decenter_begin 485
   decenter_end 637
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 335.5 3000 to ref 128386
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 335 3000 to ref 128386
   role_a_pos 533 276 3000 no_role_b
   multiplicity_a_pos 491 276 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 271618 // <directional composition>
   decenter_begin 716
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 421.5 443.5 3000 to ref 128386
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 421 443 3000 to ref 128386
   role_a_pos 477 337 3000 no_role_b
   multiplicity_a_pos 570 364 3000 no_multiplicity_b
 end

@@ -26,31 +26,10 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   ~mdtSerialPortPosix();
 
   // Open a port with a given configuration
-  bool openPort(mdtSerialPortConfig &cfg);
+  bool open(mdtSerialPortConfig &cfg);
 
-  // Set the RX timeout [ms]
-  void setRxTimeout(int timeout);
-
-  // Set the TX timeout [ms]
-  void setTxTimeout(int timeout);
-
-  // Wait on RX event
-  bool waitEventRx();
-  
-  // Flush RX
-  void flushRx();
-
-  // Read data from port
-  int readData(char *data, int maxLen);
-
-  // Wait until data TX is possible
-  bool waitEventTxReady();
-
-  // Flush TX
-  void flushTx();
-
-  // Write data to port
-  int writeData(const char *data, int len);
+  // Restore original setup and close the port
+  void close();
 
   // Wait until a control signal (modem line state) changes
   bool waitEventCtl();
@@ -108,21 +87,15 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   // Returns true if Xon/Xoff flow control is enabled
   bool flowCtlXonXoffOn();
 
-  // Restore original setup and close the port
-  void closePort();
-  
   // Check if configuration could be done on system
   bool checkConfig(mdtSerialPortConfig cfg);
   
   // Used to catch the SIGALRM signal (doese nothing else)
   static void sigactionHandle(int signum);
   
-  int pvSerialPortFd;               // Serial port file descriptor
+  //int pvSerialPortFd;               // Serial port file descriptor
   struct termios pvTermios;         // Termios configuration structure
   struct termios pvOriginalTermios; // Original termios configuration structure to restore
-  // Timeouts
-  struct timeval pvRxTimeout;
-  struct timeval pvTxTimeout;
   // Ctl signals states memory
   int pvPreviousCarState;
   int pvPreviousDsrState;

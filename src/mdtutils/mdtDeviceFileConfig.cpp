@@ -104,3 +104,35 @@ QByteArray mdtDeviceFileConfig::endOfFrameSeq()
   return pvEndOfFrameSeq;
 }
 
+bool mdtDeviceFileConfig::operator==(const mdtDeviceFileConfig &other)
+{
+  return matches(other);
+}
+
+bool mdtDeviceFileConfig::operator!=(const mdtDeviceFileConfig &other)
+{
+  return !matches(other);
+}
+
+bool mdtDeviceFileConfig::matches(const mdtDeviceFileConfig &other)
+{
+  if(pvReadFrameSize != other.pvReadFrameSize){
+    return false;
+  }
+  if(pvReadQueueSize != other.pvReadQueueSize){
+    return false;
+  }
+  if(pvWriteFrameSize != other.pvWriteFrameSize){
+    return false;
+  }
+  if(pvWriteQueueSize != other.pvWriteQueueSize){
+    return false;
+  }
+  if(pvFrameType != other.pvFrameType){
+    return false;
+  }
+  if(pvEndOfFrameSeq != other.pvEndOfFrameSeq){
+    return false;
+  }
+  return true;
+}

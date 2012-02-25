@@ -15,13 +15,13 @@ mdtFrame *mdtSerialPortRxThread::getNewFrame()
 
   mdtFrame *frame;
 
-  if(pvSerialPort->rxFramesPool().size() < 1){
+  if(pvSerialPort->readFramesPool().size() < 1){
     mdtError e(MDT_UNDEFINED_ERROR, "RX frames pool is empty", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortRxThread");
     e.commit();
     return 0;
   }
-  frame = pvSerialPort->rxFramesPool().dequeue();
+  frame = pvSerialPort->readFramesPool().dequeue();
   Q_ASSERT(frame != 0);
   frame->clear();
 
@@ -76,14 +76,14 @@ void mdtSerialPortRxThread::run()
     pvSerialPort->unlockMutex();
 
     // Wait on RX event
-    if(!pvSerialPort->waitEventRx()){
+    if(!pvSerialPort->waitEventRead()){
       pvSerialPort->lockMutex();
       pvRunning = false;
       pvSerialPort->unlockMutex();
       break;
     }
     // Event occured, get the data from port - Check timeout state first
-    if(!pvSerialPort->rxTimeoutOccured()){
+    if(!pvSerialPort->readTimeoutOccured()){
       pvSerialPort->lockMutex();
       // Reset bufferCursor
       bufferCursor = buffer;
@@ -105,7 +105,7 @@ void mdtSerialPortRxThread::run()
           Q_ASSERT(toStore >= 0);
           bufferCursor = bufferCursor + frame->eofSeqLen();
           Q_ASSERT(bufferCursor < (buffer + bufferSize));
-          pvSerialPort->rxFrames().enqueue(frame);
+          pvSerialPort->readenFrames().enqueue(frame);
           frame = getNewFrame();
         }
         toStore = toStore - stored;

@@ -1,6 +1,6 @@
 format 76
 "linux" // mdtserialport::linux
-  revision 24
+  revision 26
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -184,16 +184,6 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 209538 "pvSerialPortFd"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       operation 233858 "mdtSerialPortPosix"
 	public explicit_return_type ""
 	nparams 1
@@ -232,7 +222,7 @@ ${inlines}
 	  b parent class_ref 189570 // mdtAbstractSerialPort
       end
 
-      operation 254978 "openPort"
+      operation 254978 "open"
 	public explicit_return_type "bool"
 	nparams 1
 	  param in name "config" type class_ref 128130 // mdtSerialPortConfig
@@ -247,104 +237,12 @@ ${inlines}
 	
       end
 
-      operation 330626 "setRxTimeout"
+      operation 256898 "close"
 	public explicit_return_type "void"
-	nparams 1
-	  param in name "timeout" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 330754 "setTxTimeout"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "timeout" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 409346 "waitEventRx"
-	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 409474 "flushRx"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 409602 "readData"
-	public explicit_return_type "int"
-	nparams 2
-	  param in name "data" explicit_type "char"
-	multiplicity "*"
-	  param in name "maxLen" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 409730 "waitEventTxReady"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 409858 "writeData"
-	public explicit_return_type "int"
-	nparams 2
-	  param in name "data" explicit_type "char"
-	multiplicity "*"
-	  param in name "maxLen" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -568,20 +466,6 @@ ${inlines}
 	idl_decl ""
       end
 
-      operation 256898 "closePort"
-	private explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 264962 "checkConfig"
 	private explicit_return_type "bool"
 	nparams 1
@@ -664,26 +548,6 @@ ${inlines}
 
       attribute 285826 "pvSigaction"
 	private explicit_type "struct sigaction"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 292866 "pvRxTimeout"
-	private explicit_type "struct timeval"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 292994 "pvTxTimeout"
-	private explicit_type "struct timeval"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""

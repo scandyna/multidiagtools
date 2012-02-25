@@ -147,23 +147,23 @@ relationcanvas 132610 relation_ref 230530 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 132866 relation_ref 244482 // <directional composition>
-  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80.5 84.5 3006 to ref 132738
-  role_a_pos 132 14 3000 no_role_b
+  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80 84 3006 to ref 132738
+  role_a_pos 134 31 3000 no_role_b
   multiplicity_a_pos 182 58 3000 no_multiplicity_b
 end
 relationcanvas 132994 relation_ref 244610 // <directional composition>
-  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80.5 84.5 3006 to ref 132738
-  role_a_pos 72 44 3000 no_role_b
+  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80 84 3006 to ref 132738
+  role_a_pos 110 31 3000 no_role_b
   multiplicity_a_pos 182 58 3000 no_multiplicity_b
 end
 relationcanvas 133122 relation_ref 264194 // <directional composition>
-  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80.5 84.5 3000 to ref 132738
+  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80 84 3000 to ref 132738
   role_a_pos 135 31 3000 no_role_b
   multiplicity_a_pos 186 58 3000 no_multiplicity_b
 end
 relationcanvas 133250 relation_ref 264322 // <directional composition>
-  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80.5 84.5 3000 to ref 132738
-  role_a_pos 50 20 3000 no_role_b
+  from ref 129154 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 80 84 3000 to ref 132738
+  role_a_pos 111 31 3000 no_role_b
   multiplicity_a_pos 186 58 3000 no_multiplicity_b
 end
 end

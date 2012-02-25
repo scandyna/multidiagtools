@@ -30,7 +30,7 @@ void mdtSerialPortTest::essais()
   cfg.setParity(mdtSerialPortConfig::NoParity);
   cfg.enableFlowCtlXonXoff();
   cfg.enableFlowCtlRtsCts();
-  QVERIFY(sp.openPort(cfg));
+  QVERIFY(sp.open(cfg));
 
   ctlThd.setSerialPort(&sp);
   
@@ -90,14 +90,14 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   QFETCH(char, xonCharRef);
   QFETCH(char, xoffChar);
   QFETCH(char, xoffCharRef);
-  QFETCH(int, rxFrameSize);
-  QFETCH(int, rxFrameSizeRef);
-  QFETCH(int, rxQueueSize);
-  QFETCH(int, rxQueueSizeRef);
-  QFETCH(int, txFrameSize);
-  QFETCH(int, txFrameSizeRef);
-  QFETCH(int, txQueueSize);
-  QFETCH(int, txQueueSizeRef);
+  QFETCH(int, readFrameSize);
+  QFETCH(int, readFrameSizeRef);
+  QFETCH(int, readQueueSize);
+  QFETCH(int, readQueueSizeRef);
+  QFETCH(int, writeFrameSize);
+  QFETCH(int, writeFrameSizeRef);
+  QFETCH(int, writeQueueSize);
+  QFETCH(int, writeQueueSizeRef);
 
   // Create a new config
   mdtSerialPortConfig cfg1, cfg2;
@@ -118,10 +118,10 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   QVERIFY(!cfg1.flowCtlXonXoffEnabled());
   QCOMPARE(cfg1.xonChar(), (char)MDT_DEF_XON);
   QCOMPARE(cfg1.xoffChar(), (char)MDT_DEF_XOFF);
-  QVERIFY(cfg1.rxFrameSize() == 1024);
-  QVERIFY(cfg1.rxQueueSize() == 10);
-  QVERIFY(cfg1.txFrameSize() == 1024);
-  QVERIFY(cfg1.txQueueSize() == 10);
+  QVERIFY(cfg1.readFrameSize() == 1024);
+  QVERIFY(cfg1.readQueueSize() == 10);
+  QVERIFY(cfg1.writeFrameSize() == 1024);
+  QVERIFY(cfg1.writeQueueSize() == 10);
   
   // With default config, cfg1 and cfg2 must be the same
   QVERIFY(cfg1 == cfg2);
@@ -152,14 +152,14 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
     cfg1.diseableFlowCtlXonXoff();
   }
   QCOMPARE(cfg1.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
-  cfg1.setRxFrameSize(rxFrameSize);
-  QCOMPARE(cfg1.rxFrameSize(), rxFrameSizeRef);
-  cfg1.setRxQueueSize(rxQueueSize);
-  QCOMPARE(cfg1.rxQueueSize(), rxQueueSizeRef);
-  cfg1.setTxFrameSize(txFrameSize);
-  QCOMPARE(cfg1.txFrameSize(), txFrameSizeRef);
-  cfg1.setTxQueueSize(txQueueSize);
-  QCOMPARE(cfg1.txQueueSize(), txQueueSizeRef);
+  cfg1.setReadFrameSize(readFrameSize);
+  QCOMPARE(cfg1.readFrameSize(), readFrameSizeRef);
+  cfg1.setReadQueueSize(readQueueSize);
+  QCOMPARE(cfg1.readQueueSize(), readQueueSizeRef);
+  cfg1.setWriteFrameSize(writeFrameSize);
+  QCOMPARE(cfg1.writeFrameSize(), writeFrameSizeRef);
+  cfg1.setWriteQueueSize(writeQueueSize);
+  QCOMPARE(cfg1.writeQueueSize(), writeQueueSizeRef);
 
   // Test copy
   cfg2 = cfg1;
@@ -172,11 +172,11 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   QCOMPARE(cfg2.xonChar(), xonCharRef);
   QCOMPARE(cfg2.xoffChar(), xoffCharRef);
   QCOMPARE(cfg2.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
-  QCOMPARE(cfg2.rxFrameSize(), rxFrameSizeRef);
-  QCOMPARE(cfg2.rxFrameSize(), rxFrameSizeRef);
-  QCOMPARE(cfg2.rxQueueSize(), rxQueueSizeRef);
-  QCOMPARE(cfg2.txFrameSize(), txFrameSizeRef);
-  QCOMPARE(cfg2.txQueueSize(), txQueueSizeRef);
+  QCOMPARE(cfg2.readFrameSize(), readFrameSizeRef);
+  QCOMPARE(cfg2.readFrameSize(), readFrameSizeRef);
+  QCOMPARE(cfg2.readQueueSize(), readQueueSizeRef);
+  QCOMPARE(cfg2.writeFrameSize(), writeFrameSizeRef);
+  QCOMPARE(cfg2.writeQueueSize(), writeQueueSizeRef);
 
   // cfg1 and cfg2 must match
   QVERIFY(cfg1 == cfg2);
@@ -188,10 +188,10 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   cfg1.setDataBitsCount(-12);
   cfg1.setStopBitsCount(-1);
   cfg1.enableFlowCtlXonXoff('m', 'n');
-  cfg1.setRxFrameSize(12456);
-  cfg1.setRxQueueSize(21375);
-  cfg1.setTxFrameSize(51217);
-  cfg1.setTxQueueSize(11111);
+  cfg1.setReadFrameSize(12456);
+  cfg1.setReadQueueSize(21375);
+  cfg1.setWriteFrameSize(51217);
+  cfg1.setWriteQueueSize(11111);
   QCOMPARE(cfg2.interface(), interfaceRef);
   QCOMPARE(cfg2.baudRate(), baudRateRef);
   QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
@@ -201,9 +201,9 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   QCOMPARE(cfg2.xonChar(), xonCharRef);
   QCOMPARE(cfg2.xoffChar(), xoffCharRef);
   QCOMPARE(cfg2.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
-  QCOMPARE(cfg2.rxFrameSize(), rxFrameSizeRef);
-  QCOMPARE(cfg2.rxQueueSize(), rxQueueSizeRef);
-  QCOMPARE(cfg2.txFrameSize(), txFrameSizeRef);
+  QCOMPARE(cfg2.readFrameSize(), readFrameSizeRef);
+  QCOMPARE(cfg2.readQueueSize(), readQueueSizeRef);
+  QCOMPARE(cfg2.writeFrameSize(), writeFrameSizeRef);
 
   // cfg1 and cfg2 must not match
   QVERIFY(!(cfg1 == cfg2));
@@ -230,14 +230,14 @@ void mdtSerialPortTest::mdtSerialPortConfigTest_data()
   QTest::addColumn<char>("xonCharRef");
   QTest::addColumn<char>("xoffChar");
   QTest::addColumn<char>("xoffCharRef");
-  QTest::addColumn<int>("rxFrameSize");
-  QTest::addColumn<int>("rxFrameSizeRef");
-  QTest::addColumn<int>("rxQueueSize");
-  QTest::addColumn<int>("rxQueueSizeRef");
-  QTest::addColumn<int>("txFrameSize");
-  QTest::addColumn<int>("txFrameSizeRef");
-  QTest::addColumn<int>("txQueueSize");
-  QTest::addColumn<int>("txQueueSizeRef");
+  QTest::addColumn<int>("readFrameSize");
+  QTest::addColumn<int>("readFrameSizeRef");
+  QTest::addColumn<int>("readQueueSize");
+  QTest::addColumn<int>("readQueueSizeRef");
+  QTest::addColumn<int>("writeFrameSize");
+  QTest::addColumn<int>("writeFrameSizeRef");
+  QTest::addColumn<int>("writeQueueSize");
+  QTest::addColumn<int>("writeQueueSizeRef");
 
   QTest::newRow("Config 01") << "/dev/ttyS1" << "/dev/ttyS1" /* Interface */ \
     << 50 << 50 /* Baud rate */ \
@@ -248,10 +248,10 @@ void mdtSerialPortTest::mdtSerialPortConfigTest_data()
     << true << true /* Flow ctl Xon/Xoff */ \
     << 'a' << 'a'   /* Xon char */ \
     << 'b' << 'b'   /* Xoff char */ \
-    << 1000 << 1000 /* rxFrameSize */ \
-    << 5 << 5       /* rxQueueSize */ \
-    << 900 << 900   /* txFrameSize */ \
-    << 6 << 6       /* txQueueSize */ ;
+    << 1000 << 1000 /* readFrameSize */ \
+    << 5 << 5       /* readQueueSize */ \
+    << 900 << 900   /* writeFrameSize */ \
+    << 6 << 6       /* writeQueueSize */ ;
 }
 
 void mdtSerialPortTest::mdtSerialPortStartStopTest()
@@ -261,7 +261,7 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   mdtSerialPortCtlThread ctlThd;
 
   // Setup - We keep default config
-  QVERIFY(sp.openPort(cfg));
+  QVERIFY(sp.open(cfg));
 
   // Assign sp to the control thread
   ctlThd.setSerialPort(&sp);
@@ -295,7 +295,7 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
   cfg.setDataBitsCount(8);
   cfg.setStopBitsCount(1);
   cfg.setParity(mdtSerialPortConfig::NoParity);
-  QVERIFY(sp.openPort(cfg));
+  QVERIFY(sp.open(cfg));
 
   // Assign sp to the control thread and start
   ctlThd.setSerialPort(&sp);
@@ -337,10 +337,10 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   qDebug() << "* make shure that test terminal is plugged on serial port (ttyS0 , COM1) *";
 
   // Open port with default config
-  cfg.setRxFrameSize(100);
-  cfg.setRxQueueSize(25);
-  cfg.setEofSeq('*');
-  QVERIFY(sp.openPort(cfg));
+  cfg.setReadFrameSize(100);
+  cfg.setReadQueueSize(25);
+  cfg.setEndOfFrameSeq('*');
+  QVERIFY(sp.open(cfg));
   
   // Assign sp to the RX thread and start
   rxThd.setSerialPort(&sp);
@@ -353,13 +353,13 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   
   // Get a frame in TX pool WW: dangereurx (pool.size() )
   sp.lockMutex();
-  f = sp.txFramesPool().dequeue();
+  f = sp.writeFramesPool().dequeue();
   f->append("A*AB*ABC*ABCD*ABCDE*0123456789*abcdefghijklmnopqrstuvwxyz0123456789*");
-  sp.txFrames().enqueue(f);
+  sp.writeFrames().enqueue(f);
   sp.unlockMutex();
 
   sp.lockMutex();
-  f = sp.txFramesPool().dequeue();
+  f = sp.writeFramesPool().dequeue();
   f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
   f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
   f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
@@ -374,7 +374,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
   f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
   f->append("*");
-  sp.txFrames().enqueue(f);
+  sp.writeFrames().enqueue(f);
   sp.unlockMutex();
 
   QTest::qWait(1000);

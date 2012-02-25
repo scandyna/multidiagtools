@@ -12,13 +12,10 @@ mdtSerialPortConfig::~mdtSerialPortConfig()
 {
 }
 
-mdtSerialPortConfig::mdtSerialPortConfig(const mdtSerialPortConfig &orig)
-{
-  copy(orig);
-}
-
 void mdtSerialPortConfig::setDefault()
 {
+  mdtDeviceFileConfig::setDefault();
+  // Overwrite interface
 #ifdef Q_OS_UNIX
   pvInterface = "/dev/ttyS0";
 #elif defined Q_OS_WIN32
@@ -34,23 +31,7 @@ void mdtSerialPortConfig::setDefault()
   pvFlowCtlXonXoffEnabled = false;
   pvXonChar = MDT_DEF_XON;
   pvXoffChar = MDT_DEF_XOFF;
-  pvRxFrameSize = 1024;
-  pvRxQueueSize = 10;
-  pvTxFrameSize = 1024;
-  pvTxQueueSize = 10;
-  pvFrameType = mdtFrame::mdtFrameTypeAscii;
-  pvEofSeq = '\0';
   pvIsValid = false;
-}
-
-void mdtSerialPortConfig::setInterface(const QString &iface)
-{
-  pvInterface = iface;
-}
-
-QString mdtSerialPortConfig::interface()
-{
-  return pvInterface;
 }
 
 void mdtSerialPortConfig::setBaudRate(int baudRate)
@@ -135,90 +116,9 @@ char mdtSerialPortConfig::xoffChar()
   return pvXoffChar;
 }
 
-void mdtSerialPortConfig::setRxFrameSize(int size)
-{
-  Q_ASSERT(size >= 0);
-
-  pvRxFrameSize = size;
-}
-
-int mdtSerialPortConfig::rxFrameSize()
-{
-  return pvRxFrameSize;
-}
-
-void mdtSerialPortConfig::setRxQueueSize(int size)
-{
-  Q_ASSERT(size >= 0);
-
-  pvRxQueueSize = size;
-}
-
-int mdtSerialPortConfig::rxQueueSize()
-{
-  return pvRxQueueSize;
-}
-
-void mdtSerialPortConfig::setTxFrameSize(int size)
-{
-  Q_ASSERT(size >= 0);
-
-  pvTxFrameSize = size;
-}
-
-int mdtSerialPortConfig::txFrameSize()
-{
-  return pvTxFrameSize;
-}
-
-void mdtSerialPortConfig::setTxQueueSize(int size)
-{
-  Q_ASSERT(size >= 0);
-
-  pvTxQueueSize = size;
-}
-
-
-int mdtSerialPortConfig::txQueueSize()
-{
-  return pvTxQueueSize;
-}
-
-void mdtSerialPortConfig::setFrameType(mdtFrame::type_t type)
-{
-  pvFrameType = type;
-}
-
-mdtFrame::type_t mdtSerialPortConfig::frameType()
-{
-  return pvFrameType;
-}
-
-void mdtSerialPortConfig::setEofSeq(QByteArray eof)
-{
-  pvEofSeq = eof;
-}
-
-void mdtSerialPortConfig::setEofSeq(char eof)
-{
-  pvEofSeq.clear();
-  pvEofSeq.append(eof);
-  qDebug() << "mdtSerialPortConfig::setEofSeq() , eof: " << pvEofSeq;
-}
-
-QByteArray mdtSerialPortConfig::eofSeq()
-{
-  return pvEofSeq;
-}
-
 bool mdtSerialPortConfig::isValid()
 {
   return false;
-}
-
-void mdtSerialPortConfig::operator=(const mdtSerialPortConfig &orig)
-{
-  copy(orig);
 }
 
 bool mdtSerialPortConfig::operator==(const mdtSerialPortConfig &other)
@@ -229,26 +129,6 @@ bool mdtSerialPortConfig::operator==(const mdtSerialPortConfig &other)
 bool mdtSerialPortConfig::operator!=(const mdtSerialPortConfig &other)
 {
   return !matches(other);
-}
-
-void mdtSerialPortConfig::copy(const mdtSerialPortConfig &orig)
-{
-  pvInterface = orig.pvInterface;
-  pvBaudRate = orig.pvBaudRate;
-  pvParity = orig.pvParity;
-  pvDataBitCount = orig.pvDataBitCount;
-  pvStopBitCount = orig.pvStopBitCount;
-  pvFlowCtlRtsCtsEnabled = orig.pvFlowCtlRtsCtsEnabled;
-  pvFlowCtlXonXoffEnabled = orig.pvFlowCtlXonXoffEnabled;
-  pvXonChar = orig.pvXonChar;
-  pvXoffChar = orig.pvXoffChar;
-  pvIsValid = orig.pvIsValid;
-  pvRxFrameSize = orig.pvRxFrameSize;
-  pvRxQueueSize = orig.pvRxQueueSize;
-  pvTxFrameSize = orig.pvTxFrameSize;
-  pvTxQueueSize = orig.pvTxQueueSize;
-  pvFrameType = orig.pvFrameType;
-  pvEofSeq = orig.pvEofSeq;
 }
 
 bool mdtSerialPortConfig::matches(const mdtSerialPortConfig &other)
@@ -281,24 +161,6 @@ bool mdtSerialPortConfig::matches(const mdtSerialPortConfig &other)
     return false;
   }
   if(pvXoffChar != other.pvXoffChar){
-    return false;
-  }
-  if(pvRxFrameSize != other.pvRxFrameSize){
-    return false;
-  }
-  if(pvRxQueueSize != other.pvRxQueueSize){
-    return false;
-  }
-  if(pvTxFrameSize != other.pvTxFrameSize){
-    return false;
-  }
-  if(pvTxQueueSize != other.pvTxQueueSize){
-    return false;
-  }
-  if(pvFrameType != other.pvFrameType){
-    return false;
-  }
-  if(pvEofSeq != other.pvEofSeq){
     return false;
   }
   if(pvIsValid != other.pvIsValid){

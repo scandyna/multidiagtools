@@ -121,6 +121,10 @@ class mdtDeviceFileConfig
    */
   QByteArray endOfFrameSeq();
 
+  bool operator==(const mdtDeviceFileConfig &other);
+  bool operator!=(const mdtDeviceFileConfig &other);
+
+
  protected:
 
   QString pvInterface;    // Interface, like: /dev/ttyS0 or COM1
@@ -131,6 +135,10 @@ class mdtDeviceFileConfig
   int pvWriteQueueSize;       // Maximum number of frames that can be stored
   mdtFrame::type_t pvFrameType;
   QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
+
+ private:
+
+  bool matches(const mdtDeviceFileConfig &other);
 };
 
 #endif  // #ifndef MDT_DEVIC_EFILE_CONFIG_H

@@ -15,10 +15,10 @@ mdtFrame *mdtSerialPortTxThread::getNewFrame()
   mdtFrame *frame;
 
   // Check if there is a frame to transmit
-  if(pvSerialPort->txFrames().size() < 1){
+  if(pvSerialPort->writeFrames().size() < 1){
     return 0;
   }
-  frame = pvSerialPort->txFrames().dequeue();
+  frame = pvSerialPort->writeFrames().dequeue();
   Q_ASSERT(frame != 0);
 
   return frame;
@@ -50,14 +50,14 @@ void mdtSerialPortTxThread::run()
     pvSerialPort->unlockMutex();
 
     // Wait on TX ready event
-    if(!pvSerialPort->waitEventTxReady()){
+    if(!pvSerialPort->waitEventWriteReady()){
       pvSerialPort->lockMutex();
       pvRunning = false;
       pvSerialPort->unlockMutex();
       break;
     }
     // Event occured, send the data to port - Check timeout state first
-    if(!pvSerialPort->txTimeoutOccured()){
+    if(!pvSerialPort->writeTimeoutOccured()){
       pvSerialPort->lockMutex();
       // Check if we have something to transmit
       if(frame == 0){
@@ -78,7 +78,7 @@ void mdtSerialPortTxThread::run()
         qDebug() << "TX thd: frame size: " << frame->size();
         // Check if current frame was completly sent
         if(frame->isEmpty()){
-          pvSerialPort->txFramesPool().enqueue(frame);
+          pvSerialPort->writeFramesPool().enqueue(frame);
           frame = 0;
         }else{
           bufferCursor += written;

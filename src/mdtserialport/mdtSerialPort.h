@@ -16,9 +16,6 @@ class mdtSerialPort : public mdtSerialPortSys
 
  public:
 
-  /*! \brief Construct a new serial port object
-   *  Rx/Tx timeouts are set to 500 ms
-   */
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
 
@@ -26,15 +23,7 @@ class mdtSerialPort : public mdtSerialPortSys
    * \param cfg Contains the setup for the serial port to open
    * \return True on successfull configuration and open port
    */
-  bool openPort(mdtSerialPortConfig &cfg);
-
-  /*! \brief Returns RX timeout state
-   */
-  bool rxTimeoutOccured();
-
-  /*! \brief Returns TX timeout state
-   */
-  bool txTimeoutOccured();
+  bool open(mdtSerialPortConfig &cfg);
 
   /*! \brief Get the CAR (CD) state
    * \SA Signals provided in mdtAbstractSerialPort
