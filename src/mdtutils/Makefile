@@ -174,6 +174,60 @@ mdtutils_static/fast:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/build
 .PHONY : mdtutils_static/fast
 
+linux/mdtDeviceFilePosix.o: linux/mdtDeviceFilePosix.cpp.o
+.PHONY : linux/mdtDeviceFilePosix.o
+
+# target to build an object file
+linux/mdtDeviceFilePosix.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtDeviceFilePosix.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.o
+.PHONY : linux/mdtDeviceFilePosix.cpp.o
+
+linux/mdtDeviceFilePosix.i: linux/mdtDeviceFilePosix.cpp.i
+.PHONY : linux/mdtDeviceFilePosix.i
+
+# target to preprocess a source file
+linux/mdtDeviceFilePosix.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtDeviceFilePosix.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.i
+.PHONY : linux/mdtDeviceFilePosix.cpp.i
+
+linux/mdtDeviceFilePosix.s: linux/mdtDeviceFilePosix.cpp.s
+.PHONY : linux/mdtDeviceFilePosix.s
+
+# target to generate assembly for a file
+linux/mdtDeviceFilePosix.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtDeviceFilePosix.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.s
+.PHONY : linux/mdtDeviceFilePosix.cpp.s
+
+mdtAbstractDeviceFile.o: mdtAbstractDeviceFile.cpp.o
+.PHONY : mdtAbstractDeviceFile.o
+
+# target to build an object file
+mdtAbstractDeviceFile.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractDeviceFile.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractDeviceFile.cpp.o
+.PHONY : mdtAbstractDeviceFile.cpp.o
+
+mdtAbstractDeviceFile.i: mdtAbstractDeviceFile.cpp.i
+.PHONY : mdtAbstractDeviceFile.i
+
+# target to preprocess a source file
+mdtAbstractDeviceFile.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractDeviceFile.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractDeviceFile.cpp.i
+.PHONY : mdtAbstractDeviceFile.cpp.i
+
+mdtAbstractDeviceFile.s: mdtAbstractDeviceFile.cpp.s
+.PHONY : mdtAbstractDeviceFile.s
+
+# target to generate assembly for a file
+mdtAbstractDeviceFile.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractDeviceFile.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractDeviceFile.cpp.s
+.PHONY : mdtAbstractDeviceFile.cpp.s
+
 mdtAlgorithms.o: mdtAlgorithms.cpp.o
 .PHONY : mdtAlgorithms.o
 
@@ -227,6 +281,60 @@ mdtBuffer.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.s
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.s
 .PHONY : mdtBuffer.cpp.s
+
+mdtDeviceFile.o: mdtDeviceFile.cpp.o
+.PHONY : mdtDeviceFile.o
+
+# target to build an object file
+mdtDeviceFile.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFile.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFile.cpp.o
+.PHONY : mdtDeviceFile.cpp.o
+
+mdtDeviceFile.i: mdtDeviceFile.cpp.i
+.PHONY : mdtDeviceFile.i
+
+# target to preprocess a source file
+mdtDeviceFile.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFile.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFile.cpp.i
+.PHONY : mdtDeviceFile.cpp.i
+
+mdtDeviceFile.s: mdtDeviceFile.cpp.s
+.PHONY : mdtDeviceFile.s
+
+# target to generate assembly for a file
+mdtDeviceFile.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFile.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFile.cpp.s
+.PHONY : mdtDeviceFile.cpp.s
+
+mdtDeviceFileConfig.o: mdtDeviceFileConfig.cpp.o
+.PHONY : mdtDeviceFileConfig.o
+
+# target to build an object file
+mdtDeviceFileConfig.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileConfig.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileConfig.cpp.o
+.PHONY : mdtDeviceFileConfig.cpp.o
+
+mdtDeviceFileConfig.i: mdtDeviceFileConfig.cpp.i
+.PHONY : mdtDeviceFileConfig.i
+
+# target to preprocess a source file
+mdtDeviceFileConfig.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileConfig.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileConfig.cpp.i
+.PHONY : mdtDeviceFileConfig.cpp.i
+
+mdtDeviceFileConfig.s: mdtDeviceFileConfig.cpp.s
+.PHONY : mdtDeviceFileConfig.s
+
+# target to generate assembly for a file
+mdtDeviceFileConfig.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileConfig.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileConfig.cpp.s
+.PHONY : mdtDeviceFileConfig.cpp.s
 
 mdtError.o: mdtError.cpp.o
 .PHONY : mdtError.o
@@ -417,6 +525,54 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
+moc_mdtAbstractDeviceFile.o: moc_mdtAbstractDeviceFile.cxx.o
+.PHONY : moc_mdtAbstractDeviceFile.o
+
+# target to build an object file
+moc_mdtAbstractDeviceFile.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractDeviceFile.cxx.o
+.PHONY : moc_mdtAbstractDeviceFile.cxx.o
+
+moc_mdtAbstractDeviceFile.i: moc_mdtAbstractDeviceFile.cxx.i
+.PHONY : moc_mdtAbstractDeviceFile.i
+
+# target to preprocess a source file
+moc_mdtAbstractDeviceFile.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractDeviceFile.cxx.i
+.PHONY : moc_mdtAbstractDeviceFile.cxx.i
+
+moc_mdtAbstractDeviceFile.s: moc_mdtAbstractDeviceFile.cxx.s
+.PHONY : moc_mdtAbstractDeviceFile.s
+
+# target to generate assembly for a file
+moc_mdtAbstractDeviceFile.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractDeviceFile.cxx.s
+.PHONY : moc_mdtAbstractDeviceFile.cxx.s
+
+moc_mdtDeviceFile.o: moc_mdtDeviceFile.cxx.o
+.PHONY : moc_mdtDeviceFile.o
+
+# target to build an object file
+moc_mdtDeviceFile.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDeviceFile.cxx.o
+.PHONY : moc_mdtDeviceFile.cxx.o
+
+moc_mdtDeviceFile.i: moc_mdtDeviceFile.cxx.i
+.PHONY : moc_mdtDeviceFile.i
+
+# target to preprocess a source file
+moc_mdtDeviceFile.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDeviceFile.cxx.i
+.PHONY : moc_mdtDeviceFile.cxx.i
+
+moc_mdtDeviceFile.s: moc_mdtDeviceFile.cxx.s
+.PHONY : moc_mdtDeviceFile.s
+
+# target to generate assembly for a file
+moc_mdtDeviceFile.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDeviceFile.cxx.s
+.PHONY : moc_mdtDeviceFile.cxx.s
+
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.o
 
@@ -504,12 +660,24 @@ help:
 	@echo "... mdtutils_static"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... linux/mdtDeviceFilePosix.o"
+	@echo "... linux/mdtDeviceFilePosix.i"
+	@echo "... linux/mdtDeviceFilePosix.s"
+	@echo "... mdtAbstractDeviceFile.o"
+	@echo "... mdtAbstractDeviceFile.i"
+	@echo "... mdtAbstractDeviceFile.s"
 	@echo "... mdtAlgorithms.o"
 	@echo "... mdtAlgorithms.i"
 	@echo "... mdtAlgorithms.s"
 	@echo "... mdtBuffer.o"
 	@echo "... mdtBuffer.i"
 	@echo "... mdtBuffer.s"
+	@echo "... mdtDeviceFile.o"
+	@echo "... mdtDeviceFile.i"
+	@echo "... mdtDeviceFile.s"
+	@echo "... mdtDeviceFileConfig.o"
+	@echo "... mdtDeviceFileConfig.i"
+	@echo "... mdtDeviceFileConfig.s"
 	@echo "... mdtError.o"
 	@echo "... mdtError.i"
 	@echo "... mdtError.s"
@@ -531,6 +699,12 @@ help:
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
+	@echo "... moc_mdtAbstractDeviceFile.o"
+	@echo "... moc_mdtAbstractDeviceFile.i"
+	@echo "... moc_mdtAbstractDeviceFile.s"
+	@echo "... moc_mdtDeviceFile.o"
+	@echo "... moc_mdtDeviceFile.i"
+	@echo "... moc_mdtDeviceFile.s"
 	@echo "... moc_mdtErrorOut.o"
 	@echo "... moc_mdtErrorOut.i"
 	@echo "... moc_mdtErrorOut.s"

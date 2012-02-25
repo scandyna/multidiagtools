@@ -1,17 +1,27 @@
 window_sizes 1280 1002 370 904 808 120
 diagrams
+  classdiagram_ref 255234 // mdtAbstractDeviceFile
+    723 646 100 4 0 0
+  active  classdiagram_ref 255362 // mdtDeviceFile
+    904 808 100 4 1 0
   classdiagram_ref 128002 // mdtSerialPort
-    723 646 100 4 84 0
-  active  classdiagram_ref 182914 // interactions
-    904 808 100 4 0 0
+    723 646 100 4 1 0
+  classdiagram_ref 182914 // interactions
+    723 646 100 4 0 0
+  classdiagram_ref 215554 // mdtSerialPortConfig
+    723 646 100 4 96 0
+  classdiagram_ref 262018 // mdtDeviceFileConfig
+    723 646 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 182914 // interactions
+selected classrelation_ref 271490 // pvReadenFrames (<directional composition>)
 open
-  
-  package_ref 128002 // mdtutils
+  operation_ref 437250 // readTimeoutOccured
+  operation_ref 437378 // writeTimeoutOccured
+  classrelation_ref 271490 // pvReadenFrames (<directional composition>)
+  operation_ref 425986 // readTimeoutStateChanged
+  class_ref 249602 // mdtDeviceFile
   classview_ref 128002 // mdtSerialPort
-  classview_ref 175106 // mdtSerialPort
   
   package_ref 134530 // mdtTest
 end

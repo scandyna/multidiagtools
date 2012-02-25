@@ -1,6 +1,6 @@
 format 76
 "linux" // mdtserialport::linux
-  revision 23
+  revision 24
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -701,7 +701,6 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
-
     end
   end
 end
