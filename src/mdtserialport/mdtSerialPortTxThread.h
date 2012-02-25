@@ -12,6 +12,11 @@ class mdtSerialPortTxThread : public mdtSerialPortThread
 
  private:
 
+  // Get a new frame from TX frames
+  // If no frame is available, a null pointer is returned
+  // Note: this function handle not the serial port mutex
+  mdtFrame *getNewFrame();
+
   // Thread implementation
   void run();
 };

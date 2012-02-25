@@ -1,0 +1,18 @@
+************************************************************************
+ Ubuntu 11.10 
+ \l 3.0.0-13-generic
+ MOXA UPort 1200/1400/1600 series driver ver 1.1
+ Release Date: 2009/09/18
+************************************************************************
+**********************************WARNING*******************************
+ Kernels later then 2.6.30 are not supported.
+ MOXA UPort 1200/1400/1600 series driver may not work properly.
+ Please download the latest driver on http://www.moxa.com
+ or contact support@moxa.com.
+************************************************************************
+/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxusbserial/mxusb-serial.c:1529:2: attention : initialization from incompatible pointer type [enabled by default]
+/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxusbserial/mxusb-serial.c:1529:2: attention : (near initialization for ‘serial_ops.ioctl’) [enabled by default]
+/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxusbserial/mxusb-serial.c:1538:2: attention : initialization from incompatible pointer type [enabled by default]
+/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxusbserial/mxusb-serial.c:1538:2: attention : (near initialization for ‘serial_ops.tiocmget’) [enabled by default]
+/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxusbserial/mxusb-serial.c:1539:2: attention : initialization from incompatible pointer type [enabled by default]
+/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxusbserial/mxusb-serial.c:1539:2: attention : (near initialization for ‘serial_ops.tiocmset’) [enabled by default]

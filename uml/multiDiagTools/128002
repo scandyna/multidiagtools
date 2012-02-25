@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 32
+  revision 33
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -733,6 +733,21 @@ ${inlines}
 	
       end
 
+      operation 417154 "take"
+	public explicit_return_type "int"
+	nparams 1
+	  param in name "maxLen" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 388866 "putData"
 	abstract cpp_virtual public explicit_return_type "int"
 	nparams 2
@@ -746,6 +761,7 @@ ${inlines}
 	
 	
       end
+
     end
 
     class 242946 "mdtFrameAscii"

@@ -50,12 +50,12 @@ relationcanvas 129410 relation_ref 230530 // <generalisation>
 end
 relationcanvas 129922 relation_ref 231042 // <unidirectional association>
   from ref 128514 z 2001 to ref 128642
-  role_a_pos 174 517 3000 no_role_b
+  role_a_pos 180 501 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 231170 // <unidirectional association>
   from ref 128514 z 2001 to ref 128770
-  role_a_pos 211 568 3000 no_role_b
+  role_a_pos 185 580 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130306 relation_ref 231298 // <unidirectional association>

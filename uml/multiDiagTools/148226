@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 17
+  revision 19
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2346,21 +2346,6 @@ ${inlines}
 	
       end
 
-      operation 402562 "commitFrame"
-	private explicit_return_type "void"
-	nparams 1
-	  param in name "frame" type class_ref 196354 // mdtFrame
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 402690 "getNewFrame"
 	private return_type class_ref 196354 // mdtFrame
 	nparams 0
@@ -2509,7 +2494,6 @@ ${inlines}
 	  on activityaction_ref 150146 // activity action frame = getNewFrame()
 	end
       end
-
     end
 
     activity 141186 "getNewFrame"
@@ -2604,6 +2588,20 @@ ${inlines}
 	
       end
 
+      operation 416898 "getNewFrame"
+	public return_type class_ref 196354 // mdtFrame
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 309506 "run"
 	private explicit_return_type "void"
 	nparams 0
@@ -2679,22 +2677,26 @@ ${inlines}
 
       activityaction 171010 "written = writeData(toWrite)"
 	opaque_action
-	flow 174338 "<flow>"
-	  on activityaction_ref 171138 // activity action toWrite -= written
+	flow 182530 "<flow>"
+	  on activityaction_ref 178050 // activity action frame.take(written)
 	end
       end
 
       activityaction 171138 "toWrite -= written"
 	opaque_action
-	flow 174466 "<flow>"
-	  on activityaction_ref 171266 // activity action bufferCursor += written
+	flow 181634 "<flow>"
+	  on activityaction_ref 178050 // activity action frame.take(written)
+	end
+
+	flow 182786 "<flow>"
+	  on activitynode_ref 171010 // activity_final
 	end
       end
 
       activityaction 171266 "bufferCursor += written"
 	opaque_action
-	flow 174594 "<flow>"
-	  on activitynode_ref 170882 // decision
+	flow 182658 "<flow>"
+	  on activityaction_ref 171138 // activity action toWrite -= written
 	end
       end
 
@@ -2703,26 +2705,33 @@ ${inlines}
 	  on activityaction_ref 171394 // activity action txFramesPoll.enqueue(frame)
 	end
 
-	flow 174978 "[else]"
-	  on activitynode_ref 171010 // activity_final
+	flow 182018 "[else]"
+	  on activityaction_ref 171266 // activity action bufferCursor += written
 	end
       end
 
       activityaction 171394 "txFramesPoll.enqueue(frame)"
 	opaque_action
-	flow 174850 "<flow>"
-	  on activityaction_ref 171522 // activity action frame = getNewFrame()
+	flow 182274 "<flow>"
+	  on activityaction_ref 171522 // activity action frame = 0
 	end
       end
 
-      activityaction 171522 "frame = getNewFrame()"
+      activityaction 171522 "frame = 0"
 	opaque_action
-	flow 175106 "<flow>"
+	flow 182914 "<flow>"
 	  on activitynode_ref 171010 // activity_final
 	end
       end
 
       activitynode 171010 activity_final ""
+      end
+
+      activityaction 178050 "frame.take(written)"
+	opaque_action
+	flow 181890 "<flow>"
+	  on activitynode_ref 170882 // decision
+	end
       end
     end
 
@@ -2790,7 +2799,6 @@ ${inlines}
 	
       end
     end
-
   end
 
   package_ref 141698 // linux

@@ -1,0 +1,1 @@
+cmd_/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxuport/mxuport.o := ld -m elf_i386   -r -o /home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxuport/mxuport.o /home/philippe/programmation/multixDiagTools/drivers/linux/moxa/mxuport/driver/mxuport/mx-uport.o 

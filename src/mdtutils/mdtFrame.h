@@ -112,6 +112,16 @@ class mdtFrame : public QByteArray
    */
   int take(char *data, int len);
 
+  /*! \brief Take some data
+   * 
+   * This method does not copy any data, but is usefull afer a copy using QByteArray::data() .
+   * The conumed bytes are removed from frame
+   * \param data Pointer to data destination
+   * \param len Number of bytes to take
+   * \pre The data pointer must be valid, and not be the internal pointer returned by data().
+   */
+  int take(int len);
+
  protected:
 
   bool pvIgnoreNullValues;

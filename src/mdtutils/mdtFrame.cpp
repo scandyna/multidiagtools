@@ -180,3 +180,17 @@ int mdtFrame::take(char *data, int len)
 
   return len;
 }
+
+int mdtFrame::take(int len)
+{
+  int capa = capacity();
+
+  // Set the len that is possible to take
+  if(len > size()){
+    len = size();
+  }
+  remove(0, len);
+  reserve(capa);
+
+  return len;
+}

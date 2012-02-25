@@ -332,12 +332,14 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   mdtSerialPortConfig cfg;
   mdtSerialPortRxThread rxThd;
   mdtSerialPortTxThread txThd;
+  mdtFrame *f;
   
   qDebug() << "* make shure that test terminal is plugged on serial port (ttyS0 , COM1) *";
 
   // Open port with default config
   cfg.setRxFrameSize(100);
-  cfg.setEofSeq('t');
+  cfg.setRxQueueSize(25);
+  cfg.setEofSeq('*');
   QVERIFY(sp.openPort(cfg));
   
   // Assign sp to the RX thread and start
@@ -346,6 +348,34 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   // Assign sp to the TX thread and start
   txThd.setSerialPort(&sp);
   txThd.start();
+  
+  /// Note: test sans frame ...
+  
+  // Get a frame in TX pool WW: dangereurx (pool.size() )
+  sp.lockMutex();
+  f = sp.txFramesPool().dequeue();
+  f->append("A*AB*ABC*ABCD*ABCDE*0123456789*abcdefghijklmnopqrstuvwxyz0123456789*");
+  sp.txFrames().enqueue(f);
+  sp.unlockMutex();
+
+  sp.lockMutex();
+  f = sp.txFramesPool().dequeue();
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+  f->append("*");
+  sp.txFrames().enqueue(f);
+  sp.unlockMutex();
 
   QTest::qWait(1000);
   
