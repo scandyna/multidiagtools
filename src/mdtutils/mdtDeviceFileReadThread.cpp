@@ -1,8 +1,9 @@
 
 #include "mdtDeviceFileReadThread.h"
 #include "mdtError.h"
-#include <QDebug>
 #include <QApplication>
+
+//#include <QDebug>
 
 mdtDeviceFileReadThread::mdtDeviceFileReadThread(QObject *parent)
  : mdtDeviceFileThread(parent)
@@ -16,7 +17,7 @@ mdtFrame *mdtDeviceFileReadThread::getNewFrame()
   mdtFrame *frame;
 
   if(pvDeviceFile->readFramesPool().size() < 1){
-    mdtError e(MDT_UNDEFINED_ERROR, "RX frames pool is empty", mdtError::Warning);
+    mdtError e(MDT_UNDEFINED_ERROR, "Read frames pool is empty", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtDeviceFileReadThread");
     e.commit();
     return 0;
@@ -45,7 +46,7 @@ void mdtDeviceFileReadThread::run()
   pvRunning = true;
   frame = getNewFrame();
   if(frame == 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "No frame available in RX frames pool, stopping RX thread", mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "No frame available in read frames pool, stopping read thread", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceFileReadThread");
     e.commit();
     pvRunning = false;
@@ -61,6 +62,9 @@ void mdtDeviceFileReadThread::run()
     mdtError e(MDT_UNDEFINED_ERROR, "Cannot allocate memory for local buffer" , mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceFileReadThread");
     e.commit();
+    pvDeviceFile->lockMutex();
+    pvRunning = false;
+    pvDeviceFile->unlockMutex();
     return;
   }
   bufferCursor = buffer;
@@ -90,31 +94,47 @@ void mdtDeviceFileReadThread::run()
       // Read data from port
       readen = pvDeviceFile->readData(buffer, bufferSize);
       toStore = readen;
-      ///qDebug() << "Read: " << buffer;
-      ///qDebug() << "readen: " << readen;
-      while((toStore > 0)&&(frame != 0)){
+      // Store readen data
+      while(toStore > 0){
+        // Check for new frame if needed
+        while(frame == 0){
+          frame = getNewFrame();
+          if(frame == 0){
+            // Pool empty. Try later
+            pvDeviceFile->unlockMutex();
+            msleep(100);
+            // Check about end of thread
+            pvDeviceFile->lockMutex();
+            if(!pvRunning){
+              pvDeviceFile->unlockMutex();
+              return;
+            }
+          }
+        }
         // Store data
-        ///qDebug() << "- Cursor: " << bufferCursor;
-        ///qDebug() << "- toStore: " << toStore;
         stored = frame->putData(bufferCursor, toStore);
-        ///qDebug() << "- stored: " << stored;
-        // If frame is full, enque to RX frames and get a new one
+        // If frame is full, enque to readen frames and get a new one
         if(frame->bytesToStore() == 0){
-          qDebug() << "RX --> Frame: " << frame->data();
-          toStore = toStore - frame->eofSeqLen();
-          Q_ASSERT(toStore >= 0);
-          bufferCursor = bufferCursor + frame->eofSeqLen();
-          Q_ASSERT(bufferCursor < (buffer + bufferSize));
+          stored += frame->eofSeqLen();
           pvDeviceFile->readenFrames().enqueue(frame);
           frame = getNewFrame();
         }
         toStore = toStore - stored;
-        Q_ASSERT(toStore >= 0);
+        // When frame becomes full and EOF seq was not reached, stored will be to big
+        // We simply look that toStore is never < 0
+        if(toStore < 0){
+          toStore = 0;
+        }
         bufferCursor = bufferCursor + stored;
         Q_ASSERT(bufferCursor < (buffer + bufferSize));
       }
       pvDeviceFile->unlockMutex();
     }
+  }
+
+  // Put current frame into pool
+  if(frame != 0){
+    pvDeviceFile->readFramesPool().enqueue(frame);
   }
 
   // Free memory

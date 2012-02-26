@@ -109,7 +109,7 @@ flowcanvas 130306 flow_ref 174210 // <flow>
 end
 flowcanvas 131330 flow_ref 174722 // [frame.isEmpty()]
   
-  from ref 130946 z 2001 label "[frame.isEmpty()]" xyz 328.5 538 2001 to ref 131202
+  from ref 130946 z 2001 label "[frame.isEmpty()]" xyz 328 538 2001 to ref 131202
   show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
 end
 flowcanvas 132866 flow_ref 181890 // <flow>
@@ -119,7 +119,7 @@ flowcanvas 132866 flow_ref 181890 // <flow>
 end
 flowcanvas 132994 flow_ref 182018 // [else]
   
-  from ref 130946 z 2001 label "[else]" xyz 288 584 3000 to ref 130690
+  from ref 130946 z 2001 label "[else]" xyz 288 584 2001 to ref 130690
   show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
 end
 flowcanvas 133250 flow_ref 182274 // <flow>

@@ -1,17 +1,12 @@
 window_sizes 1280 1002 370 904 808 120
-diagrams
-  classdiagram_ref 255234 // mdtAbstractDeviceFile
-    723 646 100 4 0 0
-  classdiagram_ref 268546 // mdtDeviceFileThread
-    723 646 100 4 0 0
-  active  classdiagram_ref 215682 // mdtSerialPortThread
-    904 808 100 4 108 0
-end
 show_stereotypes
-selected operation_ref 457346 // setDeviceFile
+selected classview_ref 201218 // mdtDeviceFile
 open
-  class_ref 222594 // mdtDeviceFileThread
-  operation_ref 316930 // stop
-  classrelation_ref 285314 // <unidirectional association>
+  
+  package_ref 128002 // mdtutils
+  
+  package_ref 148226 // mdtserialport
+  
+  package_ref 134530 // mdtTest
 end
 end

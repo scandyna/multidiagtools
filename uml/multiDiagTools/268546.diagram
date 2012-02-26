@@ -6,7 +6,7 @@ classcanvas 128002 class_ref 222850 // mdtDeviceFileReadThread
 end
 classcanvas 128130 class_ref 222594 // mdtDeviceFileThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 233 161 2006
+  xyz 187 165 2006
 end
 classcanvas 128386 class_ref 222722 // QThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -37,7 +37,7 @@ relationcanvas 128770 relation_ref 230402 // <generalisation>
 end
 relationcanvas 129282 relation_ref 284930 // <unidirectional association>
   from ref 128130 z 2007 to ref 129154
-  role_a_pos 510 204 3000 no_role_b
-  multiplicity_a_pos 561 231 3000 no_multiplicity_b
+  role_a_pos 510 206 3000 no_role_b
+  multiplicity_a_pos 561 233 3000 no_multiplicity_b
 end
 end

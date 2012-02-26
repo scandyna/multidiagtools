@@ -33,7 +33,7 @@ void mdtDeviceFileWriteThread::run()
   mdtFrame *frame = 0;
   int toWrite = 0;
   int written = 0;
-  
+ 
   // Set the running flag
   pvDeviceFile->lockMutex();
   pvRunning = true;
@@ -49,7 +49,7 @@ void mdtDeviceFileWriteThread::run()
     }
     pvDeviceFile->unlockMutex();
 
-    // Wait on TX ready event
+    // Wait on write ready event
     if(!pvDeviceFile->waitEventWriteReady()){
       pvDeviceFile->lockMutex();
       pvRunning = false;
@@ -66,23 +66,23 @@ void mdtDeviceFileWriteThread::run()
           // New frame to transmit
           buffer = frame->data();
           bufferCursor = buffer;
-          qDebug() << "TX thd: bufferCursor [NF]: " << bufferCursor;
+          //qDebug() << "TX thd: bufferCursor [NF]: " << bufferCursor;
           toWrite = frame->size();
         }
       }
       if(frame != 0){
         // Write data to port
         written = pvDeviceFile->writeData(bufferCursor, toWrite);
-        qDebug() << "TX thd: written: " << written;
+        ///qDebug() << "TX thd: written: " << written;
         frame->take(written);
-        qDebug() << "TX thd: frame size: " << frame->size();
+        ///qDebug() << "TX thd: frame size: " << frame->size();
         // Check if current frame was completly sent
         if(frame->isEmpty()){
           pvDeviceFile->writeFramesPool().enqueue(frame);
           frame = 0;
         }else{
           bufferCursor += written;
-          qDebug() << "TX thd: bufferCursor [CF]: " << bufferCursor;
+          ///qDebug() << "TX thd: bufferCursor [CF]: " << bufferCursor;
           Q_ASSERT(bufferCursor < (buffer + frame->size()));
           toWrite -= written;
           Q_ASSERT(toWrite >= 0);

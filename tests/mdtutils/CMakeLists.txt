@@ -11,6 +11,7 @@ set (HEADER_FILES
           mdtBufferTest.h
           mdtFrameTest.h
           mdtErrorTest.h
+          mdtDeviceFileTest.h
     )
 
 
@@ -20,6 +21,7 @@ set (SOURCES_FILES
           mdtBufferTest.cpp
           mdtFrameTest.cpp
           mdtErrorTest.cpp
+          mdtDeviceFileTest.cpp
           main.cpp
     )
 

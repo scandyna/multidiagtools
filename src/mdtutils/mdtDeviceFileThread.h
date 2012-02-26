@@ -10,6 +10,7 @@ class mdtDeviceFileThread : public QThread
  public:
 
   mdtDeviceFileThread(QObject *parent = 0);
+  ~mdtDeviceFileThread();
 
   /*! \brief Set the device file instance
    *  \pre deviceFile must be a valid pointer

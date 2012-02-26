@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 39
+  revision 40
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3210,6 +3210,20 @@ ${inlines}
 	
       end
 
+      operation 464770 "~mdtDeviceFileThread"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 309122 "setDeviceFile"
 	public explicit_return_type "void"
 	nparams 1
@@ -3366,6 +3380,230 @@ ${inlines}
       end
     end
 
+    activity 128002 "read"
+      specification operation_ref 309378 // run
+      activitydiagram 235394 "read"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activityaction 128002 "readen = readData(bufferSize)"
+	call_operation_action
+	no_operation
+	flow 164354 "<flow>"
+	  on activityaction_ref 134530 // activity action toStore = readen
+	end
+      end
+
+      activitynode 134786 initial_node ""
+	flow 172034 "<flow>"
+	  on activityaction_ref 157186 // activity action bufferCursor = buffer
+	end
+      end
+
+      activityaction 134530 "toStore = readen"
+	call_operation_action
+	no_operation
+	flow 190722 "<flow>"
+	  on activitynode_ref 177922 // decision
+	end
+      end
+
+      activityaction 141442 "rxFrames.enqueue(frame)"
+	opaque_action
+	flow 172930 "<flow>"
+	  on activityaction_ref 170370 // activity action stored += frame.eofSeqLen()
+	end
+      end
+
+      activityaction 149634 "heuu"
+	call_behavior_action
+	synchronous activity_ref 141186 // getNewFrame
+      end
+
+      activityaction 150146 "frame = getNewFrame()"
+	opaque_action
+	flow 172802 "<flow>"
+	  on activityaction_ref 157058 // activity action toStore = toStore - stored
+	end
+      end
+
+      activityaction 156930 "stored = frame.putData(toStore)"
+	opaque_action
+	flow 171010 "<flow>"
+	  on activitynode_ref 169986 // decision
+	end
+      end
+
+      activityaction 157058 "toStore = toStore - stored"
+	opaque_action
+	flow 189570 "<flow>"
+	  on activitynode_ref 177538 // decision
+	end
+      end
+
+      activityaction 157186 "bufferCursor = buffer"
+	opaque_action
+	flow 172162 "<flow>"
+	  on activityaction_ref 128002 // activity action readen = readData(bufferSize)
+	end
+      end
+
+      activityaction 157314 "bufferCursor += stored"
+	opaque_action
+	flow 190978 "<flow>"
+	  on activitynode_ref 177922 // decision
+	end
+      end
+
+      activitynode 163330 activity_final ""
+      end
+
+      activitynode 169986 decision ""
+	flow 171138 "[frame.bytesToRead() == 0]"
+	  on activityaction_ref 141442 // activity action rxFrames.enqueue(frame)
+	end
+
+	flow 171394 "[else]"
+	  on activityaction_ref 157058 // activity action toStore = toStore - stored
+	end
+      end
+
+      activitynode 170114 decision ""
+	flow 171778 "[toStore > 0]"
+	  on activityaction_ref 157314 // activity action bufferCursor += stored
+	end
+
+	flow 171906 "[else]"
+	  on activitynode_ref 163330 // activity_final
+	end
+      end
+
+      activityaction 170370 "stored += frame.eofSeqLen()"
+	opaque_action
+	flow 189442 "<flow>"
+	  on activityaction_ref 150146 // activity action frame = getNewFrame()
+	end
+      end
+
+      activitynode 177538 decision ""
+	flow 189698 "[toStore < 0]"
+	  on activityaction_ref 184578 // activity action toStore = 0
+	end
+
+	flow 189826 "[else]"
+	  on activitynode_ref 170114 // decision
+	end
+      end
+
+      activityaction 184578 "toStore = 0"
+	opaque_action
+	flow 189954 "<flow>"
+	  on activitynode_ref 170114 // decision
+	end
+      end
+
+      activityaction 184706 "frame = getNewFrame()"
+	opaque_action
+	flow 191746 "<flow>"
+	  on activitynode_ref 178050 // decision
+	end
+      end
+
+      activityaction 184834 "seep(100) [ms]"
+	opaque_action
+	flow 192130 "<flow>"
+	  on activitynode_ref 178178 // activity_final
+	end
+      end
+
+      activitynode 177794 decision ""
+	flow 190850 "<flow>"
+	  on activityaction_ref 156930 // activity action stored = frame.putData(toStore)
+	end
+      end
+
+      activitynode 177922 decision ""
+	flow 190594 "[else]"
+	  on activitynode_ref 177794 // decision
+	end
+
+	flow 191618 "[frame == 0]"
+	  on activityaction_ref 184706 // activity action frame = getNewFrame()
+	end
+      end
+
+      activitynode 178050 decision ""
+	flow 191874 "[else]"
+	  on activitynode_ref 177794 // decision
+	end
+
+	flow 192002 "[frame == 0]"
+	  on activityaction_ref 184834 // activity action seep(100) [ms]
+	end
+      end
+
+      activitynode 178178 activity_final ""
+      end
+    end
+
+    activity 141186 "getNewFrame"
+      specification operation_ref 402690 // getNewFrame
+      activitydiagram 242050 "getNewFrame"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activitynode 149378 initial_node ""
+	flow 146178 "<flow>"
+	  on activityaction_ref 149762 // activity action pvRxFramesPool.size() > 0
+	end
+      end
+
+      activityaction 149762 "pvRxFramesPool.size() > 0"
+	opaque_action
+	flow 146306 "<flow>"
+	  on activitynode_ref 149506 // decision
+	end
+      end
+
+      activitynode 149506 decision ""
+	flow 146434 "[true]"
+	  on activityaction_ref 149890 // activity action frame = pvRxFramesPool.dequeue()
+	end
+
+	flow 146562 "[else]"
+	  on activityaction_ref 150018 // activity action frame = 0
+	end
+      end
+
+      activityaction 149890 "frame = pvRxFramesPool.dequeue()"
+	opaque_action
+	flow 148482 "<flow>"
+	  on activityaction_ref 150402 // activity action frame.clear()
+	end
+      end
+
+      activityaction 150018 "frame = 0"
+	opaque_action
+	flow 146818 "<flow>"
+	  on activitynode_ref 149634 // activity_final
+	end
+      end
+
+      activitynode 149634 activity_final ""
+      end
+
+      activityaction 150402 "frame.clear()"
+	opaque_action
+	flow 148610 "<flow>"
+	  on activitynode_ref 149634 // activity_final
+	end
+      end
+    end
+
     class 222978 "mdtDeviceFileWriteThread"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
@@ -3428,6 +3666,120 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    activity 147714 "write"
+      specification operation_ref 309378 // run
+      activitydiagram 248706 "write"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A4
+      end
+
+      activitynode 170370 initial_node ""
+	flow 173314 "<flow>"
+	  on activitynode_ref 170498 // decision
+	end
+      end
+
+      activitynode 170498 decision ""
+	flow 173442 "[frame == 0]"
+	  on activityaction_ref 170626 // activity action frame = getNewFrame()
+	end
+
+	flow 174082 "[else]"
+	  on activityaction_ref 171010 // activity action written = writeData(toWrite)
+	end
+      end
+
+      activityaction 170626 "frame = getNewFrame()"
+	opaque_action
+	flow 173570 "<flow>"
+	  on activitynode_ref 170626 // decision
+	end
+      end
+
+      activitynode 170626 decision ""
+	flow 173698 "[frame == 0]"
+	  on activitynode_ref 170754 // activity_final
+	end
+
+	flow 173826 "<flow>"
+	  on activityaction_ref 170754 // activity action bufferCursor = frame.data()
+	end
+      end
+
+      activitynode 170754 activity_final ""
+      end
+
+      activityaction 170754 "bufferCursor = frame.data()"
+	opaque_action
+	flow 173954 "<flow>"
+	  on activityaction_ref 170882 // activity action toWrite = frame.size()
+	end
+      end
+
+      activityaction 170882 "toWrite = frame.size()"
+	opaque_action
+	flow 174210 "<flow>"
+	  on activityaction_ref 171010 // activity action written = writeData(toWrite)
+	end
+      end
+
+      activityaction 171010 "written = writeData(toWrite)"
+	opaque_action
+	flow 182530 "<flow>"
+	  on activityaction_ref 178050 // activity action frame.take(written)
+	end
+      end
+
+      activityaction 171138 "toWrite -= written"
+	opaque_action
+	flow 182786 "<flow>"
+	  on activitynode_ref 171010 // activity_final
+	end
+      end
+
+      activityaction 171266 "bufferCursor += written"
+	opaque_action
+	flow 182658 "<flow>"
+	  on activityaction_ref 171138 // activity action toWrite -= written
+	end
+      end
+
+      activitynode 170882 decision ""
+	flow 174722 "[frame.isEmpty()]"
+	  on activityaction_ref 171394 // activity action txFramesPoll.enqueue(frame)
+	end
+
+	flow 182018 "[else]"
+	  on activityaction_ref 171266 // activity action bufferCursor += written
+	end
+      end
+
+      activityaction 171394 "txFramesPoll.enqueue(frame)"
+	opaque_action
+	flow 182274 "<flow>"
+	  on activityaction_ref 171522 // activity action frame = 0
+	end
+      end
+
+      activityaction 171522 "frame = 0"
+	opaque_action
+	flow 182914 "<flow>"
+	  on activitynode_ref 171010 // activity_final
+	end
+      end
+
+      activitynode 171010 activity_final ""
+      end
+
+      activityaction 178050 "frame.take(written)"
+	opaque_action
+	flow 181890 "<flow>"
+	  on activitynode_ref 170882 // decision
+	end
       end
     end
   end
