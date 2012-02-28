@@ -8,7 +8,10 @@
  */
 enum mdt_error_t{
   MDT_NO_ERROR = 0,
-  MDT_UNDEFINED_ERROR
+  MDT_UNDEFINED_ERROR,
+  MDT_FILE_IO_ERROR,
+  MDT_SERIAL_PORT_IO_ERROR,
+  MDT_USB_IO_ERROR
 };
 
 /*! \brief Add source information to error

@@ -1,11 +1,14 @@
 window_sizes 1280 1002 370 904 808 120
+diagrams
+  active  classdiagram_ref 169218 // mdtSerialPortManager
+    904 808 100 4 0 0
+end
 show_stereotypes
-selected classview_ref 201218 // mdtDeviceFile
+selected classdiagram_ref 169218 // mdtSerialPortManager
 open
   
   package_ref 128002 // mdtutils
-  
-  package_ref 148226 // mdtserialport
+  classview_ref 128002 // mdtSerialPort
   
   package_ref 134530 // mdtTest
 end

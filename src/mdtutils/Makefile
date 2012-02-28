@@ -201,6 +201,33 @@ linux/mdtDeviceFilePosix.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.s
 .PHONY : linux/mdtDeviceFilePosix.cpp.s
 
+linux/mdtUsbtmcFile.o: linux/mdtUsbtmcFile.cpp.o
+.PHONY : linux/mdtUsbtmcFile.o
+
+# target to build an object file
+linux/mdtUsbtmcFile.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcFile.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcFile.cpp.o
+.PHONY : linux/mdtUsbtmcFile.cpp.o
+
+linux/mdtUsbtmcFile.i: linux/mdtUsbtmcFile.cpp.i
+.PHONY : linux/mdtUsbtmcFile.i
+
+# target to preprocess a source file
+linux/mdtUsbtmcFile.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcFile.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcFile.cpp.i
+.PHONY : linux/mdtUsbtmcFile.cpp.i
+
+linux/mdtUsbtmcFile.s: linux/mdtUsbtmcFile.cpp.s
+.PHONY : linux/mdtUsbtmcFile.s
+
+# target to generate assembly for a file
+linux/mdtUsbtmcFile.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcFile.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcFile.cpp.s
+.PHONY : linux/mdtUsbtmcFile.cpp.s
+
 mdtAbstractDeviceFile.o: mdtAbstractDeviceFile.cpp.o
 .PHONY : mdtAbstractDeviceFile.o
 
@@ -744,6 +771,9 @@ help:
 	@echo "... linux/mdtDeviceFilePosix.o"
 	@echo "... linux/mdtDeviceFilePosix.i"
 	@echo "... linux/mdtDeviceFilePosix.s"
+	@echo "... linux/mdtUsbtmcFile.o"
+	@echo "... linux/mdtUsbtmcFile.i"
+	@echo "... linux/mdtUsbtmcFile.s"
 	@echo "... mdtAbstractDeviceFile.o"
 	@echo "... mdtAbstractDeviceFile.i"
 	@echo "... mdtAbstractDeviceFile.s"

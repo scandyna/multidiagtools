@@ -12,6 +12,8 @@
 
 #include <QDebug>
 
+#include "linux/mdtUsbtmcFile.h"
+
 void mdtDeviceFileTest::startStopTest()
 {
   mdtDeviceFile df;
@@ -241,7 +243,6 @@ void mdtDeviceFileTest::readTest_data()
 
 void mdtDeviceFileTest::writeReadTest()
 {
-  
 }
 
 void mdtDeviceFileTest::emptyQueueRecoveryTest()
@@ -316,4 +317,64 @@ void mdtDeviceFileTest::emptyQueueRecoveryTest()
   QVERIFY(frame1 != 0);
   QVERIFY(*frame1 == "MNOP");
   df.unlockMutex();
+}
+
+void mdtDeviceFileTest::essais()
+{
+  mdtUsbtmcFile df;
+  mdtDeviceFileConfig cfg;
+  mdtDeviceFileReadThread rdThd;
+  mdtDeviceFileWriteThread wrThd;
+  mdtFrame *frame;
+
+  // Setup
+  cfg.setInterface("/dev/usbtmc0");
+  cfg.setEndOfFrameSeq("\n");
+  cfg.setReadFrameSize(512);
+  //cfg.setReadMinWaitTime(100);
+  //cfg.setWriteMinWaitTime(100);
+  cfg.setWriteFrameSize(512);
+  QVERIFY(df.open(cfg));
+
+  // Assign df to the threads and start
+  rdThd.setDeviceFile(&df);
+  wrThd.setDeviceFile(&df);
+  wrThd.start();
+  rdThd.start();
+
+  /* Send a command
+   */
+
+  //df.readOneFrame();
+  //QTest::qWait(1000);
+  
+  // Get a frame
+  df.lockMutex();
+  QVERIFY(df.writeFramesPool().size() > 0);
+  frame = df.writeFramesPool().dequeue();
+  df.unlockMutex();
+  QVERIFY(frame != 0);
+
+  // Send the command
+  frame->clear();
+  frame->append("*IDN?\n");
+  //frame->append("*CLS\n");
+  df.lockMutex();
+  df.writeFrames().enqueue(frame);
+  df.unlockMutex();
+  df.writeOneFrame();
+
+  QTest::qWait(100);
+  df.readOneFrame();
+  // Wait some time
+  QTest::qWait(100);
+
+  // Get answer
+  df.lockMutex();
+  QVERIFY(df.readenFrames().size() > 0);
+  frame = df.readenFrames().dequeue();
+  df.unlockMutex();
+  QVERIFY(frame != 0);
+  qDebug() << "ANS: " << *frame;
+
 }

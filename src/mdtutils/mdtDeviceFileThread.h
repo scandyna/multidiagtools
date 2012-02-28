@@ -43,6 +43,8 @@ class mdtDeviceFileThread : public QThread
 
   volatile bool pvRunning;
   mdtDeviceFile *pvDeviceFile;
+  int pvReadMinWaitTime;
+  int pvWriteMinWaitTime;
 };
 
 #endif  // #ifndef MDT_DEVICE_FILE_THREAD_H

@@ -8,6 +8,8 @@ mdtDeviceFileThread::mdtDeviceFileThread(QObject *parent)
 {
   pvDeviceFile = 0;
   pvRunning = false;
+  pvReadMinWaitTime = 0;
+  pvWriteMinWaitTime = 0;
 }
 
 mdtDeviceFileThread::~mdtDeviceFileThread()
@@ -22,6 +24,8 @@ void mdtDeviceFileThread::setDeviceFile(mdtDeviceFile *deviceFile)
   Q_ASSERT(deviceFile != 0);
 
   pvDeviceFile = deviceFile;
+  pvReadMinWaitTime = pvDeviceFile->config().readMinWaitTime();
+  pvWriteMinWaitTime = pvDeviceFile->config().writeMinWaitTime();
 }
 
 void mdtDeviceFileThread::start()

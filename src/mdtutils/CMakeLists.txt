@@ -60,6 +60,7 @@ if(UNIX)
   message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
     linux/mdtDeviceFilePosix.cpp
+    linux/mdtUsbtmcFile.cpp
   )
 endif(UNIX)
 

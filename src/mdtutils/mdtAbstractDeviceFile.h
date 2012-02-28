@@ -30,6 +30,10 @@ class mdtAbstractDeviceFile : public QObject
    */
   virtual void close() = 0;
 
+  /*! \brief Get the stored configuration
+   */
+  mdtDeviceFileConfig &config();
+
   /*! \brief Set the read data timeout
    *
    * This method must be re-implemented in plateform specific subclass.
@@ -171,6 +175,8 @@ class mdtAbstractDeviceFile : public QObject
   QQueue<mdtFrame*> pvReadFramesPool;
   QQueue<mdtFrame*> pvWriteFrames;
   QQueue<mdtFrame*> pvWriteFramesPool;
+  // Configuration
+  mdtDeviceFileConfig pvConfig;
 
  private:
 

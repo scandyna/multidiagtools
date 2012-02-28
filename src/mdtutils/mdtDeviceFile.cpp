@@ -45,6 +45,7 @@ bool mdtDeviceFile::open(mdtDeviceFileConfig &cfg)
     pvWriteFramesPool.enqueue(frame);
   }
   unlockMutex();
+  pvConfig = cfg;
 
   return true;
 }
@@ -62,4 +63,9 @@ void mdtDeviceFile::close()
   pvWriteFramesPool.clear();
   qDeleteAll(pvWriteFrames);
   pvWriteFrames.clear();
+}
+
+int mdtDeviceFile::getFd()
+{
+  return pvFd;
 }

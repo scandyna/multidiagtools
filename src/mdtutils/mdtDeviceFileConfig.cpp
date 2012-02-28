@@ -14,8 +14,10 @@ void mdtDeviceFileConfig::setDefault()
   pvInterface = "";
   pvReadFrameSize = 1024;
   pvReadQueueSize = 10;
+  pvReadMinWaitTime = 0;
   pvWriteFrameSize = 1024;
   pvWriteQueueSize = 10;
+  pvWriteMinWaitTime = 0;
   pvFrameType = mdtFrame::mdtFrameTypeAscii;
   pvEndOfFrameSeq = '\0';
 }
@@ -52,6 +54,26 @@ void mdtDeviceFileConfig::setReadQueueSize(int size)
 int mdtDeviceFileConfig::readQueueSize()
 {
   return pvReadQueueSize;
+}
+
+void mdtDeviceFileConfig::setReadMinWaitTime(int minWaitTime)
+{
+  pvReadMinWaitTime = minWaitTime;
+}
+
+int mdtDeviceFileConfig::readMinWaitTime()
+{
+  return pvReadMinWaitTime;
+}
+
+void mdtDeviceFileConfig::setWriteMinWaitTime(int minWaitTime)
+{
+  pvWriteMinWaitTime = minWaitTime;
+}
+
+int mdtDeviceFileConfig::writeMinWaitTime()
+{
+  return pvWriteMinWaitTime;
 }
 
 void mdtDeviceFileConfig::setWriteFrameSize(int size)

@@ -25,6 +25,8 @@ class mdtDeviceFileTest : public mdtTest
 
   // Check that recovery works whenn a frame pool was empty for some time
   void emptyQueueRecoveryTest();
+  
+  void essais();
 };
 
 #endif  // #ifndef MDT_DEVICE_FILE_TEST_H

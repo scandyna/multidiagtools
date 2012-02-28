@@ -92,13 +92,17 @@ int mdtDeviceFilePosix::readData(char *data, int maxLen)
   n = read(pvFd, data, maxLen);
   if(n < 0){
     switch(errno){
-      case EAGAIN:  // No data available
+      case EAGAIN:      // No data available
+        return 0;
+      case ETIMEDOUT:   // Read timeout (happens with USBTMC)
+        updateReadTimeoutState(true);
         return 0;
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
         e.setSystemError(errno, strerror(errno));
         MDT_ERROR_SET_SRC(e, "mdtDeviceFilePosix");
         e.commit();
+        return 0;
     }
 
 /*

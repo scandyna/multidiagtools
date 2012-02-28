@@ -64,6 +64,40 @@ class mdtDeviceFileConfig
    */
   int readQueueSize();
 
+  /*! \brief Set the minimal time to wait before try to read
+   *
+   * Internally, the event system is used for read calls.<br>
+   * For exemple, on Linux, the select() call is used.<br>
+   * It can happen that the underlaying system does not support
+   * it, and call returns immediately, causing the reader thread
+   * to consume all CPU ressource.<br>
+   * In this situation, the solution is to wait sometime before calling the read function.
+   * This wat is done by setting this parameter to a value greater than 0.
+   * \param minWaitTime Wait time before read [ms]
+   * \sa mdtDeviceFileReadThread
+   */
+  void setReadMinWaitTime(int minWaitTime);
+
+  /*! \brief Get the minimal time to wait before try to read
+   * \sa setReadMinWaitTime()
+   */
+  int readMinWaitTime();
+
+  /*! \brief Set the minimal time to wait before try to write
+   *
+   * Internally, the event system is used for write calls.<br>
+   * It can be usefull (or important) to delay the write call.
+   * In this case, set a minWaitTime > 0
+   * \param minWaitTime Wait time before write [ms]
+   * \sa mdtDeviceFileWriteThread
+   */
+  void setWriteMinWaitTime(int minWaitTime);
+
+  /*! \brief Get the minimal time to wait before try to write
+   * \sa setWriteMinWaitTime()
+   */
+  int writeMinWaitTime();
+
   /*!\brief Set the write frame size
    *
    * Frame size is the maximum number of bytes that can be stored
@@ -131,8 +165,10 @@ class mdtDeviceFileConfig
   // Frame and frame FIFO (queue) size
   int pvReadFrameSize;        // Maximum data length to store before a frame is considered invalid
   int pvReadQueueSize;        // Maximum number of frames that can be stored
+  int pvReadMinWaitTime;      // Minimum time to wait before read call
   int pvWriteFrameSize;       // Maximum data length to store before a frame is considered invalid
   int pvWriteQueueSize;       // Maximum number of frames that can be stored
+  int pvWriteMinWaitTime;     // Minimum time to wait before write call
   mdtFrame::type_t pvFrameType;
   QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
 

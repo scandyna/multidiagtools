@@ -49,6 +49,10 @@ void mdtDeviceFileWriteThread::run()
     }
     pvDeviceFile->unlockMutex();
 
+    // Wait the minimal time if requierd
+    if(pvWriteMinWaitTime > 0){
+      msleep(pvWriteMinWaitTime);
+    }
     // Wait on write ready event
     if(!pvDeviceFile->waitEventWriteReady()){
       pvDeviceFile->lockMutex();
@@ -72,6 +76,7 @@ void mdtDeviceFileWriteThread::run()
       }
       if(frame != 0){
         // Write data to port
+        ///qDebug() << "WR THD, have data to send: " << *frame;
         written = pvDeviceFile->writeData(bufferCursor, toWrite);
         ///qDebug() << "TX thd: written: " << written;
         frame->take(written);

@@ -3,7 +3,7 @@
 #include "mdtError.h"
 #include <QApplication>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtDeviceFileReadThread::mdtDeviceFileReadThread(QObject *parent)
  : mdtDeviceFileThread(parent)
@@ -79,6 +79,10 @@ void mdtDeviceFileReadThread::run()
     }
     pvDeviceFile->unlockMutex();
 
+    // Wait the minimal time if requierd
+    if(pvReadMinWaitTime > 0){
+      msleep(pvReadMinWaitTime);
+    }
     // Wait on RX event
     if(!pvDeviceFile->waitEventRead()){
       pvDeviceFile->lockMutex();
@@ -93,6 +97,7 @@ void mdtDeviceFileReadThread::run()
       bufferCursor = buffer;
       // Read data from port
       readen = pvDeviceFile->readData(buffer, bufferSize);
+      ///qDebug() << "Readen: " << readen << " , data: " << buffer;
       toStore = readen;
       // Store readen data
       while(toStore > 0){
@@ -117,6 +122,7 @@ void mdtDeviceFileReadThread::run()
         if(frame->bytesToStore() == 0){
           stored += frame->eofSeqLen();
           pvDeviceFile->readenFrames().enqueue(frame);
+          pvDeviceFile->unlockMutex();
           frame = getNewFrame();
         }
         toStore = toStore - stored;

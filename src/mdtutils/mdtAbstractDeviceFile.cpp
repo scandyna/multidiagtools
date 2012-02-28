@@ -18,6 +18,11 @@ mdtAbstractDeviceFile::~mdtAbstractDeviceFile()
 {
 }
 
+mdtDeviceFileConfig &mdtAbstractDeviceFile::config()
+{
+  return pvConfig;
+}
+
 void mdtAbstractDeviceFile::updateReadTimeoutState(bool state)
 {
   if(state != pvReadTimeoutOccuredPrevious){

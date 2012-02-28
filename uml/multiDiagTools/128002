@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 40
+  revision 43
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -884,6 +884,201 @@ ${inlines}
 	
 	
 	
+      end
+    end
+  end
+
+  classview 214402 "mdtFrameCodec"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    classdiagram 281602 "mdtFrameCodec"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 269442 "mdtFrameCodec"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 471298 "mdtFrameCodec"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 471426 "~mdtFrameCodec"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 471554 "decode"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "frame" type class_ref 196354 // mdtFrame
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 471682 "encode"
+	abstract cpp_virtual public return_type class_ref 196354 // mdtFrame
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      classrelation 299394 // <dependency>
+	relation 299138 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 299394 // <dependency>
+	  b parent class_ref 269442 // mdtFrameCodec
+      end
+
+      classrelation 299522 // <dependency>
+	relation 299266 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 299522 // <dependency>
+	  b parent class_ref 196354 // mdtFrame
+      end
+    end
+
+    class 269570 "mdtFrameCodecScpi"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 299010 // <generalisation>
+	relation 298754 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 299010 // <generalisation>
+	  b parent class_ref 269954 // mdtFrameCodecAscii
+      end
+    end
+
+    class 269698 "mdtFrameCodecModbusAscii"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 299138 // <generalisation>
+	relation 298882 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 299138 // <generalisation>
+	  b parent class_ref 269954 // mdtFrameCodecAscii
+      end
+    end
+
+    class 269826 "mdtFrameCodecModbusRtu"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 299266 // <generalisation>
+	relation 299010 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 299266 // <generalisation>
+	  b parent class_ref 269442 // mdtFrameCodec
+      end
+    end
+
+    class 269954 "mdtFrameCodecAscii"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 298754 // <generalisation>
+	relation 298498 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 298754 // <generalisation>
+	  b parent class_ref 269442 // mdtFrameCodec
+      end
+
+      classrelation 298882 // pvAsciiData (<directional composition>)
+	relation 298626 *-->
+	  a role_name "pvAsciiData" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 298882 // pvAsciiData (<directional composition>)
+	  b parent class_ref 161026 // QString
       end
     end
   end
@@ -2309,6 +2504,20 @@ ${inlines}
 	
       end
 
+      operation 478722 "config"
+	public return_type class_ref 256386 // mdtDeviceFileConfig
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 424706 "setReadTimeout"
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 1
@@ -2668,6 +2877,15 @@ ${inlines}
 	
 	
       end
+
+      classrelation 306050 // pvConfig (<unidirectional association>)
+	relation 305794 --->
+	  a role_name "pvConfig" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 306050 // pvConfig (<unidirectional association>)
+	  b parent class_ref 256386 // mdtDeviceFileConfig
+      end
     end
 
     classdiagram 255362 "mdtDeviceFile"
@@ -2851,6 +3069,26 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 354434 "pvReadMinWaitTime"
+	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 354562 "pvReadTimeout"
+	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       attribute 340994 "pvWriteFrameSize"
 	protected explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -2862,6 +3100,16 @@ ${inlines}
       end
 
       attribute 341122 "pvWriteQueueSize"
+	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 354690 "pvWriteMinWaitTime"
 	protected explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -2992,6 +3240,35 @@ ${inlines}
 	
       end
 
+      operation 478210 "setReadMinWaitTime"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "minWaitTime" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 478338 "readMinWaitTime"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 435714 "setWriteFrameSize"
 	public explicit_return_type "void"
 	nparams 1
@@ -3037,6 +3314,35 @@ ${inlines}
       end
 
       operation 436354 "writeQueueSize"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 478466 "setWriteMinWaitTime"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "minWaitTime" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 478594 "writeMinWaitTime"
 	public explicit_return_type "int"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -3312,6 +3618,26 @@ ${inlines}
 "
 	    classrelation_ref 285186 // pvDeviceFile (<unidirectional association>)
 	  b parent class_ref 249602 // mdtDeviceFile
+      end
+
+      attribute 354818 "pvReadMinWaitTime"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 354946 "pvWriteMinWaitTime"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 

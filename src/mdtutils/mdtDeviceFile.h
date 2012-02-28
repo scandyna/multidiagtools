@@ -35,6 +35,9 @@ class mdtDeviceFile : public mdtDeviceFileSys
    * Note: this method locks the internal mutex
    */
   void close();
+  
+  /// NOTE: provisoire
+  int getFd();
 };
 
 #endif  // #ifndef MDT_DEVICE_FILE_H
