@@ -1,21 +1,21 @@
 format 76
 
-classcanvas 128002 class_ref 249602 // mdtDeviceFile
+classcanvas 128002 class_ref 249602 // mdtPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 81 680 2000
+  xyz 99 692 2000
 end
-classcanvas 128130 class_ref 249474 // mdtAbstractDeviceFile
+classcanvas 128130 class_ref 249474 // mdtAbstractPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 21 11 2000
 end
-classcanvas 128258 class_ref 249858 // mdtDeviceFileSys
+classcanvas 128258 class_ref 249858 // mdtPortSys
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 96 575 2000
+  xyz 97 596 2000
 end
 note 128642 "System dependent implementation.
 Replace Sys by system name"
-  xyzwh 360 566 2000 207 73
-classcanvas 128770 class_ref 256386 // mdtDeviceFileConfig
+  xyzwh 360 587 2000 207 73
+classcanvas 128770 class_ref 256386 // mdtPortConfig
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 553 150 2000
 end
@@ -31,7 +31,7 @@ relationcanvas 128514 relation_ref 270978 // <generalisation>
 end
 relationcanvas 128898 relation_ref 305794 // <unidirectional association>
   from ref 128130 z 2001 to ref 128770
-  role_a_pos 489 166 3000 no_role_b
-  multiplicity_a_pos 518 193 3000 no_multiplicity_b
+  role_a_pos 489 163 3000 no_role_b
+  multiplicity_a_pos 518 190 3000 no_multiplicity_b
 end
 end

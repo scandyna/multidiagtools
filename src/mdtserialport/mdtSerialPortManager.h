@@ -2,34 +2,35 @@
 #define MDT_SERIAL_PORT_MANAGER_H
 
 #include <QtGlobal>
+#include <QStringList>
 
-#ifdef Q_OS_UNIX
- #include "linux/mdtSerialPortManagerPosix.h"
- #define mdtSerialPortManagerSys mdtSerialPortManagerPosix
-#endif
+#include "mdtAbstractSerialPort.h"
+#include "mdtSerialPort.h"
 
-#include "mdtSerialPortConfig.h"
-#include "mdtSerialPortInterface.h"
+#include "mdtPortManager.h"
 
-class mdtSerialPortManager : public mdtSerialPortManagerSys
+class mdtSerialPortManager : public mdtPortManager
 {
  public:
 
-  mdtSerialPortManager();
+  mdtSerialPortManager(QObject *parent = 0);
   ~mdtSerialPortManager();
-  
-  /*! \brief Get interface inatance for given port number
-   *  Note that port numbers are generated during scan()
-   *  For example, if a Unix system has /dev/ttyS0 , ttyS1 and ttyUSB0 ,
-   *  port 1 will refer to ttyS0, port 2 to to ttyS1 and port 3 to ttyUSB0
-   *  \param portNumber Port number
-   *  \return The rquested interface, or a Null pointer if not available
+
+  /*! \brief Set the serial port instance
    */
-  mdtSerialPortInterface *interface(int portNumber);
+  void setSerialPortObj(mdtAbstractSerialPort *sp);
+
+  /*! \brief Scan for available serial ports
+   * 
+   * Try to open available ports on system and get some attributes.
+   * If both steps works, the found port is considered existing.
+   * \return List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows)
+   */
+  QStringList scan();
 
  private:
 
-  mdtSerialPortConfig *pvConfig;
+  mdtAbstractSerialPort *pvSerialPort;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H

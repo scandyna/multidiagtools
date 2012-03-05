@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 43
+  revision 49
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2409,7 +2409,7 @@ ${inlines}
     end
   end
 
-  classview 201218 "mdtDeviceFile"
+  classview 201218 "mdtPort"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -2426,12 +2426,12 @@ ${inlines}
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     associated_deployment_view deploymentview_ref 154882 // mdtDeviceFile
-    classdiagram 255234 "mdtAbstractDeviceFile"
+    classdiagram 255234 "mdtAbstractPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 249474 "mdtAbstractDeviceFile"
+    class 249474 "mdtAbstractPort"
       abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -2443,7 +2443,67 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 423682 "mdtAbstractDeviceFile"
+      attribute 333058 "pvReadTimeoutOccured"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 333186 "pvReadTimeoutOccuredPrevious"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 333314 "pvWriteTimeoutOccured"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 333442 "pvWriteTimeoutOccuredPrevious"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 368002 "pvName"
+	protected type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 340482 "pvMutex"
+	private type class_ref 202882 // QMutex
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 423682 "mdtAbstractPort"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -2459,7 +2519,7 @@ ${inlines}
 	
       end
 
-      operation 423810 "~mdtAbstractDeviceFile"
+      operation 423810 "~mdtAbstractPort"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -2481,10 +2541,25 @@ ${inlines}
 	  b parent class_ref 138626 // QObject
       end
 
+      operation 492802 "setAttributes"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 424450 "open"
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 1
-	  param in name "cfg" type class_ref 256386 // mdtDeviceFileConfig
+	  param in name "cfg" type class_ref 256386 // mdtPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	
@@ -2505,7 +2580,7 @@ ${inlines}
       end
 
       operation 478722 "config"
-	public return_type class_ref 256386 // mdtDeviceFileConfig
+	public return_type class_ref 256386 // mdtPortConfig
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2612,46 +2687,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      attribute 333058 "pvReadTimeoutOccured"
-	protected explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 333186 "pvReadTimeoutOccuredPrevious"
-	protected explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 333314 "pvWriteTimeoutOccured"
-	protected explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 333442 "pvWriteTimeoutOccuredPrevious"
-	protected explicit_type "bool"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
       end
 
       operation 425730 "updateReadTimeoutState"
@@ -2808,16 +2843,6 @@ ${inlines}
 	
       end
 
-      attribute 340482 "pvMutex"
-	private type class_ref 202882 // QMutex
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       operation 434690 "lockMutex"
 	public explicit_return_type "void"
 	nparams 0
@@ -2884,16 +2909,16 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 306050 // pvConfig (<unidirectional association>)
-	  b parent class_ref 256386 // mdtDeviceFileConfig
+	  b parent class_ref 256386 // mdtPortConfig
       end
     end
 
-    classdiagram 255362 "mdtDeviceFile"
+    classdiagram 255362 "mdtPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 249602 "mdtDeviceFile"
+    class 249602 "mdtPort"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -2905,7 +2930,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 423938 "mdtDeviceFile"
+      operation 423938 "mdtPort"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -2921,7 +2946,7 @@ ${inlines}
 	
       end
 
-      operation 424066 "~mdtDeviceFile"
+      operation 424066 "~mdtPort"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -2940,13 +2965,13 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 271234 // <generalisation>
-	  b parent class_ref 249858 // mdtDeviceFileSys
+	  b parent class_ref 249858 // mdtPortSys
       end
 
       operation 434434 "open"
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "cfg" type class_ref 256386 // mdtDeviceFileConfig
+	  param in name "cfg" type class_ref 256386 // mdtPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -2973,7 +2998,7 @@ ${inlines}
       end
     end
 
-    class 249858 "mdtDeviceFileSys"
+    class 249858 "mdtPortSys"
       visibility package stereotype "SystemSpecificImplementation"
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -2990,16 +3015,16 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 271106 // <generalisation>
-	  b parent class_ref 249474 // mdtAbstractDeviceFile
+	  b parent class_ref 249474 // mdtAbstractPort
       end
     end
 
-    classdiagram 262018 "mdtDeviceFileConfig"
+    classdiagram 262018 "mdtPortConfig"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 256386 "mdtDeviceFileConfig"
+    class 256386 "mdtPortConfig"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -3011,7 +3036,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 434946 "mdtDeviceFileConfig"
+      operation 434946 "mdtPortConfig"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
@@ -3025,7 +3050,7 @@ ${inlines}
 	
       end
 
-      operation 435074 "~mdtDeviceFileConfig"
+      operation 435074 "~mdtPortConfig"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
@@ -3037,16 +3062,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      attribute 340610 "pvInterface"
-	protected type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
       end
 
       attribute 340738 "pvReadFrameSize"
@@ -3141,35 +3156,6 @@ ${inlines}
 
       operation 436482 "setDefault"
 	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 435202 "setInterface"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "interface" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 435330 "interface"
-	public return_type class_ref 161026 // QString
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3432,7 +3418,7 @@ ${inlines}
       operation 444162 "operator=="
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "other" type class_ref 256386 // mdtDeviceFileConfig
+	  param in name "other" type class_ref 256386 // mdtPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -3447,7 +3433,7 @@ ${inlines}
       operation 444290 "operator!="
 	public explicit_return_type "bool"
 	nparams 1
-	  param in name "other" type class_ref 256386 // mdtDeviceFileConfig
+	  param in name "other" type class_ref 256386 // mdtPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -3462,7 +3448,7 @@ ${inlines}
       operation 443906 "matches"
 	private explicit_return_type "bool"
 	nparams 1
-	  param in name "other" type class_ref 256386 // mdtDeviceFileConfig
+	  param in name "other" type class_ref 256386 // mdtPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -3475,12 +3461,12 @@ ${inlines}
       end
     end
 
-    classdiagram 268546 "mdtDeviceFileThread"
+    classdiagram 268546 "mdtPortThread"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 222594 "mdtDeviceFileThread"
+    class 222594 "mdtPortThread"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -3500,7 +3486,7 @@ ${inlines}
 	  b parent class_ref 222722 // QThread
       end
 
-      operation 308738 "mdtDeviceFileThread"
+      operation 308738 "mdtPortThread"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -3516,7 +3502,7 @@ ${inlines}
 	
       end
 
-      operation 464770 "~mdtDeviceFileThread"
+      operation 464770 "~mdtPortThread"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
@@ -3530,10 +3516,10 @@ ${inlines}
 	
       end
 
-      operation 309122 "setDeviceFile"
+      operation 309122 "setPort"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "deviceFile" type class_ref 249602 // mdtDeviceFile
+	  param in name "port" type class_ref 249602 // mdtPort
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -3546,7 +3532,7 @@ ${inlines}
       end
 
       operation 310402 "start"
-	public explicit_return_type "void"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3611,13 +3597,13 @@ ${inlines}
 	
       end
 
-      classrelation 285186 // pvDeviceFile (<unidirectional association>)
+      classrelation 285186 // pvPort (<unidirectional association>)
 	relation 284930 --->
-	  a role_name "pvDeviceFile" multiplicity "0..1" private
+	  a role_name "pvPort" multiplicity "0..1" private
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 285186 // pvDeviceFile (<unidirectional association>)
-	  b parent class_ref 249602 // mdtDeviceFile
+	    classrelation_ref 285186 // pvPort (<unidirectional association>)
+	  b parent class_ref 249602 // mdtPort
       end
 
       attribute 354818 "pvReadMinWaitTime"
@@ -3641,7 +3627,7 @@ ${inlines}
       end
     end
 
-    class 222850 "mdtDeviceFileReadThread"
+    class 222850 "mdtPortReadThread"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -3658,10 +3644,10 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 230530 // <generalisation>
-	  b parent class_ref 222594 // mdtDeviceFileThread
+	  b parent class_ref 222594 // mdtPortThread
       end
 
-      operation 309762 "mdtDeviceFileReadThread"
+      operation 309762 "mdtPortReadThread"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -3669,6 +3655,21 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 513666 "newFrameReaden"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -3930,7 +3931,7 @@ ${inlines}
       end
     end
 
-    class 222978 "mdtDeviceFileWriteThread"
+    class 222978 "mdtPortWriteThread"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -3947,10 +3948,10 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 230658 // <generalisation>
-	  b parent class_ref 222594 // mdtDeviceFileThread
+	  b parent class_ref 222594 // mdtPortThread
       end
 
-      operation 309890 "mdtDeviceFileWriteThread"
+      operation 309890 "mdtPortWriteThread"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -3958,6 +3959,21 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514946 "frameWritten"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -4110,6 +4126,318 @@ ${inlines}
     end
   end
 
+  classview 227458 "mdtPortManager"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    classdiagram 294658 "mdtPortManager"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 182018 "mdtPortManager"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 216194 "mdtPortManager"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 216322 "~mdtPortManager"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 332674 // pvPort (<directional composition>)
+	relation 332418 *-->
+	  a role_name "pvPort" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 332674 // pvPort (<directional composition>)
+	  b parent class_ref 249602 // mdtPort
+      end
+
+      classrelation 332802 // pvReadThread (<directional composition>)
+	relation 332546 *-->
+	  a role_name "pvReadThread" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 332802 // pvReadThread (<directional composition>)
+	  b parent class_ref 222850 // mdtPortReadThread
+      end
+
+      classrelation 332930 // pvWriteThread (<directional composition>)
+	relation 332674 *-->
+	  a role_name "pvWriteThread" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 332930 // pvWriteThread (<directional composition>)
+	  b parent class_ref 222978 // mdtPortWriteThread
+      end
+
+      classrelation 333058 // <generalisation>
+	relation 332802 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 333058 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 506498 "setPortName"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 506626 "openPort"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514050 "closePort"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 506242 "startReading"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 506370 "stopReading"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 339586 // pvConfig (<directional composition>)
+	relation 339330 *-->
+	  a role_name "pvConfig" multiplicity "1" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 339586 // pvConfig (<directional composition>)
+	  b parent class_ref 256386 // mdtPortConfig
+      end
+
+      operation 506754 "startWriting"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 506882 "stopWriting"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 507010 "start"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 507138 "stop"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 513794 "writeData"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514306 "lastReadenFrame"
+	public return_type class_ref 236162 // QByteArray
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514178 "waitReadenFrame"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 513922 "newFrameReaden"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 374786 "pvLastReadenFrame"
+	protected type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 346114 // <generalisation>
+	relation 345858 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 346114 // <generalisation>
+	  b parent class_ref 222722 // QThread
+      end
+    end
+  end
+
   package_ref 155010 // linux
 
   deploymentview 154882 "mdtDeviceFile"
@@ -4135,7 +4463,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 249474 // mdtAbstractDeviceFile
+	class_ref 249474 // mdtAbstractPort
       end
     end
 
@@ -4158,7 +4486,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 249602 // mdtDeviceFile
+	class_ref 249602 // mdtPort
       end
     end
 
@@ -4181,7 +4509,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 249858 // mdtDeviceFileSys
+	class_ref 249858 // mdtPortSys
       end
     end
 
@@ -4204,7 +4532,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 256386 // mdtDeviceFileConfig
+	class_ref 256386 // mdtPortConfig
       end
     end
   end

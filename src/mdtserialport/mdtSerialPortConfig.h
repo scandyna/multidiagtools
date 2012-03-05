@@ -4,13 +4,13 @@
 #include <QString>
 #include <QByteArray>
 #include "mdtFrame.h"
-#include "mdtDeviceFileConfig.h"
+#include "mdtPortConfig.h"
 
 // Default Xon and Xoff char
 #define MDT_DEF_XON  0x11   // DC1
 #define MDT_DEF_XOFF 0x13   // DC3
 
-class mdtSerialPortConfig : public mdtDeviceFileConfig
+class mdtSerialPortConfig : public mdtPortConfig
 {
  public:
 

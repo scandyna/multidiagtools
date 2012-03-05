@@ -1,18 +1,18 @@
 #ifndef MDT_SERIAL_PORT_CTL_THREAD_H
 #define MDT_SERIAL_PORT_CTL_THREAD_H
 
-#include "mdtDeviceFileThread.h"
+#include "mdtPortThread.h"
 #include "mdtSerialPort.h"
 #include <QObject>
 
-class mdtSerialPortCtlThread : public mdtDeviceFileThread
+class mdtSerialPortCtlThread : public mdtPortThread
 {
  public:
 
   mdtSerialPortCtlThread(QObject *parent = 0);
 
   // Overloaded method, this class need access to mdtSerialPort specific methods
-  void setDeviceFile(mdtSerialPort *serialPort);
+  void setPort(mdtSerialPort *serialPort);
 
   /*! \brief Re-implemented stop function
    *  Note: this is Posix implementation specific

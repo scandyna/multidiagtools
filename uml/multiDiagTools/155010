@@ -1,6 +1,6 @@
 format 76
 "linux" // mdtutils::linux
-  revision 3
+  revision 7
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -43,12 +43,12 @@ format 76
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     associated_deployment_view deploymentview_ref 155010 // mdtDeviceFilePosix
-    classdiagram 255490 "mdtDeviceFilePosix"
+    classdiagram 255490 "mdtPortPosix"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 249730 "mdtDeviceFilePosix"
+    class 249730 "mdtPortPosix"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -60,7 +60,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 424194 "mdtDeviceFilePosix"
+      operation 424194 "mdtPortPosix"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -76,7 +76,7 @@ ${inlines}
 	
       end
 
-      operation 424322 "~mdtDeviceFilePosix"
+      operation 424322 "~mdtPortPosix"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -95,7 +95,22 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 272002 // <generalisation>
-	  b parent class_ref 249474 // mdtAbstractDeviceFile
+	  b parent class_ref 249474 // mdtAbstractPort
+      end
+
+      operation 492930 "setAttributes"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 426242 "open"
@@ -302,7 +317,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 249730 // mdtDeviceFilePosix
+	class_ref 249730 // mdtPortPosix
       end
     end
   end
@@ -324,12 +339,12 @@ ${namespace_end}"
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     associated_deployment_view deploymentview_ref 161538 // mdtUsbtmcFile
-    classdiagram 288130 "mdtUsbtmcFile"
+    classdiagram 288130 "mdtUsbtmcPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
 
-    class 276482 "mdtUsbtmcFile"
+    class 276482 "mdtUsbtmcPort"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -341,7 +356,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      operation 485250 "mdtUsbtmcFile"
+      operation 485250 "mdtUsbtmcPort"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -356,7 +371,7 @@ ${inlines}
 	
       end
 
-      operation 485378 "~mdtUsbtmcFile"
+      operation 485378 "~mdtUsbtmcPort"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
@@ -375,25 +390,11 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 312578 // <generalisation>
-	  b parent class_ref 249602 // mdtDeviceFile
+	  b parent class_ref 249602 // mdtPort
       end
 
       operation 485506 "waitEventRead"
 	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 485762 "readOneFrame"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -430,6 +431,152 @@ ${inlines}
 	
 	
       end
+
+      operation 485762 "readOneFrame"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 381570 "pvReadWriteMutex"
+	private type class_ref 202882 // QMutex
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 381698 "pvReadCondition"
+	private type class_ref 289538 // QWaitCondition
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 381826 "pvWriteCondition"
+	private type class_ref 289538 // QWaitCondition
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 283010 "mdtUsbtmcPortManager"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 346242 // <generalisation>
+	relation 345986 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 346242 // <generalisation>
+	  b parent class_ref 182018 // mdtPortManager
+      end
+
+      attribute 381314 "pvWaitingFrame"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 381442 "pvFrameWritten"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 514434 "mdtUsbtmcPortManager"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514690 "~mdtUsbtmcPortManager"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 514562 "scan"
+	public return_type class_ref 160770 // QStringList
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 521602 "writeData"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "data" type class_ref 236162 // QByteArray
+	  param in name "waitAnswer" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -456,7 +603,30 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 276482 // mdtUsbtmcFile
+	class_ref 276482 // mdtUsbtmcPort
+      end
+    end
+
+    artifact 179842 "mdtUsbtmcPortManager"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 283010 // mdtUsbtmcPortManager
       end
     end
   end

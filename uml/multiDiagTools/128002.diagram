@@ -2,11 +2,11 @@ format 76
 
 classcanvas 128002 class_ref 128002 // mdtSerialPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 9 634 2000
+  xyz 15 696 2000
 end
 classcanvas 128130 class_ref 128130 // mdtSerialPortConfig
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 622 356 2000
+  xyz 347 429 2000
 end
 classcanvas 128514 class_ref 180994 // mdtSerialPortFlowCtl
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -18,30 +18,26 @@ classcanvas 128642 class_ref 181506 // mdtSerialPortTerm
 end
 classcanvas 129410 class_ref 189570 // mdtAbstractSerialPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 7 172 2000
+  xyz 14 174 2000
 end
 classcanvas 129666 class_ref 189698 // mdtSerialPortSys
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 33 529 2000
+  xyz 39 606 2000
 end
 note 129794 "System dependent implementation.
 Replace Sys by system name"
   xyzwh 287.5 524.5 2000 207 73
-classcanvas 130434 class_ref 196354 // mdtFrame
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 630 447 2000
-end
-classcanvas 131202 class_ref 249602 // mdtDeviceFile
+classcanvas 131202 class_ref 249602 // mdtPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 58 51 2005
 end
-classcanvas 131458 class_ref 249858 // mdtDeviceFileSys
+classcanvas 131458 class_ref 249858 // mdtPortSys
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 375 68 2011
+  xyz 308 77 2011
 end
-classcanvas 131714 class_ref 249474 // mdtAbstractDeviceFile
+classcanvas 131714 class_ref 249474 // mdtAbstractPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 414 138 3005
+  xyz 592 -49 3005
 end
 relationcanvas 129538 relation_ref 189698 // <dependency>
   from ref 129410 z 2001 to ref 128130
@@ -58,33 +54,6 @@ relationcanvas 130050 relation_ref 189954 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130562 relation_ref 244482 // <directional composition>
-  decenter_begin 425
-  decenter_end 64
-  from ref 129410 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 384 374.5 3000 to ref 130434
-  role_a_pos 545 448 3000 no_role_b
-  multiplicity_a_pos 593 475 3000 no_multiplicity_b
-end
-relationcanvas 130818 relation_ref 244610 // <directional composition>
-  decenter_begin 541
-  decenter_end 409
-  from ref 129410 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 384 426 3000 to ref 130434
-  role_a_pos 521 542 3000 no_role_b
-  multiplicity_a_pos 593 569 3000 no_multiplicity_b
-end
-relationcanvas 130946 relation_ref 264194 // <directional composition>
-  decenter_begin 615
-  from ref 129410 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 384 416 3000 to ref 130434
-  role_a_pos 546 466 3000 no_role_b
-  multiplicity_a_pos 597 493 3000 no_multiplicity_b
-end
-relationcanvas 131074 relation_ref 264322 // <directional composition>
-  decenter_begin 722
-  decenter_end 898
-  from ref 129410 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 384 528.5 3000 to ref 130434
-  role_a_pos 522 673 3000 no_role_b
-  multiplicity_a_pos 597 700 3000 no_multiplicity_b
-end
 relationcanvas 131330 relation_ref 278402 // <generalisation>
   from ref 129410 z 2006 to ref 131202
   no_role_a no_role_b
@@ -94,26 +63,6 @@ relationcanvas 131586 relation_ref 270978 // <generalisation>
   from ref 131202 z 2012 to ref 131458
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 131842 relation_ref 271234 // <directional composition>
-  from ref 131714 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 770 522 3006 to ref 130434
-  role_a_pos 700 521 3000 no_role_b
-  multiplicity_a_pos 782 548 3000 no_multiplicity_b
-end
-relationcanvas 131970 relation_ref 271362 // <directional composition>
-  from ref 131714 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 770 522 3006 to ref 130434
-  role_a_pos 691 521 3000 no_role_b
-  multiplicity_a_pos 782 548 3000 no_multiplicity_b
-end
-relationcanvas 132098 relation_ref 271490 // <directional composition>
-  from ref 131714 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 770 522 3006 to ref 130434
-  role_a_pos 713 521 3000 no_role_b
-  multiplicity_a_pos 782 548 3000 no_multiplicity_b
-end
-relationcanvas 132226 relation_ref 271618 // <directional composition>
-  from ref 131714 z 3006 stereotype "<<QQueue<mdtFrame*>>>" xyz 770 522 3006 to ref 130434
-  role_a_pos 689 521 3000 no_role_b
-  multiplicity_a_pos 782 548 3000 no_multiplicity_b
 end
 relationcanvas 132354 relation_ref 270850 // <generalisation>
   from ref 131458 z 3006 to ref 131714

@@ -1,15 +1,16 @@
 window_sizes 1280 1002 370 904 808 120
 diagrams
-  active  classdiagram_ref 169218 // mdtSerialPortManager
+  active  classdiagram_ref 288130 // mdtUsbtmcPort
     904 808 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 169218 // mdtSerialPortManager
+selected attribute_ref 381826 // pvWriteCondition
 open
-  
-  package_ref 128002 // mdtutils
-  classview_ref 128002 // mdtSerialPort
-  
-  package_ref 134530 // mdtTest
+  operation_ref 485634 // waitEventWriteReady
+  operation_ref 485762 // readOneFrame
+  attribute_ref 381314 // pvWaitingFrame
+  attribute_ref 381442 // pvFrameWritten
+  operation_ref 514690 // ~mdtUsbtmcPortManager
+  class_ref 181890 // mdtSerialPortManager
 end
 end

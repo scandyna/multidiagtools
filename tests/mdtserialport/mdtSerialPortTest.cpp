@@ -3,9 +3,9 @@
 #include "mdtSerialPortManager.h"
 #include "mdtSerialPort.h"
 #include "mdtSerialPortConfig.h"
-#include "mdtDeviceFileThread.h"
-#include "mdtDeviceFileReadThread.h"
-#include "mdtDeviceFileWriteThread.h"
+#include "mdtPortThread.h"
+#include "mdtPortReadThread.h"
+#include "mdtPortWriteThread.h"
 #include "mdtSerialPortCtlThread.h"
 
 #include <QTest>
@@ -22,17 +22,17 @@ void mdtSerialPortTest::essais()
   
   m.setSerialPortObj(&sp);
   m.scan();
-  
-  cfg.setInterface("/dev/ttyS0");
+
   cfg.setBaudRate(9600);
   cfg.setDataBitsCount(8);
   cfg.setStopBitsCount(1);
   cfg.setParity(mdtSerialPortConfig::NoParity);
   cfg.enableFlowCtlXonXoff();
   cfg.enableFlowCtlRtsCts();
+  QVERIFY(sp.setAttributes("/dev/ttyS0"));
   QVERIFY(sp.open(cfg));
 
-  ctlThd.setDeviceFile(&sp);
+  ctlThd.setPort(&sp);
   
   //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));
   //emit testSignal(true);
@@ -66,14 +66,12 @@ void mdtSerialPortTest::mdtSerialPortManagerTest()
 {
   mdtSerialPortManager m;
 
-  // Verify that scan() function works
-  QVERIFY(m.scan());
+  // Verify that scan() function works ..
+  m.scan();
 }
 
 void mdtSerialPortTest::mdtSerialPortConfigTest()
 {
-  QFETCH(QString, interface);
-  QFETCH(QString, interfaceRef);
   QFETCH(int, baudRate);
   QFETCH(int, baudRateRef);
   QFETCH(int, dataBits);
@@ -103,13 +101,6 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   mdtSerialPortConfig cfg1, cfg2;
 
   // Verify default config
-#ifdef Q_OS_UNIX
-  QCOMPARE(cfg1.interface(), QString("/dev/ttyS0"));
-#elif defined Q_OS_WIN
-  QCOMPARE(cfg1.interface(), QString("COM1"));
-#else
-  QCOMPARE(cfg1.interface(), QString(""));
-#endif
   QCOMPARE(cfg1.baudRate(), 9600);
   QCOMPARE(cfg1.dataBitsCount(), 8);
   QCOMPARE(cfg1.stopBitsCount(), 1);
@@ -128,8 +119,6 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   QVERIFY(!(cfg1 != cfg2));
 
   // Check veriety of combinaisons
-  cfg1.setInterface(interface); 
-  QCOMPARE(cfg1.interface(), interfaceRef);
   cfg1.setBaudRate(baudRate);
   QCOMPARE(cfg1.baudRate(), baudRateRef);
   cfg1.setDataBitsCount(dataBits);
@@ -163,7 +152,6 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
 
   // Test copy
   cfg2 = cfg1;
-  QCOMPARE(cfg2.interface(), interfaceRef);
   QCOMPARE(cfg2.baudRate(), baudRateRef);
   QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
   QCOMPARE(cfg2.stopBitsCount(), stopBitsRef);
@@ -183,7 +171,6 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   QVERIFY(!(cfg1 != cfg2));
 
   // Make some change on original
-  cfg1.setInterface("FAKE INTERFACE");
   cfg1.setBaudRate(-10);
   cfg1.setDataBitsCount(-12);
   cfg1.setStopBitsCount(-1);
@@ -192,7 +179,6 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
   cfg1.setReadQueueSize(21375);
   cfg1.setWriteFrameSize(51217);
   cfg1.setWriteQueueSize(11111);
-  QCOMPARE(cfg2.interface(), interfaceRef);
   QCOMPARE(cfg2.baudRate(), baudRateRef);
   QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
   QCOMPARE(cfg2.stopBitsCount(), stopBitsRef);
@@ -212,8 +198,6 @@ void mdtSerialPortTest::mdtSerialPortConfigTest()
 
 void mdtSerialPortTest::mdtSerialPortConfigTest_data()
 {
-  QTest::addColumn<QString>("interface");
-  QTest::addColumn<QString>("interfaceRef");
   QTest::addColumn<int>("baudRate");
   QTest::addColumn<int>("baudRateRef");
   QTest::addColumn<int>("dataBits");
@@ -239,8 +223,7 @@ void mdtSerialPortTest::mdtSerialPortConfigTest_data()
   QTest::addColumn<int>("writeQueueSize");
   QTest::addColumn<int>("writeQueueSizeRef");
 
-  QTest::newRow("Config 01") << "/dev/ttyS1" << "/dev/ttyS1" /* Interface */ \
-    << 50 << 50 /* Baud rate */ \
+  QTest::newRow("Config 01") << 50 << 50 /* Baud rate */ \
     << 5 << 5   /* Data bits */ \
     << 1 << 1   /* Stop bits */ \
     << (int)mdtSerialPortConfig::ParityOdd << (int)mdtSerialPortConfig::ParityOdd \
@@ -260,18 +243,23 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   mdtSerialPortConfig cfg;
   mdtSerialPortCtlThread ctlThd;
 
+#ifdef Q_OS_UNIX
+  QVERIFY(sp.setAttributes("/dev/ttyS0"));
+#elif defined Q_OS_WIN
+  QVERIFY(sp.setAttributes("COM1"));
+#endif
   // Setup - We keep default config
   QVERIFY(sp.open(cfg));
 
   // Assign sp to the control thread
-  ctlThd.setDeviceFile(&sp);
+  ctlThd.setPort(&sp);
 
   // Start control thread
-  ctlThd.start();
+  QVERIFY(ctlThd.start());
   ctlThd.stop();
   qsrand(QDateTime::currentDateTime ().toTime_t ());
   for(int i=0; i<10; i++){
-    ctlThd.start();
+    QVERIFY(ctlThd.start());
     QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
     ctlThd.stop();
   }
@@ -287,9 +275,9 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
 
   // Setup
 #ifdef Q_OS_UNIX
-  cfg.setInterface("/dev/ttyS0");
+  QVERIFY(sp.setAttributes("/dev/ttyS0"));
 #elif defined Q_OS_WIN
-  cfg.setInterface("COM1");
+  QVERIFY(sp.setAttributes("COM1"));
 #endif
   cfg.setBaudRate(9600);
   cfg.setDataBitsCount(8);
@@ -298,8 +286,8 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
   QVERIFY(sp.open(cfg));
 
   // Assign sp to the control thread and start
-  ctlThd.setDeviceFile(&sp);
-  ctlThd.start();
+  ctlThd.setPort(&sp);
+  QVERIFY(ctlThd.start());
 
   // Initial states NOTE: CAR et RNG ?
   //QVERIFY(!sp.carIsOn());
@@ -326,12 +314,13 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
   ctlThd.stop();
 }
 
+/// NOTE: pas terminé !!
 void mdtSerialPortTest::mdtSerialPortTxRxTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
-  mdtDeviceFileReadThread rxThd;
-  mdtDeviceFileWriteThread txThd;
+  mdtPortReadThread rxThd;
+  mdtPortWriteThread txThd;
   mdtFrame *f;
   
   qDebug() << "* make shure that test terminal is plugged on serial port (ttyS0 , COM1) *";
@@ -340,13 +329,18 @@ void mdtSerialPortTest::mdtSerialPortTxRxTest()
   cfg.setReadFrameSize(100);
   cfg.setReadQueueSize(25);
   cfg.setEndOfFrameSeq('*');
+#ifdef Q_OS_UNIX
+  QVERIFY(sp.setAttributes("/dev/ttyS0"));
+#elif defined Q_OS_WIN
+  QVERIFY(sp.setAttributes("COM1"));
+#endif
   QVERIFY(sp.open(cfg));
-  
+
   // Assign sp to the RX thread and start
-  rxThd.setDeviceFile(&sp);
+  rxThd.setPort(&sp);
   rxThd.start();
   // Assign sp to the TX thread and start
-  txThd.setDeviceFile(&sp);
+  txThd.setPort(&sp);
   txThd.start();
   
   /// Note: test sans frame ...

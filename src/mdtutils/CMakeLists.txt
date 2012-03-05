@@ -13,8 +13,12 @@ set (HEADER_FILES
           # mdtError
           mdtErrorOut.h
           # Device file I/O
-          mdtAbstractDeviceFile.h
-          mdtDeviceFile.h
+          mdtAbstractPort.h
+          mdtPort.h
+          mdtPortReadThread.h
+          mdtPortWriteThread.h
+          # Port manager
+          mdtPortManager.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -32,12 +36,14 @@ set (SOURCES_FILES
           mdtError.cpp
           mdtErrorOut.cpp
           # Device file I/O
-          mdtAbstractDeviceFile.cpp
-          mdtDeviceFile.cpp
-          mdtDeviceFileConfig.cpp
-          mdtDeviceFileThread.cpp
-          mdtDeviceFileReadThread.cpp
-          mdtDeviceFileWriteThread.cpp
+          mdtAbstractPort.cpp
+          mdtPort.cpp
+          mdtPortConfig.cpp
+          mdtPortThread.cpp
+          mdtPortReadThread.cpp
+          mdtPortWriteThread.cpp
+          # Port manager
+          mdtPortManager.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -59,8 +65,14 @@ set (RESOURCE_FILES
 if(UNIX)
   message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
-    linux/mdtDeviceFilePosix.cpp
-    linux/mdtUsbtmcFile.cpp
+    linux/mdtPortPosix.cpp
+    linux/mdtUsbtmcPort.cpp
+    linux/mdtUsbtmcPortManager.h
+    linux/mdtUsbtmcPortManager.cpp
+  )
+  set (HEADER_FILES ${HEADER_FILES} 
+    linux/mdtUsbtmcPort.h
+    linux/mdtUsbtmcPortManager.h
   )
 endif(UNIX)
 

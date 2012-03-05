@@ -174,86 +174,161 @@ mdtutils_static/fast:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/build
 .PHONY : mdtutils_static/fast
 
-linux/mdtDeviceFilePosix.o: linux/mdtDeviceFilePosix.cpp.o
-.PHONY : linux/mdtDeviceFilePosix.o
+linux/mdtPortPosix.o: linux/mdtPortPosix.cpp.o
+.PHONY : linux/mdtPortPosix.o
 
 # target to build an object file
-linux/mdtDeviceFilePosix.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtDeviceFilePosix.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.o
-.PHONY : linux/mdtDeviceFilePosix.cpp.o
+linux/mdtPortPosix.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPortPosix.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtPortPosix.cpp.o
+.PHONY : linux/mdtPortPosix.cpp.o
 
-linux/mdtDeviceFilePosix.i: linux/mdtDeviceFilePosix.cpp.i
-.PHONY : linux/mdtDeviceFilePosix.i
+linux/mdtPortPosix.i: linux/mdtPortPosix.cpp.i
+.PHONY : linux/mdtPortPosix.i
 
 # target to preprocess a source file
-linux/mdtDeviceFilePosix.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtDeviceFilePosix.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.i
-.PHONY : linux/mdtDeviceFilePosix.cpp.i
+linux/mdtPortPosix.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPortPosix.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtPortPosix.cpp.i
+.PHONY : linux/mdtPortPosix.cpp.i
 
-linux/mdtDeviceFilePosix.s: linux/mdtDeviceFilePosix.cpp.s
-.PHONY : linux/mdtDeviceFilePosix.s
+linux/mdtPortPosix.s: linux/mdtPortPosix.cpp.s
+.PHONY : linux/mdtPortPosix.s
 
 # target to generate assembly for a file
-linux/mdtDeviceFilePosix.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtDeviceFilePosix.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtDeviceFilePosix.cpp.s
-.PHONY : linux/mdtDeviceFilePosix.cpp.s
+linux/mdtPortPosix.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPortPosix.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtPortPosix.cpp.s
+.PHONY : linux/mdtPortPosix.cpp.s
 
-linux/mdtUsbtmcFile.o: linux/mdtUsbtmcFile.cpp.o
-.PHONY : linux/mdtUsbtmcFile.o
+linux/mdtUsbtmcPort.o: linux/mdtUsbtmcPort.cpp.o
+.PHONY : linux/mdtUsbtmcPort.o
 
 # target to build an object file
-linux/mdtUsbtmcFile.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcFile.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcFile.cpp.o
-.PHONY : linux/mdtUsbtmcFile.cpp.o
+linux/mdtUsbtmcPort.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcPort.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcPort.cpp.o
+.PHONY : linux/mdtUsbtmcPort.cpp.o
 
-linux/mdtUsbtmcFile.i: linux/mdtUsbtmcFile.cpp.i
-.PHONY : linux/mdtUsbtmcFile.i
+linux/mdtUsbtmcPort.i: linux/mdtUsbtmcPort.cpp.i
+.PHONY : linux/mdtUsbtmcPort.i
 
 # target to preprocess a source file
-linux/mdtUsbtmcFile.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcFile.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcFile.cpp.i
-.PHONY : linux/mdtUsbtmcFile.cpp.i
+linux/mdtUsbtmcPort.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcPort.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcPort.cpp.i
+.PHONY : linux/mdtUsbtmcPort.cpp.i
 
-linux/mdtUsbtmcFile.s: linux/mdtUsbtmcFile.cpp.s
-.PHONY : linux/mdtUsbtmcFile.s
+linux/mdtUsbtmcPort.s: linux/mdtUsbtmcPort.cpp.s
+.PHONY : linux/mdtUsbtmcPort.s
 
 # target to generate assembly for a file
-linux/mdtUsbtmcFile.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcFile.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcFile.cpp.s
-.PHONY : linux/mdtUsbtmcFile.cpp.s
+linux/mdtUsbtmcPort.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcPort.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcPort.cpp.s
+.PHONY : linux/mdtUsbtmcPort.cpp.s
 
-mdtAbstractDeviceFile.o: mdtAbstractDeviceFile.cpp.o
-.PHONY : mdtAbstractDeviceFile.o
+linux/mdtUsbtmcPortManager.o: linux/mdtUsbtmcPortManager.cpp.o
+.PHONY : linux/mdtUsbtmcPortManager.o
 
 # target to build an object file
-mdtAbstractDeviceFile.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractDeviceFile.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractDeviceFile.cpp.o
-.PHONY : mdtAbstractDeviceFile.cpp.o
+linux/mdtUsbtmcPortManager.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcPortManager.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcPortManager.cpp.o
+.PHONY : linux/mdtUsbtmcPortManager.cpp.o
 
-mdtAbstractDeviceFile.i: mdtAbstractDeviceFile.cpp.i
-.PHONY : mdtAbstractDeviceFile.i
+linux/mdtUsbtmcPortManager.i: linux/mdtUsbtmcPortManager.cpp.i
+.PHONY : linux/mdtUsbtmcPortManager.i
 
 # target to preprocess a source file
-mdtAbstractDeviceFile.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractDeviceFile.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractDeviceFile.cpp.i
-.PHONY : mdtAbstractDeviceFile.cpp.i
+linux/mdtUsbtmcPortManager.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcPortManager.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcPortManager.cpp.i
+.PHONY : linux/mdtUsbtmcPortManager.cpp.i
 
-mdtAbstractDeviceFile.s: mdtAbstractDeviceFile.cpp.s
-.PHONY : mdtAbstractDeviceFile.s
+linux/mdtUsbtmcPortManager.s: linux/mdtUsbtmcPortManager.cpp.s
+.PHONY : linux/mdtUsbtmcPortManager.s
 
 # target to generate assembly for a file
-mdtAbstractDeviceFile.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractDeviceFile.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractDeviceFile.cpp.s
-.PHONY : mdtAbstractDeviceFile.cpp.s
+linux/mdtUsbtmcPortManager.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtUsbtmcPortManager.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/linux/mdtUsbtmcPortManager.cpp.s
+.PHONY : linux/mdtUsbtmcPortManager.cpp.s
+
+linux/moc_mdtUsbtmcPort.o: linux/moc_mdtUsbtmcPort.cxx.o
+.PHONY : linux/moc_mdtUsbtmcPort.o
+
+# target to build an object file
+linux/moc_mdtUsbtmcPort.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/moc_mdtUsbtmcPort.cxx.o
+.PHONY : linux/moc_mdtUsbtmcPort.cxx.o
+
+linux/moc_mdtUsbtmcPort.i: linux/moc_mdtUsbtmcPort.cxx.i
+.PHONY : linux/moc_mdtUsbtmcPort.i
+
+# target to preprocess a source file
+linux/moc_mdtUsbtmcPort.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/moc_mdtUsbtmcPort.cxx.i
+.PHONY : linux/moc_mdtUsbtmcPort.cxx.i
+
+linux/moc_mdtUsbtmcPort.s: linux/moc_mdtUsbtmcPort.cxx.s
+.PHONY : linux/moc_mdtUsbtmcPort.s
+
+# target to generate assembly for a file
+linux/moc_mdtUsbtmcPort.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/moc_mdtUsbtmcPort.cxx.s
+.PHONY : linux/moc_mdtUsbtmcPort.cxx.s
+
+linux/moc_mdtUsbtmcPortManager.o: linux/moc_mdtUsbtmcPortManager.cxx.o
+.PHONY : linux/moc_mdtUsbtmcPortManager.o
+
+# target to build an object file
+linux/moc_mdtUsbtmcPortManager.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/moc_mdtUsbtmcPortManager.cxx.o
+.PHONY : linux/moc_mdtUsbtmcPortManager.cxx.o
+
+linux/moc_mdtUsbtmcPortManager.i: linux/moc_mdtUsbtmcPortManager.cxx.i
+.PHONY : linux/moc_mdtUsbtmcPortManager.i
+
+# target to preprocess a source file
+linux/moc_mdtUsbtmcPortManager.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/moc_mdtUsbtmcPortManager.cxx.i
+.PHONY : linux/moc_mdtUsbtmcPortManager.cxx.i
+
+linux/moc_mdtUsbtmcPortManager.s: linux/moc_mdtUsbtmcPortManager.cxx.s
+.PHONY : linux/moc_mdtUsbtmcPortManager.s
+
+# target to generate assembly for a file
+linux/moc_mdtUsbtmcPortManager.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/moc_mdtUsbtmcPortManager.cxx.s
+.PHONY : linux/moc_mdtUsbtmcPortManager.cxx.s
+
+mdtAbstractPort.o: mdtAbstractPort.cpp.o
+.PHONY : mdtAbstractPort.o
+
+# target to build an object file
+mdtAbstractPort.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractPort.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractPort.cpp.o
+.PHONY : mdtAbstractPort.cpp.o
+
+mdtAbstractPort.i: mdtAbstractPort.cpp.i
+.PHONY : mdtAbstractPort.i
+
+# target to preprocess a source file
+mdtAbstractPort.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractPort.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractPort.cpp.i
+.PHONY : mdtAbstractPort.cpp.i
+
+mdtAbstractPort.s: mdtAbstractPort.cpp.s
+.PHONY : mdtAbstractPort.s
+
+# target to generate assembly for a file
+mdtAbstractPort.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractPort.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtAbstractPort.cpp.s
+.PHONY : mdtAbstractPort.cpp.s
 
 mdtAlgorithms.o: mdtAlgorithms.cpp.o
 .PHONY : mdtAlgorithms.o
@@ -308,141 +383,6 @@ mdtBuffer.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.s
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtBuffer.cpp.s
 .PHONY : mdtBuffer.cpp.s
-
-mdtDeviceFile.o: mdtDeviceFile.cpp.o
-.PHONY : mdtDeviceFile.o
-
-# target to build an object file
-mdtDeviceFile.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFile.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFile.cpp.o
-.PHONY : mdtDeviceFile.cpp.o
-
-mdtDeviceFile.i: mdtDeviceFile.cpp.i
-.PHONY : mdtDeviceFile.i
-
-# target to preprocess a source file
-mdtDeviceFile.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFile.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFile.cpp.i
-.PHONY : mdtDeviceFile.cpp.i
-
-mdtDeviceFile.s: mdtDeviceFile.cpp.s
-.PHONY : mdtDeviceFile.s
-
-# target to generate assembly for a file
-mdtDeviceFile.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFile.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFile.cpp.s
-.PHONY : mdtDeviceFile.cpp.s
-
-mdtDeviceFileConfig.o: mdtDeviceFileConfig.cpp.o
-.PHONY : mdtDeviceFileConfig.o
-
-# target to build an object file
-mdtDeviceFileConfig.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileConfig.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileConfig.cpp.o
-.PHONY : mdtDeviceFileConfig.cpp.o
-
-mdtDeviceFileConfig.i: mdtDeviceFileConfig.cpp.i
-.PHONY : mdtDeviceFileConfig.i
-
-# target to preprocess a source file
-mdtDeviceFileConfig.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileConfig.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileConfig.cpp.i
-.PHONY : mdtDeviceFileConfig.cpp.i
-
-mdtDeviceFileConfig.s: mdtDeviceFileConfig.cpp.s
-.PHONY : mdtDeviceFileConfig.s
-
-# target to generate assembly for a file
-mdtDeviceFileConfig.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileConfig.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileConfig.cpp.s
-.PHONY : mdtDeviceFileConfig.cpp.s
-
-mdtDeviceFileReadThread.o: mdtDeviceFileReadThread.cpp.o
-.PHONY : mdtDeviceFileReadThread.o
-
-# target to build an object file
-mdtDeviceFileReadThread.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileReadThread.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileReadThread.cpp.o
-.PHONY : mdtDeviceFileReadThread.cpp.o
-
-mdtDeviceFileReadThread.i: mdtDeviceFileReadThread.cpp.i
-.PHONY : mdtDeviceFileReadThread.i
-
-# target to preprocess a source file
-mdtDeviceFileReadThread.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileReadThread.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileReadThread.cpp.i
-.PHONY : mdtDeviceFileReadThread.cpp.i
-
-mdtDeviceFileReadThread.s: mdtDeviceFileReadThread.cpp.s
-.PHONY : mdtDeviceFileReadThread.s
-
-# target to generate assembly for a file
-mdtDeviceFileReadThread.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileReadThread.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileReadThread.cpp.s
-.PHONY : mdtDeviceFileReadThread.cpp.s
-
-mdtDeviceFileThread.o: mdtDeviceFileThread.cpp.o
-.PHONY : mdtDeviceFileThread.o
-
-# target to build an object file
-mdtDeviceFileThread.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileThread.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileThread.cpp.o
-.PHONY : mdtDeviceFileThread.cpp.o
-
-mdtDeviceFileThread.i: mdtDeviceFileThread.cpp.i
-.PHONY : mdtDeviceFileThread.i
-
-# target to preprocess a source file
-mdtDeviceFileThread.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileThread.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileThread.cpp.i
-.PHONY : mdtDeviceFileThread.cpp.i
-
-mdtDeviceFileThread.s: mdtDeviceFileThread.cpp.s
-.PHONY : mdtDeviceFileThread.s
-
-# target to generate assembly for a file
-mdtDeviceFileThread.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileThread.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileThread.cpp.s
-.PHONY : mdtDeviceFileThread.cpp.s
-
-mdtDeviceFileWriteThread.o: mdtDeviceFileWriteThread.cpp.o
-.PHONY : mdtDeviceFileWriteThread.o
-
-# target to build an object file
-mdtDeviceFileWriteThread.cpp.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileWriteThread.cpp.o
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileWriteThread.cpp.o
-.PHONY : mdtDeviceFileWriteThread.cpp.o
-
-mdtDeviceFileWriteThread.i: mdtDeviceFileWriteThread.cpp.i
-.PHONY : mdtDeviceFileWriteThread.i
-
-# target to preprocess a source file
-mdtDeviceFileWriteThread.cpp.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileWriteThread.cpp.i
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileWriteThread.cpp.i
-.PHONY : mdtDeviceFileWriteThread.cpp.i
-
-mdtDeviceFileWriteThread.s: mdtDeviceFileWriteThread.cpp.s
-.PHONY : mdtDeviceFileWriteThread.s
-
-# target to generate assembly for a file
-mdtDeviceFileWriteThread.cpp.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDeviceFileWriteThread.cpp.s
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtDeviceFileWriteThread.cpp.s
-.PHONY : mdtDeviceFileWriteThread.cpp.s
 
 mdtError.o: mdtError.cpp.o
 .PHONY : mdtError.o
@@ -606,6 +546,168 @@ mdtParentChildTableModel.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtParentChildTableModel.cpp.s
 .PHONY : mdtParentChildTableModel.cpp.s
 
+mdtPort.o: mdtPort.cpp.o
+.PHONY : mdtPort.o
+
+# target to build an object file
+mdtPort.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPort.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPort.cpp.o
+.PHONY : mdtPort.cpp.o
+
+mdtPort.i: mdtPort.cpp.i
+.PHONY : mdtPort.i
+
+# target to preprocess a source file
+mdtPort.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPort.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPort.cpp.i
+.PHONY : mdtPort.cpp.i
+
+mdtPort.s: mdtPort.cpp.s
+.PHONY : mdtPort.s
+
+# target to generate assembly for a file
+mdtPort.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPort.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPort.cpp.s
+.PHONY : mdtPort.cpp.s
+
+mdtPortConfig.o: mdtPortConfig.cpp.o
+.PHONY : mdtPortConfig.o
+
+# target to build an object file
+mdtPortConfig.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortConfig.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortConfig.cpp.o
+.PHONY : mdtPortConfig.cpp.o
+
+mdtPortConfig.i: mdtPortConfig.cpp.i
+.PHONY : mdtPortConfig.i
+
+# target to preprocess a source file
+mdtPortConfig.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortConfig.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortConfig.cpp.i
+.PHONY : mdtPortConfig.cpp.i
+
+mdtPortConfig.s: mdtPortConfig.cpp.s
+.PHONY : mdtPortConfig.s
+
+# target to generate assembly for a file
+mdtPortConfig.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortConfig.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortConfig.cpp.s
+.PHONY : mdtPortConfig.cpp.s
+
+mdtPortManager.o: mdtPortManager.cpp.o
+.PHONY : mdtPortManager.o
+
+# target to build an object file
+mdtPortManager.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortManager.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortManager.cpp.o
+.PHONY : mdtPortManager.cpp.o
+
+mdtPortManager.i: mdtPortManager.cpp.i
+.PHONY : mdtPortManager.i
+
+# target to preprocess a source file
+mdtPortManager.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortManager.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortManager.cpp.i
+.PHONY : mdtPortManager.cpp.i
+
+mdtPortManager.s: mdtPortManager.cpp.s
+.PHONY : mdtPortManager.s
+
+# target to generate assembly for a file
+mdtPortManager.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortManager.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortManager.cpp.s
+.PHONY : mdtPortManager.cpp.s
+
+mdtPortReadThread.o: mdtPortReadThread.cpp.o
+.PHONY : mdtPortReadThread.o
+
+# target to build an object file
+mdtPortReadThread.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortReadThread.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortReadThread.cpp.o
+.PHONY : mdtPortReadThread.cpp.o
+
+mdtPortReadThread.i: mdtPortReadThread.cpp.i
+.PHONY : mdtPortReadThread.i
+
+# target to preprocess a source file
+mdtPortReadThread.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortReadThread.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortReadThread.cpp.i
+.PHONY : mdtPortReadThread.cpp.i
+
+mdtPortReadThread.s: mdtPortReadThread.cpp.s
+.PHONY : mdtPortReadThread.s
+
+# target to generate assembly for a file
+mdtPortReadThread.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortReadThread.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortReadThread.cpp.s
+.PHONY : mdtPortReadThread.cpp.s
+
+mdtPortThread.o: mdtPortThread.cpp.o
+.PHONY : mdtPortThread.o
+
+# target to build an object file
+mdtPortThread.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortThread.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortThread.cpp.o
+.PHONY : mdtPortThread.cpp.o
+
+mdtPortThread.i: mdtPortThread.cpp.i
+.PHONY : mdtPortThread.i
+
+# target to preprocess a source file
+mdtPortThread.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortThread.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortThread.cpp.i
+.PHONY : mdtPortThread.cpp.i
+
+mdtPortThread.s: mdtPortThread.cpp.s
+.PHONY : mdtPortThread.s
+
+# target to generate assembly for a file
+mdtPortThread.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortThread.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortThread.cpp.s
+.PHONY : mdtPortThread.cpp.s
+
+mdtPortWriteThread.o: mdtPortWriteThread.cpp.o
+.PHONY : mdtPortWriteThread.o
+
+# target to build an object file
+mdtPortWriteThread.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortWriteThread.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortWriteThread.cpp.o
+.PHONY : mdtPortWriteThread.cpp.o
+
+mdtPortWriteThread.i: mdtPortWriteThread.cpp.i
+.PHONY : mdtPortWriteThread.i
+
+# target to preprocess a source file
+mdtPortWriteThread.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortWriteThread.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortWriteThread.cpp.i
+.PHONY : mdtPortWriteThread.cpp.i
+
+mdtPortWriteThread.s: mdtPortWriteThread.cpp.s
+.PHONY : mdtPortWriteThread.s
+
+# target to generate assembly for a file
+mdtPortWriteThread.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPortWriteThread.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortWriteThread.cpp.s
+.PHONY : mdtPortWriteThread.cpp.s
+
 mdtTime.o: mdtTime.cpp.o
 .PHONY : mdtTime.o
 
@@ -633,53 +735,29 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
-moc_mdtAbstractDeviceFile.o: moc_mdtAbstractDeviceFile.cxx.o
-.PHONY : moc_mdtAbstractDeviceFile.o
+moc_mdtAbstractPort.o: moc_mdtAbstractPort.cxx.o
+.PHONY : moc_mdtAbstractPort.o
 
 # target to build an object file
-moc_mdtAbstractDeviceFile.cxx.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractDeviceFile.cxx.o
-.PHONY : moc_mdtAbstractDeviceFile.cxx.o
+moc_mdtAbstractPort.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractPort.cxx.o
+.PHONY : moc_mdtAbstractPort.cxx.o
 
-moc_mdtAbstractDeviceFile.i: moc_mdtAbstractDeviceFile.cxx.i
-.PHONY : moc_mdtAbstractDeviceFile.i
-
-# target to preprocess a source file
-moc_mdtAbstractDeviceFile.cxx.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractDeviceFile.cxx.i
-.PHONY : moc_mdtAbstractDeviceFile.cxx.i
-
-moc_mdtAbstractDeviceFile.s: moc_mdtAbstractDeviceFile.cxx.s
-.PHONY : moc_mdtAbstractDeviceFile.s
-
-# target to generate assembly for a file
-moc_mdtAbstractDeviceFile.cxx.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractDeviceFile.cxx.s
-.PHONY : moc_mdtAbstractDeviceFile.cxx.s
-
-moc_mdtDeviceFile.o: moc_mdtDeviceFile.cxx.o
-.PHONY : moc_mdtDeviceFile.o
-
-# target to build an object file
-moc_mdtDeviceFile.cxx.o:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDeviceFile.cxx.o
-.PHONY : moc_mdtDeviceFile.cxx.o
-
-moc_mdtDeviceFile.i: moc_mdtDeviceFile.cxx.i
-.PHONY : moc_mdtDeviceFile.i
+moc_mdtAbstractPort.i: moc_mdtAbstractPort.cxx.i
+.PHONY : moc_mdtAbstractPort.i
 
 # target to preprocess a source file
-moc_mdtDeviceFile.cxx.i:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDeviceFile.cxx.i
-.PHONY : moc_mdtDeviceFile.cxx.i
+moc_mdtAbstractPort.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractPort.cxx.i
+.PHONY : moc_mdtAbstractPort.cxx.i
 
-moc_mdtDeviceFile.s: moc_mdtDeviceFile.cxx.s
-.PHONY : moc_mdtDeviceFile.s
+moc_mdtAbstractPort.s: moc_mdtAbstractPort.cxx.s
+.PHONY : moc_mdtAbstractPort.s
 
 # target to generate assembly for a file
-moc_mdtDeviceFile.cxx.s:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDeviceFile.cxx.s
-.PHONY : moc_mdtDeviceFile.cxx.s
+moc_mdtAbstractPort.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractPort.cxx.s
+.PHONY : moc_mdtAbstractPort.cxx.s
 
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.o
@@ -753,6 +831,102 @@ moc_mdtParentChildTableModel.cxx.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtParentChildTableModel.cxx.s
 .PHONY : moc_mdtParentChildTableModel.cxx.s
 
+moc_mdtPort.o: moc_mdtPort.cxx.o
+.PHONY : moc_mdtPort.o
+
+# target to build an object file
+moc_mdtPort.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPort.cxx.o
+.PHONY : moc_mdtPort.cxx.o
+
+moc_mdtPort.i: moc_mdtPort.cxx.i
+.PHONY : moc_mdtPort.i
+
+# target to preprocess a source file
+moc_mdtPort.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPort.cxx.i
+.PHONY : moc_mdtPort.cxx.i
+
+moc_mdtPort.s: moc_mdtPort.cxx.s
+.PHONY : moc_mdtPort.s
+
+# target to generate assembly for a file
+moc_mdtPort.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPort.cxx.s
+.PHONY : moc_mdtPort.cxx.s
+
+moc_mdtPortManager.o: moc_mdtPortManager.cxx.o
+.PHONY : moc_mdtPortManager.o
+
+# target to build an object file
+moc_mdtPortManager.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortManager.cxx.o
+.PHONY : moc_mdtPortManager.cxx.o
+
+moc_mdtPortManager.i: moc_mdtPortManager.cxx.i
+.PHONY : moc_mdtPortManager.i
+
+# target to preprocess a source file
+moc_mdtPortManager.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortManager.cxx.i
+.PHONY : moc_mdtPortManager.cxx.i
+
+moc_mdtPortManager.s: moc_mdtPortManager.cxx.s
+.PHONY : moc_mdtPortManager.s
+
+# target to generate assembly for a file
+moc_mdtPortManager.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortManager.cxx.s
+.PHONY : moc_mdtPortManager.cxx.s
+
+moc_mdtPortReadThread.o: moc_mdtPortReadThread.cxx.o
+.PHONY : moc_mdtPortReadThread.o
+
+# target to build an object file
+moc_mdtPortReadThread.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortReadThread.cxx.o
+.PHONY : moc_mdtPortReadThread.cxx.o
+
+moc_mdtPortReadThread.i: moc_mdtPortReadThread.cxx.i
+.PHONY : moc_mdtPortReadThread.i
+
+# target to preprocess a source file
+moc_mdtPortReadThread.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortReadThread.cxx.i
+.PHONY : moc_mdtPortReadThread.cxx.i
+
+moc_mdtPortReadThread.s: moc_mdtPortReadThread.cxx.s
+.PHONY : moc_mdtPortReadThread.s
+
+# target to generate assembly for a file
+moc_mdtPortReadThread.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortReadThread.cxx.s
+.PHONY : moc_mdtPortReadThread.cxx.s
+
+moc_mdtPortWriteThread.o: moc_mdtPortWriteThread.cxx.o
+.PHONY : moc_mdtPortWriteThread.o
+
+# target to build an object file
+moc_mdtPortWriteThread.cxx.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortWriteThread.cxx.o
+.PHONY : moc_mdtPortWriteThread.cxx.o
+
+moc_mdtPortWriteThread.i: moc_mdtPortWriteThread.cxx.i
+.PHONY : moc_mdtPortWriteThread.i
+
+# target to preprocess a source file
+moc_mdtPortWriteThread.cxx.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortWriteThread.cxx.i
+.PHONY : moc_mdtPortWriteThread.cxx.i
+
+moc_mdtPortWriteThread.s: moc_mdtPortWriteThread.cxx.s
+.PHONY : moc_mdtPortWriteThread.s
+
+# target to generate assembly for a file
+moc_mdtPortWriteThread.cxx.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortWriteThread.cxx.s
+.PHONY : moc_mdtPortWriteThread.cxx.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -768,36 +942,30 @@ help:
 	@echo "... mdtutils_static"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... linux/mdtDeviceFilePosix.o"
-	@echo "... linux/mdtDeviceFilePosix.i"
-	@echo "... linux/mdtDeviceFilePosix.s"
-	@echo "... linux/mdtUsbtmcFile.o"
-	@echo "... linux/mdtUsbtmcFile.i"
-	@echo "... linux/mdtUsbtmcFile.s"
-	@echo "... mdtAbstractDeviceFile.o"
-	@echo "... mdtAbstractDeviceFile.i"
-	@echo "... mdtAbstractDeviceFile.s"
+	@echo "... linux/mdtPortPosix.o"
+	@echo "... linux/mdtPortPosix.i"
+	@echo "... linux/mdtPortPosix.s"
+	@echo "... linux/mdtUsbtmcPort.o"
+	@echo "... linux/mdtUsbtmcPort.i"
+	@echo "... linux/mdtUsbtmcPort.s"
+	@echo "... linux/mdtUsbtmcPortManager.o"
+	@echo "... linux/mdtUsbtmcPortManager.i"
+	@echo "... linux/mdtUsbtmcPortManager.s"
+	@echo "... linux/moc_mdtUsbtmcPort.o"
+	@echo "... linux/moc_mdtUsbtmcPort.i"
+	@echo "... linux/moc_mdtUsbtmcPort.s"
+	@echo "... linux/moc_mdtUsbtmcPortManager.o"
+	@echo "... linux/moc_mdtUsbtmcPortManager.i"
+	@echo "... linux/moc_mdtUsbtmcPortManager.s"
+	@echo "... mdtAbstractPort.o"
+	@echo "... mdtAbstractPort.i"
+	@echo "... mdtAbstractPort.s"
 	@echo "... mdtAlgorithms.o"
 	@echo "... mdtAlgorithms.i"
 	@echo "... mdtAlgorithms.s"
 	@echo "... mdtBuffer.o"
 	@echo "... mdtBuffer.i"
 	@echo "... mdtBuffer.s"
-	@echo "... mdtDeviceFile.o"
-	@echo "... mdtDeviceFile.i"
-	@echo "... mdtDeviceFile.s"
-	@echo "... mdtDeviceFileConfig.o"
-	@echo "... mdtDeviceFileConfig.i"
-	@echo "... mdtDeviceFileConfig.s"
-	@echo "... mdtDeviceFileReadThread.o"
-	@echo "... mdtDeviceFileReadThread.i"
-	@echo "... mdtDeviceFileReadThread.s"
-	@echo "... mdtDeviceFileThread.o"
-	@echo "... mdtDeviceFileThread.i"
-	@echo "... mdtDeviceFileThread.s"
-	@echo "... mdtDeviceFileWriteThread.o"
-	@echo "... mdtDeviceFileWriteThread.i"
-	@echo "... mdtDeviceFileWriteThread.s"
 	@echo "... mdtError.o"
 	@echo "... mdtError.i"
 	@echo "... mdtError.s"
@@ -816,15 +984,30 @@ help:
 	@echo "... mdtParentChildTableModel.o"
 	@echo "... mdtParentChildTableModel.i"
 	@echo "... mdtParentChildTableModel.s"
+	@echo "... mdtPort.o"
+	@echo "... mdtPort.i"
+	@echo "... mdtPort.s"
+	@echo "... mdtPortConfig.o"
+	@echo "... mdtPortConfig.i"
+	@echo "... mdtPortConfig.s"
+	@echo "... mdtPortManager.o"
+	@echo "... mdtPortManager.i"
+	@echo "... mdtPortManager.s"
+	@echo "... mdtPortReadThread.o"
+	@echo "... mdtPortReadThread.i"
+	@echo "... mdtPortReadThread.s"
+	@echo "... mdtPortThread.o"
+	@echo "... mdtPortThread.i"
+	@echo "... mdtPortThread.s"
+	@echo "... mdtPortWriteThread.o"
+	@echo "... mdtPortWriteThread.i"
+	@echo "... mdtPortWriteThread.s"
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
-	@echo "... moc_mdtAbstractDeviceFile.o"
-	@echo "... moc_mdtAbstractDeviceFile.i"
-	@echo "... moc_mdtAbstractDeviceFile.s"
-	@echo "... moc_mdtDeviceFile.o"
-	@echo "... moc_mdtDeviceFile.i"
-	@echo "... moc_mdtDeviceFile.s"
+	@echo "... moc_mdtAbstractPort.o"
+	@echo "... moc_mdtAbstractPort.i"
+	@echo "... moc_mdtAbstractPort.s"
 	@echo "... moc_mdtErrorOut.o"
 	@echo "... moc_mdtErrorOut.i"
 	@echo "... moc_mdtErrorOut.s"
@@ -834,6 +1017,18 @@ help:
 	@echo "... moc_mdtParentChildTableModel.o"
 	@echo "... moc_mdtParentChildTableModel.i"
 	@echo "... moc_mdtParentChildTableModel.s"
+	@echo "... moc_mdtPort.o"
+	@echo "... moc_mdtPort.i"
+	@echo "... moc_mdtPort.s"
+	@echo "... moc_mdtPortManager.o"
+	@echo "... moc_mdtPortManager.i"
+	@echo "... moc_mdtPortManager.s"
+	@echo "... moc_mdtPortReadThread.o"
+	@echo "... moc_mdtPortReadThread.i"
+	@echo "... moc_mdtPortReadThread.s"
+	@echo "... moc_mdtPortWriteThread.o"
+	@echo "... moc_mdtPortWriteThread.i"
+	@echo "... moc_mdtPortWriteThread.s"
 .PHONY : help
 
 

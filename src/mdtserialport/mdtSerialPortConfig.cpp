@@ -14,15 +14,7 @@ mdtSerialPortConfig::~mdtSerialPortConfig()
 
 void mdtSerialPortConfig::setDefault()
 {
-  mdtDeviceFileConfig::setDefault();
-  // Overwrite interface
-#ifdef Q_OS_UNIX
-  pvInterface = "/dev/ttyS0";
-#elif defined Q_OS_WIN32
-  pvInterface = "COM1";
-#else
-  pvInterface = "";
-#endif
+  mdtPortConfig::setDefault();
   pvBaudRate = 9600;
   pvParity = NoParity;
   pvDataBitCount = 8;
@@ -133,9 +125,6 @@ bool mdtSerialPortConfig::operator!=(const mdtSerialPortConfig &other)
 
 bool mdtSerialPortConfig::matches(const mdtSerialPortConfig &other)
 {
-  if(pvInterface != other.pvInterface){
-    return false;
-  }
   if(pvBaudRate != other.pvBaudRate){
     return false;
   }

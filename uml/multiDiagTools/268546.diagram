@@ -1,10 +1,10 @@
 format 76
 
-classcanvas 128002 class_ref 222850 // mdtDeviceFileReadThread
+classcanvas 128002 class_ref 222850 // mdtPortReadThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 44 406 2000
 end
-classcanvas 128130 class_ref 222594 // mdtDeviceFileThread
+classcanvas 128130 class_ref 222594 // mdtPortThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 187 165 2006
 end
@@ -12,11 +12,11 @@ classcanvas 128386 class_ref 222722 // QThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 200 29 2012
 end
-classcanvas 128642 class_ref 222978 // mdtDeviceFileWriteThread
+classcanvas 128642 class_ref 222978 // mdtPortWriteThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 401 404 2012
 end
-classcanvas 129154 class_ref 249602 // mdtDeviceFile
+classcanvas 129154 class_ref 249602 // mdtPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 576 149 2000
 end
@@ -37,7 +37,7 @@ relationcanvas 128770 relation_ref 230402 // <generalisation>
 end
 relationcanvas 129282 relation_ref 284930 // <unidirectional association>
   from ref 128130 z 2007 to ref 129154
-  role_a_pos 490 200 3000 no_role_b
-  multiplicity_a_pos 541 227 3000 no_multiplicity_b
+  role_a_pos 526 197 3000 no_role_b
+  multiplicity_a_pos 541 224 3000 no_multiplicity_b
 end
 end

@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 23
+  revision 29
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -98,6 +98,18 @@ ${inlines}
 	
       end
 
+      operation 493058 "setAttributes"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
       operation 234114 "open"
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 1
@@ -114,6 +126,48 @@ ${inlines}
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 492418 "uartType"
+	public explicit_return_type "sp_uart_type_t"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 492546 "uartTypeStr"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 492674 "availableBaudRates"
+	public explicit_return_type "QList<int>"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -265,53 +319,32 @@ ${inlines}
 	idl_decl ""
       end
 
-      classrelation 244738 // pvRxFrames (<directional composition>)
-	relation 244482 *-->
-	  stereotype "QQueue<mdtFrame*>"
-	  a role_name "pvRxFrames" multiplicity "0...*" protected
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 244738 // pvRxFrames (<directional composition>)
-	  b parent class_ref 196354 // mdtFrame
-	  association_type class_ref 229634 // QQueue
-      end
-
-      classrelation 244866 // pvRxFramesPool (<directional composition>)
-	relation 244610 *-->
-	  stereotype "QQueue<mdtFrame*>"
-	  a role_name "pvRxFramesPool" multiplicity "0...*" protected
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 244866 // pvRxFramesPool (<directional composition>)
-	  b parent class_ref 196354 // mdtFrame
-      end
-
-      classrelation 264450 // pvTxFrames (<directional composition>)
-	relation 264194 *-->
-	  stereotype "QQueue<mdtFrame*>"
-	  a role_name "pvTxFrames" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 264450 // pvTxFrames (<directional composition>)
-	  b parent class_ref 196354 // mdtFrame
-      end
-
-      classrelation 264578 // pvTxFramesPool (<directional composition>)
-	relation 264322 *-->
-	  stereotype "QQueue<mdtFrame*>"
-	  a role_name "pvTxFramesPool" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 264578 // pvTxFramesPool (<directional composition>)
-	  b parent class_ref 196354 // mdtFrame
-      end
-
       classrelation 278658 // <generalisation>
 	relation 278402 ---|>
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 278658 // <generalisation>
-	  b parent class_ref 249602 // mdtDeviceFile
+	  b parent class_ref 249602 // mdtPort
+      end
+
+      attribute 368130 "pvUartType"
+	protected explicit_type "sp_uart_type_t"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 368258 "pvAvailableBaudRates"
+	protected explicit_type "QList<int>"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 
@@ -943,7 +976,7 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 278530 // <generalisation>
-	  b parent class_ref 256386 // mdtDeviceFileConfig
+	  b parent class_ref 256386 // mdtPortConfig
       end
 
       operation 444034 "matches"
@@ -974,14 +1007,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 182530 // <generalisation>
-	relation 182402 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 182530 // <generalisation>
-	  b parent class_ref 181890 // mdtSerialPortManager
-      end
-
       operation 217090 "mdtSerialPortManagerWidget"
 	public explicit_return_type ""
 	nparams 0
@@ -1039,297 +1064,6 @@ ${inlines}
       
     end
 
-    class 181634 "mdtSerialPortInterface"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      attribute 195074 "pvPortNumber"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 203010 "pvPortName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 194178 "pvName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 194306 "pvVendorId"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 194434 "pvVendorName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 194562 "pvModelId"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      classrelation 181762 // pvOptAttributes (<directional composition>)
-	relation 181634 *-->
-	  stereotype "QList"
-	  a role_name "pvOptAttributes" multiplicity "0..*" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 181762 // pvOptAttributes (<directional composition>)
-	  b parent class_ref 181762 // mdtSerialPortInterfaceOptAttribute
-      end
-
-      attribute 194690 "pvModelName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 195330 "pvIRQ"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 196482 "pvUartType"
-	private explicit_type "sp_uart_type_t"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 195458 "pvUartTypeStr"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 195714 "pvAvailableBaudRates"
-	private explicit_type "QList<int>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 217602 "mdtSerialPortInterface"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 217730 "~mdtSerialPortInterface"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 225538 "setUartType"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "type" explicit_type "sp_uart_type_t"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 225666 "uartType"
-	public explicit_return_type "sp_uart_type_t"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 225794 "uartTypeStr"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 225922 "setPortNumber"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "portNumber" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 226050 "portNumber"
-	public explicit_return_type "int"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 226178 "setPortName"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "portName" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 226306 "portName"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 226434 "setAvailableBaudRates"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "availableBaudRates" explicit_type "QList<int>"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 226562 "availableBaudRates"
-	public explicit_return_type "QList<int>"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
     class 181762 "mdtSerialPortInterfaceOptAttribute"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
@@ -1342,53 +1076,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 194818 "pvName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 194946 "pvParameter"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 217858 "mdtSerialPortInterfaceOptAttribute"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 217986 "~mdtSerialPortInterfaceOptAttribute"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     classdiagram 169218 "mdtSerialPortManager"
@@ -1408,20 +1095,14 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 182274 // <generalisation>
-	relation 182146 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 182274 // <generalisation>
-	  b parent class_ref 182146 // mdtSerialPortManagerSys
-      end
-
       operation 216834 "mdtSerialPortManager"
 	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1444,136 +1125,6 @@ ${inlines}
 	
       end
 
-      classrelation 196738 // <generalisation>
-	relation 196610 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 196738 // <generalisation>
-	  b parent class_ref 182274 // mdtSerialPortManagerPosix
-      end
-
-      classrelation 231298 // pvRxThread (<unidirectional association>)
-	relation 231042 --->
-	  a role_name "pvRxThread" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 231298 // pvRxThread (<unidirectional association>)
-	  b parent class_ref 222850 // mdtDeviceFileReadThread
-      end
-
-      classrelation 231426 // pvTxThread (<unidirectional association>)
-	relation 231170 --->
-	  a role_name "pvTxThread" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 231426 // pvTxThread (<unidirectional association>)
-	  b parent class_ref 222978 // mdtDeviceFileWriteThread
-      end
-
-      classrelation 231554 // pvCtlThread (<unidirectional association>)
-	relation 231298 --->
-	  a role_name "pvCtlThread" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 231554 // pvCtlThread (<unidirectional association>)
-	  b parent class_ref 223106 // mdtSerialPortCtlThread
-      end
-    end
-
-    class 182018 "mdtAbstractSerialPortManager"
-      abstract visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      classrelation 182402 // pvInterfaces (<directional composition>)
-	relation 182274 *-->
-	  stereotype "QList"
-	  a role_name "pvInterfaces" multiplicity "0..*" protected
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 182402 // pvInterfaces (<directional composition>)
-	  b parent class_ref 181634 // mdtSerialPortInterface
-      end
-
-      operation 216194 "mdtAbstractSerialPortManager"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 216322 "~mdtAbstractSerialPortManager"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 216706 "scan"
-	abstract cpp_virtual public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 226818 "interface"
-	public return_type class_ref 181634 // mdtSerialPortInterface
-	nparams 1
-	  param in name "portNumber" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 196994 // pvConfig (<directional composition>)
-	relation 196866 *-->
-	  a role_name "pvConfig" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 196994 // pvConfig (<directional composition>)
-	  b parent class_ref 128130 // mdtSerialPortConfig
-      end
-
-      classrelation 197122 // pvSerialPort (<unidirectional association>)
-	relation 196994 --->
-	  a role_name "pvSerialPort" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type} *> ${name}${value};
-"
-	    classrelation_ref 197122 // pvSerialPort (<unidirectional association>)
-	  b parent class_ref 189570 // mdtAbstractSerialPort
-      end
-
       operation 256514 "setSerialPortObj"
 	public explicit_return_type "void"
 	nparams 1
@@ -1588,26 +1139,54 @@ ${inlines}
 	
 	
       end
-    end
 
-    class 182146 "mdtSerialPortManagerSys"
-      visibility package stereotype "SystemSpecificImplementation"
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
+      classrelation 231554 // pvCtlThread (<unidirectional association>)
+	relation 231298 --->
+	  a role_name "pvCtlThread" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      classrelation 182146 // <generalisation>
-	relation 182018 ---|>
+	    classrelation_ref 231554 // pvCtlThread (<unidirectional association>)
+	  b parent class_ref 223106 // mdtSerialPortCtlThread
+      end
+
+      classrelation 319106 // pvSerialPort (<unidirectional association>)
+	relation 318850 --->
+	  a role_name "pvSerialPort" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 319106 // pvSerialPort (<unidirectional association>)
+	  b parent class_ref 189570 // mdtAbstractSerialPort
+      end
+
+      classrelation 319234 // pvConfig (<directional composition>)
+	relation 318978 *-->
+	  a role_name "pvConfig" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 319234 // pvConfig (<directional composition>)
+	  b parent class_ref 128130 // mdtSerialPortConfig
+      end
+
+      operation 499714 "scan"
+	public return_type class_ref 160770 // QStringList
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 332418 // <generalisation>
+	relation 332162 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 182146 // <generalisation>
-	  b parent class_ref 182018 // mdtAbstractSerialPortManager
+	    classrelation_ref 332418 // <generalisation>
+	  b parent class_ref 182018 // mdtPortManager
       end
     end
 
@@ -1659,7 +1238,7 @@ ${inlines}
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 230786 // <generalisation>
-	  b parent class_ref 222594 // mdtDeviceFileThread
+	  b parent class_ref 222594 // mdtPortThread
       end
 
       operation 310018 "mdtSerialPortCtlThread"
@@ -1767,7 +1346,7 @@ ${namespace_start}
 ${members}
 ${namespace_end}"
       associated_classes
-	class_ref 222850 // mdtDeviceFileReadThread
+	class_ref 222850 // mdtPortReadThread
       end
     end
   end

@@ -5,7 +5,7 @@
 #include "mdtFrameTest.h"
 #include "mdtErrorOut.h"
 #include "mdtErrorTest.h"
-#include "mdtDeviceFileTest.h"
+#include "mdtPortTest.h"
 
 int main(int argc, char **argv)
 {
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
   mdtBufferTestRun bufferTest;
   mdtFrameTest frameTest;
   mdtErrorTest errorTest;
-  mdtDeviceFileTest deviceFileTest;
+  mdtPortTest portTest;
 
   // Run test classes
   retVal = 0;
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
   if(retVal!=0){
     return retVal;
   }
-  retVal = QTest::qExec(&deviceFileTest, argc, argv);
+  retVal = QTest::qExec(&portTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }

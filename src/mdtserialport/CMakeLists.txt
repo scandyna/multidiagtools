@@ -17,13 +17,10 @@ set (HEADER_FILES
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
-          mdtAbstractSerialPortManager.cpp
           mdtSerialPortManager.cpp
           mdtAbstractSerialPort.cpp
           mdtSerialPort.cpp
           mdtSerialPortConfig.cpp
-          mdtSerialPortInterface.cpp
-          mdtSerialPortInterfaceOptAttribute.cpp
           mdtSerialPortCtlThread.cpp
     )
 
@@ -43,7 +40,6 @@ set (RESOURCE_FILES
 if(UNIX)
   message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
-    linux/mdtSerialPortManagerPosix.cpp
     linux/mdtSerialPortPosix.cpp
   )
 endif(UNIX)

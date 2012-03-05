@@ -25,6 +25,9 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   mdtSerialPortPosix(QObject *parent = 0);
   ~mdtSerialPortPosix();
 
+  // Set attributes for given port
+  bool setAttributes(const QString &portName);
+
   // Open a port with a given configuration
   bool open(mdtSerialPortConfig &cfg);
 

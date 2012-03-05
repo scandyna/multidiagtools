@@ -1,6 +1,6 @@
 format 76
 
-classcanvas 128002 class_ref 249474 // mdtAbstractDeviceFile
+classcanvas 128002 class_ref 249474 // mdtAbstractPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 17 151 2000
 end
@@ -20,28 +20,29 @@ end
 relationcanvas 128514 relation_ref 271234 // <directional composition>
   decenter_begin 122
   decenter_end 90
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 169 3000 to ref 128386
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 171 3000 to ref 128386
   role_a_pos 415 96 3000 no_role_b
   multiplicity_a_pos 497 123 3000 no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 271362 // <directional composition>
   decenter_begin 312
   decenter_end 395
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 260 3000 to ref 128386
-  role_a_pos 532 212 3000 no_role_b
-  multiplicity_a_pos 490 212 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 265 3000 to ref 128386
+  role_a_pos 533 212 3000 no_role_b
+  multiplicity_a_pos 491 212 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 271490 // <directional composition>
   decenter_begin 485
   decenter_end 637
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 339 3000 to ref 128386
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 385 346 3000 to ref 128386
   role_a_pos 534 276 3000 no_role_b
   multiplicity_a_pos 492 276 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 271618 // <directional composition>
   decenter_begin 716
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 425 448 3000 to ref 128386
-  role_a_pos 485 337 3000 no_role_b
-  multiplicity_a_pos 578 364 3000 no_multiplicity_b
+  decenter_end 17
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388 459 3000 to ref 128386
+  role_a_pos 544 372 3000 no_role_b
+  multiplicity_a_pos 502 372 3000 no_multiplicity_b
 end
 end

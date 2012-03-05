@@ -5,6 +5,7 @@
 #include <sys/time.h>
 #include <sys/select.h>
 #include <sys/ioctl.h>
+#include <linux/serial.h>
 #include <errno.h> 
 #include <cstring>
 #include <QString>
@@ -35,6 +36,147 @@ mdtSerialPortPosix::~mdtSerialPortPosix()
   close();
 }
 
+bool mdtSerialPortPosix::setAttributes(const QString &portName)
+{
+  struct serial_struct serinfo;
+
+  // Close previous opened port
+  this->close();
+  // Clear previous attributes
+  pvAvailableBaudRates.clear();
+  // Try to open port
+  pvFd = ::open(portName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
+  if(pvFd < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "can not open port '" + portName + "'", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    pvName = "";
+    return false;
+  }
+  // Set port name
+  pvName = portName;
+  // Set the UART type
+  if(ioctl(pvFd, TIOCGSERIAL, &serinfo) < 0){
+    pvUartType = UT_UNKNOW;
+    ::close(pvFd);
+    return false;
+  }
+  // Map the type
+  switch(serinfo.type){
+    case PORT_8250:
+      pvUartType = UT_8250;
+    case PORT_16450:
+      pvUartType = UT_16450;
+      break;
+    case PORT_16550:
+      pvUartType = UT_16550;
+      break;
+    case PORT_16550A:
+      pvUartType = UT_16550A;
+      break;
+    case PORT_CIRRUS:
+      pvUartType = UT_CIRRUS;
+      break;
+    case PORT_16650:
+      pvUartType = UT_16650;
+      break;
+    case PORT_16650V2:
+      pvUartType = UT_16650V2;
+      break;
+    case PORT_16750:
+      pvUartType = UT_16750;
+      break;
+    case PORT_STARTECH:
+      pvUartType = UT_STARTECH;
+      break;
+    case PORT_16C950:
+      pvUartType = UT_16C950;
+      break;
+    case PORT_16654:
+      pvUartType = UT_16654;
+      break;
+    case PORT_16850:
+      pvUartType = UT_16850;
+      break;
+    case PORT_RSA:
+      pvUartType = UT_RSA;
+      break;
+    default:
+      pvUartType = UT_UNKNOW;
+      ::close(pvFd);
+      return false;
+  }
+  // Get available baud rates list
+  pvAvailableBaudRates << 50;
+  pvAvailableBaudRates << 75;
+  pvAvailableBaudRates << 110;
+  pvAvailableBaudRates << 134; // Note: is 134.5
+  pvAvailableBaudRates << 150;
+  pvAvailableBaudRates << 200;
+  pvAvailableBaudRates << 300;
+  pvAvailableBaudRates << 600;
+  pvAvailableBaudRates << 1200;
+  pvAvailableBaudRates << 1800;
+  pvAvailableBaudRates << 2400;
+  pvAvailableBaudRates << 4800;
+  pvAvailableBaudRates << 9600;
+  pvAvailableBaudRates << 19200;
+  pvAvailableBaudRates << 38400;
+#ifdef  B57600
+  pvAvailableBaudRates << 57600;
+#endif
+#ifdef B76800
+  pvAvailableBaudRates << 76800;
+#endif
+#ifdef  B115200
+  pvAvailableBaudRates << 115200;
+#endif
+#ifdef  B230400
+  pvAvailableBaudRates << 230400;
+#endif
+#ifdef  B460800
+  pvAvailableBaudRates << 460800;
+#endif
+#ifdef  B500000
+  pvAvailableBaudRates << 500000;
+#endif
+#ifdef  B576000
+  pvAvailableBaudRates << 576000;
+#endif
+#ifdef  B921600
+  pvAvailableBaudRates << 921600;
+#endif
+#ifdef  B1000000
+  pvAvailableBaudRates << 1000000;
+#endif
+#ifdef  B1152000
+  pvAvailableBaudRates << 1152000;
+#endif
+#ifdef  B1500000
+  pvAvailableBaudRates << 1500000;
+#endif
+#ifdef  B2000000
+  pvAvailableBaudRates << 2000000;
+#endif
+#ifdef  B2500000
+  pvAvailableBaudRates << 2500000;
+#endif
+#ifdef  B3000000
+  pvAvailableBaudRates << 3000000;
+#endif
+#ifdef  B3500000
+  pvAvailableBaudRates << 3500000;
+#endif
+#ifdef  B4000000
+  pvAvailableBaudRates << 4000000;
+#endif
+
+  // End of attributes, close port
+  ::close(pvFd);
+  return true;
+}
+
 /// NOTE: validité config
 bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 {
@@ -43,13 +185,13 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Close previous opened port
   close();
 
-  if(!mdtDeviceFile::open(cfg)){
+  if(!mdtPort::open(cfg)){
     return false;
   }
   // Get current config and save it to pvOriginalTermios
   if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
     ::close(pvFd);
-    mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + cfg.interface() + " is not a serial port, or is not available", mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvName + " is not a serial port, or is not available", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
@@ -61,7 +203,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!setBaudRate(cfg.baudRate())){
     ::close(pvFd);
     strNum.setNum(cfg.baudRate());
-    mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + cfg.interface(), mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
@@ -73,7 +215,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!setDataBits(cfg.dataBitsCount())){
     ::close(pvFd);
     strNum.setNum(cfg.dataBitsCount());
-    mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + cfg.interface(), mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
     return false;
@@ -82,7 +224,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!setStopBits(cfg.stopBitsCount())){
     ::close(pvFd);
     strNum.setNum(cfg.stopBitsCount());
-    mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + cfg.interface(), mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
     return false;
@@ -98,7 +240,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Apply the setup
   if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
     ::close(pvFd);
-    mdtError e(MDT_UNDEFINED_ERROR, "unable to apply configuration for port " + cfg.interface(), mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "unable to apply configuration for port " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
@@ -117,7 +259,7 @@ void mdtSerialPortPosix::close()
 {
   if(pvFd >= 0){
     tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
-    mdtDeviceFile::close();
+    mdtPort::close();
   }
 }
 

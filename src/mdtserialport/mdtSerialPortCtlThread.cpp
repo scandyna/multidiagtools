@@ -7,16 +7,16 @@
 #endif
 
 mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
- : mdtDeviceFileThread(parent)
+ : mdtPortThread(parent)
 {
   pvSerialPort = 0;
 }
 
-void mdtSerialPortCtlThread::setDeviceFile(mdtSerialPort *serialPort)
+void mdtSerialPortCtlThread::setPort(mdtSerialPort *serialPort)
 {
   Q_ASSERT(serialPort != 0);
 
-  mdtDeviceFileThread::setDeviceFile(serialPort);
+  mdtPortThread::setPort(serialPort);
   pvSerialPort = serialPort;
 }
 
