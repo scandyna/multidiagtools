@@ -6,11 +6,11 @@ classcanvas 128002 class_ref 269442 // mdtFrameCodec
 end
 classcanvas 128130 class_ref 269570 // mdtFrameCodecScpi
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 58 508 2000
+  xyz 9 496 2000
 end
 classcanvas 128386 class_ref 269698 // mdtFrameCodecModbusAscii
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 250 511 2000
+  xyz 399 505 2000
 end
 classcanvas 128642 class_ref 161026 // QString
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -18,15 +18,19 @@ classcanvas 128642 class_ref 161026 // QString
 end
 classcanvas 128898 class_ref 269826 // mdtFrameCodecModbusRtu
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 566 509 2000
+  xyz 611 464 2000
 end
 classcanvas 129026 class_ref 269954 // mdtFrameCodecAscii
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 181 371 2000
+  xyz 204 306 2000
 end
-classcanvas 129922 class_ref 196354 // mdtFrame
+classcanvas 129794 class_ref 161154 // QVariant
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 464 27 2000
+  xyz 677 191 2000
+end
+classcanvas 130050 class_ref 302722 // mdtFrameCodecScpiU3606A
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 42 732 2000
 end
 relationcanvas 129154 relation_ref 298498 // <generalisation>
   from ref 129026 z 2001 to ref 128002
@@ -35,8 +39,8 @@ relationcanvas 129154 relation_ref 298498 // <generalisation>
 end
 relationcanvas 129282 relation_ref 298626 // <directional composition>
   from ref 129026 z 2001 to ref 128642
-  role_a_pos 89 369 3000 no_role_b
-  no_multiplicity_a no_multiplicity_b
+  role_a_pos 89 368 3000 no_role_b
+  multiplicity_a_pos 89 395 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 298754 // <generalisation>
   from ref 128130 z 2001 to ref 129026
@@ -53,8 +57,13 @@ relationcanvas 129666 relation_ref 299010 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 130434 relation_ref 299266 // <dependency>
-  from ref 128002 z 2001 to ref 129922
+relationcanvas 129922 relation_ref 359042 // <directional composition>
+  from ref 128002 z 2001 stereotype "<<QList<QVariant>>>" xyz 497 205.5 3000 to ref 129794
+  role_a_pos 612 188 3000 no_role_b
+  multiplicity_a_pos 644 215 3000 no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 365570 // <generalisation>
+  from ref 130050 z 2001 to ref 128130
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

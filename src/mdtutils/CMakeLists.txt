@@ -29,9 +29,15 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           mdtAlgorithms.cpp
           mdtBuffer.cpp
+          # Frame
           mdtFrame.cpp
           mdtFrameAscii.cpp
           mdtTime.cpp
+          # Frame codec
+          mdtFrameCodec.cpp
+          mdtFrameCodecAscii.cpp
+          mdtFrameCodecScpi.cpp
+          mdtFrameCodecScpiU3606A.cpp
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp

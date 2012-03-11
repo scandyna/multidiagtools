@@ -12,7 +12,8 @@ enum mdt_error_t{
   MDT_FILE_IO_ERROR,
   MDT_PORT_IO_ERROR,
   MDT_SERIAL_PORT_IO_ERROR,
-  MDT_USB_IO_ERROR
+  MDT_USB_IO_ERROR,
+  MDT_FRAME_DECODE_ERROR
 };
 
 /*! \brief Add source information to error

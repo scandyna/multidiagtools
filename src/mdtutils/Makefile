@@ -492,6 +492,114 @@ mdtFrameAscii.cpp.s:
 	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameAscii.cpp.s
 .PHONY : mdtFrameAscii.cpp.s
 
+mdtFrameCodec.o: mdtFrameCodec.cpp.o
+.PHONY : mdtFrameCodec.o
+
+# target to build an object file
+mdtFrameCodec.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodec.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodec.cpp.o
+.PHONY : mdtFrameCodec.cpp.o
+
+mdtFrameCodec.i: mdtFrameCodec.cpp.i
+.PHONY : mdtFrameCodec.i
+
+# target to preprocess a source file
+mdtFrameCodec.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodec.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodec.cpp.i
+.PHONY : mdtFrameCodec.cpp.i
+
+mdtFrameCodec.s: mdtFrameCodec.cpp.s
+.PHONY : mdtFrameCodec.s
+
+# target to generate assembly for a file
+mdtFrameCodec.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodec.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodec.cpp.s
+.PHONY : mdtFrameCodec.cpp.s
+
+mdtFrameCodecAscii.o: mdtFrameCodecAscii.cpp.o
+.PHONY : mdtFrameCodecAscii.o
+
+# target to build an object file
+mdtFrameCodecAscii.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecAscii.cpp.o
+.PHONY : mdtFrameCodecAscii.cpp.o
+
+mdtFrameCodecAscii.i: mdtFrameCodecAscii.cpp.i
+.PHONY : mdtFrameCodecAscii.i
+
+# target to preprocess a source file
+mdtFrameCodecAscii.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecAscii.cpp.i
+.PHONY : mdtFrameCodecAscii.cpp.i
+
+mdtFrameCodecAscii.s: mdtFrameCodecAscii.cpp.s
+.PHONY : mdtFrameCodecAscii.s
+
+# target to generate assembly for a file
+mdtFrameCodecAscii.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecAscii.cpp.s
+.PHONY : mdtFrameCodecAscii.cpp.s
+
+mdtFrameCodecScpi.o: mdtFrameCodecScpi.cpp.o
+.PHONY : mdtFrameCodecScpi.o
+
+# target to build an object file
+mdtFrameCodecScpi.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpi.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpi.cpp.o
+.PHONY : mdtFrameCodecScpi.cpp.o
+
+mdtFrameCodecScpi.i: mdtFrameCodecScpi.cpp.i
+.PHONY : mdtFrameCodecScpi.i
+
+# target to preprocess a source file
+mdtFrameCodecScpi.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpi.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpi.cpp.i
+.PHONY : mdtFrameCodecScpi.cpp.i
+
+mdtFrameCodecScpi.s: mdtFrameCodecScpi.cpp.s
+.PHONY : mdtFrameCodecScpi.s
+
+# target to generate assembly for a file
+mdtFrameCodecScpi.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpi.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpi.cpp.s
+.PHONY : mdtFrameCodecScpi.cpp.s
+
+mdtFrameCodecScpiU3606A.o: mdtFrameCodecScpiU3606A.cpp.o
+.PHONY : mdtFrameCodecScpiU3606A.o
+
+# target to build an object file
+mdtFrameCodecScpiU3606A.cpp.o:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpiU3606A.cpp.o
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpiU3606A.cpp.o
+.PHONY : mdtFrameCodecScpiU3606A.cpp.o
+
+mdtFrameCodecScpiU3606A.i: mdtFrameCodecScpiU3606A.cpp.i
+.PHONY : mdtFrameCodecScpiU3606A.i
+
+# target to preprocess a source file
+mdtFrameCodecScpiU3606A.cpp.i:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpiU3606A.cpp.i
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpiU3606A.cpp.i
+.PHONY : mdtFrameCodecScpiU3606A.cpp.i
+
+mdtFrameCodecScpiU3606A.s: mdtFrameCodecScpiU3606A.cpp.s
+.PHONY : mdtFrameCodecScpiU3606A.s
+
+# target to generate assembly for a file
+mdtFrameCodecScpiU3606A.cpp.s:
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpiU3606A.cpp.s
+	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpiU3606A.cpp.s
+.PHONY : mdtFrameCodecScpiU3606A.cpp.s
+
 mdtParentChildTableItem.o: mdtParentChildTableItem.cpp.o
 .PHONY : mdtParentChildTableItem.o
 
@@ -978,6 +1086,18 @@ help:
 	@echo "... mdtFrameAscii.o"
 	@echo "... mdtFrameAscii.i"
 	@echo "... mdtFrameAscii.s"
+	@echo "... mdtFrameCodec.o"
+	@echo "... mdtFrameCodec.i"
+	@echo "... mdtFrameCodec.s"
+	@echo "... mdtFrameCodecAscii.o"
+	@echo "... mdtFrameCodecAscii.i"
+	@echo "... mdtFrameCodecAscii.s"
+	@echo "... mdtFrameCodecScpi.o"
+	@echo "... mdtFrameCodecScpi.i"
+	@echo "... mdtFrameCodecScpi.s"
+	@echo "... mdtFrameCodecScpiU3606A.o"
+	@echo "... mdtFrameCodecScpiU3606A.i"
+	@echo "... mdtFrameCodecScpiU3606A.s"
 	@echo "... mdtParentChildTableItem.o"
 	@echo "... mdtParentChildTableItem.i"
 	@echo "... mdtParentChildTableItem.s"
