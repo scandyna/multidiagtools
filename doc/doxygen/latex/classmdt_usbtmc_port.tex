@@ -1,0 +1,95 @@
+\hypertarget{classmdt_usbtmc_port}{
+\section{mdtUsbtmcPort Class Reference}
+\label{classmdt_usbtmc_port}\index{mdtUsbtmcPort@{mdtUsbtmcPort}}
+}
+
+
+USBTMC device file calss.  
+
+
+
+
+{\ttfamily \#include $<$mdtUsbtmcPort.h$>$}
+
+
+
+Inheritance diagram for mdtUsbtmcPort:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classmdt_usbtmc_port__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtUsbtmcPort:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classmdt_usbtmc_port__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{readOneFrame} ()
+\begin{DoxyCompactList}\small\item\em Tell the thread that a frame can be read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}{
+{\bfseries mdtUsbtmcPort} (QObject $\ast$parent=0)}
+\label{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}
+
+\item 
+\hypertarget{classmdt_usbtmc_port_a60fd3e4114c46e1bce5e1188e349e0ed}{
+bool {\bfseries waitEventRead} ()}
+\label{classmdt_usbtmc_port_a60fd3e4114c46e1bce5e1188e349e0ed}
+
+\item 
+\hypertarget{classmdt_usbtmc_port_aaa58100bc6ec2a5f91a3c6bb3676a468}{
+bool {\bfseries waitEventWriteReady} ()}
+\label{classmdt_usbtmc_port_aaa58100bc6ec2a5f91a3c6bb3676a468}
+
+\item 
+\hypertarget{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}{
+void {\bfseries writeOneFrame} ()}
+\label{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+USBTMC device file calss. 
+
+With USBTMC, when we try to read, and no data are available, both read and write threads are blocked.\par
+ USBTMC seems not to handle select() call, so we re-\/implement waitEventRead() and waitEventWriteReady().\par
+ To start the read, call the \hyperlink{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{readOneFrame()} method.\par
+ To start the write, call the writeOneFrame() method. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{
+\index{mdtUsbtmcPort@{mdtUsbtmcPort}!readOneFrame@{readOneFrame}}
+\index{readOneFrame@{readOneFrame}!mdtUsbtmcPort@{mdtUsbtmcPort}}
+\subsubsection[{readOneFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbtmcPort::readOneFrame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}
+
+
+Tell the thread that a frame can be read. 
+
+In \hyperlink{classmdt_usbtmc_port_manager}{mdtUsbtmcPortManager}, this slot is connected to the write thread, and called each time a frame ws written.\par
+ If the waitingFrame flag is true, the read thread will be notified that data must be read. \begin{DoxySeeAlso}{See also}
+setWaitingFrame() 
+
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/linux/mdtUsbtmcPort.h\item 
+src/mdtutils/linux/mdtUsbtmcPort.cpp\end{DoxyCompactItemize}

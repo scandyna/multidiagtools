@@ -3,7 +3,7 @@
 # * Directory: tests/mdtserialport *
 
 # Project
-project (multixdiagtools)
+project (multidiagtools)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 

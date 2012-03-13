@@ -3,7 +3,7 @@
 # * Directory: tests/mdttest *
 
 # Projet
-project (multixdiagtools)
+project (multidiagtools)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 

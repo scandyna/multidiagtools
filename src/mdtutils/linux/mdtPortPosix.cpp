@@ -192,15 +192,18 @@ bool mdtPortPosix::waitEventWriteReady()
 int mdtPortPosix::writeData(const char *data, int maxLen)
 {
   int n;
+  int error;
 
   n = write(pvFd, data, maxLen);
   if(n < 0){
+    // Store error (errno will be reset when readen)
+    error = errno;
     mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
+    e.setSystemError(error, strerror(error));
     MDT_ERROR_SET_SRC(e, "mdtPortPosix");
     e.commit();
-/*
-    switch(errno){
+
+    switch(error){
       case EINTR:
         perror("EINTR");
         break;
@@ -225,10 +228,13 @@ int mdtPortPosix::writeData(const char *data, int maxLen)
       case ENOSPC:
         perror("ENOSPC");
         break;
+      case ENODEV:
+        perror("ENODEV");
+        break;
       default:
-        qDebug() << "unknow error";
+        qDebug() << "unknow error: " << strerror(error);
     }
-*/
+    return 0;
   }
 
   return n;

@@ -1,0 +1,164 @@
+\hypertarget{classmdt_serial_port_config}{
+\section{mdtSerialPortConfig Class Reference}
+\label{classmdt_serial_port_config}\index{mdtSerialPortConfig@{mdtSerialPortConfig}}
+}
+
+
+Inheritance diagram for mdtSerialPortConfig:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classmdt_serial_port_config__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSerialPortConfig:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classmdt_serial_port_config__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries parity\_\-t} \{ {\bfseries NoParity}, 
+{\bfseries ParityOdd}, 
+{\bfseries ParityEven}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}{setDefault} ()
+\begin{DoxyCompactList}\small\item\em Set default configuration Default configuration is: \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_config_a065f1875abc81e2aadd42a17d50167b1}{
+void {\bfseries setBaudRate} (int baudRate)}
+\label{classmdt_serial_port_config_a065f1875abc81e2aadd42a17d50167b1}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a57a447f93162816ca19285175cd1ac29}{
+int {\bfseries baudRate} ()}
+\label{classmdt_serial_port_config_a57a447f93162816ca19285175cd1ac29}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a1bc858db75808c23d1233244cff8d4fc}{
+void {\bfseries setParity} (parity\_\-t parity)}
+\label{classmdt_serial_port_config_a1bc858db75808c23d1233244cff8d4fc}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a25f17262cbbcd824de5fff4207007740}{
+parity\_\-t {\bfseries parity} ()}
+\label{classmdt_serial_port_config_a25f17262cbbcd824de5fff4207007740}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a71b78f5bea7c9a8eb66376aa4cee4344}{
+void {\bfseries setDataBitsCount} (int n)}
+\label{classmdt_serial_port_config_a71b78f5bea7c9a8eb66376aa4cee4344}
+
+\item 
+\hypertarget{classmdt_serial_port_config_af4dc5c3e0e718b91a10ec679fa9f910b}{
+int {\bfseries dataBitsCount} ()}
+\label{classmdt_serial_port_config_af4dc5c3e0e718b91a10ec679fa9f910b}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a3c438a1008386bc8eb56c03786136b73}{
+void {\bfseries setStopBitsCount} (int n)}
+\label{classmdt_serial_port_config_a3c438a1008386bc8eb56c03786136b73}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a26873bf852bc57b25f409b212f35e6a1}{
+int {\bfseries stopBitsCount} ()}
+\label{classmdt_serial_port_config_a26873bf852bc57b25f409b212f35e6a1}
+
+\item 
+\hypertarget{classmdt_serial_port_config_accac127fab319e881a0461f76a97362c}{
+void {\bfseries enableFlowCtlRtsCts} ()}
+\label{classmdt_serial_port_config_accac127fab319e881a0461f76a97362c}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a5f0af023613beabc6aeb527b280ae5c2}{
+void {\bfseries diseableFlowCtlRtsCts} ()}
+\label{classmdt_serial_port_config_a5f0af023613beabc6aeb527b280ae5c2}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a5933c0d69ed0b710bb578efbca2eb25d}{
+bool {\bfseries flowCtlRtsCtsEnabled} ()}
+\label{classmdt_serial_port_config_a5933c0d69ed0b710bb578efbca2eb25d}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a824c3fb24948eb13f1aedbc25e056b76}{
+void {\bfseries enableFlowCtlXonXoff} (char \_\-xonChar=MDT\_\-DEF\_\-XON, char \_\-xoffChar=MDT\_\-DEF\_\-XOFF)}
+\label{classmdt_serial_port_config_a824c3fb24948eb13f1aedbc25e056b76}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a1ae8683186b22de6cb1faa23191c1403}{
+void {\bfseries diseableFlowCtlXonXoff} ()}
+\label{classmdt_serial_port_config_a1ae8683186b22de6cb1faa23191c1403}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a19821c3f084fb9de5072b4cf180394eb}{
+bool {\bfseries flowCtlXonXoffEnabled} ()}
+\label{classmdt_serial_port_config_a19821c3f084fb9de5072b4cf180394eb}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a9d7e1e2be4debecb5e4646f094fa0add}{
+char {\bfseries xonChar} ()}
+\label{classmdt_serial_port_config_a9d7e1e2be4debecb5e4646f094fa0add}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a084f31a0ae6c1488403d3f5af0b1faa1}{
+char {\bfseries xoffChar} ()}
+\label{classmdt_serial_port_config_a084f31a0ae6c1488403d3f5af0b1faa1}
+
+\item 
+\hypertarget{classmdt_serial_port_config_aa9a2f9a5a82a8cb3408dafe83451ecfb}{
+bool {\bfseries isValid} ()}
+\label{classmdt_serial_port_config_aa9a2f9a5a82a8cb3408dafe83451ecfb}
+
+\item 
+\hypertarget{classmdt_serial_port_config_a31680194276513004e91cd3bee85a398}{
+bool \hyperlink{classmdt_serial_port_config_a31680194276513004e91cd3bee85a398}{operator==} (const \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&other)}
+\label{classmdt_serial_port_config_a31680194276513004e91cd3bee85a398}
+
+\begin{DoxyCompactList}\small\item\em NOTE: pas claire (héritage.. + test passe toujours..) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_config_aef2d7d8f2ca726977bc31eeb96dbe3c5}{
+bool {\bfseries operator!=} (const \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&other)}
+\label{classmdt_serial_port_config_aef2d7d8f2ca726977bc31eeb96dbe3c5}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}{
+\index{mdtSerialPortConfig@{mdtSerialPortConfig}!setDefault@{setDefault}}
+\index{setDefault@{setDefault}!mdtSerialPortConfig@{mdtSerialPortConfig}}
+\subsubsection[{setDefault}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortConfig::setDefault (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}
+
+
+Set default configuration Default configuration is: 
+
+
+\begin{DoxyItemize}
+\item Interface: /dev/ttyS0 (Posix) or COM1 (Windows)
+\item Baud rate: 9600
+\item Data bits: 8
+\item Stop bits: 1
+\item Parity: none
+\item Flow contrôl: none 
+\end{DoxyItemize}
+
+Reimplemented from \hyperlink{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}{mdtPortConfig}.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtserialport/mdtSerialPortConfig.h\item 
+src/mdtserialport/mdtSerialPortConfig.cpp\end{DoxyCompactItemize}

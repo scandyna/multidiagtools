@@ -1,0 +1,3 @@
+
+# Set permissions of usbtmc* devices
+KERNEL=="usbtmc[0-9]", GROUP="plugdev", MODE="0660" 

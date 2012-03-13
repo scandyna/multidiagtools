@@ -1,0 +1,195 @@
+\hypertarget{classmdt_serial_port_posix}{
+\section{mdtSerialPortPosix Class Reference}
+\label{classmdt_serial_port_posix}\index{mdtSerialPortPosix@{mdtSerialPortPosix}}
+}
+
+
+Inheritance diagram for mdtSerialPortPosix:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{classmdt_serial_port_posix__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSerialPortPosix:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{classmdt_serial_port_posix__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_serial_port_posix_ab42543a4500bc207985ddad3082b1f4c}{
+{\bfseries mdtSerialPortPosix} (QObject $\ast$parent=0)}
+\label{classmdt_serial_port_posix_ab42543a4500bc207985ddad3082b1f4c}
+
+\item 
+bool \hyperlink{classmdt_serial_port_posix_a1440f504f0ed43210b9c0b1cd5506663}{setAttributes} (const QString \&portName)
+\begin{DoxyCompactList}\small\item\em Set the port attributes. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_posix_afb1bcf27cc39cd962913b056ca8d4ccc}{
+bool \hyperlink{classmdt_serial_port_posix_afb1bcf27cc39cd962913b056ca8d4ccc}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)}
+\label{classmdt_serial_port_posix_afb1bcf27cc39cd962913b056ca8d4ccc}
+
+\begin{DoxyCompactList}\small\item\em NOTE: validité config. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_posix_a29df8d6b7c74bd7e3bf8513987bdd2a2}{close} ()
+\begin{DoxyCompactList}\small\item\em Close the serial port. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc9ef43b}{waitEventCtl} ()
+\begin{DoxyCompactList}\small\item\em Wait until a control (modem line) signal state changes. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08744acc}{getCtlStates} ()
+\begin{DoxyCompactList}\small\item\em Get the control (modem line) signal states and update member flags. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_posix_a3d27cec6098549cdba68465b8c5d4480}{setRts} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable the RTS (Request To Send) signal. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_posix_a0d489a938cba216ab43d3ae591689676}{setDtr} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_posix_ae840ab8d5628bdf05d8d88cc5495c2ad}{
+void {\bfseries defineCtlThread} (pthread\_\-t ctlThread)}
+\label{classmdt_serial_port_posix_ae840ab8d5628bdf05d8d88cc5495c2ad}
+
+\item 
+\hypertarget{classmdt_serial_port_posix_afe5b70aead00c0ad0107c436e9b8ffbf}{
+void {\bfseries abortWaitEventCtl} ()}
+\label{classmdt_serial_port_posix_afe5b70aead00c0ad0107c436e9b8ffbf}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_serial_port_posix_a29df8d6b7c74bd7e3bf8513987bdd2a2}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!close@{close}}
+\index{close@{close}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortPosix::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a29df8d6b7c74bd7e3bf8513987bdd2a2}
+
+
+Close the serial port. 
+
+This method must be re-\/implemented in plateform specific subclass. Multiple call of this method is possible without any test The implemented method must call \hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{mdtPort::close()} at the right time \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port}{mdtPort} 
+\end{DoxySeeAlso}
+
+
+Implements \hyperlink{classmdt_abstract_serial_port_ad84810a4bd7a10c5c621475511196c85}{mdtAbstractSerialPort}.
+
+\hypertarget{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08744acc}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!getCtlStates@{getCtlStates}}
+\index{getCtlStates@{getCtlStates}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{getCtlStates}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortPosix::getCtlStates (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08744acc}
+
+
+Get the control (modem line) signal states and update member flags. 
+
+This method must be re-\/implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+False on error, in this case, the thread will be stopped. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort}.
+
+\hypertarget{classmdt_serial_port_posix_a1440f504f0ed43210b9c0b1cd5506663}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!setAttributes@{setAttributes}}
+\index{setAttributes@{setAttributes}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{setAttributes}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortPosix::setAttributes (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{portName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a1440f504f0ed43210b9c0b1cd5506663}
+
+
+Set the port attributes. 
+
+Open the given port name and get his attributes. This method must be re-\/implemented in plateform specific subclass. 
+\begin{DoxyParams}{Parameters}
+{\em portName} & Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if given port is a serial port 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classmdt_abstract_serial_port_ae1be8d8778a7638649d5bb27a73297ef}{mdtAbstractSerialPort}.
+
+\hypertarget{classmdt_serial_port_posix_a0d489a938cba216ab43d3ae591689676}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!setDtr@{setDtr}}
+\index{setDtr@{setDtr}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{setDtr}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortPosix::setDtr (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a0d489a938cba216ab43d3ae591689676}
+
+
+Enable/diseable the DTR (Data Terminal Ready) signal. 
+
+This method must be re-\/implemented in plateform specific subclass. 
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, DTR will be enabled, diseabled else \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{mdtAbstractSerialPort}.
+
+\hypertarget{classmdt_serial_port_posix_a3d27cec6098549cdba68465b8c5d4480}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!setRts@{setRts}}
+\index{setRts@{setRts}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{setRts}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortPosix::setRts (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a3d27cec6098549cdba68465b8c5d4480}
+
+
+Enable/diseable the RTS (Request To Send) signal. 
+
+This method must be re-\/implemented in plateform specific subclass. 
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, RTS will be enabled, diseabled else \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{mdtAbstractSerialPort}.
+
+\hypertarget{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc9ef43b}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!waitEventCtl@{waitEventCtl}}
+\index{waitEventCtl@{waitEventCtl}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{waitEventCtl}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortPosix::waitEventCtl (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc9ef43b}
+
+
+Wait until a control (modem line) signal state changes. 
+
+This method must be re-\/implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+False on error, in this case, the thread will be stopped. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{mdtAbstractSerialPort}.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtserialport/linux/mdtSerialPortPosix.h\item 
+src/mdtserialport/linux/mdtSerialPortPosix.cpp\end{DoxyCompactItemize}

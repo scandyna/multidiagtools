@@ -1,0 +1,82 @@
+\hypertarget{classmdt_error}{
+\section{mdtError Class Reference}
+\label{classmdt_error}\index{mdtError@{mdtError}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries level\_\-t} \{ {\bfseries NoError} =  0x00, 
+{\bfseries Info} =  0x01, 
+{\bfseries Warning} =  0x02, 
+{\bfseries Error} =  0x04
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{
+\hyperlink{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}{mdtError} (int number, const QString \&text, level\_\-t level)}
+\label{classmdt_error_a377c175cc8e1aeae543cae2ecc5ca87b}
+
+\begin{DoxyCompactList}\small\item\em Construct new error. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{
+void \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError} (int number, const QString \&text)}
+\label{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}
+
+\begin{DoxyCompactList}\small\item\em Add system returned error (for example, errno) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a0df51beab0ddaba26d5194690303d682}{
+void \hyperlink{classmdt_error_a0df51beab0ddaba26d5194690303d682}{setSource} (const QString \&fileName, int fileLine, const QString \&className, const QString \&functionName)}
+\label{classmdt_error_a0df51beab0ddaba26d5194690303d682}
+
+\begin{DoxyCompactList}\small\item\em Add the source of error It's possible to use the helper macro MDT\_\-ERROR\_\-SET\_\-SRC() \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{
+void \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit} ()}
+\label{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}
+
+\begin{DoxyCompactList}\small\item\em Send error to output. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_ae1a118da6923baaf386c7ab5f08b3549}{
+int \hyperlink{classmdt_error_ae1a118da6923baaf386c7ab5f08b3549}{number} ()}
+\label{classmdt_error_ae1a118da6923baaf386c7ab5f08b3549}
+
+\begin{DoxyCompactList}\small\item\em Error number. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a3d1bbc08e84ef25d45054b8d440989e6}{
+QString \hyperlink{classmdt_error_a3d1bbc08e84ef25d45054b8d440989e6}{text} ()}
+\label{classmdt_error_a3d1bbc08e84ef25d45054b8d440989e6}
+
+\begin{DoxyCompactList}\small\item\em Error text. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a4d7df33307a07dc1c51d2806d90ea13d}{
+level\_\-t \hyperlink{classmdt_error_a4d7df33307a07dc1c51d2806d90ea13d}{level} ()}
+\label{classmdt_error_a4d7df33307a07dc1c51d2806d90ea13d}
+
+\begin{DoxyCompactList}\small\item\em Error level  level\_\-t. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a0c5d7ff948d194c31720636b8a211c38}{
+int \hyperlink{classmdt_error_a0c5d7ff948d194c31720636b8a211c38}{systemNumber} ()}
+\label{classmdt_error_a0c5d7ff948d194c31720636b8a211c38}
+
+\begin{DoxyCompactList}\small\item\em Error number returned from system if available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_af03eb8afe4065160aec6480f56badd43}{
+QString \hyperlink{classmdt_error_af03eb8afe4065160aec6480f56badd43}{systemText} ()}
+\label{classmdt_error_af03eb8afe4065160aec6480f56badd43}
+
+\begin{DoxyCompactList}\small\item\em Error text returned from system, if available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a4df1fdf17b1c9356dbf3033f6181f8f6}{
+QString \hyperlink{classmdt_error_a4df1fdf17b1c9356dbf3033f6181f8f6}{functionName} ()}
+\label{classmdt_error_a4df1fdf17b1c9356dbf3033f6181f8f6}
+
+\begin{DoxyCompactList}\small\item\em Error source function. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_a61a942e42c1f5c3208501dfd20f8692a}{
+QString \hyperlink{classmdt_error_a61a942e42c1f5c3208501dfd20f8692a}{fileName} ()}
+\label{classmdt_error_a61a942e42c1f5c3208501dfd20f8692a}
+
+\begin{DoxyCompactList}\small\item\em Error source file. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_af93bfb0b3a2e88755f8d0e61d51b0be6}{
+int \hyperlink{classmdt_error_af93bfb0b3a2e88755f8d0e61d51b0be6}{fileLine} ()}
+\label{classmdt_error_af93bfb0b3a2e88755f8d0e61d51b0be6}
+
+\begin{DoxyCompactList}\small\item\em Error source line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtError.h\item 
+src/mdtutils/mdtError.cpp\end{DoxyCompactItemize}

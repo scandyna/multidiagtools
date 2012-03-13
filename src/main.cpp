@@ -8,10 +8,39 @@
 #include <QDebug>
 #include <QSqlTableModel>
 
+#include <QTextCodec>
+#include "mdtErrorOut.h"
+#include "mdtError.h"
+
+#include "linux/mdtDeviceU3606AWidget.h"
+
 int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
   QStringList lst;
+  int retVal;
+
+#ifdef Q_OS_UNIX
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+#endif
+
+  // Init error system
+  if(!mdtErrorOut::init("essais.log")){
+    qDebug() << "main(): unable to init the error system";
+    return 1;
+  }
+  mdtErrorOut::setDialogLevelsMask(mdtError::Info | mdtError::Warning | mdtError::Error);
+
+  mdtDeviceU3606AWidget w;
+  
+  w.show();
+  
+  retVal = app.exec();
+
+  // Free the error system
+  mdtErrorOut::destroy();
+  
+  return retVal;
 
   QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
   db.setDatabaseName("essais.db");
@@ -43,5 +72,5 @@ int main(int argc, char **argv)
   trw.resize(400, 300);
   trw.show();
 
-  return app.exec();
+  //return app.exec();
 }

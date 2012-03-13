@@ -1,0 +1,65 @@
+\hypertarget{classmdt_port_read_thread}{
+\section{mdtPortReadThread Class Reference}
+\label{classmdt_port_read_thread}\index{mdtPortReadThread@{mdtPortReadThread}}
+}
+
+
+Inheritance diagram for mdtPortReadThread:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classmdt_port_read_thread__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtPortReadThread:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classmdt_port_read_thread__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}{newFrameReaden} ()
+\begin{DoxyCompactList}\small\item\em Emited when a complete frame is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_read_thread_a180074c2ff60f5103d7e3aa27c1cdb01}{
+{\bfseries mdtPortReadThread} (QObject $\ast$parent=0)}
+\label{classmdt_port_read_thread_a180074c2ff60f5103d7e3aa27c1cdb01}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}{
+\index{mdtPortReadThread@{mdtPortReadThread}!newFrameReaden@{newFrameReaden}}
+\index{newFrameReaden@{newFrameReaden}!mdtPortReadThread@{mdtPortReadThread}}
+\subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortReadThread::newFrameReaden (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}
+
+
+Emited when a complete frame is available. 
+
+This signal is emited when a complete frame is available.\par
+ To get the frame, the simplest way is to use a \hyperlink{classmdt_port_manager}{mdtPortManager}.\par
+ It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution needs to handle the mutex, verify the readen queue state, ... \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager}{mdtPortManager} 
+
+\hyperlink{classmdt_port}{mdtPort} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtPortReadThread.h\item 
+src/mdtutils/mdtPortReadThread.cpp\item 
+src/mdtutils/moc\_\-mdtPortReadThread.cxx\end{DoxyCompactItemize}

@@ -1,0 +1,117 @@
+\hypertarget{classmdt_serial_port}{
+\section{mdtSerialPort Class Reference}
+\label{classmdt_serial_port}\index{mdtSerialPort@{mdtSerialPort}}
+}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{setRts} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable the RTS (Request To Send) signal. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{setDtr} (bool on)
+\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{
+{\bfseries mdtSerialPort} (QObject $\ast$parent=0)}
+\label{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}
+
+\item 
+bool \hyperlink{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)
+\begin{DoxyCompactList}\small\item\em Open the serial port with given configuration. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}{
+bool \hyperlink{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}{carIsOn} ()}
+\label{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}
+
+\begin{DoxyCompactList}\small\item\em Get the CAR (CD) state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_a8e5c0750746ac4639af4e3e51d2d52e3}{
+bool \hyperlink{classmdt_serial_port_a8e5c0750746ac4639af4e3e51d2d52e3}{dsrIsOn} ()}
+\label{classmdt_serial_port_a8e5c0750746ac4639af4e3e51d2d52e3}
+
+\begin{DoxyCompactList}\small\item\em Get the DSR state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_a0abb533edb3d8487a7ec03f8c2fb4eb2}{
+bool \hyperlink{classmdt_serial_port_a0abb533edb3d8487a7ec03f8c2fb4eb2}{ctsIsOn} ()}
+\label{classmdt_serial_port_a0abb533edb3d8487a7ec03f8c2fb4eb2}
+
+\begin{DoxyCompactList}\small\item\em Get the CTS state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_a92c24c78e80a297af38a8fa48f6686a8}{
+bool \hyperlink{classmdt_serial_port_a92c24c78e80a297af38a8fa48f6686a8}{rngIsOn} ()}
+\label{classmdt_serial_port_a92c24c78e80a297af38a8fa48f6686a8}
+
+\begin{DoxyCompactList}\small\item\em Get the RNG (RI) state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_a5baf0a3f76de0e942ac7b7d6c7748e66}{
+void \hyperlink{classmdt_serial_port_a5baf0a3f76de0e942ac7b7d6c7748e66}{lockMutex} ()}
+\label{classmdt_serial_port_a5baf0a3f76de0e942ac7b7d6c7748e66}
+
+\begin{DoxyCompactList}\small\item\em Lock the internal mutex. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_abe6b77b73151da4de234917f278298f0}{
+void \hyperlink{classmdt_serial_port_abe6b77b73151da4de234917f278298f0}{unlockMutex} ()}
+\label{classmdt_serial_port_abe6b77b73151da4de234917f278298f0}
+
+\begin{DoxyCompactList}\small\item\em Unlock the internal mutex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{
+\index{mdtSerialPort@{mdtSerialPort}!open@{open}}
+\index{open@{open}!mdtSerialPort@{mdtSerialPort}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::open (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtSerialPortConfig} \&}]{cfg}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}
+
+
+Open the serial port with given configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cfg} & Contains the setup for the serial port to open \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on successfull configuration and open port 
+\end{DoxyReturn}
+\hypertarget{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{
+\index{mdtSerialPort@{mdtSerialPort}!setDtr@{setDtr}}
+\index{setDtr@{setDtr}!mdtSerialPort@{mdtSerialPort}}
+\subsubsection[{setDtr}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setDtr (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}
+
+
+Enable/diseable the DTR (Data Terminal Ready) signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, DTR will be enabled, diseabled else \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{
+\index{mdtSerialPort@{mdtSerialPort}!setRts@{setRts}}
+\index{setRts@{setRts}!mdtSerialPort@{mdtSerialPort}}
+\subsubsection[{setRts}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setRts (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}
+
+
+Enable/diseable the RTS (Request To Send) signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, RTS will be enabled, diseabled else \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtserialport/mdtSerialPort.h\item 
+src/mdtserialport/mdtSerialPort.cpp\end{DoxyCompactItemize}

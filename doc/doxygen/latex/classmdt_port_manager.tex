@@ -1,0 +1,323 @@
+\hypertarget{classmdt_port_manager}{
+\section{mdtPortManager Class Reference}
+\label{classmdt_port_manager}\index{mdtPortManager@{mdtPortManager}}
+}
+
+
+Inheritance diagram for mdtPortManager:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{classmdt_port_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtPortManager:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_port_manager__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{newFrameReaden} ()
+\begin{DoxyCompactList}\small\item\em Called by the read thread whenn a complete frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}{
+{\bfseries mdtPortManager} (QObject $\ast$parent=0)}
+\label{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}
+
+\item 
+bool \hyperlink{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}{setPortName} (const QString \&portName)
+\begin{DoxyCompactList}\small\item\em Set port name. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort} ()
+\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{
+void \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort} ()}
+\label{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}
+
+\begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{startReading} ()
+\begin{DoxyCompactList}\small\item\em Start the read thread. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}{stopReading} ()
+\begin{DoxyCompactList}\small\item\em Stop the read thread. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting} ()
+\begin{DoxyCompactList}\small\item\em Start the write thread. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}{stopWriting} ()
+\begin{DoxyCompactList}\small\item\em Stop the write thread. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start} ()
+\begin{DoxyCompactList}\small\item\em Start reading and writing threads. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop reading and writing threads. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}{writeData} (QByteArray data)
+\begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame} (int timeout=500)
+\begin{DoxyCompactList}\small\item\em Wait until a complete frame is available. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}{
+QByteArray \& \hyperlink{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}{lastReadenFrame} ()}
+\label{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}
+
+\begin{DoxyCompactList}\small\item\em Get the last readen frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_manager_a9200ca0ef520dabf9d65e4efd364d7ee}{
+\hyperlink{classmdt_port}{mdtPort} $\ast$ {\bfseries pvPort}}
+\label{classmdt_port_manager_a9200ca0ef520dabf9d65e4efd364d7ee}
+
+\item 
+\hypertarget{classmdt_port_manager_a00a4396199165f0e4bc7dab802e924e6}{
+\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$ {\bfseries pvReadThread}}
+\label{classmdt_port_manager_a00a4396199165f0e4bc7dab802e924e6}
+
+\item 
+\hypertarget{classmdt_port_manager_a21da115c51338357c50243742be8f814}{
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$ {\bfseries pvWriteThread}}
+\label{classmdt_port_manager_a21da115c51338357c50243742be8f814}
+
+\item 
+\hypertarget{classmdt_port_manager_a347bab357991c30c918722799d4536b7}{
+\hyperlink{classmdt_port_config}{mdtPortConfig} {\bfseries pvConfig}}
+\label{classmdt_port_manager_a347bab357991c30c918722799d4536b7}
+
+\item 
+\hypertarget{classmdt_port_manager_adaa5de4e693944494c78fe9c7e8207d2}{
+QByteArray {\bfseries pvLastReadenFrame}}
+\label{classmdt_port_manager_adaa5de4e693944494c78fe9c7e8207d2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
+\index{mdtPortManager@{mdtPortManager}!newFrameReaden@{newFrameReaden}}
+\index{newFrameReaden@{newFrameReaden}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newFrameReaden (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}
+
+
+Called by the read thread whenn a complete frame was readen. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{
+\index{mdtPortManager@{mdtPortManager}!openPort@{openPort}}
+\index{openPort@{openPort}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{openPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::openPort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}
+
+
+Open the port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & Port configuration \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false else 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}{setPortName()} must be called first 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}{setPortName()} 
+
+\hyperlink{classmdt_port}{mdtPort} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}{
+\index{mdtPortManager@{mdtPortManager}!setPortName@{setPortName}}
+\index{setPortName@{setPortName}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{setPortName}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::setPortName (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{portName}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}
+
+
+Set port name. 
+
+Try to open given port. If ok, the port name will be kept 
+\begin{DoxyParams}{Parameters}
+{\em portName} & Port to open \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false else 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port}{mdtPort} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{
+\index{mdtPortManager@{mdtPortManager}!start@{start}}
+\index{start@{start}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}
+
+
+Start reading and writing threads. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{startReading()} 
+
+\hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{
+\index{mdtPortManager@{mdtPortManager}!startReading@{startReading}}
+\index{startReading@{startReading}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{startReading}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::startReading (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}
+
+
+Start the read thread. 
+
+\begin{DoxyReturn}{Returns}
+True on successfull start 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+mdtThread 
+
+\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{
+\index{mdtPortManager@{mdtPortManager}!startWriting@{startWriting}}
+\index{startWriting@{startWriting}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{startWriting}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::startWriting (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}
+
+
+Start the write thread. 
+
+\begin{DoxyReturn}{Returns}
+True on successfull start 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+mdtThread 
+
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{
+\index{mdtPortManager@{mdtPortManager}!stop@{stop}}
+\index{stop@{stop}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}
+
+
+Stop reading and writing threads. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}{
+\index{mdtPortManager@{mdtPortManager}!stopReading@{stopReading}}
+\index{stopReading@{stopReading}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{stopReading}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::stopReading (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}
+
+
+Stop the read thread. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{startReading()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}{
+\index{mdtPortManager@{mdtPortManager}!stopWriting@{stopWriting}}
+\index{stopWriting@{stopWriting}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{stopWriting}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::stopWriting (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}
+
+
+Stop the write thread. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{
+\index{mdtPortManager@{mdtPortManager}!waitReadenFrame@{waitReadenFrame}}
+\index{waitReadenFrame@{waitReadenFrame}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{waitReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::waitReadenFrame (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout = {\ttfamily 500}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}
+
+
+Wait until a complete frame is available. 
+
+This method will return when a complete frame was readen.\par
+ This is usefull for query/answer protocols.\par
+ Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken. 
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if Ok, false on timeout 
+\end{DoxyReturn}
+\hypertarget{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}{
+\index{mdtPortManager@{mdtPortManager}!writeData@{writeData}}
+\index{writeData@{writeData}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::writeData (
+\begin{DoxyParamCaption}
+\item[{QByteArray}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}
+
+
+Write data by copy. 
+
+The data conatined in frame will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written. 
+\begin{DoxyParams}{Parameters}
+{\em frame} & Frame to write \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success. False if write queue is full 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtPortManager.h\item 
+src/mdtutils/mdtPortManager.cpp\end{DoxyCompactItemize}

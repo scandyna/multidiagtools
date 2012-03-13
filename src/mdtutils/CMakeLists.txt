@@ -3,10 +3,7 @@
 # * Directory: mdutils *
 
 # Project
-project (multixdiagtools)
-
-# Libraries install directory
-set (LIB_DEST_DIR "${PROJECT_SOURCE_DIR}/../../bin")
+project (multidiagtools)
 
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 

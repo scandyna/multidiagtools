@@ -1,6 +1,8 @@
 
 #include "mdtUsbtmcPort.h"
 
+#include <QDebug>
+
 mdtUsbtmcPort::mdtUsbtmcPort(QObject *parent)
  : mdtPort(parent)
 {
@@ -30,6 +32,7 @@ bool mdtUsbtmcPort::waitEventRead()
 
 bool mdtUsbtmcPort::waitEventWriteReady()
 {
+  qDebug() << "mdtUsbtmcPort::waitEventWriteReady()";
   pvReadWriteMutex.lock();
   if(!pvWriteCondition.wait(&pvReadWriteMutex, 500)){
     updateWriteTimeoutState(true);

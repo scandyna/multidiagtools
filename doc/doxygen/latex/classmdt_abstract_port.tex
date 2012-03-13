@@ -1,0 +1,487 @@
+\hypertarget{classmdt_abstract_port}{
+\section{mdtAbstractPort Class Reference}
+\label{classmdt_abstract_port}\index{mdtAbstractPort@{mdtAbstractPort}}
+}
+
+
+Inheritance diagram for mdtAbstractPort:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=168pt]{classmdt_abstract_port__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtAbstractPort:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=168pt]{classmdt_abstract_port__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_port_a62c5e1f2beb6eddf740c8710ecb84ad1}{
+void \hyperlink{classmdt_abstract_port_a62c5e1f2beb6eddf740c8710ecb84ad1}{readTimeoutStateChanged} (bool state)}
+\label{classmdt_abstract_port_a62c5e1f2beb6eddf740c8710ecb84ad1}
+
+\begin{DoxyCompactList}\small\item\em Emited when read timeout state changed. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}{
+void \hyperlink{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}{writeTimeoutStateChanged} (bool state)}
+\label{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}
+
+\begin{DoxyCompactList}\small\item\em Emited when write timeout state changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{
+{\bfseries mdtAbstractPort} (QObject $\ast$parent=0)}
+\label{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}
+
+\item 
+virtual bool \hyperlink{classmdt_abstract_port_af143cb0985d15c1c30da30cc7de206a7}{setAttributes} (const QString \&portName)=0
+\begin{DoxyCompactList}\small\item\em Set the port attributes. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_port_ac0da537a32a595df14b25bd35335a04c}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)=0
+\begin{DoxyCompactList}\small\item\em Open the device file. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_a0d40867397b0c7707115dc4b8935bca2}{close} ()=0
+\begin{DoxyCompactList}\small\item\em Close the device file. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}{
+\hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}{config} ()}
+\label{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}
+
+\begin{DoxyCompactList}\small\item\em Get the stored configuration. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout} (int timeout)=0
+\begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{setWriteTimeout} (int timeout)=0
+\begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_port_a021c300c5deac88bc4b57e713737bf59}{waitEventRead} ()=0
+\begin{DoxyCompactList}\small\item\em Wait until data is available at device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_abstract_port_a2a2ee33513adb5698ad82eca4b3d8f6f}{readData} (char $\ast$data, int maxLen)=0
+\begin{DoxyCompactList}\small\item\em Read data from device. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_a6d741fef279db4c710492a1c839a5302}{flushIn} ()=0
+\begin{DoxyCompactList}\small\item\em Flush the read (inut) flow. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{waitEventWriteReady} ()=0
+\begin{DoxyCompactList}\small\item\em Wait until data can be written to device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_abstract_port_ab3cac34f79771a67aff56ada43e0f270}{writeData} (const char $\ast$data, int maxLen)=0
+\begin{DoxyCompactList}\small\item\em Write data to device. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_aafb59687cf06f169d3c2dfc3cac19724}{flushOut} ()=0
+\begin{DoxyCompactList}\small\item\em Flush the write (output) flow. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState} (bool state)
+\begin{DoxyCompactList}\small\item\em Update the read timeout state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_port_ab51135de1f7bbc4707c3284f924c98dc}{updateWriteTimeoutState} (bool state)
+\begin{DoxyCompactList}\small\item\em Update the write timeout state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_port_aec94143165e486cbbe6e0979be887c7e}{readTimeoutOccured} ()
+\begin{DoxyCompactList}\small\item\em Returns read timeout state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_port_a7c05a1abe77f0c3c334016c6ad866f67}{writeTimeoutOccured} ()
+\begin{DoxyCompactList}\small\item\em Returns write timeout state. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_a05356a33dc546a11d2794a0419d749e0}{readenFrames} ()
+\begin{DoxyCompactList}\small\item\em Get the readen frames Queue. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_a3850ab819a8fc5dad22af14b74c45274}{readFramesPool} ()
+\begin{DoxyCompactList}\small\item\em Get the read frames Queue pool. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_a4fed10be147dfce6ca315467ff3fb968}{writeFrames} ()
+\begin{DoxyCompactList}\small\item\em Get the write frames Queue. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_abf093b67fddebffa4f3c52277b9a8cf7}{writeFramesPool} ()
+\begin{DoxyCompactList}\small\item\em Get the write frames Queue pool. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{
+void \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex} ()}
+\label{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}
+
+\begin{DoxyCompactList}\small\item\em Lock the mutex. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{
+void \hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlockMutex} ()}
+\label{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}
+
+\begin{DoxyCompactList}\small\item\em Unlock the mutex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_port_a9faa5966fcf4232b3d25034c0f67dd7c}{
+bool {\bfseries pvReadTimeoutOccured}}
+\label{classmdt_abstract_port_a9faa5966fcf4232b3d25034c0f67dd7c}
+
+\item 
+\hypertarget{classmdt_abstract_port_a2530e291d5ae4c1584595f9a5df7e9ff}{
+bool {\bfseries pvReadTimeoutOccuredPrevious}}
+\label{classmdt_abstract_port_a2530e291d5ae4c1584595f9a5df7e9ff}
+
+\item 
+\hypertarget{classmdt_abstract_port_ae5a003d280237700c8aa3cb6184e2d1b}{
+bool {\bfseries pvWriteTimeoutOccured}}
+\label{classmdt_abstract_port_ae5a003d280237700c8aa3cb6184e2d1b}
+
+\item 
+\hypertarget{classmdt_abstract_port_a8b65c0e26dc13147f02571ba74bef539}{
+bool {\bfseries pvWriteTimeoutOccuredPrevious}}
+\label{classmdt_abstract_port_a8b65c0e26dc13147f02571ba74bef539}
+
+\item 
+\hypertarget{classmdt_abstract_port_a412c3e4903bf7d90914cfeb273e82623}{
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ {\bfseries pvReadenFrames}}
+\label{classmdt_abstract_port_a412c3e4903bf7d90914cfeb273e82623}
+
+\item 
+\hypertarget{classmdt_abstract_port_a3d6bb9b420f64776d8fd077cf2b9b873}{
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ {\bfseries pvReadFramesPool}}
+\label{classmdt_abstract_port_a3d6bb9b420f64776d8fd077cf2b9b873}
+
+\item 
+\hypertarget{classmdt_abstract_port_a12cd5c1ba100b018539ed909a481d6dc}{
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ {\bfseries pvWriteFrames}}
+\label{classmdt_abstract_port_a12cd5c1ba100b018539ed909a481d6dc}
+
+\item 
+\hypertarget{classmdt_abstract_port_a67a8b1965f20a55ad115926aed0234b4}{
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ {\bfseries pvWriteFramesPool}}
+\label{classmdt_abstract_port_a67a8b1965f20a55ad115926aed0234b4}
+
+\item 
+\hypertarget{classmdt_abstract_port_a1d82fdf9ddd04e482cfa0854dc11ed22}{
+\hyperlink{classmdt_port_config}{mdtPortConfig} {\bfseries pvConfig}}
+\label{classmdt_abstract_port_a1d82fdf9ddd04e482cfa0854dc11ed22}
+
+\item 
+\hypertarget{classmdt_abstract_port_a133dec50898c780f00a1a4a843cf7543}{
+QString {\bfseries pvName}}
+\label{classmdt_abstract_port_a133dec50898c780f00a1a4a843cf7543}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_abstract_port_a0d40867397b0c7707115dc4b8935bca2}{
+\index{mdtAbstractPort@{mdtAbstractPort}!close@{close}}
+\index{close@{close}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a0d40867397b0c7707115dc4b8935bca2}
+
+
+Close the device file. 
+
+This method must be re-\/implemented in plateform specific subclass. 
+
+Implemented in \hyperlink{classmdt_port_posix_a778c8d4f6fadd1da725f4287af38f7f0}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a6d741fef279db4c710492a1c839a5302}{
+\index{mdtAbstractPort@{mdtAbstractPort}!flushIn@{flushIn}}
+\index{flushIn@{flushIn}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{flushIn}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::flushIn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a6d741fef279db4c710492a1c839a5302}
+
+
+Flush the read (inut) flow. 
+
+This method must be re-\/implemented in plateform specific subclass. 
+
+Implemented in \hyperlink{classmdt_port_posix_a810023fda450285fd6291347ee68eb4a}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_aafb59687cf06f169d3c2dfc3cac19724}{
+\index{mdtAbstractPort@{mdtAbstractPort}!flushOut@{flushOut}}
+\index{flushOut@{flushOut}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{flushOut}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::flushOut (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_aafb59687cf06f169d3c2dfc3cac19724}
+
+
+Flush the write (output) flow. 
+
+This method must be re-\/implemented in plateform specific subclass. 
+
+Implemented in \hyperlink{classmdt_port_posix_abbd08f082dfc4d822806186f6fdbb80c}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_ac0da537a32a595df14b25bd35335a04c}{
+\index{mdtAbstractPort@{mdtAbstractPort}!open@{open}}
+\index{open@{open}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractPort::open (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortConfig} \&}]{cfg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_ac0da537a32a595df14b25bd35335a04c}
+
+
+Open the device file. 
+
+This method must be re-\/implemented in plateform specific subclass. 
+\begin{DoxyParams}{Parameters}
+{\em path} & Path to the device file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on successfull configuration and open port 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classmdt_port_posix_aba7e87cb2423bfd61a248cc5d23a8517}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a2a2ee33513adb5698ad82eca4b3d8f6f}{
+\index{mdtAbstractPort@{mdtAbstractPort}!readData@{readData}}
+\index{readData@{readData}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{readData}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractPort::readData (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{int}]{maxLen}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a2a2ee33513adb5698ad82eca4b3d8f6f}
+
+
+Read data from device. 
+
+This method must be implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+Number of bytes that were really readen 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classmdt_port_posix_ade160b0b15f046a85d7fcc418792174f}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a05356a33dc546a11d2794a0419d749e0}{
+\index{mdtAbstractPort@{mdtAbstractPort}!readenFrames@{readenFrames}}
+\index{readenFrames@{readenFrames}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{readenFrames}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrame} $\ast$ $>$ \& mdtAbstractPort::readenFrames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a05356a33dc546a11d2794a0419d749e0}
+
+
+Get the readen frames Queue. 
+
+Readen frames queue contains frames that where received from device Note that the mutex is not handled by this method \hypertarget{classmdt_abstract_port_a3850ab819a8fc5dad22af14b74c45274}{
+\index{mdtAbstractPort@{mdtAbstractPort}!readFramesPool@{readFramesPool}}
+\index{readFramesPool@{readFramesPool}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{readFramesPool}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrame} $\ast$ $>$ \& mdtAbstractPort::readFramesPool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a3850ab819a8fc5dad22af14b74c45274}
+
+
+Get the read frames Queue pool. 
+
+Read frames queue pool contains frames that are ready to use for reception Note that the mutex is not handled by this method \hypertarget{classmdt_abstract_port_aec94143165e486cbbe6e0979be887c7e}{
+\index{mdtAbstractPort@{mdtAbstractPort}!readTimeoutOccured@{readTimeoutOccured}}
+\index{readTimeoutOccured@{readTimeoutOccured}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{readTimeoutOccured}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractPort::readTimeoutOccured (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_aec94143165e486cbbe6e0979be887c7e}
+
+
+Returns read timeout state. 
+
+Note: this method locks the internal mutex \hypertarget{classmdt_abstract_port_af143cb0985d15c1c30da30cc7de206a7}{
+\index{mdtAbstractPort@{mdtAbstractPort}!setAttributes@{setAttributes}}
+\index{setAttributes@{setAttributes}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{setAttributes}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractPort::setAttributes (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{portName}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_af143cb0985d15c1c30da30cc7de206a7}
+
+
+Set the port attributes. 
+
+Open the given port name and get his attributes. This method must be re-\/implemented in plateform specific subclass. 
+\begin{DoxyParams}{Parameters}
+{\em portName} & Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classmdt_port_posix_a32a532f5148226da19ee4acc6ec63201}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{
+\index{mdtAbstractPort@{mdtAbstractPort}!setReadTimeout@{setReadTimeout}}
+\index{setReadTimeout@{setReadTimeout}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::setReadTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}
+
+
+Set the read data timeout. 
+
+This method must be re-\/implemented in plateform specific subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classmdt_port_posix_a7ab7e4a7dccbd58702f2c37335b900c8}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{
+\index{mdtAbstractPort@{mdtAbstractPort}!setWriteTimeout@{setWriteTimeout}}
+\index{setWriteTimeout@{setWriteTimeout}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{setWriteTimeout}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::setWriteTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}
+
+
+Set the write data timeout. 
+
+This method must be re-\/implemented in plateform specific subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classmdt_port_posix_a577a51bf0373f478b32bb1c1e5c4726c}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{
+\index{mdtAbstractPort@{mdtAbstractPort}!updateReadTimeoutState@{updateReadTimeoutState}}
+\index{updateReadTimeoutState@{updateReadTimeoutState}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{updateReadTimeoutState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::updateReadTimeoutState (
+\begin{DoxyParamCaption}
+\item[{bool}]{state}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}
+
+
+Update the read timeout state. 
+
+This method must be called by system dependant \hyperlink{classmdt_abstract_port_a021c300c5deac88bc4b57e713737bf59}{waitEventRead()} method When the read timeout state chages, the signal \hyperlink{classmdt_abstract_port_a62c5e1f2beb6eddf740c8710ecb84ad1}{readTimeoutStateChanged()} is emited \hypertarget{classmdt_abstract_port_ab51135de1f7bbc4707c3284f924c98dc}{
+\index{mdtAbstractPort@{mdtAbstractPort}!updateWriteTimeoutState@{updateWriteTimeoutState}}
+\index{updateWriteTimeoutState@{updateWriteTimeoutState}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{updateWriteTimeoutState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::updateWriteTimeoutState (
+\begin{DoxyParamCaption}
+\item[{bool}]{state}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_ab51135de1f7bbc4707c3284f924c98dc}
+
+
+Update the write timeout state. 
+
+This method must be called by system dependant \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{waitEventWriteReady()} method When the write timeout state chages, the signal \hyperlink{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}{writeTimeoutStateChanged()} is emited \hypertarget{classmdt_abstract_port_a021c300c5deac88bc4b57e713737bf59}{
+\index{mdtAbstractPort@{mdtAbstractPort}!waitEventRead@{waitEventRead}}
+\index{waitEventRead@{waitEventRead}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{waitEventRead}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractPort::waitEventRead (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a021c300c5deac88bc4b57e713737bf59}
+
+
+Wait until data is available at device. 
+
+This method must be re-\/implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+False on error, in this case, the reader thread will be stopped. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classmdt_port_posix_aeb743174f4c53ddd92d2f2e738158d07}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{
+\index{mdtAbstractPort@{mdtAbstractPort}!waitEventWriteReady@{waitEventWriteReady}}
+\index{waitEventWriteReady@{waitEventWriteReady}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractPort::waitEventWriteReady (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}
+
+
+Wait until data can be written to device. 
+
+This method must be re-\/implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+False on error, in this case, the reader thread will be stopped. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classmdt_port_posix_a6dc329dcaf343a471cf09379f563fa06}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_ab3cac34f79771a67aff56ada43e0f270}{
+\index{mdtAbstractPort@{mdtAbstractPort}!writeData@{writeData}}
+\index{writeData@{writeData}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractPort::writeData (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{data, }
+\item[{int}]{maxLen}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_ab3cac34f79771a67aff56ada43e0f270}
+
+
+Write data to device. 
+
+This method must be implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+Number of bytes that were really written 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classmdt_port_posix_a59d72f4c2be68241ce116c986a50d621}{mdtPortPosix}.
+
+\hypertarget{classmdt_abstract_port_a4fed10be147dfce6ca315467ff3fb968}{
+\index{mdtAbstractPort@{mdtAbstractPort}!writeFrames@{writeFrames}}
+\index{writeFrames@{writeFrames}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{writeFrames}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrame} $\ast$ $>$ \& mdtAbstractPort::writeFrames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a4fed10be147dfce6ca315467ff3fb968}
+
+
+Get the write frames Queue. 
+
+Write frames queue contains frames that must be sent Note that the mutex is not handled by this method \hypertarget{classmdt_abstract_port_abf093b67fddebffa4f3c52277b9a8cf7}{
+\index{mdtAbstractPort@{mdtAbstractPort}!writeFramesPool@{writeFramesPool}}
+\index{writeFramesPool@{writeFramesPool}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{writeFramesPool}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrame} $\ast$ $>$ \& mdtAbstractPort::writeFramesPool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_abf093b67fddebffa4f3c52277b9a8cf7}
+
+
+Get the write frames Queue pool. 
+
+Write frames queue pool contains frames that are ready to use for transmission Note that serialPort mutex is not handled by this method \hypertarget{classmdt_abstract_port_a7c05a1abe77f0c3c334016c6ad866f67}{
+\index{mdtAbstractPort@{mdtAbstractPort}!writeTimeoutOccured@{writeTimeoutOccured}}
+\index{writeTimeoutOccured@{writeTimeoutOccured}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{writeTimeoutOccured}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractPort::writeTimeoutOccured (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a7c05a1abe77f0c3c334016c6ad866f67}
+
+
+Returns write timeout state. 
+
+Note: this method locks the internal mutex 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtAbstractPort.h\item 
+src/mdtutils/mdtAbstractPort.cpp\item 
+src/mdtutils/moc\_\-mdtAbstractPort.cxx\end{DoxyCompactItemize}

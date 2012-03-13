@@ -78,7 +78,7 @@ void mdtPortWriteThread::run()
         // Write data to port
         ///qDebug() << "WR THD, have data to send: " << *frame;
         written = pvPort->writeData(bufferCursor, toWrite);
-        ///qDebug() << "TX thd: written: " << written;
+        qDebug() << "TX thd: written: " << written;
         frame->take(written);
         ///qDebug() << "TX thd: frame size: " << frame->size();
         // Check if current frame was completly sent

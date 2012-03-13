@@ -1,0 +1,73 @@
+\hypertarget{classmdt_usbtmc_port_manager}{
+\section{mdtUsbtmcPortManager Class Reference}
+\label{classmdt_usbtmc_port_manager}\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+}
+
+
+Inheritance diagram for mdtUsbtmcPortManager:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{classmdt_usbtmc_port_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtUsbtmcPortManager:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_usbtmc_port_manager__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_usbtmc_port_manager_af16af21bb713410e3441e0d092872aab}{
+void {\bfseries frameWritten} ()}
+\label{classmdt_usbtmc_port_manager_af16af21bb713410e3441e0d092872aab}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_usbtmc_port_manager_a99a24e4360e70ffc63677dbe888513f7}{
+{\bfseries mdtUsbtmcPortManager} (QObject $\ast$parent=0)}
+\label{classmdt_usbtmc_port_manager_a99a24e4360e70ffc63677dbe888513f7}
+
+\item 
+\hypertarget{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}{
+QStringList \hyperlink{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}{scan} ()}
+\label{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}
+
+\begin{DoxyCompactList}\small\item\em Scan available USBTMC ports. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}{writeData} (QByteArray data, bool waitAnswer)
+\begin{DoxyCompactList}\small\item\em Write data to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
+\index{writeData@{writeData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbtmcPortManager::writeData (
+\begin{DoxyParamCaption}
+\item[{QByteArray}]{data, }
+\item[{bool}]{waitAnswer}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}
+
+
+Write data to device. 
+
+By sending data, it's important to tell if the device will return some data back. This is due to large timeout of USBTMC kernel driver whenn no data are available on port. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager}{mdtPortManager} 
+
+\hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/linux/mdtUsbtmcPortManager.h\item 
+src/mdtutils/linux/mdtUsbtmcPortManager.cpp\end{DoxyCompactItemize}

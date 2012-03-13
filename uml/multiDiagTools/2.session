@@ -1,10 +1,27 @@
 window_sizes 1280 1002 370 904 808 120
+diagrams
+  classdiagram_ref 288130 // mdtUsbtmcPort
+    904 808 100 4 0 0
+  classdiagram_ref 314242 // mdtDevice
+    723 646 100 4 0 0
+  classdiagram_ref 314370 // mdtDeviceU3606A
+    904 808 100 4 48 0
+  classdiagram_ref 294658 // mdtPortManager
+    723 646 100 4 0 0
+  classdiagram_ref 255234 // mdtAbstractPort
+    723 646 100 4 0 0
+  classdiagram_ref 255362 // mdtPort
+    723 646 100 4 84 0
+  classdiagram_ref 268546 // mdtPortThread
+    723 646 100 4 0 0
+  active  classdiagram_ref 128002 // mdtSerialPort
+    904 808 100 4 0 0
+end
 show_stereotypes
-selected classview_ref 220930 // mdtUsbtmcPort
+selected classdiagram_ref 128002 // mdtSerialPort
 open
-  classview_ref 227458 // mdtPortManager
+  classview_ref 201218 // mdtPort
   classview_ref 220930 // mdtUsbtmcPort
-  
-  package_ref 134530 // mdtTest
+  classview_ref 128002 // mdtSerialPort
 end
 end

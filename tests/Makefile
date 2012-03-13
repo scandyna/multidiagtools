@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/philippe/programmation/multixDiagTools
+CMAKE_SOURCE_DIR = /home/philippe/programmation/multiDiagTools
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/philippe/programmation/multixDiagTools
+CMAKE_BINARY_DIR = /home/philippe/programmation/multiDiagTools
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -95,6 +95,26 @@ list_install_components:
 list_install_components/fast: list_install_components
 .PHONY : list_install_components/fast
 
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
+	cd /home/philippe/programmation/multiDiagTools && /usr/bin/cpack --config ./CPackConfig.cmake
+.PHONY : package
+
+# Special rule for the target package
+package/fast: package
+.PHONY : package/fast
+
+# Special rule for the target package_source
+package_source:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
+	cd /home/philippe/programmation/multiDiagTools && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/philippe/programmation/multiDiagTools/CPackSourceConfig.cmake
+.PHONY : package_source
+
+# Special rule for the target package_source
+package_source/fast: package_source
+.PHONY : package_source/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -117,14 +137,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/philippe/programmation/multixDiagTools && $(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multixDiagTools/CMakeFiles /home/philippe/programmation/multixDiagTools/tests/CMakeFiles/progress.marks
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multixDiagTools/CMakeFiles 0
+	cd /home/philippe/programmation/multiDiagTools && $(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multiDiagTools/CMakeFiles /home/philippe/programmation/multiDiagTools/tests/CMakeFiles/progress.marks
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/philippe/programmation/multiDiagTools/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
 .PHONY : clean
 
 # The main clean target
@@ -133,17 +153,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/philippe/programmation/multixDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/philippe/programmation/multixDiagTools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/philippe/programmation/multiDiagTools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -157,6 +177,8 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
+	@echo "... package"
+	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... test"
 .PHONY : help
@@ -170,6 +192,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/philippe/programmation/multixDiagTools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/philippe/programmation/multiDiagTools && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

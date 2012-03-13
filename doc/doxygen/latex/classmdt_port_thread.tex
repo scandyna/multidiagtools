@@ -1,0 +1,148 @@
+\hypertarget{classmdt_port_thread}{
+\section{mdtPortThread Class Reference}
+\label{classmdt_port_thread}\index{mdtPortThread@{mdtPortThread}}
+}
+
+
+Inheritance diagram for mdtPortThread:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_port_thread__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtPortThread:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{classmdt_port_thread__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_thread_aa20869c68d7a016f9e547464f0d8b71e}{
+{\bfseries mdtPortThread} (QObject $\ast$parent=0)}
+\label{classmdt_port_thread_aa20869c68d7a016f9e547464f0d8b71e}
+
+\item 
+void \hyperlink{classmdt_port_thread_aaa62e0fe9371469e46a792092b2451f4}{setPort} (\hyperlink{classmdt_port}{mdtPort} $\ast$port)
+\begin{DoxyCompactList}\small\item\em Set the device file instance. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{start} ()
+\begin{DoxyCompactList}\small\item\em Start the thread. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{
+bool \hyperlink{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{isRunning} () const }
+\label{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}
+
+\begin{DoxyCompactList}\small\item\em Returns true if the thread is running This function overloads the QThread::isRunning() function. Note for subclass: when the thread is started and ready, the private member pvRunning must be set to true. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{isFinished} () const 
+\begin{DoxyCompactList}\small\item\em Returns false if the thread is running. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_thread_a59735ef01b761361b1055a0356be525a}{
+volatile bool {\bfseries pvRunning}}
+\label{classmdt_port_thread_a59735ef01b761361b1055a0356be525a}
+
+\item 
+\hypertarget{classmdt_port_thread_a2e6b8855d2b9abecd757f849731c334a}{
+\hyperlink{classmdt_port}{mdtPort} $\ast$ {\bfseries pvPort}}
+\label{classmdt_port_thread_a2e6b8855d2b9abecd757f849731c334a}
+
+\item 
+\hypertarget{classmdt_port_thread_a423f6bbca5f80ad0ea2ea7216750e041}{
+int {\bfseries pvReadMinWaitTime}}
+\label{classmdt_port_thread_a423f6bbca5f80ad0ea2ea7216750e041}
+
+\item 
+\hypertarget{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}{
+int {\bfseries pvWriteMinWaitTime}}
+\label{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
+\index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
+\index{isFinished@{isFinished}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{isFinished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isFinished (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}
+
+
+Returns false if the thread is running. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{isRunning()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_thread_aaa62e0fe9371469e46a792092b2451f4}{
+\index{mdtPortThread@{mdtPortThread}!setPort@{setPort}}
+\index{setPort@{setPort}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{setPort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::setPort (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPort} $\ast$}]{port}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_aaa62e0fe9371469e46a792092b2451f4}
+
+
+Set the device file instance. 
+
+\begin{DoxyPrecond}{Precondition}
+deviceFile must be a valid pointer 
+\end{DoxyPrecond}
+\hypertarget{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{
+\index{mdtPortThread@{mdtPortThread}!start@{start}}
+\index{start@{start}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}
+
+
+Start the thread. 
+
+\begin{DoxyReturn}{Returns}
+True on sucsessfull start, or flase on start timeout 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Serial port instance must be defined. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+setSerialPort() 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{
+\index{mdtPortThread@{mdtPortThread}!stop@{stop}}
+\index{stop@{stop}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}
+
+
+Stop the running thread. 
+
+\begin{DoxyPrecond}{Precondition}
+Serial port instance must be defined. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+setSerialPort() 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtPortThread.h\item 
+src/mdtutils/mdtPortThread.cpp\end{DoxyCompactItemize}

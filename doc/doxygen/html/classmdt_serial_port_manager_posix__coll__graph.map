@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classmdt_abstract_serial_port_manager.html" title="mdtAbstractSerialPortManager" alt="" coords="64,101,264,131"/>
+<area shape="rect" id="node4" href="$classmdt_abstract_serial_port.html" title="NOTE: closePort() à ajouter !!!!" alt="" coords="5,5,155,35"/>
+<area shape="rect" id="node6" href="$classmdt_serial_port_config.html" title="mdtSerialPortConfig" alt="" coords="179,5,317,35"/>
+</map>

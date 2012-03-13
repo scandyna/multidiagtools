@@ -1,0 +1,145 @@
+\hypertarget{classmdt_error_out}{
+\section{mdtErrorOut Class Reference}
+\label{classmdt_error_out}\index{mdtErrorOut@{mdtErrorOut}}
+}
+
+
+Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.  
+
+
+
+
+{\ttfamily \#include $<$mdtErrorOut.h$>$}
+
+
+
+Collaboration diagram for mdtErrorOut:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{classmdt_error_out__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_error_out_a033747841ec3340f0396e574723095d7}{
+void {\bfseries sigShowDialog} (\hyperlink{classmdt_error}{mdtError} error)}
+\label{classmdt_error_out_a033747841ec3340f0396e574723095d7}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{
+static bool \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init} (const QString \&logFile)}
+\label{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}
+
+\begin{DoxyCompactList}\small\item\em Initialize the error output system After this call, the log and dialog levels are defined to Warning and Error This function must be called from main thread (GUI thread) \end{DoxyCompactList}\item 
+static void \hyperlink{classmdt_error_out_a547e4e8aa75528710e4a17e9faf48621}{setLogLevelsMask} (int mask)
+\begin{DoxyCompactList}\small\item\em Set the log levels mask The mask is a OR combinaison of mdtError::level\_\-t flags. \end{DoxyCompactList}\item 
+static void \hyperlink{classmdt_error_out_afa76bdf497b750829277566ec07d44d8}{setDialogLevelsMask} (int mask)
+\begin{DoxyCompactList}\small\item\em Set the dialog display levels mask The mask is a OR combinaison of mdtError::level\_\-t flags. \end{DoxyCompactList}\item 
+static void \hyperlink{classmdt_error_out_aeb562e93216b34e7b73aa69f42065895}{addError} (\hyperlink{classmdt_error}{mdtError} \&error)
+\begin{DoxyCompactList}\small\item\em Add a error to the error output system. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_out_a7a80480a61ca1a2704ec16d69647f739}{
+static \hyperlink{classmdt_error_out}{mdtErrorOut} $\ast$ \hyperlink{classmdt_error_out_a7a80480a61ca1a2704ec16d69647f739}{instance} ()}
+\label{classmdt_error_out_a7a80480a61ca1a2704ec16d69647f739}
+
+\begin{DoxyCompactList}\small\item\em Get the instance of the error output system This function can return a Null pointer if \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} was never called. This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! \end{DoxyCompactList}\item 
+static QString \hyperlink{classmdt_error_out_a22f721fff4d6368a4a3d51279c6af8fa}{logFile} ()
+\begin{DoxyCompactList}\small\item\em Get the log file path. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_out_a45c1370762b47a06ec597d6e89ebc73d}{
+static void \hyperlink{classmdt_error_out_a45c1370762b47a06ec597d6e89ebc73d}{destroy} ()}
+\label{classmdt_error_out_a45c1370762b47a06ec597d6e89ebc73d}
+
+\begin{DoxyCompactList}\small\item\em Destroy the error output system instance This function must be called from main thread (GUI thread) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_error_out_aeb562e93216b34e7b73aa69f42065895}{
+\index{mdtErrorOut@{mdtErrorOut}!addError@{addError}}
+\index{addError@{addError}!mdtErrorOut@{mdtErrorOut}}
+\subsubsection[{addError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtErrorOut::addError (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtError} \&}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classmdt_error_out_aeb562e93216b34e7b73aa69f42065895}
+
+
+Add a error to the error output system. 
+
+\begin{DoxyPrecond}{Precondition}
+The system must be initialized. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_error_out_a22f721fff4d6368a4a3d51279c6af8fa}{
+\index{mdtErrorOut@{mdtErrorOut}!logFile@{logFile}}
+\index{logFile@{logFile}!mdtErrorOut@{mdtErrorOut}}
+\subsubsection[{logFile}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtErrorOut::logFile (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classmdt_error_out_a22f721fff4d6368a4a3d51279c6af8fa}
+
+
+Get the log file path. 
+
+\begin{DoxyPrecond}{Precondition}
+The system must be initialized. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_error_out_afa76bdf497b750829277566ec07d44d8}{
+\index{mdtErrorOut@{mdtErrorOut}!setDialogLevelsMask@{setDialogLevelsMask}}
+\index{setDialogLevelsMask@{setDialogLevelsMask}!mdtErrorOut@{mdtErrorOut}}
+\subsubsection[{setDialogLevelsMask}]{\setlength{\rightskip}{0pt plus 5cm}void mdtErrorOut::setDialogLevelsMask (
+\begin{DoxyParamCaption}
+\item[{int}]{mask}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classmdt_error_out_afa76bdf497b750829277566ec07d44d8}
+
+
+Set the dialog display levels mask The mask is a OR combinaison of mdtError::level\_\-t flags. 
+
+\begin{DoxyPrecond}{Precondition}
+The system must be initialized. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_error_out_a547e4e8aa75528710e4a17e9faf48621}{
+\index{mdtErrorOut@{mdtErrorOut}!setLogLevelsMask@{setLogLevelsMask}}
+\index{setLogLevelsMask@{setLogLevelsMask}!mdtErrorOut@{mdtErrorOut}}
+\subsubsection[{setLogLevelsMask}]{\setlength{\rightskip}{0pt plus 5cm}void mdtErrorOut::setLogLevelsMask (
+\begin{DoxyParamCaption}
+\item[{int}]{mask}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classmdt_error_out_a547e4e8aa75528710e4a17e9faf48621}
+
+
+Set the log levels mask The mask is a OR combinaison of mdtError::level\_\-t flags. 
+
+\begin{DoxyPrecond}{Precondition}
+The system must be initialized. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtErrorOut.h\item 
+src/mdtutils/mdtErrorOut.cpp\item 
+src/mdtutils/moc\_\-mdtErrorOut.cxx\end{DoxyCompactItemize}

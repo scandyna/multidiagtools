@@ -16,6 +16,8 @@ class mdtUsbtmcPortManager : public mdtPortManager
   mdtUsbtmcPortManager(QObject *parent = 0);
   ~mdtUsbtmcPortManager();
 
+  /*! \brief Scan available USBTMC ports
+   */
   QStringList scan();
 
   /*! \brief Write data to device
