@@ -3,8 +3,6 @@
 #include "mdtError.h"
 #include <QApplication>
 
-#include <QDebug>
-
 mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
 {
@@ -33,13 +31,13 @@ void mdtPortReadThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  int bufferSize;
+  qint64 bufferSize;
   char *buffer = 0;
   char *bufferCursor = 0;
   mdtFrame *frame;
-  int readen = 0;
-  int stored = 0;
-  int toStore = 0;
+  qint64 readen = 0;
+  qint64 stored = 0;
+  qint64 toStore = 0;
 
   // Set the running flag and get a RX frame
   pvPort->lockMutex();
@@ -84,11 +82,8 @@ void mdtPortReadThread::run()
       msleep(pvReadMinWaitTime);
     }
     // Wait on Read event
-    if(!pvPort->waitEventRead()){
-      pvPort->lockMutex();
-      pvRunning = false;
-      pvPort->unlockMutex();
-      break;
+    if(!pvPort->waitForReadyRead()){
+      emit(errorOccured(MDT_PORT_IO_ERROR));
     }
     // Event occured, get the data from port - Check timeout state first
     if(!pvPort->readTimeoutOccured()){
@@ -96,12 +91,14 @@ void mdtPortReadThread::run()
       // Reset bufferCursor
       bufferCursor = buffer;
       // Read data from port
-      readen = pvPort->readData(buffer, bufferSize);
-      ///qDebug() << "Readen: " << readen << " , data: " << buffer;
+      readen = pvPort->read(buffer, bufferSize);
+      if(readen < 0){
+        readen = 0;
+        emit(errorOccured(MDT_PORT_IO_ERROR));
+      }
       toStore = readen;
       // Store readen data
       while(toStore > 0){
-        ///qDebug() << "Readen: " << readen << " , data: " << buffer;
         // Check for new frame if needed
         while(frame == 0){
           frame = getNewFrame();
@@ -126,7 +123,6 @@ void mdtPortReadThread::run()
           pvPort->unlockMutex();
           // emit a Readen frame signal if complete
           if(frame->isComplete()){
-            ///qDebug() << "RTHD: emit data available";
             emit newFrameReaden();
           }
           frame = getNewFrame();

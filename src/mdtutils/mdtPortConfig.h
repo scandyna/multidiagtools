@@ -15,11 +15,12 @@ class mdtPortConfig
   /*! \brief Set default configuration
    * 
    * Default configuration is:
-   *  - interface: null (empty string)
    *  - Read and write frame size: 1024
    *  - Read and write queue size: 10
+   *  - Read/Write timout: 500 [ms]
    *  - Frame type: ASCII   NOTE: chage this ?
    *  - En of frame sequence: '\n'
+   *  - Byte per byte write: Off
    */
   void setDefault();
 
@@ -71,6 +72,18 @@ class mdtPortConfig
    */
   int readMinWaitTime();
 
+  /*! \brief Set the read timeout
+   * 
+   * \param timeout Read timout [ms]
+   */
+  void setReadTimeout(int timeout);
+
+  /*! \brief Get read timeout
+   * 
+   * \returns Read timout [ms]
+   */
+  int readTimeout();
+
   /*! \brief Set the minimal time to wait before try to write
    *
    * Internally, the event system is used for write calls.<br>
@@ -85,6 +98,18 @@ class mdtPortConfig
    * \sa setWriteMinWaitTime()
    */
   int writeMinWaitTime();
+
+  /*! \brief Set the write timeout
+   * 
+   * \param timeout Write timout [ms]
+   */
+  void setWriteTimeout(int timeout);
+
+  /*! \brief Get write timeout
+   * 
+   * \returns Write timout [ms]
+   */
+  int writeTimeout();
 
   /*!\brief Set the write frame size
    *
@@ -143,6 +168,23 @@ class mdtPortConfig
    */
   QByteArray endOfFrameSeq();
 
+  /*! \brief Set the byte per byte write On/Off
+   * 
+   * It can happen that a (very) slow device needs time
+   * after any received byte.<br>
+   * Enable this function in this situation.
+   * \param on True will enable this mode.
+   * \param waitTime Wait time between to bytes write [ms]
+   * \sa mdtPortWriteThread
+   */
+  void setBytePerByteWrite(bool on, int waitTime);
+
+  /*! \brief Get byte per byte write flag (On/Off)
+   * 
+   * \sa setBytePerByteWrite()
+   */
+  bool bytePerByteWrite();
+  
   bool operator==(const mdtPortConfig &other);
   bool operator!=(const mdtPortConfig &other);
 
@@ -152,12 +194,15 @@ class mdtPortConfig
   // Frame and frame FIFO (queue) size
   int pvReadFrameSize;        // Maximum data length to store before a frame is considered invalid
   int pvReadQueueSize;        // Maximum number of frames that can be stored
-  int pvReadMinWaitTime;      // Minimum time to wait before read call
+  int pvReadMinWaitTime;      // Minimum time to wait before read call [ms]
+  int pvReadTimeout;          // Maximum time before reading data [ms]
   int pvWriteFrameSize;       // Maximum data length to store before a frame is considered invalid
   int pvWriteQueueSize;       // Maximum number of frames that can be stored
   int pvWriteMinWaitTime;     // Minimum time to wait before write call
+  int pvWriteTimeout;         // Maximum time before port must be ready for writing data [ms]
   mdtFrame::type_t pvFrameType;
   QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
+  bool pvBytePerByteWrite;    // For some (very) slow devices that need time between each transmitted byte
 
  private:
 

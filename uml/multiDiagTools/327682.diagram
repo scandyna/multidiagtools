@@ -1,47 +1,24 @@
 format 76
 
-classcanvas 128002 class_ref 249474 // mdtAbstractPort
+classcanvas 128002 class_ref 322818 // QIODevice
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 23 203 2000
+  xyz 37 191 2000
 end
 classcanvas 128130 class_ref 138626 // QObject
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 107 114 2000
+  xyz 112 114 2006
 end
-classcanvas 128386 class_ref 196354 // mdtFrame
+classcanvas 128386 class_ref 249474 // mdtAbstractPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 531 194 2000
+  xyz 24 502 2012
 end
-relationcanvas 128514 relation_ref 271234 // <directional composition>
-  decenter_begin 122
-  decenter_end 90
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388 247.5 3000 to ref 128386
-  role_a_pos 416 192 3000 no_role_b
-  multiplicity_a_pos 498 219 3000 no_multiplicity_b
+relationcanvas 128258 relation_ref 386050 // <generalisation>
+  from ref 128002 z 2007 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
-relationcanvas 128642 relation_ref 271362 // <directional composition>
-  decenter_begin 490
-  decenter_end 483
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388.5 414 3000 to ref 128386
-  role_a_pos 536 328 3000 no_role_b
-  multiplicity_a_pos 494 328 3000 no_multiplicity_b
-end
-relationcanvas 128770 relation_ref 271490 // <directional composition>
-  decenter_begin 711
-  decenter_end 18
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 393 551.5 3000 to ref 128386
-  role_a_pos 545 465 3000 no_role_b
-  multiplicity_a_pos 503 465 3000 no_multiplicity_b
-end
-relationcanvas 128898 relation_ref 271618 // <directional composition>
-  decenter_begin 307
-  decenter_end 248
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 386.5 333.5 3000 to ref 128386
-  role_a_pos 534 266 3000 no_role_b
-  multiplicity_a_pos 492 266 3000 no_multiplicity_b
-end
-relationcanvas 129410 relation_ref 393090 // <generalisation>
-  from ref 128002 z 2001 to ref 128130
+relationcanvas 128642 relation_ref 386178 // <generalisation>
+  from ref 128386 z 2013 to ref 128002
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end

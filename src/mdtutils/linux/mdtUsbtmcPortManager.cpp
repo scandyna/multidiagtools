@@ -12,16 +12,9 @@
 mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
-  // Overwrite the port type
-  Q_ASSERT(pvPort != 0);
-  delete pvPort;
-  pvPort = new mdtUsbtmcPort;
-  Q_ASSERT(pvPort != 0);
-  // Re-affect port to threads
-  Q_ASSERT(pvReadThread != 0);
-  pvReadThread->setPort(pvPort);
+  // Alloc a port and connect signals
+  setPort(new mdtUsbtmcPort);
   Q_ASSERT(pvWriteThread != 0);
-  pvWriteThread->setPort(pvPort);
   connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten()));
   // Set USBTMC specific configuration
   pvConfig.setFrameType(mdtFrame::mdtFrameTypeAscii);
@@ -85,10 +78,6 @@ bool mdtUsbtmcPortManager::writeData(QByteArray data, bool waitAnswer)
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtUsbtmcPort *port;
-  port = dynamic_cast<mdtUsbtmcPort*>(pvPort);
-  Q_ASSERT(port != 0);
-
   // Set flags
   pvFrameWritten = false;
   pvWaitingFrame = waitAnswer;
@@ -98,7 +87,7 @@ bool mdtUsbtmcPortManager::writeData(QByteArray data, bool waitAnswer)
   }
 
   // Enable write thread flag
-  port->writeOneFrame();
+  pvPort->writeOneFrame();
   // Wait until frame was written
   while(!pvFrameWritten){
     qApp->processEvents();
@@ -112,12 +101,8 @@ void mdtUsbtmcPortManager::frameWritten()
 {
   Q_ASSERT(pvPort != 0);
   
-  mdtUsbtmcPort *port;
-  port = dynamic_cast<mdtUsbtmcPort*>(pvPort);
-  Q_ASSERT(port != 0);
-
   pvFrameWritten = true;
   if(pvWaitingFrame){
-    port->readOneFrame();
+    pvPort->readOneFrame();
   }
 }

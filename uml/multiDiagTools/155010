@@ -1,6 +1,6 @@
 format 76
 "linux" // mdtutils::linux
-  revision 12
+  revision 14
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -185,15 +185,15 @@ ${inlines}
 	
       end
 
-      operation 426882 "readData"
-	cpp_virtual public explicit_return_type "int"
+      operation 601730 "read"
+	public explicit_return_type "qInt64"
 	nparams 2
-	  param in name "data" explicit_type "char"
+	  param out name "data" explicit_type "char"
 	multiplicity "*"
-	  param in name "maxLen" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -230,15 +230,15 @@ ${inlines}
 	
       end
 
-      operation 427266 "writeData"
-	cpp_virtual public explicit_return_type "int"
+      operation 601858 "write"
+	public explicit_return_type "qInt64"
 	nparams 2
 	  param in name "data" explicit_type "char"
 	multiplicity "*"
-	  param in name "maxLen" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -355,16 +355,35 @@ ${inlines}
 	
       end
 
-      classrelation 312578 // <generalisation>
-	relation 312322 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 312578 // <generalisation>
-	  b parent class_ref 249602 // mdtPort
+      operation 593410 "setAttributes"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "portName" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
-      operation 485506 "waitEventRead"
-	public explicit_return_type "bool"
+      operation 593282 "open"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 1
+	  param in name "cfg" type class_ref 256386 // mdtPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 593666 "close"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -377,10 +396,79 @@ ${inlines}
 	
       end
 
+      operation 593538 "setReadTimeout"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 593794 "setWriteTimeout"
+	cpp_virtual public explicit_return_type "void"
+	nparams 1
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 593922 "waitForReadyRead"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 594050 "read"
+	cpp_virtual public explicit_return_type "qInt64"
+	nparams 2
+	  param out name "data" explicit_type "char"
+	multiplicity "*"
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 485634 "waitEventWriteReady"
 	cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 594178 "write"
+	cpp_virtual public explicit_return_type "qInt64"
+	nparams 2
+	  param in name "data" explicit_type "char"
+	multiplicity "*"
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -439,6 +527,44 @@ ${inlines}
 
       attribute 381826 "pvWriteCondition"
 	private type class_ref 289538 // QWaitCondition
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 386690 // <generalisation>
+	relation 386434 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 386690 // <generalisation>
+	  b parent class_ref 249474 // mdtAbstractPort
+      end
+
+      attribute 401794 "pvReadTimeout"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 401922 "pvWriteTimeout"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 402050 "pvFd"
+	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -549,5 +675,4 @@ ${inlines}
       end
     end
   end
-
 end

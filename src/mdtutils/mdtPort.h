@@ -15,26 +15,8 @@ class mdtPort : public mdtPortSys
 
  public:
 
-  /*! \brief Construct a new port object
-   *  R/W timeouts are set to 500 ms
-   */
   mdtPort(QObject *parent = 0);
   ~mdtPort();
-
-  /*! \brief Open port
-   * 
-   * Note: this method locks the internal mutex
-   * \param path Path to port
-   * \return True if successfull
-   */
-  bool open(mdtPortConfig &cfg);
-
-
-  /*! \brief Close the port
-   * 
-   * Note: this method locks the internal mutex
-   */
-  void close();
 };
 
 #endif  // #ifndef MDT_PORT_H

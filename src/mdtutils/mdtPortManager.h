@@ -4,10 +4,11 @@
 #include <QString>
 #include <QObject>
 #include <QThread>
-#include "mdtPort.h"
+#include "mdtAbstractPort.h"
 #include "mdtPortConfig.h"
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
+#include "mdtError.h"
 
 #include "mdtFrame.h"
 #include <QByteArray>
@@ -22,6 +23,10 @@ class mdtPortManager : public QThread
   mdtPortManager(QObject *parent = 0);
   ~mdtPortManager();
 
+  /*! \brief Set port object
+   */
+  void setPort(mdtAbstractPort *port);
+
   /*! \brief Set port name
    *
    * Try to open given port. If ok, the port name
@@ -34,7 +39,6 @@ class mdtPortManager : public QThread
 
   /*! \brief Open the port
    * 
-   * \param config Port configuration
    * \return True on success, false else
    * \pre setPortName() must be called first
    * \sa setPortName()
@@ -43,6 +47,8 @@ class mdtPortManager : public QThread
   bool openPort();
 
   /*! \brief Close the port
+   * 
+   * This stops the threads and close the port.
    */
   void closePort();
 
@@ -113,9 +119,13 @@ class mdtPortManager : public QThread
    */
   void newFrameReaden();
 
+  /*! \brief Manage errors comming from port threads
+   */
+  void onThreadsErrorOccured(int error);
+
  protected:
 
-  mdtPort *pvPort;
+  mdtAbstractPort *pvPort;
   mdtPortReadThread *pvReadThread;
   mdtPortWriteThread *pvWriteThread;
   mdtPortConfig pvConfig;

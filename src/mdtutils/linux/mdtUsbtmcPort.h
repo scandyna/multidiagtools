@@ -2,21 +2,21 @@
 #define MDT_USBTMC_PORT_H
 
 
-#include "mdtPort.h"
+#include "mdtAbstractPort.h"
 #include <QObject>
 #include <QWaitCondition>
 #include <QMutex>
+#include <unistd.h>
+#include <fcntl.h>
 
 /*! \brief USBTMC device file calss
  * 
  * With USBTMC, when we try to read, and no data are available,
  * both read and write threads are blocked.<br>
- * USBTMC seems not to handle select() call,
- * so we re-implement waitEventRead() and waitEventWriteReady().<br>
  * To start the read, call the readOneFrame() method.<br>
  * To start the write, call the writeOneFrame() method.
  */
-class mdtUsbtmcPort : public mdtPort
+class mdtUsbtmcPort : public mdtAbstractPort
 {
  Q_OBJECT
 
@@ -25,11 +25,34 @@ class mdtUsbtmcPort : public mdtPort
   mdtUsbtmcPort(QObject *parent = 0);
   ~mdtUsbtmcPort();
 
-  // This method is called the reader thread
-  bool waitEventRead();
+  // Implemtation of mdtAbstractPort
+  bool setAttributes(const QString &portName);
+
+  // Implemtation of mdtAbstractPort
+  bool open(mdtPortConfig &cfg);
+
+  // Overload of QIODevice method
+  void close();
+
+  // Implemtation of mdtAbstractPort
+  void setReadTimeout(int timeout);
+
+  // Implemtation of mdtAbstractPort
+  void setWriteTimeout(int timeout);
 
   // This method is called the reader thread
+  // Implemtation of mdtAbstractPort
+  bool waitForReadyRead();
+
+  // Implemtation of mdtAbstractPort
+  qint64 read(char *data, qint64 maxSize);
+
+  // This method is called the writer thread
+  // Implemtation of mdtAbstractPort
   bool waitEventWriteReady();
+
+  // Implemtation of mdtAbstractPort
+  qint64 write(const char *data, qint64 maxSize);
 
   // Tell the thread that a frame can be read
   void writeOneFrame();
@@ -52,6 +75,9 @@ class mdtUsbtmcPort : public mdtPort
   QMutex pvReadWriteMutex;
   QWaitCondition pvReadCondition;
   QWaitCondition pvWriteCondition;
+  int pvReadTimeout;
+  int pvWriteTimeout;
+  int pvFd;
 };
 
 #endif  // #ifndef MDT_USBTMC_PORT_H

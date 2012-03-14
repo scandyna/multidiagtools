@@ -4,22 +4,12 @@
 #include <QTimer>
 #include <QApplication>
 
-#include <QDebug>
-
 mdtPortManager::mdtPortManager(QObject *parent)
  : QThread(parent)
 {
-  // Create port and threads
-  pvPort = new mdtPort;
-  Q_ASSERT(pvPort != 0);
-  // Create threads and associate port
+  // Create threads
   pvReadThread = new mdtPortReadThread;
-  Q_ASSERT(pvReadThread != 0);
-  pvReadThread->setPort(pvPort);
-  connect(pvReadThread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
   pvWriteThread = new mdtPortWriteThread;
-  Q_ASSERT(pvWriteThread != 0);
-  pvWriteThread->setPort(pvPort);
 }
 
 mdtPortManager::~mdtPortManager()
@@ -39,6 +29,22 @@ mdtPortManager::~mdtPortManager()
     delete pvWriteThread;
     pvWriteThread = 0;
   }
+}
+
+void mdtPortManager::setPort(mdtAbstractPort *port)
+{
+  Q_ASSERT(port != 0);
+
+  pvPort = port;
+  // Assign port to threads
+  Q_ASSERT(pvReadThread != 0);
+  pvReadThread->setPort(pvPort);
+  connect(pvReadThread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
+  Q_ASSERT(pvWriteThread != 0);
+  pvWriteThread->setPort(pvPort);
+  // Connect thraed's error signals
+  connect(pvReadThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+  connect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
 }
 
 bool mdtPortManager::setPortName(const QString &portName)
@@ -179,4 +185,16 @@ void mdtPortManager::newFrameReaden()
   pvLastReadenFrame.append(frame->data(), frame->size());
   pvPort->readFramesPool().enqueue(frame);
   pvPort->unlockMutex();
+}
+
+void mdtPortManager::onThreadsErrorOccured(int error)
+{
+  // On IO error, we try to re-open the port
+  if(error == MDT_PORT_IO_ERROR){
+    closePort();
+    if(!openPort()){
+      return;
+    }
+    start();
+  }
 }

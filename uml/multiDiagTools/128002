@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 60
+  revision 62
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2892,14 +2892,6 @@ ${inlines}
 	
       end
 
-      classrelation 271362 // <generalisation>
-	relation 271106 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 271362 // <generalisation>
-	  b parent class_ref 138626 // QObject
-      end
-
       operation 492802 "setAttributes"
 	public explicit_return_type "bool"
 	nparams 1
@@ -2927,10 +2919,13 @@ ${inlines}
 	
       end
 
-      operation 424578 "close"
-	abstract cpp_virtual public explicit_return_type "void"
+      operation 594434 "close"
+	cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -2976,7 +2971,29 @@ ${inlines}
 	
       end
 
-      operation 424962 "waitEventRead"
+      operation 594690 "readOneFrame"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 594562 "writeOneFrame"
+	abstract cpp_virtual public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 424962 "waitForReadyRead"
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -2987,13 +3004,16 @@ ${inlines}
 	
       end
 
-      operation 425090 "readData"
-	abstract cpp_virtual public explicit_return_type "int"
+      operation 601602 "read"
+	public explicit_return_type "qInt64"
 	nparams 2
-	  param in name "data" explicit_type "char"
+	  param out name "data" explicit_type "char"
 	multiplicity "*"
-	  param in name "maxLen" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -3023,13 +3043,16 @@ ${inlines}
 	
       end
 
-      operation 425346 "writeData"
-	abstract cpp_virtual public explicit_return_type "int"
+      operation 591618 "write"
+	public explicit_return_type "qInt64"
 	nparams 2
 	  param in name "data" explicit_type "char"
 	multiplicity "*"
-	  param in name "maxLen" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}${)}${const}${volatile}${throw}${abstract};
+	  param in name "maxSize" explicit_type "qInt64"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -3270,6 +3293,14 @@ ${inlines}
 	    classrelation_ref 306050 // pvConfig (<unidirectional association>)
 	  b parent class_ref 256386 // mdtPortConfig
       end
+
+      classrelation 393346 // <generalisation>
+	relation 393090 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 393346 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
     end
 
     classdiagram 255362 "mdtPort"
@@ -3493,6 +3524,16 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 408578 "pvWriteTimeout"
+	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       attribute 341250 "pvFrameType"
 	protected explicit_type "mdtFrame::type_t"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -3505,6 +3546,16 @@ ${inlines}
 
       attribute 341378 "pvEndOfFrameSeq"
 	protected type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 408706 "pvBytePerByteWrite"
+	protected explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -3614,6 +3665,35 @@ ${inlines}
 	
       end
 
+      operation 601986 "setReadTimeout"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 602114 "readTimeout"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 435714 "setWriteFrameSize"
 	public explicit_return_type "void"
 	nparams 1
@@ -3701,6 +3781,35 @@ ${inlines}
 	
       end
 
+      operation 602242 "setWriteTimeout"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 602370 "writeTimeout"
+	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 436610 "setFrameType"
 	public explicit_return_type "void"
 	nparams 1
@@ -3762,6 +3871,36 @@ ${inlines}
 
       operation 436994 "endOfFrameSeq"
 	public return_type class_ref 236162 // QByteArray
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 602498 "setBytePerByteWrite"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "on" explicit_type "bool"
+	  param in name "waitTime" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 602626 "bytePerByteWrite"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -3956,17 +4095,24 @@ ${inlines}
 	
       end
 
-      classrelation 285186 // pvPort (<unidirectional association>)
-	relation 284930 --->
-	  a role_name "pvPort" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+      operation 594818 "errorOccured"
+	stereotype "signal"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "error" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	    classrelation_ref 285186 // pvPort (<unidirectional association>)
-	  b parent class_ref 249602 // mdtPort
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       attribute 354818 "pvReadMinWaitTime"
-	private explicit_type "int"
+	protected explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -3976,7 +4122,26 @@ ${inlines}
       end
 
       attribute 354946 "pvWriteMinWaitTime"
-	private explicit_type "int"
+	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 386562 // pvPort (<directional composition>)
+	relation 386306 *-->
+	  a role_name "pvPort" multiplicity "0..1" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 386562 // pvPort (<directional composition>)
+	  b parent class_ref 249474 // mdtAbstractPort
+      end
+
+      attribute 408834 "pvBytePerByteWrite"
+	protected explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -4483,6 +4648,11 @@ ${inlines}
 	end
       end
     end
+
+    collaborationdiagram 327810 "mdtPortThreadCalls"
+      show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+      size A4
+    end
   end
 
   classview 227458 "mdtPortManager"
@@ -4548,15 +4718,6 @@ ${inlines}
 	
       end
 
-      classrelation 332674 // pvPort (<directional composition>)
-	relation 332418 *-->
-	  a role_name "pvPort" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 332674 // pvPort (<directional composition>)
-	  b parent class_ref 249602 // mdtPort
-      end
-
       classrelation 332802 // pvReadThread (<directional composition>)
 	relation 332546 *-->
 	  a role_name "pvReadThread" multiplicity "1" private
@@ -4581,6 +4742,21 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 333058 // <generalisation>
 	  b parent class_ref 138626 // QObject
+      end
+
+      operation 594306 "setPort"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "port" type class_ref 249474 // mdtAbstractPort
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
 
       operation 506498 "setPortName"
@@ -4793,6 +4969,31 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 346114 // <generalisation>
 	  b parent class_ref 222722 // QThread
+      end
+
+      classrelation 386818 // pvPort (<unidirectional association>)
+	relation 386562 --->
+	  a role_name "pvPort" multiplicity "0..1" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 386818 // pvPort (<unidirectional association>)
+	  b parent class_ref 249474 // mdtAbstractPort
+      end
+
+      operation 594946 "onThreadsErrorOccured"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "error" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end

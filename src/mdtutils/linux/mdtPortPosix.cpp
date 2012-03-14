@@ -7,8 +7,6 @@
 #include <sys/ioctl.h>
 #include <errno.h>
 
-#include <QDebug>
-
 mdtPortPosix::mdtPortPosix(QObject *parent)
  : mdtAbstractPort(parent)
 {
@@ -49,23 +47,31 @@ bool mdtPortPosix::open(mdtPortConfig &cfg)
   //  O_RDWR : Read/write access
   //  O_NOCTTY: not a terminal
   //  O_NDELAY: ignore DCD signal
+  lockMutex();
   pvFd = ::open(pvName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
   if(pvFd < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtPortPosix");
     e.commit();
+    unlockMutex();
     return false;
   }
+  // Set the read/write timeouts
+  setReadTimeout(cfg.readTimeout());
+  setWriteTimeout(cfg.writeTimeout());
 
-  return true;
+  return mdtAbstractPort::open(cfg);
 }
 
 void mdtPortPosix::close()
 {
+  lockMutex();
   if(pvFd >= 0){
     ::close(pvFd);
     pvFd = -1;
   }
+  mdtAbstractPort::close();
 }
 
 void mdtPortPosix::setReadTimeout(int timeout)
@@ -80,7 +86,7 @@ void mdtPortPosix::setWriteTimeout(int timeout)
   pvWriteTimeout.tv_usec = 1000*(timeout%1000);
 }
 
-bool mdtPortPosix::waitEventRead()
+bool mdtPortPosix::waitForReadyRead()
 {
   fd_set input;
   int n;
@@ -106,13 +112,16 @@ bool mdtPortPosix::waitEventRead()
   return true;
 }
 
-int mdtPortPosix::readData(char *data, int maxLen)
+qint64 mdtPortPosix::read(char *data, qint64 maxSize)
 {
   int n;
+  int err;
 
-  n = read(pvFd, data, maxLen);
+  n = ::read(pvFd, data, maxSize);
   if(n < 0){
-    switch(errno){
+    // Store errno
+    err = errno;
+    switch(err){
       case EAGAIN:      // No data available
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
@@ -120,47 +129,14 @@ int mdtPortPosix::readData(char *data, int maxLen)
         return 0;
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
-        e.setSystemError(errno, strerror(errno));
+        e.setSystemError(err, strerror(err));
         MDT_ERROR_SET_SRC(e, "mdtPortPosix");
         e.commit();
-        return 0;
+        return n;
     }
-
-/*
-    switch(errno){
-      case EINTR:
-        perror("EINTR");
-        break;
-      case EAGAIN:
-        perror("EAGAIN");
-        break;
-      case EIO:
-        perror("EIO");
-        break;
-      case EISDIR:
-        perror("EISDIR");
-        break;
-      case EBADF:
-        perror("EBADF");
-        break;
-      case EINVAL:
-        perror("EINVAL");
-        break;
-      case EFAULT:
-        perror("EFAULT");
-        break;
-      default:
-        qDebug() << "unknow error";
-    }
-*/
   }
 
   return n;
-}
-
-void mdtPortPosix::flushIn()
-{
-  qDebug() << "mdtPortPosix::flushIn() - NOT implemented !!!";
 }
 
 bool mdtPortPosix::waitEventWriteReady()
@@ -189,59 +165,26 @@ bool mdtPortPosix::waitEventWriteReady()
   return true;
 }
 
-int mdtPortPosix::writeData(const char *data, int maxLen)
+qint64 mdtPortPosix::write(const char *data, qint64 maxSize)
 {
   int n;
-  int error;
+  int err;
 
-  n = write(pvFd, data, maxLen);
+  n = ::write(pvFd, data, maxSize);
   if(n < 0){
     // Store error (errno will be reset when readen)
-    error = errno;
-    mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
-    e.setSystemError(error, strerror(error));
-    MDT_ERROR_SET_SRC(e, "mdtPortPosix");
-    e.commit();
-
-    switch(error){
-      case EINTR:
-        perror("EINTR");
-        break;
-      case EAGAIN:
-        perror("EAGAIN");
-        break;
-      case EIO:
-        perror("EIO");
-        break;
-      case EPIPE:
-        perror("EPIPE");
-        break;
-      case EBADF:
-        perror("EBADF");
-        break;
-      case EINVAL:
-        perror("EINVAL");
-        break;
-      case EFAULT:
-        perror("EFAULT");
-        break;
-      case ENOSPC:
-        perror("ENOSPC");
-        break;
-      case ENODEV:
-        perror("ENODEV");
-        break;
+    err = errno;
+    switch(err){
+      case EAGAIN:    // Can't write now
+        return 0;
       default:
-        qDebug() << "unknow error: " << strerror(error);
+        mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
+        e.setSystemError(err, strerror(err));
+        MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+        e.commit();
+        return n;
     }
-    return 0;
   }
 
   return n;
 }
-
-void mdtPortPosix::flushOut()
-{
-  qDebug() << "mdtPortPosix::flushOut() - NOT implemented !!!";
-}
-

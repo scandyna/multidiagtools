@@ -1,5 +1,5 @@
-#ifndef MDT_ABSTRAC_TDEVICE_FILE_H
-#define MDT_ABSTRAC_TDEVICE_FILE_H
+#ifndef MDT_ABSTRACT_PORT_H
+#define MDT_ABSTRACT_PORT_H
 
 #include "mdtFrame.h"
 #include "mdtPortConfig.h"
@@ -8,6 +8,8 @@
 #include <QQueue>
 #include <QMutex>
 
+/*! \brief Base class for port I/O
+ */
 class mdtAbstractPort : public QObject
 {
  Q_OBJECT
@@ -15,29 +17,41 @@ class mdtAbstractPort : public QObject
  public:
 
   mdtAbstractPort(QObject *parent = 0);
-  ~mdtAbstractPort();
+  virtual ~mdtAbstractPort();
 
   /*! \brief Set the port attributes
    * 
    * Open the given port name and get his attributes.
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be re-implemented in subclass.
    * \param portName Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)
    */
   virtual bool setAttributes(const QString &portName) = 0;
 
-  /*! \brief Open the device file
+  /*! \brief Open the port
    *
-   * This method must be re-implemented in plateform specific subclass.
-   * \param path Path to the device file
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Close previous opened ressource
+   *  - Lock the mutex with lockMutex()
+   *  - Do the specific work
+   *  - Set the read/write timeouts. See the mdtPortConfig to know how to get these timeouts.
+   *  - Call this open method (with mdtAbstractPort::open() ).
+   * At this last step, the queues will be initialized, and mutex unocked.
    * \return True on successfull configuration and open port
+   * \sa mdtPortConfig
    */
-  virtual bool open(mdtPortConfig &cfg) = 0;
+  virtual bool open(mdtPortConfig &cfg);
 
-  /*! \brief Close the device file
+  /*! \brief Close the port
    *
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Lock the mutex with lockMutex()
+   *  - Do the specific work
+   *  - Call this close method (with mdtAbstractPort::close() ).
+   * At this last step, the queues will be deleted, and mutex unocked.
    */
-  virtual void close() = 0;
+  virtual void close();
 
   /*! \brief Get the stored configuration
    */
@@ -45,7 +59,7 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Set the read data timeout
    *
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be re-implemented in subclass.
    * The subclass can convert and store the value in system specific type
    * (f.ex: timeval struct on Posix)
    * \param timeout Timeout [ms]
@@ -54,7 +68,7 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Set the write data timeout
    *
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be re-implemented in subclass.
    * The subclass can convert and store the value in system specific type
    * (f.ex: timeval struct on Posix)
    * \param timeout Timeout [ms]
@@ -63,43 +77,56 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Wait until data is available at device
    *
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be re-implemented in subclass.
    * \return False on error, in this case, the reader thread will be stopped.
    */
-  virtual bool waitEventRead() = 0;
+  virtual bool waitForReadyRead() = 0;
 
-  /*! \brief Read data from device
-   * 
-   * This method must be implemented in plateform specific subclass.
-   * \return Number of bytes that were really readen
+  /*! \brief Wait until data is available at device
+   *
+   * This method calls setReadTimeout() and waitForReadyRead()
+   * (it is a little bit slower than setting timeout one time, and call waitForReadyRead() ).<br>
+   * Note that the reader thread will call waitForReadyRead() without argument.
+   * \return False on error, in this case, the reader thread will be stopped.
    */
-  virtual int readData(char *data, int maxLen) = 0;
+  bool waitForReadyRead(int msecs);
 
-  /*! \brief Flush the read (inut) flow
+  /*! \brief Read data from port
    * 
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be implemented in subclass
+   * \return Number of bytes readen, or <0 on error
    */
-  virtual void flushIn() = 0;
+  virtual qint64 read(char *data, qint64 maxSize) = 0;
+
+  /*! \brief Just for special cases
+   * 
+   * In some case, this method is implemented in subclass.
+   * Default implementation does nothing.
+   * \sa mdtUsbtmcPort
+   */
+  virtual void readOneFrame();
+
+  /*! \brief Just for special cases
+   * 
+   * In some case, this method is implemented in subclass.
+   * Default implementation does nothing.
+   * \sa mdtUsbtmcPort
+   */
+  virtual void writeOneFrame();
 
   /*! \brief Wait until data can be written to device
    *
-   * This method must be re-implemented in plateform specific subclass.
+   * This method must be re-implemented in subclass.
    * \return False on error, in this case, the reader thread will be stopped.
    */
   virtual bool waitEventWriteReady() = 0;
 
-  /*! \brief Write data to device
+  /*! \brief Write data to port
    * 
-   * This method must be implemented in plateform specific subclass.
-   * \return Number of bytes that were really written
+   * This method must be implemented in subclass
+   * \return Number of bytes written, or <0 on error
    */
-  virtual int writeData(const char *data, int maxLen) = 0;
-
-  /*! \brief Flush the write (output) flow
-   * 
-   * This method must be re-implemented in plateform specific subclass.
-   */
-  virtual void flushOut() = 0;
+  virtual qint64 write(const char *data, qint64 maxSize) = 0;
 
   /*! \brief Update the read timeout state
    *
@@ -195,4 +222,4 @@ class mdtAbstractPort : public QObject
   QMutex pvMutex;
 };
 
-#endif  // #ifndef MDT_ABSTRAC_TDEVICE_FILE_H
+#endif  // #ifndef MDT_ABSTRACT_PORT_H

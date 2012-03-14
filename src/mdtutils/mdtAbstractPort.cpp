@@ -1,6 +1,9 @@
 
 #include "mdtAbstractPort.h"
+#include "mdtFrame.h"
+#include "mdtFrameAscii.h"
 
+//#include <QDebug>
 
 mdtAbstractPort::mdtAbstractPort(QObject *parent)
  : QObject(parent)
@@ -19,9 +22,66 @@ mdtAbstractPort::~mdtAbstractPort()
 {
 }
 
+bool mdtAbstractPort::open(mdtPortConfig &cfg)
+{
+  mdtFrame *frame;
+
+  // Create the read frames pools with requested type
+  for(int i=0; i<cfg.readQueueSize(); i++){
+    if(cfg.frameType() == mdtFrame::mdtFrameTypeAscii){
+      frame = new mdtFrameAscii;
+      dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(cfg.endOfFrameSeq());
+    }else{
+      frame = new mdtFrame;
+    }
+    Q_ASSERT(frame != 0);
+    frame->reserve(cfg.readFrameSize());
+    pvReadFramesPool.enqueue(frame);
+  }
+  // Create the write frames pools
+  for(int i=0; i<cfg.writeQueueSize(); i++){
+    frame = new mdtFrame;
+    Q_ASSERT(frame != 0);
+    frame->reserve(cfg.writeFrameSize());
+    pvWriteFramesPool.enqueue(frame);
+  }
+  pvConfig = cfg;
+  unlockMutex();
+  return true;
+}
+
+void mdtAbstractPort::close()
+{
+  // Delete queues
+  qDeleteAll(pvReadFramesPool);
+  pvReadFramesPool.clear();
+  qDeleteAll(pvReadenFrames);
+  pvReadenFrames.clear();
+  qDeleteAll(pvWriteFramesPool);
+  pvWriteFramesPool.clear();
+  qDeleteAll(pvWriteFrames);
+  pvWriteFrames.clear();
+  // Unlock the mutex
+  unlockMutex();
+}
+
 mdtPortConfig &mdtAbstractPort::config()
 {
   return pvConfig;
+}
+
+bool mdtAbstractPort::waitForReadyRead(int msecs)
+{
+  setReadTimeout(msecs);
+  return waitForReadyRead();
+}
+
+void mdtAbstractPort::readOneFrame()
+{
+}
+
+void mdtAbstractPort::writeOneFrame()
+{
 }
 
 void mdtAbstractPort::updateReadTimeoutState(bool state)

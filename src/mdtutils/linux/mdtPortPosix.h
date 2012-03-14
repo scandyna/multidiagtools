@@ -18,27 +18,32 @@ class mdtPortPosix : public mdtAbstractPort
   mdtPortPosix(QObject *parent = 0);
   ~mdtPortPosix();
 
+  // Implemtation of mdtAbstractPort
   bool setAttributes(const QString &portName);
 
+  // Implemtation of mdtAbstractPort
   bool open(mdtPortConfig &cfg);
 
+  // Implemtation of mdtAbstractPort
   void close();
 
+  // Implemtation of mdtAbstractPort
   void setReadTimeout(int timeout);
 
+  // Implemtation of mdtAbstractPort
   void setWriteTimeout(int timeout);
 
-  bool waitEventRead();
+  // Implemtation of mdtAbstractPort
+  bool waitForReadyRead();
 
-  int readData(char *data, int maxLen);
+  // Implemtation of mdtAbstractPort method
+  qint64 read(char *data, qint64 maxSize);
 
-  void flushIn();
-
+  // Implemtation of mdtAbstractPort
   bool waitEventWriteReady();
 
-  int writeData(const char *data, int maxLen);
-
-  void flushOut();
+  // Implemtation of mdtAbstractPort method
+  qint64 write(const char *data, qint64 maxSize);
 
  protected:
 

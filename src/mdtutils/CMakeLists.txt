@@ -12,6 +12,7 @@ set (HEADER_FILES
           # Device file I/O
           mdtAbstractPort.h
           mdtPort.h
+          mdtPortThread.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
           # Port manager
@@ -38,7 +39,7 @@ set (SOURCES_FILES
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp
-          # Device file I/O
+          # Port I/O
           mdtAbstractPort.cpp
           mdtPort.cpp
           mdtPortConfig.cpp

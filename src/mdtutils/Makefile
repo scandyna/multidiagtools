@@ -1031,6 +1031,30 @@ moc_mdtPortReadThread.cxx.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortReadThread.cxx.s
 .PHONY : moc_mdtPortReadThread.cxx.s
 
+moc_mdtPortThread.o: moc_mdtPortThread.cxx.o
+.PHONY : moc_mdtPortThread.o
+
+# target to build an object file
+moc_mdtPortThread.cxx.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortThread.cxx.o
+.PHONY : moc_mdtPortThread.cxx.o
+
+moc_mdtPortThread.i: moc_mdtPortThread.cxx.i
+.PHONY : moc_mdtPortThread.i
+
+# target to preprocess a source file
+moc_mdtPortThread.cxx.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortThread.cxx.i
+.PHONY : moc_mdtPortThread.cxx.i
+
+moc_mdtPortThread.s: moc_mdtPortThread.cxx.s
+.PHONY : moc_mdtPortThread.s
+
+# target to generate assembly for a file
+moc_mdtPortThread.cxx.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortThread.cxx.s
+.PHONY : moc_mdtPortThread.cxx.s
+
 moc_mdtPortWriteThread.o: moc_mdtPortWriteThread.cxx.o
 .PHONY : moc_mdtPortWriteThread.o
 
@@ -1168,6 +1192,9 @@ help:
 	@echo "... moc_mdtPortReadThread.o"
 	@echo "... moc_mdtPortReadThread.i"
 	@echo "... moc_mdtPortReadThread.s"
+	@echo "... moc_mdtPortThread.o"
+	@echo "... moc_mdtPortThread.i"
+	@echo "... moc_mdtPortThread.s"
 	@echo "... moc_mdtPortWriteThread.o"
 	@echo "... moc_mdtPortWriteThread.i"
 	@echo "... moc_mdtPortWriteThread.s"

@@ -14,12 +14,15 @@ void mdtPortConfig::setDefault()
   pvReadFrameSize = 1024;
   pvReadQueueSize = 10;
   pvReadMinWaitTime = 0;
+  pvReadTimeout = 500;
   pvWriteFrameSize = 1024;
   pvWriteQueueSize = 10;
   pvWriteMinWaitTime = 0;
+  pvWriteTimeout = 500;
   pvFrameType = mdtFrame::mdtFrameTypeAscii;
   pvEndOfFrameSeq.clear();
   pvEndOfFrameSeq.append('\n');
+  pvBytePerByteWrite = false;
 }
 
 void mdtPortConfig::setReadFrameSize(int size)
@@ -56,6 +59,16 @@ int mdtPortConfig::readMinWaitTime()
   return pvReadMinWaitTime;
 }
 
+void mdtPortConfig::setReadTimeout(int timeout)
+{
+  pvReadTimeout = timeout;
+}
+
+int mdtPortConfig::readTimeout()
+{
+  return pvReadTimeout;
+}
+
 void mdtPortConfig::setWriteMinWaitTime(int minWaitTime)
 {
   pvWriteMinWaitTime = minWaitTime;
@@ -64,6 +77,16 @@ void mdtPortConfig::setWriteMinWaitTime(int minWaitTime)
 int mdtPortConfig::writeMinWaitTime()
 {
   return pvWriteMinWaitTime;
+}
+
+void mdtPortConfig::setWriteTimeout(int timeout)
+{
+  pvWriteTimeout = timeout;
+}
+
+int mdtPortConfig::writeTimeout()
+{
+  return pvWriteTimeout;
 }
 
 void mdtPortConfig::setWriteFrameSize(int size)
@@ -116,6 +139,17 @@ QByteArray mdtPortConfig::endOfFrameSeq()
   return pvEndOfFrameSeq;
 }
 
+void mdtPortConfig::setBytePerByteWrite(bool on, int waitTime)
+{
+  pvBytePerByteWrite = on;
+  pvWriteMinWaitTime = waitTime;
+}
+
+bool mdtPortConfig::bytePerByteWrite()
+{
+  return pvBytePerByteWrite;
+}
+
 bool mdtPortConfig::operator==(const mdtPortConfig &other)
 {
   return matches(other);
@@ -144,6 +178,12 @@ bool mdtPortConfig::matches(const mdtPortConfig &other)
     return false;
   }
   if(pvEndOfFrameSeq != other.pvEndOfFrameSeq){
+    return false;
+  }
+  if(pvReadTimeout != other.pvReadTimeout){
+    return false;
+  }
+  if(pvWriteTimeout != other.pvWriteTimeout){
     return false;
   }
   return true;

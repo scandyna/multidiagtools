@@ -82,6 +82,7 @@ void mdtPortTest::writeTest()
   mdtPortWriteThread wrThd;
   mdtFrame *frame;
   QTemporaryFile file;
+  QString filePath;
   QByteArray fileData;
 
   // Get data set
@@ -89,7 +90,10 @@ void mdtPortTest::writeTest()
 
   // Create a temporary file
   QVERIFY(file.open());
+  filePath = file.fileName();
   file.close();
+
+  /* Normal write */
 
   // Setup
   cfg.setWriteQueueSize(1);
@@ -122,6 +126,58 @@ void mdtPortTest::writeTest()
 
   // Wait some time and verify that data was written
   QTest::qWait(100);
+  QVERIFY(file.open());
+  fileData = file.readAll();
+  QVERIFY(fileData == data);
+
+  // Close port
+  wrThd.stop();
+  port.close();
+
+  // Create a empty temporary file
+  QVERIFY(file.open());
+  file.remove();
+  QVERIFY(!file.exists());
+  file.setFileName(filePath);
+  QVERIFY(file.open());
+  fileData = file.readAll();
+  QVERIFY(fileData == "");
+  file.close();
+
+  /* Byte per byte write */
+
+  // Setup
+  cfg.setWriteQueueSize(1);
+  QVERIFY(port.setAttributes(file.fileName()));
+  cfg.setBytePerByteWrite(true, 1);
+  QVERIFY(port.open(cfg));
+
+  // Assign port to the threads
+  wrThd.setPort(&port);
+
+  // Start
+  QVERIFY(wrThd.start());
+  QVERIFY(wrThd.isRunning());
+
+  // Initial: empty file
+  fileData = file.readAll();
+  QVERIFY(fileData.size() == 0);
+
+  // Get a frame
+  port.lockMutex();
+  QVERIFY(port.writeFramesPool().size() == 1);
+  frame = port.writeFramesPool().dequeue();
+  port.unlockMutex();
+  QVERIFY(frame != 0);
+
+  // Add some data to frame and commit
+  frame->append(data);
+  port.lockMutex();
+  port.writeFrames().enqueue(frame);
+  port.unlockMutex();
+
+  // Wait some time and verify that data was written
+  QTest::qWait(2*data.size()+100);
   QVERIFY(file.open());
   fileData = file.readAll();
   QVERIFY(fileData == data);
@@ -243,10 +299,6 @@ void mdtPortTest::readTest_data()
   QTest::newRow("Multi frame long data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ*0123456789*abcdefghijklmnopqrstuvwxyz*" << lst;
 }
 
-void mdtPortTest::writeReadTest()
-{
-}
-
 void mdtPortTest::emptyQueueRecoveryTest()
 {
   mdtPort port;
@@ -331,6 +383,7 @@ void mdtPortTest::portManagerTest()
   file.close();
 
   // Init port manager
+  m.setPort(new mdtPort);
   QVERIFY(m.setPortName(file.fileName()));
   QVERIFY(m.openPort());
 
@@ -354,6 +407,7 @@ void mdtPortTest::portManagerTest()
 }
 
 #ifdef Q_OS_UNIX
+
 void mdtPortTest::usbtmcPortTest()
 {
   mdtUsbtmcPortManager m;
@@ -385,4 +439,5 @@ void mdtPortTest::usbtmcPortTest()
     QVERIFY(m.lastReadenFrame().size() > 0);
   }
 }
+
 #endif // #ifdef Q_OS_UNIX

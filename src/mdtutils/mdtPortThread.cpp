@@ -19,13 +19,14 @@ mdtPortThread::~mdtPortThread()
   }
 }
 
-void mdtPortThread::setPort(mdtPort *port)
+void mdtPortThread::setPort(mdtAbstractPort *port)
 {
   Q_ASSERT(port != 0);
 
   pvPort = port;
   pvReadMinWaitTime = pvPort->config().readMinWaitTime();
   pvWriteMinWaitTime = pvPort->config().writeMinWaitTime();
+  pvBytePerByteWrite = pvPort->config().bytePerByteWrite();
 }
 
 bool mdtPortThread::start()

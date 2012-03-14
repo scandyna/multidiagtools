@@ -20,9 +20,6 @@ class mdtPortTest : public mdtTest
   void readTest();
   void readTest_data();
 
-  // Check that write and read works same time
-  void writeReadTest();
-
   // Check that recovery works whenn a frame pool was empty for some time
   void emptyQueueRecoveryTest();
 

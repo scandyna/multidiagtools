@@ -1,6 +1,5 @@
 
 #include "mdtPortWriteThread.h"
-#include <QDebug>
 #include <QApplication>
 
 mdtPortWriteThread::mdtPortWriteThread(QObject *parent)
@@ -28,11 +27,10 @@ void mdtPortWriteThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  char *buffer;
   char *bufferCursor = 0;
   mdtFrame *frame = 0;
-  int toWrite = 0;
-  int written = 0;
+  qint64 toWrite = 0;
+  qint64 written = 0;
  
   // Set the running flag
   pvPort->lockMutex();
@@ -55,10 +53,7 @@ void mdtPortWriteThread::run()
     }
     // Wait on write ready event
     if(!pvPort->waitEventWriteReady()){
-      pvPort->lockMutex();
-      pvRunning = false;
-      pvPort->unlockMutex();
-      break;
+      emit(errorOccured(MDT_PORT_IO_ERROR));
     }
     // Event occured, send the data to port - Check timeout state first
     if(!pvPort->writeTimeoutOccured()){
@@ -68,29 +63,30 @@ void mdtPortWriteThread::run()
         frame = getNewFrame();
         if(frame != 0){
           // New frame to transmit
-          buffer = frame->data();
-          bufferCursor = buffer;
-          //qDebug() << "TX thd: bufferCursor [NF]: " << bufferCursor;
+          bufferCursor = frame->data();
           toWrite = frame->size();
         }
       }
       if(frame != 0){
         // Write data to port
-        ///qDebug() << "WR THD, have data to send: " << *frame;
-        written = pvPort->writeData(bufferCursor, toWrite);
-        qDebug() << "TX thd: written: " << written;
+        if((toWrite > 0)&&(pvBytePerByteWrite)){
+          written = pvPort->write(bufferCursor, 1);
+        }else{
+          written = pvPort->write(bufferCursor, toWrite);
+        }
+        if(written < 0){
+          emit(errorOccured(MDT_PORT_IO_ERROR));
+          written = 0;
+        }
         frame->take(written);
-        ///qDebug() << "TX thd: frame size: " << frame->size();
         // Check if current frame was completly sent
         if(frame->isEmpty()){
           pvPort->writeFramesPool().enqueue(frame);
-          ///qDebug() << "WTHD: frame written, emit signal";
           emit frameWritten();
           frame = 0;
         }else{
-          bufferCursor += written;
-          ///qDebug() << "TX thd: bufferCursor [CF]: " << bufferCursor;
-          Q_ASSERT(bufferCursor < (buffer + frame->size()));
+          bufferCursor = frame->data();
+          Q_ASSERT(bufferCursor < (frame->data() + frame->size()));
           toWrite -= written;
           Q_ASSERT(toWrite >= 0);
         }
