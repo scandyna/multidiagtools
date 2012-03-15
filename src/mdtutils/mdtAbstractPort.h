@@ -78,7 +78,9 @@ class mdtAbstractPort : public QObject
   /*! \brief Wait until data is available at device
    *
    * This method must be re-implemented in subclass.
-   * \return False on error, in this case, the reader thread will be stopped.
+   * The read timeout state must be updated with updateReadTimeoutState()
+   * \return False on error, in this case, the reader thread will emit errorOccured()
+   * \sa mdtPortThread
    */
   virtual bool waitForReadyRead() = 0;
 

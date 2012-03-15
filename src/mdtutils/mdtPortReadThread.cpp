@@ -3,6 +3,8 @@
 #include "mdtError.h"
 #include <QApplication>
 
+#include <QDebug>
+
 mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
 {
@@ -51,8 +53,6 @@ void mdtPortReadThread::run()
     pvPort->unlockMutex();
     return;
   }
-  pvPort->unlockMutex();
-
   // Alloc the local buffer
   bufferSize = frame->capacity();
   buffer = new char[bufferSize];
@@ -60,12 +60,12 @@ void mdtPortReadThread::run()
     mdtError e(MDT_UNDEFINED_ERROR, "Cannot allocate memory for local buffer" , mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortReadThread");
     e.commit();
-    pvPort->lockMutex();
     pvRunning = false;
     pvPort->unlockMutex();
     return;
   }
   bufferCursor = buffer;
+  pvPort->unlockMutex();
 
   // Run...
   while(1){
@@ -92,6 +92,7 @@ void mdtPortReadThread::run()
       bufferCursor = buffer;
       // Read data from port
       readen = pvPort->read(buffer, bufferSize);
+      //qDebug() << "RX thread, readen: " << readen << " , buffer: " << buffer;
       if(readen < 0){
         readen = 0;
         emit(errorOccured(MDT_PORT_IO_ERROR));

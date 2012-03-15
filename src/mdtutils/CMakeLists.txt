@@ -9,12 +9,14 @@ project (multidiagtools)
 set (HEADER_FILES 
           # mdtError
           mdtErrorOut.h
-          # Device file I/O
+          # Port I/O
           mdtAbstractPort.h
           mdtPort.h
           mdtPortThread.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
+          mdtTcpSocket.h
+          mdtTcpSocketThread.h
           # Port manager
           mdtPortManager.h
           # Essais
@@ -46,6 +48,8 @@ set (SOURCES_FILES
           mdtPortThread.cpp
           mdtPortReadThread.cpp
           mdtPortWriteThread.cpp
+          mdtTcpSocket.cpp
+          mdtTcpSocketThread.cpp
           # Port manager
           mdtPortManager.cpp
           # Essais

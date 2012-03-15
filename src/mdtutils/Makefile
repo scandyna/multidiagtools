@@ -836,6 +836,60 @@ mdtPortWriteThread.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtPortWriteThread.cpp.s
 .PHONY : mdtPortWriteThread.cpp.s
 
+mdtTcpSocket.o: mdtTcpSocket.cpp.o
+.PHONY : mdtTcpSocket.o
+
+# target to build an object file
+mdtTcpSocket.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTcpSocket.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTcpSocket.cpp.o
+.PHONY : mdtTcpSocket.cpp.o
+
+mdtTcpSocket.i: mdtTcpSocket.cpp.i
+.PHONY : mdtTcpSocket.i
+
+# target to preprocess a source file
+mdtTcpSocket.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTcpSocket.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTcpSocket.cpp.i
+.PHONY : mdtTcpSocket.cpp.i
+
+mdtTcpSocket.s: mdtTcpSocket.cpp.s
+.PHONY : mdtTcpSocket.s
+
+# target to generate assembly for a file
+mdtTcpSocket.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTcpSocket.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTcpSocket.cpp.s
+.PHONY : mdtTcpSocket.cpp.s
+
+mdtTcpSocketThread.o: mdtTcpSocketThread.cpp.o
+.PHONY : mdtTcpSocketThread.o
+
+# target to build an object file
+mdtTcpSocketThread.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTcpSocketThread.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTcpSocketThread.cpp.o
+.PHONY : mdtTcpSocketThread.cpp.o
+
+mdtTcpSocketThread.i: mdtTcpSocketThread.cpp.i
+.PHONY : mdtTcpSocketThread.i
+
+# target to preprocess a source file
+mdtTcpSocketThread.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTcpSocketThread.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTcpSocketThread.cpp.i
+.PHONY : mdtTcpSocketThread.cpp.i
+
+mdtTcpSocketThread.s: mdtTcpSocketThread.cpp.s
+.PHONY : mdtTcpSocketThread.s
+
+# target to generate assembly for a file
+mdtTcpSocketThread.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTcpSocketThread.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtTcpSocketThread.cpp.s
+.PHONY : mdtTcpSocketThread.cpp.s
+
 mdtTime.o: mdtTime.cpp.o
 .PHONY : mdtTime.o
 
@@ -1079,6 +1133,54 @@ moc_mdtPortWriteThread.cxx.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtPortWriteThread.cxx.s
 .PHONY : moc_mdtPortWriteThread.cxx.s
 
+moc_mdtTcpSocket.o: moc_mdtTcpSocket.cxx.o
+.PHONY : moc_mdtTcpSocket.o
+
+# target to build an object file
+moc_mdtTcpSocket.cxx.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtTcpSocket.cxx.o
+.PHONY : moc_mdtTcpSocket.cxx.o
+
+moc_mdtTcpSocket.i: moc_mdtTcpSocket.cxx.i
+.PHONY : moc_mdtTcpSocket.i
+
+# target to preprocess a source file
+moc_mdtTcpSocket.cxx.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtTcpSocket.cxx.i
+.PHONY : moc_mdtTcpSocket.cxx.i
+
+moc_mdtTcpSocket.s: moc_mdtTcpSocket.cxx.s
+.PHONY : moc_mdtTcpSocket.s
+
+# target to generate assembly for a file
+moc_mdtTcpSocket.cxx.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtTcpSocket.cxx.s
+.PHONY : moc_mdtTcpSocket.cxx.s
+
+moc_mdtTcpSocketThread.o: moc_mdtTcpSocketThread.cxx.o
+.PHONY : moc_mdtTcpSocketThread.o
+
+# target to build an object file
+moc_mdtTcpSocketThread.cxx.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtTcpSocketThread.cxx.o
+.PHONY : moc_mdtTcpSocketThread.cxx.o
+
+moc_mdtTcpSocketThread.i: moc_mdtTcpSocketThread.cxx.i
+.PHONY : moc_mdtTcpSocketThread.i
+
+# target to preprocess a source file
+moc_mdtTcpSocketThread.cxx.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtTcpSocketThread.cxx.i
+.PHONY : moc_mdtTcpSocketThread.cxx.i
+
+moc_mdtTcpSocketThread.s: moc_mdtTcpSocketThread.cxx.s
+.PHONY : moc_mdtTcpSocketThread.s
+
+# target to generate assembly for a file
+moc_mdtTcpSocketThread.cxx.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtTcpSocketThread.cxx.s
+.PHONY : moc_mdtTcpSocketThread.cxx.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1168,6 +1270,12 @@ help:
 	@echo "... mdtPortWriteThread.o"
 	@echo "... mdtPortWriteThread.i"
 	@echo "... mdtPortWriteThread.s"
+	@echo "... mdtTcpSocket.o"
+	@echo "... mdtTcpSocket.i"
+	@echo "... mdtTcpSocket.s"
+	@echo "... mdtTcpSocketThread.o"
+	@echo "... mdtTcpSocketThread.i"
+	@echo "... mdtTcpSocketThread.s"
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
@@ -1198,6 +1306,12 @@ help:
 	@echo "... moc_mdtPortWriteThread.o"
 	@echo "... moc_mdtPortWriteThread.i"
 	@echo "... moc_mdtPortWriteThread.s"
+	@echo "... moc_mdtTcpSocket.o"
+	@echo "... moc_mdtTcpSocket.i"
+	@echo "... moc_mdtTcpSocket.s"
+	@echo "... moc_mdtTcpSocketThread.o"
+	@echo "... moc_mdtTcpSocketThread.i"
+	@echo "... moc_mdtTcpSocketThread.s"
 .PHONY : help
 
 

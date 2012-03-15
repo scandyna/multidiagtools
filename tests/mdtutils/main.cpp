@@ -33,23 +33,23 @@ int main(int argc, char **argv)
 
   // Run test classes
   retVal = 0;
-  retVal = QTest::qExec(&algorithmsTest, argc, argv);
+  //retVal = QTest::qExec(&algorithmsTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-  retVal = QTest::qExec(&bufferTest, argc, argv);
+  //retVal = QTest::qExec(&bufferTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-  retVal = QTest::qExec(&frameTest, argc, argv);
+  //retVal = QTest::qExec(&frameTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-  retVal = QTest::qExec(&errorTest, argc, argv);
+  //retVal = QTest::qExec(&errorTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-  retVal = QTest::qExec(&frameCodecTest, argc, argv);
+  //retVal = QTest::qExec(&frameCodecTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
@@ -60,9 +60,9 @@ int main(int argc, char **argv)
   }
 
   // Enable this warning if a test is temporary diseabled
-  //qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
+  qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
 
   // Free the error system
   mdtErrorOut::destroy();
-  return 0;
+  return 1;
 }
