@@ -620,6 +620,33 @@ mdtFrameCodecScpiU3606A.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecScpiU3606A.cpp.s
 .PHONY : mdtFrameCodecScpiU3606A.cpp.s
 
+mdtFrameModbusTcp.o: mdtFrameModbusTcp.cpp.o
+.PHONY : mdtFrameModbusTcp.o
+
+# target to build an object file
+mdtFrameModbusTcp.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameModbusTcp.cpp.o
+.PHONY : mdtFrameModbusTcp.cpp.o
+
+mdtFrameModbusTcp.i: mdtFrameModbusTcp.cpp.i
+.PHONY : mdtFrameModbusTcp.i
+
+# target to preprocess a source file
+mdtFrameModbusTcp.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameModbusTcp.cpp.i
+.PHONY : mdtFrameModbusTcp.cpp.i
+
+mdtFrameModbusTcp.s: mdtFrameModbusTcp.cpp.s
+.PHONY : mdtFrameModbusTcp.s
+
+# target to generate assembly for a file
+mdtFrameModbusTcp.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameModbusTcp.cpp.s
+.PHONY : mdtFrameModbusTcp.cpp.s
+
 mdtParentChildTableItem.o: mdtParentChildTableItem.cpp.o
 .PHONY : mdtParentChildTableItem.o
 
@@ -1246,6 +1273,9 @@ help:
 	@echo "... mdtFrameCodecScpiU3606A.o"
 	@echo "... mdtFrameCodecScpiU3606A.i"
 	@echo "... mdtFrameCodecScpiU3606A.s"
+	@echo "... mdtFrameModbusTcp.o"
+	@echo "... mdtFrameModbusTcp.i"
+	@echo "... mdtFrameModbusTcp.s"
 	@echo "... mdtParentChildTableItem.o"
 	@echo "... mdtParentChildTableItem.i"
 	@echo "... mdtParentChildTableItem.s"

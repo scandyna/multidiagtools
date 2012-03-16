@@ -1,23 +1,25 @@
 window_sizes 1280 1002 370 904 808 120
 diagrams
-  classdiagram_ref 334338 // QAbstractSocket
-    518 384 100 4 24 0
-  classdiagram_ref 334466 // QTcpSocket
-    518 384 100 4 0 0
-  classdiagram_ref 334594 // mdtTcpSocket
-    723 646 100 4 204 0
-  active  classdiagram_ref 341122 // mdtTcpSocketThread
-    904 808 100 4 109 0
+  active  classdiagram_ref 189442 // mdtFrame
+    904 808 100 4 144 0
+  classdiagram_ref 281602 // mdtFrameCodec
+    723 646 100 4 60 0
 end
 show_stereotypes
-selected attribute_ref 423554 // pvPeerPort
+selected operation_ref 626562 // mdtFrameModbusTcp
 open
-  classview_ref 201218 // mdtPort
-  class_ref 329602 // mdtTcpSocket
-  operation_ref 619138 // stop
-  attribute_ref 422530 // pvReadBufferSize
-  operation_ref 619010 // reconnectToHost
-  attribute_ref 423554 // pvPeerPort
-  class_ref 262914 // mdtPortTest
+  class_ref 196354 // mdtFrame
+  operation_ref 628354 // clear
+  operation_ref 627330 // putData
+  operation_ref 627714 // setTransactionId
+  operation_ref 627842 // transactionId
+  operation_ref 627970 // modbusLength
+  operation_ref 628098 // setUnitId
+  operation_ref 627074 // setPdu
+  operation_ref 627202 // getPdu
+  operation_ref 626946 // parseMbapHeader
+  operation_ref 626818 // encode
+  classview_ref 214402 // mdtFrameCodec
+  class_ref 236418 // mdtFrameTest
 end
 end

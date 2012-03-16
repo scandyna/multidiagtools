@@ -74,7 +74,7 @@ class mdtFrame : public QByteArray
    * Else, it returns 0.
    */
   int bytesToStore();
-  
+
   /*! \brief Returns true if EOF condition was reached
    */
   bool isComplete();
@@ -84,7 +84,7 @@ class mdtFrame : public QByteArray
    * Internally, it calls QByteArray's clear() and reserve() functions.
    * The goal is to keep the same capacity and reset some mdtFrame specific flags
    */
-  void clear();
+  virtual void clear();
 
   /*! \brief Put data into the frame
    * 
@@ -114,8 +114,8 @@ class mdtFrame : public QByteArray
 
   /*! \brief Take some data
    * 
-   * This method does not copy any data, but is usefull afer a copy using QByteArray::data() .
-   * The conumed bytes are removed from frame
+   * This method does not copy any data, but is usefull after a copy using QByteArray::data() .
+   * The consumed bytes are removed from frame
    * \param data Pointer to data destination
    * \param len Number of bytes to take
    * \pre The data pointer must be valid, and not be the internal pointer returned by data().
@@ -125,9 +125,6 @@ class mdtFrame : public QByteArray
  protected:
 
   bool pvIgnoreNullValues;
-
- private:
-
   bool pvEOFcondition;  // End Of Frame condition
 };
 #endif  // ifndef MDT_FRAME_H

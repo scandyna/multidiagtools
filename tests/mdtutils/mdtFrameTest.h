@@ -25,5 +25,11 @@ class mdtFrameTest : public mdtTest
 
   // Verify states and values by taking data
   void takeDataTest();
+
+  // Check mdtFrameModbusTcp encoding
+  void modbusTcpEncodeTest();
+
+  // Check mdtFrameModbusTcp decoding
+  void modbusTcpDecodeTest();
 };
 #endif // idnfef MDT_FRAME_TEST_H

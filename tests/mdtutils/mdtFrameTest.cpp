@@ -1,6 +1,7 @@
 #include "mdtFrameTest.h"
 #include "mdtFrame.h"
 #include "mdtFrameAscii.h"
+#include "mdtFrameModbusTcp.h"
 
 #include <QTest>
 #include <cstring>
@@ -706,4 +707,391 @@ void mdtFrameTest::takeDataTest()
   QVERIFY(f.remainCapacity() == 5);
   QVERIFY(strcmp(destData, "") == 0);
   QVERIFY(f == "");
+}
+
+void mdtFrameTest::modbusTcpEncodeTest()
+{
+  mdtFrameModbusTcp f;
+  QByteArray pdu;
+
+  f.reserve(10);
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.modbusLength() == 0);
+
+  // MBAP Header
+  f.setTransactionId(0x1234);
+  f.setUnitId(0x25);
+  f.encode();
+  QVERIFY(f.remainCapacity() == 3);
+  QVERIFY(f.modbusLength() == 1);
+  QVERIFY(f.at(0) == 0x12);
+  QVERIFY(f.at(1) == 0x34);
+  QVERIFY(f.at(2) == 0);
+  QVERIFY(f.at(3) == 0);
+  QVERIFY(f.at(4) == 0x00);
+  QVERIFY(f.at(5) == 0x01);
+  QVERIFY(f.at(6) == 0x25);
+  // MBAP Header + PDU
+  f.setTransactionId(0x0576);
+  f.setUnitId(0x42);
+  pdu = "abc";
+  f.setPdu(pdu);
+  f.encode();
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.at(0) == 0x05);
+  QVERIFY(f.at(1) == 0x76);
+  QVERIFY(f.at(2) == 0);
+  QVERIFY(f.at(3) == 0);
+  QVERIFY(f.at(4) == 0x00);
+  QVERIFY(f.at(5) == 0x04);
+  QVERIFY(f.at(6) == 0x42);
+  QVERIFY(f.at(7) == 'a');
+  QVERIFY(f.at(8) == 'b');
+  QVERIFY(f.at(9) == 'c');
+
+/*
+  qDebug() << "f[0]: 0x" << hex << (int)f.at(0);
+  qDebug() << "f[1]: 0x" << hex << (int)f.at(1);
+  qDebug() << "f[2]: 0x" << hex << (int)f.at(2);
+  qDebug() << "f[3]: 0x" << hex << (int)f.at(3);
+  qDebug() << "f[4]: 0x" << hex << (int)f.at(4);
+  qDebug() << "f[5]: 0x" << hex << (int)f.at(5);
+  qDebug() << "f[6]: 0x" << hex << (int)f.at(6);
+  qDebug() << "f[7]: " << f.at(7);
+  qDebug() << "f[8]: " << f.at(8);
+  qDebug() << "f[9]: " << f.at(9);
+*/
+}
+
+void mdtFrameTest::modbusTcpDecodeTest()
+{
+  mdtFrameModbusTcp f;
+  QByteArray srcData;
+  char c;
+
+  f.reserve(10);
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.modbusLength() == 0);
+
+  // Build the frame
+  srcData.clear();
+  // Transaction ID
+  srcData.append(0x10);
+  srcData.append(0x52);
+  // Protocol ID
+  srcData.append((char)0);
+  srcData.append((char)0);
+  // Length: 4
+  srcData.append((char)0);
+  srcData.append(0x04);
+  // Unit ID
+  srcData.append(0x16);
+  // PDU
+  srcData.append("123");
+  QVERIFY(srcData.size() == 10);
+
+  /*
+   * Cpapacity == MODBUS frame size
+   */
+
+  // Check 1 pass store
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 10);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f.transactionId() == 0x1052);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x16);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "123");
+  // Try to put more - must no work
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
+  QVERIFY(f.transactionId() == 0x1052);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x16);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "123");
+
+  // Check byte per byte store
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  for(int i=0; i<srcData.size(); i++){
+    c = srcData.at(i);
+    f.putData(&c, 1);
+  }
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f.transactionId() == 0x1052);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x16);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "123");
+  // Try to put more - must no work
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
+  QVERIFY(f.transactionId() == 0x1052);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x16);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "123");
+
+  // Check variable size store - WW: alter srcData
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  // Put some data
+  QVERIFY(f.putData(srcData.data(), 2) == 2);
+  srcData.remove(0, 2);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 8);
+  QVERIFY(f.bytesToStore() == 8);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  // Put some data
+  QVERIFY(f.putData(srcData.data(), 3) == 3);
+  srcData.remove(0, 3);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 5);
+  QVERIFY(f.bytesToStore() == 5);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  // Put some data - After this putData() call, frame's length can be decoded
+  QVERIFY(f.putData(srcData.data(), 2) == 2);
+  srcData.remove(0, 2);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 3);
+  QVERIFY(f.bytesToStore() == 3);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 1);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  // Put some data
+  QVERIFY(f.putData(srcData.data(), 2) == 2);
+  srcData.remove(0, 2);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 1);
+  QVERIFY(f.bytesToStore() == 1);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 3);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  // Put some data
+  QVERIFY(f.putData(srcData.data(), 1) == 1);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f.transactionId() == 0x1052);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x16);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "123");
+  // Try to put more - must no work
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
+  QVERIFY(f.transactionId() == 0x1052);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x16);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "123");
+
+  /*
+   * Cpapacity > MODBUS frame size
+   */
+
+  // Build the frame
+  srcData.clear();
+  // Transaction ID
+  srcData.append(0x53);
+  srcData.append(0x76);
+  // Protocol ID
+  srcData.append((char)0);
+  srcData.append((char)0);
+  // Length: 4
+  srcData.append((char)0);
+  srcData.append(0x04);
+  // Unit ID
+  srcData.append(0x95);
+  // PDU
+  srcData.append("ABC");
+  QVERIFY(srcData.size() == 10);
+
+  // Init frame
+  f.reserve(20);
+
+  // Check 1 pass store
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 20);
+  QVERIFY(f.bytesToStore() == 20);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 10);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f.transactionId() == 0x5376);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x95);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "ABC");
+  // Try to put more - must no work
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
+  QVERIFY(f.transactionId() == 0x5376);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x95);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "ABC");
+
+  // Check byte per byte store
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 20);
+  QVERIFY(f.bytesToStore() == 20);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  for(int i=0; i<srcData.size(); i++){
+    c = srcData.at(i);
+    f.putData(&c, 1);
+  }
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 10);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f.transactionId() == 0x5376);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x95);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "ABC");
+  // Try to put more - must no work
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
+  QVERIFY(f.transactionId() == 0x5376);
+  QVERIFY(f.modbusLength() == 4);
+  QVERIFY(f.unitId() == 0x95);
+  QVERIFY(f.getPdu().size() == 3);
+  QVERIFY(f.getPdu() == "ABC");
+
+  /*
+   * Cpapacity < MODBUS frame size
+   * Can happen if frame size field is wrong,
+   *  (or user application does a mistake on init with a size < 263)
+   */
+
+  // Build the frame
+  srcData.clear();
+  // Transaction ID
+  srcData.append(0x53);
+  srcData.append(0x76);
+  // Protocol ID
+  srcData.append((char)0);
+  srcData.append((char)0);
+  // Length: 27
+  srcData.append((char)0);
+  srcData.append(0x1B);
+  // Unit ID
+  srcData.append(0x95);
+  // PDU
+  srcData.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  QVERIFY(srcData.size() == 33);
+
+  // Init frame
+  f.reserve(20);
+
+  // Check 1 pass store
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 20);
+  QVERIFY(f.bytesToStore() == 20);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 0);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 20);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 14);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+  // Try to put more - must no work
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 14);
+  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.getPdu().size() == 0);
+
+
 }
