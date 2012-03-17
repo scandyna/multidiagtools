@@ -136,11 +136,6 @@ bool mdtFrameCodecScpi::decodeError(QByteArray &frame)
   return true;
 }
 
-QList<QVariant> mdtFrameCodecScpi::values()
-{
-  return pvValues;
-}
-
 bool mdtFrameCodecScpi::decodeIEEEblock(QString data)
 {
   int i;

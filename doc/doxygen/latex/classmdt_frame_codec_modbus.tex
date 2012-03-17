@@ -1,0 +1,112 @@
+\hypertarget{classmdt_frame_codec_modbus}{
+\section{mdtFrameCodecModbus Class Reference}
+\label{classmdt_frame_codec_modbus}\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+}
+
+
+Encode and decode MODBUS PDU.  
+
+
+
+
+{\ttfamily \#include $<$mdtFrameCodecModbus.h$>$}
+
+
+
+Inheritance diagram for mdtFrameCodecModbus:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classmdt_frame_codec_modbus__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtFrameCodecModbus:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=204pt]{classmdt_frame_codec_modbus__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_a817e84436f94801a0c2276b80b65f15d}{encodeReadCoils} (quint16 startAddress, int n)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadCoils function (0x01) \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}{decode} (const QByteArray \&pdu)
+\begin{DoxyCompactList}\small\item\em Decode a MODBUS PDU. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Encode and decode MODBUS PDU. 
+
+This class works only on MODBUS PDU. To transmit MODBUS/TCP frame, the resulting PDU can be sent using \hyperlink{classmdt_frame_modbus_tcp}{mdtFrameModbusTcp} class, or received PDU decoded here.
+
+References:
+\begin{DoxyItemize}
+\item MODBUS Application Protocol Specification V1.1b
+\item \href{http://www.Modbus-IDA.org}{\tt http://www.Modbus-\/IDA.org}
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_frame_codec}{mdtFrameCodec} 
+
+\hyperlink{classmdt_frame_modbus_tcp}{mdtFrameModbusTcp} 
+\end{DoxySeeAlso}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!decode@{decode}}
+\index{decode@{decode}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{decode}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrameCodecModbus::decode (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{pdu}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}
+
+
+Decode a MODBUS PDU. 
+
+This should function reconize the function code in PDU, and call the appropriate decode methode (internall). Once decode is done, the values are available with \hyperlink{classmdt_frame_codec_a599a46e2d7cb5f80bd80e303236ead73}{mdtFrameCodec::values()}. To know what was decoded, the function code is returned. The values are stored in a QList$<$QVariant$>$ , with format depending of the function code:
+\begin{DoxyItemize}
+\item For a ReadCoils response, values will be bool, sorted by ascending addresses.
+\end{DoxyItemize}
+
+If PDU contains a error code, the list of values will be empty, and this error code will be returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pdu} & The MODBUS PDU to decode \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Decoded function code (or error code). 
+\end{DoxyReturn}
+\hypertarget{classmdt_frame_codec_modbus_a817e84436f94801a0c2276b80b65f15d}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeReadCoils@{encodeReadCoils}}
+\index{encodeReadCoils@{encodeReadCoils}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeReadCoils}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeReadCoils (
+\begin{DoxyParamCaption}
+\item[{quint16}]{startAddress, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_a817e84436f94801a0c2276b80b65f15d}
+
+
+Encode a PDU according the ReadCoils function (0x01) 
+
+Please take a look at MODBUS specifications for more details. \begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtFrameCodecModbus.h\item 
+src/mdtutils/mdtFrameCodecModbus.cpp\end{DoxyCompactItemize}

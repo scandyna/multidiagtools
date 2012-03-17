@@ -39,6 +39,7 @@ set (SOURCES_FILES
           mdtFrameCodecAscii.cpp
           mdtFrameCodecScpi.cpp
           mdtFrameCodecScpiU3606A.cpp
+          mdtFrameCodecModbus.cpp
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp

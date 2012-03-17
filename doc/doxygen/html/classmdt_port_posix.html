@@ -71,14 +71,14 @@ Inheritance diagram for mdtPortPosix:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_posix__inherit__graph.png" border="0" usemap="#mdt_port_posix_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_port_posix_inherit__map" id="mdt_port_posix_inherit__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="mdtAbstractPort" alt="" coords="5,5,123,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,5,123,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtPortPosix:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_posix__coll__graph.png" border="0" usemap="#mdt_port_posix_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_posix_coll__map" id="mdt_port_posix_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="mdtAbstractPort" alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_posix-members.html">List of all members.</a></p>
@@ -90,25 +90,21 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a32a532f5148226da19ee4acc6ec63201">setAttributes</a> (const QString &amp;portName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#a32a532f5148226da19ee4acc6ec63201"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#aba7e87cb2423bfd61a248cc5d23a8517">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the device file.  <a href="#aba7e87cb2423bfd61a248cc5d23a8517"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aba7e87cb2423bfd61a248cc5d23a8517"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0">close</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the device file.  <a href="#a778c8d4f6fadd1da725f4287af38f7f0"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a778c8d4f6fadd1da725f4287af38f7f0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a7ab7e4a7dccbd58702f2c37335b900c8">setReadTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#a7ab7e4a7dccbd58702f2c37335b900c8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a577a51bf0373f478b32bb1c1e5c4726c">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#a577a51bf0373f478b32bb1c1e5c4726c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#aeb743174f4c53ddd92d2f2e738158d07">waitEventRead</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#aeb743174f4c53ddd92d2f2e738158d07"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#ade160b0b15f046a85d7fcc418792174f">readData</a> (char *data, int maxLen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from device.  <a href="#ade160b0b15f046a85d7fcc418792174f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a810023fda450285fd6291347ee68eb4a">flushIn</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush the read (inut) flow.  <a href="#a810023fda450285fd6291347ee68eb4a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a5547db404f974f1a04ba2e303b0aaed0">waitForReadyRead</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#a5547db404f974f1a04ba2e303b0aaed0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a1940fad77c70b3c2b7e9ae2b117f4e41">read</a> (char *data, qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a1940fad77c70b3c2b7e9ae2b117f4e41"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a6dc329dcaf343a471cf09379f563fa06">waitEventWriteReady</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to device.  <a href="#a6dc329dcaf343a471cf09379f563fa06"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a59d72f4c2be68241ce116c986a50d621">writeData</a> (const char *data, int maxLen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to device.  <a href="#a59d72f4c2be68241ce116c986a50d621"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#abbd08f082dfc4d822806186f6fdbb80c">flushOut</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush the write (output) flow.  <a href="#abbd08f082dfc4d822806186f6fdbb80c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a78e35734ae3088be2f2b097225bd648f">write</a> (const char *data, qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a78e35734ae3088be2f2b097225bd648f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84faa907c02ae2e6714c2bf2c23e2cf1"></a><!-- doxytag: member="mdtPortPosix::pvFd" ref="a84faa907c02ae2e6714c2bf2c23e2cf1" args="" -->
@@ -129,52 +125,16 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Close the device file. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
+<p>Close the port. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Do the specific work</li>
+<li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, and mutex unocked. </li>
+</ul>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a0d40867397b0c7707115dc4b8935bca2">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a810023fda450285fd6291347ee68eb4a"></a><!-- doxytag: member="mdtPortPosix::flushIn" ref="a810023fda450285fd6291347ee68eb4a" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortPosix::flushIn </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Flush the read (inut) flow. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a6d741fef279db4c710492a1c839a5302">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="abbd08f082dfc4d822806186f6fdbb80c"></a><!-- doxytag: member="mdtPortPosix::flushOut" ref="abbd08f082dfc4d822806186f6fdbb80c" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortPosix::flushOut </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Flush the write (output) flow. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#aafb59687cf06f169d3c2dfc3cac19724">mdtAbstractPort</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -193,26 +153,29 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Open the device file. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path to the device file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<p>Open the port. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Close previous opened ressource</li>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Do the specific work</li>
+<li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, and mutex unocked. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
+</li>
+</ul>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#ac0da537a32a595df14b25bd35335a04c">mdtAbstractPort</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ade160b0b15f046a85d7fcc418792174f"></a><!-- doxytag: member="mdtPortPosix::readData" ref="ade160b0b15f046a85d7fcc418792174f" args="(char *data, int maxLen)" -->
+<a class="anchor" id="a1940fad77c70b3c2b7e9ae2b117f4e41"></a><!-- doxytag: member="mdtPortPosix::read" ref="a1940fad77c70b3c2b7e9ae2b117f4e41" args="(char *data, qint64 maxSize)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int mdtPortPosix::readData </td>
+          <td class="memname">qint64 mdtPortPosix::read </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -220,8 +183,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxLen</em>&#160;</td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -232,11 +195,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Read data from device. </p>
-<p>This method must be implemented in plateform specific subclass. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes that were really readen </dd></dl>
+<p>Read data from port. </p>
+<p>This method must be implemented in subclass </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a2a2ee33513adb5698ad82eca4b3d8f6f">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -256,7 +219,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <div class="memdoc">
 
 <p>Set the port attributes. </p>
-<p>Open the given port name and get his attributes. This method must be re-implemented in plateform specific subclass. </p>
+<p>Open the given port name and get his attributes. This method must be re-implemented in subclass. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) </td></tr>
@@ -284,7 +247,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <div class="memdoc">
 
 <p>Set the read data timeout. </p>
-<p>This method must be re-implemented in plateform specific subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
@@ -312,7 +275,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <div class="memdoc">
 
 <p>Set the write data timeout. </p>
-<p>This method must be re-implemented in plateform specific subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
@@ -321,28 +284,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aeb743174f4c53ddd92d2f2e738158d07"></a><!-- doxytag: member="mdtPortPosix::waitEventRead" ref="aeb743174f4c53ddd92d2f2e738158d07" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortPosix::waitEventRead </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Wait until data is available at device. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a021c300c5deac88bc4b57e713737bf59">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -361,19 +302,42 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <div class="memdoc">
 
 <p>Wait until data can be written to device. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
+<p>This method must be re-implemented in subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a59d72f4c2be68241ce116c986a50d621"></a><!-- doxytag: member="mdtPortPosix::writeData" ref="a59d72f4c2be68241ce116c986a50d621" args="(const char *data, int maxLen)" -->
+<a class="anchor" id="a5547db404f974f1a04ba2e303b0aaed0"></a><!-- doxytag: member="mdtPortPosix::waitForReadyRead" ref="a5547db404f974f1a04ba2e303b0aaed0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int mdtPortPosix::writeData </td>
+          <td class="memname">bool mdtPortPosix::waitForReadyRead </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data is available at device. </p>
+<p>This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a> </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a78e35734ae3088be2f2b097225bd648f"></a><!-- doxytag: member="mdtPortPosix::write" ref="a78e35734ae3088be2f2b097225bd648f" args="(const char *data, qint64 maxSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 mdtPortPosix::write </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -381,8 +345,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxLen</em>&#160;</td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -393,11 +357,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Write data to device. </p>
-<p>This method must be implemented in plateform specific subclass. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes that were really written </dd></dl>
+<p>Write data to port. </p>
+<p>This method must be implemented in subclass </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#ab3cac34f79771a67aff56ada43e0f270">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -420,7 +384,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 12 2012 20:36:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

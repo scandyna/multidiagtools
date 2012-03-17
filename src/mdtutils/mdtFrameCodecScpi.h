@@ -40,10 +40,6 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    */
   bool decodeError(QByteArray &frame);
 
-  /*! \brief Get the decoded values
-   */
-  QList<QVariant> values();
-  
   /*! \brief Decode a IEEE block
    *
    * NOTE: not implemented yet !

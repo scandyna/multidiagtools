@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="13,83,115,112"/>
+<area shape="rect" id="node3" href="$classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="5,83,107,112"/>
+<area shape="rect" id="node5" href="$classmdt_tcp_socket.html" title="mdtTcpSocket" alt="" coords="131,83,237,112"/>
+<area shape="rect" id="node7" href="$classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="261,83,376,112"/>
 </map>

@@ -2,4 +2,5 @@
 <area shape="rect" id="node3" href="$classmdt_port_read_thread.html" title="mdtPortReadThread" alt="" coords="5,83,144,112"/>
 <area shape="rect" id="node5" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="168,83,307,112"/>
 <area shape="rect" id="node7" href="$classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="331,83,488,112"/>
+<area shape="rect" id="node9" href="$classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="512,83,659,112"/>
 </map>

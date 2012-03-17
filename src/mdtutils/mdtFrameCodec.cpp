@@ -12,6 +12,11 @@ mdtFrameCodec::~mdtFrameCodec()
 {
 }
 
+QList<QVariant> mdtFrameCodec::values()
+{
+  return pvValues;
+}
+
 bool mdtFrameCodec::decodeIEEEdata(QByteArray data)
 {
   if((data.size() % 8) != 0){

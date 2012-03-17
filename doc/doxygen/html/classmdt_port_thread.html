@@ -60,6 +60,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
@@ -71,24 +72,28 @@ Inheritance diagram for mdtPortThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_thread__inherit__graph.png" border="0" usemap="#mdt_port_thread_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_port_thread_inherit__map" id="mdt_port_thread_inherit__map">
-<area shape="rect" id="node3" href="classmdt_port_read_thread.html" title="mdtPortReadThread" alt="" coords="5,83,144,112"/><area shape="rect" id="node5" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="168,83,307,112"/><area shape="rect" id="node7" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="331,83,488,112"/></map>
+<area shape="rect" id="node3" href="classmdt_port_read_thread.html" title="mdtPortReadThread" alt="" coords="5,83,144,112"/><area shape="rect" id="node5" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="168,83,307,112"/><area shape="rect" id="node7" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="331,83,488,112"/><area shape="rect" id="node9" href="classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="512,83,659,112"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtPortThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_thread__coll__graph.png" border="0" usemap="#mdt_port_thread_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_thread_coll__map" id="mdt_port_thread_coll__map">
-<area shape="rect" id="node2" href="classmdt_port.html" title="mdtPort" alt="" coords="25,5,92,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_thread-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="signals"></a>
+Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured</a> (int error)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted on error.  <a href="#ab31cbe1a85aa830cd368654d1f806326"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa20869c68d7a016f9e547464f0d8b71e"></a><!-- doxytag: member="mdtPortThread::mdtPortThread" ref="aa20869c68d7a016f9e547464f0d8b71e" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortThread</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#aaa62e0fe9371469e46a792092b2451f4">setPort</a> (<a class="el" href="classmdt_port.html">mdtPort</a> *port)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the device file instance.  <a href="#aaa62e0fe9371469e46a792092b2451f4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the device file instance.  <a href="#acd51474c3a2683676423317bc9cb31b2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">start</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the thread.  <a href="#a9c45f260b8d58b7475151df79b3d8510"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">stop</a> ()</td></tr>
@@ -102,14 +107,39 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59735ef01b761361b1055a0356be525a"></a><!-- doxytag: member="mdtPortThread::pvRunning" ref="a59735ef01b761361b1055a0356be525a" args="" -->
 volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvRunning</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e6b8855d2b9abecd757f849731c334a"></a><!-- doxytag: member="mdtPortThread::pvPort" ref="a2e6b8855d2b9abecd757f849731c334a" args="" -->
-<a class="el" href="classmdt_port.html">mdtPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvPort</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5c4bed0c9fb012f220fba013d0f69b8"></a><!-- doxytag: member="mdtPortThread::pvPort" ref="af5c4bed0c9fb012f220fba013d0f69b8" args="" -->
+<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvPort</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a423f6bbca5f80ad0ea2ea7216750e041"></a><!-- doxytag: member="mdtPortThread::pvReadMinWaitTime" ref="a423f6bbca5f80ad0ea2ea7216750e041" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadMinWaitTime</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a048bcd95af9c7b33f077b73e117607"></a><!-- doxytag: member="mdtPortThread::pvWriteMinWaitTime" ref="a4a048bcd95af9c7b33f077b73e117607" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteMinWaitTime</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcdcd09d26fb8282fcd25b5ac28dc891"></a><!-- doxytag: member="mdtPortThread::pvBytePerByteWrite" ref="afcdcd09d26fb8282fcd25b5ac28dc891" args="" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ab31cbe1a85aa830cd368654d1f806326"></a><!-- doxytag: member="mdtPortThread::errorOccured" ref="ab31cbe1a85aa830cd368654d1f806326" args="(int error)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortThread::errorOccured </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Emitted on error. </p>
+<p>When a error occurs, this signal is emited.<br/>
+ This can happen, for example, when a USB device becomes not present.<br/>
+ <a class="el" href="classmdt_port_manager.html">mdtPortManager</a> uses this signal. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html">mdtPortManager</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a55d7ef615447823bf9878492a2c88fd4"></a><!-- doxytag: member="mdtPortThread::isFinished" ref="a55d7ef615447823bf9878492a2c88fd4" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -129,14 +159,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteMinWaitTime</b>
 
 </div>
 </div>
-<a class="anchor" id="aaa62e0fe9371469e46a792092b2451f4"></a><!-- doxytag: member="mdtPortThread::setPort" ref="aaa62e0fe9371469e46a792092b2451f4" args="(mdtPort *port)" -->
+<a class="anchor" id="acd51474c3a2683676423317bc9cb31b2"></a><!-- doxytag: member="mdtPortThread::setPort" ref="acd51474c3a2683676423317bc9cb31b2" args="(mdtAbstractPort *port)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtPortThread::setPort </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_port.html">mdtPort</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td>
           <td class="paramname"><em>port</em></td><td>)</td>
           <td></td>
         </tr>
@@ -188,11 +218,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteMinWaitTime</b>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Serial port instance must be defined. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>setSerialPort() </dd></dl>
 
+<p>Reimplemented in <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtutils/mdtPortThread.cpp</li>
+<li>src/mdtutils/moc_mdtPortThread.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -209,7 +242,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteMinWaitTime</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 12 2012 20:36:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

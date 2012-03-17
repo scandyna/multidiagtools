@@ -13,11 +13,12 @@ Provide an array of bytes.
 
 
 
-Inheritance diagram for mdtFrame:\nopagebreak
+Inheritance diagram for mdtFrame:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=162pt]{classmdt_frame__inherit__graph}
+\includegraphics[width=292pt]{classmdt_frame__inherit__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Types}
@@ -52,7 +53,7 @@ bool \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete} ()
 \label{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}
 
 \begin{DoxyCompactList}\small\item\em Returns true if EOF condition was reached. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear} ()
+virtual void \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear} ()
 \begin{DoxyCompactList}\small\item\em Overloaded function. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_frame_a51c355541b134e6e051167c70c09d531}{putData} (char $\ast$data, int len)
 \begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
@@ -71,6 +72,11 @@ int \hyperlink{classmdt_frame_ad8b184e6eb07a26fe84deaf233c1aa9b}{take} (int len)
 \hypertarget{classmdt_frame_a883c4de8f2c961310366d5a72b6e6dd8}{
 bool {\bfseries pvIgnoreNullValues}}
 \label{classmdt_frame_a883c4de8f2c961310366d5a72b6e6dd8}
+
+\item 
+\hypertarget{classmdt_frame_a1862e197bad6e9887cfedc54a768e88d}{
+bool {\bfseries pvEOFcondition}}
+\label{classmdt_frame_a1862e197bad6e9887cfedc54a768e88d}
 
 \end{DoxyCompactItemize}
 
@@ -114,13 +120,17 @@ Bytes to store can be the \hyperlink{classmdt_frame_aa1cd5c914c36efb3f441b7f6e78
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}
 
 
 Overloaded function. 
 
-Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} and reserve() functions. The goal is to keep the same capacity and reset some \hyperlink{classmdt_frame}{mdtFrame} specific flags \hypertarget{classmdt_frame_a51c355541b134e6e051167c70c09d531}{
+Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} and reserve() functions. The goal is to keep the same capacity and reset some \hyperlink{classmdt_frame}{mdtFrame} specific flags 
+
+Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{mdtFrameModbusTcp}.
+
+\hypertarget{classmdt_frame_a51c355541b134e6e051167c70c09d531}{
 \index{mdtFrame@{mdtFrame}!putData@{putData}}
 \index{putData@{putData}!mdtFrame@{mdtFrame}}
 \subsubsection[{putData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrame::putData (
@@ -251,7 +261,7 @@ The data pointer must be valid, and not be the internal pointer returned by data
 
 Take some data. 
 
-This method does not copy any data, but is usefull afer a copy using QByteArray::data() . The conumed bytes are removed from frame 
+This method does not copy any data, but is usefull after a copy using QByteArray::data() . The consumed bytes are removed from frame 
 \begin{DoxyParams}{Parameters}
 {\em data} & Pointer to data destination \\
 \hline

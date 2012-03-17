@@ -28,10 +28,18 @@ void \hyperlink{classmdt_port_config_a42e984173a7868ea4f58c4d0c54b202f}{setReadM
 \begin{DoxyCompactList}\small\item\em Set the minimal time to wait before try to read. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_ad8b726b560af894424a07c536e54936e}{readMinWaitTime} ()
 \begin{DoxyCompactList}\small\item\em Get the minimal time to wait before try to read. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}{setReadTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Set the read timeout. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_config_a51b06a66765d072f1d07251351477957}{readTimeout} ()
+\begin{DoxyCompactList}\small\item\em Get read timeout. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{setWriteMinWaitTime} (int minWaitTime)
 \begin{DoxyCompactList}\small\item\em Set the minimal time to wait before try to write. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_a448f69f4c78c51a8d52ff39c31ceb1d5}{writeMinWaitTime} ()
 \begin{DoxyCompactList}\small\item\em Get the minimal time to wait before try to write. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_ac117f7cd1f23de163a7fe84f69c2164c}{setWriteTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Set the write timeout. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_config_ab0c39fdce3e564f7308d869f4e28cb1c}{writeTimeout} ()
+\begin{DoxyCompactList}\small\item\em Get write timeout. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{setWriteFrameSize} (int size)
 \begin{DoxyCompactList}\small\item\em Set the write frame size. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_a4ea423e825c0730ede17a55fb723c6ac}{writeFrameSize} ()
@@ -53,6 +61,10 @@ void \hyperlink{classmdt_port_config_a9c67e95bb660a13313ec03e07a924793}{setEndOf
 \begin{DoxyCompactList}\small\item\em Set the end of frame sequence (applies on ASCII frames) \end{DoxyCompactList}\item 
 QByteArray \hyperlink{classmdt_port_config_a42f87381e6d6892770917e4ca6c80072}{endOfFrameSeq} ()
 \begin{DoxyCompactList}\small\item\em Get the end of frame sequence. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{setBytePerByteWrite} (bool on, int waitTime)
+\begin{DoxyCompactList}\small\item\em Set the byte per byte write On/Off. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_config_a687dfdffd913cd68141a784f3f77bc7e}{bytePerByteWrite} ()
+\begin{DoxyCompactList}\small\item\em Get byte per byte write flag (On/Off) \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{
 bool {\bfseries operator==} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)}
 \label{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}
@@ -81,6 +93,11 @@ int {\bfseries pvReadMinWaitTime}}
 \label{classmdt_port_config_a263cf98555f8982bb640059c345eec66}
 
 \item 
+\hypertarget{classmdt_port_config_a69fa9f6cb32469f3eccfe7517dc29101}{
+int {\bfseries pvReadTimeout}}
+\label{classmdt_port_config_a69fa9f6cb32469f3eccfe7517dc29101}
+
+\item 
 \hypertarget{classmdt_port_config_aeaeb93ea4d49f66ff9613c7499e670f4}{
 int {\bfseries pvWriteFrameSize}}
 \label{classmdt_port_config_aeaeb93ea4d49f66ff9613c7499e670f4}
@@ -96,6 +113,11 @@ int {\bfseries pvWriteMinWaitTime}}
 \label{classmdt_port_config_a098926b5811c5a3a876fbc01409437b9}
 
 \item 
+\hypertarget{classmdt_port_config_ad840fd68971a9ccc6092ce2aa3167591}{
+int {\bfseries pvWriteTimeout}}
+\label{classmdt_port_config_ad840fd68971a9ccc6092ce2aa3167591}
+
+\item 
 \hypertarget{classmdt_port_config_a4bc3110b7831ca76954a8d8fc78944f1}{
 mdtFrame::type\_\-t {\bfseries pvFrameType}}
 \label{classmdt_port_config_a4bc3110b7831ca76954a8d8fc78944f1}
@@ -105,10 +127,31 @@ mdtFrame::type\_\-t {\bfseries pvFrameType}}
 QByteArray {\bfseries pvEndOfFrameSeq}}
 \label{classmdt_port_config_ad5d5aeb26cfe98090848a62f5078b22c}
 
+\item 
+\hypertarget{classmdt_port_config_a56fb67591803bc972772073a6f2b996d}{
+bool {\bfseries pvBytePerByteWrite}}
+\label{classmdt_port_config_a56fb67591803bc972772073a6f2b996d}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_port_config_a687dfdffd913cd68141a784f3f77bc7e}{
+\index{mdtPortConfig@{mdtPortConfig}!bytePerByteWrite@{bytePerByteWrite}}
+\index{bytePerByteWrite@{bytePerByteWrite}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{bytePerByteWrite}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortConfig::bytePerByteWrite (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a687dfdffd913cd68141a784f3f77bc7e}
+
+
+Get byte per byte write flag (On/Off) 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{setBytePerByteWrite()} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_port_config_a42f87381e6d6892770917e4ca6c80072}{
 \index{mdtPortConfig@{mdtPortConfig}!endOfFrameSeq@{endOfFrameSeq}}
 \index{endOfFrameSeq@{endOfFrameSeq}!mdtPortConfig@{mdtPortConfig}}
@@ -189,6 +232,47 @@ Get the read Queue size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a04d8e81844deaff20a890ea24e2f9634}{setReadQueueSize()} 
 \end{DoxySeeAlso}
+\hypertarget{classmdt_port_config_a51b06a66765d072f1d07251351477957}{
+\index{mdtPortConfig@{mdtPortConfig}!readTimeout@{readTimeout}}
+\index{readTimeout@{readTimeout}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{readTimeout}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortConfig::readTimeout (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a51b06a66765d072f1d07251351477957}
+
+
+Get read timeout. 
+
+\begin{DoxyReturn}{Returns}
+Read timout \mbox{[}ms\mbox{]} 
+\end{DoxyReturn}
+\hypertarget{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{
+\index{mdtPortConfig@{mdtPortConfig}!setBytePerByteWrite@{setBytePerByteWrite}}
+\index{setBytePerByteWrite@{setBytePerByteWrite}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setBytePerByteWrite}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setBytePerByteWrite (
+\begin{DoxyParamCaption}
+\item[{bool}]{on, }
+\item[{int}]{waitTime}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}
+
+
+Set the byte per byte write On/Off. 
+
+It can happen that a (very) slow device needs time after any received byte.\par
+ Enable this function in this situation. 
+\begin{DoxyParams}{Parameters}
+{\em on} & True will enable this mode. \\
+\hline
+{\em waitTime} & Wait time between to bytes write \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}{
 \index{mdtPortConfig@{mdtPortConfig}!setDefault@{setDefault}}
 \index{setDefault@{setDefault}!mdtPortConfig@{mdtPortConfig}}
@@ -204,12 +288,13 @@ Set default configuration.
 
 Default configuration is:
 \begin{DoxyItemize}
-\item interface: null (empty string)
 \item Read and write frame size: 1024
 \item Read and write queue size: 10
+\item Read/Write timout: 500 \mbox{[}ms\mbox{]}
 \item Frame type: ASCII NOTE: chage this ?
 \item En of frame sequence: '\par
-' 
+'
+\item Byte per byte write: Off 
 \end{DoxyItemize}
 
 Reimplemented in \hyperlink{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}{mdtSerialPortConfig}.
@@ -305,6 +390,24 @@ Set the read Queue size.
 A queue contain several frames. This parameter gives a limit of the number of frame that can be received before they are threated \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+\hypertarget{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}{
+\index{mdtPortConfig@{mdtPortConfig}!setReadTimeout@{setReadTimeout}}
+\index{setReadTimeout@{setReadTimeout}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setReadTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}
+
+
+Set the read timeout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Read timout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
 \hypertarget{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteFrameSize@{setWriteFrameSize}}
 \index{setWriteFrameSize@{setWriteFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -362,6 +465,24 @@ Set the read Queue size.
 A queue contain several frames. This parameter gives a limit of the number of frame that can be enqueued to serial port output. \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+\hypertarget{classmdt_port_config_ac117f7cd1f23de163a7fe84f69c2164c}{
+\index{mdtPortConfig@{mdtPortConfig}!setWriteTimeout@{setWriteTimeout}}
+\index{setWriteTimeout@{setWriteTimeout}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setWriteTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setWriteTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_ac117f7cd1f23de163a7fe84f69c2164c}
+
+
+Set the write timeout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Write timout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
 \hypertarget{classmdt_port_config_a4ea423e825c0730ede17a55fb723c6ac}{
 \index{mdtPortConfig@{mdtPortConfig}!writeFrameSize@{writeFrameSize}}
 \index{writeFrameSize@{writeFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -410,6 +531,22 @@ Get the write Queue size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a8a99771f7acfeb546d1d89d3671407e5}{setWriteQueueSize()} 
 \end{DoxySeeAlso}
+\hypertarget{classmdt_port_config_ab0c39fdce3e564f7308d869f4e28cb1c}{
+\index{mdtPortConfig@{mdtPortConfig}!writeTimeout@{writeTimeout}}
+\index{writeTimeout@{writeTimeout}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{writeTimeout}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortConfig::writeTimeout (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_ab0c39fdce3e564f7308d869f4e28cb1c}
+
+
+Get write timeout. 
+
+\begin{DoxyReturn}{Returns}
+Write timout \mbox{[}ms\mbox{]} 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

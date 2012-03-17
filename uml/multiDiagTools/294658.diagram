@@ -6,15 +6,11 @@ classcanvas 128002 class_ref 182018 // mdtPortManager
 end
 classcanvas 128130 class_ref 256386 // mdtPortConfig
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 42 498 2000
+  xyz 33 498 2000
 end
 classcanvas 128770 class_ref 249474 // mdtAbstractPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 476 33 3005
-end
-classcanvas 129666 class_ref 249602 // mdtPort
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 513 665 3010
+  xyz 465 19 3005
 end
 classcanvas 130050 class_ref 222722 // QThread
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -22,13 +18,13 @@ classcanvas 130050 class_ref 222722 // QThread
 end
 relationcanvas 128898 relation_ref 305794 // <unidirectional association>
   from ref 128770 z 3006 to ref 128130
-  role_a_pos 374 595 3000 no_role_b
-  multiplicity_a_pos 374 622 3000 no_multiplicity_b
+  role_a_pos 417 602 3000 no_role_b
+  multiplicity_a_pos 373 602 3000 no_multiplicity_b
 end
 relationcanvas 129922 relation_ref 339330 // <directional composition>
   from ref 128002 z 2001 to ref 128130
-  role_a_pos 209 477 3000 no_role_b
-  multiplicity_a_pos 181 477 3000 no_multiplicity_b
+  role_a_pos 212 477 3000 no_role_b
+  multiplicity_a_pos 184 477 3000 no_multiplicity_b
 end
 relationcanvas 130178 relation_ref 345858 // <generalisation>
   from ref 128002 z 3011 to ref 130050
@@ -37,7 +33,7 @@ relationcanvas 130178 relation_ref 345858 // <generalisation>
 end
 relationcanvas 130306 relation_ref 386562 // <unidirectional association>
   from ref 128002 z 3006 to ref 128770
-  role_a_pos 426 293 3000 no_role_b
-  multiplicity_a_pos 441 320 3000 no_multiplicity_b
+  role_a_pos 415 281 3000 no_role_b
+  multiplicity_a_pos 430 308 3000 no_multiplicity_b
 end
 end

@@ -4,7 +4,8 @@
 }
 
 
-Inheritance diagram for mdtPortThread:\nopagebreak
+Inheritance diagram for mdtPortThread:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,13 +14,19 @@ Inheritance diagram for mdtPortThread:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortThread:\nopagebreak
+Collaboration diagram for mdtPortThread:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=160pt]{classmdt_port_thread__coll__graph}
+\includegraphics[width=168pt]{classmdt_port_thread__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured} (int error)
+\begin{DoxyCompactList}\small\item\em Emitted on error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -28,7 +35,7 @@ Collaboration diagram for mdtPortThread:\nopagebreak
 \label{classmdt_port_thread_aa20869c68d7a016f9e547464f0d8b71e}
 
 \item 
-void \hyperlink{classmdt_port_thread_aaa62e0fe9371469e46a792092b2451f4}{setPort} (\hyperlink{classmdt_port}{mdtPort} $\ast$port)
+void \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
 \begin{DoxyCompactList}\small\item\em Set the device file instance. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{start} ()
 \begin{DoxyCompactList}\small\item\em Start the thread. \end{DoxyCompactList}\item 
@@ -49,9 +56,9 @@ volatile bool {\bfseries pvRunning}}
 \label{classmdt_port_thread_a59735ef01b761361b1055a0356be525a}
 
 \item 
-\hypertarget{classmdt_port_thread_a2e6b8855d2b9abecd757f849731c334a}{
-\hyperlink{classmdt_port}{mdtPort} $\ast$ {\bfseries pvPort}}
-\label{classmdt_port_thread_a2e6b8855d2b9abecd757f849731c334a}
+\hypertarget{classmdt_port_thread_af5c4bed0c9fb012f220fba013d0f69b8}{
+\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$ {\bfseries pvPort}}
+\label{classmdt_port_thread_af5c4bed0c9fb012f220fba013d0f69b8}
 
 \item 
 \hypertarget{classmdt_port_thread_a423f6bbca5f80ad0ea2ea7216750e041}{
@@ -63,10 +70,33 @@ int {\bfseries pvReadMinWaitTime}}
 int {\bfseries pvWriteMinWaitTime}}
 \label{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}
 
+\item 
+\hypertarget{classmdt_port_thread_afcdcd09d26fb8282fcd25b5ac28dc891}{
+bool {\bfseries pvBytePerByteWrite}}
+\label{classmdt_port_thread_afcdcd09d26fb8282fcd25b5ac28dc891}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{
+\index{mdtPortThread@{mdtPortThread}!errorOccured@{errorOccured}}
+\index{errorOccured@{errorOccured}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{errorOccured}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::errorOccured (
+\begin{DoxyParamCaption}
+\item[{int}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}
+
+
+Emitted on error. 
+
+When a error occurs, this signal is emited.\par
+ This can happen, for example, when a USB device becomes not present.\par
+ \hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager}{mdtPortManager} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
 \index{isFinished@{isFinished}!mdtPortThread@{mdtPortThread}}
@@ -83,15 +113,15 @@ Returns false if the thread is running.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{isRunning()} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_port_thread_aaa62e0fe9371469e46a792092b2451f4}{
+\hypertarget{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{
 \index{mdtPortThread@{mdtPortThread}!setPort@{setPort}}
 \index{setPort@{setPort}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{setPort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::setPort (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtPort} $\ast$}]{port}
+\item[{{\bf mdtAbstractPort} $\ast$}]{port}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_port_thread_aaa62e0fe9371469e46a792092b2451f4}
+\label{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}
 
 
 Set the device file instance. 
@@ -142,7 +172,12 @@ setSerialPort()
 \end{DoxySeeAlso}
 
 
+Reimplemented in \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{mdtTcpSocketThread}.
+
+
+
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtutils/mdtPortThread.h\item 
-src/mdtutils/mdtPortThread.cpp\end{DoxyCompactItemize}
+src/mdtutils/mdtPortThread.cpp\item 
+src/mdtutils/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}

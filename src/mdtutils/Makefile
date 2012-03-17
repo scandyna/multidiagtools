@@ -566,6 +566,33 @@ mdtFrameCodecAscii.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecAscii.cpp.s
 .PHONY : mdtFrameCodecAscii.cpp.s
 
+mdtFrameCodecModbus.o: mdtFrameCodecModbus.cpp.o
+.PHONY : mdtFrameCodecModbus.o
+
+# target to build an object file
+mdtFrameCodecModbus.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecModbus.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecModbus.cpp.o
+.PHONY : mdtFrameCodecModbus.cpp.o
+
+mdtFrameCodecModbus.i: mdtFrameCodecModbus.cpp.i
+.PHONY : mdtFrameCodecModbus.i
+
+# target to preprocess a source file
+mdtFrameCodecModbus.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecModbus.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecModbus.cpp.i
+.PHONY : mdtFrameCodecModbus.cpp.i
+
+mdtFrameCodecModbus.s: mdtFrameCodecModbus.cpp.s
+.PHONY : mdtFrameCodecModbus.s
+
+# target to generate assembly for a file
+mdtFrameCodecModbus.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecModbus.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils_static.dir/build.make src/mdtutils/CMakeFiles/mdtutils_static.dir/mdtFrameCodecModbus.cpp.s
+.PHONY : mdtFrameCodecModbus.cpp.s
+
 mdtFrameCodecScpi.o: mdtFrameCodecScpi.cpp.o
 .PHONY : mdtFrameCodecScpi.o
 
@@ -1267,6 +1294,9 @@ help:
 	@echo "... mdtFrameCodecAscii.o"
 	@echo "... mdtFrameCodecAscii.i"
 	@echo "... mdtFrameCodecAscii.s"
+	@echo "... mdtFrameCodecModbus.o"
+	@echo "... mdtFrameCodecModbus.i"
+	@echo "... mdtFrameCodecModbus.s"
 	@echo "... mdtFrameCodecScpi.o"
 	@echo "... mdtFrameCodecScpi.i"
 	@echo "... mdtFrameCodecScpi.s"

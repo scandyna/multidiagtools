@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtTest::mdtutils
-  revision 14
+  revision 15
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -611,7 +611,37 @@ ${inlines}
 
       operation 535298 "mdtFrameCodecScpiTest"
 	stereotype "slot"
-	public explicit_return_type "void"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 635650 "mdtFrameCodecScpiTestU3606ATest"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 635778 "mdtFrameCodecModbusTest"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

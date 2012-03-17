@@ -142,10 +142,6 @@ QByteArray mdtFrameModbusTcp::getPdu()
   return pvPdu;
 }
 
-void mdtFrameModbusTcp::parseMbapHeader()
-{
-}
-
 void mdtFrameModbusTcp::encode()
 {
   Q_ASSERT(capacity() >= 7);

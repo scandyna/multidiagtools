@@ -83,10 +83,6 @@ class mdtFrameModbusTcp : public mdtFrame
    */
   QByteArray getPdu();
 
-  /*! \brief Get the MODBUS MBAP Header
-   */
-  void parseMbapHeader();
-
   /*! \brief Encode the MODBUS/TCP frame
    * 
    * This will build the frame with MBAP Header.

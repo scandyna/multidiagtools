@@ -66,7 +66,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtUsbtmcPort Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtUsbtmcPort" --><!-- doxytag: inherits="mdtPort" -->
+<!-- doxytag: class="mdtUsbtmcPort" --><!-- doxytag: inherits="mdtAbstractPort" -->
 <p>USBTMC device file calss.  
  <a href="classmdt_usbtmc_port.html#details">More...</a></p>
 
@@ -76,14 +76,14 @@ Inheritance diagram for mdtUsbtmcPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usbtmc_port__inherit__graph.png" border="0" usemap="#mdt_usbtmc_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_usbtmc_port_inherit__map" id="mdt_usbtmc_port_inherit__map">
-<area shape="rect" id="node2" href="classmdt_port.html" title="mdtPort" alt="" coords="29,5,96,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,5,123,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtUsbtmcPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usbtmc_port__coll__graph.png" border="0" usemap="#mdt_usbtmc_port_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_usbtmc_port_coll__map" id="mdt_usbtmc_port_coll__map">
-<area shape="rect" id="node2" href="classmdt_port.html" title="mdtPort" alt="" coords="29,5,96,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_usbtmc_port-members.html">List of all members.</a></p>
@@ -96,20 +96,125 @@ Public Slots</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a102a2d5ebad4968621812e682d9d1b71"></a><!-- doxytag: member="mdtUsbtmcPort::mdtUsbtmcPort" ref="a102a2d5ebad4968621812e682d9d1b71" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtUsbtmcPort</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60fd3e4114c46e1bce5e1188e349e0ed"></a><!-- doxytag: member="mdtUsbtmcPort::waitEventRead" ref="a60fd3e4114c46e1bce5e1188e349e0ed" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>waitEventRead</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa58100bc6ec2a5f91a3c6bb3676a468"></a><!-- doxytag: member="mdtUsbtmcPort::waitEventWriteReady" ref="aaa58100bc6ec2a5f91a3c6bb3676a468" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>waitEventWriteReady</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97fca5f136f232275d90ab5b8c5ce285"></a><!-- doxytag: member="mdtUsbtmcPort::writeOneFrame" ref="a97fca5f136f232275d90ab5b8c5ce285" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>writeOneFrame</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a00e7406b88f60c6c233e124d08a900ab">setAttributes</a> (const QString &amp;portName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#a00e7406b88f60c6c233e124d08a900ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#acf677164611ea563e40be93e1b36236a">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#acf677164611ea563e40be93e1b36236a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">close</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a6fec5e49a42e6c2e6202a8b2f7f0dc37"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#ad3ec37dab7918fad36190b1c4c58c266">setReadTimeout</a> (int timeout)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#ad3ec37dab7918fad36190b1c4c58c266"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c">setWriteTimeout</a> (int timeout)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#a18ff8b76d07cd75339204f9389e1dd5c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b">waitForReadyRead</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#a46efba4f2d3dbb3c917368323de0333b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a91f45336ca9a71284e0309182f5e8ca1">read</a> (char *data, qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a91f45336ca9a71284e0309182f5e8ca1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#aaa58100bc6ec2a5f91a3c6bb3676a468">waitEventWriteReady</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to device.  <a href="#aaa58100bc6ec2a5f91a3c6bb3676a468"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a32b98d2a61617293c328a343d62d52c3">write</a> (const char *data, qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a32b98d2a61617293c328a343d62d52c3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port.html#a97fca5f136f232275d90ab5b8c5ce285">writeOneFrame</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just for special cases.  <a href="#a97fca5f136f232275d90ab5b8c5ce285"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USBTMC device file calss. </p>
 <p>With USBTMC, when we try to read, and no data are available, both read and write threads are blocked.<br/>
- USBTMC seems not to handle select() call, so we re-implement waitEventRead() and waitEventWriteReady().<br/>
  To start the read, call the <a class="el" href="classmdt_usbtmc_port.html#a86ee5e17c32dea75e9f918389d3f7afc" title="Tell the thread that a frame can be read.">readOneFrame()</a> method.<br/>
- To start the write, call the writeOneFrame() method. </p>
+ To start the write, call the <a class="el" href="classmdt_usbtmc_port.html#a97fca5f136f232275d90ab5b8c5ce285" title="Just for special cases.">writeOneFrame()</a> method. </p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a6fec5e49a42e6c2e6202a8b2f7f0dc37"></a><!-- doxytag: member="mdtUsbtmcPort::close" ref="a6fec5e49a42e6c2e6202a8b2f7f0dc37" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbtmcPort::close </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Close the port. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Do the specific work</li>
+<li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, and mutex unocked. </li>
+</ul>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acf677164611ea563e40be93e1b36236a"></a><!-- doxytag: member="mdtUsbtmcPort::open" ref="acf677164611ea563e40be93e1b36236a" args="(mdtPortConfig &amp;cfg)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtUsbtmcPort::open </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open the port. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Close previous opened ressource</li>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Do the specific work</li>
+<li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, and mutex unocked. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
+</li>
+</ul>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a91f45336ca9a71284e0309182f5e8ca1"></a><!-- doxytag: member="mdtUsbtmcPort::read" ref="a91f45336ca9a71284e0309182f5e8ca1" args="(char *data, qint64 maxSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 mdtUsbtmcPort::read </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read data from port. </p>
+<p>This method must be implemented in subclass </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a86ee5e17c32dea75e9f918389d3f7afc"></a><!-- doxytag: member="mdtUsbtmcPort::readOneFrame" ref="a86ee5e17c32dea75e9f918389d3f7afc" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -118,7 +223,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>writeOneFrame</b> ()<
           <td class="memname">void mdtUsbtmcPort::readOneFrame </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td><code> [virtual, slot]</code></td>
         </tr>
       </table>
 </div>
@@ -130,6 +235,192 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>writeOneFrame</b> ()<
 <dl class="see"><dt><b>See also:</b></dt><dd>setWaitingFrame() </dd>
 <dd>
 <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ab1738b5b6b78743ee2d36ccf5daa7c00">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a00e7406b88f60c6c233e124d08a900ab"></a><!-- doxytag: member="mdtUsbtmcPort::setAttributes" ref="a00e7406b88f60c6c233e124d08a900ab" args="(const QString &amp;portName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtUsbtmcPort::setAttributes </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>portName</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the port attributes. </p>
+<p>Open the given port name and get his attributes. This method must be re-implemented in subclass. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad3ec37dab7918fad36190b1c4c58c266"></a><!-- doxytag: member="mdtUsbtmcPort::setReadTimeout" ref="ad3ec37dab7918fad36190b1c4c58c266" args="(int timeout)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbtmcPort::setReadTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the read data timeout. </p>
+<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a18ff8b76d07cd75339204f9389e1dd5c"></a><!-- doxytag: member="mdtUsbtmcPort::setWriteTimeout" ref="a18ff8b76d07cd75339204f9389e1dd5c" args="(int timeout)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbtmcPort::setWriteTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the write data timeout. </p>
+<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa58100bc6ec2a5f91a3c6bb3676a468"></a><!-- doxytag: member="mdtUsbtmcPort::waitEventWriteReady" ref="aaa58100bc6ec2a5f91a3c6bb3676a468" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtUsbtmcPort::waitEventWriteReady </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data can be written to device. </p>
+<p>This method must be re-implemented in subclass. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a46efba4f2d3dbb3c917368323de0333b"></a><!-- doxytag: member="mdtUsbtmcPort::waitForReadyRead" ref="a46efba4f2d3dbb3c917368323de0333b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtUsbtmcPort::waitForReadyRead </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data is available at device. </p>
+<p>This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a> </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a32b98d2a61617293c328a343d62d52c3"></a><!-- doxytag: member="mdtUsbtmcPort::write" ref="a32b98d2a61617293c328a343d62d52c3" args="(const char *data, qint64 maxSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 mdtUsbtmcPort::write </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Write data to port. </p>
+<p>This method must be implemented in subclass </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a97fca5f136f232275d90ab5b8c5ce285"></a><!-- doxytag: member="mdtUsbtmcPort::writeOneFrame" ref="a97fca5f136f232275d90ab5b8c5ce285" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbtmcPort::writeOneFrame </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Just for special cases. </p>
+<p>In some case, this method is implemented in subclass. Default implementation does nothing. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a2235d62d9a9e4555d41773c41cc3bc70">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -152,7 +443,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>writeOneFrame</b> ()<
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 12 2012 20:36:12 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

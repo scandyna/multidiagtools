@@ -70,7 +70,7 @@ Inheritance diagram for mdtPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port__inherit__graph.png" border="0" usemap="#mdt_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_port_inherit__map" id="mdt_port_inherit__map">
-<area shape="rect" id="node3" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,83,155,112"/><area shape="rect" id="node7" href="classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="179,83,293,112"/><area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/></map>
+<area shape="rect" id="node3" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,83,155,112"/><area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port-members.html">List of all members.</a></p>
@@ -78,62 +78,8 @@ Inheritance diagram for mdtPort:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac466eac9d1a54ea0e04c998660ad75ec"></a><!-- doxytag: member="mdtPort::mdtPort" ref="ac466eac9d1a54ea0e04c998660ad75ec" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#ac466eac9d1a54ea0e04c998660ad75ec">mdtPort</a> (QObject *parent=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new port object R/W timeouts are set to 500 ms. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#ac7158d1d718dbc6068648bbed1eab747">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open port.  <a href="#ac7158d1d718dbc6068648bbed1eab747"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#aa494585a96a16c80a04dd32b0b6a0d4c">close</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#aa494585a96a16c80a04dd32b0b6a0d4c"></a><br/></td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>mdtPort</b> (QObject *parent=0)</td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aa494585a96a16c80a04dd32b0b6a0d4c"></a><!-- doxytag: member="mdtPort::close" ref="aa494585a96a16c80a04dd32b0b6a0d4c" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPort::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Close the port. </p>
-<p>Note: this method locks the internal mutex </p>
-
-<p>Reimplemented in <a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">mdtSerialPortPosix</a>, and <a class="el" href="classmdt_abstract_serial_port.html#ad84810a4bd7a10c5c621475511196c85">mdtAbstractSerialPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac7158d1d718dbc6068648bbed1eab747"></a><!-- doxytag: member="mdtPort::open" ref="ac7158d1d718dbc6068648bbed1eab747" args="(mdtPortConfig &amp;cfg)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPort::open </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td>
-          <td class="paramname"><em>cfg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open port. </p>
-<p>Note: this method locks the internal mutex </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path to port </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if successfull </dd></dl>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_port_8h_source.html">mdtPort.h</a></li>
 <li>src/mdtutils/mdtPort.cpp</li>
@@ -153,7 +99,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 12 2012 20:36:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

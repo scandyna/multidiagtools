@@ -1,9 +1,29 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtFrameCodecTest.h"
 #include "mdtFrameCodec.h"
 #include "mdtFrameCodecAscii.h"
 #include "mdtFrameCodecScpi.h"
 #include "mdtFrameCodecScpiU3606A.h"
+#include "mdtFrameCodecModbus.h"
 #include <QByteArray>
 
 #include <QVariant>
@@ -201,4 +221,72 @@ void mdtFrameCodecTest::mdtFrameCodecScpiTestU3606ATest()
   QVERIFY(f.values().at(0) == "CAL");
   QVERIFY(f.values().at(1) == " 27 Nov 2009");
 
+}
+
+void mdtFrameCodecTest::mdtFrameCodecModbusTest()
+{
+  mdtFrameCodecModbus c;
+  QByteArray pdu;
+  
+  // Initial states
+  QVERIFY(c.values().size() == 0);
+  
+  // Check encode of ReadCoils
+  pdu = c.encodeReadCoils(0x0203, 0x0408);
+  QVERIFY(pdu.size() == 5);
+  QVERIFY(pdu.at(0) == 0x01); // Function code
+  QVERIFY(pdu.at(1) == 0x02); // Start address H
+  QVERIFY(pdu.at(2) == 0x03); // Start address L
+  QVERIFY(pdu.at(3) == 0x04); // Coils count H
+  QVERIFY(pdu.at(4) == 0x08); // Coils count L
+  
+  // Check decode of ReadCoils
+  pdu.clear();
+  pdu.append(0x01);   // Function code
+  pdu.append(3);      // Bytes count
+  pdu.append(0x07);   // 0000 0111
+  pdu.append(0x45);   // 0100 0101
+  pdu.append(0x81);   // 1000 0001
+  QVERIFY(c.decode(pdu) == 0x01);
+  QVERIFY(c.values().size() == 24);
+  QVERIFY(c.values().at(0).toBool() == true);
+  QVERIFY(c.values().at(1).toBool() == true);
+  QVERIFY(c.values().at(2).toBool() == true);
+  QVERIFY(c.values().at(3).toBool() == false);
+  QVERIFY(c.values().at(4).toBool() == false);
+  QVERIFY(c.values().at(5).toBool() == false);
+  QVERIFY(c.values().at(6).toBool() == false);
+  QVERIFY(c.values().at(7).toBool() == false);
+  QVERIFY(c.values().at(8).toBool() == true);
+  QVERIFY(c.values().at(9).toBool() == false);
+  QVERIFY(c.values().at(10).toBool() == true);
+  QVERIFY(c.values().at(11).toBool() == false);
+  QVERIFY(c.values().at(12).toBool() == false);
+  QVERIFY(c.values().at(13).toBool() == false);
+  QVERIFY(c.values().at(14).toBool() == true);
+  QVERIFY(c.values().at(15).toBool() == false);
+  QVERIFY(c.values().at(16).toBool() == true);
+  QVERIFY(c.values().at(17).toBool() == false);
+  QVERIFY(c.values().at(18).toBool() == false);
+  QVERIFY(c.values().at(19).toBool() == false);
+  QVERIFY(c.values().at(20).toBool() == false);
+  QVERIFY(c.values().at(21).toBool() == false);
+  QVERIFY(c.values().at(22).toBool() == false);
+  QVERIFY(c.values().at(23).toBool() == true);
+
+  // Check decode of ReadCoils with errors in PDU
+  pdu.clear();
+  pdu.append(0x01);   // Function code
+  pdu.append(3);      // Bytes count
+  pdu.append(0x07);   // 0000 0111
+  pdu.append(0x45);   // 1000 0101
+  QVERIFY(c.decode(pdu) < 0);
+  QVERIFY(c.values().size() == 0);
+  pdu.clear();
+  pdu.append(0x01);   // Function code
+  pdu.append(1);      // Bytes count
+  pdu.append(0x07);   // 0000 0111
+  pdu.append(0x45);   // 1000 0101
+  QVERIFY(c.decode(pdu) < 0);
+  QVERIFY(c.values().size() == 0);
 }

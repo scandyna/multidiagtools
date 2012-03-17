@@ -59,77 +59,98 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">src/mdtutils/mdtError.h</div>  </div>
 </div>
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MDT_ERROR_H</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MDT_ERROR_H</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;QMetaType&gt;</span>
-<a name="l00006"></a>00006 
-<a name="l00009"></a>00009 <span class="keyword">enum</span> mdt_error_t{
-<a name="l00010"></a>00010   MDT_NO_ERROR = 0,
-<a name="l00011"></a>00011   MDT_UNDEFINED_ERROR,
-<a name="l00012"></a>00012   MDT_FILE_IO_ERROR,
-<a name="l00013"></a>00013   MDT_PORT_IO_ERROR,
-<a name="l00014"></a>00014   MDT_SERIAL_PORT_IO_ERROR,
-<a name="l00015"></a>00015   MDT_USB_IO_ERROR,
-<a name="l00016"></a>00016   MDT_FRAME_DECODE_ERROR,
-<a name="l00017"></a>00017   MDT_DEVICE_ERROR
-<a name="l00018"></a>00018 };
-<a name="l00019"></a>00019 
-<a name="l00023"></a>00023 <span class="preprocessor">#define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__);</span>
-<a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a><a class="code" href="classmdt_error.html">00025</a> <span class="keyword">class </span><a class="code" href="classmdt_error.html">mdtError</a>
-<a name="l00026"></a>00026 {
-<a name="l00027"></a>00027  <span class="keyword">public</span>:
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029   <span class="keyword">enum</span> level_t{
-<a name="l00030"></a>00030     NoError = 0x00,
-<a name="l00031"></a>00031     Info = 0x01,
-<a name="l00032"></a>00032     Warning = 0x02,
-<a name="l00033"></a>00033     Error = 0x04
-<a name="l00034"></a>00034   };
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036   <a class="code" href="classmdt_error.html">mdtError</a>();
-<a name="l00037"></a>00037   
-<a name="l00040"></a>00040   <a class="code" href="classmdt_error.html">mdtError</a>(<span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">number</a>, <span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">text</a>, level_t <a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d" title="Error level  level_t.">level</a>);
-<a name="l00041"></a>00041 
-<a name="l00044"></a>00044   <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(<span class="keywordtype">int</span> number, <span class="keyword">const</span> QString &amp;text);
-<a name="l00045"></a>00045 
-<a name="l00049"></a>00049   <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a0df51beab0ddaba26d5194690303d682" title="Add the source of error It&#39;s possible to use the helper macro MDT_ERROR_SET_SRC()">setSource</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a" title="Error source file.">fileName</a>, <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6" title="Error source line.">fileLine</a>, <span class="keyword">const</span> QString &amp;className, <span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6" title="Error source function.">functionName</a>);
-<a name="l00050"></a>00050 
-<a name="l00053"></a>00053   <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00054"></a>00054 
-<a name="l00057"></a>00057   <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">number</a>();
-<a name="l00058"></a>00058 
-<a name="l00061"></a>00061   QString <a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">text</a>();
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
+<a name="l00002"></a>00002 <span class="comment"> **</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00004"></a>00004 <span class="comment"> **</span>
+<a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
+<a name="l00006"></a>00006 <span class="comment"> **</span>
+<a name="l00007"></a>00007 <span class="comment"> ** multiDiagTools is free software: you can redistribute it and/or modify</span>
+<a name="l00008"></a>00008 <span class="comment"> ** it under the terms of the GNU Lesser General Public License as published by</span>
+<a name="l00009"></a>00009 <span class="comment"> ** the Free Software Foundation, either version 3 of the License, or</span>
+<a name="l00010"></a>00010 <span class="comment"> ** (at your option) any later version.</span>
+<a name="l00011"></a>00011 <span class="comment"> **</span>
+<a name="l00012"></a>00012 <span class="comment"> ** multiDiagTools is distributed in the hope that it will be useful,</span>
+<a name="l00013"></a>00013 <span class="comment"> ** but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<a name="l00014"></a>00014 <span class="comment"> ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<a name="l00015"></a>00015 <span class="comment"> ** GNU Lesser General Public License for more details.</span>
+<a name="l00016"></a>00016 <span class="comment"> **</span>
+<a name="l00017"></a>00017 <span class="comment"> ** You should have received a copy of the GNU Lesser General Public License</span>
+<a name="l00018"></a>00018 <span class="comment"> ** along with multiDiagTools.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<a name="l00019"></a>00019 <span class="comment"> **</span>
+<a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#ifndef MDT_ERROR_H</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_ERROR_H</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QMetaType&gt;</span>
+<a name="l00026"></a>00026 
+<a name="l00029"></a>00029 <span class="keyword">enum</span> mdt_error_t{
+<a name="l00030"></a>00030   MDT_NO_ERROR = 0,
+<a name="l00031"></a>00031   MDT_UNDEFINED_ERROR,
+<a name="l00032"></a>00032   MDT_FILE_IO_ERROR,
+<a name="l00033"></a>00033   MDT_PORT_IO_ERROR,
+<a name="l00034"></a>00034   MDT_SERIAL_PORT_IO_ERROR,
+<a name="l00035"></a>00035   MDT_USB_IO_ERROR,
+<a name="l00036"></a>00036   MDT_TCP_IO_ERROR,
+<a name="l00037"></a>00037   MDT_FRAME_DECODE_ERROR,
+<a name="l00038"></a>00038   MDT_DEVICE_ERROR
+<a name="l00039"></a>00039 };
+<a name="l00040"></a>00040 
+<a name="l00044"></a>00044 <span class="preprocessor">#define MDT_ERROR_SET_SRC(e, className) e.setSource(__FILE__, __LINE__, className, __FUNCTION__);</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span>
+<a name="l00046"></a><a class="code" href="classmdt_error.html">00046</a> <span class="keyword">class </span><a class="code" href="classmdt_error.html">mdtError</a>
+<a name="l00047"></a>00047 {
+<a name="l00048"></a>00048  <span class="keyword">public</span>:
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050   <span class="keyword">enum</span> level_t{
+<a name="l00051"></a>00051     NoError = 0x00,
+<a name="l00052"></a>00052     Info = 0x01,
+<a name="l00053"></a>00053     Warning = 0x02,
+<a name="l00054"></a>00054     Error = 0x04
+<a name="l00055"></a>00055   };
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <a class="code" href="classmdt_error.html">mdtError</a>();
+<a name="l00058"></a>00058   
+<a name="l00061"></a>00061   <a class="code" href="classmdt_error.html">mdtError</a>(<span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">number</a>, <span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">text</a>, level_t <a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d" title="Error level  level_t.">level</a>);
 <a name="l00062"></a>00062 
-<a name="l00066"></a>00066   level_t <a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d" title="Error level  level_t.">level</a>();
-<a name="l00067"></a>00067 
-<a name="l00070"></a>00070   <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#a0c5d7ff948d194c31720636b8a211c38" title="Error number returned from system if available.">systemNumber</a>();
+<a name="l00065"></a>00065   <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(<span class="keywordtype">int</span> number, <span class="keyword">const</span> QString &amp;text);
+<a name="l00066"></a>00066 
+<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a0df51beab0ddaba26d5194690303d682" title="Add the source of error It&#39;s possible to use the helper macro MDT_ERROR_SET_SRC()">setSource</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a" title="Error source file.">fileName</a>, <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6" title="Error source line.">fileLine</a>, <span class="keyword">const</span> QString &amp;className, <span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6" title="Error source function.">functionName</a>);
 <a name="l00071"></a>00071 
-<a name="l00074"></a>00074   QString <a class="code" href="classmdt_error.html#af03eb8afe4065160aec6480f56badd43" title="Error text returned from system, if available.">systemText</a>();
+<a name="l00074"></a>00074   <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
 <a name="l00075"></a>00075 
-<a name="l00078"></a>00078   QString <a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6" title="Error source function.">functionName</a>();
+<a name="l00078"></a>00078   <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">number</a>();
 <a name="l00079"></a>00079 
-<a name="l00082"></a>00082   QString <a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a" title="Error source file.">fileName</a>();
+<a name="l00082"></a>00082   QString <a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">text</a>();
 <a name="l00083"></a>00083 
-<a name="l00086"></a>00086   <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6" title="Error source line.">fileLine</a>();
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088  <span class="keyword">private</span>:
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   <span class="keywordtype">int</span> pvNumber;
-<a name="l00091"></a>00091   QString pvText;
-<a name="l00092"></a>00092   level_t pvLevel;
-<a name="l00093"></a>00093   <span class="keywordtype">int</span> pvSystemNumber;
-<a name="l00094"></a>00094   QString pvSystemText;
-<a name="l00095"></a>00095   QString pvFunctionName;
-<a name="l00096"></a>00096   QString pvFileName;
-<a name="l00097"></a>00097   <span class="keywordtype">int</span> pvFileLine;
-<a name="l00098"></a>00098 };
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100 Q_DECLARE_METATYPE(<a class="code" href="classmdt_error.html">mdtError</a>)
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102 <span class="preprocessor">#endif  // #ifndef MDT_ERROR_H</span>
+<a name="l00087"></a>00087   level_t <a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d" title="Error level  level_t.">level</a>();
+<a name="l00088"></a>00088 
+<a name="l00091"></a>00091   <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#a0c5d7ff948d194c31720636b8a211c38" title="Error number returned from system if available.">systemNumber</a>();
+<a name="l00092"></a>00092 
+<a name="l00095"></a>00095   QString <a class="code" href="classmdt_error.html#af03eb8afe4065160aec6480f56badd43" title="Error text returned from system, if available.">systemText</a>();
+<a name="l00096"></a>00096 
+<a name="l00099"></a>00099   QString <a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6" title="Error source function.">functionName</a>();
+<a name="l00100"></a>00100 
+<a name="l00103"></a>00103   QString <a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a" title="Error source file.">fileName</a>();
+<a name="l00104"></a>00104 
+<a name="l00107"></a>00107   <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6" title="Error source line.">fileLine</a>();
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109  <span class="keyword">private</span>:
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111   <span class="keywordtype">int</span> pvNumber;
+<a name="l00112"></a>00112   QString pvText;
+<a name="l00113"></a>00113   level_t pvLevel;
+<a name="l00114"></a>00114   <span class="keywordtype">int</span> pvSystemNumber;
+<a name="l00115"></a>00115   QString pvSystemText;
+<a name="l00116"></a>00116   QString pvFunctionName;
+<a name="l00117"></a>00117   QString pvFileName;
+<a name="l00118"></a>00118   <span class="keywordtype">int</span> pvFileLine;
+<a name="l00119"></a>00119 };
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121 Q_DECLARE_METATYPE(<a class="code" href="classmdt_error.html">mdtError</a>)
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 <span class="preprocessor">#endif  // #ifndef MDT_ERROR_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -146,7 +167,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 12 2012 20:36:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

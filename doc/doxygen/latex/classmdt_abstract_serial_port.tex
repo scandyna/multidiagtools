@@ -158,13 +158,9 @@ Emited whenn CAR (CD) status changed.
 
 Close the serial port. 
 
-This method must be re-\/implemented in plateform specific subclass. Multiple call of this method is possible without any test The implemented method must call \hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{mdtPort::close()} at the right time \begin{DoxySeeAlso}{See also}
+This method must be re-\/implemented in plateform specific subclass. Multiple call of this method is possible without any test The implemented method must call mdtPort::close() at the right time \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port}{mdtPort} 
 \end{DoxySeeAlso}
-
-
-Reimplemented from \hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{mdtPort}.
-
 
 
 Implemented in \hyperlink{classmdt_serial_port_posix_a29df8d6b7c74bd7e3bf8513987bdd2a2}{mdtSerialPortPosix}.
@@ -238,7 +234,7 @@ Implemented in \hyperlink{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08
 
 Open the serial port with given configuration. 
 
-This method must be re-\/implemented in plateform specific subclass. The implemented method must call \hyperlink{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}{mdtPort::open()} at the right time 
+This method must be re-\/implemented in plateform specific subclass. The implemented method must call mdtPort::open() at the right time 
 \begin{DoxyParams}{Parameters}
 {\em cfg} & Contains the setup for the serial port to open \\
 \hline

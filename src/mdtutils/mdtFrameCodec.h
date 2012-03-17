@@ -12,6 +12,10 @@ class mdtFrameCodec
   mdtFrameCodec();
   ~mdtFrameCodec();
 
+  /*! \brief Get the decoded values
+   */
+  QList<QVariant> values();
+
  protected:
 
   // Decode IEEE block of data
