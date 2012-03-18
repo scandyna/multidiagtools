@@ -84,8 +84,10 @@ Inheritance diagram for mdtFrame:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>type_t</b> { <b>mdtFrameTypeAscii</b> =  1
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17">type_t</a> { <a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">FT_ASCII</a> =  1, 
+<a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">FT_MODBUS_TCP</a>
  }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame type.  <a href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#ac1a8ad77ce7bd6d08032056c3610d5c0">setIgnoreNullValues</a> (bool ignoreNullValues)</td></tr>
@@ -144,7 +146,33 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 </table>
 <p>At this state, whenn <a class="el" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore()</a> returns 0 and <a class="el" href="classmdt_frame.html#a2a8fb9f36c941282881bba0c538d1ce5" title="Returns true if EOF condition was reached.">isComplete()</a> is true, the received frame is ok. The next step is to decode it, according to the used protocol (modbus, ...).<br/>
  Note that these states are only set when using <a class="el" href="classmdt_frame.html#af03d60dadc6bd33b3a333cf484463113" title="Put data until EOF token was reached.">putUntil()</a> functions. </p>
-</div><hr/><h2>Member Function Documentation</h2>
+</div><hr/><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17"></a><!-- doxytag: member="mdtFrame::type_t" ref="af936e37d5fe4c066c0fb0161fafd4a17" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17">mdtFrame::type_t</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Frame type. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722"></a><!-- doxytag: member="FT_ASCII" ref="af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722" args="" -->FT_ASCII</em>&nbsp;</td><td>
+<p>ASCII frame type </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a"></a><!-- doxytag: member="FT_MODBUS_TCP" ref="af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a" args="" -->FT_MODBUS_TCP</em>&nbsp;</td><td>
+<p>MODBUS/TCP frame type </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a8526b227a56562fddf8445060e8095d4"></a><!-- doxytag: member="mdtFrame::bytesToStore" ref="a8526b227a56562fddf8445060e8095d4" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -416,7 +444,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 18 2012 17:44:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

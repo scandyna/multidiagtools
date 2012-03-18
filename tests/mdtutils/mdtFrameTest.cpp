@@ -723,6 +723,20 @@ void mdtFrameTest::modbusTcpEncodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.modbusLength() == 0);
 
+  // MBAP Header - Default Unit ID (0xFF)
+  f.setTransactionId(0x0205);
+  f.encode();
+  QVERIFY(f.remainCapacity() == 3);
+  QVERIFY(f.modbusLength() == 1);
+  QVERIFY(f.at(0) == 0x02);
+  QVERIFY(f.at(1) == 0x05);
+  QVERIFY(f.at(2) == 0);
+  QVERIFY(f.at(3) == 0);
+  QVERIFY(f.at(4) == 0x00);
+  QVERIFY(f.at(5) == 0x01);
+  QVERIFY((quint8)f.at(6) == 0xFF);
+
+
   // MBAP Header
   f.setTransactionId(0x1234);
   f.setUnitId(0x25);
@@ -814,7 +828,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   QVERIFY(f.putData(srcData.data(), srcData.size()) == 10);
   QVERIFY(!f.isEmpty());
@@ -844,7 +858,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   for(int i=0; i<srcData.size(); i++){
     c = srcData.at(i);
@@ -877,7 +891,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   // Put some data
   QVERIFY(f.putData(srcData.data(), 2) == 2);
@@ -889,7 +903,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   // Put some data
   QVERIFY(f.putData(srcData.data(), 3) == 3);
@@ -901,7 +915,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   // Put some data - After this putData() call, frame's length can be decoded
   QVERIFY(f.putData(srcData.data(), 2) == 2);
@@ -913,7 +927,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 1);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   // Put some data
   QVERIFY(f.putData(srcData.data(), 2) == 2);
@@ -925,7 +939,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 3);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   // Put some data
   QVERIFY(f.putData(srcData.data(), 1) == 1);
@@ -980,7 +994,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   QVERIFY(f.putData(srcData.data(), srcData.size()) == 10);
   QVERIFY(!f.isEmpty());
@@ -1010,7 +1024,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   for(int i=0; i<srcData.size(); i++){
     c = srcData.at(i);
@@ -1069,7 +1083,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 0);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   QVERIFY(f.putData(srcData.data(), srcData.size()) == 20);
   QVERIFY(!f.isEmpty());
@@ -1079,7 +1093,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 14);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
   // Try to put more - must no work
   QVERIFY(f.putData(srcData.data(), srcData.size()) == 0);
@@ -1090,7 +1104,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(!f.isComplete());
   QVERIFY(f.transactionId() == 0);
   QVERIFY(f.modbusLength() == 14);
-  QVERIFY(f.unitId() == 0);
+  QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
 
 

@@ -13,8 +13,7 @@ Provide an array of bytes.
 
 
 
-Inheritance diagram for mdtFrame:
-\nopagebreak
+Inheritance diagram for mdtFrame:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -24,9 +23,10 @@ Inheritance diagram for mdtFrame:
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum {\bfseries type\_\-t} \{ {\bfseries mdtFrameTypeAscii} =  1
+enum \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{type\_\-t} \{ \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}{FT\_\-ASCII} =  1, 
+\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}{FT\_\-MODBUS\_\-TCP}
  \}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Frame type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -98,6 +98,32 @@ Frame is full, and EOF condition reached&0&true \\\cline{1-3}
 \end{TabularC}
 At this state, whenn \hyperlink{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{bytesToStore()} returns 0 and \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete()} is true, the received frame is ok. The next step is to decode it, according to the used protocol (modbus, ...).\par
  Note that these states are only set when using \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} functions. 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{
+\index{mdtFrame@{mdtFrame}!type\_\-t@{type\_\-t}}
+\index{type\_\-t@{type\_\-t}!mdtFrame@{mdtFrame}}
+\subsubsection[{type\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtFrame::type\_\-t}}}
+\label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}
+
+
+Frame type. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{FT\_\-ASCII@{FT\_\-ASCII}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-ASCII@{FT\_\-ASCII}}\item[{\em 
+\hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}{
+FT\_\-ASCII}
+\label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}
+}]ASCII frame type \index{FT\_\-MODBUS\_\-TCP@{FT\_\-MODBUS\_\-TCP}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-MODBUS\_\-TCP@{FT\_\-MODBUS\_\-TCP}}\item[{\em 
+\hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}{
+FT\_\-MODBUS\_\-TCP}
+\label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}
+}]MODBUS/TCP frame type \end{description}
+\end{Desc}
+
+
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{

@@ -107,9 +107,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00136"></a>00136 
 <a name="l00140"></a>00140   <span class="keywordtype">int</span> <a class="code" href="classmdt_port_config.html#a476ae5e51401da1da4f01e40cc4441ab" title="Get the write Queue size.">writeQueueSize</a>();
 <a name="l00141"></a>00141 
-<a name="l00147"></a>00147   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<span class="keyword">const</span> mdtFrame::type_t type);
+<a name="l00147"></a>00147   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType</a>(<span class="keyword">const</span> <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17" title="Frame type.">mdtFrame::type_t</a> type);
 <a name="l00148"></a>00148 
-<a name="l00152"></a>00152   mdtFrame::type_t <a class="code" href="classmdt_port_config.html#a547cb25cd2b1b0b3c40e7ebf023c7a1d" title="Get frame type.">frameType</a>();
+<a name="l00152"></a>00152   <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17" title="Frame type.">mdtFrame::type_t</a> <a class="code" href="classmdt_port_config.html#a547cb25cd2b1b0b3c40e7ebf023c7a1d" title="Get frame type.">frameType</a>();
 <a name="l00153"></a>00153 
 <a name="l00156"></a>00156   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq</a>(<span class="keyword">const</span> QByteArray &amp; seq);
 <a name="l00157"></a>00157 
@@ -136,7 +136,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00200"></a>00200   <span class="keywordtype">int</span> pvWriteQueueSize;       <span class="comment">// Maximum number of frames that can be stored</span>
 <a name="l00201"></a>00201   <span class="keywordtype">int</span> pvWriteMinWaitTime;     <span class="comment">// Minimum time to wait before write call</span>
 <a name="l00202"></a>00202   <span class="keywordtype">int</span> pvWriteTimeout;         <span class="comment">// Maximum time before port must be ready for writing data [ms]</span>
-<a name="l00203"></a>00203   mdtFrame::type_t pvFrameType;
+<a name="l00203"></a>00203   <a class="code" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17" title="Frame type.">mdtFrame::type_t</a> pvFrameType;
 <a name="l00204"></a>00204   QByteArray pvEndOfFrameSeq; <span class="comment">// End of frame sequence (valid for ASCII frames)</span>
 <a name="l00205"></a>00205   <span class="keywordtype">bool</span> pvBytePerByteWrite;    <span class="comment">// For some (very) slow devices that need time between each transmitted byte</span>
 <a name="l00206"></a>00206 
@@ -162,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Mar 17 2012 10:03:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 18 2012 17:44:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

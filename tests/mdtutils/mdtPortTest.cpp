@@ -14,6 +14,9 @@
 #include <QStringList>
 #include <QTcpSocket>
 
+#include "mdtFrameCodecModbus.h"
+#include "mdtFrameModbusTcp.h"
+
 #include <QDebug>
 
 #include "linux/mdtUsbtmcPort.h"
@@ -475,7 +478,11 @@ void mdtPortTest::tcpSocketTest()
   mdtTcpSocket s;
   mdtPortConfig cfg;
   mdtTcpSocketThread thd;
-  mdtFrame *frame;
+  //mdtFrame *frame;
+  mdtFrameModbusTcp *frame;
+  
+  QByteArray pdu;
+  mdtFrameCodecModbus c;
 
   // Init the tcp server
   pvTcpServer = new QTcpServer;
@@ -484,6 +491,7 @@ void mdtPortTest::tcpSocketTest()
   
   
   // Setup
+  cfg.setFrameType(mdtFrame::FT_MODBUS_TCP);
   cfg.setWriteQueueSize(1);
   cfg.setWriteMinWaitTime(100);
   cfg.setReadMinWaitTime(100);
@@ -502,7 +510,8 @@ void mdtPortTest::tcpSocketTest()
   QVERIFY(thd.start());
   QVERIFY(thd.isRunning());
   
-  thd.connectToHost("127.0.0.1", pvTcpServer->serverPort());
+  //thd.connectToHost("127.0.0.1", pvTcpServer->serverPort());
+  thd.connectToHost("127.0.0.1", 1502);
   
   qDebug() << "main: threads started";
   
@@ -511,29 +520,39 @@ void mdtPortTest::tcpSocketTest()
   // Get a frame
   s.lockMutex();
   QVERIFY(s.writeFramesPool().size() == 1);
-  frame = s.writeFramesPool().dequeue();
+  frame = static_cast<mdtFrameModbusTcp*>(s.writeFramesPool().dequeue());
   s.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
-  frame->append("-> Hello !\n");
+  //frame->append("-> Hello !\n");
+  //pdu = c.encodeReadCoils(1, 5);
+  pdu = c.encodeWriteSingleCoil(16, true);
+  frame->setPdu(pdu);
+  frame->encode();
+  for(int i=0; i<frame->size(); i++){
+    qDebug() << "frame[" << i << "]: " << hex << (int)frame->at(i);
+  }
   s.lockMutex();
   s.writeFrames().enqueue(frame);
   s.unlockMutex();
   thd.beginNewTransaction();
 
   // Wait some time and verify that data was written
-  QTest::qWait(3000);
+  QTest::qWait(1000);
 
   // Get a frame
   s.lockMutex();
   QVERIFY(s.writeFramesPool().size() == 1);
-  frame = s.writeFramesPool().dequeue();
+  frame = static_cast<mdtFrameModbusTcp*>(s.writeFramesPool().dequeue());
   s.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
-  frame->append("-> Second frame !\n");
+  //frame->append("-> Second frame !\n");
+  pdu = c.encodeReadCoils(20, 12);
+  frame->setPdu(pdu);
+  frame->encode();
   s.lockMutex();
   s.writeFrames().enqueue(frame);
   s.unlockMutex();
@@ -546,11 +565,11 @@ void mdtPortTest::tcpSocketTest()
   s.lockMutex();
   QVERIFY(s.readenFrames().size() > 0);
   // Verify each readen data frame
-  frame = s.readenFrames().dequeue();
-  QVERIFY(frame != 0);
-  qDebug() << "Readen data: " << *frame;
+  //frame = static_cast<mdtFrameModbusTcp*>(s.readenFrames().dequeue());
+  //QVERIFY(frame != 0);
+  //qDebug() << "Readen data: " << *frame;
   // Restore frame to pool
-  s.readFramesPool().enqueue(frame);
+  //s.readFramesPool().enqueue(frame);
   s.unlockMutex();
 
   // End

@@ -2,6 +2,9 @@
 #define MDT_ABSTRACT_PORT_H
 
 #include "mdtFrame.h"
+#include "mdtFrameModbusTcp.h"
+#include "mdtFrameAscii.h"
+
 #include "mdtPortConfig.h"
 #include <QObject>
 #include <QString>

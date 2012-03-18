@@ -173,7 +173,7 @@ void mdtFrame::clear()
   pvEOFcondition = false;
 }
 
-int mdtFrame::putData(char *data, int len)
+int mdtFrame::putData(const char *data, int len)
 {
   Q_ASSERT(data != 0);
   Q_ASSERT(data != QByteArray::data());

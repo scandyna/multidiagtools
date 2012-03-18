@@ -27,7 +27,7 @@ mdtFrameModbusTcp::mdtFrameModbusTcp()
 {
   pvTransactionId = 0;
   pvProtocolId = 0;   // MODBUS: 0
-  pvUnitId = 0;
+  pvUnitId = 0xFF;    // Default on MODBUS/TCP
 }
 
 mdtFrameModbusTcp::~mdtFrameModbusTcp()
@@ -38,7 +38,7 @@ void mdtFrameModbusTcp::clear()
 {
   pvTransactionId = 0;
   pvProtocolId = 0;   // MODBUS: 0
-  pvUnitId = 0;
+  pvUnitId = 0xFF;    // Default on MODBUS/TCP
   pvPdu.clear();
   mdtFrame::clear();
 }
@@ -54,7 +54,7 @@ int mdtFrameModbusTcp::putData(const char *data, int maxLen)
   if(bytesToStore() < 1){
     return 0;
   }
-  ///qDebug() << "mdtFrameModbusTcp::putData(): maxLen (1): " << maxLen;
+  qDebug() << "mdtFrameModbusTcp::putData(): maxLen (1): " << maxLen;
 
   // Check if it's possible to get size of incomming frame
   if((size()+maxLen) >= 6){

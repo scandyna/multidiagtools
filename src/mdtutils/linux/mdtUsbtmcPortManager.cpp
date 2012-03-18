@@ -17,7 +17,7 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   Q_ASSERT(pvWriteThread != 0);
   connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten()));
   // Set USBTMC specific configuration
-  pvConfig.setFrameType(mdtFrame::mdtFrameTypeAscii);
+  pvConfig.setFrameType(mdtFrame::FT_ASCII);
   pvConfig.setEndOfFrameSeq("\n");
   pvConfig.setReadFrameSize(512);
   pvConfig.setWriteFrameSize(512);

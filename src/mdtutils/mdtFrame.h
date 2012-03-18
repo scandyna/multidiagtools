@@ -52,7 +52,12 @@ class mdtFrame : public QByteArray
   mdtFrame();
   ~mdtFrame();
 
-  enum type_t { mdtFrameTypeAscii = 1 };
+  /*! \brief Frame type
+   */
+  enum type_t{ 
+              FT_ASCII = 1,     /*!< ASCII frame type */
+              FT_MODBUS_TCP     /*!< MODBUS/TCP frame type */
+             };
 
   /*! \brief Set the ignore null values flag.
    * 
@@ -116,7 +121,7 @@ class mdtFrame : public QByteArray
    * \return Number of bytes that could really be stored
    * \pre The data pointer must be valid, and not be the internal pointer returned by data().
    */
-  virtual int putData(char *data, int len);
+  virtual int putData(const char *data, int len);
 
   /*! \brief Get the length of the end of frame sequence
    *  Used for ASCII frames.

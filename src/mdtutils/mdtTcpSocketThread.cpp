@@ -89,6 +89,7 @@ void mdtTcpSocketThread::readFromSocket()
     }
     // Store data
     stored = pvReadCurrentFrame->putData(bufferCursor, toStore);
+    qDebug() << "readFromSocket(): stored " << stored << " bytes in frame";
     // If frame is full, enqueue to readen frames and get a new one
     if(pvReadCurrentFrame->bytesToStore() == 0){
       stored += pvReadCurrentFrame->eofSeqLen();
@@ -96,6 +97,7 @@ void mdtTcpSocketThread::readFromSocket()
       pvPort->unlockMutex();
       // emit a Readen frame signal if complete
       if(pvReadCurrentFrame->isComplete()){
+        qDebug() << "readFromSocket(): frame complete";
         emit newFrameReaden();
       }
       pvReadCurrentFrame = getNewFrameRead();
@@ -279,7 +281,7 @@ void mdtTcpSocketThread::run()
 
   /// NOTE: essai
   pvTransactionIds.enqueue(25);
-  
+
   // Run...
   while(1){
     // If we have nothing to write, and no pending transaction, go sleep
@@ -328,6 +330,7 @@ void mdtTcpSocketThread::run()
     if(!pvSocket->waitForReadyRead(500)){  /// NOTE: timeout
       if((pvSocket->error() == QAbstractSocket::SocketTimeoutError)||(pvSocket->error() == QAbstractSocket::RemoteHostClosedError)){
         // On timeout or disconnected host, we retry later. Sleep a bit here to prevent crazy ressource consumption
+        qDebug() << "RD Timeout or disconnected";
         msleep(100);
       }else{
         // Unmanaged error, abort
@@ -338,6 +341,7 @@ void mdtTcpSocketThread::run()
       }
     }else{
       // We received data , read it
+      qDebug() << "Have to read: " << pvSocket->bytesAvailable();
       readFromSocket();
       /// NOTE: transactions
       if(pvTransactionIds.size() > 0){

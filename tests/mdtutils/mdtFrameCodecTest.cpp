@@ -289,4 +289,33 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append(0x45);   // 1000 0101
   QVERIFY(c.decode(pdu) < 0);
   QVERIFY(c.values().size() == 0);
+  
+  // Check the encode of WriteSingleCoil
+  pdu = c.encodeWriteSingleCoil(0x1258, true);
+  QVERIFY(pdu.at(0) == 0x05);         // Function code
+  QVERIFY(pdu.at(1) == 0x12);         // Address H
+  QVERIFY(pdu.at(2) == 0x58);         // Address L
+  QVERIFY((quint8)pdu.at(3) == 0xFF); // Value H
+  QVERIFY(pdu.at(4) == 0x00);         // Value L
+
+  // Check decode of WriteSingleCoil
+  pdu.clear();
+  pdu.append(0x05);     // Function code
+  pdu.append(0x25);     // Address H
+  pdu.append(0x06);     // Address L
+  pdu.append(0xFF);     // Value H
+  pdu.append((char)0);  // Value L
+  QVERIFY(c.decode(pdu) == 0x05);
+  QVERIFY(c.values().size() == 1);
+  QVERIFY(c.values().at(0).toBool() == true);
+  pdu.clear();
+  pdu.append(0x05);     // Function code
+  pdu.append(0x25);     // Address H
+  pdu.append(0x06);     // Address L
+  pdu.append((char)0);  // Value H
+  pdu.append((char)0);  // Value L
+  QVERIFY(c.decode(pdu) == 0x05);
+  QVERIFY(c.values().size() == 1);
+  QVERIFY(c.values().at(0).toBool() == false);
+
 }

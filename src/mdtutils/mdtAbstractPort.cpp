@@ -1,7 +1,5 @@
 
 #include "mdtAbstractPort.h"
-#include "mdtFrame.h"
-#include "mdtFrameAscii.h"
 
 //#include <QDebug>
 
@@ -28,11 +26,19 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
 
   // Create the read frames pools with requested type
   for(int i=0; i<cfg.readQueueSize(); i++){
-    if(cfg.frameType() == mdtFrame::mdtFrameTypeAscii){
-      frame = new mdtFrameAscii;
-      dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(cfg.endOfFrameSeq());
-    }else{
-      frame = new mdtFrame;
+    switch(cfg.frameType()){
+      // ASCII frame type
+      case mdtFrame::FT_ASCII:
+        frame = new mdtFrameAscii;
+        dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(cfg.endOfFrameSeq());
+        break;
+      // MODBUS/TCP frame type
+      case mdtFrame::FT_MODBUS_TCP:
+        frame = new mdtFrameModbusTcp;
+        break;
+      // Base frame type
+      default:
+        frame = new mdtFrame;
     }
     Q_ASSERT(frame != 0);
     frame->reserve(cfg.readFrameSize());
@@ -40,7 +46,20 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
   }
   // Create the write frames pools
   for(int i=0; i<cfg.writeQueueSize(); i++){
-    frame = new mdtFrame;
+    switch(cfg.frameType()){
+      // ASCII frame type
+      case mdtFrame::FT_ASCII:
+        frame = new mdtFrameAscii;
+        ///dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(cfg.endOfFrameSeq());
+        break;
+      // MODBUS/TCP frame type
+      case mdtFrame::FT_MODBUS_TCP:
+        frame = new mdtFrameModbusTcp;
+        break;
+      // Base frame type
+      default:
+        frame = new mdtFrame;
+    }
     Q_ASSERT(frame != 0);
     frame->reserve(cfg.writeFrameSize());
     pvWriteFramesPool.enqueue(frame);

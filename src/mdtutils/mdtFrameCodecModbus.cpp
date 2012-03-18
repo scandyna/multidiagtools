@@ -57,6 +57,26 @@ QByteArray mdtFrameCodecModbus::encodeReadCoils(quint16 startAddress, quint16 n)
   return pvPdu;
 }
 
+QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil(quint16 address, bool state)
+{
+  pvPdu.clear();
+
+  // Function code
+  pvPdu.append(0x05);
+  // Coil address
+  pvPdu.append(address >> 8);
+  pvPdu.append(address & 0x00FF);
+  // Coil state
+  if(state){
+    pvPdu.append(0xFF);
+  }else{
+    pvPdu.append((char)0);
+  }
+  pvPdu.append((char)0);
+
+  return pvPdu;
+}
+
 int mdtFrameCodecModbus::decode(const QByteArray &pdu)
 {
   pvPdu = pdu;
@@ -86,6 +106,13 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
         return -1;
       }
       return 0x01;
+      break;
+    // Write single coil
+    case 0x05:
+      if(!decodeWriteSingleCoil()){
+        return -1;
+      }
+      return 0x05;
       break;
     // Unknow code
     default:
@@ -127,6 +154,25 @@ bool mdtFrameCodecModbus::decodeReadCoils()
   for(i=2; i<pvPdu.size(); i++){
     //qDebug() << "Byte[" << i << "]: " << (int)pvPdu.at(i);
     appendValuesBitsFromByte(pvPdu.at(i));
+  }
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeWriteSingleCoil()
+{
+  // Case of unvalid bytes count
+  if(pvPdu.size() != 5){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get value
+  if((quint8)pvPdu.at(3) == 0xFF){
+    pvValues.append(true);
+  }else{
+    pvValues.append(false);
   }
 
   return true;
@@ -192,6 +238,8 @@ int mdtFrameCodecModbus::decodeModbusError(quint8 error)
   e.setSystemError(pvLastModbusError, errorText);
   MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
   e.commit();
+
+  return pvLastModbusError;
 }
 
 void mdtFrameCodecModbus::appendValuesBitsFromByte(quint8 byte)
@@ -215,4 +263,39 @@ void mdtFrameCodecModbus::appendValuesBitsFromByte(quint8 byte)
   pvValues.append(state);
   state = byte & 0x80;
   pvValues.append(state);
+}
+
+quint8 mdtFrameCodecModbus::byteFromBooleans(QList<bool> &states)
+{
+  Q_ASSERT(states.size() == 8);
+
+  quint8 byte = 0;
+
+  // Begin with first state, and store to LSB
+  if(states.at(0)){
+    byte |= 1;
+  }
+  if(states.at(1)){
+    byte |= (1<<1);
+  }
+  if(states.at(2)){
+    byte |= (1<<2);
+  }
+  if(states.at(3)){
+    byte |= (1<<3);
+  }
+  if(states.at(4)){
+    byte |= (1<<4);
+  }
+  if(states.at(5)){
+    byte |= (1<<5);
+  }
+  if(states.at(6)){
+    byte |= (1<<6);
+  }
+  if(states.at(7)){
+    byte |= (1<<7);
+  }
+
+  return byte;
 }

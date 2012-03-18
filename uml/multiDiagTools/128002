@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 66
+  revision 67
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1306,6 +1306,22 @@ ${inlines}
 	
       end
 
+      operation 642818 "encodeWriteSingleCoil"
+	public return_type class_ref 236162 // QByteArray
+	nparams 2
+	  param in name "address" explicit_type "quint16"
+	  param in name "state" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 635394 "decode"
 	public explicit_return_type "int"
 	nparams 1
@@ -1336,6 +1352,20 @@ ${inlines}
       end
 
       operation 635522 "decodeReadCoils"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 642946 "decodeWriteSingleCoil"
 	private explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -1388,6 +1418,21 @@ ${inlines}
 	private explicit_return_type "void"
 	nparams 1
 	  param in name "byte" explicit_type "quint8"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 642690 "byteFromBooleans"
+	private explicit_return_type "quint8"
+	nparams 1
+	  param in name "states" explicit_type "QList<bool>"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{

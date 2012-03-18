@@ -19,7 +19,7 @@ void mdtPortConfig::setDefault()
   pvWriteQueueSize = 10;
   pvWriteMinWaitTime = 0;
   pvWriteTimeout = 500;
-  pvFrameType = mdtFrame::mdtFrameTypeAscii;
+  pvFrameType = mdtFrame::FT_ASCII;
   pvEndOfFrameSeq.clear();
   pvEndOfFrameSeq.append('\n');
   pvBytePerByteWrite = false;

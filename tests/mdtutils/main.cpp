@@ -74,7 +74,7 @@ int main(int argc, char **argv)
     return retVal;
   }
   // Device dependent tests
-  //retVal = QTest::qExec(&portTest, argc, argv);
+  retVal = QTest::qExec(&portTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }

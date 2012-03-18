@@ -19,7 +19,7 @@ class mdtFrameAscii : public mdtFrame
    */
   int eofSeqLen();
 
-  int putData(char *data, int maxLen);
+  int putData(const char *data, int maxLen);
 
  private:
 

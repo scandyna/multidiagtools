@@ -35,7 +35,7 @@ int mdtFrameAscii::eofSeqLen()
   return pvEofSeq.size();
 }
 
-int mdtFrameAscii::putData(char *data, int maxLen)
+int mdtFrameAscii::putData(const char *data, int maxLen)
 {
   if(pvEofIsChar){
     return putUntil(data, pvEofChar, maxLen);

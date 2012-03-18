@@ -22,8 +22,9 @@
 #define MDT_FRAME_CODEC_MODBUS_H
 
 #include "mdtFrameCodec.h"
+#include <QList>
 
-/*! \brief Encode and decode MODBUS PDU
+/*! \brief Encode and decode MODBUS PDU  NOTE: stockage des adresses durant Q/R ?
  * 
  * This class works only on MODBUS PDU.
  * To transmit MODBUS/TCP frame, the resulting PDU can be
@@ -68,6 +69,13 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    */
   QByteArray encodeReadCoils(quint16 startAddress, quint16 n);
 
+  /*! \brief Encode a PDU according the WriteSingleCoil function (0x05)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeWriteSingleCoil(quint16 address, bool state);
+
   /*! \brief Decode a MODBUS PDU
    * 
    * This should reconize the function code in PDU,
@@ -97,11 +105,17 @@ class mdtFrameCodecModbus : public mdtFrameCodec
  private:
 
   bool decodeReadCoils();
+  
+  bool decodeWriteSingleCoil();
 
   // Append exception code to mdtError , and store it to pvLastModbusError
   int decodeModbusError(quint8 error);
   
   void appendValuesBitsFromByte(quint8 byte);
+  
+  // Build a byte with states - First state will be stored in LSB, last state is MSB
+  // Precondition: states must contain exactly 8 values
+  quint8 byteFromBooleans(QList<bool> &states);
   
   QByteArray pvPdu;
   modbus_error_code_t pvLastModbusError;

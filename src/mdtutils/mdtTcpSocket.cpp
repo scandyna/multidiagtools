@@ -3,6 +3,7 @@
 #include "mdtError.h"
 #include <QStringList>
 
+
 #include <QDebug>
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
