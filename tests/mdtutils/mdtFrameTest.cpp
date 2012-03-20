@@ -1108,4 +1108,50 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(f.getPdu().size() == 0);
 
 
+  /*
+   * Check with invalid data
+   */
+
+  // Data
+  srcData = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  QVERIFY(srcData.size() > 20);
+  
+  // Init frame
+  f.reserve(20);
+  f.clear();
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 20);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 14);
+  QVERIFY(f.unitId() == 0xFF);
+  QVERIFY(f.getPdu().size() == 0);
+ 
+  /*
+   * Check with invalid frame size
+   */
+
+  // Data
+  srcData = "abcd";
+  srcData.append(0xFF); // Frame size H
+  srcData.append(0xFF); // Frame size L
+  srcData = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  QVERIFY(srcData.size() > 20);
+  
+  // Init frame
+  f.reserve(20);
+  f.clear();
+  QVERIFY(f.putData(srcData.data(), srcData.size()) == 20);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.transactionId() == 0);
+  QVERIFY(f.modbusLength() == 14);
+  QVERIFY(f.unitId() == 0xFF);
+  QVERIFY(f.getPdu().size() == 0);
 }

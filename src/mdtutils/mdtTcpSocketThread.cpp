@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtTcpSocketThread.h"
 #include "mdtError.h"
 #include <QApplication>
@@ -89,7 +108,6 @@ void mdtTcpSocketThread::readFromSocket()
     }
     // Store data
     stored = pvReadCurrentFrame->putData(bufferCursor, toStore);
-    qDebug() << "readFromSocket(): stored " << stored << " bytes in frame";
     // If frame is full, enqueue to readen frames and get a new one
     if(pvReadCurrentFrame->bytesToStore() == 0){
       stored += pvReadCurrentFrame->eofSeqLen();
@@ -102,11 +120,12 @@ void mdtTcpSocketThread::readFromSocket()
       }
       pvReadCurrentFrame = getNewFrameRead();
     }
-    toStore = toStore - stored;
-    // When frame becomes full and EOF seq was not reached, stored will be to big
-    // We simply look that toStore is never < 0
-    if(toStore < 0){
+    // When frame becomes full and EOF condition was not reached, stored will be to big
+    if(stored >= pvReadBufferSize){
+      stored = pvReadBufferSize-1;
       toStore = 0;
+    }else{
+      toStore = toStore - stored;
     }
     bufferCursor = bufferCursor + stored;
     Q_ASSERT(bufferCursor < (pvReadBuffer + pvReadBufferSize));
@@ -294,7 +313,7 @@ void mdtTcpSocketThread::run()
       pvPort->lockMutex();
     }
     pvMutex.unlock();
-    // Read thread state
+    // Read thread state  /// NOTE: pvMutex à la place ?
     if(!pvRunning){
       pvPort->unlockMutex();
       break;
@@ -304,8 +323,10 @@ void mdtTcpSocketThread::run()
     // (Re-)connect to host
     if(pvSocket->state() != QAbstractSocket::ConnectedState){
       if(!reconnectToHost()){
-        qDebug() << "TCP THD: SIGNAL: Cannot reconnect !";
-        break;
+        qDebug() << "TCP THD: SIGNAL: Cannot reconnect - Retry at next transaction ...";
+        pvMutex.lock();
+        pvNewTransaction.wait(&pvMutex);
+        pvMutex.unlock();
       }
     }
     // Write data to send

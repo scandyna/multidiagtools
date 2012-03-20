@@ -65,7 +65,7 @@ int mdtFrameModbusTcp::putData(const char *data, int maxLen)
       Q_ASSERT((data + stored) <= (data + maxLen));
       data += stored;
       maxLen -= stored;
-      ///qDebug() << "mdtFrameModbusTcp::putData(): stored(1): " << stored << " , maxLen (2): " << maxLen;
+      qDebug() << "mdtFrameModbusTcp::putData(): stored(1): " << stored << " , maxLen (2): " << maxLen;
     }
     frameSize = (at(4) << 8) + at(5);
     // We have MODBUS frame size , = Unit ID + PDU. Add missing size
@@ -75,6 +75,7 @@ int mdtFrameModbusTcp::putData(const char *data, int maxLen)
       // Problem here: fill the frame with null values, so bytesToStore() will return 0 next time
       fill(0, capacity());
       stored = capacity();
+      qDebug() << "mdtFrameModbusTcp::putData(): stored(2): " << stored;;
       return stored;
     }
   }

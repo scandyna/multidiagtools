@@ -1,11 +1,17 @@
 window_sizes 1280 1002 370 904 808 120
 diagrams
-  active  classdiagram_ref 189442 // mdtFrame
-    904 808 100 4 192 0
+  active  classdiagram_ref 334594 // mdtTcpSocket
+    904 808 100 4 72 0
+  classdiagram_ref 341122 // mdtTcpSocketThread
+    723 646 100 4 72 0
+  classdiagram_ref 268546 // mdtPortThread
+    723 646 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 642946 // decodeWriteSingleCoil
+selected classdiagram_ref 334594 // mdtTcpSocket
 open
-  operation_ref 642946 // decodeWriteSingleCoil
+  classview_ref 181634 // mdtFrame
+  classview_ref 201218 // mdtPort
+  classview_ref 247298 // mdtTcpSocket
 end
 end

@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 23
+  revision 24
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -275,6 +275,22 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+      operation 657154 "QThread"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 308994 "isFinished"
 	public explicit_return_type "bool"
 	nparams 0
@@ -932,6 +948,71 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 400002 // <generalisation>
 	  b parent class_ref 329346 // QAbstractSocket
+      end
+    end
+
+    classdiagram 347650 "QTcpServer"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 349314 "QTcpServer"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 419970 // <generalisation>
+	relation 419714 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 419970 // <generalisation>
+	  b parent class_ref 138626 // QObject
+      end
+
+      operation 656258 "QTcpServer"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 656386 "~QTcpServer"
+	abstract cpp_virtual public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	
+	
+	
+	
+      end
+
+      operation 656514 "incomingConnection"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 1
+	  param in name "socketDescriptor" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
       end
     end
   end

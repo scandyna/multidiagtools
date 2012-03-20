@@ -18,47 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PORT_TEST_H
-#define MDT_PORT_TEST_H
+#include "mdtTcpServer.h"
+#include "mdtTcpServerThread.h"
 
-#include "mdtTest.h"
-
-class mdtPortTest : public mdtTest
+mdtTcpServer::mdtTcpServer(QObject *parent)
+ : QTcpServer(parent)
 {
- Q_OBJECT
+}
 
- private slots:
+void mdtTcpServer::setResponseData(const QStringList &data)
+{
+  pvMutex.lock();
+  pvResponses = data;
+  pvMutex.unlock();
+}
 
-  // Init
-  void initTestCase();
+void mdtTcpServer::incomingConnection(int socketDescriptor)
+{
+  // Init a new TCP thread and start it
+  pvMutex.lock();
+  mdtTcpServerThread *tcpThd = new mdtTcpServerThread(socketDescriptor, pvResponses, this);
+  connect(tcpThd, SIGNAL(finished()), tcpThd, SLOT(deleteLater()));
+  tcpThd->start();
+  tcpThd->wait();
+  pvMutex.unlock();
+}
 
-  // Test start and stop
-  void startStopTest();
-
-  // Check that write works
-  void writeTest();
-  void writeTest_data();
-
-  // Check that read works
-  void readTest();
-  void readTest_data();
-
-  // Check that read works with invalid frames
-  void readInvalidDataTest();
-
-  // Check that recovery works whenn a frame pool was empty for some time
-  void emptyQueueRecoveryTest();
-
-  // Test port manager
-  void portManagerTest();
-
-#ifdef Q_OS_UNIX
-  // Check USBTMC module (needs a device attached)
-  void usbtmcPortTest();
-#endif
-
-  // Test TCP/IP socket
-  void tcpSocketTest();
-};
-
-#endif  // #ifndef MDT_PORT_TEST_H

@@ -13,6 +13,9 @@ set (HEADER_FILES
           mdtErrorTest.h
           mdtPortTest.h
           mdtFrameCodecTest.h
+          # Utils
+          mdtTcpServer.h
+          mdtTcpServerThread.h
     )
 
 
@@ -24,6 +27,10 @@ set (SOURCES_FILES
           mdtErrorTest.cpp
           mdtPortTest.cpp
           mdtFrameCodecTest.cpp
+          # Utils
+          mdtTcpServer.cpp
+          mdtTcpServerThread.cpp
+          # Main
           main.cpp
     )
 

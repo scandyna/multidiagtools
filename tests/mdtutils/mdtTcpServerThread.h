@@ -18,47 +18,29 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PORT_TEST_H
-#define MDT_PORT_TEST_H
+#ifndef MDT_TCP_SERVER_THREAD_H
+#define MDT_TCP_SERVER_THREAD_H
 
-#include "mdtTest.h"
+#include <QThread>
+#include <QByteArray>
+#include <QString>
+#include <QStringList>
 
-class mdtPortTest : public mdtTest
+// Thread for the minimal TCP server used by the Unit Tests
+class mdtTcpServerThread : public QThread
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  // Init
-  void initTestCase();
+  mdtTcpServerThread(int socketDescriptor, const QStringList &data, QObject *parent);
 
-  // Test start and stop
-  void startStopTest();
+  void run();
 
-  // Check that write works
-  void writeTest();
-  void writeTest_data();
+ private:
 
-  // Check that read works
-  void readTest();
-  void readTest_data();
-
-  // Check that read works with invalid frames
-  void readInvalidDataTest();
-
-  // Check that recovery works whenn a frame pool was empty for some time
-  void emptyQueueRecoveryTest();
-
-  // Test port manager
-  void portManagerTest();
-
-#ifdef Q_OS_UNIX
-  // Check USBTMC module (needs a device attached)
-  void usbtmcPortTest();
-#endif
-
-  // Test TCP/IP socket
-  void tcpSocketTest();
+  int pvSocketDescriptor;
+  QStringList pvResponses;
 };
 
-#endif  // #ifndef MDT_PORT_TEST_H
+#endif  // #ifndef MDT_TCP_SERVER_THREAD_H

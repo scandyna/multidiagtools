@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 67
+  revision 68
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3416,15 +3416,12 @@ ${inlines}
       end
 
       operation 601602 "read"
-	public explicit_return_type "qInt64"
+	abstract cpp_virtual public explicit_return_type "qInt64"
 	nparams 2
 	  param out name "data" explicit_type "char"
 	multiplicity "*"
 	  param in name "maxSize" explicit_type "qInt64"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -3444,15 +3441,12 @@ ${inlines}
       end
 
       operation 591618 "write"
-	public explicit_return_type "qInt64"
+	abstract cpp_virtual public explicit_return_type "qInt64"
 	nparams 2
 	  param in name "data" explicit_type "char"
 	multiplicity "*"
 	  param in name "maxSize" explicit_type "qInt64"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	

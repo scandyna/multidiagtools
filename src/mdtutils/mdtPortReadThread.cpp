@@ -3,7 +3,7 @@
 #include "mdtError.h"
 #include <QApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
@@ -128,11 +128,12 @@ void mdtPortReadThread::run()
           }
           frame = getNewFrame();
         }
-        toStore = toStore - stored;
         // When frame becomes full and EOF seq was not reached, stored will be to big
-        // We simply look that toStore is never < 0
-        if(toStore < 0){
+        if(stored >= bufferSize){
+          stored = bufferSize-1;
           toStore = 0;
+        }else{
+          toStore = toStore - stored;
         }
         bufferCursor = bufferCursor + stored;
         Q_ASSERT(bufferCursor < (buffer + bufferSize));

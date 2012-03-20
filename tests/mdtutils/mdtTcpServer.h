@@ -18,47 +18,36 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PORT_TEST_H
-#define MDT_PORT_TEST_H
+#ifndef MDT_TCP_SERVER_H
+#define MDT_TCP_SERVER_H
 
-#include "mdtTest.h"
+#include <QTcpServer>
+#include <QByteArray>
+#include <QString>
+#include <QStringList>
+#include <QMutex>
 
-class mdtPortTest : public mdtTest
+// Minimal TCP server used by the Unit Tests
+class mdtTcpServer : public QTcpServer
 {
  Q_OBJECT
 
- private slots:
+ public:
 
-  // Init
-  void initTestCase();
+  mdtTcpServer(QObject *parent = 0);
 
-  // Test start and stop
-  void startStopTest();
+  // Set the list of data to return
+  void setResponseData(const QStringList &data);
+  
+ protected:
 
-  // Check that write works
-  void writeTest();
-  void writeTest_data();
+  // Called by incomming TCP connection
+  void incomingConnection(int socketDescriptor);
 
-  // Check that read works
-  void readTest();
-  void readTest_data();
-
-  // Check that read works with invalid frames
-  void readInvalidDataTest();
-
-  // Check that recovery works whenn a frame pool was empty for some time
-  void emptyQueueRecoveryTest();
-
-  // Test port manager
-  void portManagerTest();
-
-#ifdef Q_OS_UNIX
-  // Check USBTMC module (needs a device attached)
-  void usbtmcPortTest();
-#endif
-
-  // Test TCP/IP socket
-  void tcpSocketTest();
+ private:
+  
+  QStringList pvResponses;
+  QMutex pvMutex;
 };
 
-#endif  // #ifndef MDT_PORT_TEST_H
+#endif  // #ifndef MDT_TCP_SERVER_H
