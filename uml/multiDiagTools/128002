@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 68
+  revision 70
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3267,7 +3267,7 @@ ${inlines}
       end
 
       attribute 340482 "pvMutex"
-	private type class_ref 202882 // QMutex
+	protected type class_ref 202882 // QMutex
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -3293,12 +3293,9 @@ ${inlines}
       end
 
       operation 423810 "~mdtAbstractPort"
-	public explicit_return_type ""
+	abstract cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -3331,12 +3328,9 @@ ${inlines}
       end
 
       operation 594434 "close"
-	cpp_virtual public explicit_return_type "void"
+	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -5473,6 +5467,26 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 457218 "pvNewTransaction"
+	private type class_ref 289538 // QWaitCondition
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 457346 "pvTransactionIds"
+	private explicit_type "QQueue<int>"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       operation 611458 "setAttributes"
 	public explicit_return_type "bool"
 	nparams 1
@@ -5514,6 +5528,38 @@ ${inlines}
 	
       end
 
+      operation 676738 "connectToHost"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "hostName" type class_ref 161026 // QString
+	  param in name "hostPort" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 670210 "setThreadObjects"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "socket" type class_ref 329474 // QTcpSocket
+	  param in name "thread" type class_ref 336130 // mdtTcpSocketThread
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 610690 "setReadTimeout"
 	cpp_virtual public explicit_return_type "void"
 	nparams 1
@@ -5531,6 +5577,34 @@ ${inlines}
 	nparams 1
 	  param in name "timeout" explicit_type "int"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 676866 "beginNewTransaction"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 676994 "waitForNewTransaction"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -5594,39 +5668,22 @@ ${inlines}
 	
       end
 
-      attribute 422018 "pvConnected"
-	private type class_ref 289538 // QWaitCondition
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      classrelation 426882 // pvSocket (<unidirectional association>)
+	relation 426626 --->
+	  a role_name "pvSocket" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
+	    classrelation_ref 426882 // pvSocket (<unidirectional association>)
+	  b parent class_ref 329474 // QTcpSocket
       end
 
-      attribute 422146 "pvSocketMutex"
-	private type class_ref 202882 // QMutex
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      classrelation 433410 // pvThread (<unidirectional association>)
+	relation 433154 --->
+	  a role_name "pvThread" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 617986 "connectedToHost"
-	stereotype "slot"
-	private explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
+	    classrelation_ref 433410 // pvThread (<unidirectional association>)
+	  b parent class_ref 336130 // mdtTcpSocketThread
       end
     end
 
@@ -5653,6 +5710,27 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 406786 // <generalisation>
 	  b parent class_ref 222594 // mdtPortThread
+      end
+
+      attribute 422274 "pvReadBuffer"
+	private explicit_type "char"
+	multiplicity "*"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 422530 "pvReadBufferSize"
+	private explicit_type "qInt64"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
 
       operation 618114 "mdtTcpSocketThread"
@@ -5701,20 +5779,6 @@ ${inlines}
 	
       end
 
-      operation 620034 "beginNewTransaction"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 618242 "newFrameReaden"
 	stereotype "signal"
 	public explicit_return_type "void"
@@ -5728,38 +5792,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      attribute 422274 "pvReadBuffer"
-	private explicit_type "char"
-	multiplicity "*"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 422530 "pvReadBufferSize"
-	private explicit_type "qInt64"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 422402 "pvWriteBuffer"
-	private explicit_type "char"
-	multiplicity "*"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
       end
 
       operation 618370 "readFromSocket"
@@ -5855,38 +5887,8 @@ ${inlines}
 	  b parent class_ref 329474 // QTcpSocket
       end
 
-      attribute 422786 "pvReconnectCounter"
+      attribute 422786 "pvMaxReconnect"
 	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 422914 "pvTransactionIds"
-	private explicit_type "QList<int>"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 423042 "pvNewTransaction"
-	private type class_ref 289538 // QWaitCondition
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 423170 "pvMutext"
-	private type class_ref 202882 // QMutex
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -5913,6 +5915,24 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+
+      classrelation 433538 // pvReadCurrentFrame (<directional composition>)
+	relation 433282 *-->
+	  a role_name "pvReadCurrentFrame" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 433538 // pvReadCurrentFrame (<directional composition>)
+	  b parent class_ref 196354 // mdtFrame
+      end
+
+      classrelation 433666 // pvWriteCurrentFrame (<directional composition>)
+	relation 433410 *-->
+	  a role_name "pvWriteCurrentFrame" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 433666 // pvWriteCurrentFrame (<directional composition>)
+	  b parent class_ref 196354 // mdtFrame
       end
     end
   end

@@ -672,8 +672,8 @@ void mdtPortTest::tcpSocketTest()
   // Setup
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setWriteQueueSize(1);
-  cfg.setWriteMinWaitTime(100);
-  cfg.setReadMinWaitTime(100);
+  ///cfg.setWriteMinWaitTime(100);
+  ///cfg.setReadMinWaitTime(100);
   cfg.setReadTimeout(500);
   cfg.setWriteTimeout(500);
   cfg.setEndOfFrameSeq('*');
@@ -692,12 +692,12 @@ void mdtPortTest::tcpSocketTest()
   responses << "Echo !!*";
   tcpServer.setResponseData(responses);
   
-  thd.connectToHost("127.0.0.1", tcpServer.serverPort());
+  //thd.connectToHost("127.0.0.1", tcpServer.serverPort());
   //thd.connectToHost("127.0.0.1", 1502);
   
   qDebug() << "main: threads started";
   
-  //QVERIFY(s.connectToHost("127.0.0.1" , 51168));
+  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   
   // Get a frame
   s.lockMutex();
@@ -712,10 +712,10 @@ void mdtPortTest::tcpSocketTest()
   s.lockMutex();
   s.writeFrames().enqueue(frame);
   s.unlockMutex();
-  thd.beginNewTransaction();
+  s.beginNewTransaction();
 
   // Wait some time and verify that data was written
-  QTest::qWait(1000);
+  QTest::qWait(100);
 
   // Get a frame
   s.lockMutex();
@@ -725,7 +725,7 @@ void mdtPortTest::tcpSocketTest()
   QVERIFY(frame != 0);
 
   qDebug() << "FRM: " << *frame;
-
+  
   // End
   thd.stop();
 }

@@ -25,6 +25,10 @@
 #include <QObject>
 #include <QMutex>
 #include <QWaitCondition>
+#include <QTcpSocket>
+#include <QQueue>
+
+class mdtTcpSocketThread;
 
 class mdtTcpSocket : public mdtAbstractPort
 {
@@ -38,27 +42,61 @@ class mdtTcpSocket : public mdtAbstractPort
   // Implementation of mdtAbstractPort
   bool setAttributes(const QString &portName);
 
-  // Implementation of mdtAbstractPort
+  // Implementation of mdtAbstractPort - Locks the mutex
   bool open(mdtPortConfig &cfg);
 
-  // Implementation of mdtAbstractPort
+  // Implementation of mdtAbstractPort - Locks the mutex
   void close();
 
-  bool connectToHost(const QString &host, int port);
-  
+  /*! \brief Connect to host
+   * 
+   * Use this method to start a connection to a host.<br>
+   * Mutex is locked by this method.
+   * \param hostName Hostname or IP address
+   * \param hostPort Port
+   * \pre hostPort must be > 0
+   */
+  void connectToHost(const QString &hostName, int hostPort);
+
+  /*! \brief Set the socket
+   * 
+   * QTcpSocket must be created from thread on witch it will be used.
+   * In this case, the mdtTcpSocketThread create the instance.<br>
+   * This method will be called to store this instance and an instance of the thread itself.
+   * Note: should not be used.
+   * \pre socket must be a valid pointer
+   * \pre thread must be a valid pointer
+   * \sa mdtTcpSocketThread
+   */
+  void setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread);
+
   // Implementation of mdtAbstractPort
   void setReadTimeout(int timeout);
 
   // Implementation of mdtAbstractPort
   void setWriteTimeout(int timeout);
 
-  // Implementation of mdtAbstractPort
+  /*! \brief Start a new transaction
+   * 
+   * Mutex is locked by this method.
+   */
+  void beginNewTransaction();
+
+  /*! \brief Block until a new transaction starts
+   * 
+   * Note: used by thread , should not be used directly.<br>
+   * Mutex is locked by this method.
+   * \sa mdtTcpSocketThread
+   */
+  void waitForNewTransaction();
+  
+  // Implementation of mdtAbstractPort - Locks the mutex
   bool waitForReadyRead();
 
   // Implementation of mdtAbstractPort
   qint64 read(char *data, qint64 maxSize);
 
-  // Implementation of mdtAbstractPort
+  // Implementation of mdtAbstractPort - Locks the mutex
   bool waitEventWriteReady();
 
   // Implementation of mdtAbstractPort
@@ -68,8 +106,10 @@ class mdtTcpSocket : public mdtAbstractPort
 
   int pvReadTimeout;
   int pvWriteTimeout;
-  QWaitCondition pvConnected;
-  QMutex pvSocketMutex;
+  QWaitCondition pvNewTransaction;
+  QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
+  QQueue<int> pvTransactionIds;     // Transactions list
+  mdtTcpSocketThread *pvThread;
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_H

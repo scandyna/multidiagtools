@@ -39,11 +39,9 @@ class mdtTcpSocketThread : public mdtPortThread
 
   // Overload of mdtPortThread
   void stop();
-  
+
   void connectToHost(QString hostName, quint16 hostPort);
-  
-  void beginNewTransaction();
-  
+
  signals:
 
   void newFrameReaden();
@@ -52,10 +50,12 @@ class mdtTcpSocketThread : public mdtPortThread
 
   void readFromSocket();
 
+  // Get a frame in read frames pool
   mdtFrame *getNewFrameRead();
 
   void writeToSocket();
 
+  // Get a frame in frames to write
   mdtFrame *getNewFrameWrite();
 
   // Try to reconnect when host disconnected
@@ -72,9 +72,6 @@ class mdtTcpSocketThread : public mdtPortThread
   mdtFrame *pvWriteCurrentFrame;
   QTcpSocket *pvSocket;
   int pvMaxReconnect;               // Max. number of reconnections
-  QQueue<int>pvTransactionIds;      // Transactions list
-  QWaitCondition pvNewTransaction;  // Transaction begin condition
-  QMutex pvMutex;
   QString pvPeerName;               // Host name or IP
   quint16 pvPeerPort;               // Host port
 };

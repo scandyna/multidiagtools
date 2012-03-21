@@ -101,9 +101,12 @@ class mdtAbstractPort : public QObject
   /*! \brief Wait until data is available at device
    *
    * This method must be re-implemented in subclass.
-   * The read timeout state must be updated with updateReadTimeoutState()
+   * The read timeout state must be updated with updateReadTimeoutState()<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
    * \return False on error, in this case, the reader thread will emit errorOccured()
    * \sa mdtPortThread
+   * \sa mdtTcpSocketThread
    */
   virtual bool waitForReadyRead() = 0;
 
@@ -111,14 +114,18 @@ class mdtAbstractPort : public QObject
    *
    * This method calls setReadTimeout() and waitForReadyRead()
    * (it is a little bit slower than setting timeout one time, and call waitForReadyRead() ).<br>
-   * Note that the reader thread will call waitForReadyRead() without argument.
+   * Note that the reader thread will call waitForReadyRead() without argument.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex can be handled by this method (for. ex: mdtTcpSocket)
    * \return False on error, in this case, the reader thread will be stopped.
    */
   bool waitForReadyRead(int msecs);
 
   /*! \brief Read data from port
    * 
-   * This method must be implemented in subclass
+   * This method must be implemented in subclass.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
    * \return Number of bytes readen, or <0 on error
    */
   virtual qint64 read(char *data, qint64 maxSize) = 0;
@@ -141,14 +148,18 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Wait until data can be written to device
    *
-   * This method must be re-implemented in subclass.
+   * This method must be re-implemented in subclass.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex can be handled by this method (for. ex: mdtTcpSocket)
    * \return False on error, in this case, the reader thread will be stopped.
    */
   virtual bool waitEventWriteReady() = 0;
 
   /*! \brief Write data to port
    * 
-   * This method must be implemented in subclass
+   * This method must be implemented in subclass.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
    * \return Number of bytes written, or <0 on error
    */
   virtual qint64 write(const char *data, qint64 maxSize) = 0;
@@ -156,14 +167,18 @@ class mdtAbstractPort : public QObject
   /*! \brief Update the read timeout state
    *
    *  This method must be called by system dependant waitEventRead() method
-   *  When the read timeout state chages, the signal readTimeoutStateChanged() is emited
+   *  When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
    */
   void updateReadTimeoutState(bool state);
 
   /*! \brief Update the write timeout state
    *
    *  This method must be called by system dependant waitEventWriteReady() method
-   *  When the write timeout state chages, the signal writeTimeoutStateChanged() is emited
+   *  When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
    */
   void updateWriteTimeoutState(bool state);
 
@@ -241,7 +256,7 @@ class mdtAbstractPort : public QObject
   // Attributes
   QString pvName;     // Port name, like /dev/ttyS0 , COM1, ...
 
- private:
+ //private:
 
   // mutex
   QMutex pvMutex;

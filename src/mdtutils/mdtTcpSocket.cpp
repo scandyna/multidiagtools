@@ -22,12 +22,14 @@
 #include "mdtError.h"
 #include <QStringList>
 
+#include "mdtTcpSocketThread.h"
 
 #include <QDebug>
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
 {
+  pvSocket = 0;
 }
 
 mdtTcpSocket::~mdtTcpSocket()
@@ -49,32 +51,10 @@ bool mdtTcpSocket::open(mdtPortConfig &cfg)
   // Open new connection
   lockMutex();
   qDebug() << "Open ....";
-  
+
   // Set R/W timeouts
   setReadTimeout(cfg.readTimeout());
   setWriteTimeout(cfg.writeTimeout());
-
-  return mdtAbstractPort::open(cfg);
-  
-  int available;
-
-  QByteArray buffer;
-  
-  // Trame Modbus
-  buffer.clear();
-  buffer.append((char)0x15);
-  buffer.append((char)0x01);
-  buffer.append((char)0);
-  buffer.append((char)0);
-  buffer.append((char)0);
-  buffer.append((char)6);
-  buffer.append((char)0xFF);
-  buffer.append((char)3);
-  buffer.append((char)0);
-  buffer.append((char)4);
-  buffer.append((char)0);
-  buffer.append((char)1);
-
 
   return mdtAbstractPort::open(cfg);
 }
@@ -82,13 +62,28 @@ bool mdtTcpSocket::open(mdtPortConfig &cfg)
 void mdtTcpSocket::close()
 {
   lockMutex();
-  qDebug() << "Close ....";
+  pvTransactionIds.clear();
   mdtAbstractPort::close();
 }
 
-bool mdtTcpSocket::connectToHost(const QString &host, int port)
+void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 {
-  return false;
+  Q_ASSERT(pvThread != 0);
+  Q_ASSERT(hostPort > 0);
+
+  pvMutex.lock();
+  pvThread->connectToHost(hostName, hostPort);
+  pvNewTransaction.wakeAll();
+  pvMutex.unlock();
+}
+
+void mdtTcpSocket::setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread)
+{
+  Q_ASSERT(socket != 0);
+  Q_ASSERT(thread != 0);
+
+  pvSocket = socket;
+  pvThread = thread;
 }
 
 void mdtTcpSocket::setReadTimeout(int timeout)
@@ -101,22 +96,130 @@ void mdtTcpSocket::setWriteTimeout(int timeout)
   pvWriteTimeout = timeout;
 }
 
+void mdtTcpSocket::beginNewTransaction()
+{
+  pvMutex.lock();
+    /// NOTE: essai
+  pvTransactionIds.enqueue(25);
+  pvNewTransaction.wakeAll();
+  pvMutex.unlock();
+}
+
+void mdtTcpSocket::waitForNewTransaction()
+{
+  pvMutex.lock();
+  pvNewTransaction.wait(&pvMutex);
+  pvMutex.unlock();
+}
+
 bool mdtTcpSocket::waitForReadyRead()
 {
-  return false;
+  Q_ASSERT(pvSocket != 0);
+
+  pvMutex.lock();
+  qDebug() << "mdtTcpSocket::waitEventWriteReady(): transaction size: " << pvTransactionIds.size() << " , BTW: " << pvSocket->bytesToWrite();
+  // Check if something is to do, if not, wait
+  if((pvTransactionIds.size() < 1)&&(pvSocket->bytesToWrite() < 1)){
+    qDebug() << "waitForReadyRead(): No transaction, wait ...";
+    pvNewTransaction.wait(&pvMutex);
+  }
+  
+  // Check if it is possible to read now
+  if(!pvSocket->waitForReadyRead(pvReadTimeout)){
+    // Check if we have a timeout
+    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
+      updateReadTimeoutState(true);
+    }else{
+      updateReadTimeoutState(false);
+      // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
+      if(pvSocket->error() != QAbstractSocket::RemoteHostClosedError){
+        mdtError e(MDT_TCP_IO_ERROR, "waitForReadyRead() failed" , mdtError::Error);
+        e.setSystemError(pvSocket->error(), pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+        e.commit();
+        pvMutex.unlock();
+        return false;
+      }
+    }
+  }
+  pvMutex.unlock();
+
+  return true;
 }
 
 qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
 {
-  return -1;
+  Q_ASSERT(pvSocket != 0);
+
+  qint64 n;
+
+  n = pvSocket->read(data, maxSize);
+  if(n < 0){
+    mdtError e(MDT_TCP_IO_ERROR, "read() failed" , mdtError::Error);
+    e.setSystemError(pvSocket->error(), pvSocket->errorString());
+    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+    e.commit();
+  }
+
+  /// NOTE: provisoire !!
+  if(pvTransactionIds.size() > 0){
+    pvTransactionIds.dequeue();
+  }
+
+  return n;
 }
 
 bool mdtTcpSocket::waitEventWriteReady()
 {
-  return false;
+  Q_ASSERT(pvSocket != 0);
+
+  pvMutex.lock();
+  // Check if something is to do, if not, wait
+  qDebug() << "mdtTcpSocket::waitEventWriteReady(): transaction size: " << pvTransactionIds.size() << " , BTW: " << pvSocket->bytesToWrite();
+  if((pvTransactionIds.size() < 1)&&(pvSocket->bytesToWrite() < 1)){
+    qDebug() << "waitEventWriteReady(): No transaction, wait ...";
+    pvNewTransaction.wait(&pvMutex);
+  }
+  // Check if something is to write , if yes, wait until there are written
+  if(pvSocket->bytesToWrite() < 1){
+    pvMutex.unlock();
+    return true;
+  }
+  if(!pvSocket->waitForBytesWritten(pvWriteTimeout)){
+    // Check if we have a timeout
+    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
+      updateReadTimeoutState(true);
+    }else{
+      updateReadTimeoutState(false);
+      // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
+      if(pvSocket->error() != QAbstractSocket::RemoteHostClosedError){
+        mdtError e(MDT_TCP_IO_ERROR, "waitForBytesWritten() failed" , mdtError::Error);
+        e.setSystemError(pvSocket->error(), pvSocket->errorString());
+        MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+        e.commit();
+        pvMutex.unlock();
+        return false;
+      }
+    }
+  }
+  pvMutex.unlock();
+
+  return true;
 }
 
 qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
 {
-  return -1;
+  Q_ASSERT(pvSocket != 0);
+
+  qint64 n;
+
+  n = pvSocket->write(data, maxSize);
+  if(n < 0){
+    mdtError e(MDT_TCP_IO_ERROR, "write() failed" , mdtError::Error);
+    e.setSystemError(pvSocket->error(), pvSocket->errorString());
+    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+    e.commit();
+  }
+
+  return n;
 }

@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 31
+  revision 32
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -403,16 +403,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 196866 // <generalisation>
 	  b parent class_ref 189826 // mdtSerialPortPosix
-      end
-
-      attribute 265730 "pvMutex"
-	private type class_ref 202882 // QMutex
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
       end
 
       operation 301186 "open"
