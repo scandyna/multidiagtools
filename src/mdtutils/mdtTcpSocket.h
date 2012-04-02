@@ -89,7 +89,7 @@ class mdtTcpSocket : public mdtAbstractPort
    * \sa mdtTcpSocketThread
    */
   void waitForNewTransaction();
-  
+
   // Implementation of mdtAbstractPort - Locks the mutex
   bool waitForReadyRead();
 
@@ -102,13 +102,18 @@ class mdtTcpSocket : public mdtAbstractPort
   // Implementation of mdtAbstractPort
   qint64 write(const char *data, qint64 maxSize);
 
+ public slots:
+
+  // Connected to newFrameReaden() from thread
+  void decrementTransactionsCounter();
+
  private:
 
   int pvReadTimeout;
   int pvWriteTimeout;
   QWaitCondition pvNewTransaction;
   QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
-  QQueue<int> pvTransactionIds;     // Transactions list
+  int pvTransactionsCount;          // Count the number of transactions that are pending
   mdtTcpSocketThread *pvThread;
 };
 

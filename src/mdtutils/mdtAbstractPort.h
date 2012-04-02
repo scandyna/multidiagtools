@@ -103,7 +103,9 @@ class mdtAbstractPort : public QObject
    * This method must be re-implemented in subclass.
    * The read timeout state must be updated with updateReadTimeoutState()<br>
    * Note: this method is called from thread , and should not be used directly<br>
-   * Mutex is not handled by this method.
+   * Notes about mutex handling:
+   *  - Caller: Mutex must be locked before calling this method.
+   *  - Subclass implementation: Mutex must be released during wait, and relocked befor return.
    * \return False on error, in this case, the reader thread will emit errorOccured()
    * \sa mdtPortThread
    * \sa mdtTcpSocketThread
@@ -116,8 +118,9 @@ class mdtAbstractPort : public QObject
    * (it is a little bit slower than setting timeout one time, and call waitForReadyRead() ).<br>
    * Note that the reader thread will call waitForReadyRead() without argument.<br>
    * Note: this method is called from thread , and should not be used directly<br>
-   * Mutex can be handled by this method (for. ex: mdtTcpSocket)
+   * Mutex: see waitForReadyRead()
    * \return False on error, in this case, the reader thread will be stopped.
+   * \sa waitForReadyRead()
    */
   bool waitForReadyRead(int msecs);
 
@@ -150,7 +153,9 @@ class mdtAbstractPort : public QObject
    *
    * This method must be re-implemented in subclass.<br>
    * Note: this method is called from thread , and should not be used directly<br>
-   * Mutex can be handled by this method (for. ex: mdtTcpSocket)
+   * Notes about mutex handling:
+   *  - Caller: Mutex must be locked before calling this method.
+   *  - Subclass implementation: Mutex must be released during wait, and relocked befor return.
    * \return False on error, in this case, the reader thread will be stopped.
    */
   virtual bool waitEventWriteReady() = 0;
@@ -166,8 +171,8 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Update the read timeout state
    *
-   *  This method must be called by system dependant waitEventRead() method
-   *  When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br>
+   * This method must be called by system dependant waitEventRead() method
+   * When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br>
    * Note: this method is called from thread , and should not be used directly<br>
    * Mutex is not handled by this method.
    */
@@ -175,8 +180,8 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Update the write timeout state
    *
-   *  This method must be called by system dependant waitEventWriteReady() method
-   *  When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br>
+   * This method must be called by system dependant waitEventWriteReady() method
+   * When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br>
    * Note: this method is called from thread , and should not be used directly<br>
    * Mutex is not handled by this method.
    */
@@ -184,13 +189,13 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Returns read timeout state
    * 
-   * Note: this method locks the internal mutex
+   * Mutex is not handled by this method.
    */
   bool readTimeoutOccured();
 
   /*! \brief Returns write timeout state
    * 
-   * Note: this method locks the internal mutex
+   * Mutex is not handled by this method.
    */
   bool writeTimeoutOccured();
 
@@ -255,9 +260,6 @@ class mdtAbstractPort : public QObject
   mdtPortConfig pvConfig;
   // Attributes
   QString pvName;     // Port name, like /dev/ttyS0 , COM1, ...
-
- //private:
-
   // mutex
   QMutex pvMutex;
 };

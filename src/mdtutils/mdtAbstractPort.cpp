@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtAbstractPort.h"
 
 //#include <QDebug>
@@ -50,7 +69,6 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
       // ASCII frame type
       case mdtFrame::FT_ASCII:
         frame = new mdtFrameAscii;
-        ///dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(cfg.endOfFrameSeq());
         break;
       // MODBUS/TCP frame type
       case mdtFrame::FT_MODBUS_TCP:
@@ -121,24 +139,26 @@ void mdtAbstractPort::updateWriteTimeoutState(bool state)
   pvWriteTimeoutOccured = state;
 }
 
+/// NOTE: verrouillage à revoir !!
 bool mdtAbstractPort::readTimeoutOccured()
 {
   bool retVal;
 
-  lockMutex();
+  ///lockMutex();
   retVal = pvReadTimeoutOccured;
-  unlockMutex();
+  ///unlockMutex();
 
   return retVal;
 }
 
+/// NOTE: verrouillage à revoir !!
 bool mdtAbstractPort::writeTimeoutOccured()
 {
   bool retVal;
 
-  lockMutex();
+  ///lockMutex();
   retVal = pvWriteTimeoutOccured;
-  unlockMutex();
+  ///unlockMutex();
 
   return retVal;
 }

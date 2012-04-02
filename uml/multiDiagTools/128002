@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 70
+  revision 76
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -5477,8 +5477,8 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 457346 "pvTransactionIds"
-	private explicit_type "QQueue<int>"
+      attribute 457346 "pvTransactionsCount"
+	private explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -5685,6 +5685,21 @@ ${inlines}
 	    classrelation_ref 433410 // pvThread (<unidirectional association>)
 	  b parent class_ref 336130 // mdtTcpSocketThread
       end
+
+      operation 683650 "decrementTransactionsCounter"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 341122 "mdtTcpSocketThread"
@@ -5733,6 +5748,36 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 422786 "pvMaxReconnect"
+	private explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 423426 "pvPeerName"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 423554 "pvPeerPort"
+	private explicit_type "quInt16"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       operation 618114 "mdtTcpSocketThread"
 	public explicit_return_type ""
 	nparams 1
@@ -5771,6 +5816,20 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 683522 "beginNewTransaction"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -5887,36 +5946,6 @@ ${inlines}
 	  b parent class_ref 329474 // QTcpSocket
       end
 
-      attribute 422786 "pvMaxReconnect"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 423426 "pvPeerName"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 423554 "pvPeerPort"
-	private explicit_type "quInt16"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       classrelation 433538 // pvReadCurrentFrame (<directional composition>)
 	relation 433282 *-->
 	  a role_name "pvReadCurrentFrame" multiplicity "0..1" private
@@ -5934,6 +5963,25 @@ ${inlines}
 	    classrelation_ref 433666 // pvWriteCurrentFrame (<directional composition>)
 	  b parent class_ref 196354 // mdtFrame
       end
+    end
+
+    sequencediagram 354178 "tcpSocketThreadRunConnected"
+      show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+      overlapping_bars size A4
+    end
+
+    class 355970 "main"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
     end
   end
 

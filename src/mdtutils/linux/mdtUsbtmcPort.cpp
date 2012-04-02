@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtUsbtmcPort.h"
 #include "mdtError.h"
 #include <sys/types.h>
@@ -85,14 +104,11 @@ void mdtUsbtmcPort::setWriteTimeout(int timeout)
 
 bool mdtUsbtmcPort::waitForReadyRead()
 {
-  pvReadWriteMutex.lock();
-  if(!pvReadCondition.wait(&pvReadWriteMutex, pvReadTimeout)){
+  if(!pvReadCondition.wait(&pvMutex, pvReadTimeout)){
     updateReadTimeoutState(true);
-    pvReadWriteMutex.unlock();
     return true;
   }
   updateReadTimeoutState(false);
-  pvReadWriteMutex.unlock();
 
   return true;
 }
@@ -126,14 +142,11 @@ qint64 mdtUsbtmcPort::read(char *data, qint64 maxSize)
 
 bool mdtUsbtmcPort::waitEventWriteReady()
 {
-  pvReadWriteMutex.lock();
-  if(!pvWriteCondition.wait(&pvReadWriteMutex, pvWriteTimeout)){
+  if(!pvWriteCondition.wait(&pvMutex, pvWriteTimeout)){
     updateWriteTimeoutState(true);
-    pvReadWriteMutex.unlock();
     return true;
   }
   updateWriteTimeoutState(false);
-  pvReadWriteMutex.unlock();
 
   return true;
 }
@@ -164,14 +177,14 @@ qint64 mdtUsbtmcPort::write(const char *data, qint64 maxSize)
 
 void mdtUsbtmcPort::writeOneFrame()
 {
-  pvReadWriteMutex.lock();
+  pvMutex.lock();
   pvWriteCondition.wakeAll();
-  pvReadWriteMutex.unlock();
+  pvMutex.unlock();
 }
 
 void mdtUsbtmcPort::readOneFrame()
 {
-  pvReadWriteMutex.lock();
+  pvMutex.lock();
   pvReadCondition.wakeAll();
-  pvReadWriteMutex.unlock();
+  pvMutex.unlock();
 }

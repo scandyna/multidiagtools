@@ -67,7 +67,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtFrameCodecModbus" --><!-- doxytag: inherits="mdtFrameCodec" -->
-<p>Encode and decode MODBUS PDU.  
+<p>Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?  
  <a href="classmdt_frame_codec_modbus.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_frame_codec_modbus_8h_source.html">mdtFrameCodecModbus.h</a>&gt;</code></p>
@@ -112,13 +112,15 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#adf0a4d583aeff7b818dda94514c594f0">encodeReadCoils</a> (quint16 startAddress, quint16 n)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU according the ReadCoils function (0x01)  <a href="#adf0a4d583aeff7b818dda94514c594f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a123f63422bb34fcb10ac653c0e89e79e">encodeWriteSingleCoil</a> (quint16 address, bool state)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a PDU according the WriteSingleCoil function (0x05)  <a href="#a123f63422bb34fcb10ac653c0e89e79e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787">decode</a> (const QByteArray &amp;pdu)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a MODBUS PDU.  <a href="#a426f465363a49d70890a462b40677787"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame_codec_modbus.html#a31d8291be7f8636d5d295ce3066d7ac7">modbus_error_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_modbus.html#a21f3102e12f1a1d9c4145c1ce1f8e6b6">lastModbusError</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last MODBUS error code returned.  <a href="#a21f3102e12f1a1d9c4145c1ce1f8e6b6"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Encode and decode MODBUS PDU. </p>
+<div class="textblock"><p>Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ? </p>
 <p>This class works only on MODBUS PDU. To transmit MODBUS/TCP frame, the resulting PDU can be sent using <a class="el" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a> class, or received PDU decoded here.</p>
 <p>References:</p>
 <ul>
@@ -249,6 +251,37 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a123f63422bb34fcb10ac653c0e89e79e"></a><!-- doxytag: member="mdtFrameCodecModbus::encodeWriteSingleCoil" ref="a123f63422bb34fcb10ac653c0e89e79e" args="(quint16 address, bool state)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil </td>
+          <td>(</td>
+          <td class="paramtype">quint16&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Encode a PDU according the WriteSingleCoil function (0x05) </p>
+<p>Please take a look at MODBUS specifications for more details. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a21f3102e12f1a1d9c4145c1ce1f8e6b6"></a><!-- doxytag: member="mdtFrameCodecModbus::lastModbusError" ref="a21f3102e12f1a1d9c4145c1ce1f8e6b6" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -288,7 +321,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 18 2012 17:44:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

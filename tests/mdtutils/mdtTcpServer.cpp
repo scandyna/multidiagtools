@@ -41,6 +41,7 @@ void mdtTcpServer::incomingConnection(int socketDescriptor)
   connect(tcpThd, SIGNAL(finished()), tcpThd, SLOT(deleteLater()));
   tcpThd->start();
   tcpThd->wait();
+  pvResponses.clear();
   pvMutex.unlock();
 }
 

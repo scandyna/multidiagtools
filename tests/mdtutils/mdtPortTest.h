@@ -59,6 +59,10 @@ class mdtPortTest : public mdtTest
 
   // Test TCP/IP socket
   void tcpSocketTest();
+  void tcpSocketTest_data();
+
+  // Check that TCP/IP read works with invalid frames
+  void tcpSocketRreadInvalidDataTest();
 };
 
 #endif  // #ifndef MDT_PORT_TEST_H

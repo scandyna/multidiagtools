@@ -109,10 +109,6 @@ True on successfull configuration and open port
 
 \end{DoxyItemize}
 
-dynamic\_\-cast$<$mdtFrameAscii$\ast$$>$(frame)-\/$>$setEofSeq(cfg.endOfFrameSeq()); 
-
-
-
 Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort}.
 
 \hypertarget{classmdt_port_posix_a1940fad77c70b3c2b7e9ae2b117f4e41}{
@@ -129,7 +125,9 @@ Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de8
 
 Read data from port. 
 
-This method must be implemented in subclass \begin{DoxyReturn}{Returns}
+This method must be implemented in subclass.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Mutex is not handled by this method. \begin{DoxyReturn}{Returns}
 Number of bytes readen, or $<$0 on error 
 \end{DoxyReturn}
 
@@ -215,10 +213,16 @@ Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{
 
 Wait until data can be written to device. 
 
-This method must be re-\/implemented in subclass. \begin{DoxyReturn}{Returns}
+This method must be re-\/implemented in subclass.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Notes about mutex handling:
+\begin{DoxyItemize}
+\item Caller: Mutex must be locked before calling this method.
+\item Subclass implementation: Mutex must be released during wait, and relocked befor return. \begin{DoxyReturn}{Returns}
 False on error, in this case, the reader thread will be stopped. 
 \end{DoxyReturn}
 
+\end{DoxyItemize}
 
 Implements \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{mdtAbstractPort}.
 
@@ -235,13 +239,21 @@ Implements \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{
 
 Wait until data is available at device. 
 
-This method must be re-\/implemented in subclass. The read timeout state must be updated with \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState()} \begin{DoxyReturn}{Returns}
+This method must be re-\/implemented in subclass. The read timeout state must be updated with \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState()}\par
+ Note: this method is called from thread , and should not be used directly\par
+ Notes about mutex handling:
+\begin{DoxyItemize}
+\item Caller: Mutex must be locked before calling this method.
+\item Subclass implementation: Mutex must be released during wait, and relocked befor return. \begin{DoxyReturn}{Returns}
 False on error, in this case, the reader thread will emit errorOccured() 
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_thread}{mdtPortThread} 
+
+\hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
 \end{DoxySeeAlso}
 
+\end{DoxyItemize}
 
 Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{mdtAbstractPort}.
 
@@ -259,7 +271,9 @@ Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{
 
 Write data to port. 
 
-This method must be implemented in subclass \begin{DoxyReturn}{Returns}
+This method must be implemented in subclass.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Mutex is not handled by this method. \begin{DoxyReturn}{Returns}
 Number of bytes written, or $<$0 on error 
 \end{DoxyReturn}
 

@@ -23,11 +23,8 @@ Collaboration diagram for mdtTcpSocketThread:\nopagebreak
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_tcp_socket_thread_ad288905cfcb60ed16643890bafa8b9f0}{
-void {\bfseries newFrameReaden} ()}
-\label{classmdt_tcp_socket_thread_ad288905cfcb60ed16643890bafa8b9f0}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classmdt_tcp_socket_thread_ad288905cfcb60ed16643890bafa8b9f0}{newFrameReaden} ()
+\begin{DoxyCompactList}\small\item\em New frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -42,15 +39,26 @@ void \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{st
 void {\bfseries connectToHost} (QString hostName, quint16 hostPort)}
 \label{classmdt_tcp_socket_thread_a48db12819fd049de833c4789ebed134a}
 
-\item 
-\hypertarget{classmdt_tcp_socket_thread_a40c645dd3e38a648658ec70ead18b1ec}{
-void {\bfseries beginNewTransaction} ()}
-\label{classmdt_tcp_socket_thread_a40c645dd3e38a648658ec70ead18b1ec}
-
 \end{DoxyCompactItemize}
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_tcp_socket_thread_ad288905cfcb60ed16643890bafa8b9f0}{
+\index{mdtTcpSocketThread@{mdtTcpSocketThread}!newFrameReaden@{newFrameReaden}}
+\index{newFrameReaden@{newFrameReaden}!mdtTcpSocketThread@{mdtTcpSocketThread}}
+\subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocketThread::newFrameReaden (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_tcp_socket_thread_ad288905cfcb60ed16643890bafa8b9f0}
+
+
+New frame was readen. 
+
+This signal is emitted when a new frame was readen. The frame can be complete or not (depending of the EOF condition) \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_frame}{mdtFrame} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{
 \index{mdtTcpSocketThread@{mdtTcpSocketThread}!stop@{stop}}
 \index{stop@{stop}!mdtTcpSocketThread@{mdtTcpSocketThread}}

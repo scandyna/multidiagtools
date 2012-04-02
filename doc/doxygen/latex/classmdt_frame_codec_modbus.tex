@@ -4,7 +4,7 @@
 }
 
 
-Encode and decode MODBUS PDU.  
+Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?  
 
 
 
@@ -54,6 +54,8 @@ enum \hyperlink{classmdt_frame_codec_modbus_a31d8291be7f8636d5d295ce3066d7ac7}{m
 \item 
 QByteArray \hyperlink{classmdt_frame_codec_modbus_adf0a4d583aeff7b818dda94514c594f0}{encodeReadCoils} (quint16 startAddress, quint16 n)
 \begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadCoils function (0x01) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}{encodeWriteSingleCoil} (quint16 address, bool state)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the WriteSingleCoil function (0x05) \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}{decode} (const QByteArray \&pdu)
 \begin{DoxyCompactList}\small\item\em Decode a MODBUS PDU. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame_codec_modbus_a31d8291be7f8636d5d295ce3066d7ac7}{modbus\_\-error\_\-code\_\-t} \hyperlink{classmdt_frame_codec_modbus_a21f3102e12f1a1d9c4145c1ce1f8e6b6}{lastModbusError} ()
@@ -61,7 +63,7 @@ int \hyperlink{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}{de
 
 
 \subsection{Detailed Description}
-Encode and decode MODBUS PDU. 
+Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ? 
 
 This class works only on MODBUS PDU. To transmit MODBUS/TCP frame, the resulting PDU can be sent using \hyperlink{classmdt_frame_modbus_tcp}{mdtFrameModbusTcp} class, or received PDU decoded here.
 
@@ -188,6 +190,23 @@ Decoded function code, MODBUS error code or value $<$ 0 on other error.
 
 
 Encode a PDU according the ReadCoils function (0x01) 
+
+Please take a look at MODBUS specifications for more details. \begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+\hypertarget{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeWriteSingleCoil@{encodeWriteSingleCoil}}
+\index{encodeWriteSingleCoil@{encodeWriteSingleCoil}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeWriteSingleCoil}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil (
+\begin{DoxyParamCaption}
+\item[{quint16}]{address, }
+\item[{bool}]{state}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}
+
+
+Encode a PDU according the WriteSingleCoil function (0x05) 
 
 Please take a look at MODBUS specifications for more details. \begin{DoxyReturn}{Returns}
 A QByteArray containing the PDU, or a empty QByteArray on error. 

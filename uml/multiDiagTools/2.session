@@ -1,15 +1,17 @@
-window_sizes 1280 1002 370 904 808 120
+window_sizes 1280 1002 358 916 808 120
 diagrams
-  active  classdiagram_ref 128002 // mdtSerialPort
-    904 808 100 4 12 0
-  classdiagram_ref 262018 // mdtPortConfig
-    723 646 100 4 60 0
-  classdiagram_ref 215554 // mdtSerialPortConfig
-    723 646 100 4 0 0
+  classdiagram_ref 334594 // mdtTcpSocket
+    916 808 100 4 0 0
+  classdiagram_ref 341122 // mdtTcpSocketThread
+    732 646 100 4 36 0
+  classdiagram_ref 255234 // mdtAbstractPort
+    916 808 100 4 0 0
+  active  classdiagram_ref 288130 // mdtUsbtmcPort
+    916 808 100 4 0 0
 end
 show_stereotypes
 open
-  classview_ref 201218 // mdtPort
-  class_ref 128002 // mdtSerialPort
+  class_ref 276482 // mdtUsbtmcPort
+  classview_ref 134914 // Qt4
 end
 end

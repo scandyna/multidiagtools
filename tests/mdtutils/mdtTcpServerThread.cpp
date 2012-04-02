@@ -22,6 +22,8 @@
 #include <QTcpSocket>
 #include <QtTest/QtTest>
 
+#include <QDebug>
+
 mdtTcpServerThread::mdtTcpServerThread(int socketDescriptor, const QStringList &data, QObject *parent)
  : QThread(parent)
 {
@@ -39,7 +41,8 @@ void mdtTcpServerThread::run()
   // Send the data
   for(i=0; i<pvResponses.size(); i++){
     socket.write(pvResponses.at(i).toAscii());
+    QVERIFY2(socket.waitForBytesWritten() , "Note: it's possible that host (client) has closed the connection");
   }
+  pvResponses.clear();
   socket.disconnectFromHost();
-  socket.waitForDisconnected();
 }

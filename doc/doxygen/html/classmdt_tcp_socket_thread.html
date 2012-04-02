@@ -85,8 +85,8 @@ Collaboration diagram for mdtTcpSocketThread:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad288905cfcb60ed16643890bafa8b9f0"></a><!-- doxytag: member="mdtTcpSocketThread::newFrameReaden" ref="ad288905cfcb60ed16643890bafa8b9f0" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>newFrameReaden</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket_thread.html#ad288905cfcb60ed16643890bafa8b9f0">newFrameReaden</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">New frame was readen.  <a href="#ad288905cfcb60ed16643890bafa8b9f0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab379d78b2d32a9361dbe46a009c687d4"></a><!-- doxytag: member="mdtTcpSocketThread::mdtTcpSocketThread" ref="ab379d78b2d32a9361dbe46a009c687d4" args="(QObject *parent=0)" -->
@@ -95,10 +95,28 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the running thread.  <a href="#a0fd2b3f8b497427d84ae358c6f72122e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48db12819fd049de833c4789ebed134a"></a><!-- doxytag: member="mdtTcpSocketThread::connectToHost" ref="a48db12819fd049de833c4789ebed134a" args="(QString hostName, quint16 hostPort)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>connectToHost</b> (QString hostName, quint16 hostPort)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40c645dd3e38a648658ec70ead18b1ec"></a><!-- doxytag: member="mdtTcpSocketThread::beginNewTransaction" ref="a40c645dd3e38a648658ec70ead18b1ec" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>beginNewTransaction</b> ()</td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ad288905cfcb60ed16643890bafa8b9f0"></a><!-- doxytag: member="mdtTcpSocketThread::newFrameReaden" ref="ad288905cfcb60ed16643890bafa8b9f0" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtTcpSocketThread::newFrameReaden </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>New frame was readen. </p>
+<p>This signal is emitted when a new frame was readen. The frame can be complete or not (depending of the EOF condition) </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a0fd2b3f8b497427d84ae358c6f72122e"></a><!-- doxytag: member="mdtTcpSocketThread::stop" ref="a0fd2b3f8b497427d84ae358c6f72122e" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -141,7 +159,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>beginNewTransaction</
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 18 2012 17:44:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,3 +1,23 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #ifndef MDT_USBTMC_PORT_H
 #define MDT_USBTMC_PORT_H
 
@@ -62,7 +82,7 @@ class mdtUsbtmcPort : public mdtAbstractPort
   /*! \brief Tell the thread that a frame can be read
    * 
    * In mdtUsbtmcPortManager, this slot is connected to
-   * the write thread, and called each time a frame ws written.<br>
+   * the write thread, and called each time a frame was written.<br>
    * If the waitingFrame flag is true, the read thread will be
    * notified that data must be read.
    * \sa setWaitingFrame()
@@ -72,7 +92,6 @@ class mdtUsbtmcPort : public mdtAbstractPort
 
  private:
 
-  QMutex pvReadWriteMutex;
   QWaitCondition pvReadCondition;
   QWaitCondition pvWriteCondition;
   int pvReadTimeout;

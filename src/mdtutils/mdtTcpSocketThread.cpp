@@ -23,7 +23,7 @@
 #include "mdtError.h"
 #include <QApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtTcpSocketThread::mdtTcpSocketThread(QObject *parent)
  : mdtPortThread(parent)
@@ -60,8 +60,6 @@ void mdtTcpSocketThread::stop()
 
 void mdtTcpSocketThread::connectToHost(QString hostName, quint16 hostPort)
 {
-  Q_ASSERT(pvPort != 0);
-
   // Mutex is hadled from pvPort, we not lock it here
   pvPeerName = hostName;
   pvPeerPort = hostPort;
@@ -74,7 +72,6 @@ void mdtTcpSocketThread::readFromSocket()
   qint64 readen;
   qint64 stored;
 
-  pvPort->lockMutex();
   // Reset bufferCursor
   bufferCursor = pvReadBuffer;
   // Read data from port
@@ -82,6 +79,8 @@ void mdtTcpSocketThread::readFromSocket()
   if(readen < 0){
     readen = 0;
     emit(errorOccured(MDT_TCP_IO_ERROR));
+    // Sleep a bit to prevent crazy ressources consumtion NOTE: mutex !?
+    msleep(100);
   }
   toStore = readen;
   // Store readen data
@@ -107,11 +106,8 @@ void mdtTcpSocketThread::readFromSocket()
     if(pvReadCurrentFrame->bytesToStore() == 0){
       stored += pvReadCurrentFrame->eofSeqLen();
       pvPort->readenFrames().enqueue(pvReadCurrentFrame);
-      pvPort->unlockMutex();
       // emit a Readen frame signal if complete
-      if(pvReadCurrentFrame->isComplete()){
-        emit newFrameReaden();
-      }
+      emit newFrameReaden();
       pvReadCurrentFrame = getNewFrameRead();
     }
     // When frame becomes full and EOF condition was not reached, stored will be to big
@@ -124,7 +120,6 @@ void mdtTcpSocketThread::readFromSocket()
     bufferCursor = bufferCursor + stored;
     Q_ASSERT(bufferCursor < (pvReadBuffer + pvReadBufferSize));
   }
-  pvPort->unlockMutex();
 }
 
 mdtFrame *mdtTcpSocketThread::getNewFrameRead()
@@ -152,7 +147,6 @@ void mdtTcpSocketThread::writeToSocket()
   qint64 toWrite;
   qint64 written;
 
-  pvPort->lockMutex();
   // Check if we have something to transmit
   if(pvWriteCurrentFrame == 0){
     pvWriteCurrentFrame = getNewFrameWrite();
@@ -168,6 +162,8 @@ void mdtTcpSocketThread::writeToSocket()
     if(written < 0){
       emit(errorOccured(MDT_TCP_IO_ERROR));
       written = 0;
+      // Sleep a bit to prevent crazy ressources consumtion
+      msleep(100);
     }
     pvWriteCurrentFrame->take(written);
     // Check if current frame was completly sent
@@ -182,7 +178,6 @@ void mdtTcpSocketThread::writeToSocket()
       Q_ASSERT(toWrite >= 0);
     }
   }
-  pvPort->unlockMutex();
 }
 
 mdtFrame *mdtTcpSocketThread::getNewFrameWrite()
@@ -203,6 +198,8 @@ mdtFrame *mdtTcpSocketThread::getNewFrameWrite()
 
 bool mdtTcpSocketThread::reconnectToHost()
 {
+  Q_ASSERT(pvPort != 0);
+
   int counter = pvMaxReconnect + 1;
   int timeout = 500;  // Initial timeout
 
@@ -212,35 +209,40 @@ bool mdtTcpSocketThread::reconnectToHost()
   }
   // If a connection is about to be established, wait and return
   if((pvSocket->state() == QAbstractSocket::HostLookupState)||(pvSocket->state() == QAbstractSocket::ConnectingState)){
+    pvPort->unlockMutex();
     if(!pvSocket->waitForConnected(timeout)){
+      pvPort->lockMutex();
       mdtError e(MDT_TCP_IO_ERROR, "Unable to reconnect to host", mdtError::Error);
       e.setSystemError(pvSocket->error(), pvSocket->errorString());
       MDT_ERROR_SET_SRC(e, "mdtTcpSocketThread");
       e.commit();
       return false;
     }
+    pvPort->lockMutex();
     return true;
   }
   // Here, we can be disconnecting or disconnected , wait to be shure
   if(pvSocket->state() != QAbstractSocket::UnconnectedState){
+    pvPort->unlockMutex();
     if(!pvSocket->waitForDisconnected(timeout)){
+      pvPort->lockMutex();
       mdtError e(MDT_TCP_IO_ERROR, "waitForDisconnected() failed", mdtError::Error);
       e.setSystemError(pvSocket->error(), pvSocket->errorString());
       MDT_ERROR_SET_SRC(e, "mdtTcpSocketThread");
       e.commit();
       return false;
     }
+    pvPort->lockMutex();
   }
   // Ok, try reconnect
   while(counter > 0){
-    pvPort->lockMutex();
     pvSocket->connectToHost(pvPeerName, pvPeerPort);
     pvPort->unlockMutex();
-    qDebug() << "Try connecting ...";
     if(pvSocket->waitForConnected(timeout)){
-      qDebug() << "Connected to " << pvSocket->peerName() << ":" << pvSocket->peerPort();
+      pvPort->lockMutex();
       return true;
     }
+    pvPort->lockMutex();
     timeout += 100;
     counter--;
   }
@@ -257,7 +259,6 @@ void mdtTcpSocketThread::run()
   Q_ASSERT(pvPort != 0);
 
   mdtTcpSocket *socket;
-  qDebug() << "TCP THD: start ...";
 
   pvPort->lockMutex();
   // Init write frame
@@ -293,38 +294,30 @@ void mdtTcpSocketThread::run()
   socket = dynamic_cast<mdtTcpSocket*>(pvPort);
   Q_ASSERT(socket != 0);
   socket->setThreadObjects(pvSocket, this);
-  // Clear transactions list
-  ///pvTransactionIds.clear();
   // Set the running flag
   pvRunning = true;
-  pvPort->unlockMutex();
 
   // Run...
   while(1){
     // Read thread state
-    pvPort->lockMutex();
     if(!pvRunning){
-      pvPort->unlockMutex();
       break;
     }
     // Check if a connection was requested
     if(pvPeerPort == 0){
-      pvPort->unlockMutex();
       socket->waitForNewTransaction();
     }
-    pvPort->unlockMutex();
     if(pvSocket->state() == QAbstractSocket::ConnectedState){
       // Wait on write ready event
       if(!pvPort->waitEventWriteReady()){
         emit(errorOccured(MDT_TCP_IO_ERROR));
+        /// NOTE: sleep ?
       }
       // Read thread state
-      pvPort->lockMutex();
       if(!pvRunning){
-        pvPort->unlockMutex();
         break;
       }
-      pvPort->unlockMutex();
+      // **********************
       // Event occured, send the data to port - Check timeout state first
       if(!pvPort->writeTimeoutOccured()){
         // Write data to send
@@ -333,14 +326,13 @@ void mdtTcpSocketThread::run()
       // Wait until data is available for read
       if(!pvPort->waitForReadyRead()){
         emit(errorOccured(MDT_TCP_IO_ERROR));
+        /// NOTE: sleep ?
       }
       // Read thread state
-      pvPort->lockMutex();
       if(!pvRunning){
-        pvPort->unlockMutex();
         break;
       }
-      pvPort->unlockMutex();
+      // **********************
       // Event occured, get the data from port - Check timeout state first
       if(!pvPort->readTimeoutOccured()){
         // We received data , read it
@@ -375,5 +367,7 @@ void mdtTcpSocketThread::run()
   // Free memory
   Q_ASSERT(pvReadBuffer != 0);
   delete pvReadBuffer;
+
+  pvPort->unlockMutex();
 }
 

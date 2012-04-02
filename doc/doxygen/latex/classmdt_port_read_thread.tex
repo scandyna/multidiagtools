@@ -24,7 +24,7 @@ Collaboration diagram for mdtPortReadThread:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}{newFrameReaden} ()
-\begin{DoxyCompactList}\small\item\em Emited when a complete frame is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Emited when a new frame is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -47,9 +47,9 @@ void \hyperlink{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}{new
 \label{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}
 
 
-Emited when a complete frame is available. 
+Emited when a new frame is available. 
 
-This signal is emited when a complete frame is available.\par
+This signal is emited when a new frame is available.\par
  To get the frame, the simplest way is to use a \hyperlink{classmdt_port_manager}{mdtPortManager}.\par
  It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution needs to handle the mutex, verify the readen queue state, ... \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_manager}{mdtPortManager} 

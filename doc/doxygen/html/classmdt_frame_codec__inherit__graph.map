@@ -1,6 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="28,83,175,112"/>
-<area shape="rect" id="node9" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU." alt="" coords="199,83,364,112"/>
+<area shape="rect" id="node9" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="199,83,364,112"/>
 <area shape="rect" id="node5" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="29,160,173,189"/>
 <area shape="rect" id="node7" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="5,237,197,267"/>
 </map>

@@ -44,6 +44,12 @@ class mdtTcpSocketThread : public mdtPortThread
 
  signals:
 
+  /*! \brief New frame was readen.
+   * 
+   * This signal is emitted when a new frame was readen.
+   * The frame can be complete or not (depending of the EOF condition)
+   * \sa mdtFrame
+   */
   void newFrameReaden();
 
  private:

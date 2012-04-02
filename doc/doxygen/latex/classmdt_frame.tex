@@ -55,7 +55,7 @@ bool \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete} ()
 \begin{DoxyCompactList}\small\item\em Returns true if EOF condition was reached. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear} ()
 \begin{DoxyCompactList}\small\item\em Overloaded function. \end{DoxyCompactList}\item 
-virtual int \hyperlink{classmdt_frame_a51c355541b134e6e051167c70c09d531}{putData} (char $\ast$data, int len)
+virtual int \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData} (const char $\ast$data, int len)
 \begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{
 virtual int \hyperlink{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{eofSeqLen} ()}
@@ -156,16 +156,16 @@ Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af
 
 Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{mdtFrameModbusTcp}.
 
-\hypertarget{classmdt_frame_a51c355541b134e6e051167c70c09d531}{
+\hypertarget{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{
 \index{mdtFrame@{mdtFrame}!putData@{putData}}
 \index{putData@{putData}!mdtFrame@{mdtFrame}}
 \subsubsection[{putData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrame::putData (
 \begin{DoxyParamCaption}
-\item[{char $\ast$}]{data, }
+\item[{const char $\ast$}]{data, }
 \item[{int}]{len}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_frame_a51c355541b134e6e051167c70c09d531}
+\label{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}
 
 
 Put data into the frame. 
@@ -185,7 +185,7 @@ The data pointer must be valid, and not be the internal pointer returned by data
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_frame_ascii_abdab25b08b5955b5275377c4d19ca78d}{mdtFrameAscii}.
+Reimplemented in \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{mdtFrameAscii}, and \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{mdtFrameModbusTcp}.
 
 \hypertarget{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{
 \index{mdtFrame@{mdtFrame}!putUntil@{putUntil}}

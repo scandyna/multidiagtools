@@ -27,7 +27,7 @@
  *
  * mdtFrame is based on Qt's QByteArray, that provide a array of bytes.
  * To store data, the QByteArray's methods append() can be used.<br>
- * For ASCII frames reception, the end is a special char/strting on most case. mdtFrame
+ * For ASCII frames reception, the end is a special char/string on most case. mdtFrame
  * provide the functions putUntil() for that purpose.<br>
  * During data reception, for exemple from serial port, the best way to check if more data can be stored is to use bytesToStore().
  * It returns the remain capacity of the frame, and 0 if the end of frame (EOF) condition was

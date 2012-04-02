@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtPortPosix.h"
 #include "mdtError.h"
 #include <sys/types.h>
@@ -95,7 +114,9 @@ bool mdtPortPosix::waitForReadyRead()
   FD_ZERO(&input);
   FD_SET(pvFd, &input);
 
+  pvMutex.unlock();
   n = select(pvFd+1, &input, 0, 0, &pvReadTimeout);
+  pvMutex.lock();
   if(n == 0){
     updateReadTimeoutState(true);
   }else{
@@ -148,7 +169,9 @@ bool mdtPortPosix::waitEventWriteReady()
   FD_ZERO(&output);
   FD_SET(pvFd, &output);
 
+  pvMutex.unlock();
   n = select(pvFd+1, 0, &output, 0, &pvWriteTimeout);
+  pvMutex.lock();
   if(n == 0){
     updateWriteTimeoutState(true);
   }else{

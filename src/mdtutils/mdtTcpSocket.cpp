@@ -24,12 +24,13 @@
 
 #include "mdtTcpSocketThread.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvSocket = 0;
+  pvTransactionsCount = 0;
 }
 
 mdtTcpSocket::~mdtTcpSocket()
@@ -62,7 +63,7 @@ bool mdtTcpSocket::open(mdtPortConfig &cfg)
 void mdtTcpSocket::close()
 {
   lockMutex();
-  pvTransactionIds.clear();
+  pvTransactionsCount = 0;
   mdtAbstractPort::close();
 }
 
@@ -84,6 +85,7 @@ void mdtTcpSocket::setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thre
 
   pvSocket = socket;
   pvThread = thread;
+  connect(pvThread, SIGNAL(newFrameReaden()), this, SLOT(decrementTransactionsCounter()), Qt::DirectConnection);
 }
 
 void mdtTcpSocket::setReadTimeout(int timeout)
@@ -99,28 +101,22 @@ void mdtTcpSocket::setWriteTimeout(int timeout)
 void mdtTcpSocket::beginNewTransaction()
 {
   pvMutex.lock();
-    /// NOTE: essai
-  pvTransactionIds.enqueue(25);
+  pvTransactionsCount++;
   pvNewTransaction.wakeAll();
   pvMutex.unlock();
 }
 
 void mdtTcpSocket::waitForNewTransaction()
 {
-  pvMutex.lock();
   pvNewTransaction.wait(&pvMutex);
-  pvMutex.unlock();
 }
 
 bool mdtTcpSocket::waitForReadyRead()
 {
   Q_ASSERT(pvSocket != 0);
 
-  pvMutex.lock();
-  qDebug() << "mdtTcpSocket::waitEventWriteReady(): transaction size: " << pvTransactionIds.size() << " , BTW: " << pvSocket->bytesToWrite();
   // Check if something is to do, if not, wait
-  if((pvTransactionIds.size() < 1)&&(pvSocket->bytesToWrite() < 1)){
-    qDebug() << "waitForReadyRead(): No transaction, wait ...";
+  if((pvTransactionsCount < 1)&&(pvSocket->bytesToWrite() < 1)){
     pvNewTransaction.wait(&pvMutex);
   }
   
@@ -137,12 +133,10 @@ bool mdtTcpSocket::waitForReadyRead()
         e.setSystemError(pvSocket->error(), pvSocket->errorString());
         MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
         e.commit();
-        pvMutex.unlock();
         return false;
       }
     }
   }
-  pvMutex.unlock();
 
   return true;
 }
@@ -161,11 +155,6 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
     e.commit();
   }
 
-  /// NOTE: provisoire !!
-  if(pvTransactionIds.size() > 0){
-    pvTransactionIds.dequeue();
-  }
-
   return n;
 }
 
@@ -173,16 +162,12 @@ bool mdtTcpSocket::waitEventWriteReady()
 {
   Q_ASSERT(pvSocket != 0);
 
-  pvMutex.lock();
   // Check if something is to do, if not, wait
-  qDebug() << "mdtTcpSocket::waitEventWriteReady(): transaction size: " << pvTransactionIds.size() << " , BTW: " << pvSocket->bytesToWrite();
-  if((pvTransactionIds.size() < 1)&&(pvSocket->bytesToWrite() < 1)){
-    qDebug() << "waitEventWriteReady(): No transaction, wait ...";
+  if((pvTransactionsCount < 1)&&(pvSocket->bytesToWrite() < 1)){
     pvNewTransaction.wait(&pvMutex);
   }
   // Check if something is to write , if yes, wait until there are written
   if(pvSocket->bytesToWrite() < 1){
-    pvMutex.unlock();
     return true;
   }
   if(!pvSocket->waitForBytesWritten(pvWriteTimeout)){
@@ -197,12 +182,10 @@ bool mdtTcpSocket::waitEventWriteReady()
         e.setSystemError(pvSocket->error(), pvSocket->errorString());
         MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
         e.commit();
-        pvMutex.unlock();
         return false;
       }
     }
   }
-  pvMutex.unlock();
 
   return true;
 }
@@ -222,4 +205,11 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   }
 
   return n;
+}
+
+void mdtTcpSocket::decrementTransactionsCounter()
+{
+  if(pvTransactionsCount > 0){
+    pvTransactionsCount--;
+  }
 }

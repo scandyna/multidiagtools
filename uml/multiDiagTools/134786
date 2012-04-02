@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 25
+  revision 26
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -361,6 +361,33 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+      operation 690178 "lock"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 690306 "unlock"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 202498 "QMessageBox"
@@ -537,6 +564,36 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+      operation 690434 "wait"
+	public explicit_return_type "bool"
+	nparams 2
+	  param in name "mutex" type class_ref 202882 // QMutex
+	  param in name "time" explicit_type "unsigned long int"
+	    defaultvalue "ULONG_MAX"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 690562 "wakeAll"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 321026 "QWidget"

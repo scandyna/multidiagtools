@@ -109,8 +109,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if EOF condition was reached. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloaded function.  <a href="#acdf8a921a3f36ca91af88b55b90febdc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#a51c355541b134e6e051167c70c09d531">putData</a> (char *data, int len)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Put data into the frame.  <a href="#a51c355541b134e6e051167c70c09d531"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8">putData</a> (const char *data, int len)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Put data into the frame.  <a href="#ae63af784d2fc54430ea5db4dc80b7ec8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e0dcfb9d284ac0dae550db33f0fbece"></a><!-- doxytag: member="mdtFrame::eofSeqLen" ref="a0e0dcfb9d284ac0dae550db33f0fbece" args="()" -->
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#a0e0dcfb9d284ac0dae550db33f0fbece">eofSeqLen</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the length of the end of frame sequence Used for ASCII frames. Default implementation returns 0. <br/></td></tr>
@@ -213,14 +213,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 
 </div>
 </div>
-<a class="anchor" id="a51c355541b134e6e051167c70c09d531"></a><!-- doxytag: member="mdtFrame::putData" ref="a51c355541b134e6e051167c70c09d531" args="(char *data, int len)" -->
+<a class="anchor" id="ae63af784d2fc54430ea5db4dc80b7ec8"></a><!-- doxytag: member="mdtFrame::putData" ref="ae63af784d2fc54430ea5db4dc80b7ec8" args="(const char *data, int len)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int mdtFrame::putData </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
@@ -250,7 +250,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes that could really be stored </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The data pointer must be valid, and not be the internal pointer returned by data(). </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_frame_ascii.html#abdab25b08b5955b5275377c4d19ca78d">mdtFrameAscii</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_frame_ascii.html#a9ef48ef78d9603a9d8c3be7e39b03745">mdtFrameAscii</a>, and <a class="el" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb">mdtFrameModbusTcp</a>.</p>
 
 </div>
 </div>
@@ -444,7 +444,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 18 2012 17:44:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

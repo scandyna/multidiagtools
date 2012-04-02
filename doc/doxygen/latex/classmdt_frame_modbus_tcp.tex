@@ -35,7 +35,7 @@ Collaboration diagram for mdtFrameModbusTcp:\nopagebreak
 void \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{clear} ()
 \item 
 int \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{putData} (const char $\ast$data, int maxLen)
-\begin{DoxyCompactList}\small\item\em Overload of \hyperlink{classmdt_frame_a51c355541b134e6e051167c70c09d531}{mdtFrame::putData()} \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Overload of \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{mdtFrame::putData()} \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_modbus_tcp_a3c5528d2e45111ec0563dfd3350177cd}{
 void \hyperlink{classmdt_frame_modbus_tcp_a3c5528d2e45111ec0563dfd3350177cd}{setTransactionId} (quint16 id)}
 \label{classmdt_frame_modbus_tcp_a3c5528d2e45111ec0563dfd3350177cd}
@@ -127,11 +127,11 @@ Capacity must be $>$= 7
 \item[{const char $\ast$}]{data, }
 \item[{int}]{maxLen}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}
 
 
-Overload of \hyperlink{classmdt_frame_a51c355541b134e6e051167c70c09d531}{mdtFrame::putData()} 
+Overload of \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{mdtFrame::putData()} 
 
 \begin{DoxyPrecond}{Precondition}
 Capacity must be $>$= 7 
@@ -141,15 +141,15 @@ Capacity must be $>$= 7
 \end{DoxySeeAlso}
 
 
-qDebug() $<$$<$ \char`\"{}mdtFrameModbusTcp::putData(): maxLen (1): \char`\"{} $<$$<$ maxLen;
-
-qDebug() $<$$<$ \char`\"{}mdtFrameModbusTcp::putData(): stored(1): \char`\"{} $<$$<$ stored $<$$<$ \char`\"{} , maxLen (2): \char`\"{} $<$$<$ maxLen;
-
 qDebug() $<$$<$ \char`\"{}mdtFrameModbusTcp::putData(): maxLen (3): \char`\"{} $<$$<$ maxLen;
 
 qDebug() $<$$<$ \char`\"{}mdtFrameModbusTcp::putData(): maxLen (4): \char`\"{} $<$$<$ maxLen;
 
 qDebug() $<$$<$ \char`\"{}mdtFrameModbusTcp::putData(): stored: \char`\"{} $<$$<$ stored; 
+
+
+
+Reimplemented from \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{mdtFrame}.
 
 
 

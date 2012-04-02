@@ -33,11 +33,11 @@ classcanvas 131202 class_ref 249602 // mdtPort
 end
 classcanvas 131458 class_ref 249858 // mdtPortSys
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 308 77 2011
+  xyz 462 73 2011
 end
 classcanvas 131714 class_ref 249474 // mdtAbstractPort
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 395 167 3005
+  xyz 397 168 3005
 end
 relationcanvas 129538 relation_ref 189698 // <dependency>
   from ref 129410 z 2001 to ref 128130

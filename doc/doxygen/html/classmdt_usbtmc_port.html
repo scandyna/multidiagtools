@@ -178,9 +178,6 @@ Public Member Functions</h2></td></tr>
 </li>
 </ul>
 
-<p><p>dynamic_cast&lt;mdtFrameAscii*&gt;(frame)-&gt;setEofSeq(cfg.endOfFrameSeq()); </p>
-</p>
-
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">mdtAbstractPort</a>.</p>
 
 </div>
@@ -211,7 +208,9 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read data from port. </p>
-<p>This method must be implemented in subclass </p>
+<p>This method must be implemented in subclass.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex is not handled by this method. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
@@ -342,8 +341,14 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Wait until data can be written to device. </p>
-<p>This method must be re-implemented in subclass. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+<p>This method must be re-implemented in subclass.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Notes about mutex handling:</p>
+<ul>
+<li>Caller: Mutex must be locked before calling this method.</li>
+<li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+</li>
+</ul>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
 
@@ -364,9 +369,17 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Wait until data is available at device. </p>
-<p>This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a> </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
+<p>This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a><br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Notes about mutex handling:</p>
+<ul>
+<li>Caller: Mutex must be locked before calling this method.</li>
+<li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
+<dd>
+<a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
+</li>
+</ul>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
 
@@ -398,7 +411,9 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Write data to port. </p>
-<p>This method must be implemented in subclass </p>
+<p>This method must be implemented in subclass.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex is not handled by this method. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
@@ -446,7 +461,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Mar 18 2012 17:44:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
