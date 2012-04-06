@@ -1,0 +1,295 @@
+\hypertarget{classmdt_led}{
+\section{mdtLed Class Reference}
+\label{classmdt_led}\index{mdtLed@{mdtLed}}
+}
+
+
+ldtLED is a widget witch displays a LED  
+
+
+
+
+{\ttfamily \#include $<$mdtLed.h$>$}
+
+
+
+Inheritance diagram for mdtLed:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{classmdt_led__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}{
+void \hyperlink{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}{setOn} ()}
+\label{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}
+
+\begin{DoxyCompactList}\small\item\em Set the LED ON. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_led_a4c8f5f6aa91b7c90ae6b1aa4933ba6e0}{
+void \hyperlink{classmdt_led_a4c8f5f6aa91b7c90ae6b1aa4933ba6e0}{setOff} ()}
+\label{classmdt_led_a4c8f5f6aa91b7c90ae6b1aa4933ba6e0}
+
+\begin{DoxyCompactList}\small\item\em Set the LED OFF. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_aabbe7fcb23d539946dffec4526c89495}{setOn} (bool on)
+\begin{DoxyCompactList}\small\item\em Set the LED ON or OFF. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a9e86ff65f2ec1bfb6131e2b9042609e8}{toggleOnOff} ()
+\begin{DoxyCompactList}\small\item\em Toggle On/Off. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_led_a64d5de3a8c2e4937d9ca9328b5ae4f9c}{mdtLed} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Contruct a new ldtLED. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a1271e1dfe07e8ff459d7f20e55ab3bc4}{setBorders} (int horizontalBorder, int verticalBorder)
+\begin{DoxyCompactList}\small\item\em Set the borders. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a5f3b4975c423ac35442ec2b9c546b0e4}{setGreen} ()
+\begin{DoxyCompactList}\small\item\em Set the LED color to green. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a5cdd40d1e3baefab72d9cda866353797}{setOrange} ()
+\begin{DoxyCompactList}\small\item\em Set the LED color to orange. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a28e208fb105c99b21d81d4c82ed50a98}{setRed} ()
+\begin{DoxyCompactList}\small\item\em Set the LED color to red. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a664ca4c83ec0faaa86bd3f932fb06d5b}{setFlat} ()
+\begin{DoxyCompactList}\small\item\em Set a simple flat LED. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a8ec814fdc4910476e7479649ba3f6204}{setGlint} ()
+\begin{DoxyCompactList}\small\item\em Set a glint LED. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a6aabb78ea686814f316f88e20d024d39}{setTextMode} ()
+\begin{DoxyCompactList}\small\item\em Set the LED as text. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_ab8a997e610a2ad5572e1a6dbe7fbc256}{setAntialiasing} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Enable the antialiasing. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_abd0fde0ce1eca75fe7c832557829089b}{setFixedSize} (int width, int height)
+\begin{DoxyCompactList}\small\item\em Force the LED to have a fixed size. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_led_a696570e6eb8f5b0a629fc6823ed2fe4d}{setAutoSize} ()
+\begin{DoxyCompactList}\small\item\em Use Qt QSizePolicy to resize the LED. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_led_a44cf6e19e2640bc843d1ed096843e686}{
+QSize {\bfseries sizeHint} () const }
+\label{classmdt_led_a44cf6e19e2640bc843d1ed096843e686}
+
+\item 
+\hypertarget{classmdt_led_ae7d22257f19d57771299b321a8a17c50}{
+QSize {\bfseries minimumSizeHint} () const }
+\label{classmdt_led_ae7d22257f19d57771299b321a8a17c50}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_led_a1c96c8e06658ba569f7cf6b3fc3f5903}{
+void {\bfseries paintEvent} (QPaintEvent $\ast$)}
+\label{classmdt_led_a1c96c8e06658ba569f7cf6b3fc3f5903}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+ldtLED is a widget witch displays a LED 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_led_a64d5de3a8c2e4937d9ca9328b5ae4f9c}{
+\index{mdtLed@{mdtLed}!mdtLed@{mdtLed}}
+\index{mdtLed@{mdtLed}!mdtLed@{mdtLed}}
+\subsubsection[{mdtLed}]{\setlength{\rightskip}{0pt plus 5cm}mdtLed::mdtLed (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a64d5de3a8c2e4937d9ca9328b5ae4f9c}
+
+
+Contruct a new ldtLED. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_led_ab8a997e610a2ad5572e1a6dbe7fbc256}{
+\index{mdtLed@{mdtLed}!setAntialiasing@{setAntialiasing}}
+\index{setAntialiasing@{setAntialiasing}!mdtLed@{mdtLed}}
+\subsubsection[{setAntialiasing}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setAntialiasing (
+\begin{DoxyParamCaption}
+\item[{bool}]{enabled}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_ab8a997e610a2ad5572e1a6dbe7fbc256}
+
+
+Enable the antialiasing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & If true, antialiasing will be enabled (else, diseabled) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_led_a696570e6eb8f5b0a629fc6823ed2fe4d}{
+\index{mdtLed@{mdtLed}!setAutoSize@{setAutoSize}}
+\index{setAutoSize@{setAutoSize}!mdtLed@{mdtLed}}
+\subsubsection[{setAutoSize}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setAutoSize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a696570e6eb8f5b0a629fc6823ed2fe4d}
+
+
+Use Qt QSizePolicy to resize the LED. 
+
+Use the Qt default QSizePolicy (see the QLayout and QWidget references for details) This is the default behaviour if \hyperlink{classmdt_led_abd0fde0ce1eca75fe7c832557829089b}{setFixedSize()} was never called. \hypertarget{classmdt_led_a1271e1dfe07e8ff459d7f20e55ab3bc4}{
+\index{mdtLed@{mdtLed}!setBorders@{setBorders}}
+\index{setBorders@{setBorders}!mdtLed@{mdtLed}}
+\subsubsection[{setBorders}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setBorders (
+\begin{DoxyParamCaption}
+\item[{int}]{horizontalBorder, }
+\item[{int}]{verticalBorder}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a1271e1dfe07e8ff459d7f20e55ab3bc4}
+
+
+Set the borders. 
+
+The LED will be drawn in the center, with horizontal and vertical specified spaces. 
+\begin{DoxyParams}{Parameters}
+{\em horizontalBorder} & Set the horizontal borders (will be the same at left and right of the LED) \\
+\hline
+{\em verticalBorder} & Set the vertical borders (will be the same at top and bottom of the LED) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_led_abd0fde0ce1eca75fe7c832557829089b}{
+\index{mdtLed@{mdtLed}!setFixedSize@{setFixedSize}}
+\index{setFixedSize@{setFixedSize}!mdtLed@{mdtLed}}
+\subsubsection[{setFixedSize}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setFixedSize (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_abd0fde0ce1eca75fe7c832557829089b}
+
+
+Force the LED to have a fixed size. 
+
+By default, ldtLED uses the Qt default QSizePolicy Wenn calling this method, the LED will keep a fixed size 
+\begin{DoxyParams}{Parameters}
+{\em width} & The width (min. 10) \\
+\hline
+{\em height} & The height (min. 10) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_led_a664ca4c83ec0faaa86bd3f932fb06d5b}{
+\index{mdtLed@{mdtLed}!setFlat@{setFlat}}
+\index{setFlat@{setFlat}!mdtLed@{mdtLed}}
+\subsubsection[{setFlat}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setFlat (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a664ca4c83ec0faaa86bd3f932fb06d5b}
+
+
+Set a simple flat LED. 
+
+The color will be uniform on the LED surface \hypertarget{classmdt_led_a8ec814fdc4910476e7479649ba3f6204}{
+\index{mdtLed@{mdtLed}!setGlint@{setGlint}}
+\index{setGlint@{setGlint}!mdtLed@{mdtLed}}
+\subsubsection[{setGlint}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setGlint (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a8ec814fdc4910476e7479649ba3f6204}
+
+
+Set a glint LED. 
+
+This will use the Qt::RadialGradientPattern brush style This can slow down the application with many LED's. For better performance, use \hyperlink{classmdt_led_a664ca4c83ec0faaa86bd3f932fb06d5b}{setFlat()} . \hypertarget{classmdt_led_a5f3b4975c423ac35442ec2b9c546b0e4}{
+\index{mdtLed@{mdtLed}!setGreen@{setGreen}}
+\index{setGreen@{setGreen}!mdtLed@{mdtLed}}
+\subsubsection[{setGreen}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setGreen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a5f3b4975c423ac35442ec2b9c546b0e4}
+
+
+Set the LED color to green. 
+
+\hypertarget{classmdt_led_aabbe7fcb23d539946dffec4526c89495}{
+\index{mdtLed@{mdtLed}!setOn@{setOn}}
+\index{setOn@{setOn}!mdtLed@{mdtLed}}
+\subsubsection[{setOn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setOn (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_led_aabbe7fcb23d539946dffec4526c89495}
+
+
+Set the LED ON or OFF. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, the LED is set ON , else OFF \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_led_a5cdd40d1e3baefab72d9cda866353797}{
+\index{mdtLed@{mdtLed}!setOrange@{setOrange}}
+\index{setOrange@{setOrange}!mdtLed@{mdtLed}}
+\subsubsection[{setOrange}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setOrange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a5cdd40d1e3baefab72d9cda866353797}
+
+
+Set the LED color to orange. 
+
+\hypertarget{classmdt_led_a28e208fb105c99b21d81d4c82ed50a98}{
+\index{mdtLed@{mdtLed}!setRed@{setRed}}
+\index{setRed@{setRed}!mdtLed@{mdtLed}}
+\subsubsection[{setRed}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setRed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a28e208fb105c99b21d81d4c82ed50a98}
+
+
+Set the LED color to red. 
+
+\hypertarget{classmdt_led_a6aabb78ea686814f316f88e20d024d39}{
+\index{mdtLed@{mdtLed}!setTextMode@{setTextMode}}
+\index{setTextMode@{setTextMode}!mdtLed@{mdtLed}}
+\subsubsection[{setTextMode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::setTextMode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_led_a6aabb78ea686814f316f88e20d024d39}
+
+
+Set the LED as text. 
+
+The LED will display a ON/OFF text instead a color \hypertarget{classmdt_led_a9e86ff65f2ec1bfb6131e2b9042609e8}{
+\index{mdtLed@{mdtLed}!toggleOnOff@{toggleOnOff}}
+\index{toggleOnOff@{toggleOnOff}!mdtLed@{mdtLed}}
+\subsubsection[{toggleOnOff}]{\setlength{\rightskip}{0pt plus 5cm}void mdtLed::toggleOnOff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_led_a9e86ff65f2ec1bfb6131e2b9042609e8}
+
+
+Toggle On/Off. 
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtLed.h\item 
+src/mdtutilsgui/mdtLed.cpp\end{DoxyCompactItemize}

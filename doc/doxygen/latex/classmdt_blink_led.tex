@@ -1,0 +1,141 @@
+\hypertarget{classmdt_blink_led}{
+\section{mdtBlinkLed Class Reference}
+\label{classmdt_blink_led}\index{mdtBlinkLed@{mdtBlinkLed}}
+}
+
+
+Blinking LED.  
+
+
+
+
+{\ttfamily \#include $<$mdtBlinkLed.h$>$}
+
+
+
+Inheritance diagram for mdtBlinkLed:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{classmdt_blink_led__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtBlinkLed:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{classmdt_blink_led__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{setOn} ()
+\begin{DoxyCompactList}\small\item\em Set the LED ON. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}{setOff} ()
+\begin{DoxyCompactList}\small\item\em Set the LED OFF. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_blink_led_abbc96bc408a45ceb191a908b2808a235}{
+{\bfseries mdtBlinkLed} (QWidget $\ast$parent=0)}
+\label{classmdt_blink_led_abbc96bc408a45ceb191a908b2808a235}
+
+\item 
+void \hyperlink{classmdt_blink_led_ae2dc395378aed0705ff19db5096a1efc}{setBlinkPeriod} (int T)
+\begin{DoxyCompactList}\small\item\em Set blinking period. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_blink_led_a1b15c8fafec0bc3aeb31ddf284ca7be2}{setBlinking} (bool on)
+\begin{DoxyCompactList}\small\item\em Set LED blinking. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Blinking LED. 
+
+This class can be helpfull to get a blinking LED in a simple way.\par
+ If a lot of blinking LED's are needed, it is recommanded to use \hyperlink{classmdt_led}{mdtLed} objects and one QTimer, and to connect the QTimer::timeout() signal to each \hyperlink{classmdt_led_a9e86ff65f2ec1bfb6131e2b9042609e8}{mdtLed::toggleOnOff()} slot. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_blink_led_a1b15c8fafec0bc3aeb31ddf284ca7be2}{
+\index{mdtBlinkLed@{mdtBlinkLed}!setBlinking@{setBlinking}}
+\index{setBlinking@{setBlinking}!mdtBlinkLed@{mdtBlinkLed}}
+\subsubsection[{setBlinking}]{\setlength{\rightskip}{0pt plus 5cm}void mdtBlinkLed::setBlinking (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_blink_led_a1b15c8fafec0bc3aeb31ddf284ca7be2}
+
+
+Set LED blinking. 
+
+Set the LED blinking. The blink period can be changed with \hyperlink{classmdt_blink_led_ae2dc395378aed0705ff19db5096a1efc}{setBlinkPeriod()} When \hyperlink{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{setOn()} or \hyperlink{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}{setOff()} is called, the blinking is cancelled.
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & If true, the LED goes blinking. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_blink_led_ae2dc395378aed0705ff19db5096a1efc}{
+\index{mdtBlinkLed@{mdtBlinkLed}!setBlinkPeriod@{setBlinkPeriod}}
+\index{setBlinkPeriod@{setBlinkPeriod}!mdtBlinkLed@{mdtBlinkLed}}
+\subsubsection[{setBlinkPeriod}]{\setlength{\rightskip}{0pt plus 5cm}void mdtBlinkLed::setBlinkPeriod (
+\begin{DoxyParamCaption}
+\item[{int}]{T}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_blink_led_ae2dc395378aed0705ff19db5096a1efc}
+
+
+Set blinking period. 
+
+In 1 period, the LED toogles 1x ON ant 1x OFF (The time whenn the LED is ON is 1/2 period)
+
+
+\begin{DoxyParams}{Parameters}
+{\em T} & The period \mbox{[}ms\mbox{]} (min. 160 \mbox{[}ms\mbox{]}) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}{
+\index{mdtBlinkLed@{mdtBlinkLed}!setOff@{setOff}}
+\index{setOff@{setOff}!mdtBlinkLed@{mdtBlinkLed}}
+\subsubsection[{setOff}]{\setlength{\rightskip}{0pt plus 5cm}void mdtBlinkLed::setOff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}
+
+
+Set the LED OFF. 
+
+
+
+Reimplemented from \hyperlink{classmdt_led_a4c8f5f6aa91b7c90ae6b1aa4933ba6e0}{mdtLed}.
+
+\hypertarget{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{
+\index{mdtBlinkLed@{mdtBlinkLed}!setOn@{setOn}}
+\index{setOn@{setOn}!mdtBlinkLed@{mdtBlinkLed}}
+\subsubsection[{setOn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtBlinkLed::setOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}
+
+
+Set the LED ON. 
+
+
+
+Reimplemented from \hyperlink{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}{mdtLed}.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtBlinkLed.h\item 
+src/mdtutilsgui/mdtBlinkLed.cpp\end{DoxyCompactItemize}
