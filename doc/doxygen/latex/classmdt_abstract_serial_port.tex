@@ -4,8 +4,7 @@
 }
 
 
-Inheritance diagram for mdtAbstractSerialPort:
-\nopagebreak
+Inheritance diagram for mdtAbstractSerialPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -14,8 +13,7 @@ Inheritance diagram for mdtAbstractSerialPort:
 \end{figure}
 
 
-Collaboration diagram for mdtAbstractSerialPort:
-\nopagebreak
+Collaboration diagram for mdtAbstractSerialPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -65,7 +63,7 @@ void \hyperlink{classmdt_abstract_serial_port_a47c08ccb99dc6de76ae58ebeefc26857}
 
 \item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)=0
-\begin{DoxyCompactList}\small\item\em Open the serial port with given configuration. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{
 \hyperlink{classmdt_abstract_serial_port_a56b107c57fb0acb17cfcca262abe6a54}{sp\_\-uart\_\-type\_\-t} \hyperlink{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{uartType} ()}
 \label{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}
@@ -210,20 +208,23 @@ Implemented in \hyperlink{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08
 \label{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}
 
 
-Open the serial port with given configuration. 
+Open the port. 
 
-This method must be re-\/implemented in plateform specific subclass. The implemented method must call mdtPort::open() at the right time 
-\begin{DoxyParams}{Parameters}
-{\em cfg} & Contains the setup for the serial port to open \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+This method must be re-\/implemented in subclass.\par
+ To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Close previous opened ressource
+\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
+\item Do the specific work
+\item Set the read/write timeouts. See the \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
+\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, and mutex unocked. \begin{DoxyReturn}{Returns}
 True on successfull configuration and open port 
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port}{mdtPort} 
+\hyperlink{classmdt_port_config}{mdtPortConfig} 
 \end{DoxySeeAlso}
 
+\end{DoxyItemize}
 
 Implemented in \hyperlink{classmdt_serial_port_posix_afb1bcf27cc39cd962913b056ca8d4ccc}{mdtSerialPortPosix}.
 
@@ -314,5 +315,4 @@ Implemented in \hyperlink{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtserialport/mdtAbstractSerialPort.h\item 
-src/mdtserialport/mdtAbstractSerialPort.cpp\item 
-src/mdtserialport/moc\_\-mdtAbstractSerialPort.cxx\end{DoxyCompactItemize}
+src/mdtserialport/mdtAbstractSerialPort.cpp\end{DoxyCompactItemize}

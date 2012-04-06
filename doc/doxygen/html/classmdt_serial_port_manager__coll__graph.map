@@ -1,9 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_manager.html" title="mdtPortManager" alt="" coords="155,400,272,429"/>
+<area shape="rect" id="node2" href="$classmdt_port_manager.html" title="mdtPortManager" alt="" coords="93,389,211,419"/>
 <area shape="rect" id="node4" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/>
-<area shape="rect" id="node10" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="88,101,205,131"/>
-<area shape="rect" id="node6" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="144,304,283,333"/>
-<area shape="rect" id="node8" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="160,197,267,227"/>
-<area shape="rect" id="node13" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="307,304,445,333"/>
-<area shape="rect" id="node17" href="$classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="369,251,519,280"/>
+<area shape="rect" id="node10" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="61,101,179,131"/>
+<area shape="rect" id="node6" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/>
+<area shape="rect" id="node8" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/>
+<area shape="rect" id="node13" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/>
 </map>

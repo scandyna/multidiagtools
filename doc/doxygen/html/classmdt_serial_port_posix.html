@@ -93,6 +93,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE: validité config. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">close</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a29df8d6b7c74bd7e3bf8513987bdd2a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a7cea8e6d04dac0645785e8bee7570cea">setReadTimeout</a> (int timeout)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#a7cea8e6d04dac0645785e8bee7570cea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001">setWriteTimeout</a> (int timeout)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#ac8388d9e5411541ead6eab17c0661001"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39">waitForReadyRead</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#a69ecbfb420544af72301e50635c4ba39"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930">read</a> (char *data, qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a55b73a33f1b9552fbb8821e356a8b930"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1">waitEventWriteReady</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to device.  <a href="#ac6e29bfccaa92509f6d86848da45bcc1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6">write</a> (const char *data, qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a3b70bbabeb933e25ad787f606dca0fb6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a8ec213863c6eacfc8d3079aadc9ef43b">waitEventCtl</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#a8ec213863c6eacfc8d3079aadc9ef43b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc">getCtlStates</a> ()</td></tr>
@@ -156,6 +168,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
+<a class="anchor" id="a55b73a33f1b9552fbb8821e356a8b930"></a><!-- doxytag: member="mdtSerialPortPosix::read" ref="a55b73a33f1b9552fbb8821e356a8b930" args="(char *data, qint64 maxSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 mdtSerialPortPosix::read </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read data from port. </p>
+<p>This method must be implemented in subclass.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex is not handled by this method. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a1440f504f0ed43210b9c0b1cd5506663"></a><!-- doxytag: member="mdtSerialPortPosix::setAttributes" ref="a1440f504f0ed43210b9c0b1cd5506663" args="(const QString &amp;portName)" -->
 <div class="memitem">
 <div class="memproto">
@@ -212,6 +259,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
+<a class="anchor" id="a7cea8e6d04dac0645785e8bee7570cea"></a><!-- doxytag: member="mdtSerialPortPosix::setReadTimeout" ref="a7cea8e6d04dac0645785e8bee7570cea" args="(int timeout)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSerialPortPosix::setReadTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the read data timeout. </p>
+<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3d27cec6098549cdba68465b8c5d4480"></a><!-- doxytag: member="mdtSerialPortPosix::setRts" ref="a3d27cec6098549cdba68465b8c5d4480" args="(bool on)" -->
 <div class="memitem">
 <div class="memproto">
@@ -240,6 +315,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
+<a class="anchor" id="ac8388d9e5411541ead6eab17c0661001"></a><!-- doxytag: member="mdtSerialPortPosix::setWriteTimeout" ref="ac8388d9e5411541ead6eab17c0661001" args="(int timeout)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSerialPortPosix::setWriteTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the write data timeout. </p>
+<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8ec213863c6eacfc8d3079aadc9ef43b"></a><!-- doxytag: member="mdtSerialPortPosix::waitEventCtl" ref="a8ec213863c6eacfc8d3079aadc9ef43b" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -262,6 +365,102 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
+<a class="anchor" id="ac6e29bfccaa92509f6d86848da45bcc1"></a><!-- doxytag: member="mdtSerialPortPosix::waitEventWriteReady" ref="ac6e29bfccaa92509f6d86848da45bcc1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPortPosix::waitEventWriteReady </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data can be written to device. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Notes about mutex handling:</p>
+<ul>
+<li>Caller: Mutex must be locked before calling this method.</li>
+<li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+</li>
+</ul>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a69ecbfb420544af72301e50635c4ba39"></a><!-- doxytag: member="mdtSerialPortPosix::waitForReadyRead" ref="a69ecbfb420544af72301e50635c4ba39" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPortPosix::waitForReadyRead </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data is available at device. </p>
+<p>This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a><br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Notes about mutex handling:</p>
+<ul>
+<li>Caller: Mutex must be locked before calling this method.</li>
+<li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
+<dd>
+<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd>
+<dd>
+<a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
+</li>
+</ul>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3b70bbabeb933e25ad787f606dca0fb6"></a><!-- doxytag: member="mdtSerialPortPosix::write" ref="a3b70bbabeb933e25ad787f606dca0fb6" args="(const char *data, qint64 maxSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">qint64 mdtSerialPortPosix::write </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Write data to port. </p>
+<p>This method must be implemented in subclass.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex is not handled by this method. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/linux/<a class="el" href="mdt_serial_port_posix_8h_source.html">mdtSerialPortPosix.h</a></li>
 <li>src/mdtserialport/linux/mdtSerialPortPosix.cpp</li>
@@ -281,7 +480,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

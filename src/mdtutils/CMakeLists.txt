@@ -9,9 +9,6 @@ project (multidiagtools)
 set (HEADER_FILES 
           # mdtError
           mdtErrorOut.h
-          # Essais
-          mdtParentChildTableModel.h
-          mdtParentChildTableItem.h
     )
 
 # Liste des fichiers sources
@@ -32,9 +29,6 @@ set (SOURCES_FILES
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp
-          # Essais
-          mdtParentChildTableModel.cpp
-          mdtParentChildTableItem.cpp
     )
 
 # Liste des fichiers ui

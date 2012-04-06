@@ -17,13 +17,8 @@ void \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{setDtr} 
 \label{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}
 
 \item 
-bool \hyperlink{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)
+bool \hyperlink{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}{carIsOn} ()
 \begin{DoxyCompactList}\small\item\em Open the serial port with given configuration. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}{
-bool \hyperlink{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}{carIsOn} ()}
-\label{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}
-
-\begin{DoxyCompactList}\small\item\em Get the CAR (CD) state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_serial_port_a8e5c0750746ac4639af4e3e51d2d52e3}{
 bool \hyperlink{classmdt_serial_port_a8e5c0750746ac4639af4e3e51d2d52e3}{dsrIsOn} ()}
 \label{classmdt_serial_port_a8e5c0750746ac4639af4e3e51d2d52e3}
@@ -38,29 +33,19 @@ bool \hyperlink{classmdt_serial_port_a0abb533edb3d8487a7ec03f8c2fb4eb2}{ctsIsOn}
 bool \hyperlink{classmdt_serial_port_a92c24c78e80a297af38a8fa48f6686a8}{rngIsOn} ()}
 \label{classmdt_serial_port_a92c24c78e80a297af38a8fa48f6686a8}
 
-\begin{DoxyCompactList}\small\item\em Get the RNG (RI) state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_a5baf0a3f76de0e942ac7b7d6c7748e66}{
-void \hyperlink{classmdt_serial_port_a5baf0a3f76de0e942ac7b7d6c7748e66}{lockMutex} ()}
-\label{classmdt_serial_port_a5baf0a3f76de0e942ac7b7d6c7748e66}
-
-\begin{DoxyCompactList}\small\item\em Lock the internal mutex. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_abe6b77b73151da4de234917f278298f0}{
-void \hyperlink{classmdt_serial_port_abe6b77b73151da4de234917f278298f0}{unlockMutex} ()}
-\label{classmdt_serial_port_abe6b77b73151da4de234917f278298f0}
-
-\begin{DoxyCompactList}\small\item\em Unlock the internal mutex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the RNG (RI) state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{
-\index{mdtSerialPort@{mdtSerialPort}!open@{open}}
-\index{open@{open}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::open (
+\hypertarget{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}{
+\index{mdtSerialPort@{mdtSerialPort}!carIsOn@{carIsOn}}
+\index{carIsOn@{carIsOn}!mdtSerialPort@{mdtSerialPort}}
+\subsubsection[{carIsOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPort::carIsOn (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtSerialPortConfig} \&}]{cfg}
+{}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}
+\label{classmdt_serial_port_a3eb4d41f925e40b08365ad270ee3662e}
 
 
 Open the serial port with given configuration. 
@@ -71,9 +56,9 @@ Open the serial port with given configuration.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on successfull configuration and open port 
+True on successfull configuration and open port
 \end{DoxyReturn}
-\hypertarget{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{
+Get the CAR (CD) state  Signals provided in \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} \hypertarget{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{
 \index{mdtSerialPort@{mdtSerialPort}!setDtr@{setDtr}}
 \index{setDtr@{setDtr}!mdtSerialPort@{mdtSerialPort}}
 \subsubsection[{setDtr}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::setDtr (

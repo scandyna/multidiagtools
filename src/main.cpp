@@ -33,6 +33,10 @@
 #include "mdtError.h"
 
 #include "linux/mdtDeviceU3606AWidget.h"
+#include "mdtLed.h"
+#include "mdtBlinkLed.h"
+#include <QGridLayout>
+#include <QWidget>
 
 int main(int argc, char **argv)
 {
@@ -51,9 +55,35 @@ int main(int argc, char **argv)
   }
   mdtErrorOut::setDialogLevelsMask(mdtError::Info | mdtError::Warning | mdtError::Error);
 
-  mdtDeviceU3606AWidget w;
-  
-  w.show();
+  mdtDeviceU3606AWidget dw;
+  dw.show();
+
+  /* Essais LED */
+  QWidget *w = new QWidget;
+  QGridLayout *layout = new QGridLayout;
+  mdtBlinkLed *led;
+
+  for(int x=0; x<20; x++){
+    for(int y=0; y<2; y++){
+      led = new mdtBlinkLed;
+      led->setFixedSize(30, 30);
+      led->setTextMode();
+      led->setBlinking(true);
+      layout->addWidget(led, y, x);
+    }
+    for(int y=2; y<4; y++){
+      led = new mdtBlinkLed;
+      led->setFixedSize(30, 30);
+      //led->setTextMode();
+      led->setBlinking(true);
+      layout->addWidget(led, y, x);
+    }
+
+  }
+  w->setLayout(layout);
+  w->resize(400,200);
+  w->show();
+
   
   retVal = app.exec();
 

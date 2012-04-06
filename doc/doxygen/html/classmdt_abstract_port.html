@@ -201,7 +201,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, and mutex unocked. </li>
 </ul>
 
-<p>Reimplemented in <a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">mdtSerialPortPosix</a>, <a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8">mdtTcpSocket</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -268,7 +268,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
  Mutex is not handled by this method. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a1940fad77c70b3c2b7e9ae2b117f4e41">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a91f45336ca9a71284e0309182f5e8ca1">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a1940fad77c70b3c2b7e9ae2b117f4e41">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a91f45336ca9a71284e0309182f5e8ca1">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -347,12 +347,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Returns read timeout state. </p>
-<p>NOTE: verrouillage à revoir !!</p>
 <p>Mutex is not handled by this method. </p>
-
-<p><p><a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>;</p>
-<p><a class="el" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex()</a>; </p>
-</p>
 
 </div>
 </div>
@@ -380,7 +375,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663">mdtSerialPortPosix</a>, <a class="el" href="classmdt_port_posix.html#a32a532f5148226da19ee4acc6ec63201">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a00e7406b88f60c6c233e124d08a900ab">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a22ba9c4826e8c45d6cfcd676be48a303">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a32a532f5148226da19ee4acc6ec63201">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a00e7406b88f60c6c233e124d08a900ab">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a22ba9c4826e8c45d6cfcd676be48a303">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -408,7 +403,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a7ab7e4a7dccbd58702f2c37335b900c8">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#ad3ec37dab7918fad36190b1c4c58c266">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a7ab7e4a7dccbd58702f2c37335b900c8">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#ad3ec37dab7918fad36190b1c4c58c266">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a7cea8e6d04dac0645785e8bee7570cea">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -436,7 +431,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a577a51bf0373f478b32bb1c1e5c4726c">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a577a51bf0373f478b32bb1c1e5c4726c">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -508,7 +503,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </li>
 </ul>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a6dc329dcaf343a471cf09379f563fa06">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#aaa58100bc6ec2a5f91a3c6bb3676a468">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a91ada4fd18d31646c2a4d630b8f9ff21">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a6dc329dcaf343a471cf09379f563fa06">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#aaa58100bc6ec2a5f91a3c6bb3676a468">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a91ada4fd18d31646c2a4d630b8f9ff21">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -560,11 +555,13 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
 <dd>
+<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd>
+<dd>
 <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
 </li>
 </ul>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a5547db404f974f1a04ba2e303b0aaed0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a381bf5194cf180ca95f5f4bae730f73c">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a5547db404f974f1a04ba2e303b0aaed0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a381bf5194cf180ca95f5f4bae730f73c">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -599,7 +596,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
  Mutex is not handled by this method. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a78e35734ae3088be2f2b097225bd648f">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a32b98d2a61617293c328a343d62d52c3">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port_posix.html#a78e35734ae3088be2f2b097225bd648f">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a32b98d2a61617293c328a343d62d52c3">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -678,19 +675,13 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Returns write timeout state. </p>
-<p>NOTE: verrouillage à revoir !!</p>
 <p>Mutex is not handled by this method. </p>
-
-<p><p><a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>;</p>
-<p><a class="el" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex()</a>; </p>
-</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtutils/<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a></li>
-<li>src/mdtutils/mdtAbstractPort.cpp</li>
-<li>src/mdtutils/moc_mdtAbstractPort.cxx</li>
+<li>src/mdtport/<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a></li>
+<li>src/mdtport/mdtAbstractPort.cpp</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -707,7 +698,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:53 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

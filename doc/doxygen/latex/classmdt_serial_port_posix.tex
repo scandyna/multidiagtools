@@ -4,8 +4,7 @@
 }
 
 
-Inheritance diagram for mdtSerialPortPosix:
-\nopagebreak
+Inheritance diagram for mdtSerialPortPosix:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -14,8 +13,7 @@ Inheritance diagram for mdtSerialPortPosix:
 \end{figure}
 
 
-Collaboration diagram for mdtSerialPortPosix:
-\nopagebreak
+Collaboration diagram for mdtSerialPortPosix:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -39,6 +37,18 @@ bool \hyperlink{classmdt_serial_port_posix_afb1bcf27cc39cd962913b056ca8d4ccc}{op
 \begin{DoxyCompactList}\small\item\em NOTE: validité config. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_serial_port_posix_a29df8d6b7c74bd7e3bf8513987bdd2a2}{close} ()
 \begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_posix_a7cea8e6d04dac0645785e8bee7570cea}{setReadTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_posix_ac8388d9e5411541ead6eab17c0661001}{setWriteTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_posix_a69ecbfb420544af72301e50635c4ba39}{waitForReadyRead} ()
+\begin{DoxyCompactList}\small\item\em Wait until data is available at device. \end{DoxyCompactList}\item 
+qint64 \hyperlink{classmdt_serial_port_posix_a55b73a33f1b9552fbb8821e356a8b930}{read} (char $\ast$data, qint64 maxSize)
+\begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_posix_ac6e29bfccaa92509f6d86848da45bcc1}{waitEventWriteReady} ()
+\begin{DoxyCompactList}\small\item\em Wait until data can be written to device. \end{DoxyCompactList}\item 
+qint64 \hyperlink{classmdt_serial_port_posix_a3b70bbabeb933e25ad787f606dca0fb6}{write} (const char $\ast$data, qint64 maxSize)
+\begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc9ef43b}{waitEventCtl} ()
 \begin{DoxyCompactList}\small\item\em Wait until a control (modem line) signal state changes. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08744acc}{getCtlStates} ()
@@ -103,6 +113,29 @@ False on error, in this case, the thread will be stopped.
 
 Implements \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort}.
 
+\hypertarget{classmdt_serial_port_posix_a55b73a33f1b9552fbb8821e356a8b930}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!read@{read}}
+\index{read@{read}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtSerialPortPosix::read (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{qint64}]{maxSize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a55b73a33f1b9552fbb8821e356a8b930}
+
+
+Read data from port. 
+
+This method must be implemented in subclass.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Mutex is not handled by this method. \begin{DoxyReturn}{Returns}
+Number of bytes readen, or $<$0 on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
+
 \hypertarget{classmdt_serial_port_posix_a1440f504f0ed43210b9c0b1cd5506663}{
 \index{mdtSerialPortPosix@{mdtSerialPortPosix}!setAttributes@{setAttributes}}
 \index{setAttributes@{setAttributes}!mdtSerialPortPosix@{mdtSerialPortPosix}}
@@ -147,6 +180,28 @@ This method must be re-\/implemented in plateform specific subclass.
 
 Implements \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{mdtAbstractSerialPort}.
 
+\hypertarget{classmdt_serial_port_posix_a7cea8e6d04dac0645785e8bee7570cea}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!setReadTimeout@{setReadTimeout}}
+\index{setReadTimeout@{setReadTimeout}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortPosix::setReadTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a7cea8e6d04dac0645785e8bee7570cea}
+
+
+Set the read data timeout. 
+
+This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
+
 \hypertarget{classmdt_serial_port_posix_a3d27cec6098549cdba68465b8c5d4480}{
 \index{mdtSerialPortPosix@{mdtSerialPortPosix}!setRts@{setRts}}
 \index{setRts@{setRts}!mdtSerialPortPosix@{mdtSerialPortPosix}}
@@ -169,6 +224,28 @@ This method must be re-\/implemented in plateform specific subclass.
 
 Implements \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{mdtAbstractSerialPort}.
 
+\hypertarget{classmdt_serial_port_posix_ac8388d9e5411541ead6eab17c0661001}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!setWriteTimeout@{setWriteTimeout}}
+\index{setWriteTimeout@{setWriteTimeout}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{setWriteTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortPosix::setWriteTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_ac8388d9e5411541ead6eab17c0661001}
+
+
+Set the write data timeout. 
+
+This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
+
 \hypertarget{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc9ef43b}{
 \index{mdtSerialPortPosix@{mdtSerialPortPosix}!waitEventCtl@{waitEventCtl}}
 \index{waitEventCtl@{waitEventCtl}!mdtSerialPortPosix@{mdtSerialPortPosix}}
@@ -188,6 +265,88 @@ False on error, in this case, the thread will be stopped.
 
 
 Implements \hyperlink{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{mdtAbstractSerialPort}.
+
+\hypertarget{classmdt_serial_port_posix_ac6e29bfccaa92509f6d86848da45bcc1}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!waitEventWriteReady@{waitEventWriteReady}}
+\index{waitEventWriteReady@{waitEventWriteReady}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortPosix::waitEventWriteReady (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_ac6e29bfccaa92509f6d86848da45bcc1}
+
+
+Wait until data can be written to device. 
+
+This method must be re-\/implemented in subclass.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Notes about mutex handling:
+\begin{DoxyItemize}
+\item Caller: Mutex must be locked before calling this method.
+\item Subclass implementation: Mutex must be released during wait, and relocked befor return. \begin{DoxyReturn}{Returns}
+False on error, in this case, the reader thread will be stopped. 
+\end{DoxyReturn}
+
+\end{DoxyItemize}
+
+Implements \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{mdtAbstractPort}.
+
+\hypertarget{classmdt_serial_port_posix_a69ecbfb420544af72301e50635c4ba39}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!waitForReadyRead@{waitForReadyRead}}
+\index{waitForReadyRead@{waitForReadyRead}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortPosix::waitForReadyRead (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a69ecbfb420544af72301e50635c4ba39}
+
+
+Wait until data is available at device. 
+
+This method must be re-\/implemented in subclass. The read timeout state must be updated with \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState()}\par
+ Note: this method is called from thread , and should not be used directly\par
+ Notes about mutex handling:
+\begin{DoxyItemize}
+\item Caller: Mutex must be locked before calling this method.
+\item Subclass implementation: Mutex must be released during wait, and relocked befor return. \begin{DoxyReturn}{Returns}
+False on error, in this case, the reader thread will emit errorOccured() 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_thread}{mdtPortThread} 
+
+\hyperlink{classmdt_port_config}{mdtPortConfig} 
+
+\hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
+\end{DoxySeeAlso}
+
+\end{DoxyItemize}
+
+Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{mdtAbstractPort}.
+
+\hypertarget{classmdt_serial_port_posix_a3b70bbabeb933e25ad787f606dca0fb6}{
+\index{mdtSerialPortPosix@{mdtSerialPortPosix}!write@{write}}
+\index{write@{write}!mdtSerialPortPosix@{mdtSerialPortPosix}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtSerialPortPosix::write (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{data, }
+\item[{qint64}]{maxSize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_posix_a3b70bbabeb933e25ad787f606dca0fb6}
+
+
+Write data to port. 
+
+This method must be implemented in subclass.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Mutex is not handled by this method. \begin{DoxyReturn}{Returns}
+Number of bytes written, or $<$0 on error 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
 
 
 

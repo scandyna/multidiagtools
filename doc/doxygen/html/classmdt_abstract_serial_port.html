@@ -123,7 +123,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae379b6151edebc1518e81ec061e379db"></a><!-- doxytag: member="mdtAbstractSerialPort::mdtAbstractSerialPort" ref="ae379b6151edebc1518e81ec061e379db" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtAbstractSerialPort</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ad96a99c370c87d7e4a8b47f98cc7ce35">open</a> (<a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the serial port with given configuration.  <a href="#ad96a99c370c87d7e4a8b47f98cc7ce35"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#ad96a99c370c87d7e4a8b47f98cc7ce35"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b153155d9e110336d51ec48d2cee203"></a><!-- doxytag: member="mdtAbstractSerialPort::uartType" ref="a6b153155d9e110336d51ec48d2cee203" args="()" -->
 <a class="el" href="classmdt_abstract_serial_port.html#a56b107c57fb0acb17cfcca262abe6a54">sp_uart_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a6b153155d9e110336d51ec48d2cee203">uartType</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get UART type. <br/></td></tr>
@@ -268,16 +268,18 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </div>
 <div class="memdoc">
 
-<p>Open the serial port with given configuration. </p>
-<p>This method must be re-implemented in plateform specific subclass. The implemented method must call mdtPort::open() at the right time </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cfg</td><td>Contains the setup for the serial port to open </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
+<p>Open the port. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Close previous opened ressource</li>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Do the specific work</li>
+<li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, and mutex unocked. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
+</li>
+</ul>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc">mdtSerialPortPosix</a>.</p>
 
@@ -389,7 +391,6 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/<a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a></li>
 <li>src/mdtserialport/mdtAbstractSerialPort.cpp</li>
-<li>src/mdtserialport/moc_mdtAbstractSerialPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -406,7 +407,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:53 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

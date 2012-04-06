@@ -47,9 +47,10 @@ find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
-# Répertoires de headers
+# Headers directories
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
@@ -69,6 +70,9 @@ endif(WIN32)
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 
+# * mdtutilsgui *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+
 # * mdtdevice *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 
@@ -82,6 +86,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 add_executable (essais src/main.cpp)
 # Librairies à lier
 target_link_libraries(essais "mdtutils")
+target_link_libraries(essais "mdtutilsgui")
 target_link_libraries(essais "mdtport")
 target_link_libraries(essais "mdtdevice")
 target_link_libraries(essais ${QT_LIBRARIES})
