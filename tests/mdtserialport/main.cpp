@@ -30,5 +30,5 @@ int main(int argc, char **argv)
 
   // Free the error system
   mdtErrorOut::destroy();
-  return 1;
+  return 0;
 }

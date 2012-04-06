@@ -37,6 +37,12 @@ class mdtPortManager : public QThread
    */
   bool setPortName(const QString &portName);
 
+  /*! \brief Get the config object
+   * 
+   * Usefull to alter internal port configuration
+   */
+  mdtPortConfig &config();
+
   /*! \brief Open the port
    * 
    * \return True on success, false else

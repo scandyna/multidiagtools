@@ -52,7 +52,9 @@ int \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{putData} 
 
 Put data into the frame. 
 
-Must be implemented by specific frame subclass. This method is called by the RX thread. Default implementation simply stores the maximum data as possible. No flags ares set. 
+Must be implemented by specific frame subclass.\par
+ This method is called by the read thread.\par
+ Default implementation simply stores data, and set the EOF condition to true. This way, it's possible to use \hyperlink{classmdt_frame}{mdtFrame} for raw binary transferts. 
 \begin{DoxyParams}{Parameters}
 {\em data} & Valid pointer to the data \\
 \hline

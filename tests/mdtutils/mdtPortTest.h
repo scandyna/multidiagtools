@@ -36,15 +36,19 @@ class mdtPortTest : public mdtTest
   void startStopTest();
 
   // Check that write works
-  void writeTest();
-  void writeTest_data();
+  void writeRawTest();
+  void writeRawTest_data();
+  void writeAsciiTest();
+  void writeAsciiTest_data();
 
   // Check that read works
-  void readTest();
-  void readTest_data();
+  void readRawTest();
+  void readRawTest_data();
+  void readAsciiTest();
+  void readAsciiTest_data();
 
   // Check that read works with invalid frames
-  void readInvalidDataTest();
+  void readInvalidDataAsciiTest();
 
   // Check that recovery works whenn a frame pool was empty for some time
   void emptyQueueRecoveryTest();

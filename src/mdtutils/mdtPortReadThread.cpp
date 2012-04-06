@@ -101,7 +101,23 @@ void mdtPortReadThread::run()
       emit(errorOccured(MDT_PORT_IO_ERROR));
     }
     // Event occured, get the data from port - Check timeout state first
-    if(!pvPort->readTimeoutOccured()){
+    if(pvPort->readTimeoutOccured()){
+      // In timeout protocol, the current frame is considered complete
+      if(pvUseReadTimeoutProtocol){
+        ///qDebug() << "TO et TOP";
+        if(frame != 0){
+          if(!frame->isEmpty()){
+            // NOTE: smowath ugly, we reset timeout state to false, this emits signal again !
+            pvPort->updateReadTimeoutState(false);
+            frame->setComplete();
+            pvPort->readenFrames().enqueue(frame);
+            // emit a Readen frame signal
+            emit newFrameReaden();
+            frame = getNewFrame();
+          }
+        }
+      }
+    }else{
       // Reset bufferCursor
       bufferCursor = buffer;
       // Read data from port
@@ -124,9 +140,13 @@ void mdtPortReadThread::run()
             // Check about end of thread
             pvPort->lockMutex();
             if(!pvRunning){
-              return;
+              break;
             }
           }
+        }
+        // Check about end of thread
+        if(!pvRunning){
+          break;
         }
         // Store data
         stored = frame->putData(bufferCursor, toStore);

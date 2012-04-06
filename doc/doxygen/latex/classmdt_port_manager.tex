@@ -13,7 +13,8 @@ Inheritance diagram for mdtPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortManager:\nopagebreak
+Collaboration diagram for mdtPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -45,6 +46,8 @@ void \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort
 \begin{DoxyCompactList}\small\item\em Set port object. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}{setPortName} (const QString \&portName)
 \begin{DoxyCompactList}\small\item\em Set port name. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config} ()
+\begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort} ()
 \begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort} ()
@@ -114,7 +117,20 @@ QByteArray {\bfseries pvLastReadenFrame}}
 
 Close the port. 
 
-This stops the threads and close the port. \hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
+This stops the threads and close the port. \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
+\index{mdtPortManager@{mdtPortManager}!config@{config}}
+\index{config@{config}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortConfig} \& mdtPortManager::config (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}
+
+
+Get the config object. 
+
+Usefull to alter internal port configuration \hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
 \index{mdtPortManager@{mdtPortManager}!newFrameReaden@{newFrameReaden}}
 \index{newFrameReaden@{newFrameReaden}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newFrameReaden (

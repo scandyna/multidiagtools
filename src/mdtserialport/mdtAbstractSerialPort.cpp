@@ -2,7 +2,7 @@
 #include "mdtAbstractSerialPort.h"
 
 mdtAbstractSerialPort::mdtAbstractSerialPort(QObject *parent)
- : mdtPort(parent)
+ : mdtAbstractPort(parent)
 {
   pvCarIsOn = false;
   pvDsrIsOn = false;

@@ -49,7 +49,6 @@ void mdtFrameTest::putDataTest()
    * mdtFrame
    */
   f.reserve(5);
-
   // Initial values
   QVERIFY(f.isEmpty());
   QVERIFY(!f.isFull());
@@ -85,6 +84,52 @@ void mdtFrameTest::putDataTest()
   QVERIFY(f.isFull());
   QVERIFY(f.remainCapacity() == 0);
   QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f == "01234");
+
+  /*
+   * mdtFrame (Raw)
+   */
+  f.setDirectlyComplete(true);
+  f.clear();
+
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 5);
+  QVERIFY(f.bytesToStore() == 5);
+  // Put a char
+  QVERIFY(f.putData(data, 1) == 1);
+  // Check values
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 4);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f == "0");
+  // Put 4 bytes
+  QVERIFY(f.putData(&data[1], 4) == 4);
+  // Check values
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
+  QVERIFY(f == "01234");
+
+  // Re-init
+  f.clear();
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 5);
+  QVERIFY(f.bytesToStore() == 5);
+  // Try to put to many data
+  QVERIFY(f.putData(data, 7) == 5);
+  // Check values
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isFull());
+  QVERIFY(f.remainCapacity() == 0);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(f.isComplete());
   QVERIFY(f == "01234");
 
   /*
@@ -128,7 +173,6 @@ void mdtFrameTest::putDataTest()
   QVERIFY(fa.remainCapacity() == 0);
   QVERIFY(fa.bytesToStore() == 0);
   QVERIFY(fa == "01234");
-
 }
 
 void mdtFrameTest::asciiReceptionTest()

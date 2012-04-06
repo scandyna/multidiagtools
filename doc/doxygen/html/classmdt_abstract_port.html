@@ -77,7 +77,7 @@ Inheritance diagram for mdtAbstractPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_port__inherit__graph.png" border="0" usemap="#mdt_abstract_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_abstract_port_inherit__map" id="mdt_abstract_port_inherit__map">
-<area shape="rect" id="node3" href="classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="5,83,107,112"/><area shape="rect" id="node5" href="classmdt_tcp_socket.html" title="mdtTcpSocket" alt="" coords="131,83,237,112"/><area shape="rect" id="node7" href="classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="261,83,376,112"/></map>
+<area shape="rect" id="node3" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,83,155,112"/><area shape="rect" id="node7" href="classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="179,83,280,112"/><area shape="rect" id="node9" href="classmdt_tcp_socket.html" title="mdtTcpSocket" alt="" coords="304,83,411,112"/><area shape="rect" id="node11" href="classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="435,83,549,112"/><area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtAbstractPort:</div>
@@ -201,7 +201,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, and mutex unocked. </li>
 </ul>
 
-<p>Reimplemented in <a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8">mdtTcpSocket</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">mdtSerialPortPosix</a>, <a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8">mdtTcpSocket</a>.</p>
 
 </div>
 </div>
@@ -380,7 +380,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classmdt_port_posix.html#a32a532f5148226da19ee4acc6ec63201">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a00e7406b88f60c6c233e124d08a900ab">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a22ba9c4826e8c45d6cfcd676be48a303">mdtTcpSocket</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663">mdtSerialPortPosix</a>, <a class="el" href="classmdt_port_posix.html#a32a532f5148226da19ee4acc6ec63201">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a00e7406b88f60c6c233e124d08a900ab">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#a22ba9c4826e8c45d6cfcd676be48a303">mdtTcpSocket</a>.</p>
 
 </div>
 </div>
@@ -707,7 +707,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:55 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

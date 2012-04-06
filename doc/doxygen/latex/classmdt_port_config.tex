@@ -28,6 +28,10 @@ void \hyperlink{classmdt_port_config_a42e984173a7868ea4f58c4d0c54b202f}{setReadM
 \begin{DoxyCompactList}\small\item\em Set the minimal time to wait before try to read. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_ad8b726b560af894424a07c536e54936e}{readMinWaitTime} ()
 \begin{DoxyCompactList}\small\item\em Get the minimal time to wait before try to read. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{setUseReadTimeoutProtocol} (bool use)
+\begin{DoxyCompactList}\small\item\em Use the read timeout protocol. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_config_ae2516b9a714f69e3ebb8f2b47d459b50}{useReadTimeoutProtocol} ()
+\begin{DoxyCompactList}\small\item\em Know if read timeout protocol must be used. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}{setReadTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the read timeout. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_a51b06a66765d072f1d07251351477957}{readTimeout} ()
@@ -91,6 +95,11 @@ int {\bfseries pvReadQueueSize}}
 \hypertarget{classmdt_port_config_a263cf98555f8982bb640059c345eec66}{
 int {\bfseries pvReadMinWaitTime}}
 \label{classmdt_port_config_a263cf98555f8982bb640059c345eec66}
+
+\item 
+\hypertarget{classmdt_port_config_a1a5ab2cf82ea35db627aa8b87f9dba2e}{
+bool {\bfseries pvUseReadTimeoutProtocol}}
+\label{classmdt_port_config_a1a5ab2cf82ea35db627aa8b87f9dba2e}
 
 \item 
 \hypertarget{classmdt_port_config_a69fa9f6cb32469f3eccfe7517dc29101}{
@@ -290,8 +299,9 @@ Default configuration is:
 \begin{DoxyItemize}
 \item Read and write frame size: 1024
 \item Read and write queue size: 10
+\item Use read timeout protocol: false
 \item Read/Write timout: 500 \mbox{[}ms\mbox{]}
-\item Frame type: ASCII NOTE: chage this ?
+\item Frame type: RAW
 \item En of frame sequence: '\par
 '
 \item Byte per byte write: Off 
@@ -408,6 +418,24 @@ Set the read timeout.
 {\em timeout} & Read timout \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
+\hypertarget{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{
+\index{mdtPortConfig@{mdtPortConfig}!setUseReadTimeoutProtocol@{setUseReadTimeoutProtocol}}
+\index{setUseReadTimeoutProtocol@{setUseReadTimeoutProtocol}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setUseReadTimeoutProtocol}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setUseReadTimeoutProtocol (
+\begin{DoxyParamCaption}
+\item[{bool}]{use}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}
+
+
+Use the read timeout protocol. 
+
+An example of read timeout protocol is MODBUS (over serial lines) RTU mode The \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} will use this parameter. 
+\begin{DoxyParams}{Parameters}
+{\em use} & If true, read timeout protocol will be used. \\
+\hline
+\end{DoxyParams}
 \hypertarget{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteFrameSize@{setWriteFrameSize}}
 \index{setWriteFrameSize@{setWriteFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -483,6 +511,22 @@ Set the write timeout.
 {\em timeout} & Write timout \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
+\hypertarget{classmdt_port_config_ae2516b9a714f69e3ebb8f2b47d459b50}{
+\index{mdtPortConfig@{mdtPortConfig}!useReadTimeoutProtocol@{useReadTimeoutProtocol}}
+\index{useReadTimeoutProtocol@{useReadTimeoutProtocol}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{useReadTimeoutProtocol}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortConfig::useReadTimeoutProtocol (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_ae2516b9a714f69e3ebb8f2b47d459b50}
+
+
+Know if read timeout protocol must be used. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{setUseReadTimeoutProtocol()} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_port_config_a4ea423e825c0730ede17a55fb723c6ac}{
 \index{mdtPortConfig@{mdtPortConfig}!writeFrameSize@{writeFrameSize}}
 \index{writeFrameSize@{writeFrameSize}!mdtPortConfig@{mdtPortConfig}}

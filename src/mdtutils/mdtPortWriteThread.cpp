@@ -21,6 +21,8 @@
 #include "mdtPortWriteThread.h"
 #include <QApplication>
 
+#include <QDebug>
+
 mdtPortWriteThread::mdtPortWriteThread(QObject *parent)
  : mdtPortThread(parent)
 {
@@ -62,9 +64,11 @@ void mdtPortWriteThread::run()
       break;
     }
 
-    // Wait the minimal time if requierd NOTE: obelete ?
+    // Wait the minimal time if requierd - Used for timeout protocol
     if(pvWriteMinWaitTime > 0){
+      pvPort->unlockMutex();
       msleep(pvWriteMinWaitTime);
+      pvPort->lockMutex();
     }
     // Wait on write ready event
     if(!pvPort->waitEventWriteReady()){
@@ -88,6 +92,7 @@ void mdtPortWriteThread::run()
         }else{
           written = pvPort->write(bufferCursor, toWrite);
         }
+        //qDebug() << "WTHD: written: " << written;
         if(written < 0){
           emit(errorOccured(MDT_PORT_IO_ERROR));
           written = 0;

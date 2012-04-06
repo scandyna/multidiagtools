@@ -58,6 +58,7 @@ class mdtPortThread : public QThread
 
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;
+  bool pvUseReadTimeoutProtocol;  // For example: MODBUS RTU mode
   int pvReadMinWaitTime;
   int pvWriteMinWaitTime;
   bool pvBytePerByteWrite;

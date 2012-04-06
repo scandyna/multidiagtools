@@ -4,7 +4,8 @@
 }
 
 
-Inheritance diagram for mdtAbstractSerialPort:\nopagebreak
+Inheritance diagram for mdtAbstractSerialPort:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,7 +14,8 @@ Inheritance diagram for mdtAbstractSerialPort:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtAbstractSerialPort:\nopagebreak
+Collaboration diagram for mdtAbstractSerialPort:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -62,12 +64,8 @@ void \hyperlink{classmdt_abstract_serial_port_a47c08ccb99dc6de76ae58ebeefc26857}
 \label{classmdt_abstract_serial_port_ae379b6151edebc1518e81ec061e379db}
 
 \item 
-virtual bool \hyperlink{classmdt_abstract_serial_port_ae1be8d8778a7638649d5bb27a73297ef}{setAttributes} (const QString \&portName)=0
-\begin{DoxyCompactList}\small\item\em Set the port attributes. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)=0
 \begin{DoxyCompactList}\small\item\em Open the serial port with given configuration. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_serial_port_ad84810a4bd7a10c5c621475511196c85}{close} ()=0
-\begin{DoxyCompactList}\small\item\em Close the serial port. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{
 \hyperlink{classmdt_abstract_serial_port_a56b107c57fb0acb17cfcca262abe6a54}{sp\_\-uart\_\-type\_\-t} \hyperlink{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{uartType} ()}
 \label{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}
@@ -145,26 +143,6 @@ Emited whenn CAR (CD) status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_abstract_serial_port_ad84810a4bd7a10c5c621475511196c85}{
-\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!close@{close}}
-\index{close@{close}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
-\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSerialPort::close (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_serial_port_ad84810a4bd7a10c5c621475511196c85}
-
-
-Close the serial port. 
-
-This method must be re-\/implemented in plateform specific subclass. Multiple call of this method is possible without any test The implemented method must call mdtPort::close() at the right time \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port}{mdtPort} 
-\end{DoxySeeAlso}
-
-
-Implemented in \hyperlink{classmdt_serial_port_posix_a29df8d6b7c74bd7e3bf8513987bdd2a2}{mdtSerialPortPosix}.
-
 \hypertarget{classmdt_abstract_serial_port_adf45a5006218ef5660721ecdf8454b5d}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!ctsChanged@{ctsChanged}}
 \index{ctsChanged@{ctsChanged}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -267,31 +245,6 @@ Emited whenn RNG (RI) status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_abstract_serial_port_ae1be8d8778a7638649d5bb27a73297ef}{
-\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setAttributes@{setAttributes}}
-\index{setAttributes@{setAttributes}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
-\subsubsection[{setAttributes}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setAttributes (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{portName}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_serial_port_ae1be8d8778a7638649d5bb27a73297ef}
-
-
-Set the port attributes. 
-
-Open the given port name and get his attributes. This method must be re-\/implemented in plateform specific subclass. 
-\begin{DoxyParams}{Parameters}
-{\em portName} & Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-True if given port is a serial port 
-\end{DoxyReturn}
-
-
-Implemented in \hyperlink{classmdt_serial_port_posix_a1440f504f0ed43210b9c0b1cd5506663}{mdtSerialPortPosix}.
-
 \hypertarget{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setDtr@{setDtr}}
 \index{setDtr@{setDtr}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}

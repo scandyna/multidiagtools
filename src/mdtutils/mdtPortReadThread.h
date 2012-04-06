@@ -25,6 +25,13 @@
 #include "mdtFrame.h"
 #include <QObject>
 
+/*! \brief Reader thread for port I/O
+ * 
+ * It's possible to use the read timeout protocol.
+ * An example of this is MODBUS (over serial line) in RTU mode.
+ * 
+ * \sa mdtPortConfig
+ */
 class mdtPortReadThread : public mdtPortThread
 {
  Q_OBJECT

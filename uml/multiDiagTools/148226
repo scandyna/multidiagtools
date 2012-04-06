@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 33
+  revision 34
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -42,7 +42,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    classdiagram 128002 "mdtSerialPort"
+    classdiagram 360706 "mdtAbstractSerialPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
     end
@@ -97,34 +97,11 @@ ${inlines}
 	
       end
 
-      operation 493058 "setAttributes"
-	abstract cpp_virtual public explicit_return_type "bool"
-	nparams 1
-	  param in name "portName" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
       operation 234114 "open"
 	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 1
 	  param in name "cfg" type class_ref 128130 // mdtSerialPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	
-	
-	
-	
-      end
-
-      operation 450818 "close"
-	abstract cpp_virtual public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
 	
 	
@@ -318,14 +295,6 @@ ${inlines}
 	idl_decl ""
       end
 
-      classrelation 278658 // <generalisation>
-	relation 278402 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 278658 // <generalisation>
-	  b parent class_ref 249602 // mdtPort
-      end
-
       attribute 368130 "pvUartType"
 	protected explicit_type "sp_uart_type_t"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -345,6 +314,19 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      classrelation 440194 // <generalisation>
+	relation 439938 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 440194 // <generalisation>
+	  b parent class_ref 249474 // mdtAbstractPort
+      end
+    end
+
+    classdiagram 128002 "mdtSerialPort"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
     end
 
     class 128002 "mdtSerialPort"
@@ -405,21 +387,6 @@ ${inlines}
 	  b parent class_ref 189826 // mdtSerialPortPosix
       end
 
-      operation 301186 "open"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "cfg" type class_ref 128130 // mdtSerialPortConfig
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 301570 "carState"
 	public explicit_return_type "bool"
 	nparams 0
@@ -464,34 +431,6 @@ ${inlines}
 
       operation 301954 "rngState"
 	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 310146 "lockMutex"
-	public explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 310274 "unlockMutex"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -1114,21 +1053,6 @@ ${inlines}
 	
       end
 
-      operation 256514 "setSerialPortObj"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "sp" type class_ref 128002 // mdtSerialPort
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       classrelation 231554 // pvCtlThread (<unidirectional association>)
 	relation 231298 --->
 	  a role_name "pvCtlThread" private
@@ -1136,15 +1060,6 @@ ${inlines}
 "
 	    classrelation_ref 231554 // pvCtlThread (<unidirectional association>)
 	  b parent class_ref 223106 // mdtSerialPortCtlThread
-      end
-
-      classrelation 319106 // pvSerialPort (<unidirectional association>)
-	relation 318850 --->
-	  a role_name "pvSerialPort" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 319106 // pvSerialPort (<unidirectional association>)
-	  b parent class_ref 189570 // mdtAbstractSerialPort
       end
 
       classrelation 319234 // pvConfig (<directional composition>)
@@ -1246,21 +1161,6 @@ ${inlines}
 	
       end
 
-      operation 457346 "setDeviceFile"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "deviceFile" type class_ref 128002 // mdtSerialPort
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 316930 "stop"
 	public explicit_return_type "void"
 	nparams 0
@@ -1289,24 +1189,6 @@ ${inlines}
 	
       end
 
-      classrelation 285314 // <unidirectional association>
-	relation 285058 --->
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 285314 // <unidirectional association>
-	  b parent class_ref 128002 // mdtSerialPort
-      end
-
-      attribute 347906 "pvDeviceFile"
-	private type class_ref 128002 // mdtSerialPort
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
     end
   end
 

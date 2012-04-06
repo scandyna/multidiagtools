@@ -109,13 +109,14 @@ bool mdtPortPosix::waitForReadyRead()
 {
   fd_set input;
   int n;
+  struct timeval tv = pvReadTimeout;  // Create a copy, because select() alter the timeout
 
   // Init the select call
   FD_ZERO(&input);
   FD_SET(pvFd, &input);
 
   pvMutex.unlock();
-  n = select(pvFd+1, &input, 0, 0, &pvReadTimeout);
+  n = select(pvFd+1, &input, 0, 0, &tv);
   pvMutex.lock();
   if(n == 0){
     updateReadTimeoutState(true);
@@ -164,13 +165,14 @@ bool mdtPortPosix::waitEventWriteReady()
 {
   fd_set output;
   int n;
+  struct timeval tv = pvWriteTimeout;  // Create a copy, because select() alter the timeout
 
   // Init the select call
   FD_ZERO(&output);
   FD_SET(pvFd, &output);
 
   pvMutex.unlock();
-  n = select(pvFd+1, 0, &output, 0, &pvWriteTimeout);
+  n = select(pvFd+1, 0, &output, 0, &tv);
   pvMutex.lock();
   if(n == 0){
     updateWriteTimeoutState(true);

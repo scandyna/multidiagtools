@@ -68,19 +68,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtAbstractSerialPort Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtAbstractSerialPort" --><!-- doxytag: inherits="mdtPort" --><div class="dynheader">
+<!-- doxytag: class="mdtAbstractSerialPort" --><!-- doxytag: inherits="mdtAbstractPort" --><div class="dynheader">
 Inheritance diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__inherit__graph.png" border="0" usemap="#mdt_abstract_serial_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_abstract_serial_port_inherit__map" id="mdt_abstract_serial_port_inherit__map">
-<area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/><area shape="rect" id="node2" href="classmdt_port.html" title="mdtPort" alt="" coords="47,5,113,35"/></map>
+<area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__coll__graph.png" border="0" usemap="#mdt_abstract_serial_port_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_abstract_serial_port_coll__map" id="mdt_abstract_serial_port_coll__map">
-<area shape="rect" id="node2" href="classmdt_port.html" title="mdtPort" alt="" coords="47,5,113,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,101,139,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_abstract_serial_port-members.html">List of all members.</a></p>
@@ -122,12 +122,8 @@ Signals</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae379b6151edebc1518e81ec061e379db"></a><!-- doxytag: member="mdtAbstractSerialPort::mdtAbstractSerialPort" ref="ae379b6151edebc1518e81ec061e379db" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtAbstractSerialPort</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ae1be8d8778a7638649d5bb27a73297ef">setAttributes</a> (const QString &amp;portName)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#ae1be8d8778a7638649d5bb27a73297ef"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ad96a99c370c87d7e4a8b47f98cc7ce35">open</a> (<a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the serial port with given configuration.  <a href="#ad96a99c370c87d7e4a8b47f98cc7ce35"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ad84810a4bd7a10c5c621475511196c85">close</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the serial port.  <a href="#ad84810a4bd7a10c5c621475511196c85"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b153155d9e110336d51ec48d2cee203"></a><!-- doxytag: member="mdtAbstractSerialPort::uartType" ref="a6b153155d9e110336d51ec48d2cee203" args="()" -->
 <a class="el" href="classmdt_abstract_serial_port.html#a56b107c57fb0acb17cfcca262abe6a54">sp_uart_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a6b153155d9e110336d51ec48d2cee203">uartType</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get UART type. <br/></td></tr>
@@ -182,28 +178,6 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ad84810a4bd7a10c5c621475511196c85"></a><!-- doxytag: member="mdtAbstractSerialPort::close" ref="ad84810a4bd7a10c5c621475511196c85" args="()=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mdtAbstractSerialPort::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Close the serial port. </p>
-<p>This method must be re-implemented in plateform specific subclass. Multiple call of this method is possible without any test The implemented method must call mdtPort::close() at the right time </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
-
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">mdtSerialPortPosix</a>.</p>
 
 </div>
 </div>
@@ -334,35 +308,6 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 </div>
 </div>
-<a class="anchor" id="ae1be8d8778a7638649d5bb27a73297ef"></a><!-- doxytag: member="mdtAbstractSerialPort::setAttributes" ref="ae1be8d8778a7638649d5bb27a73297ef" args="(const QString &amp;portName)=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool mdtAbstractSerialPort::setAttributes </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>portName</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the port attributes. </p>
-<p>Open the given port name and get his attributes. This method must be re-implemented in plateform specific subclass. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if given port is a serial port </dd></dl>
-
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663">mdtSerialPortPosix</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="aa86a8bc0bb03ac2b07bf43968dfeb189"></a><!-- doxytag: member="mdtAbstractSerialPort::setDtr" ref="aa86a8bc0bb03ac2b07bf43968dfeb189" args="(bool on)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -461,7 +406,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:55 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

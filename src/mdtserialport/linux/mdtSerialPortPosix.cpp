@@ -10,7 +10,7 @@
 #include <cstring>
 #include <QString>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
  : mdtAbstractSerialPort(parent)
@@ -182,15 +182,26 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 {
   QString strNum;
 
-  // Close previous opened port
-  close();
-
-  if(!mdtPort::open(cfg)){
+  // Close previous opened device
+  this->close();
+  // Try to open port
+  //  O_RDWR : Read/write access
+  //  O_NOCTTY: not a terminal
+  //  O_NDELAY: ignore DCD signal
+  lockMutex();
+  pvFd = ::open(pvName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
+  if(pvFd < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    unlockMutex();
     return false;
   }
   // Get current config and save it to pvOriginalTermios
   if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
     ::close(pvFd);
+    pvFd = -1;
     mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvName + " is not a serial port, or is not available", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -202,6 +213,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Set baud rate
   if(!setBaudRate(cfg.baudRate())){
     ::close(pvFd);
+    pvFd = -1;
     strNum.setNum(cfg.baudRate());
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
@@ -214,6 +226,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Set data bits
   if(!setDataBits(cfg.dataBitsCount())){
     ::close(pvFd);
+    pvFd = -1;
     strNum.setNum(cfg.dataBitsCount());
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -223,6 +236,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Set stop bits
   if(!setStopBits(cfg.stopBitsCount())){
     ::close(pvFd);
+    pvFd = -1;
     strNum.setNum(cfg.stopBitsCount());
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -240,6 +254,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Apply the setup
   if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
     ::close(pvFd);
+    pvFd = -1;
     mdtError e(MDT_UNDEFINED_ERROR, "unable to apply configuration for port " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -249,18 +264,147 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   // Check if configuration could really be set
   if(!checkConfig(cfg)){
     ::close(pvFd);
+    pvFd = -1;
     return false;
+  }
+
+  // Set the read/write timeouts
+  setReadTimeout(cfg.readTimeout());
+  setWriteTimeout(cfg.writeTimeout());
+
+  return mdtAbstractPort::open(cfg);
+}
+
+void mdtSerialPortPosix::close()
+{
+  lockMutex();
+  if(pvFd >= 0){
+    tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
+    ::close(pvFd);
+    pvFd = -1;
+  }
+  mdtAbstractPort::close();
+}
+
+void mdtSerialPortPosix::setReadTimeout(int timeout)
+{
+  pvReadTimeout.tv_sec = timeout/1000;
+  pvReadTimeout.tv_usec = 1000*(timeout%1000);
+}
+
+void mdtSerialPortPosix::setWriteTimeout(int timeout)
+{
+  pvWriteTimeout.tv_sec = timeout/1000;
+  pvWriteTimeout.tv_usec = 1000*(timeout%1000);
+}
+
+bool mdtSerialPortPosix::waitForReadyRead()
+{
+  fd_set input;
+  int n;
+  struct timeval tv = pvReadTimeout;  // Create a copy, because select() alter the timeout
+
+  // Init the select call
+  FD_ZERO(&input);
+  FD_SET(pvFd, &input);
+
+  pvMutex.unlock();
+  n = select(pvFd+1, &input, 0, 0, &tv);
+  pvMutex.lock();
+  if(n == 0){
+    updateReadTimeoutState(true);
+  }else{
+    updateReadTimeoutState(false);
+    if(n < 0){
+      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
+      return false;
+    }
   }
 
   return true;
 }
 
-void mdtSerialPortPosix::close()
+qint64 mdtSerialPortPosix::read(char *data, qint64 maxSize)
 {
-  if(pvFd >= 0){
-    tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
-    mdtPort::close();
+  int n;
+  int err;
+
+  n = ::read(pvFd, data, maxSize);
+  if(n < 0){
+    // Store errno
+    err = errno;
+    switch(err){
+      case EAGAIN:      // No data available
+        return 0;
+      case ETIMEDOUT:   // Read timeout (happens with USBTMC)
+        updateReadTimeoutState(true);
+        return 0;
+      default:
+        mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
+        e.setSystemError(err, strerror(err));
+        MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+        e.commit();
+        return n;
+    }
   }
+
+  return n;
+}
+
+bool mdtSerialPortPosix::waitEventWriteReady()
+{
+  fd_set output;
+  int n;
+  struct timeval tv = pvWriteTimeout;  // Create a copy, because select() alter the timeout
+
+  // Init the select call
+  FD_ZERO(&output);
+  FD_SET(pvFd, &output);
+
+  pvMutex.unlock();
+  n = select(pvFd+1, 0, &output, 0, &tv);
+  pvMutex.lock();
+  if(n == 0){
+    updateWriteTimeoutState(true);
+  }else{
+    updateWriteTimeoutState(false);
+    if(n < 0){
+      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+qint64 mdtSerialPortPosix::write(const char *data, qint64 maxSize)
+{
+  int n;
+  int err;
+
+  n = ::write(pvFd, data, maxSize);
+  if(n < 0){
+    // Store error (errno will be reset when readen)
+    err = errno;
+    switch(err){
+      case EAGAIN:    // Can't write now
+        return 0;
+      default:
+        mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
+        e.setSystemError(err, strerror(err));
+        MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+        e.commit();
+        return n;
+    }
+  }
+
+  return n;
 }
 
 bool mdtSerialPortPosix::waitEventCtl()

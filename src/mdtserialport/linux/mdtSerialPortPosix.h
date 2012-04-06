@@ -25,28 +25,46 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   mdtSerialPortPosix(QObject *parent = 0);
   ~mdtSerialPortPosix();
 
-  // Set attributes for given port
+  // Implemented from mdtAbstractPort
   bool setAttributes(const QString &portName);
 
-  // Open a port with a given configuration
+  // Implemented from mdtAbstractSerialPort
   bool open(mdtSerialPortConfig &cfg);
 
   // Restore original setup and close the port
   void close();
 
+  // Implemtation of mdtAbstractPort
+  void setReadTimeout(int timeout);
+
+  // Implemtation of mdtAbstractPort
+  void setWriteTimeout(int timeout);
+
+  // Implemtation of mdtAbstractPort
+  bool waitForReadyRead();
+
+  // Implemtation of mdtAbstractPort method
+  qint64 read(char *data, qint64 maxSize);
+
+  // Implemtation of mdtAbstractPort
+  bool waitEventWriteReady();
+
+  // Implemtation of mdtAbstractPort method
+  qint64 write(const char *data, qint64 maxSize);
+
   // Wait until a control signal (modem line state) changes
   bool waitEventCtl();
-  
+
   // Get the control signal (modem line) states and update member flags
   bool getCtlStates();
 
   void setRts(bool on);
-  
+
   void setDtr(bool on);
-  
+
   // Must be called from signal control thread (see mdtSerialPortCtlThread)
   void defineCtlThread(pthread_t ctlThread);
-  
+
   // Abort the waitEventCtl() function
   // Note: the thread in witch the waitEventCtl() function
   //       is called must be defined with defineCtlThread() before
@@ -95,8 +113,7 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   
   // Used to catch the SIGALRM signal (doese nothing else)
   static void sigactionHandle(int signum);
-  
-  //int pvSerialPortFd;               // Serial port file descriptor
+
   struct termios pvTermios;         // Termios configuration structure
   struct termios pvOriginalTermios; // Original termios configuration structure to restore
   // Ctl signals states memory
@@ -108,6 +125,10 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   pthread_t pvCtlThread;
   struct sigaction pvSigaction;
   bool pvAbortingWaitEventCtl;
+  int pvFd;                         // Port file descriptor
+  struct timeval pvReadTimeout;
+  struct timeval pvWriteTimeout;
+
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_POSIX_H

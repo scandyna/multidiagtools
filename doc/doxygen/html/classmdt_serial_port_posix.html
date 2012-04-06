@@ -70,14 +70,14 @@ Inheritance diagram for mdtSerialPortPosix:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_posix__inherit__graph.png" border="0" usemap="#mdt_serial_port_posix_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_serial_port_posix_inherit__map" id="mdt_serial_port_posix_inherit__map">
-<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,83,155,112"/><area shape="rect" id="node4" href="classmdt_port.html" title="mdtPort" alt="" coords="47,5,113,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,83,155,112"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtSerialPortPosix:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_posix__coll__graph.png" border="0" usemap="#mdt_serial_port_posix_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_serial_port_posix_coll__map" id="mdt_serial_port_posix_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,83,155,112"/><area shape="rect" id="node4" href="classmdt_port.html" title="mdtPort" alt="" coords="47,5,113,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="5,181,155,211"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,101,139,131"/><area shape="rect" id="node6" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_serial_port_posix-members.html">List of all members.</a></p>
@@ -92,7 +92,7 @@ Public Member Functions</h2></td></tr>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc">open</a> (<a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE: validité config. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2">close</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the serial port.  <a href="#a29df8d6b7c74bd7e3bf8513987bdd2a2"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a29df8d6b7c74bd7e3bf8513987bdd2a2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a8ec213863c6eacfc8d3079aadc9ef43b">waitEventCtl</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#a8ec213863c6eacfc8d3079aadc9ef43b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc">getCtlStates</a> ()</td></tr>
@@ -121,11 +121,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </div>
 <div class="memdoc">
 
-<p>Close the serial port. </p>
-<p>This method must be re-implemented in plateform specific subclass. Multiple call of this method is possible without any test The implemented method must call mdtPort::close() at the right time </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
+<p>Close the port. </p>
+<p>This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Do the specific work</li>
+<li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, and mutex unocked. </li>
+</ul>
 
-<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ad84810a4bd7a10c5c621475511196c85">mdtAbstractSerialPort</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -167,16 +172,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Set the port attributes. </p>
-<p>Open the given port name and get his attributes. This method must be re-implemented in plateform specific subclass. </p>
+<p>Open the given port name and get his attributes. This method must be re-implemented in subclass. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if given port is a serial port </dd></dl>
 
-<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ae1be8d8778a7638649d5bb27a73297ef">mdtAbstractSerialPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -277,7 +281,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

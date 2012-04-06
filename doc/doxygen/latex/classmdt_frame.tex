@@ -23,7 +23,9 @@ Inheritance diagram for mdtFrame:\nopagebreak
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{type\_\-t} \{ \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}{FT\_\-ASCII} =  1, 
+enum \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{type\_\-t} \{ \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f}{FT\_\-RAW}, 
+\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96}{FT\_\-RAW\_\-TOP}, 
+\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}{FT\_\-ASCII}, 
 \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}{FT\_\-MODBUS\_\-TCP}
  \}
 \begin{DoxyCompactList}\small\item\em Frame type. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -48,6 +50,10 @@ int \hyperlink{classmdt_frame_aa1cd5c914c36efb3f441b7f6e782dc24}{remainCapacity}
 \begin{DoxyCompactList}\small\item\em Returns the remain capacity. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{bytesToStore} ()
 \begin{DoxyCompactList}\small\item\em Returns the bytes to store into the frame. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_abfd6de396626f01ebf972b7d6cd26957}{setDirectlyComplete} (bool dc)
+\begin{DoxyCompactList}\small\item\em Set the complete flag directly. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_ab8db9882c095091109115afb8e448b37}{setComplete} ()
+\begin{DoxyCompactList}\small\item\em Set the frame as complete. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{
 bool \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete} ()}
 \label{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}
@@ -85,7 +91,7 @@ bool {\bfseries pvEOFcondition}}
 Provide an array of bytes. 
 
 \hyperlink{classmdt_frame}{mdtFrame} is based on Qt's QByteArray, that provide a array of bytes. To store data, the QByteArray's methods append() can be used.\par
- For ASCII frames reception, the end is a special char/strting on most case. \hyperlink{classmdt_frame}{mdtFrame} provide the functions \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} for that purpose.\par
+ For ASCII frames reception, the end is a special char/string on most case. \hyperlink{classmdt_frame}{mdtFrame} provide the functions \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} for that purpose.\par
  During data reception, for exemple from serial port, the best way to check if more data can be stored is to use \hyperlink{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{bytesToStore()}. It returns the remain capacity of the frame, and 0 if the end of frame (EOF) condition was reached. To know if the frame is complete (i.e. end of frame condition ok), use \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete()}\par
  Here are the states of a frame with return values of both functions:\par
  \begin{TabularC}{3}
@@ -97,7 +103,7 @@ Frame is not full, and EOF condition reached&0&true \\\cline{1-3}
 Frame is full, and EOF condition reached&0&true \\\cline{1-3}
 \end{TabularC}
 At this state, whenn \hyperlink{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{bytesToStore()} returns 0 and \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete()} is true, the received frame is ok. The next step is to decode it, according to the used protocol (modbus, ...).\par
- Note that these states are only set when using \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} functions. 
+ Note that these states are only set when using \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} and \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData()} functions. 
 
 \subsection{Member Enumeration Documentation}
 \hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{
@@ -112,7 +118,15 @@ Frame type.
 \begin{Desc}
 \item[Enumerator: ]\par
 \begin{description}
-\index{FT\_\-ASCII@{FT\_\-ASCII}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-ASCII@{FT\_\-ASCII}}\item[{\em 
+\index{FT\_\-RAW@{FT\_\-RAW}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-RAW@{FT\_\-RAW}}\item[{\em 
+\hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f}{
+FT\_\-RAW}
+\label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f}
+}]Raw binary data \index{FT\_\-RAW\_\-TOP@{FT\_\-RAW\_\-TOP}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-RAW\_\-TOP@{FT\_\-RAW\_\-TOP}}\item[{\em 
+\hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96}{
+FT\_\-RAW\_\-TOP}
+\label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96}
+}]Raw binary data for usage with timeout protocol \index{FT\_\-ASCII@{FT\_\-ASCII}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-ASCII@{FT\_\-ASCII}}\item[{\em 
 \hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}{
 FT\_\-ASCII}
 \label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}
@@ -170,7 +184,9 @@ Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e
 
 Put data into the frame. 
 
-Must be implemented by specific frame subclass. This method is called by the RX thread. Default implementation simply stores the maximum data as possible. No flags ares set. 
+Must be implemented by specific frame subclass.\par
+ This method is called by the read thread.\par
+ Default implementation simply stores data, and set the EOF condition to true. This way, it's possible to use \hyperlink{classmdt_frame}{mdtFrame} for raw binary transferts. 
 \begin{DoxyParams}{Parameters}
 {\em data} & Valid pointer to the data \\
 \hline
@@ -237,6 +253,37 @@ Put data until EOF token was reached.
 This is an overloaded function. The token can be a sequence of bytes. \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} 
 \end{DoxySeeAlso}
+\hypertarget{classmdt_frame_ab8db9882c095091109115afb8e448b37}{
+\index{mdtFrame@{mdtFrame}!setComplete@{setComplete}}
+\index{setComplete@{setComplete}!mdtFrame@{mdtFrame}}
+\subsubsection[{setComplete}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::setComplete (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_ab8db9882c095091109115afb8e448b37}
+
+
+Set the frame as complete. 
+
+This is used by \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} with timeout protocols. \hypertarget{classmdt_frame_abfd6de396626f01ebf972b7d6cd26957}{
+\index{mdtFrame@{mdtFrame}!setDirectlyComplete@{setDirectlyComplete}}
+\index{setDirectlyComplete@{setDirectlyComplete}!mdtFrame@{mdtFrame}}
+\subsubsection[{setDirectlyComplete}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::setDirectlyComplete (
+\begin{DoxyParamCaption}
+\item[{bool}]{dc}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_abfd6de396626f01ebf972b7d6cd26957}
+
+
+Set the complete flag directly. 
+
+This is usefull for raw mode transfert. If true, the frame is set complete after each call of \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData()} 
+\begin{DoxyParams}{Parameters}
+{\em dc} & The Directly complete flag \\
+\hline
+\end{DoxyParams}
 \hypertarget{classmdt_frame_ac1a8ad77ce7bd6d08032056c3610d5c0}{
 \index{mdtFrame@{mdtFrame}!setIgnoreNullValues@{setIgnoreNullValues}}
 \index{setIgnoreNullValues@{setIgnoreNullValues}!mdtFrame@{mdtFrame}}

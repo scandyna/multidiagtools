@@ -3,6 +3,8 @@
 #include "mdtError.h"
 #include <QApplication>
 
+#include <QDebug>
+
 mdtPortThread::mdtPortThread(QObject *parent)
  : QThread(parent)
 {
@@ -10,6 +12,7 @@ mdtPortThread::mdtPortThread(QObject *parent)
   pvRunning = false;
   pvReadMinWaitTime = 0;
   pvWriteMinWaitTime = 0;
+  pvUseReadTimeoutProtocol = false;
 }
 
 mdtPortThread::~mdtPortThread()
@@ -27,6 +30,7 @@ void mdtPortThread::setPort(mdtAbstractPort *port)
   pvReadMinWaitTime = pvPort->config().readMinWaitTime();
   pvWriteMinWaitTime = pvPort->config().writeMinWaitTime();
   pvBytePerByteWrite = pvPort->config().bytePerByteWrite();
+  pvUseReadTimeoutProtocol = pvPort->config().useReadTimeoutProtocol();
 }
 
 bool mdtPortThread::start()
@@ -74,6 +78,8 @@ void mdtPortThread::stop()
 
 bool mdtPortThread::isRunning() const
 {
+  Q_ASSERT(pvPort != 0);
+
   if(!QThread::isRunning()){
     return false;
   }
@@ -88,6 +94,8 @@ bool mdtPortThread::isRunning() const
 
 bool mdtPortThread::isFinished() const
 {
+  Q_ASSERT(pvPort != 0);
+
   pvPort->lockMutex();
   if(pvRunning){
     pvPort->unlockMutex();

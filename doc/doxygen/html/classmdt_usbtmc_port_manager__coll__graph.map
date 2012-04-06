@@ -4,5 +4,5 @@
 <area shape="rect" id="node10" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="61,101,179,131"/>
 <area shape="rect" id="node6" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/>
 <area shape="rect" id="node8" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/>
-<area shape="rect" id="node13" href="$classmdt_port_read_thread.html" title="mdtPortReadThread" alt="" coords="315,293,453,323"/>
+<area shape="rect" id="node13" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/>
 </map>

@@ -79,7 +79,7 @@ Collaboration diagram for mdtPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_manager__coll__graph.png" border="0" usemap="#mdt_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_manager_coll__map" id="mdt_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/><area shape="rect" id="node8" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="61,101,179,131"/><area shape="rect" id="node4" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/><area shape="rect" id="node6" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/><area shape="rect" id="node11" href="classmdt_port_read_thread.html" title="mdtPortReadThread" alt="" coords="315,293,453,323"/></map>
+<area shape="rect" id="node2" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/><area shape="rect" id="node8" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="61,101,179,131"/><area shape="rect" id="node4" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/><area shape="rect" id="node6" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/><area shape="rect" id="node11" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_manager-members.html">List of all members.</a></p>
@@ -100,6 +100,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port object. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a647f85027ac2ed695a88f23c9f9167eb">setPortName</a> (const QString &amp;portName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port name.  <a href="#a647f85027ac2ed695a88f23c9f9167eb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a9cf3ea2da38f81682695b37448712ffd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">openPort</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aab594613e8985590c835194efbc27b5e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">closePort</a> ()</td></tr>
@@ -156,6 +158,25 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFra
 
 </div>
 </div>
+<a class="anchor" id="a9cf3ea2da38f81682695b37448712ffd"></a><!-- doxytag: member="mdtPortManager::config" ref="a9cf3ea2da38f81682695b37448712ffd" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp; mdtPortManager::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the config object. </p>
+<p>Usefull to alter internal port configuration </p>
+
+</div>
+</div>
 <a class="anchor" id="a4a2a146021158aeb72f9f4b6d62b6dd0"></a><!-- doxytag: member="mdtPortManager::newFrameReaden" ref="a4a2a146021158aeb72f9f4b6d62b6dd0" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -171,7 +192,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFra
 <div class="memdoc">
 
 <p>Called by the read thread whenn a complete frame was readen. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> </dd></dl>
 
 </div>
 </div>
@@ -265,7 +286,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFra
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull start </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>mdtThread </dd>
 <dd>
-<a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> </dd></dl>
+<a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> </dd></dl>
 
 </div>
 </div>
@@ -423,7 +444,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFra
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

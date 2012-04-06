@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtTest::mdtutils
-  revision 18
+  revision 19
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -407,7 +407,7 @@ ${inlines}
 	
       end
 
-      operation 463874 "writeTest"
+      operation 463874 "writeAsciiTest"
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 0
@@ -422,7 +422,7 @@ ${inlines}
 	
       end
 
-      operation 464514 "writeTest_data"
+      operation 464514 "writeAsciiTest_data"
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 0
@@ -437,7 +437,7 @@ ${inlines}
 	
       end
 
-      operation 464002 "readTest"
+      operation 464002 "readAsciiTest"
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 0
@@ -452,7 +452,7 @@ ${inlines}
 	
       end
 
-      operation 464642 "readTest_data"
+      operation 464642 "readAsciiTest_data"
 	stereotype "slot"
 	public explicit_return_type "void"
 	nparams 0
@@ -467,24 +467,9 @@ ${inlines}
 	
       end
 
-      operation 649474 "readInvalidDataTest"
+      operation 649474 "readInvalidDataAsciiTest"
 	stereotype "slot"
 	private explicit_return_type "void"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 464386 "writeReadTest"
-	stereotype "slot"
-	public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "

@@ -25,6 +25,7 @@ mdtFrame::mdtFrame()
 {
   pvEOFcondition = false;
   pvIgnoreNullValues = false;
+  pvDirectlyComplete = false;
 }
 
 mdtFrame::~mdtFrame()
@@ -159,6 +160,16 @@ int mdtFrame::bytesToStore()
   return remainCapacity();
 }
 
+void mdtFrame::setDirectlyComplete(bool dc)
+{
+  pvDirectlyComplete = dc;
+}
+
+void mdtFrame::setComplete()
+{
+  pvEOFcondition = true;
+}
+
 bool mdtFrame::isComplete()
 {
   return pvEOFcondition;
@@ -183,6 +194,9 @@ int mdtFrame::putData(const char *data, int len)
     len = remainCapacity();
   }
   append(data, len);
+  if(pvDirectlyComplete){
+    pvEOFcondition = true;
+  }
 
   return len;
 }

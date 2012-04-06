@@ -9,7 +9,7 @@
 <area shape="rect" id="node20" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="213,69,331,99"/>
 <area shape="rect" id="node16" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="632,121,771,151"/>
 <area shape="rect" id="node18" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="425,121,532,151"/>
-<area shape="rect" id="node23" href="$classmdt_port_read_thread.html" title="mdtPortReadThread" alt="" coords="632,175,771,204"/>
+<area shape="rect" id="node23" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="632,175,771,204"/>
 <area shape="rect" id="node27" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="1108,184,1300,213"/>
 <area shape="rect" id="node29" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="911,199,1055,228"/>
 <area shape="rect" id="node31" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="628,228,775,257"/>

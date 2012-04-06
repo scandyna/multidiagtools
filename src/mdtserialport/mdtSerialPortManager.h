@@ -16,10 +16,6 @@ class mdtSerialPortManager : public mdtPortManager
   mdtSerialPortManager(QObject *parent = 0);
   ~mdtSerialPortManager();
 
-  /*! \brief Set the serial port instance
-   */
-  void setSerialPortObj(mdtAbstractSerialPort *sp);
-
   /*! \brief Scan for available serial ports
    * 
    * Try to open available ports on system and get some attributes.
@@ -27,10 +23,6 @@ class mdtSerialPortManager : public mdtPortManager
    * \return List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows)
    */
   QStringList scan();
-
- private:
-
-  mdtAbstractSerialPort *pvSerialPort;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H

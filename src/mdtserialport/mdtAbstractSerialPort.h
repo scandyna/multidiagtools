@@ -2,13 +2,13 @@
 #define MDT_ABSTRACT_SERIAL_PORT_H
 
 #include "mdtSerialPortConfig.h"
-#include "mdtPort.h"
+#include "mdtAbstractPort.h"
 #include "mdtFrame.h"
 #include <QObject>
 #include <QQueue>
 #include <QList>
 
-class mdtAbstractSerialPort : public mdtPort
+class mdtAbstractSerialPort : public mdtAbstractPort
 {
  Q_OBJECT
 
@@ -36,33 +36,20 @@ class mdtAbstractSerialPort : public mdtPort
   mdtAbstractSerialPort(QObject *parent = 0);
   ~mdtAbstractSerialPort();
 
-  /*! \brief Set the port attributes
-   * 
-   * Open the given port name and get his attributes.
-   * This method must be re-implemented in plateform specific subclass.
-   * \param portName Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)
-   * \return True if given port is a serial port
-   */
-  virtual bool setAttributes(const QString &portName) = 0;
-
-  /*! \brief Open the serial port with given configuration
+  /*! \brief Open the port
    *
-   * This method must be re-implemented in plateform specific subclass.
-   * The implemented method must call mdtPort::open() at the right time
-   * \param cfg Contains the setup for the serial port to open
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Close previous opened ressource
+   *  - Lock the mutex with lockMutex()
+   *  - Do the specific work
+   *  - Set the read/write timeouts. See the mdtPortConfig to know how to get these timeouts.
+   *  - Call this open method (with mdtAbstractPort::open() ).
+   * At this last step, the queues will be initialized, and mutex unocked.
    * \return True on successfull configuration and open port
-   * \sa mdtPort
+   * \sa mdtPortConfig
    */
   virtual bool open(mdtSerialPortConfig &cfg) = 0;
-
-  /*! \brief Close the serial port
-   *
-   * This method must be re-implemented in plateform specific subclass.
-   * Multiple call of this method is possible without any test
-   * The implemented method must call mdtPort::close() at the right time
-   * \sa mdtPort
-   */
-  virtual void close() = 0;
 
   /*! \brief Get UART type
    */

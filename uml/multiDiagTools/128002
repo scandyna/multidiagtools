@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 76
+  revision 80
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -534,7 +534,6 @@ ${inlines}
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    associated_deployment_view deploymentview_ref 147586 // mdtFrame
     classdiagram 189442 "mdtFrame"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -702,6 +701,49 @@ ${inlines}
 	
       end
 
+      operation 704130 "setDirectlyComplete"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "dc" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 703618 "setComplete"
+	public explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 703746 "isComplete"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 373506 "clear"
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
@@ -757,6 +799,16 @@ ${inlines}
 	
 	
 	
+      end
+
+      attribute 464130 "pvDirectlyComplete"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
 
@@ -1134,7 +1186,6 @@ ${inlines}
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    associated_deployment_view deploymentview_ref 154114 // mdtFrameCodec
     classdiagram 281602 "mdtFrameCodec"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -3727,14 +3778,6 @@ ${inlines}
 	
       end
 
-      classrelation 271234 // <generalisation>
-	relation 270978 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 271234 // <generalisation>
-	  b parent class_ref 249858 // mdtPortSys
-      end
-
       operation 434434 "open"
 	public explicit_return_type "bool"
 	nparams 1
@@ -3763,6 +3806,14 @@ ${inlines}
 	
 	
       end
+
+      classrelation 440450 // <generalisation>
+	relation 440194 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 440450 // <generalisation>
+	  b parent class_ref 249858 // mdtPortSys
+      end
     end
 
     class 249858 "mdtPortSys"
@@ -3777,11 +3828,11 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 271106 // <generalisation>
-	relation 270850 ---|>
+      classrelation 440322 // <generalisation>
+	relation 440066 ---|>
 	  a public
 	    cpp default "${type}"
-	    classrelation_ref 271106 // <generalisation>
+	    classrelation_ref 440322 // <generalisation>
 	  b parent class_ref 249474 // mdtAbstractPort
       end
     end
@@ -3792,7 +3843,7 @@ ${inlines}
     end
 
     class 256386 "mdtPortConfig"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -3853,6 +3904,16 @@ ${inlines}
 
       attribute 354434 "pvReadMinWaitTime"
 	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 464002 "pvUseReadTimeoutProtocol"
+	protected explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -3942,12 +4003,9 @@ ${inlines}
       end
 
       operation 436482 "setDefault"
-	public explicit_return_type "void"
+	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -4030,6 +4088,35 @@ ${inlines}
 
       operation 478338 "readMinWaitTime"
 	public explicit_return_type "int"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 703874 "setUseReadTimeoutProtocol"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "use" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 704002 "useReadTimeoutProtocol"
+	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -4342,7 +4429,7 @@ ${inlines}
     end
 
     class 222594 "mdtPortThread"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -4421,12 +4508,9 @@ ${inlines}
       end
 
       operation 308866 "stop"
-	public explicit_return_type "void"
+	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -4490,6 +4574,16 @@ ${inlines}
 
       attribute 354818 "pvReadMinWaitTime"
 	protected explicit_type "int"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 463874 "pvUseReadTimeoutProtocol"
+	protected explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
 	java_decl ""
@@ -5151,6 +5245,20 @@ ${inlines}
 	
       end
 
+      operation 697090 "config"
+	public return_type class_ref 256386 // mdtPortConfig
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 506626 "openPort"
 	public explicit_return_type "bool"
 	nparams 0
@@ -5391,7 +5499,6 @@ ${inlines}
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    associated_deployment_view deploymentview_ref 141058 // mdtTcpSocket
     classdiagram 334594 "mdtTcpSocket"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -5987,110 +6094,4 @@ ${inlines}
 
   package_ref 155010 // linux
 
-  deploymentview 141058 "mdtTcpSocket"
-    //deployment diagram settings
-    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
-    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 143746 "mdtTcpSocket"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 329602 // mdtTcpSocket
-      end
-    end
-
-    artifact 150274 "mdtTcpSocketThread"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 336130 // mdtTcpSocketThread
-      end
-    end
-  end
-
-  deploymentview 147586 "mdtFrame"
-    //deployment diagram settings
-    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
-    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 156802 "mdtFrameModbusTcp"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 342658 // mdtFrameModbusTcp
-      end
-    end
-  end
-
-  deploymentview 154114 "mdtFrameCodec"
-    //deployment diagram settings
-    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
-    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 163330 "mdtFrameCodecModbus"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 269826 // mdtFrameCodecModbus
-      end
-    end
-  end
 end

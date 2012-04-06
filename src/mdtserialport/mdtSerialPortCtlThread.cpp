@@ -1,6 +1,9 @@
 
 #include "mdtSerialPortCtlThread.h"
+#include "mdtSerialPort.h"
 #include <QApplication>
+
+#include <QDebug>
 
 #ifdef Q_OS_UNIX
  #include <pthread.h>
@@ -9,27 +12,22 @@
 mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
  : mdtPortThread(parent)
 {
-  pvSerialPort = 0;
-}
-
-void mdtSerialPortCtlThread::setPort(mdtSerialPort *serialPort)
-{
-  Q_ASSERT(serialPort != 0);
-
-  mdtPortThread::setPort(serialPort);
-  pvSerialPort = serialPort;
 }
 
 #ifdef Q_OS_UNIX
 void mdtSerialPortCtlThread::stop()
 {
-  Q_ASSERT(pvSerialPort != 0);
+  Q_ASSERT(pvPort != 0);
+
+  // We need a mdtSerialPort instance here
+  mdtSerialPort *port = dynamic_cast<mdtSerialPort*>(pvPort);
+  Q_ASSERT(port != 0);
 
   // Unset the running flag and kill ioctl() wait function
-  pvSerialPort->lockMutex();
+  port->lockMutex();
   pvRunning = false;
-  pvSerialPort->abortWaitEventCtl();
-  pvSerialPort->unlockMutex();
+  port->abortWaitEventCtl();
+  port->unlockMutex();
 
   // Wait the end of the thread
   while(!isFinished()){
@@ -41,40 +39,44 @@ void mdtSerialPortCtlThread::stop()
 
 void mdtSerialPortCtlThread::run()
 {
-  Q_ASSERT(pvSerialPort != 0);
+  Q_ASSERT(pvPort != 0);
+
+  // We need a mdtSerialPort instance here
+  mdtSerialPort *port = dynamic_cast<mdtSerialPort*>(pvPort);
+  Q_ASSERT(port != 0);
 
 #ifdef Q_OS_UNIX
-  pvSerialPort->defineCtlThread(pthread_self());
+  port->defineCtlThread(pthread_self());
 #endif
 
   // Set the running flag
-  pvSerialPort->lockMutex();
+  port->lockMutex();
   pvRunning = true;
-  pvSerialPort->unlockMutex();
+  port->unlockMutex();
 
   // Run...
   while(1){
     // Read thread state
-    pvSerialPort->lockMutex();
+    port->lockMutex();
     if(!pvRunning){
-      pvSerialPort->unlockMutex();
+      port->unlockMutex();
       break;
     }
-    pvSerialPort->unlockMutex();
+    port->unlockMutex();
     // Wait on ctl signal event
-    if(!pvSerialPort->waitEventCtl()){
-      pvSerialPort->lockMutex();
+    if(!port->waitEventCtl()){
+      port->lockMutex();
       pvRunning = false;
-      pvSerialPort->unlockMutex();
+      port->unlockMutex();
       break;
     }
     // We have a event here, update the flags
-    pvSerialPort->lockMutex();
-    if(!pvSerialPort->getCtlStates()){
+    port->lockMutex();
+    if(!port->getCtlStates()){
       pvRunning = false;
-      pvSerialPort->unlockMutex();
+      port->unlockMutex();
       break;
     }
-    pvSerialPort->unlockMutex();
+    port->unlockMutex();
   }
 }

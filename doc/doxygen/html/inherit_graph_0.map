@@ -1,6 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,59,123,88"/>
-<area shape="rect" id="node3" href="$classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="177,5,279,35"/>
-<area shape="rect" id="node5" href="$classmdt_tcp_socket.html" title="mdtTcpSocket" alt="" coords="175,59,281,88"/>
-<area shape="rect" id="node7" href="$classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="171,112,285,141"/>
+<area shape="rect" id="node1" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,85,123,115"/>
+<area shape="rect" id="node3" href="$classmdt_abstract_serial_port.html" title="mdtAbstractSerialPort" alt="" coords="172,5,321,35"/>
+<area shape="rect" id="node7" href="$classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="196,59,297,88"/>
+<area shape="rect" id="node9" href="$classmdt_tcp_socket.html" title="mdtTcpSocket" alt="" coords="193,112,300,141"/>
+<area shape="rect" id="node11" href="$classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="189,165,304,195"/>
+<area shape="rect" id="node5" href="$classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="372,5,505,35"/>
 </map>

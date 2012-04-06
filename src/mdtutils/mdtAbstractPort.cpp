@@ -46,6 +46,16 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
   // Create the read frames pools with requested type
   for(int i=0; i<cfg.readQueueSize(); i++){
     switch(cfg.frameType()){
+      // Raw (binary) frame
+      case mdtFrame::FT_RAW:
+        frame = new mdtFrame;
+        Q_ASSERT(frame != 0);
+        frame->setDirectlyComplete(true);
+        break;
+      // Raw (binary) frame for use with timeout protocol
+      case mdtFrame::FT_RAW_TOP:
+        frame = new mdtFrame;
+        break;
       // ASCII frame type
       case mdtFrame::FT_ASCII:
         frame = new mdtFrameAscii;
@@ -66,6 +76,14 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
   // Create the write frames pools
   for(int i=0; i<cfg.writeQueueSize(); i++){
     switch(cfg.frameType()){
+      // Raw (binary) frame
+      case mdtFrame::FT_RAW:
+        frame = new mdtFrame;
+        break;
+      // Raw (binary) frame for use with timeout protocol
+      case mdtFrame::FT_RAW_TOP:
+        frame = new mdtFrame;
+        break;
       // ASCII frame type
       case mdtFrame::FT_ASCII:
         frame = new mdtFrameAscii;
@@ -139,28 +157,14 @@ void mdtAbstractPort::updateWriteTimeoutState(bool state)
   pvWriteTimeoutOccured = state;
 }
 
-/// NOTE: verrouillage à revoir !!
 bool mdtAbstractPort::readTimeoutOccured()
 {
-  bool retVal;
-
-  ///lockMutex();
-  retVal = pvReadTimeoutOccured;
-  ///unlockMutex();
-
-  return retVal;
+  return pvReadTimeoutOccured;
 }
 
-/// NOTE: verrouillage à revoir !!
 bool mdtAbstractPort::writeTimeoutOccured()
 {
-  bool retVal;
-
-  ///lockMutex();
-  retVal = pvWriteTimeoutOccured;
-  ///unlockMutex();
-
-  return retVal;
+  return pvWriteTimeoutOccured;
 }
 
 QQueue<mdtFrame*> &mdtAbstractPort::readenFrames()

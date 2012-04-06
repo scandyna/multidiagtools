@@ -108,6 +108,7 @@ class mdtAbstractPort : public QObject
    *  - Subclass implementation: Mutex must be released during wait, and relocked befor return.
    * \return False on error, in this case, the reader thread will emit errorOccured()
    * \sa mdtPortThread
+   * \sa mdtPortConfig
    * \sa mdtTcpSocketThread
    */
   virtual bool waitForReadyRead() = 0;

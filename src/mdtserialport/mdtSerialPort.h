@@ -1,3 +1,23 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #ifndef MDT_SERIAL_PORT_H
 #define MDT_SERIAL_PORT_H
 
@@ -23,7 +43,7 @@ class mdtSerialPort : public mdtSerialPortSys
    * \param cfg Contains the setup for the serial port to open
    * \return True on successfull configuration and open port
    */
-  bool open(mdtSerialPortConfig &cfg);
+  //bool open(mdtSerialPortConfig &cfg);
 
   /*! \brief Get the CAR (CD) state
    * \SA Signals provided in mdtAbstractSerialPort
@@ -44,14 +64,6 @@ class mdtSerialPort : public mdtSerialPortSys
    * \SA Signals provided in mdtAbstractSerialPort
    */
   bool rngIsOn();
-
-  /*! \brief Lock the internal mutex
-   */
-  void lockMutex();
-
-  /*! \brief Unlock the internal mutex
-   */
-  void unlockMutex();
 
  public slots:
 

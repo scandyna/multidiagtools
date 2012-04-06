@@ -77,6 +77,7 @@ This is the complete list of members for <a class="el" href="classmdt_port_confi
   <tr bgcolor="#f0f0f0"><td><b>pvReadMinWaitTime</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvReadQueueSize</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvReadTimeout</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvUseReadTimeoutProtocol</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvWriteFrameSize</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvWriteMinWaitTime</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvWriteQueueSize</b> (defined in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td><code> [protected]</code></td></tr>
@@ -94,10 +95,12 @@ This is the complete list of members for <a class="el" href="classmdt_port_confi
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a42e984173a7868ea4f58c4d0c54b202f">setReadMinWaitTime</a>(int minWaitTime)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634">setReadQueueSize</a>(int size)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585">setReadTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742">setUseReadTimeoutProtocol</a>(bool use)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a9539cef9e33d564c7c70902a6380be04">setWriteFrameSize</a>(int size)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a1d7515af56919b95f060cad4f83c6ef3">setWriteMinWaitTime</a>(int minWaitTime)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5">setWriteQueueSize</a>(int size)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#ac117f7cd1f23de163a7fe84f69c2164c">setWriteTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#ae2516b9a714f69e3ebb8f2b47d459b50">useReadTimeoutProtocol</a>()</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a4ea423e825c0730ede17a55fb723c6ac">writeFrameSize</a>()</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a448f69f4c78c51a8d52ff39c31ceb1d5">writeMinWaitTime</a>()</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_config.html#a476ae5e51401da1da4f01e40cc4441ab">writeQueueSize</a>()</td><td><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></td><td></td></tr>
@@ -118,7 +121,7 @@ This is the complete list of members for <a class="el" href="classmdt_port_confi
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:55 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

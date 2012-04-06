@@ -12,18 +12,10 @@
 mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
-  pvSerialPort = 0;
 }
 
 mdtSerialPortManager::~mdtSerialPortManager()
 {
-}
-
-void mdtSerialPortManager::setSerialPortObj(mdtAbstractSerialPort *sp)
-{
-  Q_ASSERT(sp != 0);
-
-  pvSerialPort = sp;
 }
 
 QStringList mdtSerialPortManager::scan()

@@ -43,7 +43,7 @@
  *  </table>
  * At this state, whenn bytesToStore() returns 0 and isComplete() is true, the received frame is ok.
  * The next step is to decode it, according to the used protocol (modbus, ...).<br>
- * Note that these states are only set when using putUntil() functions.
+ * Note that these states are only set when using putUntil() and putData() functions.
  */
 class mdtFrame : public QByteArray
 {
@@ -54,8 +54,10 @@ class mdtFrame : public QByteArray
 
   /*! \brief Frame type
    */
-  enum type_t{ 
-              FT_ASCII = 1,     /*!< ASCII frame type */
+  enum type_t{
+              FT_RAW,           /*!< Raw binary data */
+              FT_RAW_TOP,       /*!< Raw binary data for usage with timeout protocol */
+              FT_ASCII,         /*!< ASCII frame type */
               FT_MODBUS_TCP     /*!< MODBUS/TCP frame type */
              };
 
@@ -100,6 +102,20 @@ class mdtFrame : public QByteArray
    */
   int bytesToStore();
 
+  /*! \brief Set the complete flag directly.
+   * 
+   * This is usefull for raw mode transfert.
+   * If true, the frame is set complete after each call of putData()
+   * \param dc The Directly complete flag
+   */
+  void setDirectlyComplete(bool dc);
+
+  /*! \brief Set the frame as complete
+   * 
+   * This is used by mdtPortReadThread with timeout protocols.
+   */
+  void setComplete();
+
   /*! \brief Returns true if EOF condition was reached
    */
   bool isComplete();
@@ -113,9 +129,10 @@ class mdtFrame : public QByteArray
 
   /*! \brief Put data into the frame
    * 
-   * Must be implemented by specific frame subclass.
-   * This method is called by the RX thread.
-   * Default implementation simply stores the maximum data as possible. No flags ares set.
+   * Must be implemented by specific frame subclass.<br>
+   * This method is called by the read thread.<br>
+   * Default implementation simply stores data, and set the EOF condition to true.
+   * This way, it's possible to use mdtFrame for raw binary transferts.
    * \param data Valid pointer to the data
    * \param len Maximum number of byte to store, must not be more than data size
    * \return Number of bytes that could really be stored
@@ -150,6 +167,10 @@ class mdtFrame : public QByteArray
  protected:
 
   bool pvIgnoreNullValues;
-  bool pvEOFcondition;  // End Of Frame condition
+  bool pvEOFcondition;      // End Of Frame condition
+  
+ private:
+
+  bool pvDirectlyComplete;  // When true, putData() will set the frame complete after each call (usefull for raw mode)
 };
 #endif  // ifndef MDT_FRAME_H

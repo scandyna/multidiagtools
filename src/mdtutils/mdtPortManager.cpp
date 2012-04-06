@@ -8,8 +8,8 @@ mdtPortManager::mdtPortManager(QObject *parent)
  : QThread(parent)
 {
   // Create threads
-  pvReadThread = new mdtPortReadThread;
-  pvWriteThread = new mdtPortWriteThread;
+  pvReadThread = 0;
+  pvWriteThread = 0;
 }
 
 mdtPortManager::~mdtPortManager()
@@ -36,6 +36,14 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
   Q_ASSERT(port != 0);
 
   pvPort = port;
+
+  // If thread not exists, create it first
+  if(pvReadThread == 0){
+    pvReadThread = new mdtPortReadThread;
+  }
+  if(pvWriteThread == 0){
+    pvWriteThread = new mdtPortWriteThread;
+  }
   // Assign port to threads
   Q_ASSERT(pvReadThread != 0);
   pvReadThread->setPort(pvPort);
@@ -45,6 +53,11 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
   // Connect thraed's error signals
   connect(pvReadThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
   connect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+}
+
+mdtPortConfig &mdtPortManager::config()
+{
+  return pvConfig;
 }
 
 bool mdtPortManager::setPortName(const QString &portName)
@@ -63,7 +76,10 @@ bool mdtPortManager::openPort()
 
 void mdtPortManager::closePort()
 {
-  Q_ASSERT(pvPort != 0);
+  // It can happen that port was never set
+  if(pvPort == 0){
+    return;
+  }
 
   stop();
   pvPort->close();

@@ -105,7 +105,7 @@ void mdtPortTest::startStopTest()
   }
 }
 
-void mdtPortTest::writeTest()
+void mdtPortTest::writeRawTest()
 {
   mdtPort port;
   mdtPortConfig cfg;
@@ -127,6 +127,7 @@ void mdtPortTest::writeTest()
 
   // Setup
   cfg.setWriteQueueSize(1);
+  cfg.setFrameType(mdtFrame::FT_RAW);
   QVERIFY(port.setAttributes(file.fileName()));
   QVERIFY(port.open(cfg));
 
@@ -216,7 +217,7 @@ void mdtPortTest::writeTest()
   wrThd.stop();
 }
 
-void mdtPortTest::writeTest_data()
+void mdtPortTest::writeRawTest_data()
 {
   QString str;
 
@@ -239,7 +240,142 @@ void mdtPortTest::writeTest_data()
   QTest::newRow("Very long data") << str;
 }
 
-void mdtPortTest::readTest()
+void mdtPortTest::writeAsciiTest()
+{
+  mdtPort port;
+  mdtPortConfig cfg;
+  mdtPortWriteThread wrThd;
+  mdtFrame *frame;
+  QTemporaryFile file;
+  QString filePath;
+  QByteArray fileData;
+
+  // Get data set
+  QFETCH(QString, data);
+
+  // Create a temporary file
+  QVERIFY(file.open());
+  filePath = file.fileName();
+  file.close();
+
+  /* Normal write */
+
+  // Setup
+  cfg.setWriteQueueSize(1);
+  cfg.setFrameType(mdtFrame::FT_ASCII);
+  QVERIFY(port.setAttributes(file.fileName()));
+  QVERIFY(port.open(cfg));
+
+  // Assign port to the threads
+  wrThd.setPort(&port);
+
+  // Start
+  QVERIFY(wrThd.start());
+  QVERIFY(wrThd.isRunning());
+
+  // Initial: empty file
+  fileData = file.readAll();
+  QVERIFY(fileData.size() == 0);
+
+  // Get a frame
+  port.lockMutex();
+  QVERIFY(port.writeFramesPool().size() == 1);
+  frame = port.writeFramesPool().dequeue();
+  port.unlockMutex();
+  QVERIFY(frame != 0);
+
+  // Add some data to frame and commit
+  frame->append(data);
+  port.lockMutex();
+  port.writeFrames().enqueue(frame);
+  port.unlockMutex();
+
+  // Wait some time and verify that data was written
+  QTest::qWait(100);
+  QVERIFY(file.open());
+  fileData = file.readAll();
+  QVERIFY(fileData == data);
+
+  // Close port
+  wrThd.stop();
+  port.close();
+
+  // Create a empty temporary file
+  QVERIFY(file.open());
+  file.remove();
+  QVERIFY(!file.exists());
+  file.setFileName(filePath);
+  QVERIFY(file.open());
+  fileData = file.readAll();
+  QVERIFY(fileData == "");
+  file.close();
+
+  /* Byte per byte write */
+
+  // Setup
+  cfg.setWriteQueueSize(1);
+  QVERIFY(port.setAttributes(file.fileName()));
+  cfg.setBytePerByteWrite(true, 1);
+  QVERIFY(port.open(cfg));
+
+  // Assign port to the threads
+  wrThd.setPort(&port);
+
+  // Start
+  QVERIFY(wrThd.start());
+  QVERIFY(wrThd.isRunning());
+
+  // Initial: empty file
+  fileData = file.readAll();
+  QVERIFY(fileData.size() == 0);
+
+  // Get a frame
+  port.lockMutex();
+  QVERIFY(port.writeFramesPool().size() == 1);
+  frame = port.writeFramesPool().dequeue();
+  port.unlockMutex();
+  QVERIFY(frame != 0);
+
+  // Add some data to frame and commit
+  frame->append(data);
+  port.lockMutex();
+  port.writeFrames().enqueue(frame);
+  port.unlockMutex();
+
+  // Wait some time and verify that data was written
+  QTest::qWait(3*data.size()+100);
+  QVERIFY(file.open());
+  fileData = file.readAll();
+  QVERIFY(fileData == data);
+
+  // End
+  wrThd.stop();
+}
+
+void mdtPortTest::writeAsciiTest_data()
+{
+  QString str;
+
+  QTest::addColumn<QString>("data");
+
+  QTest::newRow("Empty data") << "";
+  QTest::newRow("1 char") << "A";
+  QTest::newRow("Short len data") << "ABCD";
+  QTest::newRow("Middle len data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  // Long data
+  str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  str += "abcdefghijklmnopqrstuvwxyz";
+  str += "0123456789";
+  QTest::newRow("Long data") << str;
+  // Very long data
+  str = "";
+  for(int i=0; i<100; i++){
+    str += "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  }
+  QTest::newRow("Very long data") << str;
+}
+
+void mdtPortTest::readRawTest()
 {
   mdtPort port;
   mdtPortConfig cfg;
@@ -257,6 +393,96 @@ void mdtPortTest::readTest()
 
   // Setup
   cfg.setReadQueueSize(10);
+  cfg.setReadFrameSize(10);
+  cfg.setFrameType(mdtFrame::FT_RAW);
+  QVERIFY(port.setAttributes(file.fileName()));
+  QVERIFY(port.open(cfg));
+
+  // Assign port to the threads
+  rdThd.setPort(&port);
+
+  // Start
+  QVERIFY(rdThd.start());
+  QVERIFY(rdThd.isRunning());
+
+  // Write data to file and verify that data was written
+  QVERIFY(file.write(data.toAscii()) == data.size());
+  QVERIFY(file.flush());
+  file.close();
+  file.open();
+  fileData = file.readAll();
+  QVERIFY(fileData == data);
+  file.close();
+
+  // Wait some time and verify that data are available
+  QTest::qWait(100);
+  port.lockMutex();
+  // We have a special case for empty data test
+  if((refData.size() == 1)&&(refData.at(0).size() == 0)){
+    QVERIFY(port.readenFrames().size() == 0);
+  }else{
+    QVERIFY(port.readenFrames().size() == refData.size());
+    // Verify each readen data frame
+    for(int i=0; i<refData.size(); i++){
+      frame = port.readenFrames().dequeue();
+      QVERIFY(frame != 0);
+      QVERIFY(frame->isComplete());
+      // Verify readen data
+      QVERIFY(*frame == refData.at(i));
+      // Restore frame to pool
+      port.readFramesPool().enqueue(frame);
+    }
+  }
+  port.unlockMutex();
+
+  // End
+  rdThd.stop();
+}
+
+void mdtPortTest::readRawTest_data()
+{
+  // Note: assume that ReadFrameSize is 10
+  QStringList refLst;
+
+  QTest::addColumn<QString>("data");
+  QTest::addColumn<QStringList>("refData");
+
+  refLst.clear();
+  refLst << "";
+  QTest::newRow("Empty data") << "" << refLst;
+  refLst.clear();
+  refLst << "A";
+  QTest::newRow("1 char data") << "A" << refLst;
+  refLst.clear();
+  refLst << "ABCD";
+  QTest::newRow("1 frame short data") << "ABCD" << refLst;
+  refLst.clear();
+  refLst << "ABCDEFGHIJ" << "KLMNOPQRST" << "UVWXYZ";
+  QTest::newRow("1 frame middle len data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << refLst;
+  refLst.clear();
+  refLst << "ABCDEFGHIJ" << "KLMNOPQRST" << "UVWXYZabcd" << "efghijklmn" << "opqrstuvwx" << "yz01234567" << "89";
+  QTest::newRow("1 frame long data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" << refLst;
+}
+
+void mdtPortTest::readAsciiTest()
+{
+  mdtPort port;
+  mdtPortConfig cfg;
+  mdtPortReadThread rdThd;
+  mdtFrame *frame;
+  QTemporaryFile file;
+  QByteArray fileData;
+
+  // Get data set
+  QFETCH(QString, data);
+  QFETCH(QStringList, refData);
+
+  // Create a temporary file
+  QVERIFY(file.open());
+
+  // Setup
+  cfg.setReadQueueSize(10);
+  cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
   QVERIFY(port.setAttributes(file.fileName()));
   QVERIFY(port.open(cfg));
@@ -275,6 +501,7 @@ void mdtPortTest::readTest()
   file.open();
   fileData = file.readAll();
   QVERIFY(fileData == data);
+  file.close();
 
   // Wait some time and verify that data are available
   QTest::qWait(100);
@@ -296,7 +523,7 @@ void mdtPortTest::readTest()
   rdThd.stop();
 }
 
-void mdtPortTest::readTest_data()
+void mdtPortTest::readAsciiTest_data()
 {
   QString str;
   QStringList lst;
@@ -330,7 +557,7 @@ void mdtPortTest::readTest_data()
   QTest::newRow("Multi frame long data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ*0123456789*abcdefghijklmnopqrstuvwxyz*" << lst;
 }
 
-void mdtPortTest::readInvalidDataTest()
+void mdtPortTest::readInvalidDataAsciiTest()
 {
   mdtPort port;
   mdtPortConfig cfg;
@@ -348,6 +575,7 @@ void mdtPortTest::readInvalidDataTest()
   // Setup
   cfg.setReadFrameSize(10);
   cfg.setReadQueueSize(10);
+  cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
   QVERIFY(port.setAttributes(filePath));
 
@@ -513,6 +741,7 @@ void mdtPortTest::emptyQueueRecoveryTest()
 
   // Setup
   cfg.setReadQueueSize(3);
+  cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
   QVERIFY(port.setAttributes(file.fileName()));
   QVERIFY(port.open(cfg));
@@ -580,6 +809,9 @@ void mdtPortTest::portManagerTest()
   // Create a temporary file
   QVERIFY(file.open());
   file.close();
+
+  // Port setup
+  m.config().setFrameType(mdtFrame::FT_ASCII);
 
   // Init port manager
   m.setPort(new mdtPort);

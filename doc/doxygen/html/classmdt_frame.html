@@ -84,7 +84,9 @@ Inheritance diagram for mdtFrame:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17">type_t</a> { <a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">FT_ASCII</a> =  1, 
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17">type_t</a> { <a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f">FT_RAW</a>, 
+<a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96">FT_RAW_TOP</a>, 
+<a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722">FT_ASCII</a>, 
 <a class="el" href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a">FT_MODBUS_TCP</a>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame type.  <a href="classmdt_frame.html#af936e37d5fe4c066c0fb0161fafd4a17">More...</a><br/></td></tr>
@@ -104,6 +106,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the remain capacity. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4">bytesToStore</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the bytes to store into the frame.  <a href="#a8526b227a56562fddf8445060e8095d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#abfd6de396626f01ebf972b7d6cd26957">setDirectlyComplete</a> (bool dc)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the complete flag directly.  <a href="#abfd6de396626f01ebf972b7d6cd26957"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#ab8db9882c095091109115afb8e448b37">setComplete</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the frame as complete.  <a href="#ab8db9882c095091109115afb8e448b37"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a8fb9f36c941282881bba0c538d1ce5"></a><!-- doxytag: member="mdtFrame::isComplete" ref="a2a8fb9f36c941282881bba0c538d1ce5" args="()" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame.html#a2a8fb9f36c941282881bba0c538d1ce5">isComplete</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if EOF condition was reached. <br/></td></tr>
@@ -128,7 +134,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Provide an array of bytes. </p>
 <p><a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> is based on Qt's QByteArray, that provide a array of bytes. To store data, the QByteArray's methods append() can be used.<br/>
- For ASCII frames reception, the end is a special char/strting on most case. <a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> provide the functions <a class="el" href="classmdt_frame.html#af03d60dadc6bd33b3a333cf484463113" title="Put data until EOF token was reached.">putUntil()</a> for that purpose.<br/>
+ For ASCII frames reception, the end is a special char/string on most case. <a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> provide the functions <a class="el" href="classmdt_frame.html#af03d60dadc6bd33b3a333cf484463113" title="Put data until EOF token was reached.">putUntil()</a> for that purpose.<br/>
  During data reception, for exemple from serial port, the best way to check if more data can be stored is to use <a class="el" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore()</a>. It returns the remain capacity of the frame, and 0 if the end of frame (EOF) condition was reached. To know if the frame is complete (i.e. end of frame condition ok), use <a class="el" href="classmdt_frame.html#a2a8fb9f36c941282881bba0c538d1ce5" title="Returns true if EOF condition was reached.">isComplete()</a><br/>
  Here are the states of a frame with return values of both functions:<br/>
  </p>
@@ -145,7 +151,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 <td>Frame is full, and EOF condition reached</td><td>0</td><td>true </td></tr>
 </table>
 <p>At this state, whenn <a class="el" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore()</a> returns 0 and <a class="el" href="classmdt_frame.html#a2a8fb9f36c941282881bba0c538d1ce5" title="Returns true if EOF condition was reached.">isComplete()</a> is true, the received frame is ok. The next step is to decode it, according to the used protocol (modbus, ...).<br/>
- Note that these states are only set when using <a class="el" href="classmdt_frame.html#af03d60dadc6bd33b3a333cf484463113" title="Put data until EOF token was reached.">putUntil()</a> functions. </p>
+ Note that these states are only set when using <a class="el" href="classmdt_frame.html#af03d60dadc6bd33b3a333cf484463113" title="Put data until EOF token was reached.">putUntil()</a> and <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8" title="Put data into the frame.">putData()</a> functions. </p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17"></a><!-- doxytag: member="mdtFrame::type_t" ref="af936e37d5fe4c066c0fb0161fafd4a17" args="" -->
 <div class="memitem">
@@ -160,6 +166,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 
 <p>Frame type. </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f"></a><!-- doxytag: member="FT_RAW" ref="af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f" args="" -->FT_RAW</em>&nbsp;</td><td>
+<p>Raw binary data </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96"></a><!-- doxytag: member="FT_RAW_TOP" ref="af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96" args="" -->FT_RAW_TOP</em>&nbsp;</td><td>
+<p>Raw binary data for usage with timeout protocol </p>
+</td></tr>
 <tr><td valign="top"><em><a class="anchor" id="af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722"></a><!-- doxytag: member="FT_ASCII" ref="af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722" args="" -->FT_ASCII</em>&nbsp;</td><td>
 <p>ASCII frame type </p>
 </td></tr>
@@ -239,7 +251,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 <div class="memdoc">
 
 <p>Put data into the frame. </p>
-<p>Must be implemented by specific frame subclass. This method is called by the RX thread. Default implementation simply stores the maximum data as possible. No flags ares set. </p>
+<p>Must be implemented by specific frame subclass.<br/>
+ This method is called by the read thread.<br/>
+ Default implementation simply stores data, and set the EOF condition to true. This way, it's possible to use <a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> for raw binary transferts. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Valid pointer to the data </td></tr>
@@ -336,6 +350,51 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 <p>Put data until EOF token was reached. </p>
 <p>This is an overloaded function. The token can be a sequence of bytes. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_frame.html#af03d60dadc6bd33b3a333cf484463113" title="Put data until EOF token was reached.">putUntil()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab8db9882c095091109115afb8e448b37"></a><!-- doxytag: member="mdtFrame::setComplete" ref="ab8db9882c095091109115afb8e448b37" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtFrame::setComplete </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the frame as complete. </p>
+<p>This is used by <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> with timeout protocols. </p>
+
+</div>
+</div>
+<a class="anchor" id="abfd6de396626f01ebf972b7d6cd26957"></a><!-- doxytag: member="mdtFrame::setDirectlyComplete" ref="abfd6de396626f01ebf972b7d6cd26957" args="(bool dc)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtFrame::setDirectlyComplete </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the complete flag directly. </p>
+<p>This is usefull for raw mode transfert. If true, the frame is set complete after each call of <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8" title="Put data into the frame.">putData()</a> </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dc</td><td>The Directly complete flag </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -444,7 +503,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvEOFcondition</b></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 1 2012 15:29:55 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Apr 5 2012 10:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

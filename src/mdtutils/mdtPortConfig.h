@@ -17,8 +17,9 @@ class mdtPortConfig
    * Default configuration is:
    *  - Read and write frame size: 1024
    *  - Read and write queue size: 10
+   *  - Use read timeout protocol: false
    *  - Read/Write timout: 500 [ms]
-   *  - Frame type: ASCII   NOTE: chage this ?
+   *  - Frame type: RAW
    *  - En of frame sequence: '\n'
    *  - Byte per byte write: Off
    */
@@ -71,6 +72,19 @@ class mdtPortConfig
    * \sa setReadMinWaitTime()
    */
   int readMinWaitTime();
+
+  /*! \brief Use the read timeout protocol.
+   * 
+   * An example of read timeout protocol is MODBUS (over serial lines) RTU mode
+   * The mdtPortReadThread will use this parameter.
+   * \param use If true, read timeout protocol will be used.
+   */
+  void setUseReadTimeoutProtocol(bool use);
+
+  /*! \brief Know if read timeout protocol must be used
+   * \sa setUseReadTimeoutProtocol()
+   */
+  bool useReadTimeoutProtocol();
 
   /*! \brief Set the read timeout
    * 
@@ -192,14 +206,15 @@ class mdtPortConfig
  protected:
 
   // Frame and frame FIFO (queue) size
-  int pvReadFrameSize;        // Maximum data length to store before a frame is considered invalid
-  int pvReadQueueSize;        // Maximum number of frames that can be stored
-  int pvReadMinWaitTime;      // Minimum time to wait before read call [ms]
-  int pvReadTimeout;          // Maximum time before reading data [ms]
-  int pvWriteFrameSize;       // Maximum data length to store before a frame is considered invalid
-  int pvWriteQueueSize;       // Maximum number of frames that can be stored
-  int pvWriteMinWaitTime;     // Minimum time to wait before write call
-  int pvWriteTimeout;         // Maximum time before port must be ready for writing data [ms]
+  int pvReadFrameSize;            // Maximum data length to store before a frame is considered invalid
+  int pvReadQueueSize;            // Maximum number of frames that can be stored
+  int pvReadMinWaitTime;          // Minimum time to wait before read call [ms]
+  bool pvUseReadTimeoutProtocol;  // Use the timeout protocol, for example, MODBUS RTU mode. Used by mdtPortReadThread
+  int pvReadTimeout;              // Maximum time before reading data [ms]
+  int pvWriteFrameSize;           // Maximum data length to store before a frame is considered invalid
+  int pvWriteQueueSize;           // Maximum number of frames that can be stored
+  int pvWriteMinWaitTime;         // Minimum time to wait before write call
+  int pvWriteTimeout;             // Maximum time before port must be ready for writing data [ms]
   mdtFrame::type_t pvFrameType;
   QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
   bool pvBytePerByteWrite;    // For some (very) slow devices that need time between each transmitted byte

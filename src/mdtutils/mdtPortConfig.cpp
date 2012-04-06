@@ -14,12 +14,13 @@ void mdtPortConfig::setDefault()
   pvReadFrameSize = 1024;
   pvReadQueueSize = 10;
   pvReadMinWaitTime = 0;
+  pvUseReadTimeoutProtocol = false;
   pvReadTimeout = 500;
   pvWriteFrameSize = 1024;
   pvWriteQueueSize = 10;
   pvWriteMinWaitTime = 0;
   pvWriteTimeout = 500;
-  pvFrameType = mdtFrame::FT_ASCII;
+  pvFrameType = mdtFrame::FT_RAW;
   pvEndOfFrameSeq.clear();
   pvEndOfFrameSeq.append('\n');
   pvBytePerByteWrite = false;
@@ -57,6 +58,16 @@ void mdtPortConfig::setReadMinWaitTime(int minWaitTime)
 int mdtPortConfig::readMinWaitTime()
 {
   return pvReadMinWaitTime;
+}
+
+void mdtPortConfig::setUseReadTimeoutProtocol(bool use)
+{
+  pvUseReadTimeoutProtocol = use;
+}
+
+bool mdtPortConfig::useReadTimeoutProtocol()
+{
+  return pvUseReadTimeoutProtocol;
 }
 
 void mdtPortConfig::setReadTimeout(int timeout)

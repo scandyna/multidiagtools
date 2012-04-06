@@ -11,9 +11,6 @@ class mdtSerialPortCtlThread : public mdtPortThread
 
   mdtSerialPortCtlThread(QObject *parent = 0);
 
-  // Overloaded method, this class need access to mdtSerialPort specific methods
-  void setPort(mdtSerialPort *serialPort);
-
   /*! \brief Re-implemented stop function
    *  Note: this is Posix implementation specific
    *  \pre Serial port instance must be defined. \see mdtSerialPortThread::setDeviceFile()
@@ -26,9 +23,6 @@ class mdtSerialPortCtlThread : public mdtPortThread
 
   // Thread implementation
   void run();
-
-  // Overloaded pvDeviceFile, type mdtSerialPort
-  mdtSerialPort *pvSerialPort;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_CTL_THREAD_H
