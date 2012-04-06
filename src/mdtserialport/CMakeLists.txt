@@ -1,5 +1,5 @@
-# CMake project file for Multi X Diag Tools
-# * Part: mdtutils *
+# CMake project file for Multi Diag Tools
+# * Part: mdtserialport *
 # * Directory: mdtserialport *
 
 # Project
@@ -55,10 +55,14 @@ add_library (mdtserialport SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS}
 target_link_libraries(mdtserialport ${QT_LIBRARIES})
 
 # Version statique
-add_library (mdtserialport_static STATIC ${SOURCES_FILES} )
-target_link_libraries(mdtserialport_static ${QT_LIBRARIES})
-#set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
+if(MDT_BUILD_STATIC_LIBS)
+  add_library (mdtserialport_static STATIC ${SOURCES_FILES} )
+  target_link_libraries(mdtserialport_static ${QT_LIBRARIES})
+  #set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
+endif(MDT_BUILD_STATIC_LIBS)
 
 # Destinations
 install (TARGETS "mdtserialport" DESTINATION "${LIB_DEST_DIR}")
-install (TARGETS "mdtserialport_static" DESTINATION "${LIB_DEST_DIR}")
+if(MDT_BUILD_STATIC_LIBS)
+  install (TARGETS "mdtserialport_static" DESTINATION "${LIB_DEST_DIR}")
+endif(MDT_BUILD_STATIC_LIBS)

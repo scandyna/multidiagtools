@@ -20,12 +20,8 @@
  ****************************************************************************/
 #include <QApplication>
 #include <QDebug>
-#include "mdtAlgorithmsTest.h"
-#include "mdtBufferTest.h"
-#include "mdtFrameTest.h"
+#include "mdtPortTest.h"
 #include "mdtErrorOut.h"
-#include "mdtErrorTest.h"
-#include "mdtFrameCodecTest.h"
 
 int main(int argc, char **argv)
 {
@@ -43,31 +39,12 @@ int main(int argc, char **argv)
   }
   mdtErrorOut::setDialogLevelsMask(0);
   // Test objetcs
-  mdtAlgorithmsTest algorithmsTest;
-  mdtBufferTestRun bufferTest;
-  mdtFrameTest frameTest;
-  mdtErrorTest errorTest;
-  mdtFrameCodecTest frameCodecTest;
+  mdtPortTest portTest;
 
   // Run test classes
   retVal = 0;
-  retVal = QTest::qExec(&algorithmsTest, argc, argv);
-  if(retVal!=0){
-    return retVal;
-  }
-  retVal = QTest::qExec(&bufferTest, argc, argv);
-  if(retVal!=0){
-    return retVal;
-  }
-  retVal = QTest::qExec(&frameTest, argc, argv);
-  if(retVal!=0){
-    return retVal;
-  }
-  retVal = QTest::qExec(&errorTest, argc, argv);
-  if(retVal!=0){
-    return retVal;
-  }
-  retVal = QTest::qExec(&frameCodecTest, argc, argv);
+  // Device dependent tests
+  retVal = QTest::qExec(&portTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }

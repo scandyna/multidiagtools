@@ -1,4 +1,4 @@
-# CMake project file for Multi X Diag Tools
+# Project file for Multi Diag Tools
 # * Part: mdtutils *
 # * Directory: mdutils *
 
@@ -9,21 +9,10 @@ project (multidiagtools)
 set (HEADER_FILES 
           # mdtError
           mdtErrorOut.h
-          # Port I/O
-          mdtAbstractPort.h
-          mdtPort.h
-          mdtPortThread.h
-          mdtPortReadThread.h
-          mdtPortWriteThread.h
-          mdtTcpSocket.h
-          mdtTcpSocketThread.h
-          # Port manager
-          mdtPortManager.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
     )
-
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
@@ -43,17 +32,6 @@ set (SOURCES_FILES
           # mdtError
           mdtError.cpp
           mdtErrorOut.cpp
-          # Port I/O
-          mdtAbstractPort.cpp
-          mdtPort.cpp
-          mdtPortConfig.cpp
-          mdtPortThread.cpp
-          mdtPortReadThread.cpp
-          mdtPortWriteThread.cpp
-          mdtTcpSocket.cpp
-          mdtTcpSocketThread.cpp
-          # Port manager
-          mdtPortManager.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -73,16 +51,9 @@ set (RESOURCE_FILES
 
 # Unix (Posix) specific files
 if(UNIX)
-  message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
-    linux/mdtPortPosix.cpp
-    linux/mdtUsbtmcPort.cpp
-    linux/mdtUsbtmcPortManager.h
-    linux/mdtUsbtmcPortManager.cpp
   )
   set (HEADER_FILES ${HEADER_FILES} 
-    linux/mdtUsbtmcPort.h
-    linux/mdtUsbtmcPortManager.h
   )
 endif(UNIX)
 
@@ -100,10 +71,14 @@ add_library (mdtutils SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RC
 target_link_libraries(mdtutils ${QT_LIBRARIES})
 
 # Version statique
-add_library (mdtutils_static STATIC ${SOURCES_FILES} )
-target_link_libraries(mdtutils_static ${QT_LIBRARIES})
-#set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
+if(MDT_BUILD_STATIC_LIBS)
+  add_library (mdtutils_static STATIC ${SOURCES_FILES} )
+  target_link_libraries(mdtutils_static ${QT_LIBRARIES})
+  set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
+endif(MDT_BUILD_STATIC_LIBS)
 
 # Destinations
 install (TARGETS "mdtutils" DESTINATION "${LIB_DEST_DIR}")
-install (TARGETS "mdtutils_static" DESTINATION "${LIB_DEST_DIR}")
+if(MDT_BUILD_STATIC_LIBS)
+  install (TARGETS "mdtutils_static" DESTINATION "${LIB_DEST_DIR}")
+endif(MDT_BUILD_STATIC_LIBS)

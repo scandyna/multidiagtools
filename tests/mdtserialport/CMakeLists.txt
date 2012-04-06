@@ -31,6 +31,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 add_executable (mdtSerialPortTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraires à lier
 target_link_libraries(mdtSerialPortTest "mdtutils")
+target_link_libraries(mdtSerialPortTest "mdtport")
 target_link_libraries(mdtSerialPortTest "mdtserialport")
 target_link_libraries(mdtSerialPortTest "mdttest")
 target_link_libraries(mdtSerialPortTest ${QT_LIBRARIES})

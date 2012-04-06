@@ -1,3 +1,7 @@
-/home/philippe/programmation/multixDiagTools/bin/unMain
-/home/philippe/programmation/multixDiagTools/src/mdtutils/../../bin/libmdtutils.so
-/home/philippe/programmation/multixDiagTools/src/mdtutils/../../bin/libmdtutils_static.a
+/etc/udev/rules.d/40-usbtmc.rules
+/usr/lib/libmdtutils.so
+/usr/lib/libmdtutils_static.a
+/usr/lib/libmdtdevice.so
+/usr/lib/libmdtdevice_static.a
+/usr/lib/libmdtserialport.so
+/usr/lib/libmdtserialport_static.a

@@ -1,4 +1,4 @@
-# Fichier de projet pour Multi X Diag Tools
+# Project file for Multi Diag Tools
 
 # CMake ressources:
 #  http://www.cmake.org/cmake/help/cmake_tutorial.html
@@ -51,9 +51,13 @@ add_definitions(${QT_DEFINITIONS})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # *** Librairies section ***
+
+# Build the static variant of libraries
+set(MDT_BUILD_STATIC_LIBS 0)
 
 # Libraries install directory
 if(WIN32)
@@ -68,6 +72,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 # * mdtdevice *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 
+# * mdtport *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtport")
+
 # * mdtserialport *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
@@ -75,6 +82,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 add_executable (essais src/main.cpp)
 # Librairies à lier
 target_link_libraries(essais "mdtutils")
+target_link_libraries(essais "mdtport")
 target_link_libraries(essais "mdtdevice")
 target_link_libraries(essais ${QT_LIBRARIES})
 
@@ -86,8 +94,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 # * Unit tests execution *
 enable_testing()
 add_test (mdtUtilsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtUtilsTest)
-add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtDeviceTest)
+add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtPortTest)
 add_test (mdtSerialPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtSerialPortTest)
+add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtDeviceTest)
 
 # *** Install section ***
 

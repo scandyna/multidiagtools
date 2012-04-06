@@ -4,7 +4,7 @@
 
 
 # Project
-project (multixdiagtools)
+project (multidiagtools)
 
 # Access to project's include files
 include_directories("${PROJECT_SOURCE_DIR}/mdttest")
@@ -18,6 +18,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutils")
 
 # * mdtdevice *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtdevice")
+
+# * mdtserialport *
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdtport")
 
 # * mdtserialport *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtserialport")

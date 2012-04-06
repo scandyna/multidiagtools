@@ -1,5 +1,5 @@
-# CMake project file for Multi X Diag Tools
-# * Part: mdtutils *
+# Project file for Multi Diag Tools
+# * Part: mdudevice *
 # * Directory: mdudevice *
 
 # Project
@@ -59,13 +59,18 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 # Librairie du projet
 add_library (mdtdevice SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtdevice "mdtutils")
+target_link_libraries(mdtdevice "mdtport")
 target_link_libraries(mdtdevice ${QT_LIBRARIES})
 
 # Version statique
-add_library (mdtdevice_static STATIC ${SOURCES_FILES} )
-target_link_libraries(mdtdevice_static "mdtutils")
-target_link_libraries(mdtdevice_static ${QT_LIBRARIES})
+if(MDT_BUILD_STATIC_LIBS)
+  add_library (mdtdevice_static STATIC ${SOURCES_FILES} )
+  target_link_libraries(mdtdevice_static "mdtutils")
+  target_link_libraries(mdtdevice_static ${QT_LIBRARIES})
+endif(MDT_BUILD_STATIC_LIBS)
 
 # Destinations
 install (TARGETS "mdtdevice" DESTINATION "${LIB_DEST_DIR}")
-install (TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}")
+if(MDT_BUILD_STATIC_LIBS)
+  install (TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}")
+endif(MDT_BUILD_STATIC_LIBS)
