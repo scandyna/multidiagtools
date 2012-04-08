@@ -68,31 +68,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00007"></a>00007 <span class="preprocessor">#include &lt;QObject&gt;</span>
 <a name="l00008"></a>00008 <span class="preprocessor">#include &lt;QStringList&gt;</span>
 <a name="l00009"></a>00009 
-<a name="l00010"></a><a class="code" href="classmdt_usbtmc_port_manager.html">00010</a> <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_manager.html">mdtUsbtmcPortManager</a> : <span class="keyword">public</span> <a class="code" href="classmdt_port_manager.html">mdtPortManager</a>
-<a name="l00011"></a>00011 {
-<a name="l00012"></a>00012  Q_OBJECT
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014  <span class="keyword">public</span>:
+<a name="l00012"></a><a class="code" href="classmdt_usbtmc_port_manager.html">00012</a> <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> : <span class="keyword">public</span> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>
+<a name="l00013"></a>00013 {
+<a name="l00014"></a>00014  Q_OBJECT
 <a name="l00015"></a>00015 
-<a name="l00016"></a>00016   <a class="code" href="classmdt_usbtmc_port_manager.html">mdtUsbtmcPortManager</a>(QObject *parent = 0);
-<a name="l00017"></a>00017   ~<a class="code" href="classmdt_usbtmc_port_manager.html">mdtUsbtmcPortManager</a>();
-<a name="l00018"></a>00018 
-<a name="l00021"></a>00021   QStringList <a class="code" href="classmdt_usbtmc_port_manager.html#ab26aebdb694fab232f62e7c6084cc0fb" title="Scan available USBTMC ports.">scan</a>();
-<a name="l00022"></a>00022 
-<a name="l00032"></a>00032   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port_manager.html#afc1afc7deb3f5d7cf6031037d63e9bff" title="Write data to device.">writeData</a>(QByteArray data, <span class="keywordtype">bool</span> waitAnswer);
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034  <span class="keyword">public</span> slots:
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036   <span class="comment">// Called by write thread whenn data was written</span>
-<a name="l00037"></a>00037   <span class="keywordtype">void</span> frameWritten();
-<a name="l00038"></a>00038   
-<a name="l00039"></a>00039  <span class="keyword">private</span>:
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   <span class="keywordtype">bool</span> pvFrameWritten;
-<a name="l00042"></a>00042   <span class="keywordtype">bool</span> pvWaitingFrame;  <span class="comment">// If true, frameWritten() will enable the read thread flag</span>
-<a name="l00043"></a>00043 };
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_MANAGER_H</span>
+<a name="l00016"></a>00016  <span class="keyword">public</span>:
+<a name="l00017"></a>00017 
+<a name="l00022"></a>00022   <a class="code" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7" title="Construct the manager.">mdtUsbtmcPortManager</a>(QObject *parent = 0);
+<a name="l00023"></a>00023   ~<a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>();
+<a name="l00024"></a>00024 
+<a name="l00027"></a>00027   QStringList <a class="code" href="classmdt_usbtmc_port_manager.html#ab26aebdb694fab232f62e7c6084cc0fb" title="Scan available USBTMC ports.">scan</a>();
+<a name="l00028"></a>00028 
+<a name="l00038"></a>00038   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port_manager.html#afc1afc7deb3f5d7cf6031037d63e9bff" title="Write data to device.">writeData</a>(QByteArray data, <span class="keywordtype">bool</span> waitAnswer);
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040  <span class="keyword">public</span> slots:
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <span class="comment">// Called by write thread whenn data was written</span>
+<a name="l00043"></a>00043   <span class="keywordtype">void</span> frameWritten();
+<a name="l00044"></a>00044   
+<a name="l00045"></a>00045  <span class="keyword">private</span>:
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047   <span class="keywordtype">bool</span> pvFrameWritten;
+<a name="l00048"></a>00048   <span class="keywordtype">bool</span> pvWaitingFrame;  <span class="comment">// If true, frameWritten() will enable the read thread flag</span>
+<a name="l00049"></a>00049 };
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_MANAGER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

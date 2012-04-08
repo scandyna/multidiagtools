@@ -1,9 +1,9 @@
 <map id="G" name="G">
 <area shape="rect" id="node2" href="$classmdt_device.html" title="mdtDevice" alt="" coords="1160,76,1245,105"/>
-<area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="mdtUsbtmcPortManager" alt="" coords="1121,129,1284,159"/>
-<area shape="rect" id="node6" href="$classmdt_port_manager.html" title="mdtPortManager" alt="" coords="924,121,1041,151"/>
+<area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="1121,129,1284,159"/>
+<area shape="rect" id="node6" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="924,121,1041,151"/>
 <area shape="rect" id="node8" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,33,112,63"/>
-<area shape="rect" id="node14" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="213,69,331,99"/>
+<area shape="rect" id="node14" href="$classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="213,69,331,99"/>
 <area shape="rect" id="node10" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="632,121,771,151"/>
 <area shape="rect" id="node12" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="425,121,532,151"/>
 <area shape="rect" id="node17" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="632,175,771,204"/>

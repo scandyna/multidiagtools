@@ -1,5 +1,0 @@
-0xf5e6d244	mx_usbserial_deregister	/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/drv_v1.1.11/mxuport-try-linux-3.0.0/driver/mxusbserial/mxusbserial	(unknown)
-0x8578c61d	mx_usbserial_disconnect	/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/drv_v1.1.11/mxuport-try-linux-3.0.0/driver/mxusbserial/mxusbserial	(unknown)
-0x6a0ffe7f	mx_usbserial_port_softint	/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/drv_v1.1.11/mxuport-try-linux-3.0.0/driver/mxusbserial/mxusbserial	(unknown)
-0xd2749e01	mx_usbserial_probe	/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/drv_v1.1.11/mxuport-try-linux-3.0.0/driver/mxusbserial/mxusbserial	(unknown)
-0xa0c503ac	mx_usbserial_register	/home/philippe/programmation/multixDiagTools/drivers/linux/moxa/drv_v1.1.11/mxuport-try-linux-3.0.0/driver/mxusbserial/mxusbserial	(unknown)

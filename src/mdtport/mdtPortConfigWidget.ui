@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mdtPortConfigWidget</class>
+ <widget class="QWidget" name="mdtPortConfigWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>514</width>
+    <height>225</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lbFrameType">
+     <property name="text">
+      <string>Frame &amp;type</string>
+     </property>
+     <property name="buddy">
+      <cstring>cbFrameType</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="cbFrameType"/>
+   </item>
+   <item row="0" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>332</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lbEndOfFrameSeq">
+     <property name="text">
+      <string>End of frame</string>
+     </property>
+     <property name="buddy">
+      <cstring>cbEndOfFrameSeq</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QComboBox" name="cbEndOfFrameSeq">
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>332</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QGroupBox" name="gbReadOptions">
+       <property name="title">
+        <string>Read options</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lbReadFrameSize">
+          <property name="text">
+           <string>Frame size</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbReadFrameSize</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="sbReadFrameSize">
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lbReadQueueSize">
+          <property name="text">
+           <string>Queue size</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbReadQueueSize</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="sbReadQueueSize">
+          <property name="maximum">
+           <number>500</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lbReadTimeout">
+          <property name="text">
+           <string>Timeout [ms]</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbReadTimeout</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="sbReadTimeout">
+          <property name="maximum">
+           <number>30000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <widget class="QCheckBox" name="cbUseReadTimeoutProtocol">
+          <property name="text">
+           <string>Use read timeout protocol</string>
+          </property>
+          <property name="tristate">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="gbWriteOptions">
+       <property name="title">
+        <string>Write options</string>
+       </property>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lbWriteFrameSize">
+          <property name="text">
+           <string>Frame size</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbWriteFrameSize</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lbWriteQueueSize">
+          <property name="text">
+           <string>Queue size</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbWriteQueueSize</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QSpinBox" name="sbWriteQueueSize">
+          <property name="maximum">
+           <number>500</number>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lbWriteTimeout">
+          <property name="text">
+           <string>Timeout [ms]</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbWriteTimeout</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="sbWriteTimeout">
+          <property name="maximum">
+           <number>30000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="lbWriteMinWaitTime">
+          <property name="text">
+           <string>Wait time [ms]</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbWriteMinWaitTime</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSpinBox" name="sbWriteMinWaitTime">
+          <property name="toolTip">
+           <string>Time to wait before sending a frame, or a byte if &quot;Write byte per byte&quot; option is set.</string>
+          </property>
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QCheckBox" name="cbBytePerByteWrite">
+          <property name="text">
+           <string>Write byte per byte</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="sbWriteFrameSize">
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+       <zorder>lbWriteFrameSize</zorder>
+       <zorder>lbWriteQueueSize</zorder>
+       <zorder>sbWriteQueueSize</zorder>
+       <zorder>lbWriteTimeout</zorder>
+       <zorder>sbWriteTimeout</zorder>
+       <zorder>sbWriteMinWaitTime</zorder>
+       <zorder>lbWriteMinWaitTime</zorder>
+       <zorder>cbBytePerByteWrite</zorder>
+       <zorder>sbWriteFrameSize</zorder>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cbFrameType</tabstop>
+  <tabstop>cbEndOfFrameSeq</tabstop>
+  <tabstop>sbReadFrameSize</tabstop>
+  <tabstop>sbReadQueueSize</tabstop>
+  <tabstop>sbReadTimeout</tabstop>
+  <tabstop>cbUseReadTimeoutProtocol</tabstop>
+  <tabstop>sbWriteFrameSize</tabstop>
+  <tabstop>sbWriteQueueSize</tabstop>
+  <tabstop>sbWriteTimeout</tabstop>
+  <tabstop>sbWriteMinWaitTime</tabstop>
+  <tabstop>cbBytePerByteWrite</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

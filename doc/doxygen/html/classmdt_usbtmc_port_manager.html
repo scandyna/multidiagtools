@@ -66,19 +66,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtUsbtmcPortManager Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtUsbtmcPortManager" --><!-- doxytag: inherits="mdtPortManager" --><div class="dynheader">
+<!-- doxytag: class="mdtUsbtmcPortManager" --><!-- doxytag: inherits="mdtPortManager" -->
+<p>USBTMC port manager.  
+ <a href="classmdt_usbtmc_port_manager.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_usbtmc_port_manager_8h_source.html">mdtUsbtmcPortManager.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for mdtUsbtmcPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usbtmc_port_manager__inherit__graph.png" border="0" usemap="#mdt_usbtmc_port_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_usbtmc_port_manager_inherit__map" id="mdt_usbtmc_port_manager_inherit__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="mdtPortManager" alt="" coords="28,5,145,35"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="28,5,145,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtUsbtmcPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usbtmc_port_manager__coll__graph.png" border="0" usemap="#mdt_usbtmc_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_usbtmc_port_manager_coll__map" id="mdt_usbtmc_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="mdtPortManager" alt="" coords="93,389,211,419"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/><area shape="rect" id="node10" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="61,101,179,131"/><area shape="rect" id="node6" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/><area shape="rect" id="node13" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="93,389,211,419"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/><area shape="rect" id="node10" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="61,101,179,131"/><area shape="rect" id="node6" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/><area shape="rect" id="node13" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_usbtmc_port_manager-members.html">List of all members.</a></p>
@@ -89,14 +94,37 @@ Public Slots</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>frameWritten</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99a24e4360e70ffc63677dbe888513f7"></a><!-- doxytag: member="mdtUsbtmcPortManager::mdtUsbtmcPortManager" ref="a99a24e4360e70ffc63677dbe888513f7" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtUsbtmcPortManager</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7">mdtUsbtmcPortManager</a> (QObject *parent=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the manager.  <a href="#a99a24e4360e70ffc63677dbe888513f7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab26aebdb694fab232f62e7c6084cc0fb"></a><!-- doxytag: member="mdtUsbtmcPortManager::scan" ref="ab26aebdb694fab232f62e7c6084cc0fb" args="()" -->
 QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#ab26aebdb694fab232f62e7c6084cc0fb">scan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan available USBTMC ports. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#afc1afc7deb3f5d7cf6031037d63e9bff">writeData</a> (QByteArray data, bool waitAnswer)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to device.  <a href="#afc1afc7deb3f5d7cf6031037d63e9bff"></a><br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>USBTMC port manager. </p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a99a24e4360e70ffc63677dbe888513f7"></a><!-- doxytag: member="mdtUsbtmcPortManager::mdtUsbtmcPortManager" ref="a99a24e4360e70ffc63677dbe888513f7" args="(QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtUsbtmcPortManager::mdtUsbtmcPortManager </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Construct the manager. </p>
+<p>The port and configuration instances will be created here </p>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="afc1afc7deb3f5d7cf6031037d63e9bff"></a><!-- doxytag: member="mdtUsbtmcPortManager::writeData" ref="afc1afc7deb3f5d7cf6031037d63e9bff" args="(QByteArray data, bool waitAnswer)" -->
 <div class="memitem">
@@ -125,7 +153,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Write data to device. </p>
 <p>By sending data, it's important to tell if the device will return some data back. This is due to large timeout of USBTMC kernel driver whenn no data are available on port. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html">mdtPortManager</a> </dd>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd>
 <dd>
 <a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a> </dd></dl>
 
@@ -141,7 +169,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -150,7 +178,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

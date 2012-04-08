@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 27
+  revision 28
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1202,6 +1202,110 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+    end
+
+    classdiagram 375042 "QDialog"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 370434 "QDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 720642 "QDialog"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	  param in name "f" explicit_type "Qt::WindowFlags"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 454018 // <generalisation>
+	relation 453762 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 454018 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+    end
+
+    classdiagram 375170 "QTabWidget"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 370562 "QTabWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 454274 // <generalisation>
+	relation 454018 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 454274 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      operation 720898 "QTabWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 454530 // <unidirectional association>
+	relation 454274 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 454530 // <unidirectional association>
+	  b parent class_ref 369922 // ui_mdtPortConfigWidget
+      end
+
+      classrelation 454658 // <unidirectional association>
+	relation 454402 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 454658 // <unidirectional association>
+	  b parent class_ref 370050 // ui_mdtSerialPortConfigWidget
+      end
     end
   end
 

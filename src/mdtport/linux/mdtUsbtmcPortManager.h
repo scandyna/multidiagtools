@@ -7,12 +7,18 @@
 #include <QObject>
 #include <QStringList>
 
+/*! \brief USBTMC port manager
+ */
 class mdtUsbtmcPortManager : public mdtPortManager
 {
  Q_OBJECT
 
  public:
 
+  /*! \brief Construct the manager
+   * 
+   * The port and configuration instances will be created here
+   */
   mdtUsbtmcPortManager(QObject *parent = 0);
   ~mdtUsbtmcPortManager();
 

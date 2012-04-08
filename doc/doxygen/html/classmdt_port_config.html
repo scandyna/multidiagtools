@@ -78,7 +78,7 @@ Inheritance diagram for mdtPortConfig:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a1cad2f21252411977fe328f89b68fbfb">setDefault</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a1cad2f21252411977fe328f89b68fbfb">setDefault</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set default configuration.  <a href="#a1cad2f21252411977fe328f89b68fbfb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a02f3c9744b0d7a61853ab58467278bbc">setReadFrameSize</a> (int size)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read frame size.  <a href="#a02f3c9744b0d7a61853ab58467278bbc"></a><br/></td></tr>
@@ -88,12 +88,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read Queue size.  <a href="#a04d8e81844deaff20a890ea24e2f9634"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#acbeb17f5ee40cd4ab10e816ebd4db3ef">readQueueSize</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the read Queue size.  <a href="#acbeb17f5ee40cd4ab10e816ebd4db3ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a42e984173a7868ea4f58c4d0c54b202f">setReadMinWaitTime</a> (int minWaitTime)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the minimal time to wait before try to read.  <a href="#a42e984173a7868ea4f58c4d0c54b202f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#ad8b726b560af894424a07c536e54936e">readMinWaitTime</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimal time to wait before try to read.  <a href="#ad8b726b560af894424a07c536e54936e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742">setUseReadTimeoutProtocol</a> (bool use)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the read timeout protocol.  <a href="#a5e7857a56ab2baff4bd0a77290b3c742"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the minimal time to wait before try to read.  <a href="#a5e7857a56ab2baff4bd0a77290b3c742"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#ae2516b9a714f69e3ebb8f2b47d459b50">useReadTimeoutProtocol</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Know if read timeout protocol must be used.  <a href="#ae2516b9a714f69e3ebb8f2b47d459b50"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585">setReadTimeout</a> (int timeout)</td></tr>
@@ -141,8 +137,6 @@ Protected Attributes</h2></td></tr>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadFrameSize</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a999e392fa0d1e97428cef3d45a0f7983"></a><!-- doxytag: member="mdtPortConfig::pvReadQueueSize" ref="a999e392fa0d1e97428cef3d45a0f7983" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadQueueSize</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a263cf98555f8982bb640059c345eec66"></a><!-- doxytag: member="mdtPortConfig::pvReadMinWaitTime" ref="a263cf98555f8982bb640059c345eec66" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadMinWaitTime</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a5ab2cf82ea35db627aa8b87f9dba2e"></a><!-- doxytag: member="mdtPortConfig::pvUseReadTimeoutProtocol" ref="a1a5ab2cf82ea35db627aa8b87f9dba2e" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvUseReadTimeoutProtocol</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69fa9f6cb32469f3eccfe7517dc29101"></a><!-- doxytag: member="mdtPortConfig::pvReadTimeout" ref="a69fa9f6cb32469f3eccfe7517dc29101" args="" -->
@@ -239,25 +233,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 </div>
 </div>
-<a class="anchor" id="ad8b726b560af894424a07c536e54936e"></a><!-- doxytag: member="mdtPortConfig::readMinWaitTime" ref="ad8b726b560af894424a07c536e54936e" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtPortConfig::readMinWaitTime </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get the minimal time to wait before try to read. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a42e984173a7868ea4f58c4d0c54b202f" title="Set the minimal time to wait before try to read.">setReadMinWaitTime()</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="acbeb17f5ee40cd4ab10e816ebd4db3ef"></a><!-- doxytag: member="mdtPortConfig::readQueueSize" ref="acbeb17f5ee40cd4ab10e816ebd4db3ef" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -343,7 +318,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
           <td class="memname">void mdtPortConfig::setDefault </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -357,8 +332,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <li>Use read timeout protocol: false</li>
 <li>Read/Write timout: 500 [ms]</li>
 <li>Frame type: RAW</li>
-<li>En of frame sequence: '<br/>
-'</li>
+<li>En of frame sequence: LF (ASCII 0x0A)</li>
 <li>Byte per byte write: Off </li>
 </ul>
 
@@ -430,36 +404,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 </div>
 </div>
-<a class="anchor" id="a42e984173a7868ea4f58c4d0c54b202f"></a><!-- doxytag: member="mdtPortConfig::setReadMinWaitTime" ref="a42e984173a7868ea4f58c4d0c54b202f" args="(int minWaitTime)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortConfig::setReadMinWaitTime </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>minWaitTime</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the minimal time to wait before try to read. </p>
-<p>Internally, the event system is used for read calls.<br/>
- For exemple, on Linux, the select() call is used.<br/>
- It can happen that the underlaying system does not support it, and call returns immediately, causing the reader thread to consume all CPU ressource.<br/>
- In this situation, the solution is to wait sometime before calling the read function. This wat is done by setting this parameter to a value greater than 0. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">minWaitTime</td><td>Wait time before read [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>mdtDeviceFileReadThread </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a04d8e81844deaff20a890ea24e2f9634"></a><!-- doxytag: member="mdtPortConfig::setReadQueueSize" ref="a04d8e81844deaff20a890ea24e2f9634" args="(int size)" -->
 <div class="memitem">
 <div class="memproto">
@@ -521,7 +465,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </div>
 <div class="memdoc">
 
-<p>Use the read timeout protocol. </p>
+<p>Set the minimal time to wait before try to read. </p>
+<p>Internally, the event system is used for read calls.<br/>
+ For exemple, on Linux, the select() call is used.<br/>
+ It can happen that the underlaying system does not support it, and call returns immediately, causing the reader thread to consume all CPU ressource.<br/>
+ In this situation, the solution is to wait sometime before calling the read function. This wat is done by setting this parameter to a value greater than 0. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minWaitTime</td><td>Wait time before read [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>mdtDeviceFileReadThread</dd></dl>
+<p>Get the minimal time to wait before try to read </p>
+<dl class="see"><dt><b>See also:</b></dt><dd>setReadMinWaitTime()</dd></dl>
+<p>Use the read timeout protocol.</p>
 <p>An example of read timeout protocol is MODBUS (over serial lines) RTU mode The <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> will use this parameter. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -643,7 +601,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Know if read timeout protocol must be used. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742" title="Use the read timeout protocol.">setUseReadTimeoutProtocol()</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742" title="Set the minimal time to wait before try to read.">setUseReadTimeoutProtocol()</a> </dd></dl>
 
 </div>
 </div>
@@ -733,7 +691,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -742,7 +700,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

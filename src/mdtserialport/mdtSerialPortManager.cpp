@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtSerialPortManager.h"
 #include "mdtSerialPortConfig.h"
 #include "mdtError.h"
@@ -6,12 +25,17 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
+#include <typeinfo>
 
 #include <QDebug>
 
 mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
+  qDebug() << "mdtSerialPortManager::mdtSerialPortManager() ...";
+  setConfig(new mdtSerialPortConfig);
+  setPort(new mdtSerialPort);
+  qDebug() << "mdtSerialPortManager::mdtSerialPortManager() END";
 }
 
 mdtSerialPortManager::~mdtSerialPortManager()
@@ -76,7 +100,38 @@ QStringList mdtSerialPortManager::scan()
     }
     delete port;
   }
-  
-  qDebug() << "Available serial ports: " << availablePorts;
+
   return availablePorts;
+}
+
+bool mdtSerialPortManager::openPort()
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvConfig != 0);
+
+  // We must typecast to the mdtSerialPort* classes
+  mdtSerialPort *p = dynamic_cast<mdtSerialPort*>(pvPort);
+  Q_ASSERT(p != 0);
+  mdtSerialPortConfig *c = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
+  Q_ASSERT(c != 0);
+
+  return p->open(*c);
+}
+
+mdtSerialPortConfig &mdtSerialPortManager::config()
+{
+  mdtSerialPortConfig *config = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
+  Q_ASSERT(config != 0);
+
+  return *config;
+}
+
+mdtAbstractSerialPort &mdtSerialPortManager::port()
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtAbstractSerialPort *sp = dynamic_cast<mdtAbstractSerialPort*>(pvPort);
+  Q_ASSERT(sp != 0);
+
+  return *sp;
 }

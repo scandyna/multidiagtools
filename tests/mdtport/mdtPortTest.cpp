@@ -811,6 +811,7 @@ void mdtPortTest::portManagerTest()
   file.close();
 
   // Port setup
+  m.setConfig(new mdtPortConfig);
   m.config().setFrameType(mdtFrame::FT_ASCII);
 
   // Init port manager
@@ -835,6 +836,8 @@ void mdtPortTest::portManagerTest()
   // Get readen data
   QVERIFY(m.waitReadenFrame());
   QVERIFY(m.lastReadenFrame() == "Test");
+
+  m.closePort();
 }
 
 #ifdef Q_OS_UNIX

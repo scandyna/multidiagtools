@@ -14,7 +14,7 @@ Inheritance diagram for mdtPortConfig:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}{setDefault} ()
+virtual void \hyperlink{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}{setDefault} ()
 \begin{DoxyCompactList}\small\item\em Set default configuration. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_a02f3c9744b0d7a61853ab58467278bbc}{setReadFrameSize} (int size)
 \begin{DoxyCompactList}\small\item\em Set the read frame size. \end{DoxyCompactList}\item 
@@ -24,12 +24,8 @@ void \hyperlink{classmdt_port_config_a04d8e81844deaff20a890ea24e2f9634}{setReadQ
 \begin{DoxyCompactList}\small\item\em Set the read Queue size. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_acbeb17f5ee40cd4ab10e816ebd4db3ef}{readQueueSize} ()
 \begin{DoxyCompactList}\small\item\em Get the read Queue size. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_config_a42e984173a7868ea4f58c4d0c54b202f}{setReadMinWaitTime} (int minWaitTime)
-\begin{DoxyCompactList}\small\item\em Set the minimal time to wait before try to read. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_port_config_ad8b726b560af894424a07c536e54936e}{readMinWaitTime} ()
-\begin{DoxyCompactList}\small\item\em Get the minimal time to wait before try to read. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{setUseReadTimeoutProtocol} (bool use)
-\begin{DoxyCompactList}\small\item\em Use the read timeout protocol. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Set the minimal time to wait before try to read. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_config_ae2516b9a714f69e3ebb8f2b47d459b50}{useReadTimeoutProtocol} ()
 \begin{DoxyCompactList}\small\item\em Know if read timeout protocol must be used. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}{setReadTimeout} (int timeout)
@@ -90,11 +86,6 @@ int {\bfseries pvReadFrameSize}}
 \hypertarget{classmdt_port_config_a999e392fa0d1e97428cef3d45a0f7983}{
 int {\bfseries pvReadQueueSize}}
 \label{classmdt_port_config_a999e392fa0d1e97428cef3d45a0f7983}
-
-\item 
-\hypertarget{classmdt_port_config_a263cf98555f8982bb640059c345eec66}{
-int {\bfseries pvReadMinWaitTime}}
-\label{classmdt_port_config_a263cf98555f8982bb640059c345eec66}
 
 \item 
 \hypertarget{classmdt_port_config_a1a5ab2cf82ea35db627aa8b87f9dba2e}{
@@ -209,22 +200,6 @@ Get the read frame size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a02f3c9744b0d7a61853ab58467278bbc}{setReadFrameSize()} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_port_config_ad8b726b560af894424a07c536e54936e}{
-\index{mdtPortConfig@{mdtPortConfig}!readMinWaitTime@{readMinWaitTime}}
-\index{readMinWaitTime@{readMinWaitTime}!mdtPortConfig@{mdtPortConfig}}
-\subsubsection[{readMinWaitTime}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortConfig::readMinWaitTime (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_config_ad8b726b560af894424a07c536e54936e}
-
-
-Get the minimal time to wait before try to read. 
-
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_config_a42e984173a7868ea4f58c4d0c54b202f}{setReadMinWaitTime()} 
-\end{DoxySeeAlso}
 \hypertarget{classmdt_port_config_acbeb17f5ee40cd4ab10e816ebd4db3ef}{
 \index{mdtPortConfig@{mdtPortConfig}!readQueueSize@{readQueueSize}}
 \index{readQueueSize@{readQueueSize}!mdtPortConfig@{mdtPortConfig}}
@@ -289,7 +264,7 @@ It can happen that a (very) slow device needs time after any received byte.\par
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}
 
 
@@ -302,8 +277,7 @@ Default configuration is:
 \item Use read timeout protocol: false
 \item Read/Write timout: 500 \mbox{[}ms\mbox{]}
 \item Frame type: RAW
-\item En of frame sequence: '\par
-'
+\item En of frame sequence: LF (ASCII 0x0A)
 \item Byte per byte write: Off 
 \end{DoxyItemize}
 
@@ -360,30 +334,6 @@ Frame size is the maximum number of bytes that can be stored before a frame is f
 \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
-\hypertarget{classmdt_port_config_a42e984173a7868ea4f58c4d0c54b202f}{
-\index{mdtPortConfig@{mdtPortConfig}!setReadMinWaitTime@{setReadMinWaitTime}}
-\index{setReadMinWaitTime@{setReadMinWaitTime}!mdtPortConfig@{mdtPortConfig}}
-\subsubsection[{setReadMinWaitTime}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setReadMinWaitTime (
-\begin{DoxyParamCaption}
-\item[{int}]{minWaitTime}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_config_a42e984173a7868ea4f58c4d0c54b202f}
-
-
-Set the minimal time to wait before try to read. 
-
-Internally, the event system is used for read calls.\par
- For exemple, on Linux, the select() call is used.\par
- It can happen that the underlaying system does not support it, and call returns immediately, causing the reader thread to consume all CPU ressource.\par
- In this situation, the solution is to wait sometime before calling the read function. This wat is done by setting this parameter to a value greater than 0. 
-\begin{DoxyParams}{Parameters}
-{\em minWaitTime} & Wait time before read \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-\begin{DoxySeeAlso}{See also}
-mdtDeviceFileReadThread 
-\end{DoxySeeAlso}
 \hypertarget{classmdt_port_config_a04d8e81844deaff20a890ea24e2f9634}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadQueueSize@{setReadQueueSize}}
 \index{setReadQueueSize@{setReadQueueSize}!mdtPortConfig@{mdtPortConfig}}
@@ -429,7 +379,23 @@ Set the read timeout.
 \label{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}
 
 
-Use the read timeout protocol. 
+Set the minimal time to wait before try to read. 
+
+Internally, the event system is used for read calls.\par
+ For exemple, on Linux, the select() call is used.\par
+ It can happen that the underlaying system does not support it, and call returns immediately, causing the reader thread to consume all CPU ressource.\par
+ In this situation, the solution is to wait sometime before calling the read function. This wat is done by setting this parameter to a value greater than 0. 
+\begin{DoxyParams}{Parameters}
+{\em minWaitTime} & Wait time before read \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+mdtDeviceFileReadThread
+\end{DoxySeeAlso}
+Get the minimal time to wait before try to read \begin{DoxySeeAlso}{See also}
+setReadMinWaitTime()
+\end{DoxySeeAlso}
+Use the read timeout protocol.
 
 An example of read timeout protocol is MODBUS (over serial lines) RTU mode The \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} will use this parameter. 
 \begin{DoxyParams}{Parameters}

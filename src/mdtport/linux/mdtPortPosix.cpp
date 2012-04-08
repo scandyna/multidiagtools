@@ -26,6 +26,8 @@
 #include <sys/ioctl.h>
 #include <errno.h>
 
+//#include <QDebug>
+
 mdtPortPosix::mdtPortPosix(QObject *parent)
  : mdtAbstractPort(parent)
 {

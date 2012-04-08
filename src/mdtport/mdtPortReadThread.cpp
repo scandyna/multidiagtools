@@ -93,12 +93,17 @@ void mdtPortReadThread::run()
     }
 
     // Wait the minimal time if requierd NOTE: obesete ??
+    /**
     if(pvReadMinWaitTime > 0){
       msleep(pvReadMinWaitTime);
     }
+    */
     // Wait on Read event
     if(!pvPort->waitForReadyRead()){
       emit(errorOccured(MDT_PORT_IO_ERROR));
+      pvPort->unlockMutex();
+      msleep(100);
+      pvPort->lockMutex();
     }
     // Event occured, get the data from port - Check timeout state first
     if(pvPort->readTimeoutOccured()){
@@ -125,6 +130,9 @@ void mdtPortReadThread::run()
       //qDebug() << "RX thread, readen: " << readen << " , buffer: " << buffer;
       if(readen < 0){
         readen = 0;
+        pvPort->unlockMutex();
+        msleep(100);
+        pvPort->lockMutex();
         emit(errorOccured(MDT_PORT_IO_ERROR));
       }
       toStore = readen;

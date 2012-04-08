@@ -64,7 +64,7 @@ void mdtPortWriteThread::run()
       break;
     }
 
-    // Wait the minimal time if requierd - Used for timeout protocol
+    // Wait the minimal time if requierd - Used for timeout protocol and byte per byte write
     if(pvWriteMinWaitTime > 0){
       pvPort->unlockMutex();
       msleep(pvWriteMinWaitTime);
@@ -73,6 +73,9 @@ void mdtPortWriteThread::run()
     // Wait on write ready event
     if(!pvPort->waitEventWriteReady()){
       emit(errorOccured(MDT_PORT_IO_ERROR));
+      pvPort->unlockMutex();
+      msleep(100);
+      pvPort->lockMutex();
     }
     // Event occured, send the data to port - Check timeout state first
     if(!pvPort->writeTimeoutOccured()){
@@ -94,8 +97,11 @@ void mdtPortWriteThread::run()
         }
         //qDebug() << "WTHD: written: " << written;
         if(written < 0){
-          emit(errorOccured(MDT_PORT_IO_ERROR));
           written = 0;
+          pvPort->unlockMutex();
+          msleep(100);
+          pvPort->lockMutex();
+          emit(errorOccured(MDT_PORT_IO_ERROR));
         }
         frame->take(written);
         // Check if current frame was completly sent

@@ -13,7 +13,8 @@ Inheritance diagram for mdtPortThread:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortThread:\nopagebreak
+Collaboration diagram for mdtPortThread:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,7 +35,7 @@ void \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOcc
 
 \item 
 void \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
-\begin{DoxyCompactList}\small\item\em Set the device file instance. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Set the port instance. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{start} ()
 \begin{DoxyCompactList}\small\item\em Start the thread. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{stop} ()
@@ -64,16 +65,11 @@ bool {\bfseries pvUseReadTimeoutProtocol}}
 \label{classmdt_port_thread_a2af4c41daa39ddd8f94faf0a2c2ca17e}
 
 \item 
-\hypertarget{classmdt_port_thread_a423f6bbca5f80ad0ea2ea7216750e041}{
-int {\bfseries pvReadMinWaitTime}}
-\label{classmdt_port_thread_a423f6bbca5f80ad0ea2ea7216750e041}
-
-\item 
 \hypertarget{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}{
-int {\bfseries pvWriteMinWaitTime}}
+int \hyperlink{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}{pvWriteMinWaitTime}}
 \label{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}
 
-\item 
+\begin{DoxyCompactList}\small\item\em int pvReadMinWaitTime; \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_thread_afcdcd09d26fb8282fcd25b5ac28dc891}{
 bool {\bfseries pvBytePerByteWrite}}
 \label{classmdt_port_thread_afcdcd09d26fb8282fcd25b5ac28dc891}
@@ -127,10 +123,12 @@ Returns false if the thread is running.
 \label{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}
 
 
-Set the device file instance. 
+Set the port instance. 
 
 \begin{DoxyPrecond}{Precondition}
-deviceFile must be a valid pointer 
+port must be a valid pointer 
+
+The thread must not running 
 \end{DoxyPrecond}
 \hypertarget{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{
 \index{mdtPortThread@{mdtPortThread}!start@{start}}
@@ -182,4 +180,5 @@ Reimplemented in \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\item 
+src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}

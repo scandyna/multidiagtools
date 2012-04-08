@@ -1,3 +1,23 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #ifndef MDT_PORT_CONFIG_H
 #define MDT_PORT_CONFIG_H
 
@@ -10,7 +30,7 @@ class mdtPortConfig
  public:
 
   mdtPortConfig();
-  ~mdtPortConfig();
+  virtual ~mdtPortConfig();
 
   /*! \brief Set default configuration
    * 
@@ -20,10 +40,10 @@ class mdtPortConfig
    *  - Use read timeout protocol: false
    *  - Read/Write timout: 500 [ms]
    *  - Frame type: RAW
-   *  - En of frame sequence: '\n'
+   *  - En of frame sequence: LF (ASCII 0x0A)
    *  - Byte per byte write: Off
    */
-  void setDefault();
+  virtual void setDefault();
 
   /*!\brief Set the read frame size
    *
@@ -66,12 +86,12 @@ class mdtPortConfig
    * \param minWaitTime Wait time before read [ms]
    * \sa mdtDeviceFileReadThread
    */
-  void setReadMinWaitTime(int minWaitTime);
+  //void setReadMinWaitTime(int minWaitTime);
 
   /*! \brief Get the minimal time to wait before try to read
    * \sa setReadMinWaitTime()
    */
-  int readMinWaitTime();
+  //int readMinWaitTime();
 
   /*! \brief Use the read timeout protocol.
    * 
@@ -208,7 +228,7 @@ class mdtPortConfig
   // Frame and frame FIFO (queue) size
   int pvReadFrameSize;            // Maximum data length to store before a frame is considered invalid
   int pvReadQueueSize;            // Maximum number of frames that can be stored
-  int pvReadMinWaitTime;          // Minimum time to wait before read call [ms]
+  //int pvReadMinWaitTime;          // Minimum time to wait before read call [ms]
   bool pvUseReadTimeoutProtocol;  // Use the timeout protocol, for example, MODBUS RTU mode. Used by mdtPortReadThread
   int pvReadTimeout;              // Maximum time before reading data [ms]
   int pvWriteFrameSize;           // Maximum data length to store before a frame is considered invalid

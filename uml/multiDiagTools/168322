@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 1
+  revision 3
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -42,6 +42,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 167298 // mdtPort
     classdiagram 255234 "mdtAbstractPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -151,6 +152,20 @@ ${inlines}
 	nparams 1
 	  param in name "portName" type class_ref 161026 // QString
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 729602 "name"
+	public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -521,6 +536,21 @@ ${inlines}
 	    classrelation_ref 393346 // <generalisation>
 	  b parent class_ref 138626 // QObject
       end
+
+      operation 722818 "mdtAbstractPort"
+	private explicit_return_type ""
+	nparams 1
+	  param in name "other" type class_ref 249474 // mdtAbstractPort
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
 
     classdiagram 255362 "mdtPort"
@@ -661,12 +691,9 @@ ${inlines}
       end
 
       operation 435074 "~mdtPortConfig"
-	public explicit_return_type ""
+	abstract cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
-  ${body}}
 "
 	
 	
@@ -685,16 +712,6 @@ ${inlines}
       end
 
       attribute 340866 "pvReadQueueSize"
-	protected explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 354434 "pvReadMinWaitTime"
 	protected explicit_type "int"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -850,35 +867,6 @@ ${inlines}
       end
 
       operation 436098 "readQueueSize"
-	public explicit_return_type "int"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 478210 "setReadMinWaitTime"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "minWaitTime" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 478338 "readMinWaitTime"
 	public explicit_return_type "int"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -1206,6 +1194,124 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    classdiagram 374658 "mdtPortConfigWidget"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 369922 "ui_mdtPortConfigWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 370690 "mdtPortConfigWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 455042 // <generalisation>
+	relation 454786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 455042 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      classrelation 455170 // <generalisation>
+	relation 454914 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 455170 // <generalisation>
+	  b parent class_ref 369922 // ui_mdtPortConfigWidget
+      end
+
+      operation 721410 "mdtPortConfigWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 721538 "displayConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "config" type class_ref 256386 // mdtPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 721666 "updateConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param out name "config" type class_ref 256386 // mdtPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 455298 // <dependency>
+	relation 455042 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 455298 // <dependency>
+	  b parent class_ref 256386 // mdtPortConfig
+      end
+
+      operation 721794 "on_cbFrameType_currentIndexChanged"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1940,7 +2046,7 @@ ${inlines}
     end
 
     class 182018 "mdtPortManager"
-      visibility package 
+      abstract visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
 ${inlines}
@@ -1968,7 +2074,7 @@ ${inlines}
       end
 
       operation 216322 "~mdtPortManager"
-	public explicit_return_type ""
+	cpp_virtual public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
@@ -2037,6 +2143,21 @@ ${inlines}
 	
       end
 
+      operation 720258 "setConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "config" type class_ref 256386 // mdtPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 697090 "config"
 	public return_type class_ref 256386 // mdtPortConfig
 	nparams 0
@@ -2052,12 +2173,9 @@ ${inlines}
       end
 
       operation 506626 "openPort"
-	public explicit_return_type "bool"
+	abstract cpp_virtual public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -2107,12 +2225,12 @@ ${inlines}
 	
       end
 
-      classrelation 339586 // pvConfig (<directional composition>)
-	relation 339330 *-->
-	  a role_name "pvConfig" multiplicity "1" protected
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+      classrelation 339586 // pvConfig (<unidirectional association>)
+	relation 339330 --->
+	  a role_name "pvConfig" multiplicity "0..1" protected
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 339586 // pvConfig (<directional composition>)
+	    classrelation_ref 339586 // pvConfig (<unidirectional association>)
 	  b parent class_ref 256386 // mdtPortConfig
       end
 
@@ -2265,6 +2383,21 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 722562 "mdtPortManager"
+	private explicit_return_type ""
+	nparams 1
+	  param in name "other" type class_ref 182018 // mdtPortManager
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
   ${body}}
 "
 	
@@ -2885,4 +3018,32 @@ ${inlines}
   end
 
   package_ref 155010 // linux
+
+  deploymentview 167298 "mdtPort"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 143874 "mdtPortConfigWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 370690 // mdtPortConfigWidget
+      end
+    end
+  end
 end

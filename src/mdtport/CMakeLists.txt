@@ -17,6 +17,8 @@ set (HEADER_FILES
           mdtTcpSocketThread.h
           # Port manager
           mdtPortManager.h
+          # Port config
+          mdtPortConfigWidget.h
     )
 
 # Liste des fichiers sources
@@ -24,7 +26,6 @@ set (SOURCES_FILES
           # Port I/O
           mdtAbstractPort.cpp
           mdtPort.cpp
-          mdtPortConfig.cpp
           mdtPortThread.cpp
           mdtPortReadThread.cpp
           mdtPortWriteThread.cpp
@@ -32,11 +33,14 @@ set (SOURCES_FILES
           mdtTcpSocketThread.cpp
           # Port manager
           mdtPortManager.cpp
+          # Port config
+          mdtPortConfig.cpp
+          mdtPortConfigWidget.cpp
     )
 
 # Liste des fichiers ui
 set (FORM_FILES
-
+          mdtPortConfigWidget.ui
     )
 
 # Liste des fichiers rcc (ressources)

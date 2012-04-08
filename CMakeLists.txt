@@ -88,6 +88,7 @@ add_executable (essais src/main.cpp)
 target_link_libraries(essais "mdtutils")
 target_link_libraries(essais "mdtutilsgui")
 target_link_libraries(essais "mdtport")
+target_link_libraries(essais "mdtserialport")
 target_link_libraries(essais "mdtdevice")
 target_link_libraries(essais ${QT_LIBRARIES})
 

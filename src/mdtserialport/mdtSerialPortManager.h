@@ -1,3 +1,23 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #ifndef MDT_SERIAL_PORT_MANAGER_H
 #define MDT_SERIAL_PORT_MANAGER_H
 
@@ -6,13 +26,25 @@
 
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPort.h"
+#include "mdtSerialPortConfig.h"
 
 #include "mdtPortManager.h"
 
+/*! \brief Port manager base class
+ * 
+ * This is the easiest way to use the serial port API.<br>
+ * 
+ * 
+ * 
+ */
 class mdtSerialPortManager : public mdtPortManager
 {
  public:
 
+  /*! \brief Contruct a serial port manager
+   * 
+   * This will create a serial port and config instances
+   */
   mdtSerialPortManager(QObject *parent = 0);
   ~mdtSerialPortManager();
 
@@ -23,6 +55,28 @@ class mdtSerialPortManager : public mdtPortManager
    * \return List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows)
    */
   QStringList scan();
+
+  /*! \brief Open the port
+   * 
+   * \return True on success, false else
+   */
+  bool openPort();
+
+  /*! \brief Get the config object
+   * 
+   * Usefull to alter internal port configuration
+   */
+  mdtSerialPortConfig &config();
+
+  /*! \brief Get the serial port instance
+   * \pre Port must be set with a mdtAbstractSerialPort instance (not mdtAbstractPort)
+   */
+  mdtAbstractSerialPort &port();
+  
+ private:
+
+  // Diseable copy
+  mdtSerialPortManager(mdtSerialPortManager &other);
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H

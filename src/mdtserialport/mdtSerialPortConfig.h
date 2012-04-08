@@ -27,7 +27,7 @@ class mdtSerialPortConfig : public mdtPortConfig
    *  - Data bits: 8
    *  - Stop bits: 1
    *  - Parity: none
-   *  - Flow contrôl: none
+   *  - Flow control: none
    */
   void setDefault();
 

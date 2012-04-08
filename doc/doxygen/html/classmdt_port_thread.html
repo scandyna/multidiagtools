@@ -79,7 +79,7 @@ Collaboration diagram for mdtPortThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_thread__coll__graph.png" border="0" usemap="#mdt_port_thread_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_thread_coll__map" id="mdt_port_thread_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_thread-members.html">List of all members.</a></p>
@@ -93,7 +93,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa20869c68d7a016f9e547464f0d8b71e"></a><!-- doxytag: member="mdtPortThread::mdtPortThread" ref="aa20869c68d7a016f9e547464f0d8b71e" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortThread</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the device file instance.  <a href="#acd51474c3a2683676423317bc9cb31b2"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port instance.  <a href="#acd51474c3a2683676423317bc9cb31b2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">start</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the thread.  <a href="#a9c45f260b8d58b7475151df79b3d8510"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">stop</a> ()</td></tr>
@@ -111,10 +111,9 @@ volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvRunning</b
 <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvPort</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af4c41daa39ddd8f94faf0a2c2ca17e"></a><!-- doxytag: member="mdtPortThread::pvUseReadTimeoutProtocol" ref="a2af4c41daa39ddd8f94faf0a2c2ca17e" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvUseReadTimeoutProtocol</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a423f6bbca5f80ad0ea2ea7216750e041"></a><!-- doxytag: member="mdtPortThread::pvReadMinWaitTime" ref="a423f6bbca5f80ad0ea2ea7216750e041" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadMinWaitTime</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a048bcd95af9c7b33f077b73e117607"></a><!-- doxytag: member="mdtPortThread::pvWriteMinWaitTime" ref="a4a048bcd95af9c7b33f077b73e117607" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteMinWaitTime</b></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a4a048bcd95af9c7b33f077b73e117607">pvWriteMinWaitTime</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">int pvReadMinWaitTime; <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcdcd09d26fb8282fcd25b5ac28dc891"></a><!-- doxytag: member="mdtPortThread::pvBytePerByteWrite" ref="afcdcd09d26fb8282fcd25b5ac28dc891" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b></td></tr>
 </table>
@@ -137,8 +136,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <p>Emitted on error. </p>
 <p>When a error occurs, this signal is emited.<br/>
  This can happen, for example, when a USB device becomes not present.<br/>
- <a class="el" href="classmdt_port_manager.html">mdtPortManager</a> uses this signal. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html">mdtPortManager</a> </dd></dl>
+ <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> uses this signal. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd></dl>
 
 </div>
 </div>
@@ -176,8 +175,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </div>
 <div class="memdoc">
 
-<p>Set the device file instance. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>deviceFile must be a valid pointer </dd></dl>
+<p>Set the port instance. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer </dd>
+<dd>
+The thread must not running </dd></dl>
 
 </div>
 </div>
@@ -227,6 +228,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtport/mdtPortThread.cpp</li>
+<li>src/mdtport/moc_mdtPortThread.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -234,7 +236,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -243,7 +245,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

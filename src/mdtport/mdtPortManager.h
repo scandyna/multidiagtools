@@ -1,3 +1,23 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #ifndef MDT_PORT_MANAGER_H
 #define MDT_PORT_MANAGER_H
 
@@ -13,7 +33,57 @@
 #include "mdtFrame.h"
 #include <QByteArray>
 
-
+/*! \brief Port manager base class
+ * 
+ * This is the easiest way to use the port API.<br>
+ * The read and write threads will be created by setPort() ,
+ * and port affected to them.<br>
+ * 
+ * Example:
+ * \code
+ * mdtPortManager m;
+ * 
+ * // Setup
+ * m.setConfig(new mdtPortConfig);
+ * m.config().setFrameType(mdtFrame::FT_ASCII);
+ * m.config().setEndOfFrameSeq("$");
+ * 
+ * // Init port manager
+ * m.setPort(new mdtPort);
+ * if(!m.setPortName("/dev/xyz")){
+ *  // Handle error
+ * }
+ * if(!m.openPort()){
+ *  // Handle error
+ * }
+ *
+ * // Start threads
+ * if(!m.start()){
+ *  // Handle error
+ * }
+ * 
+ * // Send some data
+ * if(!m.writeData("Test$")){
+ *  // Handle error
+ * }
+ * 
+ * // Wait on answer - Timout: 1500 [ms]
+ * if(!m.waitReadenFrame(1500)){
+ *  // Timout , handle error
+ * }
+ * // Do something with received data
+ * qDebug() << m.lastReadenFrame();
+ * 
+ * // End
+ * m.closePort();
+ * 
+ * \endcode
+ * 
+ * This is a base class for port manager.
+ * Port type specific classes are available.
+ * \sa mdtSerialPortManager
+ * \sa mdtUsbtmcPortManager (Linux only)
+ */
 class mdtPortManager : public QThread
 {
  Q_OBJECT
@@ -24,22 +94,37 @@ class mdtPortManager : public QThread
   ~mdtPortManager();
 
   /*! \brief Set port object
+   * 
+   * The read and write threads will be created if not allready exists,
+   * port assigned to them, and signals/slots connection made.<br>
+   * Please take care to never call this method while threads are running.
+   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort)
    */
   void setPort(mdtAbstractPort *port);
 
   /*! \brief Set port name
    *
    * Try to open given port. If ok, the port name
-   * will be kept
+   * will be kept.<br>
+   * mdtAbstractPort::setAttributes() will be called to fetch some attributes
+   * (for example available baud rates if port is a mdtSerialPort object).
+   * \pre Port must be set before with setPort()
    * \param portName Port to open
    * \return True on success, false else
-   * \sa mdtPort
+   * \sa mdtAbstractPort
    */
   bool setPortName(const QString &portName);
+
+  /*! \brief Set the config object
+   * 
+   * \pre config must be a valid pointer to expected a object type.
+   */
+  void setConfig(mdtPortConfig *config);
 
   /*! \brief Get the config object
    * 
    * Usefull to alter internal port configuration
+   * \pre Config must be set with setConfig()
    */
   mdtPortConfig &config();
 
@@ -47,14 +132,16 @@ class mdtPortManager : public QThread
    * 
    * \return True on success, false else
    * \pre setPortName() must be called first
+   * \pre Config must be set with setConfig()
    * \sa setPortName()
    * \sa mdtPort
    */
-  bool openPort();
+  virtual bool openPort();
 
   /*! \brief Close the port
    * 
-   * This stops the threads and close the port.
+   * This stops the threads (if exists) and close the port.<br>
+   * If port was never set (with setPort() ), this method does nothing.
    */
   void closePort();
 
@@ -66,11 +153,15 @@ class mdtPortManager : public QThread
   bool startReading();
 
   /*! \brief Stop the read thread
+   * 
+   * \pre setPort() must be called before.
    * \sa startReading()
    */
   void stopReading();
 
   /*! \brief Start the write thread
+   *
+   * \pre setPort() must be called before.
    * \return True on successfull start
    * \sa mdtThread
    * \sa mdtPortWriteThread
@@ -78,17 +169,23 @@ class mdtPortManager : public QThread
   bool startWriting();
 
   /*! \brief Stop the write thread
+   * 
+   * \pre setPort() must be called before.
    * \sa startWriting()
    */
   void stopWriting();
 
   /*! \brief Start reading and writing threads
+   *
+   * \pre setPort() must be called before.
    * \sa startReading()
    * \sa startWriting()
    */
   bool start();
 
   /*! \brief Stop reading and writing threads
+   * 
+   * \pre setPort() must be called before.
    * \sa start()
    */
   void stop();
@@ -134,7 +231,12 @@ class mdtPortManager : public QThread
   mdtAbstractPort *pvPort;
   mdtPortReadThread *pvReadThread;
   mdtPortWriteThread *pvWriteThread;
-  mdtPortConfig pvConfig;
+  mdtPortConfig *pvConfig;
   QByteArray pvLastReadenFrame;
+  
+ private:
+
+  // Diseable copy
+  mdtPortManager(mdtPortManager &other);
 };
 #endif  // #ifndef MDT_PORT_MANAGER_H

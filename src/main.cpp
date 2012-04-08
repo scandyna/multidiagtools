@@ -38,6 +38,9 @@
 #include <QGridLayout>
 #include <QWidget>
 
+#include "mdtSerialPortSetupDialog.h"
+#include "mdtSerialPortManager.h"
+
 int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
@@ -55,10 +58,16 @@ int main(int argc, char **argv)
   }
   mdtErrorOut::setDialogLevelsMask(mdtError::Info | mdtError::Warning | mdtError::Error);
 
-  mdtDeviceU3606AWidget dw;
-  dw.show();
+  // Essais serial port dialog
+  mdtSerialPortSetupDialog dlg;
+  dlg.setPortManager(new mdtSerialPortManager);
+  dlg.show();
+  
+  //mdtDeviceU3606AWidget dw;
+  //dw.show();
 
   /* Essais LED */
+/*
   QWidget *w = new QWidget;
   QGridLayout *layout = new QGridLayout;
   mdtBlinkLed *led;
@@ -78,12 +87,11 @@ int main(int argc, char **argv)
       led->setBlinking(true);
       layout->addWidget(led, y, x);
     }
-
   }
   w->setLayout(layout);
   w->resize(400,200);
   w->show();
-
+*/
   
   retVal = app.exec();
 

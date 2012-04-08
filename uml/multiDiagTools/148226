@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 34
+  revision 36
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -42,6 +42,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 167170 // mdtSerialPort
     classdiagram 360706 "mdtAbstractSerialPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -321,6 +322,21 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 440194 // <generalisation>
 	  b parent class_ref 249474 // mdtAbstractPort
+      end
+
+      operation 722946 "mdtAbstractSerialPort"
+	private explicit_return_type ""
+	nparams 1
+	  param in name "other" type class_ref 189570 // mdtAbstractSerialPort
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -923,6 +939,125 @@ ${inlines}
       end
     end
 
+    classdiagram 374786 "mdtSerialPortConfigWidget"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 370818 "mdtSerialPortConfigWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 455682 // <dependency>
+	relation 455426 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 455682 // <dependency>
+	  b parent class_ref 128130 // mdtSerialPortConfig
+      end
+
+      classrelation 455810 // <generalisation>
+	relation 455554 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 455810 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      classrelation 455938 // <generalisation>
+	relation 455682 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 455938 // <generalisation>
+	  b parent class_ref 370050 // ui_mdtSerialPortConfigWidget
+      end
+
+      operation 721922 "mdtSerialPortConfigWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 723074 "setAvailableBaudRates"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "baudRates" type class_ref 160898 // QList
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 722050 "displayConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "config" type class_ref 128130 // mdtSerialPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 722178 "updateConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "config" type class_ref 128130 // mdtSerialPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 722306 "on_rbFlowCtlXonXoff_toggled"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "checked" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
     class 128258 "mdtSerialPortManagerWidget"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
@@ -1062,15 +1197,6 @@ ${inlines}
 	  b parent class_ref 223106 // mdtSerialPortCtlThread
       end
 
-      classrelation 319234 // pvConfig (<directional composition>)
-	relation 318978 *-->
-	  a role_name "pvConfig" multiplicity "1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	    classrelation_ref 319234 // pvConfig (<directional composition>)
-	  b parent class_ref 128130 // mdtSerialPortConfig
-      end
-
       operation 499714 "scan"
 	public return_type class_ref 160770 // QStringList
 	nparams 0
@@ -1091,6 +1217,63 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 332418 // <generalisation>
 	  b parent class_ref 182018 // mdtPortManager
+      end
+
+      operation 729730 "openPort"
+	cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 720386 "config"
+	public return_type class_ref 128130 // mdtSerialPortConfig
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 722434 "port"
+	public return_type class_ref 189570 // mdtAbstractSerialPort
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 722690 "mdtSerialPortManager"
+	private explicit_return_type ""
+	nparams 1
+	  param in name "other" type class_ref 181890 // mdtSerialPortManager
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -1188,9 +1371,233 @@ ${inlines}
 	
 	
       end
+    end
 
+    class 370050 "ui_mdtSerialPortConfigWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      associated_diagram classdiagram_ref 374914 // mdtSerialPortSetupDialog
+    end
+
+    classdiagram 374914 "mdtSerialPortSetupDialog"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 370178 "mdtSerialPortSetupDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 720770 "mdtSerialPortSetupDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 453762 // pvPortManager (<unidirectional association>)
+	relation 453506 --->
+	  a role_name "pvPortManager" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 453762 // pvPortManager (<unidirectional association>)
+	  b parent class_ref 181890 // mdtSerialPortManager
+      end
+
+      operation 720514 "setPortManager"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "manager" type class_ref 181890 // mdtSerialPortManager
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 453890 // <generalisation>
+	relation 453634 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 453890 // <generalisation>
+	  b parent class_ref 370306 // ui_mdtSerialPortSetupDialog
+      end
+
+      classrelation 454146 // <generalisation>
+	relation 453890 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 454146 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      operation 721026 "displayConfig"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 721154 "updateConfig"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 721282 "applySetup"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 455426 // pvPortConfigWidget (<unidirectional association>)
+	relation 455170 --->
+	  a role_name "pvPortConfigWidget" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 455426 // pvPortConfigWidget (<unidirectional association>)
+	  b parent class_ref 370690 // mdtPortConfigWidget
+      end
+
+      classrelation 456066 // pvSerialPortConfigWidget (<unidirectional association>)
+	relation 455810 --->
+	  a role_name "pvSerialPortConfigWidget" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 456066 // pvSerialPortConfigWidget (<unidirectional association>)
+	  b parent class_ref 370818 // mdtSerialPortConfigWidget
+      end
+    end
+
+    class 370306 "ui_mdtSerialPortSetupDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 454402 // <unidirectional association>
+	relation 454146 --->
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 454402 // <unidirectional association>
+	  b parent class_ref 370562 // QTabWidget
+      end
     end
   end
 
   package_ref 141698 // linux
+
+  deploymentview 167170 "mdtSerialPort"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 143746 "mdtSerialPortSetupDialog"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 370178 // mdtSerialPortSetupDialog
+      end
+    end
+
+    artifact 144002 "mdtSerialPortConfigWidget"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 370818 // mdtSerialPortConfigWidget
+      end
+    end
+  end
 end

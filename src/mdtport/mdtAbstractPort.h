@@ -31,6 +31,8 @@
 #include <QQueue>
 #include <QMutex>
 
+/// NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)
+
 /*! \brief Base class for port I/O
  */
 class mdtAbstractPort : public QObject
@@ -49,6 +51,10 @@ class mdtAbstractPort : public QObject
    * \param portName Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)
    */
   virtual bool setAttributes(const QString &portName) = 0;
+
+  /*! \brief Port name (as defined in setAttributes() );
+   */
+  QString &name();
 
   /*! \brief Open the port
    *
@@ -263,6 +269,11 @@ class mdtAbstractPort : public QObject
   QString pvName;     // Port name, like /dev/ttyS0 , COM1, ...
   // mutex
   QMutex pvMutex;
+
+ private:
+
+  // Diseable copy
+  mdtAbstractPort(mdtAbstractPort &other);
 };
 
 #endif  // #ifndef MDT_ABSTRACT_PORT_H

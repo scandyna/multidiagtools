@@ -58,38 +58,47 @@ void mdtSerialPortTest::essais()
   qDebug() << "TEST end";
   //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));
   //emit testSignal(true);
-/*
-  while(1){
-    sp.waitEventCtl(2000);
-  }
-
-
-  char buffer[128] = {'\0'};
-  qDebug() << "Wait on RX";
-  while(sp.waitEventRx(30000) > 0){
-    qDebug() << "Read..";
-    sp.readData(buffer, 128);
-    qDebug() << "Readen: " << buffer;
-  }
-  
-  
-  for(int i=0; i<100; i++){
-    snprintf(buffer, 128, "Un test %d\n", i);
-    qDebug() << "Wait on TX , i:" << i;
-    if(sp.waitEventTxReady(3000) > 0){
-      qDebug() << "Write...";
-      sp.writeData(buffer, strlen(buffer));
-    }
-  }
-*/
 }
 
 void mdtSerialPortTest::mdtSerialPortManagerTest()
 {
   mdtSerialPortManager m;
+  QStringList portsList;
+
+  qDebug() << "* Be shure that the computer has at least one serial port, else test will fail *";
 
   // Verify that scan() function works ..
-  m.scan();
+  portsList = m.scan();
+  QVERIFY(portsList.size() > 0);
+
+  // Port setup
+  m.config().setFrameType(mdtFrame::FT_ASCII);
+  m.config().setEndOfFrameSeq("$");
+  
+  // Init port manager
+  QVERIFY(m.setPortName(portsList.at(0)));
+  QVERIFY(m.openPort());
+  
+  // Check that available baud rates contains 9600 (very standard, should exists on most device)
+  QVERIFY(m.port().availableBaudRates().size() > 0);
+  QVERIFY(m.port().availableBaudRates().contains(9600));
+  // Chack that the right port is set
+  QVERIFY(m.port().name() == portsList.at(0));
+
+  // Start threads
+  QVERIFY(m.start());
+
+  // Send some data
+  QVERIFY(m.writeData("Test$"));
+
+  // Wait on answer - Timout: 500 [ms]
+ QVERIFY(m.waitReadenFrame(500));
+
+ // Verify received data
+ QVERIFY(m.lastReadenFrame() == "Test");
+ 
+ // End
+ m.closePort();
 }
 
 void mdtSerialPortTest::mdtSerialPortConfigTest()

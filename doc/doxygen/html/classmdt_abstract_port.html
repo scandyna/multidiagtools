@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtAbstractPort" -->
-<p>Base class for port I/O.  
+<p>NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)  
  <a href="classmdt_abstract_port.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>&gt;</code></p>
@@ -103,6 +103,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtAbstractPort</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7">setAttributes</a> (const QString &amp;portName)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#af143cb0985d15c1c30da30cc7de206a7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98e7b231370940504c2dbb1dbfe04ad5"></a><!-- doxytag: member="mdtAbstractPort::name" ref="a98e7b231370940504c2dbb1dbfe04ad5" args="()" -->
+QString &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a98e7b231370940504c2dbb1dbfe04ad5">name</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Port name (as defined in <a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7" title="Set the port attributes.">setAttributes()</a> );. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#a4a8195c2bf580eb69ad5d90de86798e6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">close</a> ()</td></tr>
@@ -176,7 +179,8 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>pvName</b></td></t
 QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Base class for port I/O. </p>
+<div class="textblock"><p>NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm) </p>
+<p>Base class for port I/O </p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a1ace1a2bd1a04f16952980e247b04800"></a><!-- doxytag: member="mdtAbstractPort::close" ref="a1ace1a2bd1a04f16952980e247b04800" args="()" -->
 <div class="memitem">
@@ -507,31 +511,6 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 
 </div>
 </div>
-<a class="anchor" id="ae77785fbad938eac5f24f437e7683277"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="ae77785fbad938eac5f24f437e7683277" args="(int msecs)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtAbstractPort::waitForReadyRead </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>msecs</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Wait until data is available at device. </p>
-<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> ).<br/>
- Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> without argument.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
- Mutex: see <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a848e3c86aa6ec480e8c471655fbcf5c5"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="a848e3c86aa6ec480e8c471655fbcf5c5" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -562,6 +541,31 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </ul>
 
 <p>Implemented in <a class="el" href="classmdt_port_posix.html#a5547db404f974f1a04ba2e303b0aaed0">mdtPortPosix</a>, <a class="el" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a381bf5194cf180ca95f5f4bae730f73c">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39">mdtSerialPortPosix</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae77785fbad938eac5f24f437e7683277"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="ae77785fbad938eac5f24f437e7683277" args="(int msecs)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractPort::waitForReadyRead </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>msecs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data is available at device. </p>
+<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> ).<br/>
+ Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> without argument.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex: see <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available at device.">waitForReadyRead()</a> </dd></dl>
 
 </div>
 </div>
@@ -682,6 +686,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a></li>
 <li>src/mdtport/mdtAbstractPort.cpp</li>
+<li>src/mdtport/moc_mdtAbstractPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -689,7 +694,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -698,7 +703,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -10,7 +10,7 @@
 #include <cstring>
 #include <QString>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
  : mdtAbstractSerialPort(parent)
@@ -19,6 +19,7 @@ mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
   pvPreviousDsrState = 0;
   pvPreviousCtsState = 0;
   pvPreviousRngState = 0;
+  pvFd = -1;
 
   // Control signal thread kill utils
   pvCtlThread = 0;
@@ -181,6 +182,8 @@ bool mdtSerialPortPosix::setAttributes(const QString &portName)
 bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 {
   QString strNum;
+  
+  qDebug() << "mdtSerialPortPosix::open() , port: " << pvName;
 
   // Close previous opened device
   this->close();

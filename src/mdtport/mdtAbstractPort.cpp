@@ -39,6 +39,11 @@ mdtAbstractPort::~mdtAbstractPort()
 {
 }
 
+QString &mdtAbstractPort::name()
+{
+  return pvName;
+}
+
 bool mdtAbstractPort::open(mdtPortConfig &cfg)
 {
   mdtFrame *frame;

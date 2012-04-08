@@ -73,14 +73,14 @@ Inheritance diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__inherit__graph.png" border="0" usemap="#mdt_abstract_serial_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_abstract_serial_port_inherit__map" id="mdt_abstract_serial_port_inherit__map">
-<area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,5,139,35"/></map>
+<area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__coll__graph.png" border="0" usemap="#mdt_abstract_serial_port_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_abstract_serial_port_coll__map" id="mdt_abstract_serial_port_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,101,139,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,101,139,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_abstract_serial_port-members.html">List of all members.</a></p>
@@ -129,8 +129,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get UART type. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a669c9ce68455abd3cfdb98259996e701"></a><!-- doxytag: member="mdtAbstractSerialPort::uartTypeStr" ref="a669c9ce68455abd3cfdb98259996e701" args="()" -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>uartTypeStr</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad267d53be10917396302912af28c4e2"></a><!-- doxytag: member="mdtAbstractSerialPort::availableBaudRates" ref="aad267d53be10917396302912af28c4e2" args="()" -->
-QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aad267d53be10917396302912af28c4e2">availableBaudRates</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecd76bff0f93cb86c3bbfd73e3776032"></a><!-- doxytag: member="mdtAbstractSerialPort::availableBaudRates" ref="aecd76bff0f93cb86c3bbfd73e3776032" args="()" -->
+QList&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aecd76bff0f93cb86c3bbfd73e3776032">availableBaudRates</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of available baud rates. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a0ef2426fbd1afbcb0701f327cc16a7cc">setRts</a> (bool on)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the RTS (Request To Send) signal.  <a href="#a0ef2426fbd1afbcb0701f327cc16a7cc"></a><br/></td></tr>
@@ -391,6 +391,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/<a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a></li>
 <li>src/mdtserialport/mdtAbstractSerialPort.cpp</li>
+<li>src/mdtserialport/moc_mdtAbstractSerialPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -398,7 +399,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -407,7 +408,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

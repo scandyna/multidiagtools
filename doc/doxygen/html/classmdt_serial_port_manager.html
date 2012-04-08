@@ -65,31 +65,128 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtSerialPortManager Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtSerialPortManager" --><!-- doxytag: inherits="mdtPortManager" --><div class="dynheader">
+<!-- doxytag: class="mdtSerialPortManager" --><!-- doxytag: inherits="mdtPortManager" -->
+<p>Port manager base class.  
+ <a href="classmdt_serial_port_manager.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_serial_port_manager_8h_source.html">mdtSerialPortManager.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for mdtSerialPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_manager__inherit__graph.png" border="0" usemap="#mdt_serial_port_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_serial_port_manager_inherit__map" id="mdt_serial_port_manager_inherit__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="mdtPortManager" alt="" coords="21,5,139,35"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtSerialPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_manager__coll__graph.png" border="0" usemap="#mdt_serial_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_serial_port_manager_coll__map" id="mdt_serial_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="mdtPortManager" alt="" coords="93,389,211,419"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/><area shape="rect" id="node10" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="61,101,179,131"/><area shape="rect" id="node6" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/><area shape="rect" id="node13" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="93,389,211,419"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/><area shape="rect" id="node10" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="61,101,179,131"/><area shape="rect" id="node6" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="152,293,291,323"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="168,197,275,227"/><area shape="rect" id="node13" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="315,293,453,323"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_serial_port_manager-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6508372bcab37a73546fc2c24ee6415c"></a><!-- doxytag: member="mdtSerialPortManager::mdtSerialPortManager" ref="a6508372bcab37a73546fc2c24ee6415c" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtSerialPortManager</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a6508372bcab37a73546fc2c24ee6415c">mdtSerialPortManager</a> (QObject *parent=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contruct a serial port manager.  <a href="#a6508372bcab37a73546fc2c24ee6415c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">scan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available serial ports.  <a href="#a8b9c19a9b5a927e434a888b901a8ccff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685">openPort</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#a406481e80014cdd6cb83ff49c3d31685"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">config</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a4b8ab7b9d53966a1887d9ce8557b8416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d">port</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the serial port instance.  <a href="#aa96937c2123fe4353b948b848d3e064d"></a><br/></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>Port manager base class. </p>
+<p>This is the easiest way to use the serial port API.<br/>
+ </p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a6508372bcab37a73546fc2c24ee6415c"></a><!-- doxytag: member="mdtSerialPortManager::mdtSerialPortManager" ref="a6508372bcab37a73546fc2c24ee6415c" args="(QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtSerialPortManager::mdtSerialPortManager </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Contruct a serial port manager. </p>
+<p>This will create a serial port and config instances </p>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a4b8ab7b9d53966a1887d9ce8557b8416"></a><!-- doxytag: member="mdtSerialPortManager::config" ref="a4b8ab7b9d53966a1887d9ce8557b8416" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp; mdtSerialPortManager::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the config object. </p>
+<p>Usefull to alter internal port configuration </p>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">mdtPortManager</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a406481e80014cdd6cb83ff49c3d31685"></a><!-- doxytag: member="mdtSerialPortManager::openPort" ref="a406481e80014cdd6cb83ff49c3d31685" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPortManager::openPort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open the port. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">mdtPortManager</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa96937c2123fe4353b948b848d3e064d"></a><!-- doxytag: member="mdtSerialPortManager::port" ref="aa96937c2123fe4353b948b848d3e064d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp; mdtSerialPortManager::port </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the serial port instance. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with a <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> instance (not <a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a>) </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a8b9c19a9b5a927e434a888b901a8ccff"></a><!-- doxytag: member="mdtSerialPortManager::scan" ref="a8b9c19a9b5a927e434a888b901a8ccff" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -120,7 +217,7 @@ Public Member Functions</h2></td></tr>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -129,7 +226,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Apr 6 2012 16:49:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,19 +1,44 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtPortManager.h"
 #include "mdtError.h"
 #include <QTimer>
 #include <QApplication>
 
+#include <QDebug>
+
 mdtPortManager::mdtPortManager(QObject *parent)
  : QThread(parent)
 {
-  // Create threads
+  qDebug() << "mdtPortManager::mdtPortManager() ...";
   pvReadThread = 0;
   pvWriteThread = 0;
+  pvConfig = 0;
+  pvPort = 0;
+  qDebug() << "mdtPortManager::mdtPortManager() END";
 }
 
 mdtPortManager::~mdtPortManager()
 {
+  qDebug() << "mdtPortManager::~mdtPortManager() ...";
   // Stop threads and close the port
   closePort();
   // Release memory
@@ -29,6 +54,7 @@ mdtPortManager::~mdtPortManager()
     delete pvWriteThread;
     pvWriteThread = 0;
   }
+  qDebug() << "mdtPortManager::~mdtPortManager() END";
 }
 
 void mdtPortManager::setPort(mdtAbstractPort *port)
@@ -55,11 +81,6 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
   connect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
 }
 
-mdtPortConfig &mdtPortManager::config()
-{
-  return pvConfig;
-}
-
 bool mdtPortManager::setPortName(const QString &portName)
 {
   Q_ASSERT(pvPort != 0);
@@ -67,11 +88,26 @@ bool mdtPortManager::setPortName(const QString &portName)
   return pvPort->setAttributes(portName);
 }
 
+void mdtPortManager::setConfig(mdtPortConfig *config)
+{
+  Q_ASSERT(config != 0);
+
+  pvConfig = config;
+}
+
+mdtPortConfig &mdtPortManager::config()
+{
+  Q_ASSERT(pvConfig != 0);
+
+  return *pvConfig;
+}
+
 bool mdtPortManager::openPort()
 {
   Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvConfig != 0);
 
-  return pvPort->open(pvConfig);
+  return pvPort->open(*pvConfig);
 }
 
 void mdtPortManager::closePort()
@@ -80,15 +116,21 @@ void mdtPortManager::closePort()
   if(pvPort == 0){
     return;
   }
-
-  stop();
+  // If threads exists, call stop methods
+  if(pvReadThread != 0){
+    stopReading();
+  }
+  if(pvWriteThread != 0){
+    stopWriting();
+  }
+  // Close the port
   pvPort->close();
 }
 
 bool mdtPortManager::startReading()
 {
-  Q_ASSERT(pvReadThread != 0);
   Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvReadThread != 0);
 
   return pvReadThread->start();
 }
@@ -96,6 +138,7 @@ bool mdtPortManager::startReading()
 void mdtPortManager::stopReading()
 {
   Q_ASSERT(pvReadThread != 0);
+  Q_ASSERT(pvPort != 0);
 
   if(pvReadThread->isRunning()){
     pvReadThread->stop();
@@ -113,6 +156,7 @@ bool mdtPortManager::startWriting()
 void mdtPortManager::stopWriting()
 {
   Q_ASSERT(pvWriteThread != 0);
+  Q_ASSERT(pvPort != 0);
 
   if(pvWriteThread->isRunning()){
     pvWriteThread->stop();
