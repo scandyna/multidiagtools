@@ -116,6 +116,7 @@ void mdtSerialPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
       return;
     }
     // Start R/W
+    lbState->setText(tr("Starting ..."));
     if(!pvPortManager->start()){
       setStateError(tr("Cannot start threads"));
       enableApplyButtons();

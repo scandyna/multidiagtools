@@ -11,6 +11,7 @@ set (HEADER_FILES
           mdtSerialPort.h
           mdtSerialPortConfigWidget.h
           mdtSerialPortSetupDialog.h
+          mdtSerialPortCtlWidget.h
     )
 
 
@@ -23,6 +24,7 @@ set (SOURCES_FILES
           mdtSerialPortCtlThread.cpp
           mdtSerialPortConfigWidget.cpp
           mdtSerialPortSetupDialog.cpp
+          mdtSerialPortCtlWidget.cpp
     )
 
 # Liste des fichiers ui
@@ -59,12 +61,14 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 add_library (mdtserialport SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtserialport ${QT_LIBRARIES})
 target_link_libraries(mdtserialport "mdtport")
+target_link_libraries(mdtserialport "mdtutilsgui")
 
 # Version statique
 if(MDT_BUILD_STATIC_LIBS)
   add_library (mdtserialport_static STATIC ${SOURCES_FILES} )
   target_link_libraries(mdtserialport_static ${QT_LIBRARIES})
   target_link_libraries(mdtserialport_static "mdtport")
+  target_link_libraries(mdtserialport_static "mdtutilsgui")
   #set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
 endif(MDT_BUILD_STATIC_LIBS)
 

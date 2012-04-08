@@ -40,6 +40,8 @@
 
 #include "mdtSerialPortSetupDialog.h"
 #include "mdtSerialPortManager.h"
+#include "mdtAbstractSerialPort.h"
+#include "mdtSerialPortCtlWidget.h"
 
 int main(int argc, char **argv)
 {
@@ -58,11 +60,25 @@ int main(int argc, char **argv)
   }
   mdtErrorOut::setDialogLevelsMask(mdtError::Info | mdtError::Warning | mdtError::Error);
 
+  // Port manager
+  mdtSerialPortManager *portManager = new mdtSerialPortManager;
+  mdtAbstractSerialPort *sp = &portManager->port();
+
+  // Essais avec Ctl LEDs
+  mdtSerialPortCtlWidget ctls;
+  ctls.makeConnections(sp);
+
+  
+  
+  
   // Essais serial port dialog
   mdtSerialPortSetupDialog dlg;
-  dlg.setPortManager(new mdtSerialPortManager(&dlg));
+  dlg.setPortManager(portManager);
   dlg.show();
 
+  ctls.show();
+  
+  
   //mdtDeviceU3606AWidget dw;
   //dw.show();
 
@@ -97,7 +113,8 @@ int main(int argc, char **argv)
 
   // Free the error system
   mdtErrorOut::destroy();
-
+  delete portManager;
+  
   return retVal;
 
   QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");

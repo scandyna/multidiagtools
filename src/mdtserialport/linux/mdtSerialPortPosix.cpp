@@ -542,12 +542,17 @@ void mdtSerialPortPosix::setRts(bool on)
 {
   int states;
 
+  if(!isOpen()){
+    return;
+  }
+  pvMutex.lock();
   // Get the current ctl states
   if(ioctl(pvFd, TIOCMGET, &states) < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    pvMutex.unlock();
     return;
   }
   // Set RTS state
@@ -563,18 +568,24 @@ void mdtSerialPortPosix::setRts(bool on)
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
   }
+  pvMutex.unlock();
 }
 
 void mdtSerialPortPosix::setDtr(bool on)
 {
   int states;
 
+  if(!isOpen()){
+    return;
+  }
+  pvMutex.lock();
   // Get the current ctl states
   if(ioctl(pvFd, TIOCMGET, &states) < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    pvMutex.unlock();
     return;
   }
   // Set DTR state
@@ -590,6 +601,7 @@ void mdtSerialPortPosix::setDtr(bool on)
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
   }
+  pvMutex.unlock();
 }
 
 void mdtSerialPortPosix::defineCtlThread(pthread_t ctlThread)

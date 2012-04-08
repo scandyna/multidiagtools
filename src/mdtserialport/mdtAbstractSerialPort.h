@@ -80,20 +80,6 @@ class mdtAbstractSerialPort : public mdtAbstractPort
    */
   QList<int> &availableBaudRates();
 
-  /*! \brief Enable/diseable the RTS (Request To Send) signal
-   *
-   * This method must be re-implemented in plateform specific subclass.
-   * \param on If true, RTS will be enabled, diseabled else
-   */
-  virtual void setRts(bool on) = 0;
-
-  /*! \brief Enable/diseable the DTR (Data Terminal Ready) signal
-   *
-   * This method must be re-implemented in plateform specific subclass.
-   * \param on If true, DTR will be enabled, diseabled else
-   */
-  virtual void setDtr(bool on) = 0;
-
   /*! \brief Wait until a control (modem line) signal state changes
    *
    * This method must be re-implemented in plateform specific subclass.
@@ -107,6 +93,26 @@ class mdtAbstractSerialPort : public mdtAbstractPort
    * \return False on error, in this case, the thread will be stopped.
    */
   virtual bool getCtlStates() = 0;
+
+ public slots:
+
+  /*! \brief Enable/diseable the RTS (Request To Send) signal
+   *
+   * This method must be re-implemented in plateform specific subclass.<br>
+   * If port is not open, this method must make no system call.<br>
+   * This method locks the mutex.
+   * \param on If true, RTS will be enabled, diseabled else
+   */
+  virtual void setRts(bool on) = 0;
+
+  /*! \brief Enable/diseable the DTR (Data Terminal Ready) signal
+   *
+   * This method must be re-implemented in plateform specific subclass.<br>
+   * If port is not open, this method must make no system call.<br>
+   * This method locks the mutex.
+   * \param on If true, DTR will be enabled, diseabled else
+   */
+  virtual void setDtr(bool on) = 0;
 
  signals:
 

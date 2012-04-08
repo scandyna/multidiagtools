@@ -1,15 +1,18 @@
 window_sizes 1280 1002 358 916 808 120
 diagrams
-  active  classdiagram_ref 169218 // mdtSerialPortManager
+  classdiagram_ref 169218 // mdtSerialPortManager
     916 808 100 4 0 0
   classdiagram_ref 294658 // mdtPortManager
     732 646 100 4 12 0
+  classdiagram_ref 360706 // mdtAbstractSerialPort
+    732 646 100 4 376 0
+  active  classdiagram_ref 381698 // mdtSerialPortCtlWidget
+    916 808 100 4 0 0
 end
 show_stereotypes
+selected operation_ref 744706 // updateTxTimeoutState
 open
-  
-  package_ref 168322 // mdtport
-  
-  package_ref 134786 // Qt4
+  classview_ref 128002 // mdtSerialPort
+  operation_ref 744706 // updateTxTimeoutState
 end
 end

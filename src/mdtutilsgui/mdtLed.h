@@ -29,7 +29,7 @@
 #include <QSize>
 #include <QTimer>
 
-/*! \brief ldtLED is a widget witch displays a LED
+/*! \brief mdtLED is a widget witch displays a LED
  *
  */
 class mdtLed : public QWidget
@@ -37,7 +37,7 @@ class mdtLed : public QWidget
  Q_OBJECT
 
  public:
-  /*! \brief Contruct a new ldtLED
+  /*! \brief Contruct a new mdtLED
    *
    */
   mdtLed(QWidget *parent = 0);
