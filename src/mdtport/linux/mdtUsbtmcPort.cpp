@@ -84,6 +84,9 @@ bool mdtUsbtmcPort::open(mdtPortConfig &cfg)
 
 void mdtUsbtmcPort::close()
 {
+  if(!isOpen()){
+    return;
+  }
   lockMutex();
   if(pvFd >= 0){
     ::close(pvFd);

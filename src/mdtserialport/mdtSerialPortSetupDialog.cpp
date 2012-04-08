@@ -21,6 +21,7 @@
 #include "mdtSerialPortSetupDialog.h"
 #include <QWidget>
 #include <QDialogButtonBox>
+#include <QPushButton>
 
 #include <QDebug>
 
@@ -49,6 +50,13 @@ void mdtSerialPortSetupDialog::setPortManager(mdtSerialPortManager *manager)
   Q_ASSERT(manager != 0);
 
   pvPortManager = manager;
+
+  // See witch state the port is
+  if(pvPortManager->isRunning()){
+    setStateRunning();
+    return;
+  }
+  setStateStopped();
   // Close port
   pvPortManager->closePort();
   // List available ports
@@ -90,22 +98,31 @@ void mdtSerialPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
 
   type = buttonBox->standardButton(button);
   if((type == QDialogButtonBox::Apply)||(type == QDialogButtonBox::Ok)){
+    diseableApplyButtons();
+    // Close port
+    lbState->setText(tr("Stopping ..."));
+    pvPortManager->closePort();
+    // Get current config
     updateConfig();
     // Open the port
     if(!pvPortManager->setPortName(cbPort->currentText())){
-      qDebug() << "ERR set port name !";
+      setStateError(tr("Cannot fetch port attributes"));
+      enableApplyButtons();
       return;
     }
     if(!pvPortManager->openPort()){
-      qDebug() << "ERR open port !";
+      setStateError(tr("Cannot open port"));
+      enableApplyButtons();
       return;
     }
     // Start R/W
     if(!pvPortManager->start()){
-      qDebug() << "ERR start !";
+      setStateError(tr("Cannot start threads"));
+      enableApplyButtons();
       return;
     }
-    /// NOTE: retsart etc...
+    setStateRunning();
+    enableApplyButtons();
   }
 }
 
@@ -113,8 +130,8 @@ void mdtSerialPortSetupDialog::on_pbRescan_clicked()
 {
   Q_ASSERT(pvPortManager != 0);
 
-  cbPort->clear();
   pbRescan->setEnabled(false);
+  cbPort->clear();
   cbPort->addItems(pvPortManager->scan());
   pbRescan->setEnabled(true);
 }
@@ -127,13 +144,68 @@ void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
   if(pvPortManager == 0){
     return;
   }
+  cbPort->setEnabled(false);
+  // Close port
+  pvPortManager->closePort();
+  setStateStopped();
   // Open the port
   if(!pvPortManager->setPortName(cbPort->currentText())){
-    qDebug() << "ERRRRRR Open !";
+    setStateError(tr("Cannot fetch port attributes"));
+    cbPort->setEnabled(true);
     return;
   }
   // List available baud rates
   pvSerialPortConfigWidget->setAvailableBaudRates(pvPortManager->port().availableBaudRates());
   // Display configuration
   displayConfig();
+  cbPort->setEnabled(true);
+}
+
+void mdtSerialPortSetupDialog::setStateRunning()
+{
+  // Update state label
+  lbState->setText(tr("Running"));
+  lbState->setStyleSheet("QLabel { background-color : green; color : black; }");
+}
+
+void mdtSerialPortSetupDialog::setStateStopped()
+{
+  // Update state label
+  lbState->setText(tr("Stopped"));
+  lbState->setStyleSheet("QLabel { background-color : orange; color : black; }");
+}
+
+void mdtSerialPortSetupDialog::setStateError(QString msg)
+{
+  // Update state label
+  lbState->setText(msg);
+  lbState->setStyleSheet("QLabel { background-color : red; color : black; }");
+}
+
+void mdtSerialPortSetupDialog::diseableApplyButtons()
+{
+  QPushButton *b;
+
+  b = buttonBox->button(QDialogButtonBox::Ok);
+  if(b != 0){
+    b->setEnabled(false);
+  }
+  b = buttonBox->button(QDialogButtonBox::Apply);
+  if(b != 0){
+    b->setEnabled(false);
+  }
+}
+
+void mdtSerialPortSetupDialog::enableApplyButtons()
+{
+  QPushButton *b;
+
+  b = buttonBox->button(QDialogButtonBox::Ok);
+  if(b != 0){
+    b->setEnabled(true);
+  }
+  b = buttonBox->button(QDialogButtonBox::Apply);
+  if(b != 0){
+    b->setEnabled(true);
+  }
 }

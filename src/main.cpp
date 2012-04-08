@@ -60,9 +60,9 @@ int main(int argc, char **argv)
 
   // Essais serial port dialog
   mdtSerialPortSetupDialog dlg;
-  dlg.setPortManager(new mdtSerialPortManager);
+  dlg.setPortManager(new mdtSerialPortManager(&dlg));
   dlg.show();
-  
+
   //mdtDeviceU3606AWidget dw;
   //dw.show();
 
@@ -92,12 +92,12 @@ int main(int argc, char **argv)
   w->resize(400,200);
   w->show();
 */
-  
+
   retVal = app.exec();
 
   // Free the error system
   mdtErrorOut::destroy();
-  
+
   return retVal;
 
   QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");

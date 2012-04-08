@@ -32,14 +32,21 @@
 mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
-  qDebug() << "mdtSerialPortManager::mdtSerialPortManager() ...";
   setConfig(new mdtSerialPortConfig);
   setPort(new mdtSerialPort);
-  qDebug() << "mdtSerialPortManager::mdtSerialPortManager() END";
 }
 
 mdtSerialPortManager::~mdtSerialPortManager()
 {
+  Q_ASSERT(pvConfig != 0);
+  Q_ASSERT(pvPort != 0);
+
+  closePort();
+
+  delete pvConfig;
+  pvConfig = 0;
+  delete pvPort;
+  pvPort = 0;
 }
 
 QStringList mdtSerialPortManager::scan()
@@ -104,6 +111,14 @@ QStringList mdtSerialPortManager::scan()
   return availablePorts;
 }
 
+void mdtSerialPortManager::setPort(mdtSerialPort *port)
+{
+  Q_ASSERT(port != 0);
+
+  pvCtlThread.setPort(port);
+  mdtPortManager::setPort(port);
+}
+
 bool mdtSerialPortManager::openPort()
 {
   Q_ASSERT(pvPort != 0);
@@ -116,6 +131,22 @@ bool mdtSerialPortManager::openPort()
   Q_ASSERT(c != 0);
 
   return p->open(*c);
+}
+
+bool mdtSerialPortManager::start()
+{
+  if(!pvCtlThread.start()){
+    return false;
+  }
+  return mdtPortManager::start();
+}
+
+void mdtSerialPortManager::stop()
+{
+  mdtPortManager::stop();
+  if(pvCtlThread.isRunning()){
+    pvCtlThread.stop();
+  }
 }
 
 mdtSerialPortConfig &mdtSerialPortManager::config()

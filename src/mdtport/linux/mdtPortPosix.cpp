@@ -87,11 +87,14 @@ bool mdtPortPosix::open(mdtPortConfig &cfg)
 
 void mdtPortPosix::close()
 {
-  lockMutex();
-  if(pvFd >= 0){
-    ::close(pvFd);
-    pvFd = -1;
+  if(!isOpen()){
+    return;
   }
+  lockMutex();
+  ///if(pvFd >= 0){
+  ::close(pvFd);
+  pvFd = -1;
+  ///}
   mdtAbstractPort::close();
 }
 

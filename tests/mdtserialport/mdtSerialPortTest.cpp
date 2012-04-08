@@ -68,7 +68,9 @@ void mdtSerialPortTest::mdtSerialPortManagerTest()
   qDebug() << "* Be shure that the computer has at least one serial port, else test will fail *";
 
   // Verify that scan() function works ..
+  qDebug() << "TEST: scan() ...";
   portsList = m.scan();
+  qDebug() << "TEST: scan() END";
   QVERIFY(portsList.size() > 0);
 
   // Port setup
@@ -76,8 +78,12 @@ void mdtSerialPortTest::mdtSerialPortManagerTest()
   m.config().setEndOfFrameSeq("$");
   
   // Init port manager
+  qDebug() << "TEST: setPortName() ...";
   QVERIFY(m.setPortName(portsList.at(0)));
+  qDebug() << "TEST: setPortName() END";
+  qDebug() << "TEST: openPort() ...";
   QVERIFY(m.openPort());
+  qDebug() << "TEST: openPort() END";
   
   // Check that available baud rates contains 9600 (very standard, should exists on most device)
   QVERIFY(m.port().availableBaudRates().size() > 0);
@@ -92,13 +98,13 @@ void mdtSerialPortTest::mdtSerialPortManagerTest()
   QVERIFY(m.writeData("Test$"));
 
   // Wait on answer - Timout: 500 [ms]
- QVERIFY(m.waitReadenFrame(500));
+  QVERIFY(m.waitReadenFrame(500));
 
- // Verify received data
- QVERIFY(m.lastReadenFrame() == "Test");
+  // Verify received data
+  QVERIFY(m.lastReadenFrame() == "Test");
  
- // End
- m.closePort();
+  // End
+  m.closePort();
 }
 
 void mdtSerialPortTest::mdtSerialPortConfigTest()
@@ -402,7 +408,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   sp.unlockMutex();
 
   // Wait some time and verify that data was transfered
-  QTest::qWait(3*data.size()+10);
+  QTest::qWait(3*data.size()+100);
   sp.lockMutex();
   // We don't know how many frames that were used, so cat all together, and check the result.
   rxData = "";
@@ -546,7 +552,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
   sp.unlockMutex();
 
   // Wait some time and verify that data was transfered
-  QTest::qWait(120*data.size()+100);
+  QTest::qWait(150*data.size()+100);
   sp.lockMutex();
   // We have a special case for empty data test
   if((data.size() == 1)&&(data.at(0).size() == 0)){
@@ -651,7 +657,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   sp.unlockMutex();
 
   // Wait some time and verify that data was transfered
-  QTest::qWait(3*data.size()+10);
+  QTest::qWait(3*data.size()+100);
   sp.lockMutex();
   QVERIFY(sp.readenFrames().size() == refData.size());
   // Verify each readen data frame

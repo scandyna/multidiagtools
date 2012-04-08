@@ -15,30 +15,30 @@ end
 relationcanvas 128514 relation_ref 271234 // <directional composition>
   decenter_begin 122
   decenter_end 90
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388 249 3000 to ref 128386
-  role_a_pos 416 199 3000 no_role_b
-  multiplicity_a_pos 498 226 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388 251 3000 to ref 128386
+  role_a_pos 416 198 3000 no_role_b
+  multiplicity_a_pos 498 225 3000 no_multiplicity_b
 end
 relationcanvas 128642 relation_ref 271362 // <directional composition>
   decenter_begin 490
   decenter_end 483
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388 422 3000 to ref 128386
-  role_a_pos 535 361 3000 no_role_b
-  multiplicity_a_pos 493 361 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 388 430.5 3000 to ref 128386
+  role_a_pos 536 361 3000 no_role_b
+  multiplicity_a_pos 494 361 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 271490 // <directional composition>
   decenter_begin 711
   decenter_end 17
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 393 563 3000 to ref 128386
-  role_a_pos 438 497 3000 no_role_b
-  multiplicity_a_pos 507 524 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 393 575 3000 to ref 128386
+  role_a_pos 543 533 3000 no_role_b
+  multiplicity_a_pos 501 533 3000 no_multiplicity_b
 end
 relationcanvas 128898 relation_ref 271618 // <directional composition>
   decenter_begin 307
   decenter_end 246
-  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 386 337.5 3000 to ref 128386
-  role_a_pos 533 282 3000 no_role_b
-  multiplicity_a_pos 491 282 3000 no_multiplicity_b
+  from ref 128002 z 2001 stereotype "<<QQueue<mdtFrame*>>>" xyz 386 342.5 3000 to ref 128386
+  role_a_pos 534 282 3000 no_role_b
+  multiplicity_a_pos 492 282 3000 no_multiplicity_b
 end
 relationcanvas 129410 relation_ref 393090 // <generalisation>
   from ref 128002 z 2001 to ref 128130

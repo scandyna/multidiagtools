@@ -46,6 +46,31 @@ void mdtPortTest::initTestCase()
 {
 }
 
+void mdtPortTest::openCloseTest()
+{
+  mdtPort port;
+  mdtPortConfig cfg;
+  QTemporaryFile file;
+
+  // Initial state
+  QVERIFY(!port.isOpen());
+
+  // Create a temporary file
+  QVERIFY(file.open());
+
+  // Attributes fetch
+  QVERIFY(port.setAttributes(file.fileName()));
+  QVERIFY(!port.isOpen());
+
+  // Open
+  QVERIFY(port.open(cfg));
+  QVERIFY(port.isOpen());
+
+  // Close
+  port.close();
+  QVERIFY(!port.isOpen());
+}
+
 void mdtPortTest::startStopTest()
 {
   mdtPort port;

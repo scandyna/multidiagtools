@@ -28,24 +28,17 @@
 mdtPortManager::mdtPortManager(QObject *parent)
  : QThread(parent)
 {
-  qDebug() << "mdtPortManager::mdtPortManager() ...";
   pvReadThread = 0;
   pvWriteThread = 0;
   pvConfig = 0;
   pvPort = 0;
-  qDebug() << "mdtPortManager::mdtPortManager() END";
 }
 
 mdtPortManager::~mdtPortManager()
 {
-  qDebug() << "mdtPortManager::~mdtPortManager() ...";
   // Stop threads and close the port
   closePort();
   // Release memory
-  if(pvPort != 0){
-    delete pvPort;
-    pvPort = 0;
-  }
   if(pvReadThread != 0){
     delete pvReadThread;
     pvReadThread = 0;
@@ -54,7 +47,6 @@ mdtPortManager::~mdtPortManager()
     delete pvWriteThread;
     pvWriteThread = 0;
   }
-  qDebug() << "mdtPortManager::~mdtPortManager() END";
 }
 
 void mdtPortManager::setPort(mdtAbstractPort *port)
@@ -123,6 +115,7 @@ void mdtPortManager::closePort()
   if(pvWriteThread != 0){
     stopWriting();
   }
+  stop();
   // Close the port
   pvPort->close();
 }
@@ -173,6 +166,24 @@ bool mdtPortManager::start()
     return false;
   }
   return true;
+}
+
+bool mdtPortManager::isRunning()
+{
+  if(pvPort == 0){
+    return false;
+  }
+  if(pvReadThread != 0){
+    if(pvReadThread->isRunning()){
+      return true;
+    }
+  }
+  if(pvWriteThread != 0){
+    if(pvWriteThread->isRunning()){
+      return true;
+    }
+  }
+  return false;
 }
 
 void mdtPortManager::stop()

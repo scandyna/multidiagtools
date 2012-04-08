@@ -181,14 +181,21 @@ class mdtPortManager : public QThread
    * \sa startReading()
    * \sa startWriting()
    */
-  bool start();
+  virtual bool start();
+
+  /*! \brief Get the running state
+   * 
+   * If port was set, it returns false.<br>
+   * If one of the threads is running, true is returned.
+   */
+  bool isRunning();
 
   /*! \brief Stop reading and writing threads
    * 
    * \pre setPort() must be called before.
    * \sa start()
    */
-  void stop();
+  virtual void stop();
 
   /*! \brief Write data by copy
    *

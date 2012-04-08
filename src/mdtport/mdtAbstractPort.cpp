@@ -29,6 +29,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   pvReadTimeoutOccuredPrevious = false;
   pvWriteTimeoutOccured = false;
   pvWriteTimeoutOccuredPrevious = false;
+  pvIsOpen = false;
 
   // Emit signals with initial states
   emit readTimeoutStateChanged(pvReadTimeoutOccured);
@@ -42,6 +43,11 @@ mdtAbstractPort::~mdtAbstractPort()
 QString &mdtAbstractPort::name()
 {
   return pvName;
+}
+
+bool mdtAbstractPort::isOpen()
+{
+  return pvIsOpen;
 }
 
 bool mdtAbstractPort::open(mdtPortConfig &cfg)
@@ -106,6 +112,7 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
     pvWriteFramesPool.enqueue(frame);
   }
   pvConfig = cfg;
+  pvIsOpen = true;
   unlockMutex();
   return true;
 }
@@ -121,6 +128,7 @@ void mdtAbstractPort::close()
   pvWriteFramesPool.clear();
   qDeleteAll(pvWriteFrames);
   pvWriteFrames.clear();
+  pvIsOpen = false;
   // Unlock the mutex
   unlockMutex();
 }

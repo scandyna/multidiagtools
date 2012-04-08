@@ -46,8 +46,9 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Set the port attributes
    * 
-   * Open the given port name and get his attributes.
+   * Open the given port name and get his attributes.<br>
    * This method must be re-implemented in subclass.
+   * The implementation must close the port after use, and not use mdtAbstractPort open() and close().
    * \param portName Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)
    */
   virtual bool setAttributes(const QString &portName) = 0;
@@ -65,20 +66,25 @@ class mdtAbstractPort : public QObject
    *  - Do the specific work
    *  - Set the read/write timeouts. See the mdtPortConfig to know how to get these timeouts.
    *  - Call this open method (with mdtAbstractPort::open() ).
-   * At this last step, the queues will be initialized, and mutex unocked.
+   * At this last step, the queues will be initialized, mutex unocked and open flag updated.
    * \return True on successfull configuration and open port
    * \sa mdtPortConfig
    */
   virtual bool open(mdtPortConfig &cfg);
 
+  /*! \brief Get port's open state
+   */
+  bool isOpen();
+
   /*! \brief Close the port
    *
    * This method must be re-implemented in subclass.<br>
    * To handle the port correctly, the subclass method must:
+   *  - Check if port is open with isOpen() , if false, simply return.
    *  - Lock the mutex with lockMutex()
    *  - Do the specific work
    *  - Call this close method (with mdtAbstractPort::close() ).
-   * At this last step, the queues will be deleted, and mutex unocked.
+   * At this last step, the queues will be deleted, mutex unocked and open flag updated.
    */
   virtual void close();
 
@@ -274,6 +280,9 @@ class mdtAbstractPort : public QObject
 
   // Diseable copy
   mdtAbstractPort(mdtAbstractPort &other);
+  
+  // Some flags
+  bool pvIsOpen;
 };
 
 #endif  // #ifndef MDT_ABSTRACT_PORT_H

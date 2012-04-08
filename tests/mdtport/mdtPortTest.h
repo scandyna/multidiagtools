@@ -32,6 +32,9 @@ class mdtPortTest : public mdtTest
   // Init
   void initTestCase();
 
+  // Open/Close and check state
+  void openCloseTest();
+
   // Test start and stop
   void startStopTest();
 

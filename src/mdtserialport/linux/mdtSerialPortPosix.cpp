@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtSerialPortPosix.h"
 #include "mdtError.h"
 #include <sys/types.h>
@@ -178,12 +197,9 @@ bool mdtSerialPortPosix::setAttributes(const QString &portName)
   return true;
 }
 
-/// NOTE: validité config
 bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 {
   QString strNum;
-  
-  qDebug() << "mdtSerialPortPosix::open() , port: " << pvName;
 
   // Close previous opened device
   this->close();
@@ -209,10 +225,20 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    unlockMutex();
     return false;
   }
   // Get current system config on "work copy"
-  tcgetattr(pvFd, &pvTermios);
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    ::close(pvFd);
+    pvFd = -1;
+    mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvName + " is not a serial port, or is not available", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    unlockMutex();
+    return false;
+  }
   // Set baud rate
   if(!setBaudRate(cfg.baudRate())){
     ::close(pvFd);
@@ -222,6 +248,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    unlockMutex();
     return false;
   }
   // Set local mode and enable the receiver
@@ -234,6 +261,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    unlockMutex();
     return false;
   }
   // Set stop bits
@@ -244,6 +272,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    unlockMutex();
     return false;
   }
   // Set parity
@@ -262,12 +291,14 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();
+    unlockMutex();
     return false;
   }
   // Check if configuration could really be set
   if(!checkConfig(cfg)){
     ::close(pvFd);
     pvFd = -1;
+    unlockMutex();
     return false;
   }
 
@@ -280,6 +311,9 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
 
 void mdtSerialPortPosix::close()
 {
+  if(!isOpen()){
+    return;
+  }
   lockMutex();
   if(pvFd >= 0){
     tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
@@ -412,8 +446,13 @@ qint64 mdtSerialPortPosix::write(const char *data, qint64 maxSize)
 
 bool mdtSerialPortPosix::waitEventCtl()
 {
+  int retVal;
+
   // We wait until a line status change happens
-  if(ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG)) < 0){
+  pvMutex.unlock();
+  retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
+  pvMutex.lock();
+  if(retVal < 0){
     if(errno == EINTR){
       // Probably sent by pthread_kill() to stop the thread
       if(pvAbortingWaitEventCtl){
@@ -867,7 +906,7 @@ bool mdtSerialPortPosix::setDataBits(int n)
       nbMask = CS5;
       break;
     case 6:
-      nbMask = CS5;
+      nbMask = CS6;
       break;
     case 7:
       nbMask = CS7;
@@ -901,7 +940,7 @@ int mdtSerialPortPosix::dataBits()
   }else{
     nb = 0;
   }
-  
+
   return nb;
 }
 
@@ -914,7 +953,6 @@ bool mdtSerialPortPosix::setStopBits(int n)
   }else{
     return false;
   }
-
   return true;
 }
 
@@ -930,7 +968,6 @@ void mdtSerialPortPosix::setParity(mdtSerialPortConfig::parity_t p)
 {
   if(p == mdtSerialPortConfig::NoParity){
     pvTermios.c_cflag &= ~PARENB;
-    pvTermios.c_cflag &= ~CSTOPB;
     pvTermios.c_iflag &= ~(INPCK | ISTRIP);
   }else if(p == mdtSerialPortConfig::ParityOdd){
     pvTermios.c_cflag |= PARENB;
@@ -950,8 +987,8 @@ mdtSerialPortConfig::parity_t mdtSerialPortPosix::parity()
   if(!(pvTermios.c_cflag & PARENB)){
     return mdtSerialPortConfig::NoParity;
   }
-  // Here, parity is enabled
-  if(pvTermios.c_cflag & PARENB){
+  // Here, parity is enabled - Check if it's even or odd
+  if((pvTermios.c_cflag & PARENB)&&(pvTermios.c_cflag & PARODD)){
     return mdtSerialPortConfig::ParityOdd;
   }
   return mdtSerialPortConfig::ParityEven;
@@ -1027,6 +1064,7 @@ bool mdtSerialPortPosix::checkConfig(mdtSerialPortConfig cfg)
     return false;
   }
   if(stopBits() != cfg.stopBitsCount()){
+    qDebug() << "stopBits(): " << stopBits() << " , cfg: " << cfg.stopBitsCount();
     mdtError e(MDT_UNDEFINED_ERROR, "stop bits count is not set", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
     e.commit();

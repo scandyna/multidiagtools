@@ -27,7 +27,7 @@
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPort.h"
 #include "mdtSerialPortConfig.h"
-
+#include "mdtSerialPortCtlThread.h"
 #include "mdtPortManager.h"
 
 /*! \brief Port manager base class
@@ -56,11 +56,31 @@ class mdtSerialPortManager : public mdtPortManager
    */
   QStringList scan();
 
+  /*! \brief Set the port
+   * Affects port to the line control thread,
+   * and calls mdtPortManager::setPort()
+   */
+  void setPort(mdtSerialPort *port);
+
   /*! \brief Open the port
    * 
    * \return True on success, false else
    */
   bool openPort();
+
+  /*! \brief Start threads
+   * 
+   * Start the line control thread, then calls mdtPortManager::start()
+   * \sa mdtPortManager
+   */
+  bool start();
+
+  /*! \brief Stop threads
+   * 
+   * Calls mdtPortManager::stop() and stop the line control thread.
+   * \sa mdtPortManager
+   */
+  void stop();
 
   /*! \brief Get the config object
    * 
@@ -77,6 +97,8 @@ class mdtSerialPortManager : public mdtPortManager
 
   // Diseable copy
   mdtSerialPortManager(mdtSerialPortManager &other);
+  
+  mdtSerialPortCtlThread pvCtlThread;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H

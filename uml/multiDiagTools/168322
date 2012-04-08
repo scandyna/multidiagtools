@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 3
+  revision 4
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -42,7 +42,6 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    associated_deployment_view deploymentview_ref 167298 // mdtPort
     classdiagram 255234 "mdtAbstractPort"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -120,6 +119,16 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 486658 "pvIsOpen"
+	private explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       operation 423682 "mdtAbstractPort"
 	public explicit_return_type ""
 	nparams 1
@@ -178,6 +187,20 @@ ${inlines}
 	nparams 1
 	  param in name "cfg" type class_ref 256386 // mdtPortConfig
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 737026 "isOpen"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
 "
 	
 	
@@ -2263,6 +2286,17 @@ ${inlines}
       end
 
       operation 507010 "start"
+	abstract cpp_virtual public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 736642 "isRunning"
 	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -2277,12 +2311,9 @@ ${inlines}
       end
 
       operation 507138 "stop"
-	public explicit_return_type "void"
+	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
 "
 	
 	
@@ -3019,31 +3050,4 @@ ${inlines}
 
   package_ref 155010 // linux
 
-  deploymentview 167298 "mdtPort"
-    //deployment diagram settings
-    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
-    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 143874 "mdtPortConfigWidget"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
-"
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 370690 // mdtPortConfigWidget
-      end
-    end
-  end
 end

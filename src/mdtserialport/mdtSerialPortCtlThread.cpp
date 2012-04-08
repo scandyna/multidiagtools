@@ -52,31 +52,32 @@ void mdtSerialPortCtlThread::run()
   // Set the running flag
   port->lockMutex();
   pvRunning = true;
-  port->unlockMutex();
+  ///port->unlockMutex();
 
   // Run...
   while(1){
     // Read thread state
-    port->lockMutex();
+    ///port->lockMutex();
     if(!pvRunning){
-      port->unlockMutex();
+      ///port->unlockMutex();
       break;
     }
-    port->unlockMutex();
+    ///port->unlockMutex();
     // Wait on ctl signal event
     if(!port->waitEventCtl()){
-      port->lockMutex();
+      ///port->lockMutex();
       pvRunning = false;
-      port->unlockMutex();
+      ///port->unlockMutex();
       break;
     }
     // We have a event here, update the flags
-    port->lockMutex();
+    ///port->lockMutex();
     if(!port->getCtlStates()){
       pvRunning = false;
-      port->unlockMutex();
+      ///port->unlockMutex();
       break;
     }
-    port->unlockMutex();
   }
+
+  port->unlockMutex();
 }

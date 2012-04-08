@@ -115,6 +115,11 @@ void mdtPortWriteThread::run()
           toWrite -= written;
           Q_ASSERT(toWrite >= 0);
         }
+      }else{
+        // Sleep a while
+        pvPort->unlockMutex();
+        msleep(100);
+        pvPort->lockMutex();
       }
     }
   }

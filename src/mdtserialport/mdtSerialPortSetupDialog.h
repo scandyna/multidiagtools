@@ -27,6 +27,8 @@
 #include "mdtSerialPortConfigWidget.h"
 #include <QDialog>
 #include <QAbstractButton>
+#include <QString>
+#include <QCloseEvent>
 
 /*! \brief Setup dialog for serial port
  * 
@@ -63,10 +65,23 @@ class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDi
   // Rescan for available ports
   void on_pbRescan_clicked();
 
-  // 
+  // Open selected port (if manager was set)
   void on_cbPort_currentIndexChanged(int index);
 
  private:
+
+  // Set the running state
+  void setStateRunning();
+
+  // Set the stopped state
+  void setStateStopped();
+
+  // Set the Error state
+  void setStateError(QString msg = tr("Error"));
+
+  // Enable/diseable the apply buttons (Ok, Apply)
+  void diseableApplyButtons();
+  void enableApplyButtons();
 
   mdtSerialPortManager *pvPortManager;
   mdtPortConfigWidget *pvPortConfigWidget;
