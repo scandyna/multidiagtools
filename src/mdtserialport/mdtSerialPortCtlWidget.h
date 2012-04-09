@@ -25,7 +25,8 @@
 #include <QPushButton>
 #include <QLabel>
 #include "mdtLed.h"
-#include "mdtAbstractSerialPort.h"
+#include "mdtBlinkLed.h"
+#include "mdtSerialPortManager.h"
 
 class mdtSerialPortCtlWidget : public QWidget
 {
@@ -37,15 +38,31 @@ class mdtSerialPortCtlWidget : public QWidget
 
   /*! \brief Make the signals/slots connections
    * 
-   * \pre port must be a valid pointer
+   * \pre manager must be a valid pointer
    */
-  void makeConnections(mdtAbstractSerialPort *port);
+  void makeConnections(mdtSerialPortManager *manager);
 
  public slots:
+
+  /*! \brief Change TX LED's color
+   */
+  void trigTxState();
+
+  /*! \brief Change TX LED's color
+   */
+  void trigTxErrorState();
 
   /*! \brief Change TX LED's color depending state
    */
   void updateTxTimeoutState(bool state);
+
+  /*! \brief Change TX LED's color
+   */
+  void trigRxState();
+
+  /*! \brief Change TX LED's color
+   */
+  void trigRxErrorState();
 
   /*! \brief Change RX LED's color depending state
    */
@@ -71,8 +88,8 @@ class mdtSerialPortCtlWidget : public QWidget
   mdtLed *ldRng;
   mdtLed *ldDsr;
   mdtLed *ldCts;
-  mdtLed *ldTx;
-  mdtLed *ldRx;
+  mdtBlinkLed *ldTx;
+  mdtBlinkLed *ldRx;
   QPushButton *pbDtr;
   QPushButton *pbRts;
 };

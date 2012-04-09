@@ -4,8 +4,7 @@
 }
 
 
-Inheritance diagram for mdtTcpSocket:
-\nopagebreak
+Inheritance diagram for mdtTcpSocket:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -14,8 +13,7 @@ Inheritance diagram for mdtTcpSocket:
 \end{figure}
 
 
-Collaboration diagram for mdtTcpSocket:
-\nopagebreak
+Collaboration diagram for mdtTcpSocket:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -96,9 +94,10 @@ Close the port.
 This method must be re-\/implemented in subclass.\par
  To handle the port correctly, the subclass method must:
 \begin{DoxyItemize}
+\item Check if port is open with \hyperlink{classmdt_abstract_port_a53affce84400ed1519db93ccc79888f9}{isOpen()} , if false, simply return.
 \item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
 \item Do the specific work
-\item Call this close method (with \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} ). At this last step, the queues will be deleted, and mutex unocked. 
+\item Call this close method (with \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} ). At this last step, the queues will be deleted, mutex unocked and open flag updated. 
 \end{DoxyItemize}
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort}.
@@ -148,7 +147,7 @@ This method must be re-\/implemented in subclass.\par
 \item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
 \item Do the specific work
 \item Set the read/write timeouts. See the \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
-\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, and mutex unocked. \begin{DoxyReturn}{Returns}
+\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, mutex unocked and open flag updated. \begin{DoxyReturn}{Returns}
 True on successfull configuration and open port 
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
@@ -195,7 +194,8 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 Set the port attributes. 
 
-Open the given port name and get his attributes. This method must be re-\/implemented in subclass. 
+Open the given port name and get his attributes.\par
+ This method must be re-\/implemented in subclass. The implementation must close the port after use, and not use \hyperlink{classmdt_abstract_port}{mdtAbstractPort} \hyperlink{classmdt_tcp_socket_aca164cd2f0b47988291afb7fbb423648}{open()} and \hyperlink{classmdt_tcp_socket_a7fd4aec4bc5e3e17034f0ec6647af1e8}{close()}. 
 \begin{DoxyParams}{Parameters}
 {\em portName} & Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) \\
 \hline

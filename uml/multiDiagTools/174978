@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 1
+  revision 2
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -970,6 +970,20 @@ ${inlines}
 	
       end
 
+      operation 753410 "isOn"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 713602 "setOn"
 	stereotype "slot"
 	public explicit_return_type "void"
@@ -1044,7 +1058,6 @@ ${inlines}
 	
 	
       end
-
     end
 
     classdiagram 367874 "mdtBlinkLed"
@@ -1169,5 +1182,4 @@ ${inlines}
       end
     end
   end
-
 end

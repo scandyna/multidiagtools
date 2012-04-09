@@ -61,6 +61,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
@@ -108,6 +109,12 @@ Public Types</h2></td></tr>
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">UART type. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a0ef2426fbd1afbcb0701f327cc16a7cc">setRts</a> (bool on)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the RTS (Request To Send) signal.  <a href="#a0ef2426fbd1afbcb0701f327cc16a7cc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aa86a8bc0bb03ac2b07bf43968dfeb189">setDtr</a> (bool on)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the DTR (Data Terminal Ready) signal.  <a href="#aa86a8bc0bb03ac2b07bf43968dfeb189"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a63ddcadf5d8a63c479b0b6a24f89c837">carChanged</a> (bool on)</td></tr>
@@ -132,10 +139,6 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><b>uartTypeStr</b> ()
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecd76bff0f93cb86c3bbfd73e3776032"></a><!-- doxytag: member="mdtAbstractSerialPort::availableBaudRates" ref="aecd76bff0f93cb86c3bbfd73e3776032" args="()" -->
 QList&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aecd76bff0f93cb86c3bbfd73e3776032">availableBaudRates</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of available baud rates. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a0ef2426fbd1afbcb0701f327cc16a7cc">setRts</a> (bool on)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the RTS (Request To Send) signal.  <a href="#a0ef2426fbd1afbcb0701f327cc16a7cc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aa86a8bc0bb03ac2b07bf43968dfeb189">setDtr</a> (bool on)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the DTR (Data Terminal Ready) signal.  <a href="#aa86a8bc0bb03ac2b07bf43968dfeb189"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ac27d1224db349bcf7f161329b5f53efb">waitEventCtl</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#ac27d1224db349bcf7f161329b5f53efb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">getCtlStates</a> ()=0</td></tr>
@@ -319,14 +322,16 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>on</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td><code> [pure virtual, slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Enable/diseable the DTR (Data Terminal Ready) signal. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
+<p>This method must be re-implemented in plateform specific subclass.<br/>
+ If port is not open, this method must make no system call.<br/>
+ This method locks the mutex. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">on</td><td>If true, DTR will be enabled, diseabled else </td></tr>
@@ -347,14 +352,16 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>on</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td><code> [pure virtual, slot]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Enable/diseable the RTS (Request To Send) signal. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
+<p>This method must be re-implemented in plateform specific subclass.<br/>
+ If port is not open, this method must make no system call.<br/>
+ This method locks the mutex. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">on</td><td>If true, RTS will be enabled, diseabled else </td></tr>
@@ -391,7 +398,6 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/<a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a></li>
 <li>src/mdtserialport/mdtAbstractSerialPort.cpp</li>
-<li>src/mdtserialport/moc_mdtAbstractSerialPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -408,7 +414,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

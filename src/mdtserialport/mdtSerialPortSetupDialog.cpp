@@ -51,14 +51,10 @@ void mdtSerialPortSetupDialog::setPortManager(mdtSerialPortManager *manager)
 
   pvPortManager = manager;
 
-  // See witch state the port is
-  if(pvPortManager->isRunning()){
-    setStateRunning();
-    return;
-  }
-  setStateStopped();
-  // Close port
+  // Stop manager and close port
+  lbState->setText(tr("Stopping ..."));
   pvPortManager->closePort();
+  setStateStopped();
   // List available ports
   on_pbRescan_clicked();
   // Update GUI

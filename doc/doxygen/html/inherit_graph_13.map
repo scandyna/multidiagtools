@@ -1,7 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="7,85,113,115"/>
-<area shape="rect" id="node3" href="$classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="173,5,312,35"/>
-<area shape="rect" id="node5" href="$classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="173,59,312,88"/>
-<area shape="rect" id="node7" href="$classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="164,112,321,141"/>
-<area shape="rect" id="node9" href="$classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="169,165,316,195"/>
+<area shape="rect" id="node1" href="$classmdt_port_config_widget.html" title="mdtPortConfigWidget" alt="" coords="5,5,152,35"/>
 </map>

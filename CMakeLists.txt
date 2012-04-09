@@ -26,8 +26,8 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # Project version
 set (VERSION_MAJOR 0)
-set (VERSION_MINOR 0)
-set (VERSION_MICRO 1)
+set (VERSION_MINOR 2)
+set (VERSION_MICRO 3)
 
 # Config file
 configure_file (
@@ -54,6 +54,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 
 # *** Librairies section ***
 
@@ -82,6 +83,12 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtport")
 # * mdtserialport *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
+# * mdttools *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
+
+
+# *** Mini test programm section ***
+
 # Exécutable pour tests
 add_executable (essais src/main.cpp)
 # Librairies à lier
@@ -90,6 +97,7 @@ target_link_libraries(essais "mdtutilsgui")
 target_link_libraries(essais "mdtport")
 target_link_libraries(essais "mdtserialport")
 target_link_libraries(essais "mdtdevice")
+target_link_libraries(essais "mdttools")
 target_link_libraries(essais ${QT_LIBRARIES})
 
 # *** Unit tests section ***

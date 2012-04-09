@@ -1,18 +1,24 @@
 window_sizes 1280 1002 358 916 808 120
-diagrams
-  classdiagram_ref 169218 // mdtSerialPortManager
-    916 808 100 4 0 0
-  classdiagram_ref 294658 // mdtPortManager
-    732 646 100 4 12 0
-  classdiagram_ref 360706 // mdtAbstractSerialPort
-    732 646 100 4 376 0
-  active  classdiagram_ref 381698 // mdtSerialPortCtlWidget
-    916 808 100 4 0 0
-end
 show_stereotypes
-selected operation_ref 744706 // updateTxTimeoutState
+selected operation_ref 754178 // flushOut
 open
-  classview_ref 128002 // mdtSerialPort
+  operation_ref 753410 // isOn
+  operation_ref 753666 // resumeTransmission
+  operation_ref 754178 // flushOut
+  operation_ref 722818 // mdtAbstractPort
+  operation_ref 752770 // ioProcessBegin
+  class_ref 222850 // mdtPortReadThread
+  operation_ref 752130 // newDataReaden
+  operation_ref 722562 // mdtPortManager
+  classview_ref 260482 // mdtSerialPortManager
+  classview_ref 260354 // mdtSerialPortSetupDialog
+  operation_ref 753154 // trigRxErrorState
+  operation_ref 753282 // trigTxErrorState
   operation_ref 744706 // updateTxTimeoutState
+  operation_ref 752002 // sendCmd
+  operation_ref 754050 // on_pbSendCmdAbort_clicked
+  operation_ref 751618 // attachToSerialPort
+  operation_ref 751874 // detachFromSerialPort
+  operation_ref 751490 // mdtPortTerm
 end
 end

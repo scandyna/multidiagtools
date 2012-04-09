@@ -120,9 +120,11 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the write thread.  <a href="#ac769ac4eb2b43a5a37be5b5d2a7bccbc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a29b0d41eb5b72ef58031e4b7c96bb7e5">stopWriting</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the write thread.  <a href="#a29b0d41eb5b72ef58031e4b7c96bb7e5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">start</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">start</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start reading and writing threads.  <a href="#af1fb103ffafc227337a59c7e82f44fbc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2">isRunning</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the running state.  <a href="#af460167e604b8b6e2e933a98b2b6b5a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop reading and writing threads.  <a href="#aacbf87cc3d9c37c87e21696f8a6514bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a6d3cc4e522326e2a6ca0da401ae58271">writeData</a> (QByteArray data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a6d3cc4e522326e2a6ca0da401ae58271"></a><br/></td></tr>
@@ -229,6 +231,26 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFra
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14678b0e2470d9f5218ac905ce" title="Set the config object.">setConfig()</a> </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">mdtSerialPortManager</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af460167e604b8b6e2e933a98b2b6b5a2"></a><!-- doxytag: member="mdtPortManager::isRunning" ref="af460167e604b8b6e2e933a98b2b6b5a2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortManager::isRunning </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the running state. </p>
+<p>If port was set, it returns false.<br/>
+ If one of the threads is running, true is returned. </p>
 
 </div>
 </div>
@@ -358,7 +380,7 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
           <td class="memname">bool mdtPortManager::start </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -369,6 +391,8 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4" title="Start the read thread.">startReading()</a> </dd>
 <dd>
 <a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc" title="Start the write thread.">startWriting()</a> </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">mdtSerialPortManager</a>.</p>
 
 </div>
 </div>
@@ -425,7 +449,7 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
           <td class="memname">void mdtPortManager::stop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -434,6 +458,8 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 <p>Stop reading and writing threads. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start reading and writing threads.">start()</a> </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298">mdtSerialPortManager</a>.</p>
 
 </div>
 </div>
@@ -552,7 +578,7 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

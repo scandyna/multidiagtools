@@ -43,6 +43,8 @@
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPortCtlWidget.h"
 
+#include "mdtPortTerm.h"
+
 int main(int argc, char **argv)
 {
   QApplication app(argc, argv);
@@ -58,27 +60,28 @@ int main(int argc, char **argv)
     qDebug() << "main(): unable to init the error system";
     return 1;
   }
-  mdtErrorOut::setDialogLevelsMask(mdtError::Info | mdtError::Warning | mdtError::Error);
+  ///mdtErrorOut::setDialogLevelsMask(mdtError::Info | mdtError::Warning | mdtError::Error);
+  mdtErrorOut::setDialogLevelsMask(mdtError::Error);
 
+  // Port term
+  mdtPortTerm pt;
+  pt.show();
+  
+  
   // Port manager
-  mdtSerialPortManager *portManager = new mdtSerialPortManager;
-  mdtAbstractSerialPort *sp = &portManager->port();
+  //mdtSerialPortManager *portManager = new mdtSerialPortManager;
+  //mdtAbstractSerialPort *sp = &portManager->port();
 
   // Essais avec Ctl LEDs
-  mdtSerialPortCtlWidget ctls;
-  ctls.makeConnections(sp);
+  //mdtSerialPortCtlWidget ctls;
+  //ctls.makeConnections(sp);
 
-  
-  
-  
   // Essais serial port dialog
-  mdtSerialPortSetupDialog dlg;
-  dlg.setPortManager(portManager);
-  dlg.show();
+  //mdtSerialPortSetupDialog dlg;
+  //dlg.setPortManager(portManager);
+  //dlg.show();
 
-  ctls.show();
-  
-  
+  //ctls.show();
   //mdtDeviceU3606AWidget dw;
   //dw.show();
 
@@ -113,7 +116,7 @@ int main(int argc, char **argv)
 
   // Free the error system
   mdtErrorOut::destroy();
-  delete portManager;
+  //delete portManager;
   
   return retVal;
 

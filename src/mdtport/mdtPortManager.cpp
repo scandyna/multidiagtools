@@ -222,7 +222,10 @@ bool mdtPortManager::writeData(QByteArray data)
 
 QByteArray &mdtPortManager::lastReadenFrame()
 {
-  return pvLastReadenFrame;
+  pvLastReadenData = pvLastReadenFrame;
+  pvLastReadenFrame.clear();
+
+  return pvLastReadenData;
 }
 
 bool mdtPortManager::waitReadenFrame(int timeout)
@@ -241,31 +244,51 @@ bool mdtPortManager::waitReadenFrame(int timeout)
   return true;
 }
 
+mdtPortReadThread *mdtPortManager::readThread()
+{
+  Q_ASSERT(pvReadThread != 0);
+
+  return pvReadThread;
+}
+
+mdtPortWriteThread *mdtPortManager::writeThread()
+{
+  Q_ASSERT(pvWriteThread != 0);
+
+  return pvWriteThread;
+}
+
 void mdtPortManager::newFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame;
 
-  // Get a frame in readen queue
+  // Get frames in readen queue
   pvPort->lockMutex();
-  Q_ASSERT(pvPort->readenFrames().size() > 0);
-  frame = pvPort->readenFrames().dequeue();
-  Q_ASSERT(frame != 0);
-  // Copy data and put frame back to pool
-  pvLastReadenFrame.append(frame->data(), frame->size());
-  pvPort->readFramesPool().enqueue(frame);
+  while(pvPort->readenFrames().size() > 0){
+    frame = pvPort->readenFrames().dequeue();
+    Q_ASSERT(frame != 0);
+    // Copy data and put frame back to pool
+    pvLastReadenFrame.append(frame->data(), frame->size());
+    pvPort->readFramesPool().enqueue(frame);
+  };
   pvPort->unlockMutex();
+  emit(newDataReaden());
 }
 
 void mdtPortManager::onThreadsErrorOccured(int error)
 {
   // On IO error, we try to re-open the port
   if(error == MDT_PORT_IO_ERROR){
+    qDebug() << "I/O error !";
     closePort();
     if(!openPort()){
       return;
     }
     start();
+  }
+  if(error == MDT_PORT_QUEUE_EMPY_ERROR){
+    qDebug() << "Queue empty !";
   }
 }

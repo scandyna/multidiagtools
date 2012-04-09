@@ -37,8 +37,17 @@ Collaboration diagram for mdtSerialPortManager:
 \begin{DoxyCompactList}\small\item\em Contruct a serial port manager. \end{DoxyCompactList}\item 
 QStringList \hyperlink{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available serial ports. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}{
+void \hyperlink{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}{setPort} (\hyperlink{classmdt_serial_port}{mdtSerialPort} $\ast$port)}
+\label{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}
+
+\begin{DoxyCompactList}\small\item\em Set the port Affects port to the line control thread, and calls \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{mdtPortManager::setPort()} \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_serial_port_manager_a406481e80014cdd6cb83ff49c3d31685}{openPort} ()
 \begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{start} ()
+\begin{DoxyCompactList}\small\item\em Start threads. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop threads. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \& \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config} ()
 \begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} \& \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port} ()
@@ -137,6 +146,46 @@ Scan for available serial ports.
 Try to open available ports on system and get some attributes. If both steps works, the found port is considered existing. \begin{DoxyReturn}{Returns}
 List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows) 
 \end{DoxyReturn}
+\hypertarget{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{
+\index{mdtSerialPortManager@{mdtSerialPortManager}!start@{start}}
+\index{start@{start}!mdtSerialPortManager@{mdtSerialPortManager}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortManager::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}
+
+
+Start threads. 
+
+Start the line control thread, then calls \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager::start()} \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager}{mdtPortManager} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager}.
+
+\hypertarget{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}{
+\index{mdtSerialPortManager@{mdtSerialPortManager}!stop@{stop}}
+\index{stop@{stop}!mdtSerialPortManager@{mdtSerialPortManager}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortManager::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}
+
+
+Stop threads. 
+
+Calls \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{mdtPortManager::stop()} and stop the line control thread. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager}{mdtPortManager} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{mdtPortManager}.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

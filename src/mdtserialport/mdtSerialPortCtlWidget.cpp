@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtSerialPortCtlWidget.h"
+#include "mdtAbstractSerialPort.h"
 #include <QGridLayout>
 
 #include <QDebug>
@@ -65,8 +66,8 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   ldRng = new mdtLed;
   ldDsr = new mdtLed;
   ldCts = new mdtLed;
-  ldTx = new mdtLed;
-  ldRx = new mdtLed;
+  ldTx = new mdtBlinkLed;
+  ldRx = new mdtBlinkLed;
   // Fix LEDs size
   ldCar->setFixedSize(15, 15);
   ldRng->setFixedSize(15, 15);
@@ -106,16 +107,44 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   pbRts->setText(" -- ");
 }
 
-void mdtSerialPortCtlWidget::makeConnections(mdtAbstractSerialPort *port)
+void mdtSerialPortCtlWidget::makeConnections(mdtSerialPortManager *manager)
 {
+  Q_ASSERT(manager != 0);
+
+  mdtAbstractSerialPort *port = &manager->port();
+  Q_ASSERT(port != 0);
+
+  // Modem lines
   connect(port, SIGNAL(carChanged(bool)), ldCar, SLOT(setOn(bool)));
   connect(port, SIGNAL(rngChanged(bool)), ldRng, SLOT(setOn(bool)));
   connect(port, SIGNAL(dsrChanged(bool)), ldDsr, SLOT(setOn(bool)));
   connect(port, SIGNAL(ctsChanged(bool)), ldCts, SLOT(setOn(bool)));
-  connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(updateTxTimeoutState(bool)));
-  connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(updateRxTimeoutState(bool)));
   connect(pbDtr, SIGNAL(toggled(bool)), port, SLOT(setDtr(bool)));
   connect(pbRts, SIGNAL(toggled(bool)), port, SLOT(setRts(bool)));
+  // TX/RX
+  connect(manager->writeThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigTxState()));
+  connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(updateTxTimeoutState(bool)));
+  connect(manager->readThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigRxState()));
+  connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(updateRxTimeoutState(bool)));
+  // IO error
+  connect(manager->writeThread(), SIGNAL(errorOccured(int)), this, SLOT(trigTxErrorState()));
+  connect(manager->readThread(), SIGNAL(errorOccured(int)), this, SLOT(trigRxErrorState()));
+}
+
+void mdtSerialPortCtlWidget::trigTxState()
+{
+  // Good TX state is not priority
+  if(ldTx->isOn()){
+    return;
+  }
+  ldTx->setGreen();
+  ldTx->setOn(100);
+}
+
+void mdtSerialPortCtlWidget::trigTxErrorState()
+{
+  ldTx->setRed();
+  ldTx->setOn(1000, true);
 }
 
 void mdtSerialPortCtlWidget::updateTxTimeoutState(bool state)
@@ -127,6 +156,22 @@ void mdtSerialPortCtlWidget::updateTxTimeoutState(bool state)
     ldTx->setGreen();
     ldTx->setOff();
   }
+}
+
+void mdtSerialPortCtlWidget::trigRxState()
+{
+  // Good RX state is not priority
+  if(ldRx->isOn()){
+    return;
+  }
+  ldRx->setGreen();
+  ldRx->setOn(100);
+}
+
+void mdtSerialPortCtlWidget::trigRxErrorState()
+{
+  ldRx->setRed();
+  ldRx->setOn(1000, true);
 }
 
 void mdtSerialPortCtlWidget::updateRxTimeoutState(bool state)

@@ -4,8 +4,7 @@
 }
 
 
-Inheritance diagram for mdtAbstractSerialPort:
-\nopagebreak
+Inheritance diagram for mdtAbstractSerialPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -14,8 +13,7 @@ Inheritance diagram for mdtAbstractSerialPort:
 \end{figure}
 
 
-Collaboration diagram for mdtAbstractSerialPort:
-\nopagebreak
+Collaboration diagram for mdtAbstractSerialPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -45,6 +43,13 @@ enum \hyperlink{classmdt_abstract_serial_port_a56b107c57fb0acb17cfcca262abe6a54}
 {\bfseries UT\_\-RSA}
  \}
 \begin{DoxyCompactList}\small\item\em UART type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{setRts} (bool on)=0
+\begin{DoxyCompactList}\small\item\em Enable/diseable the RTS (Request To Send) signal. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{setDtr} (bool on)=0
+\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -81,10 +86,6 @@ QList$<$ int $>$ \& \hyperlink{classmdt_abstract_serial_port_aecd76bff0f93cb86c3
 \label{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}
 
 \begin{DoxyCompactList}\small\item\em Get the list of available baud rates. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{setRts} (bool on)=0
-\begin{DoxyCompactList}\small\item\em Enable/diseable the RTS (Request To Send) signal. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{setDtr} (bool on)=0
-\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{waitEventCtl} ()=0
 \begin{DoxyCompactList}\small\item\em Wait until a control (modem line) signal state changes. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{getCtlStates} ()=0
@@ -255,13 +256,15 @@ Emited whenn RNG (RI) status changed.
 \begin{DoxyParamCaption}
 \item[{bool}]{on}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
 \label{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}
 
 
 Enable/diseable the DTR (Data Terminal Ready) signal. 
 
-This method must be re-\/implemented in plateform specific subclass. 
+This method must be re-\/implemented in plateform specific subclass.\par
+ If port is not open, this method must make no system call.\par
+ This method locks the mutex. 
 \begin{DoxyParams}{Parameters}
 {\em on} & If true, DTR will be enabled, diseabled else \\
 \hline
@@ -277,13 +280,15 @@ Implemented in \hyperlink{classmdt_serial_port_posix_a0d489a938cba216ab43d3ae591
 \begin{DoxyParamCaption}
 \item[{bool}]{on}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual, slot\mbox{]}}}}
 \label{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}
 
 
 Enable/diseable the RTS (Request To Send) signal. 
 
-This method must be re-\/implemented in plateform specific subclass. 
+This method must be re-\/implemented in plateform specific subclass.\par
+ If port is not open, this method must make no system call.\par
+ This method locks the mutex. 
 \begin{DoxyParams}{Parameters}
 {\em on} & If true, RTS will be enabled, diseabled else \\
 \hline
@@ -317,5 +322,4 @@ Implemented in \hyperlink{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtserialport/mdtAbstractSerialPort.h\item 
-src/mdtserialport/mdtAbstractSerialPort.cpp\item 
-src/mdtserialport/moc\_\-mdtAbstractSerialPort.cxx\end{DoxyCompactItemize}
+src/mdtserialport/mdtAbstractSerialPort.cpp\end{DoxyCompactItemize}

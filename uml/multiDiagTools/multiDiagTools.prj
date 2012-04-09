@@ -1,6 +1,6 @@
 format 76
 "multiDiagTools"
-  revision 10
+  revision 11
   modified_by 2 "philippe"
   cpp_root_dir "cpp_gen/"
 
@@ -48,6 +48,8 @@ format 76
   package_ref 148226 // mdtserialport
 
   package_ref 161538 // mdtdevice
+
+  package_ref 181506 // mdttools
 
   package_ref 134530 // mdtTest
 

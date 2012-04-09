@@ -380,7 +380,7 @@ qint64 mdtSerialPortPosix::read(char *data, qint64 maxSize)
         updateReadTimeoutState(true);
         return 0;
       default:
-        mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
+        mdtError e(MDT_PORT_IO_ERROR, "read() call failed", mdtError::Error);
         e.setSystemError(err, strerror(err));
         MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
         e.commit();
@@ -389,6 +389,67 @@ qint64 mdtSerialPortPosix::read(char *data, qint64 maxSize)
   }
 
   return n;
+}
+
+bool mdtSerialPortPosix::suspendTransmission()
+{
+  int err;
+
+  if(flowCtlRtsCtsOn()){
+    if(!setRtsOff()){
+      return false;
+    }
+  }
+  if(flowCtlXonXoffOn()){
+    if(tcflow(pvFd, TCIOFF) < 0){
+      err = errno;
+      mdtError e(MDT_PORT_IO_ERROR, "tcflow() call failed", mdtError::Error);
+      e.setSystemError(err, strerror(err));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtSerialPortPosix::resumeTransmission()
+{
+  int err;
+
+  if(flowCtlRtsCtsOn()){
+    if(!setRtsOn()){
+      return false;
+    }
+  }
+  if(flowCtlXonXoffOn()){
+    if(tcflow(pvFd, TCION) < 0){
+      err = errno;
+      mdtError e(MDT_PORT_IO_ERROR, "tcflow() call failed", mdtError::Error);
+      e.setSystemError(err, strerror(err));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void mdtSerialPortPosix::flushIn()
+{
+  int err;
+
+  lockMutex();
+  if(tcflush(pvFd, TCIFLUSH) < 0){
+    err = errno;
+    mdtError e(MDT_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+  }
+  mdtAbstractPort::flushIn();
 }
 
 bool mdtSerialPortPosix::waitEventWriteReady()
@@ -433,7 +494,7 @@ qint64 mdtSerialPortPosix::write(const char *data, qint64 maxSize)
       case EAGAIN:    // Can't write now
         return 0;
       default:
-        mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
+        mdtError e(MDT_PORT_IO_ERROR, "write() call failed", mdtError::Error);
         e.setSystemError(err, strerror(err));
         MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
         e.commit();
@@ -442,6 +503,21 @@ qint64 mdtSerialPortPosix::write(const char *data, qint64 maxSize)
   }
 
   return n;
+}
+
+void mdtSerialPortPosix::flushOut()
+{
+  int err;
+
+  lockMutex();
+  if(tcflush(pvFd, TCOFLUSH) < 0){
+    err = errno;
+    mdtError e(MDT_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+  }
+  mdtAbstractPort::flushOut();
 }
 
 bool mdtSerialPortPosix::waitEventCtl()
@@ -540,33 +616,14 @@ bool mdtSerialPortPosix::getCtlStates()
 
 void mdtSerialPortPosix::setRts(bool on)
 {
-  int states;
-
   if(!isOpen()){
     return;
   }
   pvMutex.lock();
-  // Get the current ctl states
-  if(ioctl(pvFd, TIOCMGET, &states) < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
-    e.commit();
-    pvMutex.unlock();
-    return;
-  }
-  // Set RTS state
   if(on){
-    states |= TIOCM_RTS;
+    setRtsOn();
   }else{
-    states &= ~TIOCM_RTS;
-  }
-  // Commit to system
-  if(ioctl(pvFd, TIOCMSET, &states) < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
-    e.commit();
+    setRtsOff();
   }
   pvMutex.unlock();
 }
@@ -1120,4 +1177,56 @@ bool mdtSerialPortPosix::checkConfig(mdtSerialPortConfig cfg)
 
 void mdtSerialPortPosix::sigactionHandle(int/*signum*/)
 {
+}
+
+bool mdtSerialPortPosix::setRtsOn()
+{
+  int states;
+
+  // Get the current ctl states
+  if(ioctl(pvFd, TIOCMGET, &states) < 0){
+    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
+  }
+  // Set RTS state
+  states |= TIOCM_RTS;
+  // Commit to system
+  if(ioctl(pvFd, TIOCMSET, &states) < 0){
+    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtSerialPortPosix::setRtsOff()
+{
+  int states;
+
+  // Get the current ctl states
+  if(ioctl(pvFd, TIOCMGET, &states) < 0){
+    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
+  }
+  // Set RTS state
+  states &= ~TIOCM_RTS;
+  // Commit to system
+  if(ioctl(pvFd, TIOCMSET, &states) < 0){
+    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
+    e.commit();
+    return false;
+  }
+
+  return true;
 }

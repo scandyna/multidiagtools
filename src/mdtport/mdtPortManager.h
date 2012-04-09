@@ -222,6 +222,20 @@ class mdtPortManager : public QThread
    */
   QByteArray &lastReadenFrame();
 
+  /*! \brief Get read thread object
+   * 
+   * Note that thread object should not be used without care.
+   * \pre setPort() must be called before, because threads are created at this time (becaus of subclassing).
+   */
+  mdtPortReadThread *readThread();
+
+  /*! \brief Get write thread object
+   * 
+   * Note that thread object should not be used without care.
+   * \pre setPort() must be called before, because threads are created at this time (becaus of subclassing).
+   */
+  mdtPortWriteThread *writeThread();
+
  public slots:
 
   /*! \brief Called by the read thread whenn a complete frame was readen
@@ -233,13 +247,21 @@ class mdtPortManager : public QThread
    */
   void onThreadsErrorOccured(int error);
 
+ signals:
+
+  /*! \brief Emitted when new data was readen
+   * \sa newFrameReaden()
+   */
+  void newDataReaden();
+  
  protected:
 
   mdtAbstractPort *pvPort;
   mdtPortReadThread *pvReadThread;
   mdtPortWriteThread *pvWriteThread;
   mdtPortConfig *pvConfig;
-  QByteArray pvLastReadenFrame;
+  QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
+  QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
   
  private:
 

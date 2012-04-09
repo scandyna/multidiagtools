@@ -27,10 +27,11 @@
 /*! \brief error list
  */
 enum mdt_error_t{
-  MDT_NO_ERROR = 0,
-  MDT_UNDEFINED_ERROR,
-  MDT_FILE_IO_ERROR,
-  MDT_PORT_IO_ERROR,
+  MDT_NO_ERROR = 0,             /*!< No error */
+  MDT_UNDEFINED_ERROR = -1000,  /*!< Unknow error */
+  MDT_FILE_IO_ERROR,            /*!< File I/O error */
+  MDT_PORT_IO_ERROR,            /*!< Unknow port I/O error */
+  MDT_PORT_QUEUE_EMPY_ERROR,    /*!< A I/O Queue is empty \sa mdtPortThread */
   MDT_SERIAL_PORT_IO_ERROR,
   MDT_USB_IO_ERROR,
   MDT_TCP_IO_ERROR,

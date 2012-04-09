@@ -166,6 +166,12 @@ qint64 mdtPortPosix::read(char *data, qint64 maxSize)
   return n;
 }
 
+void mdtPortPosix::flushIn()
+{
+  lockMutex();
+  mdtAbstractPort::flushIn();
+}
+
 bool mdtPortPosix::waitEventWriteReady()
 {
   fd_set output;
@@ -217,4 +223,10 @@ qint64 mdtPortPosix::write(const char *data, qint64 maxSize)
   }
 
   return n;
+}
+
+void mdtPortPosix::flushOut()
+{
+  lockMutex();
+  mdtAbstractPort::flushOut();
 }

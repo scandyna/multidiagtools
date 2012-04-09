@@ -66,11 +66,23 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   // Implemtation of mdtAbstractPort method
   qint64 read(char *data, qint64 maxSize);
 
+  // Re-implementation of mdtAbstractPort method
+  bool suspendTransmission();
+
+  // Re-implementation of mdtAbstractPort method
+  bool resumeTransmission();
+
+  // Implemtation of mdtAbstractPort method
+  void flushIn();
+
   // Implemtation of mdtAbstractPort
   bool waitEventWriteReady();
 
   // Implemtation of mdtAbstractPort method
   qint64 write(const char *data, qint64 maxSize);
+
+  // Implemtation of mdtAbstractPort method
+  void flushOut();
 
   // Wait until a control signal (modem line state) changes
   bool waitEventCtl();
@@ -133,6 +145,10 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   
   // Used to catch the SIGALRM signal (doese nothing else)
   static void sigactionHandle(int signum);
+
+  // Set the RTS ON/OFF
+  bool setRtsOn();
+  bool setRtsOff();
 
   struct termios pvTermios;         // Termios configuration structure
   struct termios pvOriginalTermios; // Original termios configuration structure to restore

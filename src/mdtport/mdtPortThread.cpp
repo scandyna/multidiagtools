@@ -29,6 +29,7 @@ mdtPortThread::mdtPortThread(QObject *parent)
 {
   pvPort = 0;
   pvRunning = false;
+  pvMinPoolSizeBeforeReadSuspend = 0;
   pvWriteMinWaitTime = 0;
   pvUseReadTimeoutProtocol = false;
 }
@@ -46,6 +47,10 @@ void mdtPortThread::setPort(mdtAbstractPort *port)
   Q_ASSERT(!QThread::isRunning());
 
   pvPort = port;
+  pvMinPoolSizeBeforeReadSuspend = pvPort->config().readQueueSize() / 4;
+  if((pvMinPoolSizeBeforeReadSuspend < 1)&&(pvPort->config().readQueueSize() > 0)){
+    pvMinPoolSizeBeforeReadSuspend = 1;
+  }
   pvWriteMinWaitTime = pvPort->config().writeMinWaitTime();
   pvBytePerByteWrite = pvPort->config().bytePerByteWrite();
   pvUseReadTimeoutProtocol = pvPort->config().useReadTimeoutProtocol();

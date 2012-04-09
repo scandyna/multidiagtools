@@ -37,6 +37,7 @@ class mdtLed : public QWidget
  Q_OBJECT
 
  public:
+
   /*! \brief Contruct a new mdtLED
    *
    */
@@ -109,6 +110,10 @@ class mdtLed : public QWidget
 
   QSize sizeHint() const;
   QSize minimumSizeHint() const;
+
+  /*! \brief Get the LED ON state
+   */
+  bool isOn();
 
  public slots:
 

@@ -22,11 +22,12 @@
 #include "mdtError.h"
 #include <QApplication>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
 {
+  pvTransmissionSuspended = false;
 }
 
 mdtFrame *mdtPortReadThread::getNewFrame()
@@ -40,6 +41,23 @@ mdtFrame *mdtPortReadThread::getNewFrame()
     MDT_ERROR_SET_SRC(e, "mdtPortReadThread");
     e.commit();
     return 0;
+  }
+  if(pvPort->readFramesPool().size() < pvMinPoolSizeBeforeReadSuspend){
+    if(!pvPort->suspendTransmission()){
+      pvRunning = false;
+      return 0;
+    }
+    pvTransmissionSuspended = true;
+    qDebug() << "RTHD: requ SUSPEND";
+  }else{
+    if(pvTransmissionSuspended){
+      if(!pvPort->resumeTransmission()){
+        pvRunning = false;
+        return 0;
+      }
+      pvTransmissionSuspended = false;
+      qDebug() << "RTHD: requ Resume";
+    }
   }
   frame = pvPort->readFramesPool().dequeue();
   Q_ASSERT(frame != 0);
@@ -126,6 +144,7 @@ void mdtPortReadThread::run()
       // Reset bufferCursor
       bufferCursor = buffer;
       // Read data from port
+      emit ioProcessBegin();
       readen = pvPort->read(buffer, bufferSize);
       //qDebug() << "RX thread, readen: " << readen << " , buffer: " << buffer;
       if(readen < 0){
@@ -144,6 +163,7 @@ void mdtPortReadThread::run()
           if(frame == 0){
             // Pool empty. Try later
             pvPort->unlockMutex();
+            emit(errorOccured(MDT_PORT_QUEUE_EMPY_ERROR));
             msleep(100);
             // Check about end of thread
             pvPort->lockMutex();

@@ -142,9 +142,45 @@ class mdtAbstractPort : public QObject
    * This method must be implemented in subclass.<br>
    * Note: this method is called from thread , and should not be used directly<br>
    * Mutex is not handled by this method.
-   * \return Number of bytes readen, or <0 on error
+   * \return Number of bytes readen, or a error < 0
    */
   virtual qint64 read(char *data, qint64 maxSize) = 0;
+
+  /*! \brief Request to suspend transmission
+   *
+   * This method must be implemented in subclass if requierd.<br>
+   * Note about serial port subclass:<br>
+   *  the right flow control must be used regarding enabled flow control.<br>
+   * Default implementation does nothing.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
+   * \return False on error, in this case, the reader thread will be stopped.
+   */
+  virtual bool suspendTransmission();
+
+  /*! \brief Request to resume transmission
+   *
+   * This method must be implemented in subclass if requierd.<br>
+   * Note about serial port subclass:<br>
+   *  the right flow control must be used regarding enabled flow control.<br>
+   * Default implementation does nothing.<br>
+   * Note: this method is called from thread , and should not be used directly<br>
+   * Mutex is not handled by this method.
+   * \return False on error, in this case, the reader thread will be stopped.
+   */
+  virtual bool resumeTransmission();
+
+  /*! \brief Flush read buffers
+   * 
+   * This method must be implemented in subclass.<br>
+   * To handle port correctly, subclass must:
+   *  - Lock the mutex with lockMutex()
+   *  - Call specific system flush function
+   *  - Call this flush method ( with mdtAbstractPort::flushIn() ).
+   * The last step will move all pending frames to read pool.<br>
+   * Note: if subclass has nothing to do it must lock the mutex and call this method.
+   */
+  virtual void flushIn();
 
   /*! \brief Just for special cases
    * 
@@ -181,6 +217,18 @@ class mdtAbstractPort : public QObject
    * \return Number of bytes written, or <0 on error
    */
   virtual qint64 write(const char *data, qint64 maxSize) = 0;
+
+  /*! \brief Flush write buffers
+   * 
+   * This method must be implemented in subclass.<br>
+   * To handle port correctly, subclass must:
+   *  - Lock the mutex with lockMutex()
+   *  - Call specific system flush function
+   *  - Call this flush method ( with mdtAbstractPort::flushOut() ).
+   * The last step will move all pending frames to read pool.<br>
+   * Note: if subclass has nothing to do it must lock the mutex and call this method.
+   */
+  virtual void flushOut();
 
   /*! \brief Update the read timeout state
    *

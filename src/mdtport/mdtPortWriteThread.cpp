@@ -90,6 +90,7 @@ void mdtPortWriteThread::run()
       }
       if(frame != 0){
         // Write data to port
+        emit ioProcessBegin();
         if((toWrite > 0)&&(pvBytePerByteWrite)){
           written = pvPort->write(bufferCursor, 1);
         }else{

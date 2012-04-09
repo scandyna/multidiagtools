@@ -88,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00027"></a>00027 <span class="preprocessor">#include &quot;mdtAbstractSerialPort.h&quot;</span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &quot;mdtSerialPort.h&quot;</span>
 <a name="l00029"></a>00029 <span class="preprocessor">#include &quot;mdtSerialPortConfig.h&quot;</span>
-<a name="l00030"></a>00030 
+<a name="l00030"></a>00030 <span class="preprocessor">#include &quot;mdtSerialPortCtlThread.h&quot;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &quot;mdtPortManager.h&quot;</span>
 <a name="l00032"></a>00032 
 <a name="l00040"></a><a class="code" href="classmdt_serial_port_manager.html">00040</a> <span class="keyword">class </span><a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> : <span class="keyword">public</span> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>
@@ -100,19 +100,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00050"></a>00050 
 <a name="l00057"></a>00057   QStringList <a class="code" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff" title="Scan for available serial ports.">scan</a>();
 <a name="l00058"></a>00058 
-<a name="l00063"></a>00063   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685" title="Open the port.">openPort</a>();
+<a name="l00063"></a>00063   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_manager.html#aa33e4efc1a98d8e2edf8eee7a15b6cad" title="Set the port Affects port to the line control thread, and calls mdtPortManager::setPort()">setPort</a>(<a class="code" href="classmdt_serial_port.html">mdtSerialPort</a> *<a class="code" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d" title="Get the serial port instance.">port</a>);
 <a name="l00064"></a>00064 
-<a name="l00069"></a>00069   <a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;<a class="code" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416" title="Get the config object.">config</a>();
+<a name="l00069"></a>00069   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685" title="Open the port.">openPort</a>();
 <a name="l00070"></a>00070 
-<a name="l00074"></a>00074   <a class="code" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp;<a class="code" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d" title="Get the serial port instance.">port</a>();
-<a name="l00075"></a>00075   
-<a name="l00076"></a>00076  <span class="keyword">private</span>:
+<a name="l00076"></a>00076   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412" title="Start threads.">start</a>();
 <a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="comment">// Diseable copy</span>
-<a name="l00079"></a>00079   <a class="code" href="classmdt_serial_port_manager.html#a6508372bcab37a73546fc2c24ee6415c" title="Contruct a serial port manager.">mdtSerialPortManager</a>(<a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> &amp;other);
-<a name="l00080"></a>00080 };
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H</span>
+<a name="l00083"></a>00083   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298" title="Stop threads.">stop</a>();
+<a name="l00084"></a>00084 
+<a name="l00089"></a>00089   <a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;<a class="code" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416" title="Get the config object.">config</a>();
+<a name="l00090"></a>00090 
+<a name="l00094"></a>00094   <a class="code" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp;<a class="code" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d" title="Get the serial port instance.">port</a>();
+<a name="l00095"></a>00095   
+<a name="l00096"></a>00096  <span class="keyword">private</span>:
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   <span class="comment">// Diseable copy</span>
+<a name="l00099"></a>00099   <a class="code" href="classmdt_serial_port_manager.html#a6508372bcab37a73546fc2c24ee6415c" title="Contruct a serial port manager.">mdtSerialPortManager</a>(<a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> &amp;other);
+<a name="l00100"></a>00100   
+<a name="l00101"></a>00101   <a class="code" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> pvCtlThread;
+<a name="l00102"></a>00102 };
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -129,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 11:59:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

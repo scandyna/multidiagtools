@@ -59,11 +59,17 @@ class mdtPortPosix : public mdtAbstractPort
   // Implemtation of mdtAbstractPort method
   qint64 read(char *data, qint64 maxSize);
 
+  // Implemtation of mdtAbstractPort method
+  void flushIn();
+
   // Implemtation of mdtAbstractPort
   bool waitEventWriteReady();
 
   // Implemtation of mdtAbstractPort method
   qint64 write(const char *data, qint64 maxSize);
+
+  // Implemtation of mdtAbstractPort method
+  void flushOut();
 
  protected:
 

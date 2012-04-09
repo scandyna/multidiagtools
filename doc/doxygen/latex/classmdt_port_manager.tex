@@ -13,8 +13,7 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdtPortManager:
-\nopagebreak
+Inheritance diagram for mdtPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtPortManager:
 \end{figure}
 
 
-Collaboration diagram for mdtPortManager:
-\nopagebreak
+Collaboration diagram for mdtPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -69,9 +67,11 @@ bool \hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWr
 \begin{DoxyCompactList}\small\item\em Start the write thread. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}{stopWriting} ()
 \begin{DoxyCompactList}\small\item\em Stop the write thread. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start} ()
+virtual bool \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start} ()
 \begin{DoxyCompactList}\small\item\em Start reading and writing threads. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{stop} ()
+bool \hyperlink{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{isRunning} ()
+\begin{DoxyCompactList}\small\item\em Get the running state. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{stop} ()
 \begin{DoxyCompactList}\small\item\em Stop reading and writing threads. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}{writeData} (QByteArray data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
@@ -201,7 +201,21 @@ Config must be set with \hyperlink{classmdt_port_manager_a087ade14678b0e2470d9f5
 
 Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{mdtSerialPortManager}.
 
-\hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
+\hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
+\index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{isRunning}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::isRunning (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}
+
+
+Get the running state. 
+
+If port was set, it returns false.\par
+ If one of the threads is running, true is returned. \hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
 \index{mdtPortManager@{mdtPortManager}!newFrameReaden@{newFrameReaden}}
 \index{newFrameReaden@{newFrameReaden}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newFrameReaden (
@@ -315,7 +329,7 @@ True on success, false else
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}
 
 
@@ -329,6 +343,10 @@ Start reading and writing threads.
 
 \hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting()} 
 \end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{mdtSerialPortManager}.
+
 \hypertarget{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{
 \index{mdtPortManager@{mdtPortManager}!startReading@{startReading}}
 \index{startReading@{startReading}!mdtPortManager@{mdtPortManager}}
@@ -381,7 +399,7 @@ mdtThread
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}
 
 
@@ -393,6 +411,10 @@ Stop reading and writing threads.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} 
 \end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}{mdtSerialPortManager}.
+
 \hypertarget{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}{
 \index{mdtPortManager@{mdtPortManager}!stopReading@{stopReading}}
 \index{stopReading@{stopReading}!mdtPortManager@{mdtPortManager}}

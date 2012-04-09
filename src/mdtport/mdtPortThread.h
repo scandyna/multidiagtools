@@ -66,6 +66,17 @@ class mdtPortThread : public QThread
 
  signals:
 
+  /*! \brief Emitted when a I/O process begins
+   * 
+   * This can be used to display read/write state.
+   * Please consider that this signal is emitted each time the I/O process begins,
+   * and not when it ends.
+   * This is because asynch I/O calls are fast, and nothing will be seend from user
+   * if we update state before/after I/O call.
+   * To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms])
+   */
+  void ioProcessBegin();
+
   /*! \brief Emitted on error
    * 
    * When a error occurs, this signal is emited.<br>
@@ -78,6 +89,7 @@ class mdtPortThread : public QThread
  protected:
 
   volatile bool pvRunning;
+  int pvMinPoolSizeBeforeReadSuspend;
   mdtAbstractPort *pvPort;
   bool pvUseReadTimeoutProtocol;  // For example: MODBUS RTU mode
   ///int pvReadMinWaitTime;

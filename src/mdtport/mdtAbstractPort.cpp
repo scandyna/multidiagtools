@@ -144,6 +144,32 @@ bool mdtAbstractPort::waitForReadyRead(int msecs)
   return waitForReadyRead();
 }
 
+bool mdtAbstractPort::suspendTransmission()
+{
+  return true;
+}
+
+bool mdtAbstractPort::resumeTransmission()
+{
+  return true;
+}
+
+void mdtAbstractPort::flushIn()
+{
+  while(pvReadenFrames.size() > 0){
+    pvReadFramesPool.enqueue(pvReadenFrames.dequeue());
+  }
+  unlockMutex();
+}
+
+void mdtAbstractPort::flushOut()
+{
+  while(pvWriteFrames.size() > 0){
+    pvWriteFramesPool.enqueue(pvWriteFrames.dequeue());
+  }
+  unlockMutex();
+}
+
 void mdtAbstractPort::readOneFrame()
 {
 }

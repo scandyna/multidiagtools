@@ -137,6 +137,11 @@ QSize mdtLed::minimumSizeHint() const
   return pvSizeHint;
 }
 
+bool mdtLed::isOn()
+{
+  return pvIsOn;
+}
+
 void mdtLed::setOn()
 {
   pvCurrentColor = pvOnColor;
