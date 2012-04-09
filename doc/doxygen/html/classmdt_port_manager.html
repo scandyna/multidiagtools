@@ -61,6 +61,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
@@ -96,6 +97,10 @@ Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e45b8e3475e5182ed12218616664d07"></a><!-- doxytag: member="mdtPortManager::onThreadsErrorOccured" ref="a7e45b8e3475e5182ed12218616664d07" args="(int error)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a7e45b8e3475e5182ed12218616664d07">onThreadsErrorOccured</a> (int error)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Manage errors comming from port threads. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="signals"></a>
+Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a000ffb4df553fad9ec90e62caaccc91f">newDataReaden</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new data was readen.  <a href="#a000ffb4df553fad9ec90e62caaccc91f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ec36523089b7528d973e29cdbc64d01"></a><!-- doxytag: member="mdtPortManager::mdtPortManager" ref="a5ec36523089b7528d973e29cdbc64d01" args="(QObject *parent=0)" -->
@@ -133,6 +138,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac289078134036e05eaa3eabc6799443a"></a><!-- doxytag: member="mdtPortManager::lastReadenFrame" ref="ac289078134036e05eaa3eabc6799443a" args="()" -->
 QByteArray &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ac289078134036e05eaa3eabc6799443a">lastReadenFrame</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last readen frame. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adb7669da204438b7b802c8efad422a71">readThread</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get read thread object.  <a href="#adb7669da204438b7b802c8efad422a71"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aeac5a4abfd2a2f4e4ecb608ca9d38fcf">writeThread</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get write thread object.  <a href="#aeac5a4abfd2a2f4e4ecb608ca9d38fcf"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af856162aab4f1c5202c1dfb330fae538"></a><!-- doxytag: member="mdtPortManager::pvPort" ref="af856162aab4f1c5202c1dfb330fae538" args="" -->
@@ -145,6 +154,8 @@ Protected Attributes</h2></td></tr>
 <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvConfig</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adaa5de4e693944494c78fe9c7e8207d2"></a><!-- doxytag: member="mdtPortManager::pvLastReadenFrame" ref="adaa5de4e693944494c78fe9c7e8207d2" args="" -->
 QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFrame</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27b171edec4e273e048593bbec7c37dc"></a><!-- doxytag: member="mdtPortManager::pvLastReadenData" ref="a27b171edec4e273e048593bbec7c37dc" args="" -->
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenData</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Port manager base class. </p>
@@ -254,6 +265,25 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFra
 
 </div>
 </div>
+<a class="anchor" id="a000ffb4df553fad9ec90e62caaccc91f"></a><!-- doxytag: member="mdtPortManager::newDataReaden" ref="a000ffb4df553fad9ec90e62caaccc91f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::newDataReaden </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Emitted when new data was readen. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a4a2a146021158aeb72f9f4b6d62b6dd0" title="Called by the read thread whenn a complete frame was readen.">newFrameReaden()</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a4a2a146021158aeb72f9f4b6d62b6dd0"></a><!-- doxytag: member="mdtPortManager::newFrameReaden" ref="a4a2a146021158aeb72f9f4b6d62b6dd0" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -297,6 +327,26 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 <a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685">mdtSerialPortManager</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adb7669da204438b7b802c8efad422a71"></a><!-- doxytag: member="mdtPortManager::readThread" ref="adb7669da204438b7b802c8efad422a71" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> * mdtPortManager::readThread </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get read thread object. </p>
+<p>Note that thread object should not be used without care. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before, because threads are created at this time (becaus of subclassing). </dd></dl>
 
 </div>
 </div>
@@ -559,6 +609,26 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 
 </div>
 </div>
+<a class="anchor" id="aeac5a4abfd2a2f4e4ecb608ca9d38fcf"></a><!-- doxytag: member="mdtPortManager::writeThread" ref="aeac5a4abfd2a2f4e4ecb608ca9d38fcf" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> * mdtPortManager::writeThread </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get write thread object. </p>
+<p>Note that thread object should not be used without care. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before, because threads are created at this time (becaus of subclassing). </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8h_source.html">mdtPortManager.h</a></li>
 <li>src/mdtport/mdtPortManager.cpp</li>
@@ -578,7 +648,7 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:05 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

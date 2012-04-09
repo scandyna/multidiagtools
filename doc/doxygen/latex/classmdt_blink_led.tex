@@ -13,8 +13,7 @@ Blinking LED.
 
 
 
-Inheritance diagram for mdtBlinkLed:
-\nopagebreak
+Inheritance diagram for mdtBlinkLed:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtBlinkLed:
 \end{figure}
 
 
-Collaboration diagram for mdtBlinkLed:
-\nopagebreak
+Collaboration diagram for mdtBlinkLed:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -36,6 +34,8 @@ Collaboration diagram for mdtBlinkLed:
 \item 
 void \hyperlink{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{setOn} ()
 \begin{DoxyCompactList}\small\item\em Set the LED ON. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_blink_led_aab370ebe5c53203947e49e794d0959a7}{setOn} (int holdTime, bool priority=false)
+\begin{DoxyCompactList}\small\item\em Set the LED ON for a given time. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}{setOff} ()
 \begin{DoxyCompactList}\small\item\em Set the LED OFF. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -133,6 +133,27 @@ Set the LED ON.
 
 Reimplemented from \hyperlink{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}{mdtLed}.
 
+\hypertarget{classmdt_blink_led_aab370ebe5c53203947e49e794d0959a7}{
+\index{mdtBlinkLed@{mdtBlinkLed}!setOn@{setOn}}
+\index{setOn@{setOn}!mdtBlinkLed@{mdtBlinkLed}}
+\subsubsection[{setOn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtBlinkLed::setOn (
+\begin{DoxyParamCaption}
+\item[{int}]{holdTime, }
+\item[{bool}]{priority = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_blink_led_aab370ebe5c53203947e49e794d0959a7}
+
+
+Set the LED ON for a given time. 
+
+The LED will set ON and hold this state for specified time. After this time, the LED goes back OFF. 
+\begin{DoxyParams}{Parameters}
+{\em holdTime} & ON state hold time \mbox{[}ms\mbox{]} \\
+\hline
+{\em priority} & If true, cancel allready running shot. \\
+\hline
+\end{DoxyParams}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

@@ -70,6 +70,8 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481">config</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#adf45a5006218ef5660721ecdf8454b5d">ctsChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a077d8c39ed12713742f1f2ffa0dca11d">dsrChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">flushIn</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">flushOut</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">getCtlStates</a>()=0</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a53affce84400ed1519db93ccc79888f9">isOpen</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3">lockMutex</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
@@ -101,6 +103,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ab1738b5b6b78743ee2d36ccf5daa7c00">readOneFrame</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e">readTimeoutOccured</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a62c5e1f2beb6eddf740c8710ecb84ad1">readTimeoutStateChanged</a>(bool state)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">resumeTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a47c08ccb99dc6de76ae58ebeefc26857">rngChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7">setAttributes</a>(const QString &amp;portName)=0</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#aa86a8bc0bb03ac2b07bf43968dfeb189">setDtr</a>(bool on)=0</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [pure virtual, slot]</code></td></tr>
@@ -108,6 +111,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a0ef2426fbd1afbcb0701f327cc16a7cc">setRts</a>(bool on)=0</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [pure virtual, slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">setWriteTimeout</a>(int timeout)=0</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a56b107c57fb0acb17cfcca262abe6a54">sp_uart_type_t</a> enum name</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">suspendTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a6b153155d9e110336d51ec48d2cee203">uartType</a>()</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>uartTypeStr</b>() (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84">unlockMutex</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
@@ -154,7 +158,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:04 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

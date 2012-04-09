@@ -108,18 +108,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067  signals:
 <a name="l00068"></a>00068 
-<a name="l00076"></a>00076   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured</a>(<span class="keywordtype">int</span> error);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078  <span class="keyword">protected</span>:
+<a name="l00078"></a>00078   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>();
 <a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <span class="keyword">volatile</span> <span class="keywordtype">bool</span> pvRunning;
-<a name="l00081"></a>00081   <a class="code" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> *pvPort;
-<a name="l00082"></a>00082   <span class="keywordtype">bool</span> pvUseReadTimeoutProtocol;  <span class="comment">// For example: MODBUS RTU mode</span>
-<a name="l00084"></a><a class="code" href="classmdt_port_thread.html#a4a048bcd95af9c7b33f077b73e117607">00084</a> <span class="comment"></span>  <span class="keywordtype">int</span> <a class="code" href="classmdt_port_thread.html#a4a048bcd95af9c7b33f077b73e117607" title="int pvReadMinWaitTime;">pvWriteMinWaitTime</a>;
-<a name="l00085"></a>00085   <span class="keywordtype">bool</span> pvBytePerByteWrite;
-<a name="l00086"></a>00086 };
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088 <span class="preprocessor">#endif  // #ifndef MDT_PORT_THREAD_H</span>
+<a name="l00087"></a>00087   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured</a>(<span class="keywordtype">int</span> error);
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089  <span class="keyword">protected</span>:
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091   <span class="keyword">volatile</span> <span class="keywordtype">bool</span> pvRunning;
+<a name="l00092"></a>00092   <span class="keywordtype">int</span> pvMinPoolSizeBeforeReadSuspend;
+<a name="l00093"></a>00093   <a class="code" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> *pvPort;
+<a name="l00094"></a>00094   <span class="keywordtype">bool</span> pvUseReadTimeoutProtocol;  <span class="comment">// For example: MODBUS RTU mode</span>
+<a name="l00096"></a><a class="code" href="classmdt_port_thread.html#a4a048bcd95af9c7b33f077b73e117607">00096</a> <span class="comment"></span>  <span class="keywordtype">int</span> <a class="code" href="classmdt_port_thread.html#a4a048bcd95af9c7b33f077b73e117607" title="int pvReadMinWaitTime;">pvWriteMinWaitTime</a>;
+<a name="l00097"></a>00097   <span class="keywordtype">bool</span> pvBytePerByteWrite;
+<a name="l00098"></a>00098 };
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100 <span class="preprocessor">#endif  // #ifndef MDT_PORT_THREAD_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -136,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:04 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

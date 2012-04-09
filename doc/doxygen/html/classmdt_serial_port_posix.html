@@ -100,10 +100,18 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#a69ecbfb420544af72301e50635c4ba39"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a55b73a33f1b9552fbb8821e356a8b930"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac153ca3658d467c5fe04dba89ead97bc">suspendTransmission</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to suspend transmission.  <a href="#ac153ca3658d467c5fe04dba89ead97bc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a83c71a904b63e09ff4bc4155bbff89ab">resumeTransmission</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to resume transmission.  <a href="#a83c71a904b63e09ff4bc4155bbff89ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#aefeb623e5b2b31bbb72f83d5735a2a8e">flushIn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#aefeb623e5b2b31bbb72f83d5735a2a8e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1">waitEventWriteReady</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to device.  <a href="#ac6e29bfccaa92509f6d86848da45bcc1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a3b70bbabeb933e25ad787f606dca0fb6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a7371414037fa039269b169856e23aae2">flushOut</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write buffers.  <a href="#a7371414037fa039269b169856e23aae2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a8ec213863c6eacfc8d3079aadc9ef43b">waitEventCtl</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#a8ec213863c6eacfc8d3079aadc9ef43b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc">getCtlStates</a> ()</td></tr>
@@ -143,6 +151,62 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </ul>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aefeb623e5b2b31bbb72f83d5735a2a8e"></a><!-- doxytag: member="mdtSerialPortPosix::flushIn" ref="aefeb623e5b2b31bbb72f83d5735a2a8e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSerialPortPosix::flushIn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush read buffers. </p>
+<p>This method must be implemented in subclass.<br/>
+ To handle port correctly, subclass must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Call specific system flush function</li>
+<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtAbstractPort::flushIn()</a> ). The last step will move all pending frames to read pool.<br/>
+ Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
+</ul>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7371414037fa039269b169856e23aae2"></a><!-- doxytag: member="mdtSerialPortPosix::flushOut" ref="a7371414037fa039269b169856e23aae2" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtSerialPortPosix::flushOut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush write buffers. </p>
+<p>This method must be implemented in subclass.<br/>
+ To handle port correctly, subclass must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Call specific system flush function</li>
+<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtAbstractPort::flushOut()</a> ). The last step will move all pending frames to read pool.<br/>
+ Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
+</ul>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -229,9 +293,36 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <p>This method must be implemented in subclass.<br/>
  Note: this method is called from thread , and should not be used directly<br/>
  Mutex is not handled by this method. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a83c71a904b63e09ff4bc4155bbff89ab"></a><!-- doxytag: member="mdtSerialPortPosix::resumeTransmission" ref="a83c71a904b63e09ff4bc4155bbff89ab" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPortPosix::resumeTransmission </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Request to resume transmission. </p>
+<p>This method must be implemented in subclass if requierd.<br/>
+ Note about serial port subclass:<br/>
+ the right flow control must be used regarding enabled flow control.<br/>
+ Default implementation does nothing.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex is not handled by this method. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -380,6 +471,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
+<a class="anchor" id="ac153ca3658d467c5fe04dba89ead97bc"></a><!-- doxytag: member="mdtSerialPortPosix::suspendTransmission" ref="ac153ca3658d467c5fe04dba89ead97bc" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPortPosix::suspendTransmission </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Request to suspend transmission. </p>
+<p>This method must be implemented in subclass if requierd.<br/>
+ Note about serial port subclass:<br/>
+ the right flow control must be used regarding enabled flow control.<br/>
+ Default implementation does nothing.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex is not handled by this method. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8ec213863c6eacfc8d3079aadc9ef43b"></a><!-- doxytag: member="mdtSerialPortPosix::waitEventCtl" ref="a8ec213863c6eacfc8d3079aadc9ef43b" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -517,7 +635,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:05 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -39,6 +39,11 @@ void \hyperlink{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{onThrea
 \label{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}
 
 \begin{DoxyCompactList}\small\item\em Manage errors comming from port threads. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}{newDataReaden} ()
+\begin{DoxyCompactList}\small\item\em Emitted when new data was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -81,7 +86,11 @@ bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitRea
 QByteArray \& \hyperlink{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}{lastReadenFrame} ()}
 \label{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}
 
-\begin{DoxyCompactList}\small\item\em Get the last readen frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the last readen frame. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$ \hyperlink{classmdt_port_manager_adb7669da204438b7b802c8efad422a71}{readThread} ()
+\begin{DoxyCompactList}\small\item\em Get read thread object. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$ \hyperlink{classmdt_port_manager_aeac5a4abfd2a2f4e4ecb608ca9d38fcf}{writeThread} ()
+\begin{DoxyCompactList}\small\item\em Get write thread object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -108,6 +117,11 @@ QByteArray \& \hyperlink{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a
 \hypertarget{classmdt_port_manager_adaa5de4e693944494c78fe9c7e8207d2}{
 QByteArray {\bfseries pvLastReadenFrame}}
 \label{classmdt_port_manager_adaa5de4e693944494c78fe9c7e8207d2}
+
+\item 
+\hypertarget{classmdt_port_manager_a27b171edec4e273e048593bbec7c37dc}{
+QByteArray {\bfseries pvLastReadenData}}
+\label{classmdt_port_manager_a27b171edec4e273e048593bbec7c37dc}
 
 \end{DoxyCompactItemize}
 
@@ -215,7 +229,23 @@ Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9c
 Get the running state. 
 
 If port was set, it returns false.\par
- If one of the threads is running, true is returned. \hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
+ If one of the threads is running, true is returned. \hypertarget{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}{
+\index{mdtPortManager@{mdtPortManager}!newDataReaden@{newDataReaden}}
+\index{newDataReaden@{newDataReaden}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{newDataReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newDataReaden (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}
+
+
+Emitted when new data was readen. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{newFrameReaden()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_manager_a4a2a146021158aeb72f9f4b6d62b6dd0}{
 \index{mdtPortManager@{mdtPortManager}!newFrameReaden@{newFrameReaden}}
 \index{newFrameReaden@{newFrameReaden}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newFrameReaden (
@@ -261,6 +291,22 @@ Config must be set with \hyperlink{classmdt_port_manager_a087ade14678b0e2470d9f5
 
 Reimplemented in \hyperlink{classmdt_serial_port_manager_a406481e80014cdd6cb83ff49c3d31685}{mdtSerialPortManager}.
 
+\hypertarget{classmdt_port_manager_adb7669da204438b7b802c8efad422a71}{
+\index{mdtPortManager@{mdtPortManager}!readThread@{readThread}}
+\index{readThread@{readThread}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{readThread}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortReadThread} $\ast$ mdtPortManager::readThread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_adb7669da204438b7b802c8efad422a71}
+
+
+Get read thread object. 
+
+Note that thread object should not be used without care. \begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} must be called before, because threads are created at this time (becaus of subclassing). 
+\end{DoxyPrecond}
 \hypertarget{classmdt_port_manager_a087ade14678b0e2470d9f5218ac905ce}{
 \index{mdtPortManager@{mdtPortManager}!setConfig@{setConfig}}
 \index{setConfig@{setConfig}!mdtPortManager@{mdtPortManager}}
@@ -497,6 +543,22 @@ The data conatined in frame will be passed to the mdtPort's write queue by copy.
 \begin{DoxyReturn}{Returns}
 True on success. False if write queue is full 
 \end{DoxyReturn}
+\hypertarget{classmdt_port_manager_aeac5a4abfd2a2f4e4ecb608ca9d38fcf}{
+\index{mdtPortManager@{mdtPortManager}!writeThread@{writeThread}}
+\index{writeThread@{writeThread}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{writeThread}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortWriteThread} $\ast$ mdtPortManager::writeThread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_aeac5a4abfd2a2f4e4ecb608ca9d38fcf}
+
+
+Get write thread object. 
+
+Note that thread object should not be used without care. \begin{DoxyPrecond}{Precondition}
+\hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} must be called before, because threads are created at this time (becaus of subclassing). 
+\end{DoxyPrecond}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

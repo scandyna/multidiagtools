@@ -107,9 +107,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00062"></a>00062 
 <a name="l00063"></a>00063   <span class="comment">// Thread implementation</span>
 <a name="l00064"></a>00064   <span class="keywordtype">void</span> run();
-<a name="l00065"></a>00065 };
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 <span class="preprocessor">#endif  // #ifndef MDT_PORT_READ_THREAD_H</span>
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066   <span class="keywordtype">bool</span> pvTransmissionSuspended; <span class="comment">// Flag used to remeber if a transmission suspend was request.</span>
+<a name="l00067"></a>00067 };
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 <span class="preprocessor">#endif  // #ifndef MDT_PORT_READ_THREAD_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -126,7 +128,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:04 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

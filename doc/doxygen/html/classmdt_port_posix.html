@@ -101,10 +101,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#a5547db404f974f1a04ba2e303b0aaed0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a1940fad77c70b3c2b7e9ae2b117f4e41">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a1940fad77c70b3c2b7e9ae2b117f4e41"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a810023fda450285fd6291347ee68eb4a">flushIn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#a810023fda450285fd6291347ee68eb4a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a6dc329dcaf343a471cf09379f563fa06">waitEventWriteReady</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to device.  <a href="#a6dc329dcaf343a471cf09379f563fa06"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a78e35734ae3088be2f2b097225bd648f">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a78e35734ae3088be2f2b097225bd648f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#abbd08f082dfc4d822806186f6fdbb80c">flushOut</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write buffers.  <a href="#abbd08f082dfc4d822806186f6fdbb80c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84faa907c02ae2e6714c2bf2c23e2cf1"></a><!-- doxytag: member="mdtPortPosix::pvFd" ref="a84faa907c02ae2e6714c2bf2c23e2cf1" args="" -->
@@ -140,6 +144,62 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a810023fda450285fd6291347ee68eb4a"></a><!-- doxytag: member="mdtPortPosix::flushIn" ref="a810023fda450285fd6291347ee68eb4a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortPosix::flushIn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush read buffers. </p>
+<p>This method must be implemented in subclass.<br/>
+ To handle port correctly, subclass must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Call specific system flush function</li>
+<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtAbstractPort::flushIn()</a> ). The last step will move all pending frames to read pool.<br/>
+ Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
+</ul>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abbd08f082dfc4d822806186f6fdbb80c"></a><!-- doxytag: member="mdtPortPosix::flushOut" ref="abbd08f082dfc4d822806186f6fdbb80c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortPosix::flushOut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush write buffers. </p>
+<p>This method must be implemented in subclass.<br/>
+ To handle port correctly, subclass must:</p>
+<ul>
+<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
+<li>Call specific system flush function</li>
+<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtAbstractPort::flushOut()</a> ). The last step will move all pending frames to read pool.<br/>
+ Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
+</ul>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -204,7 +264,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <p>This method must be implemented in subclass.<br/>
  Note: this method is called from thread , and should not be used directly<br/>
  Mutex is not handled by this method. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or &lt;0 on error </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
@@ -410,7 +470,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:05 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

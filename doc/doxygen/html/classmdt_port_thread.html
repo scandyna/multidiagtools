@@ -86,6 +86,8 @@ Collaboration diagram for mdtPortThread:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d">ioProcessBegin</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a I/O process begins.  <a href="#a8f3d8f3d70839e5ae7b108a3a199e94d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured</a> (int error)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted on error.  <a href="#ab31cbe1a85aa830cd368654d1f806326"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
@@ -107,6 +109,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59735ef01b761361b1055a0356be525a"></a><!-- doxytag: member="mdtPortThread::pvRunning" ref="a59735ef01b761361b1055a0356be525a" args="" -->
 volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvRunning</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fee9a4cf92dd375e7d5e1e71c454754"></a><!-- doxytag: member="mdtPortThread::pvMinPoolSizeBeforeReadSuspend" ref="a7fee9a4cf92dd375e7d5e1e71c454754" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>pvMinPoolSizeBeforeReadSuspend</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5c4bed0c9fb012f220fba013d0f69b8"></a><!-- doxytag: member="mdtPortThread::pvPort" ref="af5c4bed0c9fb012f220fba013d0f69b8" args="" -->
 <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvPort</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af4c41daa39ddd8f94faf0a2c2ca17e"></a><!-- doxytag: member="mdtPortThread::pvUseReadTimeoutProtocol" ref="a2af4c41daa39ddd8f94faf0a2c2ca17e" args="" -->
@@ -138,6 +142,25 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
  This can happen, for example, when a USB device becomes not present.<br/>
  <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> uses this signal. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8f3d8f3d70839e5ae7b108a3a199e94d"></a><!-- doxytag: member="mdtPortThread::ioProcessBegin" ref="a8f3d8f3d70839e5ae7b108a3a199e94d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortThread::ioProcessBegin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Emitted when a I/O process begins. </p>
+<p>This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
 </div>
 </div>
@@ -244,7 +267,7 @@ The thread must not running </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:05 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

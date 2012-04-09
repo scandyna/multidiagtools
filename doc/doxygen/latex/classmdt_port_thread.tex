@@ -23,6 +23,8 @@ Collaboration diagram for mdtPortThread:\nopagebreak
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
+void \hyperlink{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}{ioProcessBegin} ()
+\begin{DoxyCompactList}\small\item\em Emitted when a I/O process begins. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured} (int error)
 \begin{DoxyCompactList}\small\item\em Emitted on error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -52,6 +54,11 @@ bool \hyperlink{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{isFinish
 \hypertarget{classmdt_port_thread_a59735ef01b761361b1055a0356be525a}{
 volatile bool {\bfseries pvRunning}}
 \label{classmdt_port_thread_a59735ef01b761361b1055a0356be525a}
+
+\item 
+\hypertarget{classmdt_port_thread_a7fee9a4cf92dd375e7d5e1e71c454754}{
+int {\bfseries pvMinPoolSizeBeforeReadSuspend}}
+\label{classmdt_port_thread_a7fee9a4cf92dd375e7d5e1e71c454754}
 
 \item 
 \hypertarget{classmdt_port_thread_af5c4bed0c9fb012f220fba013d0f69b8}{
@@ -95,7 +102,20 @@ When a error occurs, this signal is emited.\par
  \hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_manager}{mdtPortManager} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
+\hypertarget{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}{
+\index{mdtPortThread@{mdtPortThread}!ioProcessBegin@{ioProcessBegin}}
+\index{ioProcessBegin@{ioProcessBegin}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{ioProcessBegin}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::ioProcessBegin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}
+
+
+Emitted when a I/O process begins. 
+
+This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
 \index{isFinished@{isFinished}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{isFinished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isFinished (

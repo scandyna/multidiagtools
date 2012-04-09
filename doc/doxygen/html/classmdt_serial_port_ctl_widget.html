@@ -71,16 +71,28 @@ Collaboration diagram for mdtSerialPortCtlWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_ctl_widget__coll__graph.png" border="0" usemap="#mdt_serial_port_ctl_widget_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_serial_port_ctl_widget_coll__map" id="mdt_serial_port_ctl_widget_coll__map">
-<area shape="rect" id="node2" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="52,5,116,35"/></map>
+<area shape="rect" id="node2" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="65,5,129,35"/><area shape="rect" id="node4" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="121,105,215,135"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_serial_port_ctl_widget-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adab8eba8a36782a9fbf4fa3b9fd848b0"></a><!-- doxytag: member="mdtSerialPortCtlWidget::trigTxState" ref="adab8eba8a36782a9fbf4fa3b9fd848b0" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#adab8eba8a36782a9fbf4fa3b9fd848b0">trigTxState</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Change TX LED's color. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c9ceed20ee727cfd1ef1ee971460fd1"></a><!-- doxytag: member="mdtSerialPortCtlWidget::trigTxErrorState" ref="a0c9ceed20ee727cfd1ef1ee971460fd1" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a0c9ceed20ee727cfd1ef1ee971460fd1">trigTxErrorState</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Change TX LED's color. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79cd97b8359da815298c99e6b90bc147"></a><!-- doxytag: member="mdtSerialPortCtlWidget::updateTxTimeoutState" ref="a79cd97b8359da815298c99e6b90bc147" args="(bool state)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a79cd97b8359da815298c99e6b90bc147">updateTxTimeoutState</a> (bool state)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Change TX LED's color depending state. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a739adf036e346577549a1a5e0dbcec2f"></a><!-- doxytag: member="mdtSerialPortCtlWidget::trigRxState" ref="a739adf036e346577549a1a5e0dbcec2f" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a739adf036e346577549a1a5e0dbcec2f">trigRxState</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Change TX LED's color. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8490db062b6226b4c26ef1a85afc75bd"></a><!-- doxytag: member="mdtSerialPortCtlWidget::trigRxErrorState" ref="a8490db062b6226b4c26ef1a85afc75bd" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a8490db062b6226b4c26ef1a85afc75bd">trigRxErrorState</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Change TX LED's color. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cbb9a5ef4098dec46a9330372dc882c"></a><!-- doxytag: member="mdtSerialPortCtlWidget::updateRxTimeoutState" ref="a5cbb9a5ef4098dec46a9330372dc882c" args="(bool state)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a5cbb9a5ef4098dec46a9330372dc882c">updateRxTimeoutState</a> (bool state)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Change RX LED's color depending state. <br/></td></tr>
@@ -88,19 +100,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae2fac54a22a572b5f3348322a27cced9"></a><!-- doxytag: member="mdtSerialPortCtlWidget::mdtSerialPortCtlWidget" ref="ae2fac54a22a572b5f3348322a27cced9" args="(QWidget *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtSerialPortCtlWidget</b> (QWidget *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a53ad1916aa5ffbcb63648a9029522f65">makeConnections</a> (<a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> *port)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the signals/slots connections.  <a href="#a53ad1916aa5ffbcb63648a9029522f65"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_ctl_widget.html#a9dce60a846cbf24d7ceab099ff147c18">makeConnections</a> (<a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a> *manager)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the signals/slots connections.  <a href="#a9dce60a846cbf24d7ceab099ff147c18"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a53ad1916aa5ffbcb63648a9029522f65"></a><!-- doxytag: member="mdtSerialPortCtlWidget::makeConnections" ref="a53ad1916aa5ffbcb63648a9029522f65" args="(mdtAbstractSerialPort *port)" -->
+<a class="anchor" id="a9dce60a846cbf24d7ceab099ff147c18"></a><!-- doxytag: member="mdtSerialPortCtlWidget::makeConnections" ref="a9dce60a846cbf24d7ceab099ff147c18" args="(mdtSerialPortManager *manager)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtSerialPortCtlWidget::makeConnections </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> *&#160;</td>
-          <td class="paramname"><em>port</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a> *&#160;</td>
+          <td class="paramname"><em>manager</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -108,7 +120,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Make the signals/slots connections. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>manager must be a valid pointer </dd></dl>
 
 </div>
 </div>
@@ -131,7 +143,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 8 2012 21:57:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 9 2012 17:39:05 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
