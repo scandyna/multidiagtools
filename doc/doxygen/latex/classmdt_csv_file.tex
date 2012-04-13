@@ -1,0 +1,118 @@
+\hypertarget{classmdt_csv_file}{
+\section{mdtCsvFile Class Reference}
+\label{classmdt_csv_file}\index{mdtCsvFile@{mdtCsvFile}}
+}
+
+
+Read and write CSV file.  
+
+
+
+
+{\ttfamily \#include $<$mdtCsvFile.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_csv_file_afabe0f84461413af8defaccd615886b5}{
+{\bfseries mdtCsvFile} (QObject $\ast$parent=0)}
+\label{classmdt_csv_file_afabe0f84461413af8defaccd615886b5}
+
+\item 
+bool \hyperlink{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{readLines} (QByteArray separator=\char`\"{};\char`\"{}, QByteArray dataProtection=\char`\"{}\char`\"{}, QByteArray comment=\char`\"{}\#\char`\"{})
+\begin{DoxyCompactList}\small\item\em Read the file and store data. \end{DoxyCompactList}\item 
+QStringList \& \hyperlink{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{parseLine} (const QByteArray \&line, const QByteArray \&separator, const QByteArray \&dataProtection)
+\begin{DoxyCompactList}\small\item\em Parse a string (considered as a line in a CSV file) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{
+void \hyperlink{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}{clear} ()}
+\label{classmdt_csv_file_afe815d4fbdc08c442c9b1dce447cda75}
+
+\begin{DoxyCompactList}\small\item\em Clear readen data. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}{valueAt} (int line, int column)
+\begin{DoxyCompactList}\small\item\em Get a value. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_csv_file_a089e82f55982a40587f3d9e53c7ff261}{
+QList$<$ QStringList $>$ \& \hyperlink{classmdt_csv_file_a089e82f55982a40587f3d9e53c7ff261}{lines} ()}
+\label{classmdt_csv_file_a089e82f55982a40587f3d9e53c7ff261}
+
+\begin{DoxyCompactList}\small\item\em Get content of entire file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Read and write CSV file. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{
+\index{mdtCsvFile@{mdtCsvFile}!parseLine@{parseLine}}
+\index{parseLine@{parseLine}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{parseLine}]{\setlength{\rightskip}{0pt plus 5cm}QStringList \& mdtCsvFile::parseLine (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{line, }
+\item[{const QByteArray \&}]{separator, }
+\item[{const QByteArray \&}]{dataProtection}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}
+
+
+Parse a string (considered as a line in a CSV file) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em separator} & Separator to use (typical: ; ) \\
+\hline
+{\em protection} & Data protection (typical: " ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The list of found fields 
+\end{DoxyReturn}
+\hypertarget{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{
+\index{mdtCsvFile@{mdtCsvFile}!readLines@{readLines}}
+\index{readLines@{readLines}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{readLines}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtCsvFile::readLines (
+\begin{DoxyParamCaption}
+\item[{QByteArray}]{separator = {\ttfamily \char`\"{};\char`\"{}}, }
+\item[{QByteArray}]{dataProtection = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{QByteArray}]{comment = {\ttfamily \char`\"{}\#\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_ab2d9754e50db179825813081bb129797}
+
+
+Read the file and store data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em separator} & Separator to use (typical: ; ) \\
+\hline
+{\em protection} & Data protection (typical: " ) \\
+\hline
+{\em comment} & Comment (typical: \# ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false else (see errorString() to know what happened in this case) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+separator, dataProtection and comment must not be the same 
+\end{DoxyPrecond}
+\hypertarget{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}{
+\index{mdtCsvFile@{mdtCsvFile}!valueAt@{valueAt}}
+\index{valueAt@{valueAt}!mdtCsvFile@{mdtCsvFile}}
+\subsubsection[{valueAt}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtCsvFile::valueAt (
+\begin{DoxyParamCaption}
+\item[{int}]{line, }
+\item[{int}]{column}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_csv_file_af2d0917f92dd0d0d8100edccf1d3e4ee}
+
+
+Get a value. 
+
+No value is available before \hyperlink{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{readLines()} was called. If requested index (line, column) is empty, or does not exists, a empty string is returned. The index check is done internally. 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtCsvFile.h\item 
+src/mdtutils/mdtCsvFile.cpp\end{DoxyCompactItemize}
