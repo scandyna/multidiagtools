@@ -26,6 +26,7 @@
 #include "mdtErrorOut.h"
 #include "mdtErrorTest.h"
 #include "mdtFrameCodecTest.h"
+#include "mdtFileTest.h"
 
 int main(int argc, char **argv)
 {
@@ -48,9 +49,16 @@ int main(int argc, char **argv)
   mdtFrameTest frameTest;
   mdtErrorTest errorTest;
   mdtFrameCodecTest frameCodecTest;
+  mdtFileTest fileTest;
 
   // Run test classes
   retVal = 0;
+  retVal = QTest::qExec(&fileTest, argc, argv);
+  if(retVal!=0){
+    return retVal;
+  }
+  return 1; /// NOTE: provisoire
+  
   retVal = QTest::qExec(&algorithmsTest, argc, argv);
   if(retVal!=0){
     return retVal;
@@ -73,9 +81,9 @@ int main(int argc, char **argv)
   }
 
   // Enable this warning if a test is temporary diseabled
-  //qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
+  qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
 
   // Free the error system
   mdtErrorOut::destroy();
-  return 0;
+  return 1;
 }

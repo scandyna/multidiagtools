@@ -1,24 +1,19 @@
 window_sizes 1280 1002 358 916 808 120
+diagrams
+  active  classdiagram_ref 394882 // mdtCsvFile
+    916 808 100 4 0 0
+end
 show_stereotypes
-selected operation_ref 754178 // flushOut
+selected deploymentview_ref 186754 // mdtCsvFile
 open
-  operation_ref 753410 // isOn
-  operation_ref 753666 // resumeTransmission
-  operation_ref 754178 // flushOut
-  operation_ref 722818 // mdtAbstractPort
-  operation_ref 752770 // ioProcessBegin
-  class_ref 222850 // mdtPortReadThread
-  operation_ref 752130 // newDataReaden
-  operation_ref 722562 // mdtPortManager
-  classview_ref 260482 // mdtSerialPortManager
-  classview_ref 260354 // mdtSerialPortSetupDialog
-  operation_ref 753154 // trigRxErrorState
-  operation_ref 753282 // trigTxErrorState
-  operation_ref 744706 // updateTxTimeoutState
-  operation_ref 752002 // sendCmd
-  operation_ref 754050 // on_pbSendCmdAbort_clicked
-  operation_ref 751618 // attachToSerialPort
-  operation_ref 751874 // detachFromSerialPort
-  operation_ref 751490 // mdtPortTerm
+  
+  package_ref 128002 // mdtutils
+  
+  package_ref 135170 // mdttest
+  
+  package_ref 134914 // mdtutils
+  operation_ref 761858 // errorString
+  operation_ref 761986 // setErrorString
+  class_ref 390530 // QFile
 end
 end

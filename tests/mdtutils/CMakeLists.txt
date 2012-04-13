@@ -12,6 +12,7 @@ set (HEADER_FILES
           mdtFrameTest.h
           mdtErrorTest.h
           mdtFrameCodecTest.h
+          mdtFileTest.h
     )
 
 
@@ -22,6 +23,7 @@ set (SOURCES_FILES
           mdtFrameTest.cpp
           mdtErrorTest.cpp
           mdtFrameCodecTest.cpp
+          mdtFileTest.cpp
           # Main
           main.cpp
     )

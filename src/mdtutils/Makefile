@@ -228,6 +228,30 @@ mdtBuffer.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.s
 .PHONY : mdtBuffer.cpp.s
 
+mdtCsvFile.o: mdtCsvFile.cpp.o
+.PHONY : mdtCsvFile.o
+
+# target to build an object file
+mdtCsvFile.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.o
+.PHONY : mdtCsvFile.cpp.o
+
+mdtCsvFile.i: mdtCsvFile.cpp.i
+.PHONY : mdtCsvFile.i
+
+# target to preprocess a source file
+mdtCsvFile.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.i
+.PHONY : mdtCsvFile.cpp.i
+
+mdtCsvFile.s: mdtCsvFile.cpp.s
+.PHONY : mdtCsvFile.s
+
+# target to generate assembly for a file
+mdtCsvFile.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.s
+.PHONY : mdtCsvFile.cpp.s
+
 mdtError.o: mdtError.cpp.o
 .PHONY : mdtError.o
 
@@ -538,6 +562,9 @@ help:
 	@echo "... mdtBuffer.o"
 	@echo "... mdtBuffer.i"
 	@echo "... mdtBuffer.s"
+	@echo "... mdtCsvFile.o"
+	@echo "... mdtCsvFile.i"
+	@echo "... mdtCsvFile.s"
 	@echo "... mdtError.o"
 	@echo "... mdtError.i"
 	@echo "... mdtError.s"

@@ -63,7 +63,6 @@ void mdtPortWriteThread::run()
     if(!pvRunning){
       break;
     }
-
     // Wait the minimal time if requierd - Used for timeout protocol and byte per byte write
     if(pvWriteMinWaitTime > 0){
       pvPort->unlockMutex();

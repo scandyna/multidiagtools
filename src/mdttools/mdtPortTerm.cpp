@@ -21,6 +21,7 @@
 #include "mdtPortTerm.h"
 #include <QHBoxLayout>
 
+#include <QString>
 #include <QDebug>
 
 mdtPortTerm::mdtPortTerm(QWidget *parent)
@@ -57,6 +58,8 @@ void mdtPortTerm::appendReadenData()
 
 void mdtPortTerm::sendCmd()
 {
+  QString cmd;
+
   if(pvCurrentPortManager == 0){
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
     return;
@@ -64,7 +67,12 @@ void mdtPortTerm::sendCmd()
   if(teCmd->toPlainText().size() < 1){
     return;
   }
-  pvCurrentPortManager->writeData(teCmd->toPlainText().toAscii());
+  /// NOTE: essais
+  cmd = teCmd->toPlainText();
+  //cmd.remove('\n');
+  cmd.append((char)0x0D);
+  //cmd.append((char)0x04);
+  pvCurrentPortManager->writeData(cmd.toAscii());
   teCmd->clear();
 }
 
