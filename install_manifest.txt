@@ -1,7 +1,0 @@
-/etc/udev/rules.d/40-usbtmc.rules
-/usr/lib/libmdtutils.so
-/usr/lib/libmdtutils_static.a
-/usr/lib/libmdtdevice.so
-/usr/lib/libmdtdevice_static.a
-/usr/lib/libmdtserialport.so
-/usr/lib/libmdtserialport_static.a

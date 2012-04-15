@@ -85,6 +85,10 @@ if(MDT_BUILD_STATIC_LIBS)
   set_target_properties("mdtport_static" PROPERTIES OUTPUT_NAME "mdtport")
 endif(MDT_BUILD_STATIC_LIBS)
 
+# Headers to install
+file(GLOB INSTALL_HEADERS *.h)
+install (FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtport")
+
 # Destinations
 install (TARGETS "mdtport" DESTINATION "${LIB_DEST_DIR}")
 if(MDT_BUILD_STATIC_LIBS)

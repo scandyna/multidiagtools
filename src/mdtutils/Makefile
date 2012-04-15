@@ -516,6 +516,54 @@ mdtTime.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
+mdtUicNumber.o: mdtUicNumber.cpp.o
+.PHONY : mdtUicNumber.o
+
+# target to build an object file
+mdtUicNumber.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumber.cpp.o
+.PHONY : mdtUicNumber.cpp.o
+
+mdtUicNumber.i: mdtUicNumber.cpp.i
+.PHONY : mdtUicNumber.i
+
+# target to preprocess a source file
+mdtUicNumber.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumber.cpp.i
+.PHONY : mdtUicNumber.cpp.i
+
+mdtUicNumber.s: mdtUicNumber.cpp.s
+.PHONY : mdtUicNumber.s
+
+# target to generate assembly for a file
+mdtUicNumber.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumber.cpp.s
+.PHONY : mdtUicNumber.cpp.s
+
+mdtUicNumberItem.o: mdtUicNumberItem.cpp.o
+.PHONY : mdtUicNumberItem.o
+
+# target to build an object file
+mdtUicNumberItem.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberItem.cpp.o
+.PHONY : mdtUicNumberItem.cpp.o
+
+mdtUicNumberItem.i: mdtUicNumberItem.cpp.i
+.PHONY : mdtUicNumberItem.i
+
+# target to preprocess a source file
+mdtUicNumberItem.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberItem.cpp.i
+.PHONY : mdtUicNumberItem.cpp.i
+
+mdtUicNumberItem.s: mdtUicNumberItem.cpp.s
+.PHONY : mdtUicNumberItem.s
+
+# target to generate assembly for a file
+mdtUicNumberItem.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberItem.cpp.s
+.PHONY : mdtUicNumberItem.cpp.s
+
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.o
 
@@ -598,6 +646,12 @@ help:
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
+	@echo "... mdtUicNumber.o"
+	@echo "... mdtUicNumber.i"
+	@echo "... mdtUicNumber.s"
+	@echo "... mdtUicNumberItem.o"
+	@echo "... mdtUicNumberItem.i"
+	@echo "... mdtUicNumberItem.s"
 	@echo "... moc_mdtErrorOut.o"
 	@echo "... moc_mdtErrorOut.i"
 	@echo "... moc_mdtErrorOut.s"

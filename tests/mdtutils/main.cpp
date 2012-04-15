@@ -27,6 +27,7 @@
 #include "mdtErrorTest.h"
 #include "mdtFrameCodecTest.h"
 #include "mdtFileTest.h"
+#include "mdtUicNumberTest.h"
 
 int main(int argc, char **argv)
 {
@@ -50,15 +51,20 @@ int main(int argc, char **argv)
   mdtErrorTest errorTest;
   mdtFrameCodecTest frameCodecTest;
   mdtFileTest fileTest;
+  mdtUicNumberTest uicNumberTest;
 
   // Run test classes
   retVal = 0;
-  retVal = QTest::qExec(&fileTest, argc, argv);
+  retVal = QTest::qExec(&uicNumberTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
   return 1; /// NOTE: provisoire
-  
+
+  retVal = QTest::qExec(&fileTest, argc, argv);
+  if(retVal!=0){
+    return retVal;
+  }
   retVal = QTest::qExec(&algorithmsTest, argc, argv);
   if(retVal!=0){
     return retVal;

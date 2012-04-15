@@ -61,11 +61,13 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 # Build the static variant of libraries
 set(MDT_BUILD_STATIC_LIBS 0)
 
-# Libraries install directory
+# Libraries and headers install directories
 if(WIN32)
   set(LIB_DEST_DIR ".")
+  set(HEADERS_DEST_DIR "./include/mdt")
 else(WIN32)
   set(LIB_DEST_DIR "lib")
+  set(HEADERS_DEST_DIR "include/mdt")
 endif(WIN32)
 
 # * mdtutils *
@@ -127,7 +129,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   include(InstallRequiredSystemLibraries)
 
   # Allow CPack to owerwrite CMAKE_INSTALL_PREFIX
-  set(CPACK_SET_DESTDIR ON)
+  # set(CPACK_SET_DESTDIR ON)
 
   # On Windows, we build a Zip file with needed content
   if(WIN32)

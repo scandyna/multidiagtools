@@ -72,6 +72,10 @@ if(MDT_BUILD_STATIC_LIBS)
   #set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
 endif(MDT_BUILD_STATIC_LIBS)
 
+# Headers to install
+file(GLOB INSTALL_HEADERS *.h)
+install (FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtserialport")
+
 # Destinations
 install (TARGETS "mdtserialport" DESTINATION "${LIB_DEST_DIR}")
 if(MDT_BUILD_STATIC_LIBS)

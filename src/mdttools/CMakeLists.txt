@@ -54,6 +54,10 @@ if(MDT_BUILD_STATIC_LIBS)
   set_target_properties("mdttools_static" PROPERTIES OUTPUT_NAME "mdttools")
 endif(MDT_BUILD_STATIC_LIBS)
 
+# Headers to install
+file(GLOB INSTALL_HEADERS *.h)
+install (FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdttools")
+
 # Destinations
 install (TARGETS "mdttools" DESTINATION "${LIB_DEST_DIR}")
 if(MDT_BUILD_STATIC_LIBS)

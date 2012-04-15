@@ -69,6 +69,10 @@ if(MDT_BUILD_STATIC_LIBS)
   target_link_libraries(mdtdevice_static ${QT_LIBRARIES})
 endif(MDT_BUILD_STATIC_LIBS)
 
+# Headers to install
+file(GLOB INSTALL_HEADERS *.h)
+install (FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtdevice")
+
 # Destinations
 install (TARGETS "mdtdevice" DESTINATION "${LIB_DEST_DIR}")
 if(MDT_BUILD_STATIC_LIBS)

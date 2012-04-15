@@ -18,38 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FRAME_TEST_H
-#define MDT_FRAME_TEST_H
+#ifndef MDT_UIC_NUMBER_TEST_H
+#define MDT_UIC_NUMBER_TEST_H
 
 #include "mdtTest.h"
 
-class mdtFrameTest : public mdtTest
+class mdtUicNumberTest : public mdtTest
 {
  Q_OBJECT
- 
+
  private slots:
 
-  // Verify that initial parameters are correct,
-  // such as capacity, ...
-  void initTest();
+  // Check UIC control key function
+  void controlKeyTest();
 
-  // Verify putData() function
-  void putDataTest();
-
-  // Verify state and values by ASCII frames
-  void asciiReceptionTest();
-  void asciiReceptionIgnoreNullValuesTest();
-  // Same. but the EOF is a string
-  void asciiReceptionEofStrTest();
-  void asciiReceptionEofStrIgnoreNullValuesTest();
-
-  // Verify states and values by taking data
-  void takeDataTest();
-
-  // Check mdtFrameModbusTcp encoding
-  void modbusTcpEncodeTest();
-
-  // Check mdtFrameModbusTcp decoding
-  void modbusTcpDecodeTest();
+  // Check UIC details (country, usage, vehicule type, ...) functions
+  void detailsTest();
 };
-#endif // idnfef MDT_FRAME_TEST_H
+
+#endif  // #ifndef MDT_UIC_NUMBER_TEST_H
