@@ -22,6 +22,7 @@
 #include "mdtUicNumber.h"
 #include "mdtUicNumberItem.h"
 
+/// NOTE: add 91 85 4 450 014
 void mdtUicNumberTest::controlKeyTest()
 {
   mdtUicNumber uic;
@@ -166,5 +167,21 @@ void mdtUicNumberTest::detailsTest()
   QVERIFY(uic.country().number() == 85);
   QVERIFY(uic.country().code() == "CH");
   QVERIFY(uic.serialNumber() == "256");
+
+  // Check with 11 digits "other usage" UIC numbers
+  QVERIFY(uic.setNumber("91 85 4 450 014"));
+
+  qDebug() << "UIC: " << uic.formatedUicNumber();
+  qDebug() << uic.country().nameFr();
+  qDebug() << uic.usage().nameFr();
+  qDebug() << uic.type().nameFr();
+  qDebug() << uic.speedAndHeat().nameFr();
+
+  QVERIFY(uic.isValid());
+  QVERIFY(uic.usage().number() == 91);
+  QVERIFY(uic.country().number() == 85);
+  QVERIFY(uic.country().code() == "CH");
+  QVERIFY(uic.serialNumber() == "014");
+
 }
 

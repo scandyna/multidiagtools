@@ -78,7 +78,6 @@ bool mdtUicNumber::setNumber(const QString &uicNumber)
 QString mdtUicNumber::formatedUicNumber()
 {
   QString uicNumber;
-  int u;
 
   if(!isValid()){
     return "<unknow>";
@@ -95,8 +94,6 @@ QString mdtUicNumber::formatedUicNumber()
     uicNumber.append("-");
     uicNumber.append(controlKeyString());
   }else if(pvUicNumberDigits.size() == 11){
-    // We have case of standard UIC number, or "other" (94 xx x xxx xxx-x)  NOTE: fixme, don't know how this should work !
-    u = 10*pvUicNumberDigits.at(0) + pvUicNumberDigits.at(1);
     uicNumber.append(QString::number(pvUicNumberDigits.at(0)));
     uicNumber.append(QString::number(pvUicNumberDigits.at(1)));
     uicNumber.append(" ");
@@ -104,7 +101,8 @@ QString mdtUicNumber::formatedUicNumber()
     uicNumber.append(QString::number(pvUicNumberDigits.at(3)));
     uicNumber.append(" ");
     uicNumber.append(QString::number(pvUicNumberDigits.at(4)));
-    if(u == 94){
+    // We have special cases for UIC numbbers beginning with 9
+    if(pvUicNumberDigits.at(0) == 9){
       uicNumber.append(" ");
       uicNumber.append(QString::number(pvUicNumberDigits.at(5)));
       uicNumber.append(QString::number(pvUicNumberDigits.at(6)));
@@ -487,15 +485,14 @@ mdtUicNumberItem mdtUicNumber::usage()
 mdtUicNumberItem mdtUicNumber::type()
 {
   mdtUicNumberItem *item;
-  int index, u;
+  int index;
 
   // Check about UIC number
   if(pvUicNumberDigits.size() == 6){
     index = 100*pvUicNumberDigits.at(0) + 10*pvUicNumberDigits.at(1) + pvUicNumberDigits.at(2);
   }else if(pvUicNumberDigits.size() == 11){
-    // We have case of standard UIC number, or "other" (94 xx x xxx xxx-x)  NOTE: fixme, don't know how this should work !
-    u = 10*pvUicNumberDigits.at(0) + pvUicNumberDigits.at(1);
-    if(u == 94){
+    // We have special cases for UIC numbbers beginning with 9
+    if(pvUicNumberDigits.at(0) == 9){
       index = 100*pvUicNumberDigits.at(5) + 10*pvUicNumberDigits.at(6) + pvUicNumberDigits.at(7);
     }else{
       index = 10*pvUicNumberDigits.at(4) + pvUicNumberDigits.at(5);

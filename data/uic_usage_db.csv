@@ -7,4 +7,7 @@ Number;Usage FR;Usage EN;Usage DE
 06;Wagons RIV-Europ à 2 ou 3 essieux, loués;<No translsation>;<Keine Übersezung>
 50;Service intérieur (non RIC);Domestic use only (non RIC) ;<Keine Übersezung>
 51;Service international (RIC) à écartement fixe;International use (RIC), fixed gauge ;<Keine Übersezung>
-94;Autres rames et automoteurs électriques;Other electric trainsets and motor cars;<Keine Übersezung>
+91;Locomotive électrique;Electric locomotive;<Keine Übersezung>
+92;Locomotive diesel;Diesel locomotive;<Keine Übersezung>
+93;Rame ou automoteur haute vitesse;Electric trainset or motor car (high speed);<Keine Übersezung>
+94;Autre rame et automoteur électrique;Other electric trainset or motor car;<Keine Übersezung>
