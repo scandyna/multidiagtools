@@ -61,7 +61,9 @@ void \hyperlink{classmdt_uic_number_item_a28a50d800a2de3f7e24f549ea14f9446}{setN
 QString \& \hyperlink{classmdt_uic_number_item_ae24087c96e5e38138ba984705bece3f2}{nameDe} ()}
 \label{classmdt_uic_number_item_ae24087c96e5e38138ba984705bece3f2}
 
-\begin{DoxyCompactList}\small\item\em Get the name string in german. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the name string in german. \end{DoxyCompactList}\item 
+QString \& \hyperlink{classmdt_uic_number_item_a6e2bfad78dc1761b35ed6a642a345bb9}{name} (const QLocale \&locale)
+\begin{DoxyCompactList}\small\item\em Get the name string in language given in locale. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -105,7 +107,20 @@ Get code string.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_uic_number_item_a8c3a5faea122cdbaadf026b0a64ce59b}{setCode()} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_uic_number_item_a8c3a5faea122cdbaadf026b0a64ce59b}{
+\hypertarget{classmdt_uic_number_item_a6e2bfad78dc1761b35ed6a642a345bb9}{
+\index{mdtUicNumberItem@{mdtUicNumberItem}!name@{name}}
+\index{name@{name}!mdtUicNumberItem@{mdtUicNumberItem}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}QString \& mdtUicNumberItem::name (
+\begin{DoxyParamCaption}
+\item[{const QLocale \&}]{locale}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_uic_number_item_a6e2bfad78dc1761b35ed6a642a345bb9}
+
+
+Get the name string in language given in locale. 
+
+If langugage given in locale not exists, english name is returned \hypertarget{classmdt_uic_number_item_a8c3a5faea122cdbaadf026b0a64ce59b}{
 \index{mdtUicNumberItem@{mdtUicNumberItem}!setCode@{setCode}}
 \index{setCode@{setCode}!mdtUicNumberItem@{mdtUicNumberItem}}
 \subsubsection[{setCode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUicNumberItem::setCode (

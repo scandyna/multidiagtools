@@ -75,8 +75,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afabe0f84461413af8defaccd615886b5"></a><!-- doxytag: member="mdtCsvFile::mdtCsvFile" ref="afabe0f84461413af8defaccd615886b5" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtCsvFile</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c9f24190d83f32672f360f0fcc53d2f"></a><!-- doxytag: member="mdtCsvFile::mdtCsvFile" ref="a8c9f24190d83f32672f360f0fcc53d2f" args="(QObject *parent=0, QByteArray fileEncoding=&quot;UTF&#45;8&quot;)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a8c9f24190d83f32672f360f0fcc53d2f">mdtCsvFile</a> (QObject *parent=0, QByteArray fileEncoding=&quot;UTF-8&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797">readLines</a> (QByteArray separator=&quot;;&quot;, QByteArray dataProtection=&quot;&quot;, QByteArray comment=&quot;#&quot;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the file and store data.  <a href="#ab2d9754e50db179825813081bb129797"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QStringList &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc">parseLine</a> (const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection)</td></tr>
@@ -92,6 +93,7 @@ QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bott
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Read and write CSV file. </p>
+<p>The default file encoding format is assumed UTF-8. If another format is to use, give it at constructor. </p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="af44de864675351a6f22b176e64a4cecc"></a><!-- doxytag: member="mdtCsvFile::parseLine" ref="af44de864675351a6f22b176e64a4cecc" args="(const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection)" -->
 <div class="memitem">
@@ -230,7 +232,7 @@ QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bott
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat May 19 2012 06:41:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 19 2012 17:15:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -14,11 +14,11 @@ Read and write CSV file.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_csv_file_afabe0f84461413af8defaccd615886b5}{
-{\bfseries mdtCsvFile} (QObject $\ast$parent=0)}
-\label{classmdt_csv_file_afabe0f84461413af8defaccd615886b5}
+\hypertarget{classmdt_csv_file_a8c9f24190d83f32672f360f0fcc53d2f}{
+\hyperlink{classmdt_csv_file_a8c9f24190d83f32672f360f0fcc53d2f}{mdtCsvFile} (QObject $\ast$parent=0, QByteArray fileEncoding=\char`\"{}UTF-\/8\char`\"{})}
+\label{classmdt_csv_file_a8c9f24190d83f32672f360f0fcc53d2f}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_csv_file_ab2d9754e50db179825813081bb129797}{readLines} (QByteArray separator=\char`\"{};\char`\"{}, QByteArray dataProtection=\char`\"{}\char`\"{}, QByteArray comment=\char`\"{}\#\char`\"{})
 \begin{DoxyCompactList}\small\item\em Read the file and store data. \end{DoxyCompactList}\item 
 QStringList \& \hyperlink{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{parseLine} (const QByteArray \&line, const QByteArray \&separator, const QByteArray \&dataProtection)
@@ -39,6 +39,8 @@ QList$<$ QStringList $>$ \& \hyperlink{classmdt_csv_file_a089e82f55982a40587f3d9
 
 \subsection{Detailed Description}
 Read and write CSV file. 
+
+The default file encoding format is assumed UTF-\/8. If another format is to use, give it at constructor. 
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{

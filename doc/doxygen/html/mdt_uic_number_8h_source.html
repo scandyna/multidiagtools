@@ -109,37 +109,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00086"></a>00086 
 <a name="l00094"></a>00094   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#ad7bb1405db0de8f1d247fa5a7bdb19ce" title="Load the coutries database.">loadCountriesDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
 <a name="l00095"></a>00095 
-<a name="l00102"></a>00102   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#af496e1fb75f696258287754fe2607561" title="Load the usage database.">loadUsagesDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
-<a name="l00103"></a>00103 
-<a name="l00110"></a>00110   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#a98c879c7bb7412caac4612a46586b76d" title="Load the vehicule type database.">loadTypesDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
+<a name="l00098"></a>00098   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#a36eec09823de2d9848e9f7b8135fa59d" title="Return true if Countries DB was successfully loaded.">countriesDbLoaded</a>();
+<a name="l00099"></a>00099 
+<a name="l00106"></a>00106   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#af496e1fb75f696258287754fe2607561" title="Load the usage database.">loadUsagesDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
+<a name="l00107"></a>00107 
+<a name="l00110"></a>00110   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#a2090c7d80c75d1db42d271f82ff8f598" title="Return true if usages DB was successfully loaded.">usagesDbLoaded</a>();
 <a name="l00111"></a>00111 
-<a name="l00118"></a>00118   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#ab1d08c2ea34f310631866d2e46010363" title="Load the vehicule speend and heat.">loadSpeedAndHeatsDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
+<a name="l00118"></a>00118   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#a98c879c7bb7412caac4612a46586b76d" title="Load the vehicule type database.">loadTypesDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
 <a name="l00119"></a>00119 
-<a name="l00125"></a>00125   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number.html#a7bb368e5de6a9e7af3a2516eb4282e04" title="Unload databases.">unloadDbs</a>();
-<a name="l00126"></a>00126 
-<a name="l00132"></a>00132   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#a69fea97b67a745980ad4386d5ffa9505" title="Get the country.">country</a>();
-<a name="l00133"></a>00133 
-<a name="l00139"></a>00139   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#a8e2e1c1be4425b57e0fa60113410bfbc" title="Get the usage.">usage</a>();
-<a name="l00140"></a>00140 
-<a name="l00146"></a>00146   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#ae7d6500d0e939956371e152d9ca17117" title="Get the vehicule type.">type</a>();
-<a name="l00147"></a>00147 
-<a name="l00153"></a>00153   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#af2c13420378ec5559ce4f1eaba1f38e7" title="Get the vehicule speed and heat.">speedAndHeat</a>();
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155  <span class="keyword">private</span>:
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157   <span class="comment">// Compute the control sum of 6 digits UIC number</span>
-<a name="l00158"></a>00158   <span class="keywordtype">int</span> controlSum6();
-<a name="l00159"></a>00159   <span class="comment">// Compute the control sum of 11 digits UIC number</span>
-<a name="l00160"></a>00160   <span class="keywordtype">int</span> controlSum11();
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162   QMap&lt;int, mdtUicNumberItem*&gt; pvCountries;
-<a name="l00163"></a>00163   QMap&lt;int, mdtUicNumberItem*&gt; pvUsages;
-<a name="l00164"></a>00164   QMap&lt;int, mdtUicNumberItem*&gt; pvTypes;
-<a name="l00165"></a>00165   QMap&lt;int, mdtUicNumberItem*&gt; pvSpeedAndHeats;
-<a name="l00166"></a>00166   QList&lt;int&gt; pvUicNumberDigits;
-<a name="l00167"></a>00167 };
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169 <span class="preprocessor">#endif  // #ifndef MDT_UIC_NUMBER_H</span>
+<a name="l00122"></a>00122   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#a39fb254207bfe6dd6eaade2711030dac" title="Return true if types DB was successfully loaded.">typesDbLoaded</a>();
+<a name="l00123"></a>00123 
+<a name="l00130"></a>00130   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#ab1d08c2ea34f310631866d2e46010363" title="Load the vehicule speend and heat.">loadSpeedAndHeatsDb</a>(<span class="keyword">const</span> QString &amp;dbPath);
+<a name="l00131"></a>00131 
+<a name="l00134"></a>00134   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#a42ec71258e2120337953c8c6bda63638" title="Return true if speed and heat DB was successfully loaded.">speedAndHeatDbLoaded</a>();
+<a name="l00135"></a>00135 
+<a name="l00145"></a>00145   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#ab7d29b1cb5fe5ac58bef5bec787e83df" title="Load all needed DBs.">loadDbs</a>(<span class="keyword">const</span> QString &amp;dir);
+<a name="l00146"></a>00146 
+<a name="l00149"></a>00149   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number.html#ab684e8290b0a74a05e992699bf0fa7f4" title="Return true if all DBs was successfully loaded.">dbsLoaded</a>();
+<a name="l00150"></a>00150 
+<a name="l00156"></a>00156   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number.html#a7bb368e5de6a9e7af3a2516eb4282e04" title="Unload databases.">unloadDbs</a>();
+<a name="l00157"></a>00157 
+<a name="l00163"></a>00163   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#a69fea97b67a745980ad4386d5ffa9505" title="Get the country.">country</a>();
+<a name="l00164"></a>00164 
+<a name="l00170"></a>00170   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#a8e2e1c1be4425b57e0fa60113410bfbc" title="Get the usage.">usage</a>();
+<a name="l00171"></a>00171 
+<a name="l00177"></a>00177   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#ae7d6500d0e939956371e152d9ca17117" title="Get the vehicule type.">type</a>();
+<a name="l00178"></a>00178 
+<a name="l00184"></a>00184   <a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a> <a class="code" href="classmdt_uic_number.html#af2c13420378ec5559ce4f1eaba1f38e7" title="Get the vehicule speed and heat.">speedAndHeat</a>();
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186  <span class="keyword">private</span>:
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188   <span class="comment">// Compute the control sum of 6 digits UIC number</span>
+<a name="l00189"></a>00189   <span class="keywordtype">int</span> controlSum6();
+<a name="l00190"></a>00190   <span class="comment">// Compute the control sum of 11 digits UIC number</span>
+<a name="l00191"></a>00191   <span class="keywordtype">int</span> controlSum11();
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193   QMap&lt;int, mdtUicNumberItem*&gt; pvCountries;
+<a name="l00194"></a>00194   QMap&lt;int, mdtUicNumberItem*&gt; pvUsages;
+<a name="l00195"></a>00195   QMap&lt;int, mdtUicNumberItem*&gt; pvTypes;
+<a name="l00196"></a>00196   QMap&lt;int, mdtUicNumberItem*&gt; pvSpeedAndHeats;
+<a name="l00197"></a>00197   QList&lt;int&gt; pvUicNumberDigits;
+<a name="l00198"></a>00198 };
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 <span class="preprocessor">#endif  // #ifndef MDT_UIC_NUMBER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -156,7 +168,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat May 19 2012 06:41:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 19 2012 17:15:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

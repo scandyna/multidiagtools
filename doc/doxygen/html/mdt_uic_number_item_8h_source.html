@@ -83,47 +83,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_UIC_NUMBER_ITEM_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00025"></a>00025 
-<a name="l00029"></a><a class="code" href="classmdt_uic_number_item.html">00029</a> <span class="keyword">class </span><a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a>
-<a name="l00030"></a>00030 {
-<a name="l00031"></a>00031  <span class="keyword">public</span>:
-<a name="l00032"></a>00032 
-<a name="l00037"></a>00037   <a class="code" href="classmdt_uic_number_item.html#a119fb789d9a5755b0243b3c4d1cab811" title="Create a unknow item.">mdtUicNumberItem</a>();
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039   ~<a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a>();
-<a name="l00040"></a>00040 
-<a name="l00043"></a>00043   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#ab1388f9d35e67c76bde96c522ba7388b" title="Set numerical value.">setNumber</a>(<span class="keywordtype">int</span> <a class="code" href="classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc" title="Get numerical value.">number</a>);
-<a name="l00044"></a>00044 
-<a name="l00050"></a>00050   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number_item.html#ab1388f9d35e67c76bde96c522ba7388b" title="Set numerical value.">setNumber</a>(<span class="keyword">const</span> QString &amp;number);
-<a name="l00051"></a>00051 
-<a name="l00054"></a>00054   <span class="keywordtype">int</span> <a class="code" href="classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc" title="Get numerical value.">number</a>();
-<a name="l00055"></a>00055 
-<a name="l00060"></a>00060   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a8c3a5faea122cdbaadf026b0a64ce59b" title="Set code string.">setCode</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_uic_number_item.html#a43652b0e8b1685b5d9890d175b42dc75" title="Get code string.">code</a>);
-<a name="l00061"></a>00061 
-<a name="l00065"></a>00065   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a43652b0e8b1685b5d9890d175b42dc75" title="Get code string.">code</a>();
-<a name="l00066"></a>00066 
-<a name="l00069"></a>00069   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a048e9a4070062e6d68dde4f264fdac05" title="Set the name string for french.">setNameFr</a>(<span class="keyword">const</span> QString &amp;name);
-<a name="l00070"></a>00070 
-<a name="l00073"></a>00073   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a088b41783b5f1bee0e49be43b993269c" title="Get the name string in french.">nameFr</a>();
-<a name="l00074"></a>00074 
-<a name="l00077"></a>00077   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a63e2c89465b2053081ae89b2de9de1f3" title="Set the name string for english.">setNameEn</a>(<span class="keyword">const</span> QString &amp;name);
-<a name="l00078"></a>00078 
-<a name="l00081"></a>00081   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a5f87c87141076cf481173d7f75984ef1" title="Get the name string in english.">nameEn</a>();
-<a name="l00082"></a>00082 
-<a name="l00085"></a>00085   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a28a50d800a2de3f7e24f549ea14f9446" title="Set the name string for german.">setNameDe</a>(<span class="keyword">const</span> QString &amp;name);
-<a name="l00086"></a>00086 
-<a name="l00089"></a>00089   QString &amp;<a class="code" href="classmdt_uic_number_item.html#ae24087c96e5e38138ba984705bece3f2" title="Get the name string in german.">nameDe</a>();
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091  <span class="keyword">private</span>:
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <span class="keywordtype">int</span> pvNumber;
-<a name="l00094"></a>00094   QString pvCode;
-<a name="l00095"></a>00095   QString pvNameFr;
-<a name="l00096"></a>00096   QString pvNameEn;
-<a name="l00097"></a>00097   QString pvNameDe;
-<a name="l00098"></a>00098 };
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QLocale&gt;</span>
+<a name="l00026"></a>00026 
+<a name="l00030"></a><a class="code" href="classmdt_uic_number_item.html">00030</a> <span class="keyword">class </span><a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a>
+<a name="l00031"></a>00031 {
+<a name="l00032"></a>00032  <span class="keyword">public</span>:
+<a name="l00033"></a>00033 
+<a name="l00038"></a>00038   <a class="code" href="classmdt_uic_number_item.html#a119fb789d9a5755b0243b3c4d1cab811" title="Create a unknow item.">mdtUicNumberItem</a>();
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040   ~<a class="code" href="classmdt_uic_number_item.html" title="UIC Number item.">mdtUicNumberItem</a>();
+<a name="l00041"></a>00041 
+<a name="l00044"></a>00044   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#ab1388f9d35e67c76bde96c522ba7388b" title="Set numerical value.">setNumber</a>(<span class="keywordtype">int</span> <a class="code" href="classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc" title="Get numerical value.">number</a>);
+<a name="l00045"></a>00045 
+<a name="l00051"></a>00051   <span class="keywordtype">bool</span> <a class="code" href="classmdt_uic_number_item.html#ab1388f9d35e67c76bde96c522ba7388b" title="Set numerical value.">setNumber</a>(<span class="keyword">const</span> QString &amp;number);
+<a name="l00052"></a>00052 
+<a name="l00055"></a>00055   <span class="keywordtype">int</span> <a class="code" href="classmdt_uic_number_item.html#a23c0a0e1c9f20bc3e092a51a1eabbffc" title="Get numerical value.">number</a>();
+<a name="l00056"></a>00056 
+<a name="l00061"></a>00061   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a8c3a5faea122cdbaadf026b0a64ce59b" title="Set code string.">setCode</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_uic_number_item.html#a43652b0e8b1685b5d9890d175b42dc75" title="Get code string.">code</a>);
+<a name="l00062"></a>00062 
+<a name="l00066"></a>00066   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a43652b0e8b1685b5d9890d175b42dc75" title="Get code string.">code</a>();
+<a name="l00067"></a>00067 
+<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a048e9a4070062e6d68dde4f264fdac05" title="Set the name string for french.">setNameFr</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_uic_number_item.html#a6e2bfad78dc1761b35ed6a642a345bb9" title="Get the name string in language given in locale.">name</a>);
+<a name="l00071"></a>00071 
+<a name="l00074"></a>00074   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a088b41783b5f1bee0e49be43b993269c" title="Get the name string in french.">nameFr</a>();
+<a name="l00075"></a>00075 
+<a name="l00078"></a>00078   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a63e2c89465b2053081ae89b2de9de1f3" title="Set the name string for english.">setNameEn</a>(<span class="keyword">const</span> QString &amp;name);
+<a name="l00079"></a>00079 
+<a name="l00082"></a>00082   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a5f87c87141076cf481173d7f75984ef1" title="Get the name string in english.">nameEn</a>();
+<a name="l00083"></a>00083 
+<a name="l00086"></a>00086   <span class="keywordtype">void</span> <a class="code" href="classmdt_uic_number_item.html#a28a50d800a2de3f7e24f549ea14f9446" title="Set the name string for german.">setNameDe</a>(<span class="keyword">const</span> QString &amp;name);
+<a name="l00087"></a>00087 
+<a name="l00090"></a>00090   QString &amp;<a class="code" href="classmdt_uic_number_item.html#ae24087c96e5e38138ba984705bece3f2" title="Get the name string in german.">nameDe</a>();
+<a name="l00091"></a>00091 
+<a name="l00096"></a>00096   QString &amp;<a class="code" href="classmdt_uic_number_item.html#a6e2bfad78dc1761b35ed6a642a345bb9" title="Get the name string in language given in locale.">name</a>(<span class="keyword">const</span> QLocale &amp;locale);
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098  <span class="keyword">private</span>:
 <a name="l00099"></a>00099 
-<a name="l00100"></a>00100 <span class="preprocessor">#endif  // #ifndef MDT_UIC_NUMBER_ITEM_H</span>
+<a name="l00100"></a>00100   <span class="keywordtype">int</span> pvNumber;
+<a name="l00101"></a>00101   QString pvCode;
+<a name="l00102"></a>00102   QString pvNameFr;
+<a name="l00103"></a>00103   QString pvNameEn;
+<a name="l00104"></a>00104   QString pvNameDe;
+<a name="l00105"></a>00105 };
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107 <span class="preprocessor">#endif  // #ifndef MDT_UIC_NUMBER_ITEM_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -140,7 +143,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat May 19 2012 06:41:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 19 2012 17:15:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
