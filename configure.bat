@@ -1,21 +1,22 @@
 @echo off
 
-REM Script créé pour la partie C++ du projet
-REM Plateforme utilisée: Windows 7
+REM Crate PATH for developpement environnement
+call env-mingw.bat
 
-REM Effacement du fichier de cache CMake
+REM Helper script for CMake on Win32
 
+REM CMake cache file
 set CMAKE_CACHE_FILE="CMakeCache.txt"
 
 
-REM Cache du projet
+REM Project cache
 REM NOTE: demander la question à l'utilisateur reste à implémenter
 if exist %CMAKE_CACHE_FILE% (
   echo Deleting %CMAKE_CACHE_FILE%
   del %CMAKE_CACHE_FILE%
 )
 
-REM On lance cmake avec le générateur MinGW
+REM Run CMake with MinGW generator
 cmake -G "MinGW Makefiles" . -Wdev
 if "%ErrorLevel%" NEQ "0" (
   goto end
@@ -23,14 +24,6 @@ if "%ErrorLevel%" NEQ "0" (
 
 echo ** cmake . done , you schould be able to compile with mingw32-make
 
-REM mingw32-make
-REM if "%ErrorLevel%" NEQ "0" (
-REM   goto end
-REM )
-
 REM Fin
 :end
 echo Fin
-
-
-

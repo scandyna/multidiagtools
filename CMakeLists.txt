@@ -51,10 +51,13 @@ add_definitions(${QT_DEFINITIONS})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+# NOTE: Support Windows pas terminé
+if(UNIX)
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
+endif(UNIX)
 
 # *** Librairies section ***
 
@@ -63,8 +66,8 @@ set(MDT_BUILD_STATIC_LIBS 0)
 
 # Libraries and headers install directories
 if(WIN32)
-  set(LIB_DEST_DIR ".")
-  set(HEADERS_DEST_DIR "./include/mdt")
+  set(LIB_DEST_DIR "bin")
+  set(HEADERS_DEST_DIR "include/mdt")
 else(WIN32)
   set(LIB_DEST_DIR "lib")
   set(HEADERS_DEST_DIR "include/mdt")
@@ -76,6 +79,8 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 # * mdtutilsgui *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
 
+# NOTE: Support Windows pas terminé
+if(UNIX)
 # * mdtdevice *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 
@@ -87,9 +92,13 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
+endif(UNIX)
 
 
 # *** Mini test programm section ***
+
+# NOTE: Support Windows pas terminé
+if(UNIX)
 
 # Exécutable pour tests
 add_executable (essais src/main.cpp)
@@ -102,6 +111,8 @@ target_link_libraries(essais "mdtdevice")
 target_link_libraries(essais "mdttools")
 target_link_libraries(essais ${QT_LIBRARIES})
 
+endif(UNIX)
+
 # *** Unit tests section ***
 
 # * Unit tests compilation *
@@ -110,9 +121,12 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 # * Unit tests execution *
 enable_testing()
 add_test (mdtUtilsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtUtilsTest)
+# NOTE: Support Windows pas terminé
+if(UNIX)
 add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtPortTest)
 add_test (mdtSerialPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtSerialPortTest)
 add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtDeviceTest)
+endif(UNIX)
 
 # *** Install section ***
 
@@ -121,6 +135,25 @@ if(UNIX)
   install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/40-usbtmc.rules" DESTINATION "/etc/udev/rules.d/")
 endif(UNIX)
 
+# Some Windows specific files
+if(WIN32)
+  find_library(LIBGCCDLL NAMES libgcc_s_dw2-1.dll)
+  find_library(LIBSTDCPP6DLL NAMES libstdc++-6.dll)
+  find_library(MINGWM10DLL NAMES mingwm10.dll)
+  # Qt4 dll's - choose correct dll regarding on Debug or Release build type
+  if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    find_library(QTCOREDLL NAMES QtCored4.dll)
+    find_library(QTGUIDLL NAMES QtGuid4.dll)
+  else(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    find_library(QTCOREDLL NAMES QtCore4.dll)
+    find_library(QTGUIDLL NAMES QtGui4.dll)
+  endif(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  install(FILES ${LIBGCCDLL} DESTINATION "${LIB_DEST_DIR}")
+  install(FILES ${LIBSTDCPP6DLL} DESTINATION "${LIB_DEST_DIR}")
+  install(FILES ${MINGWM10DLL} DESTINATION "${LIB_DEST_DIR}")
+  install(FILES ${QTCOREDLL} DESTINATION "${LIB_DEST_DIR}")
+  install(FILES ${QTGUIDLL} DESTINATION "${LIB_DEST_DIR}")
+endif(WIN32)
 
 # ** CPack section **
 

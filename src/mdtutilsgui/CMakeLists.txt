@@ -10,6 +10,9 @@ set (HEADER_FILES
           # mdtLed
           mdtLed.h
           mdtBlinkLed.h
+          # Database
+          mdtSqlTableModel.h
+          mdtDataWidgetMapper.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -20,6 +23,9 @@ set (SOURCES_FILES
           # mdtLed
           mdtLed.cpp
           mdtBlinkLed.cpp
+          # Database
+          mdtSqlTableModel.cpp
+          mdtDataWidgetMapper.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

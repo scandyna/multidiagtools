@@ -1,16 +1,13 @@
 window_sizes 1280 1003 358 916 809 120
 diagrams
-  classdiagram_ref 401538 // mdtUicNumber
-    916 809 100 4 12 0
-  active  classdiagram_ref 394882 // mdtCsvFile
-    916 809 100 4 24 0
+  active  classdiagram_ref 401538 // mdtUicNumber
+    916 809 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 394882 // mdtCsvFile
+selected classdiagram_ref 401538 // mdtUicNumber
 open
-  classview_ref 273666 // mdtCsvFile
   classview_ref 280322 // mdtUicNumber
-  classview_ref 134786 // mdttest
-  class_ref 398082 // mdtUicNumberTest
+  
+package_ref 174978 // mdtutilsgui
 end
 end

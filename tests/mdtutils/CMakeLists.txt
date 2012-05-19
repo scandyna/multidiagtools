@@ -14,6 +14,7 @@ set (HEADER_FILES
           mdtFrameCodecTest.h
           mdtFileTest.h
           mdtUicNumberTest.h
+          mdtDatabaseTest.h
     )
 
 
@@ -26,6 +27,7 @@ set (SOURCES_FILES
           mdtFrameCodecTest.cpp
           mdtFileTest.cpp
           mdtUicNumberTest.cpp
+          mdtDatabaseTest.cpp
           # Main
           main.cpp
     )
@@ -46,5 +48,6 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 add_executable (mdtUtilsTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraires à lier
 target_link_libraries(mdtUtilsTest "mdtutils")
+target_link_libraries(mdtUtilsTest "mdtutilsgui")
 target_link_libraries(mdtUtilsTest "mdttest")
 target_link_libraries(mdtUtilsTest ${QT_LIBRARIES})

@@ -16,6 +16,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/mdttest")
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutils")
 
+# NOTE: Support Windows pas terminé
+if(UNIX)
+
 # * mdtdevice *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtdevice")
 
@@ -24,3 +27,5 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/mdtport")
 
 # * mdtserialport *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtserialport")
+
+endif(UNIX)

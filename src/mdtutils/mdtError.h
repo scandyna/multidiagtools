@@ -38,7 +38,8 @@ enum mdt_error_t{
   MDT_FRAME_DECODE_ERROR,
   MDT_FRAME_ENCODE_ERROR,
   MDT_DEVICE_ERROR,
-  MDT_PARSE_ERROR               /*!< Parsing error */
+  MDT_PARSE_ERROR,              /*!< Parsing error */
+  MDT_DATABASE_ERROR            /*!< Database error */
 };
 
 /*! \brief Add source information to error

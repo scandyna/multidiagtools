@@ -51,7 +51,3 @@ Thumbs.db
 .directory
 *.log
 *.tmp
-
-# Some other files
-######################
-projects/.gitignore
