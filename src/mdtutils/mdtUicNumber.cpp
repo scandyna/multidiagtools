@@ -253,6 +253,11 @@ bool mdtUicNumber::loadCountriesDb(const QString &dbPath)
   return true;
 }
 
+bool mdtUicNumber::countriesDbLoaded()
+{
+  return (pvCountries.size() > 0);
+}
+
 bool mdtUicNumber::loadUsagesDb(const QString &dbPath)
 {
   mdtCsvFile csv;
@@ -310,6 +315,11 @@ bool mdtUicNumber::loadUsagesDb(const QString &dbPath)
   }
 
   return true;
+}
+
+bool mdtUicNumber::usagesDbLoaded()
+{
+  return (pvUsages.size() > 0);
 }
 
 bool mdtUicNumber::loadTypesDb(const QString &dbPath)
@@ -371,6 +381,11 @@ bool mdtUicNumber::loadTypesDb(const QString &dbPath)
   return true;
 }
 
+bool mdtUicNumber::typesDbLoaded()
+{
+  return (pvTypes.size() > 0);
+}
+
 bool mdtUicNumber::loadSpeedAndHeatsDb(const QString &dbPath)
 {
   mdtCsvFile csv;
@@ -425,6 +440,47 @@ bool mdtUicNumber::loadSpeedAndHeatsDb(const QString &dbPath)
     item->setNameDe(db.at(i).at(3));
     // Add to the list
     pvSpeedAndHeats.insert(item->number(), item);
+  }
+
+  return true;
+}
+
+bool mdtUicNumber::speedAndHeatDbLoaded()
+{
+  return (pvSpeedAndHeats.size() > 0);
+}
+
+bool mdtUicNumber::loadDbs(const QString &dir)
+{
+  if(!loadCountriesDb(dir + "/uic_countries_db.csv")){
+    return false;
+  }
+  if(!loadUsagesDb(dir + "/uic_usages_db.csv")){
+    return false;
+  }
+  if(!loadTypesDb(dir + "/uic_types_db.csv")){
+    return false;
+  }
+  if(!loadSpeedAndHeatsDb(dir + "/uic_speedandheat_db.csv")){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtUicNumber::dbsLoaded()
+{
+  if(!countriesDbLoaded()){
+    return false;
+  }
+  if(!usagesDbLoaded()){
+    return false;
+  }
+  if(!typesDbLoaded()){
+    return false;
+  }
+  if(!speedAndHeatDbLoaded()){
+    return false;
   }
 
   return true;

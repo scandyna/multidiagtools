@@ -22,6 +22,7 @@
 #define MDT_UIC_NUMBER_ITEM_H
 
 #include <QString>
+#include <QLocale>
 
 /*! \brief UIC Number item
  * \sa mdtUicNumber
@@ -87,6 +88,12 @@ class mdtUicNumberItem
   /*! \brief Get the name string in german
    */
   QString &nameDe();
+
+  /*! \brief Get the name string in language given in locale
+   * 
+   * If langugage given in locale not exists, english name is returned
+   */
+  QString &name(const QLocale &locale);
 
  private:
 

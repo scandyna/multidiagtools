@@ -22,8 +22,10 @@
 
 #include <QDebug>
 
-mdtCsvFile::mdtCsvFile(QObject *parent)
+mdtCsvFile::mdtCsvFile(QObject *parent, QByteArray fileEncoding)
 {
+  pvCodec = QTextCodec::codecForName(fileEncoding);
+  Q_ASSERT(pvCodec != 0);
 }
 
 mdtCsvFile::~mdtCsvFile()
@@ -102,7 +104,7 @@ QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &sep
           }else{
             // Copy into field
             field.append(tmpStr.left(sepCursor));
-            pvFields << field;
+            pvFields << pvCodec->toUnicode(field);
             // Remove separator
             tmpStr.remove(0, sepCursor+separator.size());
           }
@@ -111,7 +113,7 @@ QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &sep
           tmpStr.remove(0, dataProtection.size());
           Q_ASSERT((tmpStr.size()-dataProtection.size()) >= 0);
           field.append(tmpStr.left(tmpStr.size()-dataProtection.size()));
-          pvFields << field;
+          pvFields << pvCodec->toUnicode(field);
           break;
         }
       }else{
@@ -119,13 +121,13 @@ QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &sep
         if(sepCursor >= 0){
           // Copy into field
           field.append(tmpStr.left(sepCursor));
-          pvFields << field;
+          pvFields << pvCodec->toUnicode(field);
           // Remove separator
           tmpStr.remove(0, sepCursor+separator.size());
         }else{
           // Nothing found - Just copy all data into field
           field.append(tmpStr);
-          pvFields << field;
+          pvFields << pvCodec->toUnicode(field);
           break;
         }
       }
@@ -135,12 +137,12 @@ QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &sep
         parserEnabled = true;
         // Store data -> cursor
         field.append(tmpStr.left(dpCursor));
-        pvFields << field;
+        pvFields << pvCodec->toUnicode(field);
         tmpStr.remove(0, dpCursor+dataProtection.size()+separator.size());
       }else{
         // Simply store the data into field
         field.append(tmpStr);
-        pvFields << field;
+        pvFields << pvCodec->toUnicode(field);
         break;
       }
     }

@@ -93,6 +93,10 @@ class mdtUicNumber
    */
   bool loadCountriesDb(const QString &dbPath);
 
+  /*! \brief Return true if Countries DB was successfully loaded
+   */
+  bool countriesDbLoaded();
+
   /*! \brief Load the usage database
    * 
    * The database is a CSV file containing
@@ -100,6 +104,10 @@ class mdtUicNumber
    * and the usage.
    */
   bool loadUsagesDb(const QString &dbPath);
+
+  /*! \brief Return true if usages DB was successfully loaded
+   */
+  bool usagesDbLoaded();
 
   /*! \brief Load the vehicule type database
    * 
@@ -109,6 +117,10 @@ class mdtUicNumber
    */
   bool loadTypesDb(const QString &dbPath);
 
+  /*! \brief Return true if types DB was successfully loaded
+   */
+  bool typesDbLoaded();
+
   /*! \brief Load the vehicule speend and heat
    * 
    * The database is a CSV file containing
@@ -116,6 +128,25 @@ class mdtUicNumber
    * and the vehicule type.
    */
   bool loadSpeedAndHeatsDb(const QString &dbPath);
+
+  /*! \brief Return true if speed and heat DB was successfully loaded
+   */
+  bool speedAndHeatDbLoaded();
+
+  /*! \brief Load all needed DBs.
+   * 
+   * The directory that contains the databeses must be given as argument.
+   * This directory must contain following files:
+   *  - uic_countries_db.csv
+   *  - uic_speedandheat_db.csv
+   *  - uic_types_db.csv
+   *  - uic_usages_db.csv
+   */
+  bool loadDbs(const QString &dir);
+
+  /*! \brief Return true if all DBs was successfully loaded
+   */
+  bool dbsLoaded();
 
   /*! \brief Unload databases
    * 

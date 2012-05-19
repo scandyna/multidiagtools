@@ -9,6 +9,8 @@ project (multidiagtools)
 set (HEADER_FILES 
           # mdtError
           mdtErrorOut.h
+          # UIC Number
+          mdtUicNumberWidget.h
     )
 
 # List of source files
@@ -34,11 +36,13 @@ set (SOURCES_FILES
           # UIC number
           mdtUicNumber.cpp
           mdtUicNumberItem.cpp
+          mdtUicNumberWidget.cpp
+          mdtUicNumberValidator.cpp
     )
 
 # List of .ui files
 set (FORM_FILES
-
+          mdtUicNumberWidget.ui
     )
 
 # List of rcc files (Qt ressources)

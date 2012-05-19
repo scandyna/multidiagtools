@@ -1,13 +1,28 @@
 window_sizes 1280 1003 358 916 809 120
 diagrams
-  active  classdiagram_ref 401538 // mdtUicNumber
-    916 809 100 4 0 0
+  classdiagram_ref 421890 // mdtUicNumberWidget
+    528 420 100 4 0 0
+  classdiagram_ref 422018 // mdtUicNumberValidator
+    732 647 100 4 0 0
+  classdiagram_ref 422146 // QValidator
+    732 647 100 4 0 0
+  classdiagram_ref 401538 // mdtUicNumber
+    732 647 100 4 132 0
+  active  classdiagram_ref 394882 // mdtCsvFile
+    916 809 100 4 84 0
 end
 show_stereotypes
-selected classdiagram_ref 401538 // mdtUicNumber
+selected attribute_ref 529410 // pvCodec
 open
-  classview_ref 280322 // mdtUicNumber
+  class_ref 390658 // mdtCsvFile
+  class_ref 397442 // mdtUicNumberItem
+  operation_ref 811778 // setUicDbsDir
+  class_ref 418562 // mdtUicNumberValidator
   
-package_ref 174978 // mdtutilsgui
+  package_ref 174978 // mdtutilsgui
+  
+  package_ref 148226 // mdtserialport
+  
+  package_ref 134786 // Qt4
 end
 end

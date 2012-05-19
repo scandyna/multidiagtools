@@ -22,7 +22,7 @@ relationcanvas 128258 relation_ref 476418 // <generalisation>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128514 relation_ref 476546 // <directional composition>
-  from ref 128002 z 2001 stereotype "<<QList   [Qt4]>>" xyz 621.5 572 3000 to ref 128386
+  from ref 128002 z 2001 stereotype "<<QList   [Qt4]>>" xyz 621 573.5 3000 to ref 128386
   role_a_pos 687 552 3000 no_role_b
   multiplicity_a_pos 711 579 3000 no_multiplicity_b
 end

@@ -16,6 +16,8 @@ mdtErrorOut::mdtErrorOut()
   pvLogLevelsMask = (mdtError::Warning | mdtError::Error);
   pvDialogLevelsMask = (mdtError::Warning | mdtError::Error);
   qRegisterMetaType<mdtError>();
+  // MessageBox
+  ///pvDialog.setWindowFlags(Qt::Dialog);
 }
 
 mdtErrorOut::~mdtErrorOut()
@@ -169,8 +171,8 @@ void mdtErrorOut::showDialog(mdtError error)
     msg += num;
     msg += tr(" :\n");
     msg += error.systemText();
+    instance()->pvDialog.setInformativeText(msg);
   }
-  instance()->pvDialog.setInformativeText(msg);
   // Set the source
   if(error.fileLine() > 0){
     msg = tr("Function: ");

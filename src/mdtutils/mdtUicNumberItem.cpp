@@ -105,3 +105,13 @@ QString &mdtUicNumberItem::nameDe()
 {
   return pvNameDe;
 }
+
+QString &mdtUicNumberItem::name(const QLocale &locale)
+{
+  if(locale.language() == QLocale::French){
+    return nameFr();
+  }else if(locale.language() == QLocale::German){
+    return nameDe();
+  }
+  return nameEn();
+}

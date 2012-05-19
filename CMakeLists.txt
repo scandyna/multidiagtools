@@ -25,9 +25,9 @@ set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_BUILD_TYPE Release)
 
 # Project version
-set (VERSION_MAJOR 0)
-set (VERSION_MINOR 2)
-set (VERSION_MICRO 3)
+set(VERSION_MAJOR 0)
+set(VERSION_MINOR 2)
+set(VERSION_MICRO 3)
 
 # Config file
 configure_file (
@@ -94,6 +94,8 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
 endif(UNIX)
 
+# *** Tools section (executables) ***
+add_subdirectory("${PROJECT_SOURCE_DIR}/tools")
 
 # *** Mini test programm section ***
 
@@ -133,6 +135,7 @@ endif(UNIX)
 # Some Linux specific files
 if(UNIX)
   install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/40-usbtmc.rules" DESTINATION "/etc/udev/rules.d/")
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "/usr/share/mdt/")
 endif(UNIX)
 
 # Some Windows specific files
@@ -153,6 +156,7 @@ if(WIN32)
   install(FILES ${MINGWM10DLL} DESTINATION "${LIB_DEST_DIR}")
   install(FILES ${QTCOREDLL} DESTINATION "${LIB_DEST_DIR}")
   install(FILES ${QTGUIDLL} DESTINATION "${LIB_DEST_DIR}")
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif(WIN32)
 
 # ** CPack section **

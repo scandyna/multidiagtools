@@ -62,7 +62,6 @@ int main(int argc, char **argv)
   if(retVal!=0){
     return retVal;
   }
-  return 1; /// NOTE: provisoire
 
   retVal = QTest::qExec(&uicNumberTest, argc, argv);
   if(retVal!=0){
@@ -73,6 +72,9 @@ int main(int argc, char **argv)
   if(retVal!=0){
     return retVal;
   }
+  
+  return 1; /// NOTE: provisoire
+  
   retVal = QTest::qExec(&algorithmsTest, argc, argv);
   if(retVal!=0){
     return retVal;

@@ -22,17 +22,23 @@
 #define MDT_CSV_FILE_H
 
 #include <QString>
+#include <QTextCodec>
 #include <QStringList>
 #include <QList>
 #include <QFile>
 
 /*! \brief Read and write CSV file
+ * 
+ * The default file encoding format is assumed UTF-8.
+ * If another format is to use, give it at constructor.
  */
 class mdtCsvFile : public QFile
 {
  public:
 
-  mdtCsvFile(QObject *parent = 0);
+  /*! \brief Constructor.
+   */
+  mdtCsvFile(QObject *parent = 0, QByteArray fileEncoding = "UTF-8");
   ~mdtCsvFile();
 
   /*! \brief Read the file and store data
@@ -73,6 +79,7 @@ class mdtCsvFile : public QFile
 
   QList<QStringList> pvLines;
   QStringList pvFields;
+  QTextCodec *pvCodec;
 };
 
 #endif  // #ifndef MDT_CSV_FILE_H

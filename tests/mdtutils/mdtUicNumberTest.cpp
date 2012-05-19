@@ -137,12 +137,30 @@ void mdtUicNumberTest::detailsTest()
 
   // Initial states
   QVERIFY(!uic.isValid());
+  QVERIFY(!uic.countriesDbLoaded());
+  QVERIFY(!uic.usagesDbLoaded());
+  QVERIFY(!uic.typesDbLoaded());
+  QVERIFY(!uic.speedAndHeatDbLoaded());
+  QVERIFY(!uic.dbsLoaded());
 
-  // Load databases
-  QVERIFY(uic.loadCountriesDb("data/uic_country_db.csv"));
-  QVERIFY(uic.loadUsagesDb("data/uic_usage_db.csv"));
-  QVERIFY(uic.loadTypesDb("data/uic_type_db.csv"));
-  QVERIFY(uic.loadSpeedAndHeatsDb("data/uic_speedandheat_db.csv"));
+  // Load databases manually
+  QVERIFY(uic.loadCountriesDb("data/uic/uic_countries_db.csv"));
+  QVERIFY(uic.countriesDbLoaded());
+  QVERIFY(!uic.dbsLoaded());
+  QVERIFY(uic.loadUsagesDb("data/uic/uic_usages_db.csv"));
+  QVERIFY(uic.usagesDbLoaded());
+  QVERIFY(!uic.dbsLoaded());
+  QVERIFY(uic.loadTypesDb("data/uic/uic_types_db.csv"));
+  QVERIFY(uic.typesDbLoaded());
+  QVERIFY(!uic.dbsLoaded());
+  QVERIFY(uic.loadSpeedAndHeatsDb("data/uic/uic_speedandheat_db.csv"));
+  QVERIFY(uic.speedAndHeatDbLoaded());
+  QVERIFY(uic.dbsLoaded());
+  // Reload DBs
+  uic.unloadDbs();
+  QVERIFY(!uic.dbsLoaded());
+  QVERIFY(uic.loadDbs("data/uic"));
+  QVERIFY(uic.dbsLoaded());
 
   // Check with 11 digits UIC numbers
   QVERIFY(uic.setNumber("50 85 39 43 864"));
@@ -182,6 +200,5 @@ void mdtUicNumberTest::detailsTest()
   QVERIFY(uic.country().number() == 85);
   QVERIFY(uic.country().code() == "CH");
   QVERIFY(uic.serialNumber() == "014");
-
 }
 
