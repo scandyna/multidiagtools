@@ -21,7 +21,6 @@ moc_*
 *.com
 *.class
 *.dll
-*.exe
 
 # Packages #
 ############
@@ -34,9 +33,6 @@ moc_*
 *.jar
 *.rar
 *.tar
-*.zip
-*.deb
-*.rpm
 
 # Logs and databases #
 ######################
