@@ -1,0 +1,279 @@
+\hypertarget{class_qt_single_application}{
+\section{QtSingleApplication Class Reference}
+\label{class_qt_single_application}\index{QtSingleApplication@{QtSingleApplication}}
+}
+
+
+The \hyperlink{class_qt_single_application}{QtSingleApplication} class provides an API to detect and communicate with running instances of an application.  
+
+
+
+
+{\ttfamily \#include $<$qtsingleapplication.h$>$}
+
+
+
+Inheritance diagram for QtSingleApplication:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{class_qt_single_application__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for QtSingleApplication:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{class_qt_single_application__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{sendMessage} (const QString \&message, int timeout=5000)
+\item 
+void \hyperlink{class_qt_single_application_a0881b32c76132b499f3180064006abc1}{activateWindow} ()
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived} (const QString \&message)
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_qt_single_application_afe5e96d236e42949e65669eca282acbd}{QtSingleApplication} (int \&argc, char $\ast$$\ast$argv, bool GUIenabled=true)
+\item 
+\hyperlink{class_qt_single_application_a746192779985e28f22fd17766884518e}{QtSingleApplication} (const QString \&id, int \&argc, char $\ast$$\ast$argv)
+\item 
+\hyperlink{class_qt_single_application_adcb7a28eec3eef34c6474fb419509895}{QtSingleApplication} (int \&argc, char $\ast$$\ast$argv, Type type)
+\item 
+bool \hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning} ()
+\item 
+QString \hyperlink{class_qt_single_application_affd094410862f30fce83afcba3457b19}{id} () const 
+\item 
+void \hyperlink{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{setActivationWindow} (QWidget $\ast$aw, bool activateOnMessage=true)
+\item 
+QWidget $\ast$ \hyperlink{class_qt_single_application_a1e6be5adba2282fcfe547596b2aee18a}{activationWindow} () const 
+\item 
+void \hyperlink{class_qt_single_application_a622807c60657c1a1fadec15ea5903b47}{initialize} (bool dummy=true)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_qt_single_application}{QtSingleApplication} class provides an API to detect and communicate with running instances of an application. 
+
+This class allows you to create applications where only one instance should be running at a time. I.e., if the user tries to launch another instance, the already running instance will be activated instead. Another usecase is a client-\/server system, where the first started instance will assume the role of server, and the later instances will act as clients of that server.
+
+By default, the full path of the executable file is used to determine whether two processes are instances of the same application. You can also provide an explicit identifier string that will be compared instead.
+
+The application should create the \hyperlink{class_qt_single_application}{QtSingleApplication} object early in the startup phase, and call \hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning()} to find out if another instance of this application is already running. If \hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning()} returns false, it means that no other instance is running, and this instance has assumed the role as the running instance. In this case, the application should continue with the initialization of the application user interface before entering the event loop with exec(), as normal.
+
+The \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()} signal will be emitted when the running application receives messages from another instance of the same application. When a message is received it might be helpful to the user to raise the application so that it becomes visible. To facilitate this, \hyperlink{class_qt_single_application}{QtSingleApplication} provides the \hyperlink{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{setActivationWindow()} function and the \hyperlink{class_qt_single_application_a0881b32c76132b499f3180064006abc1}{activateWindow()} slot.
+
+If \hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning()} returns true, another instance is already running. It may be alerted to the fact that another instance has started by using the \hyperlink{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{sendMessage()} function. Also data such as startup parameters (e.g. the name of the file the user wanted this new instance to open) can be passed to the running instance with this function. Then, the application should terminate (or enter client mode).
+
+If \hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning()} returns true, but \hyperlink{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{sendMessage()} fails, that is an indication that the running instance is frozen.
+
+Here's an example that shows how to convert an existing application to use \hyperlink{class_qt_single_application}{QtSingleApplication}. It is very simple and does not make use of all QtSingleApplication's functionality (see the examples for that).
+
+
+\begin{DoxyCode}
+    // Original
+    int main(int argc, char **argv)
+    {
+        QApplication app(argc, argv);
+
+        MyMainWidget mmw;
+        mmw.show();
+        return app.exec();
+    }
+
+    // Single instance
+    int main(int argc, char **argv)
+    {
+        QtSingleApplication app(argc, argv);
+
+        if (app.isRunning())
+            return !app.sendMessage(someDataString);
+
+        MyMainWidget mmw;
+        app.setActivationWindow(&mmw);
+        mmw.show();
+        return app.exec();
+    }
+\end{DoxyCode}
+
+
+Once this \hyperlink{class_qt_single_application}{QtSingleApplication} instance is destroyed (normally when the process exits or crashes), when the user next attempts to run the application this instance will not, of course, be encountered. The next instance to call \hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning()} or \hyperlink{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{sendMessage()} will assume the role as the new running instance.
+
+For console (non-\/GUI) applications, QtSingleCoreApplication may be used instead of this class, to avoid the dependency on the QtGui library.
+
+\begin{DoxySeeAlso}{See also}
+QtSingleCoreApplication 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_qt_single_application_afe5e96d236e42949e65669eca282acbd}{
+\index{QtSingleApplication@{QtSingleApplication}!QtSingleApplication@{QtSingleApplication}}
+\index{QtSingleApplication@{QtSingleApplication}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{QtSingleApplication}]{\setlength{\rightskip}{0pt plus 5cm}QtSingleApplication::QtSingleApplication (
+\begin{DoxyParamCaption}
+\item[{int \&}]{argc, }
+\item[{char $\ast$$\ast$}]{argv, }
+\item[{bool}]{GUIenabled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{class_qt_single_application_afe5e96d236e42949e65669eca282acbd}
+Creates a \hyperlink{class_qt_single_application}{QtSingleApplication} object. The application identifier will be QCoreApplication::applicationFilePath(). {\itshape argc\/}, {\itshape argv\/}, and {\itshape GUIenabled\/} are passed on to the QAppliation constructor.
+
+If you are creating a console application (i.e. setting {\itshape GUIenabled\/} to false), you may consider using QtSingleCoreApplication instead. \hypertarget{class_qt_single_application_a746192779985e28f22fd17766884518e}{
+\index{QtSingleApplication@{QtSingleApplication}!QtSingleApplication@{QtSingleApplication}}
+\index{QtSingleApplication@{QtSingleApplication}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{QtSingleApplication}]{\setlength{\rightskip}{0pt plus 5cm}QtSingleApplication::QtSingleApplication (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{appId, }
+\item[{int \&}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}
+\label{class_qt_single_application_a746192779985e28f22fd17766884518e}
+Creates a \hyperlink{class_qt_single_application}{QtSingleApplication} object with the application identifier {\itshape appId\/}. {\itshape argc\/} and {\itshape argv\/} are passed on to the QAppliation constructor. \hypertarget{class_qt_single_application_adcb7a28eec3eef34c6474fb419509895}{
+\index{QtSingleApplication@{QtSingleApplication}!QtSingleApplication@{QtSingleApplication}}
+\index{QtSingleApplication@{QtSingleApplication}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{QtSingleApplication}]{\setlength{\rightskip}{0pt plus 5cm}QtSingleApplication::QtSingleApplication (
+\begin{DoxyParamCaption}
+\item[{int \&}]{argc, }
+\item[{char $\ast$$\ast$}]{argv, }
+\item[{Type}]{type}
+\end{DoxyParamCaption}
+)}}
+\label{class_qt_single_application_adcb7a28eec3eef34c6474fb419509895}
+Creates a \hyperlink{class_qt_single_application}{QtSingleApplication} object. The application identifier will be QCoreApplication::applicationFilePath(). {\itshape argc\/}, {\itshape argv\/}, and {\itshape type\/} are passed on to the QAppliation constructor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_qt_single_application_a0881b32c76132b499f3180064006abc1}{
+\index{QtSingleApplication@{QtSingleApplication}!activateWindow@{activateWindow}}
+\index{activateWindow@{activateWindow}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{activateWindow}]{\setlength{\rightskip}{0pt plus 5cm}void QtSingleApplication::activateWindow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{class_qt_single_application_a0881b32c76132b499f3180064006abc1}
+De-\/minimizes, raises, and activates this application's activation window. This function does nothing if no activation window has been set.
+
+This is a convenience function to show the user that this application instance has been activated when he has tried to start another instance.
+
+This function should typically be called in response to the \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()} signal. By default, that will happen automatically, if an activation window has been set.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{setActivationWindow()}, \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()}, \hyperlink{class_qt_single_application_a622807c60657c1a1fadec15ea5903b47}{initialize()} 
+\end{DoxySeeAlso}
+\hypertarget{class_qt_single_application_a1e6be5adba2282fcfe547596b2aee18a}{
+\index{QtSingleApplication@{QtSingleApplication}!activationWindow@{activationWindow}}
+\index{activationWindow@{activationWindow}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{activationWindow}]{\setlength{\rightskip}{0pt plus 5cm}QWidget $\ast$ QtSingleApplication::activationWindow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{class_qt_single_application_a1e6be5adba2282fcfe547596b2aee18a}
+Returns the applications activation window if one has been set by calling \hyperlink{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{setActivationWindow()}, otherwise returns 0.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{setActivationWindow()} 
+\end{DoxySeeAlso}
+\hypertarget{class_qt_single_application_affd094410862f30fce83afcba3457b19}{
+\index{QtSingleApplication@{QtSingleApplication}!id@{id}}
+\index{id@{id}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{id}]{\setlength{\rightskip}{0pt plus 5cm}QString QtSingleApplication::id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{class_qt_single_application_affd094410862f30fce83afcba3457b19}
+Returns the application identifier. Two processes with the same identifier will be regarded as instances of the same application. \hypertarget{class_qt_single_application_a622807c60657c1a1fadec15ea5903b47}{
+\index{QtSingleApplication@{QtSingleApplication}!initialize@{initialize}}
+\index{initialize@{initialize}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void QtSingleApplication::initialize (
+\begin{DoxyParamCaption}
+\item[{bool}]{dummy = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{class_qt_single_application_a622807c60657c1a1fadec15ea5903b47}
+\hypertarget{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{
+\index{QtSingleApplication@{QtSingleApplication}!isRunning@{isRunning}}
+\index{isRunning@{isRunning}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{isRunning}]{\setlength{\rightskip}{0pt plus 5cm}bool QtSingleApplication::isRunning (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}
+Returns true if another instance of this application is running; otherwise false.
+
+This function does not find instances of this application that are being run by a different user (on Windows: that are running in another session).
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{sendMessage()} 
+\end{DoxySeeAlso}
+\hypertarget{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{
+\index{QtSingleApplication@{QtSingleApplication}!messageReceived@{messageReceived}}
+\index{messageReceived@{messageReceived}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{messageReceived}]{\setlength{\rightskip}{0pt plus 5cm}void QtSingleApplication::messageReceived (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}
+This signal is emitted when the current instance receives a {\itshape message\/} from another instance of this application.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{sendMessage()}, \hyperlink{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{setActivationWindow()}, \hyperlink{class_qt_single_application_a0881b32c76132b499f3180064006abc1}{activateWindow()} 
+\end{DoxySeeAlso}
+\hypertarget{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}{
+\index{QtSingleApplication@{QtSingleApplication}!sendMessage@{sendMessage}}
+\index{sendMessage@{sendMessage}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{sendMessage}]{\setlength{\rightskip}{0pt plus 5cm}bool QtSingleApplication::sendMessage (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{message, }
+\item[{int}]{timeout = {\ttfamily 5000}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{class_qt_single_application_a0e2f3900f0290913c738ec6b4b959922}
+Tries to send the text {\itshape message\/} to the currently running instance. The \hyperlink{class_qt_single_application}{QtSingleApplication} object in the running instance will emit the \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()} signal when it receives the message.
+
+This function returns true if the message has been sent to, and processed by, the current instance. If there is no instance currently running, or if the running instance fails to process the message within {\itshape timeout\/} milliseconds, this function return false.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_qt_single_application_aa9f0e6e4f18ac79bbb7a955cd860894d}{isRunning()}, \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()} 
+\end{DoxySeeAlso}
+\hypertarget{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}{
+\index{QtSingleApplication@{QtSingleApplication}!setActivationWindow@{setActivationWindow}}
+\index{setActivationWindow@{setActivationWindow}!QtSingleApplication@{QtSingleApplication}}
+\subsubsection[{setActivationWindow}]{\setlength{\rightskip}{0pt plus 5cm}void QtSingleApplication::setActivationWindow (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{aw, }
+\item[{bool}]{activateOnMessage = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{class_qt_single_application_acb5347f6dc6822dbe4d6a78804043528}
+Sets the activation window of this application to {\itshape aw\/}. The activation window is the widget that will be activated by \hyperlink{class_qt_single_application_a0881b32c76132b499f3180064006abc1}{activateWindow()}. This is typically the application's main window.
+
+If {\itshape activateOnMessage\/} is true (the default), the window will be activated automatically every time a message is received, just prior to the \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()} signal being emitted.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_qt_single_application_a0881b32c76132b499f3180064006abc1}{activateWindow()}, \hyperlink{class_qt_single_application_a69340cef3d26d026e11424930e5a5866}{messageReceived()} 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/qt-\/solutions/qtsingleapplication/qtsingleapplication.h\item 
+src/qt-\/solutions/qtsingleapplication/qtsingleapplication.cpp\end{DoxyCompactItemize}

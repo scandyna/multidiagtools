@@ -1,0 +1,95 @@
+\hypertarget{class_qt_local_peer}{
+\section{QtLocalPeer Class Reference}
+\label{class_qt_local_peer}\index{QtLocalPeer@{QtLocalPeer}}
+}
+
+
+Collaboration diagram for QtLocalPeer:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=154pt]{class_qt_local_peer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}{
+void {\bfseries messageReceived} (const QString \&message)}
+\label{class_qt_local_peer_a4436ad976edb6f177de1300b5aab9bfe}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}{
+{\bfseries QtLocalPeer} (QObject $\ast$parent=0, const QString \&appId=QString())}
+\label{class_qt_local_peer_a7f6f94203a6ece5b14c8c800da1e40ab}
+
+\item 
+bool \hyperlink{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}{isClient} ()
+\item 
+\hypertarget{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}{
+bool {\bfseries sendMessage} (const QString \&message, int timeout)}
+\label{class_qt_local_peer_ab239cb6dcea36512d43df6ca07881ea7}
+
+\item 
+\hypertarget{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}{
+QString {\bfseries applicationId} () const }
+\label{class_qt_local_peer_a2f7d615b1eebd738a4025894d8e213d4}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}{
+void {\bfseries receiveConnection} ()}
+\label{class_qt_local_peer_afb29397e8af380cac78af0b7535121d2}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}{
+QString {\bfseries id}}
+\label{class_qt_local_peer_a89ee3139c0e2515e081a2b5de98beda6}
+
+\item 
+\hypertarget{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}{
+QString {\bfseries socketName}}
+\label{class_qt_local_peer_a2c86a18c237bdfe4bd0565d3cc413cd8}
+
+\item 
+\hypertarget{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}{
+QLocalServer $\ast$ {\bfseries server}}
+\label{class_qt_local_peer_af400ab8eb001ef4790541069a5d0e292}
+
+\item 
+\hypertarget{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}{
+\hyperlink{class_qt_locked_file}{QtLockedFile} \hyperlink{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}{lockFile}}
+\label{class_qt_local_peer_ab72488160eed35c9518ef3de1e6062cf}
+
+\begin{DoxyCompactList}\small\item\em QtLP\_\-Private::QtLockedFile lockFile;. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}{
+\index{QtLocalPeer@{QtLocalPeer}!isClient@{isClient}}
+\index{isClient@{isClient}!QtLocalPeer@{QtLocalPeer}}
+\subsubsection[{isClient}]{\setlength{\rightskip}{0pt plus 5cm}bool QtLocalPeer::isClient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_qt_local_peer_a72f4ec6cda404661094778f98296d2a9}
+
+
+if (!lockFile.lock(QtLP\_\-Private::QtLockedFile::WriteLock, false)) 
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/qt-\/solutions/qtsingleapplication/qtlocalpeer.h\item 
+src/qt-\/solutions/qtsingleapplication/qtlocalpeer.cpp\end{DoxyCompactItemize}
