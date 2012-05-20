@@ -50,6 +50,11 @@ Thumbs.db
 *.log
 *.tmp
 
+# Documents with Copyright #
+############################
+doc/Agilent
+doc/Wago
+
 # Other files #
 ###############
 customdb
