@@ -71,10 +71,10 @@ endif(MDT_BUILD_STATIC_LIBS)
 
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
-install (FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtdevice")
+install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtdevice" COMPONENT dev)
 
 # Destinations
-install (TARGETS "mdtdevice" DESTINATION "${LIB_DEST_DIR}")
+install(TARGETS "mdtdevice" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 if(MDT_BUILD_STATIC_LIBS)
-  install (TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}")
+  install(TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 endif(MDT_BUILD_STATIC_LIBS)

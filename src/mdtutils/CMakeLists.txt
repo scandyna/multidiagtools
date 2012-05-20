@@ -38,6 +38,8 @@ set (SOURCES_FILES
           mdtUicNumberItem.cpp
           mdtUicNumberWidget.cpp
           mdtUicNumberValidator.cpp
+          # Main application
+          mdtApplication.cpp
     )
 
 # List of .ui files
@@ -72,6 +74,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 # Output library
 add_library (mdtutils SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtutils ${QT_LIBRARIES})
+target_link_libraries(mdtutils "qtsingleapplication")
 
 # Static version of the library
 if(MDT_BUILD_STATIC_LIBS)
@@ -82,10 +85,10 @@ endif(MDT_BUILD_STATIC_LIBS)
 
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
-install (FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtutils")
+install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtutils" COMPONENT dev)
 
 # Install targets
-install (TARGETS "mdtutils" DESTINATION "${LIB_DEST_DIR}")
+install(TARGETS "mdtutils" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 if(MDT_BUILD_STATIC_LIBS)
-  install (TARGETS "mdtutils_static" DESTINATION "${LIB_DEST_DIR}")
+  install(TARGETS "mdtutils_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 endif(MDT_BUILD_STATIC_LIBS)

@@ -88,7 +88,7 @@ install/strip/fast: install/strip
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"dev\" \"lib\" \"tools\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -203,6 +203,30 @@ mdtAlgorithms.s: mdtAlgorithms.cpp.s
 mdtAlgorithms.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAlgorithms.cpp.s
 .PHONY : mdtAlgorithms.cpp.s
+
+mdtApplication.o: mdtApplication.cpp.o
+.PHONY : mdtApplication.o
+
+# target to build an object file
+mdtApplication.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtApplication.cpp.o
+.PHONY : mdtApplication.cpp.o
+
+mdtApplication.i: mdtApplication.cpp.i
+.PHONY : mdtApplication.i
+
+# target to preprocess a source file
+mdtApplication.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtApplication.cpp.i
+.PHONY : mdtApplication.cpp.i
+
+mdtApplication.s: mdtApplication.cpp.s
+.PHONY : mdtApplication.s
+
+# target to generate assembly for a file
+mdtApplication.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtApplication.cpp.s
+.PHONY : mdtApplication.cpp.s
 
 mdtBuffer.o: mdtBuffer.cpp.o
 .PHONY : mdtBuffer.o
@@ -679,6 +703,9 @@ help:
 	@echo "... mdtAlgorithms.o"
 	@echo "... mdtAlgorithms.i"
 	@echo "... mdtAlgorithms.s"
+	@echo "... mdtApplication.o"
+	@echo "... mdtApplication.i"
+	@echo "... mdtApplication.s"
 	@echo "... mdtBuffer.o"
 	@echo "... mdtBuffer.i"
 	@echo "... mdtBuffer.s"

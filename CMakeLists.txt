@@ -6,6 +6,8 @@
 #  http://qt-quarterly.developpez.com/qq-34/cmake/
 #  http://matthieu-brucher.developpez.com/tutoriels/cpp/qt/compilation/
 #  http://www.cmake.org/Wiki/CMake:CPackConfiguration
+# CPack ressources:
+#  http://www.vtk.org/Wiki/CMake:Component_Install_With_CPack
 
 # CMake project file for Multi Diag Tools
 # * root project file *
@@ -51,6 +53,7 @@ add_definitions(${QT_DEFINITIONS})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutilsgui")
+include_directories("${PROJECT_SOURCE_DIR}/src/qt-solutions/qtsingleapplication")
 # NOTE: Support Windows pas terminé
 if(UNIX)
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
@@ -72,6 +75,9 @@ else(WIN32)
   set(LIB_DEST_DIR "lib")
   set(HEADERS_DEST_DIR "include/mdt")
 endif(WIN32)
+
+# * QtSolutions *
+add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
@@ -134,8 +140,8 @@ endif(UNIX)
 
 # Some Linux specific files
 if(UNIX)
-  install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/40-usbtmc.rules" DESTINATION "/etc/udev/rules.d/")
-  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "/usr/share/mdt/")
+  install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/40-usbtmc.rules" DESTINATION "/etc/udev/rules.d/" COMPONENT lib)
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "/usr/share/mdt/" COMPONENT lib)
 endif(UNIX)
 
 # Some Windows specific files
@@ -147,16 +153,19 @@ if(WIN32)
   if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     find_library(QTCOREDLL NAMES QtCored4.dll)
     find_library(QTGUIDLL NAMES QtGuid4.dll)
+    find_library(QTNETWORKDLL NAMES QtNetworkd4.dll)
   else(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     find_library(QTCOREDLL NAMES QtCore4.dll)
     find_library(QTGUIDLL NAMES QtGui4.dll)
+    find_library(QTNETWORKDLL NAMES QtNetwork4.dll)
   endif(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  install(FILES ${LIBGCCDLL} DESTINATION "${LIB_DEST_DIR}")
-  install(FILES ${LIBSTDCPP6DLL} DESTINATION "${LIB_DEST_DIR}")
-  install(FILES ${MINGWM10DLL} DESTINATION "${LIB_DEST_DIR}")
-  install(FILES ${QTCOREDLL} DESTINATION "${LIB_DEST_DIR}")
-  install(FILES ${QTGUIDLL} DESTINATION "${LIB_DEST_DIR}")
-  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${CMAKE_INSTALL_PREFIX}")
+  install(FILES ${LIBGCCDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(FILES ${LIBSTDCPP6DLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(FILES ${MINGWM10DLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(FILES ${QTCOREDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(FILES ${QTGUIDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(FILES ${QTNETWORKDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 endif(WIN32)
 
 # ** CPack section **
@@ -171,7 +180,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   # On Windows, we build a Zip file with needed content
   if(WIN32)
     set(CPACK_INSTALL_PREFIX ".")
-    set(CPACK_GENERATOR "ZIP")
+    # set(CPACK_GENERATOR "ZIP")
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_PACKAGE_NAME "multidiagtools")
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "multidiagtools")
   endif(WIN32)
 
   # On Linux, we build a Debian package
@@ -192,14 +204,23 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
   # Some Debian package specific varaibles
   if(UNIX)
+    set(CPACK_DEB_COMPONENT_INSTALL ON)
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.5.0), libqtgui4 (>= 4:4.5.0), libstdc++6 , libgcc1 , libc6")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
     set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
   endif(UNIX)
 
-  set(CPACK_COMPONENTS_ALL Libraries ApplicationData)
+  set(CPACK_COMPONENT_LIB_DISPLAY_NAME "Libraries (runtime)")
+  set(CPACK_COMPONENT_DEV_DISPLAY_NAME "Headers (Only needed for devloppers)")
+  set(CPACK_COMPONENT_TOOLS_DISPLAY_NAME "Some little tools")
+  # Dependances
+  set(CPACK_COMPONENT_DEV_DEPENDS lib)
+  set(CPACK_COMPONENT_TOOLS_DEPENDS lib)
+  
+  set(CPACK_COMPONENTS_ALL lib dev tools)
 
+  # Keep this instruction at last
   include(CPack)
 
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")

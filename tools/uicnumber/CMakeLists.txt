@@ -31,4 +31,4 @@ target_link_libraries(mdtuicnumber "mdtutils")
 target_link_libraries(mdtuicnumber ${QT_LIBRARIES})
 
 # Install targets
-install (TARGETS "mdtuicnumber" RUNTIME DESTINATION bin)
+install (TARGETS "mdtuicnumber" RUNTIME DESTINATION bin COMPONENT tools)

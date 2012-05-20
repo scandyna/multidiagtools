@@ -18,9 +18,10 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include <QApplication>
+//#include <QApplication>
 #include <QTextCodec>
 #include <QDir>
+#include "mdtApplication.h"
 #include "mdtError.h"
 #include "mdtErrorOut.h"
 #include "mdtUicNumber.h"
@@ -30,7 +31,8 @@
 
 int main(int argc, char **argv)
 {
-  QApplication app(argc, argv);
+  ///QApplication app(argc, argv);
+  mdtApplication app(argc, argv);
   int retVal;
   mdtUicNumber *uic;
   mdtUicNumberWidget uicw;
