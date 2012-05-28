@@ -84,151 +84,152 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtAbstractSerialPort.h&quot;</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include &quot;mdtSerialPortConfig.h&quot;</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;string.h&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;termios.h&gt;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;signal.h&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;pthread.h&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;QObject&gt;</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="comment">/*</span>
-<a name="l00037"></a>00037 <span class="comment"> * Ressources: http://www.easysw.com/~mike/serial/serial.html</span>
-<a name="l00038"></a>00038 <span class="comment"> * </span>
-<a name="l00039"></a>00039 <span class="comment"> */</span>
-<a name="l00040"></a>00040 
-<a name="l00041"></a><a class="code" href="classmdt_serial_port_posix.html">00041</a> <span class="keyword">class </span><a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>
-<a name="l00042"></a>00042 {
-<a name="l00043"></a>00043  <span class="keyword">public</span>:
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>(QObject *parent = 0);
-<a name="l00046"></a>00046   ~<a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>();
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="comment">// Implemented from mdtAbstractPort</span>
-<a name="l00049"></a>00049   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663" title="Set the port attributes.">setAttributes</a>(<span class="keyword">const</span> QString &amp;portName);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="comment">// Implemented from mdtAbstractSerialPort</span>
-<a name="l00052"></a>00052   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc" title="Open the port.">open</a>(<a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg);
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <span class="comment">// Restore original setup and close the port</span>
-<a name="l00055"></a>00055   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2" title="Close the port.">close</a>();
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00058"></a>00058   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a7cea8e6d04dac0645785e8bee7570cea" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00061"></a>00061   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00064"></a>00064   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39" title="Wait until data is available at device.">waitForReadyRead</a>();
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <span class="comment">// Implemtation of mdtAbstractPort method</span>
-<a name="l00067"></a>00067   qint64 <a class="code" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069   <span class="comment">// Re-implementation of mdtAbstractPort method</span>
-<a name="l00070"></a>00070   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#ac153ca3658d467c5fe04dba89ead97bc" title="Request to suspend transmission.">suspendTransmission</a>();
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   <span class="comment">// Re-implementation of mdtAbstractPort method</span>
-<a name="l00073"></a>00073   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a83c71a904b63e09ff4bc4155bbff89ab" title="Request to resume transmission.">resumeTransmission</a>();
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075   <span class="comment">// Implemtation of mdtAbstractPort method</span>
-<a name="l00076"></a>00076   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#aefeb623e5b2b31bbb72f83d5735a2a8e" title="Flush read buffers.">flushIn</a>();
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00079"></a>00079   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1" title="Wait until data can be written to device.">waitEventWriteReady</a>();
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081   <span class="comment">// Implemtation of mdtAbstractPort method</span>
-<a name="l00082"></a>00082   qint64 <a class="code" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084   <span class="comment">// Implemtation of mdtAbstractPort method</span>
-<a name="l00085"></a>00085   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a7371414037fa039269b169856e23aae2" title="Flush write buffers.">flushOut</a>();
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <span class="comment">// Wait until a control signal (modem line state) changes</span>
-<a name="l00088"></a>00088   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a8ec213863c6eacfc8d3079aadc9ef43b" title="Wait until a control (modem line) signal state changes.">waitEventCtl</a>();
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   <span class="comment">// Get the control signal (modem line) states and update member flags</span>
-<a name="l00091"></a>00091   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc" title="Get the control (modem line) signal states and update member flags.">getCtlStates</a>();
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a3d27cec6098549cdba68465b8c5d4480" title="Enable/diseable the RTS (Request To Send) signal.">setRts</a>(<span class="keywordtype">bool</span> on);
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a0d489a938cba216ab43d3ae591689676" title="Enable/diseable the DTR (Data Terminal Ready) signal.">setDtr</a>(<span class="keywordtype">bool</span> on);
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097   <span class="comment">// Must be called from signal control thread (see mdtSerialPortCtlThread)</span>
-<a name="l00098"></a>00098   <span class="keywordtype">void</span> defineCtlThread(pthread_t ctlThread);
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100   <span class="comment">// Abort the waitEventCtl() function</span>
-<a name="l00101"></a>00101   <span class="comment">// Note: the thread in witch the waitEventCtl() function</span>
-<a name="l00102"></a>00102   <span class="comment">//       is called must be defined with defineCtlThread() before</span>
-<a name="l00103"></a>00103   <span class="keywordtype">void</span> abortWaitEventCtl();
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105  <span class="keyword">private</span>:
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107   <span class="comment">// Set the baud rate. Returns false if baud rate is not supported</span>
-<a name="l00108"></a>00108   <span class="keywordtype">bool</span> setBaudRate(<span class="keywordtype">int</span> rate);
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110   <span class="comment">// Get configured baud rate</span>
-<a name="l00111"></a>00111   <span class="keywordtype">int</span> baudRate();
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113   <span class="comment">// Set number of data bits. Returns false on un unsupported number</span>
-<a name="l00114"></a>00114   <span class="keywordtype">bool</span> setDataBits(<span class="keywordtype">int</span> n);
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116   <span class="comment">// Get configured number of data bits</span>
-<a name="l00117"></a>00117   <span class="keywordtype">int</span> dataBits();
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119   <span class="comment">// Set number of stop bits. Returns false on un unsupported number</span>
-<a name="l00120"></a>00120   <span class="keywordtype">bool</span> setStopBits(<span class="keywordtype">int</span> n);
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122   <span class="comment">// Get configured number of stop bits</span>
-<a name="l00123"></a>00123   <span class="keywordtype">int</span> stopBits();
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125   <span class="comment">//  Set parity check</span>
-<a name="l00126"></a>00126   <span class="keywordtype">void</span> setParity(mdtSerialPortConfig::parity_t p);
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128   <span class="comment">// Get configured parity</span>
-<a name="l00129"></a>00129   mdtSerialPortConfig::parity_t parity();
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131   <span class="comment">// Enable/diseable RTS/CTS flow control</span>
-<a name="l00132"></a>00132   <span class="keywordtype">void</span> setFlowCtlRtsCts(<span class="keywordtype">bool</span> on);
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134   <span class="comment">// Returns true if RTS/CTS flow control is enabled</span>
-<a name="l00135"></a>00135   <span class="keywordtype">bool</span> flowCtlRtsCtsOn();
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   <span class="comment">// Enable/diseable Xon/Xoff flow control</span>
-<a name="l00138"></a>00138   <span class="keywordtype">void</span> setFlowCtlXonXoff(<span class="keywordtype">bool</span> on, <span class="keywordtype">char</span> xonChar, <span class="keywordtype">char</span> xoffChar);
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140   <span class="comment">// Returns true if Xon/Xoff flow control is enabled</span>
-<a name="l00141"></a>00141   <span class="keywordtype">bool</span> flowCtlXonXoffOn();
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143   <span class="comment">// Check if configuration could be done on system</span>
-<a name="l00144"></a>00144   <span class="keywordtype">bool</span> checkConfig(<a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> cfg);
-<a name="l00145"></a>00145   
-<a name="l00146"></a>00146   <span class="comment">// Used to catch the SIGALRM signal (doese nothing else)</span>
-<a name="l00147"></a>00147   <span class="keyword">static</span> <span class="keywordtype">void</span> sigactionHandle(<span class="keywordtype">int</span> signum);
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149   <span class="comment">// Set the RTS ON/OFF</span>
-<a name="l00150"></a>00150   <span class="keywordtype">bool</span> setRtsOn();
-<a name="l00151"></a>00151   <span class="keywordtype">bool</span> setRtsOff();
-<a name="l00152"></a>00152 
-<a name="l00153"></a>00153   <span class="keyword">struct </span>termios pvTermios;         <span class="comment">// Termios configuration structure</span>
-<a name="l00154"></a>00154   <span class="keyword">struct </span>termios pvOriginalTermios; <span class="comment">// Original termios configuration structure to restore</span>
-<a name="l00155"></a>00155   <span class="comment">// Ctl signals states memory</span>
-<a name="l00156"></a>00156   <span class="keywordtype">int</span> pvPreviousCarState;
-<a name="l00157"></a>00157   <span class="keywordtype">int</span> pvPreviousDsrState;
-<a name="l00158"></a>00158   <span class="keywordtype">int</span> pvPreviousCtsState;
-<a name="l00159"></a>00159   <span class="keywordtype">int</span> pvPreviousRngState;
-<a name="l00160"></a>00160   <span class="comment">// Members used for control signals thread kill</span>
-<a name="l00161"></a>00161   pthread_t pvCtlThread;
-<a name="l00162"></a>00162   <span class="keyword">struct </span>sigaction pvSigaction;
-<a name="l00163"></a>00163   <span class="keywordtype">bool</span> pvAbortingWaitEventCtl;
-<a name="l00164"></a>00164   <span class="keywordtype">int</span> pvFd;                         <span class="comment">// Port file descriptor</span>
-<a name="l00165"></a>00165   <span class="keyword">struct </span>timeval pvReadTimeout;
-<a name="l00166"></a>00166   <span class="keyword">struct </span>timeval pvWriteTimeout;
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168 };
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_POSIX_H</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;linux/mdtPortLock.h&quot;</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;string.h&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;termios.h&gt;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;signal.h&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;pthread.h&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QObject&gt;</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="comment">/*</span>
+<a name="l00038"></a>00038 <span class="comment"> * Ressources: http://www.easysw.com/~mike/serial/serial.html</span>
+<a name="l00039"></a>00039 <span class="comment"> * </span>
+<a name="l00040"></a>00040 <span class="comment"> */</span>
+<a name="l00041"></a>00041 
+<a name="l00042"></a><a class="code" href="classmdt_serial_port_posix.html">00042</a> <span class="keyword">class </span><a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>
+<a name="l00043"></a>00043 {
+<a name="l00044"></a>00044  <span class="keyword">public</span>:
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046   <a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>(QObject *parent = 0);
+<a name="l00047"></a>00047   ~<a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>();
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="comment">// Implemented from mdtAbstractPort</span>
+<a name="l00050"></a>00050   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663" title="Set the port attributes.">setAttributes</a>(<span class="keyword">const</span> QString &amp;portName);
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="comment">// Implemented from mdtAbstractSerialPort</span>
+<a name="l00053"></a>00053   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc" title="Open the port.">open</a>(<a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg);
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055   <span class="comment">// Restore original setup and close the port</span>
+<a name="l00056"></a>00056   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a29df8d6b7c74bd7e3bf8513987bdd2a2" title="Close the port.">close</a>();
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="comment">// Implemtation of mdtAbstractPort</span>
+<a name="l00059"></a>00059   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a7cea8e6d04dac0645785e8bee7570cea" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   <span class="comment">// Implemtation of mdtAbstractPort</span>
+<a name="l00062"></a>00062   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064   <span class="comment">// Implemtation of mdtAbstractPort</span>
+<a name="l00065"></a>00065   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39" title="Wait until data is available at device.">waitForReadyRead</a>();
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   <span class="comment">// Implemtation of mdtAbstractPort method</span>
+<a name="l00068"></a>00068   qint64 <a class="code" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="comment">// Re-implementation of mdtAbstractPort method</span>
+<a name="l00071"></a>00071   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#ac153ca3658d467c5fe04dba89ead97bc" title="Request to suspend transmission.">suspendTransmission</a>();
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073   <span class="comment">// Re-implementation of mdtAbstractPort method</span>
+<a name="l00074"></a>00074   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a83c71a904b63e09ff4bc4155bbff89ab" title="Request to resume transmission.">resumeTransmission</a>();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   <span class="comment">// Implemtation of mdtAbstractPort method</span>
+<a name="l00077"></a>00077   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#aefeb623e5b2b31bbb72f83d5735a2a8e" title="Flush read buffers.">flushIn</a>();
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="comment">// Implemtation of mdtAbstractPort</span>
+<a name="l00080"></a>00080   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1" title="Wait until data can be written to device.">waitEventWriteReady</a>();
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082   <span class="comment">// Implemtation of mdtAbstractPort method</span>
+<a name="l00083"></a>00083   qint64 <a class="code" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   <span class="comment">// Implemtation of mdtAbstractPort method</span>
+<a name="l00086"></a>00086   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a7371414037fa039269b169856e23aae2" title="Flush write buffers.">flushOut</a>();
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088   <span class="comment">// Wait until a control signal (modem line state) changes</span>
+<a name="l00089"></a>00089   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a8ec213863c6eacfc8d3079aadc9ef43b" title="Wait until a control (modem line) signal state changes.">waitEventCtl</a>();
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091   <span class="comment">// Get the control signal (modem line) states and update member flags</span>
+<a name="l00092"></a>00092   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc" title="Get the control (modem line) signal states and update member flags.">getCtlStates</a>();
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a3d27cec6098549cdba68465b8c5d4480" title="Enable/diseable the RTS (Request To Send) signal.">setRts</a>(<span class="keywordtype">bool</span> on);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#a0d489a938cba216ab43d3ae591689676" title="Enable/diseable the DTR (Data Terminal Ready) signal.">setDtr</a>(<span class="keywordtype">bool</span> on);
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   <span class="comment">// Must be called from signal control thread (see mdtSerialPortCtlThread)</span>
+<a name="l00099"></a>00099   <span class="keywordtype">void</span> defineCtlThread(pthread_t ctlThread);
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101   <span class="comment">// Abort the waitEventCtl() function</span>
+<a name="l00102"></a>00102   <span class="comment">// Note: the thread in witch the waitEventCtl() function</span>
+<a name="l00103"></a>00103   <span class="comment">//       is called must be defined with defineCtlThread() before</span>
+<a name="l00104"></a>00104   <span class="keywordtype">void</span> abortWaitEventCtl();
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106  <span class="keyword">private</span>:
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108   <span class="comment">// Set the baud rate. Returns false if baud rate is not supported</span>
+<a name="l00109"></a>00109   <span class="keywordtype">bool</span> setBaudRate(<span class="keywordtype">int</span> rate);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111   <span class="comment">// Get configured baud rate</span>
+<a name="l00112"></a>00112   <span class="keywordtype">int</span> baudRate();
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114   <span class="comment">// Set number of data bits. Returns false on un unsupported number</span>
+<a name="l00115"></a>00115   <span class="keywordtype">bool</span> setDataBits(<span class="keywordtype">int</span> n);
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117   <span class="comment">// Get configured number of data bits</span>
+<a name="l00118"></a>00118   <span class="keywordtype">int</span> dataBits();
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120   <span class="comment">// Set number of stop bits. Returns false on un unsupported number</span>
+<a name="l00121"></a>00121   <span class="keywordtype">bool</span> setStopBits(<span class="keywordtype">int</span> n);
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123   <span class="comment">// Get configured number of stop bits</span>
+<a name="l00124"></a>00124   <span class="keywordtype">int</span> stopBits();
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126   <span class="comment">//  Set parity check</span>
+<a name="l00127"></a>00127   <span class="keywordtype">void</span> setParity(mdtSerialPortConfig::parity_t p);
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129   <span class="comment">// Get configured parity</span>
+<a name="l00130"></a>00130   mdtSerialPortConfig::parity_t parity();
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132   <span class="comment">// Enable/diseable RTS/CTS flow control</span>
+<a name="l00133"></a>00133   <span class="keywordtype">void</span> setFlowCtlRtsCts(<span class="keywordtype">bool</span> on);
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135   <span class="comment">// Returns true if RTS/CTS flow control is enabled</span>
+<a name="l00136"></a>00136   <span class="keywordtype">bool</span> flowCtlRtsCtsOn();
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138   <span class="comment">// Enable/diseable Xon/Xoff flow control</span>
+<a name="l00139"></a>00139   <span class="keywordtype">void</span> setFlowCtlXonXoff(<span class="keywordtype">bool</span> on, <span class="keywordtype">char</span> xonChar, <span class="keywordtype">char</span> xoffChar);
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141   <span class="comment">// Returns true if Xon/Xoff flow control is enabled</span>
+<a name="l00142"></a>00142   <span class="keywordtype">bool</span> flowCtlXonXoffOn();
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144   <span class="comment">// Check if configuration could be done on system</span>
+<a name="l00145"></a>00145   <span class="keywordtype">bool</span> checkConfig(<a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> cfg);
+<a name="l00146"></a>00146   
+<a name="l00147"></a>00147   <span class="comment">// Used to catch the SIGALRM signal (doese nothing else)</span>
+<a name="l00148"></a>00148   <span class="keyword">static</span> <span class="keywordtype">void</span> sigactionHandle(<span class="keywordtype">int</span> signum);
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150   <span class="comment">// Set the RTS ON/OFF</span>
+<a name="l00151"></a>00151   <span class="keywordtype">bool</span> setRtsOn();
+<a name="l00152"></a>00152   <span class="keywordtype">bool</span> setRtsOff();
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154   <span class="keyword">struct </span>termios pvTermios;         <span class="comment">// Termios configuration structure</span>
+<a name="l00155"></a>00155   <span class="keyword">struct </span>termios pvOriginalTermios; <span class="comment">// Original termios configuration structure to restore</span>
+<a name="l00156"></a>00156   <span class="comment">// Ctl signals states memory</span>
+<a name="l00157"></a>00157   <span class="keywordtype">int</span> pvPreviousCarState;
+<a name="l00158"></a>00158   <span class="keywordtype">int</span> pvPreviousDsrState;
+<a name="l00159"></a>00159   <span class="keywordtype">int</span> pvPreviousCtsState;
+<a name="l00160"></a>00160   <span class="keywordtype">int</span> pvPreviousRngState;
+<a name="l00161"></a>00161   <span class="comment">// Members used for control signals thread kill</span>
+<a name="l00162"></a>00162   pthread_t pvCtlThread;
+<a name="l00163"></a>00163   <span class="keyword">struct </span>sigaction pvSigaction;
+<a name="l00164"></a>00164   <span class="keywordtype">bool</span> pvAbortingWaitEventCtl;
+<a name="l00165"></a>00165   <span class="keywordtype">int</span> pvFd;                         <span class="comment">// Port file descriptor</span>
+<a name="l00166"></a>00166   <span class="keyword">struct </span>timeval pvReadTimeout;
+<a name="l00167"></a>00167   <span class="keyword">struct </span>timeval pvWriteTimeout;
+<a name="l00168"></a>00168   <a class="code" href="classmdt_port_lock.html" title="Open a port and lock it.">mdtPortLock</a> *pvPortLock;
+<a name="l00169"></a>00169 };
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_POSIX_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -245,7 +246,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 20 2012 14:23:33 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:58 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

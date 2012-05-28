@@ -83,17 +83,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_APPLICATION_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QtSingleApplication&gt;</span>
-<a name="l00025"></a>00025 
-<a name="l00030"></a><a class="code" href="classmdt_application.html">00030</a> <span class="keyword">class </span><a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a> : <span class="keyword">public</span> <a class="code" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a>
-<a name="l00031"></a>00031 {
-<a name="l00032"></a>00032  <span class="keyword">public</span>:
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a>(<span class="keywordtype">int</span> &amp;argc, <span class="keywordtype">char</span> **argv, <span class="keywordtype">bool</span> GUIenabled = <span class="keyword">true</span>);
-<a name="l00035"></a>00035   ~<a class="code" href="classmdt_application.html" title="Main application.">mdtApplication</a>();
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 };
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="preprocessor">#endif  // #ifndef MDT_APPLICATION_H</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;config.h&gt;</span>
+<a name="l00027"></a>00027 
+<a name="l00029"></a>00029 
+<a name="l00034"></a><a class="code" href="classmdt_application.html">00034</a> <span class="keyword">class </span><a class="code" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a> : <span class="keyword">public</span> <a class="code" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a>
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036  <span class="keyword">public</span>:
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038   <a class="code" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a>(<span class="keywordtype">int</span> &amp;argc, <span class="keywordtype">char</span> **argv, <span class="keywordtype">bool</span> GUIenabled = <span class="keyword">true</span>);
+<a name="l00039"></a>00039   ~<a class="code" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a>();
+<a name="l00040"></a>00040   
+<a name="l00049"></a>00049   <span class="keywordtype">bool</span> <a class="code" href="classmdt_application.html#a5000b9656a59b3594de2a4ceb4232673" title="Some initializations.">init</a>(<span class="keywordtype">bool</span> allowMultipleInstances = <span class="keyword">true</span>);
+<a name="l00050"></a>00050 
+<a name="l00055"></a>00055   <span class="keyword">static</span> <a class="code" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a> *<a class="code" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d" title="Get the instance of mdtApplication.">instance</a>();
+<a name="l00056"></a>00056 
+<a name="l00059"></a>00059   <span class="keyword">static</span> QString <a class="code" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c" title="Get data dir path.">systemDataDirPath</a>();
+<a name="l00060"></a>00060 
+<a name="l00063"></a>00063   <span class="keyword">static</span> QString <a class="code" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51" title="Get the multi diag tools library version.">mdtLibVersion</a>();
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065  <span class="keyword">private</span>:
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   <span class="comment">// Search the data system directory</span>
+<a name="l00068"></a>00068   <span class="keywordtype">bool</span> searchSystemDataDir();
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="comment">// Create some directories in home</span>
+<a name="l00071"></a>00071   <span class="keywordtype">bool</span> initHomeDir();
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073   QString pvSystemDataDirPath;
+<a name="l00074"></a>00074   QString pvLogDirPath;
+<a name="l00075"></a>00075   <span class="keyword">static</span> <a class="code" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a> *pvInstance;
+<a name="l00076"></a>00076 };
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078 <span class="preprocessor">#endif  // #ifndef MDT_APPLICATION_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -110,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 20 2012 14:23:33 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:58 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

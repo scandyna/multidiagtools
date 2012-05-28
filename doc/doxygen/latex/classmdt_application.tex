@@ -4,7 +4,7 @@
 }
 
 
-Main application.  
+NOTE: Mutex for static members..  
 
 
 
@@ -13,8 +13,7 @@ Main application.
 
 
 
-Inheritance diagram for mdtApplication:
-\nopagebreak
+Inheritance diagram for mdtApplication:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -28,7 +27,7 @@ Collaboration diagram for mdtApplication:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=182pt]{classmdt_application__coll__graph}
+\includegraphics[width=238pt]{classmdt_application__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -38,18 +37,77 @@ Collaboration diagram for mdtApplication:
 {\bfseries mdtApplication} (int \&argc, char $\ast$$\ast$argv, bool GUIenabled=true)}
 \label{classmdt_application_ab6268414770ee9239c83677c15a67f75}
 
-\end{DoxyCompactItemize}
+\item 
+bool \hyperlink{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}{init} (bool allowMultipleInstances=true)
+\begin{DoxyCompactList}\small\item\em Some initializations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classmdt_application}{mdtApplication} $\ast$ \hyperlink{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{instance} ()
+\begin{DoxyCompactList}\small\item\em Get the instance of \hyperlink{classmdt_application}{mdtApplication}. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_application_af17bb16e420c91af3d0ad1970714388c}{
+static QString \hyperlink{classmdt_application_af17bb16e420c91af3d0ad1970714388c}{systemDataDirPath} ()}
+\label{classmdt_application_af17bb16e420c91af3d0ad1970714388c}
+
+\begin{DoxyCompactList}\small\item\em Get data dir path. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_application_ad5318086812dad2c2870e294703caa51}{
+static QString \hyperlink{classmdt_application_ad5318086812dad2c2870e294703caa51}{mdtLibVersion} ()}
+\label{classmdt_application_ad5318086812dad2c2870e294703caa51}
+
+\begin{DoxyCompactList}\small\item\em Get the multi diag tools library version. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Main application. 
+NOTE: Mutex for static members.. 
 
-\begin{DoxySeeAlso}{See also}
+Main application \begin{DoxySeeAlso}{See also}
 QApplication 
 
 \hyperlink{class_qt_single_application}{QtSingleApplication} 
 \end{DoxySeeAlso}
 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}{
+\index{mdtApplication@{mdtApplication}!init@{init}}
+\index{init@{init}!mdtApplication@{mdtApplication}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtApplication::init (
+\begin{DoxyParamCaption}
+\item[{bool}]{allowMultipleInstances = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}
+
+
+Some initializations. 
+
+Several things are done here:
+\begin{DoxyItemize}
+\item Search the system data directory path
+\item Init the error system (\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_error_out}{mdtErrorOut})
+\end{DoxySeeAlso}
+
+\item Check if another instance is running (if allowMultipleInstances Instance is false) 
+\begin{DoxyParams}{Parameters}
+{\em allowMultipleInstances} & If true, multiple instance of application is allowed (but NOT multiple instance of \hyperlink{classmdt_application}{mdtApplication} in program !) \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\hypertarget{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{
+\index{mdtApplication@{mdtApplication}!instance@{instance}}
+\index{instance@{instance}!mdtApplication@{mdtApplication}}
+\subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtApplication} $\ast$ mdtApplication::instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}
+
+
+Get the instance of \hyperlink{classmdt_application}{mdtApplication}. 
+
+This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

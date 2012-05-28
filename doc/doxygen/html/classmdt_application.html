@@ -60,13 +60,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtApplication Class Reference</div>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtApplication" --><!-- doxytag: inherits="QtSingleApplication" -->
-<p>Main application.  
+<p>NOTE: Mutex for static members..  
  <a href="classmdt_application.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_application_8h_source.html">mdtApplication.h</a>&gt;</code></p>
@@ -91,13 +92,78 @@ Collaboration diagram for mdtApplication:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6268414770ee9239c83677c15a67f75"></a><!-- doxytag: member="mdtApplication::mdtApplication" ref="ab6268414770ee9239c83677c15a67f75" args="(int &amp;argc, char **argv, bool GUIenabled=true)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtApplication</b> (int &amp;argc, char **argv, bool GUIenabled=true)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#a5000b9656a59b3594de2a4ceb4232673">init</a> (bool allowMultipleInstances=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Some initializations.  <a href="#a5000b9656a59b3594de2a4ceb4232673"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmdt_application.html">mdtApplication</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d">instance</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the instance of <a class="el" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a>.  <a href="#a365ac79934070b0e5a42d2c7cd9b076d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af17bb16e420c91af3d0ad1970714388c"></a><!-- doxytag: member="mdtApplication::systemDataDirPath" ref="af17bb16e420c91af3d0ad1970714388c" args="()" -->
+static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#af17bb16e420c91af3d0ad1970714388c">systemDataDirPath</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data dir path. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5318086812dad2c2870e294703caa51"></a><!-- doxytag: member="mdtApplication::mdtLibVersion" ref="ad5318086812dad2c2870e294703caa51" args="()" -->
+static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#ad5318086812dad2c2870e294703caa51">mdtLibVersion</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the multi diag tools library version. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Main application. </p>
+<div class="textblock"><p>NOTE: Mutex for static members.. </p>
+<p>Main application </p>
 <dl class="see"><dt><b>See also:</b></dt><dd>QApplication </dd>
 <dd>
 <a class="el" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a> </dd></dl>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a5000b9656a59b3594de2a4ceb4232673"></a><!-- doxytag: member="mdtApplication::init" ref="a5000b9656a59b3594de2a4ceb4232673" args="(bool allowMultipleInstances=true)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtApplication::init </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>allowMultipleInstances</em> = <code>true</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Some initializations. </p>
+<p>Several things are done here:</p>
+<ul>
+<li>Search the system data directory path</li>
+<li>Init the error system (<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>)</dd></dl>
+</li>
+<li>Check if another instance is running (if allowMultipleInstances Instance is false) <dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">allowMultipleInstances</td><td>If true, multiple instance of application is allowed (but NOT multiple instance of <a class="el" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a> in program !) </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="a365ac79934070b0e5a42d2c7cd9b076d"></a><!-- doxytag: member="mdtApplication::instance" ref="a365ac79934070b0e5a42d2c7cd9b076d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_application.html">mdtApplication</a> * mdtApplication::instance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the instance of <a class="el" href="classmdt_application.html" title="NOTE: Mutex for static members..">mdtApplication</a>. </p>
+<p>This function, and returned pointer, should be used with care in multi-thread applicatopn ! </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_application_8h_source.html">mdtApplication.h</a></li>
 <li>src/mdtutils/mdtApplication.cpp</li>
 </ul>
@@ -116,7 +182,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 20 2012 14:23:33 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

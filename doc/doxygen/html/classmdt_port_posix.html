@@ -78,7 +78,7 @@ Collaboration diagram for mdtPortPosix:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_posix__coll__graph.png" border="0" usemap="#mdt_port_posix_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_posix_coll__map" id="mdt_port_posix_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/><area shape="rect" id="node6" href="classmdt_port_lock.html" title="Open a port and lock it." alt="" coords="147,101,243,131"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_posix-members.html">List of all members.</a></p>
@@ -226,7 +226,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
 <li>Do the specific work</li>
 <li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
-<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated. Notes:</li>
+<li>If config's readOnly flag is true, the port must be opened in read only mode. In this case, the write frames pool is not created.</li>
+<li>In read/write mode, the subclass mus use <a class="el" href="classmdt_port_lock.html" title="Open a port and lock it.">mdtPortLock</a> to handle locks <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
 </li>
 </ul>
@@ -470,7 +472,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 20 2012 14:23:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -94,9 +94,8 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the dialog display levels mask The mask is a OR combinaison of mdtError::level_t flags.  <a href="#afa76bdf497b750829277566ec07d44d8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895">addError</a> (<a class="el" href="classmdt_error.html">mdtError</a> &amp;error)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a error to the error output system.  <a href="#aeb562e93216b34e7b73aa69f42065895"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a80480a61ca1a2704ec16d69647f739"></a><!-- doxytag: member="mdtErrorOut::instance" ref="a7a80480a61ca1a2704ec16d69647f739" args="()" -->
-static <a class="el" href="classmdt_error_out.html">mdtErrorOut</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739">instance</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the instance of the error output system This function can return a Null pointer if <a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system After this call, the log and dialog levels are defined to Warning ...">init()</a> was never called. This function, and returned pointer, should be used with care in multi-thread applicatopn ! <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmdt_error_out.html">mdtErrorOut</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739">instance</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the instance of the error output system.  <a href="#a7a80480a61ca1a2704ec16d69647f739"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error_out.html#a22f721fff4d6368a4a3d51279c6af8fa">logFile</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the log file path.  <a href="#a22f721fff4d6368a4a3d51279c6af8fa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45c1370762b47a06ec597d6e89ebc73d"></a><!-- doxytag: member="mdtErrorOut::destroy" ref="a45c1370762b47a06ec597d6e89ebc73d" args="()" -->
@@ -124,6 +123,25 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Add a error to the error output system. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The system must be initialized. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system After this call, the log and dialog levels are defined to Warning ...">init()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7a80480a61ca1a2704ec16d69647f739"></a><!-- doxytag: member="mdtErrorOut::instance" ref="a7a80480a61ca1a2704ec16d69647f739" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_error_out.html">mdtErrorOut</a> * mdtErrorOut::instance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the instance of the error output system. </p>
+<p>This function can return a Null pointer if <a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system After this call, the log and dialog levels are defined to Warning ...">init()</a> was never called. This function, and returned pointer, should be used with care in multi-thread applicatopn ! </p>
 
 </div>
 </div>
@@ -208,7 +226,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun May 20 2012 14:23:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
