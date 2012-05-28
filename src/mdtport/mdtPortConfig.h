@@ -218,7 +218,15 @@ class mdtPortConfig
    * \sa setBytePerByteWrite()
    */
   bool bytePerByteWrite();
-  
+
+  /*! \brief Set the port read only
+   */
+  void setReadOnly(bool readOnly);
+
+  /*! \brief Get the read only flag
+   */
+  bool readOnly();
+
   bool operator==(const mdtPortConfig &other);
   bool operator!=(const mdtPortConfig &other);
 
@@ -238,6 +246,7 @@ class mdtPortConfig
   mdtFrame::type_t pvFrameType;
   QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
   bool pvBytePerByteWrite;    // For some (very) slow devices that need time between each transmitted byte
+  bool pvReadOnly;                // If true, the port should be open as read only
 
  private:
 

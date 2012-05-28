@@ -22,6 +22,7 @@
 #define MDT_PORT_POSIX_H
 
 #include "mdtAbstractPort.h"
+#include "mdtPortLock.h"
 
 #include <cstdio>
 #include <cstring>
@@ -79,6 +80,7 @@ class mdtPortPosix : public mdtAbstractPort
 
   struct timeval pvReadTimeout;
   struct timeval pvWriteTimeout;
+  mdtPortLock *pvPortLock;
 };
 
 #endif  // #ifndef MDT_PORT_POSIX_H

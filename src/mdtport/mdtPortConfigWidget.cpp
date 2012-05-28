@@ -28,6 +28,7 @@ mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
  : QWidget(parent)
 {
   setupUi(this);
+  gbWriteOptions->setEnabled(!cbReadOnly->isChecked());
 }
 
 void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
@@ -55,6 +56,8 @@ void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
   if(index >= 0){
     cbEndOfFrameSeq->setCurrentIndex(index);
   }
+  // Read only flag
+  cbReadOnly->setChecked(config.readOnly());
   // Read options
   sbReadFrameSize->setValue(config.readFrameSize());
   sbReadQueueSize->setValue(config.readQueueSize());
@@ -96,6 +99,8 @@ void mdtPortConfigWidget::updateConfig(mdtPortConfig &config)
   }else{
     config.setEndOfFrameSeq("");
   }
+  // Read only flag
+  config.setReadOnly(cbReadOnly->isChecked());
   // Read options
   config.setReadFrameSize(sbReadFrameSize->value());
   config.setReadQueueSize(sbReadQueueSize->value());
@@ -126,4 +131,9 @@ void mdtPortConfigWidget::on_cbFrameType_currentIndexChanged(int index)
   }else{
     cbUseReadTimeoutProtocol->setChecked(false);
   }
+}
+
+void mdtPortConfigWidget::on_cbReadOnly_toggled(bool checked)
+{
+  gbWriteOptions->setEnabled(!checked);
 }

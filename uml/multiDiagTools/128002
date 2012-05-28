@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 89
+  revision 91
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3912,7 +3912,6 @@ ${inlines}
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    associated_deployment_view deploymentview_ref 219650 // mdtApplication
     classdiagram 428930 "mdtApplication"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
@@ -3970,34 +3969,121 @@ ${inlines}
 	
 	
       end
-    end
-  end
 
-  deploymentview 219650 "mdtApplication"
-    //deployment diagram settings
-    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
-    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 196866 "mdtApplication"
-      stereotype "source"
-      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
-#define ${NAMESPACE}_${NAME}_H
-
-${comment}
-${includes}
-${declarations}
-${namespace_start}
-${definition}
-${namespace_end}
-#endif
+      operation 825986 "init"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
 "
-      cpp_src "${comment}
-${includes}
-${namespace_start}
-${members}
-${namespace_end}"
-      associated_classes
-	class_ref 425474 // mdtApplication
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 826114 "instance"
+	class_operation public return_type class_ref 425474 // mdtApplication
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 826242 "systemDataDirPath"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 834434 "mdtLibVersion"
+	class_operation public return_type class_ref 161026 // QString
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 535938 "pvSystemDataDirPath"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 536066 "pvLogDirPath"
+	private type class_ref 161026 // QString
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 825730 "searchSystemDataDir"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 825858 "initHomeDir"
+	private explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      attribute 536194 "pvInstance"
+	private type class_ref 425474 // mdtApplication
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
       end
     end
   end
+
 end

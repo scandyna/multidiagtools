@@ -32,11 +32,14 @@ mdtPortPosix::mdtPortPosix(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvFd = -1;
+  pvPortLock = new mdtPortLock;
+  Q_ASSERT(pvPortLock != 0);
 }
 
 mdtPortPosix::~mdtPortPosix()
 {
   this->close();
+  delete pvPortLock;
 }
 
 bool mdtPortPosix::setAttributes(const QString &portName)
@@ -69,12 +72,18 @@ bool mdtPortPosix::open(mdtPortConfig &cfg)
   //  O_NOCTTY: not a terminal
   //  O_NDELAY: ignore DCD signal
   lockMutex();
-  pvFd = ::open(pvName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
+  // In read only mode, we handle no lock
+  if(cfg.readOnly()){
+    pvFd = ::open(pvName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK );
+  }else{
+    pvFd = pvPortLock->openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  }
   if(pvFd < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtPortPosix");
     e.commit();
+    pvPortLock->unlock();
     unlockMutex();
     return false;
   }
@@ -92,6 +101,9 @@ void mdtPortPosix::close()
   }
   lockMutex();
   ///if(pvFd >= 0){
+  if(pvPortLock->isLocked()){
+    pvPortLock->unlock();
+  }
   ::close(pvFd);
   pvFd = -1;
   ///}

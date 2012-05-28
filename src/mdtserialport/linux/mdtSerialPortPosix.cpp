@@ -39,6 +39,8 @@ mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
   pvPreviousCtsState = 0;
   pvPreviousRngState = 0;
   pvFd = -1;
+  pvPortLock = new mdtPortLock;
+  Q_ASSERT(pvPortLock != 0);
 
   // Control signal thread kill utils
   pvCtlThread = 0;
@@ -54,6 +56,7 @@ mdtSerialPortPosix::mdtSerialPortPosix(QObject *parent)
 mdtSerialPortPosix::~mdtSerialPortPosix()
 {
   close();
+  delete pvPortLock;
 }
 
 bool mdtSerialPortPosix::setAttributes(const QString &portName)
@@ -65,7 +68,7 @@ bool mdtSerialPortPosix::setAttributes(const QString &portName)
   // Clear previous attributes
   pvAvailableBaudRates.clear();
   // Try to open port
-  pvFd = ::open(portName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
+  pvFd = ::open(portName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NDELAY);
   if(pvFd < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "can not open port '" + portName + "'", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
@@ -208,8 +211,14 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   //  O_NOCTTY: not a terminal
   //  O_NDELAY: ignore DCD signal
   lockMutex();
-  pvFd = ::open(pvName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
+  // In read only mode, we handle no lock
+  if(cfg.readOnly()){
+    pvFd = ::open(pvName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK);
+  }else{
+    pvFd = pvPortLock->openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  }
   if(pvFd < 0){
+    pvPortLock->unlock();
     mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -221,6 +230,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvName + " is not a serial port, or is not available", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -232,6 +242,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(tcgetattr(pvFd, &pvTermios) < 0){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvName + " is not a serial port, or is not available", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -243,6 +254,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!setBaudRate(cfg.baudRate())){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     strNum.setNum(cfg.baudRate());
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
@@ -257,6 +269,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!setDataBits(cfg.dataBitsCount())){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     strNum.setNum(cfg.dataBitsCount());
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -268,6 +281,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!setStopBits(cfg.stopBitsCount())){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     strNum.setNum(cfg.stopBitsCount());
     mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + pvName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -287,6 +301,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     mdtError e(MDT_UNDEFINED_ERROR, "unable to apply configuration for port " + pvName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPortPosix");
@@ -298,6 +313,7 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   if(!checkConfig(cfg)){
     ::close(pvFd);
     pvFd = -1;
+    pvPortLock->unlock();
     unlockMutex();
     return false;
   }
@@ -315,6 +331,9 @@ void mdtSerialPortPosix::close()
     return;
   }
   lockMutex();
+  if(pvPortLock->isLocked()){
+    pvPortLock->unlock();
+  }
   if(pvFd >= 0){
     tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
     ::close(pvFd);

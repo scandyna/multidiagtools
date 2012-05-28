@@ -8,9 +8,9 @@
 */
 
 /* Version */
-#define VERSION_MAJOR 0
-#define VERSION_MINOR 2
-#define VERSION_MICRO 3
+#define MDTLIB_VERSION_MAJOR 0
+#define MDTLIB_VERSION_MINOR 2
+#define MDTLIB_VERSION_MICRO 3
 
 /* Utilisation des assertions avec assert() */
 #define USE_ASSERT 1

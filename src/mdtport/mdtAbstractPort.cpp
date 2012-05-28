@@ -85,31 +85,33 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
     pvReadFramesPool.enqueue(frame);
   }
   // Create the write frames pools
-  for(int i=0; i<cfg.writeQueueSize(); i++){
-    switch(cfg.frameType()){
-      // Raw (binary) frame
-      case mdtFrame::FT_RAW:
-        frame = new mdtFrame;
-        break;
-      // Raw (binary) frame for use with timeout protocol
-      case mdtFrame::FT_RAW_TOP:
-        frame = new mdtFrame;
-        break;
-      // ASCII frame type
-      case mdtFrame::FT_ASCII:
-        frame = new mdtFrameAscii;
-        break;
-      // MODBUS/TCP frame type
-      case mdtFrame::FT_MODBUS_TCP:
-        frame = new mdtFrameModbusTcp;
-        break;
-      // Base frame type
-      default:
-        frame = new mdtFrame;
+  if(!cfg.readOnly()){
+    for(int i=0; i<cfg.writeQueueSize(); i++){
+      switch(cfg.frameType()){
+        // Raw (binary) frame
+        case mdtFrame::FT_RAW:
+          frame = new mdtFrame;
+          break;
+        // Raw (binary) frame for use with timeout protocol
+        case mdtFrame::FT_RAW_TOP:
+          frame = new mdtFrame;
+          break;
+        // ASCII frame type
+        case mdtFrame::FT_ASCII:
+          frame = new mdtFrameAscii;
+          break;
+        // MODBUS/TCP frame type
+        case mdtFrame::FT_MODBUS_TCP:
+          frame = new mdtFrameModbusTcp;
+          break;
+        // Base frame type
+        default:
+          frame = new mdtFrame;
+      }
+      Q_ASSERT(frame != 0);
+      frame->reserve(cfg.writeFrameSize());
+      pvWriteFramesPool.enqueue(frame);
     }
-    Q_ASSERT(frame != 0);
-    frame->reserve(cfg.writeFrameSize());
-    pvWriteFramesPool.enqueue(frame);
   }
   pvConfig = cfg;
   pvIsOpen = true;

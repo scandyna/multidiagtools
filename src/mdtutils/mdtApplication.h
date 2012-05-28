@@ -22,6 +22,10 @@
 #define MDT_APPLICATION_H
 
 #include <QtSingleApplication>
+#include <QString>
+#include <config.h>
+
+/// NOTE: Mutex for static members..
 
 /*! \brief Main application
  * \sa QApplication
@@ -33,7 +37,42 @@ class mdtApplication : public QtSingleApplication
 
   mdtApplication(int &argc, char **argv, bool GUIenabled = true);
   ~mdtApplication();
+  
+  /*! \brief Some initializations
+   * 
+   * Several things are done here:
+   *  - Search the system data directory path
+   *  - Init the error system (\sa mdtErrorOut)
+   *  - Check if another instance is running (if allowMultipleInstances Instance is false)
+   * \param allowMultipleInstances If true, multiple instance of application is allowed (but NOT multiple instance of mdtApplication in program !)
+   */
+  bool init(bool allowMultipleInstances = true);
 
+  /*! \brief Get the instance of mdtApplication
+   *
+   * This function, and returned pointer, should be used with care in multi-thread applicatopn !
+   */
+  static mdtApplication *instance();
+
+  /*! \brief Get data dir path
+   */
+  static QString systemDataDirPath();
+
+  /*! \brief Get the multi diag tools library version
+   */
+  static QString mdtLibVersion();
+
+ private:
+
+  // Search the data system directory
+  bool searchSystemDataDir();
+
+  // Create some directories in home
+  bool initHomeDir();
+
+  QString pvSystemDataDirPath;
+  QString pvLogDirPath;
+  static mdtApplication *pvInstance;
 };
 
 #endif  // #ifndef MDT_APPLICATION_H

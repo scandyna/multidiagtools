@@ -32,6 +32,11 @@ class mdtPortTest : public mdtTest
   // Init
   void initTestCase();
 
+  // Port lock test
+#ifdef Q_OS_UNIX
+  void portLockTest();
+#endif
+
   // Open/Close and check state
   void openCloseTest();
 

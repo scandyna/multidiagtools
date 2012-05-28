@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -890,6 +890,16 @@ ${inlines}
 	idl_decl ""
       end
 
+      attribute 543746 "pvReadOnly"
+	protected explicit_type "bool"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       operation 436482 "setDefault"
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 0
@@ -1223,6 +1233,35 @@ ${inlines}
       end
 
       operation 602626 "bytePerByteWrite"
+	public explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 834178 "setReadOnly"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "readOnly" explicit_type "bool"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 834306 "readOnly"
 	public explicit_return_type "bool"
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};

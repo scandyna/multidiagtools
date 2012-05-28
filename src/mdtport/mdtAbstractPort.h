@@ -67,6 +67,10 @@ class mdtAbstractPort : public QObject
    *  - Set the read/write timeouts. See the mdtPortConfig to know how to get these timeouts.
    *  - Call this open method (with mdtAbstractPort::open() ).
    * At this last step, the queues will be initialized, mutex unocked and open flag updated.
+   * Notes:
+   *  - If config's readOnly flag is true, the port must be opened in read only mode.
+   *    In this case, the write frames pool is not created.
+   *  - In read/write mode, the subclass mus use mdtPortLock to handle locks
    * \return True on successfull configuration and open port
    * \sa mdtPortConfig
    */

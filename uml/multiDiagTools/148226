@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 40
+  revision 41
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1949,5 +1949,4 @@ ${inlines}
   end
 
   package_ref 141698 // linux
-
 end

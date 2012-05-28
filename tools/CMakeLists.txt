@@ -8,3 +8,8 @@ include_directories("${PROJECT_SOURCE_DIR}/../src")
 
 # * UIC Number *
 add_subdirectory("${PROJECT_SOURCE_DIR}/uicnumber")
+
+# * mdtterm *
+if(UNIX)
+  add_subdirectory("${PROJECT_SOURCE_DIR}/mdtterm")
+endif(UNIX)

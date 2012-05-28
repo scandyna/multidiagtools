@@ -18,12 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-//#include <QApplication>
-#include <QTextCodec>
 #include <QDir>
 #include "mdtApplication.h"
-#include "mdtError.h"
-#include "mdtErrorOut.h"
 #include "mdtUicNumber.h"
 #include "mdtUicNumberWidget.h"
 
@@ -31,32 +27,24 @@
 
 int main(int argc, char **argv)
 {
-  ///QApplication app(argc, argv);
   mdtApplication app(argc, argv);
   int retVal;
   mdtUicNumber *uic;
   mdtUicNumberWidget uicw;
   QDir dataDir;
 
-#ifdef Q_OS_UNIX
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
-
-  // Init error system
-  if(!mdtErrorOut::init("uicnumber.log")){
-    qDebug() << "main(): unable to init the error system";
+  // Init app
+  if(!app.init(true)){
     return 1;
   }
 
   uic = new mdtUicNumber;
+
   // Find data path
-  dataDir = QDir::currentPath() + "/data/uic";
+  dataDir = app.systemDataDirPath() + "/uic";
   if(!dataDir.exists()){
-    dataDir = "/usr/share/mdt/data/uic";
-    if(!dataDir.exists()){
-      qDebug() << "Cannot find data dir !";
-      return 1;
-    }
+    qDebug() << "Cannot find data dir";
+    return 1;
   }
   qDebug() << "Foud data in " << dataDir.path();
   uicw.setUicDbsDir(dataDir.path());
@@ -65,8 +53,6 @@ int main(int argc, char **argv)
   
   retVal = app.exec();
 
-  // Free the error system
-  mdtErrorOut::destroy();
   delete uic;
 
   return retVal;

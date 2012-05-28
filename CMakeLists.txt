@@ -12,7 +12,6 @@
 # CMake project file for Multi Diag Tools
 # * root project file *
 
-# Version requise de CMake
 # CMake minimal requiered version
 cmake_minimum_required(VERSION 2.6)
 
@@ -27,9 +26,9 @@ set(CMAKE_BUILD_TYPE Debug)
 #set(CMAKE_BUILD_TYPE Release)
 
 # Project version
-set(VERSION_MAJOR 0)
-set(VERSION_MINOR 2)
-set(VERSION_MICRO 3)
+set(MDTLIB_VERSION_MAJOR 0)
+set(MDTLIB_VERSION_MINOR 2)
+set(MDTLIB_VERSION_MICRO 3)
 
 # Config file
 configure_file (
@@ -40,6 +39,10 @@ configure_file (
 # Some flags for compiler
 add_definitions("-Wall -ansi -lm")
 
+# We want GUI executables on Windows (not console)
+if(WIN32)
+  set(GUI_TYPE WIN32)
+endif(WIN32)
 
 # Enable Qt4 support
 set(QT_USE_QTTEST TRUE)
@@ -165,7 +168,8 @@ if(WIN32)
   install(FILES ${QTCOREDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
   install(FILES ${QTGUIDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
   install(FILES ${QTNETWORKDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  #install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "." COMPONENT lib)
 endif(WIN32)
 
 # ** CPack section **
@@ -177,7 +181,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   # Allow CPack to owerwrite CMAKE_INSTALL_PREFIX
   # set(CPACK_SET_DESTDIR ON)
 
-  # On Windows, we build a Zip file with needed content
+  # On Windows, we build a installer with NSIS
   if(WIN32)
     set(CPACK_INSTALL_PREFIX ".")
     # set(CPACK_GENERATOR "ZIP")
@@ -197,11 +201,17 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Multi Diag Tools is a library that offers some connectivity to instruments")
   set(CPACK_PACKAGE_VENDOR "Philippe")
   set(CPACK_PACKAGE_CONTACT "Philippe ")
-  set(CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
-  set(CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
-  set(CPACK_PACKAGE_VERSION_PATCH "${VERSION_MICRO}")
-  set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-  set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${VERSION_MAJOR}.${VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+  set(CPACK_PACKAGE_VERSION_MAJOR "${MDTLIB_VERSION_MAJOR}")
+  set(CPACK_PACKAGE_VERSION_MINOR "${MDTLIB_VERSION_MINOR}")
+  set(CPACK_PACKAGE_VERSION_PATCH "${MDTLIB_VERSION_MICRO}")
+  set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+  set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+  set(CPACK_COMPONENT_LIB_DISPLAY_NAME "Libraries (runtime)")
+  set(CPACK_COMPONENT_DEV_DISPLAY_NAME "Headers (Only needed for devloppers)")
+  set(CPACK_COMPONENT_TOOLS_DISPLAY_NAME "Some little tools")
+  # Dependances
+  set(CPACK_COMPONENT_DEV_DEPENDS lib)
+  set(CPACK_COMPONENT_TOOLS_DEPENDS lib)
   # Some Debian package specific varaibles
   if(UNIX)
     set(CPACK_DEB_COMPONENT_INSTALL ON)
@@ -209,15 +219,9 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
     set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+    # set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS TRUE)
   endif(UNIX)
 
-  set(CPACK_COMPONENT_LIB_DISPLAY_NAME "Libraries (runtime)")
-  set(CPACK_COMPONENT_DEV_DISPLAY_NAME "Headers (Only needed for devloppers)")
-  set(CPACK_COMPONENT_TOOLS_DISPLAY_NAME "Some little tools")
-  # Dependances
-  set(CPACK_COMPONENT_DEV_DEPENDS lib)
-  set(CPACK_COMPONENT_TOOLS_DEPENDS lib)
-  
   set(CPACK_COMPONENTS_ALL lib dev tools)
 
   # Keep this instruction at last

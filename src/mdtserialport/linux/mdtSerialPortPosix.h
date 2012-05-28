@@ -23,6 +23,7 @@
 
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPortConfig.h"
+#include "linux/mdtPortLock.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -164,7 +165,7 @@ class mdtSerialPortPosix : public mdtAbstractSerialPort
   int pvFd;                         // Port file descriptor
   struct timeval pvReadTimeout;
   struct timeval pvWriteTimeout;
-
+  mdtPortLock *pvPortLock;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_POSIX_H

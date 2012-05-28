@@ -25,7 +25,7 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Executable
-add_executable (mdtuicnumber ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+add_executable (mdtuicnumber ${GUI_TYPE} ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraries to link
 target_link_libraries(mdtuicnumber "mdtutils")
 target_link_libraries(mdtuicnumber ${QT_LIBRARIES})

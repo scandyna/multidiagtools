@@ -55,6 +55,7 @@ if(UNIX)
   message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
     linux/mdtPortPosix.cpp
+    linux/mdtPortLock.cpp
     linux/mdtUsbtmcPort.cpp
     linux/mdtUsbtmcPortManager.h
     linux/mdtUsbtmcPortManager.cpp

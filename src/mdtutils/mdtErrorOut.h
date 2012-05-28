@@ -41,6 +41,7 @@ class mdtErrorOut : public QObject
   static void addError(mdtError &error);
 
   /*! \brief Get the instance of the error output system
+   *
    * This function can return a Null pointer if init() was never called.
    * This function, and returned pointer, should be used with care in multi-thread applicatopn !
    */
