@@ -33,6 +33,9 @@ moc_*
 *.jar
 *.rar
 *.tar
+*.tip
+*.deb
+*.exe
 
 # Logs and databases #
 ######################
