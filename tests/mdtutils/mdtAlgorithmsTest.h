@@ -17,6 +17,9 @@ class mdtAlgorithmsTest : public mdtTest
 
   void sortStringListWithNumericEndTest();
   void sortStringListWithNumericEndTest_data();
+
+  // Test hex string <-> byte array conversions
+  void hexStringByteArrayTest();
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_TEST_H

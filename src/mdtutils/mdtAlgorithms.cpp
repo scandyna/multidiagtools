@@ -1,4 +1,7 @@
 #include "mdtAlgorithms.h"
+#include <QChar>
+
+//#include <QDebug>
 
 QStringList mdtAlgorithms::sortStringListWithNumericEnd(QStringList &list)
 {
@@ -88,4 +91,51 @@ bool mdtAlgorithms::stringWithNumericEndLessThan(QString str1, QString str2)
   }
   // Result
   return (num1 < num2);
+}
+
+QByteArray mdtAlgorithms::hexStringToByteArray(const QString &hexStr)
+{
+  QByteArray byteArray;
+  QString hexString;
+  QString hexNum;
+  int i, len;
+  bool ok;
+
+  // Remove every spaces
+  hexString = hexStr.simplified();
+  hexString.remove(' ');
+  Q_ASSERT((hexString.size() % 2) == 0);
+  len = hexString.size();
+  // Travel the hexString and convert each 2 bytes (52 H4 ...)
+  for(i=0; i<len; i = i+2){
+    hexNum.clear();
+    hexNum.append(hexString.at(i));
+    hexNum.append(hexString.at(i+1));
+    byteArray.append((char)hexNum.toInt(&ok, 16));
+    Q_ASSERT(ok == true);
+  }
+  
+  return byteArray;
+}
+
+QString mdtAlgorithms::byteArrayToHexString(const QByteArray &byteArray)
+{
+  QString hexString;
+  QString hexNum;
+  int i, len;
+  
+  // Travel the byte array and convert each byte
+  len = byteArray.size();
+  for(i=0; i<len; i++){
+    hexNum.setNum((unsigned char)byteArray.at(i), 16);
+    // If we have only one char, we prepend a 0
+    if(hexNum.size() < 2){
+      hexNum.prepend("0");
+    }
+    hexString.append(hexNum);
+    // Append a white space
+    hexString.append(" ");
+  }
+
+  return hexString.trimmed();
 }

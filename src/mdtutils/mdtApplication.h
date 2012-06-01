@@ -48,6 +48,12 @@ class mdtApplication : public QtSingleApplication
    */
   bool init(bool allowMultipleInstances = true);
 
+  /*! \brief Build the application version with numeric values.
+   * 
+   * Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion().
+   */
+  void setApplicationVersion(int versionMajor, int versionMinor, int versionMicro);
+
   /*! \brief Get the instance of mdtApplication
    *
    * This function, and returned pointer, should be used with care in multi-thread applicatopn !

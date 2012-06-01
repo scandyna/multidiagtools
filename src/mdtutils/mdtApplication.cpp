@@ -89,6 +89,20 @@ bool mdtApplication::init(bool allowMultipleInstances)
   return true;
 }
 
+void mdtApplication::setApplicationVersion(int versionMajor, int versionMinor, int versionMicro)
+{
+  QString num, version;
+  
+  num.setNum(versionMajor);
+  version = num + ".";
+  num.setNum(versionMinor);
+  version += num + ".";
+  num.setNum(versionMicro);
+  version += num;
+  
+  QApplication::setApplicationVersion(version);
+}
+
 mdtApplication *mdtApplication::instance()
 {
   Q_ASSERT(pvInstance != 0);

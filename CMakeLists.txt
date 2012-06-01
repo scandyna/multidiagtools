@@ -141,6 +141,9 @@ endif(UNIX)
 
 # *** Install section ***
 
+# Config file
+install(FILES "${PROJECT_SOURCE_DIR}/src/config.h" DESTINATION "${HEADERS_DEST_DIR}" COMPONENT dev)
+
 # Some Linux specific files
 if(UNIX)
   install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/40-usbtmc.rules" DESTINATION "/etc/udev/rules.d/" COMPONENT lib)

@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 91
+  revision 93
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2717,6 +2717,36 @@ ${inlines}
 	
 	
       end
+
+      operation 840962 "hexStringToByteArray"
+	public return_type class_ref 236162 // QByteArray
+	nparams 1
+	  param in name "hexStr" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 841090 "byteArrayToHexString"
+	public return_type class_ref 161026 // QString
+	nparams 1
+	  param in name "byteArray" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -4083,7 +4113,23 @@ ${inlines}
 	python_decl ""
 	idl_decl ""
       end
+
+      operation 847746 "setApplicationVersion"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "versionMajor" explicit_type "int"
+	  param in name "versionMinor" explicit_type "int"
+	  param in name "versionMicro" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
-
 end

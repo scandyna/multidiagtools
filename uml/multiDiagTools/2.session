@@ -1,18 +1,16 @@
 window_sizes 1280 1003 358 916 809 120
 diagrams
   active  classdiagram_ref 428930 // mdtApplication
-    916 809 100 4 12 0
+    916 809 100 4 48 0
 end
 show_stereotypes
-selected attribute_ref 536194 // pvInstance
+selected operation_ref 847746 // setApplicationVersion
 open
-  operation_ref 825986 // init
-  operation_ref 826114 // instance
-  operation_ref 826242 // systemDataDirPath
-  operation_ref 825858 // initHomeDir
-  attribute_ref 536194 // pvInstance
+  class_ref 425474 // mdtApplication
   
   package_ref 174978 // mdtutilsgui
+  classview_ref 227458 // mdtPortManager
+  classview_ref 267138 // mdtPortTerm
   
   package_ref 134658 // src
 end
