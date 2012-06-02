@@ -15,7 +15,7 @@ set QTDIR=C:\Qt\4.8.1
 set QMAKESPEC=win32-g++
 
 REM Multidiagtools libraries (needed for tests)
-set MDTLIBS=src\mdtutils;src\mdtutilsgui
+set MDTLIBS=src\mdtutils;src\mdtutilsgui;src\qt-solutions\qtsingleapplication
 
 REM --- Build vars ----
 

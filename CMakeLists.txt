@@ -82,6 +82,7 @@ endif(WIN32)
 # * QtSolutions *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
 
+
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
 

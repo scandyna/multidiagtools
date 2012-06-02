@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtFileTest.h"
 #include "mdtCsvFile.h"
+#include "mdtPartitionAttributes.h"
 #include <QTemporaryFile>
 #include <QFile>
 #include <QIODevice>
@@ -44,12 +45,22 @@ void mdtFileTest::csvFileWriteTest()
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
 
   // Write data
-  data = "0123;ABCD\nUIJ;88";
+  data = "0123;ABCD";
+  data += "\n";
+  data += "UIJ;88";
   QVERIFY(csv.write(data) == (qint64)data.size());
   csv.close();
 
   // Check written data
   QVERIFY(tmp.open());
+
+#ifdef Q_OS_WIN
+  // On Windows, we reconstruct ref data with CRLF sequence
+  data = "0123;ABCD";
+  data += (char)0x0D; // CR
+  data += "\n";       // LF
+  data += "UIJ;88";
+#endif
   QVERIFY(tmp.readAll() == data);
   tmp.close();
 }
@@ -289,4 +300,46 @@ void mdtFileTest::csvFileReadTest_data()
   line2 << "" << "1" << "data" << "JKLM";
   line3 << "JK" << "inni" << "Some data";
   QTest::newRow("Separator: <data> , dp: {REM} ") << line1 << line2 << line3 << "<data>" << "{REM}";
+}
+
+void mdtFileTest::mdtPartitionAttributesTest()
+{
+  mdtPartitionAttributes pa;
+  QStringList paList;
+  
+  // Initial states
+  QVERIFY(pa.rootPath() == "");
+  QVERIFY(pa.name() == "");
+  QVERIFY(pa.fileSystem() == "");
+  
+  // We make some very basic checks
+#ifdef Q_OS_UNIX
+  QVERIFY(pa.setPath("/"));
+  QVERIFY(pa.rootPath() == "/");
+  QVERIFY(!pa.setPath(""));
+  QVERIFY(pa.rootPath() == "");
+  QVERIFY(pa.name() == "");
+  QVERIFY(pa.fileSystem() == "");
+#endif
+#ifdef Q_OS_WIN
+  QVERIFY(pa.setPath("C:\\"));
+  QVERIFY(pa.rootPath() == "C:/");
+  QVERIFY(pa.rootPath(true) == "C:\\");
+  QVERIFY(pa.rootPath() == "C:/");
+  QVERIFY(!pa.setPath(""));
+  QVERIFY(pa.rootPath() == "");
+  QVERIFY(pa.name() == "");
+  QVERIFY(pa.fileSystem() == "");
+  QVERIFY(pa.setPath("C:/"));
+  QVERIFY(pa.rootPath() == "C:/");
+  QVERIFY(pa.rootPath(true) == "C:\\");
+#endif
+  
+  paList = pa.availablePartitions();
+  qDebug() << "Available partitions:";
+  for(int i=0; i<paList.size(); i++){
+    qDebug() << paList.at(i) << ":";
+    pa.setPath(paList.at(i));
+    qDebug() << " -> Name: " << pa.name() << " , rootPath: " << pa.rootPath() << " , FS: " << pa.fileSystem() << " , RD only: " << pa.isReadOnly();
+  }
 }

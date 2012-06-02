@@ -50,4 +50,5 @@ add_executable (mdtUtilsTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RC
 target_link_libraries(mdtUtilsTest "mdtutils")
 target_link_libraries(mdtUtilsTest "mdtutilsgui")
 target_link_libraries(mdtUtilsTest "mdttest")
+target_link_libraries(mdtUtilsTest "qtsingleapplication")
 target_link_libraries(mdtUtilsTest ${QT_LIBRARIES})

@@ -18,24 +18,48 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FILE_TEST_H
-#define MDT_FILE_TEST_H
+#include "mdtPartitionAttributes.h"
+#include <QDir>
 
-#include "mdtTest.h"
-
-class mdtFileTest : public mdtTest
+mdtPartitionAttributes::mdtPartitionAttributes()
 {
- Q_OBJECT
+  pvIsReadOnly = false;
+}
 
- private slots:
+mdtPartitionAttributes::~mdtPartitionAttributes()
+{
+}
 
-  // CSV file read/write tests
-  void csvFileWriteTest();
-  void csvFileReadTest();
-  void csvFileReadTest_data();
+// setPath() is implemented in system specific file
 
-  // Partition attributes tests
-  void mdtPartitionAttributesTest();
-};
+QString mdtPartitionAttributes::rootPath(bool nativeFormat)
+{
+#ifdef Q_OS_WIN
+  if(nativeFormat){
+    return QDir::toNativeSeparators(pvRootPath);
+  }
+#endif
+  return pvRootPath;
+}
 
-#endif  // #ifndef MDT_FILE_TEST_H
+QString &mdtPartitionAttributes::name()
+{
+  return pvName;
+}
+
+bool mdtPartitionAttributes::isReadOnly()
+{
+  return pvIsReadOnly;
+}
+
+bool mdtPartitionAttributes::isWriteable()
+{
+  return !pvIsReadOnly;
+}
+
+QString &mdtPartitionAttributes::fileSystem()
+{
+  return pvFileSystem;
+}
+
+// availablePartitions() is implemented in system specific file

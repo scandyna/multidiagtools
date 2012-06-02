@@ -38,6 +38,8 @@ set (SOURCES_FILES
           mdtUicNumberItem.cpp
           mdtUicNumberWidget.cpp
           mdtUicNumberValidator.cpp
+          # mdtFileSystem
+          mdtPartitionAttributes.cpp
           # Main application
           mdtApplication.cpp
     )
@@ -56,11 +58,21 @@ set (RESOURCE_FILES
 
 # Unix (Posix) specific files
 if(UNIX)
-  set (SOURCES_FILES ${SOURCES_FILES} 
+  set (SOURCES_FILES ${SOURCES_FILES}
+          linux/mdtPartitionAttributesPosix.cpp
   )
   set (HEADER_FILES ${HEADER_FILES} 
   )
 endif(UNIX)
+
+# Windows specific files
+if(WIN32)
+  set (SOURCES_FILES ${SOURCES_FILES}
+          windows/mdtPartitionAttributesWindows.cpp
+  )
+  set (HEADER_FILES ${HEADER_FILES} 
+  )
+endif(WIN32)
 
 # Files on witch moc compiler must work
 QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})

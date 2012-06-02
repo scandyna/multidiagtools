@@ -180,6 +180,30 @@ mdtutils/fast:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/build
 .PHONY : mdtutils/fast
 
+linux/mdtPartitionAttributesPosix.o: linux/mdtPartitionAttributesPosix.cpp.o
+.PHONY : linux/mdtPartitionAttributesPosix.o
+
+# target to build an object file
+linux/mdtPartitionAttributesPosix.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPartitionAttributesPosix.cpp.o
+.PHONY : linux/mdtPartitionAttributesPosix.cpp.o
+
+linux/mdtPartitionAttributesPosix.i: linux/mdtPartitionAttributesPosix.cpp.i
+.PHONY : linux/mdtPartitionAttributesPosix.i
+
+# target to preprocess a source file
+linux/mdtPartitionAttributesPosix.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPartitionAttributesPosix.cpp.i
+.PHONY : linux/mdtPartitionAttributesPosix.cpp.i
+
+linux/mdtPartitionAttributesPosix.s: linux/mdtPartitionAttributesPosix.cpp.s
+.PHONY : linux/mdtPartitionAttributesPosix.s
+
+# target to generate assembly for a file
+linux/mdtPartitionAttributesPosix.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPartitionAttributesPosix.cpp.s
+.PHONY : linux/mdtPartitionAttributesPosix.cpp.s
+
 mdtAlgorithms.o: mdtAlgorithms.cpp.o
 .PHONY : mdtAlgorithms.o
 
@@ -516,6 +540,30 @@ mdtFrameModbusTcp.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.s
 .PHONY : mdtFrameModbusTcp.cpp.s
 
+mdtPartitionAttributes.o: mdtPartitionAttributes.cpp.o
+.PHONY : mdtPartitionAttributes.o
+
+# target to build an object file
+mdtPartitionAttributes.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPartitionAttributes.cpp.o
+.PHONY : mdtPartitionAttributes.cpp.o
+
+mdtPartitionAttributes.i: mdtPartitionAttributes.cpp.i
+.PHONY : mdtPartitionAttributes.i
+
+# target to preprocess a source file
+mdtPartitionAttributes.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPartitionAttributes.cpp.i
+.PHONY : mdtPartitionAttributes.cpp.i
+
+mdtPartitionAttributes.s: mdtPartitionAttributes.cpp.s
+.PHONY : mdtPartitionAttributes.s
+
+# target to generate assembly for a file
+mdtPartitionAttributes.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPartitionAttributes.cpp.s
+.PHONY : mdtPartitionAttributes.cpp.s
+
 mdtTime.o: mdtTime.cpp.o
 .PHONY : mdtTime.o
 
@@ -700,6 +748,9 @@ help:
 	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... linux/mdtPartitionAttributesPosix.o"
+	@echo "... linux/mdtPartitionAttributesPosix.i"
+	@echo "... linux/mdtPartitionAttributesPosix.s"
 	@echo "... mdtAlgorithms.o"
 	@echo "... mdtAlgorithms.i"
 	@echo "... mdtAlgorithms.s"
@@ -742,6 +793,9 @@ help:
 	@echo "... mdtFrameModbusTcp.o"
 	@echo "... mdtFrameModbusTcp.i"
 	@echo "... mdtFrameModbusTcp.s"
+	@echo "... mdtPartitionAttributes.o"
+	@echo "... mdtPartitionAttributes.i"
+	@echo "... mdtPartitionAttributes.s"
 	@echo "... mdtTime.o"
 	@echo "... mdtTime.i"
 	@echo "... mdtTime.s"
