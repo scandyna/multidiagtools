@@ -36,6 +36,7 @@ moc_*
 *.tip
 *.deb
 *.exe
+*.zip
 
 # Logs and databases #
 ######################

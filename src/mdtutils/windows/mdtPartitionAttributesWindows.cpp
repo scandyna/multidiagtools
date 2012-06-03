@@ -44,6 +44,7 @@ bool mdtPartitionAttributes::setPath(const QString &path)
   // Get attributes
   if(GetVolumeInformation(drive, driveName, 1023, 0, 0, (LPDWORD)&flags, fs, 255) == 0){
     mdtError e(MDT_FILE_IO_ERROR, "GetVolumeInformation() failed", mdtError::Error);
+    e.setSystemErrorWinApi();
     MDT_ERROR_SET_SRC(e, "mdtPartitionAttributes");
     e.commit();
     return false;

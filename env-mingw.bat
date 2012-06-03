@@ -11,7 +11,7 @@ set CMAKE_DIR=C:\Program Files\CMake 2.8
 
 REM Qt4 config
 REM set QTDIR=C:\Qt\2010.05\qt
-set QTDIR=C:\Qt\4.8.1
+set QTDIR=C:\Qt\4.8.2
 set QMAKESPEC=win32-g++
 
 REM Multidiagtools libraries (needed for tests)

@@ -68,6 +68,15 @@ class mdtError
    */
   void setSystemError(int number, const QString &text);
 
+  /*! \brief Add system error (for Windows  API)
+   *
+   *  When using Windows API, the standard mechanism is GetLastError() and FormatMessage().
+   *  Calling this method will do this internally.
+   */
+#ifdef Q_OS_WIN
+  void setSystemErrorWinApi();
+#endif
+
   /*! \brief Add the source of error
    *  It's possible to use the helper macro MDT_ERROR_SET_SRC()
    */
