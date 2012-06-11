@@ -87,7 +87,7 @@ bool mdtPartitionAttributes::setPath(const QString &path)
   return false;
 }
 
-QStringList mdtPartitionAttributes::availablePartitions()
+QStringList mdtPartitionAttributes::availablePartitions(const QStringList &ignoreList)
 {
   QStringList partitionsList;
   FILE *fd;
@@ -106,7 +106,10 @@ QStringList mdtPartitionAttributes::availablePartitions()
   while((fs = getmntent(fd)) != 0){
     // We ignore "virtual" FS , like sysfs
     if(fs->mnt_fsname[0] == '/'){
-      partitionsList << fs->mnt_dir;
+      // Add only if not in ignoreList
+      if(!ignoreList.contains(fs->mnt_dir)){
+        partitionsList << fs->mnt_dir;
+      }
     }
   }
 

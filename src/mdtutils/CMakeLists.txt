@@ -11,6 +11,8 @@ set (HEADER_FILES
           mdtErrorOut.h
           # UIC Number
           mdtUicNumberWidget.h
+          # mdtFileSystem
+          mdtFileCopier.h
     )
 
 # List of source files
@@ -40,6 +42,8 @@ set (SOURCES_FILES
           mdtUicNumberValidator.cpp
           # mdtFileSystem
           mdtPartitionAttributes.cpp
+          mdtFileCopier.cpp
+          mdtFileCopierItem.cpp
           # Main application
           mdtApplication.cpp
     )
@@ -82,6 +86,22 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 
 # Files on witch rcc compiler must work
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
+
+# Some specific build options
+
+# On MinGW, the -ansi flag must be removed for file mdtFileCopier.cpp,
+#  because this "diseable" the availablity of _fileno() function.
+# Don't found other solution than remove the -ansi flag for the directory,
+#  and re-add -ansi flg for all files exept mdtFileCopier.cpp ..
+# Note: if(MINGW) not work, so we use if(WIN32) ..
+if(WIN32)
+  remove_definitions("-ansi")
+  foreach(SRCFILE ${SOURCES_FILES})
+    if(NOT (${SRCFILE} STREQUAL "mdtFileCopier.cpp"))
+      set_source_files_properties(${SRCFILE} PROPERTIES COMPILE_FLAGS "-ansi")
+    endif(NOT (${SRCFILE} STREQUAL "mdtFileCopier.cpp"))
+  endforeach(SRCFILE)
+endif(WIN32)
 
 # Output library
 add_library (mdtutils SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})

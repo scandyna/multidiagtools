@@ -21,8 +21,11 @@
 #include "mdtFileTest.h"
 #include "mdtCsvFile.h"
 #include "mdtPartitionAttributes.h"
+#include "mdtFileCopier.h"
 #include <QTemporaryFile>
 #include <QFile>
+#include <QFileInfo>
+#include <QDir>
 #include <QIODevice>
 #include <QByteArray>
 #include <QList>
@@ -305,7 +308,7 @@ void mdtFileTest::csvFileReadTest_data()
 void mdtFileTest::mdtPartitionAttributesTest()
 {
   mdtPartitionAttributes pa;
-  QStringList paList;
+  QStringList paList, ignoreList;
   
   // Initial states
   QVERIFY(pa.rootPath() == "");
@@ -320,6 +323,12 @@ void mdtFileTest::mdtPartitionAttributesTest()
   QVERIFY(pa.rootPath() == "");
   QVERIFY(pa.name() == "");
   QVERIFY(pa.fileSystem() == "");
+  paList = pa.availablePartitions();
+  QVERIFY(paList.contains("/"));
+  // Check that ignore list works
+  ignoreList << "/";
+  paList = pa.availablePartitions(ignoreList);
+  QVERIFY(!paList.contains("/"));
 #endif
 #ifdef Q_OS_WIN
   QVERIFY(pa.setPath("C:\\"));
@@ -333,8 +342,22 @@ void mdtFileTest::mdtPartitionAttributesTest()
   QVERIFY(pa.setPath("C:/"));
   QVERIFY(pa.rootPath() == "C:/");
   QVERIFY(pa.rootPath(true) == "C:\\");
+  paList = pa.availablePartitions();
+  QVERIFY(paList.contains("C:/"));
+  // Check that ignore list works
+  ignoreList << "C:/";
+  paList = pa.availablePartitions(ignoreList);
+  QVERIFY(!paList.contains("C:/"));
+  ignoreList.clear();
+  ignoreList << "c:/";
+  paList = pa.availablePartitions(ignoreList);
+  QVERIFY(!paList.contains("C:/"));
+  // It can happen that drive list (QDir::drives() )contains not the terminal / on a drive
+  // Happend with wine, drive H was returned H: , and not H:/ . Best is to handle this
+  QVERIFY(pa.setPath("C:"));
+  QVERIFY(pa.rootPath() == "C:/");
 #endif
-  
+
   paList = pa.availablePartitions();
   qDebug() << "Available partitions:";
   for(int i=0; i<paList.size(); i++){
@@ -342,4 +365,88 @@ void mdtFileTest::mdtPartitionAttributesTest()
     pa.setPath(paList.at(i));
     qDebug() << " -> Name: " << pa.name() << " , rootPath: " << pa.rootPath() << " , FS: " << pa.fileSystem() << " , RD only: " << pa.isReadOnly();
   }
+  
+}
+
+void mdtFileTest::mdtFileCopierTest()
+{
+  mdtFileCopier fc;
+  QDir dir;
+  ///QFileInfoList files;
+  QFileInfo fileInfo;
+  QList<QTemporaryFile*> srcFiles;
+  QList<QByteArray*> srcDataList;
+  QList<QTemporaryFile*> destFiles;
+  QList<QByteArray*> destDataList;
+
+  // Create files
+  for(int i=0; i<10; i++){
+    // Create and open temp files
+    srcFiles.append(new QTemporaryFile);
+    QVERIFY(srcFiles.at(i)->open());
+    fileInfo.setFile(*srcFiles.at(i));
+    qDebug() << "Src[" << i << "]: " << fileInfo.absoluteFilePath();
+    destFiles.append(new QTemporaryFile);
+    QVERIFY(destFiles.at(i)->open());
+    fileInfo.setFile(*destFiles.at(i));
+    qDebug() << "Dst[" << i << "]: " << fileInfo.absoluteFilePath();
+    // Create data objects
+    srcDataList.append(new QByteArray);
+    destDataList.append(new QByteArray);
+    // Generate some data in source FIXME: random data
+    srcDataList.at(i)->append("Hello!");
+  }
+  
+  
+  // Check copy
+  
+  // Check copy check :o)
+  
+  // Check clean (on abort, ...)
+  
+  
+  /*
+  dir.setPath("/etc/sane.d/");
+  files = dir.entryInfoList();
+  for(int i=0; i<files.size(); i++){
+    fc.addCopy(files.at(i).absoluteFilePath(), "/media/PS_MBS/usr", true);
+  }
+  dir.setPath("/usr/lib");
+  files = dir.entryInfoList();
+  for(int i=0; i<files.size(); i++){
+    fc.addCopy(files.at(i).absoluteFilePath(), "/media/PS_MBS/usr", false, true);
+  }
+  */
+  
+  /*
+  dir.setPath("C:/users/essais");
+  files = dir.entryInfoList();
+  for(int i=0; i<files.size(); i++){
+    fc.addCopy(files.at(i).absoluteFilePath(), QDir::tempPath(), true, true);
+    //fc.addCopy(files.at(i).absoluteFilePath(), "F:/usr", true, true);
+  }
+  */
+  
+  ///fc.addCopy("C:/users/essais/20175", QDir::tempPath(), true, true);
+
+  /*
+  fc.addCopy("test", "/tmp/test");
+  fc.addCopy("/home", "/tmp");
+  fc.addCopy("test/are", "/tmp/testa");
+  fc.addCopy("README", "/tmp/testa");
+  fc.addCopy("README", "/tmp/testa");
+  fc.addCopy("/var/log/syslog", "/tmp/");
+  fc.addCopy("/home/philippe/Vidéos/elephantsdream-1920-hd-mpeg4-su-ac3.avi", "/tmp");
+  */
+  //fc.addCopy("README", "/");
+  fc.startCopy();
+  
+  // Wait some time to display end message
+  QTest::qWait(100);
+  
+  // Free ressources
+  qDeleteAll(srcFiles);
+  qDeleteAll(srcDataList);
+  qDeleteAll(destFiles);
+  qDeleteAll(destDataList);
 }

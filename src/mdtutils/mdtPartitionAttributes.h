@@ -55,7 +55,8 @@ class mdtPartitionAttributes
 
   /*! \brief Get the partition name
    * 
-   * FIXME: clarify this
+   * On Windows, name can be a CD-ROM name, USB Key partition name, ...
+   * On Linux, name is the device path like /dev/sda1
    */
   QString &name();
 
@@ -78,8 +79,9 @@ class mdtPartitionAttributes
    * On Linux, this return mounted partitions (reading /etc/mtab)<br>
    *  Note: could be fixed in future, when I understand something in DBus :)<br>
    * On Windows, returns the paths geven by QDir::drives()
+   * \param ignoreList All paths listed here will not be returned (ignore list can contain / , C:/ ,... , but NOT C:\)
    */
-  QStringList availablePartitions();
+  static QStringList availablePartitions(const QStringList &ignoreList = QStringList());
 
  private:
 

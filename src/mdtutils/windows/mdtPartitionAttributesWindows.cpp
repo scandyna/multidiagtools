@@ -23,8 +23,9 @@
 #include "windows.h"
 #include <QDir>
 #include <QFileInfo>
+#include <QByteArray>
 
-#include <QDebug>
+//#include <QDebug>
 
 bool mdtPartitionAttributes::setPath(const QString &path)
 {
@@ -32,6 +33,7 @@ bool mdtPartitionAttributes::setPath(const QString &path)
   char fs[256];
   const char *drive;
   int flags;
+  QByteArray strPath;
 
   // Default values
   pvRootPath = "";
@@ -40,7 +42,12 @@ bool mdtPartitionAttributes::setPath(const QString &path)
   pvFileSystem = "";
 
   // Get Windows native format of given path
-  drive = QDir::toNativeSeparators(path).toStdString().c_str();
+  strPath = QDir::toNativeSeparators(path).toLocal8Bit();
+  // See if the terminal \ exists
+  if(strPath.size() == 2){
+    strPath.append('\\');
+  }
+  drive = strPath.data();
   // Get attributes
   if(GetVolumeInformation(drive, driveName, 1023, 0, 0, (LPDWORD)&flags, fs, 255) == 0){
     mdtError e(MDT_FILE_IO_ERROR, "GetVolumeInformation() failed", mdtError::Error);
@@ -56,14 +63,14 @@ bool mdtPartitionAttributes::setPath(const QString &path)
     pvIsReadOnly = false;
   }
   // Store attributes
-  pvRootPath = QDir::fromNativeSeparators(path);
+  pvRootPath = QDir::fromNativeSeparators(strPath);
   pvName = driveName;
   pvFileSystem = fs;
 
   return true;
 }
 
-QStringList mdtPartitionAttributes::availablePartitions()
+QStringList mdtPartitionAttributes::availablePartitions(const QStringList &ignoreList)
 {
   QStringList partitionsList;
   QFileInfoList infoList;
@@ -71,7 +78,10 @@ QStringList mdtPartitionAttributes::availablePartitions()
 
   infoList = QDir::drives();
   for(i=0; i<infoList.size(); i++){
-    partitionsList << infoList.at(i).absoluteFilePath();
+    // Add only if not in ignoreList
+    if(!ignoreList.contains(infoList.at(i).absoluteFilePath(), Qt::CaseInsensitive)){
+      partitionsList << infoList.at(i).absoluteFilePath();
+    }
   }
 
   return partitionsList;

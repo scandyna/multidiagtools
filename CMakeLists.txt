@@ -37,7 +37,8 @@ configure_file (
 )
 
 # Some flags for compiler
-add_definitions("-Wall -ansi -lm")
+add_definitions("-Wall -ansi -O2 -lm")
+#add_definitions("-Wall -ansi -lm")
 
 # We want GUI executables on Windows (not console)
 if(WIN32)

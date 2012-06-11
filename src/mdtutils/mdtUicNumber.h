@@ -56,6 +56,22 @@ class mdtUicNumber
    */
   QString formatedUicNumber();
 
+  /*! \brief Get 6 digit compact unformated UIC number
+   * 
+   * A 6 or 11 digit UIC number must first be set with setNumber().<br>
+   * Note: if a 11 digits UIC number is set, the 6 last digit (without control key) are returned.<br>
+   *  F.ex: if 94 85 7 560 256-0 is set, this method returns 560256.
+   * \return 6 digit UIC number without space, without control key, or a empty string on error
+   */
+  QString compact6UicNumber();
+
+  /*! \brief Get 11 digit compact unformated UIC number
+   * 
+   * A 11 digit UIC number must first be set with setNumber().
+   * \return 11 digit UIC number without space, without control key, or a empty string on error
+   */
+  QString compact11UicNumber();
+
   /*! \brief Check the UIC number validity
    * 
    * A valid UIC number contains 6, 7, 11 or 12 digits.

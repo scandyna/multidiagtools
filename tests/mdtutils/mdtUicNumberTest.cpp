@@ -30,6 +30,8 @@ void mdtUicNumberTest::controlKeyTest()
   // Initial state
   QVERIFY(!uic.isValid());
   QVERIFY(uic.controlKey() < 0);
+  QVERIFY(uic.compact6UicNumber() == "");
+  QVERIFY(uic.compact11UicNumber() == "");
 
   // Tests with some invalid numbers
   QVERIFY(!uic.setNumber("A 560 005"));
@@ -99,36 +101,50 @@ void mdtUicNumberTest::controlKeyTest()
   QVERIFY(uic.setNumber("560 005-1"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 1);
+  QVERIFY(uic.compact6UicNumber() == "560005");
+  QVERIFY(uic.compact11UicNumber() == "");
   QVERIFY(uic.setNumber("94 85 7 560 256 - 0"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 0);
+  QVERIFY(uic.compact6UicNumber() == "560256");
+  QVERIFY(uic.compact11UicNumber() == "94857560256");
   QVERIFY(uic.setNumber("50 85 20-43 028 - 3"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 3);
   QVERIFY(uic.setNumber("50 85 29 43 028 - 4"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 4);
+  QVERIFY(uic.compact11UicNumber() == "50852943028");
   QVERIFY(uic.setNumber("50 85 39 43 864 - 0"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 0);
   QVERIFY(uic.setNumber("560 044-0"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 0);
+  QVERIFY(uic.compact6UicNumber() == "560044");
+  QVERIFY(uic.compact11UicNumber() == "");
   QVERIFY(uic.setNumber("460 002-9"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 9);
+  QVERIFY(uic.compact6UicNumber() == "460002");
   QVERIFY(uic.setNumber("460 006-0"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 0);
+  QVERIFY(uic.compact6UicNumber() == "460006");
+  QVERIFY(uic.compact11UicNumber() == "");
   QVERIFY(uic.setNumber("50 85 20-34 684-4"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 4);
+  QVERIFY(uic.compact11UicNumber() == "50852034684");
   QVERIFY(uic.setNumber("50 85 92-33 645-9"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 9);
+  QVERIFY(uic.compact11UicNumber() == "50859233645");
   QVERIFY(uic.setNumber("522 007-4"));
   QVERIFY(uic.isValid());
   QVERIFY(uic.controlKey() == 4);
+  QVERIFY(uic.compact6UicNumber() == "522007");
+  QVERIFY(uic.compact11UicNumber() == "");
 }
 
 void mdtUicNumberTest::detailsTest()
@@ -190,6 +206,8 @@ void mdtUicNumberTest::detailsTest()
   QVERIFY(uic.setNumber("91 85 4 450 014"));
 
   qDebug() << "UIC: " << uic.formatedUicNumber();
+  qDebug() << "UIC 6: " << uic.compact6UicNumber();
+  qDebug() << "UIC 11: " << uic.compact11UicNumber();
   qDebug() << uic.country().nameFr();
   qDebug() << uic.usage().nameFr();
   qDebug() << uic.type().nameFr();

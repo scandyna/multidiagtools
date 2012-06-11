@@ -126,6 +126,60 @@ QString mdtUicNumber::formatedUicNumber()
   return uicNumber;
 }
 
+QString mdtUicNumber::compact6UicNumber()
+{
+  QString uicNumber;
+
+  if(!isValid()){
+    return uicNumber;
+  }
+
+  // Case of 6 digits number
+  if(pvUicNumberDigits.size() == 6){
+    uicNumber.append(QString::number(pvUicNumberDigits.at(0)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(1)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(2)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(3)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(4)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(5)));
+  }else if(pvUicNumberDigits.size() == 11){
+    uicNumber.append(QString::number(pvUicNumberDigits.at(5)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(6)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(7)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(8)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(9)));
+    uicNumber.append(QString::number(pvUicNumberDigits.at(10)));
+  }
+
+  return uicNumber;
+}
+
+QString mdtUicNumber::compact11UicNumber()
+{
+  QString uicNumber;
+
+  if(!isValid()){
+    return uicNumber;
+  }
+  // Must have 11 digits
+  if(pvUicNumberDigits.size() != 11){
+    return uicNumber;
+  }
+  uicNumber.append(QString::number(pvUicNumberDigits.at(0)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(1)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(2)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(3)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(4)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(5)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(6)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(7)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(8)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(9)));
+  uicNumber.append(QString::number(pvUicNumberDigits.at(10)));
+
+  return uicNumber;
+}
+
 bool mdtUicNumber::isValid()
 {
   // Check if somethig was set
