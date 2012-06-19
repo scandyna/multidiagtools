@@ -22,13 +22,13 @@ project(multidiagtools)
 set(USE_ASSERT 1)
 
 #Debug or Release
-set(CMAKE_BUILD_TYPE Debug)
-#set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 2)
-set(MDTLIB_VERSION_MICRO 3)
+set(MDTLIB_VERSION_MICRO 4)
 
 # Config file
 configure_file (

@@ -310,12 +310,12 @@ void mdtFileTest::mdtPartitionAttributesTest()
 {
   mdtPartitionAttributes pa;
   QStringList paList, ignoreList;
-  
+
   // Initial states
   QVERIFY(pa.rootPath() == "");
   QVERIFY(pa.name() == "");
   QVERIFY(pa.fileSystem() == "");
-  
+
   // We make some very basic checks
 #ifdef Q_OS_UNIX
   QVERIFY(pa.setPath("/"));

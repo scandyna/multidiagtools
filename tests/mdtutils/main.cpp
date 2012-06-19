@@ -62,24 +62,18 @@ int main(int argc, char **argv)
   if(retVal!=0){
     return retVal;
   }
-
   retVal = QTest::qExec(&uicNumberTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-
   retVal = QTest::qExec(&fileTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-
   retVal = QTest::qExec(&algorithmsTest, argc, argv);
   if(retVal!=0){
     return retVal;
   }
-  
-  return 1; /// NOTE: provisoire
-  
   retVal = QTest::qExec(&bufferTest, argc, argv);
   if(retVal!=0){
     return retVal;
@@ -98,9 +92,9 @@ int main(int argc, char **argv)
   }
 
   // Enable this warning if a test is temporary diseabled
-  qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
+  ///qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
 
   // Free the error system
   mdtErrorOut::destroy();
-  return 1;
+  return 0;
 }
