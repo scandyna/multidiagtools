@@ -75,10 +75,34 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the numeric part at end of string.  <a href="#adfeb44a0a2a440a6b200ad19db73ac45"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a11d5a1ebe9a68710e6e78f768ac9203c">stringWithNumericEndLessThan</a> (QString str1, QString str2)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the numeric end of 2 strings This is a helper function for <a class="el" href="namespacemdt_algorithms.html#a1a3e54a0c5c508c2ea531c7c6200588e" title="Sort a string list, for witch each string ends with a number Usefull for directory entry list...">sortStringListWithNumericEnd()</a>  <a href="#a11d5a1ebe9a68710e6e78f768ac9203c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a5094251abb1557b9b4717b3a0f1a8535">hexStringToByteArray</a> (const QString &amp;hexStr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a hexadecimal formated string to numerical bytes array.  <a href="#a5094251abb1557b9b4717b3a0f1a8535"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemdt_algorithms.html#a29977b36180db7518a7ee2317265d26b">byteArrayToHexString</a> (const QByteArray &amp;byteArray)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a byte array to a hexadecimal string.  <a href="#a29977b36180db7518a7ee2317265d26b"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Some usefull little (unefficient) algoritms. </p>
 </div><hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a29977b36180db7518a7ee2317265d26b"></a><!-- doxytag: member="mdtAlgorithms::byteArrayToHexString" ref="a29977b36180db7518a7ee2317265d26b" args="(const QByteArray &amp;byteArray)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtAlgorithms::byteArrayToHexString </td>
+          <td>(</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>byteArray</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Convert a byte array to a hexadecimal string. </p>
+<p>For example, byte array with 44,18,95 numerical values will generate a string with "2C 12 5F". </p>
+
+</div>
+</div>
 <a class="anchor" id="adfeb44a0a2a440a6b200ad19db73ac45"></a><!-- doxytag: member="mdtAlgorithms::extractNumericPartAtEnd" ref="adfeb44a0a2a440a6b200ad19db73ac45" args="(const QString &amp;str)" -->
 <div class="memitem">
 <div class="memproto">
@@ -102,6 +126,29 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The numeric part, or empty string on problem </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5094251abb1557b9b4717b3a0f1a8535"></a><!-- doxytag: member="mdtAlgorithms::hexStringToByteArray" ref="a5094251abb1557b9b4717b3a0f1a8535" args="(const QString &amp;hexStr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QByteArray mdtAlgorithms::hexStringToByteArray </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>hexStr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Convert a hexadecimal formated string to numerical bytes array. </p>
+<p>Hexadecimal string is, for example, 2C 12 5F , witch will be converted to 44,18,95 numeric byte array.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>hexStr must contain multiple of 2 valid chars. F.ex: 2C 12 5 is not valid. </dd>
+<dd>
+hexStr must contain valid chars (0-9 , a-f, A-F). F.ex: 2Z is not valid. </dd></dl>
 
 </div>
 </div>
@@ -176,7 +223,7 @@ Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:43:00 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:21 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -79,6 +79,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the UIC number.  <a href="#aadf50072784344824c696da7cff5b445"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_uic_number.html#a0eda9b614e91b32c0d99bc016d906eae">formatedUicNumber</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the complete formated UIC number.  <a href="#a0eda9b614e91b32c0d99bc016d906eae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_uic_number.html#ac213145f98f8373d3300f4b3d46881cc">compact6UicNumber</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get 6 digit compact unformated UIC number.  <a href="#ac213145f98f8373d3300f4b3d46881cc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_uic_number.html#a1923dbc9f382433d3d669b32aac75888">compact11UicNumber</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get 11 digit compact unformated UIC number.  <a href="#a1923dbc9f382433d3d669b32aac75888"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_uic_number.html#aac3c9e1adb6f9646216b4327645a621a">isValid</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the UIC number validity.  <a href="#aac3c9e1adb6f9646216b4327645a621a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_uic_number.html#acd5013109fc4b953023333ac1382edd6">controlKey</a> ()</td></tr>
@@ -129,6 +133,48 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dd>
 <a href="http://en.wikipedia.org/wiki/UIC_wagon_numbers">http://en.wikipedia.org/wiki/UIC_wagon_numbers</a> </dd></dl>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a1923dbc9f382433d3d669b32aac75888"></a><!-- doxytag: member="mdtUicNumber::compact11UicNumber" ref="a1923dbc9f382433d3d669b32aac75888" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtUicNumber::compact11UicNumber </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get 11 digit compact unformated UIC number. </p>
+<p>A 11 digit UIC number must first be set with <a class="el" href="classmdt_uic_number.html#aadf50072784344824c696da7cff5b445" title="Set the UIC number.">setNumber()</a>. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>11 digit UIC number without space, without control key, or a empty string on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac213145f98f8373d3300f4b3d46881cc"></a><!-- doxytag: member="mdtUicNumber::compact6UicNumber" ref="ac213145f98f8373d3300f4b3d46881cc" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtUicNumber::compact6UicNumber </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get 6 digit compact unformated UIC number. </p>
+<p>A 6 or 11 digit UIC number must first be set with <a class="el" href="classmdt_uic_number.html#aadf50072784344824c696da7cff5b445" title="Set the UIC number.">setNumber()</a>.<br/>
+ Note: if a 11 digits UIC number is set, the 6 last digit (without control key) are returned.<br/>
+ F.ex: if 94 85 7 560 256-0 is set, this method returns 560256. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>6 digit UIC number without space, without control key, or a empty string on error </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="acd5013109fc4b953023333ac1382edd6"></a><!-- doxytag: member="mdtUicNumber::controlKey" ref="acd5013109fc4b953023333ac1382edd6" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -470,7 +516,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:43:00 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:21 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

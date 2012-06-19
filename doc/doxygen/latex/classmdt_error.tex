@@ -24,11 +24,8 @@ void \hyperlink{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}{setSystemError
 \label{classmdt_error_a49254fdb566fee1a4adafe6a3694befc}
 
 \begin{DoxyCompactList}\small\item\em Add system returned error (for example, errno) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_error_a0df51beab0ddaba26d5194690303d682}{
-void \hyperlink{classmdt_error_a0df51beab0ddaba26d5194690303d682}{setSource} (const QString \&fileName, int fileLine, const QString \&className, const QString \&functionName)}
-\label{classmdt_error_a0df51beab0ddaba26d5194690303d682}
-
-\begin{DoxyCompactList}\small\item\em Add the source of error It's possible to use the helper macro MDT\_\-ERROR\_\-SET\_\-SRC() \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_error_a0df51beab0ddaba26d5194690303d682}{setSource} (const QString \&fileName, int fileLine, const QString \&className, const QString \&functionName)
+\begin{DoxyCompactList}\small\item\em Add system error (for Windows API) \end{DoxyCompactList}\item 
 \hypertarget{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{
 void \hyperlink{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}{commit} ()}
 \label{classmdt_error_ad3cccf7c7f7d4bdabdcb4e60794bb9cb}
@@ -75,6 +72,27 @@ int \hyperlink{classmdt_error_af93bfb0b3a2e88755f8d0e61d51b0be6}{fileLine} ()}
 
 \begin{DoxyCompactList}\small\item\em Error source line. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_error_a0df51beab0ddaba26d5194690303d682}{
+\index{mdtError@{mdtError}!setSource@{setSource}}
+\index{setSource@{setSource}!mdtError@{mdtError}}
+\subsubsection[{setSource}]{\setlength{\rightskip}{0pt plus 5cm}void mdtError::setSource (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{fileName, }
+\item[{int}]{fileLine, }
+\item[{const QString \&}]{className, }
+\item[{const QString \&}]{functionName}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_error_a0df51beab0ddaba26d5194690303d682}
+
+
+Add system error (for Windows API) 
+
+When using Windows API, the standard mechanism is GetLastError() and FormatMessage(). Calling this method will do this internally.
+
+Add the source of error It's possible to use the helper macro MDT\_\-ERROR\_\-SET\_\-SRC() 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

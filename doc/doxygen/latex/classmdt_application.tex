@@ -22,8 +22,7 @@ Inheritance diagram for mdtApplication:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtApplication:
-\nopagebreak
+Collaboration diagram for mdtApplication:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -39,7 +38,9 @@ Collaboration diagram for mdtApplication:
 
 \item 
 bool \hyperlink{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}{init} (bool allowMultipleInstances=true)
-\begin{DoxyCompactList}\small\item\em Some initializations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Some initializations. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{setApplicationVersion} (int versionMajor, int versionMinor, int versionMicro)
+\begin{DoxyCompactList}\small\item\em Build the application version with numeric values. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -107,7 +108,22 @@ Several things are done here:
 
 Get the instance of \hyperlink{classmdt_application}{mdtApplication}. 
 
-This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! 
+This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! \hypertarget{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{
+\index{mdtApplication@{mdtApplication}!setApplicationVersion@{setApplicationVersion}}
+\index{setApplicationVersion@{setApplicationVersion}!mdtApplication@{mdtApplication}}
+\subsubsection[{setApplicationVersion}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::setApplicationVersion (
+\begin{DoxyParamCaption}
+\item[{int}]{versionMajor, }
+\item[{int}]{versionMinor, }
+\item[{int}]{versionMicro}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}
+
+
+Build the application version with numeric values. 
+
+Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

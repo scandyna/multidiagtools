@@ -94,6 +94,8 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtApplication</b> (int &amp;argc, char **argv, bool GUIenabled=true)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#a5000b9656a59b3594de2a4ceb4232673">init</a> (bool allowMultipleInstances=true)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Some initializations.  <a href="#a5000b9656a59b3594de2a4ceb4232673"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#a79dbb5f3d889d7cd9b8909a4eb8bcce1">setApplicationVersion</a> (int versionMajor, int versionMinor, int versionMicro)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the application version with numeric values.  <a href="#a79dbb5f3d889d7cd9b8909a4eb8bcce1"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classmdt_application.html">mdtApplication</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_application.html#a365ac79934070b0e5a42d2c7cd9b076d">instance</a> ()</td></tr>
@@ -163,6 +165,42 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
+<a class="anchor" id="a79dbb5f3d889d7cd9b8909a4eb8bcce1"></a><!-- doxytag: member="mdtApplication::setApplicationVersion" ref="a79dbb5f3d889d7cd9b8909a4eb8bcce1" args="(int versionMajor, int versionMinor, int versionMicro)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtApplication::setApplicationVersion </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>versionMajor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>versionMinor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>versionMicro</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Build the application version with numeric values. </p>
+<p>Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_application_8h_source.html">mdtApplication.h</a></li>
 <li>src/mdtutils/mdtApplication.cpp</li>
@@ -182,7 +220,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:59 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:20 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

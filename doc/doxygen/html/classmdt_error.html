@@ -84,9 +84,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49254fdb566fee1a4adafe6a3694befc"></a><!-- doxytag: member="mdtError::setSystemError" ref="a49254fdb566fee1a4adafe6a3694befc" args="(int number, const QString &amp;text)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">setSystemError</a> (int number, const QString &amp;text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add system returned error (for example, errno) <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0df51beab0ddaba26d5194690303d682"></a><!-- doxytag: member="mdtError::setSource" ref="a0df51beab0ddaba26d5194690303d682" args="(const QString &amp;fileName, int fileLine, const QString &amp;className, const QString &amp;functionName)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a0df51beab0ddaba26d5194690303d682">setSource</a> (const QString &amp;fileName, int fileLine, const QString &amp;className, const QString &amp;functionName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the source of error It's possible to use the helper macro MDT_ERROR_SET_SRC() <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#a0df51beab0ddaba26d5194690303d682">setSource</a> (const QString &amp;fileName, int fileLine, const QString &amp;className, const QString &amp;functionName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add system error (for Windows API)  <a href="#a0df51beab0ddaba26d5194690303d682"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3cccf7c7f7d4bdabdcb4e60794bb9cb"></a><!-- doxytag: member="mdtError::commit" ref="ad3cccf7c7f7d4bdabdcb4e60794bb9cb" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">commit</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send error to output. <br/></td></tr>
@@ -115,6 +114,50 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6">fileLine</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error source line. <br/></td></tr>
 </table>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a0df51beab0ddaba26d5194690303d682"></a><!-- doxytag: member="mdtError::setSource" ref="a0df51beab0ddaba26d5194690303d682" args="(const QString &amp;fileName, int fileLine, const QString &amp;className, const QString &amp;functionName)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtError::setSource </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fileLine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>className</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>functionName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add system error (for Windows API) </p>
+<p>When using Windows API, the standard mechanism is GetLastError() and FormatMessage(). Calling this method will do this internally.</p>
+<p>Add the source of error It's possible to use the helper macro MDT_ERROR_SET_SRC() </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_error_8h_source.html">mdtError.h</a></li>
 <li>src/mdtutils/mdtError.cpp</li>
@@ -134,7 +177,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:59 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:21 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

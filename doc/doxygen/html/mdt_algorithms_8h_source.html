@@ -84,19 +84,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QtAlgorithms&gt;</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QStringList&gt;</span>
-<a name="l00027"></a>00027 
-<a name="l00030"></a><a class="code" href="namespacemdt_algorithms.html">00030</a> <span class="keyword">namespace </span>mdtAlgorithms
-<a name="l00031"></a>00031 {
-<a name="l00032"></a>00032 
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QByteArray&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00028"></a>00028 
+<a name="l00031"></a><a class="code" href="namespacemdt_algorithms.html">00031</a> <span class="keyword">namespace </span>mdtAlgorithms
+<a name="l00032"></a>00032 {
 <a name="l00044"></a>00044   QStringList <a class="code" href="namespacemdt_algorithms.html#a1a3e54a0c5c508c2ea531c7c6200588e" title="Sort a string list, for witch each string ends with a number Usefull for directory entry list...">sortStringListWithNumericEnd</a>(QStringList &amp;list);
 <a name="l00045"></a>00045 
 <a name="l00050"></a>00050   QString <a class="code" href="namespacemdt_algorithms.html#adfeb44a0a2a440a6b200ad19db73ac45" title="Extract the numeric part at end of string.">extractNumericPartAtEnd</a>(<span class="keyword">const</span> QString &amp;str);
 <a name="l00051"></a>00051 
 <a name="l00056"></a>00056   <span class="keywordtype">bool</span> <a class="code" href="namespacemdt_algorithms.html#a11d5a1ebe9a68710e6e78f768ac9203c" title="Compare the numeric end of 2 strings This is a helper function for sortStringListWithNumericEnd()">stringWithNumericEndLessThan</a>(QString str1, QString str2);
-<a name="l00057"></a>00057 };
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059 <span class="preprocessor">#endif  // #ifndef MDT_ALGORITHMS_H</span>
+<a name="l00057"></a>00057 
+<a name="l00066"></a>00066   QByteArray <a class="code" href="namespacemdt_algorithms.html#a5094251abb1557b9b4717b3a0f1a8535" title="Convert a hexadecimal formated string to numerical bytes array.">hexStringToByteArray</a>(<span class="keyword">const</span> QString &amp;hexStr);
+<a name="l00067"></a>00067 
+<a name="l00073"></a>00073   QString <a class="code" href="namespacemdt_algorithms.html#a29977b36180db7518a7ee2317265d26b" title="Convert a byte array to a hexadecimal string.">byteArrayToHexString</a>(<span class="keyword">const</span> QByteArray &amp;byteArray);
+<a name="l00074"></a>00074 };
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="preprocessor">#endif  // #ifndef MDT_ALGORITHMS_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -113,7 +117,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon May 28 2012 21:42:58 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:20 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

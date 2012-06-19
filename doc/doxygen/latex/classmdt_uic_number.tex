@@ -18,6 +18,10 @@ bool \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber
 \begin{DoxyCompactList}\small\item\em Set the UIC number. \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{formatedUicNumber} ()
 \begin{DoxyCompactList}\small\item\em Get the complete formated UIC number. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{compact6UicNumber} ()
+\begin{DoxyCompactList}\small\item\em Get 6 digit compact unformated UIC number. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{compact11UicNumber} ()
+\begin{DoxyCompactList}\small\item\em Get 11 digit compact unformated UIC number. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}{isValid} ()
 \begin{DoxyCompactList}\small\item\em Check the UIC number validity. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{controlKey} ()
@@ -84,6 +88,40 @@ Parse a UIC number and get details.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{
+\index{mdtUicNumber@{mdtUicNumber}!compact11UicNumber@{compact11UicNumber}}
+\index{compact11UicNumber@{compact11UicNumber}!mdtUicNumber@{mdtUicNumber}}
+\subsubsection[{compact11UicNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::compact11UicNumber (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}
+
+
+Get 11 digit compact unformated UIC number. 
+
+A 11 digit UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}. \begin{DoxyReturn}{Returns}
+11 digit UIC number without space, without control key, or a empty string on error 
+\end{DoxyReturn}
+\hypertarget{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{
+\index{mdtUicNumber@{mdtUicNumber}!compact6UicNumber@{compact6UicNumber}}
+\index{compact6UicNumber@{compact6UicNumber}!mdtUicNumber@{mdtUicNumber}}
+\subsubsection[{compact6UicNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::compact6UicNumber (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}
+
+
+Get 6 digit compact unformated UIC number. 
+
+A 6 or 11 digit UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}.\par
+ Note: if a 11 digits UIC number is set, the 6 last digit (without control key) are returned.\par
+ F.ex: if 94 85 7 560 256-\/0 is set, this method returns 560256. \begin{DoxyReturn}{Returns}
+6 digit UIC number without space, without control key, or a empty string on error 
+\end{DoxyReturn}
 \hypertarget{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{
 \index{mdtUicNumber@{mdtUicNumber}!controlKey@{controlKey}}
 \index{controlKey@{controlKey}!mdtUicNumber@{mdtUicNumber}}

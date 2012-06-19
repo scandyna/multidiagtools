@@ -15,14 +15,31 @@ QStringList \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e
 QString \hyperlink{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{extractNumericPartAtEnd} (const QString \&str)
 \begin{DoxyCompactList}\small\item\em Extract the numeric part at end of string. \end{DoxyCompactList}\item 
 bool \hyperlink{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}{stringWithNumericEndLessThan} (QString str1, QString str2)
-\begin{DoxyCompactList}\small\item\em Compare the numeric end of 2 strings This is a helper function for \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd()} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Compare the numeric end of 2 strings This is a helper function for \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd()} \end{DoxyCompactList}\item 
+QByteArray \hyperlink{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{hexStringToByteArray} (const QString \&hexStr)
+\begin{DoxyCompactList}\small\item\em Convert a hexadecimal formated string to numerical bytes array. \end{DoxyCompactList}\item 
+QString \hyperlink{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{byteArrayToHexString} (const QByteArray \&byteArray)
+\begin{DoxyCompactList}\small\item\em Convert a byte array to a hexadecimal string. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Some usefull little (unefficient) algoritms. 
 
 \subsection{Function Documentation}
-\hypertarget{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{
+\hypertarget{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{
+\index{mdtAlgorithms@{mdtAlgorithms}!byteArrayToHexString@{byteArrayToHexString}}
+\index{byteArrayToHexString@{byteArrayToHexString}!mdtAlgorithms@{mdtAlgorithms}}
+\subsubsection[{byteArrayToHexString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::byteArrayToHexString (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{byteArray}
+\end{DoxyParamCaption}
+)}}
+\label{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}
+
+
+Convert a byte array to a hexadecimal string. 
+
+For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2C 12 5F\char`\"{}. \hypertarget{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{
 \index{mdtAlgorithms@{mdtAlgorithms}!extractNumericPartAtEnd@{extractNumericPartAtEnd}}
 \index{extractNumericPartAtEnd@{extractNumericPartAtEnd}!mdtAlgorithms@{mdtAlgorithms}}
 \subsubsection[{extractNumericPartAtEnd}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::extractNumericPartAtEnd (
@@ -43,6 +60,26 @@ Extract the numeric part at end of string.
 \begin{DoxyReturn}{Returns}
 The numeric part, or empty string on problem 
 \end{DoxyReturn}
+\hypertarget{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{
+\index{mdtAlgorithms@{mdtAlgorithms}!hexStringToByteArray@{hexStringToByteArray}}
+\index{hexStringToByteArray@{hexStringToByteArray}!mdtAlgorithms@{mdtAlgorithms}}
+\subsubsection[{hexStringToByteArray}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtAlgorithms::hexStringToByteArray (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{hexStr}
+\end{DoxyParamCaption}
+)}}
+\label{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}
+
+
+Convert a hexadecimal formated string to numerical bytes array. 
+
+Hexadecimal string is, for example, 2C 12 5F , witch will be converted to 44,18,95 numeric byte array.
+
+\begin{DoxyPrecond}{Precondition}
+hexStr must contain multiple of 2 valid chars. F.ex: 2C 12 5 is not valid. 
+
+hexStr must contain valid chars (0-\/9 , a-\/f, A-\/F). F.ex: 2Z is not valid. 
+\end{DoxyPrecond}
 \hypertarget{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{
 \index{mdtAlgorithms@{mdtAlgorithms}!sortStringListWithNumericEnd@{sortStringListWithNumericEnd}}
 \index{sortStringListWithNumericEnd@{sortStringListWithNumericEnd}!mdtAlgorithms@{mdtAlgorithms}}
