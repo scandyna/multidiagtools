@@ -59,10 +59,6 @@ class mdtFileCopier : public QThread
   mdtFileCopier(QObject *parent = 0);
   ~mdtFileCopier();
 
-  /*! \brief If set true, a proegress dialog will be displayed during copy
-   */
-  void setShowProgressDialog(bool show);
-
   /*! \brief Permit direct destination overwrite
    * 
    * If set false, the user will be asked about what to do if destination allready exists.
@@ -76,9 +72,11 @@ class mdtFileCopier : public QThread
   /*! \brief Set the default setup
    * 
    * Default setup is:
-   *  - Progress dialog will be showed during copy
-   *  - If destination file allready exists, user will be asked about what to do
+   *  - Test mode is diseabled
+   *  - Direct overwrite diseabled, user will be asked if destination allready exists
    * This method is called by constructor.
+   * \sa setTestMode()
+   * \sa setDirectDestOverwrite()
    */
   void setDefaultSetup();
 
@@ -93,17 +91,24 @@ class mdtFileCopier : public QThread
    *
    * For all enqueued copies, some checks will be done, when ok, copies will then processed.<br>
    * To know when copy is finished, use waitFinished(), or connect to the finished() signal.
+   * \return true if copy will be processed, or false if no copy can be done, or user cancelled copy because of some problems.
    */
-  void startCopy();
+  bool startCopy();
 
   /*! \brief Wait until copies are done
    * 
    * This function will only return when copy process is done.
    * Internally, a couple of msleep()/process event will be called,
    *  so Qt's GUI event loop is not broken, and application will not freeze.
-   * \return True on success, false on failure (errors are displayed to the user, and logged with mdtError system)
+   * \return True on success, false on failure or abort (errors are displayed to the user, and logged with mdtError system)
    */
   bool waitFinished();
+
+  /*! \brief If set true, message boxes will not be displayed, and some default decisions will be taken.
+   * 
+   * Used by unit tests. Please never use this flag without you know that it can happen !
+   */
+  void setTestMode(bool enable);
 
  public slots:
 
@@ -140,10 +145,13 @@ class mdtFileCopier : public QThread
   // Called by thread when copy is finished or cancelled to display result to the user
   void displayCopyResult(const QString &failedCopies, const QString &informativeText);
 
+  // Set the end flags, display copy results and emit finished() signal
+  void finish(const QString &failedCopies, const QString &informativeText);
+
  private:
 
-  // Call the system sync to write data to device - Is called by thread, must not be called elswhere.
-  bool sync(FILE *f/*, const QString &Filepath*/);
+  // Call the system sync to write data to device - Is called by thread, must not be called elsewhere.
+  bool sync(FILE *f);
 
   // Thread method that processes copies
   void run();
@@ -157,10 +165,11 @@ class mdtFileCopier : public QThread
   QProgressDialog *pvProgressDialog;
   QLinkedList<mdtFileCopierItem*> pvCopies;
   QList <mdtFileCopierItem*> pvCopiesInProcess;
-  bool pvShowProgressDialog;
+  bool pvTestMode;
   bool pvDirectDestOverwrite;
   bool pvAllDialogsDiseabled;
   bool pvFinished;
+  bool pvCopySuccessfull;
   bool pvCancelCopy;
 };
 

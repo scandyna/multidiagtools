@@ -38,7 +38,7 @@ class mdtFileTest : public mdtTest
   void mdtPartitionAttributesTest();
 
   // File copier
-  void mdtFileCopierTest();
+  void mdtFileCopierTestS();
 };
 
 #endif  // #ifndef MDT_FILE_TEST_H

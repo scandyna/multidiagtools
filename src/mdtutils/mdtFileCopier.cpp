@@ -24,6 +24,7 @@
 #include <QMutableLinkedListIterator>
 #include <QLabel>
 #include <QCryptographicHash>
+#include <QApplication>
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
@@ -33,9 +34,6 @@
 #endif  // #ifdef Q_OS_WIN
 #include <stdio.h>
 
-
-#include <QDebug>
-
 mdtFileCopier::mdtFileCopier(QObject *parent)
  : QThread(parent)
 {
@@ -43,6 +41,7 @@ mdtFileCopier::mdtFileCopier(QObject *parent)
   pvBuffer = new char[pvBufferSize];
   Q_ASSERT(pvBuffer != 0);
   pvFinished = true;
+  pvCopySuccessfull = false;
   // Set the default setup
   setDefaultSetup();
   // Progress dialog
@@ -56,11 +55,10 @@ mdtFileCopier::mdtFileCopier(QObject *parent)
   pvProgressDialog->setWindowModality(Qt::WindowModal);
   connect(this, SIGNAL(newProgressValue(int)), pvProgressDialog, SLOT(setValue(int)));
   connect(this, SIGNAL(newProgressRange(int, int)), pvProgressDialog, SLOT(setRange(int, int)));
-  connect(this, SIGNAL(finished(bool)), pvProgressDialog, SLOT(reset()));
   connect(this, SIGNAL(newProgressLabelText(const QString&)), pvProgressDialog, SLOT(setLabelText(const QString&)));
   connect(pvProgressDialog, SIGNAL(canceled()), this, SLOT(cancelCopy()));
   // Thread signals
-  connect(this, SIGNAL(copyEnded(const QString&, const QString&)), this, SLOT(displayCopyResult(const QString&, const QString&)));
+  connect(this, SIGNAL(copyEnded(const QString&, const QString&)), this, SLOT(finish(const QString&, const QString&)));
 }
 
 mdtFileCopier::~mdtFileCopier()
@@ -73,18 +71,9 @@ mdtFileCopier::~mdtFileCopier()
   qDeleteAll(pvCopies);
 }
 
-void mdtFileCopier::setShowProgressDialog(bool show)
-{
-  pvMutex.lock();
-  pvShowProgressDialog = show;
-  pvMutex.unlock();
-}
-
 void mdtFileCopier::setDirectDestOverwrite(bool directOverwrite)
 {
-  pvMutex.lock();
   pvDirectDestOverwrite = directOverwrite;
-  pvMutex.unlock();
 }
 
 void mdtFileCopier::diseableAllDialogs(bool diseable)
@@ -95,11 +84,9 @@ void mdtFileCopier::diseableAllDialogs(bool diseable)
 
 void mdtFileCopier::setDefaultSetup()
 {
-  pvMutex.lock();
-  pvShowProgressDialog = true;
+  pvTestMode = false;
   pvDirectDestOverwrite = false;
-  pvAllDialogsDiseabled = false;
-  pvMutex.unlock();
+  ///pvAllDialogsDiseabled = false;
 }
 
 void mdtFileCopier::addCopy(const QString & srcFilePath, const QString & destFilePath, bool syncAfterCopy, bool checkAfterCopy)
@@ -111,16 +98,31 @@ void mdtFileCopier::addCopy(const QString & srcFilePath, const QString & destFil
   pvCopies << item;
 }
 
-void mdtFileCopier::startCopy()
+bool mdtFileCopier::startCopy()
 {
   QString msgDetails;
   mdtFileCopierItem *item;
-  bool applyOverwrite = false;
-  bool askBeforeOverwrite = true; // Ask the user before overwrite existing destination. Becomes false when user selected YesForAll or NoForAll
+  bool applyOverwrite;
+  bool askBeforeOverwrite;
   int retVal;
   QMutableLinkedListIterator<mdtFileCopierItem*> it(pvCopies);
   FILE *destTestFile;
 
+  // Some initial flags
+  pvFinished = false;
+  pvCancelCopy = false;
+  pvCopySuccessfull = false;
+
+  // If direct overwrite is true, we never ask the user
+  if(pvDirectDestOverwrite){
+    applyOverwrite = true;
+    askBeforeOverwrite = false;
+  }else{
+    applyOverwrite = false;
+    askBeforeOverwrite = true; // Ask the user before overwrite existing destination. Becomes false when user selected YesForAll or NoForAll
+  }
+
+  // Do checks for all avaliable copies
   while(it.hasNext()){
     item = it.next();
     Q_ASSERT(item != 0);
@@ -131,20 +133,29 @@ void mdtFileCopier::startCopy()
     if(!pvSrcFileInfo.exists()){
       msgDetails += tr("Source file '") + pvSrcFileInfo.fileName() + tr("' was not found in '") + pvSrcFileInfo.absolutePath() + "'\n\n";
       it.remove();
+      delete item;
       continue;
     }
     // Check if source is a directory
     if(pvSrcFileInfo.isDir()){
       msgDetails += tr("Source '") + pvSrcFileInfo.fileName() + tr("' is a directory\n\n");
       it.remove();
+      delete item;
       continue;
     }
-    // Check if file exists on destination
+    // If destination is a directory, rebuild destination with dir/srcFileName
     if(pvDestFileInfo.isDir()){
-      // Rebuild destination with dir/srcFileName
       item->setDestFilePath(pvDestFileInfo.absoluteFilePath() + "/" + pvSrcFileInfo.fileName());
       pvDestFileInfo.setFile(item->destFilePath());
     }
+    // Check if destination is same as source file
+    if(pvDestFileInfo.absoluteFilePath() == pvSrcFileInfo.absoluteFilePath()){
+      msgDetails += tr("For file '") + pvSrcFileInfo.fileName() + tr("' : source and destination is the same file\n\n");
+      it.remove();
+      delete item;
+      continue;
+    }
+    // Check if file exists on destination
     if(pvDestFileInfo.exists()){
       if(askBeforeOverwrite){
         // Ask the user what to do, and give a option to apply choice to all (next) files
@@ -168,28 +179,35 @@ void mdtFileCopier::startCopy()
             applyOverwrite = false;
             askBeforeOverwrite = false;
             it.remove();
+            delete item;
             continue;
           default:  // No, Cancel, ...
             applyOverwrite = false;
             askBeforeOverwrite = true;
             it.remove();
+            delete item;
             continue;
         }
       }else{
         // User choosed YesToAll or NoToAll
         if(!applyOverwrite){
           it.remove();
+          delete item;
           continue;
         }
       }
     }
-    // Set source file name
+    // Set file names
     item->setSrcFileName(pvSrcFileInfo.fileName());
+    item->setDestFileName(pvDestFileInfo.fileName());
     // Set absolute file path to source and destination
     item->setSrcFilePath(pvSrcFileInfo.absoluteFilePath());
     item->setDestFilePath(pvDestFileInfo.absoluteFilePath());
-    // Here we are shure that destination can be written, try it now
-    destTestFile = fopen(item->destFilePath().toAscii().data(), "w");
+    // Set source and destination directory path
+    item->setSrcDirectoryPath(pvSrcFileInfo.canonicalPath());
+    item->setDestDirectoryPath(pvDestFileInfo.canonicalPath());
+    // Here we are shure that user wants to write destination , try it now
+    destTestFile = fopen(item->destFilePath().toAscii().data(), "wb");
     if(destTestFile == 0){
       switch(errno){
         case EACCES:
@@ -210,40 +228,57 @@ void mdtFileCopier::startCopy()
           break;
       }
       it.remove();
+      delete item;
       continue;
     }
     fclose(destTestFile);
-    // NOTE: remove destination file here !
-    
     // Set copy size
     item->setFileSize(pvSrcFileInfo.size());
   }
   // If no file can be copied, tell this the user
   if(pvCopies.size() < 1){
-    pvMessageBox->setText(tr("No copy can be done"));
-    if(msgDetails.size() > 0){
-      pvMessageBox->setInformativeText(tr("More informations are available in details"));
-      pvMessageBox->setDetailedText(msgDetails);
-    }else{
-      pvMessageBox->setInformativeText(tr(""));
-      pvMessageBox->setDetailedText("");
+    if(!pvTestMode){
+      pvMessageBox->setText(tr("No copy can be done                                               "));  // Avoid too little msgbox
+      if(msgDetails.size() > 0){
+        pvMessageBox->setInformativeText(tr("More informations are available in details"));
+        pvMessageBox->setDetailedText(msgDetails);
+      }else{
+        pvMessageBox->setInformativeText("");
+        pvMessageBox->setDetailedText("");
+      }
+      pvMessageBox->setIcon(QMessageBox::Warning);
+      pvMessageBox->setStandardButtons(QMessageBox::Ok);
+      pvMessageBox->exec();
     }
-    pvMessageBox->setIcon(QMessageBox::Warning);
-    pvMessageBox->setStandardButtons(QMessageBox::Ok);
-    pvMessageBox->exec();
-    return;
+    // Remove all copies
+    qDeleteAll(pvCopies);
+    pvCopies.clear();
+    // Update flags
+    pvFinished = true;
+    emit(finished(false));
+    return false;
   }
   // If some messages where collected, show to user, and ask if copy must be done
   if(!msgDetails.isEmpty()){
-    pvMessageBox->setText(tr("Some copies cannot be done, do you want to continue ?"));
-    pvMessageBox->setInformativeText(tr("More informations are available in details"));
-    pvMessageBox->setDetailedText(msgDetails);
-    pvMessageBox->setIcon(QMessageBox::Warning);
-    pvMessageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::Abort);
-    pvMessageBox->setDefaultButton(QMessageBox::Abort);
-    retVal = pvMessageBox->exec();
+    if(!pvTestMode){
+      pvMessageBox->setText(tr("Some copies cannot be done, do you want to continue ?             "));  // Avoid too little msgbox
+      pvMessageBox->setInformativeText(tr("More informations are available in details"));
+      pvMessageBox->setDetailedText(msgDetails);
+      pvMessageBox->setIcon(QMessageBox::Warning);
+      pvMessageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::Abort);
+      pvMessageBox->setDefaultButton(QMessageBox::Abort);
+      retVal = pvMessageBox->exec();
+    }else{
+      retVal = QMessageBox::Yes;
+    }
     if(retVal != QMessageBox::Yes){
-      return;
+      // Remove all copies
+      qDeleteAll(pvCopies);
+      pvCopies.clear();
+      // Update flags
+      pvFinished = true;
+      emit(finished(false));
+      return false;
     }
   }
   // Add possible copies to the process list
@@ -255,31 +290,50 @@ void mdtFileCopier::startCopy()
     it.remove();
     pvCopiesInProcess.append(item);
   }
-  pvFinished = false;
-  pvCancelCopy = false;
+  // Init progress dialog
+  pvProgressDialog->setMinimumDuration(500);
+  pvProgressDialog->setRange(0, 0);
+  pvProgressDialog->setLabelText(tr("\nBegin copy ..."));
   pvMutex.unlock();
   // Start thread if needed
   if(!isRunning()){
     start();
   }
 
-  ///pvProgressDialog->setRange(0, 100);
-  pvProgressDialog->setLabelText(tr("\nBegin copy ..."));
-
-  pvProgressDialog->exec();
+  return true;
 }
 
 bool mdtFileCopier::waitFinished()
 {
-  pvMutex.lock();
-  pvMutex.unlock();
+  bool finished = false;
+
+  while(!finished){
+    // Read finished state
+    pvMutex.lock();
+    finished = pvFinished;
+    pvMutex.unlock();
+    // Wait some time
+    msleep(50);
+    QApplication::processEvents();
+  }
+
+  return pvCopySuccessfull;
 }
+
+
+void mdtFileCopier::setTestMode(bool enable)
+{
+  pvTestMode = enable;
+}
+
 
 void mdtFileCopier::cancelCopy()
 {
+  // Tell the thread that we must cancel copy
   pvMutex.lock();
   pvCancelCopy = true;
   pvMutex.unlock();
+  // Reset/hide progress dialog
   pvProgressDialog->reset();
   // Wait end of thread and display message
   wait();
@@ -289,11 +343,16 @@ void mdtFileCopier::cancelCopy()
   pvMessageBox->setIcon(QMessageBox::Warning);
   pvMessageBox->setStandardButtons(QMessageBox::Ok);
   pvMessageBox->exec();
+  // Update flags and send signal
+  pvCopySuccessfull = false;
+  pvFinished = true;
+  // Emit the finished signal
+  emit(finished(pvCopySuccessfull));
 }
 
 void mdtFileCopier::displayCopyResult(const QString &failedCopies, const QString &informativeText)
 {
-  if(failedCopies.size() > 0){
+  if(!pvCopySuccessfull){
     pvMessageBox->setText(tr("Some copies failed                                                "));  // Don't want this too little message box..
     if(informativeText.size() > 0){
       pvMessageBox->setInformativeText(tr("The list of failed copies are available in details\n") + informativeText);
@@ -314,7 +373,23 @@ void mdtFileCopier::displayCopyResult(const QString &failedCopies, const QString
   }
 }
 
-bool mdtFileCopier::sync(FILE *f/*, const QString &Filepath*/)
+void mdtFileCopier::finish(const QString &failedCopies, const QString &informativeText)
+{
+  // Reset/hide progress dialog
+  pvProgressDialog->reset();
+  // Display results
+  if(!pvTestMode){
+    displayCopyResult(failedCopies, informativeText);
+  }
+  // Wait on end of thread
+  wait();
+  // Update finished flag
+  pvFinished = true;
+  // Emit the finished signal
+  emit(finished(pvCopySuccessfull));
+}
+
+bool mdtFileCopier::sync(FILE *f)
 {
   Q_ASSERT(f != 0);
 
@@ -361,10 +436,14 @@ void mdtFileCopier::run()
   int previousCopiesCount = 0;
   int i;
   QString failedCopies = "";
-  QString copyInfos;
   QCryptographicHash hash(QCryptographicHash::Sha1);  // To calculate file "sum"
 
-  // Copy all available copies
+  // Init states
+  pvMutex.lock();
+  pvCopySuccessfull = false;
+  pvMutex.unlock();
+
+  // Process all available copies
   while(1){
     pvMutex.lock();
     // Check if somthing is to copy
@@ -380,8 +459,8 @@ void mdtFileCopier::run()
         copySize += item->fileSize();
       }
       previousCopiesCount = pvCopiesInProcess.size();
-      // Select divisor regarding total size, and set range
       Q_ASSERT(copySize >= Q_INT64_C(0));
+      // Select divisor regarding total size, and set range
       copySizeDivisor = 1;
       i=0;
       while( copySizeDivisor < (copySize / Q_INT64_C(10000)) ){
@@ -390,26 +469,16 @@ void mdtFileCopier::run()
       }
       Q_ASSERT((copySize/copySizeDivisor) <= Q_INT64_C(10000) );
       Q_ASSERT((copySize/copySizeDivisor) >= Q_INT64_C(0) );
-      qDebug() << "Copy size: " << copySize << " , divisor: " << copySizeDivisor << " , copySize/copySizeDivisor: " << copySize/copySizeDivisor;
       emit(newProgressRange(0, (int)(copySize/copySizeDivisor)));
+      // Must initialy call setValue() on progress dialog (https://bugreports.qt-project.org/browse/QTBUG-17427)
+      emit(newProgressValue(0));
     }
     // Take item and unlock mutex
     item = pvCopiesInProcess.takeFirst();
     pvMutex.unlock();
     Q_ASSERT(item != 0);
-    // Some infos to display during copy ...
-    if(item->syncAfterCopy()){
-      copyInfos = tr("\n\nSync after copy: on");
-    }else{
-      copyInfos = tr("\n\nSync after copy: off");
-    }
-    if(item->checkAfterCopy()){
-      copyInfos += tr("      Verify after copy: on");
-    }else{
-      copyInfos += tr("      Verify after copy: off");
-    }
-    // Open source and destination files
-    emit(newProgressLabelText(tr("\nCopying file ") + item->srcFileName() + tr("\n to ") + item->destFilePath() + copyInfos));
+    // Text to display in progress dialog
+    emit(newProgressLabelText(item->copyText()));
     srcFile = fopen(item->srcFilePath().toAscii().data(), "rb");
     if(srcFile == 0){
       mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->srcFilePath(), mdtError::Error);
@@ -465,7 +534,6 @@ void mdtFileCopier::run()
         failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
         switch(errno){
           case ENOSPC:  // Destination device full
-            emit(finished(false));
             emit(copyEnded(failedCopies, tr("Note: destination device is full")));
             return;
           default:
@@ -473,6 +541,7 @@ void mdtFileCopier::run()
             e.setSystemError(errno, strerror(errno));
             MDT_ERROR_SET_SRC(e, "mdtFileCopier");
             e.commit();
+            emit(copyEnded(failedCopies));
             return;
         }
       }
@@ -498,7 +567,6 @@ void mdtFileCopier::run()
         failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
         fclose(srcFile);
         fclose(destFile);
-        emit(finished(false));
         emit(copyEnded(failedCopies));
         return;
       }
@@ -512,11 +580,14 @@ void mdtFileCopier::run()
     }
     srcFile = 0;
     if(fclose(destFile) != 0){
+      // If fclose fails on destination, it can be a fatal error (device full, HW error, ...) - We cancel the copy
       mdtError e(MDT_FILE_IO_ERROR, "Cannot close file: " + item->destFilePath(), mdtError::Error);
       e.setSystemError(errno, strerror(errno));
       MDT_ERROR_SET_SRC(e, "mdtFileCopier");
       e.commit();
       failedCopies += item->srcFileName() + " -> " + item->destFilePath() + "\n\n";
+      emit(copyEnded(failedCopies));
+      return;
     }
     destFile = 0;
     // Check destination (with hash) if needed
@@ -540,19 +611,16 @@ void mdtFileCopier::run()
       fclose(destFile);
       item->setDestFileHash(hash.result());
       // Compare results
-      ///qDebug() << "File " << item->srcFileName() << ": SHA-1, SRC: " << item->srcFileHash().toHex() << " , DST: " << item->destFileHash().toHex();
       if(item->destFileHash() != item->srcFileHash()){
         failedCopies += item->srcFileName() + " -> " + item->destFilePath() + tr("\n Hash verification failed\n\n");
+        /// NOTE: break copy here ?
       }
     }
   }
-  // Update finished state
+  // END - Here, all should be ok ...
   pvMutex.lock();
-  pvFinished = true;
+  pvCopySuccessfull = true;
   pvMutex.unlock();
-  if(!pvCancelCopy){
-    emit(finished(true));
-    emit(copyEnded(failedCopies));
-  }
+  emit(copyEnded(failedCopies));
 }
 

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtFileCopierItem.h"
+#include <QObject>
 
 mdtFileCopierItem::mdtFileCopierItem(const QString & srcFilePath, const QString & destFilePath)
 {
@@ -31,11 +32,6 @@ mdtFileCopierItem::mdtFileCopierItem(const QString & srcFilePath, const QString 
 
 mdtFileCopierItem::~mdtFileCopierItem()
 {
-}
-
-void mdtFileCopierItem::setFileSize(qint64 size)
-{
-  pvFileSize = size;
 }
 
 void mdtFileCopierItem::setSrcFilePath(const QString & filePath)
@@ -58,6 +54,16 @@ QString &mdtFileCopierItem::srcFileName()
   return pvSrcFileName;
 }
 
+void mdtFileCopierItem::setSrcDirectoryPath(const QString & directoryPath)
+{
+  pvSrcDirectoryPath = directoryPath;
+}
+
+QString &mdtFileCopierItem::srcDirectoryPath()
+{
+  return pvSrcDirectoryPath;
+}
+
 void mdtFileCopierItem::setSrcFileHash(const QByteArray &hash)
 {
   pvSrcFileHash = hash;
@@ -66,6 +72,11 @@ void mdtFileCopierItem::setSrcFileHash(const QByteArray &hash)
 QByteArray &mdtFileCopierItem::srcFileHash()
 {
   return pvSrcFileHash;
+}
+
+void mdtFileCopierItem::setFileSize(qint64 size)
+{
+  pvFileSize = size;
 }
 
 qint64 mdtFileCopierItem::fileSize()
@@ -83,6 +94,26 @@ QString &mdtFileCopierItem::destFilePath()
   return pvDestFilePath;
 }
 
+void mdtFileCopierItem::setDestFileName(const QString & fileName)
+{
+  pvDestFileName = fileName;
+}
+
+QString &mdtFileCopierItem::destFileName()
+{
+  return pvDestFileName;
+}
+
+void mdtFileCopierItem::setDestDirectoryPath(const QString & directoryPath)
+{
+  pvDestDirectoryPath = directoryPath;
+}
+
+QString &mdtFileCopierItem::destDirectoryPath()
+{
+  return pvDestDirectoryPath;
+}
+
 void mdtFileCopierItem::setDestFileHash(const QByteArray &hash)
 {
   pvDestFileHash = hash;
@@ -91,6 +122,37 @@ void mdtFileCopierItem::setDestFileHash(const QByteArray &hash)
 QByteArray &mdtFileCopierItem::destFileHash()
 {
   return pvDestFileHash;
+}
+
+QString &mdtFileCopierItem::copyText()
+{
+  pvCopyText = "\n";
+  pvCopyText += QObject::tr("Copying file ");
+  pvCopyText += pvSrcFileName + "\n\n";
+  pvCopyText += QObject::tr("From\t");
+  pvCopyText += pvSrcDirectoryPath + "\n";
+  pvCopyText += QObject::tr("To  \t");
+  if(pvSrcFileName != pvDestFileName){
+    pvCopyText += pvDestFilePath + "\n\n";
+  }else{
+    pvCopyText += pvDestDirectoryPath + "\n\n";
+  }
+  pvCopyText += QObject::tr("Sync after copy: ");
+  // Add infos
+  if(pvSyncAfterCopy){
+    pvCopyText += QObject::tr("on");
+  }else{
+    pvCopyText += QObject::tr("off");
+  }
+  pvCopyText += "      ";
+  pvCopyText += QObject::tr("Verify after copy: ");
+  if(pvCheckAfterCopy){
+    pvCopyText += QObject::tr("on");
+  }else{
+    pvCopyText += QObject::tr("off");
+  }
+
+  return pvCopyText;
 }
 
 void mdtFileCopierItem::setSyncAfterCopy(bool sync)

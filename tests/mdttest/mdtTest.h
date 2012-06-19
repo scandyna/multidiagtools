@@ -26,6 +26,12 @@ class mdtTest : public QObject
    */
   static bool verify(bool statement, const char *statementStr, const char *description, const char *file, int line);
 
+ /*!  \brief get a random value between min and max
+  * 
+  */
+ void randomValueInit();
+ int randomValue(int min, int max);
+ 
 };
 
 #endif  // ifdef MDT_TEST_H

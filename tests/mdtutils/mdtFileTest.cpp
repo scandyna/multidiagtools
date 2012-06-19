@@ -30,6 +30,7 @@
 #include <QByteArray>
 #include <QList>
 #include <QStringList>
+#include <QCryptographicHash>
 
 #include <QDebug>
 
@@ -368,85 +369,175 @@ void mdtFileTest::mdtPartitionAttributesTest()
   
 }
 
-void mdtFileTest::mdtFileCopierTest()
+void mdtFileTest::mdtFileCopierTestS()
 {
   mdtFileCopier fc;
-  QDir dir;
-  ///QFileInfoList files;
-  QFileInfo fileInfo;
-  QList<QTemporaryFile*> srcFiles;
-  QList<QByteArray*> srcDataList;
-  QList<QTemporaryFile*> destFiles;
-  QList<QByteArray*> destDataList;
+  QFileInfo srcFileInfo;
+  QFileInfo destFileInfo;
+  QTemporaryFile *srcFile, *srcFile2;
+  QList<QTemporaryFile*> srcFilesList;
+  QByteArray *srcData;
+  QTemporaryFile *destFile, *destFile2;
+  QList<QTemporaryFile*> destFilesList;
+  qint64 written;
+  QCryptographicHash srcHash(QCryptographicHash::Sha1);
+  QCryptographicHash destHash(QCryptographicHash::Sha1);
+  int i, j;
+  int fileSize;
+  int filesCount = 10;
+
+  // Configure copy
+  fc.setDirectDestOverwrite(true);
+  fc.setTestMode(true);
+
+  /*
+   * Source file not found test
+   */
+
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  QVERIFY(srcFile->remove());
+  delete srcFile;
+  fc.addCopy(srcFileInfo.absoluteFilePath(), QDir::tempPath());
+
+  // Run copy
+  QVERIFY(!fc.startCopy());
+  QVERIFY(!fc.waitFinished());
+
+  /*
+   * Source file is a directory
+   */
+
+  // Add a directory to copier
+  fc.addCopy(QDir::homePath(), QDir::tempPath());
+
+  // Run copy
+  QVERIFY(!fc.startCopy());
+  QVERIFY(!fc.waitFinished());
+
+  /*
+   * Destination file is source file
+   */
+
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  fc.addCopy(srcFileInfo.absoluteFilePath(), srcFileInfo.absoluteFilePath());
+  fc.addCopy(srcFileInfo.absoluteFilePath(), QDir::tempPath());
+
+  // Run copy
+  QVERIFY(!fc.startCopy());
+  QVERIFY(!fc.waitFinished());
+  delete srcFile;
+
+  /*
+   * Combinaisons
+   */
+
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  destFile = new QTemporaryFile;
+  QVERIFY(destFile->open());
+  destFileInfo.setFile(*destFile);
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+
+  // Create a file, delte it,  and add it to copier
+  srcFile2 = new QTemporaryFile;
+  QVERIFY(srcFile2->open());
+  srcFileInfo.setFile(*srcFile2);
+  QVERIFY(srcFile2->remove());
+  delete srcFile2;
+  destFile2 = new QTemporaryFile;
+  QVERIFY(destFile2->open());
+  destFileInfo.setFile(*destFile2);
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+  delete srcFile;
+  delete destFile;
+  delete destFile2;
+
+  /*
+   * Real copy test
+   */
 
   // Create files
-  for(int i=0; i<10; i++){
-    // Create and open temp files
-    srcFiles.append(new QTemporaryFile);
-    QVERIFY(srcFiles.at(i)->open());
-    fileInfo.setFile(*srcFiles.at(i));
-    qDebug() << "Src[" << i << "]: " << fileInfo.absoluteFilePath();
-    destFiles.append(new QTemporaryFile);
-    QVERIFY(destFiles.at(i)->open());
-    fileInfo.setFile(*destFiles.at(i));
-    qDebug() << "Dst[" << i << "]: " << fileInfo.absoluteFilePath();
-    // Create data objects
-    srcDataList.append(new QByteArray);
-    destDataList.append(new QByteArray);
-    // Generate some data in source FIXME: random data
-    srcDataList.at(i)->append("Hello!");
+  randomValueInit();
+  for(i=0; i<filesCount; i++){
+    // Create a source file
+    srcFile = new QTemporaryFile;
+    QVERIFY(srcFile->open());
+    // Generate some data
+    srcData = new QByteArray;
+    *srcData = "";
+    fileSize = randomValue(100, 10000000);
+    for(j=0; j<fileSize; j++){
+      srcData->append((char)randomValue(0, 255));
+    }
+    written = srcFile->write(*srcData);
+    QVERIFY(written == (qint64)srcData->size());
+    // Reopen source file
+    srcFile->close();
+    QVERIFY(srcFile->open());
+    // calculate source hash
+    srcHash.reset();
+    srcHash.addData(srcFile->readAll());
+    // Append to source lists
+    srcFile->close();
+    srcFilesList.append(srcFile);
+    // Create a destination file
+    destFile = new QTemporaryFile;
+    QVERIFY(destFile->open());
+    // calculate destination hash
+    destHash.reset();
+    destHash.addData(destFile->readAll());
+    // Append to destination list
+    destFile->close();
+    destFilesList.append(destFile);
+    // Check that source and destination files are different
+    QVERIFY(srcHash.result() != destHash.result());
+    // Add to copy list
+    srcFileInfo.setFile(*srcFile);
+    destFileInfo.setFile(*destFile);
+    fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath(), true, true);
   }
-  
-  
-  // Check copy
-  
-  // Check copy check :o)
-  
-  // Check clean (on abort, ...)
-  
-  
-  /*
-  dir.setPath("/etc/sane.d/");
-  files = dir.entryInfoList();
-  for(int i=0; i<files.size(); i++){
-    fc.addCopy(files.at(i).absoluteFilePath(), "/media/PS_MBS/usr", true);
-  }
-  dir.setPath("/usr/lib");
-  files = dir.entryInfoList();
-  for(int i=0; i<files.size(); i++){
-    fc.addCopy(files.at(i).absoluteFilePath(), "/media/PS_MBS/usr", false, true);
-  }
-  */
-  
-  /*
-  dir.setPath("C:/users/essais");
-  files = dir.entryInfoList();
-  for(int i=0; i<files.size(); i++){
-    fc.addCopy(files.at(i).absoluteFilePath(), QDir::tempPath(), true, true);
-    //fc.addCopy(files.at(i).absoluteFilePath(), "F:/usr", true, true);
-  }
-  */
-  
-  ///fc.addCopy("C:/users/essais/20175", QDir::tempPath(), true, true);
 
-  /*
-  fc.addCopy("test", "/tmp/test");
-  fc.addCopy("/home", "/tmp");
-  fc.addCopy("test/are", "/tmp/testa");
-  fc.addCopy("README", "/tmp/testa");
-  fc.addCopy("README", "/tmp/testa");
-  fc.addCopy("/var/log/syslog", "/tmp/");
-  fc.addCopy("/home/philippe/Vidéos/elephantsdream-1920-hd-mpeg4-su-ac3.avi", "/tmp");
-  */
-  //fc.addCopy("README", "/");
-  fc.startCopy();
-  
-  // Wait some time to display end message
-  QTest::qWait(100);
-  
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+
+  // Check copy
+  for(i=0; i<filesCount; i++){
+    // Open source file and calculate hash
+    srcFile = srcFilesList.at(i);
+    QVERIFY(srcFile->open());
+    srcHash.reset();
+    srcHash.addData(srcFile->readAll());
+    // Open destination file and calculate hash
+    destFile = destFilesList.at(i);
+    QVERIFY(destFile->open());
+    destHash.reset();
+    destHash.addData(destFile->readAll());
+    // Check
+    QVERIFY(destHash.result() == srcHash.result());
+    // Close files
+    srcFile->close();
+    destFile->close();
+  }
+
+
+  // Check copy check :o)
+
+  // Check clean (on abort, ...)
+
   // Free ressources
-  qDeleteAll(srcFiles);
-  qDeleteAll(srcDataList);
-  qDeleteAll(destFiles);
-  qDeleteAll(destDataList);
+  qDeleteAll(srcFilesList);
+  qDeleteAll(destFilesList);
 }

@@ -1,4 +1,6 @@
 #include "mdtTest.h"
+#include <stdlib.h>
+#include <time.h>
 
 mdtTest::mdtTest()
 {  
@@ -18,4 +20,15 @@ bool mdtTest::verify(bool statement, const char* statementStr, const char* descr
     return false;
   }
   return true;
+}
+
+void mdtTest::randomValueInit()
+{
+  srand(time(0));
+  srand(randomValue(1000, RAND_MAX));
+}
+
+int mdtTest::randomValue(int min, int max)
+{
+  return (int)( (double)min + (int)((double)max*rand()/(RAND_MAX + (double)min)) );
 }

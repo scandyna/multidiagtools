@@ -29,6 +29,7 @@ Install it in default location (Program Files), this will simplify the build lat
 MinGW:
 Download it from http://www.mingw.org/
 Install it in default location (C:\), this will simplify the build later.
+Note: have some trouble (direct crash) with latest update with gcc 4.7.0 !
 
 Qt4
 Web: http://qt.nokia.com
