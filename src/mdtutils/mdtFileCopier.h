@@ -148,6 +148,11 @@ class mdtFileCopier : public QThread
   // Set the end flags, display copy results and emit finished() signal
   void finish(const QString &failedCopies, const QString &informativeText);
 
+  // Essais
+  void updateProgressLabelText(const QString &text);
+  void updateProgressRange(int min, int max);
+  void updateProgressValue(int value);
+
  private:
 
   // Call the system sync to write data to device - Is called by thread, must not be called elsewhere.

@@ -369,7 +369,7 @@ void mdtFileTest::mdtPartitionAttributesTest()
   
 }
 
-void mdtFileTest::mdtFileCopierTestS()
+void mdtFileTest::mdtFileCopierTest()
 {
   mdtFileCopier fc;
   QFileInfo srcFileInfo;
@@ -385,6 +385,9 @@ void mdtFileTest::mdtFileCopierTestS()
   int i, j;
   int fileSize;
   int filesCount = 10;
+
+  randomValueInit();
+  srcData = new QByteArray;
 
   // Configure copy
   fc.setDirectDestOverwrite(true);
@@ -465,17 +468,124 @@ void mdtFileTest::mdtFileCopierTestS()
   delete destFile2;
 
   /*
+   * Real copy with different sizes test
+   * (created while trying to reproduce a strange bug with crash)
+   */
+
+  fileSize = 0;
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  *srcData = "";
+  for(i=0; i<fileSize; i++){
+    srcData->append((char)randomValue(0, 255));
+  }
+  written = srcFile->write(*srcData);
+  QVERIFY(written == (qint64)srcData->size());
+  // Reopen source file
+  srcFile->close();
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  srcFile->close();
+  destFile = new QTemporaryFile;
+  QVERIFY(destFile->open());
+  destFileInfo.setFile(*destFile);
+  destFile->close();
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+  delete srcFile;
+  delete destFile;
+
+  fileSize = 1;
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  *srcData = "";
+  for(i=0; i<fileSize; i++){
+    srcData->append((char)randomValue(0, 255));
+  }
+  written = srcFile->write(*srcData);
+  QVERIFY(written == (qint64)srcData->size());
+  // Reopen source file
+  srcFile->close();
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  srcFile->close();
+  destFile = new QTemporaryFile;
+  QVERIFY(destFile->open());
+  destFileInfo.setFile(*destFile);
+  destFile->close();
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+  delete srcFile;
+  delete destFile;
+
+  fileSize = 10000;
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  *srcData = "";
+  for(i=0; i<fileSize; i++){
+    srcData->append((char)randomValue(0, 255));
+  }
+  written = srcFile->write(*srcData);
+  QVERIFY(written == (qint64)srcData->size());
+  // Reopen source file
+  srcFile->close();
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  srcFile->close();
+  destFile = new QTemporaryFile;
+  QVERIFY(destFile->open());
+  destFileInfo.setFile(*destFile);
+  destFile->close();
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+  delete srcFile;
+  delete destFile;
+
+  fileSize = 16384;
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  *srcData = "";
+  for(i=0; i<fileSize; i++){
+    srcData->append((char)randomValue(0, 255));
+  }
+  written = srcFile->write(*srcData);
+  QVERIFY(written == (qint64)srcData->size());
+  // Reopen source file
+  srcFile->close();
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  srcFile->close();
+  destFile = new QTemporaryFile;
+  QVERIFY(destFile->open());
+  destFileInfo.setFile(*destFile);
+  destFile->close();
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+  delete srcFile;
+  delete destFile;
+
+  /*
    * Real copy test
    */
 
   // Create files
-  randomValueInit();
   for(i=0; i<filesCount; i++){
     // Create a source file
     srcFile = new QTemporaryFile;
     QVERIFY(srcFile->open());
     // Generate some data
-    srcData = new QByteArray;
     *srcData = "";
     fileSize = randomValue(100, 10000000);
     for(j=0; j<fileSize; j++){
@@ -540,4 +650,5 @@ void mdtFileTest::mdtFileCopierTestS()
   // Free ressources
   qDeleteAll(srcFilesList);
   qDeleteAll(destFilesList);
+  delete srcData;
 }

@@ -22,8 +22,8 @@ project(multidiagtools)
 set(USE_ASSERT 1)
 
 #Debug or Release
-#set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE Release)
 
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)

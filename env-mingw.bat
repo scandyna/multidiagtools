@@ -4,7 +4,7 @@ REM GNU MinGW developpment environnement
 REM Create the PATH var
 
 REM MinGW install dir
-set MINGW_DIR=C:\MinGW
+set MINGW_DIR=C:\MinGW32
 
 REM CMake install dir
 set CMAKE_DIR=C:\Program Files\CMake 2.8
