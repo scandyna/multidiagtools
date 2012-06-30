@@ -32,3 +32,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 add_library (mdttest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libryries to link
 target_link_libraries(mdttest ${QT_LIBRARIES})
+
+# Minimal application
+add_executable(minimalapp "minimalApp.cpp")
+target_link_libraries(minimalapp ${QT_LIBRARIES})

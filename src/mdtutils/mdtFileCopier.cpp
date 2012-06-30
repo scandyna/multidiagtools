@@ -24,6 +24,7 @@
 #include <QMutableLinkedListIterator>
 #include <QLabel>
 #include <QCryptographicHash>
+#include <QElapsedTimer>
 #include <QApplication>
 #include <errno.h>
 #include <string.h>
@@ -36,7 +37,6 @@
 
 #include <QDebug>
 
-/// NOTE: message box modal
 mdtFileCopier::mdtFileCopier(QObject *parent)
  : QThread(parent)
 {
@@ -59,9 +59,6 @@ mdtFileCopier::mdtFileCopier(QObject *parent)
   connect(this, SIGNAL(newProgressValue(int)), pvProgressDialog, SLOT(setValue(int)));
   connect(this, SIGNAL(newProgressRange(int, int)), pvProgressDialog, SLOT(setRange(int, int)));
   connect(this, SIGNAL(newProgressLabelText(const QString&)), pvProgressDialog, SLOT(setLabelText(const QString&)));
-  ///connect(this, SIGNAL(newProgressValue(int)), this, SLOT(updateProgressValue(int)));
-  ///connect(this, SIGNAL(newProgressRange(int, int)), this, SLOT(updateProgressRange(int, int)));
-  ///connect(this, SIGNAL(newProgressLabelText(const QString&)), this, SLOT(updateProgressLabelText(const QString&)));
   connect(pvProgressDialog, SIGNAL(canceled()), this, SLOT(cancelCopy()));
   // Thread signals
   connect(this, SIGNAL(copyEnded(const QString&, const QString&)), this, SLOT(finish(const QString&, const QString&)));
@@ -82,17 +79,10 @@ void mdtFileCopier::setDirectDestOverwrite(bool directOverwrite)
   pvDirectDestOverwrite = directOverwrite;
 }
 
-void mdtFileCopier::diseableAllDialogs(bool diseable)
-{
-  pvMutex.lock();
-  pvMutex.unlock();
-}
-
 void mdtFileCopier::setDefaultSetup()
 {
   pvTestMode = false;
   pvDirectDestOverwrite = false;
-  ///pvAllDialogsDiseabled = false;
 }
 
 void mdtFileCopier::addCopy(const QString & srcFilePath, const QString & destFilePath, bool syncAfterCopy, bool checkAfterCopy)
@@ -304,9 +294,7 @@ bool mdtFileCopier::startCopy()
 
   // Start thread if needed
   if(!isRunning()){
-    qDebug() << "Starting thread ...";
     start();
-    qDebug() << "start() done";
   }
 
   return true;
@@ -344,14 +332,8 @@ void mdtFileCopier::cancelCopy()
   pvMutex.unlock();
   // Reset/hide progress dialog
   pvProgressDialog->reset();
-  // Wait end of thread and display message
+  // Wait end of thread
   wait();
-  pvMessageBox->setText(tr("Copy aborted"));
-  pvMessageBox->setInformativeText("");
-  pvMessageBox->setDetailedText("");
-  pvMessageBox->setIcon(QMessageBox::Warning);
-  pvMessageBox->setStandardButtons(QMessageBox::Ok);
-  pvMessageBox->exec();
   // Update flags and send signal
   pvCopySuccessfull = false;
   pvFinished = true;
@@ -398,41 +380,6 @@ void mdtFileCopier::finish(const QString &failedCopies, const QString &informati
   emit(finished(pvCopySuccessfull));
 }
 
-void mdtFileCopier::updateProgressLabelText(const QString &text)
-{
-  Q_ASSERT(pvProgressDialog != 0);
-
-  if(!pvMutex.tryLock()){
-    return;
-  }
-  pvProgressDialog->setLabelText(text);
-  pvMutex.unlock();
-}
-
-void mdtFileCopier::updateProgressRange(int min, int max)
-{
-  Q_ASSERT(pvProgressDialog != 0);
-
-  if(!pvMutex.tryLock()){
-    return;
-  }
-  pvProgressDialog->setRange(min, max);
-  pvMutex.unlock();
-}
-
-void mdtFileCopier::updateProgressValue(int value)
-{
-  Q_ASSERT(pvProgressDialog != 0);
-
-  //qDebug() << "updateProgressValue() , trying to lock ...";
-  if(!pvMutex.tryLock()){
-    return;
-  }
-  qDebug() << " -> Ok, locked";
-  pvProgressDialog->setValue(value);
-  pvMutex.unlock();
-}
-
 bool mdtFileCopier::sync(FILE *f)
 {
   Q_ASSERT(f != 0);
@@ -477,10 +424,7 @@ void mdtFileCopier::run()
   qint64 copySize = 0;
   qint64 copyProgress = 0;
   qint64 copySizeDivisor = 1;
-  // refreshRate[1/s] * transfertRate[B/s]. 50[MB/s]: estimated for standard HDD
-  qint64 progressBytesCountBeforeUpdate = (1.0/100.0)*50e6;
-  qDebug() << "progressBytesCountBeforeUpdate: " << progressBytesCountBeforeUpdate;
-  qint64 progressBytesCount = 0;
+  QElapsedTimer timer;  // GUI update timer
   int previousCopiesCount = 0;
   int i;
   QString failedCopies = "";
@@ -493,7 +437,6 @@ void mdtFileCopier::run()
 
   // Process all available copies
   while(1){
-    qDebug() << "THD, runing ...";
     pvMutex.lock();
     // Check if somthing is to copy
     if(pvCopiesInProcess.size() < 1){
@@ -501,14 +444,12 @@ void mdtFileCopier::run()
       break;
     }
     // See if we have to (re-)calculate copy size
-    qDebug() << "pvCopiesInProcess.size(): " << pvCopiesInProcess.size();
     if(pvCopiesInProcess.size() > previousCopiesCount){
       copySize = 0;
       for(i=0; i<pvCopiesInProcess.size(); i++){
         item = pvCopiesInProcess.at(i);
         Q_ASSERT(item != 0);
         copySize += item->fileSize();
-        qDebug() << "File size: " << item->fileSize();
       }
       previousCopiesCount = pvCopiesInProcess.size();
       Q_ASSERT(copySize >= Q_INT64_C(0));
@@ -519,13 +460,13 @@ void mdtFileCopier::run()
         copySizeDivisor = (1<<i);
         i++;
       }
-      qDebug() << "New range: 0 ... " << (int)(copySize/copySizeDivisor);
-      Q_ASSERT(copySizeDivisor != Q_INT64_C(0));
-      Q_ASSERT((copySize/copySizeDivisor) <= Q_INT64_C(16384) );
+      Q_ASSERT(copySizeDivisor > Q_INT64_C(0));
+      Q_ASSERT((copySize/copySizeDivisor) <= Q_INT64_C(33000) );
       Q_ASSERT((copySize/copySizeDivisor) >= Q_INT64_C(0) );
       emit(newProgressRange(0, (int)(copySize/copySizeDivisor)));
       // Must initialy call setValue() on progress dialog (https://bugreports.qt-project.org/browse/QTBUG-17427)
       emit(newProgressValue(0));
+      timer.start();
     }
     // Take item and unlock mutex
     item = pvCopiesInProcess.takeFirst();
@@ -533,9 +474,6 @@ void mdtFileCopier::run()
     Q_ASSERT(item != 0);
     // Text to display in progress dialog
     emit(newProgressLabelText(item->copyText()));
-    progressBytesCount = 0;
-    ///emit(newProgressLabelText(QObject::tr("Essai")));
-    ///emit(newProgressLabelText("Essai"));
     srcFile = fopen(item->srcFilePath().toAscii().data(), "rb");
     if(srcFile == 0){
       mdtError e(MDT_FILE_IO_ERROR, "Cannot open file: " + item->srcFilePath(), mdtError::Error);
@@ -616,12 +554,9 @@ void mdtFileCopier::run()
         }
       }
       copyProgress += (qint64)written;
-      progressBytesCount += (qint64)written;
-      if(progressBytesCount >= progressBytesCountBeforeUpdate){
-        ///qDebug() << "PG value: " << (int)(copyProgress/copySizeDivisor) << " , range: 0 ... " << (int)(copySize/copySizeDivisor);
+      if(timer.hasExpired(40)){
         emit(newProgressValue((int)(copyProgress/copySizeDivisor)));
-        ///emit(newProgressValue(20));
-        progressBytesCount = 0;
+        timer.start();
       }
     }while(readen > 0);
     // Hash, if needed
@@ -711,6 +646,5 @@ void mdtFileCopier::run()
   pvCopiesInProcess.clear();
   pvMutex.unlock();
   emit(copyEnded(failedCopies));
-  qDebug() << "THD End.";
 }
 

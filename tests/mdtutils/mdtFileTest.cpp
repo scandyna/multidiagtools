@@ -22,6 +22,7 @@
 #include "mdtCsvFile.h"
 #include "mdtPartitionAttributes.h"
 #include "mdtFileCopier.h"
+#include "mdtApplication.h"
 #include <QTemporaryFile>
 #include <QFile>
 #include <QFileInfo>
@@ -576,8 +577,34 @@ void mdtFileTest::mdtFileCopierTest()
   delete srcFile;
   delete destFile;
 
+  fileSize = 2*16384-1;
+  // Create a file and add it to copier
+  srcFile = new QTemporaryFile;
+  QVERIFY(srcFile->open());
+  *srcData = "";
+  for(i=0; i<fileSize; i++){
+    srcData->append((char)randomValue(0, 255));
+  }
+  written = srcFile->write(*srcData);
+  QVERIFY(written == (qint64)srcData->size());
+  // Reopen source file
+  srcFile->close();
+  QVERIFY(srcFile->open());
+  srcFileInfo.setFile(*srcFile);
+  srcFile->close();
+  destFile = new QTemporaryFile;
+  QVERIFY(destFile->open());
+  destFileInfo.setFile(*destFile);
+  destFile->close();
+  fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath());
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+  delete srcFile;
+  delete destFile;
+
   /*
-   * Real copy test
+   * Real copy test: middle size files
    */
 
   // Create files
@@ -642,13 +669,100 @@ void mdtFileTest::mdtFileCopierTest()
     destFile->close();
   }
 
+  // Free ressources
+  qDeleteAll(srcFilesList);
+  srcFilesList.clear();
+  qDeleteAll(destFilesList);
+  destFilesList.clear();
 
-  // Check copy check :o)
+  /*
+   * Real copy test: little size files
+   */
 
-  // Check clean (on abort, ...)
+  // Create files
+  filesCount = randomValue(100, 500);
+  for(i=0; i<filesCount; i++){
+    // Create a source file
+    srcFile = new QTemporaryFile;
+    QVERIFY(srcFile->open());
+    // Generate some data
+    *srcData = "";
+    fileSize = randomValue(1, 100);
+    for(j=0; j<fileSize; j++){
+      srcData->append((char)randomValue(0, 255));
+    }
+    written = srcFile->write(*srcData);
+    QVERIFY(written == (qint64)srcData->size());
+    // Reopen source file
+    srcFile->close();
+    QVERIFY(srcFile->open());
+    // calculate source hash
+    srcHash.reset();
+    srcHash.addData(srcFile->readAll());
+    // Append to source lists
+    srcFile->close();
+    srcFilesList.append(srcFile);
+    // Create a destination file
+    destFile = new QTemporaryFile;
+    QVERIFY(destFile->open());
+    // calculate destination hash
+    destHash.reset();
+    destHash.addData(destFile->readAll());
+    // Append to destination list
+    destFile->close();
+    destFilesList.append(destFile);
+    // Check that source and destination files are different
+    QVERIFY(srcHash.result() != destHash.result());
+    // Add to copy list
+    srcFileInfo.setFile(*srcFile);
+    destFileInfo.setFile(*destFile);
+    fc.addCopy(srcFileInfo.absoluteFilePath(), destFileInfo.absoluteFilePath(), true, true);
+    srcFile->close();
+    destFile->close();
+  }
+  qDebug() << "Created " << filesCount << " files";
+
+  // Run copy
+  QVERIFY(fc.startCopy());
+  QVERIFY(fc.waitFinished());
+
+  qDebug() << "Copy end, begin check ...";
+  
+  // Check copy
+  for(i=0; i<filesCount; i++){
+    // Open source file and calculate hash
+    srcFile = srcFilesList.at(i);
+    QVERIFY(srcFile != 0);
+    QVERIFY(srcFile->open());
+    srcHash.reset();
+    srcHash.addData(srcFile->readAll());
+    // Open destination file and calculate hash
+    destFile = destFilesList.at(i);
+    QVERIFY(destFile != 0);
+    QVERIFY(destFile->open());
+    destHash.reset();
+    destHash.addData(destFile->readAll());
+    // Check
+    QVERIFY(destHash.result() == srcHash.result());
+    // Close files
+    srcFile->close();
+    destFile->close();
+  }
 
   // Free ressources
   qDeleteAll(srcFilesList);
   qDeleteAll(destFilesList);
   delete srcData;
+}
+
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtFileTest fileTest;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&fileTest, argc, argv);
 }

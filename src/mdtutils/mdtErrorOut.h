@@ -18,24 +18,28 @@ class mdtErrorOut : public QObject
  public:
 
   /*! \brief Initialize the error output system
+   *
    * After this call, the log and dialog levels are defined to Warning and Error
    * This function must be called from main thread (GUI thread)
    */
   static bool init(const QString &logFile);
-  
+
   /*! \brief Set the log levels mask
+   *
    *  The mask is a OR combinaison of mdtError::level_t flags
    *  \pre The system must be initialized. \see init()
    */
   static void setLogLevelsMask(int mask);
 
   /*! \brief Set the dialog display levels mask
+   *
    *  The mask is a OR combinaison of mdtError::level_t flags
    * \pre The system must be initialized. \see init()
    */
   static void setDialogLevelsMask(int mask);
 
   /*! \brief Add a error to the error output system
+   *
    * \pre The system must be initialized. \see init()
    */
   static void addError(mdtError &error);
@@ -48,11 +52,13 @@ class mdtErrorOut : public QObject
   static mdtErrorOut *instance();
   
   /*! \brief Get the log file path
+   *
    * \pre The system must be initialized. \see init()
    */
   static QString logFile();
 
   /*! \brief Destroy the error output system instance
+   *
    * This function must be called from main thread (GUI thread)
    */
   static void destroy();

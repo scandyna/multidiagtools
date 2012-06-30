@@ -45,8 +45,10 @@ class mdtApplication : public QtSingleApplication
    *  - Init the error system (\sa mdtErrorOut)
    *  - Check if another instance is running (if allowMultipleInstances Instance is false)
    * \param allowMultipleInstances If true, multiple instance of application is allowed (but NOT multiple instance of mdtApplication in program !)
+   * \param dialogErrorLevelsMask Set the mask of errors that are displayed as dialogs in GUI. By default, no error (geven by mdtErrorOut)
+   *          are displayed in GUI. \sa mdtErrorOut::setDialogLevelsMask()
    */
-  bool init(bool allowMultipleInstances = true);
+  bool init(bool allowMultipleInstances = true, int dialogErrorLevelsMask = 0);
 
   /*! \brief Build the application version with numeric values.
    * 

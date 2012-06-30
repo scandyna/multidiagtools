@@ -41,7 +41,7 @@ mdtApplication::~mdtApplication()
   mdtErrorOut::destroy();
 }
 
-bool mdtApplication::init(bool allowMultipleInstances)
+bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask)
 {
   QFileInfo fi;
   QString logFileName;
@@ -85,6 +85,7 @@ bool mdtApplication::init(bool allowMultipleInstances)
     std::cerr << "mdtApplication::init(): unable to init the error system" << std::endl;
     return false;
   }
+  mdtErrorOut::setDialogLevelsMask(dialogErrorLevelsMask);
 
   return true;
 }
@@ -124,7 +125,13 @@ bool mdtApplication::searchSystemDataDir()
 {
   QDir dir;
 
-  // At first, we look in application directory
+  // At first, we look in current directory
+  if(dir.cd("data")){
+    // Ok, found.
+    pvSystemDataDirPath = dir.absolutePath();
+    return true;
+  }
+  // Check in application directory
   dir.setPath(applicationDirPath());
   if(!dir.exists()){
     std::cerr << "mdtApplication::searchSystemDataDir(): cannot find application directory" << std::endl;

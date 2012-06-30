@@ -12,7 +12,7 @@ set (HEADER_FILES
           mdtFrameTest.h
           mdtErrorTest.h
           mdtFrameCodecTest.h
-          mdtFileTest.h
+          # mdtFileTest.h
           mdtUicNumberTest.h
           mdtDatabaseTest.h
     )
@@ -25,7 +25,7 @@ set (SOURCES_FILES
           mdtFrameTest.cpp
           mdtErrorTest.cpp
           mdtFrameCodecTest.cpp
-          mdtFileTest.cpp
+          # mdtFileTest.cpp
           mdtUicNumberTest.cpp
           mdtDatabaseTest.cpp
           # Main
@@ -52,3 +52,9 @@ target_link_libraries(mdtUtilsTest "mdtutilsgui")
 target_link_libraries(mdtUtilsTest "mdttest")
 target_link_libraries(mdtUtilsTest "qtsingleapplication")
 target_link_libraries(mdtUtilsTest ${QT_LIBRARIES})
+
+# * mdtFileTest executable *
+QT4_WRAP_CPP(MDT_FILE_TEST_MOC "mdtFileTest.h")
+add_executable(mdtfiletest "mdtFileTest.cpp" ${MDT_FILE_TEST_MOC})
+target_link_libraries(mdtfiletest "mdtutils")
+target_link_libraries(mdtfiletest "mdttest")

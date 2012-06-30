@@ -128,12 +128,17 @@ endif(UNIX)
 
 # *** Unit tests section ***
 
-# * Unit tests compilation *
+# ** Unit tests compilation **
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 
-# * Unit tests execution *
+# ** Unit tests execution **
 enable_testing()
+
+# * mdtutils *
 add_test (mdtUtilsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtUtilsTest)
+# mdtFileTest
+add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
+
 # NOTE: Support Windows pas terminé
 if(UNIX)
 add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtPortTest)
@@ -220,7 +225,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   # Some Debian package specific varaibles
   if(UNIX)
     set(CPACK_DEB_COMPONENT_INSTALL ON)
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.5.0), libqtgui4 (>= 4:4.5.0), libstdc++6 , libgcc1 , libc6")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.7.0), libqtgui4 (>= 4:4.7.0), libstdc++6 , libgcc1 , libc6")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
     set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
