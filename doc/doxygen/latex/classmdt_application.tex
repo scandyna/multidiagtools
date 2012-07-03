@@ -37,10 +37,16 @@ Collaboration diagram for mdtApplication:\nopagebreak
 \label{classmdt_application_ab6268414770ee9239c83677c15a67f75}
 
 \item 
-bool \hyperlink{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}{init} (bool allowMultipleInstances=true)
+bool \hyperlink{classmdt_application_a5e91676cfeaf0d2e3e10ff58f1da6f0c}{init} (bool allowMultipleInstances=true, int dialogErrorLevelsMask=0)
 \begin{DoxyCompactList}\small\item\em Some initializations. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{setApplicationVersion} (int versionMajor, int versionMinor, int versionMicro)
-\begin{DoxyCompactList}\small\item\em Build the application version with numeric values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Build the application version with numeric values. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_application_a01355ee29c2824e905cad49a34dcf0aa}{setLanguage} (const QLocale \&locale=QLocale(), const QStringList \&otherQmDirectories=QStringList())
+\begin{DoxyCompactList}\small\item\em Set the application language. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator} (QTranslator $\ast$translator)
+\begin{DoxyCompactList}\small\item\em Adds the translator to the list of translators to be used for translations. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{removeCurrentTranslators} ()
+\begin{DoxyCompactList}\small\item\em Remove installed translators. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -61,7 +67,9 @@ static QString \hyperlink{classmdt_application_ad5318086812dad2c2870e294703caa51
 \subsection{Detailed Description}
 NOTE: Mutex for static members.. 
 
-Main application \begin{DoxySeeAlso}{See also}
+Main application
+
+\begin{DoxySeeAlso}{See also}
 QApplication 
 
 \hyperlink{class_qt_single_application}{QtSingleApplication} 
@@ -69,15 +77,16 @@ QApplication
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}{
+\hypertarget{classmdt_application_a5e91676cfeaf0d2e3e10ff58f1da6f0c}{
 \index{mdtApplication@{mdtApplication}!init@{init}}
 \index{init@{init}!mdtApplication@{mdtApplication}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtApplication::init (
 \begin{DoxyParamCaption}
-\item[{bool}]{allowMultipleInstances = {\ttfamily true}}
+\item[{bool}]{allowMultipleInstances = {\ttfamily true}, }
+\item[{int}]{dialogErrorLevelsMask = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_application_a5000b9656a59b3594de2a4ceb4232673}
+\label{classmdt_application_a5e91676cfeaf0d2e3e10ff58f1da6f0c}
 
 
 Some initializations. 
@@ -93,9 +102,30 @@ Several things are done here:
 \begin{DoxyParams}{Parameters}
 {\em allowMultipleInstances} & If true, multiple instance of application is allowed (but NOT multiple instance of \hyperlink{classmdt_application}{mdtApplication} in program !) \\
 \hline
+{\em dialogErrorLevelsMask} & Set the mask of errors that are displayed as dialogs in GUI. By default, no error (geven by \hyperlink{classmdt_error_out}{mdtErrorOut}) are displayed in GUI. \\
+\hline
 \end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_error_out_afa76bdf497b750829277566ec07d44d8}{mdtErrorOut::setDialogLevelsMask()} 
+\end{DoxySeeAlso}
 
-\end{DoxyItemize}\hypertarget{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{
+\end{DoxyItemize}\hypertarget{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{
+\index{mdtApplication@{mdtApplication}!installTranslator@{installTranslator}}
+\index{installTranslator@{installTranslator}!mdtApplication@{mdtApplication}}
+\subsubsection[{installTranslator}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::installTranslator (
+\begin{DoxyParamCaption}
+\item[{QTranslator $\ast$}]{translator}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}
+
+
+Adds the translator to the list of translators to be used for translations. 
+
+Note: this method overloads QCoreApplication::installTranslator() . The difference is that it adds new translator to a list, and delete it all in destructor. Internally, it calls QApplication::installTranslator(). To keep trace of installed translators, you should allways use this method, and never mix calls with, for example, qApp-\/$>$\hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator()} or QCoreApplication::installTranslator() \begin{DoxyPrecond}{Precondition}
+translator must point to a valid object. 
+\end{DoxyPrecond}
+\hypertarget{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{
 \index{mdtApplication@{mdtApplication}!instance@{instance}}
 \index{instance@{instance}!mdtApplication@{mdtApplication}}
 \subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtApplication} $\ast$ mdtApplication::instance (
@@ -108,7 +138,23 @@ Several things are done here:
 
 Get the instance of \hyperlink{classmdt_application}{mdtApplication}. 
 
-This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! \hypertarget{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{
+This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! \hypertarget{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{
+\index{mdtApplication@{mdtApplication}!removeCurrentTranslators@{removeCurrentTranslators}}
+\index{removeCurrentTranslators@{removeCurrentTranslators}!mdtApplication@{mdtApplication}}
+\subsubsection[{removeCurrentTranslators}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::removeCurrentTranslators (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}
+
+
+Remove installed translators. 
+
+This will romove all translators installed with \hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator()}. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{
 \index{mdtApplication@{mdtApplication}!setApplicationVersion@{setApplicationVersion}}
 \index{setApplicationVersion@{setApplicationVersion}!mdtApplication@{mdtApplication}}
 \subsubsection[{setApplicationVersion}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::setApplicationVersion (
@@ -123,7 +169,21 @@ This function, and returned pointer, should be used with care in multi-\/thread 
 
 Build the application version with numeric values. 
 
-Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). 
+Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). \hypertarget{classmdt_application_a01355ee29c2824e905cad49a34dcf0aa}{
+\index{mdtApplication@{mdtApplication}!setLanguage@{setLanguage}}
+\index{setLanguage@{setLanguage}!mdtApplication@{mdtApplication}}
+\subsubsection[{setLanguage}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtApplication::setLanguage (
+\begin{DoxyParamCaption}
+\item[{const QLocale \&}]{locale = {\ttfamily QLocale()}, }
+\item[{const QStringList \&}]{otherQmDirectories = {\ttfamily QStringList()}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_a01355ee29c2824e905cad49a34dcf0aa}
+
+
+Set the application language. 
+
+If no parameters are given, system's language will be used. By default, the .qm translation files are searched in system's data directory. It's possible to add other search paths using otherQmDirectories parameter. 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

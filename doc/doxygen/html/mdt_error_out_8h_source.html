@@ -75,44 +75,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00017"></a>00017 
 <a name="l00018"></a>00018  <span class="keyword">public</span>:
 <a name="l00019"></a>00019 
-<a name="l00024"></a>00024   <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system After this call, the log and dialog levels are defined to Warning ...">init</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error_out.html#a22f721fff4d6368a4a3d51279c6af8fa" title="Get the log file path.">logFile</a>);
-<a name="l00025"></a>00025   
-<a name="l00030"></a>00030   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#a547e4e8aa75528710e4a17e9faf48621" title="Set the log levels mask The mask is a OR combinaison of mdtError::level_t flags.">setLogLevelsMask</a>(<span class="keywordtype">int</span> mask);
-<a name="l00031"></a>00031 
-<a name="l00036"></a>00036   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#afa76bdf497b750829277566ec07d44d8" title="Set the dialog display levels mask The mask is a OR combinaison of mdtError::level_t flags...">setDialogLevelsMask</a>(<span class="keywordtype">int</span> mask);
-<a name="l00037"></a>00037 
-<a name="l00041"></a>00041   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895" title="Add a error to the error output system.">addError</a>(<a class="code" href="classmdt_error.html">mdtError</a> &amp;error);
-<a name="l00042"></a>00042 
-<a name="l00048"></a>00048   <span class="keyword">static</span> <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> *<a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>();
-<a name="l00049"></a>00049   
-<a name="l00053"></a>00053   <span class="keyword">static</span> QString <a class="code" href="classmdt_error_out.html#a22f721fff4d6368a4a3d51279c6af8fa" title="Get the log file path.">logFile</a>();
-<a name="l00054"></a>00054 
-<a name="l00058"></a>00058   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#a45c1370762b47a06ec597d6e89ebc73d" title="Destroy the error output system instance This function must be called from main thread (GUI thread)...">destroy</a>();
+<a name="l00025"></a>00025   <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">init</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_error_out.html#a22f721fff4d6368a4a3d51279c6af8fa" title="Get the log file path.">logFile</a>);
+<a name="l00026"></a>00026 
+<a name="l00032"></a>00032   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#a547e4e8aa75528710e4a17e9faf48621" title="Set the log levels mask.">setLogLevelsMask</a>(<span class="keywordtype">int</span> mask);
+<a name="l00033"></a>00033 
+<a name="l00039"></a>00039   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#afa76bdf497b750829277566ec07d44d8" title="Set the dialog display levels mask.">setDialogLevelsMask</a>(<span class="keywordtype">int</span> mask);
+<a name="l00040"></a>00040 
+<a name="l00045"></a>00045   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895" title="Add a error to the error output system.">addError</a>(<a class="code" href="classmdt_error.html">mdtError</a> &amp;error);
+<a name="l00046"></a>00046 
+<a name="l00052"></a>00052   <span class="keyword">static</span> <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> *<a class="code" href="classmdt_error_out.html#a7a80480a61ca1a2704ec16d69647f739" title="Get the instance of the error output system.">instance</a>();
+<a name="l00053"></a>00053   
+<a name="l00058"></a>00058   <span class="keyword">static</span> QString <a class="code" href="classmdt_error_out.html#a22f721fff4d6368a4a3d51279c6af8fa" title="Get the log file path.">logFile</a>();
 <a name="l00059"></a>00059 
-<a name="l00060"></a>00060  <span class="keyword">private</span> slots:
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keywordtype">void</span> showDialog(<a class="code" href="classmdt_error.html">mdtError</a> error);
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064  signals:
+<a name="l00064"></a>00064   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_error_out.html#a45c1370762b47a06ec597d6e89ebc73d" title="Destroy the error output system instance.">destroy</a>();
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <span class="keywordtype">void</span> sigShowDialog(<a class="code" href="classmdt_error.html">mdtError</a> error);
+<a name="l00066"></a>00066  <span class="keyword">private</span> slots:
 <a name="l00067"></a>00067 
-<a name="l00068"></a>00068  <span class="keyword">private</span>:
+<a name="l00068"></a>00068   <span class="keywordtype">void</span> showDialog(<a class="code" href="classmdt_error.html">mdtError</a> error);
 <a name="l00069"></a>00069 
-<a name="l00070"></a>00070   <span class="comment">// Constructors and destructor set private</span>
-<a name="l00071"></a>00071   <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>();
-<a name="l00072"></a>00072   ~<a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>();
-<a name="l00073"></a>00073   <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>(<span class="keyword">const</span> <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> &amp;orig);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075   <span class="keyword">static</span> <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> *pvInstance;
-<a name="l00076"></a>00076   QFile pvLogFile;
-<a name="l00077"></a>00077   QMutex pvMutex;
-<a name="l00078"></a>00078   QMessageBox pvDialog;
-<a name="l00079"></a>00079   <span class="keywordtype">int</span> pvLogLevelsMask;
-<a name="l00080"></a>00080   <span class="keywordtype">int</span> pvDialogLevelsMask;
-<a name="l00081"></a>00081 };
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 <span class="preprocessor">#endif  // #ifndef MDT_ERROR_OUT_H</span>
+<a name="l00070"></a>00070  signals:
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072   <span class="keywordtype">void</span> sigShowDialog(<a class="code" href="classmdt_error.html">mdtError</a> error);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074  <span class="keyword">private</span>:
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   <span class="comment">// Constructors and destructor set private</span>
+<a name="l00077"></a>00077   <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>();
+<a name="l00078"></a>00078   ~<a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>();
+<a name="l00079"></a>00079   <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a>(<span class="keyword">const</span> <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> &amp;orig);
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081   <span class="keyword">static</span> <a class="code" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> *pvInstance;
+<a name="l00082"></a>00082   QFile pvLogFile;
+<a name="l00083"></a>00083   QMutex pvMutex;
+<a name="l00084"></a>00084   QMessageBox pvDialog;
+<a name="l00085"></a>00085   <span class="keywordtype">int</span> pvLogLevelsMask;
+<a name="l00086"></a>00086   <span class="keywordtype">int</span> pvDialogLevelsMask;
+<a name="l00087"></a>00087 };
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 <span class="preprocessor">#endif  // #ifndef MDT_ERROR_OUT_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -129,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:20 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 3 2012 20:43:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -104,68 +104,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00061"></a>00061 
 <a name="l00066"></a>00066   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ad045db0c7b84a7c9505d7ac1704f7413" title="Permit direct destination overwrite.">setDirectDestOverwrite</a>(<span class="keywordtype">bool</span> directOverwrite);
 <a name="l00067"></a>00067 
-<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a46d25119a130f224d6bb1ba2f8dbf79c" title="Display no dialogs (used for unit tests)">diseableAllDialogs</a>(<span class="keywordtype">bool</span> diseable);
-<a name="l00071"></a>00071 
-<a name="l00081"></a>00081   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a868ce61ec7d8f590002dd350276413a4" title="Set the default setup.">setDefaultSetup</a>();
-<a name="l00082"></a>00082 
-<a name="l00088"></a>00088   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ad0730aae81b3ba64eec4563390b852a3" title="Add a source and destination file path to copy.">addCopy</a>(<span class="keyword">const</span> QString &amp; srcFilePath, <span class="keyword">const</span> QString &amp; destFilePath, <span class="keywordtype">bool</span> syncAfterCopy = <span class="keyword">false</span>, <span class="keywordtype">bool</span> checkAfterCopy = <span class="keyword">false</span>);
-<a name="l00089"></a>00089 
-<a name="l00096"></a>00096   <span class="keywordtype">bool</span> <a class="code" href="classmdt_file_copier.html#acd5397fbea57f8169a5dddd2809d26cb" title="Start the copy.">startCopy</a>();
-<a name="l00097"></a>00097 
-<a name="l00105"></a>00105   <span class="keywordtype">bool</span> <a class="code" href="classmdt_file_copier.html#adcfa582fe6e1e3420c8285c2301323f6" title="Wait until copies are done.">waitFinished</a>();
-<a name="l00106"></a>00106 
-<a name="l00111"></a>00111   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ad971d6b727c4ceaa1a39bf356d694654" title="If set true, message boxes will not be displayed, and some default decisions will be taken...">setTestMode</a>(<span class="keywordtype">bool</span> enable);
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113  <span class="keyword">public</span> slots:
+<a name="l00077"></a>00077   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a868ce61ec7d8f590002dd350276413a4" title="Set the default setup.">setDefaultSetup</a>();
+<a name="l00078"></a>00078 
+<a name="l00084"></a>00084   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ad0730aae81b3ba64eec4563390b852a3" title="Add a source and destination file path to copy.">addCopy</a>(<span class="keyword">const</span> QString &amp; srcFilePath, <span class="keyword">const</span> QString &amp; destFilePath, <span class="keywordtype">bool</span> syncAfterCopy = <span class="keyword">false</span>, <span class="keywordtype">bool</span> checkAfterCopy = <span class="keyword">false</span>);
+<a name="l00085"></a>00085 
+<a name="l00092"></a>00092   <span class="keywordtype">bool</span> <a class="code" href="classmdt_file_copier.html#acd5397fbea57f8169a5dddd2809d26cb" title="Start the copy.">startCopy</a>();
+<a name="l00093"></a>00093 
+<a name="l00101"></a>00101   <span class="keywordtype">bool</span> <a class="code" href="classmdt_file_copier.html#adcfa582fe6e1e3420c8285c2301323f6" title="Wait until copies are done.">waitFinished</a>();
+<a name="l00102"></a>00102 
+<a name="l00107"></a>00107   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ad971d6b727c4ceaa1a39bf356d694654" title="If set true, message boxes will not be displayed, and some default decisions will be taken...">setTestMode</a>(<span class="keywordtype">bool</span> enable);
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109  <span class="keyword">public</span> slots:
+<a name="l00110"></a>00110 
+<a name="l00113"></a>00113   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ab9a0a4121a3fa0c70652413ad7917714" title="Cancel running copy (used internally for proegress dialog)">cancelCopy</a>();
 <a name="l00114"></a>00114 
-<a name="l00117"></a>00117   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#ab9a0a4121a3fa0c70652413ad7917714" title="Cancel running copy (used internally for proegress dialog)">cancelCopy</a>();
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119  signals:
-<a name="l00120"></a>00120 
-<a name="l00125"></a>00125   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a808f01eb2a319e82a9fec5bb978ccb85" title="Emitted when copy process is done.">finished</a>(<span class="keywordtype">bool</span> success);
+<a name="l00115"></a>00115  signals:
+<a name="l00116"></a>00116 
+<a name="l00121"></a>00121   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a808f01eb2a319e82a9fec5bb978ccb85" title="Emitted when copy process is done.">finished</a>(<span class="keywordtype">bool</span> success);
+<a name="l00122"></a>00122 
+<a name="l00125"></a>00125   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a4c6c815614ab929ebe36f62f09296f25" title="Emitted when new progress range is set (used internally for proegress dialog)">newProgressRange</a>(<span class="keywordtype">int</span> min, <span class="keywordtype">int</span> max);
 <a name="l00126"></a>00126 
-<a name="l00129"></a>00129   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a4c6c815614ab929ebe36f62f09296f25" title="Emitted when new progress range is set (used internally for proegress dialog)">newProgressRange</a>(<span class="keywordtype">int</span> min, <span class="keywordtype">int</span> max);
+<a name="l00129"></a>00129   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a48c337249ec54bd9f672b079fca3116f" title="Emitted when new progress value is set (used internally for proegress dialog)">newProgressValue</a>(<span class="keywordtype">int</span> value);
 <a name="l00130"></a>00130 
-<a name="l00133"></a>00133   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a48c337249ec54bd9f672b079fca3116f" title="Emitted when new progress value is set (used internally for proegress dialog)">newProgressValue</a>(<span class="keywordtype">int</span> value);
+<a name="l00133"></a>00133   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a70626ba282633b15d2bdb398081c71be" title="Emitted when new progress label text is set (used internally for proegress dialog)">newProgressLabelText</a>(<span class="keyword">const</span> QString &amp;text);
 <a name="l00134"></a>00134 
-<a name="l00137"></a>00137   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#a70626ba282633b15d2bdb398081c71be" title="Emitted when new progress label text is set (used internally for proegress dialog)">newProgressLabelText</a>(<span class="keyword">const</span> QString &amp;text);
+<a name="l00137"></a>00137   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#aad51a259e0e55a67698d599e43dc1264" title="Emitted when copy is ended or aborted (used internally to display copy result)">copyEnded</a>(<span class="keyword">const</span> QString &amp;failedCopies, <span class="keyword">const</span> QString &amp;informativeText = QString());
 <a name="l00138"></a>00138 
-<a name="l00141"></a>00141   <span class="keywordtype">void</span> <a class="code" href="classmdt_file_copier.html#aad51a259e0e55a67698d599e43dc1264" title="Emitted when copy is ended or aborted (used internally to display copy result)">copyEnded</a>(<span class="keyword">const</span> QString &amp;failedCopies, <span class="keyword">const</span> QString &amp;informativeText = QString());
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143  <span class="keyword">private</span> slots:
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145   <span class="comment">// Called by thread when copy is finished or cancelled to display result to the user</span>
-<a name="l00146"></a>00146   <span class="keywordtype">void</span> displayCopyResult(<span class="keyword">const</span> QString &amp;failedCopies, <span class="keyword">const</span> QString &amp;informativeText);
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148   <span class="comment">// Set the end flags, display copy results and emit finished() signal</span>
-<a name="l00149"></a>00149   <span class="keywordtype">void</span> finish(<span class="keyword">const</span> QString &amp;failedCopies, <span class="keyword">const</span> QString &amp;informativeText);
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151  <span class="keyword">private</span>:
-<a name="l00152"></a>00152 
-<a name="l00153"></a>00153   <span class="comment">// Call the system sync to write data to device - Is called by thread, must not be called elsewhere.</span>
-<a name="l00154"></a>00154   <span class="keywordtype">bool</span> sync(FILE *f);
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156   <span class="comment">// Thread method that processes copies</span>
-<a name="l00157"></a>00157   <span class="keywordtype">void</span> run();
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159   <span class="keywordtype">char</span> *pvBuffer;
-<a name="l00160"></a>00160   <span class="keywordtype">size_t</span> pvBufferSize;
-<a name="l00161"></a>00161   QFileInfo pvSrcFileInfo;
-<a name="l00162"></a>00162   QFileInfo pvDestFileInfo;
-<a name="l00163"></a>00163   QMutex pvMutex;
-<a name="l00164"></a>00164   QMessageBox *pvMessageBox;
-<a name="l00165"></a>00165   QProgressDialog *pvProgressDialog;
-<a name="l00166"></a>00166   QLinkedList&lt;mdtFileCopierItem*&gt; pvCopies;
-<a name="l00167"></a>00167   QList &lt;mdtFileCopierItem*&gt; pvCopiesInProcess;
-<a name="l00168"></a>00168   <span class="keywordtype">bool</span> pvTestMode;
-<a name="l00169"></a>00169   <span class="keywordtype">bool</span> pvDirectDestOverwrite;
-<a name="l00170"></a>00170   <span class="keywordtype">bool</span> pvAllDialogsDiseabled;
-<a name="l00171"></a>00171   <span class="keywordtype">bool</span> pvFinished;
-<a name="l00172"></a>00172   <span class="keywordtype">bool</span> pvCopySuccessfull;
-<a name="l00173"></a>00173   <span class="keywordtype">bool</span> pvCancelCopy;
-<a name="l00174"></a>00174 };
-<a name="l00175"></a>00175 
-<a name="l00176"></a>00176 <span class="preprocessor">#endif  // #ifndef MDT_FILE_COPIER_H</span>
+<a name="l00139"></a>00139  <span class="keyword">private</span> slots:
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141   <span class="comment">// Called by thread when copy is finished or cancelled to display result to the user</span>
+<a name="l00142"></a>00142   <span class="keywordtype">void</span> displayCopyResult(<span class="keyword">const</span> QString &amp;failedCopies, <span class="keyword">const</span> QString &amp;informativeText);
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144   <span class="comment">// Set the end flags, display copy results and emit finished() signal</span>
+<a name="l00145"></a>00145   <span class="keywordtype">void</span> finish(<span class="keyword">const</span> QString &amp;failedCopies, <span class="keyword">const</span> QString &amp;informativeText);
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147  <span class="keyword">private</span>:
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149   <span class="comment">// Call the system sync to write data to device - Is called by thread, must not be called elsewhere.</span>
+<a name="l00150"></a>00150   <span class="keywordtype">bool</span> sync(FILE *f);
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152   <span class="comment">// Thread method that processes copies</span>
+<a name="l00153"></a>00153   <span class="keywordtype">void</span> run();
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155   <span class="keywordtype">char</span> *pvBuffer;
+<a name="l00156"></a>00156   <span class="keywordtype">size_t</span> pvBufferSize;
+<a name="l00157"></a>00157   QFileInfo pvSrcFileInfo;
+<a name="l00158"></a>00158   QFileInfo pvDestFileInfo;
+<a name="l00159"></a>00159   QMutex pvMutex;
+<a name="l00160"></a>00160   QMessageBox *pvMessageBox;
+<a name="l00161"></a>00161   QProgressDialog *pvProgressDialog;
+<a name="l00162"></a>00162   QLinkedList&lt;mdtFileCopierItem*&gt; pvCopies;
+<a name="l00163"></a>00163   QList &lt;mdtFileCopierItem*&gt; pvCopiesInProcess;
+<a name="l00164"></a>00164   <span class="keywordtype">bool</span> pvTestMode;
+<a name="l00165"></a>00165   <span class="keywordtype">bool</span> pvDirectDestOverwrite;
+<a name="l00166"></a>00166   <span class="keywordtype">bool</span> pvFinished;
+<a name="l00167"></a>00167   <span class="keywordtype">bool</span> pvCopySuccessfull;
+<a name="l00168"></a>00168   <span class="keywordtype">bool</span> pvCancelCopy;
+<a name="l00169"></a>00169 };
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 <span class="preprocessor">#endif  // #ifndef MDT_FILE_COPIER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -182,7 +179,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jun 19 2012 21:30:20 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 3 2012 20:43:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
