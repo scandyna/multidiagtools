@@ -264,13 +264,11 @@ bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const Q
   }
   // Try to go to translations directory
   if(!otherQmDirectory.isEmpty()){
-    qDebug() << "Searching in " << otherQmDirectory;
     if(!dir.cd(otherQmDirectory)){
       std::cerr << "mdtApplication::loadTranslationFiles(): cannot find directory" << otherQmDirectory.toStdString() << std::endl;
       return false;
     }
   }else{
-    qDebug() << "Searching in " << pvSystemDataDirPath;
     if(!dir.cd(pvSystemDataDirPath)){
       std::cerr << "mdtApplication::loadTranslationFiles(): cannot find data directory" << std::endl;
       return false;
@@ -281,7 +279,6 @@ bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const Q
       return false;
     }
   }
-  std::cout << "REQ locale: " << languageSuffix.toStdString() << std::endl;
   // Get avaliable files for given language
   filesInfoList = dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
   if(filesInfoList.size() < 1){
@@ -289,7 +286,6 @@ bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const Q
     std::cerr << "mdtApplication::loadTranslationFiles(): no translation file was found in " << dir.path().toStdString() << std::endl;
   }
   for(i=0; i<filesInfoList.size(); i++){
-    qDebug() << filesInfoList.at(i).fileName();
     translator = new QTranslator;
     if(!translator->load(filesInfoList.at(i).absoluteFilePath())){
       std::cerr << "mdtApplication::loadTranslationFiles(): cannot load translation file " << filesInfoList.at(i).fileName().toStdString() << std::endl;

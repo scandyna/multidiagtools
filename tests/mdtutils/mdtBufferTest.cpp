@@ -1,5 +1,6 @@
 #include "mdtBufferTest.h"
 #include "mdtTime.h"
+#include "mdtApplication.h"
 #include <typeinfo>
 #include <cstring>
 #include <cfloat>
@@ -1330,3 +1331,15 @@ template bool mdtBufferTest<char>::copyTest();
 template bool mdtBufferTest<char>::putOneTest();
 template bool mdtBufferTest<char>::takeOneTest();
 template bool mdtBufferTest<char>::timingTest(unsigned int, unsigned int);
+
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtBufferTestRun test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
+}

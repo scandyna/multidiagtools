@@ -21,6 +21,7 @@
 #include "mdtUicNumberTest.h"
 #include "mdtUicNumber.h"
 #include "mdtUicNumberItem.h"
+#include "mdtApplication.h"
 
 /// NOTE: add 91 85 4 450 014
 void mdtUicNumberTest::controlKeyTest()
@@ -220,3 +221,14 @@ void mdtUicNumberTest::detailsTest()
   QVERIFY(uic.serialNumber() == "014");
 }
 
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtUicNumberTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
+}

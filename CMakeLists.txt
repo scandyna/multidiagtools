@@ -134,9 +134,24 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 enable_testing()
 
 # * mdtutils *
-add_test (mdtUtilsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtUtilsTest)
+
+# mdtAlgorithmsTest
+add_test (mdtAlgorithmsTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtalgorithmstest)
+# mdtErrorTest
+add_test (mdtErrorTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdterrortest)
+# mdtBufferTest
+add_test (mdtBufferTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtbuffertest)
+# mdtFrameTest
+add_test (mdtFrameTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframetest)
+# mdtFrameCodecTest
+add_test (mdtFrameCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframecodectest)
+# mdtUicNumberTest
+add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumbertest)
+# mdtDatabaseTest
+add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtdatabasetest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
+
 
 # NOTE: Support Windows pas terminé
 if(UNIX)

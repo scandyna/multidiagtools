@@ -5,53 +5,48 @@
 # Project
 project (multidiagtools)
 
-# Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
-set (HEADER_FILES 
-          mdtAlgorithmsTest.h
-          mdtBufferTest.h
-          mdtFrameTest.h
-          mdtErrorTest.h
-          mdtFrameCodecTest.h
-          # mdtFileTest.h
-          mdtUicNumberTest.h
-          mdtDatabaseTest.h
-    )
+# * mdtAlgorithmsTest executable *
+QT4_WRAP_CPP(MDT_ALGORITHM_TEST_MOC "mdtAlgorithmsTest.h")
+add_executable(mdtalgorithmstest "mdtAlgorithmsTest.cpp" ${MDT_ALGORITHM_TEST_MOC})
+target_link_libraries(mdtalgorithmstest "mdtutils")
+target_link_libraries(mdtalgorithmstest "mdttest")
 
+# * mdtErrorTest executable *
+QT4_WRAP_CPP(MDT_ERROR_TEST_MOC "mdtErrorTest.h")
+add_executable(mdterrortest "mdtErrorTest.cpp" ${MDT_ERROR_TEST_MOC})
+target_link_libraries(mdterrortest "mdtutils")
+target_link_libraries(mdterrortest "mdttest")
 
-# Liste des fichiers sources
-set (SOURCES_FILES 
-          mdtAlgorithmsTest.cpp
-          mdtBufferTest.cpp
-          mdtFrameTest.cpp
-          mdtErrorTest.cpp
-          mdtFrameCodecTest.cpp
-          # mdtFileTest.cpp
-          mdtUicNumberTest.cpp
-          mdtDatabaseTest.cpp
-          # Main
-          main.cpp
-    )
+# * mdtBufferTest executable *
+QT4_WRAP_CPP(MDT_BUFFER_TEST_MOC "mdtBufferTest.h")
+add_executable(mdtbuffertest "mdtBufferTest.cpp" ${MDT_BUFFER_TEST_MOC})
+target_link_libraries(mdtbuffertest "mdtutils")
+target_link_libraries(mdtbuffertest "mdttest")
 
+# * mdtFrameTest executable *
+QT4_WRAP_CPP(MDT_FRAME_TEST_MOC "mdtFrameTest.h")
+add_executable(mdtframetest "mdtFrameTest.cpp" ${MDT_FRAME_TEST_MOC})
+target_link_libraries(mdtframetest "mdtutils")
+target_link_libraries(mdtframetest "mdttest")
 
-# * mdtutils *
+# * mdtFrameCodecTest executable *
+QT4_WRAP_CPP(MDT_FRAME_CODEC_TEST_MOC "mdtFrameCodecTest.h")
+add_executable(mdtframecodectest "mdtFrameCodecTest.cpp" ${MDT_FRAME_CODEC_TEST_MOC})
+target_link_libraries(mdtframecodectest "mdtutils")
+target_link_libraries(mdtframecodectest "mdttest")
 
-# Fichiers à traiter par le compilateur moc
-QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
+# * mdtUicNumberTest executable *
+QT4_WRAP_CPP(MDT_UIC_NUMBER_TEST_MOC "mdtUicNumberTest.h")
+add_executable(mdtuicnumbertest "mdtUicNumberTest.cpp" ${MDT_UIC_NUMBER_TEST_MOC})
+target_link_libraries(mdtuicnumbertest "mdtutils")
+target_link_libraries(mdtuicnumbertest "mdttest")
 
-# Fichiers à traiter par le compilateur uic
-QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
-
-# Fichiers à traiter par le compilateur rcc
-QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
-
-# Exécutable
-add_executable (mdtUtilsTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-# Libraires à lier
-target_link_libraries(mdtUtilsTest "mdtutils")
-target_link_libraries(mdtUtilsTest "mdtutilsgui")
-target_link_libraries(mdtUtilsTest "mdttest")
-target_link_libraries(mdtUtilsTest "qtsingleapplication")
-target_link_libraries(mdtUtilsTest ${QT_LIBRARIES})
+# * mdtDatabaseTest executable *
+QT4_WRAP_CPP(MDT_DATABASE_TEST_MOC "mdtDatabaseTest.h")
+add_executable(mdtdatabasetest "mdtDatabaseTest.cpp" ${MDT_DATABASE_TEST_MOC})
+target_link_libraries(mdtdatabasetest "mdtutils")
+target_link_libraries(mdtdatabasetest "mdtutilsgui")
+target_link_libraries(mdtdatabasetest "mdttest")
 
 # * mdtFileTest executable *
 QT4_WRAP_CPP(MDT_FILE_TEST_MOC "mdtFileTest.h")

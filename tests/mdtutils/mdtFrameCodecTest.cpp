@@ -24,6 +24,7 @@
 #include "mdtFrameCodecScpi.h"
 #include "mdtFrameCodecScpiU3606A.h"
 #include "mdtFrameCodecModbus.h"
+#include "mdtApplication.h"
 #include <QByteArray>
 
 #include <QVariant>
@@ -318,4 +319,16 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   QVERIFY(c.values().size() == 1);
   QVERIFY(c.values().at(0).toBool() == false);
 
+}
+
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtFrameCodecTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
 }

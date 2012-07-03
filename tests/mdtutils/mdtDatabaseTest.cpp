@@ -21,6 +21,7 @@
 #include "mdtDatabaseTest.h"
 #include "mdtSqlTableModel.h"
 #include "mdtDataWidgetMapper.h"
+#include "mdtApplication.h"
 #include <QSqlDatabase>
 #include <QTemporaryFile>
 #include <QSqlQuery>
@@ -93,4 +94,16 @@ void mdtDatabaseTest::mdtDataWidgetMapperTest()
   // Check that data are available in widgets
   QVERIFY(!id.text().isEmpty());
   QVERIFY(!first_name.text().isEmpty());
+}
+
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtDatabaseTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
 }
