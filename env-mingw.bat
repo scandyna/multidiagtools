@@ -45,5 +45,5 @@ set PATH=%PATH%;%SystemRoot%\System32
 echo Adding %SystemRoot% to PATH
 set PATH=%PATH%;%SystemRoot%
 
-echo Adding %MDTLIBS%
+echo Adding %MDTLIBS% to PATH
 set PATH=%PATH%;%MDTLIBS%

@@ -22,13 +22,13 @@ project(multidiagtools)
 set(USE_ASSERT 1)
 
 #Debug or Release
-set(CMAKE_BUILD_TYPE Debug)
-#set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 2)
-set(MDTLIB_VERSION_MICRO 4)
+set(MDTLIB_VERSION_MICRO 5)
 
 # Config file
 configure_file (
@@ -38,7 +38,6 @@ configure_file (
 
 # Some flags for compiler
 add_definitions("-Wall -ansi -O2 -lm")
-#add_definitions("-Wall -ansi -lm")
 
 # We want GUI executables on Windows (not console)
 if(WIN32)
@@ -146,10 +145,25 @@ add_test (mdtSerialPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtS
 add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtDeviceTest)
 endif(UNIX)
 
+# * Translations section *
+
+# Create a target to generate qm files
+file(GLOB TSFILES "${PROJECT_SOURCE_DIR}/translations/*.ts")
+foreach(TSFILE ${TSFILES})
+  get_filename_component(TSFILE_ABS "${TSFILE}" ABSOLUTE)
+  get_filename_component(QMFILE "${TSFILE_ABS}" NAME_WE)
+  set(QMFILE "${PROJECT_SOURCE_DIR}/data/i18n/${QMFILE}.qm")
+  add_custom_command(OUTPUT ${QMFILE} COMMAND "${QT_LRELEASE_EXECUTABLE}" ARGS "${TSFILE_ABS}" "-qm" "${QMFILE}" DEPENDS "${TSFILE_ABS}")
+  set(QMFILES ${QMFILES} ${QMFILE})
+endforeach(TSFILE ${TSFILES})
+add_custom_target(qm ALL DEPENDS ${QMFILES})
+
 # *** Install section ***
 
 # Config file
 install(FILES "${PROJECT_SOURCE_DIR}/src/config.h" DESTINATION "${HEADERS_DEST_DIR}" COMPONENT dev)
+
+# Translation files
 
 # Some Linux specific files
 if(UNIX)

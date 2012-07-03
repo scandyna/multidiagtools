@@ -39,6 +39,7 @@ mdtApplication::~mdtApplication()
 {
   // Free the error system
   mdtErrorOut::destroy();
+  qDeleteAll(pvTranslators);
 }
 
 bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask)
@@ -86,6 +87,10 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
     return false;
   }
   mdtErrorOut::setDialogLevelsMask(dialogErrorLevelsMask);
+  // Set the default language
+  if(!setLanguage()){
+    return false;
+  }
 
   return true;
 }
@@ -119,6 +124,41 @@ QString mdtApplication::systemDataDirPath()
 QString mdtApplication::mdtLibVersion()
 {
   return QString(QString::number(MDTLIB_VERSION_MAJOR) + "." + QString::number(MDTLIB_VERSION_MINOR) + "." + QString::number(MDTLIB_VERSION_MICRO));
+}
+
+bool mdtApplication::setLanguage(const QLocale &locale, const QStringList &otherQmDirectories)
+{
+  QString languageSuffix;
+  int i;
+
+  languageSuffix = locale.name().left(2);
+  // Search in given other qm directories
+  for(i=0; i<otherQmDirectories.size(); i++){
+    if(!loadTranslationFiles(languageSuffix, otherQmDirectories.at(i))){
+      return false;
+    }
+  }
+  // Load that is avaliable in system's data directory
+  return loadTranslationFiles(languageSuffix);
+}
+
+void mdtApplication::installTranslator(QTranslator *translator)
+{
+  Q_ASSERT(translator != 0);
+
+  pvTranslators << translator;
+  QApplication::installTranslator(translator);
+}
+
+void mdtApplication::removeCurrentTranslators()
+{
+  int i;
+
+  for(i=0; i<pvTranslators.size(); i++){
+    removeTranslator(pvTranslators.at(i));
+  }
+  qDeleteAll(pvTranslators);
+  pvTranslators.clear();
 }
 
 bool mdtApplication::searchSystemDataDir()
@@ -202,6 +242,62 @@ bool mdtApplication::initHomeDir()
     }
   }
   pvLogDirPath = dir.absolutePath();
+
+  return true;
+}
+
+bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const QString &otherQmDirectory)
+{
+  QDir dir;
+  QFileInfoList filesInfoList;
+  QTranslator *translator;
+  int i;
+
+  // If no language suffix is geven, just return
+  if(languageSuffix.isEmpty()){
+    return true;
+  }
+  // Case of non supported suffix size, error
+  if(languageSuffix.size() != 2){
+    std::cerr << "mdtApplication::loadTranslationFiles(): unknow language suffix: " << languageSuffix.toStdString() << std::endl;
+    return false;
+  }
+  // Try to go to translations directory
+  if(!otherQmDirectory.isEmpty()){
+    qDebug() << "Searching in " << otherQmDirectory;
+    if(!dir.cd(otherQmDirectory)){
+      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find directory" << otherQmDirectory.toStdString() << std::endl;
+      return false;
+    }
+  }else{
+    qDebug() << "Searching in " << pvSystemDataDirPath;
+    if(!dir.cd(pvSystemDataDirPath)){
+      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find data directory" << std::endl;
+      return false;
+    }
+    // We are in data directory, try to go to i18n
+    if(!dir.cd("i18n")){
+      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find i18n directory\n -> Searched in " << pvSystemDataDirPath.toStdString() << std::endl;
+      return false;
+    }
+  }
+  std::cout << "REQ locale: " << languageSuffix.toStdString() << std::endl;
+  // Get avaliable files for given language
+  filesInfoList = dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
+  if(filesInfoList.size() < 1){
+    // Not translation file found is not fatal, just put a message
+    std::cerr << "mdtApplication::loadTranslationFiles(): no translation file was found in " << dir.path().toStdString() << std::endl;
+  }
+  for(i=0; i<filesInfoList.size(); i++){
+    qDebug() << filesInfoList.at(i).fileName();
+    translator = new QTranslator;
+    if(!translator->load(filesInfoList.at(i).absoluteFilePath())){
+      std::cerr << "mdtApplication::loadTranslationFiles(): cannot load translation file " << filesInfoList.at(i).fileName().toStdString() << std::endl;
+      delete translator;
+      return false;
+    }
+    installTranslator(translator);
+  }
 
   return true;
 }

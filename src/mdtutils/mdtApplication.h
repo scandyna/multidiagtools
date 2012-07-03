@@ -23,11 +23,16 @@
 
 #include <QtSingleApplication>
 #include <QString>
+#include <QStringList>
+#include <QList>
+#include <QTranslator>
+#include <QLocale>
 #include <config.h>
 
 /// NOTE: Mutex for static members..
 
 /*! \brief Main application
+ *
  * \sa QApplication
  * \sa QtSingleApplication
  */
@@ -37,7 +42,7 @@ class mdtApplication : public QtSingleApplication
 
   mdtApplication(int &argc, char **argv, bool GUIenabled = true);
   ~mdtApplication();
-  
+
   /*! \brief Some initializations
    * 
    * Several things are done here:
@@ -70,6 +75,32 @@ class mdtApplication : public QtSingleApplication
    */
   static QString mdtLibVersion();
 
+  /*! \brief Set the application language
+   * 
+   * If no parameters are given, system's language will be used.
+   * By default, the .qm translation files are searched in system's data directory.
+   * It's possible to add other search paths using otherQmDirectories parameter.
+   */
+  bool setLanguage(const QLocale &locale = QLocale(), const QStringList &otherQmDirectories = QStringList());
+
+  /*! \brief Adds the translator to the list of translators to be used for translations.
+   * 
+   * Note: this method overloads QCoreApplication::installTranslator() .
+   *   The difference is that it adds new translator to a list, and delete it all in destructor.
+   *   Internally, it calls QApplication::installTranslator().
+   *   To keep trace of installed translators, you should allways use this method, and never 
+   *   mix calls with, for example, qApp->installTranslator() or QCoreApplication::installTranslator()
+   * \pre translator must point to a valid object.
+   */
+  void installTranslator(QTranslator *translator);
+
+  /*! \brief Remove installed translators
+   *
+   * This will romove all translators installed with installTranslator().
+   * \sa installTranslator()
+   */
+  void removeCurrentTranslators();
+
  private:
 
   // Search the data system directory
@@ -78,9 +109,15 @@ class mdtApplication : public QtSingleApplication
   // Create some directories in home
   bool initHomeDir();
 
+  // Load found translation files according given language
+  // If otherQmDirectory is set, qm files will be searched in it,
+  //  else, the system data/i18n/ will be used
+  bool loadTranslationFiles(const QString &languageSuffix, const QString &otherQmDirectory = "");
+
   QString pvSystemDataDirPath;
   QString pvLogDirPath;
   static mdtApplication *pvInstance;
+  QList<QTranslator*> pvTranslators;
 };
 
 #endif  // #ifndef MDT_APPLICATION_H
