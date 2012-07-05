@@ -26,6 +26,7 @@
 #include <QStringList>
 #include <QList>
 #include <QTranslator>
+#include <QDir>
 #include <QLocale>
 #include <config.h>
 
@@ -46,14 +47,17 @@ class mdtApplication : public QtSingleApplication
   /*! \brief Some initializations
    * 
    * Several things are done here:
-   *  - Search the system data directory path
-   *  - Init the error system (\sa mdtErrorOut)
+   *  - Search the system data directory
+   *  - Init the error system
    *  - Check if another instance is running (if allowMultipleInstances Instance is false)
+   *  - Load translation files and set language according system settings.
    * \param allowMultipleInstances If true, multiple instance of application is allowed (but NOT multiple instance of mdtApplication in program !)
    * \param dialogErrorLevelsMask Set the mask of errors that are displayed as dialogs in GUI. By default, no error (geven by mdtErrorOut)
-   *          are displayed in GUI. \sa mdtErrorOut::setDialogLevelsMask()
+   *          are displayed in GUI.
+   * \sa mdtErrorOut::setDialogLevelsMask()
+   * \sa mdtErrorOut
    */
-  bool init(bool allowMultipleInstances = true, int dialogErrorLevelsMask = 0);
+  bool init(bool allowMultipleInstances = false, int dialogErrorLevelsMask = 0);
 
   /*! \brief Build the application version with numeric values.
    * 
@@ -106,13 +110,16 @@ class mdtApplication : public QtSingleApplication
   // Search the data system directory
   bool searchSystemDataDir();
 
+  // Make some checks on given directory, and returns true if it matches to the data directory
+  bool isSystemDataDir(QDir &dir);
+
   // Create some directories in home
   bool initHomeDir();
 
   // Load found translation files according given language
   // If otherQmDirectory is set, qm files will be searched in it,
   //  else, the system data/i18n/ will be used
-  bool loadTranslationFiles(const QString &languageSuffix, const QString &otherQmDirectory = "");
+  bool loadTranslationFiles(const QString &languageSuffix, const QStringList &otherQmDirectories);
 
   QString pvSystemDataDirPath;
   QString pvLogDirPath;

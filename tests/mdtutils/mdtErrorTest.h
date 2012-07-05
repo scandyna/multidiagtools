@@ -26,14 +26,16 @@
 class mdtErrorTest : public mdtTest
 {
  Q_OBJECT
- 
+
  private slots:
 
   void simpleTest();
-  
+
   void errorOutInitTest();
-  
+
   void errorOutAddTest();
+
+  void errorOutBackupTest();
 };
 
 #endif // #ifndef MDT_ERROR_TEST_H

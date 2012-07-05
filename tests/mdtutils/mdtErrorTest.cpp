@@ -23,6 +23,7 @@
 #include "mdtErrorOut.h"
 #include "mdtApplication.h"
 #include <QTest>
+#include <QFile>
 
 void mdtErrorTest::simpleTest()
 {
@@ -52,13 +53,13 @@ void mdtErrorTest::simpleTest()
 void mdtErrorTest::errorOutInitTest()
 {
   QString oldLogFile;
-  
+
   // An error out instance was initialized in main, destroy it
   oldLogFile = mdtErrorOut::logFile();
   mdtErrorOut::destroy();
   // Verify that instance is initially null
   QVERIFY(mdtErrorOut::instance() == 0);
-  // Chcek that init works
+  // Check that init works
   QVERIFY(mdtErrorOut::init("mdtErrorTest.log"));
   QVERIFY(mdtErrorOut::instance() != 0);
   // Second call of init must fail
@@ -82,6 +83,64 @@ void mdtErrorTest::errorOutAddTest()
   //mdtErrorOut::addError(e);
   e.commit();
 }
+
+void mdtErrorTest::errorOutBackupTest()
+{
+  QString oldLogFile;
+  mdtError e1(1 , "Error 1", mdtError::Error);
+  mdtError e2(2 , "Error 2", mdtError::Error);
+  mdtError e3(3 , "Error 3", mdtError::Error);
+
+  MDT_ERROR_SET_SRC(e1, "mdtErrorTest");
+  MDT_ERROR_SET_SRC(e2, "mdtErrorTest");
+  MDT_ERROR_SET_SRC(e3, "mdtErrorTest");
+
+  // An error out instance was initialized in main, destroy it
+  oldLogFile = mdtErrorOut::logFile();
+  mdtErrorOut::destroy();
+  QVERIFY(mdtErrorOut::instance() == 0);
+
+  // Init
+  QFile::remove("mdtErrorTest.log");
+  QFile::remove("mdtErrorTest.log.bak");
+  QFile::remove("mdtErrorTest.log.bak.bak");
+  QVERIFY(!QFile::exists("mdtErrorTest.log"));
+  QVERIFY(!QFile::exists("mdtErrorTest.log.bak"));
+  QVERIFY(!QFile::exists("mdtErrorTest.log.bak.bak"));
+  QVERIFY(mdtErrorOut::init("mdtErrorTest.log"));
+  QVERIFY(mdtErrorOut::instance() != 0);
+  mdtErrorOut::setDialogLevelsMask(0);
+  mdtErrorOut::setLogFileMaxSize(500);
+
+  // Add a first error , and check that logfile exists, but no backup
+  e1.commit();
+  QTest::qWait(100);
+  QVERIFY(QFile::exists("mdtErrorTest.log"));
+  QVERIFY(!QFile::exists("mdtErrorTest.log.bak"));
+  // Add a second error , and check that backup was created
+  e2.commit();
+  QTest::qWait(100);
+  QVERIFY(!QFile::exists("mdtErrorTest.log"));
+  QVERIFY(QFile::exists("mdtErrorTest.log.bak"));
+  // Add a error , and check that logfile exists
+  e3.commit();
+  QTest::qWait(100);
+  QVERIFY(QFile::exists("mdtErrorTest.log"));
+  QVERIFY(QFile::exists("mdtErrorTest.log.bak"));
+  QVERIFY(!QFile::exists("mdtErrorTest.log.bak.bak"));
+
+  // Remove created files
+  QFile::remove("mdtErrorTest.log");
+  QFile::remove("mdtErrorTest.log.bak");
+
+  // Delete the instance
+  mdtErrorOut::destroy();
+  QVERIFY(mdtErrorOut::instance() == 0);
+  // Re-init the original out
+  QVERIFY(mdtErrorOut::init(oldLogFile));
+  mdtErrorOut::setDialogLevelsMask(0);
+}
+
 
 int main(int argc, char **argv)
 {

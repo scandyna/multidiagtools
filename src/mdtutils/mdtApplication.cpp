@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtApplication.h"
 #include "mdtErrorOut.h"
-#include <QDir>
 #include <QFileInfo>
 #include <QTextCodec>
 #include <iostream>
@@ -77,8 +76,15 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
   if(logFileName.isEmpty()){
     logFileName = "mdtapplication";
   }
-  logFileName += "-";
-  logFileName += QString::number(applicationPid());
+  /*
+   * If multiple instances of application is allowed, 
+   * the simple way to avoid conflict during logfile write is
+   * to suffix process id to the logfilename
+   */
+  if(allowMultipleInstances){
+    logFileName += "-";
+    logFileName += QString::number(applicationPid());
+  }
   logFileName += ".log";
   qDebug() << "mdtApplication::init(): log file: " << logFileName;
   // Init error system
@@ -129,17 +135,9 @@ QString mdtApplication::mdtLibVersion()
 bool mdtApplication::setLanguage(const QLocale &locale, const QStringList &otherQmDirectories)
 {
   QString languageSuffix;
-  int i;
 
   languageSuffix = locale.name().left(2);
-  // Search in given other qm directories
-  for(i=0; i<otherQmDirectories.size(); i++){
-    if(!loadTranslationFiles(languageSuffix, otherQmDirectories.at(i))){
-      return false;
-    }
-  }
-  // Load that is avaliable in system's data directory
-  return loadTranslationFiles(languageSuffix);
+  return loadTranslationFiles(languageSuffix, otherQmDirectories);
 }
 
 void mdtApplication::installTranslator(QTranslator *translator)
@@ -167,9 +165,11 @@ bool mdtApplication::searchSystemDataDir()
 
   // At first, we look in current directory
   if(dir.cd("data")){
-    // Ok, found.
-    pvSystemDataDirPath = dir.absolutePath();
-    return true;
+    if(isSystemDataDir(dir)){
+      // Ok, found.
+      pvSystemDataDirPath = dir.absolutePath();
+      return true;
+    }
   }
   // Check in application directory
   dir.setPath(applicationDirPath());
@@ -178,27 +178,35 @@ bool mdtApplication::searchSystemDataDir()
     return false;
   }
   if(dir.cd("data")){
-    // Ok, found.
-    pvSystemDataDirPath = dir.absolutePath();
-    return true;
+    if(isSystemDataDir(dir)){
+      // Ok, found.
+      pvSystemDataDirPath = dir.absolutePath();
+      return true;
+    }
   }
   // Check in application's parent directory
   if(dir.cd("../data")){
-    // Ok, found.
-    pvSystemDataDirPath = dir.absolutePath();
-    return true;
+    if(isSystemDataDir(dir)){
+      // Ok, found.
+      pvSystemDataDirPath = dir.absolutePath();
+      return true;
+    }
   }
   // On Linux/Unix, data is probably installed in /usr/share/mdt or /usr/local/share
 #ifdef Q_OS_UNIX
   if(dir.cd("/usr/share/mdt/data")){
-    // Ok, found.
-    pvSystemDataDirPath = dir.absolutePath();
-    return true;
+    if(isSystemDataDir(dir)){
+      // Ok, found.
+      pvSystemDataDirPath = dir.absolutePath();
+      return true;
+    }
   }
   if(dir.cd("/usr/local/share/mdt/data")){
-    // Ok, found.
-    pvSystemDataDirPath = dir.absolutePath();
-    return true;
+    if(isSystemDataDir(dir)){
+      // Ok, found.
+      pvSystemDataDirPath = dir.absolutePath();
+      return true;
+    }
   }
 #endif  // #ifdef Q_OS_UNIX
 
@@ -206,6 +214,23 @@ bool mdtApplication::searchSystemDataDir()
   std::cerr << "mdtApplication::searchSystemDataDir(): cannot find system data directory" << std::endl;
 
   return false;
+}
+
+bool mdtApplication::isSystemDataDir(QDir &dir)
+{
+  // Some checks on directories that must be in data
+  if(!dir.cd("i18n")){
+    std::cerr << "mdtApplication::isSystemDataDir(): subdirectory i18n not found in " << dir.path().toStdString() << std::endl;
+    return false;
+  }
+  dir.cdUp();
+  if(!dir.cd("uic")){
+    std::cerr << "mdtApplication::isSystemDataDir(): subdirectory uic not found in " << dir.path().toStdString() << std::endl;
+    return false;
+  }
+  dir.cdUp();
+
+  return true;
 }
 
 bool mdtApplication::initHomeDir()
@@ -246,7 +271,7 @@ bool mdtApplication::initHomeDir()
   return true;
 }
 
-bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const QString &otherQmDirectory)
+bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const QStringList &otherQmDirectories)
 {
   QDir dir;
   QFileInfoList filesInfoList;
@@ -262,29 +287,33 @@ bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const Q
     std::cerr << "mdtApplication::loadTranslationFiles(): unknow language suffix: " << languageSuffix.toStdString() << std::endl;
     return false;
   }
-  // Try to go to translations directory
-  if(!otherQmDirectory.isEmpty()){
-    if(!dir.cd(otherQmDirectory)){
-      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find directory" << otherQmDirectory.toStdString() << std::endl;
-      return false;
+  // Search translations in other directories, if given
+  for(i=0; i<otherQmDirectories.size(); i++){
+    if(!dir.cd(otherQmDirectories.at(i))){
+      // Not found translations is not fatal, just warn
+      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find directory" << otherQmDirectories.at(i).toStdString() << std::endl;
+    }else{
+      // Get avaliable files for given language
+      filesInfoList << dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
     }
+  }
+  // Search translations in system data directory, if given
+  if(!dir.cd(pvSystemDataDirPath)){
+    std::cerr << "mdtApplication::loadTranslationFiles(): cannot find data directory" << std::endl;
   }else{
-    if(!dir.cd(pvSystemDataDirPath)){
-      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find data directory" << std::endl;
-      return false;
-    }
     // We are in data directory, try to go to i18n
     if(!dir.cd("i18n")){
       std::cerr << "mdtApplication::loadTranslationFiles(): cannot find i18n directory\n -> Searched in " << pvSystemDataDirPath.toStdString() << std::endl;
-      return false;
+    }else{
+      // Get avaliable files for given language
+      filesInfoList = dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
+      if(filesInfoList.size() < 1){
+        // Not translation file found is not fatal, just put a message
+        std::cerr << "mdtApplication::loadTranslationFiles(): no translation file was found in " << dir.path().toStdString() << std::endl;
+      }
     }
   }
-  // Get avaliable files for given language
-  filesInfoList = dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
-  if(filesInfoList.size() < 1){
-    // Not translation file found is not fatal, just put a message
-    std::cerr << "mdtApplication::loadTranslationFiles(): no translation file was found in " << dir.path().toStdString() << std::endl;
-  }
+  // Install found translation files
   for(i=0; i<filesInfoList.size(); i++){
     translator = new QTranslator;
     if(!translator->load(filesInfoList.at(i).absoluteFilePath())){

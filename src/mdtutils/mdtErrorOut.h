@@ -1,12 +1,35 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #ifndef MDT_ERROR_OUT_H
 #define MDT_ERROR_OUT_H
 
-
 #include "mdtError.h"
 #include <QMessageBox>
+#include <QThread>
 #include <QMutex>
 #include <QFile>
 #include <QObject>
+#include <QStringList>
+
+class mdtErrorOutLogger;
 
 /*! \brief Error output system
  * Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.
@@ -50,7 +73,7 @@ class mdtErrorOut : public QObject
    * This function, and returned pointer, should be used with care in multi-thread applicatopn !
    */
   static mdtErrorOut *instance();
-  
+
   /*! \brief Get the log file path
    *
    * \pre The system must be initialized. \see init()
@@ -62,6 +85,10 @@ class mdtErrorOut : public QObject
    * This function must be called from main thread (GUI thread)
    */
   static void destroy();
+
+  /*! \brief Set the maximum log file size [Byte] before backup
+   */
+  static void setLogFileMaxSize(qint64 maxSize);
 
  private slots:
 
@@ -79,11 +106,51 @@ class mdtErrorOut : public QObject
   mdtErrorOut(const mdtErrorOut &orig);
 
   static mdtErrorOut *pvInstance;
-  QFile pvLogFile;
   QMutex pvMutex;
   QMessageBox pvDialog;
   int pvLogLevelsMask;
   int pvDialogLevelsMask;
+  mdtErrorOutLogger *pvLogger;
+};
+
+/*! \brief Put errors in the log file
+ */
+class mdtErrorOutLogger : public QThread
+{
+ public:
+
+  mdtErrorOutLogger(QObject *parent = 0);
+  ~mdtErrorOutLogger();
+
+  /*! \brief Set the log file path
+   *
+   * \return True if file can be open for write, false else
+   */
+  bool setLogFilePath(const QString &path);
+
+  /*! \brief Get log file path
+   */
+  QString logFilePath();
+
+  /*! \brief Add a line to the log file
+   */
+  void putData(QString data);
+
+  /*! \brief Set the maximum log file size [Byte] before backup
+   */
+  void setLogFileMaxSize(qint64 maxSize);
+
+ private:
+
+  // Diseable copy
+  mdtErrorOutLogger(const mdtErrorOutLogger&);
+
+  void run();
+
+  QStringList pvDataToWrite;
+  QFile *pvLogFile;
+  QMutex *pvMutex;
+  qint64 pvLogFileMaxSize;    // Maximum size before backup
 };
 
 #endif  // #ifndef MDT_ERROR_OUT_H
