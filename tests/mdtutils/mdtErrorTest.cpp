@@ -79,8 +79,6 @@ void mdtErrorTest::errorOutAddTest()
   // Setup error
   e.setSystemError(-85, "Arguments invalides");
   MDT_ERROR_SET_SRC(e, "mdtErrorTest");
-  // Add error
-  //mdtErrorOut::addError(e);
   e.commit();
 }
 

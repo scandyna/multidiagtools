@@ -209,6 +209,9 @@ if(WIN32)
   install(FILES ${QTNETWORKDLL} DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
   #install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
   install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "." COMPONENT lib)
+  # Qt translations files
+  install(FILES "${QT_TRANSLATIONS_DIR}/qt_fr.qm" DESTINATION "data/i18n" COMPONENT lib)
+  install(FILES "${QT_TRANSLATIONS_DIR}/qt_de.qm" DESTINATION "data/i18n" COMPONENT lib)
 endif(WIN32)
 
 # ** CPack section **

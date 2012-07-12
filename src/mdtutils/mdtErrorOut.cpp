@@ -22,10 +22,11 @@
 #include <QDebug>
 #include <QMutexLocker>
 #include <QDateTime>
-#include <QString>
 #include <QTextStream>
 #include <QMetaType>
 #include <iostream>
+#include <stdio.h>
+#include <errno.h>
 
 mdtErrorOut *mdtErrorOut::pvInstance = 0;
 
@@ -247,11 +248,21 @@ void mdtErrorOut::showDialog(mdtError error)
  * ** Logger class **
  */
 
+/*
+ * Note: 2012.07.12
+ * Had a strange problem by using QFile in this class, so I rewrote this part with ANCI C calls (fopen, fclose, ...)
+ * On Linux, all worked Ok.
+ * On Wine, with MinGW, the symtom was:
+ *  - Write a error (open, write, close): Ok
+ *  - Write a new error: (same calls): Nok, the first error was overwritten !?
+ *  - Write a new error: (same calls): Ok, second error was keeped, and new appended !?
+ * After replacing QFile by C calls, all worked fine.
+ * Platform: Wine, MinGW32, Qt 4.8.2
+ */
+
 mdtErrorOutLogger::mdtErrorOutLogger(QObject *parent)
  : QThread(parent)
 {
-  pvLogFile = new QFile;
-  Q_ASSERT(pvLogFile != 0);
   pvMutex = new QMutex;
   Q_ASSERT(pvMutex != 0);
   // Set the maximum log file size before backup
@@ -261,20 +272,30 @@ mdtErrorOutLogger::mdtErrorOutLogger(QObject *parent)
 mdtErrorOutLogger::~mdtErrorOutLogger()
 {
   wait();
-  delete pvLogFile;
   delete pvMutex;
 }
 
 bool mdtErrorOutLogger::setLogFilePath(const QString &path)
 {
+  FILE *f;
+
   pvMutex->lock();
-  pvLogFile->setFileName(path);
-  if(!pvLogFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)){
-    qDebug() << "mdtErrorOutLogger::setLogFilePath(): unabble to create/open log file '" << path << "'";
+  pvLogFilePath = path;
+  // Check if file can be open for write
+  f = fopen(pvLogFilePath.toStdString().c_str(), "a");
+  if(f == 0){
+    qDebug() << "mdtErrorOutLogger::setLogFilePath(): unabble to open log file '" << pvLogFilePath << "'";
+    qDebug() << "-> System returned error : " << errno << strerror(errno);
     pvMutex->unlock();
     return false;
   }
-  pvLogFile->close();
+  // Write ok, close and return
+  if(fclose(f) != 0){
+    qDebug() << "mdtErrorOutLogger::setLogFilePath(): fclose call failed";
+    qDebug() << "-> System returned error : " << errno << strerror(errno);
+    pvMutex->unlock();
+    return false;
+  }
   pvMutex->unlock();
 
   return true;
@@ -285,7 +306,7 @@ QString mdtErrorOutLogger::logFilePath()
   QString path;
 
   pvMutex->lock();
-  path = pvLogFile->fileName();
+  path = pvLogFilePath;
   pvMutex->unlock();
 
   return path;
@@ -316,6 +337,8 @@ void mdtErrorOutLogger::run()
   qint64 logFileSize;
   qint64 logFileMaxSize;
   QString backupName;
+  FILE *logFile;
+  qint64 written;
 
   while(1){
     // Check how many lines are to write and get a line
@@ -329,30 +352,63 @@ void mdtErrorOutLogger::run()
     if(dataToWriteCount < 1){
       break;
     }
-    // Write the line
+    // Write the data
     logFileSize = 0;
-    if(!pvLogFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)){
-      qDebug() << "mdtErrorOutLogger::run(): unabble to open log file '" << pvLogFile->fileName() << "'";
+    logFile = fopen(pvLogFilePath.toStdString().c_str(), "a");
+    if(logFile == 0){
+      qDebug() << "mdtErrorOutLogger::run(): unabble to open log file '" << pvLogFilePath << "'";
+      qDebug() << "-> System returned error : " << errno << strerror(errno);
+      break;
+    }
+    written = fwrite(data.toStdString().c_str(), 1, data.size(), logFile);
+    if(written < data.size()){
+      qDebug() << "mdtErrorOutLogger::run(): fwrite could not write all data";
+    }
+    if(fflush(logFile) < 0){
+      qDebug() << "mdtErrorOutLogger::run(): ffluh call failed";
+      qDebug() << "-> System returned error : " << errno << strerror(errno);
+    }
+    // Get log file size
+    rewind(logFile);
+    if(fseek(logFile, 0L, SEEK_END) != 0){
+      qDebug() << "mdtErrorOutLogger::run(): fseek call failed";
+      qDebug() << "-> System returned error : " << errno << strerror(errno);
     }else{
-      pvLogFile->write(data.toAscii());
-      pvLogFile->flush();
-      logFileSize = pvLogFile->size();
-      pvLogFile->close();
+      logFileSize = ftell(logFile);
+      if(logFileSize < 0){
+        qDebug() << "mdtErrorOutLogger::run(): ftell call failed";
+        qDebug() << "-> System returned error : " << errno << strerror(errno);
+        logFileSize = 0;
+      }
+    }
+    if(fclose(logFile) < 0){
+      qDebug() << "mdtErrorOutLogger::run(): fclose call failed";
+      qDebug() << "-> System returned error : " << errno << strerror(errno);
     }
     // Make backups
+    qDebug() << "logFileSize: " << logFileSize << " , logFileMaxSize: " << logFileMaxSize;
     if(logFileSize > logFileMaxSize){
       // We make it simple, with just 1 backup file
-      backupName = pvLogFile->fileName();
+      backupName = pvLogFilePath;
       backupName += ".bak";
-      if(pvLogFile->exists(backupName)){
-          if(!QFile::remove(backupName)){
-          qDebug() << "mdtErrorOutLogger::run(): cannot remove backuped logfile '" << backupName << "'";
+      // Check if backup exists, and remove if true
+      logFile = fopen(backupName.toStdString().c_str(), "r");
+      if(logFile != 0){
+        if(remove(backupName.toStdString().c_str()) != 0){
+          qDebug() << "mdtErrorOutLogger::run(): remove call failed";
+          qDebug() << "-> System returned error : " << errno << strerror(errno);
+          fclose(logFile);
           break;
+        }
+        if(fclose(logFile) < 0){
+          qDebug() << "mdtErrorOutLogger::run(): fclose call failed";
+          qDebug() << "-> System returned error : " << errno << strerror(errno);
         }
       }
       // Rename log file to backup name
-      if(!QFile::rename(pvLogFile->fileName(), backupName)){
-        qDebug() << "mdtErrorOutLogger::run(): cannot backup logfile to '" << backupName << "'";
+      if(rename(pvLogFilePath.toStdString().c_str(), backupName.toStdString().c_str()) != 0){
+        qDebug() << "mdtErrorOutLogger::run(): rename call failed";
+        qDebug() << "-> System returned error : " << errno << strerror(errno);
         break;
       }
     }

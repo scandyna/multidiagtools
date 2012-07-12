@@ -93,10 +93,13 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
     return false;
   }
   mdtErrorOut::setDialogLevelsMask(dialogErrorLevelsMask);
-  // Set the default language
-  if(!setLanguage()){
-    return false;
-  }
+  // Load translations and set the default language
+  addTranslationsDirectory(pvSystemDataDirPath + "/i18n");
+#ifdef Q_OS_UNIX
+  addTranslationsDirectory("/usr/share/qt4/translations");
+#endif
+  buildAvailableTranslationsList();
+  changeLanguage();
 
   return true;
 }
@@ -104,14 +107,14 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
 void mdtApplication::setApplicationVersion(int versionMajor, int versionMinor, int versionMicro)
 {
   QString num, version;
-  
+
   num.setNum(versionMajor);
   version = num + ".";
   num.setNum(versionMinor);
   version += num + ".";
   num.setNum(versionMicro);
   version += num;
-  
+
   QApplication::setApplicationVersion(version);
 }
 
@@ -132,12 +135,27 @@ QString mdtApplication::mdtLibVersion()
   return QString(QString::number(MDTLIB_VERSION_MAJOR) + "." + QString::number(MDTLIB_VERSION_MINOR) + "." + QString::number(MDTLIB_VERSION_MICRO));
 }
 
-bool mdtApplication::setLanguage(const QLocale &locale, const QStringList &otherQmDirectories)
+void mdtApplication::addTranslationsDirectory(const QString &directory)
 {
-  QString languageSuffix;
+  QDir dir;
 
-  languageSuffix = locale.name().left(2);
-  return loadTranslationFiles(languageSuffix, otherQmDirectories);
+  if(dir.cd(directory)){
+    pvTranslationsDirectories << directory;
+  }else{
+    mdtError e(MDT_QM_FILE_LOAD_ERROR, "Cannot access directory '" + directory +"'", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtApplication");
+    e.commit();
+  }
+}
+
+QMap<QString, QString> &mdtApplication::availableTranslations()
+{
+  return pvAvailableTranslations;
+}
+
+QString &mdtApplication::currentTranslationKey()
+{
+  return pvCurrentTranslationKey;
 }
 
 void mdtApplication::installTranslator(QTranslator *translator)
@@ -157,6 +175,32 @@ void mdtApplication::removeCurrentTranslators()
   }
   qDeleteAll(pvTranslators);
   pvTranslators.clear();
+}
+
+void mdtApplication::changeLanguage(const QLocale &locale)
+{
+  QString languageSuffix;
+
+  languageSuffix = locale.name().left(2);
+
+  removeCurrentTranslators();
+  pvCurrentTranslationKey = "en";
+  if(languageSuffix != "en"){
+    if(!loadTranslationFiles(languageSuffix)){
+      mdtError e(MDT_QM_FILE_LOAD_ERROR, "Loading a translation file failed for " + languageSuffix, mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtApplication");
+      e.commit();
+    }
+  }
+
+  emit(languageChanged());
+}
+
+void mdtApplication::changeLanguage(QAction *action)
+{
+  Q_ASSERT(action != 0);
+
+  changeLanguage(QLocale(action->data().toString()));
 }
 
 bool mdtApplication::searchSystemDataDir()
@@ -271,7 +315,35 @@ bool mdtApplication::initHomeDir()
   return true;
 }
 
-bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const QStringList &otherQmDirectories)
+void mdtApplication::buildAvailableTranslationsList()
+{
+  QDir dir;
+  QFileInfoList filesInfoList;
+  QTranslator *translator;
+  int i;
+
+  pvAvailableTranslations.clear();
+
+  // Search translations files in known directories
+  for(i=0; i<pvTranslationsDirectories.size(); i++){
+    if(dir.cd(pvTranslationsDirectories.at(i))){
+      filesInfoList << dir.entryInfoList(QStringList("mdtutils_*.qm"));
+    }
+  }
+  // Install found translation files, add language and uninstall translator
+  pvAvailableTranslations.insert("en", "English");
+  for(i=0; i<filesInfoList.size(); i++){
+    translator = new QTranslator;
+    if(translator->load(filesInfoList.at(i).absoluteFilePath())){
+      QApplication::installTranslator(translator);
+      pvAvailableTranslations.insert(filesInfoList.at(i).baseName().right(2), tr("English"));
+      QApplication::removeTranslator(translator);
+    }
+    delete translator;
+  }
+}
+
+bool mdtApplication::loadTranslationFiles(const QString &languageSuffix)
 {
   QDir dir;
   QFileInfoList filesInfoList;
@@ -287,30 +359,10 @@ bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const Q
     std::cerr << "mdtApplication::loadTranslationFiles(): unknow language suffix: " << languageSuffix.toStdString() << std::endl;
     return false;
   }
-  // Search translations in other directories, if given
-  for(i=0; i<otherQmDirectories.size(); i++){
-    if(!dir.cd(otherQmDirectories.at(i))){
-      // Not found translations is not fatal, just warn
-      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find directory" << otherQmDirectories.at(i).toStdString() << std::endl;
-    }else{
-      // Get avaliable files for given language
+  // Search translations files in known directories
+  for(i=0; i<pvTranslationsDirectories.size(); i++){
+    if(dir.cd(pvTranslationsDirectories.at(i))){
       filesInfoList << dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
-    }
-  }
-  // Search translations in system data directory, if given
-  if(!dir.cd(pvSystemDataDirPath)){
-    std::cerr << "mdtApplication::loadTranslationFiles(): cannot find data directory" << std::endl;
-  }else{
-    // We are in data directory, try to go to i18n
-    if(!dir.cd("i18n")){
-      std::cerr << "mdtApplication::loadTranslationFiles(): cannot find i18n directory\n -> Searched in " << pvSystemDataDirPath.toStdString() << std::endl;
-    }else{
-      // Get avaliable files for given language
-      filesInfoList = dir.entryInfoList(QStringList("*_" + languageSuffix + ".qm"));
-      if(filesInfoList.size() < 1){
-        // Not translation file found is not fatal, just put a message
-        std::cerr << "mdtApplication::loadTranslationFiles(): no translation file was found in " << dir.path().toStdString() << std::endl;
-      }
     }
   }
   // Install found translation files
@@ -322,6 +374,7 @@ bool mdtApplication::loadTranslationFiles(const QString &languageSuffix, const Q
       return false;
     }
     installTranslator(translator);
+    pvCurrentTranslationKey = languageSuffix;
   }
 
   return true;

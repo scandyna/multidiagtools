@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtApplication.h"
 #include "mdtPortTerm.h"
+#include <QObject>
+#include <QLocale>
 
 int main(int argc, char **argv)
 {
@@ -32,6 +34,9 @@ int main(int argc, char **argv)
 
   // Init port term
   mdtPortTerm term;
+  QObject::connect(&term, SIGNAL(languageChanged(const QLocale&)), &app, SLOT(changeLanguage(const QLocale&)));
+  QObject::connect(&app, SIGNAL(languageChanged()), &term, SLOT(retranslate()));
+  term.setAvailableTranslations(app.availableTranslations(), app.currentTranslationKey());
   term.show();
 
   return app.exec();

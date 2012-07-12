@@ -157,6 +157,7 @@ bool mdtFileCopier::startCopy()
         // Ask the user what to do, and give a option to apply choice to all (next) files
         pvMessageBox->setText(tr("File '") + pvDestFileInfo.fileName() + tr("' allready exists. Overwrite it ?"));
         pvMessageBox->setInformativeText(tr("Destination: ") + pvDestFileInfo.absolutePath());
+        pvMessageBox->setDetailedText("");
         pvMessageBox->setIcon(QMessageBox::Question);
         pvMessageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll | QMessageBox::NoToAll);
         pvMessageBox->setDefaultButton(QMessageBox::No);
@@ -287,7 +288,7 @@ bool mdtFileCopier::startCopy()
     pvCopiesInProcess.append(item);
   }
   // Init progress dialog
-  pvProgressDialog->setMinimumDuration(500);
+  pvProgressDialog->setMinimumDuration(1000);
   pvProgressDialog->setRange(0, 0);
   pvProgressDialog->setLabelText(tr("\nBegin copy ..."));
   pvMutex.unlock();

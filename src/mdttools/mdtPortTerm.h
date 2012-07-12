@@ -28,6 +28,11 @@
 #include "mdtSerialPortCtlWidget.h"
 #include <QWidget>
 #include <QMainWindow>
+#include <QLocale>
+#include <QEvent>
+#include <QMap>
+#include <QString>
+#include <QActionGroup>
 
 /*! \brief Mini port treminal
  */
@@ -39,6 +44,10 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   mdtPortTerm(QWidget *parent = 0);
   ~mdtPortTerm();
+
+  /*! \brief Build the translations menu
+   */
+  void setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
 
  public slots:
 
@@ -60,6 +69,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    */
   void on_pbClearTerm_clicked();
 
+  void retranslate();
+
  private slots:
 
   // Set/unset port type to serial port
@@ -68,6 +79,13 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   // Call serial port setup dialog
   void serialPortSetup();
+  
+  // Change lagugage
+  void changeLanguage();
+  
+ signals:
+  
+  void languageChanged(const QLocale &locale);
   
  private:
 
@@ -79,6 +97,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   mdtSerialPortCtlWidget *pvSerialPortCtlWidget;
   // Current port manager
   mdtPortManager *pvCurrentPortManager;
+  // Translations menu
+  QActionGroup *pvLanguageActionGroup;
 };
 
 #endif  // #ifndef MDT_PORT_TERM_H

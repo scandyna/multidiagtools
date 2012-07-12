@@ -39,7 +39,8 @@ enum mdt_error_t{
   MDT_FRAME_ENCODE_ERROR,
   MDT_DEVICE_ERROR,
   MDT_PARSE_ERROR,              /*!< Parsing error */
-  MDT_DATABASE_ERROR            /*!< Database error */
+  MDT_DATABASE_ERROR,           /*!< Database error */
+  MDT_QM_FILE_LOAD_ERROR        /*!< A translation file (.qm) could not be loaded */
 };
 
 /*! \brief Add source information to error

@@ -19,9 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtPortTerm.h"
+#include "mdtApplication.h"
 #include <QHBoxLayout>
+#include <QAction>
 
-#include <QString>
 #include <QDebug>
 
 mdtPortTerm::mdtPortTerm(QWidget *parent)
@@ -40,11 +41,36 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   
   // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(serialPortSetup()));
+  connect(action_German, SIGNAL(triggered()), this, SLOT(changeLanguage()));
+  pvLanguageActionGroup = 0;
 }
 
 mdtPortTerm::~mdtPortTerm()
 {
   detachFromSerialPort();
+}
+
+void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey)
+{
+  QMap<QString, QString>::const_iterator it = avaliableTranslations.constBegin();
+
+  // Create a action group
+  if(pvLanguageActionGroup == 0){
+    pvLanguageActionGroup = new QActionGroup(this);
+    connect(pvLanguageActionGroup, SIGNAL(triggered(QAction*)), mdtApp, SLOT(changeLanguage(QAction*)));
+  }
+  // Travel available translation and add actions to menu +  group
+  while(it != avaliableTranslations.constEnd()){
+    QAction *action = new QAction(it.value(), this);
+    action->setCheckable(true);
+    action->setData(it.key());
+    if(it.key() == currentTranslationKey){
+      action->setChecked(true);
+    }
+    menu_Language->addAction(action);
+    pvLanguageActionGroup->addAction(action);
+    it++;
+  }
 }
 
 void mdtPortTerm::appendReadenData()
@@ -90,6 +116,11 @@ void mdtPortTerm::on_pbClearTerm_clicked()
   teTerm->clear();
 }
 
+void mdtPortTerm::retranslate()
+{
+  retranslateUi(this);
+}
+
 void mdtPortTerm::attachToSerialPort()
 {
   // Create objects
@@ -99,7 +130,7 @@ void mdtPortTerm::attachToSerialPort()
   // Ctl widget
   bottomHLayout->insertWidget(0, pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
-  
+
   connect(pvSerialPortManager, SIGNAL(newDataReaden()), this, SLOT(appendReadenData()));
 }
 
@@ -120,4 +151,9 @@ void mdtPortTerm::serialPortSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }
+}
+
+void mdtPortTerm::changeLanguage()
+{
+  emit(languageChanged(QLocale("de")));
 }

@@ -13,6 +13,8 @@ set (HEADER_FILES
           mdtUicNumberWidget.h
           # mdtFileSystem
           mdtFileCopier.h
+          # Main application
+          mdtApplication.h
     )
 
 # List of source files

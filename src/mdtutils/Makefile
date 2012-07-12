@@ -732,6 +732,30 @@ mdtUicNumberWidget.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberWidget.cpp.s
 .PHONY : mdtUicNumberWidget.cpp.s
 
+moc_mdtApplication.o: moc_mdtApplication.cxx.o
+.PHONY : moc_mdtApplication.o
+
+# target to build an object file
+moc_mdtApplication.cxx.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.o
+.PHONY : moc_mdtApplication.cxx.o
+
+moc_mdtApplication.i: moc_mdtApplication.cxx.i
+.PHONY : moc_mdtApplication.i
+
+# target to preprocess a source file
+moc_mdtApplication.cxx.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.i
+.PHONY : moc_mdtApplication.cxx.i
+
+moc_mdtApplication.s: moc_mdtApplication.cxx.s
+.PHONY : moc_mdtApplication.s
+
+# target to generate assembly for a file
+moc_mdtApplication.cxx.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.s
+.PHONY : moc_mdtApplication.cxx.s
+
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.o
 
@@ -889,6 +913,9 @@ help:
 	@echo "... mdtUicNumberWidget.o"
 	@echo "... mdtUicNumberWidget.i"
 	@echo "... mdtUicNumberWidget.s"
+	@echo "... moc_mdtApplication.o"
+	@echo "... moc_mdtApplication.i"
+	@echo "... moc_mdtApplication.s"
 	@echo "... moc_mdtErrorOut.o"
 	@echo "... moc_mdtErrorOut.i"
 	@echo "... moc_mdtErrorOut.s"

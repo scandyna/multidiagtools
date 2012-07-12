@@ -129,9 +129,9 @@ QString &mdtFileCopierItem::copyText()
   pvCopyText = "\n";
   pvCopyText += QObject::tr("Copying file ");
   pvCopyText += pvSrcFileName + "\n\n";
-  pvCopyText += QObject::tr("From\t");
+  pvCopyText += QObject::tr("From: \t");
   pvCopyText += pvSrcDirectoryPath + "\n";
-  pvCopyText += QObject::tr("To  \t");
+  pvCopyText += QObject::tr("To:   \t");
   if(pvSrcFileName != pvDestFileName){
     pvCopyText += pvDestFilePath + "\n\n";
   }else{

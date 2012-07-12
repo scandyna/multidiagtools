@@ -39,7 +39,7 @@ class mdtFileCopierItem;
  *  - Display a message box when source file not exists, or cannot be read
  *  - Ask the user if allready existing destination file must be overwritten
  *  - Display a progress bar during a long copy
- *  - ...
+ *  - ...<br>
  * This class was made to simplify this process.<br>
  * The copy is done in a separated thread.
  * Notes:
@@ -108,7 +108,7 @@ class mdtFileCopier : public QThread
 
  public slots:
 
-  /*! \brief Cancel running copy (used internally for proegress dialog)
+  /*! \brief Cancel running copy (used internally for progress dialog)
    */
   void cancelCopy();
 

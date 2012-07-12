@@ -10,14 +10,22 @@
         <translation>Copie du fichier </translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopierItem.cpp" line="132"/>
         <source>From	</source>
-        <translation>De	</translation>
+        <translation type="obsolete">De	</translation>
+    </message>
+    <message>
+        <source>To  	</source>
+        <translation type="obsolete">Vers	</translation>
+    </message>
+    <message>
+        <location filename="../src/mdtutils/mdtFileCopierItem.cpp" line="132"/>
+        <source>From: 	</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mdtutils/mdtFileCopierItem.cpp" line="134"/>
-        <source>To  	</source>
-        <translation>Vers	</translation>
+        <source>To:   	</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mdtutils/mdtFileCopierItem.cpp" line="140"/>
@@ -47,6 +55,14 @@
     </message>
 </context>
 <context>
+    <name>mdtApplication</name>
+    <message>
+        <location filename="../src/mdtutils/mdtApplication.cpp" line="348"/>
+        <source>English</source>
+        <translation type="unfinished">Français</translation>
+    </message>
+</context>
+<context>
     <name>mdtCsvFile</name>
     <message>
         <location filename="../src/mdtutils/mdtCsvFile.cpp" line="46"/>
@@ -57,42 +73,42 @@
 <context>
     <name>mdtErrorOut</name>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="161"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="203"/>
         <source>Error number </source>
         <translation>Erreur No </translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="164"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="206"/>
         <source> occured:
 </source>
         <translation> s&apos;est produite:
 </translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="169"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="211"/>
         <source>System returned error number </source>
         <translation>Numéro d&apos;erreur retourné par le système: </translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="172"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="214"/>
         <source> :
 </source>
         <translation> :</translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="178"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="220"/>
         <source>Function: </source>
         <translation>Fonction: </translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="180"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="222"/>
         <source>
 File: </source>
         <translation>
 Fichier: </translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="182"/>
+        <location filename="../src/mdtutils/mdtErrorOut.cpp" line="224"/>
         <source>
 Line: </source>
         <translation>
@@ -151,92 +167,92 @@ Ligne: </translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="210"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="213"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="216"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="223"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="211"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="214"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="217"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="224"/>
         <source>Cannot copy file &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="210"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="213"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="216"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="223"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="211"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="214"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="217"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="224"/>
         <source>&apos; to &apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="210"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="211"/>
         <source>&apos; : access denied
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="213"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="214"/>
         <source>&apos; : destination not found
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="216"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="217"/>
         <source>&apos; : filesystem is read only
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="237"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="238"/>
         <source>No copy can be done                                               </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="239"/>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="261"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="240"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="262"/>
         <source>More informations are available in details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="260"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="261"/>
         <source>Some copies cannot be done, do you want to continue ?             </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="292"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="293"/>
         <source>
 Begin copy ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="347"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="348"/>
         <source>Some copies failed                                                </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="349"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="350"/>
         <source>The list of failed copies are available in details
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="351"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="352"/>
         <source>The list of failed copies are available in details</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="358"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="359"/>
         <source>All copies are done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="535"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="536"/>
         <source>Note: destination device is full</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="623"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="624"/>
         <source>
  Open for verification failed
 
@@ -244,7 +260,7 @@ Begin copy ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="636"/>
+        <location filename="../src/mdtutils/mdtFileCopier.cpp" line="637"/>
         <source>
  Hash verification failed
 

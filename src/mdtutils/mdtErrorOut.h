@@ -27,6 +27,7 @@
 #include <QMutex>
 #include <QFile>
 #include <QObject>
+#include <QString>
 #include <QStringList>
 
 class mdtErrorOutLogger;
@@ -145,10 +146,11 @@ class mdtErrorOutLogger : public QThread
   // Diseable copy
   mdtErrorOutLogger(const mdtErrorOutLogger&);
 
+  // Thread
   void run();
 
   QStringList pvDataToWrite;
-  QFile *pvLogFile;
+  QString pvLogFilePath;
   QMutex *pvMutex;
   qint64 pvLogFileMaxSize;    // Maximum size before backup
 };

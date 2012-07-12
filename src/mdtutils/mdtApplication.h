@@ -25,11 +25,18 @@
 #include <QString>
 #include <QStringList>
 #include <QList>
+#include <QMap>
 #include <QTranslator>
 #include <QDir>
 #include <QLocale>
+#include <QAction>
 #include <config.h>
 
+#ifndef mdtApp
+ #define mdtApp mdtApplication::instance()
+#endif
+
+/// NOTE: manage directories better (with, f.ex, a member containing search paths ..)
 /// NOTE: Mutex for static members..
 
 /*! \brief Main application
@@ -39,6 +46,8 @@
  */
 class mdtApplication : public QtSingleApplication
 {
+ Q_OBJECT
+
  public:
 
   mdtApplication(int &argc, char **argv, bool GUIenabled = true);
@@ -79,13 +88,26 @@ class mdtApplication : public QtSingleApplication
    */
   static QString mdtLibVersion();
 
-  /*! \brief Set the application language
+  /*! \brief Add a directory that contains translations files in search paths
    * 
-   * If no parameters are given, system's language will be used.
-   * By default, the .qm translation files are searched in system's data directory.
-   * It's possible to add other search paths using otherQmDirectories parameter.
+   * If given directory exists (and is accessible), it will be added to search paths.
+   * \pre The mdtErrorOut system must be initialized before using this method, this is done by init().
    */
-  bool setLanguage(const QLocale &locale = QLocale(), const QStringList &otherQmDirectories = QStringList());
+  void addTranslationsDirectory(const QString &directory);
+
+  /*! \brief Get the list of available translations
+   * 
+   * The key contains the language suffix, like en , that can be reused
+   * with changeLanguage().
+   * The list is built during init().
+   */
+  QMap<QString, QString> &availableTranslations();
+
+  /*! \brief Get the current translation key.
+   * 
+   * The translation key could be en, de, fr, ...
+   */
+  QString &currentTranslationKey();
 
   /*! \brief Adds the translator to the list of translators to be used for translations.
    * 
@@ -105,6 +127,35 @@ class mdtApplication : public QtSingleApplication
    */
   void removeCurrentTranslators();
 
+ public slots:
+
+  /*! \brief Change the application language
+   * 
+   * This will remove installed translators, and install language speficifed
+   *  translators. Whenn translation files could not be loaded, the application
+   *  should fall back to source code's language.
+   * If no parameters are given, system's language will be used.
+   * By default, the .qm translation files are searched in system's data directory.
+   * It's possible to add other search paths using otherQmDirectories parameter.
+   * 
+   * \pre The error system must be initalized before using this method (this is done by init() ).
+   */
+  void changeLanguage(const QLocale &locale = QLocale());
+
+  /*! \brief Change the application language (overload)
+   * 
+   * To make this slot work, the QAction must contain the
+   *  language key (like en, fr, de, ...) in the data section.
+   * \pre action must be a valid pointer.
+   */
+  void changeLanguage(QAction *action);
+
+ signals:
+
+  /*! \brief Emitted when language was changed using changeLanguage()
+   */
+  void languageChanged();
+
  private:
 
   // Search the data system directory
@@ -116,15 +167,19 @@ class mdtApplication : public QtSingleApplication
   // Create some directories in home
   bool initHomeDir();
 
+  // Find available .qm files and build the available translations list
+  void buildAvailableTranslationsList();
+
   // Load found translation files according given language
-  // If otherQmDirectory is set, qm files will be searched in it,
-  //  else, the system data/i18n/ will be used
-  bool loadTranslationFiles(const QString &languageSuffix, const QStringList &otherQmDirectories);
+  bool loadTranslationFiles(const QString &languageSuffix);
 
   QString pvSystemDataDirPath;
   QString pvLogDirPath;
+  QStringList pvTranslationsDirectories;  // Directories that contains .qm translations files
   static mdtApplication *pvInstance;
   QList<QTranslator*> pvTranslators;
+  QMap<QString, QString> pvAvailableTranslations; // Key: suffix, like en, fr, . Value: English, Français, ..
+  QString pvCurrentTranslationKey;                // Current loaded translation keay, like en, de, ...
 };
 
 #endif  // #ifndef MDT_APPLICATION_H
