@@ -13,11 +13,12 @@ Error output system Helper for error output. Outputs are the stderr output (cons
 
 
 
-Collaboration diagram for mdtErrorOut:\nopagebreak
+Collaboration diagram for mdtErrorOut:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=217pt]{classmdt_error_out__coll__graph}
+\includegraphics[width=231pt]{classmdt_error_out__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Signals}
@@ -44,7 +45,12 @@ static \hyperlink{classmdt_error_out}{mdtErrorOut} $\ast$ \hyperlink{classmdt_er
 static QString \hyperlink{classmdt_error_out_a22f721fff4d6368a4a3d51279c6af8fa}{logFile} ()
 \begin{DoxyCompactList}\small\item\em Get the log file path. \end{DoxyCompactList}\item 
 static void \hyperlink{classmdt_error_out_a45c1370762b47a06ec597d6e89ebc73d}{destroy} ()
-\begin{DoxyCompactList}\small\item\em Destroy the error output system instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Destroy the error output system instance. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_out_afd7f41eaf7e07b4fceb83297e9040e35}{
+static void \hyperlink{classmdt_error_out_afd7f41eaf7e07b4fceb83297e9040e35}{setLogFileMaxSize} (qint64 maxSize)}
+\label{classmdt_error_out_afd7f41eaf7e07b4fceb83297e9040e35}
+
+\begin{DoxyCompactList}\small\item\em Set the maximum log file size \mbox{[}Byte\mbox{]} before backup. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}

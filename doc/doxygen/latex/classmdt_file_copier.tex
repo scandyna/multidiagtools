@@ -18,7 +18,7 @@ Helper class for file copy.
 void \hyperlink{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}{cancelCopy} ()}
 \label{classmdt_file_copier_ab9a0a4121a3fa0c70652413ad7917714}
 
-\begin{DoxyCompactList}\small\item\em Cancel running copy (used internally for proegress dialog) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Cancel running copy (used internally for progress dialog) \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
@@ -74,7 +74,8 @@ When files must be copied in a GUI application, some common situation must be ha
 \item Display a message box when source file not exists, or cannot be read
 \item Ask the user if allready existing destination file must be overwritten
 \item Display a progress bar during a long copy
-\item ... This class was made to simplify this process.\par
+\item ...\par
+ This class was made to simplify this process.\par
  The copy is done in a separated thread. Notes:
 \item For a simple and efficient copy, it's better to use system provided functions, QFile or others.
 \item If a file exists at destination, user will be asked about what to do. But, the ask operation, and the effective copy are not a atomic operation. So it can happen that another process creates the destination, and that file is then overwritten during copy ! 

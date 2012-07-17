@@ -1,0 +1,66 @@
+\hypertarget{classmdt_error_out_logger}{
+\section{mdtErrorOutLogger Class Reference}
+\label{classmdt_error_out_logger}\index{mdtErrorOutLogger@{mdtErrorOutLogger}}
+}
+
+
+Put errors in the log file.  
+
+
+
+
+{\ttfamily \#include $<$mdtErrorOut.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_error_out_logger_a323c048fd3a5107e8b28a7c7a9c4cf9d}{
+{\bfseries mdtErrorOutLogger} (QObject $\ast$parent=0)}
+\label{classmdt_error_out_logger_a323c048fd3a5107e8b28a7c7a9c4cf9d}
+
+\item 
+bool \hyperlink{classmdt_error_out_logger_a6e68b905a6c1f9452523b8a0e336ce1e}{setLogFilePath} (const QString \&path)
+\begin{DoxyCompactList}\small\item\em Set the log file path. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_out_logger_ac0d0bcca2d181c722f2ee5d024de5d57}{
+QString \hyperlink{classmdt_error_out_logger_ac0d0bcca2d181c722f2ee5d024de5d57}{logFilePath} ()}
+\label{classmdt_error_out_logger_ac0d0bcca2d181c722f2ee5d024de5d57}
+
+\begin{DoxyCompactList}\small\item\em Get log file path. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_out_logger_a4ba2f6f02c9c22171c4d04a8065aafd8}{
+void \hyperlink{classmdt_error_out_logger_a4ba2f6f02c9c22171c4d04a8065aafd8}{putData} (QString data)}
+\label{classmdt_error_out_logger_a4ba2f6f02c9c22171c4d04a8065aafd8}
+
+\begin{DoxyCompactList}\small\item\em Add a line to the log file. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_error_out_logger_a2f7158e61fd961e35f589bb2d1f51e03}{
+void \hyperlink{classmdt_error_out_logger_a2f7158e61fd961e35f589bb2d1f51e03}{setLogFileMaxSize} (qint64 maxSize)}
+\label{classmdt_error_out_logger_a2f7158e61fd961e35f589bb2d1f51e03}
+
+\begin{DoxyCompactList}\small\item\em Set the maximum log file size \mbox{[}Byte\mbox{]} before backup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Put errors in the log file. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_error_out_logger_a6e68b905a6c1f9452523b8a0e336ce1e}{
+\index{mdtErrorOutLogger@{mdtErrorOutLogger}!setLogFilePath@{setLogFilePath}}
+\index{setLogFilePath@{setLogFilePath}!mdtErrorOutLogger@{mdtErrorOutLogger}}
+\subsubsection[{setLogFilePath}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtErrorOutLogger::setLogFilePath (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{path}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_error_out_logger_a6e68b905a6c1f9452523b8a0e336ce1e}
+
+
+Set the log file path. 
+
+\begin{DoxyReturn}{Returns}
+True if file can be open for write, false else 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtErrorOut.h\item 
+src/mdtutils/mdtErrorOut.cpp\end{DoxyCompactItemize}

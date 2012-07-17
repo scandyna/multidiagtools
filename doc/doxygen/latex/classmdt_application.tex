@@ -4,7 +4,7 @@
 }
 
 
-NOTE: Mutex for static members..  
+Main application.  
 
 
 
@@ -29,6 +29,21 @@ Collaboration diagram for mdtApplication:\nopagebreak
 \includegraphics[width=238pt]{classmdt_application__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{changeLanguage} (const QLocale \&locale=QLocale())
+\begin{DoxyCompactList}\small\item\em Change the application language. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}{changeLanguage} (QAction $\ast$action)
+\begin{DoxyCompactList}\small\item\em Change the application language (overload) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_application_a4200ade3b0b295ea8b0cb5239d967610}{
+void \hyperlink{classmdt_application_a4200ade3b0b295ea8b0cb5239d967610}{languageChanged} ()}
+\label{classmdt_application_a4200ade3b0b295ea8b0cb5239d967610}
+
+\begin{DoxyCompactList}\small\item\em Emitted when language was changed using \hyperlink{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{changeLanguage()} \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -37,12 +52,16 @@ Collaboration diagram for mdtApplication:\nopagebreak
 \label{classmdt_application_ab6268414770ee9239c83677c15a67f75}
 
 \item 
-bool \hyperlink{classmdt_application_a5e91676cfeaf0d2e3e10ff58f1da6f0c}{init} (bool allowMultipleInstances=true, int dialogErrorLevelsMask=0)
+bool \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init} (bool allowMultipleInstances=false, int dialogErrorLevelsMask=0)
 \begin{DoxyCompactList}\small\item\em Some initializations. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{setApplicationVersion} (int versionMajor, int versionMinor, int versionMicro)
 \begin{DoxyCompactList}\small\item\em Build the application version with numeric values. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_application_a01355ee29c2824e905cad49a34dcf0aa}{setLanguage} (const QLocale \&locale=QLocale(), const QStringList \&otherQmDirectories=QStringList())
-\begin{DoxyCompactList}\small\item\em Set the application language. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_application_ab5279a8c25923ab4c570670b8a41d599}{addTranslationsDirectory} (const QString \&directory)
+\begin{DoxyCompactList}\small\item\em Add a directory that contains translations files in search paths. \end{DoxyCompactList}\item 
+QMap$<$ QString, QString $>$ \& \hyperlink{classmdt_application_a9ce5b5c3ca36a76ad0acc3913ce8f89a}{availableTranslations} ()
+\begin{DoxyCompactList}\small\item\em Get the list of available translations. \end{DoxyCompactList}\item 
+QString \& \hyperlink{classmdt_application_a531e64266be58b3a10608b21ae6afedb}{currentTranslationKey} ()
+\begin{DoxyCompactList}\small\item\em Get the current translation key. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator} (QTranslator $\ast$translator)
 \begin{DoxyCompactList}\small\item\em Adds the translator to the list of translators to be used for translations. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{removeCurrentTranslators} ()
@@ -65,9 +84,9 @@ static QString \hyperlink{classmdt_application_ad5318086812dad2c2870e294703caa51
 
 
 \subsection{Detailed Description}
-NOTE: Mutex for static members.. 
+Main application. 
 
-Main application
+NOTE: manage directories better (with, f.ex, a member containing search paths ..) NOTE: Mutex for static members..
 
 \begin{DoxySeeAlso}{See also}
 QApplication 
@@ -77,28 +96,102 @@ QApplication
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_application_a5e91676cfeaf0d2e3e10ff58f1da6f0c}{
+\hypertarget{classmdt_application_ab5279a8c25923ab4c570670b8a41d599}{
+\index{mdtApplication@{mdtApplication}!addTranslationsDirectory@{addTranslationsDirectory}}
+\index{addTranslationsDirectory@{addTranslationsDirectory}!mdtApplication@{mdtApplication}}
+\subsubsection[{addTranslationsDirectory}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::addTranslationsDirectory (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{directory}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_ab5279a8c25923ab4c570670b8a41d599}
+
+
+Add a directory that contains translations files in search paths. 
+
+If given directory exists (and is accessible), it will be added to search paths. \begin{DoxyPrecond}{Precondition}
+The \hyperlink{classmdt_error_out}{mdtErrorOut} system must be initialized before using this method, this is done by \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()}. 
+\end{DoxyPrecond}
+\hypertarget{classmdt_application_a9ce5b5c3ca36a76ad0acc3913ce8f89a}{
+\index{mdtApplication@{mdtApplication}!availableTranslations@{availableTranslations}}
+\index{availableTranslations@{availableTranslations}!mdtApplication@{mdtApplication}}
+\subsubsection[{availableTranslations}]{\setlength{\rightskip}{0pt plus 5cm}QMap$<$ QString, QString $>$ \& mdtApplication::availableTranslations (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_a9ce5b5c3ca36a76ad0acc3913ce8f89a}
+
+
+Get the list of available translations. 
+
+The key contains the language suffix, like en , that can be reused with \hyperlink{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{changeLanguage()}. The list is built during \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()}. \hypertarget{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{
+\index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
+\index{changeLanguage@{changeLanguage}!mdtApplication@{mdtApplication}}
+\subsubsection[{changeLanguage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::changeLanguage (
+\begin{DoxyParamCaption}
+\item[{const QLocale \&}]{locale = {\ttfamily QLocale()}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}
+
+
+Change the application language. 
+
+This will remove installed translators, and install language speficifed translators. Whenn translation files could not be loaded, the application should fall back to source code's language. If no parameters are given, system's language will be used. By default, the .qm translation files are searched in system's data directory. It's possible to add other search paths using otherQmDirectories parameter.
+
+\begin{DoxyPrecond}{Precondition}
+The error system must be initalized before using this method (this is done by \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()} ). 
+\end{DoxyPrecond}
+\hypertarget{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}{
+\index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
+\index{changeLanguage@{changeLanguage}!mdtApplication@{mdtApplication}}
+\subsubsection[{changeLanguage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::changeLanguage (
+\begin{DoxyParamCaption}
+\item[{QAction $\ast$}]{action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}
+
+
+Change the application language (overload) 
+
+To make this slot work, the QAction must contain the language key (like en, fr, de, ...) in the data section. \begin{DoxyPrecond}{Precondition}
+action must be a valid pointer. 
+\end{DoxyPrecond}
+\hypertarget{classmdt_application_a531e64266be58b3a10608b21ae6afedb}{
+\index{mdtApplication@{mdtApplication}!currentTranslationKey@{currentTranslationKey}}
+\index{currentTranslationKey@{currentTranslationKey}!mdtApplication@{mdtApplication}}
+\subsubsection[{currentTranslationKey}]{\setlength{\rightskip}{0pt plus 5cm}QString \& mdtApplication::currentTranslationKey (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_application_a531e64266be58b3a10608b21ae6afedb}
+
+
+Get the current translation key. 
+
+The translation key could be en, de, fr, ... \hypertarget{classmdt_application_a3b8798416e730f85e419566442adb77b}{
 \index{mdtApplication@{mdtApplication}!init@{init}}
 \index{init@{init}!mdtApplication@{mdtApplication}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtApplication::init (
 \begin{DoxyParamCaption}
-\item[{bool}]{allowMultipleInstances = {\ttfamily true}, }
+\item[{bool}]{allowMultipleInstances = {\ttfamily false}, }
 \item[{int}]{dialogErrorLevelsMask = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_application_a5e91676cfeaf0d2e3e10ff58f1da6f0c}
+\label{classmdt_application_a3b8798416e730f85e419566442adb77b}
 
 
 Some initializations. 
 
 Several things are done here:
 \begin{DoxyItemize}
-\item Search the system data directory path
-\item Init the error system (\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_error_out}{mdtErrorOut})
-\end{DoxySeeAlso}
-
-\item Check if another instance is running (if allowMultipleInstances Instance is false) 
+\item Search the system data directory
+\item Init the error system
+\item Check if another instance is running (if allowMultipleInstances Instance is false)
+\item Load translation files and set language according system settings. 
 \begin{DoxyParams}{Parameters}
 {\em allowMultipleInstances} & If true, multiple instance of application is allowed (but NOT multiple instance of \hyperlink{classmdt_application}{mdtApplication} in program !) \\
 \hline
@@ -107,6 +200,8 @@ Several things are done here:
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_error_out_afa76bdf497b750829277566ec07d44d8}{mdtErrorOut::setDialogLevelsMask()} 
+
+\hyperlink{classmdt_error_out}{mdtErrorOut} 
 \end{DoxySeeAlso}
 
 \end{DoxyItemize}\hypertarget{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{
@@ -169,21 +264,7 @@ This will romove all translators installed with \hyperlink{classmdt_application_
 
 Build the application version with numeric values. 
 
-Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). \hypertarget{classmdt_application_a01355ee29c2824e905cad49a34dcf0aa}{
-\index{mdtApplication@{mdtApplication}!setLanguage@{setLanguage}}
-\index{setLanguage@{setLanguage}!mdtApplication@{mdtApplication}}
-\subsubsection[{setLanguage}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtApplication::setLanguage (
-\begin{DoxyParamCaption}
-\item[{const QLocale \&}]{locale = {\ttfamily QLocale()}, }
-\item[{const QStringList \&}]{otherQmDirectories = {\ttfamily QStringList()}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_application_a01355ee29c2824e905cad49a34dcf0aa}
-
-
-Set the application language. 
-
-If no parameters are given, system's language will be used. By default, the .qm translation files are searched in system's data directory. It's possible to add other search paths using otherQmDirectories parameter. 
+Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
