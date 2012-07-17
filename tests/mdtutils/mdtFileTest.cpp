@@ -204,7 +204,6 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.valueAt(1, 0) == "Uncommented data");
   QVERIFY(csv.valueAt(1, 1) == "Some data");
   QVERIFY(csv.valueAt(1, 2) == "987");
-
 }
 
 void mdtFileTest::csvFileReadTest_data()

@@ -34,7 +34,6 @@ int main(int argc, char **argv)
 
   // Init port term
   mdtPortTerm term;
-  QObject::connect(&term, SIGNAL(languageChanged(const QLocale&)), &app, SLOT(changeLanguage(const QLocale&)));
   QObject::connect(&app, SIGNAL(languageChanged()), &term, SLOT(retranslate()));
   term.setAvailableTranslations(app.availableTranslations(), app.currentTranslationKey());
   term.show();

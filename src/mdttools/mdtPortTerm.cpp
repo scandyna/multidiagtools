@@ -41,7 +41,6 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   
   // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(serialPortSetup()));
-  connect(action_German, SIGNAL(triggered()), this, SLOT(changeLanguage()));
   pvLanguageActionGroup = 0;
 }
 
@@ -59,7 +58,7 @@ void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTran
     pvLanguageActionGroup = new QActionGroup(this);
     connect(pvLanguageActionGroup, SIGNAL(triggered(QAction*)), mdtApp, SLOT(changeLanguage(QAction*)));
   }
-  // Travel available translation and add actions to menu +  group
+  // Travel available translation and add actions to menu + group
   while(it != avaliableTranslations.constEnd()){
     QAction *action = new QAction(it.value(), this);
     action->setCheckable(true);
@@ -151,9 +150,4 @@ void mdtPortTerm::serialPortSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }
-}
-
-void mdtPortTerm::changeLanguage()
-{
-  emit(languageChanged(QLocale("de")));
 }

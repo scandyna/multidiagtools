@@ -28,7 +28,7 @@ set(CMAKE_BUILD_TYPE Release)
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 2)
-set(MDTLIB_VERSION_MICRO 5)
+set(MDTLIB_VERSION_MICRO 6)
 
 # Config file
 configure_file (

@@ -23,6 +23,7 @@
 #include <QDebug>
 
 mdtCsvFile::mdtCsvFile(QObject *parent, QByteArray fileEncoding)
+ : QFile(parent)
 {
   pvCodec = QTextCodec::codecForName(fileEncoding);
   Q_ASSERT(pvCodec != 0);

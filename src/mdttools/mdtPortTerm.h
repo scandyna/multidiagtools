@@ -79,14 +79,7 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   // Call serial port setup dialog
   void serialPortSetup();
-  
-  // Change lagugage
-  void changeLanguage();
-  
- signals:
-  
-  void languageChanged(const QLocale &locale);
-  
+
  private:
 
   // Diseable copy

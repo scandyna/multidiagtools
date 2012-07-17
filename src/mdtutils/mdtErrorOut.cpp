@@ -336,6 +336,7 @@ void mdtErrorOutLogger::run()
   QString data;
   qint64 logFileSize;
   qint64 logFileMaxSize;
+  QString logFilePath;
   QString backupName;
   FILE *logFile;
   qint64 written;
@@ -348,15 +349,16 @@ void mdtErrorOutLogger::run()
     if(dataToWriteCount > 0){
       data = pvDataToWrite.takeFirst();
     }
+    logFilePath = pvLogFilePath;
     pvMutex->unlock();
     if(dataToWriteCount < 1){
       break;
     }
     // Write the data
     logFileSize = 0;
-    logFile = fopen(pvLogFilePath.toStdString().c_str(), "a");
+    logFile = fopen(logFilePath.toStdString().c_str(), "a");
     if(logFile == 0){
-      qDebug() << "mdtErrorOutLogger::run(): unabble to open log file '" << pvLogFilePath << "'";
+      qDebug() << "mdtErrorOutLogger::run(): unabble to open log file '" << logFilePath << "'";
       qDebug() << "-> System returned error : " << errno << strerror(errno);
       break;
     }
@@ -389,7 +391,7 @@ void mdtErrorOutLogger::run()
     qDebug() << "logFileSize: " << logFileSize << " , logFileMaxSize: " << logFileMaxSize;
     if(logFileSize > logFileMaxSize){
       // We make it simple, with just 1 backup file
-      backupName = pvLogFilePath;
+      backupName = logFilePath;
       backupName += ".bak";
       // Check if backup exists, and remove if true
       logFile = fopen(backupName.toStdString().c_str(), "r");
@@ -406,7 +408,7 @@ void mdtErrorOutLogger::run()
         }
       }
       // Rename log file to backup name
-      if(rename(pvLogFilePath.toStdString().c_str(), backupName.toStdString().c_str()) != 0){
+      if(rename(logFilePath.toStdString().c_str(), backupName.toStdString().c_str()) != 0){
         qDebug() << "mdtErrorOutLogger::run(): rename call failed";
         qDebug() << "-> System returned error : " << errno << strerror(errno);
         break;
