@@ -48,7 +48,7 @@ class mdtPortConfigWidget : public QWidget, public Ui::mdtPortConfigWidget
 
   void on_cbFrameType_currentIndexChanged(int index);
 
-  void on_cbReadOnly_toggled(bool checked);
+  ///void on_cbReadOnly_toggled(bool checked);
 };
 
 #endif  // #ifndef MDT_PORT_CONFIG_WIDGET_H

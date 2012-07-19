@@ -144,12 +144,14 @@ bool mdtPortManager::startWriting()
   Q_ASSERT(pvPort != 0);
 
   // Calling this method on read only port is a error
+  /**
   if(config().readOnly()){
     mdtError e(MDT_PORT_IO_ERROR, "start writing called on a read only port", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
     return false;
   }
+  */
   return pvWriteThread->start();
 }
 
@@ -165,11 +167,11 @@ void mdtPortManager::stopWriting()
 
 bool mdtPortManager::start()
 {
-  if(!config().readOnly()){
+  ///if(!config().readOnly()){
     if(!startWriting()){
       return false;
     }
-  }
+  ///}
   if(!startReading()){
     stopWriting();
     return false;

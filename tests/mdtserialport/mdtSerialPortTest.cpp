@@ -26,6 +26,7 @@
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtSerialPortCtlThread.h"
+#include "mdtApplication.h"
 
 #include <QtGlobal>
 #include <QDateTime>
@@ -763,4 +764,16 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest_data()
   lst.clear();
   lst << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << "0123456789" << "abcdefghijklmnopqrstuvwxyz";
   QTest::newRow("Multi frame long data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ*0123456789*abcdefghijklmnopqrstuvwxyz*" << lst;
+}
+
+int main(int argc, char **argv)
+{
+  mdtApplication app(argc, argv);
+  mdtSerialPortTest test;
+
+  if(!app.init()){
+    return 1;
+  }
+
+  return QTest::qExec(&test, argc, argv);
 }

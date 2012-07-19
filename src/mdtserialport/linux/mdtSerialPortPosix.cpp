@@ -212,11 +212,14 @@ bool mdtSerialPortPosix::open(mdtSerialPortConfig &cfg)
   //  O_NDELAY: ignore DCD signal
   lockMutex();
   // In read only mode, we handle no lock
+  /**
   if(cfg.readOnly()){
     pvFd = ::open(pvName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK);
   }else{
     pvFd = pvPortLock->openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK);
   }
+  */
+  pvFd = pvPortLock->openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK);
   if(pvFd < 0){
     pvPortLock->unlock();
     mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);

@@ -18,48 +18,19 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PORT_TEST_H
-#define MDT_PORT_TEST_H
+#ifndef MDT_USB_TMC_PORT_TEST_H
+#define MDT_USB_TMC_PORT_TEST_H
 
 #include "mdtTest.h"
 
-class mdtPortTest : public mdtTest
+class mdtUsbTmcPortTest : public mdtTest
 {
  Q_OBJECT
 
  private slots:
 
-  // Port lock test
-#ifdef Q_OS_UNIX
-  void portLockTest();
-#endif
-
-  // Open/Close and check state
-  void openCloseTest();
-
-  // Test start and stop
-  void startStopTest();
-
-  // Check that write works
-  void writeRawTest();
-  void writeRawTest_data();
-  void writeAsciiTest();
-  void writeAsciiTest_data();
-
-  // Check that read works
-  void readRawTest();
-  void readRawTest_data();
-  void readAsciiTest();
-  void readAsciiTest_data();
-
-  // Check that read works with invalid frames
-  void readInvalidDataAsciiTest();
-
-  // Check that recovery works whenn a frame pool was empty for some time
-  void emptyQueueRecoveryTest();
-
-  // Test port manager
+  // Check USBTMC module (needs a device attached)
   void portManagerTest();
 };
 
-#endif  // #ifndef MDT_PORT_TEST_H
+#endif  // #ifndef MDT_USB_TMC_PORT_TEST_H

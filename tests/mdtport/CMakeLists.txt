@@ -5,41 +5,32 @@
 # Project
 project (multidiagtools)
 
-# Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
-set (HEADER_FILES 
-          mdtPortTest.h
-          # Utils
-          mdtTcpServer.h
-          mdtTcpServerThread.h
-    )
 
+# Target mdtPortTest
+QT4_WRAP_CPP (MOC_MDT_PORT_TEST mdtPortTest.h)
+add_executable (mdtporttest mdtPortTest.cpp ${MOC_MDT_PORT_TEST})
+target_link_libraries(mdtporttest "mdtutils")
+target_link_libraries(mdtporttest "mdtport")
+target_link_libraries(mdtporttest "mdttest")
+target_link_libraries(mdtporttest ${QT_LIBRARIES})
 
-# Liste des fichiers sources
-set (SOURCES_FILES 
-          mdtPortTest.cpp
-          # Utils
-          mdtTcpServer.cpp
-          mdtTcpServerThread.cpp
-          # Main
-          main.cpp
-    )
+# Target usbTmcPortTest
+if(UNIX)
+  QT4_WRAP_CPP (MOC_MDT_USB_TMC_PORT_TEST mdtUsbTmcPortTest.h)
+  add_executable(mdtusbtmcporttest mdtUsbTmcPortTest.cpp ${MOC_MDT_USB_TMC_PORT_TEST})
+  target_link_libraries(mdtusbtmcporttest "mdttest")
+  target_link_libraries(mdtusbtmcporttest "mdtutils")
+  target_link_libraries(mdtusbtmcporttest "mdtport")
+  target_link_libraries(mdtusbtmcporttest ${QT_LIBRARIES})
+endif(UNIX)
 
+# Target mdtTcpSocketTest
+if(UNIX)
+  QT4_WRAP_CPP (MOC_MDT_TMC_SOCKET_TEST mdtTcpSocketTest.h mdtTcpServer.h mdtTcpServerThread.h)
+  add_executable(mdttcpsockettest mdtTcpSocketTest.cpp mdtTcpServer.cpp mdtTcpServerThread.cpp ${MOC_MDT_TMC_SOCKET_TEST})
+  target_link_libraries(mdttcpsockettest "mdttest")
+  target_link_libraries(mdttcpsockettest "mdtutils")
+  target_link_libraries(mdttcpsockettest "mdtport")
+  target_link_libraries(mdttcpsockettest ${QT_LIBRARIES})
+endif(UNIX)
 
-# * mdtutils *
-
-# Fichiers à traiter par le compilateur moc
-QT4_WRAP_CPP (MOC_HEADERS ${HEADER_FILES})
-
-# Fichiers à traiter par le compilateur uic
-QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
-
-# Fichiers à traiter par le compilateur rcc
-QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
-
-# Exécutable
-add_executable (mdtPortTest ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-# Libraires à lier
-target_link_libraries(mdtPortTest "mdtutils")
-target_link_libraries(mdtPortTest "mdtport")
-target_link_libraries(mdtPortTest "mdttest")
-target_link_libraries(mdtPortTest ${QT_LIBRARIES})

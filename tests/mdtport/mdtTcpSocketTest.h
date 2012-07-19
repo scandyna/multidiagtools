@@ -18,41 +18,23 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include <QApplication>
-#include <QDebug>
-#include "mdtPortTest.h"
-#include "mdtErrorOut.h"
+#ifndef MDT_TCP_SOCKET_TEST_H
+#define MDT_TCP_SOCKET_TEST_H
 
-int main(int argc, char **argv)
+#include "mdtTest.h"
+
+class mdtTcpSocketTest : public mdtTest
 {
-  QApplication app(argc, argv);
-  int retVal = 0;
+ Q_OBJECT
 
-#ifdef Q_OS_UNIX
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-#endif
+ private slots:
 
-  // Init error system
-  if(!mdtErrorOut::init("mdtutilstest.log")){
-    qDebug() << "main(): unable to init the error system";
-    return 1;
-  }
-  mdtErrorOut::setDialogLevelsMask(0);
-  // Test objetcs
-  mdtPortTest portTest;
+  // Test TCP/IP socket
+  void tcpSocketTest();
+  void tcpSocketTest_data();
 
-  // Run test classes
-  retVal = 0;
-  // Device dependent tests
-  retVal = QTest::qExec(&portTest, argc, argv);
-  if(retVal!=0){
-    return retVal;
-  }
+  // Check that TCP/IP read works with invalid frames
+  void tcpSocketRreadInvalidDataTest();
+};
 
-  // Enable this warning if a test is temporary diseabled
-  //qDebug() << "*!!* WWW Some tests are diseabled !!!!! WWW *!!*";
-
-  // Free the error system
-  mdtErrorOut::destroy();
-  return 0;
-}
+#endif  // #ifndef MDT_TCP_SOCKET_TEST_H

@@ -24,7 +24,7 @@ void mdtPortConfig::setDefault()
   pvEndOfFrameSeq.clear();
   pvEndOfFrameSeq.append('\n');
   pvBytePerByteWrite = false;
-  pvReadOnly = false;
+  ///pvReadOnly = false;
 }
 
 void mdtPortConfig::setReadFrameSize(int size)
@@ -163,15 +163,19 @@ bool mdtPortConfig::bytePerByteWrite()
   return pvBytePerByteWrite;
 }
 
+/**
 void mdtPortConfig::setReadOnly(bool readOnly)
 {
   pvReadOnly = readOnly;
 }
+*/
 
+/**
 bool mdtPortConfig::readOnly()
 {
   return pvReadOnly;
 }
+*/
 
 bool mdtPortConfig::operator==(const mdtPortConfig &other)
 {
@@ -209,8 +213,10 @@ bool mdtPortConfig::matches(const mdtPortConfig &other)
   if(pvWriteTimeout != other.pvWriteTimeout){
     return false;
   }
+  /**
   if(pvReadOnly != other.pvReadOnly){
     return false;
   }
+  */
   return true;
 }

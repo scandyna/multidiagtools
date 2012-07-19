@@ -25,30 +25,17 @@
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtFrame.h"
-#include "mdtTcpSocket.h"
-#include "mdtTcpSocketThread.h"
 #include <QTemporaryFile>
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
-#include <QTcpSocket>
-#include "mdtTcpServer.h"
+#include "mdtApplication.h"
 
-#include "mdtFrameCodecModbus.h"
-#include "mdtFrameModbusTcp.h"
-
-#include <QDebug>
-
-#include "linux/mdtUsbtmcPort.h"
-#include "linux/mdtUsbtmcPortManager.h"
+//#include <QDebug>
 
 #ifdef Q_OS_UNIX
   #include "linux/mdtPortLock.h"
 #endif
-
-void mdtPortTest::initTestCase()
-{
-}
 
 #ifdef Q_OS_UNIX
 void mdtPortTest::portLockTest()
@@ -67,16 +54,16 @@ void mdtPortTest::portLockTest()
   // Try to reopen locked file with same object
   QVERIFY(lck.openLocked("/dev/ttyS0", O_RDWR | O_NONBLOCK) < 0);
   QVERIFY(lck.isLocked());
-  
+
   // Try to open with second object
   QVERIFY(lck2.openLocked("/dev/ttyS0", O_RDWR | O_NONBLOCK) < 0);
   QVERIFY(lck2.isLocked());
-  
+
   // Free first lock
   lck.unlock();
   QVERIFY(!lck.isLocked());
   close(fd);
-  
+
   // Try to open with second object
   fd = lck2.openLocked("/dev/ttyS0", O_RDWR | O_NONBLOCK);
   QVERIFY(fd >= 0);
@@ -110,13 +97,17 @@ void mdtPortTest::openCloseTest()
   QVERIFY(!port.isOpen());
 
   // Open read only
+  /**
   cfg.setReadOnly(true);
   QVERIFY(port.open(cfg));
   QVERIFY(port.isOpen());
+  */
 
   // Close
+  /**
   port.close();
   QVERIFY(!port.isOpen());
+  */
 }
 
 void mdtPortTest::startStopTest()
@@ -920,321 +911,25 @@ void mdtPortTest::portManagerTest()
   QVERIFY(!m2.openPort());
 
   // In read only, port must be open
-  m2.config().setReadOnly(true);
-  QVERIFY(m2.openPort());
+  ///m2.config().setReadOnly(true);
+  ///QVERIFY(m2.openPort());
 
   // Chack that start and running flag works
-  QVERIFY(m2.start());
-  QVERIFY(m2.isRunning());
-  
+  ///QVERIFY(m2.start());
+  ///QVERIFY(m2.isRunning());
+
   m.closePort();
-  m2.closePort();
+  ///m2.closePort();
 }
 
-#ifdef Q_OS_UNIX
-void mdtPortTest::usbtmcPortTest()
+int main(int argc, char **argv)
 {
-  mdtUsbtmcPortManager m;
-  QStringList ports;
+  mdtApplication app(argc, argv);
+  mdtPortTest test;
 
-  qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
-
-  // Find attached devices
-  ports = m.scan();
-  QVERIFY(ports.size() > 0);
-
-  // Init port manager
-  QVERIFY(m.setPortName(ports.at(0)));
-  QVERIFY(m.openPort());
-
-  // start threads
-  QVERIFY(m.start());
-
-  // Query without answer
-  QVERIFY(m.writeData("*CLS\n", false));
-
-  // Try to query device
-  for(int i=0; i<5; i++){
-    // Send a command
-    QVERIFY(m.writeData("*IDN?\n", true));
-    // Wait and read answer
-    QVERIFY(m.lastReadenFrame().size() <= 0);
-    QVERIFY(m.waitReadenFrame());
-    QVERIFY(m.lastReadenFrame().size() > 0);
-  }
-}
-#endif // #ifdef Q_OS_UNIX
-
-void mdtPortTest::tcpSocketTest()
-{
-  mdtTcpSocket s;
-  mdtPortConfig cfg;
-  mdtTcpSocketThread thd;
-  mdtFrame *frame;
-  mdtTcpServer tcpServer;
-  QStringList responses;
-
-  // Get data set
-  QFETCH(QStringList, queries);
-  QFETCH(QStringList, responsesRef);
-
-  // Init the tcp server
-  QVERIFY(tcpServer.listen());
-
-  // Setup
-  cfg.setFrameType(mdtFrame::FT_ASCII);
-  cfg.setReadQueueSize(10);
-  cfg.setWriteQueueSize(10);
-  cfg.setReadTimeout(500);
-  cfg.setWriteTimeout(500);
-  cfg.setEndOfFrameSeq('*');
-  //QVERIFY(s.setAttributes("127.0.0.1:80"));
-  QVERIFY(s.open(cfg));
-
-  // Assign socket to the thread
-  thd.setPort(&s);
-
-  // Start
-  QVERIFY(thd.start());
-  QVERIFY(thd.isRunning());
-
-  // Responses comming from server
-  responses = responsesRef;
-  // Add the EOF sequence
-  for(int i=0; i<responses.size(); i++){
-    responses[i].append("*");
+  if(!app.init()){
+    return 1;
   }
 
-  // Set TCP server data
-  tcpServer.setResponseData(responses);
-
-  // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
-
-  // Send data to server
-  s.lockMutex();
-  QVERIFY(s.writeFramesPool().size() >= queries.size());
-  s.unlockMutex();
-  for(int i=0; i<queries.size(); i++){
-    s.lockMutex();
-    // Get a frame
-    frame = s.writeFramesPool().dequeue();
-    QVERIFY(frame != 0);
-    // Add some data to frame and commit
-    frame->clear();
-    frame->append(queries.at(i).toAscii());
-    s.writeFrames().enqueue(frame);
-    s.unlockMutex();
-    s.beginNewTransaction();
-  }
-  s.unlockMutex();
-
-  // Wait some time and verify that data was exchanged
-  QTest::qWait(100);
-
-  // Check received data
-  s.lockMutex();
-  QVERIFY(s.readenFrames().size() == responses.size());
-  for(int i=0; i<responses.size(); i++){
-    // Get a frame
-    frame = s.readenFrames().dequeue();
-    QVERIFY(frame != 0);
-    QVERIFY(*frame == responsesRef.at(i));
-  }
-  s.unlockMutex();
-
-  // End
-  thd.stop();
-}
-
-void mdtPortTest::tcpSocketTest_data()
-{
-  QStringList q;
-  QStringList r;
-
-  QTest::addColumn<QStringList>("queries");
-  QTest::addColumn<QStringList>("responsesRef");
-
-  q.clear();
-  r.clear();
-  q << "";
-  r << "";
-  QTest::newRow("Empty data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "A";
-  r << "1";
-  QTest::newRow("1 char data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "ABCD";
-  r << "1234";
-  QTest::newRow("1 frame short data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  r << "1234567890";
-  QTest::newRow("1 frame middle len data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  r << "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  QTest::newRow("1 frame long data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "A" << "B" << "C" << "D";
-  r << "Z" << "8" << "G" << "4";
-  QTest::newRow("Multi frame short data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "ABCD" << "1234" << "abcd";
-  r << "9876" << "FGHI" << "askjdf";
-  QTest::newRow("Multi frame middle len data") << q << r;
-
-  q.clear();
-  r.clear();
-  q << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << "0123456789" << "abcdefghijklmnopqrstuvwxyz";
-  r << "0123456789" << "ABCDEFGHIJK0055LMNOPQRSTUVWXYZ" << "abcdefghijklmnopqrstuvwxyz8545";
-  QTest::newRow("Multi frame long data") << q << r;
-}
-
-void mdtPortTest::tcpSocketRreadInvalidDataTest()
-{
-  mdtTcpSocket s;
-  mdtPortConfig cfg;
-  mdtTcpSocketThread thd;
-  mdtFrame *frame;
-  mdtTcpServer tcpServer;
-  QStringList responses;
-
-  // Init the tcp server
-  QVERIFY(tcpServer.listen());
-
-  // Setup
-  cfg.setFrameType(mdtFrame::FT_ASCII);
-  cfg.setReadQueueSize(10);
-  cfg.setReadFrameSize(10);
-  cfg.setWriteQueueSize(10);
-  cfg.setReadTimeout(500);
-  cfg.setWriteTimeout(500);
-  cfg.setEndOfFrameSeq('*');
-  QVERIFY(s.open(cfg));
-
-  // Assign socket to the thread
-  thd.setPort(&s);
-
-  // Start
-  QVERIFY(thd.start());
-  QVERIFY(thd.isRunning());
-
-  /*
-   * Data without EOF , size < capacity : must not crash, no frame must be readen
-   */
-
-  responses.clear();
-  responses << "ABCDE";
-  QVERIFY(responses.at(0).size() < cfg.readFrameSize());
-
-  // Set TCP server data
-  tcpServer.setResponseData(responses);
-  QVERIFY(tcpServer.isListening());
-
-  // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
-
-  // Wait some time and verify that data was exchanged
-  QTest::qWait(100);
-
-  // Check received data
-  s.lockMutex();
-  QVERIFY(s.readenFrames().size() == 0);
-  s.unlockMutex();
-
-  // Wait some time to enshure TCP server has finished ...
-  tcpServer.close();
-  QTest::qWait(100);
-
-  // Restart
-  thd.stop();
-  QVERIFY(!thd.isRunning());
-  QVERIFY(thd.start());
-  QVERIFY(thd.isRunning());
-
-  /*
-   * Data with EOF , size == capacity : must not crash, 1 frame must be readen
-   */
-
-  responses.clear();
-  responses << "0123456789";
-  QVERIFY(responses.at(0).size() == cfg.readFrameSize());
-
-  // Set TCP server data
-  tcpServer.setResponseData(responses);
-  QVERIFY(tcpServer.listen());
-
-  // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
-
-  // Wait some time and verify that data was exchanged
-  QTest::qWait(100);
-
-  // Check received data
-  s.lockMutex();
-  QVERIFY(s.readenFrames().size() == 1);
-  // Get a frame
-  frame = s.readenFrames().dequeue();
-  QVERIFY(frame != 0);
-  QVERIFY(*frame == responses.at(0));
-  // Restore frame
-  s.readFramesPool().enqueue(frame);
-  s.unlockMutex();
-
-  // Wait some time to enshure TCP server has finished ...
-  tcpServer.close();
-  QTest::qWait(100);
-
-  // Restart
-  thd.stop();
-  QVERIFY(!thd.isRunning());
-  QVERIFY(thd.start());
-  QVERIFY(thd.isRunning());
-
-  /*
-   * Data with EOF , size > capacity (but < 2*capacity) : must not crash, 1 frame must be readen
-   */
-
-  responses.clear();
-  responses << "0123456789abcdefg";
-  QVERIFY(responses.at(0).size() > cfg.readFrameSize());
-  QVERIFY(responses.at(0).size() < 2*cfg.readFrameSize());
-
-  // Set TCP server data
-  tcpServer.setResponseData(responses);
-  QVERIFY(tcpServer.listen());
-
-  // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
-
-  // Wait some time and verify that data was exchanged
-  QTest::qWait(100);
-
-  // Check received data
-  s.lockMutex();
-  QVERIFY(s.readenFrames().size() == 1);
-  // Get a frame
-  frame = s.readenFrames().dequeue();
-  QVERIFY(frame != 0);
-  QVERIFY(*frame == "0123456789");
-  // Restore frame
-  s.readFramesPool().enqueue(frame);
-  s.unlockMutex();
-
-  // End
-  thd.stop();
+  return QTest::qExec(&test, argc, argv);
 }

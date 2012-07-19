@@ -85,7 +85,7 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
     pvReadFramesPool.enqueue(frame);
   }
   // Create the write frames pools
-  if(!cfg.readOnly()){
+  ///if(!cfg.readOnly()){
     for(int i=0; i<cfg.writeQueueSize(); i++){
       switch(cfg.frameType()){
         // Raw (binary) frame
@@ -112,7 +112,7 @@ bool mdtAbstractPort::open(mdtPortConfig &cfg)
       frame->reserve(cfg.writeFrameSize());
       pvWriteFramesPool.enqueue(frame);
     }
-  }
+  ///}
   pvConfig = cfg;
   pvIsOpen = true;
   unlockMutex();
