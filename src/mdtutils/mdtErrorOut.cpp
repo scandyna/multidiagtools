@@ -388,7 +388,6 @@ void mdtErrorOutLogger::run()
       qDebug() << "-> System returned error : " << errno << strerror(errno);
     }
     // Make backups
-    qDebug() << "logFileSize: " << logFileSize << " , logFileMaxSize: " << logFileMaxSize;
     if(logFileSize > logFileMaxSize){
       // We make it simple, with just 1 backup file
       backupName = logFilePath;
