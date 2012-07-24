@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -409,7 +410,7 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 
 <p>Set port name. </p>
 <p>Try to open given port. If ok, the port name will be kept.<br/>
- <a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7" title="Set the port attributes.">mdtAbstractPort::setAttributes()</a> will be called to fetch some attributes (for example available baud rates if port is a <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a> object). </p>
+ mdtAbstractPort::setAttributes() will be called to fetch some attributes (for example available baud rates if port is a <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a> object). </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set before with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> </dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -419,6 +420,9 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> </dd></dl>
+
+<p><p>return pvPort-&gt;setAttributes(portName); </p>
+</p>
 
 </div>
 </div>
@@ -441,6 +445,10 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4" title="Start the read thread.">startReading()</a> </dd>
 <dd>
 <a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc" title="Start the write thread.">startWriting()</a> </dd></dl>
+
+<p><p>if(!config().readOnly()){</p>
+<p>} </p>
+</p>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">mdtSerialPortManager</a>.</p>
 
@@ -488,6 +496,9 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 <dl class="see"><dt><b>See also:</b></dt><dd>mdtThread </dd>
 <dd>
 <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> </dd></dl>
+
+<p><p>if(<a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the config object.">config()</a>.readOnly()){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, "start writing called on a read only port", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtPortManager"); e.commit(); return false; }</p>
+</p>
 
 </div>
 </div>
@@ -648,7 +659,7 @@ Config must be set with <a class="el" href="classmdt_port_manager.html#a087ade14
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 24 2012 20:17:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

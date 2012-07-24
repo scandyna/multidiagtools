@@ -28,6 +28,7 @@
 #include <QQueue>
 #include <QList>
 
+/// NOTE: \todo Comment this class
 class mdtAbstractSerialPort : public mdtAbstractPort
 {
  Q_OBJECT
@@ -54,7 +55,7 @@ class mdtAbstractSerialPort : public mdtAbstractPort
                       };
 
   mdtAbstractSerialPort(QObject *parent = 0);
-  ~mdtAbstractSerialPort();
+  virtual ~mdtAbstractSerialPort();
 
   /*! \brief Open the port
    *
@@ -63,7 +64,7 @@ class mdtAbstractSerialPort : public mdtAbstractPort
    *  - Close previous opened ressource
    *  - Lock the mutex with lockMutex()
    *  - Do the specific work
-   *  - Set the read/write timeouts. See the mdtPortConfig to know how to get these timeouts.
+   *  - Set the read/write timeouts. See the mdtSerialPortConfig to know how to get these timeouts.
    *  - Call this open method (with mdtAbstractPort::open() ).
    * At this last step, the queues will be initialized, and mutex unocked.
    * \return True on successfull configuration and open port
@@ -83,10 +84,12 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   /*! \brief Wait until a control (modem line) signal state changes
    *
    * This method must be re-implemented in plateform specific subclass.
+   *
    * \return False on error, in this case, the thread will be stopped.
    */
   virtual bool waitEventCtl() = 0;
 
+  /// NOTE: \todo Update name to : updateCtlStates ?
   /*! \brief Get the control (modem line) signal states and update member flags
    *
    * This method must be re-implemented in plateform specific subclass.
@@ -94,13 +97,38 @@ class mdtAbstractSerialPort : public mdtAbstractPort
    */
   virtual bool getCtlStates() = 0;
 
+  /*! \brief Get the CAR (CD) state
+   *
+   * The mutex is handled in this method.
+   */
+  bool carIsOn();
+
+  /*! \brief Get the DSR state
+   *
+   * The mutex is handled in this method.
+   */
+  bool dsrIsOn();
+
+  /*! \brief Get the CTS state
+   *
+   * The mutex is handled in this method.
+   */
+  bool ctsIsOn();
+
+  /*! \brief Get the RNG (RI) state
+   *
+   * The mutex is handled in this method.
+   */
+  bool rngIsOn();
+
  public slots:
 
   /*! \brief Enable/diseable the RTS (Request To Send) signal
    *
    * This method must be re-implemented in plateform specific subclass.<br>
    * If port is not open, this method must make no system call.<br>
-   * This method locks the mutex.
+   * The mutex is handled in this method.
+   *
    * \param on If true, RTS will be enabled, diseabled else
    */
   virtual void setRts(bool on) = 0;
@@ -109,7 +137,8 @@ class mdtAbstractSerialPort : public mdtAbstractPort
    *
    * This method must be re-implemented in plateform specific subclass.<br>
    * If port is not open, this method must make no system call.<br>
-   * This method locks the mutex.
+   * The mutex is handled in this method.
+   *
    * \param on If true, DTR will be enabled, diseabled else
    */
   virtual void setDtr(bool on) = 0;
@@ -137,7 +166,7 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   void rngChanged(bool on);
 
  protected:
-  
+
   // Control signals states
   bool pvCarIsOn;
   bool pvDsrIsOn;

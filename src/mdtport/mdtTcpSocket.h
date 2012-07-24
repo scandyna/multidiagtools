@@ -40,7 +40,11 @@ class mdtTcpSocket : public mdtAbstractPort
   ~mdtTcpSocket();
 
   // Implementation of mdtAbstractPort
-  bool setAttributes(const QString &portName);
+  ///bool setAttributes(const QString &portName);
+
+  /*! \brief Implemeted for conformity with mdtAbstractPort, does nothing.
+   */
+  error_t tryOpen();
 
   // Implementation of mdtAbstractPort - Locks the mutex
   bool open(mdtPortConfig &cfg);

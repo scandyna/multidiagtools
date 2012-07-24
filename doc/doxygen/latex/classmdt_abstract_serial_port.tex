@@ -4,6 +4,15 @@
 }
 
 
+NOTE:  
+
+
+
+
+{\ttfamily \#include $<$mdtAbstractSerialPort.h$>$}
+
+
+
 Inheritance diagram for mdtAbstractSerialPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -89,7 +98,15 @@ QList$<$ int $>$ \& \hyperlink{classmdt_abstract_serial_port_aecd76bff0f93cb86c3
 virtual bool \hyperlink{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{waitEventCtl} ()=0
 \begin{DoxyCompactList}\small\item\em Wait until a control (modem line) signal state changes. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{getCtlStates} ()=0
-\begin{DoxyCompactList}\small\item\em Get the control (modem line) signal states and update member flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em NOTE: \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_serial_port_abf0be424c1a8cf01b830cc6b371e8695}{carIsOn} ()
+\begin{DoxyCompactList}\small\item\em Get the CAR (CD) state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_serial_port_a76816aa53a6dce0ab30b9f1d095dd045}{dsrIsOn} ()
+\begin{DoxyCompactList}\small\item\em Get the DSR state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_serial_port_a9bea314eefd6f4ec79456bc21e6c66af}{ctsIsOn} ()
+\begin{DoxyCompactList}\small\item\em Get the CTS state. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_abstract_serial_port_a0a3954438d1e8180e53717cc0fe1ce3e}{rngIsOn} ()
+\begin{DoxyCompactList}\small\item\em Get the RNG (RI) state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -125,6 +142,13 @@ QList$<$ int $>$ {\bfseries pvAvailableBaudRates}}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+NOTE: 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000011}{Todo}]Comment this class \end{Desc}
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_abstract_serial_port_a63ddcadf5d8a63c479b0b6a24f89c837}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!carChanged@{carChanged}}
@@ -144,7 +168,20 @@ Emited whenn CAR (CD) status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_abstract_serial_port_adf45a5006218ef5660721ecdf8454b5d}{
+\hypertarget{classmdt_abstract_serial_port_abf0be424c1a8cf01b830cc6b371e8695}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!carIsOn@{carIsOn}}
+\index{carIsOn@{carIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{carIsOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSerialPort::carIsOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_serial_port_abf0be424c1a8cf01b830cc6b371e8695}
+
+
+Get the CAR (CD) state. 
+
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_adf45a5006218ef5660721ecdf8454b5d}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!ctsChanged@{ctsChanged}}
 \index{ctsChanged@{ctsChanged}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{ctsChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSerialPort::ctsChanged (
@@ -162,7 +199,20 @@ Emited whenn CTS status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_abstract_serial_port_a077d8c39ed12713742f1f2ffa0dca11d}{
+\hypertarget{classmdt_abstract_serial_port_a9bea314eefd6f4ec79456bc21e6c66af}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!ctsIsOn@{ctsIsOn}}
+\index{ctsIsOn@{ctsIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{ctsIsOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSerialPort::ctsIsOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_serial_port_a9bea314eefd6f4ec79456bc21e6c66af}
+
+
+Get the CTS state. 
+
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_a077d8c39ed12713742f1f2ffa0dca11d}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!dsrChanged@{dsrChanged}}
 \index{dsrChanged@{dsrChanged}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{dsrChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSerialPort::dsrChanged (
@@ -180,7 +230,20 @@ Emited whenn DSR status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{
+\hypertarget{classmdt_abstract_serial_port_a76816aa53a6dce0ab30b9f1d095dd045}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!dsrIsOn@{dsrIsOn}}
+\index{dsrIsOn@{dsrIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{dsrIsOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSerialPort::dsrIsOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_serial_port_a76816aa53a6dce0ab30b9f1d095dd045}
+
+
+Get the DSR state. 
+
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!getCtlStates@{getCtlStates}}
 \index{getCtlStates@{getCtlStates}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{getCtlStates}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::getCtlStates (
@@ -191,14 +254,20 @@ Emited whenn DSR status changed.
 \label{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}
 
 
-Get the control (modem line) signal states and update member flags. 
+NOTE: 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+
+
+Get the control (modem line) signal states and update member flags
 
 This method must be re-\/implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
 False on error, in this case, the thread will be stopped. 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_serial_port_posix_a849ce720a56af921c0ecf9ba08744acc}{mdtSerialPortPosix}.
+Implemented in \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!open@{open}}
@@ -219,7 +288,7 @@ This method must be re-\/implemented in subclass.\par
 \item Close previous opened ressource
 \item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
 \item Do the specific work
-\item Set the read/write timeouts. See the \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
+\item Set the read/write timeouts. See the \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} to know how to get these timeouts.
 \item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, and mutex unocked. \begin{DoxyReturn}{Returns}
 True on successfull configuration and open port 
 \end{DoxyReturn}
@@ -229,7 +298,7 @@ True on successfull configuration and open port
 
 \end{DoxyItemize}
 
-Implemented in \hyperlink{classmdt_serial_port_posix_afb1bcf27cc39cd962913b056ca8d4ccc}{mdtSerialPortPosix}.
+Implemented in \hyperlink{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_serial_port_a47c08ccb99dc6de76ae58ebeefc26857}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!rngChanged@{rngChanged}}
@@ -249,7 +318,20 @@ Emited whenn RNG (RI) status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
-\hypertarget{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{
+\hypertarget{classmdt_abstract_serial_port_a0a3954438d1e8180e53717cc0fe1ce3e}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!rngIsOn@{rngIsOn}}
+\index{rngIsOn@{rngIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{rngIsOn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSerialPort::rngIsOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_serial_port_a0a3954438d1e8180e53717cc0fe1ce3e}
+
+
+Get the RNG (RI) state. 
+
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setDtr@{setDtr}}
 \index{setDtr@{setDtr}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{setDtr}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSerialPort::setDtr (
@@ -264,14 +346,16 @@ Enable/diseable the DTR (Data Terminal Ready) signal.
 
 This method must be re-\/implemented in plateform specific subclass.\par
  If port is not open, this method must make no system call.\par
- This method locks the mutex. 
+ The mutex is handled in this method.
+
+
 \begin{DoxyParams}{Parameters}
 {\em on} & If true, DTR will be enabled, diseabled else \\
 \hline
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classmdt_serial_port_posix_a0d489a938cba216ab43d3ae591689676}{mdtSerialPortPosix}, and \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setRts@{setRts}}
@@ -288,14 +372,16 @@ Enable/diseable the RTS (Request To Send) signal.
 
 This method must be re-\/implemented in plateform specific subclass.\par
  If port is not open, this method must make no system call.\par
- This method locks the mutex. 
+ The mutex is handled in this method.
+
+
 \begin{DoxyParams}{Parameters}
 {\em on} & If true, RTS will be enabled, diseabled else \\
 \hline
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classmdt_serial_port_posix_a3d27cec6098549cdba68465b8c5d4480}{mdtSerialPortPosix}, and \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!waitEventCtl@{waitEventCtl}}
@@ -310,12 +396,14 @@ Implemented in \hyperlink{classmdt_serial_port_posix_a3d27cec6098549cdba68465b8c
 
 Wait until a control (modem line) signal state changes. 
 
-This method must be re-\/implemented in plateform specific subclass. \begin{DoxyReturn}{Returns}
+This method must be re-\/implemented in plateform specific subclass.
+
+\begin{DoxyReturn}{Returns}
 False on error, in this case, the thread will be stopped. 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_serial_port_posix_a8ec213863c6eacfc8d3079aadc9ef43b}{mdtSerialPortPosix}.
+Implemented in \hyperlink{classmdt_serial_port_acc51ca593b4592f806ef4b9791486f47}{mdtSerialPort}.
 
 
 

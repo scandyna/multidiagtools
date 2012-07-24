@@ -15,12 +15,12 @@ using namespace std;
 class mdtTest : public QObject
 {
  Q_OBJECT
- 
+
  public:
-   
+
   mdtTest();
   ~mdtTest();
-  
+
   /*! \brief Verify a statement
    *
    */
@@ -31,7 +31,6 @@ class mdtTest : public QObject
   */
  void randomValueInit();
  int randomValue(int min, int max);
- 
 };
 
 #endif  // ifdef MDT_TEST_H

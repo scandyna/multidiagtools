@@ -27,10 +27,183 @@ Collaboration diagram for mdtPort:\nopagebreak
 {\bfseries mdtPort} (QObject $\ast$parent=0)}
 \label{classmdt_port_ac466eac9d1a54ea0e04c998660ad75ec}
 
-\end{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}{tryOpen} ()
+\begin{DoxyCompactList}\small\item\em bool setAttributes(const QString \&portName); \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)
+\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{close} ()
+\begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_aa77b266f23744f1b53ae589f986be101}{
+void \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{setReadTimeout} (int timeout)}
+\label{classmdt_port_aa77b266f23744f1b53ae589f986be101}
+
+\begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{
+void \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{setWriteTimeout} (int timeout)}
+\label{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}
+
+\begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_af8737cc14667f6770af7be01759253e2}{waitForReadyRead} ()
+\begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
+qint64 \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{read} (char $\ast$data, qint64 maxSize)
+\begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{
+void \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{flushIn} ()}
+\label{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}
+
+\begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}{waitEventWriteReady} ()
+\begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
+qint64 \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{write} (const char $\ast$data, qint64 maxSize)
+\begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_a42022f9fe08166418711b956c6aabb49}{
+void \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{flushOut} ()}
+\label{classmdt_port_a42022f9fe08166418711b956c6aabb49}
+
+\begin{DoxyCompactList}\small\item\em Flush write buffers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{
+\index{mdtPort@{mdtPort}!close@{close}}
+\index{close@{close}!mdtPort@{mdtPort}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPort::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}
+
+
+Close the port. 
+
+
+
+if(pvFd $>$= 0)\{
+
+\} 
+
+
+
+Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}{
+\index{mdtPort@{mdtPort}!open@{open}}
+\index{open@{open}!mdtPort@{mdtPort}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPort::open (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortConfig} \&}]{cfg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}
+
+
+Open the port. 
+
+Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues. 
+
+Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{
+\index{mdtPort@{mdtPort}!read@{read}}
+\index{read@{read}!mdtPort@{mdtPort}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtPort::read (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{qint64}]{maxSize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}
+
+
+Read data from port. 
+
+This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly. 
+
+Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}{
+\index{mdtPort@{mdtPort}!tryOpen@{tryOpen}}
+\index{tryOpen@{tryOpen}!mdtPort@{mdtPort}}
+\subsubsection[{tryOpen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPort::tryOpen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}
+
+
+bool setAttributes(const QString \&portName); 
+
+Try to open port.
+
+Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. \begin{DoxyPrecond}{Precondition}
+The port must not be open whenn calling this method.
+\end{DoxyPrecond}
+bool mdtPort::setAttributes(const QString \&portName) \{ Close previous opened device this-\/$>$\hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{close()}; Try to open given port pvFd = ::open(portName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + portName, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtPort\char`\"{}); e.commit(); pvPortName = \char`\"{}\char`\"{}; return false; \} Set attributes pvPortName = portName; Close the port this-\/$>$\hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{close()};
+
+return true; \} 
+
+Implements \hyperlink{classmdt_abstract_port_a44d2d57b118d2b1f7a0041fcf84958ac}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}{
+\index{mdtPort@{mdtPort}!waitEventWriteReady@{waitEventWriteReady}}
+\index{waitEventWriteReady@{waitEventWriteReady}!mdtPort@{mdtPort}}
+\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPort::waitEventWriteReady (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}
+
+
+Wait until data can be written to port. 
+
+This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+
+Implements \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_af8737cc14667f6770af7be01759253e2}{
+\index{mdtPort@{mdtPort}!waitForReadyRead@{waitForReadyRead}}
+\index{waitForReadyRead@{waitForReadyRead}!mdtPort@{mdtPort}}
+\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPort::waitForReadyRead (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_af8737cc14667f6770af7be01759253e2}
+
+
+Wait until data is available on port. 
+
+This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+
+Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{
+\index{mdtPort@{mdtPort}!write@{write}}
+\index{write@{write}!mdtPort@{mdtPort}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtPort::write (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{data, }
+\item[{qint64}]{maxSize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}
+
+
+Write data to port. 
+
+This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly. Mutex is not handled by this method. 
+
+Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-src/mdtport/mdtPort.h\item 
-src/mdtport/mdtPort.cpp\end{DoxyCompactItemize}
+src/mdtport/linux/mdtPort.h\item 
+src/mdtport/linux/mdtPort.cpp\end{DoxyCompactItemize}

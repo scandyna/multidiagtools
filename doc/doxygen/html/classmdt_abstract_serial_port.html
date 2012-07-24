@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -69,12 +70,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtAbstractSerialPort Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtAbstractSerialPort" --><!-- doxytag: inherits="mdtAbstractPort" --><div class="dynheader">
+<!-- doxytag: class="mdtAbstractSerialPort" --><!-- doxytag: inherits="mdtAbstractPort" -->
+<p>NOTE:  
+ <a href="classmdt_abstract_serial_port.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__inherit__graph.png" border="0" usemap="#mdt_abstract_serial_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_abstract_serial_port_inherit__map" id="mdt_abstract_serial_port_inherit__map">
-<area shape="rect" id="node5" href="classmdt_serial_port_posix.html" title="mdtSerialPortPosix" alt="" coords="13,160,147,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,5,139,35"/><area shape="rect" id="node7" href="classmdt_serial_port.html" title="mdtSerialPort" alt="" coords="29,237,131,267"/></map>
+<area shape="rect" id="node5" href="classmdt_serial_port.html" title="mdtSerialPort" alt="" coords="29,160,131,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtAbstractSerialPort:</div>
@@ -142,7 +148,15 @@ QList&lt; int &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a c
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ac27d1224db349bcf7f161329b5f53efb">waitEventCtl</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#ac27d1224db349bcf7f161329b5f53efb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">getCtlStates</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the control (modem line) signal states and update member flags.  <a href="#aaeacd26b220ab0f8c521cef74edfafdd"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE:  <a href="#aaeacd26b220ab0f8c521cef74edfafdd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#abf0be424c1a8cf01b830cc6b371e8695">carIsOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the CAR (CD) state.  <a href="#abf0be424c1a8cf01b830cc6b371e8695"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a76816aa53a6dce0ab30b9f1d095dd045">dsrIsOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DSR state.  <a href="#a76816aa53a6dce0ab30b9f1d095dd045"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a9bea314eefd6f4ec79456bc21e6c66af">ctsIsOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the CTS state.  <a href="#a9bea314eefd6f4ec79456bc21e6c66af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a0a3954438d1e8180e53717cc0fe1ce3e">rngIsOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RNG (RI) state.  <a href="#a0a3954438d1e8180e53717cc0fe1ce3e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49907da757ca24c88c0a63275f9a2700"></a><!-- doxytag: member="mdtAbstractSerialPort::pvCarIsOn" ref="a49907da757ca24c88c0a63275f9a2700" args="" -->
@@ -158,7 +172,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvRngIsOn</b></td></t
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7ac0cd1058d0b6b322c41479b8ee631"></a><!-- doxytag: member="mdtAbstractSerialPort::pvAvailableBaudRates" ref="aa7ac0cd1058d0b6b322c41479b8ee631" args="" -->
 QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvailableBaudRates</b></td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>NOTE: </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Comment this class </dd></dl>
+</div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a63ddcadf5d8a63c479b0b6a24f89c837"></a><!-- doxytag: member="mdtAbstractSerialPort::carChanged" ref="a63ddcadf5d8a63c479b0b6a24f89c837" args="(bool on)" -->
 <div class="memitem">
 <div class="memproto">
@@ -181,6 +198,25 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="abf0be424c1a8cf01b830cc6b371e8695"></a><!-- doxytag: member="mdtAbstractSerialPort::carIsOn" ref="abf0be424c1a8cf01b830cc6b371e8695" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractSerialPort::carIsOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the CAR (CD) state. </p>
+<p>The mutex is handled in this method. </p>
 
 </div>
 </div>
@@ -209,6 +245,25 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 </div>
 </div>
+<a class="anchor" id="a9bea314eefd6f4ec79456bc21e6c66af"></a><!-- doxytag: member="mdtAbstractSerialPort::ctsIsOn" ref="a9bea314eefd6f4ec79456bc21e6c66af" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractSerialPort::ctsIsOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the CTS state. </p>
+<p>The mutex is handled in this method. </p>
+
+</div>
+</div>
 <a class="anchor" id="a077d8c39ed12713742f1f2ffa0dca11d"></a><!-- doxytag: member="mdtAbstractSerialPort::dsrChanged" ref="a077d8c39ed12713742f1f2ffa0dca11d" args="(bool on)" -->
 <div class="memitem">
 <div class="memproto">
@@ -234,6 +289,25 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 </div>
 </div>
+<a class="anchor" id="a76816aa53a6dce0ab30b9f1d095dd045"></a><!-- doxytag: member="mdtAbstractSerialPort::dsrIsOn" ref="a76816aa53a6dce0ab30b9f1d095dd045" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractSerialPort::dsrIsOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the DSR state. </p>
+<p>The mutex is handled in this method. </p>
+
+</div>
+</div>
 <a class="anchor" id="aaeacd26b220ab0f8c521cef74edfafdd"></a><!-- doxytag: member="mdtAbstractSerialPort::getCtlStates" ref="aaeacd26b220ab0f8c521cef74edfafdd" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -248,11 +322,13 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </div>
 <div class="memdoc">
 
-<p>Get the control (modem line) signal states and update member flags. </p>
+<p>NOTE: </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc">mdtSerialPortPosix</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -278,13 +354,13 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <li>Close previous opened ressource</li>
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
 <li>Do the specific work</li>
-<li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
-<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, and mutex unocked. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<li>Set the read/write timeouts. See the <a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> to know how to get these timeouts.</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Set the port attributes.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, and mutex unocked. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
 </li>
 </ul>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc">mdtSerialPortPosix</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port.html#a523cc099b9fff06c46ce1c251646ca20">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -313,6 +389,25 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 </div>
 </div>
+<a class="anchor" id="a0a3954438d1e8180e53717cc0fe1ce3e"></a><!-- doxytag: member="mdtAbstractSerialPort::rngIsOn" ref="a0a3954438d1e8180e53717cc0fe1ce3e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractSerialPort::rngIsOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the RNG (RI) state. </p>
+<p>The mutex is handled in this method. </p>
+
+</div>
+</div>
 <a class="anchor" id="aa86a8bc0bb03ac2b07bf43968dfeb189"></a><!-- doxytag: member="mdtAbstractSerialPort::setDtr" ref="aa86a8bc0bb03ac2b07bf43968dfeb189" args="(bool on)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -331,7 +426,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>Enable/diseable the DTR (Data Terminal Ready) signal. </p>
 <p>This method must be re-implemented in plateform specific subclass.<br/>
  If port is not open, this method must make no system call.<br/>
- This method locks the mutex. </p>
+ The mutex is handled in this method.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">on</td><td>If true, DTR will be enabled, diseabled else </td></tr>
@@ -339,7 +434,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a0d489a938cba216ab43d3ae591689676">mdtSerialPortPosix</a>, and <a class="el" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592">mdtSerialPort</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -361,7 +456,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>Enable/diseable the RTS (Request To Send) signal. </p>
 <p>This method must be re-implemented in plateform specific subclass.<br/>
  If port is not open, this method must make no system call.<br/>
- This method locks the mutex. </p>
+ The mutex is handled in this method.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">on</td><td>If true, RTS will be enabled, diseabled else </td></tr>
@@ -369,7 +464,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a3d27cec6098549cdba68465b8c5d4480">mdtSerialPortPosix</a>, and <a class="el" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">mdtSerialPort</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -388,10 +483,10 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <div class="memdoc">
 
 <p>Wait until a control (modem line) signal state changes. </p>
-<p>This method must be re-implemented in plateform specific subclass. </p>
+<p>This method must be re-implemented in plateform specific subclass.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port_posix.html#a8ec213863c6eacfc8d3079aadc9ef43b">mdtSerialPortPosix</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port.html#acc51ca593b4592f806ef4b9791486f47">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -414,7 +509,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 24 2012 20:17:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

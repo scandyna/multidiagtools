@@ -36,3 +36,9 @@ target_link_libraries(mdttest ${QT_LIBRARIES})
 # Minimal application
 add_executable(minimalapp "minimalApp.cpp")
 target_link_libraries(minimalapp ${QT_LIBRARIES})
+
+# Virtual method bench
+QT4_WRAP_CPP(MOC_MDT_VIRTUAL_METHOD_BENCH "mdtVirtualMethodBench.h")
+add_executable(mdtvirtualmethodbench "mdtVirtualMethodBench.cpp" ${MOC_MDT_VIRTUAL_METHOD_BENCH})
+target_link_libraries(mdtvirtualmethodbench "mdttest")
+target_link_libraries(mdtvirtualmethodbench ${QT_LIBRARIES})

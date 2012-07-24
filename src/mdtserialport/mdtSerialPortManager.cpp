@@ -68,6 +68,10 @@ QStringList mdtSerialPortManager::scan()
   extList << "ttyUSB*";
   // Moxa USB interfaces
   extList << "ttyMXUSB*";
+  // Moxa PCI interfaces
+  extList << "ttyMI*";
+  // CDC ACM (USB Modems)
+  extList << "ttyACM*";
   // Common device directory
   dir.setPath("/dev");
   if(!dir.exists()){
@@ -93,7 +97,7 @@ QStringList mdtSerialPortManager::scan()
   // I found nothing better than this ..
   for(int i=1; i<=20; i++){
     str = QString("COM%1").arg(i);
-    portNames.append(str);
+    portNames << str;
   }
 #endif  // #ifdef Q_OS_WIN
 
@@ -102,7 +106,7 @@ QStringList mdtSerialPortManager::scan()
     // Try to get port attributes
     port = new mdtSerialPort;
     Q_ASSERT(port != 0);
-    if(port->setAttributes(portNames.at(i))){
+    if(port->setAttributes(portNames.at(i))){/// NOTE...
       availablePorts.append(portNames.at(i));
     }
     delete port;

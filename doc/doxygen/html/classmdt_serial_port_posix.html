@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -97,7 +98,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#ac8388d9e5411541ead6eab17c0661001"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39">waitForReadyRead</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available at device.  <a href="#a69ecbfb420544af72301e50635c4ba39"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#a69ecbfb420544af72301e50635c4ba39"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a55b73a33f1b9552fbb8821e356a8b930"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac153ca3658d467c5fe04dba89ead97bc">suspendTransmission</a> ()</td></tr>
@@ -107,7 +108,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#aefeb623e5b2b31bbb72f83d5735a2a8e">flushIn</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#aefeb623e5b2b31bbb72f83d5735a2a8e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1">waitEventWriteReady</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to device.  <a href="#ac6e29bfccaa92509f6d86848da45bcc1"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#ac6e29bfccaa92509f6d86848da45bcc1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a3b70bbabeb933e25ad787f606dca0fb6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_posix.html#a7371414037fa039269b169856e23aae2">flushOut</a> ()</td></tr>
@@ -141,7 +142,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Close the port. </p>
-<p>This method must be re-implemented in subclass.<br/>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass.<br/>
  To handle the port correctly, the subclass method must:</p>
 <ul>
 <li>Check if port is open with <a class="el" href="classmdt_abstract_port.html#a53affce84400ed1519db93ccc79888f9" title="Get port&#39;s open state.">isOpen()</a> , if false, simply return.</li>
@@ -169,7 +171,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Flush read buffers. </p>
-<p>This method must be implemented in subclass.<br/>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass.<br/>
  To handle port correctly, subclass must:</p>
 <ul>
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
@@ -197,7 +200,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Flush write buffers. </p>
-<p>This method must be implemented in subclass.<br/>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass.<br/>
  To handle port correctly, subclass must:</p>
 <ul>
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
@@ -260,6 +264,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </li>
 </ul>
 
+<p><p>if(cfg.readOnly()){ pvFd = ::open(pvPortName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK); }else{ pvFd = pvPortLock-&gt;openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK); }</p>
+</p>
+
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ad96a99c370c87d7e4a8b47f98cc7ce35">mdtAbstractSerialPort</a>.</p>
 
 </div>
@@ -290,9 +297,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Read data from port. </p>
-<p>This method must be implemented in subclass.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
- Mutex is not handled by this method. </p>
+<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass.<br/>
+ Mutex is not handled by this method.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
@@ -314,12 +322,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Request to resume transmission. </p>
-<p>This method must be implemented in subclass if requierd.<br/>
+<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
+ Mutex is not handled by this method.</p>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass if requierd.<br/>
  Note about serial port subclass:<br/>
  the right flow control must be used regarding enabled flow control.<br/>
  Default implementation does nothing.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
- Mutex is not handled by this method. </p>
+</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">mdtAbstractPort</a>.</p>
@@ -403,7 +413,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Set the read data timeout. </p>
-<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
@@ -463,7 +474,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Set the write data timeout. </p>
-<p>This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
@@ -490,12 +502,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Request to suspend transmission. </p>
-<p>This method must be implemented in subclass if requierd.<br/>
+<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
+ Mutex is not handled by this method.</p>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass if requierd.<br/>
  Note about serial port subclass:<br/>
  the right flow control must be used regarding enabled flow control.<br/>
  Default implementation does nothing.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
- Mutex is not handled by this method. </p>
+</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">mdtAbstractPort</a>.</p>
@@ -538,15 +552,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </div>
 <div class="memdoc">
 
-<p>Wait until data can be written to device. </p>
-<p>This method must be re-implemented in subclass.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
+<p>Wait until data can be written to port. </p>
+<p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass.<br/>
  Notes about mutex handling:</p>
 <ul>
-<li>Caller: Mutex must be locked before calling this method.</li>
-<li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
-</li>
+<li>Mutex must be released during wait, and relocked befor return.</li>
 </ul>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
 
@@ -566,20 +581,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </div>
 <div class="memdoc">
 
-<p>Wait until data is available at device. </p>
-<p>This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a><br/>
- Note: this method is called from thread , and should not be used directly<br/>
+<p>Wait until data is available on port. </p>
+<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a><br/>
  Notes about mutex handling:</p>
 <ul>
-<li>Caller: Mutex must be locked before calling this method.</li>
-<li>Subclass implementation: Mutex must be released during wait, and relocked befor return. <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured() </dd></dl>
+<li>Mutex must be released during wait, and relocked befor return.</li>
+</ul>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured()</dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
 <dd>
 <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd>
 <dd>
 <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
-</li>
-</ul>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
 
@@ -611,9 +627,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Write data to port. </p>
-<p>This method must be implemented in subclass.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
- Mutex is not handled by this method. </p>
+<p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly. Mutex is not handled by this method.</p>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass.<br/>
+</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
@@ -639,7 +656,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:36 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 22 2012 20:09:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

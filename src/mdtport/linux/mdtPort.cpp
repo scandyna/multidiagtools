@@ -18,17 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtPortPosix.h"
+#include "mdtPort.h"
 #include "mdtError.h"
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/select.h>
 #include <sys/ioctl.h>
 #include <errno.h>
+#include <string.h>
 
 //#include <QDebug>
 
-mdtPortPosix::mdtPortPosix(QObject *parent)
+mdtPort::mdtPort(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvFd = -1;
@@ -36,13 +37,14 @@ mdtPortPosix::mdtPortPosix(QObject *parent)
   Q_ASSERT(pvPortLock != 0);
 }
 
-mdtPortPosix::~mdtPortPosix()
+mdtPort::~mdtPort()
 {
   this->close();
   delete pvPortLock;
 }
 
-bool mdtPortPosix::setAttributes(const QString &portName)
+/**
+bool mdtPort::setAttributes(const QString &portName)
 {
   // Close previous opened device
   this->close();
@@ -50,20 +52,52 @@ bool mdtPortPosix::setAttributes(const QString &portName)
   pvFd = ::open(portName.toStdString().c_str(), O_RDWR);
   if(pvFd < 0){
     mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + portName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+    MDT_ERROR_SET_SRC(e, "mdtPort");
     e.commit();
-    pvName = "";
+    pvPortName = "";
     return false;
   }
   // Set attributes
-  pvName = portName;
+  pvPortName = portName;
   // Close the port
   this->close();
 
   return true;
 }
+*/
 
-bool mdtPortPosix::open(mdtPortConfig &cfg)
+mdtAbstractPort::error_t mdtPort::tryOpen()
+{
+  Q_ASSERT(!isOpen());
+
+  int err;
+
+  // Try to open port
+  pvFd = ::open(pvPortName.toStdString().c_str(), O_RDWR);
+  if(pvFd < 0){
+    err = errno;
+    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtPort");
+    e.commit();
+    // Check error and return a possibly correct code
+    switch(err){
+      case EACCES:
+        return PortAccess;
+      case ENOENT:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+  // Close the port
+  ::close(pvFd);
+  pvFd = -1;
+
+  return NoError;
+}
+
+bool mdtPort::open(mdtPortConfig &cfg)
 {
   // Close previous opened device
   this->close();
@@ -72,19 +106,11 @@ bool mdtPortPosix::open(mdtPortConfig &cfg)
   //  O_NOCTTY: not a terminal
   //  O_NDELAY: ignore DCD signal
   lockMutex();
-  // In read only mode, we handle no lock
-  /**
-  if(cfg.readOnly()){
-    pvFd = ::open(pvName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK );
-  }else{
-    pvFd = pvPortLock->openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK);
-  }
-  */
-  pvFd = pvPortLock->openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
   if(pvFd < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+    MDT_ERROR_SET_SRC(e, "mdtPort");
     e.commit();
     pvPortLock->unlock();
     unlockMutex();
@@ -97,7 +123,7 @@ bool mdtPortPosix::open(mdtPortConfig &cfg)
   return mdtAbstractPort::open(cfg);
 }
 
-void mdtPortPosix::close()
+void mdtPort::close()
 {
   if(!isOpen()){
     return;
@@ -113,19 +139,19 @@ void mdtPortPosix::close()
   mdtAbstractPort::close();
 }
 
-void mdtPortPosix::setReadTimeout(int timeout)
+void mdtPort::setReadTimeout(int timeout)
 {
   pvReadTimeout.tv_sec = timeout/1000;
   pvReadTimeout.tv_usec = 1000*(timeout%1000);
 }
 
-void mdtPortPosix::setWriteTimeout(int timeout)
+void mdtPort::setWriteTimeout(int timeout)
 {
   pvWriteTimeout.tv_sec = timeout/1000;
   pvWriteTimeout.tv_usec = 1000*(timeout%1000);
 }
 
-bool mdtPortPosix::waitForReadyRead()
+bool mdtPort::waitForReadyRead()
 {
   fd_set input;
   int n;
@@ -145,7 +171,7 @@ bool mdtPortPosix::waitForReadyRead()
     if(n < 0){
       mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
       e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+      MDT_ERROR_SET_SRC(e, "mdtPort");
       e.commit();
       return false;
     }
@@ -154,7 +180,7 @@ bool mdtPortPosix::waitForReadyRead()
   return true;
 }
 
-qint64 mdtPortPosix::read(char *data, qint64 maxSize)
+qint64 mdtPort::read(char *data, qint64 maxSize)
 {
   int n;
   int err;
@@ -172,7 +198,7 @@ qint64 mdtPortPosix::read(char *data, qint64 maxSize)
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
         e.setSystemError(err, strerror(err));
-        MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+        MDT_ERROR_SET_SRC(e, "mdtPort");
         e.commit();
         return n;
     }
@@ -181,13 +207,13 @@ qint64 mdtPortPosix::read(char *data, qint64 maxSize)
   return n;
 }
 
-void mdtPortPosix::flushIn()
+void mdtPort::flushIn()
 {
   lockMutex();
   mdtAbstractPort::flushIn();
 }
 
-bool mdtPortPosix::waitEventWriteReady()
+bool mdtPort::waitEventWriteReady()
 {
   fd_set output;
   int n;
@@ -207,7 +233,7 @@ bool mdtPortPosix::waitEventWriteReady()
     if(n < 0){
       mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
       e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+      MDT_ERROR_SET_SRC(e, "mdtPort");
       e.commit();
       return false;
     }
@@ -216,7 +242,7 @@ bool mdtPortPosix::waitEventWriteReady()
   return true;
 }
 
-qint64 mdtPortPosix::write(const char *data, qint64 maxSize)
+qint64 mdtPort::write(const char *data, qint64 maxSize)
 {
   int n;
   int err;
@@ -231,7 +257,7 @@ qint64 mdtPortPosix::write(const char *data, qint64 maxSize)
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "write() call failed", mdtError::Error);
         e.setSystemError(err, strerror(err));
-        MDT_ERROR_SET_SRC(e, "mdtPortPosix");
+        MDT_ERROR_SET_SRC(e, "mdtPort");
         e.commit();
         return n;
     }
@@ -240,7 +266,7 @@ qint64 mdtPortPosix::write(const char *data, qint64 maxSize)
   return n;
 }
 
-void mdtPortPosix::flushOut()
+void mdtPort::flushOut()
 {
   lockMutex();
   mdtAbstractPort::flushOut();

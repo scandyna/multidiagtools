@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -108,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00047"></a>00047   ~<a class="code" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>();
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049   <span class="comment">// Implemented from mdtAbstractPort</span>
-<a name="l00050"></a>00050   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663" title="Set the port attributes.">setAttributes</a>(<span class="keyword">const</span> QString &amp;portName);
+<a name="l00050"></a>00050   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663" title="Set the port attributes.">setAttributes</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615" title="Get port name.">portName</a>);
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052   <span class="comment">// Implemented from mdtAbstractSerialPort</span>
 <a name="l00053"></a>00053   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc" title="Open the port.">open</a>(<a class="code" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg);
@@ -123,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00062"></a>00062   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
 <a name="l00063"></a>00063 
 <a name="l00064"></a>00064   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00065"></a>00065   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39" title="Wait until data is available at device.">waitForReadyRead</a>();
+<a name="l00065"></a>00065   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#a69ecbfb420544af72301e50635c4ba39" title="Wait until data is available on port.">waitForReadyRead</a>();
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067   <span class="comment">// Implemtation of mdtAbstractPort method</span>
 <a name="l00068"></a>00068   qint64 <a class="code" href="classmdt_serial_port_posix.html#a55b73a33f1b9552fbb8821e356a8b930" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
@@ -138,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00077"></a>00077   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_posix.html#aefeb623e5b2b31bbb72f83d5735a2a8e" title="Flush read buffers.">flushIn</a>();
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00080"></a>00080   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1" title="Wait until data can be written to device.">waitEventWriteReady</a>();
+<a name="l00080"></a>00080   <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_posix.html#ac6e29bfccaa92509f6d86848da45bcc1" title="Wait until data can be written to port.">waitEventWriteReady</a>();
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082   <span class="comment">// Implemtation of mdtAbstractPort method</span>
 <a name="l00083"></a>00083   qint64 <a class="code" href="classmdt_serial_port_posix.html#a3b70bbabeb933e25ad787f606dca0fb6" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
@@ -246,7 +247,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 22 2012 20:09:41 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

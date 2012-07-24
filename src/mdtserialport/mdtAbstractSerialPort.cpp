@@ -85,3 +85,47 @@ QList<int> &mdtAbstractSerialPort::availableBaudRates()
 {
   return pvAvailableBaudRates;
 }
+
+bool mdtAbstractSerialPort::carIsOn()
+{
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvCarIsOn;
+  pvMutex.unlock();
+
+  return retVal;
+}
+
+bool mdtAbstractSerialPort::dsrIsOn()
+{
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvDsrIsOn;
+  pvMutex.unlock();
+
+  return retVal;
+}
+
+bool mdtAbstractSerialPort::ctsIsOn()
+{
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvCtsIsOn;
+  pvMutex.unlock();
+
+  return retVal;
+}
+
+bool mdtAbstractSerialPort::rngIsOn()
+{
+  bool retVal;
+
+  pvMutex.lock();
+  retVal = pvRngIsOn;
+  pvMutex.unlock();
+
+  return retVal;
+}

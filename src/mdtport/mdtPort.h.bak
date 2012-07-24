@@ -4,12 +4,14 @@
 #include <QObject>
 #include <QString>
 
+/**
 #ifdef Q_OS_UNIX
  #include "linux/mdtPortPosix.h"
  #define mdtPortSys mdtPortPosix
 #endif
+*/
 
-class mdtPort : public mdtPortSys
+class mdtPort : public mdtAbstractPort
 {
  Q_OBJECT
 
@@ -17,6 +19,12 @@ class mdtPort : public mdtPortSys
 
   mdtPort(QObject *parent = 0);
   ~mdtPort();
+
+  /*! \brief Open the port
+   *
+   * Open port given by setPortName() and init read/write queues.
+   */
+  bool open(mdtPortConfig &cfg);
 };
 
 #endif  // #ifndef MDT_PORT_H

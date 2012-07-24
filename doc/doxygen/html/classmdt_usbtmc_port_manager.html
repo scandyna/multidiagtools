@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -96,9 +97,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>frameWritten</b> ()</
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7">mdtUsbtmcPortManager</a> (QObject *parent=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the manager.  <a href="#a99a24e4360e70ffc63677dbe888513f7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab26aebdb694fab232f62e7c6084cc0fb"></a><!-- doxytag: member="mdtUsbtmcPortManager::scan" ref="ab26aebdb694fab232f62e7c6084cc0fb" args="()" -->
-QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#ab26aebdb694fab232f62e7c6084cc0fb">scan</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan available USBTMC ports. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#ab26aebdb694fab232f62e7c6084cc0fb">scan</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan available USBTMC ports.  <a href="#ab26aebdb694fab232f62e7c6084cc0fb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#afc1afc7deb3f5d7cf6031037d63e9bff">writeData</a> (QByteArray data, bool waitAnswer)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to device.  <a href="#afc1afc7deb3f5d7cf6031037d63e9bff"></a><br/></td></tr>
 </table>
@@ -126,6 +126,27 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ab26aebdb694fab232f62e7c6084cc0fb"></a><!-- doxytag: member="mdtUsbtmcPortManager::scan" ref="ab26aebdb694fab232f62e7c6084cc0fb" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QStringList mdtUsbtmcPortManager::scan </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Scan available USBTMC ports. </p>
+
+<p><p>if(port-&gt;setAttributes(portNames.at(i))){ availablePorts.append(portNames.at(i)); }</p>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="afc1afc7deb3f5d7cf6031037d63e9bff"></a><!-- doxytag: member="mdtUsbtmcPortManager::writeData" ref="afc1afc7deb3f5d7cf6031037d63e9bff" args="(QByteArray data, bool waitAnswer)" -->
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +199,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:36 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 24 2012 20:17:49 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -8,7 +8,7 @@ project (multidiagtools)
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           mdtAbstractSerialPort.h
-          mdtSerialPort.h
+          # mdtSerialPort.h
           mdtSerialPortConfigWidget.h
           mdtSerialPortSetupDialog.h
           mdtSerialPortCtlWidget.h
@@ -19,7 +19,7 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           mdtSerialPortManager.cpp
           mdtAbstractSerialPort.cpp
-          mdtSerialPort.cpp
+          # mdtSerialPort.cpp
           mdtSerialPortConfig.cpp
           mdtSerialPortCtlThread.cpp
           mdtSerialPortConfigWidget.cpp
@@ -44,7 +44,7 @@ set (RESOURCE_FILES
 if(UNIX)
   message("${PROJECT_SOURCE_DIR}/linux")
   set (SOURCES_FILES ${SOURCES_FILES} 
-    linux/mdtSerialPortPosix.cpp
+    linux/mdtSerialPort.cpp
   )
 endif(UNIX)
 

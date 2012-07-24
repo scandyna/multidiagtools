@@ -28,8 +28,11 @@ Collaboration diagram for mdtPortPosix:\nopagebreak
 \label{classmdt_port_posix_ac122e8dde0e224afb3557d29a62de114}
 
 \item 
-bool \hyperlink{classmdt_port_posix_a32a532f5148226da19ee4acc6ec63201}{setAttributes} (const QString \&portName)
-\begin{DoxyCompactList}\small\item\em Set the port attributes. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_posix_a32a532f5148226da19ee4acc6ec63201}{
+bool {\bfseries setAttributes} (const QString \&portName)}
+\label{classmdt_port_posix_a32a532f5148226da19ee4acc6ec63201}
+
+\item 
 bool \hyperlink{classmdt_port_posix_aba7e87cb2423bfd61a248cc5d23a8517}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)
 \begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_posix_a778c8d4f6fadd1da725f4287af38f7f0}{close} ()
@@ -152,23 +155,35 @@ Reimplemented from \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a239
 
 Open the port. 
 
-This method must be re-\/implemented in subclass.\par
+NOTE: change return type: replace with error\_\-t type.
+
+Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues. \par
+Subclass notes:\par
+ This method must be re-\/implemented in subclass.\par
  To handle the port correctly, the subclass method must:
 \begin{DoxyItemize}
 \item Close previous opened ressource
 \item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Do the specific work
+\item Do the specific work. Note that port must be open in exclusive mode. On Linux, the \hyperlink{classmdt_port_lock}{mdtPortLock} should be used for this.
 \item Set the read/write timeouts. See the \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
-\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, mutex unocked and open flag updated. Notes:
-\item If config's readOnly flag is true, the port must be opened in read only mode. In this case, the write frames pool is not created.
-\item In read/write mode, the subclass mus use \hyperlink{classmdt_port_lock}{mdtPortLock} to handle locks \begin{DoxyReturn}{Returns}
+\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, mutex unocked and open flag updated.
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
 True on successfull configuration and open port 
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config}{mdtPortConfig} 
 \end{DoxySeeAlso}
 
-\end{DoxyItemize}
+
+if(cfg.readOnly())\{ pvFd = ::open(pvName.toStdString().c\_\-str(), O\_\-RDONLY $|$ O\_\-NOCTTY $|$ O\_\-NONBLOCK ); \}else\{ pvFd = pvPortLock-\/$>$openLocked(pvName, O\_\-RDWR $|$ O\_\-NOCTTY $|$ O\_\-NONBLOCK); \}
+
+if(!cfg.readOnly())\{
+
+\} 
+
+
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort}.
 
@@ -194,29 +209,6 @@ Number of bytes readen, or a error $<$ 0
 
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
-
-\hypertarget{classmdt_port_posix_a32a532f5148226da19ee4acc6ec63201}{
-\index{mdtPortPosix@{mdtPortPosix}!setAttributes@{setAttributes}}
-\index{setAttributes@{setAttributes}!mdtPortPosix@{mdtPortPosix}}
-\subsubsection[{setAttributes}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortPosix::setAttributes (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{portName}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_port_posix_a32a532f5148226da19ee4acc6ec63201}
-
-
-Set the port attributes. 
-
-Open the given port name and get his attributes.\par
- This method must be re-\/implemented in subclass. The implementation must close the port after use, and not use \hyperlink{classmdt_abstract_port}{mdtAbstractPort} \hyperlink{classmdt_port_posix_aba7e87cb2423bfd61a248cc5d23a8517}{open()} and \hyperlink{classmdt_port_posix_a778c8d4f6fadd1da725f4287af38f7f0}{close()}. 
-\begin{DoxyParams}{Parameters}
-{\em portName} & Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) \\
-\hline
-\end{DoxyParams}
-
-
-Implements \hyperlink{classmdt_abstract_port_af143cb0985d15c1c30da30cc7de206a7}{mdtAbstractPort}.
 
 \hypertarget{classmdt_port_posix_a7ab7e4a7dccbd58702f2c37335b900c8}{
 \index{mdtPortPosix@{mdtPortPosix}!setReadTimeout@{setReadTimeout}}

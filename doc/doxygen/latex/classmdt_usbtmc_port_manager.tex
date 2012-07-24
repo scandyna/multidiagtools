@@ -42,10 +42,7 @@ void {\bfseries frameWritten} ()}
 \item 
 \hyperlink{classmdt_usbtmc_port_manager_a99a24e4360e70ffc63677dbe888513f7}{mdtUsbtmcPortManager} (QObject $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Construct the manager. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}{
-QStringList \hyperlink{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}{scan} ()}
-\label{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}
-
+QStringList \hyperlink{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan available USBTMC ports. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}{writeData} (QByteArray data, bool waitAnswer)
 \begin{DoxyCompactList}\small\item\em Write data to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -71,6 +68,23 @@ Construct the manager.
 The port and configuration instances will be created here 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan@{scan}}
+\index{scan@{scan}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtUsbtmcPortManager::scan (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_ab26aebdb694fab232f62e7c6084cc0fb}
+
+
+Scan available USBTMC ports. 
+
+
+
+if(port-\/$>$setAttributes(portNames.at(i)))\{ availablePorts.append(portNames.at(i)); \}
+
 \hypertarget{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
 \index{writeData@{writeData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}

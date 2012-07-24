@@ -4,7 +4,7 @@
 }
 
 
-Open a port and lock it.  
+NOTE:  
 
 
 
@@ -22,18 +22,43 @@ void \hyperlink{classmdt_port_lock_a60b65f02d57568dc36c5e918aa5357a6}{unlock} ()
 bool \hyperlink{classmdt_port_lock_a07a7d13509147d65dde89e95ac343eb2}{isLocked} ()}
 \label{classmdt_port_lock_a07a7d13509147d65dde89e95ac343eb2}
 
-\begin{DoxyCompactList}\small\item\em Returns true if port is locked. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns true if port is locked. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_lock_a739a8cedebb1a32e122c7e451f0cfe98}{isLockedByAnother} ()
+\begin{DoxyCompactList}\small\item\em Returns true if port is locked by another port instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Open a port and lock it. 
+NOTE: 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000004}{Todo}]Create serious test cases for this class \end{Desc}
+
+
+Open a port and lock it
 
 On Linux (or all POSIX ?) system, file locking is avaliable with fcntl(). But several applications uses LCK..name for locking.\par
  This class will try to find if a port is allready locked using LCK..name system in several directories (/var/lock, /tmp, ...).\par
  If nothing is found, then port will be opened, and several lockfiles created. The port is then locked with fcntl(). 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_lock_a25e9a2cb8a10069fae75c76b6809c27f}{
+\hypertarget{classmdt_port_lock_a739a8cedebb1a32e122c7e451f0cfe98}{
+\index{mdtPortLock@{mdtPortLock}!isLockedByAnother@{isLockedByAnother}}
+\index{isLockedByAnother@{isLockedByAnother}!mdtPortLock@{mdtPortLock}}
+\subsubsection[{isLockedByAnother}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortLock::isLockedByAnother (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_lock_a739a8cedebb1a32e122c7e451f0cfe98}
+
+
+Returns true if port is locked by another port instance. 
+
+The rule is simple:
+\begin{DoxyItemize}
+\item If port is open and locked, false will be returned.
+\item If port is closed and locked, true will be returned. 
+\end{DoxyItemize}\hypertarget{classmdt_port_lock_a25e9a2cb8a10069fae75c76b6809c27f}{
 \index{mdtPortLock@{mdtPortLock}!openLocked@{openLocked}}
 \index{openLocked@{openLocked}!mdtPortLock@{mdtPortLock}}
 \subsubsection[{openLocked}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortLock::openLocked (
@@ -47,9 +72,25 @@ On Linux (or all POSIX ?) system, file locking is avaliable with fcntl(). But se
 
 Open a port locked. 
 
-At first, the lock file name will be buit for each lock directories found. Then, is no lock file is found, the port will be opened with open(). Just after open, the port will be locked with fcntl(). Note: to close opend port, the system call close() can be used. \begin{DoxyReturn}{Returns}
+At first, the lock file name will be buit for each lock directories found. Then, is no lock file is found, the port will be opened with open(). Just after open, the port will be locked with fcntl(). Note: to close opend port, the system call close() can be used.
+
+\begin{DoxyReturn}{Returns}
 File descriptor returned by open() , or -\/1 on error. 
 \end{DoxyReturn}
+
+
+NOTE:\begin{Desc}
+\item[\hyperlink{todo__todo000001}{Todo}]Flag pvIsLocked : could be locked by another (other process, or other thread in this process), true seems not to be correct here ! \end{Desc}
+
+
+NOTE:\begin{Desc}
+\item[\hyperlink{todo__todo000002}{Todo}]Flag pvIsLocked ? \end{Desc}
+
+
+NOTE:\begin{Desc}
+\item[\hyperlink{todo__todo000003}{Todo}]Flag pvIsLocked ? \end{Desc}
+
+
 \hypertarget{classmdt_port_lock_a60b65f02d57568dc36c5e918aa5357a6}{
 \index{mdtPortLock@{mdtPortLock}!unlock@{unlock}}
 \index{unlock@{unlock}!mdtPortLock@{mdtPortLock}}

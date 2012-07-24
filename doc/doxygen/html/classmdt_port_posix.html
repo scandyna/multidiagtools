@@ -71,7 +71,7 @@ Inheritance diagram for mdtPortPosix:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_posix__inherit__graph.png" border="0" usemap="#mdt_port_posix_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_port_posix_inherit__map" id="mdt_port_posix_inherit__map">
-<area shape="rect" id="node5" href="classmdt_port.html" title="mdtPort" alt="" coords="31,160,97,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,5,123,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,5,123,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtPortPosix:</div>
@@ -87,8 +87,8 @@ Collaboration diagram for mdtPortPosix:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac122e8dde0e224afb3557d29a62de114"></a><!-- doxytag: member="mdtPortPosix::mdtPortPosix" ref="ac122e8dde0e224afb3557d29a62de114" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortPosix</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a32a532f5148226da19ee4acc6ec63201">setAttributes</a> (const QString &amp;portName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#a32a532f5148226da19ee4acc6ec63201"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32a532f5148226da19ee4acc6ec63201"></a><!-- doxytag: member="mdtPortPosix::setAttributes" ref="a32a532f5148226da19ee4acc6ec63201" args="(const QString &amp;portName)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>setAttributes</b> (const QString &amp;portName)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#aba7e87cb2423bfd61a248cc5d23a8517">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aba7e87cb2423bfd61a248cc5d23a8517"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0">close</a> ()</td></tr>
@@ -219,19 +219,25 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <div class="memdoc">
 
 <p>Open the port. </p>
-<p>This method must be re-implemented in subclass.<br/>
+<p>NOTE: change return type: replace with error_t type.</p>
+<p>Open port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> and init read/write queues. <br/>
+Subclass notes:<br/>
+ This method must be re-implemented in subclass.<br/>
  To handle the port correctly, the subclass method must:</p>
 <ul>
 <li>Close previous opened ressource</li>
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Do the specific work</li>
+<li>Do the specific work. Note that port must be open in exclusive mode. On Linux, the <a class="el" href="classmdt_port_lock.html" title="Open a port and lock it.">mdtPortLock</a> should be used for this.</li>
 <li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
-<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated. Notes:</li>
-<li>If config's readOnly flag is true, the port must be opened in read only mode. In this case, the write frames pool is not created.</li>
-<li>In read/write mode, the subclass mus use <a class="el" href="classmdt_port_lock.html" title="Open a port and lock it.">mdtPortLock</a> to handle locks <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
-</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Open the port.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated.</li>
 </ul>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
+
+<p><p>if(cfg.readOnly()){ pvFd = ::open(pvName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK ); }else{ pvFd = pvPortLock-&gt;openLocked(pvName, O_RDWR | O_NOCTTY | O_NONBLOCK); }</p>
+<p>if(!cfg.readOnly()){</p>
+<p>} </p>
+</p>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">mdtAbstractPort</a>.</p>
 
@@ -269,35 +275,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a32a532f5148226da19ee4acc6ec63201"></a><!-- doxytag: member="mdtPortPosix::setAttributes" ref="a32a532f5148226da19ee4acc6ec63201" args="(const QString &amp;portName)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortPosix::setAttributes </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>portName</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the port attributes. </p>
-<p>Open the given port name and get his attributes.<br/>
- This method must be re-implemented in subclass. The implementation must close the port after use, and not use <a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> <a class="el" href="classmdt_port_posix.html#aba7e87cb2423bfd61a248cc5d23a8517" title="Open the port.">open()</a> and <a class="el" href="classmdt_port_posix.html#a778c8d4f6fadd1da725f4287af38f7f0" title="Close the port.">close()</a>. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#af143cb0985d15c1c30da30cc7de206a7">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -472,7 +449,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvFd</b></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 22 2012 18:41:09 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

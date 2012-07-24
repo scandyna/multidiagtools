@@ -39,12 +39,31 @@
  * 
  */
 
-class mdtSerialPortPosix : public mdtAbstractSerialPort
+class mdtSerialPort : public mdtAbstractSerialPort
 {
  public:
 
-  mdtSerialPortPosix(QObject *parent = 0);
-  ~mdtSerialPortPosix();
+  mdtSerialPort(QObject *parent = 0);
+  ~mdtSerialPort();
+
+  /// TODO: \todo activate and implement in all subclasses.
+  /*! \brief Try to open port.
+   *
+   * Try to open port set by setPortName().
+   * This can be usefull to enumerate real available ports on system.
+   * If port can be open successfull, NoError code is returned, and port is closed again.
+   * Note that the mutex is not handled in this method.
+   * \pre The port must not be open whenn calling this method.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * To handle the port correctly, the subclass method must:
+   *  - Call the appropriate open function
+   *  - Return the correct error code on failure (see the error_t enum)
+   *  - Be sure that the port is closed again before return.
+   *  - The mdtError system should be used to keep trace in logfile.
+   */
+  error_t tryOpen();
 
   // Implemented from mdtAbstractPort
   bool setAttributes(const QString &portName);

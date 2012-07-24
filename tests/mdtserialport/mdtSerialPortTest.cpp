@@ -90,7 +90,7 @@ void mdtSerialPortTest::mdtSerialPortManagerTest()
   QVERIFY(m.port().availableBaudRates().size() > 0);
   QVERIFY(m.port().availableBaudRates().contains(9600));
   // Chack that the right port is set
-  QVERIFY(m.port().name() == portsList.at(0));
+  QVERIFY(m.port().portName() == portsList.at(0));
 
   // Start threads
   QVERIFY(m.start());

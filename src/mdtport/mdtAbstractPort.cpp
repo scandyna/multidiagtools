@@ -40,9 +40,14 @@ mdtAbstractPort::~mdtAbstractPort()
 {
 }
 
-QString &mdtAbstractPort::name()
+void mdtAbstractPort::setPortName(const QString &portName)
 {
-  return pvName;
+  pvPortName = portName;
+}
+
+QString &mdtAbstractPort::portName()
+{
+  return pvPortName;
 }
 
 bool mdtAbstractPort::isOpen()

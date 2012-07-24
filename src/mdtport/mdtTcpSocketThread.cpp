@@ -143,8 +143,8 @@ mdtFrame *mdtTcpSocketThread::getNewFrameRead()
 
 void mdtTcpSocketThread::writeToSocket()
 {
-  char *bufferCursor;
-  qint64 toWrite;
+  char *bufferCursor = 0;
+  qint64 toWrite = 0;
   qint64 written;
 
   // Check if we have something to transmit
@@ -157,6 +157,7 @@ void mdtTcpSocketThread::writeToSocket()
     }
   }
   if(pvWriteCurrentFrame != 0){
+    Q_ASSERT(bufferCursor != 0);
     // Write data to port
     written = pvPort->write(bufferCursor, toWrite);
     if(written < 0){

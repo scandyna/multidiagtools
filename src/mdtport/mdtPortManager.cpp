@@ -77,7 +77,9 @@ bool mdtPortManager::setPortName(const QString &portName)
 {
   Q_ASSERT(pvPort != 0);
 
-  return pvPort->setAttributes(portName);
+  pvPort->setPortName(portName);
+  ///return pvPort->setAttributes(portName);
+  return pvPort->tryOpen() == mdtAbstractPort::NoError;
 }
 
 void mdtPortManager::setConfig(mdtPortConfig *config)

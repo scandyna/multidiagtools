@@ -38,11 +38,18 @@ mdtTcpSocket::~mdtTcpSocket()
   close();
 }
 
+/**
 bool mdtTcpSocket::setAttributes(const QString &portName)
 {
   //qDebug() << "setAttributes(): " << portName.split(":");
   
   return true;
+}
+*/
+
+mdtAbstractPort::error_t mdtTcpSocket::tryOpen()
+{
+  return NoError;
 }
 
 bool mdtTcpSocket::open(mdtPortConfig &cfg)

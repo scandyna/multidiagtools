@@ -85,7 +85,9 @@ void mdtPortTest::openCloseTest()
   QVERIFY(file.open());
 
   // Attributes fetch
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
   QVERIFY(!port.isOpen());
 
   // Open
@@ -122,7 +124,10 @@ void mdtPortTest::startStopTest()
   QVERIFY(file.open());
 
   // Setup
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
+
   QVERIFY(port.open(cfg));
 
   // Assign port to the threads
@@ -192,7 +197,10 @@ void mdtPortTest::writeRawTest()
   // Setup
   cfg.setWriteQueueSize(1);
   cfg.setFrameType(mdtFrame::FT_RAW);
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
+
   QVERIFY(port.open(cfg));
 
   // Assign port to the threads
@@ -243,7 +251,10 @@ void mdtPortTest::writeRawTest()
 
   // Setup
   cfg.setWriteQueueSize(1);
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
+
   cfg.setBytePerByteWrite(true, 1);
   QVERIFY(port.open(cfg));
 
@@ -327,7 +338,9 @@ void mdtPortTest::writeAsciiTest()
   // Setup
   cfg.setWriteQueueSize(1);
   cfg.setFrameType(mdtFrame::FT_ASCII);
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
   QVERIFY(port.open(cfg));
 
   // Assign port to the threads
@@ -378,7 +391,9 @@ void mdtPortTest::writeAsciiTest()
 
   // Setup
   cfg.setWriteQueueSize(1);
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
   cfg.setBytePerByteWrite(true, 1);
   QVERIFY(port.open(cfg));
 
@@ -459,7 +474,9 @@ void mdtPortTest::readRawTest()
   cfg.setReadQueueSize(10);
   cfg.setReadFrameSize(10);
   cfg.setFrameType(mdtFrame::FT_RAW);
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
   QVERIFY(port.open(cfg));
 
   // Assign port to the threads
@@ -548,7 +565,9 @@ void mdtPortTest::readAsciiTest()
   cfg.setReadQueueSize(10);
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
   QVERIFY(port.open(cfg));
 
   // Assign port to the threads
@@ -641,7 +660,9 @@ void mdtPortTest::readInvalidDataAsciiTest()
   cfg.setReadQueueSize(10);
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
-  QVERIFY(port.setAttributes(filePath));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   rdThd.setPort(&port);
@@ -807,7 +828,9 @@ void mdtPortTest::emptyQueueRecoveryTest()
   cfg.setReadQueueSize(3);
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
-  QVERIFY(port.setAttributes(file.fileName()));
+  ///QVERIFY(port.setAttributes(file.fileName()));
+  port.setPortName(file.fileName());
+  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
   QVERIFY(port.open(cfg));
 
   // Assign port to the threads

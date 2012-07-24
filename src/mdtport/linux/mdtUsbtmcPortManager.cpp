@@ -63,12 +63,18 @@ QStringList mdtUsbtmcPortManager::scan()
   portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames);
   // For each port name, try to open the port and get some attributes (to see if it really exists)
   for(int i=0; i<portNames.size(); ++i){
-    // Try to get port attributes
+    // Try to open port
     port = new mdtUsbtmcPort;
     Q_ASSERT(port != 0);
+    port->setPortName(portNames.at(i));
+    if(port->tryOpen() == mdtAbstractPort::NoError){
+      availablePorts.append(portNames.at(i));
+    }
+    /**
     if(port->setAttributes(portNames.at(i))){
       availablePorts.append(portNames.at(i));
     }
+    */
     delete port;
   }
 

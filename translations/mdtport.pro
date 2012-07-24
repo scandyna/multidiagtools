@@ -3,7 +3,6 @@
 TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdtport/../../translations/mdtport_fr.ts
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdtport/../../translations/mdtport_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtAbstractPort.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPort.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortThread.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortReadThread.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortWriteThread.cpp
@@ -12,7 +11,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtTcpSocketT
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortManager.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfig.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfigWidget.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPortPosix.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPort.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPortLock.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtUsbtmcPort.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtUsbtmcPortManager.h

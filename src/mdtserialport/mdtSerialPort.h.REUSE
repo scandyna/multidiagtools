@@ -79,7 +79,7 @@ class mdtSerialPort : public mdtSerialPortSys
   
  private:
 
-  QMutex pvMutex;
+  QMutex pvMutex; /// NOTE; \todo Doublon !
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_H

@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_posix.html" title="mdtPortPosix" alt="" coords="13,83,115,112"/>
-<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,5,123,35"/>
+<area shape="rect" id="node2" href="$classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,5,123,35"/>
 </map>

@@ -28,6 +28,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -72,6 +73,8 @@ This is the complete list of members for <a class="el" href="classmdt_serial_por
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#adf45a5006218ef5660721ecdf8454b5d">ctsChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>defineCtlThread</b>(pthread_t ctlThread) (defined in <a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a077d8c39ed12713742f1f2ffa0dca11d">dsrChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> enum name</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aaed310dcb940afa6b54ae928df9d55a8">fake1</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#aefeb623e5b2b31bbb72f83d5735a2a8e">flushIn</a>()</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#a7371414037fa039269b169856e23aae2">flushOut</a>()</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#a849ce720a56af921c0ecf9ba08744acc">getCtlStates</a>()</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
@@ -80,16 +83,20 @@ This is the complete list of members for <a class="el" href="classmdt_serial_por
   <tr bgcolor="#f0f0f0"><td><b>mdtAbstractPort</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtAbstractSerialPort</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtSerialPortPosix</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a>)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a98e7b231370940504c2dbb1dbfe04ad5">name</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#afb1bcf27cc39cd962913b056ca8d4ccc">open</a>(mdtSerialPortConfig &amp;cfg)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">mdtAbstractPort::open</a>(mdtPortConfig &amp;cfg)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaee5a84e59e9dc5fcf27cac57068bb1f4">PortAccess</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c">PortLocked</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615">portName</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvAvailableBaudRates</b> (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvCarIsOn</b> (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvConfig</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvCtsIsOn</b> (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvDsrIsOn</b> (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvMutex</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>pvName</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvPortName</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvReadenFrames</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvReadFramesPool</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvReadTimeoutOccured</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
@@ -110,6 +117,7 @@ This is the complete list of members for <a class="el" href="classmdt_serial_por
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a47c08ccb99dc6de76ae58ebeefc26857">rngChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#a1440f504f0ed43210b9c0b1cd5506663">setAttributes</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#a0d489a938cba216ab43d3ae591689676">setDtr</a>(bool on)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932">setPortName</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#a7cea8e6d04dac0645785e8bee7570cea">setReadTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#a3d27cec6098549cdba68465b8c5d4480">setRts</a>(bool on)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_posix.html#ac8388d9e5411541ead6eab17c0661001">setWriteTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_serial_port_posix.html">mdtSerialPortPosix</a></td><td><code> [virtual]</code></td></tr>
@@ -162,7 +170,7 @@ This is the complete list of members for <a class="el" href="classmdt_serial_por
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 17 2012 18:38:36 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 22 2012 20:09:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

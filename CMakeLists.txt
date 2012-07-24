@@ -61,7 +61,9 @@ include_directories("${PROJECT_SOURCE_DIR}/src/qt-solutions/qtsingleapplication"
 if(UNIX)
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtdevice")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtport")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport")
+include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 endif(UNIX)
 

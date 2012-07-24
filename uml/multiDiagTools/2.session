@@ -1,21 +1,21 @@
 window_sizes 1280 1003 304 970 809 120
 diagrams
-  classdiagram_ref 394882 // mdtCsvFile
-    970 809 100 4 0 0
-  active  classdiagram_ref 455426 // mdtConfigFile
-    970 809 100 4 0 0
+  classdiagram_ref 255234 // mdtAbstractPort
+    776 647 100 4 192 0
+  classdiagram_ref 262018 // mdtPortConfig
+    970 809 100 4 84 0
+  classdiagram_ref 360706 // mdtAbstractSerialPort
+    776 647 100 4 228 0
+  active  classdiagram_ref 128002 // mdtSerialPort
+    970 809 100 4 336 0
 end
 show_stereotypes
-selected operation_ref 905730 // read
+selected attribute_ref 272386 // pvDsrIsOn
 open
-  classview_ref 273666 // mdtCsvFile
-  operation_ref 904578 // mdtConfigFile
-  operation_ref 904706 // ~mdtConfigFile
-  class_ref 458882 // mdtConfigFileSection
-  deploymentview_ref 239234 // mdtFileCopier
-  
-  package_ref 174978 // mdtutilsgui
-  classview_ref 227458 // mdtPortManager
+  operation_ref 301570 // carState
+  operation_ref 301698 // dsrState
+  operation_ref 301826 // ctsState
+  classrelation_ref 196866 // <generalisation>
   classview_ref 267138 // mdtPortTerm
   
   package_ref 134658 // src

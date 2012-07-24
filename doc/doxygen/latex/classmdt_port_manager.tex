@@ -354,7 +354,7 @@ port must be a valid pointer to the expected class instance (for ex: \hyperlink{
 Set port name. 
 
 Try to open given port. If ok, the port name will be kept.\par
- \hyperlink{classmdt_abstract_port_af143cb0985d15c1c30da30cc7de206a7}{mdtAbstractPort::setAttributes()} will be called to fetch some attributes (for example available baud rates if port is a \hyperlink{classmdt_serial_port}{mdtSerialPort} object). \begin{DoxyPrecond}{Precondition}
+ mdtAbstractPort::setAttributes() will be called to fetch some attributes (for example available baud rates if port is a \hyperlink{classmdt_serial_port}{mdtSerialPort} object). \begin{DoxyPrecond}{Precondition}
 Port must be set before with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} 
 \end{DoxyPrecond}
 
@@ -368,6 +368,10 @@ True on success, false else
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_abstract_port}{mdtAbstractPort} 
 \end{DoxySeeAlso}
+
+
+return pvPort-\/$>$setAttributes(portName); 
+
 \hypertarget{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{
 \index{mdtPortManager@{mdtPortManager}!start@{start}}
 \index{start@{start}!mdtPortManager@{mdtPortManager}}
@@ -389,6 +393,12 @@ Start reading and writing threads.
 
 \hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting()} 
 \end{DoxySeeAlso}
+
+
+if(!config().readOnly())\{
+
+\} 
+
 
 
 Reimplemented in \hyperlink{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{mdtSerialPortManager}.
@@ -438,6 +448,10 @@ mdtThread
 
 \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} 
 \end{DoxySeeAlso}
+
+
+if(\hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.readOnly())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-PORT\_\-IO\_\-ERROR, \char`\"{}start writing called on a read only port\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtPortManager\char`\"{}); e.commit(); return false; \}
+
 \hypertarget{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{
 \index{mdtPortManager@{mdtPortManager}!stop@{stop}}
 \index{stop@{stop}!mdtPortManager@{mdtPortManager}}

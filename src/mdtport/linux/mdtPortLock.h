@@ -30,6 +30,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+/// NOTE: \todo Create serious test cases for this class
 /*! \brief Open a port and lock it
  *
  * On Linux (or all POSIX ?) system, file locking is avaliable with fcntl().
@@ -54,6 +55,7 @@ class mdtPortLock
    * Then, is no lock file is found, the port will be opened with open().
    * Just after open, the port will be locked with fcntl().
    * Note: to close opend port, the system call close() can be used.
+   *
    * \return File descriptor returned by open() , or -1 on error.
    */
   int openLocked(const QString & portName, int flags);
@@ -69,6 +71,14 @@ class mdtPortLock
   /*! \brief Returns true if port is locked.
    */
   bool isLocked();
+
+  /*! \brief Returns true if port is locked by another port instance.
+   *
+   * The rule is simple:
+   *  - If port is open and locked, false will be returned.
+   *  - If port is closed and locked, true will be returned.
+   */
+  bool isLockedByAnother();
 
  private:
 

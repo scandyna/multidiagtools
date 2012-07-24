@@ -1,6 +1,6 @@
 format 76
 "linux" // mdtserialport::linux
-  revision 31
+  revision 32
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -47,7 +47,7 @@ format 76
       size A4
     end
 
-    class 189826 "mdtSerialPortPosix"
+    class 189826 "mdtSerialPort"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -69,7 +69,7 @@ ${inlines}
 	idl_decl ""
       end
 
-      operation 233858 "mdtSerialPortPosix"
+      operation 233858 "mdtSerialPort"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "parent" type class_ref 138626 // QObject
@@ -85,7 +85,7 @@ ${inlines}
 	
       end
 
-      operation 233986 "~mdtSerialPortPosix"
+      operation 233986 "~mdtSerialPort"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};

@@ -46,35 +46,74 @@ class mdtUsbtmcPort : public mdtAbstractPort
   ~mdtUsbtmcPort();
 
   // Implemtation of mdtAbstractPort
-  bool setAttributes(const QString &portName);
+  ///bool setAttributes(const QString &portName);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Try to open port.
+   *
+   * Try to open port set by setPortName().
+   * This can be usefull to enumerate real available ports on system.
+   * If port can be open successfull, NoError code is returned, and port is closed again.
+   * \pre The port must not be open whenn calling this method.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * To handle the port correctly, the subclass method must:
+   *  - Call the appropriate open function
+   *  - Return the correct error code on failure (see the error_t enum)
+   *  - Be sure that the port is closed again before return.
+   *  - The mdtError system should be used to keep trace in logfile.
+   */
+  error_t tryOpen();
+
+  /*! \brief Open the port
+   *
+   * NOTE: \todo change return type: replace with error_t type.
+   *
+   * Open port given by setPortName() and init read/write queues.
+   */
   bool open(mdtPortConfig &cfg);
 
-  // Overload of QIODevice method
+  /*! \brief Close the port
+   */
   void close();
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Set the read data timeout
+   */
   void setReadTimeout(int timeout);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Set the write data timeout
+   */
   void setWriteTimeout(int timeout);
 
-  // This method is called the reader thread
-  // Implemtation of mdtAbstractPort
+  /*! \brief Wait until data is available on port.
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
   bool waitForReadyRead();
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Read data from port
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.
+   */
   qint64 read(char *data, qint64 maxSize);
 
-  // This method is called the writer thread
-  // Implemtation of mdtAbstractPort
+  /*! \brief Wait until data can be written to port.
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
   bool waitEventWriteReady();
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Write data to port
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.
+   * Mutex is not handled by this method.
+   */
   qint64 write(const char *data, qint64 maxSize);
 
   // Tell the thread that a frame can be read
+  /// Write a frame... \todo fix this class..
   void writeOneFrame();
 
  public slots:

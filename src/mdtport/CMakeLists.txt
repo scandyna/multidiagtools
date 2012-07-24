@@ -9,7 +9,7 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Port I/O
           mdtAbstractPort.h
-          mdtPort.h
+          # mdtPort.h
           mdtPortThread.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
@@ -25,7 +25,7 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Port I/O
           mdtAbstractPort.cpp
-          mdtPort.cpp
+          # mdtPort.cpp
           mdtPortThread.cpp
           mdtPortReadThread.cpp
           mdtPortWriteThread.cpp
@@ -53,7 +53,8 @@ set (RESOURCE_FILES
 # Unix (Posix) specific files
 if(UNIX)
   set (SOURCES_FILES ${SOURCES_FILES} 
-    linux/mdtPortPosix.cpp
+    # linux/mdtPortPosix.cpp
+    linux/mdtPort.cpp
     linux/mdtPortLock.cpp
     linux/mdtUsbtmcPort.cpp
     linux/mdtUsbtmcPortManager.h

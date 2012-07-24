@@ -37,6 +37,7 @@ mdtUsbtmcPort::~mdtUsbtmcPort()
   this->close();
 }
 
+/**
 bool mdtUsbtmcPort::setAttributes(const QString &portName)
 {
   // Close previous opened device
@@ -47,15 +48,47 @@ bool mdtUsbtmcPort::setAttributes(const QString &portName)
     mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + portName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPort");
     e.commit();
-    pvName = "";
+    pvPortName = "";
     return false;
   }
   // Set attributes
-  pvName = portName;
+  pvPortName = portName;
   // Close the port
   this->close();
 
   return true;
+}
+*/
+
+mdtAbstractPort::error_t mdtUsbtmcPort::tryOpen()
+{
+  Q_ASSERT(!isOpen());
+
+  int err;
+
+  // Try to open port
+  pvFd = ::open(pvPortName.toStdString().c_str(), O_RDWR);
+  if(pvFd < 0){
+    err = errno;
+    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPort");
+    e.commit();
+    // Check error and return a possibly correct code
+    switch(err){
+      case EACCES:
+        return PortAccess;
+      case ENOENT:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+  // Close the port
+  ::close(pvFd);
+  pvFd = -1;
+
+  return NoError;
 }
 
 bool mdtUsbtmcPort::open(mdtPortConfig &cfg)
@@ -67,9 +100,9 @@ bool mdtUsbtmcPort::open(mdtPortConfig &cfg)
   //  O_NOCTTY: not a terminal
   //  O_NDELAY: ignore DCD signal
   lockMutex();
-  pvFd = ::open(pvName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
+  pvFd = ::open(pvPortName.toStdString().c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK );
   if(pvFd < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvName, mdtError::Error);
+    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPort");
     e.commit();

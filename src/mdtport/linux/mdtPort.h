@@ -32,55 +32,84 @@
 #include <QObject>
 #include <QString>
 
-class mdtPortPosix : public mdtAbstractPort
+class mdtPort : public mdtAbstractPort
 {
  public:
 
-  mdtPortPosix(QObject *parent = 0);
-  ~mdtPortPosix();
+  mdtPort(QObject *parent = 0);
+  ~mdtPort();
 
   // Implemtation of mdtAbstractPort
-  bool setAttributes(const QString &portName);
+  ///bool setAttributes(const QString &portName);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Try to open port.
+   *
+   * Try to open port set by setPortName().
+   * This can be usefull to enumerate real available ports on system.
+   * If port can be open successfull, NoError code is returned, and port is closed again.
+   * \pre The port must not be open whenn calling this method.
+   */
+  error_t tryOpen();
+
+  /*! \brief Open the port
+   *
+   * Open port given by setPortName() and init read/write queues.
+   */
   bool open(mdtPortConfig &cfg);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Close the port
+   */
   void close();
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Set the read data timeout
+   */
   void setReadTimeout(int timeout);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Set the write data timeout
+   */
   void setWriteTimeout(int timeout);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Wait until data is available on port
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
   bool waitForReadyRead();
 
-  // Implemtation of mdtAbstractPort method
+  /*! \brief Read data from port
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.
+   */
   qint64 read(char *data, qint64 maxSize);
 
-  // Implemtation of mdtAbstractPort method
+  /*! \brief Flush read buffers
+   */
   void flushIn();
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Wait until data can be written to port.
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
   bool waitEventWriteReady();
 
-  // Implemtation of mdtAbstractPort method
+  /*! \brief Write data to port
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.
+   * Mutex is not handled by this method.
+   */
   qint64 write(const char *data, qint64 maxSize);
 
-  // Implemtation of mdtAbstractPort method
+  /*! \brief Flush write buffers
+   */
   void flushOut();
-
- protected:
-
-  int pvFd;
 
  private:
 
   struct timeval pvReadTimeout;
   struct timeval pvWriteTimeout;
   mdtPortLock *pvPortLock;
+  int pvFd;
 };
 
 #endif  // #ifndef MDT_PORT_POSIX_H
