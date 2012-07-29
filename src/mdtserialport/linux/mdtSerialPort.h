@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SERIAL_PORT_POSIX_H
-#define MDT_SERIAL_PORT_POSIX_H
+#ifndef MDT_SERIAL_PORT_H
+#define MDT_SERIAL_PORT_H
 
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPortConfig.h"
@@ -63,16 +63,126 @@ class mdtSerialPort : public mdtAbstractSerialPort
    *  - Be sure that the port is closed again before return.
    *  - The mdtError system should be used to keep trace in logfile.
    */
-  error_t tryOpen();
+  ///error_t tryOpen();
+
+  /*! \brief Open the port given by setPortName()
+   * NOTE: \todo à supprimer
+   *
+   * If port can be open successfull, NoError code is returned.
+   *
+   * The mutex is not handled by this method.
+   */
+  ///error_t open();
 
   // Implemented from mdtAbstractPort
-  bool setAttributes(const QString &portName);
+  ///bool setAttributes(const QString &portName);
 
   // Implemented from mdtAbstractSerialPort
-  bool open(mdtSerialPortConfig &cfg);
+  ///bool open(mdtSerialPortConfig &cfg);
 
-  // Restore original setup and close the port
-  void close();
+  /*! \brief Close the serial port
+   *
+   * Restore original settings and close the port.
+   *
+   * The mutex is not handled by this method.
+   */
+  ///void close();
+
+  /*! \brief Set the baud rate
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if baud rate is supported and could be set.
+   */
+  bool setBaudRate(int rate);
+
+  /*! \brief Get the baud rate
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured baud rate, or 0 on error.
+   */
+  int baudRate();
+
+  /*! \brief Set number of data bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if data bits count is supported and could be set.
+   */
+  bool setDataBits(int n);
+
+  /*! \brief Get number of data bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured data bits count or 0 on error.
+   */
+  int dataBits();
+
+  /*! \brief Set number of stop bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if stop bits count is supported and could be set.
+   */
+  bool setStopBits(int n);
+
+  /*! \brief Get number of stop bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured stop bits count or -1 on error.
+   */
+  int stopBits();
+
+  /*! \brief Set parity check.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if parity check is supported and could be set.
+   */
+  bool setParity(mdtSerialPortConfig::parity_t p);
+
+  /*! \brief Get configured parity
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured parity or NoParity on error.
+   */
+  mdtSerialPortConfig::parity_t parity();
+
+  /*! \brief Enable/diseable RTS/CTS flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if RTS/CTS flow control is supported and could be set.
+   */
+  bool setFlowCtlRtsCts(bool on);
+
+  /*! \brief Get configured state of RTS/CTS flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if RTS/CTS flow control is enabled (and no error occured).
+   */
+  bool flowCtlRtsCtsOn();
+
+  /*! \brief Enable/diseable Xon/Xoff flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if Xon/Xoff flow control is supported and could be set.
+   */
+  bool setFlowCtlXonXoff(bool on, char xonChar, char xoffChar);
+
+  /*! \brief Get configured state of Xon/Xoff flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if Xon/Xoff flow control is enabled (and no error occured).
+   */
+  bool flowCtlXonXoffOn();
 
   // Implemtation of mdtAbstractPort
   void setReadTimeout(int timeout);
@@ -124,41 +234,44 @@ class mdtSerialPort : public mdtAbstractSerialPort
 
  private:
 
-  // Set the baud rate. Returns false if baud rate is not supported
-  bool setBaudRate(int rate);
+  /*! \brief Open the port given by setPortName()
+   *
+   * If port can be open successfull, NoError code is returned.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must not be open whenn calling this method.
+   *
+   * \sa close()
+   * \sa error_t
+   */
+  error_t pvOpen();
 
-  // Get configured baud rate
-  int baudRate();
+  /*! \brief Close port
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   */
+  void pvClose();
 
-  // Set number of data bits. Returns false on un unsupported number
-  bool setDataBits(int n);
+  /*! \brief Setup port with given configurations.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   *
+   * \sa error_t
+   */
+  error_t pvSetup();
 
-  // Get configured number of data bits
-  int dataBits();
+  /*! \brief Map the system defined UART type to internal one.
+   */
+  void mapUartType();
 
-  // Set number of stop bits. Returns false on un unsupported number
-  bool setStopBits(int n);
-
-  // Get configured number of stop bits
-  int stopBits();
-
-  //  Set parity check
-  void setParity(mdtSerialPortConfig::parity_t p);
-
-  // Get configured parity
-  mdtSerialPortConfig::parity_t parity();
-
-  // Enable/diseable RTS/CTS flow control
-  void setFlowCtlRtsCts(bool on);
-
-  // Returns true if RTS/CTS flow control is enabled
-  bool flowCtlRtsCtsOn();
-
-  // Enable/diseable Xon/Xoff flow control
-  void setFlowCtlXonXoff(bool on, char xonChar, char xoffChar);
-
-  // Returns true if Xon/Xoff flow control is enabled
-  bool flowCtlXonXoffOn();
+  /*! \brief Build the list of available baud rates.
+   */
+  void buildAvailableBaudRates();
 
   // Check if configuration could be done on system
   bool checkConfig(mdtSerialPortConfig cfg);

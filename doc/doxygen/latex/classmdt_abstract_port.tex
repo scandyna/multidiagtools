@@ -69,13 +69,13 @@ QString \& \hyperlink{classmdt_abstract_port_ac52fbd121f7cbb848a2f3e5d29fae615}{
 \label{classmdt_abstract_port_ac52fbd121f7cbb848a2f3e5d29fae615}
 
 \begin{DoxyCompactList}\small\item\em Get port name. \end{DoxyCompactList}\item 
-virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_a44d2d57b118d2b1f7a0041fcf84958ac}{tryOpen} ()=0
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{open} ()
 \begin{DoxyCompactList}\small\item\em TODO: \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)
-\begin{DoxyCompactList}\small\item\em Set the port attributes. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_port_a53affce84400ed1519db93ccc79888f9}{
-bool \hyperlink{classmdt_abstract_port_a53affce84400ed1519db93ccc79888f9}{isOpen} ()}
-\label{classmdt_abstract_port_a53affce84400ed1519db93ccc79888f9}
+\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{
+bool \hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{isOpen} () const }
+\label{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}
 
 \begin{DoxyCompactList}\small\item\em Get port's open state. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close} ()
@@ -137,6 +137,15 @@ void \hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlock
 \label{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}
 
 \begin{DoxyCompactList}\small\item\em Unlock the mutex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_ac1440ea9759cbbee9efc5ea22afcdb0a}{pvOpen} ()=0
+\begin{DoxyCompactList}\small\item\em Open the port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose} ()=0
+\begin{DoxyCompactList}\small\item\em Close port. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_a880e5ae1699af102f9a80501bb6a0021}{pvSetup} ()=0
+\begin{DoxyCompactList}\small\item\em Setup port with given configurations. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -180,9 +189,9 @@ QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ {\bfseries pvWriteFram
 \label{classmdt_abstract_port_a67a8b1965f20a55ad115926aed0234b4}
 
 \item 
-\hypertarget{classmdt_abstract_port_a1d82fdf9ddd04e482cfa0854dc11ed22}{
-\hyperlink{classmdt_port_config}{mdtPortConfig} {\bfseries pvConfig}}
-\label{classmdt_abstract_port_a1d82fdf9ddd04e482cfa0854dc11ed22}
+\hypertarget{classmdt_abstract_port_a035d72bddbac47f405a8ecf0d2eeba66}{
+\hyperlink{classmdt_port_config}{mdtPortConfig} $\ast$ {\bfseries pvConfig}}
+\label{classmdt_abstract_port_a035d72bddbac47f405a8ecf0d2eeba66}
 
 \item 
 \hypertarget{classmdt_abstract_port_afb8f8a723ff2db5141f18750020a7ee9}{
@@ -254,17 +263,14 @@ UnknownError}
 
 Close the port. 
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass.\par
- To handle the port correctly, the subclass method must:
-\begin{DoxyItemize}
-\item Check if port is open with \hyperlink{classmdt_abstract_port_a53affce84400ed1519db93ccc79888f9}{isOpen()} , if false, simply return.
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Do the specific work
-\item Call this close method (with \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} ). At this last step, the queues will be deleted, mutex unocked and open flag updated. 
-\end{DoxyItemize}
+Close port if it is open. The mutex is not handled by this method.
 
-Reimplemented in \hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a7fd4aec4bc5e3e17034f0ec6647af1e8}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a9ce6490af9ecba3bbc8a8e7de44c3f95}{mdtSerialPort}.
+Subclass notes:\par
+ Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated \begin{Desc}
+\item[\hyperlink{todo__todo000009}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+
+
+Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
 
 \hypertarget{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flushIn@{flushIn}}
@@ -316,6 +322,53 @@ Subclass notes:\par
 
 Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdtPort}, and \hyperlink{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}{mdtSerialPort}.
 
+\hypertarget{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{
+\index{mdtAbstractPort@{mdtAbstractPort}!open@{open}}
+\index{open@{open}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtAbstractPort::open (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}
+
+
+TODO: 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000007}{Todo}]activate and implement in all subclasses. \end{Desc}
+
+
+Try to open port.
+
+Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. Note that the mutex is not handled in this method. \begin{DoxyPrecond}{Precondition}
+The port must not be open whenn calling this method.
+\end{DoxyPrecond}
+Subclass notes:\par
+ This method must be implemented in subclass. To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Call the appropriate open function
+\item Return the correct error code on failure (see the error\_\-t enum)
+\item Be sure that the port is closed again before return.
+\item The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile.virtual error\_\-t tryOpen() = 0;
+\end{DoxyItemize}
+
+Open the port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}
+
+If port can be open successfull, NoError code is returned. If port is open, it will be closed first (by calling \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}).
+
+The mutex is not handled by this method.
+
+Subclass notes:\par
+ Internally, this method calls \hyperlink{classmdt_abstract_port_ac1440ea9759cbbee9efc5ea22afcdb0a}{pvOpen()}. Once done, the flags are updated.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{classmdt_serial_port_ae62fbd70485c30db13c6384c169925c9}{mdtSerialPort}.
+
 \hypertarget{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{
 \index{mdtAbstractPort@{mdtAbstractPort}!open@{open}}
 \index{open@{open}!mdtAbstractPort@{mdtAbstractPort}}
@@ -327,15 +380,7 @@ Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdt
 \label{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}
 
 
-Set the port attributes. 
-
-Open the given port name and get his attributes.\par
- This method must be re-\/implemented in subclass. The implementation must close the port after use, and not use \hyperlink{classmdt_abstract_port}{mdtAbstractPort} \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{open()} and \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}. 
-\begin{DoxyParams}{Parameters}
-{\em portName} & Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)virtual bool setAttributes(const QString \&portName) = 0;\\
-\hline
-\end{DoxyParams}
-Open the port
+Open the port. 
 
 NOTE:\begin{Desc}
 \item[\hyperlink{todo__todo000008}{Todo}]change return type: replace with error\_\-t type.\end{Desc}
@@ -351,7 +396,7 @@ Subclass notes:\par
 \item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
 \item Do the specific work. Note that port must be open in exclusive mode. On Linux, the \hyperlink{classmdt_port_lock}{mdtPortLock} should be used for this.
 \item Set the read/write timeouts. See the \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
-\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, mutex unocked and open flag updated.
+\item Call this open method (with \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, mutex unocked and open flag updated.
 \end{DoxyItemize}
 
 \begin{DoxyReturn}{Returns}
@@ -370,6 +415,97 @@ if(!cfg.readOnly())\{
 
 Reimplemented in \hyperlink{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}{mdtPort}, \hyperlink{classmdt_usbtmc_port_acf677164611ea563e40be93e1b36236a}{mdtUsbtmcPort}, and \hyperlink{classmdt_tcp_socket_aca164cd2f0b47988291afb7fbb423648}{mdtTcpSocket}.
 
+\hypertarget{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{
+\index{mdtAbstractPort@{mdtAbstractPort}!pvClose@{pvClose}}
+\index{pvClose@{pvClose}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{pvClose}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::pvClose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}
+
+
+Close port. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyPrecond}{Precondition}
+The port must be open whenn calling this method.
+\end{DoxyPrecond}
+Subclass notes:\par
+ This method must be re-\/implemented in subclass.\par
+ To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with \hyperlink{classmdt_port_lock}{mdtPortLock}.
+\item The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+\end{DoxyItemize}\hypertarget{classmdt_abstract_port_ac1440ea9759cbbee9efc5ea22afcdb0a}{
+\index{mdtAbstractPort@{mdtAbstractPort}!pvOpen@{pvOpen}}
+\index{pvOpen@{pvOpen}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{pvOpen}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractPort::pvOpen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_ac1440ea9759cbbee9efc5ea22afcdb0a}
+
+
+Open the port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} 
+
+If port can be open successfull, NoError code is returned.
+
+The mutex is not handled by this method.
+
+\begin{DoxyPrecond}{Precondition}
+The port must not be open whenn calling this method.
+\end{DoxyPrecond}
+Subclass notes:\par
+ This method must be re-\/implemented in subclass.\par
+ To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Do the specific work. Note that port must be open in exclusive mode. On Linux, the \hyperlink{classmdt_port_lock}{mdtPortLock} should be used for this.
+\item The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile.
+\item If port must be closed (f.ex. on error), use the \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()} method to keep flags coherent.
+\item Return the correct error code on failure (see the error\_\-t enum)
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()} 
+
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_abstract_port_a880e5ae1699af102f9a80501bb6a0021}{
+\index{mdtAbstractPort@{mdtAbstractPort}!pvSetup@{pvSetup}}
+\index{pvSetup@{pvSetup}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{pvSetup}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractPort::pvSetup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a880e5ae1699af102f9a80501bb6a0021}
+
+
+Setup port with given configurations. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyPrecond}{Precondition}
+The port must be open whenn calling this method.
+\end{DoxyPrecond}
+Subclass notes:\par
+ This method must be re-\/implemented in subclass.\par
+ To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Do the specific work
+\item Set read/write timeouts using \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} and \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{setWriteTimeout()}. See \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
+\item Return the correct error code on failure (see the error\_\-t enum)
+\end{DoxyItemize}
+
+Configuration is available using \hyperlink{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}{config()}.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 \index{mdtAbstractPort@{mdtAbstractPort}!read@{read}}
 \index{read@{read}!mdtAbstractPort@{mdtAbstractPort}}
@@ -575,39 +711,6 @@ False on error, in this case, the reader thread will be stopped.
 
 Reimplemented in \hyperlink{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{mdtSerialPort}.
 
-\hypertarget{classmdt_abstract_port_a44d2d57b118d2b1f7a0041fcf84958ac}{
-\index{mdtAbstractPort@{mdtAbstractPort}!tryOpen@{tryOpen}}
-\index{tryOpen@{tryOpen}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{tryOpen}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractPort::tryOpen (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_port_a44d2d57b118d2b1f7a0041fcf84958ac}
-
-
-TODO: 
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000007}{Todo}]activate and implement in all subclasses. \end{Desc}
-
-
-Try to open port.
-
-Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. Note that the mutex is not handled in this method. \begin{DoxyPrecond}{Precondition}
-The port must not be open whenn calling this method.
-\end{DoxyPrecond}
-Subclass notes:\par
- This method must be implemented in subclass. To handle the port correctly, the subclass method must:
-\begin{DoxyItemize}
-\item Call the appropriate open function
-\item Return the correct error code on failure (see the error\_\-t enum)
-\item Be sure that the port is closed again before return.
-\item The \hyperlink{classmdt_error}{mdtError} system should be used to keep trace in logfile. 
-\end{DoxyItemize}
-
-Implemented in \hyperlink{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a400c209a895be62c2554db395a9864d4}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_af151666d97ee2547297ff836430893ce}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a75750b52566e8448ee2eef649903fdb0}{mdtSerialPort}.
-
 \hypertarget{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{
 \index{mdtAbstractPort@{mdtAbstractPort}!updateReadTimeoutState@{updateReadTimeoutState}}
 \index{updateReadTimeoutState@{updateReadTimeoutState}!mdtAbstractPort@{mdtAbstractPort}}
@@ -668,28 +771,6 @@ False on error, in this case, the reader thread will be stopped.
 
 Implemented in \hyperlink{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}{mdtPort}, \hyperlink{classmdt_usbtmc_port_aaa58100bc6ec2a5f91a3c6bb3676a468}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a815275951e5834daf5068ffb48fcdcb3}{mdtSerialPort}.
 
-\hypertarget{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}{
-\index{mdtAbstractPort@{mdtAbstractPort}!waitForReadyRead@{waitForReadyRead}}
-\index{waitForReadyRead@{waitForReadyRead}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractPort::waitForReadyRead (
-\begin{DoxyParamCaption}
-\item[{int}]{msecs}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}
-
-
-Wait until data is available on port. 
-
-This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} and \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} (it is a little bit slower than setting timeout one time, and call \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} ).\par
- Note that the reader thread will call \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} without argument.\par
- Note: this method is called from thread , and should not be used directly\par
- Mutex: see \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} \begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will be stopped. 
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} 
-\end{DoxySeeAlso}
 \hypertarget{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{
 \index{mdtAbstractPort@{mdtAbstractPort}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtAbstractPort@{mdtAbstractPort}}
@@ -727,6 +808,28 @@ False on error, in this case, the reader thread will emit errorOccured()
 
 Implemented in \hyperlink{classmdt_port_af8737cc14667f6770af7be01759253e2}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a46efba4f2d3dbb3c917368323de0333b}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a381bf5194cf180ca95f5f4bae730f73c}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a0334aa073299f6161034e6be7c60939d}{mdtSerialPort}.
 
+\hypertarget{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}{
+\index{mdtAbstractPort@{mdtAbstractPort}!waitForReadyRead@{waitForReadyRead}}
+\index{waitForReadyRead@{waitForReadyRead}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractPort::waitForReadyRead (
+\begin{DoxyParamCaption}
+\item[{int}]{msecs}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}
+
+
+Wait until data is available on port. 
+
+This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} and \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} (it is a little bit slower than setting timeout one time, and call \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} ).\par
+ Note that the reader thread will call \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} without argument.\par
+ Note: this method is called from thread , and should not be used directly\par
+ Mutex: see \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} \begin{DoxyReturn}{Returns}
+False on error, in this case, the reader thread will be stopped. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 \index{mdtAbstractPort@{mdtAbstractPort}!write@{write}}
 \index{write@{write}!mdtAbstractPort@{mdtAbstractPort}}
@@ -818,4 +921,5 @@ Mutex is not handled by this method.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtAbstractPort.h\item 
-src/mdtport/mdtAbstractPort.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtAbstractPort.cpp\item 
+src/mdtport/moc\_\-mdtAbstractPort.cxx\end{DoxyCompactItemize}

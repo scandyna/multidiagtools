@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_file_copier_item.html" title="This is a container class used by mdtFileCopier." alt="" coords="7,5,135,35"/>
+<area shape="rect" id="node1" href="$classmdt_frame.html" title="Provide an array of bytes." alt="" coords="7,32,87,61"/>
+<area shape="rect" id="node3" href="$classmdt_frame_ascii.html" title="mdtFrameAscii" alt="" coords="156,5,265,35"/>
+<area shape="rect" id="node5" href="$classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame." alt="" coords="136,59,285,88"/>
 </map>

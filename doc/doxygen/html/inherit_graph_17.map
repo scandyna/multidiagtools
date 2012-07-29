@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="5,5,112,35"/>
-<area shape="rect" id="node3" href="$classmdt_serial_port_config.html" title="mdtSerialPortConfig" alt="" coords="160,5,299,35"/>
+<area shape="rect" id="node1" href="$classmdt_port_lock.html" title="NOTE:" alt="" coords="5,5,101,35"/>
 </map>

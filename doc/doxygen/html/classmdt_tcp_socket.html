@@ -92,14 +92,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>decrementTransactions
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeed1a50725a8e61f86de2bf67a92feb8"></a><!-- doxytag: member="mdtTcpSocket::mdtTcpSocket" ref="aeed1a50725a8e61f86de2bf67a92feb8" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtTcpSocket</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#ac1e7831d297471d6e5b920de5e9bb675">~mdtTcpSocket</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#af151666d97ee2547297ff836430893ce">tryOpen</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">bool setAttributes(const QString &amp;portName);  <a href="#af151666d97ee2547297ff836430893ce"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#aca164cd2f0b47988291afb7fbb423648">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#aca164cd2f0b47988291afb7fbb423648"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8">close</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a7fd4aec4bc5e3e17034f0ec6647af1e8"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aca164cd2f0b47988291afb7fbb423648"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#aa5b229a668c0d9b083f8eec8efe4636f">connectToHost</a> (const QString &amp;hostName, int hostPort)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect to host.  <a href="#aa5b229a668c0d9b083f8eec8efe4636f"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a>;  <a href="#aa5b229a668c0d9b083f8eec8efe4636f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a8a57e4b49f56c301c5f8d7a9ec191e87">setThreadObjects</a> (QTcpSocket *socket, <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> *thread)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the socket.  <a href="#a8a57e4b49f56c301c5f8d7a9ec191e87"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">setReadTimeout</a> (int timeout)</td></tr>
@@ -119,6 +118,26 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#adbf2db44b291127a499d9f8720beb632"></a><br/></td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ac1e7831d297471d6e5b920de5e9bb675"></a><!-- doxytag: member="mdtTcpSocket::~mdtTcpSocket" ref="ac1e7831d297471d6e5b920de5e9bb675" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtTcpSocket::~mdtTcpSocket </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><p><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a>; </p>
+</p>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a93984277418aee53633bd28249f484d1"></a><!-- doxytag: member="mdtTcpSocket::beginNewTransaction" ref="a93984277418aee53633bd28249f484d1" args="()" -->
 <div class="memitem">
@@ -136,35 +155,6 @@ Public Member Functions</h2></td></tr>
 
 <p>Start a new transaction. </p>
 <p>Mutex is locked by this method. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7fd4aec4bc5e3e17034f0ec6647af1e8"></a><!-- doxytag: member="mdtTcpSocket::close" ref="a7fd4aec4bc5e3e17034f0ec6647af1e8" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtTcpSocket::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Close the port. </p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass.<br/>
- To handle the port correctly, the subclass method must:</p>
-<ul>
-<li>Check if port is open with <a class="el" href="classmdt_abstract_port.html#a53affce84400ed1519db93ccc79888f9" title="Get port&#39;s open state.">isOpen()</a> , if false, simply return.</li>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Do the specific work</li>
-<li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, mutex unocked and open flag updated. </li>
-</ul>
-
-<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -193,7 +183,8 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Connect to host. </p>
+<p>void <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a>; </p>
+<p>Connect to host</p>
 <p>Use this method to start a connection to a host.<br/>
  Mutex is locked by this method. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -203,7 +194,8 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>hostPort must be &gt; 0 </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>hostPort must be &gt; 0</dd></dl>
+<p>void <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtTcpSocket::close()</a> { <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>; pvTransactionsCount = 0; <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a>; } </p>
 
 </div>
 </div>
@@ -222,16 +214,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Set the port attributes. </p>
-<p>Open the given port name and get his attributes.<br/>
- This method must be re-implemented in subclass. The implementation must close the port after use, and not use <a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> <a class="el" href="classmdt_tcp_socket.html#aca164cd2f0b47988291afb7fbb423648" title="Set the port attributes.">open()</a> and <a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8" title="Close the port.">close()</a>. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)virtual bool setAttributes(const QString &amp;portName) = 0;</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Open the port</p>
+<p>Open the port. </p>
 <p>NOTE:</p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>change return type: replace with error_t type.</dd></dl>
 <p>Open port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> and init read/write queues.</p>
@@ -243,7 +226,7 @@ Public Member Functions</h2></td></tr>
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
 <li>Do the specific work. Note that port must be open in exclusive mode. On Linux, the <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a> should be used for this.</li>
 <li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
-<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Set the port attributes.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated.</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde" title="TODO:">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated.</li>
 </ul>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
@@ -393,7 +376,7 @@ thread must be a valid pointer </dd></dl>
           <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtTcpSocket::tryOpen </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -403,8 +386,6 @@ thread must be a valid pointer </dd></dl>
 <p>Implemeted for conformity with <a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a>, does nothing.</p>
 <p>bool mdtTcpSocket::setAttributes(const QString &amp;portName) { qDebug() &lt;&lt; "setAttributes(): " &lt;&lt; portName.split(":");</p>
 <p>return true; } </p>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a44d2d57b118d2b1f7a0041fcf84958ac">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -547,7 +528,7 @@ thread must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 24 2012 20:17:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 29 2012 16:02:22 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

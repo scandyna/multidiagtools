@@ -49,17 +49,17 @@ class mdtPort : public mdtAbstractPort
    * If port can be open successfull, NoError code is returned, and port is closed again.
    * \pre The port must not be open whenn calling this method.
    */
-  error_t tryOpen();
+  ///error_t tryOpen();
 
   /*! \brief Open the port
    *
    * Open port given by setPortName() and init read/write queues.
    */
-  bool open(mdtPortConfig &cfg);
+  ///bool open(mdtPortConfig &cfg);
 
   /*! \brief Close the port
    */
-  void close();
+  ///void close();
 
   /*! \brief Set the read data timeout
    */
@@ -105,6 +105,37 @@ class mdtPort : public mdtAbstractPort
   void flushOut();
 
  private:
+
+   /*! \brief Open the port given by setPortName()
+   *
+   * If port can be open successfull, NoError code is returned.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must not be open whenn calling this method.
+   *
+   * \sa close()
+   * \sa error_t
+   */
+  error_t pvOpen();
+
+  /*! \brief Close port
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   */
+  void pvClose();
+
+  /*! \brief Setup port with given configurations.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   *
+   * \sa error_t
+   */
+  error_t pvSetup();
 
   struct timeval pvReadTimeout;
   struct timeval pvWriteTimeout;

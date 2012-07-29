@@ -50,6 +50,7 @@ class mdtAbstractPort : public QObject
                 PortLocked,       /*!< Port is allready locked */
                 PortNotFound,     /*!< Port was not found */
                 PortAccess,       /*!< Port cannot be open with requierd access (read, write) */
+                SetupError,       /*!< Setup failed on a configuration option */
                 UnknownError      /*!< Unknown error is happen. Logfile could give more information, see mdtError and mdtApplication */
                };
 
@@ -83,18 +84,33 @@ class mdtAbstractPort : public QObject
    *  - Call the appropriate open function
    *  - Return the correct error code on failure (see the error_t enum)
    *  - Be sure that the port is closed again before return.
-   *  - The mdtError system should be used to keep trace in logfile.
+   *  - The mdtError system should be used (on error) to keep trace in logfile.
    */
-  virtual error_t tryOpen() = 0;
+  ///virtual error_t tryOpen() = 0;
 
-  /*! \brief Set the port attributes
+  /* \brief Set the port attributes
    * 
    * Open the given port name and get his attributes.<br>
    * This method must be re-implemented in subclass.
    * The implementation must close the port after use, and not use mdtAbstractPort open() and close().
    * \param portName Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)
    */
-  ///virtual bool setAttributes(const QString &portName) = 0;
+  //virtual bool setAttributes(const QString &portName) = 0;
+
+  /*! \brief Open the port given by setPortName()
+   *
+   * If port can be open successfull, NoError code is returned.
+   * If port is open, it will be closed first (by calling close()).
+   *
+   * The mutex is not handled by this method.
+   *
+   * Subclass notes:<br>
+   * Internally, this method calls pvOpen(). Once done,
+   *  the flags are updated.
+   *
+   * \sa error_t
+   */
+  error_t open();
 
   /*! \brief Open the port
    *
@@ -115,28 +131,46 @@ class mdtAbstractPort : public QObject
    * \return True on successfull configuration and open port
    * \sa mdtPortConfig
    */
-  virtual bool open(mdtPortConfig &cfg);
+  ///virtual bool open(mdtPortConfig &cfg);
 
   /*! \brief Get port's open state
    */
-  bool isOpen();
+  bool isOpen() const;
 
   /*! \brief Close the port
    *
+   * Close port if it is open.
+   *
+   * The mutex is not handled by this method.
+   *
    * Subclass notes:<br>
-   * This method must be re-implemented in subclass.<br>
-   * To handle the port correctly, the subclass method must:
-   *  - Check if port is open with isOpen() , if false, simply return.
-   *  - Lock the mutex with lockMutex()
-   *  - Do the specific work
-   *  - Call this close method (with mdtAbstractPort::close() ).
-   * At this last step, the queues will be deleted, mutex unocked and open flag updated.
+   * Internally, this method calls pvClose(). Once done,
+   *  the flags are updated
+   * \todo Actuellement, les queues sont deletée ici, que faire ?
    */
   virtual void close();
+
+  /*! \brief Set configuration
+   */
+  void setConfig(mdtPortConfig *cfg);
 
   /*! \brief Get the stored configuration
    */
   mdtPortConfig &config();
+
+  /*! \brief Setup port with given configurations.
+   *
+   * If port is not open, open() will be called first.
+   * Then, pvSetup() is called, and finally queues initialized with initQueues().
+   * If somethig fails, the port is closed again, and error code returned.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre A valid configuration must be set before calling this method.
+   *
+   * \sa error_t
+   */
+  error_t setup();
 
   /*! \brief Set the read data timeout
    *
@@ -329,6 +363,12 @@ class mdtAbstractPort : public QObject
    */
   bool writeTimeoutOccured();
 
+  /*! \brief Init the read ans write queues
+   *
+   * \pre A valid configuration must be set before using this method.
+   */
+  void initQueues();
+
   /*! \brief Get the readen frames Queue
    *
    * Readen frames queue contains frames that where received from device
@@ -377,6 +417,63 @@ class mdtAbstractPort : public QObject
 
  protected:
 
+  /*! \brief Open the port given by setPortName()
+   *
+   * If port can be open successfull, NoError code is returned.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must not be open whenn calling this method.
+   *
+   * Subclass notes:<br>
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Do the specific work. Note that port must be open in exclusive mode. On Linux, the mdtPortLock should be used for this.
+   *  - The mdtError system should be used (on error) to keep trace in logfile.
+   *  - If port must be closed (f.ex. on error), use the close() method to keep flags coherent.
+   *  - Return the correct error code on failure (see the error_t enum)
+   *
+   * \sa close()
+   * \sa error_t
+   */
+  virtual error_t pvOpen() = 0;
+
+  /*! \brief Close port
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   *
+   * Subclass notes:<br>
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with mdtPortLock.
+   *  - The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual void pvClose() = 0;
+
+  /*! \brief Setup port with given configurations.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   * \pre A valid configuration must be set before calling this method.
+   *
+   * Subclass notes:<br>
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Do the specific work
+   *  - Set read/write timeouts using setReadTimeout() and setWriteTimeout().
+   *     See mdtPortConfig to know how to get these timeouts.
+   *  - Return the correct error code on failure (see the error_t enum)
+   *
+   * Configuration is available using config().
+   *
+   * \sa error_t
+   */
+  virtual error_t pvSetup() = 0;
+
+
   bool pvReadTimeoutOccured;
   bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
@@ -387,7 +484,7 @@ class mdtAbstractPort : public QObject
   QQueue<mdtFrame*> pvWriteFrames;
   QQueue<mdtFrame*> pvWriteFramesPool;
   // Configuration
-  mdtPortConfig pvConfig;
+  mdtPortConfig *pvConfig;
   // Attributes
   QString pvPortName;     // Port name, like /dev/ttyS0 , COM1, ...
   // mutex

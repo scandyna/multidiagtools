@@ -54,7 +54,8 @@ void mdtTcpSocketTest::tcpSocketTest()
   cfg.setWriteTimeout(500);
   cfg.setEndOfFrameSeq('*');
   //QVERIFY(s.setAttributes("127.0.0.1:80"));
-  QVERIFY(s.open(cfg));
+  s.setConfig(&cfg);
+  QVERIFY(s.setup() == mdtAbstractPort::NoError);
 
   // Assign socket to the thread
   thd.setPort(&s);
@@ -189,7 +190,8 @@ void mdtTcpSocketTest::tcpSocketRreadInvalidDataTest()
   cfg.setReadTimeout(500);
   cfg.setWriteTimeout(500);
   cfg.setEndOfFrameSeq('*');
-  QVERIFY(s.open(cfg));
+  s.setConfig(&cfg);
+  QVERIFY(s.setup() == mdtAbstractPort::NoError);
 
   // Assign socket to the thread
   thd.setPort(&s);

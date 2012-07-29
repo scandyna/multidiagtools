@@ -64,6 +64,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtAbstractPort Class Reference</div>  </div>
@@ -120,12 +121,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac52fbd121f7cbb848a2f3e5d29fae615"></a><!-- doxytag: member="mdtAbstractPort::portName" ref="ac52fbd121f7cbb848a2f3e5d29fae615" args="()" -->
 QString &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615">portName</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get port name. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a44d2d57b118d2b1f7a0041fcf84958ac">tryOpen</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO:  <a href="#a44d2d57b118d2b1f7a0041fcf84958ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde">open</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO:  <a href="#a4e0f0b7f9e24257677184e4bde10fdde"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port attributes.  <a href="#a4a8195c2bf580eb69ad5d90de86798e6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53affce84400ed1519db93ccc79888f9"></a><!-- doxytag: member="mdtAbstractPort::isOpen" ref="a53affce84400ed1519db93ccc79888f9" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a53affce84400ed1519db93ccc79888f9">isOpen</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#a4a8195c2bf580eb69ad5d90de86798e6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2122ae3141342ff38c8388e62b244e3b"></a><!-- doxytag: member="mdtAbstractPort::isOpen" ref="a2122ae3141342ff38c8388e62b244e3b" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b">isOpen</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get port's open state. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">close</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a1ace1a2bd1a04f16952980e247b04800"></a><br/></td></tr>
@@ -180,6 +181,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3523c72a06e4d950338f91e56c286e84"></a><!-- doxytag: member="mdtAbstractPort::unlockMutex" ref="a3523c72a06e4d950338f91e56c286e84" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84">unlockMutex</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock the mutex. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a">pvOpen</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a>  <a href="#ac1440ea9759cbbee9efc5ea22afcdb0a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0">pvClose</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close port.  <a href="#add29e91ccc4be62ab5c0dcb2a68ae8f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a880e5ae1699af102f9a80501bb6a0021">pvSetup</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup port with given configurations.  <a href="#a880e5ae1699af102f9a80501bb6a0021"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9faa5966fcf4232b3d25034c0f67dd7c"></a><!-- doxytag: member="mdtAbstractPort::pvReadTimeoutOccured" ref="a9faa5966fcf4232b3d25034c0f67dd7c" args="" -->
@@ -198,8 +207,8 @@ QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt;&#160;</t
 QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFrames</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67a8b1965f20a55ad115926aed0234b4"></a><!-- doxytag: member="mdtAbstractPort::pvWriteFramesPool" ref="a67a8b1965f20a55ad115926aed0234b4" args="" -->
 QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFramesPool</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d82fdf9ddd04e482cfa0854dc11ed22"></a><!-- doxytag: member="mdtAbstractPort::pvConfig" ref="a1d82fdf9ddd04e482cfa0854dc11ed22" args="" -->
-<a class="el" href="classmdt_port_config.html">mdtPortConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pvConfig</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a035d72bddbac47f405a8ecf0d2eeba66"></a><!-- doxytag: member="mdtAbstractPort::pvConfig" ref="a035d72bddbac47f405a8ecf0d2eeba66" args="" -->
+<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvConfig</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb8f8a723ff2db5141f18750020a7ee9"></a><!-- doxytag: member="mdtAbstractPort::pvPortName" ref="afb8f8a723ff2db5141f18750020a7ee9" args="" -->
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>pvPortName</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a357bce65bc031fffa87090a26ab88a08"></a><!-- doxytag: member="mdtAbstractPort::pvMutex" ref="a357bce65bc031fffa87090a26ab88a08" args="" -->
@@ -259,17 +268,12 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Close the port. </p>
+<p>Close port if it is open. The mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
- This method must be re-implemented in subclass.<br/>
- To handle the port correctly, the subclass method must:</p>
-<ul>
-<li>Check if port is open with <a class="el" href="classmdt_abstract_port.html#a53affce84400ed1519db93ccc79888f9" title="Get port&#39;s open state.">isOpen()</a> , if false, simply return.</li>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Do the specific work</li>
-<li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, mutex unocked and open flag updated. </li>
-</ul>
+ Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_port.html#aa494585a96a16c80a04dd32b0b6a0d4c">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a6fec5e49a42e6c2e6202a8b2f7f0dc37">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a7fd4aec4bc5e3e17034f0ec6647af1e8">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#a9ce6490af9ecba3bbc8a8e7de44c3f95">mdtSerialPort</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
@@ -331,6 +335,44 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 
 </div>
 </div>
+<a class="anchor" id="a4e0f0b7f9e24257677184e4bde10fdde"></a><!-- doxytag: member="mdtAbstractPort::open" ref="a4e0f0b7f9e24257677184e4bde10fdde" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtAbstractPort::open </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>TODO: </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>activate and implement in all subclasses. </dd></dl>
+<p>Try to open port.</p>
+<p>Try to open port set by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a>. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. Note that the mutex is not handled in this method. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>The port must not be open whenn calling this method.</dd></dl>
+<p>Subclass notes:<br/>
+ This method must be implemented in subclass. To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Call the appropriate open function</li>
+<li>Return the correct error code on failure (see the error_t enum)</li>
+<li>Be sure that the port is closed again before return.</li>
+<li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile.virtual error_t tryOpen() = 0;</li>
+</ul>
+<p>Open the port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a></p>
+<p>If port can be open successfull, NoError code is returned. If port is open, it will be closed first (by calling <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a>).</p>
+<p>The mutex is not handled by this method.</p>
+<p>Subclass notes:<br/>
+ Internally, this method calls <a class="el" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="Open the port given by setPortName()">pvOpen()</a>. Once done, the flags are updated.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_serial_port.html#ae62fbd70485c30db13c6384c169925c9">mdtSerialPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4a8195c2bf580eb69ad5d90de86798e6"></a><!-- doxytag: member="mdtAbstractPort::open" ref="a4a8195c2bf580eb69ad5d90de86798e6" args="(mdtPortConfig &amp;cfg)" -->
 <div class="memitem">
 <div class="memproto">
@@ -346,16 +388,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </div>
 <div class="memdoc">
 
-<p>Set the port attributes. </p>
-<p>Open the given port name and get his attributes.<br/>
- This method must be re-implemented in subclass. The implementation must close the port after use, and not use <a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Set the port attributes.">open()</a> and <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a>. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">portName</td><td>Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)virtual bool setAttributes(const QString &amp;portName) = 0;</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Open the port</p>
+<p>Open the port. </p>
 <p>NOTE:</p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>change return type: replace with error_t type.</dd></dl>
 <p>Open port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> and init read/write queues.</p>
@@ -367,7 +400,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
 <li>Do the specific work. Note that port must be open in exclusive mode. On Linux, the <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a> should be used for this.</li>
 <li>Set the read/write timeouts. See the <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
-<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Set the port attributes.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated.</li>
+<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde" title="TODO:">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, mutex unocked and open flag updated.</li>
 </ul>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
@@ -377,6 +410,96 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </p>
 
 <p>Reimplemented in <a class="el" href="classmdt_port.html#ac7158d1d718dbc6068648bbed1eab747">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#acf677164611ea563e40be93e1b36236a">mdtUsbtmcPort</a>, and <a class="el" href="classmdt_tcp_socket.html#aca164cd2f0b47988291afb7fbb423648">mdtTcpSocket</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="add29e91ccc4be62ab5c0dcb2a68ae8f0"></a><!-- doxytag: member="mdtAbstractPort::pvClose" ref="add29e91ccc4be62ab5c0dcb2a68ae8f0" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mdtAbstractPort::pvClose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Close port. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>The port must be open whenn calling this method.</dd></dl>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>.</li>
+<li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="ac1440ea9759cbbee9efc5ea22afcdb0a"></a><!-- doxytag: member="mdtAbstractPort::pvOpen" ref="ac1440ea9759cbbee9efc5ea22afcdb0a" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> mdtAbstractPort::pvOpen </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open the port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> </p>
+<p>If port can be open successfull, NoError code is returned.</p>
+<p>The mutex is not handled by this method.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>The port must not be open whenn calling this method.</dd></dl>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Do the specific work. Note that port must be open in exclusive mode. On Linux, the <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a> should be used for this.</li>
+<li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile.</li>
+<li>If port must be closed (f.ex. on error), use the <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> method to keep flags coherent.</li>
+<li>Return the correct error code on failure (see the error_t enum)</li>
+</ul>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> </dd>
+<dd>
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a880e5ae1699af102f9a80501bb6a0021"></a><!-- doxytag: member="mdtAbstractPort::pvSetup" ref="a880e5ae1699af102f9a80501bb6a0021" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> mdtAbstractPort::pvSetup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Setup port with given configurations. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>The port must be open whenn calling this method.</dd></dl>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in subclass.<br/>
+ To handle the port correctly, the subclass method must:</p>
+<ul>
+<li>Do the specific work</li>
+<li>Set read/write timeouts using <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7" title="Set the write data timeout.">setWriteTimeout()</a>. See <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> to know how to get these timeouts.</li>
+<li>Return the correct error code on failure (see the error_t enum)</li>
+</ul>
+<p>Configuration is available using <a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config()</a>.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
 
 </div>
 </div>
@@ -631,38 +754,6 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 
 </div>
 </div>
-<a class="anchor" id="a44d2d57b118d2b1f7a0041fcf84958ac"></a><!-- doxytag: member="mdtAbstractPort::tryOpen" ref="a44d2d57b118d2b1f7a0041fcf84958ac" args="()=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> mdtAbstractPort::tryOpen </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>TODO: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>activate and implement in all subclasses. </dd></dl>
-<p>Try to open port.</p>
-<p>Try to open port set by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a>. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. Note that the mutex is not handled in this method. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>The port must not be open whenn calling this method.</dd></dl>
-<p>Subclass notes:<br/>
- This method must be implemented in subclass. To handle the port correctly, the subclass method must:</p>
-<ul>
-<li>Call the appropriate open function</li>
-<li>Return the correct error code on failure (see the error_t enum)</li>
-<li>Be sure that the port is closed again before return.</li>
-<li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used to keep trace in logfile. </li>
-</ul>
-
-<p>Implemented in <a class="el" href="classmdt_port.html#ad3c958b5559e39ed8bb6b0c699809755">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a400c209a895be62c2554db395a9864d4">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#af151666d97ee2547297ff836430893ce">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#a75750b52566e8448ee2eef649903fdb0">mdtSerialPort</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a0fc7317e988d5dea53a999cd1bf4faa9"></a><!-- doxytag: member="mdtAbstractPort::updateReadTimeoutState" ref="a0fc7317e988d5dea53a999cd1bf4faa9" args="(bool state)" -->
 <div class="memitem">
 <div class="memproto">
@@ -736,31 +827,6 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 
 </div>
 </div>
-<a class="anchor" id="ae77785fbad938eac5f24f437e7683277"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="ae77785fbad938eac5f24f437e7683277" args="(int msecs)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtAbstractPort::waitForReadyRead </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>msecs</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Wait until data is available on port. </p>
-<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> ).<br/>
- Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> without argument.<br/>
- Note: this method is called from thread , and should not be used directly<br/>
- Mutex: see <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a848e3c86aa6ec480e8c471655fbcf5c5"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="a848e3c86aa6ec480e8c471655fbcf5c5" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -792,6 +858,31 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#af8737cc14667f6770af7be01759253e2">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a381bf5194cf180ca95f5f4bae730f73c">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#a0334aa073299f6161034e6be7c60939d">mdtSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae77785fbad938eac5f24f437e7683277"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="ae77785fbad938eac5f24f437e7683277" args="(int msecs)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtAbstractPort::waitForReadyRead </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>msecs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until data is available on port. </p>
+<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> ).<br/>
+ Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> without argument.<br/>
+ Note: this method is called from thread , and should not be used directly<br/>
+ Mutex: see <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> </dd></dl>
 
 </div>
 </div>
@@ -913,6 +1004,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a></li>
 <li>src/mdtport/mdtAbstractPort.cpp</li>
+<li>src/mdtport/moc_mdtAbstractPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -929,7 +1021,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 24 2012 20:17:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 29 2012 16:02:22 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

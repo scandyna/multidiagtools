@@ -39,7 +39,7 @@ mdtPort::mdtPort(QObject *parent)
 
 mdtPort::~mdtPort()
 {
-  this->close();
+  ///this->close();  /// NOTE!!
   delete pvPortLock;
 }
 
@@ -66,6 +66,7 @@ bool mdtPort::setAttributes(const QString &portName)
 }
 */
 
+/**
 mdtAbstractPort::error_t mdtPort::tryOpen()
 {
   Q_ASSERT(!isOpen());
@@ -96,7 +97,9 @@ mdtAbstractPort::error_t mdtPort::tryOpen()
 
   return NoError;
 }
+*/
 
+/**
 bool mdtPort::open(mdtPortConfig &cfg)
 {
   // Close previous opened device
@@ -122,22 +125,23 @@ bool mdtPort::open(mdtPortConfig &cfg)
 
   return mdtAbstractPort::open(cfg);
 }
+*/
 
+/**
 void mdtPort::close()
 {
   if(!isOpen()){
     return;
   }
   lockMutex();
-  ///if(pvFd >= 0){
   if(pvPortLock->isLocked()){
     pvPortLock->unlock();
   }
   ::close(pvFd);
   pvFd = -1;
-  ///}
   mdtAbstractPort::close();
 }
+*/
 
 void mdtPort::setReadTimeout(int timeout)
 {
@@ -270,4 +274,60 @@ void mdtPort::flushOut()
 {
   lockMutex();
   mdtAbstractPort::flushOut();
+}
+
+mdtAbstractPort::error_t mdtPort::pvOpen()
+{
+  Q_ASSERT(!isOpen());
+
+  int err;
+
+  // Try to open port
+  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  if(pvFd < 0){
+    err = errno;
+    // Check if port was locked by another
+    if(pvPortLock->isLockedByAnother()){
+      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtPort");
+      e.commit();
+      return PortLocked;
+    }
+    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtPort");
+    e.commit();
+    pvPortLock->unlock();
+    // Check error and return a possibly correct code
+    switch(err){
+      case EACCES:
+        return PortAccess;
+      case ENOENT:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+
+  return NoError;
+}
+
+void mdtPort::pvClose()
+{
+  Q_ASSERT(isOpen());
+
+  pvPortLock->unlock();
+  ::close(pvFd);
+  pvFd = -1;
+}
+
+mdtAbstractPort::error_t mdtPort::pvSetup()
+{
+  Q_ASSERT(isOpen());
+
+  // Set the read/write timeouts
+  setReadTimeout(config().readTimeout());
+  setWriteTimeout(config().writeTimeout());
+
+  return NoError;
 }

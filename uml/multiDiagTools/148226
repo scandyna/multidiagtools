@@ -1,6 +1,6 @@
 format 76
 "mdtserialport" // mdtserialport
-  revision 44
+  revision 45
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -381,6 +381,34 @@ ${inlines}
 	  b parent class_ref 249474 // mdtAbstractPort
       end
 
+      operation 919810 "mapUartType"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 919938 "buildAvailableBaudRates"
+	protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 722946 "mdtAbstractSerialPort"
 	private explicit_return_type ""
 	nparams 1
@@ -400,105 +428,6 @@ ${inlines}
     classdiagram 128002 "mdtSerialPort"
       draw_all_relations no hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
       size A4
-    end
-
-    class 128002 "mdtSerialPort_OLD"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      operation 233346 "mdtSerialPort_OLD"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 138626 // QObject
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 233474 "~mdtSerialPort_OLD"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 190082 // <generalisation>
-	relation 189954 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 190082 // <generalisation>
-	  b parent class_ref 189698 // mdtSerialPortSys
-      end
-
-      classrelation 196866 // <generalisation>
-	relation 196738 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 196866 // <generalisation>
-	  b parent class_ref 189826 // mdtSerialPort
-      end
-
-      operation 301314 "setRts"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "on" explicit_type "bool"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 301442 "setDtr"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "on" explicit_type "bool"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 551682 // <generalisation>
-	relation 551170 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 551682 // <generalisation>
-	  b parent class_ref 189570 // mdtAbstractSerialPort
-      end
     end
 
     classdiagram 215554 "mdtSerialPortConfig"
@@ -1344,7 +1273,7 @@ ${inlines}
       operation 737538 "setPort"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "port" type class_ref 128002 // mdtSerialPort_OLD
+	  param in name "port" explicit_type "mdtSerialPort_OLD"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{

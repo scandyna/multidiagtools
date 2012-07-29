@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtAbstractPort.h"
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtAbstractPort::mdtAbstractPort(QObject *parent)
  : QObject(parent)
@@ -30,6 +30,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   pvWriteTimeoutOccured = false;
   pvWriteTimeoutOccuredPrevious = false;
   pvIsOpen = false;
+  pvConfig = 0;
 
   // Emit signals with initial states
   emit readTimeoutStateChanged(pvReadTimeoutOccured);
@@ -38,6 +39,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
 
 mdtAbstractPort::~mdtAbstractPort()
 {
+  close();
 }
 
 void mdtAbstractPort::setPortName(const QString &portName)
@@ -50,82 +52,46 @@ QString &mdtAbstractPort::portName()
   return pvPortName;
 }
 
-bool mdtAbstractPort::isOpen()
+bool mdtAbstractPort::isOpen() const
 {
   return pvIsOpen;
 }
 
+mdtAbstractPort::error_t mdtAbstractPort::open()
+{
+  error_t err;
+
+  if(isOpen()){
+    close();
+  }
+  // Call system open method
+  err = pvOpen();
+  if(err == NoError){
+    pvIsOpen = true;
+  }
+
+  return err;
+}
+
+/**
 bool mdtAbstractPort::open(mdtPortConfig &cfg)
 {
-  mdtFrame *frame;
-
-  // Create the read frames pools with requested type
-  for(int i=0; i<cfg.readQueueSize(); i++){
-    switch(cfg.frameType()){
-      // Raw (binary) frame
-      case mdtFrame::FT_RAW:
-        frame = new mdtFrame;
-        Q_ASSERT(frame != 0);
-        frame->setDirectlyComplete(true);
-        break;
-      // Raw (binary) frame for use with timeout protocol
-      case mdtFrame::FT_RAW_TOP:
-        frame = new mdtFrame;
-        break;
-      // ASCII frame type
-      case mdtFrame::FT_ASCII:
-        frame = new mdtFrameAscii;
-        dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(cfg.endOfFrameSeq());
-        break;
-      // MODBUS/TCP frame type
-      case mdtFrame::FT_MODBUS_TCP:
-        frame = new mdtFrameModbusTcp;
-        break;
-      // Base frame type
-      default:
-        frame = new mdtFrame;
-    }
-    Q_ASSERT(frame != 0);
-    frame->reserve(cfg.readFrameSize());
-    pvReadFramesPool.enqueue(frame);
-  }
-  // Create the write frames pools
-  ///if(!cfg.readOnly()){
-    for(int i=0; i<cfg.writeQueueSize(); i++){
-      switch(cfg.frameType()){
-        // Raw (binary) frame
-        case mdtFrame::FT_RAW:
-          frame = new mdtFrame;
-          break;
-        // Raw (binary) frame for use with timeout protocol
-        case mdtFrame::FT_RAW_TOP:
-          frame = new mdtFrame;
-          break;
-        // ASCII frame type
-        case mdtFrame::FT_ASCII:
-          frame = new mdtFrameAscii;
-          break;
-        // MODBUS/TCP frame type
-        case mdtFrame::FT_MODBUS_TCP:
-          frame = new mdtFrameModbusTcp;
-          break;
-        // Base frame type
-        default:
-          frame = new mdtFrame;
-      }
-      Q_ASSERT(frame != 0);
-      frame->reserve(cfg.writeFrameSize());
-      pvWriteFramesPool.enqueue(frame);
-    }
   ///}
-  pvConfig = cfg;
+  pvConfig = &cfg;
   pvIsOpen = true;
   unlockMutex();
   return true;
 }
+*/
 
 void mdtAbstractPort::close()
 {
+  qDebug() << "mdtAbstractPort::close() ...";
+  if(!isOpen()){
+    return;
+  }
+  // Call system close method
+  pvClose();
   // Delete queues
   qDeleteAll(pvReadFramesPool);
   pvReadFramesPool.clear();
@@ -136,13 +102,43 @@ void mdtAbstractPort::close()
   qDeleteAll(pvWriteFrames);
   pvWriteFrames.clear();
   pvIsOpen = false;
-  // Unlock the mutex
-  unlockMutex();
+  qDebug() << "mdtAbstractPort::close() END";
+}
+
+void mdtAbstractPort::setConfig(mdtPortConfig *cfg)
+{
+  pvConfig = cfg;
 }
 
 mdtPortConfig &mdtAbstractPort::config()
 {
-  return pvConfig;
+  Q_ASSERT(pvConfig != 0);
+
+  return *pvConfig;
+}
+
+mdtAbstractPort::error_t mdtAbstractPort::setup()
+{
+  error_t err;
+
+  // Open port if needed
+  if(!isOpen()){
+    err = open();
+    if(err != NoError){
+      return err;
+    }
+  }
+  // Call setup
+  ///pvConfig = &cfg;
+  err = pvSetup();
+  if(err != NoError){
+    close();
+    return err;
+  }
+  // Init queues
+  initQueues();
+
+  return NoError;
 }
 
 bool mdtAbstractPort::waitForReadyRead(int msecs)
@@ -211,6 +207,69 @@ bool mdtAbstractPort::readTimeoutOccured()
 bool mdtAbstractPort::writeTimeoutOccured()
 {
   return pvWriteTimeoutOccured;
+}
+
+void mdtAbstractPort::initQueues()
+{
+  mdtFrame *frame;
+
+  // Create the read frames pools with requested type
+  for(int i=0; i<config().readQueueSize(); i++){
+    switch(config().frameType()){
+      // Raw (binary) frame
+      case mdtFrame::FT_RAW:
+        frame = new mdtFrame;
+        Q_ASSERT(frame != 0);
+        frame->setDirectlyComplete(true);
+        break;
+      // Raw (binary) frame for use with timeout protocol
+      case mdtFrame::FT_RAW_TOP:
+        frame = new mdtFrame;
+        break;
+      // ASCII frame type
+      case mdtFrame::FT_ASCII:
+        frame = new mdtFrameAscii;
+        dynamic_cast<mdtFrameAscii*>(frame)->setEofSeq(config().endOfFrameSeq());
+        break;
+      // MODBUS/TCP frame type
+      case mdtFrame::FT_MODBUS_TCP:
+        frame = new mdtFrameModbusTcp;
+        break;
+      // Base frame type
+      default:
+        frame = new mdtFrame;
+    }
+    Q_ASSERT(frame != 0);
+    frame->reserve(config().readFrameSize());
+    pvReadFramesPool.enqueue(frame);
+  }
+  // Create the write frames pools
+  for(int i=0; i<config().writeQueueSize(); i++){
+    switch(config().frameType()){
+      // Raw (binary) frame
+      case mdtFrame::FT_RAW:
+        frame = new mdtFrame;
+        break;
+      // Raw (binary) frame for use with timeout protocol
+      case mdtFrame::FT_RAW_TOP:
+        frame = new mdtFrame;
+        break;
+      // ASCII frame type
+      case mdtFrame::FT_ASCII:
+        frame = new mdtFrameAscii;
+        break;
+      // MODBUS/TCP frame type
+      case mdtFrame::FT_MODBUS_TCP:
+        frame = new mdtFrameModbusTcp;
+        break;
+      // Base frame type
+      default:
+        frame = new mdtFrame;
+    }
+    Q_ASSERT(frame != 0);
+    frame->reserve(config().writeFrameSize());
+    pvWriteFramesPool.enqueue(frame);
+  }
 }
 
 QQueue<mdtFrame*> &mdtAbstractPort::readenFrames()

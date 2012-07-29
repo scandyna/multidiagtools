@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtSerialPortConfig.h"
 #include <QtGlobal>
 #include <QDebug>
@@ -31,7 +50,7 @@ void mdtSerialPortConfig::setBaudRate(int baudRate)
   pvBaudRate = baudRate;
 }
 
-int mdtSerialPortConfig::baudRate()
+int mdtSerialPortConfig::baudRate() const
 {
   return pvBaudRate;
 }
@@ -41,7 +60,7 @@ void mdtSerialPortConfig::setParity(mdtSerialPortConfig::parity_t _parity)
   pvParity = _parity;
 }
 
-mdtSerialPortConfig::parity_t mdtSerialPortConfig::parity()
+mdtSerialPortConfig::parity_t mdtSerialPortConfig::parity() const
 {
   return pvParity;
 }
@@ -51,7 +70,7 @@ void mdtSerialPortConfig::setDataBitsCount(int n)
   pvDataBitCount = n;
 }
 
-int mdtSerialPortConfig::dataBitsCount()
+int mdtSerialPortConfig::dataBitsCount() const
 {
   return pvDataBitCount;
 }
@@ -61,7 +80,7 @@ void mdtSerialPortConfig::setStopBitsCount(int n)
   pvStopBitCount = n;
 }
 
-int mdtSerialPortConfig::stopBitsCount()
+int mdtSerialPortConfig::stopBitsCount() const
 {
   return pvStopBitCount;
 }
@@ -76,7 +95,7 @@ void mdtSerialPortConfig::diseableFlowCtlRtsCts()
   pvFlowCtlRtsCtsEnabled = false;
 }
 
-bool mdtSerialPortConfig::flowCtlRtsCtsEnabled()
+bool mdtSerialPortConfig::flowCtlRtsCtsEnabled() const
 {
   return pvFlowCtlRtsCtsEnabled;
 }
@@ -93,22 +112,22 @@ void mdtSerialPortConfig::diseableFlowCtlXonXoff()
   pvFlowCtlXonXoffEnabled = false;
 }
 
-bool mdtSerialPortConfig::flowCtlXonXoffEnabled()
+bool mdtSerialPortConfig::flowCtlXonXoffEnabled() const
 {
   return pvFlowCtlXonXoffEnabled;
 }
 
-char mdtSerialPortConfig::xonChar()
+char mdtSerialPortConfig::xonChar() const
 {
   return pvXonChar;
 }
 
-char mdtSerialPortConfig::xoffChar()
+char mdtSerialPortConfig::xoffChar() const
 {
   return pvXoffChar;
 }
 
-bool mdtSerialPortConfig::isValid()
+bool mdtSerialPortConfig::isValid() const
 {
   return false;
 }
@@ -155,5 +174,5 @@ bool mdtSerialPortConfig::matches(const mdtSerialPortConfig &other)
   if(pvIsValid != other.pvIsValid){
     return false;
   }
-  return true;
+  return mdtPortConfig::matches(other);
 }

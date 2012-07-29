@@ -18,42 +18,20 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_SERIAL_PORT_TEST_H
-#define MDT_SERIAL_PORT_TEST_H
+#ifndef MDT_SERIAL_PORT_CONFIG_TEST_H
+#define MDT_SERIAL_PORT_CONFIG_TEST_H
 
 #include "mdtTest.h"
 
-class mdtSerialPortTest : public mdtTest
+class mdtSerialPortConfigTest : public mdtTest
 {
  Q_OBJECT
 
  private slots:
 
-  void essais();
-
-  // Serial port manager tests
-  void mdtSerialPortManagerTest();
-
-  // Test start and stop
-  void mdtSerialPortStartStopTest();
-
-  // Test the control signals (modem lines)
-  void mdtSerialPortCtlSignalsTest();
-
-  // Test the data transmission: RAW
-  void mdtSerialPortTxRxBinaryTest();
-  void mdtSerialPortTxRxBinaryTest_data();
-
-  // Test the data transmission: timeout protocol
-  void mdtSerialPortTxRxBinaryTopTest();
-  void mdtSerialPortTxRxBinaryTopTest_data();
-
-  // Test the data transmission: ASCII
-  void mdtSerialPortTxRxAsciiTest();
-  void mdtSerialPortTxRxAsciiTest_data();
-
-signals:
-  void testSignal(bool on);
+  // Test the mdtSerialPortConfig class
+  void ConfigTest();
+  void ConfigTest_data();
 };
 
-#endif  // #ifndef MDT_SERIAL_PORT_TEST_H
+#endif  // #ifndef MDT_SERIAL_PORT_CONFIG_TEST_H

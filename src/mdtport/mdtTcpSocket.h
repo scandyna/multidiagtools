@@ -47,10 +47,10 @@ class mdtTcpSocket : public mdtAbstractPort
   error_t tryOpen();
 
   // Implementation of mdtAbstractPort - Locks the mutex
-  bool open(mdtPortConfig &cfg);
+  ///bool open(mdtPortConfig &cfg);
 
   // Implementation of mdtAbstractPort - Locks the mutex
-  void close();
+  ///void close();
 
   /*! \brief Connect to host
    * 
@@ -112,6 +112,37 @@ class mdtTcpSocket : public mdtAbstractPort
   void decrementTransactionsCounter();
 
  private:
+
+  /*! \brief Open the port given by setPortName()
+   *
+   * If port can be open successfull, NoError code is returned.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must not be open whenn calling this method.
+   *
+   * \sa close()
+   * \sa error_t
+   */
+  error_t pvOpen();
+
+  /*! \brief Close port
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   */
+  void pvClose();
+
+  /*! \brief Setup port with given configurations.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   *
+   * \sa error_t
+   */
+  error_t pvSetup();
 
   int pvReadTimeout;
   int pvWriteTimeout;

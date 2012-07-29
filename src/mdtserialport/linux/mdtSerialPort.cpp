@@ -59,14 +59,19 @@ mdtSerialPort::~mdtSerialPort()
   delete pvPortLock;
 }
 
+/**
 mdtAbstractPort::error_t mdtSerialPort::tryOpen()
 {
   Q_ASSERT(!isOpen());
 
-  int err;
+  mdtAbstractPort::error_t err;
 
   // Try to open port
-  ///pvFd = ::open(pvPortName.toStdString().c_str(), O_RDWR);
+  err = open();
+  if(err != mdtAbstractPort::NoError){
+    return err;
+  }
+
   pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
   if(pvFd < 0){
     // Checl if port was locked by another
@@ -74,7 +79,7 @@ mdtAbstractPort::error_t mdtSerialPort::tryOpen()
       return PortLocked;
     }
     err = errno;
-    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
     e.setSystemError(err, strerror(err));
     MDT_ERROR_SET_SRC(e, "mdtSerialPort");
     e.commit();
@@ -88,19 +93,84 @@ mdtAbstractPort::error_t mdtSerialPort::tryOpen()
         return UnknownError;
     }
   }
+
   // Close the port
+  close();
+
   pvPortLock->unlock();
   ::close(pvFd);
   pvFd = -1;
 
+
+  return mdtAbstractPort::NoError;
+}
+*/
+
+/// NOTE: \todo A supprimer !!
+/**
+mdtAbstractPort::error_t mdtSerialPort::open()
+{
   return NoError;
 }
+*/
+
+/**
+mdtAbstractPort::error_t mdtSerialPort::open()
+{
+  int err;
+
+  // Close previous opened port
+  close();
+
+  // Try to open port locked
+  //  O_RDWR : Read/write access
+  //  O_NOCTTY: not a terminal
+  //  O_NDELAY: ignore DCD signal
+  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  if(pvFd < 0){
+    // Check if port was locked by another
+    if(pvPortLock->isLockedByAnother()){
+      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return PortLocked;
+    }
+    err = errno;
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    // Check error and return a possibly correct code
+    switch(err){
+      case EACCES:
+        return PortAccess;
+      case ENOENT:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+  // Get current config and save it to pvOriginalTermios
+  if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
+    close();
+    // Most of cases, this function fails because the phisical port is not attached
+    return PortNotFound;
+  }
+  // Get current system config on "work copy"
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    close();
+    // Most of cases, this function fails because the phisical port is not attached
+    return PortNotFound;
+  }
+
+  return mdtAbstractPort::open();
+}
+*/
 
 /// NOTE: \todo Split functions and remove this
+/**
 bool mdtSerialPort::setAttributes(const QString &portName)
 {
-  struct serial_struct serinfo;
-
   // Close previous opened port
   this->close();
   // Clear previous attributes
@@ -117,130 +187,18 @@ bool mdtSerialPort::setAttributes(const QString &portName)
   }
   // Set port name
   pvPortName = portName;
-  // Set the UART type
-  if(ioctl(pvFd, TIOCGSERIAL, &serinfo) < 0){
-    pvUartType = UT_UNKNOW;
-    ::close(pvFd);
-    return false;
-  }
-  // Map the type
-  switch(serinfo.type){
-    case PORT_8250:
-      pvUartType = UT_8250;
-    case PORT_16450:
-      pvUartType = UT_16450;
-      break;
-    case PORT_16550:
-      pvUartType = UT_16550;
-      break;
-    case PORT_16550A:
-      pvUartType = UT_16550A;
-      break;
-    case PORT_CIRRUS:
-      pvUartType = UT_CIRRUS;
-      break;
-    case PORT_16650:
-      pvUartType = UT_16650;
-      break;
-    case PORT_16650V2:
-      pvUartType = UT_16650V2;
-      break;
-    case PORT_16750:
-      pvUartType = UT_16750;
-      break;
-    case PORT_STARTECH:
-      pvUartType = UT_STARTECH;
-      break;
-    case PORT_16C950:
-      pvUartType = UT_16C950;
-      break;
-    case PORT_16654:
-      pvUartType = UT_16654;
-      break;
-    case PORT_16850:
-      pvUartType = UT_16850;
-      break;
-    case PORT_RSA:
-      pvUartType = UT_RSA;
-      break;
-    default:
-      pvUartType = UT_UNKNOW;
-      ::close(pvFd);
-      return false;
-  }
-  // Get available baud rates list
-  pvAvailableBaudRates << 50;
-  pvAvailableBaudRates << 75;
-  pvAvailableBaudRates << 110;
-  pvAvailableBaudRates << 134; // Note: is 134.5
-  pvAvailableBaudRates << 150;
-  pvAvailableBaudRates << 200;
-  pvAvailableBaudRates << 300;
-  pvAvailableBaudRates << 600;
-  pvAvailableBaudRates << 1200;
-  pvAvailableBaudRates << 1800;
-  pvAvailableBaudRates << 2400;
-  pvAvailableBaudRates << 4800;
-  pvAvailableBaudRates << 9600;
-  pvAvailableBaudRates << 19200;
-  pvAvailableBaudRates << 38400;
-#ifdef  B57600
-  pvAvailableBaudRates << 57600;
-#endif
-#ifdef B76800
-  pvAvailableBaudRates << 76800;
-#endif
-#ifdef  B115200
-  pvAvailableBaudRates << 115200;
-#endif
-#ifdef  B230400
-  pvAvailableBaudRates << 230400;
-#endif
-#ifdef  B460800
-  pvAvailableBaudRates << 460800;
-#endif
-#ifdef  B500000
-  pvAvailableBaudRates << 500000;
-#endif
-#ifdef  B576000
-  pvAvailableBaudRates << 576000;
-#endif
-#ifdef  B921600
-  pvAvailableBaudRates << 921600;
-#endif
-#ifdef  B1000000
-  pvAvailableBaudRates << 1000000;
-#endif
-#ifdef  B1152000
-  pvAvailableBaudRates << 1152000;
-#endif
-#ifdef  B1500000
-  pvAvailableBaudRates << 1500000;
-#endif
-#ifdef  B2000000
-  pvAvailableBaudRates << 2000000;
-#endif
-#ifdef  B2500000
-  pvAvailableBaudRates << 2500000;
-#endif
-#ifdef  B3000000
-  pvAvailableBaudRates << 3000000;
-#endif
-#ifdef  B3500000
-  pvAvailableBaudRates << 3500000;
-#endif
-#ifdef  B4000000
-  pvAvailableBaudRates << 4000000;
-#endif
 
   // End of attributes, close port
   ::close(pvFd);
   return true;
 }
+*/
 
+/**
 bool mdtSerialPort::open(mdtSerialPortConfig &cfg)
 {
   QString strNum;
+  mdtAbstractPort::error_t err;
 
   // Close previous opened device
   this->close();
@@ -249,14 +207,11 @@ bool mdtSerialPort::open(mdtSerialPortConfig &cfg)
   //  O_NOCTTY: not a terminal
   //  O_NDELAY: ignore DCD signal
   lockMutex();
-  // In read only mode, we handle no lock
-  /**
-  if(cfg.readOnly()){
-    pvFd = ::open(pvPortName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK);
-  }else{
-    pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  err = open();
+  if(err != mdtAbstractPort::NoError){
+    return false; /// NOTE: adapt to error_t
   }
-  */
+
   pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
   if(pvFd < 0){
     pvPortLock->unlock();
@@ -291,6 +246,7 @@ bool mdtSerialPort::open(mdtSerialPortConfig &cfg)
     unlockMutex();
     return false;
   }
+
   // Set baud rate
   if(!setBaudRate(cfg.baudRate())){
     ::close(pvFd);
@@ -365,375 +321,24 @@ bool mdtSerialPort::open(mdtSerialPortConfig &cfg)
 
   return mdtAbstractPort::open(cfg);
 }
+*/
 
+/**
 void mdtSerialPort::close()
 {
   if(!isOpen()){
     return;
   }
-  lockMutex();
-  if(pvPortLock->isLocked()){
-    pvPortLock->unlock();
-  }
-  if(pvFd >= 0){
-    tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
-    ::close(pvFd);
-    pvFd = -1;
-  }
-  mdtAbstractPort::close();
+  // Restore original termios struct
+  tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
+  // Close the port
+  pvPortLock->unlock();
+  ::close(pvFd);
+  pvFd = -1;
+
+  mdtAbstractSerialPort::close();
 }
-
-void mdtSerialPort::setReadTimeout(int timeout)
-{
-  pvReadTimeout.tv_sec = timeout/1000;
-  pvReadTimeout.tv_usec = 1000*(timeout%1000);
-}
-
-void mdtSerialPort::setWriteTimeout(int timeout)
-{
-  pvWriteTimeout.tv_sec = timeout/1000;
-  pvWriteTimeout.tv_usec = 1000*(timeout%1000);
-}
-
-bool mdtSerialPort::waitForReadyRead()
-{
-  fd_set input;
-  int n;
-  struct timeval tv = pvReadTimeout;  // Create a copy, because select() alter the timeout
-
-  // Init the select call
-  FD_ZERO(&input);
-  FD_SET(pvFd, &input);
-
-  pvMutex.unlock();
-  n = select(pvFd+1, &input, 0, 0, &tv);
-  pvMutex.lock();
-  if(n == 0){
-    updateReadTimeoutState(true);
-  }else{
-    updateReadTimeoutState(false);
-    if(n < 0){
-      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-  }
-
-  return true;
-}
-
-qint64 mdtSerialPort::read(char *data, qint64 maxSize)
-{
-  int n;
-  int err;
-
-  n = ::read(pvFd, data, maxSize);
-  if(n < 0){
-    // Store errno
-    err = errno;
-    switch(err){
-      case EAGAIN:      // No data available
-        return 0;
-      case ETIMEDOUT:   // Read timeout (happens with USBTMC)
-        updateReadTimeoutState(true);
-        return 0;
-      default:
-        mdtError e(MDT_PORT_IO_ERROR, "read() call failed", mdtError::Error);
-        e.setSystemError(err, strerror(err));
-        MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-        e.commit();
-        return n;
-    }
-  }
-
-  return n;
-}
-
-bool mdtSerialPort::suspendTransmission()
-{
-  int err;
-
-  if(flowCtlRtsCtsOn()){
-    if(!setRtsOff()){
-      return false;
-    }
-  }
-  if(flowCtlXonXoffOn()){
-    if(tcflow(pvFd, TCIOFF) < 0){
-      err = errno;
-      mdtError e(MDT_PORT_IO_ERROR, "tcflow() call failed", mdtError::Error);
-      e.setSystemError(err, strerror(err));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-  }
-
-  return true;
-}
-
-bool mdtSerialPort::resumeTransmission()
-{
-  int err;
-
-  if(flowCtlRtsCtsOn()){
-    if(!setRtsOn()){
-      return false;
-    }
-  }
-  if(flowCtlXonXoffOn()){
-    if(tcflow(pvFd, TCION) < 0){
-      err = errno;
-      mdtError e(MDT_PORT_IO_ERROR, "tcflow() call failed", mdtError::Error);
-      e.setSystemError(err, strerror(err));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-  }
-
-  return true;
-}
-
-void mdtSerialPort::flushIn()
-{
-  int err;
-
-  lockMutex();
-  if(tcflush(pvFd, TCIFLUSH) < 0){
-    err = errno;
-    mdtError e(MDT_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-  }
-  mdtAbstractPort::flushIn();
-}
-
-bool mdtSerialPort::waitEventWriteReady()
-{
-  fd_set output;
-  int n;
-  struct timeval tv = pvWriteTimeout;  // Create a copy, because select() alter the timeout
-
-  // Init the select call
-  FD_ZERO(&output);
-  FD_SET(pvFd, &output);
-
-  pvMutex.unlock();
-  n = select(pvFd+1, 0, &output, 0, &tv);
-  pvMutex.lock();
-  if(n == 0){
-    updateWriteTimeoutState(true);
-  }else{
-    updateWriteTimeoutState(false);
-    if(n < 0){
-      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-  }
-
-  return true;
-}
-
-qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
-{
-  int n;
-  int err;
-
-  n = ::write(pvFd, data, maxSize);
-  if(n < 0){
-    // Store error (errno will be reset when readen)
-    err = errno;
-    switch(err){
-      case EAGAIN:    // Can't write now
-        return 0;
-      default:
-        mdtError e(MDT_PORT_IO_ERROR, "write() call failed", mdtError::Error);
-        e.setSystemError(err, strerror(err));
-        MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-        e.commit();
-        return n;
-    }
-  }
-
-  return n;
-}
-
-void mdtSerialPort::flushOut()
-{
-  int err;
-
-  lockMutex();
-  if(tcflush(pvFd, TCOFLUSH) < 0){
-    err = errno;
-    mdtError e(MDT_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-  }
-  mdtAbstractPort::flushOut();
-}
-
-bool mdtSerialPort::waitEventCtl()
-{
-  int retVal;
-
-  // We wait until a line status change happens
-  pvMutex.unlock();
-  retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
-  pvMutex.lock();
-  if(retVal < 0){
-    if(errno == EINTR){
-      // Probably sent by pthread_kill() to stop the thread
-      if(pvAbortingWaitEventCtl){
-        pvAbortingWaitEventCtl = false;
-        return true;
-      }
-      // Unhandled case that abort the thread
-      mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Info);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-    // Else, we have a unhandled error
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-
-  return true;
-}
-
-bool mdtSerialPort::getCtlStates()
-{
-  int states;
-
-  if(ioctl(pvFd, TIOCMGET, &states) < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-
-  // See witch signals changed
-  if((states & TIOCM_CAR) != pvPreviousCarState){
-    // Store new state
-    pvPreviousCarState = (states & TIOCM_CAR);
-    // Determine current state and emit signal
-    if(states & TIOCM_CAR){
-      pvCarIsOn = true;
-    }else{
-      pvCarIsOn = false;
-    }
-    emit carChanged(pvCarIsOn);
-  }
-  if((states & TIOCM_DSR) != pvPreviousDsrState){
-    // Store new state
-    pvPreviousDsrState = (states & TIOCM_DSR);
-    // Determine current state and emit signal
-    if(states & TIOCM_DSR){
-      pvDsrIsOn = true;
-    }else{
-      pvDsrIsOn = false;
-    }
-    emit dsrChanged(pvDsrIsOn);
-  }
-  if((states & TIOCM_CTS) != pvPreviousCtsState){
-    // Store new state
-    pvPreviousCtsState = (states & TIOCM_CTS);
-    // Determine current state and emit signal
-    if(states & TIOCM_CTS){
-      pvCtsIsOn = true;
-    }else{
-      pvCtsIsOn = false;
-    }
-    emit ctsChanged(pvCtsIsOn);
-  }
-  if((states & TIOCM_RNG) != pvPreviousRngState){
-    // Store new state
-    pvPreviousRngState = (states & TIOCM_RNG);
-    // Determine current state and emit signal
-    if(states & TIOCM_RNG){
-      pvRngIsOn = true;
-    }else{
-      pvRngIsOn = false;
-    }
-    emit rngChanged(pvRngIsOn);
-  }
-
-  return true;
-}
-
-void mdtSerialPort::setRts(bool on)
-{
-  if(!isOpen()){
-    return;
-  }
-  pvMutex.lock();
-  if(on){
-    setRtsOn();
-  }else{
-    setRtsOff();
-  }
-  pvMutex.unlock();
-}
-
-void mdtSerialPort::setDtr(bool on)
-{
-  int states;
-
-  if(!isOpen()){
-    return;
-  }
-  pvMutex.lock();
-  // Get the current ctl states
-  if(ioctl(pvFd, TIOCMGET, &states) < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    pvMutex.unlock();
-    return;
-  }
-  // Set DTR state
-  if(on){
-    states |= TIOCM_DTR;
-  }else{
-    states &= ~TIOCM_DTR;
-  }
-  // Commit to system
-  if(ioctl(pvFd, TIOCMSET, &states) < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-  }
-  pvMutex.unlock();
-}
-
-void mdtSerialPort::defineCtlThread(pthread_t ctlThread)
-{
-  pvCtlThread = ctlThread;
-}
-
-void mdtSerialPort::abortWaitEventCtl()
-{
-  Q_ASSERT(pvCtlThread != 0);
-
-  // Set aborting flag and send the signal
-  pvAbortingWaitEventCtl = true;
-  pthread_kill(pvCtlThread, SIGALRM);
-}
+*/
 
 bool mdtSerialPort::setBaudRate(int rate)
 {
@@ -877,6 +482,17 @@ bool mdtSerialPort::setBaudRate(int rate)
   if(cfsetospeed(&pvTermios, brMask) < 0){
     return false;
   }
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+  // Check if baud rate could be applied
+  if(baudRate() != rate){
+    return false;
+  }
 
   return true;
 }
@@ -887,6 +503,13 @@ int mdtSerialPort::baudRate()
   int rate;
 
   // Get configured baud rate
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcgetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return 0;
+  }
   // Note, we allways configure the same rate for input
   // or output, so we choose here to get input configured rate
   brMask = cfgetispeed(&pvTermios);
@@ -1049,7 +672,18 @@ bool mdtSerialPort::setDataBits(int n)
   // Apply to configuration
   pvTermios.c_cflag &= ~CSIZE;
   pvTermios.c_cflag |= nbMask;
-  
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+  // Check if data bits count could be applied
+  if(dataBits() != n){
+    return false;
+  }
+
   return true;
 }
 
@@ -1057,7 +691,14 @@ int mdtSerialPort::dataBits()
 {
   int nb = 0;
 
-  // Get configured bits count
+  // Get configured data bits count
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcgetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return 0;
+  }
   if((pvTermios.c_cflag & CSIZE) == CS8){
     nb = 8;
   }else if((pvTermios.c_cflag & CSIZE) == CS7){
@@ -1082,18 +723,39 @@ bool mdtSerialPort::setStopBits(int n)
   }else{
     return false;
   }
+  // Apply to configuration
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+  // Check
+  if(stopBits() != n){
+    return false;
+  }
+
   return true;
 }
 
 int mdtSerialPort::stopBits()
 {
+  // Get configured stop bits count
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcgetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return -1;
+  }
   if(pvTermios.c_cflag & CSTOPB){
     return 2;
   }
   return 1;
 }
 
-void mdtSerialPort::setParity(mdtSerialPortConfig::parity_t p)
+bool mdtSerialPort::setParity(mdtSerialPortConfig::parity_t p)
 {
   if(p == mdtSerialPortConfig::NoParity){
     pvTermios.c_cflag &= ~PARENB;
@@ -1109,10 +771,32 @@ void mdtSerialPort::setParity(mdtSerialPortConfig::parity_t p)
     // Check and strip parity
     pvTermios.c_iflag |= (INPCK | ISTRIP);
   }
+  // Apply to configuration
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+  // Check
+  if(parity() != p){
+    return false;
+  }
+
+  return true;
 }
 
 mdtSerialPortConfig::parity_t mdtSerialPort::parity()
 {
+  // Get configured stop bits count
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcgetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return mdtSerialPortConfig::NoParity;
+  }
   if(!(pvTermios.c_cflag & PARENB)){
     return mdtSerialPortConfig::NoParity;
   }
@@ -1123,21 +807,44 @@ mdtSerialPortConfig::parity_t mdtSerialPort::parity()
   return mdtSerialPortConfig::ParityEven;
 }
 
-void mdtSerialPort::setFlowCtlRtsCts(bool on)
+bool mdtSerialPort::setFlowCtlRtsCts(bool on)
 {
   if(on){
     pvTermios.c_cflag |= CRTSCTS;
   }else{
     pvTermios.c_cflag &= ~CRTSCTS;
   }
+  // Apply to configuration
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+  // Check
+  if(flowCtlRtsCtsOn() != on){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtSerialPort::flowCtlRtsCtsOn()
 {
+  // Get configured RTS/CTS flow control
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcgetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+
   return (pvTermios.c_cflag & CRTSCTS);
 }
 
-void mdtSerialPort::setFlowCtlXonXoff(bool on, char xonChar, char xoffChar)
+bool mdtSerialPort::setFlowCtlXonXoff(bool on, char xonChar, char xoffChar)
 {
   if(on){
     pvTermios.c_iflag |= (IXON | IXOFF | IXANY);
@@ -1146,11 +853,657 @@ void mdtSerialPort::setFlowCtlXonXoff(bool on, char xonChar, char xoffChar)
   }else{
     pvTermios.c_iflag &= ~(IXON | IXOFF | IXANY);
   }
+  // Apply to configuration
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+  // Check
+  if(flowCtlXonXoffOn() != on){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtSerialPort::flowCtlXonXoffOn()
 {
+  // Get configured Xon/Xoff flow control
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcgetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+
   return (pvTermios.c_iflag & (IXON | IXOFF | IXANY));
+}
+
+void mdtSerialPort::setReadTimeout(int timeout)
+{
+  pvReadTimeout.tv_sec = timeout/1000;
+  pvReadTimeout.tv_usec = 1000*(timeout%1000);
+}
+
+void mdtSerialPort::setWriteTimeout(int timeout)
+{
+  pvWriteTimeout.tv_sec = timeout/1000;
+  pvWriteTimeout.tv_usec = 1000*(timeout%1000);
+}
+
+bool mdtSerialPort::waitForReadyRead()
+{
+  fd_set input;
+  int n;
+  struct timeval tv = pvReadTimeout;  // Create a copy, because select() alter the timeout
+
+  // Init the select call
+  FD_ZERO(&input);
+  FD_SET(pvFd, &input);
+
+  pvMutex.unlock();
+  n = select(pvFd+1, &input, 0, 0, &tv);
+  pvMutex.lock();
+  if(n == 0){
+    updateReadTimeoutState(true);
+  }else{
+    updateReadTimeoutState(false);
+    if(n < 0){
+      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+qint64 mdtSerialPort::read(char *data, qint64 maxSize)
+{
+  int n;
+  int err;
+
+  n = ::read(pvFd, data, maxSize);
+  if(n < 0){
+    // Store errno
+    err = errno;
+    switch(err){
+      case EAGAIN:      // No data available
+        return 0;
+      case ETIMEDOUT:   // Read timeout (happens with USBTMC)
+        updateReadTimeoutState(true);
+        return 0;
+      default:
+        mdtError e(MDT_SERIAL_PORT_IO_ERROR, "read() call failed", mdtError::Error);
+        e.setSystemError(err, strerror(err));
+        MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+        e.commit();
+        return n;
+    }
+  }
+
+  return n;
+}
+
+bool mdtSerialPort::suspendTransmission()
+{
+  int err;
+
+  if(flowCtlRtsCtsOn()){
+    if(!setRtsOff()){
+      return false;
+    }
+  }
+  if(flowCtlXonXoffOn()){
+    if(tcflow(pvFd, TCIOFF) < 0){
+      err = errno;
+      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflow() call failed", mdtError::Error);
+      e.setSystemError(err, strerror(err));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtSerialPort::resumeTransmission()
+{
+  int err;
+
+  if(flowCtlRtsCtsOn()){
+    if(!setRtsOn()){
+      return false;
+    }
+  }
+  if(flowCtlXonXoffOn()){
+    if(tcflow(pvFd, TCION) < 0){
+      err = errno;
+      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflow() call failed", mdtError::Error);
+      e.setSystemError(err, strerror(err));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void mdtSerialPort::flushIn()
+{
+  int err;
+
+  lockMutex();
+  if(tcflush(pvFd, TCIFLUSH) < 0){
+    err = errno;
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+  }
+  mdtAbstractPort::flushIn();
+}
+
+bool mdtSerialPort::waitEventWriteReady()
+{
+  fd_set output;
+  int n;
+  struct timeval tv = pvWriteTimeout;  // Create a copy, because select() alter the timeout
+
+  // Init the select call
+  FD_ZERO(&output);
+  FD_SET(pvFd, &output);
+
+  pvMutex.unlock();
+  n = select(pvFd+1, 0, &output, 0, &tv);
+  pvMutex.lock();
+  if(n == 0){
+    updateWriteTimeoutState(true);
+  }else{
+    updateWriteTimeoutState(false);
+    if(n < 0){
+      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return false;
+    }
+  }
+
+  return true;
+}
+
+qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
+{
+  int n;
+  int err;
+
+  n = ::write(pvFd, data, maxSize);
+  if(n < 0){
+    // Store error (errno will be reset when readen)
+    err = errno;
+    switch(err){
+      case EAGAIN:    // Can't write now
+        return 0;
+      default:
+        mdtError e(MDT_SERIAL_PORT_IO_ERROR, "write() call failed", mdtError::Error);
+        e.setSystemError(err, strerror(err));
+        MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+        e.commit();
+        return n;
+    }
+  }
+
+  return n;
+}
+
+void mdtSerialPort::flushOut()
+{
+  int err;
+
+  lockMutex();
+  if(tcflush(pvFd, TCOFLUSH) < 0){
+    err = errno;
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+  }
+  mdtAbstractPort::flushOut();
+}
+
+bool mdtSerialPort::waitEventCtl()
+{
+  int retVal;
+
+  // We wait until a line status change happens
+  pvMutex.unlock();
+  retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
+  pvMutex.lock();
+  if(retVal < 0){
+    if(errno == EINTR){
+      // Probably sent by pthread_kill() to stop the thread
+      if(pvAbortingWaitEventCtl){
+        pvAbortingWaitEventCtl = false;
+        return true;
+      }
+      // Unhandled case that abort the thread
+      mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Info);
+      e.setSystemError(errno, strerror(errno));
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return false;
+    }
+    // Else, we have a unhandled error
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtSerialPort::getCtlStates()
+{
+  int states;
+
+  if(ioctl(pvFd, TIOCMGET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return false;
+  }
+
+  // See witch signals changed
+  if((states & TIOCM_CAR) != pvPreviousCarState){
+    // Store new state
+    pvPreviousCarState = (states & TIOCM_CAR);
+    // Determine current state and emit signal
+    if(states & TIOCM_CAR){
+      pvCarIsOn = true;
+    }else{
+      pvCarIsOn = false;
+    }
+    emit carChanged(pvCarIsOn);
+  }
+  if((states & TIOCM_DSR) != pvPreviousDsrState){
+    // Store new state
+    pvPreviousDsrState = (states & TIOCM_DSR);
+    // Determine current state and emit signal
+    if(states & TIOCM_DSR){
+      pvDsrIsOn = true;
+    }else{
+      pvDsrIsOn = false;
+    }
+    emit dsrChanged(pvDsrIsOn);
+  }
+  if((states & TIOCM_CTS) != pvPreviousCtsState){
+    // Store new state
+    pvPreviousCtsState = (states & TIOCM_CTS);
+    // Determine current state and emit signal
+    if(states & TIOCM_CTS){
+      pvCtsIsOn = true;
+    }else{
+      pvCtsIsOn = false;
+    }
+    emit ctsChanged(pvCtsIsOn);
+  }
+  if((states & TIOCM_RNG) != pvPreviousRngState){
+    // Store new state
+    pvPreviousRngState = (states & TIOCM_RNG);
+    // Determine current state and emit signal
+    if(states & TIOCM_RNG){
+      pvRngIsOn = true;
+    }else{
+      pvRngIsOn = false;
+    }
+    emit rngChanged(pvRngIsOn);
+  }
+
+  return true;
+}
+
+void mdtSerialPort::setRts(bool on)
+{
+  if(!isOpen()){
+    return;
+  }
+  pvMutex.lock();
+  if(on){
+    setRtsOn();
+  }else{
+    setRtsOff();
+  }
+  pvMutex.unlock();
+}
+
+void mdtSerialPort::setDtr(bool on)
+{
+  int states;
+
+  if(!isOpen()){
+    return;
+  }
+  pvMutex.lock();
+  // Get the current ctl states
+  if(ioctl(pvFd, TIOCMGET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    pvMutex.unlock();
+    return;
+  }
+  // Set DTR state
+  if(on){
+    states |= TIOCM_DTR;
+  }else{
+    states &= ~TIOCM_DTR;
+  }
+  // Commit to system
+  if(ioctl(pvFd, TIOCMSET, &states) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+  }
+  pvMutex.unlock();
+}
+
+void mdtSerialPort::defineCtlThread(pthread_t ctlThread)
+{
+  pvCtlThread = ctlThread;
+}
+
+void mdtSerialPort::abortWaitEventCtl()
+{
+  Q_ASSERT(pvCtlThread != 0);
+
+  // Set aborting flag and send the signal
+  pvAbortingWaitEventCtl = true;
+  pthread_kill(pvCtlThread, SIGALRM);
+}
+
+mdtAbstractPort::error_t mdtSerialPort::pvOpen()
+{
+  Q_ASSERT(!isOpen());
+
+  int err;
+
+  // Try to open port locked
+  //  O_RDWR : Read/write access
+  //  O_NOCTTY: not a terminal
+  //  O_NDELAY: ignore DCD signal
+  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  if(pvFd < 0){
+    err = errno;
+    // Check if port was locked by another
+    if(pvPortLock->isLockedByAnother()){
+      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+      e.commit();
+      return PortLocked;
+    }
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    pvPortLock->unlock();
+    // Check error and return a possibly correct code
+    switch(err){
+      case EACCES:
+        return PortAccess;
+      case ENOENT:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+  // Get current config and save it to pvOriginalTermios
+  if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
+    close();
+    // Most of cases, this function fails because the physical port is not attached
+    return PortNotFound;
+  }
+  // Get current system config on "work copy"
+  if(tcgetattr(pvFd, &pvTermios) < 0){
+    close();
+    // Most of cases, this function fails because the physical port is not attached
+    return PortNotFound;
+  }
+
+  return NoError;
+}
+
+void mdtSerialPort::pvClose()
+{
+  Q_ASSERT(isOpen());
+
+  // Restore original termios struct
+  if(tcsetattr(pvFd, TCSANOW, &pvOriginalTermios) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcsetattr() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+  }
+  // Close the port
+  pvPortLock->unlock();
+  ::close(pvFd);
+  pvFd = -1;
+}
+
+mdtAbstractPort::error_t mdtSerialPort::pvSetup()
+{
+  Q_ASSERT(isOpen());
+
+  QString strNum;
+
+  // Set baud rate
+  if(!setBaudRate(config().baudRate())){
+    strNum.setNum(config().baudRate());
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + pvPortName, mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
+  // Set local mode and enable the receiver
+  pvTermios.c_cflag |= (CLOCAL | CREAD);
+  // Set data bits
+  if(!setDataBits(config().dataBitsCount())){
+    strNum.setNum(config().dataBitsCount());
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
+  // Set stop bits
+  if(!setStopBits(config().stopBitsCount())){
+    strNum.setNum(config().stopBitsCount());
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
+  // Set parity
+  if(!setParity(config().parity())){
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported parity requested for port " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
+  // Set flow control
+  if(!setFlowCtlRtsCts(config().flowCtlRtsCtsEnabled())){
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported flow control for port " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
+  if(!setFlowCtlXonXoff(config().flowCtlXonXoffEnabled(), config().xonChar(), config().xoffChar())){
+    mdtError e(MDT_UNDEFINED_ERROR, "unsupported flow control for port " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
+  // Set raw data mode
+  pvTermios.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+  pvTermios.c_oflag &= ~OPOST;
+  // Set the read/write timeouts
+  setReadTimeout(config().readTimeout());
+  setWriteTimeout(config().writeTimeout());
+
+  return NoError;
+}
+
+void mdtSerialPort::mapUartType()
+{
+  Q_ASSERT(isOpen());
+
+  struct serial_struct serinfo;
+
+  // Request system's UART type.
+  if(ioctl(pvFd, TIOCGSERIAL, &serinfo) < 0){
+    pvUartType = UT_UNKNOW;
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "ioctl() failed for port " + pvPortName, mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    return;
+  }
+  // Map the type
+  switch(serinfo.type){
+    case PORT_8250:
+      pvUartType = UT_8250;
+    case PORT_16450:
+      pvUartType = UT_16450;
+      break;
+    case PORT_16550:
+      pvUartType = UT_16550;
+      break;
+    case PORT_16550A:
+      pvUartType = UT_16550A;
+      break;
+    case PORT_CIRRUS:
+      pvUartType = UT_CIRRUS;
+      break;
+    case PORT_16650:
+      pvUartType = UT_16650;
+      break;
+    case PORT_16650V2:
+      pvUartType = UT_16650V2;
+      break;
+    case PORT_16750:
+      pvUartType = UT_16750;
+      break;
+    case PORT_STARTECH:
+      pvUartType = UT_STARTECH;
+      break;
+    case PORT_16C950:
+      pvUartType = UT_16C950;
+      break;
+    case PORT_16654:
+      pvUartType = UT_16654;
+      break;
+    case PORT_16850:
+      pvUartType = UT_16850;
+      break;
+    case PORT_RSA:
+      pvUartType = UT_RSA;
+      break;
+    default:
+      pvUartType = UT_UNKNOW;
+  }
+}
+
+void mdtSerialPort::buildAvailableBaudRates()
+{
+  Q_ASSERT(isOpen());
+
+  QList<int> tmpAvailableBaudRates;
+  int i;
+
+  // Build defined baud rates list
+  tmpAvailableBaudRates << 50;
+  tmpAvailableBaudRates << 75;
+  tmpAvailableBaudRates << 110;
+  tmpAvailableBaudRates << 134; // Note: is 134.5
+  tmpAvailableBaudRates << 150;
+  tmpAvailableBaudRates << 200;
+  tmpAvailableBaudRates << 300;
+  tmpAvailableBaudRates << 600;
+  tmpAvailableBaudRates << 1200;
+  tmpAvailableBaudRates << 1800;
+  tmpAvailableBaudRates << 2400;
+  tmpAvailableBaudRates << 4800;
+  tmpAvailableBaudRates << 9600;
+  tmpAvailableBaudRates << 19200;
+  tmpAvailableBaudRates << 38400;
+#ifdef  B57600
+  tmpAvailableBaudRates << 57600;
+#endif
+#ifdef B76800
+  tmpAvailableBaudRates << 76800;
+#endif
+#ifdef  B115200
+  tmpAvailableBaudRates << 115200;
+#endif
+#ifdef  B230400
+  tmpAvailableBaudRates << 230400;
+#endif
+#ifdef  B460800
+  tmpAvailableBaudRates << 460800;
+#endif
+#ifdef  B500000
+  tmpAvailableBaudRates << 500000;
+#endif
+#ifdef  B576000
+  tmpAvailableBaudRates << 576000;
+#endif
+#ifdef  B921600
+  tmpAvailableBaudRates << 921600;
+#endif
+#ifdef  B1000000
+  tmpAvailableBaudRates << 1000000;
+#endif
+#ifdef  B1152000
+  tmpAvailableBaudRates << 1152000;
+#endif
+#ifdef  B1500000
+  tmpAvailableBaudRates << 1500000;
+#endif
+#ifdef  B2000000
+  tmpAvailableBaudRates << 2000000;
+#endif
+#ifdef  B2500000
+  tmpAvailableBaudRates << 2500000;
+#endif
+#ifdef  B3000000
+  tmpAvailableBaudRates << 3000000;
+#endif
+#ifdef  B3500000
+  tmpAvailableBaudRates << 3500000;
+#endif
+#ifdef  B4000000
+  tmpAvailableBaudRates << 4000000;
+#endif
+
+  // Check each defined baud rate, try to apply, and store to container if Ok
+  pvAvailableBaudRates.clear();
+  for(i=0; i<tmpAvailableBaudRates.size(); ++i){
+    if(setBaudRate(tmpAvailableBaudRates.at(i))){
+      pvAvailableBaudRates << tmpAvailableBaudRates.at(i);
+    }
+  }
 }
 
 bool mdtSerialPort::checkConfig(mdtSerialPortConfig cfg)
@@ -1245,7 +1598,7 @@ bool mdtSerialPort::setRtsOn()
 
   // Get the current ctl states
   if(ioctl(pvFd, TIOCMGET, &states) < 0){
-    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPort");
     e.commit();
@@ -1255,7 +1608,7 @@ bool mdtSerialPort::setRtsOn()
   states |= TIOCM_RTS;
   // Commit to system
   if(ioctl(pvFd, TIOCMSET, &states) < 0){
-    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPort");
     e.commit();
@@ -1271,7 +1624,7 @@ bool mdtSerialPort::setRtsOff()
 
   // Get the current ctl states
   if(ioctl(pvFd, TIOCMGET, &states) < 0){
-    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "ioctl() call failed with command TIOCMGET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPort");
     e.commit();
@@ -1281,7 +1634,7 @@ bool mdtSerialPort::setRtsOff()
   states &= ~TIOCM_RTS;
   // Commit to system
   if(ioctl(pvFd, TIOCMSET, &states) < 0){
-    mdtError e(MDT_PORT_IO_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "ioctl() call failed with command TIOCMSET", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
     MDT_ERROR_SET_SRC(e, "mdtSerialPort");
     e.commit();

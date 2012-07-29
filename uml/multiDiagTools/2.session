@@ -7,15 +7,15 @@ diagrams
   classdiagram_ref 360706 // mdtAbstractSerialPort
     776 647 100 4 228 0
   active  classdiagram_ref 128002 // mdtSerialPort
-    970 809 100 4 336 0
+    970 809 100 4 72 0
 end
 show_stereotypes
-selected attribute_ref 272386 // pvDsrIsOn
+selected operation_ref 919810 // mapUartType
 open
   operation_ref 301570 // carState
   operation_ref 301698 // dsrState
   operation_ref 301826 // ctsState
-  classrelation_ref 196866 // <generalisation>
+  operation_ref 722946 // mdtAbstractSerialPort
   classview_ref 267138 // mdtPortTerm
   
   package_ref 134658 // src

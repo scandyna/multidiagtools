@@ -35,7 +35,7 @@ mdtTcpSocket::mdtTcpSocket(QObject *parent)
 
 mdtTcpSocket::~mdtTcpSocket()
 {
-  close();
+  ///close();
 }
 
 /**
@@ -52,6 +52,7 @@ mdtAbstractPort::error_t mdtTcpSocket::tryOpen()
   return NoError;
 }
 
+/**
 bool mdtTcpSocket::open(mdtPortConfig &cfg)
 {
   // Close previous opened connection
@@ -66,13 +67,16 @@ bool mdtTcpSocket::open(mdtPortConfig &cfg)
 
   return mdtAbstractPort::open(cfg);
 }
+*/
 
+/**
 void mdtTcpSocket::close()
 {
   lockMutex();
   pvTransactionsCount = 0;
   mdtAbstractPort::close();
 }
+*/
 
 void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 {
@@ -219,4 +223,29 @@ void mdtTcpSocket::decrementTransactionsCounter()
   if(pvTransactionsCount > 0){
     pvTransactionsCount--;
   }
+}
+
+mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
+{
+  Q_ASSERT(!isOpen());
+
+  return NoError;
+}
+
+void mdtTcpSocket::pvClose()
+{
+  Q_ASSERT(isOpen());
+
+  pvTransactionsCount = 0;
+}
+
+mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
+{
+  Q_ASSERT(isOpen());
+
+  // Set R/W timeouts
+  setReadTimeout(config().readTimeout());
+  setWriteTimeout(config().writeTimeout());
+
+  return NoError;
 }

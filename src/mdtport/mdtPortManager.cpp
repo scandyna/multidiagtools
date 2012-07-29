@@ -30,14 +30,16 @@ mdtPortManager::mdtPortManager(QObject *parent)
 {
   pvReadThread = 0;
   pvWriteThread = 0;
-  pvConfig = 0;
+  ///pvConfig = 0;
   pvPort = 0;
 }
 
 mdtPortManager::~mdtPortManager()
 {
+  qDebug() << "mdtPortManager::~mdtPortManager() ...";
   // Stop threads and close the port
   closePort();
+  qDebug() << "mdtPortManager::~mdtPortManager() port closed";
   // Release memory
   if(pvReadThread != 0){
     delete pvReadThread;
@@ -47,6 +49,7 @@ mdtPortManager::~mdtPortManager()
     delete pvWriteThread;
     pvWriteThread = 0;
   }
+  qDebug() << "mdtPortManager::~mdtPortManager() END";
 }
 
 void mdtPortManager::setPort(mdtAbstractPort *port)
@@ -79,37 +82,57 @@ bool mdtPortManager::setPortName(const QString &portName)
 
   pvPort->setPortName(portName);
   ///return pvPort->setAttributes(portName);
-  return pvPort->tryOpen() == mdtAbstractPort::NoError;
+  /**
+  if(pvPort->open() != mdtAbstractPort::NoError){
+    return false;
+  }
+  pvPort->close();
+  */
+
+  return true;
 }
 
+/**
 void mdtPortManager::setConfig(mdtPortConfig *config)
 {
   Q_ASSERT(config != 0);
 
   pvConfig = config;
 }
+*/
 
 mdtPortConfig &mdtPortManager::config()
 {
-  Q_ASSERT(pvConfig != 0);
+  ///Q_ASSERT(pvConfig != 0);
+  ///return *pvConfig;
 
-  return *pvConfig;
+  Q_ASSERT(pvPort != 0);
+
+  return pvPort->config();
 }
 
 bool mdtPortManager::openPort()
 {
   Q_ASSERT(pvPort != 0);
-  Q_ASSERT(pvConfig != 0);
+  ///Q_ASSERT(pvConfig != 0);
 
-  return pvPort->open(*pvConfig);
+  ///return pvPort->open(*pvConfig);
+  if(pvPort->setup() != mdtAbstractPort::NoError){
+    return false;
+  }
+
+  return true;
 }
 
+/// NOTE: \todo FIXME: clean this ...
 void mdtPortManager::closePort()
 {
   // It can happen that port was never set
+  /**
   if(pvPort == 0){
     return;
   }
+  */
   // If threads exists, call stop methods
   if(pvReadThread != 0){
     stopReading();
@@ -119,7 +142,7 @@ void mdtPortManager::closePort()
   }
   stop();
   // Close the port
-  pvPort->close();
+  ///pvPort->close();
 }
 
 bool mdtPortManager::startReading()
@@ -170,9 +193,9 @@ void mdtPortManager::stopWriting()
 bool mdtPortManager::start()
 {
   ///if(!config().readOnly()){
-    if(!startWriting()){
-      return false;
-    }
+  if(!startWriting()){
+    return false;
+  }
   ///}
   if(!startReading()){
     stopWriting();

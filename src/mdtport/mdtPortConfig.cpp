@@ -1,4 +1,23 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtPortConfig.h"
 
 mdtPortConfig::mdtPortConfig()
@@ -34,7 +53,7 @@ void mdtPortConfig::setReadFrameSize(int size)
   pvReadFrameSize = size;
 }
 
-int mdtPortConfig::readFrameSize()
+int mdtPortConfig::readFrameSize() const
 {
   return pvReadFrameSize;
 }
@@ -46,7 +65,7 @@ void mdtPortConfig::setReadQueueSize(int size)
   pvReadQueueSize = size;
 }
 
-int mdtPortConfig::readQueueSize()
+int mdtPortConfig::readQueueSize() const
 {
   return pvReadQueueSize;
 }
@@ -67,7 +86,7 @@ void mdtPortConfig::setUseReadTimeoutProtocol(bool use)
   pvUseReadTimeoutProtocol = use;
 }
 
-bool mdtPortConfig::useReadTimeoutProtocol()
+bool mdtPortConfig::useReadTimeoutProtocol()const
 {
   return pvUseReadTimeoutProtocol;
 }
@@ -77,7 +96,7 @@ void mdtPortConfig::setReadTimeout(int timeout)
   pvReadTimeout = timeout;
 }
 
-int mdtPortConfig::readTimeout()
+int mdtPortConfig::readTimeout() const
 {
   return pvReadTimeout;
 }
@@ -87,7 +106,7 @@ void mdtPortConfig::setWriteMinWaitTime(int minWaitTime)
   pvWriteMinWaitTime = minWaitTime;
 }
 
-int mdtPortConfig::writeMinWaitTime()
+int mdtPortConfig::writeMinWaitTime() const
 {
   return pvWriteMinWaitTime;
 }
@@ -97,7 +116,7 @@ void mdtPortConfig::setWriteTimeout(int timeout)
   pvWriteTimeout = timeout;
 }
 
-int mdtPortConfig::writeTimeout()
+int mdtPortConfig::writeTimeout() const
 {
   return pvWriteTimeout;
 }
@@ -109,7 +128,7 @@ void mdtPortConfig::setWriteFrameSize(int size)
   pvWriteFrameSize = size;
 }
 
-int mdtPortConfig::writeFrameSize()
+int mdtPortConfig::writeFrameSize() const
 {
   return pvWriteFrameSize;
 }
@@ -121,7 +140,7 @@ void mdtPortConfig::setWriteQueueSize(int size)
   pvWriteQueueSize = size;
 }
 
-int mdtPortConfig::writeQueueSize()
+int mdtPortConfig::writeQueueSize() const
 {
   return pvWriteQueueSize;
 }
@@ -131,7 +150,7 @@ void mdtPortConfig::setFrameType(const mdtFrame::type_t type)
   pvFrameType = type;
 }
 
-mdtFrame::type_t mdtPortConfig::frameType()
+mdtFrame::type_t mdtPortConfig::frameType() const
 {
   return pvFrameType;
 }
@@ -147,7 +166,7 @@ void mdtPortConfig::setEndOfFrameSeq(char c)
   pvEndOfFrameSeq.append(c);
 }
 
-QByteArray mdtPortConfig::endOfFrameSeq()
+QByteArray mdtPortConfig::endOfFrameSeq() const
 {
   return pvEndOfFrameSeq;
 }
@@ -158,7 +177,7 @@ void mdtPortConfig::setBytePerByteWrite(bool on, int waitTime)
   pvWriteMinWaitTime = waitTime;
 }
 
-bool mdtPortConfig::bytePerByteWrite()
+bool mdtPortConfig::bytePerByteWrite() const
 {
   return pvBytePerByteWrite;
 }

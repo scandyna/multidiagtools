@@ -14,10 +14,11 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 {
   // Alloc a port and connect signals
   setPort(new mdtUsbtmcPort);
+  pvPort->setConfig(new mdtPortConfig);
   Q_ASSERT(pvWriteThread != 0);
   connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten()));
   // Set USBTMC specific configuration
-  setConfig(new mdtPortConfig);
+  ///setConfig(new mdtPortConfig);
   config().setFrameType(mdtFrame::FT_ASCII);
   config().setEndOfFrameSeq("\n");
   config().setReadFrameSize(512);
@@ -29,6 +30,7 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
 mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
 {
+  delete pvPort;
 }
 
 QStringList mdtUsbtmcPortManager::scan()
@@ -67,8 +69,9 @@ QStringList mdtUsbtmcPortManager::scan()
     port = new mdtUsbtmcPort;
     Q_ASSERT(port != 0);
     port->setPortName(portNames.at(i));
-    if(port->tryOpen() == mdtAbstractPort::NoError){
+    if(port->open() == mdtAbstractPort::NoError){
       availablePorts.append(portNames.at(i));
+      port->close();
     }
     /**
     if(port->setAttributes(portNames.at(i))){

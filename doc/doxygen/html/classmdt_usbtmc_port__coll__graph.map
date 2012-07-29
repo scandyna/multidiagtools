@@ -1,4 +1,5 @@
 <map id="G" name="G">
 <area shape="rect" id="node2" href="$classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,101,123,131"/>
 <area shape="rect" id="node4" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/>
+<area shape="rect" id="node6" href="$classmdt_port_lock.html" title="NOTE:" alt="" coords="147,101,243,131"/>
 </map>

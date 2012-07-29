@@ -78,23 +78,43 @@ void \hyperlink{classmdt_abstract_serial_port_a47c08ccb99dc6de76ae58ebeefc26857}
 \label{classmdt_abstract_serial_port_ae379b6151edebc1518e81ec061e379db}
 
 \item 
-virtual bool \hyperlink{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)=0
-\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{
-\hyperlink{classmdt_abstract_serial_port_a56b107c57fb0acb17cfcca262abe6a54}{sp\_\-uart\_\-type\_\-t} \hyperlink{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{uartType} ()}
-\label{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}
-
+virtual bool \hyperlink{classmdt_abstract_serial_port_a0bd6de5e10a922d9944376ec5943fd66}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)
+\begin{DoxyCompactList}\small\item\em Open the serial port specified with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{close} ()
+\begin{DoxyCompactList}\small\item\em Close the serial port. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_serial_port_a56b107c57fb0acb17cfcca262abe6a54}{sp\_\-uart\_\-type\_\-t} \hyperlink{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{uartType} ()
 \begin{DoxyCompactList}\small\item\em Get UART type. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_serial_port_a669c9ce68455abd3cfdb98259996e701}{
 QString {\bfseries uartTypeStr} ()}
 \label{classmdt_abstract_serial_port_a669c9ce68455abd3cfdb98259996e701}
 
 \item 
-\hypertarget{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}{
-QList$<$ int $>$ \& \hyperlink{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}{availableBaudRates} ()}
-\label{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}
-
+QList$<$ int $>$ \& \hyperlink{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}{availableBaudRates} ()
 \begin{DoxyCompactList}\small\item\em Get the list of available baud rates. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{setBaudRate} (int rate)=0
+\begin{DoxyCompactList}\small\item\em Set the baud rate. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{baudRate} ()=0
+\begin{DoxyCompactList}\small\item\em Get the baud rate. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_a323e590d6ead87033985ffff1ecfae81}{setDataBits} (int n)=0
+\begin{DoxyCompactList}\small\item\em Set number of data bits. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{dataBits} ()=0
+\begin{DoxyCompactList}\small\item\em Get number of data bits. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc5011208b}{setStopBits} (int n)=0
+\begin{DoxyCompactList}\small\item\em Set number of stop bits. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_abstract_serial_port_abae48c24634c3e2d298f1cff98b250ed}{stopBits} ()=0
+\begin{DoxyCompactList}\small\item\em Get number of stop bits. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b78545}{setParity} (mdtSerialPortConfig::parity\_\-t p)=0
+\begin{DoxyCompactList}\small\item\em Set parity check. \end{DoxyCompactList}\item 
+virtual mdtSerialPortConfig::parity\_\-t \hyperlink{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}{parity} ()=0
+\begin{DoxyCompactList}\small\item\em Get configured parity. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_af01806f53cfc5ef90b34c0645cee3bdf}{setFlowCtlRtsCts} (bool on)=0
+\begin{DoxyCompactList}\small\item\em Enable/diseable RTS/CTS flow control. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{flowCtlRtsCtsOn} ()=0
+\begin{DoxyCompactList}\small\item\em Get configured state of RTS/CTS flow control. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_a05b35143f7b048ebcb2295fdc2ac5013}{setFlowCtlXonXoff} (bool on, char xonChar, char xoffChar)=0
+\begin{DoxyCompactList}\small\item\em Enable/diseable Xon/Xoff flow control. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}{flowCtlXonXoffOn} ()=0
+\begin{DoxyCompactList}\small\item\em Get configured state of Xon/Xoff flow control. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{waitEventCtl} ()=0
 \begin{DoxyCompactList}\small\item\em Wait until a control (modem line) signal state changes. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{getCtlStates} ()=0
@@ -107,6 +127,13 @@ bool \hyperlink{classmdt_abstract_serial_port_a9bea314eefd6f4ec79456bc21e6c66af}
 \begin{DoxyCompactList}\small\item\em Get the CTS state. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_abstract_serial_port_a0a3954438d1e8180e53717cc0fe1ce3e}{rngIsOn} ()
 \begin{DoxyCompactList}\small\item\em Get the RNG (RI) state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classmdt_abstract_serial_port_abbc98ff6721f120d68b43078e90b1195}{mapUartType} ()=0
+\begin{DoxyCompactList}\small\item\em Map the system defined UART type to internal one. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_serial_port_a6241c9f53d60fd477e2375bd5b36073f}{buildAvailableBaudRates} ()=0
+\begin{DoxyCompactList}\small\item\em Build the list of available baud rates. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -146,10 +173,78 @@ QList$<$ int $>$ {\bfseries pvAvailableBaudRates}}
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Comment this class \end{Desc}
+\item[\hyperlink{todo__todo000014}{Todo}]Comment this class \end{Desc}
+
+
+Interface class for serial port
+
+This is a abstract class used to build system specific implementation.\par
+ The subclass should have \hyperlink{classmdt_serial_port}{mdtSerialPort} as name, so it will be compatible with several classes (f.ex. \hyperlink{classmdt_serial_port_manager}{mdtSerialPortManager}).\par
+ To begin a implementation, please take a look at \hyperlink{classmdt_abstract_port}{mdtAbstractPort} at first.\par
+
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_abstract_port}{mdtAbstractPort} 
+\end{DoxySeeAlso}
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!availableBaudRates@{availableBaudRates}}
+\index{availableBaudRates@{availableBaudRates}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{availableBaudRates}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ int $>$ \& mdtAbstractSerialPort::availableBaudRates (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}
+
+
+Get the list of available baud rates. 
+
+The mutex is not handled by this method.
+
+If the internal baud rates list is empty and port is open, \hyperlink{classmdt_abstract_serial_port_a6241c9f53d60fd477e2375bd5b36073f}{buildAvailableBaudRates()} will be called. \hypertarget{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!baudRate@{baudRate}}
+\index{baudRate@{baudRate}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{baudRate}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractSerialPort::baudRate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}
+
+
+Get the baud rate. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+Configured baud rate, or 0 on error.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The rate should be get with system call (f.ex. tgetattr() on POSIX). The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_a6241c9f53d60fd477e2375bd5b36073f}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!buildAvailableBaudRates@{buildAvailableBaudRates}}
+\index{buildAvailableBaudRates@{buildAvailableBaudRates}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{buildAvailableBaudRates}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSerialPort::buildAvailableBaudRates (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a6241c9f53d60fd477e2375bd5b36073f}
+
+
+Build the list of available baud rates. 
+
+The subclass must search about available baud rates for current port, and should check if it can be really be used. For.ex. , on POSIX, termios defines some baud rates, but all are not necessarily supported by port. To be shure, a solution is to try each baudrate (with cfsetispeed()/cfsetospeed() on POSIX) before storing it in container. Note that the precondition must be checked with Q\_\-ASSERT(\hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{isOpen()})
+
+\begin{DoxyPrecond}{Precondition}
+Port must be open before this call. 
+\end{DoxyPrecond}
 \hypertarget{classmdt_abstract_serial_port_a63ddcadf5d8a63c479b0b6a24f89c837}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!carChanged@{carChanged}}
 \index{carChanged@{carChanged}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -181,7 +276,41 @@ Emited whenn CAR (CD) status changed.
 
 Get the CAR (CD) state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_adf45a5006218ef5660721ecdf8454b5d}{
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!close@{close}}
+\index{close@{close}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSerialPort::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}
+
+
+Close the serial port. 
+
+Close serial port and clear flags (f.ex. UART Type is set to unknow).
+
+The mutex is not handled by this method.
+
+Subclass notes:\par
+ This method must be re-\/implemented in subclass.\par
+ To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Check if port is open with \hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{isOpen()} , if false, simply return.
+\item Restore original settings (f.ex. termios struct on Posix)
+\item Unlock and close the port
+\item Call this close method (with \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort::close()} ). At this last step, the UART type wil be set to unknown type, available baud rates list cleared. Then, the \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} method will be called.
+\end{DoxyItemize}
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort}.
+
+\hypertarget{classmdt_abstract_serial_port_adf45a5006218ef5660721ecdf8454b5d}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!ctsChanged@{ctsChanged}}
 \index{ctsChanged@{ctsChanged}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{ctsChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSerialPort::ctsChanged (
@@ -212,7 +341,30 @@ Emited whenn CTS status changed.
 
 Get the CTS state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_a077d8c39ed12713742f1f2ffa0dca11d}{
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!dataBits@{dataBits}}
+\index{dataBits@{dataBits}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{dataBits}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractSerialPort::dataBits (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}
+
+
+Get number of data bits. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+Configured data bits count or 0 on error.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The data bits count should be get with system call (f.ex. tgetattr() on POSIX). The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_a077d8c39ed12713742f1f2ffa0dca11d}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!dsrChanged@{dsrChanged}}
 \index{dsrChanged@{dsrChanged}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{dsrChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSerialPort::dsrChanged (
@@ -243,7 +395,53 @@ Emited whenn DSR status changed.
 
 Get the DSR state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!flowCtlRtsCtsOn@{flowCtlRtsCtsOn}}
+\index{flowCtlRtsCtsOn@{flowCtlRtsCtsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{flowCtlRtsCtsOn}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::flowCtlRtsCtsOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}
+
+
+Get configured state of RTS/CTS flow control. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if RTS/CTS flow control is enabled (and no error occured).
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The RTS/CTS flow control should be get with system call (f.ex. tgetattr() on POSIX). The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!flowCtlXonXoffOn@{flowCtlXonXoffOn}}
+\index{flowCtlXonXoffOn@{flowCtlXonXoffOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{flowCtlXonXoffOn}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::flowCtlXonXoffOn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}
+
+
+Get configured state of Xon/Xoff flow control. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if Xon/Xoff flow control is enabled (and no error occured).
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The Xon/Xoff flow control should be get with system call (f.ex. tgetattr() on POSIX). The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!getCtlStates@{getCtlStates}}
 \index{getCtlStates@{getCtlStates}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{getCtlStates}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::getCtlStates (
@@ -257,7 +455,7 @@ The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000012}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000016}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -269,36 +467,83 @@ False on error, in this case, the thread will be stopped.
 
 Implemented in \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{mdtSerialPort}.
 
-\hypertarget{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}{
+\hypertarget{classmdt_abstract_serial_port_abbc98ff6721f120d68b43078e90b1195}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!mapUartType@{mapUartType}}
+\index{mapUartType@{mapUartType}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{mapUartType}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSerialPort::mapUartType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_abbc98ff6721f120d68b43078e90b1195}
+
+
+Map the system defined UART type to internal one. 
+
+In this class, the UART type is defined in sp\_\-uart\_\-type\_\-t enum. The subclass must map the system's internal type to sp\_\-uart\_\-type\_\-t. On error (f.ex. by system calls), the method should use the \hyperlink{classmdt_error}{mdtError} system, and set the UART type to UT\_\-UNKNOW. Note that the precondition must be checked with Q\_\-ASSERT(\hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{isOpen()})
+
+\begin{DoxyPrecond}{Precondition}
+Port must be open before this call. 
+\end{DoxyPrecond}
+\hypertarget{classmdt_abstract_serial_port_a0bd6de5e10a922d9944376ec5943fd66}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!open@{open}}
 \index{open@{open}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
-\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::open (
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSerialPort::open (
 \begin{DoxyParamCaption}
 \item[{{\bf mdtSerialPortConfig} \&}]{cfg}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_serial_port_ad96a99c370c87d7e4a8b47f98cc7ce35}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a0bd6de5e10a922d9944376ec5943fd66}
 
 
-Open the port. 
+Open the serial port specified with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} 
 
-This method must be re-\/implemented in subclass.\par
+Subclass notes:\par
+ This method must be re-\/implemented in subclass.\par
  To handle the port correctly, the subclass method must:
 \begin{DoxyItemize}
-\item Close previous opened ressource
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
+\item Close previous opened serial port\begin{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]specify how to close it. \end{Desc}
+-\/ Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
 \item Do the specific work
 \item Set the read/write timeouts. See the \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} to know how to get these timeouts.
-\item Call this open method (with \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, and mutex unocked. \begin{DoxyReturn}{Returns}
-True on successfull configuration and open port 
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_config}{mdtPortConfig} 
-\end{DoxySeeAlso}
-
+\item Call this open method (with \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractSerialPort::open()} ). At this last step, the \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractPort::open()} method will be called.
 \end{DoxyItemize}
 
-Implemented in \hyperlink{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{mdtSerialPort}.
+\begin{DoxyReturn}{Returns}
+True on successfull configuration and open port
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} 
+
+\hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractPort::open()} 
+\end{DoxySeeAlso}
+
+
+Reimplemented in \hyperlink{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!parity@{parity}}
+\index{parity@{parity}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{parity}]{\setlength{\rightskip}{0pt plus 5cm}virtual mdtSerialPortConfig::parity\_\-t mdtAbstractSerialPort::parity (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}
+
+
+Get configured parity. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+Configured parity or NoParity on error.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The parity check should be get with system call (f.ex. tgetattr() on POSIX). The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_serial_port_a47c08ccb99dc6de76ae58ebeefc26857}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!rngChanged@{rngChanged}}
@@ -331,7 +576,53 @@ Emited whenn RNG (RI) status changed.
 
 Get the RNG (RI) state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{
+The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setBaudRate@{setBaudRate}}
+\index{setBaudRate@{setBaudRate}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{setBaudRate}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setBaudRate (
+\begin{DoxyParamCaption}
+\item[{int}]{rate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}
+
+
+Set the baud rate. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if baud rate is supported and could be set.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The rate should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_a323e590d6ead87033985ffff1ecfae81}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setDataBits@{setDataBits}}
+\index{setDataBits@{setDataBits}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{setDataBits}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setDataBits (
+\begin{DoxyParamCaption}
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a323e590d6ead87033985ffff1ecfae81}
+
+
+Set number of data bits. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if data bits count is supported and could be set.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The data bits count should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setDtr@{setDtr}}
 \index{setDtr@{setDtr}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{setDtr}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractSerialPort::setDtr (
@@ -356,6 +647,77 @@ This method must be re-\/implemented in plateform specific subclass.\par
 
 
 Implemented in \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_af01806f53cfc5ef90b34c0645cee3bdf}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setFlowCtlRtsCts@{setFlowCtlRtsCts}}
+\index{setFlowCtlRtsCts@{setFlowCtlRtsCts}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{setFlowCtlRtsCts}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setFlowCtlRtsCts (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_af01806f53cfc5ef90b34c0645cee3bdf}
+
+
+Enable/diseable RTS/CTS flow control. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if RTS/CTS flow control is supported and could be set.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The RTS/CTS flow control should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_a05b35143f7b048ebcb2295fdc2ac5013}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setFlowCtlXonXoff@{setFlowCtlXonXoff}}
+\index{setFlowCtlXonXoff@{setFlowCtlXonXoff}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{setFlowCtlXonXoff}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setFlowCtlXonXoff (
+\begin{DoxyParamCaption}
+\item[{bool}]{on, }
+\item[{char}]{xonChar, }
+\item[{char}]{xoffChar}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a05b35143f7b048ebcb2295fdc2ac5013}
+
+
+Enable/diseable Xon/Xoff flow control. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if Xon/Xoff flow control is supported and could be set.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The Xon/Xoff flow control should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b78545}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setParity@{setParity}}
+\index{setParity@{setParity}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{setParity}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setParity (
+\begin{DoxyParamCaption}
+\item[{mdtSerialPortConfig::parity\_\-t}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b78545}
+
+
+Set parity check. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if parity check is supported and could be set.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The parity check should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setRts@{setRts}}
@@ -383,7 +745,68 @@ This method must be re-\/implemented in plateform specific subclass.\par
 
 Implemented in \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{mdtSerialPort}.
 
-\hypertarget{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{
+\hypertarget{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc5011208b}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setStopBits@{setStopBits}}
+\index{setStopBits@{setStopBits}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{setStopBits}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setStopBits (
+\begin{DoxyParamCaption}
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc5011208b}
+
+
+Set number of stop bits. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+True if stop bits count is supported and could be set.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The stop bits count should be applied directly to system (f.ex. with tcsetattr() on POSIX) and checked. The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_abae48c24634c3e2d298f1cff98b250ed}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!stopBits@{stopBits}}
+\index{stopBits@{stopBits}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{stopBits}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractSerialPort::stopBits (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classmdt_abstract_serial_port_abae48c24634c3e2d298f1cff98b250ed}
+
+
+Get number of stop bits. 
+
+The mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+Configured stop bits count or -\/1 on error.
+\end{DoxyReturn}
+Subclass notes:\par
+ This method must be implemented in subclass. The stop bits count should be get with system call (f.ex. tgetattr() on POSIX). The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
+
+Implemented in \hyperlink{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}{mdtSerialPort}.
+
+\hypertarget{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{
+\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!uartType@{uartType}}
+\index{uartType@{uartType}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
+\subsubsection[{uartType}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractSerialPort::sp\_\-uart\_\-type\_\-t} mdtAbstractSerialPort::uartType (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}
+
+
+Get UART type. 
+
+The mutex is not handled by this method.
+
+If UART type is unknow and port is open, \hyperlink{classmdt_abstract_serial_port_abbc98ff6721f120d68b43078e90b1195}{mapUartType()} will be called. \hypertarget{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!waitEventCtl@{waitEventCtl}}
 \index{waitEventCtl@{waitEventCtl}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{waitEventCtl}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::waitEventCtl (
@@ -410,4 +833,5 @@ Implemented in \hyperlink{classmdt_serial_port_acc51ca593b4592f806ef4b9791486f47
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtserialport/mdtAbstractSerialPort.h\item 
-src/mdtserialport/mdtAbstractSerialPort.cpp\end{DoxyCompactItemize}
+src/mdtserialport/mdtAbstractSerialPort.cpp\item 
+src/mdtserialport/moc\_\-mdtAbstractSerialPort.cxx\end{DoxyCompactItemize}

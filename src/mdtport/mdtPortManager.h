@@ -42,14 +42,20 @@
  * Example:
  * \code
  * mdtPortManager m;
- * 
+ * mdtPort *port;
+ * mdtPortConfig *config;
+ *
  * // Setup
- * m.setConfig(new mdtPortConfig);
- * m.config().setFrameType(mdtFrame::FT_ASCII);
- * m.config().setEndOfFrameSeq("$");
- * 
+ * config = new mdtPortConfig;
+ * config->setFrameType(mdtFrame::FT_ASCII);
+ * config->setEndOfFrameSeq("$");
+ *
+ * // Init port
+ * port = new mdtPort;
+ * port->setConfig(config);
+ *
  * // Init port manager
- * m.setPort(new mdtPort);
+ * m.setPort(port);
  * if(!m.setPortName("/dev/xyz")){
  *  // Handle error
  * }
@@ -76,11 +82,14 @@
  * 
  * // End
  * m.closePort();
- * 
+ * delete config;
+ * delete port;
+ *
  * \endcode
  * 
  * This is a base class for port manager.
  * Port type specific classes are available.
+ *
  * \sa mdtSerialPortManager
  * \sa mdtUsbtmcPortManager (Linux only)
  */
@@ -119,12 +128,13 @@ class mdtPortManager : public QThread
    * 
    * \pre config must be a valid pointer to expected a object type.
    */
-  void setConfig(mdtPortConfig *config);
+  ///void setConfig(mdtPortConfig *config);
 
   /*! \brief Get the config object
    * 
    * Usefull to alter internal port configuration
-   * \pre Config must be set with setConfig()
+   *
+   * \pre Port must be set with setPort() before use of this method.
    */
   mdtPortConfig &config();
 
@@ -132,7 +142,8 @@ class mdtPortManager : public QThread
    * 
    * \return True on success, false else
    * \pre setPortName() must be called first
-   * \pre Config must be set with setConfig()
+   * \pre Port must have a valid configuration, and be set with setPort() before calling this method
+   *
    * \sa setPortName()
    * \sa mdtPort
    */
@@ -259,7 +270,7 @@ class mdtPortManager : public QThread
   mdtAbstractPort *pvPort;
   mdtPortReadThread *pvReadThread;
   mdtPortWriteThread *pvWriteThread;
-  mdtPortConfig *pvConfig;
+  ///mdtPortConfig *pvConfig;
   QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
   QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
   

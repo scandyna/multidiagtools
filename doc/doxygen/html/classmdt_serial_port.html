@@ -89,12 +89,34 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtSerialPort</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a75750b52566e8448ee2eef649903fdb0">tryOpen</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">TODO:  <a href="#a75750b52566e8448ee2eef649903fdb0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ab045c382aa6bafd26a9c77ffc731c9ff">setAttributes</a> (const QString &amp;portName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE:  <a href="#ab045c382aa6bafd26a9c77ffc731c9ff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ae62fbd70485c30db13c6384c169925c9">open</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> NOTE:  <a href="#ae62fbd70485c30db13c6384c169925c9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a523cc099b9fff06c46ce1c251646ca20">open</a> (<a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#a523cc099b9fff06c46ce1c251646ca20"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9ce6490af9ecba3bbc8a8e7de44c3f95">close</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a9ce6490af9ecba3bbc8a8e7de44c3f95"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">bool setAttributes(const QString &amp;portName);  <a href="#a523cc099b9fff06c46ce1c251646ca20"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351">setBaudRate</a> (int rate)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the serial port.  <a href="#ad77b6a5fd819fae6db0db888b3113351"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195">baudRate</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the baud rate.  <a href="#ab7d9433433f4ec5d5e584721e5bb1195"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389">setDataBits</a> (int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set number of data bits.  <a href="#af39774b2d3c4121623253740660a0389"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a65c92bdb5543c1fe0034169ffc88d09f">dataBits</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of data bits.  <a href="#a65c92bdb5543c1fe0034169ffc88d09f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9471ebff90de41decee977566dd1571f">setStopBits</a> (int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set number of stop bits.  <a href="#a9471ebff90de41decee977566dd1571f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a163a83bdcac2c81a5c6b097c4afde41f">stopBits</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of stop bits.  <a href="#a163a83bdcac2c81a5c6b097c4afde41f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ae435f052a87dcd0b1829f1577bb5e58d">setParity</a> (mdtSerialPortConfig::parity_t p)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parity check.  <a href="#ae435f052a87dcd0b1829f1577bb5e58d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">mdtSerialPortConfig::parity_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a98938e2c51d1888236b920903f99050a">parity</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get configured parity.  <a href="#a98938e2c51d1888236b920903f99050a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a175785be0dfe124254484822b7b8832e">setFlowCtlRtsCts</a> (bool on)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable RTS/CTS flow control.  <a href="#a175785be0dfe124254484822b7b8832e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7">flowCtlRtsCtsOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get configured state of RTS/CTS flow control.  <a href="#a9315ed0c7854a09716a4585efb0094c7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a34e2ac7b0d3cb7a6fb65756cbca2ce48">setFlowCtlXonXoff</a> (bool on, char xonChar, char xoffChar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable Xon/Xoff flow control.  <a href="#a34e2ac7b0d3cb7a6fb65756cbca2ce48"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4">flowCtlXonXoffOn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get configured state of Xon/Xoff flow control.  <a href="#a8d3e3eb1d2272129b8b97377dff1d5d4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9105e5a3a640b56097c1156000ace933">setReadTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#a9105e5a3a640b56097c1156000ace933"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a036f49d743838013c9a8cbf6a1dd40d1">setWriteTimeout</a> (int timeout)</td></tr>
@@ -129,12 +151,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>defineCtlThread</b> (
 void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b> ()</td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a9ce6490af9ecba3bbc8a8e7de44c3f95"></a><!-- doxytag: member="mdtSerialPort::close" ref="a9ce6490af9ecba3bbc8a8e7de44c3f95" args="()" -->
+<a class="anchor" id="ab7d9433433f4ec5d5e584721e5bb1195"></a><!-- doxytag: member="mdtSerialPort::baudRate" ref="ab7d9433433f4ec5d5e584721e5bb1195" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtSerialPort::close </td>
+          <td class="memname">int mdtSerialPort::baudRate </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -143,18 +165,77 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </div>
 <div class="memdoc">
 
-<p>Close the port. </p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass.<br/>
- To handle the port correctly, the subclass method must:</p>
-<ul>
-<li>Check if port is open with <a class="el" href="classmdt_abstract_port.html#a53affce84400ed1519db93ccc79888f9" title="Get port&#39;s open state.">isOpen()</a> , if false, simply return.</li>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Do the specific work</li>
-<li>Call this close method (with <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> ). At this last step, the queues will be deleted, mutex unocked and open flag updated. </li>
-</ul>
+<p>Get the baud rate. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Configured baud rate, or 0 on error. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ad9f5b7e939c60cd3766d2bf76df4af4b">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a65c92bdb5543c1fe0034169ffc88d09f"></a><!-- doxytag: member="mdtSerialPort::dataBits" ref="a65c92bdb5543c1fe0034169ffc88d09f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtSerialPort::dataBits </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get number of data bits. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Configured data bits count or 0 on error. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a63e2a14c416d9c3516ec74f5e37f4cc7">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9315ed0c7854a09716a4585efb0094c7"></a><!-- doxytag: member="mdtSerialPort::flowCtlRtsCtsOn" ref="a9315ed0c7854a09716a4585efb0094c7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::flowCtlRtsCtsOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get configured state of RTS/CTS flow control. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if RTS/CTS flow control is enabled (and no error occured). </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a7a1163b4d44d80369bd56c65af7942ad">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d3e3eb1d2272129b8b97377dff1d5d4"></a><!-- doxytag: member="mdtSerialPort::flowCtlXonXoffOn" ref="a8d3e3eb1d2272129b8b97377dff1d5d4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::flowCtlXonXoffOn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get configured state of Xon/Xoff flow control. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if Xon/Xoff flow control is enabled (and no error occured). </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a80074ba4e5bf44c3e2aebb82214499ee">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
@@ -231,12 +312,37 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
 <p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae62fbd70485c30db13c6384c169925c9"></a><!-- doxytag: member="mdtSerialPort::open" ref="ae62fbd70485c30db13c6384c169925c9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtSerialPort::open </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open the port given by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> NOTE: </p>
+<p>NOTE:</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>à supprimer</dd></dl>
+<p>If port can be open successfull, NoError code is returned.</p>
+<p>The mutex is not handled by this method.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>A supprimer !! </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -255,23 +361,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </div>
 <div class="memdoc">
 
-<p>Open the port. </p>
-<p>This method must be re-implemented in subclass.<br/>
- To handle the port correctly, the subclass method must:</p>
-<ul>
-<li>Close previous opened ressource</li>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Do the specific work</li>
-<li>Set the read/write timeouts. See the <a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> to know how to get these timeouts.</li>
-<li>Call this open method (with <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6" title="Set the port attributes.">mdtAbstractPort::open()</a> ). At this last step, the queues will be initialized, and mutex unocked. <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull configuration and open port </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
-</li>
-</ul>
+<p>bool setAttributes(const QString &amp;portName); </p>
+<p>NOTE:</p>
+<p><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="el" href="classmdt_serial_port.html#ae62fbd70485c30db13c6384c169925c9" title="Open the port given by setPortName() NOTE:">mdtSerialPort::open()</a> { int err;</p>
+<p>Close previous opened port <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close()</a>;</p>
+<p>Try to open port locked O_RDWR : Read/write access O_NOCTTY: not a terminal O_NDELAY: ignore DCD signal pvFd = pvPortLock-&gt;openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK); if(pvFd &lt; 0){ Check if port was locked by another if(pvPortLock-&gt;isLockedByAnother()){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtSerialPort"); e.commit(); return PortLocked; } err = errno; <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error); e.setSystemError(err, strerror(err)); MDT_ERROR_SET_SRC(e, "mdtSerialPort"); e.commit(); Check error and return a possibly correct code switch(err){ case EACCES: return PortAccess; case ENOENT: return PortNotFound; default: return UnknownError; } } Get current config and save it to pvOriginalTermios if(tcgetattr(pvFd, &amp;pvOriginalTermios) &lt; 0){ <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close()</a>; Most of cases, this function fails because the phisical port is not attached return PortNotFound; } Get current system config on "work copy" if(tcgetattr(pvFd, &amp;pvTermios) &lt; 0){ <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close()</a>; Most of cases, this function fails because the phisical port is not attached return PortNotFound; }</p>
+<p>return <a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde" title="TODO:">mdtAbstractPort::open()</a>; }</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Split functions and remove this </dd></dl>
+<p>bool mdtSerialPort::setAttributes(const QString &amp;portName) { Close previous opened port this-&gt;<a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close()</a>; Clear previous attributes pvAvailableBaudRates.clear(); Try to open port pvFd = ::open(portName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NDELAY); if(pvFd &lt; 0){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, "can not open port '" + portName + "'", mdtError::Error); e.setSystemError(errno, strerror(errno)); MDT_ERROR_SET_SRC(e, "mdtSerialPort"); e.commit(); pvPortName = ""; return false; } Set port name pvPortName = portName;</p>
+<p>End of attributes, close port ::close(pvFd); return true; } </p>
 
-<p><p>if(cfg.readOnly()){ pvFd = ::open(pvPortName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NONBLOCK); }else{ pvFd = pvPortLock-&gt;openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK); }</p>
+<p><p>NOTE: adapt to error_t </p>
 </p>
 
-<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ad96a99c370c87d7e4a8b47f98cc7ce35">mdtAbstractSerialPort</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_abstract_serial_port.html#a0bd6de5e10a922d9944376ec5943fd66">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a98938e2c51d1888236b920903f99050a"></a><!-- doxytag: member="mdtSerialPort::parity" ref="a98938e2c51d1888236b920903f99050a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtSerialPortConfig::parity_t mdtSerialPort::parity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get configured parity. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Configured parity or NoParity on error. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ac361191b58789065fcea742019b958f9">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
@@ -340,23 +465,54 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
-<a class="anchor" id="ab045c382aa6bafd26a9c77ffc731c9ff"></a><!-- doxytag: member="mdtSerialPort::setAttributes" ref="ab045c382aa6bafd26a9c77ffc731c9ff" args="(const QString &amp;portName)" -->
+<a class="anchor" id="ad77b6a5fd819fae6db0db888b3113351"></a><!-- doxytag: member="mdtSerialPort::setBaudRate" ref="ad77b6a5fd819fae6db0db888b3113351" args="(int rate)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtSerialPort::setAttributes </td>
+          <td class="memname">bool mdtSerialPort::setBaudRate </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>portName</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rate</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>Split functions and remove this </dd></dl>
+<p>Close the serial port. </p>
+<p>Restore original settings and close the port.</p>
+<p>The mutex is not handled by this method.void <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close()</a>;</p>
+<p>Set the baud rate</p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if baud rate is supported and could be set.</dd></dl>
+<p>void <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">mdtSerialPort::close()</a> { if(!isOpen()){ return; } Restore original termios struct tcsetattr(pvFd, TCSANOW, &amp;pvOriginalTermios); Close the port pvPortLock-&gt;unlock(); ::close(pvFd); pvFd = -1;</p>
+<p><a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">mdtAbstractSerialPort::close()</a>; } </p>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ae250b30c1db5652bd2abe2caf1c9d5c7">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af39774b2d3c4121623253740660a0389"></a><!-- doxytag: member="mdtSerialPort::setDataBits" ref="af39774b2d3c4121623253740660a0389" args="(int n)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::setDataBits </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set number of data bits. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if data bits count is supported and could be set. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a323e590d6ead87033985ffff1ecfae81">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
@@ -387,6 +543,91 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#aa86a8bc0bb03ac2b07bf43968dfeb189">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a175785be0dfe124254484822b7b8832e"></a><!-- doxytag: member="mdtSerialPort::setFlowCtlRtsCts" ref="a175785be0dfe124254484822b7b8832e" args="(bool on)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::setFlowCtlRtsCts </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Enable/diseable RTS/CTS flow control. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if RTS/CTS flow control is supported and could be set. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#af01806f53cfc5ef90b34c0645cee3bdf">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a34e2ac7b0d3cb7a6fb65756cbca2ce48"></a><!-- doxytag: member="mdtSerialPort::setFlowCtlXonXoff" ref="a34e2ac7b0d3cb7a6fb65756cbca2ce48" args="(bool on, char xonChar, char xoffChar)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::setFlowCtlXonXoff </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>xonChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>xoffChar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Enable/diseable Xon/Xoff flow control. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if Xon/Xoff flow control is supported and could be set. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a05b35143f7b048ebcb2295fdc2ac5013">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae435f052a87dcd0b1829f1577bb5e58d"></a><!-- doxytag: member="mdtSerialPort::setParity" ref="ae435f052a87dcd0b1829f1577bb5e58d" args="(mdtSerialPortConfig::parity_t p)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::setParity </td>
+          <td>(</td>
+          <td class="paramtype">mdtSerialPortConfig::parity_t&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set parity check. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if parity check is supported and could be set. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ac9c6990ac9861f21dcfe27c989b78545">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
@@ -449,6 +690,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 </div>
 </div>
+<a class="anchor" id="a9471ebff90de41decee977566dd1571f"></a><!-- doxytag: member="mdtSerialPort::setStopBits" ref="a9471ebff90de41decee977566dd1571f" args="(int n)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtSerialPort::setStopBits </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set number of stop bits. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if stop bits count is supported and could be set. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a164c7be802a04805e5b401fc5011208b">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a036f49d743838013c9a8cbf6a1dd40d1"></a><!-- doxytag: member="mdtSerialPort::setWriteTimeout" ref="a036f49d743838013c9a8cbf6a1dd40d1" args="(int timeout)" -->
 <div class="memitem">
 <div class="memproto">
@@ -475,6 +739,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a163a83bdcac2c81a5c6b097c4afde41f"></a><!-- doxytag: member="mdtSerialPort::stopBits" ref="a163a83bdcac2c81a5c6b097c4afde41f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtSerialPort::stopBits </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get number of stop bits. </p>
+<p>The mutex is not handled by this method.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Configured stop bits count or -1 on error. </dd></dl>
+
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#abae48c24634c3e2d298f1cff98b250ed">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
@@ -515,14 +801,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
           <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtSerialPort::tryOpen </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>TODO: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>activate and implement in all subclasses. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>activate and implement in all subclasses. </dd></dl>
 <p>Try to open port.</p>
 <p>Try to open port set by <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a>. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. Note that the mutex is not handled in this method. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The port must not be open whenn calling this method.</dd></dl>
@@ -534,11 +820,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <li>Be sure that the port is closed again before return.</li>
 <li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used to keep trace in logfile. </li>
 </ul>
-
-<p><p>pvFd = ::open(pvPortName.toStdString().c_str(), O_RDWR); </p>
-</p>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a44d2d57b118d2b1f7a0041fcf84958ac">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -682,7 +963,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Jul 24 2012 20:17:49 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 29 2012 16:02:22 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

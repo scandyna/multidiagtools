@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtAbstractSerialPort.h"
 
+#include <QDebug>
+
 mdtAbstractSerialPort::mdtAbstractSerialPort(QObject *parent)
  : mdtAbstractPort(parent)
 {
@@ -40,14 +42,45 @@ mdtAbstractSerialPort::~mdtAbstractSerialPort()
 {
 }
 
+/**
+bool mdtAbstractSerialPort::open(mdtSerialPortConfig &cfg)
+{
+  mapUartType();
+
+  return mdtAbstractPort::open(cfg);
+}
+*/
+
+void mdtAbstractSerialPort::close()
+{
+  qDebug() << "mdtAbstractSerialPort::close()";
+  pvAvailableBaudRates.clear();
+  pvUartType = UT_UNKNOW;
+  mdtAbstractPort::close();
+}
+
+mdtSerialPortConfig &mdtAbstractSerialPort::config()
+{
+  Q_ASSERT(pvConfig != 0);
+
+  mdtSerialPortConfig *c = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
+  Q_ASSERT(c != 0);
+
+  return *c;
+}
+
 mdtAbstractSerialPort::sp_uart_type_t mdtAbstractSerialPort::uartType()
 {
+  if((pvUartType == UT_UNKNOW)&&(isOpen())){
+    mapUartType();
+  }
+
   return pvUartType;
 }
 
 QString mdtAbstractSerialPort::uartTypeStr()
 {
-  switch(pvUartType){
+  switch(uartType()){
     case UT_UNKNOW:
       return "Unknow";
     case UT_8250:
@@ -83,6 +116,10 @@ QString mdtAbstractSerialPort::uartTypeStr()
 
 QList<int> &mdtAbstractSerialPort::availableBaudRates()
 {
+  if((pvAvailableBaudRates.isEmpty())&&(isOpen())){
+    buildAvailableBaudRates();
+  }
+
   return pvAvailableBaudRates;
 }
 

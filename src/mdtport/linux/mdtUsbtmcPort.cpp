@@ -30,11 +30,14 @@ mdtUsbtmcPort::mdtUsbtmcPort(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvFd = -1;
+  pvPortLock = new mdtPortLock;
+  Q_ASSERT(pvPortLock != 0);
 }
 
 mdtUsbtmcPort::~mdtUsbtmcPort()
 {
-  this->close();
+  this->close();  /// NOTE!!
+  delete pvPortLock;
 }
 
 /**
@@ -60,6 +63,7 @@ bool mdtUsbtmcPort::setAttributes(const QString &portName)
 }
 */
 
+/**
 mdtAbstractPort::error_t mdtUsbtmcPort::tryOpen()
 {
   Q_ASSERT(!isOpen());
@@ -90,7 +94,9 @@ mdtAbstractPort::error_t mdtUsbtmcPort::tryOpen()
 
   return NoError;
 }
+*/
 
+/**
 bool mdtUsbtmcPort::open(mdtPortConfig &cfg)
 {
   // Close previous opened device
@@ -114,7 +120,9 @@ bool mdtUsbtmcPort::open(mdtPortConfig &cfg)
 
   return mdtAbstractPort::open(cfg);
 }
+*/
 
+/**
 void mdtUsbtmcPort::close()
 {
   if(!isOpen()){
@@ -127,6 +135,7 @@ void mdtUsbtmcPort::close()
   }
   mdtAbstractPort::close();
 }
+*/
 
 void mdtUsbtmcPort::setReadTimeout(int timeout)
 {
@@ -223,4 +232,60 @@ void mdtUsbtmcPort::readOneFrame()
   pvMutex.lock();
   pvReadCondition.wakeAll();
   pvMutex.unlock();
+}
+
+mdtAbstractPort::error_t mdtUsbtmcPort::pvOpen()
+{
+  Q_ASSERT(!isOpen());
+
+  int err;
+
+  // Try to open port
+  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+  if(pvFd < 0){
+    err = errno;
+    // Check if port was locked by another
+    if(pvPortLock->isLockedByAnother()){
+      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPort");
+      e.commit();
+      return PortLocked;
+    }
+    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
+    e.setSystemError(err, strerror(err));
+    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPort");
+    e.commit();
+    pvPortLock->unlock();
+    // Check error and return a possibly correct code
+    switch(err){
+      case EACCES:
+        return PortAccess;
+      case ENOENT:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+
+  return NoError;
+}
+
+void mdtUsbtmcPort::pvClose()
+{
+  Q_ASSERT(isOpen());
+
+  pvPortLock->unlock();
+  ::close(pvFd);
+  pvFd = -1;
+}
+
+mdtAbstractPort::error_t mdtUsbtmcPort::pvSetup()
+{
+  Q_ASSERT(isOpen());
+
+  // Set the read/write timeouts
+  setReadTimeout(config().readTimeout());
+  setWriteTimeout(config().writeTimeout());
+
+  return NoError;
 }

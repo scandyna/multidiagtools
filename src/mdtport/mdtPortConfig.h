@@ -58,7 +58,7 @@ class mdtPortConfig
   /*!\brief Get the read frame size
    * \sa setReadFrameSize()
    */
-  int readFrameSize();
+  int readFrameSize() const;
 
   /*!\brief Set the read Queue size
    *
@@ -72,7 +72,7 @@ class mdtPortConfig
   /*!\brief Get the read Queue size
    * \sa setReadQueueSize()
    */
-  int readQueueSize();
+  int readQueueSize() const;
 
   /*! \brief Set the minimal time to wait before try to read
    *
@@ -104,7 +104,7 @@ class mdtPortConfig
   /*! \brief Know if read timeout protocol must be used
    * \sa setUseReadTimeoutProtocol()
    */
-  bool useReadTimeoutProtocol();
+  bool useReadTimeoutProtocol() const;
 
   /*! \brief Set the read timeout
    * 
@@ -116,7 +116,7 @@ class mdtPortConfig
    * 
    * \returns Read timout [ms]
    */
-  int readTimeout();
+  int readTimeout() const;
 
   /*! \brief Set the minimal time to wait before try to write
    *
@@ -131,7 +131,7 @@ class mdtPortConfig
   /*! \brief Get the minimal time to wait before try to write
    * \sa setWriteMinWaitTime()
    */
-  int writeMinWaitTime();
+  int writeMinWaitTime() const;
 
   /*! \brief Set the write timeout
    * 
@@ -143,7 +143,7 @@ class mdtPortConfig
    * 
    * \returns Write timout [ms]
    */
-  int writeTimeout();
+  int writeTimeout() const;
 
   /*!\brief Set the write frame size
    *
@@ -157,7 +157,7 @@ class mdtPortConfig
   /*!\brief Get the read frame size
    * \sa setWriteFrameSize()
    */
-  int writeFrameSize();
+  int writeFrameSize() const;
 
   /*!\brief Set the read Queue size
    *
@@ -171,7 +171,7 @@ class mdtPortConfig
   /*!\brief Get the write Queue size
    * \sa setWriteQueueSize()
    */
-  int writeQueueSize();
+  int writeQueueSize() const;
 
   /*! \brief Set frame type
    *
@@ -183,7 +183,7 @@ class mdtPortConfig
   /*! \brief Get frame type
    * \sa setFrameType()
    */
-  mdtFrame::type_t frameType();
+  mdtFrame::type_t frameType() const;
 
   /*! \brief Set the end of frame sequence (applies on ASCII frames)
    */
@@ -200,7 +200,7 @@ class mdtPortConfig
    * 
    * \sa setEndOfFrameSeq()
    */
-  QByteArray endOfFrameSeq();
+  QByteArray endOfFrameSeq() const;
 
   /*! \brief Set the byte per byte write On/Off
    * 
@@ -217,7 +217,7 @@ class mdtPortConfig
    * 
    * \sa setBytePerByteWrite()
    */
-  bool bytePerByteWrite();
+  bool bytePerByteWrite() const;
 
   /*! \brief Set the port read only
    */
@@ -247,8 +247,6 @@ class mdtPortConfig
   QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
   bool pvBytePerByteWrite;    // For some (very) slow devices that need time between each transmitted byte
   ///bool pvReadOnly;                // If true, the port should be open as read only
-
- private:
 
   bool matches(const mdtPortConfig &other);
 };

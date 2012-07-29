@@ -28,17 +28,12 @@ Collaboration diagram for mdtPort:\nopagebreak
 \label{classmdt_port_ac466eac9d1a54ea0e04c998660ad75ec}
 
 \item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}{tryOpen} ()
-\begin{DoxyCompactList}\small\item\em bool setAttributes(const QString \&portName); \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_aa19f56493000459083df371be57f67aa}{$\sim$mdtPort} ()
+\item 
 bool \hyperlink{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)
-\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{close} ()
+\begin{DoxyCompactList}\small\item\em bool setAttributes(const QString \&portName); \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{setReadTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_aa77b266f23744f1b53ae589f986be101}{
-void \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{setReadTimeout} (int timeout)}
-\label{classmdt_port_aa77b266f23744f1b53ae589f986be101}
-
-\begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{
 void \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{setWriteTimeout} (int timeout)}
 \label{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}
@@ -64,30 +59,23 @@ void \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{flushOut} ()}
 \begin{DoxyCompactList}\small\item\em Flush write buffers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{Member Function Documentation}
-\hypertarget{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{
-\index{mdtPort@{mdtPort}!close@{close}}
-\index{close@{close}!mdtPort@{mdtPort}}
-\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPort::close (
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_port_aa19f56493000459083df371be57f67aa}{
+\index{mdtPort@{mdtPort}!$\sim$mdtPort@{$\sim$mdtPort}}
+\index{$\sim$mdtPort@{$\sim$mdtPort}!mdtPort@{mdtPort}}
+\subsubsection[{$\sim$mdtPort}]{\setlength{\rightskip}{0pt plus 5cm}mdtPort::$\sim$mdtPort (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}
+)}}
+\label{classmdt_port_aa19f56493000459083df371be57f67aa}
 
 
-Close the port. 
-
-
-
-if(pvFd $>$= 0)\{
-
-\} 
+this-\/$>$\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}; /// NOTE!! 
 
 
 
-Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort}.
-
+\subsection{Member Function Documentation}
 \hypertarget{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}{
 \index{mdtPort@{mdtPort}!open@{open}}
 \index{open@{open}!mdtPort@{mdtPort}}
@@ -99,9 +87,26 @@ Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247
 \label{classmdt_port_ac7158d1d718dbc6068648bbed1eab747}
 
 
-Open the port. 
+bool setAttributes(const QString \&portName); 
 
-Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues. 
+Try to open port.
+
+Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. \begin{DoxyPrecond}{Precondition}
+The port must not be open whenn calling this method.error\_\-t tryOpen();
+\end{DoxyPrecond}
+Open the port
+
+Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues.
+
+bool mdtPort::setAttributes(const QString \&portName) \{ Close previous opened device this-\/$>$\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}; Try to open given port pvFd = ::open(portName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + portName, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtPort\char`\"{}); e.commit(); pvPortName = \char`\"{}\char`\"{}; return false; \} Set attributes pvPortName = portName; Close the port this-\/$>$\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()};
+
+return true; \} \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} mdtPort::tryOpen() \{ Q\_\-ASSERT(!isOpen());
+
+int err;
+
+Try to open port pvFd = ::open(pvPortName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-PORT\_\-IO\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + pvPortName, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtPort\char`\"{}); e.commit(); Check error and return a possibly correct code switch(err)\{ case EACCES: return PortAccess; case ENOENT: return PortNotFound; default: return UnknownError; \} \} Close the port ::close(pvFd); pvFd = -\/1;
+
+return NoError; \} 
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort}.
 
@@ -123,29 +128,26 @@ This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThre
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
 
-\hypertarget{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}{
-\index{mdtPort@{mdtPort}!tryOpen@{tryOpen}}
-\index{tryOpen@{tryOpen}!mdtPort@{mdtPort}}
-\subsubsection[{tryOpen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPort::tryOpen (
+\hypertarget{classmdt_port_aa77b266f23744f1b53ae589f986be101}{
+\index{mdtPort@{mdtPort}!setReadTimeout@{setReadTimeout}}
+\index{setReadTimeout@{setReadTimeout}!mdtPort@{mdtPort}}
+\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPort::setReadTimeout (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{timeout}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_port_ad3c958b5559e39ed8bb6b0c699809755}
+\label{classmdt_port_aa77b266f23744f1b53ae589f986be101}
 
 
-bool setAttributes(const QString \&portName); 
+Close the port. 
 
-Try to open port.
+void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()};
 
-Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. \begin{DoxyPrecond}{Precondition}
-The port must not be open whenn calling this method.
-\end{DoxyPrecond}
-bool mdtPort::setAttributes(const QString \&portName) \{ Close previous opened device this-\/$>$\hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{close()}; Try to open given port pvFd = ::open(portName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + portName, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtPort\char`\"{}); e.commit(); pvPortName = \char`\"{}\char`\"{}; return false; \} Set attributes pvPortName = portName; Close the port this-\/$>$\hyperlink{classmdt_port_aa494585a96a16c80a04dd32b0b6a0d4c}{close()};
+Set the read data timeout
 
-return true; \} 
+void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtPort::close()} \{ if(!isOpen())\{ return; \} \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(pvPortLock-\/$>$isLocked())\{ pvPortLock-\/$>$unlock(); \} ::close(pvFd); pvFd = -\/1; \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()}; \} 
 
-Implements \hyperlink{classmdt_abstract_port_a44d2d57b118d2b1f7a0041fcf84958ac}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
 
 \hypertarget{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}{
 \index{mdtPort@{mdtPort}!waitEventWriteReady@{waitEventWriteReady}}

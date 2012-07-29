@@ -21,8 +21,8 @@
 #ifndef MDT_USBTMC_PORT_H
 #define MDT_USBTMC_PORT_H
 
-
 #include "mdtAbstractPort.h"
+#include "mdtPortLock.h"
 #include <QObject>
 #include <QWaitCondition>
 #include <QMutex>
@@ -63,7 +63,7 @@ class mdtUsbtmcPort : public mdtAbstractPort
    *  - Be sure that the port is closed again before return.
    *  - The mdtError system should be used to keep trace in logfile.
    */
-  error_t tryOpen();
+  ///error_t tryOpen();
 
   /*! \brief Open the port
    *
@@ -71,11 +71,11 @@ class mdtUsbtmcPort : public mdtAbstractPort
    *
    * Open port given by setPortName() and init read/write queues.
    */
-  bool open(mdtPortConfig &cfg);
+  ///bool open(mdtPortConfig &cfg);
 
   /*! \brief Close the port
    */
-  void close();
+  ///void close();
 
   /*! \brief Set the read data timeout
    */
@@ -131,11 +131,43 @@ class mdtUsbtmcPort : public mdtAbstractPort
 
  private:
 
+   /*! \brief Open the port given by setPortName()
+   *
+   * If port can be open successfull, NoError code is returned.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must not be open whenn calling this method.
+   *
+   * \sa close()
+   * \sa error_t
+   */
+  error_t pvOpen();
+
+  /*! \brief Close port
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   */
+  void pvClose();
+
+  /*! \brief Setup port with given configurations.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \pre The port must be open whenn calling this method.
+   *
+   * \sa error_t
+   */
+  error_t pvSetup();
+
   QWaitCondition pvReadCondition;
   QWaitCondition pvWriteCondition;
   int pvReadTimeout;
   int pvWriteTimeout;
   int pvFd;
+  mdtPortLock *pvPortLock;
 };
 
 #endif  // #ifndef MDT_USBTMC_PORT_H

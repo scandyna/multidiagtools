@@ -32,21 +32,20 @@
 mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
-  setConfig(new mdtSerialPortConfig);
+  ///setConfig(new mdtSerialPortConfig);
   setPort(new mdtSerialPort);
+  Q_ASSERT(pvPort != 0);
+  pvPort->setConfig(new mdtSerialPortConfig);
 }
 
 mdtSerialPortManager::~mdtSerialPortManager()
 {
-  Q_ASSERT(pvConfig != 0);
-  Q_ASSERT(pvPort != 0);
+  ///Q_ASSERT(pvConfig != 0);
 
   closePort();
 
-  delete pvConfig;
-  pvConfig = 0;
+  ///delete pvConfig;
   delete pvPort;
-  pvPort = 0;
 }
 
 QStringList mdtSerialPortManager::scan()
@@ -103,12 +102,21 @@ QStringList mdtSerialPortManager::scan()
 
   // For each port name, try to open the port and get some attributes (to see if it really exists)
   for(int i=0; i<portNames.size(); ++i){
-    // Try to get port attributes
+    // Try to open port and get UART type
     port = new mdtSerialPort;
     Q_ASSERT(port != 0);
+    port->setPortName(portNames.at(i));
+    if(port->open() == mdtAbstractPort::NoError){
+      if(port->uartType() != mdtAbstractSerialPort::UT_UNKNOW){
+        availablePorts.append(portNames.at(i));
+        qDebug() << "mdtSerialPortManager::scan(): adding port " << port->portName() << " to list";
+      }
+    }
+    /**
     if(port->setAttributes(portNames.at(i))){/// NOTE...
       availablePorts.append(portNames.at(i));
     }
+    */
     delete port;
   }
 
@@ -126,15 +134,23 @@ void mdtSerialPortManager::setPort(mdtSerialPort *port)
 bool mdtSerialPortManager::openPort()
 {
   Q_ASSERT(pvPort != 0);
-  Q_ASSERT(pvConfig != 0);
+  ///Q_ASSERT(pvConfig != 0);
 
   // We must typecast to the mdtSerialPort* classes
   mdtSerialPort *p = dynamic_cast<mdtSerialPort*>(pvPort);
   Q_ASSERT(p != 0);
+  
+  /**
   mdtSerialPortConfig *c = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
   Q_ASSERT(c != 0);
+  */
 
-  return p->open(*c);
+  ///return p->open(*c);
+  if(p->setup() != mdtAbstractPort::NoError){
+    return false;
+  }
+
+  return true;
 }
 
 bool mdtSerialPortManager::start()
@@ -155,10 +171,15 @@ void mdtSerialPortManager::stop()
 
 mdtSerialPortConfig &mdtSerialPortManager::config()
 {
-  mdtSerialPortConfig *config = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
-  Q_ASSERT(config != 0);
+  ///mdtSerialPortConfig *config = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
+  ///Q_ASSERT(config != 0);
+  ///return *config;
 
-  return *config;
+  // We must typecast to the mdtSerialPort* classes
+  mdtSerialPort *p = dynamic_cast<mdtSerialPort*>(pvPort);
+  Q_ASSERT(p != 0);
+
+  return p->config();
 }
 
 mdtAbstractSerialPort &mdtSerialPortManager::port()

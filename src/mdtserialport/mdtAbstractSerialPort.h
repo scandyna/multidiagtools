@@ -29,6 +29,15 @@
 #include <QList>
 
 /// NOTE: \todo Comment this class
+/*! \brief Interface class for serial port
+ *
+ * This is a abstract class used to build system specific implementation.<br>
+ * The subclass should have mdtSerialPort as name, so it will be compatible
+ *  with several classes (f.ex. mdtSerialPortManager).<br>
+ * To begin a implementation, please take a look at mdtAbstractPort at first.<br>
+ *
+ * \sa mdtAbstractPort
+ */
 class mdtAbstractSerialPort : public mdtAbstractPort
 {
  Q_OBJECT
@@ -57,29 +66,235 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   mdtAbstractSerialPort(QObject *parent = 0);
   virtual ~mdtAbstractSerialPort();
 
-  /*! \brief Open the port
+  /*! \brief Open the serial port specified with setPortName()
    *
+   * Subclass notes:<br>
    * This method must be re-implemented in subclass.<br>
    * To handle the port correctly, the subclass method must:
-   *  - Close previous opened ressource
+   *  - Close previous opened serial port \todo specify how to close it.
    *  - Lock the mutex with lockMutex()
    *  - Do the specific work
    *  - Set the read/write timeouts. See the mdtSerialPortConfig to know how to get these timeouts.
-   *  - Call this open method (with mdtAbstractPort::open() ).
-   * At this last step, the queues will be initialized, and mutex unocked.
+   *  - Call this open method (with mdtAbstractSerialPort::open() ).
+   * At this last step, the mdtAbstractPort::open() method will be called.
+   *
    * \return True on successfull configuration and open port
-   * \sa mdtPortConfig
+   *
+   * \sa mdtSerialPortConfig
+   * \sa mdtAbstractPort::open()
    */
-  virtual bool open(mdtSerialPortConfig &cfg) = 0;
+  ///virtual bool open(mdtSerialPortConfig &cfg);
+
+  /*! \brief Close the serial port
+   *
+   * Close serial port and clear flags (f.ex. UART Type is set to unknow).
+   *
+   * The mutex is not handled by this method.
+   *
+   * Subclass notes:<br>
+   * This method must be re-implemented in subclass.<br>
+   * To handle the port correctly, the subclass method must:
+   *  - Check if port is open with isOpen() , if false, simply return.
+   *  - Restore original settings (f.ex. termios struct on Posix)
+   *  - Unlock and close the port
+   *  - Call this close method (with mdtAbstractSerialPort::close() ).
+   * At this last step, the UART type wil be set to unknown type, available baud rates
+   *  list cleared. Then, the mdtAbstractPort::close() method will be called.
+   *
+   * \sa mdtAbstractPort::close()
+   */
+  void close();
+
+  /*! \brief Get the stored configuration
+   */
+  mdtSerialPortConfig &config();
 
   /*! \brief Get UART type
+   *
+   * The mutex is not handled by this method.
+   *
+   * If UART type is unknow and port is open,
+   *  mapUartType() will be called.
    */
   sp_uart_type_t uartType();
   QString uartTypeStr();
 
   /*! \brief Get the list of available baud rates
+   *
+   * The mutex is not handled by this method.
+   *
+   * If the internal baud rates list is empty and port is open,
+   *  buildAvailableBaudRates() will be called.
    */
   QList<int> &availableBaudRates();
+
+  /*! \brief Set the baud rate
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if baud rate is supported and could be set.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The rate should be applied directly to system
+   *  (f.ex. with tcsetattr() on POSIX) and checked.
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool setBaudRate(int rate) = 0;
+
+  /*! \brief Get the baud rate
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured baud rate, or 0 on error.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The rate should be get with system call
+   *  (f.ex. tgetattr() on POSIX).
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual int baudRate() = 0;
+
+  /*! \brief Set number of data bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if data bits count is supported and could be set.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The data bits count should be applied directly to system
+   *  (f.ex. with tcsetattr() on POSIX) and checked.
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool setDataBits(int n) = 0;
+
+  /*! \brief Get number of data bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured data bits count or 0 on error.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The data bits count should be get with system call
+   *  (f.ex. tgetattr() on POSIX).
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual int dataBits() = 0;
+
+  /*! \brief Set number of stop bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if stop bits count is supported and could be set.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The stop bits count should be applied directly to system
+   *  (f.ex. with tcsetattr() on POSIX) and checked.
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool setStopBits(int n) = 0;
+
+  /*! \brief Get number of stop bits.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured stop bits count or -1 on error.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The stop bits count should be get with system call
+   *  (f.ex. tgetattr() on POSIX).
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual int stopBits() = 0;
+
+  /*! \brief Set parity check.
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if parity check is supported and could be set.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The parity check should be applied directly to system
+   *  (f.ex. with tcsetattr() on POSIX) and checked.
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool setParity(mdtSerialPortConfig::parity_t p) = 0;
+
+  /*! \brief Get configured parity
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return Configured parity or NoParity on error.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The parity check should be get with system call
+   *  (f.ex. tgetattr() on POSIX).
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual mdtSerialPortConfig::parity_t parity() = 0;
+
+  /*! \brief Enable/diseable RTS/CTS flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if RTS/CTS flow control is supported and could be set.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The RTS/CTS flow control should be applied directly to system
+   *  (f.ex. with tcsetattr() on POSIX) and checked.
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool setFlowCtlRtsCts(bool on) = 0;
+
+  /*! \brief Get configured state of RTS/CTS flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if RTS/CTS flow control is enabled (and no error occured).
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The RTS/CTS flow control should be get with system call
+   *  (f.ex. tgetattr() on POSIX).
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool flowCtlRtsCtsOn() = 0;
+
+  /*! \brief Enable/diseable Xon/Xoff flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if Xon/Xoff flow control is supported and could be set.
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The Xon/Xoff flow control should be applied directly to system
+   *  (f.ex. with tcsetattr() on POSIX) and checked.
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool setFlowCtlXonXoff(bool on, char xonChar, char xoffChar) = 0;
+
+  /*! \brief Get configured state of Xon/Xoff flow control
+   *
+   * The mutex is not handled by this method.
+   *
+   * \return True if Xon/Xoff flow control is enabled (and no error occured).
+   *
+   * Subclass notes:<br>
+   * This method must be implemented in subclass.
+   * The Xon/Xoff flow control should be get with system call
+   *  (f.ex. tgetattr() on POSIX).
+   * The mdtError system should be used (on error) to keep trace in logfile.
+   */
+  virtual bool flowCtlXonXoffOn() = 0;
 
   /*! \brief Wait until a control (modem line) signal state changes
    *
@@ -166,6 +381,32 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   void rngChanged(bool on);
 
  protected:
+
+  /*! \brief Map the system defined UART type to internal one.
+   *
+   * In this class, the UART type is defined in sp_uart_type_t enum.
+   * The subclass must map the system's internal type to sp_uart_type_t.
+   * On error (f.ex. by system calls), the method should use the mdtError
+   *  system, and set the UART type to UT_UNKNOW.
+   * Note that the precondition must be checked with Q_ASSERT(isOpen())
+   *
+   * \pre Port must be open before this call.
+   */
+  virtual void mapUartType() = 0;
+
+  /*! \brief Build the list of available baud rates.
+   *
+   * The subclass must search about available baud rates for current port,
+   *  and should check if it can be really be used.
+   * For.ex. , on POSIX, termios defines some baud rates, but all are not
+   *  necessarily supported by port. To be shure, a solution is to
+   *  try each baudrate (with cfsetispeed()/cfsetospeed() on POSIX) before
+   *  storing it in container.
+   * Note that the precondition must be checked with Q_ASSERT(isOpen())
+   *
+   * \pre Port must be open before this call.
+   */
+  virtual void buildAvailableBaudRates() = 0;
 
   // Control signals states
   bool pvCarIsOn;

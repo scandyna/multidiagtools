@@ -26,7 +26,7 @@ Collaboration diagram for mdtUsbtmcPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=168pt]{classmdt_usbtmc_port__coll__graph}
+\includegraphics[width=261pt]{classmdt_usbtmc_port__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
@@ -42,20 +42,12 @@ void \hyperlink{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{readOneF
 \label{classmdt_usbtmc_port_a102a2d5ebad4968621812e682d9d1b71}
 
 \item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usbtmc_port_a400c209a895be62c2554db395a9864d4}{tryOpen} ()
-\begin{DoxyCompactList}\small\item\em bool setAttributes(const QString \&portName); \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}{$\sim$mdtUsbtmcPort} ()
+\item 
 bool \hyperlink{classmdt_usbtmc_port_acf677164611ea563e40be93e1b36236a}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)
-\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{
-void \hyperlink{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{close} ()}
-\label{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}
-
+\begin{DoxyCompactList}\small\item\em bool setAttributes(const QString \&portName); \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}{setReadTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}{
-void \hyperlink{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}{setReadTimeout} (int timeout)}
-\label{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}
-
-\begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_usbtmc_port_a18ff8b76d07cd75339204f9389e1dd5c}{
 void \hyperlink{classmdt_usbtmc_port_a18ff8b76d07cd75339204f9389e1dd5c}{setWriteTimeout} (int timeout)}
 \label{classmdt_usbtmc_port_a18ff8b76d07cd75339204f9389e1dd5c}
@@ -80,6 +72,22 @@ With USBTMC, when we try to read, and no data are available, both read and write
  To start the read, call the \hyperlink{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{readOneFrame()} method.\par
  To start the write, call the \hyperlink{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}{writeOneFrame()} method. 
 
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}{
+\index{mdtUsbtmcPort@{mdtUsbtmcPort}!$\sim$mdtUsbtmcPort@{$\sim$mdtUsbtmcPort}}
+\index{$\sim$mdtUsbtmcPort@{$\sim$mdtUsbtmcPort}!mdtUsbtmcPort@{mdtUsbtmcPort}}
+\subsubsection[{$\sim$mdtUsbtmcPort}]{\setlength{\rightskip}{0pt plus 5cm}mdtUsbtmcPort::$\sim$mdtUsbtmcPort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_a3f9d3f1f40f61e17fa2997f3ad181d30}
+
+
+NOTE!! 
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usbtmc_port_acf677164611ea563e40be93e1b36236a}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!open@{open}}
@@ -92,13 +100,39 @@ With USBTMC, when we try to read, and no data are available, both read and write
 \label{classmdt_usbtmc_port_acf677164611ea563e40be93e1b36236a}
 
 
-Open the port. 
+bool setAttributes(const QString \&portName); 
+
+Try to open port.
+
+Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. \begin{DoxyPrecond}{Precondition}
+The port must not be open whenn calling this method.
+\end{DoxyPrecond}
+Subclass notes:\par
+ This method must be implemented in subclass. To handle the port correctly, the subclass method must:
+\begin{DoxyItemize}
+\item Call the appropriate open function
+\item Return the correct error code on failure (see the error\_\-t enum)
+\item Be sure that the port is closed again before return.
+\item The \hyperlink{classmdt_error}{mdtError} system should be used to keep trace in logfile.error\_\-t tryOpen();
+\end{DoxyItemize}
+
+Open the port
 
 NOTE:\begin{Desc}
 \item[\hyperlink{todo__todo000005}{Todo}]change return type: replace with error\_\-t type.\end{Desc}
 
 
-Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues. 
+Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues.
+
+bool mdtUsbtmcPort::setAttributes(const QString \&portName) \{ Close previous opened device this-\/$>$\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}; Try to open given port pvFd = ::open(portName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + portName, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtUsbtmcPort\char`\"{}); e.commit(); pvPortName = \char`\"{}\char`\"{}; return false; \} Set attributes pvPortName = portName; Close the port this-\/$>$\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()};
+
+return true; \} \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} mdtUsbtmcPort::tryOpen() \{ Q\_\-ASSERT(!isOpen());
+
+int err;
+
+Try to open port pvFd = ::open(pvPortName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-PORT\_\-IO\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + pvPortName, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtUsbtmcPort\char`\"{}); e.commit(); Check error and return a possibly correct code switch(err)\{ case EACCES: return PortAccess; case ENOENT: return PortNotFound; default: return UnknownError; \} \} Close the port ::close(pvFd); pvFd = -\/1;
+
+return NoError; \} 
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort}.
 
@@ -143,38 +177,26 @@ setWaitingFrame()
 
 Reimplemented from \hyperlink{classmdt_abstract_port_ab1738b5b6b78743ee2d36ccf5daa7c00}{mdtAbstractPort}.
 
-\hypertarget{classmdt_usbtmc_port_a400c209a895be62c2554db395a9864d4}{
-\index{mdtUsbtmcPort@{mdtUsbtmcPort}!tryOpen@{tryOpen}}
-\index{tryOpen@{tryOpen}!mdtUsbtmcPort@{mdtUsbtmcPort}}
-\subsubsection[{tryOpen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbtmcPort::tryOpen (
+\hypertarget{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}{
+\index{mdtUsbtmcPort@{mdtUsbtmcPort}!setReadTimeout@{setReadTimeout}}
+\index{setReadTimeout@{setReadTimeout}!mdtUsbtmcPort@{mdtUsbtmcPort}}
+\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbtmcPort::setReadTimeout (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{timeout}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_usbtmc_port_a400c209a895be62c2554db395a9864d4}
+\label{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}
 
 
-bool setAttributes(const QString \&portName); 
+Close the port. 
 
-Try to open port.
+void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()};
 
-Try to open port set by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()}. This can be usefull to enumerate real available ports on system. If port can be open successfull, NoError code is returned, and port is closed again. \begin{DoxyPrecond}{Precondition}
-The port must not be open whenn calling this method.
-\end{DoxyPrecond}
-Subclass notes:\par
- This method must be implemented in subclass. To handle the port correctly, the subclass method must:
-\begin{DoxyItemize}
-\item Call the appropriate open function
-\item Return the correct error code on failure (see the error\_\-t enum)
-\item Be sure that the port is closed again before return.
-\item The \hyperlink{classmdt_error}{mdtError} system should be used to keep trace in logfile.
-\end{DoxyItemize}
+Set the read data timeout
 
-bool mdtUsbtmcPort::setAttributes(const QString \&portName) \{ Close previous opened device this-\/$>$\hyperlink{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{close()}; Try to open given port pvFd = ::open(portName.toStdString().c\_\-str(), O\_\-RDWR); if(pvFd $<$ 0)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}Unable to open port: \char`\"{} + portName, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtUsbtmcPort\char`\"{}); e.commit(); pvPortName = \char`\"{}\char`\"{}; return false; \} Set attributes pvPortName = portName; Close the port this-\/$>$\hyperlink{classmdt_usbtmc_port_a6fec5e49a42e6c2e6202a8b2f7f0dc37}{close()};
+void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtUsbtmcPort::close()} \{ if(!isOpen())\{ return; \} \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(pvFd $>$= 0)\{ ::close(pvFd); pvFd = -\/1; \} \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()}; \} 
 
-return true; \} 
-
-Implements \hyperlink{classmdt_abstract_port_a44d2d57b118d2b1f7a0041fcf84958ac}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
 
 \hypertarget{classmdt_usbtmc_port_aaa58100bc6ec2a5f91a3c6bb3676a468}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!waitEventWriteReady@{waitEventWriteReady}}

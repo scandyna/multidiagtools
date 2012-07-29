@@ -87,11 +87,11 @@ void mdtPortTest::openCloseTest()
   // Attributes fetch
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-  QVERIFY(!port.isOpen());
-
-  // Open
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+  // Setup
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(port.isOpen());
 
   // Close
@@ -126,9 +126,10 @@ void mdtPortTest::startStopTest()
   // Setup
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-
-  QVERIFY(port.open(cfg));
+  port.setConfig(&cfg);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
 
   // Assign port to the threads
   rdThd.setPort(&port);
@@ -199,9 +200,9 @@ void mdtPortTest::writeRawTest()
   cfg.setFrameType(mdtFrame::FT_RAW);
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-
-  QVERIFY(port.open(cfg));
+  port.setConfig(&cfg);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   wrThd.setPort(&port);
@@ -253,10 +254,10 @@ void mdtPortTest::writeRawTest()
   cfg.setWriteQueueSize(1);
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
   cfg.setBytePerByteWrite(true, 1);
-  QVERIFY(port.open(cfg));
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   wrThd.setPort(&port);
@@ -340,8 +341,9 @@ void mdtPortTest::writeAsciiTest()
   cfg.setFrameType(mdtFrame::FT_ASCII);
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   wrThd.setPort(&port);
@@ -393,9 +395,10 @@ void mdtPortTest::writeAsciiTest()
   cfg.setWriteQueueSize(1);
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
   cfg.setBytePerByteWrite(true, 1);
-  QVERIFY(port.open(cfg));
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   wrThd.setPort(&port);
@@ -476,8 +479,9 @@ void mdtPortTest::readRawTest()
   cfg.setFrameType(mdtFrame::FT_RAW);
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   rdThd.setPort(&port);
@@ -567,8 +571,9 @@ void mdtPortTest::readAsciiTest()
   cfg.setEndOfFrameSeq("*");
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-  QVERIFY(port.open(cfg));
+  port.setConfig(&cfg);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   rdThd.setPort(&port);
@@ -662,7 +667,8 @@ void mdtPortTest::readInvalidDataAsciiTest()
   cfg.setEndOfFrameSeq("*");
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
+  port.setConfig(&cfg);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   rdThd.setPort(&port);
@@ -682,7 +688,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
   file.close();
 
   // Start
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
 
@@ -715,7 +721,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
   file.close();
 
   // Start
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
 
@@ -752,7 +758,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
   file.close();
 
   // Start
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
 
@@ -789,7 +795,7 @@ void mdtPortTest::readInvalidDataAsciiTest()
   file.close();
 
   // Start
-  QVERIFY(port.open(cfg));
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
 
@@ -830,8 +836,9 @@ void mdtPortTest::emptyQueueRecoveryTest()
   cfg.setEndOfFrameSeq("*");
   ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
-  QVERIFY(port.tryOpen() == mdtAbstractPort::NoError);
-  QVERIFY(port.open(cfg));
+  port.setConfig(&cfg);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
   // Assign port to the threads
   rdThd.setPort(&port);
@@ -892,17 +899,21 @@ void mdtPortTest::portManagerTest()
 {
   mdtPortManager m, m2;
   QTemporaryFile file;
+  mdtPortConfig *cfg, *cfg2;
+  mdtPort *port, *port2;
 
   // Create a temporary file
   QVERIFY(file.open());
   file.close();
 
   // Port setup
-  m.setConfig(new mdtPortConfig);
-  m.config().setFrameType(mdtFrame::FT_ASCII);
+  cfg = new mdtPortConfig;
+  cfg->setFrameType(mdtFrame::FT_ASCII);
+  port = new mdtPort;
+  port->setConfig(cfg);
 
   // Init port manager
-  m.setPort(new mdtPort);
+  m.setPort(port);
   QVERIFY(m.setPortName(file.fileName()));
   QVERIFY(m.openPort());
 
@@ -926,8 +937,11 @@ void mdtPortTest::portManagerTest()
   QVERIFY(m.lastReadenFrame() == "Test");
 
   // Setup a second port manager
-  m2.setConfig(new mdtPortConfig);
-  m2.setPort(new mdtPort);
+  // Port setup
+  cfg2 = new mdtPortConfig;
+  port2 = new mdtPort;
+  port2->setConfig(cfg2);
+  m2.setPort(port2);
 
   // Setup same port than first manager, open must fail
   QVERIFY(m2.setPortName(file.fileName()));
@@ -941,8 +955,17 @@ void mdtPortTest::portManagerTest()
   ///QVERIFY(m2.start());
   ///QVERIFY(m2.isRunning());
 
+  qDebug() << "About to close ...";
   m.closePort();
   ///m2.closePort();
+  qDebug() << "About to delete port ...";
+  delete port;
+  delete cfg;
+  qDebug() << "About to delete port2 ...";
+  delete port2;
+  qDebug() << "About to delete cfg2 ...";
+  delete cfg2;
+  qDebug() << "End";
 }
 
 int main(int argc, char **argv)

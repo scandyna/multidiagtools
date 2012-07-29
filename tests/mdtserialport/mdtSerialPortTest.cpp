@@ -50,10 +50,16 @@ void mdtSerialPortTest::essais()
   cfg.setParity(mdtSerialPortConfig::NoParity);
   cfg.enableFlowCtlXonXoff();
   cfg.enableFlowCtlRtsCts();
-  qDebug() << "TEST: setAttributes() ...";
-  QVERIFY(sp.setAttributes("/dev/ttyS0"));
+
+  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
+  sp.setPortName("/dev/ttyS0");
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
+  qDebug() << "UART: " << sp.uartTypeStr();
+  qDebug() << "Baudrates: " << sp.availableBaudRates();
   qDebug() << "TEST: open() ...";
-  QVERIFY(sp.open(cfg));
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   ctlThd.setPort(&sp);
   qDebug() << "TEST end";
@@ -108,173 +114,6 @@ void mdtSerialPortTest::mdtSerialPortManagerTest()
   m.closePort();
 }
 
-void mdtSerialPortTest::mdtSerialPortConfigTest()
-{
-  QFETCH(int, baudRate);
-  QFETCH(int, baudRateRef);
-  QFETCH(int, dataBits);
-  QFETCH(int, dataBitsRef);
-  QFETCH(int, stopBits);
-  QFETCH(int, stopBitsRef);
-  QFETCH(int, parity);
-  QFETCH(int, parityRef);
-  QFETCH(bool, flowCtlRtsCts);
-  QFETCH(bool, flowCtlRtsCtsRef);
-  QFETCH(bool, flowCtlXonXoff);
-  QFETCH(bool, flowCtlXonXoffRef);
-  QFETCH(char, xonChar);
-  QFETCH(char, xonCharRef);
-  QFETCH(char, xoffChar);
-  QFETCH(char, xoffCharRef);
-  QFETCH(int, readFrameSize);
-  QFETCH(int, readFrameSizeRef);
-  QFETCH(int, readQueueSize);
-  QFETCH(int, readQueueSizeRef);
-  QFETCH(int, writeFrameSize);
-  QFETCH(int, writeFrameSizeRef);
-  QFETCH(int, writeQueueSize);
-  QFETCH(int, writeQueueSizeRef);
-
-  // Create a new config
-  mdtSerialPortConfig cfg1, cfg2;
-
-  // Verify default config
-  QCOMPARE(cfg1.baudRate(), 9600);
-  QCOMPARE(cfg1.dataBitsCount(), 8);
-  QCOMPARE(cfg1.stopBitsCount(), 1);
-  QCOMPARE(cfg1.parity(), mdtSerialPortConfig::NoParity);
-  QVERIFY(!cfg1.flowCtlRtsCtsEnabled());
-  QVERIFY(!cfg1.flowCtlXonXoffEnabled());
-  QCOMPARE(cfg1.xonChar(), (char)MDT_DEF_XON);
-  QCOMPARE(cfg1.xoffChar(), (char)MDT_DEF_XOFF);
-  QVERIFY(cfg1.readFrameSize() == 1024);
-  QVERIFY(cfg1.readQueueSize() == 10);
-  QVERIFY(cfg1.writeFrameSize() == 1024);
-  QVERIFY(cfg1.writeQueueSize() == 10);
-  
-  // With default config, cfg1 and cfg2 must be the same
-  QVERIFY(cfg1 == cfg2);
-  QVERIFY(!(cfg1 != cfg2));
-
-  // Check veriety of combinaisons
-  cfg1.setBaudRate(baudRate);
-  QCOMPARE(cfg1.baudRate(), baudRateRef);
-  cfg1.setDataBitsCount(dataBits);
-  QCOMPARE(cfg1.dataBitsCount(), dataBitsRef);
-  cfg1.setStopBitsCount(stopBits);
-  QCOMPARE(cfg1.stopBitsCount(), stopBitsRef);
-  cfg1.setParity((mdtSerialPortConfig::parity_t)parity);
-  QCOMPARE((int)cfg1.parity(), parityRef);
-  if(flowCtlRtsCts){
-    cfg1.enableFlowCtlRtsCts();
-  }else{
-    cfg1.diseableFlowCtlRtsCts();
-  }
-  QCOMPARE(cfg1.flowCtlRtsCtsEnabled(), flowCtlRtsCtsRef);
-  if(flowCtlXonXoff){
-    cfg1.enableFlowCtlXonXoff(xonChar, xoffChar);
-    QCOMPARE(cfg1.xonChar(), xonCharRef);
-    QCOMPARE(cfg1.xoffChar(), xoffCharRef);
-  }else{
-    cfg1.diseableFlowCtlXonXoff();
-  }
-  QCOMPARE(cfg1.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
-  cfg1.setReadFrameSize(readFrameSize);
-  QCOMPARE(cfg1.readFrameSize(), readFrameSizeRef);
-  cfg1.setReadQueueSize(readQueueSize);
-  QCOMPARE(cfg1.readQueueSize(), readQueueSizeRef);
-  cfg1.setWriteFrameSize(writeFrameSize);
-  QCOMPARE(cfg1.writeFrameSize(), writeFrameSizeRef);
-  cfg1.setWriteQueueSize(writeQueueSize);
-  QCOMPARE(cfg1.writeQueueSize(), writeQueueSizeRef);
-
-  // Test copy
-  cfg2 = cfg1;
-  QCOMPARE(cfg2.baudRate(), baudRateRef);
-  QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
-  QCOMPARE(cfg2.stopBitsCount(), stopBitsRef);
-  QCOMPARE((int)cfg2.parity(), parityRef);
-  QCOMPARE(cfg2.flowCtlRtsCtsEnabled(), flowCtlRtsCtsRef);
-  QCOMPARE(cfg2.xonChar(), xonCharRef);
-  QCOMPARE(cfg2.xoffChar(), xoffCharRef);
-  QCOMPARE(cfg2.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
-  QCOMPARE(cfg2.readFrameSize(), readFrameSizeRef);
-  QCOMPARE(cfg2.readFrameSize(), readFrameSizeRef);
-  QCOMPARE(cfg2.readQueueSize(), readQueueSizeRef);
-  QCOMPARE(cfg2.writeFrameSize(), writeFrameSizeRef);
-  QCOMPARE(cfg2.writeQueueSize(), writeQueueSizeRef);
-
-  // cfg1 and cfg2 must match
-  QVERIFY(cfg1 == cfg2);
-  QVERIFY(!(cfg1 != cfg2));
-
-  // Make some change on original
-  cfg1.setBaudRate(-10);
-  cfg1.setDataBitsCount(-12);
-  cfg1.setStopBitsCount(-1);
-  cfg1.enableFlowCtlXonXoff('m', 'n');
-  cfg1.setReadFrameSize(12456);
-  cfg1.setReadQueueSize(21375);
-  cfg1.setWriteFrameSize(51217);
-  cfg1.setWriteQueueSize(11111);
-  QCOMPARE(cfg2.baudRate(), baudRateRef);
-  QCOMPARE(cfg2.dataBitsCount(), dataBitsRef);
-  QCOMPARE(cfg2.stopBitsCount(), stopBitsRef);
-  QCOMPARE((int)cfg2.parity(), parityRef);
-  QCOMPARE(cfg2.flowCtlRtsCtsEnabled(), flowCtlRtsCtsRef);
-  QCOMPARE(cfg2.xonChar(), xonCharRef);
-  QCOMPARE(cfg2.xoffChar(), xoffCharRef);
-  QCOMPARE(cfg2.flowCtlXonXoffEnabled(), flowCtlXonXoffRef);
-  QCOMPARE(cfg2.readFrameSize(), readFrameSizeRef);
-  QCOMPARE(cfg2.readQueueSize(), readQueueSizeRef);
-  QCOMPARE(cfg2.writeFrameSize(), writeFrameSizeRef);
-
-  // cfg1 and cfg2 must not match
-  QVERIFY(!(cfg1 == cfg2));
-  QVERIFY(cfg1 != cfg2);
-}
-
-void mdtSerialPortTest::mdtSerialPortConfigTest_data()
-{
-  QTest::addColumn<int>("baudRate");
-  QTest::addColumn<int>("baudRateRef");
-  QTest::addColumn<int>("dataBits");
-  QTest::addColumn<int>("dataBitsRef");
-  QTest::addColumn<int>("stopBits");
-  QTest::addColumn<int>("stopBitsRef");
-  QTest::addColumn<int>("parity");
-  QTest::addColumn<int>("parityRef");
-  QTest::addColumn<bool>("flowCtlRtsCts");
-  QTest::addColumn<bool>("flowCtlRtsCtsRef");
-  QTest::addColumn<bool>("flowCtlXonXoff");
-  QTest::addColumn<bool>("flowCtlXonXoffRef");
-  QTest::addColumn<char>("xonChar");
-  QTest::addColumn<char>("xonCharRef");
-  QTest::addColumn<char>("xoffChar");
-  QTest::addColumn<char>("xoffCharRef");
-  QTest::addColumn<int>("readFrameSize");
-  QTest::addColumn<int>("readFrameSizeRef");
-  QTest::addColumn<int>("readQueueSize");
-  QTest::addColumn<int>("readQueueSizeRef");
-  QTest::addColumn<int>("writeFrameSize");
-  QTest::addColumn<int>("writeFrameSizeRef");
-  QTest::addColumn<int>("writeQueueSize");
-  QTest::addColumn<int>("writeQueueSizeRef");
-
-  QTest::newRow("Config 01") << 50 << 50 /* Baud rate */ \
-    << 5 << 5   /* Data bits */ \
-    << 1 << 1   /* Stop bits */ \
-    << (int)mdtSerialPortConfig::ParityOdd << (int)mdtSerialPortConfig::ParityOdd \
-    << true << true /* Flow ctl RTS/CTS */ \
-    << true << true /* Flow ctl Xon/Xoff */ \
-    << 'a' << 'a'   /* Xon char */ \
-    << 'b' << 'b'   /* Xoff char */ \
-    << 1000 << 1000 /* readFrameSize */ \
-    << 5 << 5       /* readQueueSize */ \
-    << 900 << 900   /* writeFrameSize */ \
-    << 6 << 6       /* writeQueueSize */ ;
-}
-
 void mdtSerialPortTest::mdtSerialPortStartStopTest()
 {
   mdtSerialPort sp;
@@ -282,12 +121,18 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   mdtSerialPortCtlThread ctlThd;
 
 #ifdef Q_OS_UNIX
-  QVERIFY(sp.setAttributes("/dev/ttyS0"));
+  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
+  sp.setPortName("/dev/ttyS0");
 #elif defined Q_OS_WIN
-  QVERIFY(sp.setAttributes("COM1"));
+  ///QVERIFY(sp.setAttributes("COM1"));
+  sp.setPortName("COM1");
 #endif
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
   // Setup - We keep default config
-  QVERIFY(sp.open(cfg));
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
+
 
   // Assign sp to the control thread
   ctlThd.setPort(&sp);
@@ -316,15 +161,21 @@ void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
 
   // Setup
 #ifdef Q_OS_UNIX
-  QVERIFY(sp.setAttributes("/dev/ttyS0"));
+  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
+  sp.setPortName("/dev/ttyS0");
 #elif defined Q_OS_WIN
-  QVERIFY(sp.setAttributes("COM1"));
+  ///QVERIFY(sp.setAttributes("COM1"));
+  sp.setPortName("COM1");
 #endif
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
+  // Setup
   cfg.setBaudRate(9600);
   cfg.setDataBitsCount(8);
   cfg.setStopBitsCount(1);
   cfg.setParity(mdtSerialPortConfig::NoParity);
-  QVERIFY(sp.open(cfg));
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   // Assign sp to the control thread and start
   ctlThd.setPort(&sp);
@@ -382,8 +233,13 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Setup
   cfg.setFrameType(mdtFrame::FT_RAW);
   cfg.setReadQueueSize(data.size()+10);    // In raw mode, we don't know how many frames that will be used at read (depend on OS, UART, ...)
-  QVERIFY(sp.setAttributes(portName));
-  QVERIFY(sp.open(cfg));
+  ///QVERIFY(sp.setAttributes(portName));
+  sp.setPortName(portName);
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
+  
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
@@ -435,7 +291,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Setup and open port
   cfg.setBytePerByteWrite(true, 1);
   cfg.setReadQueueSize(data.size()+10); // In RAW mode, each transfered byte will generate a RX frame
-  QVERIFY(sp.open(cfg));
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   // Re-affect threads (so new setup will be read) and start it
   rxThd.setPort(&sp);
@@ -529,8 +386,13 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
   cfg.setReadQueueSize(data.size()+10);
   cfg.setReadTimeout(50);
   cfg.setUseReadTimeoutProtocol(true);
-  QVERIFY(sp.setAttributes(portName));
-  QVERIFY(sp.open(cfg));
+  ///QVERIFY(sp.setAttributes(portName));
+  sp.setPortName(portName);
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
+
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
@@ -631,8 +493,13 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
   cfg.setReadQueueSize(10);
-  QVERIFY(sp.setAttributes(portName));
-  QVERIFY(sp.open(cfg));
+  ///QVERIFY(sp.setAttributes(portName));
+  sp.setPortName(portName);
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
+
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   // Assign sp to the RX thread and start
   rxThd.setPort(&sp);
@@ -683,7 +550,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   // Setup and open port
   cfg.setBytePerByteWrite(true, 1);
   cfg.setReadQueueSize(data.size()+10); // In RAW mode, each transfered byte can use a RX frame
-  QVERIFY(sp.open(cfg));
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
   // Re-affect threads (so new setup will be read) and start it
   rxThd.setPort(&sp);
