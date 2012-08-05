@@ -54,9 +54,12 @@ void mdtPortWriteThread::run()
   mdtFrame *frame = 0;
   qint64 toWrite = 0;
   qint64 written = 0;
- 
-  // Set the running flag
+
   pvPort->lockMutex();
+#ifdef Q_OS_UNIX
+  pvPort->setNativePthreadObject(pthread_self());
+#endif
+  // Set the running flag
   pvRunning = true;
 
   // Run...

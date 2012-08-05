@@ -16,7 +16,7 @@ class mdtSerialPortCtlThread : public mdtPortThread
    *  \pre Serial port instance must be defined. \see mdtSerialPortThread::setDeviceFile()
    */
 #ifdef Q_OS_UNIX
-  void stop();
+  ///void stop();
 #endif
 
  private:

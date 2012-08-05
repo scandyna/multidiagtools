@@ -46,6 +46,17 @@ class mdtSerialPort : public mdtAbstractSerialPort
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
 
+  /*! \brief Abort the waiting functions
+   *
+   * This method is called from main thread (mdtPortThread::stop()),
+   * and cause the system's wait functions to be aborted.
+   * Example are select() or ioctl() on POSIX. On Windows,
+   * the appropriate event of WaitForMultipleObjects() should be set.
+   *
+   * The mutex is not handled by this method.
+   */
+  void abortWaiting();
+
   /*! \brief Set the baud rate
    *
    * The mutex is not handled by this method.
@@ -202,12 +213,12 @@ class mdtSerialPort : public mdtAbstractSerialPort
   void setDtr(bool on);
 
   // Must be called from signal control thread (see mdtSerialPortCtlThread)
-  void defineCtlThread(pthread_t ctlThread);
+  ///void defineCtlThread(pthread_t ctlThread);
 
   // Abort the waitEventCtl() function
   // Note: the thread in witch the waitEventCtl() function
   //       is called must be defined with defineCtlThread() before
-  void abortWaitEventCtl();
+  ///void abortWaitEventCtl();
 
  private:
 
@@ -252,9 +263,9 @@ class mdtSerialPort : public mdtAbstractSerialPort
 
   // Check if configuration could be done on system
   bool checkConfig(mdtSerialPortConfig cfg);
-  
+
   // Used to catch the SIGALRM signal (doese nothing else)
-  static void sigactionHandle(int signum);
+  ///static void sigactionHandle(int signum);
 
   // Set the RTS ON/OFF
   bool setRtsOn();
@@ -268,8 +279,8 @@ class mdtSerialPort : public mdtAbstractSerialPort
   int pvPreviousCtsState;
   int pvPreviousRngState;
   // Members used for control signals thread kill
-  pthread_t pvCtlThread;
-  struct sigaction pvSigaction;
+  ///pthread_t pvCtlThread;
+  ///struct sigaction pvSigaction;
   bool pvAbortingWaitEventCtl;
   int pvFd;                         // Port file descriptor
   struct timeval pvReadTimeout;

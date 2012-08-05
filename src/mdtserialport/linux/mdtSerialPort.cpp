@@ -44,20 +44,29 @@ mdtSerialPort::mdtSerialPort(QObject *parent)
   Q_ASSERT(pvPortLock != 0);
 
   // Control signal thread kill utils
-  pvCtlThread = 0;
+  ///pvCtlThread = 0;
   pvAbortingWaitEventCtl = false;
   // We must catch the SIGALRM signal, else the application process
   // will be killed by pthread_kill()
-  sigemptyset(&(pvSigaction.sa_mask));
-  pvSigaction.sa_flags = 0;
-  pvSigaction.sa_handler = sigactionHandle;
-  sigaction(SIGALRM, &pvSigaction, NULL);
+  ///sigemptyset(&(pvSigaction.sa_mask));
+  ///pvSigaction.sa_flags = 0;
+  ///pvSigaction.sa_handler = sigactionHandle;
+  ///sigaction(SIGALRM, &pvSigaction, NULL);
 }
 
 mdtSerialPort::~mdtSerialPort()
 {
   close();
   delete pvPortLock;
+}
+
+void mdtSerialPort::abortWaiting()
+{
+  Q_ASSERT(pvNativePthreadObject != 0);
+
+  // Set aborting flag and send the signal
+  ///pvAbortingWaitEventCtl = true;
+  pthread_kill(pvNativePthreadObject, SIGALRM);
 }
 
 bool mdtSerialPort::setBaudRate(int rate)
@@ -943,11 +952,14 @@ void mdtSerialPort::setDtr(bool on)
   pvMutex.unlock();
 }
 
+/**
 void mdtSerialPort::defineCtlThread(pthread_t ctlThread)
 {
   pvCtlThread = ctlThread;
 }
+*/
 
+/**
 void mdtSerialPort::abortWaitEventCtl()
 {
   Q_ASSERT(pvCtlThread != 0);
@@ -956,6 +968,7 @@ void mdtSerialPort::abortWaitEventCtl()
   pvAbortingWaitEventCtl = true;
   pthread_kill(pvCtlThread, SIGALRM);
 }
+*/
 
 mdtAbstractPort::error_t mdtSerialPort::pvOpen()
 {
@@ -1323,10 +1336,6 @@ bool mdtSerialPort::checkConfig(mdtSerialPortConfig cfg)
   }
 
   return true;
-}
-
-void mdtSerialPort::sigactionHandle(int/*signum*/)
-{
 }
 
 bool mdtSerialPort::setRtsOn()

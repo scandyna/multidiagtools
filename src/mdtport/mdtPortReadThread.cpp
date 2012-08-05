@@ -79,8 +79,12 @@ void mdtPortReadThread::run()
   qint64 stored = 0;
   qint64 toStore = 0;
 
-  // Set the running flag and get a RX frame
+
   pvPort->lockMutex();
+#ifdef Q_OS_UNIX
+  pvPort->setNativePthreadObject(pthread_self());
+#endif
+  // Set the running flag and get a RX frame
   pvRunning = true;
   frame = getNewFrame();
   if(frame == 0){

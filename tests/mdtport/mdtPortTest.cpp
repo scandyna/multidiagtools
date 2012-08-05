@@ -46,7 +46,6 @@ void mdtPortTest::openCloseTest()
   QVERIFY(file.open());
 
   // Attributes fetch
-  ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.isOpen());
@@ -79,7 +78,6 @@ void mdtPortTest::startStopTest()
   QVERIFY(file.open());
 
   // Setup
-  ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
   port.setConfig(&cfg);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
@@ -111,9 +109,21 @@ void mdtPortTest::startStopTest()
   QVERIFY(wrThd.start());
   QVERIFY(wrThd.isRunning());
   rdThd.stop();
+  QVERIFY(wrThd.isRunning());
   QVERIFY(!rdThd.isRunning());
   wrThd.stop();
   QVERIFY(!wrThd.isRunning());
+
+  // Start threads (sequencial 2)
+  QVERIFY(wrThd.start());
+  QVERIFY(wrThd.isRunning());
+  QVERIFY(rdThd.start());
+  QVERIFY(rdThd.isRunning());
+  wrThd.stop();
+  QVERIFY(!wrThd.isRunning());
+  QVERIFY(rdThd.isRunning());
+  rdThd.stop();
+  QVERIFY(!rdThd.isRunning());
 
   // Multiple start/stop - seq: rd/wr/rd/wr
   qsrand(QDateTime::currentDateTime ().toTime_t ());
@@ -125,6 +135,7 @@ void mdtPortTest::startStopTest()
     QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
     rdThd.stop();
     QVERIFY(!rdThd.isRunning());
+    QVERIFY(wrThd.isRunning());
     wrThd.stop();
     QVERIFY(!wrThd.isRunning());
   }

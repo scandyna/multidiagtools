@@ -34,6 +34,7 @@ mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
 {
 }
 
+/**
 #ifdef Q_OS_UNIX
 void mdtSerialPortCtlThread::stop()
 {
@@ -48,7 +49,8 @@ void mdtSerialPortCtlThread::stop()
   // Unset the running flag and kill ioctl() wait function
   port->lockMutex();
   pvRunning = false;
-  port->abortWaitEventCtl();
+  ///port->abortWaitEventCtl();
+  port->abortWaiting();
   port->unlockMutex();
 
   // Wait the end of the thread
@@ -58,6 +60,7 @@ void mdtSerialPortCtlThread::stop()
   }
 }
 #endif
+*/
 
 void mdtSerialPortCtlThread::run()
 {
@@ -68,7 +71,8 @@ void mdtSerialPortCtlThread::run()
   Q_ASSERT(port != 0);
 
 #ifdef Q_OS_UNIX
-  port->defineCtlThread(pthread_self());
+  ///port->defineCtlThread(pthread_self());
+  port->setNativePthreadObject(pthread_self());
 #endif
 
   // Set the running flag

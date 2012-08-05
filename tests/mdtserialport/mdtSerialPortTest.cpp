@@ -71,13 +71,13 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
+  mdtPortReadThread rThd;
+  mdtPortWriteThread wThd;
   mdtSerialPortCtlThread ctlThd;
 
 #ifdef Q_OS_UNIX
-  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
   sp.setPortName("/dev/ttyS0");
 #elif defined Q_OS_WIN
-  ///QVERIFY(sp.setAttributes("COM1"));
   sp.setPortName("COM1");
 #endif
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
@@ -86,13 +86,43 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   sp.setConfig(&cfg);
   QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
-
-  // Assign sp to the control thread
+  // Assign sp to threads
+  rThd.setPort(&sp);
+  wThd.setPort(&sp);
   ctlThd.setPort(&sp);
 
-  // Start control thread
+  // Chack initial states
+  QVERIFY(!rThd.isRunning());
+  QVERIFY(!wThd.isRunning());
+  QVERIFY(!ctlThd.isRunning());
+
+  // Start read and write threads and check states
+  QVERIFY(rThd.start());
+  QVERIFY(wThd.start());
+  QVERIFY(rThd.isRunning());
+  QVERIFY(wThd.isRunning());
+  QVERIFY(!ctlThd.isRunning());
+
+  // Start control thread and check states
   QVERIFY(ctlThd.start());
+  QVERIFY(ctlThd.isRunning());
+  QVERIFY(rThd.isRunning());
+  QVERIFY(wThd.isRunning());
+
+  // Stop control thread and check that other still running
   ctlThd.stop();
+  QVERIFY(!ctlThd.isRunning());
+  QVERIFY(rThd.isRunning());
+  QVERIFY(wThd.isRunning());
+
+  // Stop all and check states
+  rThd.stop();
+  wThd.stop();
+  QVERIFY(!rThd.isRunning());
+  QVERIFY(!wThd.isRunning());
+  QVERIFY(!ctlThd.isRunning());
+
+  // Check several times start/stop of control thread
   QVERIFY(!ctlThd.isRunning());
   qsrand(QDateTime::currentDateTime ().toTime_t ());
   for(int i=0; i<10; i++){
@@ -165,6 +195,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   mdtSerialPortConfig cfg;
   mdtPortReadThread rxThd;
   mdtPortWriteThread txThd;
+  mdtSerialPortCtlThread ctlThd;
   mdtFrame *frame;
   QByteArray portName;
   QByteArray rxData;
@@ -202,6 +233,10 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   txThd.setPort(&sp);
   QVERIFY(txThd.start());
   QVERIFY(txThd.isRunning());
+  // Assign sp to control thread and start
+  ctlThd.setPort(&sp);
+  QVERIFY(ctlThd.start());
+  QVERIFY(ctlThd.isRunning());
 
   // Get a frame
   sp.lockMutex();
@@ -219,6 +254,14 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
 
   // Wait some time and verify that data was transfered
   QTest::qWait(3*data.size()+100);
+
+  // Stop control thread, and be shure that other can continue
+  // This is to check the port's stop system (with signal on Posix, and waitForMultipleObjects on Windows)
+  ctlThd.stop();
+  QVERIFY(!ctlThd.isRunning());
+  QVERIFY(txThd.isRunning());
+  QVERIFY(rxThd.isRunning());
+
   sp.lockMutex();
   // We don't know how many frames that were used, so cat all together, and check the result.
   rxData = "";
@@ -232,7 +275,6 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
     sp.readFramesPool().enqueue(frame);
   }
   sp.unlockMutex();
-  qDebug() << "TEST, RX: " << rxData << " , ref: " << data;
   QVERIFY(rxData == data);
 
   // Stop threads and close port

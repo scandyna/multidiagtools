@@ -50,6 +50,7 @@ void mdtTcpSocketThread::stop()
   Q_ASSERT(socket != 0);
   pvPort->unlockMutex();
   socket->beginNewTransaction();
+  /// pvPort->abortWaiting();
 
   // Wait the end of the thread
   while(!isFinished()){
@@ -262,6 +263,9 @@ void mdtTcpSocketThread::run()
   mdtTcpSocket *socket;
 
   pvPort->lockMutex();
+#ifdef Q_OS_UNIX
+  pvPort->setNativePthreadObject(pthread_self());
+#endif
   // Init write frame
   pvWriteCurrentFrame = 0;
   // Get a RX frame

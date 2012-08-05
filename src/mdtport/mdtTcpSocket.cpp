@@ -35,7 +35,16 @@ mdtTcpSocket::mdtTcpSocket(QObject *parent)
 
 mdtTcpSocket::~mdtTcpSocket()
 {
-  ///close();
+  close();
+}
+
+void mdtTcpSocket::abortWaiting()
+{
+  Q_ASSERT(pvNativePthreadObject != 0);
+
+  // Set aborting flag and send the signal
+  ///pvAbortingWaitEventCtl = true;
+  pthread_kill(pvNativePthreadObject, SIGALRM);
 }
 
 void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)

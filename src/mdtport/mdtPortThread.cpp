@@ -92,6 +92,7 @@ void mdtPortThread::stop()
   pvPort->lockMutex();
   pvRunning = false;
   pvPort->unlockMutex();
+  pvPort->abortWaiting();
 
   // Wait the end of the thread
   while(!isFinished()){

@@ -39,6 +39,17 @@ class mdtTcpSocket : public mdtAbstractPort
   mdtTcpSocket(QObject *parent = 0);
   ~mdtTcpSocket();
 
+  /*! \brief Abort the waiting functions
+   *
+   * This method is called from main thread (mdtPortThread::stop()),
+   * and cause the system's wait functions to be aborted.
+   * Example are select() or ioctl() on POSIX. On Windows,
+   * the appropriate event of WaitForMultipleObjects() should be set.
+   *
+   * The mutex is not handled by this method.
+   */
+  void abortWaiting();
+
   /*! \brief Connect to host
    * 
    * Use this method to start a connection to a host.<br>

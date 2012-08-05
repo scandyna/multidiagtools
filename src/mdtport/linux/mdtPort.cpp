@@ -26,6 +26,8 @@
 #include <sys/ioctl.h>
 #include <errno.h>
 #include <string.h>
+#include <pthread.h>
+#include <signal.h>
 
 #include <QDebug>
 
@@ -43,6 +45,15 @@ mdtPort::~mdtPort()
   close();
   delete pvPortLock;
   qDebug() << "mdtPort::~mdtPort() END";
+}
+
+void mdtPort::abortWaiting()
+{
+  Q_ASSERT(pvNativePthreadObject != 0);
+
+  // Set aborting flag and send the signal
+  ///pvAbortingWaitEventCtl = true;
+  pthread_kill(pvNativePthreadObject, SIGALRM);
 }
 
 void mdtPort::setReadTimeout(int timeout)

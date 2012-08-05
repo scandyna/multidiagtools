@@ -30,6 +30,11 @@
 #include <QQueue>
 #include <QMutex>
 
+#ifdef Q_OS_UNIX
+ #include <pthread.h>
+ #include <signal.h>
+#endif
+
 class mdtPortThread;
 
 /*! \brief Base class for port I/O
@@ -112,6 +117,40 @@ class mdtAbstractPort : public QObject
    */
   virtual void close();
 
+  /*! \brief Abort the waiting functions
+   *
+   * This method is called from main thread (mdtPortThread::stop()),
+   * and cause the system's wait functions to be aborted.
+   * Example are select() or ioctl() on POSIX. On Windows,
+   * the appropriate event of WaitForMultipleObjects() should be set.
+   *
+   * The mutex is not handled by this method.
+   *
+   * Subclass notes:<br>
+   * This method must be implement in subclass,
+   * and use the system's native way to abort blocking system calls.
+   * On POSIX, the pthread_kill() can be used with SIGALRM. The pvNativePthreadObject must be used.<br>
+   * On Windows, the WaitForMultipleObjects() seems to be a good aproach.
+   */
+  virtual void abortWaiting() = 0;
+
+#ifdef Q_OS_UNIX
+  /*! \brief Set the internal pthrad_t object (POSIX only)
+   *
+   * This method is called from a thread (subclass of mdtPortThread)
+   *  to set the pthread_t instance.
+   *
+   * The mutex is not handled by this method.
+   */
+  void setNativePthreadObject(pthread_t thread);
+
+  /*! \brief Handle function for sigaction
+   *
+   * This default implementation does nothing.
+   */
+  static void sigactionHandle(int signum);
+#endif
+
   /*! \brief Set configuration
    */
   void setConfig(mdtPortConfig *cfg);
@@ -178,9 +217,6 @@ class mdtAbstractPort : public QObject
    * \sa mdtTcpSocketThread
    */
   virtual bool waitForReadyRead() = 0;
-
-  /// NOTE: \todo Comment, check, implement, remove this dummy implementation, move to pure virtual
-  virtual bool waitForReadyRead(mdtPortThread *thread);
 
   /*! \brief Wait until data is available on port.
    *
@@ -450,7 +486,6 @@ class mdtAbstractPort : public QObject
    */
   virtual error_t pvSetup() = 0;
 
-
   bool pvReadTimeoutOccured;
   bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
@@ -466,6 +501,16 @@ class mdtAbstractPort : public QObject
   QString pvPortName;     // Port name, like /dev/ttyS0 , COM1, ...
   // mutex
   QMutex pvMutex;
+#ifdef Q_OS_UNIX
+  /*! \brief pthread_t instance (POSIX only)
+   *
+   * Use this object in abortWaiting() to send signal with pthread_kill().
+   */
+  pthread_t pvNativePthreadObject;
+
+  // Internal sigaction
+  struct sigaction pvSigaction;
+#endif
 
  private:
 
