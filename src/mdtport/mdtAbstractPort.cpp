@@ -39,7 +39,8 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
 
 mdtAbstractPort::~mdtAbstractPort()
 {
-  close();
+  qDebug() << "mdtAbstractPort::~mdtAbstractPort() ...";
+  qDebug() << "mdtAbstractPort::~mdtAbstractPort() END";
 }
 
 void mdtAbstractPort::setPortName(const QString &portName)
@@ -72,17 +73,6 @@ mdtAbstractPort::error_t mdtAbstractPort::open()
 
   return err;
 }
-
-/**
-bool mdtAbstractPort::open(mdtPortConfig &cfg)
-{
-  ///}
-  pvConfig = &cfg;
-  pvIsOpen = true;
-  unlockMutex();
-  return true;
-}
-*/
 
 void mdtAbstractPort::close()
 {
@@ -129,7 +119,6 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
     }
   }
   // Call setup
-  ///pvConfig = &cfg;
   err = pvSetup();
   if(err != NoError){
     close();
@@ -140,6 +129,13 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
 
   return NoError;
 }
+
+/// NOTE: dummy method, to remove !!
+bool mdtAbstractPort::waitForReadyRead(mdtPortThread *thread)
+{
+  return false;
+}
+
 
 bool mdtAbstractPort::waitForReadyRead(int msecs)
 {
@@ -214,6 +210,7 @@ void mdtAbstractPort::initQueues()
   mdtFrame *frame;
 
   // Create the read frames pools with requested type
+  qDebug() << "mdtAbstractPort::initQueues() , n: " << config().readQueueSize() << " , fsize: " << config().readFrameSize();
   for(int i=0; i<config().readQueueSize(); i++){
     switch(config().frameType()){
       // Raw (binary) frame

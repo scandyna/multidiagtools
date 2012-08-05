@@ -23,41 +23,8 @@
 #include <QStringList>
 #include "mdtApplication.h"
 #include "linux/mdtUsbtmcPort.h"
-#include "linux/mdtUsbtmcPortManager.h"
 
 #include <QDebug>
-
-void mdtUsbTmcPortTest::portManagerTest()
-{
-  mdtUsbtmcPortManager m;
-  QStringList ports;
-
-  qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
-
-  // Find attached devices
-  ports = m.scan();
-  QVERIFY(ports.size() > 0);
-
-  // Init port manager
-  QVERIFY(m.setPortName(ports.at(0)));
-  QVERIFY(m.openPort());
-
-  // start threads
-  QVERIFY(m.start());
-
-  // Query without answer
-  QVERIFY(m.writeData("*CLS\n", false));
-
-  // Try to query device
-  for(int i=0; i<5; i++){
-    // Send a command
-    QVERIFY(m.writeData("*IDN?\n", true));
-    // Wait and read answer
-    QVERIFY(m.lastReadenFrame().size() <= 0);
-    QVERIFY(m.waitReadenFrame());
-    QVERIFY(m.lastReadenFrame().size() > 0);
-  }
-}
 
 int main(int argc, char **argv)
 {

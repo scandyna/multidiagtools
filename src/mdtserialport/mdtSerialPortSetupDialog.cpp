@@ -151,8 +151,15 @@ void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
     cbPort->setEnabled(true);
     return;
   }
+  if(!pvPortManager->openPort()){
+    setStateError(tr("Cannot fetch port attributes"));
+    cbPort->setEnabled(true);
+    return;
+  }
   // List available baud rates
   pvSerialPortConfigWidget->setAvailableBaudRates(pvPortManager->port().availableBaudRates());
+  // Close port
+  pvPortManager->closePort();
   // Display configuration
   displayConfig();
   cbPort->setEnabled(true);

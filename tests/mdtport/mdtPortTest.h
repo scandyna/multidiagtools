@@ -29,11 +29,6 @@ class mdtPortTest : public mdtTest
 
  private slots:
 
-  // Port lock test
-#ifdef Q_OS_UNIX
-  void portLockTest();
-#endif
-
   // Open/Close and check state
   void openCloseTest();
 
@@ -57,9 +52,6 @@ class mdtPortTest : public mdtTest
 
   // Check that recovery works whenn a frame pool was empty for some time
   void emptyQueueRecoveryTest();
-
-  // Test port manager
-  void portManagerTest();
 };
 
 #endif  // #ifndef MDT_PORT_TEST_H

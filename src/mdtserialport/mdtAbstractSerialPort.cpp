@@ -42,15 +42,6 @@ mdtAbstractSerialPort::~mdtAbstractSerialPort()
 {
 }
 
-/**
-bool mdtAbstractSerialPort::open(mdtSerialPortConfig &cfg)
-{
-  mapUartType();
-
-  return mdtAbstractPort::open(cfg);
-}
-*/
-
 void mdtAbstractSerialPort::close()
 {
   qDebug() << "mdtAbstractSerialPort::close()";

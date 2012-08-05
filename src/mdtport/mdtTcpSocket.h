@@ -39,19 +39,6 @@ class mdtTcpSocket : public mdtAbstractPort
   mdtTcpSocket(QObject *parent = 0);
   ~mdtTcpSocket();
 
-  // Implementation of mdtAbstractPort
-  ///bool setAttributes(const QString &portName);
-
-  /*! \brief Implemeted for conformity with mdtAbstractPort, does nothing.
-   */
-  error_t tryOpen();
-
-  // Implementation of mdtAbstractPort - Locks the mutex
-  ///bool open(mdtPortConfig &cfg);
-
-  // Implementation of mdtAbstractPort - Locks the mutex
-  ///void close();
-
   /*! \brief Connect to host
    * 
    * Use this method to start a connection to a host.<br>

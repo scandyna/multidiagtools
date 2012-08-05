@@ -32,6 +32,7 @@ mdtPortLock::mdtPortLock()
   // Find lock directories
   scanForLockDirectories();
   pvIsLocked = false;
+  pvIsLockedByAnother = false;
   pvFd = -1;
 }
 
@@ -43,18 +44,27 @@ mdtPortLock::~mdtPortLock()
 int mdtPortLock::openLocked(const QString & portName, int flags)
 {
   int i;
+  int err;
+
+  // If this method is called second time without unlocking port before, it''sa error
+  if(pvIsLocked){
+    mdtError e(MDT_PORT_IO_ERROR , "Port " + pvPort.absoluteFilePath() + " is allready locked by this instance, please unlock it first", mdtError::Info);
+    MDT_ERROR_SET_SRC(e, "mdtPortLock");
+    e.commit();
+    return -1;
+  }
 
   pvPort.setFile(portName);
+  pvIsLockedByAnother = false;
 
   // Search about lock files
   buildLockFilesList();
   for(i=0; i<pvLockfiles.size(); i++){
     if(pvLockfiles.at(i).exists()){
-      mdtError e(MDT_PORT_IO_ERROR , "Port " + pvPort.absoluteFilePath() + " is locked (Lockfile" + pvLockfiles.at(i).filePath() + " exists)", mdtError::Error);
+      mdtError e(MDT_PORT_IO_ERROR , "Port " + pvPort.absoluteFilePath() + " is allready locked (Lockfile" + pvLockfiles.at(i).filePath() + " exists)", mdtError::Info);
       MDT_ERROR_SET_SRC(e, "mdtPortLock");
       e.commit();
-      /// NOTE: \todo Flag pvIsLocked : could be locked by another (other process, or other thread in this process), true seems not to be correct here !
-      pvIsLocked = true;
+      pvIsLockedByAnother = true;
       return -1;
     }
   }
@@ -67,12 +77,13 @@ int mdtPortLock::openLocked(const QString & portName, int flags)
   // Try to open the port
   pvFd = ::open(pvPort.absoluteFilePath().toStdString().c_str(), flags);
   if(pvFd < 0){
+    err = errno;
     mdtError e(MDT_PORT_IO_ERROR, "Unable to open " + pvPort.absoluteFilePath(), mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
+    e.setSystemError(err, strerror(err));
     MDT_ERROR_SET_SRC(e, "mdtPortLock");
     e.commit();
     removeLockFiles();
-    /// NOTE: \todo Flag pvIsLocked ?
+    errno = err;
     return -1;
   }
   // Lock the port
@@ -81,18 +92,20 @@ int mdtPortLock::openLocked(const QString & portName, int flags)
   pvLock.l_start = 0;
   pvLock.l_len = 0;
   if(fcntl(pvFd, F_SETLK, &pvLock) < 0){
+    err =errno;
     mdtError e(MDT_PORT_IO_ERROR, "Unable to lock " + pvPort.absoluteFilePath(), mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
+    e.setSystemError(err, strerror(err));
     MDT_ERROR_SET_SRC(e, "mdtPortLock");
     e.commit();
     removeLockFiles();
     ::close(pvFd);
     pvFd = -1;
-    /// NOTE: \todo Flag pvIsLocked ?
+    errno = err;
     return -1;
   }
   // Ok, port is open and locked here
   pvIsLocked = true;
+  pvIsLockedByAnother = false;
 
   return pvFd;
 }
@@ -118,7 +131,7 @@ bool mdtPortLock::isLocked()
 
 bool mdtPortLock::isLockedByAnother()
 {
-  return pvIsLocked && (pvFd < 0);
+  return pvIsLockedByAnother;
 }
 
 void mdtPortLock::scanForLockDirectories()

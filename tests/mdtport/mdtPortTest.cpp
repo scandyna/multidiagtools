@@ -33,45 +33,6 @@
 
 //#include <QDebug>
 
-#ifdef Q_OS_UNIX
-  #include "linux/mdtPortLock.h"
-#endif
-
-#ifdef Q_OS_UNIX
-void mdtPortTest::portLockTest()
-{
-  mdtPortLock lck, lck2;
-  int fd;
-
-  // Initial states
-  QVERIFY(!lck.isLocked());
-  QVERIFY(!lck2.isLocked());
-
-  // Try to open a file
-  fd = lck.openLocked("/dev/ttyS0" , O_RDWR | O_NONBLOCK);
-  QVERIFY(fd >= 0);
-  QVERIFY(lck.isLocked());
-  // Try to reopen locked file with same object
-  QVERIFY(lck.openLocked("/dev/ttyS0", O_RDWR | O_NONBLOCK) < 0);
-  QVERIFY(lck.isLocked());
-
-  // Try to open with second object
-  QVERIFY(lck2.openLocked("/dev/ttyS0", O_RDWR | O_NONBLOCK) < 0);
-  QVERIFY(lck2.isLocked());
-
-  // Free first lock
-  lck.unlock();
-  QVERIFY(!lck.isLocked());
-  close(fd);
-
-  // Try to open with second object
-  fd = lck2.openLocked("/dev/ttyS0", O_RDWR | O_NONBLOCK);
-  QVERIFY(fd >= 0);
-  QVERIFY(lck2.isLocked());
-  
-}
-#endif  // #ifdef Q_OS_UNIX
-
 void mdtPortTest::openCloseTest()
 {
   mdtPort port;
@@ -98,18 +59,12 @@ void mdtPortTest::openCloseTest()
   port.close();
   QVERIFY(!port.isOpen());
 
-  // Open read only
-  /**
-  cfg.setReadOnly(true);
-  QVERIFY(port.open(cfg));
+  /*
+   * Closing by destructor: must not crash
+   */
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(port.isOpen());
-  */
-
-  // Close
-  /**
-  port.close();
-  QVERIFY(!port.isOpen());
-  */
+  qDebug() << "Test END";
 }
 
 void mdtPortTest::startStopTest()
@@ -895,78 +850,6 @@ void mdtPortTest::emptyQueueRecoveryTest()
   port.unlockMutex();
 }
 
-void mdtPortTest::portManagerTest()
-{
-  mdtPortManager m, m2;
-  QTemporaryFile file;
-  mdtPortConfig *cfg, *cfg2;
-  mdtPort *port, *port2;
-
-  // Create a temporary file
-  QVERIFY(file.open());
-  file.close();
-
-  // Port setup
-  cfg = new mdtPortConfig;
-  cfg->setFrameType(mdtFrame::FT_ASCII);
-  port = new mdtPort;
-  port->setConfig(cfg);
-
-  // Init port manager
-  m.setPort(port);
-  QVERIFY(m.setPortName(file.fileName()));
-  QVERIFY(m.openPort());
-
-  // start threads
-  QVERIFY(m.start());
-  QVERIFY(m.isRunning());
-
-  // Check the wait function without available data
-  QVERIFY(!m.waitReadenFrame());
-
-  // Send some data
-  QVERIFY(m.writeData("Test\n"));
-
-  // We must re-open the file, else nothing will be readen
-  QTest::qWait(100);
-  m.closePort();
-  QVERIFY(m.openPort());
-  QVERIFY(m.start());
-  // Get readen data
-  QVERIFY(m.waitReadenFrame());
-  QVERIFY(m.lastReadenFrame() == "Test");
-
-  // Setup a second port manager
-  // Port setup
-  cfg2 = new mdtPortConfig;
-  port2 = new mdtPort;
-  port2->setConfig(cfg2);
-  m2.setPort(port2);
-
-  // Setup same port than first manager, open must fail
-  QVERIFY(m2.setPortName(file.fileName()));
-  QVERIFY(!m2.openPort());
-
-  // In read only, port must be open
-  ///m2.config().setReadOnly(true);
-  ///QVERIFY(m2.openPort());
-
-  // Chack that start and running flag works
-  ///QVERIFY(m2.start());
-  ///QVERIFY(m2.isRunning());
-
-  qDebug() << "About to close ...";
-  m.closePort();
-  ///m2.closePort();
-  qDebug() << "About to delete port ...";
-  delete port;
-  delete cfg;
-  qDebug() << "About to delete port2 ...";
-  delete port2;
-  qDebug() << "About to delete cfg2 ...";
-  delete cfg2;
-  qDebug() << "End";
-}
 
 int main(int argc, char **argv)
 {

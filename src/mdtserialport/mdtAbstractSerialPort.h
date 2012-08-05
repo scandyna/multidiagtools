@@ -28,6 +28,8 @@
 #include <QQueue>
 #include <QList>
 
+class mdtPortThread;
+
 /// NOTE: \todo Comment this class
 /*! \brief Interface class for serial port
  *
@@ -66,42 +68,11 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   mdtAbstractSerialPort(QObject *parent = 0);
   virtual ~mdtAbstractSerialPort();
 
-  /*! \brief Open the serial port specified with setPortName()
-   *
-   * Subclass notes:<br>
-   * This method must be re-implemented in subclass.<br>
-   * To handle the port correctly, the subclass method must:
-   *  - Close previous opened serial port \todo specify how to close it.
-   *  - Lock the mutex with lockMutex()
-   *  - Do the specific work
-   *  - Set the read/write timeouts. See the mdtSerialPortConfig to know how to get these timeouts.
-   *  - Call this open method (with mdtAbstractSerialPort::open() ).
-   * At this last step, the mdtAbstractPort::open() method will be called.
-   *
-   * \return True on successfull configuration and open port
-   *
-   * \sa mdtSerialPortConfig
-   * \sa mdtAbstractPort::open()
-   */
-  ///virtual bool open(mdtSerialPortConfig &cfg);
-
   /*! \brief Close the serial port
    *
    * Close serial port and clear flags (f.ex. UART Type is set to unknow).
    *
    * The mutex is not handled by this method.
-   *
-   * Subclass notes:<br>
-   * This method must be re-implemented in subclass.<br>
-   * To handle the port correctly, the subclass method must:
-   *  - Check if port is open with isOpen() , if false, simply return.
-   *  - Restore original settings (f.ex. termios struct on Posix)
-   *  - Unlock and close the port
-   *  - Call this close method (with mdtAbstractSerialPort::close() ).
-   * At this last step, the UART type wil be set to unknown type, available baud rates
-   *  list cleared. Then, the mdtAbstractPort::close() method will be called.
-   *
-   * \sa mdtAbstractPort::close()
    */
   void close();
 
@@ -298,11 +269,22 @@ class mdtAbstractSerialPort : public mdtAbstractPort
 
   /*! \brief Wait until a control (modem line) signal state changes
    *
-   * This method must be re-implemented in plateform specific subclass.
+   * This method is called from mdtSerialPortCtlThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   *
+   * Subclass notes:<br>
+   * This method must be re-implemented in plateform specific subclass.<br>
+   * To handle port correctly, a sequence should be something like:<br>
+   *  - Do some needed calls/init
+   *  - Unlock the mutex
+   *  - Enable thread's canclel state with setCancelStateEnabled()
+   *  - Call system's wait function
+   *  - Diseable thread's canclel state with setCancelStateEnabled()
+   *  - Lock the mutext again
    *
    * \return False on error, in this case, the thread will be stopped.
    */
-  virtual bool waitEventCtl() = 0;
+  virtual bool waitEventCtl(/*mdtPortThread *thread*/) = 0;
 
   /// NOTE: \todo Update name to : updateCtlStates ?
   /*! \brief Get the control (modem line) signal states and update member flags
@@ -341,7 +323,8 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   /*! \brief Enable/diseable the RTS (Request To Send) signal
    *
    * This method must be re-implemented in plateform specific subclass.<br>
-   * If port is not open, this method must make no system call.<br>
+   * If port is not open, this method must make no system call.
+   *
    * The mutex is handled in this method.
    *
    * \param on If true, RTS will be enabled, diseabled else
@@ -351,7 +334,8 @@ class mdtAbstractSerialPort : public mdtAbstractPort
   /*! \brief Enable/diseable the DTR (Data Terminal Ready) signal
    *
    * This method must be re-implemented in plateform specific subclass.<br>
-   * If port is not open, this method must make no system call.<br>
+   * If port is not open, this method must make no system call.
+   *
    * The mutex is handled in this method.
    *
    * \param on If true, DTR will be enabled, diseabled else

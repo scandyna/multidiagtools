@@ -39,28 +39,6 @@ class mdtPort : public mdtAbstractPort
   mdtPort(QObject *parent = 0);
   ~mdtPort();
 
-  // Implemtation of mdtAbstractPort
-  ///bool setAttributes(const QString &portName);
-
-  /*! \brief Try to open port.
-   *
-   * Try to open port set by setPortName().
-   * This can be usefull to enumerate real available ports on system.
-   * If port can be open successfull, NoError code is returned, and port is closed again.
-   * \pre The port must not be open whenn calling this method.
-   */
-  ///error_t tryOpen();
-
-  /*! \brief Open the port
-   *
-   * Open port given by setPortName() and init read/write queues.
-   */
-  ///bool open(mdtPortConfig &cfg);
-
-  /*! \brief Close the port
-   */
-  ///void close();
-
   /*! \brief Set the read data timeout
    */
   void setReadTimeout(int timeout);

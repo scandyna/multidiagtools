@@ -38,7 +38,8 @@ mdtPortManager::~mdtPortManager()
 {
   qDebug() << "mdtPortManager::~mdtPortManager() ...";
   // Stop threads and close the port
-  closePort();
+  ///closePort();
+  detachPort();
   qDebug() << "mdtPortManager::~mdtPortManager() port closed";
   // Release memory
   if(pvReadThread != 0){
@@ -71,9 +72,20 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
   connect(pvReadThread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
   Q_ASSERT(pvWriteThread != 0);
   pvWriteThread->setPort(pvPort);
-  // Connect thraed's error signals
+  // Connect thread's error signals
   connect(pvReadThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
   connect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+}
+
+void mdtPortManager::detachPort()
+{
+  Q_ASSERT(pvPort != 0);
+
+  if(isRunning()){
+    stop();
+  }
+  /// NOTE: disconnect ?
+  pvPort = 0;
 }
 
 bool mdtPortManager::setPortName(const QString &portName)
@@ -128,11 +140,9 @@ bool mdtPortManager::openPort()
 void mdtPortManager::closePort()
 {
   // It can happen that port was never set
-  /**
   if(pvPort == 0){
     return;
   }
-  */
   // If threads exists, call stop methods
   if(pvReadThread != 0){
     stopReading();
@@ -142,7 +152,7 @@ void mdtPortManager::closePort()
   }
   stop();
   // Close the port
-  ///pvPort->close();
+  pvPort->close();
 }
 
 bool mdtPortManager::startReading()

@@ -45,38 +45,6 @@ class mdtUsbtmcPort : public mdtAbstractPort
   mdtUsbtmcPort(QObject *parent = 0);
   ~mdtUsbtmcPort();
 
-  // Implemtation of mdtAbstractPort
-  ///bool setAttributes(const QString &portName);
-
-  /*! \brief Try to open port.
-   *
-   * Try to open port set by setPortName().
-   * This can be usefull to enumerate real available ports on system.
-   * If port can be open successfull, NoError code is returned, and port is closed again.
-   * \pre The port must not be open whenn calling this method.
-   *
-   * Subclass notes:<br>
-   * This method must be implemented in subclass.
-   * To handle the port correctly, the subclass method must:
-   *  - Call the appropriate open function
-   *  - Return the correct error code on failure (see the error_t enum)
-   *  - Be sure that the port is closed again before return.
-   *  - The mdtError system should be used to keep trace in logfile.
-   */
-  ///error_t tryOpen();
-
-  /*! \brief Open the port
-   *
-   * NOTE: \todo change return type: replace with error_t type.
-   *
-   * Open port given by setPortName() and init read/write queues.
-   */
-  ///bool open(mdtPortConfig &cfg);
-
-  /*! \brief Close the port
-   */
-  ///void close();
-
   /*! \brief Set the read data timeout
    */
   void setReadTimeout(int timeout);

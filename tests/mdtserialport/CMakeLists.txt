@@ -7,8 +7,8 @@ project (multidiagtools)
 
 
 # Target mdtSerialPortTest
-QT4_WRAP_CPP (MOC_HEADERS mdtSerialPortTest.h)
-add_executable (mdtserialporttest mdtSerialPortTest.cpp ${MOC_HEADERS})
+QT4_WRAP_CPP (MDT_SERIAL_PORT_TEST_HEADER mdtSerialPortTest.h)
+add_executable (mdtserialporttest mdtSerialPortTest.cpp ${MDT_SERIAL_PORT_TEST_HEADER})
 target_link_libraries(mdtserialporttest "mdtutils")
 target_link_libraries(mdtserialporttest "mdtport")
 target_link_libraries(mdtserialporttest "mdtserialport")
@@ -23,3 +23,12 @@ target_link_libraries(mdtserialportconfigtest "mdtport")
 target_link_libraries(mdtserialportconfigtest "mdtserialport")
 target_link_libraries(mdtserialportconfigtest "mdttest")
 target_link_libraries(mdtserialportconfigtest ${QT_LIBRARIES})
+
+# Target mdtSerialPortManagerTest
+QT4_WRAP_CPP (MDT_SERIAL_PORT_MANAGER_TEST_HEADER mdtSerialPortManagerTest.h)
+add_executable (mdtserialportmanagertest mdtSerialPortManagerTest.cpp ${MDT_SERIAL_PORT_MANAGER_TEST_HEADER})
+target_link_libraries(mdtserialportmanagertest "mdtutils")
+target_link_libraries(mdtserialportmanagertest "mdtport")
+target_link_libraries(mdtserialportmanagertest "mdtserialport")
+target_link_libraries(mdtserialportmanagertest "mdttest")
+target_link_libraries(mdtserialportmanagertest ${QT_LIBRARIES})

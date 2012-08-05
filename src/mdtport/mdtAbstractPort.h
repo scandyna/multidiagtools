@@ -24,14 +24,13 @@
 #include "mdtFrame.h"
 #include "mdtFrameModbusTcp.h"
 #include "mdtFrameAscii.h"
-
 #include "mdtPortConfig.h"
 #include <QObject>
 #include <QString>
 #include <QQueue>
 #include <QMutex>
 
-/// NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)
+class mdtPortThread;
 
 /*! \brief Base class for port I/O
  */
@@ -55,6 +54,15 @@ class mdtAbstractPort : public QObject
                };
 
   mdtAbstractPort(QObject *parent = 0);
+
+  /*! \brief Destructor
+   *
+   * Subclass notes:<br>
+   * This destructor cannot call the close() method,
+   *  because this will call the pvClose() from destructed
+   *  inherited object.
+   * So, the subclass must call close() in its own destructor.
+   */
   virtual ~mdtAbstractPort();
 
   /*! \brief Set the port name
@@ -68,34 +76,6 @@ class mdtAbstractPort : public QObject
   /*! \brief Get port name
    */
   QString &portName();
-
-  /// TODO: \todo activate and implement in all subclasses.
-  /*! \brief Try to open port.
-   *
-   * Try to open port set by setPortName().
-   * This can be usefull to enumerate real available ports on system.
-   * If port can be open successfull, NoError code is returned, and port is closed again.
-   * Note that the mutex is not handled in this method.
-   * \pre The port must not be open whenn calling this method.
-   *
-   * Subclass notes:<br>
-   * This method must be implemented in subclass.
-   * To handle the port correctly, the subclass method must:
-   *  - Call the appropriate open function
-   *  - Return the correct error code on failure (see the error_t enum)
-   *  - Be sure that the port is closed again before return.
-   *  - The mdtError system should be used (on error) to keep trace in logfile.
-   */
-  ///virtual error_t tryOpen() = 0;
-
-  /* \brief Set the port attributes
-   * 
-   * Open the given port name and get his attributes.<br>
-   * This method must be re-implemented in subclass.
-   * The implementation must close the port after use, and not use mdtAbstractPort open() and close().
-   * \param portName Name of the port to open (f.ex: /dev/ttyS0 , COM1, ...)
-   */
-  //virtual bool setAttributes(const QString &portName) = 0;
 
   /*! \brief Open the port given by setPortName()
    *
@@ -112,27 +92,6 @@ class mdtAbstractPort : public QObject
    */
   error_t open();
 
-  /*! \brief Open the port
-   *
-   * NOTE: \todo change return type: replace with error_t type.
-   *
-   * Open port given by setPortName() and init read/write queues.
-   *
-   * Subclass notes:<br>
-   * This method must be re-implemented in subclass.<br>
-   * To handle the port correctly, the subclass method must:
-   *  - Close previous opened ressource
-   *  - Lock the mutex with lockMutex()
-   *  - Do the specific work. Note that port must be open in exclusive mode. On Linux, the mdtPortLock should be used for this.
-   *  - Set the read/write timeouts. See the mdtPortConfig to know how to get these timeouts.
-   *  - Call this open method (with mdtAbstractPort::open() ).
-   * At this last step, the queues will be initialized, mutex unocked and open flag updated.
-   *
-   * \return True on successfull configuration and open port
-   * \sa mdtPortConfig
-   */
-  ///virtual bool open(mdtPortConfig &cfg);
-
   /*! \brief Get port's open state
    */
   bool isOpen() const;
@@ -145,7 +104,10 @@ class mdtAbstractPort : public QObject
    *
    * Subclass notes:<br>
    * Internally, this method calls pvClose(). Once done,
-   *  the flags are updated
+   *  the flags are updated.
+   * Note that this method must be called from subclass destructor.
+   *  See ~mdtAbstractPort() for details.
+   *
    * \todo Actuellement, les queues sont deletée ici, que faire ?
    */
   virtual void close();
@@ -174,20 +136,26 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Set the read data timeout
    *
+   * The mutex is not handled by this method.
+   *
    * Subclass notes:<br>
    * This method must be re-implemented in subclass.
    * The subclass can convert and store the value in system specific type
    * (f.ex: timeval struct on Posix)
+   *
    * \param timeout Timeout [ms]
    */
   virtual void setReadTimeout(int timeout) = 0;
 
   /*! \brief Set the write data timeout
    *
+   * The mutex is not handled by this method.
+   *
    * Subclass notes:<br>
    * This method must be re-implemented in subclass.
    * The subclass can convert and store the value in system specific type
    * (f.ex: timeval struct on Posix)
+   *
    * \param timeout Timeout [ms]
    */
   virtual void setWriteTimeout(int timeout) = 0;
@@ -211,6 +179,9 @@ class mdtAbstractPort : public QObject
    */
   virtual bool waitForReadyRead() = 0;
 
+  /// NOTE: \todo Comment, check, implement, remove this dummy implementation, move to pure virtual
+  virtual bool waitForReadyRead(mdtPortThread *thread);
+
   /*! \brief Wait until data is available on port.
    *
    * This method calls setReadTimeout() and waitForReadyRead()
@@ -227,9 +198,10 @@ class mdtAbstractPort : public QObject
    *
    * This method is called from mdtPortReadThread , and should not be used directly.
    *
+   * Mutex is not handled by this method.
+   *
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
-   * Mutex is not handled by this method.
    *
    * \return Number of bytes readen, or a error < 0
    */
@@ -311,6 +283,7 @@ class mdtAbstractPort : public QObject
   /*! \brief Write data to port
    *
    * This method is called from mdtPortWriteThread , and should not be used directly.
+   *
    * Mutex is not handled by this method.
    *
    * Subclass notes:<br>
@@ -372,28 +345,32 @@ class mdtAbstractPort : public QObject
   /*! \brief Get the readen frames Queue
    *
    * Readen frames queue contains frames that where received from device
-   * Note that the mutex is not handled by this method
+   *
+   * Mutex is not handled by this method.
    */
   QQueue<mdtFrame*> &readenFrames();
 
   /*! \brief Get the read frames Queue pool
    *
    * Read frames queue pool contains frames that are ready to use for reception
-   * Note that the mutex is not handled by this method
+   *
+   * Mutex is not handled by this method.
    */
   QQueue<mdtFrame*> &readFramesPool();
 
   /*! \brief Get the write frames Queue
    *
    * Write frames queue contains frames that must be sent
-   * Note that the mutex is not handled by this method
+   *
+   * Mutex is not handled by this method.
    */
   QQueue<mdtFrame*> &writeFrames();
 
   /*! \brief Get the write frames Queue pool
    *
    * Write frames queue pool contains frames that are ready to use for transmission
-   * Note that serialPort mutex is not handled by this method
+   *
+   * Mutex is not handled by this method.
    */
   QQueue<mdtFrame*> &writeFramesPool();
 

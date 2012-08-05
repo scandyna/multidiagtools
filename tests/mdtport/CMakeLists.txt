@@ -5,6 +5,15 @@
 # Project
 project (multidiagtools)
 
+# Target mdtPortLockTest
+if(UNIX)
+  QT4_WRAP_CPP (MOC_MDT_PORT_LOCK_TEST mdtPortLockTest.h)
+  add_executable (mdtportlocktest mdtPortLockTest.cpp ${MOC_MDT_PORT_LOCK_TEST})
+  target_link_libraries(mdtportlocktest "mdtutils")
+  target_link_libraries(mdtportlocktest "mdtport")
+  target_link_libraries(mdtportlocktest "mdttest")
+  target_link_libraries(mdtportlocktest ${QT_LIBRARIES})
+endif(UNIX)
 
 # Target mdtPortTest
 QT4_WRAP_CPP (MOC_MDT_PORT_TEST mdtPortTest.h)
@@ -34,3 +43,10 @@ if(UNIX)
   target_link_libraries(mdttcpsockettest ${QT_LIBRARIES})
 endif(UNIX)
 
+# Target mdtPortManagerTest
+QT4_WRAP_CPP (MOC_MDT_PORT_MANAGER_TEST mdtPortManagerTest.h)
+add_executable (mdtportmanagertest mdtPortManagerTest.cpp ${MOC_MDT_PORT_MANAGER_TEST})
+target_link_libraries(mdtportmanagertest "mdtutils")
+target_link_libraries(mdtportmanagertest "mdtport")
+target_link_libraries(mdtportmanagertest "mdttest")
+target_link_libraries(mdtportmanagertest ${QT_LIBRARIES})

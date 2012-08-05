@@ -98,50 +98,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00043"></a>00043  <span class="keyword">public</span>:
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045   <a class="code" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a>(QObject *parent = 0);
-<a name="l00046"></a>00046   <a class="code" href="classmdt_usbtmc_port.html#a3f9d3f1f40f61e17fa2997f3ad181d30">~mdtUsbtmcPort</a>();
+<a name="l00046"></a>00046   ~<a class="code" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a>();
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="comment">// Implemtation of mdtAbstractPort</span>
-<a name="l00050"></a>00050 <span class="comment"></span>
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 
-<a name="l00074"></a>00074   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde" title="TODO:">open</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg);
+<a name="l00050"></a>00050   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#ad3ec37dab7918fad36190b1c4c58c266" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00051"></a>00051 
+<a name="l00054"></a>00054   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00055"></a>00055 
+<a name="l00061"></a>00061   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b" title="Wait until data is available on port.">waitForReadyRead</a>();
+<a name="l00062"></a>00062 
+<a name="l00067"></a>00067   qint64 <a class="code" href="classmdt_usbtmc_port.html#a91f45336ca9a71284e0309182f5e8ca1" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00068"></a>00068 
+<a name="l00074"></a>00074   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#aaa58100bc6ec2a5f91a3c6bb3676a468" title="Wait until data can be written to port.">waitEventWriteReady</a>();
 <a name="l00075"></a>00075 
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 
-<a name="l00082"></a>00082   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#ad3ec37dab7918fad36190b1c4c58c266" title="Close the port.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00083"></a>00083 
-<a name="l00086"></a>00086   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00087"></a>00087 
-<a name="l00093"></a>00093   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b" title="Wait until data is available on port.">waitForReadyRead</a>();
-<a name="l00094"></a>00094 
-<a name="l00099"></a>00099   qint64 <a class="code" href="classmdt_usbtmc_port.html#a91f45336ca9a71284e0309182f5e8ca1" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
-<a name="l00100"></a>00100 
-<a name="l00106"></a>00106   <span class="keywordtype">bool</span> <a class="code" href="classmdt_usbtmc_port.html#aaa58100bc6ec2a5f91a3c6bb3676a468" title="Wait until data can be written to port.">waitEventWriteReady</a>();
-<a name="l00107"></a>00107 
-<a name="l00113"></a>00113   qint64 <a class="code" href="classmdt_usbtmc_port.html#a32b98d2a61617293c328a343d62d52c3" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00081"></a>00081   qint64 <a class="code" href="classmdt_usbtmc_port.html#a32b98d2a61617293c328a343d62d52c3" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   <span class="comment">// Tell the thread that a frame can be read</span>
+<a name="l00085"></a>00085 <span class="comment"></span>  <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a97fca5f136f232275d90ab5b8c5ce285" title="Write a frame...">writeOneFrame</a>();
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087  <span class="keyword">public</span> slots:
+<a name="l00088"></a>00088 
+<a name="l00098"></a>00098   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a86ee5e17c32dea75e9f918389d3f7afc" title="Tell the thread that a frame can be read.">readOneFrame</a>();
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100  <span class="keyword">private</span>:
+<a name="l00101"></a>00101 
+<a name="l00113"></a>00113   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvOpen();
 <a name="l00114"></a>00114 
-<a name="l00115"></a>00115   <span class="comment">// Tell the thread that a frame can be read</span>
-<a name="l00117"></a>00117 <span class="comment"></span>  <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a97fca5f136f232275d90ab5b8c5ce285" title="Write a frame...">writeOneFrame</a>();
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119  <span class="keyword">public</span> slots:
-<a name="l00120"></a>00120 
-<a name="l00130"></a>00130   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port.html#a86ee5e17c32dea75e9f918389d3f7afc" title="Tell the thread that a frame can be read.">readOneFrame</a>();
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132  <span class="keyword">private</span>:
-<a name="l00133"></a>00133 
-<a name="l00145"></a>00145   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvOpen();
-<a name="l00146"></a>00146 
-<a name="l00153"></a>00153   <span class="keywordtype">void</span> pvClose();
-<a name="l00154"></a>00154 
-<a name="l00155"></a>00155   QWaitCondition pvReadCondition;
-<a name="l00156"></a>00156   QWaitCondition pvWriteCondition;
-<a name="l00157"></a>00157   <span class="keywordtype">int</span> pvReadTimeout;
-<a name="l00158"></a>00158   <span class="keywordtype">int</span> pvWriteTimeout;
-<a name="l00159"></a>00159   <span class="keywordtype">int</span> pvFd;
-<a name="l00160"></a>00160   <a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a> *pvPortLock;
-<a name="l00161"></a>00161 };
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_H</span>
+<a name="l00121"></a>00121   <span class="keywordtype">void</span> pvClose();
+<a name="l00122"></a>00122 
+<a name="l00131"></a>00131   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvSetup();
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133   QWaitCondition pvReadCondition;
+<a name="l00134"></a>00134   QWaitCondition pvWriteCondition;
+<a name="l00135"></a>00135   <span class="keywordtype">int</span> pvReadTimeout;
+<a name="l00136"></a>00136   <span class="keywordtype">int</span> pvWriteTimeout;
+<a name="l00137"></a>00137   <span class="keywordtype">int</span> pvFd;
+<a name="l00138"></a>00138   <a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a> *pvPortLock;
+<a name="l00139"></a>00139 };
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -158,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 29 2012 16:02:21 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:17 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

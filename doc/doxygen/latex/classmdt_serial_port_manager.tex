@@ -34,6 +34,8 @@ Collaboration diagram for mdtSerialPortManager:\nopagebreak
 \item 
 \hyperlink{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{mdtSerialPortManager} (QObject $\ast$parent=0)
 \begin{DoxyCompactList}\small\item\em Contruct a serial port manager. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{$\sim$mdtSerialPortManager} ()
+\item 
 QStringList \hyperlink{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available serial ports. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}{
@@ -75,6 +77,25 @@ Contruct a serial port manager.
 
 This will create a serial port and config instances 
 
+setConfig(new mdtSerialPortConfig); 
+
+\hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{
+\index{mdtSerialPortManager@{mdtSerialPortManager}!$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}}
+\index{$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
+\subsubsection[{$\sim$mdtSerialPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPortManager::$\sim$mdtSerialPortManager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}
+
+
+Q\_\-ASSERT(pvConfig != 0);
+
+delete pvConfig; 
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!config@{config}}
@@ -90,6 +111,10 @@ This will create a serial port and config instances
 Get the config object. 
 
 Usefull to alter internal port configuration 
+
+\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} $\ast$config = dynamic\_\-cast$<$mdtSerialPortConfig$\ast$$>$(pvConfig); Q\_\-ASSERT(config != 0); return $\ast$config; 
+
+
 
 Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager}.
 
@@ -109,6 +134,14 @@ Open the port.
 \begin{DoxyReturn}{Returns}
 True on success, false else 
 \end{DoxyReturn}
+
+
+Q\_\-ASSERT(pvConfig != 0);
+
+\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} $\ast$c = dynamic\_\-cast$<$mdtSerialPortConfig$\ast$$>$(pvConfig); Q\_\-ASSERT(c != 0);
+
+return p-\/$>$open($\ast$c); 
+
 
 
 Reimplemented from \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager}.

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtPortThread.h"
 #include "mdtError.h"
+#include "mdtAbstractPort.h"
 #include <QApplication>
 
 #include <QDebug>
@@ -128,3 +129,11 @@ bool mdtPortThread::isFinished() const
 
   return QThread::isFinished();
 }
+
+/**
+void mdtPortThread::setCancelStateEnabled(bool enabled)
+{
+  qDebug() << "mdtPortThread::setCancelStateEnabled(" << enabled << ")";
+  setTerminationEnabled(enabled);
+}
+*/

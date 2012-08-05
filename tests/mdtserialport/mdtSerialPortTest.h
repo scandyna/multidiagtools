@@ -31,9 +31,6 @@ class mdtSerialPortTest : public mdtTest
 
   void essais();
 
-  // Serial port manager tests
-  void mdtSerialPortManagerTest();
-
   // Test start and stop
   void mdtSerialPortStartStopTest();
 

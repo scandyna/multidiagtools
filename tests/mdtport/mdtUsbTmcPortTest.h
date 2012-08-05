@@ -29,8 +29,6 @@ class mdtUsbTmcPortTest : public mdtTest
 
  private slots:
 
-  // Check USBTMC module (needs a device attached)
-  void portManagerTest();
 };
 
 #endif  // #ifndef MDT_USB_TMC_PORT_TEST_H

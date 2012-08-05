@@ -19,6 +19,8 @@
  **
  ****************************************************************************/
 #include "mdtPortWriteThread.h"
+#include "mdtAbstractPort.h"
+#include "mdtFrame.h"
 #include <QApplication>
 
 #include <QDebug>

@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtSerialPort.h"
 #include "mdtError.h"
+#include "mdtPortThread.h"
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/select.h>
@@ -58,287 +59,6 @@ mdtSerialPort::~mdtSerialPort()
   close();
   delete pvPortLock;
 }
-
-/**
-mdtAbstractPort::error_t mdtSerialPort::tryOpen()
-{
-  Q_ASSERT(!isOpen());
-
-  mdtAbstractPort::error_t err;
-
-  // Try to open port
-  err = open();
-  if(err != mdtAbstractPort::NoError){
-    return err;
-  }
-
-  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
-  if(pvFd < 0){
-    // Checl if port was locked by another
-    if(pvPortLock->isLockedByAnother()){
-      return PortLocked;
-    }
-    err = errno;
-    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    // Check error and return a possibly correct code
-    switch(err){
-      case EACCES:
-        return PortAccess;
-      case ENOENT:
-        return PortNotFound;
-      default:
-        return UnknownError;
-    }
-  }
-
-  // Close the port
-  close();
-
-  pvPortLock->unlock();
-  ::close(pvFd);
-  pvFd = -1;
-
-
-  return mdtAbstractPort::NoError;
-}
-*/
-
-/// NOTE: \todo A supprimer !!
-/**
-mdtAbstractPort::error_t mdtSerialPort::open()
-{
-  return NoError;
-}
-*/
-
-/**
-mdtAbstractPort::error_t mdtSerialPort::open()
-{
-  int err;
-
-  // Close previous opened port
-  close();
-
-  // Try to open port locked
-  //  O_RDWR : Read/write access
-  //  O_NOCTTY: not a terminal
-  //  O_NDELAY: ignore DCD signal
-  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
-  if(pvFd < 0){
-    // Check if port was locked by another
-    if(pvPortLock->isLockedByAnother()){
-      mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Port " + pvPortName + " allready locked, cannot open it", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return PortLocked;
-    }
-    err = errno;
-    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    // Check error and return a possibly correct code
-    switch(err){
-      case EACCES:
-        return PortAccess;
-      case ENOENT:
-        return PortNotFound;
-      default:
-        return UnknownError;
-    }
-  }
-  // Get current config and save it to pvOriginalTermios
-  if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
-    close();
-    // Most of cases, this function fails because the phisical port is not attached
-    return PortNotFound;
-  }
-  // Get current system config on "work copy"
-  if(tcgetattr(pvFd, &pvTermios) < 0){
-    close();
-    // Most of cases, this function fails because the phisical port is not attached
-    return PortNotFound;
-  }
-
-  return mdtAbstractPort::open();
-}
-*/
-
-/// NOTE: \todo Split functions and remove this
-/**
-bool mdtSerialPort::setAttributes(const QString &portName)
-{
-  // Close previous opened port
-  this->close();
-  // Clear previous attributes
-  pvAvailableBaudRates.clear();
-  // Try to open port
-  pvFd = ::open(portName.toStdString().c_str(), O_RDONLY | O_NOCTTY | O_NDELAY);
-  if(pvFd < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "can not open port '" + portName + "'", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    pvPortName = "";
-    return false;
-  }
-  // Set port name
-  pvPortName = portName;
-
-  // End of attributes, close port
-  ::close(pvFd);
-  return true;
-}
-*/
-
-/**
-bool mdtSerialPort::open(mdtSerialPortConfig &cfg)
-{
-  QString strNum;
-  mdtAbstractPort::error_t err;
-
-  // Close previous opened device
-  this->close();
-  // Try to open port
-  //  O_RDWR : Read/write access
-  //  O_NOCTTY: not a terminal
-  //  O_NDELAY: ignore DCD signal
-  lockMutex();
-  err = open();
-  if(err != mdtAbstractPort::NoError){
-    return false; /// NOTE: adapt to error_t
-  }
-
-  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
-  if(pvFd < 0){
-    pvPortLock->unlock();
-    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-  // Get current config and save it to pvOriginalTermios
-  if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvPortName + " is not a serial port, or is not available", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-  // Get current system config on "work copy"
-  if(tcgetattr(pvFd, &pvTermios) < 0){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    mdtError e(MDT_UNDEFINED_ERROR, "tcgetattr() failed, " + pvPortName + " is not a serial port, or is not available", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-
-  // Set baud rate
-  if(!setBaudRate(cfg.baudRate())){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    strNum.setNum(cfg.baudRate());
-    mdtError e(MDT_UNDEFINED_ERROR, "unsupported baud rate '" + strNum + "' for port " + pvPortName, mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-  // Set local mode and enable the receiver
-  pvTermios.c_cflag |= (CLOCAL | CREAD);
-  // Set data bits
-  if(!setDataBits(cfg.dataBitsCount())){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    strNum.setNum(cfg.dataBitsCount());
-    mdtError e(MDT_UNDEFINED_ERROR, "unsupported data bits count '" + strNum + "' for port " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-  // Set stop bits
-  if(!setStopBits(cfg.stopBitsCount())){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    strNum.setNum(cfg.stopBitsCount());
-    mdtError e(MDT_UNDEFINED_ERROR, "unsupported stop bits count '" + strNum + "' for port " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-  // Set parity
-  setParity(cfg.parity());
-  // Set flow control
-  setFlowCtlRtsCts(cfg.flowCtlRtsCtsEnabled());
-  setFlowCtlXonXoff(cfg.flowCtlXonXoffEnabled(), cfg.xonChar(), cfg.xoffChar());
-  // Set raw data mode
-  pvTermios.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-  pvTermios.c_oflag &= ~OPOST;
-  // Apply the setup
-  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    mdtError e(MDT_UNDEFINED_ERROR, "unable to apply configuration for port " + pvPortName, mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    unlockMutex();
-    return false;
-  }
-  // Check if configuration could really be set
-  if(!checkConfig(cfg)){
-    ::close(pvFd);
-    pvFd = -1;
-    pvPortLock->unlock();
-    unlockMutex();
-    return false;
-  }
-
-  // Set the read/write timeouts
-  setReadTimeout(cfg.readTimeout());
-  setWriteTimeout(cfg.writeTimeout());
-
-  return mdtAbstractPort::open(cfg);
-}
-*/
-
-/**
-void mdtSerialPort::close()
-{
-  if(!isOpen()){
-    return;
-  }
-  // Restore original termios struct
-  tcsetattr(pvFd, TCSANOW, &pvOriginalTermios); 
-  // Close the port
-  pvPortLock->unlock();
-  ::close(pvFd);
-  pvFd = -1;
-
-  mdtAbstractSerialPort::close();
-}
-*/
 
 bool mdtSerialPort::setBaudRate(int rate)
 {
@@ -1086,7 +806,9 @@ bool mdtSerialPort::waitEventCtl()
 
   // We wait until a line status change happens
   pvMutex.unlock();
+  qDebug() << "mdtSerialPort::waitEventCtl(), waiting...";
   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
+  qDebug() << "mdtSerialPort::waitEventCtl(), waiting DONE";
   pvMutex.lock();
   if(retVal < 0){
     if(errno == EINTR){
@@ -1359,9 +1081,24 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   // Set raw data mode
   pvTermios.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
   pvTermios.c_oflag &= ~OPOST;
+  if(tcsetattr(pvFd, TCSANOW, &pvTermios) < 0){
+    mdtError e(MDT_UNDEFINED_ERROR, "cannot set raw mode on port " + pvPortName, mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+    return SetupError;
+  }
   // Set the read/write timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
+
+  qDebug() << "mdtSerialPort::pvSetup() setup:";
+  qDebug() << "-> Baudrate: " << baudRate();
+  qDebug() << "-> Data bits: " << dataBits();
+  qDebug() << "-> Stop bits: " << stopBits();
+  qDebug() << "-> parity: " << parity();
+  qDebug() << "-> Xon/Xoff: " << flowCtlXonXoffOn();
+  qDebug() << "-> CTS/RTS: " << flowCtlRtsCtsOn();
 
   return NoError;
 }

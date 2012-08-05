@@ -21,10 +21,12 @@
 #ifndef MDT_PORT_THREAD_H
 #define MDT_PORT_THREAD_H
 
-#include "mdtAbstractPort.h"
 #include "mdtError.h"
 #include <QThread>
 #include <QObject>
+
+class mdtAbstractPort;
+class mdtFrame;
 
 class mdtPortThread : public QThread
 {
@@ -63,6 +65,18 @@ class mdtPortThread : public QThread
    *  \see isRunning()
    */
   bool isFinished() const;
+
+  /*! \brief Enable/diseable cancel state
+   *
+   * If cancel state is enabled, the QThread::terminate() will work.
+   * Internally, QThread::setTerminationEnabled() is called.
+   * See the Qt's QThread documentation for more details.
+   *
+   * Subclass notes:<br>
+   * In the run method, this method should be called at first with false parameter, to
+   *  be shure that thread cannot be cancelled.
+   */
+  ///void setCancelStateEnabled(bool enabled);
 
  signals:
 

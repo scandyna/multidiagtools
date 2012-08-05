@@ -107,9 +107,14 @@ class mdtPortManager : public QThread
    * The read and write threads will be created if not allready exists,
    * port assigned to them, and signals/slots connection made.<br>
    * Please take care to never call this method while threads are running.
+   *
    * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort)
    */
   void setPort(mdtAbstractPort *port);
+
+  /*! \brief Detach port
+   */
+  void detachPort();
 
   /*! \brief Set port name
    *

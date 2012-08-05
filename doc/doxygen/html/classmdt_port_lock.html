@@ -82,41 +82,19 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlock the port.  <a href="#a60b65f02d57568dc36c5e918aa5357a6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07a7d13509147d65dde89e95ac343eb2"></a><!-- doxytag: member="mdtPortLock::isLocked" ref="a07a7d13509147d65dde89e95ac343eb2" args="()" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_lock.html#a07a7d13509147d65dde89e95ac343eb2">isLocked</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if port is locked. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98">isLockedByAnother</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if port is locked by another port instance.  <a href="#a739a8cedebb1a32e122c7e451f0cfe98"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if port is locked by current instance. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a739a8cedebb1a32e122c7e451f0cfe98"></a><!-- doxytag: member="mdtPortLock::isLockedByAnother" ref="a739a8cedebb1a32e122c7e451f0cfe98" args="()" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98">isLockedByAnother</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if port is locked by another instance. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Create serious test cases for this class </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Implement UUCP format in LCK.. files </dd></dl>
 <p>Open a port and lock it</p>
 <p>On Linux (or all POSIX ?) system, file locking is avaliable with fcntl(). But several applications uses LCK..name for locking.<br/>
  This class will try to find if a port is allready locked using LCK..name system in several directories (/var/lock, /tmp, ...).<br/>
  If nothing is found, then port will be opened, and several lockfiles created. The port is then locked with fcntl(). </p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a739a8cedebb1a32e122c7e451f0cfe98"></a><!-- doxytag: member="mdtPortLock::isLockedByAnother" ref="a739a8cedebb1a32e122c7e451f0cfe98" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortLock::isLockedByAnother </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Returns true if port is locked by another port instance. </p>
-<p>The rule is simple:</p>
-<ul>
-<li>If port is open and locked, false will be returned.</li>
-<li>If port is closed and locked, true will be returned. </li>
-</ul>
-
-</div>
-</div>
 <a class="anchor" id="a25e9a2cb8a10069fae75c76b6809c27f"></a><!-- doxytag: member="mdtPortLock::openLocked" ref="a25e9a2cb8a10069fae75c76b6809c27f" args="(const QString &amp;portName, int flags)" -->
 <div class="memitem">
 <div class="memproto">
@@ -143,16 +121,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Open a port locked. </p>
-<p>At first, the lock file name will be buit for each lock directories found. Then, is no lock file is found, the port will be opened with open(). Just after open, the port will be locked with fcntl(). Note: to close opend port, the system call close() can be used.</p>
+<p>At first, the lock file name will be buit for each lock directories found (searching in /tmp, /var/lock). Then, if no lock file is found, the port will be opened with open(). Just after open, the port will be locked with fcntl().</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">portName</td><td>Path to port to open (f.ex. /dev/ttyS0) </td></tr>
+    <tr><td class="paramname">flags</td><td>Flags are simply passed to open() syscall (see open() man for details). </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>File descriptor returned by open() , or -1 on error. </dd></dl>
-
-<p><p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Flag pvIsLocked : could be locked by another (other process, or other thread in this process), true seems not to be correct here ! </dd></dl>
-<p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Flag pvIsLocked ? </dd></dl>
-<p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Flag pvIsLocked ? </dd></dl>
-</p>
 
 </div>
 </div>
@@ -171,7 +148,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Unlock the port. </p>
-<p>Will remove lockfiles and unlock port with fcntl(). Note: use close() if file is not used later, this preserve a system call. </p>
+<p>Will remove lockfiles and unlock port with fcntl(). Note: use close() if file is not used later, this is not done by this method. </p>
 
 </div>
 </div>
@@ -194,7 +171,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 29 2012 16:02:22 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:19 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

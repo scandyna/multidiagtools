@@ -33,7 +33,11 @@ mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
   ///setConfig(new mdtSerialPortConfig);
-  setPort(new mdtSerialPort);
+  mdtSerialPort *port = new mdtSerialPort;
+  mdtSerialPortConfig *config = new mdtSerialPortConfig;
+  
+  port->setConfig(config);
+  setPort(port);
   Q_ASSERT(pvPort != 0);
   pvPort->setConfig(new mdtSerialPortConfig);
 }
@@ -45,6 +49,7 @@ mdtSerialPortManager::~mdtSerialPortManager()
   closePort();
 
   ///delete pvConfig;
+  delete &pvPort->config();
   delete pvPort;
 }
 

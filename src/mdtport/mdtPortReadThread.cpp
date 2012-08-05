@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtPortReadThread.h"
 #include "mdtError.h"
+#include "mdtAbstractPort.h"
 #include <QApplication>
 
 #include <QDebug>

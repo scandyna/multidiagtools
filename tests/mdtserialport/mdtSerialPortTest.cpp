@@ -67,53 +67,6 @@ void mdtSerialPortTest::essais()
   //emit testSignal(true);
 }
 
-void mdtSerialPortTest::mdtSerialPortManagerTest()
-{
-  mdtSerialPortManager m;
-  QStringList portsList;
-
-  qDebug() << "* Be shure that the computer has at least one serial port, else test will fail *";
-
-  // Verify that scan() function works ..
-  qDebug() << "TEST: scan() ...";
-  portsList = m.scan();
-  qDebug() << "TEST: scan() END";
-  QVERIFY(portsList.size() > 0);
-
-  // Port setup
-  m.config().setFrameType(mdtFrame::FT_ASCII);
-  m.config().setEndOfFrameSeq("$");
-  
-  // Init port manager
-  qDebug() << "TEST: setPortName() ...";
-  QVERIFY(m.setPortName(portsList.at(0)));
-  qDebug() << "TEST: setPortName() END";
-  qDebug() << "TEST: openPort() ...";
-  QVERIFY(m.openPort());
-  qDebug() << "TEST: openPort() END";
-  
-  // Check that available baud rates contains 9600 (very standard, should exists on most device)
-  QVERIFY(m.port().availableBaudRates().size() > 0);
-  QVERIFY(m.port().availableBaudRates().contains(9600));
-  // Chack that the right port is set
-  QVERIFY(m.port().portName() == portsList.at(0));
-
-  // Start threads
-  QVERIFY(m.start());
-
-  // Send some data
-  QVERIFY(m.writeData("Test$"));
-
-  // Wait on answer - Timout: 500 [ms]
-  QVERIFY(m.waitReadenFrame(500));
-
-  // Verify received data
-  QVERIFY(m.lastReadenFrame() == "Test");
- 
-  // End
-  m.closePort();
-}
-
 void mdtSerialPortTest::mdtSerialPortStartStopTest()
 {
   mdtSerialPort sp;
@@ -279,6 +232,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
     sp.readFramesPool().enqueue(frame);
   }
   sp.unlockMutex();
+  qDebug() << "TEST, RX: " << rxData << " , ref: " << data;
   QVERIFY(rxData == data);
 
   // Stop threads and close port

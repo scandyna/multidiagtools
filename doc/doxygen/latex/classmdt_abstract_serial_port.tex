@@ -78,10 +78,13 @@ void \hyperlink{classmdt_abstract_serial_port_a47c08ccb99dc6de76ae58ebeefc26857}
 \label{classmdt_abstract_serial_port_ae379b6151edebc1518e81ec061e379db}
 
 \item 
-virtual bool \hyperlink{classmdt_abstract_serial_port_a0bd6de5e10a922d9944376ec5943fd66}{open} (\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \&cfg)
-\begin{DoxyCompactList}\small\item\em Open the serial port specified with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{close} ()
 \begin{DoxyCompactList}\small\item\em Close the serial port. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_serial_port_ae053b73fee897769641813df658c9ead}{
+\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \& \hyperlink{classmdt_abstract_serial_port_ae053b73fee897769641813df658c9ead}{config} ()}
+\label{classmdt_abstract_serial_port_ae053b73fee897769641813df658c9ead}
+
+\begin{DoxyCompactList}\small\item\em Get the stored configuration. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_serial_port_a56b107c57fb0acb17cfcca262abe6a54}{sp\_\-uart\_\-type\_\-t} \hyperlink{classmdt_abstract_serial_port_a6b153155d9e110336d51ec48d2cee203}{uartType} ()
 \begin{DoxyCompactList}\small\item\em Get UART type. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_serial_port_a669c9ce68455abd3cfdb98259996e701}{
@@ -173,7 +176,7 @@ QList$<$ int $>$ {\bfseries pvAvailableBaudRates}}
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000014}{Todo}]Comment this class \end{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]Comment this class \end{Desc}
 
 
 Interface class for serial port
@@ -455,7 +458,7 @@ Implemented in \hyperlink{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000016}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000007}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -485,43 +488,6 @@ In this class, the UART type is defined in sp\_\-uart\_\-type\_\-t enum. The sub
 \begin{DoxyPrecond}{Precondition}
 Port must be open before this call. 
 \end{DoxyPrecond}
-\hypertarget{classmdt_abstract_serial_port_a0bd6de5e10a922d9944376ec5943fd66}{
-\index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!open@{open}}
-\index{open@{open}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
-\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractSerialPort::open (
-\begin{DoxyParamCaption}
-\item[{{\bf mdtSerialPortConfig} \&}]{cfg}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_abstract_serial_port_a0bd6de5e10a922d9944376ec5943fd66}
-
-
-Open the serial port specified with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} 
-
-Subclass notes:\par
- This method must be re-\/implemented in subclass.\par
- To handle the port correctly, the subclass method must:
-\begin{DoxyItemize}
-\item Close previous opened serial port\begin{Desc}
-\item[\hyperlink{todo__todo000015}{Todo}]specify how to close it. \end{Desc}
--\/ Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Do the specific work
-\item Set the read/write timeouts. See the \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} to know how to get these timeouts.
-\item Call this open method (with \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractSerialPort::open()} ). At this last step, the \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractPort::open()} method will be called.
-\end{DoxyItemize}
-
-\begin{DoxyReturn}{Returns}
-True on successfull configuration and open port
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} 
-
-\hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractPort::open()} 
-\end{DoxySeeAlso}
-
-
-Reimplemented in \hyperlink{classmdt_serial_port_a523cc099b9fff06c46ce1c251646ca20}{mdtSerialPort}.
-
 \hypertarget{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!parity@{parity}}
 \index{parity@{parity}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -636,8 +602,9 @@ Implemented in \hyperlink{classmdt_serial_port_af39774b2d3c4121623253740660a0389
 Enable/diseable the DTR (Data Terminal Ready) signal. 
 
 This method must be re-\/implemented in plateform specific subclass.\par
- If port is not open, this method must make no system call.\par
- The mutex is handled in this method.
+ If port is not open, this method must make no system call.
+
+The mutex is handled in this method.
 
 
 \begin{DoxyParams}{Parameters}
@@ -733,8 +700,9 @@ Implemented in \hyperlink{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d
 Enable/diseable the RTS (Request To Send) signal. 
 
 This method must be re-\/implemented in plateform specific subclass.\par
- If port is not open, this method must make no system call.\par
- The mutex is handled in this method.
+ If port is not open, this method must make no system call.
+
+The mutex is handled in this method.
 
 
 \begin{DoxyParams}{Parameters}

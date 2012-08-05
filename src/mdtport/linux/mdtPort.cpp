@@ -27,7 +27,7 @@
 #include <errno.h>
 #include <string.h>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtPort::mdtPort(QObject *parent)
  : mdtAbstractPort(parent)
@@ -39,109 +39,11 @@ mdtPort::mdtPort(QObject *parent)
 
 mdtPort::~mdtPort()
 {
-  ///this->close();  /// NOTE!!
+  qDebug() << "mdtPort::~mdtPort() ...";
+  close();
   delete pvPortLock;
+  qDebug() << "mdtPort::~mdtPort() END";
 }
-
-/**
-bool mdtPort::setAttributes(const QString &portName)
-{
-  // Close previous opened device
-  this->close();
-  // Try to open given port
-  pvFd = ::open(portName.toStdString().c_str(), O_RDWR);
-  if(pvFd < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + portName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPort");
-    e.commit();
-    pvPortName = "";
-    return false;
-  }
-  // Set attributes
-  pvPortName = portName;
-  // Close the port
-  this->close();
-
-  return true;
-}
-*/
-
-/**
-mdtAbstractPort::error_t mdtPort::tryOpen()
-{
-  Q_ASSERT(!isOpen());
-
-  int err;
-
-  // Try to open port
-  pvFd = ::open(pvPortName.toStdString().c_str(), O_RDWR);
-  if(pvFd < 0){
-    err = errno;
-    mdtError e(MDT_PORT_IO_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtPort");
-    e.commit();
-    // Check error and return a possibly correct code
-    switch(err){
-      case EACCES:
-        return PortAccess;
-      case ENOENT:
-        return PortNotFound;
-      default:
-        return UnknownError;
-    }
-  }
-  // Close the port
-  ::close(pvFd);
-  pvFd = -1;
-
-  return NoError;
-}
-*/
-
-/**
-bool mdtPort::open(mdtPortConfig &cfg)
-{
-  // Close previous opened device
-  this->close();
-  // Try to open port
-  //  O_RDWR : Read/write access
-  //  O_NOCTTY: not a terminal
-  //  O_NDELAY: ignore DCD signal
-  lockMutex();
-  pvFd = pvPortLock->openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
-  if(pvFd < 0){
-    mdtError e(MDT_UNDEFINED_ERROR, "Unable to open port: " + pvPortName, mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtPort");
-    e.commit();
-    pvPortLock->unlock();
-    unlockMutex();
-    return false;
-  }
-  // Set the read/write timeouts
-  setReadTimeout(cfg.readTimeout());
-  setWriteTimeout(cfg.writeTimeout());
-
-  return mdtAbstractPort::open(cfg);
-}
-*/
-
-/**
-void mdtPort::close()
-{
-  if(!isOpen()){
-    return;
-  }
-  lockMutex();
-  if(pvPortLock->isLocked()){
-    pvPortLock->unlock();
-  }
-  ::close(pvFd);
-  pvFd = -1;
-  mdtAbstractPort::close();
-}
-*/
 
 void mdtPort::setReadTimeout(int timeout)
 {
@@ -314,6 +216,7 @@ mdtAbstractPort::error_t mdtPort::pvOpen()
 
 void mdtPort::pvClose()
 {
+  qDebug() << "mdtPort::pvClose() ...";
   Q_ASSERT(isOpen());
 
   pvPortLock->unlock();

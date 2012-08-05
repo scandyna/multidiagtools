@@ -46,48 +46,6 @@ class mdtSerialPort : public mdtAbstractSerialPort
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
 
-  /// TODO: \todo activate and implement in all subclasses.
-  /*! \brief Try to open port.
-   *
-   * Try to open port set by setPortName().
-   * This can be usefull to enumerate real available ports on system.
-   * If port can be open successfull, NoError code is returned, and port is closed again.
-   * Note that the mutex is not handled in this method.
-   * \pre The port must not be open whenn calling this method.
-   *
-   * Subclass notes:<br>
-   * This method must be implemented in subclass.
-   * To handle the port correctly, the subclass method must:
-   *  - Call the appropriate open function
-   *  - Return the correct error code on failure (see the error_t enum)
-   *  - Be sure that the port is closed again before return.
-   *  - The mdtError system should be used to keep trace in logfile.
-   */
-  ///error_t tryOpen();
-
-  /*! \brief Open the port given by setPortName()
-   * NOTE: \todo à supprimer
-   *
-   * If port can be open successfull, NoError code is returned.
-   *
-   * The mutex is not handled by this method.
-   */
-  ///error_t open();
-
-  // Implemented from mdtAbstractPort
-  ///bool setAttributes(const QString &portName);
-
-  // Implemented from mdtAbstractSerialPort
-  ///bool open(mdtSerialPortConfig &cfg);
-
-  /*! \brief Close the serial port
-   *
-   * Restore original settings and close the port.
-   *
-   * The mutex is not handled by this method.
-   */
-  ///void close();
-
   /*! \brief Set the baud rate
    *
    * The mutex is not handled by this method.
@@ -184,16 +142,31 @@ class mdtSerialPort : public mdtAbstractSerialPort
    */
   bool flowCtlXonXoffOn();
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Set the read data timeout
+   *
+   * The mutex is not handled by this method.
+   */
   void setReadTimeout(int timeout);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Set the write data timeout
+   *
+   * The mutex is not handled by this method.
+   */
   void setWriteTimeout(int timeout);
 
-  // Implemtation of mdtAbstractPort
+  /*! \brief Wait until data is available on port.
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
   bool waitForReadyRead();
 
-  // Implemtation of mdtAbstractPort method
+  /*! \brief Read data from port
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.
+   *
+   * Mutex is not handled by this method.
+   */
   qint64 read(char *data, qint64 maxSize);
 
   // Re-implementation of mdtAbstractPort method
@@ -214,7 +187,11 @@ class mdtSerialPort : public mdtAbstractSerialPort
   // Implemtation of mdtAbstractPort method
   void flushOut();
 
-  // Wait until a control signal (modem line state) changes
+  /*! \brief Wait until a control (modem line) signal state changes
+   *
+   * This method is called from mdtSerialPortCtlThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
   bool waitEventCtl();
 
   // Get the control signal (modem line) states and update member flags

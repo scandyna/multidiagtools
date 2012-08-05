@@ -30,7 +30,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-/// NOTE: \todo Create serious test cases for this class
+/// NOTE: \todo Implement UUCP format in LCK.. files
 /*! \brief Open a port and lock it
  *
  * On Linux (or all POSIX ?) system, file locking is avaliable with fcntl().
@@ -51,11 +51,12 @@ class mdtPortLock
   /*! \brief Open a port locked
    * 
    * At first, the lock file name will be buit for
-   * each lock directories found.
-   * Then, is no lock file is found, the port will be opened with open().
+   * each lock directories found (searching in /tmp, /var/lock).
+   * Then, if no lock file is found, the port will be opened with open().
    * Just after open, the port will be locked with fcntl().
-   * Note: to close opend port, the system call close() can be used.
    *
+   * \param portName Path to port to open (f.ex. /dev/ttyS0)
+   * \param flags Flags are simply passed to open() syscall (see open() man for details).
    * \return File descriptor returned by open() , or -1 on error.
    */
   int openLocked(const QString & portName, int flags);
@@ -64,19 +65,15 @@ class mdtPortLock
    * 
    * Will remove lockfiles and unlock port
    * with fcntl().
-   * Note: use close() if file is not used later, this preserve a system call.
+   * Note: use close() if file is not used later, this is not done by this method.
    */
   void unlock();
 
-  /*! \brief Returns true if port is locked.
+  /*! \brief Returns true if port is locked by current instance.
    */
   bool isLocked();
 
-  /*! \brief Returns true if port is locked by another port instance.
-   *
-   * The rule is simple:
-   *  - If port is open and locked, false will be returned.
-   *  - If port is closed and locked, true will be returned.
+  /*! \brief Returns true if port is locked by another instance.
    */
   bool isLockedByAnother();
 
@@ -103,6 +100,7 @@ class mdtPortLock
   QFileInfoList pvCreatedLockFiles;       // Lockfiles that where created
   QStringList pvWritableLockDirectories;  // Directories for lockfiles
   bool pvIsLocked;                        // Internall lock flag
+  bool pvIsLockedByAnother;               // Internall lock flag
   struct flock pvLock;                    // Internall flock struct
 };
 

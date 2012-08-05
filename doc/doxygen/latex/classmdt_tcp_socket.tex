@@ -38,12 +38,8 @@ void {\bfseries decrementTransactionsCounter} ()}
 \item 
 \hyperlink{classmdt_tcp_socket_ac1e7831d297471d6e5b920de5e9bb675}{$\sim$mdtTcpSocket} ()
 \item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_tcp_socket_af151666d97ee2547297ff836430893ce}{tryOpen} ()
-\begin{DoxyCompactList}\small\item\em bool setAttributes(const QString \&portName); \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tcp_socket_aca164cd2f0b47988291afb7fbb423648}{open} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&cfg)
-\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{connectToHost} (const QString \&hostName, int hostPort)
-\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}; \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Connect to host. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{setThreadObjects} (QTcpSocket $\ast$socket, \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} $\ast$thread)
 \begin{DoxyCompactList}\small\item\em Set the socket. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTimeout} (int timeout)
@@ -106,9 +102,7 @@ Mutex is locked by this method. \hypertarget{classmdt_tcp_socket_aa5b229a668c0d9
 \label{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}
 
 
-void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}; 
-
-Connect to host
+Connect to host. 
 
 Use this method to start a connection to a host.\par
  Mutex is locked by this method. 
@@ -119,54 +113,8 @@ Use this method to start a connection to a host.\par
 \hline
 \end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-hostPort must be $>$ 0
+hostPort must be $>$ 0 
 \end{DoxyPrecond}
-void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtTcpSocket::close()} \{ \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; pvTransactionsCount = 0; \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()}; \} \hypertarget{classmdt_tcp_socket_aca164cd2f0b47988291afb7fbb423648}{
-\index{mdtTcpSocket@{mdtTcpSocket}!open@{open}}
-\index{open@{open}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocket::open (
-\begin{DoxyParamCaption}
-\item[{{\bf mdtPortConfig} \&}]{cfg}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_tcp_socket_aca164cd2f0b47988291afb7fbb423648}
-
-
-Open the port. 
-
-NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000008}{Todo}]change return type: replace with error\_\-t type.\end{Desc}
-
-
-Open port given by \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} and init read/write queues.
-
-Subclass notes:\par
- This method must be re-\/implemented in subclass.\par
- To handle the port correctly, the subclass method must:
-\begin{DoxyItemize}
-\item Close previous opened ressource
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Do the specific work. Note that port must be open in exclusive mode. On Linux, the \hyperlink{classmdt_port_lock}{mdtPortLock} should be used for this.
-\item Set the read/write timeouts. See the \hyperlink{classmdt_port_config}{mdtPortConfig} to know how to get these timeouts.
-\item Call this open method (with \hyperlink{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{mdtAbstractPort::open()} ). At this last step, the queues will be initialized, mutex unocked and open flag updated.
-\end{DoxyItemize}
-
-\begin{DoxyReturn}{Returns}
-True on successfull configuration and open port 
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_config}{mdtPortConfig} 
-\end{DoxySeeAlso}
-
-
-if(!cfg.readOnly())\{
-
-\} 
-
-
-
-Reimplemented from \hyperlink{classmdt_abstract_port_a4a8195c2bf580eb69ad5d90de86798e6}{mdtAbstractPort}.
-
 \hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
 \index{mdtTcpSocket@{mdtTcpSocket}!read@{read}}
 \index{read@{read}!mdtTcpSocket@{mdtTcpSocket}}
@@ -263,24 +211,7 @@ Subclass notes:\par
 
 Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
 
-\hypertarget{classmdt_tcp_socket_af151666d97ee2547297ff836430893ce}{
-\index{mdtTcpSocket@{mdtTcpSocket}!tryOpen@{tryOpen}}
-\index{tryOpen@{tryOpen}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{tryOpen}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtTcpSocket::tryOpen (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_tcp_socket_af151666d97ee2547297ff836430893ce}
-
-
-bool setAttributes(const QString \&portName); 
-
-Implemeted for conformity with \hyperlink{classmdt_abstract_port}{mdtAbstractPort}, does nothing.
-
-bool mdtTcpSocket::setAttributes(const QString \&portName) \{ qDebug() $<$$<$ \char`\"{}setAttributes(): \char`\"{} $<$$<$ portName.split(\char`\"{}:\char`\"{});
-
-return true; \} \hypertarget{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{
+\hypertarget{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitEventWriteReady@{waitEventWriteReady}}
 \index{waitEventWriteReady@{waitEventWriteReady}!mdtTcpSocket@{mdtTcpSocket}}
 \subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocket::waitEventWriteReady (

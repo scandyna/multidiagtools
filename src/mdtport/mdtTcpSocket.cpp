@@ -38,46 +38,6 @@ mdtTcpSocket::~mdtTcpSocket()
   ///close();
 }
 
-/**
-bool mdtTcpSocket::setAttributes(const QString &portName)
-{
-  //qDebug() << "setAttributes(): " << portName.split(":");
-  
-  return true;
-}
-*/
-
-mdtAbstractPort::error_t mdtTcpSocket::tryOpen()
-{
-  return NoError;
-}
-
-/**
-bool mdtTcpSocket::open(mdtPortConfig &cfg)
-{
-  // Close previous opened connection
-  close();
-  // Open new connection
-  lockMutex();
-  qDebug() << "Open ....";
-
-  // Set R/W timeouts
-  setReadTimeout(cfg.readTimeout());
-  setWriteTimeout(cfg.writeTimeout());
-
-  return mdtAbstractPort::open(cfg);
-}
-*/
-
-/**
-void mdtTcpSocket::close()
-{
-  lockMutex();
-  pvTransactionsCount = 0;
-  mdtAbstractPort::close();
-}
-*/
-
 void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 {
   Q_ASSERT(pvThread != 0);

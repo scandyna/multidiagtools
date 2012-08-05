@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 7
+  revision 8
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -640,6 +640,10 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 551682 // <association>
+	relation_ref 386306 // <association>
       end
     end
 
@@ -1701,13 +1705,14 @@ ${inlines}
 	idl_decl ""
       end
 
-      classrelation 386562 // pvPort (<unidirectional association>)
-	relation 386306 --->
+      classrelation 386562 // pvPort (<association>)
+	relation 386306 ----
 	  a role_name "pvPort" multiplicity "0..1" protected
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	    classrelation_ref 386562 // pvPort (<unidirectional association>)
-	  b parent class_ref 249474 // mdtAbstractPort
+	    classrelation_ref 386562 // pvPort (<association>)
+	  b role_name "" private
+	    classrelation_ref 551682 // <association>
       end
 
       attribute 408834 "pvBytePerByteWrite"

@@ -56,72 +56,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Todo List </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000009"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000003"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort::close</a> () </dt>
 <dd>Actuellement, les queues sont deletée ici, que faire ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000008"></a> </p>
+<p><a class="anchor" id="_todo000004"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_abstract_port.html#a4a8195c2bf580eb69ad5d90de86798e6">mdtAbstractPort::open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg) </dt>
-<dd>change return type: replace with error_t type.</dd>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#a8a9177346624fb043689f1a5234fff4c">mdtAbstractPort::waitForReadyRead</a> (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *thread) </dt>
+<dd>Comment, check, implement, remove this dummy implementation, move to pure virtual </dd>
 </dl>
-<p><a class="anchor" id="_todo000007"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde">mdtAbstractPort::open</a> () </dt>
-<dd>activate and implement in all subclasses. </dd>
-</dl>
-<p><a class="anchor" id="_todo000014"></a> </p>
+<p><a class="anchor" id="_todo000006"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000016"></a> </p>
+<p><a class="anchor" id="_todo000007"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000015"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_abstract_serial_port.html#a0bd6de5e10a922d9944376ec5943fd66">mdtAbstractSerialPort::open</a> (<a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg) </dt>
-<dd>specify how to close it. </dd>
-</dl>
-<p><a class="anchor" id="_todo000004"></a> </p>
-<dl>
-<dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
-<dd>Create serious test cases for this class </dd>
-</dl>
 <p><a class="anchor" id="_todo000001"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_port_lock.html#a25e9a2cb8a10069fae75c76b6809c27f">mdtPortLock::openLocked</a> (const QString &amp;portName, int flags) </dt>
-<dd><p class="startdd">Flag pvIsLocked : could be locked by another (other process, or other thread in this process), true seems not to be correct here ! </p>
-<p>Flag pvIsLocked ? </p>
-<p class="enddd">Flag pvIsLocked ? </p>
-</dd>
-</dl>
-<p><a class="anchor" id="_todo000011"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_serial_port.html#a523cc099b9fff06c46ce1c251646ca20">mdtSerialPort::open</a> (<a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;cfg) </dt>
-<dd>Split functions and remove this </dd>
-</dl>
-<p><a class="anchor" id="_todo000013"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_serial_port.html#ae62fbd70485c30db13c6384c169925c9">mdtSerialPort::open</a> () </dt>
-<dd><p class="startdd">à supprimer</p>
-<p class="enddd">A supprimer !! </p>
-</dd>
-</dl>
-<p><a class="anchor" id="_todo000012"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_serial_port.html#a75750b52566e8448ee2eef649903fdb0">mdtSerialPort::tryOpen</a> () </dt>
-<dd>activate and implement in all subclasses. </dd>
+<dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
+<dd>Implement UUCP format in LCK.. files </dd>
 </dl>
 <p><a class="anchor" id="_todo000005"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_usbtmc_port.html#acf677164611ea563e40be93e1b36236a">mdtUsbtmcPort::open</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;cfg) </dt>
-<dd>change return type: replace with error_t type.</dd>
+<dt>Member <a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">mdtPortManager::closePort</a> () </dt>
+<dd>FIXME: clean this ... </dd>
 </dl>
-<p><a class="anchor" id="_todo000006"></a> </p>
+<p><a class="anchor" id="_todo000002"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port.html#a97fca5f136f232275d90ab5b8c5ce285">mdtUsbtmcPort::writeOneFrame</a> () </dt>
 <dd>fix this class.. </dd>
@@ -141,7 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jul 29 2012 16:02:21 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:18 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

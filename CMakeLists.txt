@@ -160,14 +160,19 @@ if(UNIX)
 
   # * mdtport *
 
+  # mdtPortLockTest
+  add_test (mdtPortLockTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportlocktest)
   # mdtPortTest
   add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtporttest)
   # mdtUsbTmcPortTest
   add_test (mdtUsbTmcPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbtmcporttest)
   # mdtTcpSocketTest
   add_test (mdtTcpSocketTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdttcpsockettest)
+  # mdtPortManagerTest
+  add_test (mdtPortManagerTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportmanagertest)
   # mdtSerialPortTests
   add_test (mdtSerialPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialporttest)
+  add_test (mdtSerialPortManagerTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportmanagertest)
   add_test (mdtSerialPortConfigTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportconfigtest)
 
   add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtDeviceTest)
