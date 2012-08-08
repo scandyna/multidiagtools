@@ -176,7 +176,7 @@ QList$<$ int $>$ {\bfseries pvAvailableBaudRates}}
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000006}{Todo}]Comment this class \end{Desc}
+\item[\hyperlink{todo__todo000005}{Todo}]Comment this class \end{Desc}
 
 
 Interface class for serial port
@@ -294,22 +294,7 @@ Close the serial port.
 
 Close serial port and clear flags (f.ex. UART Type is set to unknow).
 
-The mutex is not handled by this method.
-
-Subclass notes:\par
- This method must be re-\/implemented in subclass.\par
- To handle the port correctly, the subclass method must:
-\begin{DoxyItemize}
-\item Check if port is open with \hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{isOpen()} , if false, simply return.
-\item Restore original settings (f.ex. termios struct on Posix)
-\item Unlock and close the port
-\item Call this close method (with \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort::close()} ). At this last step, the UART type wil be set to unknown type, available baud rates list cleared. Then, the \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} method will be called.
-\end{DoxyItemize}
-
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close()} 
-\end{DoxySeeAlso}
-
+The mutex is not handled by this method. 
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort}.
 
@@ -458,7 +443,7 @@ Implemented in \hyperlink{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000007}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -787,7 +772,21 @@ If UART type is unknow and port is open, \hyperlink{classmdt_abstract_serial_por
 
 Wait until a control (modem line) signal state changes. 
 
-This method must be re-\/implemented in plateform specific subclass.
+This method is called from \hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+
+Subclass notes:\par
+ This method must be re-\/implemented in plateform specific subclass.\par
+ To handle port correctly, a sequence should be something like:\par
+
+\begin{DoxyItemize}
+\item Do some needed calls/init
+\item Unlock the mutex
+\item Enable thread's canclel state with setCancelStateEnabled()
+\item Call system's wait function
+\item Diseable thread's canclel state with setCancelStateEnabled()
+\item Lock the mutext again
+\end{DoxyItemize}
 
 \begin{DoxyReturn}{Returns}
 False on error, in this case, the thread will be stopped. 
@@ -801,5 +800,4 @@ Implemented in \hyperlink{classmdt_serial_port_acc51ca593b4592f806ef4b9791486f47
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtserialport/mdtAbstractSerialPort.h\item 
-src/mdtserialport/mdtAbstractSerialPort.cpp\item 
-src/mdtserialport/moc\_\-mdtAbstractSerialPort.cxx\end{DoxyCompactItemize}
+src/mdtserialport/mdtAbstractSerialPort.cpp\end{DoxyCompactItemize}

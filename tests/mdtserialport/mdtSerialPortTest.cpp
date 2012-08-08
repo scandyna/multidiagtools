@@ -67,7 +67,7 @@ void mdtSerialPortTest::essais()
   //emit testSignal(true);
 }
 
-void mdtSerialPortTest::mdtSerialPortStartStopTest()
+void mdtSerialPortTest::startStopTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
@@ -82,7 +82,9 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
 #endif
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
   QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
-  // Setup - We keep default config
+  // Setup
+  cfg.setReadTimeout(-1);   // Set infinite timeout
+  cfg.setWriteTimeout(-1);   // Set infinite timeout
   sp.setConfig(&cfg);
   QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
@@ -109,6 +111,9 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   QVERIFY(rThd.isRunning());
   QVERIFY(wThd.isRunning());
 
+  // Wait some time to enshure that each thread does in wait state
+  QTest::qWait(100);
+
   // Stop control thread and check that other still running
   ctlThd.stop();
   QVERIFY(!ctlThd.isRunning());
@@ -128,13 +133,21 @@ void mdtSerialPortTest::mdtSerialPortStartStopTest()
   for(int i=0; i<10; i++){
     QVERIFY(ctlThd.start());
     QVERIFY(ctlThd.isRunning());
+    QVERIFY(rThd.start());
+    QVERIFY(rThd.isRunning());
+    QVERIFY(wThd.start());
+    QVERIFY(wThd.isRunning());
     QTest::qWait((100.0*(double)qrand()) / RAND_MAX);
     ctlThd.stop();
     QVERIFY(!ctlThd.isRunning());
+    rThd.stop();
+    QVERIFY(!rThd.isRunning());
+    wThd.stop();
+    QVERIFY(!wThd.isRunning());
   }
 }
 
-void mdtSerialPortTest::mdtSerialPortCtlSignalsTest()
+void mdtSerialPortTest::ctlSignalsTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;

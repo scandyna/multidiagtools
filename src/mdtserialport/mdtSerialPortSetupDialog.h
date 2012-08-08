@@ -34,6 +34,8 @@
  * 
  * The first step before display this dialog is to set the port manager
  * with setPortManager()
+ * 
+ * \image html mdtSerialPortSetupDialog.png
  */
 class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDialog
 {

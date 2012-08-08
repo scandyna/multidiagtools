@@ -60,6 +60,7 @@ mdtSerialPort::~mdtSerialPort()
   delete pvPortLock;
 }
 
+/**
 void mdtSerialPort::abortWaiting()
 {
   Q_ASSERT(pvNativePthreadObject != 0);
@@ -68,6 +69,7 @@ void mdtSerialPort::abortWaiting()
   ///pvAbortingWaitEventCtl = true;
   pthread_kill(pvNativePthreadObject, SIGALRM);
 }
+*/
 
 bool mdtSerialPort::setBaudRate(int rate)
 {
@@ -614,14 +616,24 @@ bool mdtSerialPort::flowCtlXonXoffOn()
 
 void mdtSerialPort::setReadTimeout(int timeout)
 {
-  pvReadTimeout.tv_sec = timeout/1000;
-  pvReadTimeout.tv_usec = 1000*(timeout%1000);
+  if(timeout == -1){
+    pvReadTimeout.tv_sec = -1;
+    pvReadTimeout.tv_usec = 0;
+  }else{
+    pvReadTimeout.tv_sec = timeout/1000;
+    pvReadTimeout.tv_usec = 1000*(timeout%1000);
+  }
 }
 
 void mdtSerialPort::setWriteTimeout(int timeout)
 {
-  pvWriteTimeout.tv_sec = timeout/1000;
-  pvWriteTimeout.tv_usec = 1000*(timeout%1000);
+  if(timeout == -1){
+    pvWriteTimeout.tv_sec = -1;
+    pvWriteTimeout.tv_usec = 0;
+  }else{
+    pvWriteTimeout.tv_sec = timeout/1000;
+    pvWriteTimeout.tv_usec = 1000*(timeout%1000);
+  }
 }
 
 bool mdtSerialPort::waitForReadyRead()
@@ -634,9 +646,15 @@ bool mdtSerialPort::waitForReadyRead()
   FD_ZERO(&input);
   FD_SET(pvFd, &input);
 
+  qDebug() << "mdtSerialPort::waitForReadyRead(): waiting ...";
   pvMutex.unlock();
-  n = select(pvFd+1, &input, 0, 0, &tv);
+  if(tv.tv_sec == -1){
+    n = select(pvFd+1, &input, 0, 0, 0);
+  }else{
+    n = select(pvFd+1, &input, 0, 0, &tv);
+  }
   pvMutex.lock();
+  qDebug() << "mdtSerialPort::waitForReadyRead(): waiting DONE";
   if(n == 0){
     updateReadTimeoutState(true);
   }else{
@@ -752,7 +770,11 @@ bool mdtSerialPort::waitEventWriteReady()
   FD_SET(pvFd, &output);
 
   pvMutex.unlock();
-  n = select(pvFd+1, 0, &output, 0, &tv);
+  if(tv.tv_sec == -1){
+    n = select(pvFd+1, 0, &output, 0, 0);
+  }else{
+    n = select(pvFd+1, 0, &output, 0, &tv);
+  }
   pvMutex.lock();
   if(n == 0){
     updateWriteTimeoutState(true);
@@ -814,11 +836,11 @@ bool mdtSerialPort::waitEventCtl()
   int retVal;
 
   // We wait until a line status change happens
-  pvMutex.unlock();
   qDebug() << "mdtSerialPort::waitEventCtl(), waiting...";
+  pvMutex.unlock();
   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
-  qDebug() << "mdtSerialPort::waitEventCtl(), waiting DONE";
   pvMutex.lock();
+  qDebug() << "mdtSerialPort::waitEventCtl(), waiting DONE";
   if(retVal < 0){
     if(errno == EINTR){
       // Probably sent by pthread_kill() to stop the thread

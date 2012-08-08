@@ -23,13 +23,10 @@ Collaboration diagram for mdtSerialPort:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{
-{\bfseries mdtSerialPort} (QObject $\ast$parent=0)}
-\label{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}
-
+\hyperlink{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{mdtSerialPort} (QObject $\ast$parent=0)
 \item 
 bool \hyperlink{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{setBaudRate} (int rate)
-\begin{DoxyCompactList}\small\item\em Set the baud rate. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Abort the waiting functions. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{baudRate} ()
 \begin{DoxyCompactList}\small\item\em Get the baud rate. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{setDataBits} (int n)
@@ -79,17 +76,25 @@ bool \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{getCtlSt
 void \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{setRts} (bool on)
 \begin{DoxyCompactList}\small\item\em Enable/diseable the RTS (Request To Send) signal. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{setDtr} (bool on)
-\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_a04af6b916a955579a5317d5b76c2f643}{
-void {\bfseries defineCtlThread} (pthread\_\-t ctlThread)}
-\label{classmdt_serial_port_a04af6b916a955579a5317d5b76c2f643}
+\begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\item 
-\hypertarget{classmdt_serial_port_aed3a5a75d5c83d4901f0cb6e0e82e289}{
-void {\bfseries abortWaitEventCtl} ()}
-\label{classmdt_serial_port_aed3a5a75d5c83d4901f0cb6e0e82e289}
 
-\end{DoxyCompactItemize}
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}{
+\index{mdtSerialPort@{mdtSerialPort}!mdtSerialPort@{mdtSerialPort}}
+\index{mdtSerialPort@{mdtSerialPort}!mdtSerialPort@{mdtSerialPort}}
+\subsubsection[{mdtSerialPort}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPort::mdtSerialPort (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_serial_port_a7b2da083885e727981c1fd4414634cae}
+
+
+pvCtlThread = 0;
+
+sigemptyset(\&(pvSigaction.sa\_\-mask)); pvSigaction.sa\_\-flags = 0; pvSigaction.sa\_\-handler = sigactionHandle; sigaction(SIGALRM, \&pvSigaction, NULL); 
+
 
 
 \subsection{Member Function Documentation}
@@ -245,7 +250,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a239
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000007}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -295,14 +300,7 @@ Read data from port.
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.
 
-Subclass notes:\par
- This method must be implemented in subclass.\par
- Mutex is not handled by this method.
-
-\begin{DoxyReturn}{Returns}
-Number of bytes readen, or a error $<$ 0 
-\end{DoxyReturn}
-
+Mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
 
@@ -347,14 +345,22 @@ Reimplemented from \hyperlink{classmdt_abstract_port_ad4a04c995df881593db0a30900
 \label{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}
 
 
-Set the baud rate. 
+Abort the waiting functions. 
+
+This method is called from main thread (\hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()}), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.
+
+The mutex is not handled by this method.void abortWaiting();
+
+Set the baud rate
 
 The mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-True if baud rate is supported and could be set. 
+True if baud rate is supported and could be set.
 \end{DoxyReturn}
+void mdtSerialPort::abortWaiting() \{ Q\_\-ASSERT(pvNativePthreadObject != 0);
 
+Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread\_\-kill(pvNativePthreadObject, SIGALRM); \} 
 
 Implements \hyperlink{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{mdtAbstractSerialPort}.
 
@@ -488,13 +494,7 @@ Implements \hyperlink{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b
 
 Set the read data timeout. 
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
-\begin{DoxyParams}{Parameters}
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
+The mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
 
@@ -560,13 +560,7 @@ Implements \hyperlink{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc501
 
 Set the write data timeout. 
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
-\begin{DoxyParams}{Parameters}
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-
+The mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
 
@@ -635,12 +629,8 @@ Reimplemented from \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fe
 
 Wait until a control (modem line) signal state changes. 
 
-This method must be re-\/implemented in plateform specific subclass.
-
-\begin{DoxyReturn}{Returns}
-False on error, in this case, the thread will be stopped. 
-\end{DoxyReturn}
-
+This method is called from \hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} , and should not be used directly.\par
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_serial_port_ac27d1224db349bcf7f161329b5f53efb}{mdtAbstractSerialPort}.
 
@@ -688,26 +678,7 @@ Implements \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{
 Wait until data is available on port. 
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-Subclass notes:\par
- This method must be re-\/implemented in subclass. The read timeout state must be updated with \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState()}\par
- Notes about mutex handling:
-\begin{DoxyItemize}
-\item Mutex must be released during wait, and relocked befor return.
-\end{DoxyItemize}
-
-\begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will emit errorOccured()
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_thread}{mdtPortThread} 
-
-\hyperlink{classmdt_port_config}{mdtPortConfig} 
-
-\hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
-\end{DoxySeeAlso}
-
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{mdtAbstractPort}.
 
@@ -725,7 +696,9 @@ Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{
 
 Write data to port. 
 
-This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly. Mutex is not handled by this method.
+This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.
+
+Mutex is not handled by this method.
 
 Subclass notes:\par
  This method must be implemented in subclass.\par

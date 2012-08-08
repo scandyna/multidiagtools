@@ -71,24 +71,23 @@ Inheritance diagram for mdtSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port__inherit__graph.png" border="0" usemap="#mdt_serial_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_serial_port_inherit__map" id="mdt_serial_port_inherit__map">
-<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="NOTE:" alt="" coords="5,83,155,112"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,5,139,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="NOTE:" alt="" coords="5,83,155,112"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port__coll__graph.png" border="0" usemap="#mdt_serial_port_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_serial_port_coll__map" id="mdt_serial_port_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="NOTE:" alt="" coords="5,181,155,211"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,101,139,131"/><area shape="rect" id="node6" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/><area shape="rect" id="node8" href="classmdt_port_lock.html" title="NOTE:" alt="" coords="179,181,275,211"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_serial_port.html" title="NOTE:" alt="" coords="5,181,155,211"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,101,139,131"/><area shape="rect" id="node6" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/><area shape="rect" id="node8" href="classmdt_port_lock.html" title="NOTE:" alt="" coords="179,181,275,211"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_serial_port-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b2da083885e727981c1fd4414634cae"></a><!-- doxytag: member="mdtSerialPort::mdtSerialPort" ref="a7b2da083885e727981c1fd4414634cae" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtSerialPort</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a7b2da083885e727981c1fd4414634cae">mdtSerialPort</a> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351">setBaudRate</a> (int rate)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the baud rate.  <a href="#ad77b6a5fd819fae6db0db888b3113351"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the waiting functions.  <a href="#ad77b6a5fd819fae6db0db888b3113351"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195">baudRate</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the baud rate.  <a href="#ab7d9433433f4ec5d5e584721e5bb1195"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389">setDataBits</a> (int n)</td></tr>
@@ -139,11 +138,29 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the RTS (Request To Send) signal.  <a href="#af0534e9f2e25b44a1a127d2a34b409fb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592">setDtr</a> (bool on)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the DTR (Data Terminal Ready) signal.  <a href="#a91ec8a600f09b6844d36902fe1e16592"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04af6b916a955579a5317d5b76c2f643"></a><!-- doxytag: member="mdtSerialPort::defineCtlThread" ref="a04af6b916a955579a5317d5b76c2f643" args="(pthread_t ctlThread)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>defineCtlThread</b> (pthread_t ctlThread)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed3a5a75d5c83d4901f0cb6e0e82e289"></a><!-- doxytag: member="mdtSerialPort::abortWaitEventCtl" ref="aed3a5a75d5c83d4901f0cb6e0e82e289" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b> ()</td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a7b2da083885e727981c1fd4414634cae"></a><!-- doxytag: member="mdtSerialPort::mdtSerialPort" ref="a7b2da083885e727981c1fd4414634cae" args="(QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtSerialPort::mdtSerialPort </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p><p>pvCtlThread = 0;</p>
+<p>sigemptyset(&amp;(pvSigaction.sa_mask)); pvSigaction.sa_flags = 0; pvSigaction.sa_handler = sigactionHandle; sigaction(SIGALRM, &amp;pvSigaction, NULL); </p>
+</p>
+
+</div>
+</div>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ab7d9433433f4ec5d5e584721e5bb1195"></a><!-- doxytag: member="mdtSerialPort::baudRate" ref="ab7d9433433f4ec5d5e584721e5bb1195" args="()" -->
 <div class="memitem">
@@ -306,7 +323,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
 <p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
@@ -364,10 +381,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 <p>Read data from port. </p>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
-<p>Subclass notes:<br/>
- This method must be implemented in subclass.<br/>
- Mutex is not handled by this method.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 </dd></dl>
+<p>Mutex is not handled by this method. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
@@ -417,9 +431,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </div>
 <div class="memdoc">
 
-<p>Set the baud rate. </p>
+<p>Abort the waiting functions. </p>
+<p>This method is called from main thread (<a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a>), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.</p>
+<p>The mutex is not handled by this method.void abortWaiting();</p>
+<p>Set the baud rate</p>
 <p>The mutex is not handled by this method.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if baud rate is supported and could be set. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if baud rate is supported and could be set.</dd></dl>
+<p>void mdtSerialPort::abortWaiting() { Q_ASSERT(pvNativePthreadObject != 0);</p>
+<p>Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread_kill(pvNativePthreadObject, SIGALRM); } </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ae250b30c1db5652bd2abe2caf1c9d5c7">mdtAbstractSerialPort</a>.</p>
 
@@ -579,14 +598,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Set the read data timeout. </p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>The mutex is not handled by this method. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
 
@@ -661,14 +673,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Set the write data timeout. </p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>The mutex is not handled by this method. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
 
@@ -740,8 +745,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Wait until a control (modem line) signal state changes. </p>
-<p>This method must be re-implemented in plateform specific subclass.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
+<p>This method is called from <a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> , and should not be used directly.<br/>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ac27d1224db349bcf7f161329b5f53efb">mdtAbstractSerialPort</a>.</p>
 
@@ -792,19 +797,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 
 <p>Wait until data is available on port. </p>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a><br/>
- Notes about mutex handling:</p>
-<ul>
-<li>Mutex must be released during wait, and relocked befor return.</li>
-</ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured()</dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
-<dd>
-<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd>
-<dd>
-<a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
 
@@ -836,7 +829,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 <div class="memdoc">
 
 <p>Write data to port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly. Mutex is not handled by this method.</p>
+<p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.</p>
+<p>Mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
  This method must be implemented in subclass.<br/>
 </p>
@@ -865,7 +859,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>abortWaitEventCtl</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:19 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

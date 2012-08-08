@@ -25,6 +25,11 @@
 #include <QThread>
 #include <QObject>
 
+#ifdef Q_OS_UNIX
+ #include <pthread.h>
+ #include <signal.h>
+#endif
+
 class mdtAbstractPort;
 class mdtFrame;
 
@@ -109,6 +114,13 @@ class mdtPortThread : public QThread
   ///int pvReadMinWaitTime;
   int pvWriteMinWaitTime;
   bool pvBytePerByteWrite;
+#ifdef Q_OS_UNIX
+  // Members needed to abort blocking
+  //  functions sith pthread_kill()
+  static void sigactionHandle(int signum);
+  pthread_t pvNativePthreadObject;
+  struct sigaction pvSigaction;
+#endif
 };
 
 #endif  // #ifndef MDT_PORT_THREAD_H

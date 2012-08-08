@@ -30,10 +30,12 @@
 #include <QQueue>
 #include <QMutex>
 
+/**
 #ifdef Q_OS_UNIX
  #include <pthread.h>
  #include <signal.h>
 #endif
+*/
 
 class mdtPortThread;
 
@@ -55,7 +57,12 @@ class mdtAbstractPort : public QObject
                 PortNotFound,     /*!< Port was not found */
                 PortAccess,       /*!< Port cannot be open with requierd access (read, write) */
                 SetupError,       /*!< Setup failed on a configuration option */
-                UnknownError      /*!< Unknown error is happen. Logfile could give more information, see mdtError and mdtApplication */
+                WaitingCanceled,  /*!< When a thread (mdtPortThread or subclass) is stopping, it will
+                                        cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
+                                        At this case, this error is returned, and the thread knows that it can 
+                                        cleanup and end. */
+                UnknownError      /*!< Unknown error is happen.
+                                       Logfile could give more information, see mdtError and mdtApplication */
                };
 
   mdtAbstractPort(QObject *parent = 0);
@@ -132,7 +139,7 @@ class mdtAbstractPort : public QObject
    * On POSIX, the pthread_kill() can be used with SIGALRM. The pvNativePthreadObject must be used.<br>
    * On Windows, the WaitForMultipleObjects() seems to be a good aproach.
    */
-  virtual void abortWaiting() = 0;
+  ///virtual void abortWaiting() = 0;
 
 #ifdef Q_OS_UNIX
   /*! \brief Set the internal pthrad_t object (POSIX only)
@@ -142,13 +149,13 @@ class mdtAbstractPort : public QObject
    *
    * The mutex is not handled by this method.
    */
-  void setNativePthreadObject(pthread_t thread);
+  ///void setNativePthreadObject(pthread_t thread);
 
   /*! \brief Handle function for sigaction
    *
    * This default implementation does nothing.
    */
-  static void sigactionHandle(int signum);
+  ///static void sigactionHandle(int signum);
 #endif
 
   /*! \brief Set configuration
@@ -182,7 +189,7 @@ class mdtAbstractPort : public QObject
    * The subclass can convert and store the value in system specific type
    * (f.ex: timeval struct on Posix)
    *
-   * \param timeout Timeout [ms]
+   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
    */
   virtual void setReadTimeout(int timeout) = 0;
 
@@ -195,7 +202,7 @@ class mdtAbstractPort : public QObject
    * The subclass can convert and store the value in system specific type
    * (f.ex: timeval struct on Posix)
    *
-   * \param timeout Timeout [ms]
+   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
    */
   virtual void setWriteTimeout(int timeout) = 0;
 
@@ -225,6 +232,8 @@ class mdtAbstractPort : public QObject
    * Note that the reader thread will call waitForReadyRead() without argument.<br>
    * Note: this method is called from thread , and should not be used directly<br>
    * Mutex: see waitForReadyRead()
+   *
+   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
    * \return False on error, in this case, the reader thread will be stopped.
    * \sa waitForReadyRead()
    */
@@ -506,10 +515,10 @@ class mdtAbstractPort : public QObject
    *
    * Use this object in abortWaiting() to send signal with pthread_kill().
    */
-  pthread_t pvNativePthreadObject;
+  ///pthread_t pvNativePthreadObject;
 
   // Internal sigaction
-  struct sigaction pvSigaction;
+  ///struct sigaction pvSigaction;
 #endif
 
  private:

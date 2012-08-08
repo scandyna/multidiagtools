@@ -63,6 +63,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtPortThread Class Reference</div>  </div>
@@ -80,7 +81,7 @@ Collaboration diagram for mdtPortThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_thread__coll__graph.png" border="0" usemap="#mdt_port_thread_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_thread_coll__map" id="mdt_port_thread_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_thread-members.html">List of all members.</a></p>
@@ -88,7 +89,7 @@ Collaboration diagram for mdtPortThread:</div>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d">ioProcessBegin</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a I/O process begins.  <a href="#a8f3d8f3d70839e5ae7b108a3a199e94d"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable cancel state.  <a href="#a8f3d8f3d70839e5ae7b108a3a199e94d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured</a> (int error)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted on error.  <a href="#ab31cbe1a85aa830cd368654d1f806326"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
@@ -106,6 +107,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the thread is running This function overloads the QThread::isRunning() function. Note for subclass: when the thread is started and ready, the private member pvRunning must be set to true. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4">isFinished</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns false if the thread is running.  <a href="#a55d7ef615447823bf9878492a2c88fd4"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01d2362e0dfcece4cba242cb586d8d1c"></a><!-- doxytag: member="mdtPortThread::sigactionHandle" ref="a01d2362e0dfcece4cba242cb586d8d1c" args="(int signum)" -->
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>sigactionHandle</b> (int signum)</td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59735ef01b761361b1055a0356be525a"></a><!-- doxytag: member="mdtPortThread::pvRunning" ref="a59735ef01b761361b1055a0356be525a" args="" -->
@@ -121,6 +126,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">int pvReadMinWaitTime; <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcdcd09d26fb8282fcd25b5ac28dc891"></a><!-- doxytag: member="mdtPortThread::pvBytePerByteWrite" ref="afcdcd09d26fb8282fcd25b5ac28dc891" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7154af7d387eecaea113ddb5900ff23c"></a><!-- doxytag: member="mdtPortThread::pvNativePthreadObject" ref="a7154af7d387eecaea113ddb5900ff23c" args="" -->
+pthread_t&#160;</td><td class="memItemRight" valign="bottom"><b>pvNativePthreadObject</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae22f83fd56b06cdaa9b77abafe85a6b4"></a><!-- doxytag: member="mdtPortThread::pvSigaction" ref="ae22f83fd56b06cdaa9b77abafe85a6b4" args="" -->
+struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigaction</b></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ab31cbe1a85aa830cd368654d1f806326"></a><!-- doxytag: member="mdtPortThread::errorOccured" ref="ab31cbe1a85aa830cd368654d1f806326" args="(int error)" -->
@@ -160,7 +169,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </div>
 <div class="memdoc">
 
-<p>Emitted when a I/O process begins. </p>
+<p>Enable/diseable cancel state. </p>
+<p>If cancel state is enabled, the QThread::terminate() will work. Internally, QThread::setTerminationEnabled() is called. See the Qt's QThread documentation for more details.</p>
+<p>Subclass notes:<br/>
+ In the run method, this method should be called at first with false parameter, to be shure that thread cannot be cancelled.void setCancelStateEnabled(bool enabled);</p>
+<p>Emitted when a I/O process begins</p>
 <p>This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
 </div>
@@ -245,14 +258,16 @@ The thread must not running </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Serial port instance must be defined. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>setSerialPort() </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>, and <a class="el" href="classmdt_serial_port_ctl_thread.html#a4a4070e3ad4795808ce511b0251e98df">mdtSerialPortCtlThread</a>.</p>
+<p><p>pvPort-&gt;abortWaiting(); </p>
+</p>
+
+<p>Reimplemented in <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtport/mdtPortThread.cpp</li>
-<li>src/mdtport/moc_mdtPortThread.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -269,7 +284,7 @@ The thread must not running </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:19 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

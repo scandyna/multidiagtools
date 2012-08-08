@@ -47,7 +47,7 @@ class mdtPort : public mdtAbstractPort
    *
    * The mutex is not handled by this method.
    */
-  void abortWaiting();
+  ///void abortWaiting();
 
   /*! \brief Set the read data timeout
    */

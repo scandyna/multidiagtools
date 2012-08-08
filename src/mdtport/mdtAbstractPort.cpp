@@ -32,6 +32,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   pvIsOpen = false;
   pvConfig = 0;
 
+/**
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = 0;
   // We must catch the SIGALRM signal, else the application process
@@ -41,6 +42,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   pvSigaction.sa_handler = sigactionHandle;
   sigaction(SIGALRM, &pvSigaction, NULL);
 #endif
+*/
   // Emit signals with initial states
   emit readTimeoutStateChanged(pvReadTimeoutOccured);
   emit writeTimeoutStateChanged(pvWriteTimeoutOccured);
@@ -104,14 +106,18 @@ void mdtAbstractPort::close()
   qDebug() << "mdtAbstractPort::close() END";
 }
 
+/**
 void mdtAbstractPort::setNativePthreadObject(pthread_t thread)
 {
   pvNativePthreadObject = thread;
 }
+*/
 
-void mdtAbstractPort::sigactionHandle(int /* signum */)
+/**
+void mdtAbstractPort::sigactionHandle(int)
 {
 }
+*/
 
 void mdtAbstractPort::setConfig(mdtPortConfig *cfg)
 {

@@ -69,6 +69,7 @@ mdtFrame *mdtPortReadThread::getNewFrame()
 
 void mdtPortReadThread::run()
 {
+  qDebug() << "RDTHD: starting ...";
   Q_ASSERT(pvPort != 0);
 
   qint64 bufferSize;
@@ -82,7 +83,9 @@ void mdtPortReadThread::run()
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
-  pvPort->setNativePthreadObject(pthread_self());
+  ///pvPort->setNativePthreadObject(pthread_self());
+  pvNativePthreadObject = pthread_self();
+  Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Set the running flag and get a RX frame
   pvRunning = true;
@@ -206,6 +209,8 @@ void mdtPortReadThread::run()
     }
   }
 
+  qDebug() << "RDTHD: Cleanup ...";
+
   // Put current frame into pool
   if(frame != 0){
     pvPort->readFramesPool().enqueue(frame);
@@ -216,4 +221,5 @@ void mdtPortReadThread::run()
   delete buffer;
 
   pvPort->unlockMutex();
+  qDebug() << "RDTHD: END";
 }

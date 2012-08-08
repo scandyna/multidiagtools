@@ -55,7 +55,7 @@ class mdtSerialPort : public mdtAbstractSerialPort
    *
    * The mutex is not handled by this method.
    */
-  void abortWaiting();
+  ///void abortWaiting();
 
   /*! \brief Set the baud rate
    *

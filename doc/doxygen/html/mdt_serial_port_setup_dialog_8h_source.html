@@ -92,57 +92,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QString&gt;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QCloseEvent&gt;</span>
 <a name="l00032"></a>00032 
-<a name="l00038"></a><a class="code" href="classmdt_serial_port_setup_dialog.html">00038</a> <span class="keyword">class </span><a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a> : <span class="keyword">public</span> QDialog, <span class="keyword">public</span> Ui::<a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a>
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040  Q_OBJECT
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042  <span class="keyword">public</span>:
+<a name="l00040"></a><a class="code" href="classmdt_serial_port_setup_dialog.html">00040</a> <span class="keyword">class </span><a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a> : <span class="keyword">public</span> QDialog, <span class="keyword">public</span> Ui::<a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a>
+<a name="l00041"></a>00041 {
+<a name="l00042"></a>00042  Q_OBJECT
 <a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a>(QWidget *parent = 0);
+<a name="l00044"></a>00044  <span class="keyword">public</span>:
 <a name="l00045"></a>00045 
-<a name="l00049"></a>00049   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_setup_dialog.html#a90f315f66728387fb7b4b8d23dba33a8" title="Set the serial port manager instance.">setPortManager</a>(<a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> *manager);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051  <span class="keyword">private</span> slots:
+<a name="l00046"></a>00046   <a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a>(QWidget *parent = 0);
+<a name="l00047"></a>00047 
+<a name="l00051"></a>00051   <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port_setup_dialog.html#a90f315f66728387fb7b4b8d23dba33a8" title="Set the serial port manager instance.">setPortManager</a>(<a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> *manager);
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="comment">// Read the configuration and update GUI</span>
-<a name="l00054"></a>00054   <span class="keywordtype">void</span> displayConfig();
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="comment">// Read options from GUI and update configuration</span>
-<a name="l00057"></a>00057   <span class="keywordtype">void</span> updateConfig();
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="comment">// Tell the manager to re-open with new configuration</span>
-<a name="l00060"></a>00060   <span class="keywordtype">void</span> applySetup();
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="comment">// Called when setup is accepted from user</span>
-<a name="l00063"></a>00063   <span class="keywordtype">void</span> on_buttonBox_clicked(QAbstractButton *button);
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065   <span class="comment">// Rescan for available ports</span>
-<a name="l00066"></a>00066   <span class="keywordtype">void</span> on_pbRescan_clicked();
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="comment">// Open selected port (if manager was set)</span>
-<a name="l00069"></a>00069   <span class="keywordtype">void</span> on_cbPort_currentIndexChanged(<span class="keywordtype">int</span> index);
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071  <span class="keyword">private</span>:
+<a name="l00053"></a>00053  <span class="keyword">private</span> slots:
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055   <span class="comment">// Read the configuration and update GUI</span>
+<a name="l00056"></a>00056   <span class="keywordtype">void</span> displayConfig();
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="comment">// Read options from GUI and update configuration</span>
+<a name="l00059"></a>00059   <span class="keywordtype">void</span> updateConfig();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   <span class="comment">// Tell the manager to re-open with new configuration</span>
+<a name="l00062"></a>00062   <span class="keywordtype">void</span> applySetup();
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064   <span class="comment">// Called when setup is accepted from user</span>
+<a name="l00065"></a>00065   <span class="keywordtype">void</span> on_buttonBox_clicked(QAbstractButton *button);
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   <span class="comment">// Rescan for available ports</span>
+<a name="l00068"></a>00068   <span class="keywordtype">void</span> on_pbRescan_clicked();
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="comment">// Open selected port (if manager was set)</span>
+<a name="l00071"></a>00071   <span class="keywordtype">void</span> on_cbPort_currentIndexChanged(<span class="keywordtype">int</span> index);
 <a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="comment">// Set the running state</span>
-<a name="l00074"></a>00074   <span class="keywordtype">void</span> setStateRunning();
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="comment">// Set the stopped state</span>
-<a name="l00077"></a>00077   <span class="keywordtype">void</span> setStateStopped();
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="comment">// Set the Error state</span>
-<a name="l00080"></a>00080   <span class="keywordtype">void</span> setStateError(QString msg = tr(<span class="stringliteral">&quot;Error&quot;</span>));
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="comment">// Enable/diseable the apply buttons (Ok, Apply)</span>
-<a name="l00083"></a>00083   <span class="keywordtype">void</span> diseableApplyButtons();
-<a name="l00084"></a>00084   <span class="keywordtype">void</span> enableApplyButtons();
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086   <a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> *pvPortManager;
-<a name="l00087"></a>00087   <a class="code" href="classmdt_port_config_widget.html">mdtPortConfigWidget</a> *pvPortConfigWidget;
-<a name="l00088"></a>00088   <a class="code" href="classmdt_serial_port_config_widget.html">mdtSerialPortConfigWidget</a> *pvSerialPortConfigWidget;
-<a name="l00089"></a>00089 };
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H</span>
+<a name="l00073"></a>00073  <span class="keyword">private</span>:
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075   <span class="comment">// Set the running state</span>
+<a name="l00076"></a>00076   <span class="keywordtype">void</span> setStateRunning();
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   <span class="comment">// Set the stopped state</span>
+<a name="l00079"></a>00079   <span class="keywordtype">void</span> setStateStopped();
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081   <span class="comment">// Set the Error state</span>
+<a name="l00082"></a>00082   <span class="keywordtype">void</span> setStateError(QString msg = tr(<span class="stringliteral">&quot;Error&quot;</span>));
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   <span class="comment">// Enable/diseable the apply buttons (Ok, Apply)</span>
+<a name="l00085"></a>00085   <span class="keywordtype">void</span> diseableApplyButtons();
+<a name="l00086"></a>00086   <span class="keywordtype">void</span> enableApplyButtons();
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088   <a class="code" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> *pvPortManager;
+<a name="l00089"></a>00089   <a class="code" href="classmdt_port_config_widget.html">mdtPortConfigWidget</a> *pvPortConfigWidget;
+<a name="l00090"></a>00090   <a class="code" href="classmdt_serial_port_config_widget.html">mdtSerialPortConfigWidget</a> *pvSerialPortConfigWidget;
+<a name="l00091"></a>00091 };
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 <span class="preprocessor">#endif  // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -159,7 +159,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:17 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

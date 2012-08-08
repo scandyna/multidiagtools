@@ -38,6 +38,7 @@ mdtTcpSocket::~mdtTcpSocket()
   close();
 }
 
+/**
 void mdtTcpSocket::abortWaiting()
 {
   Q_ASSERT(pvNativePthreadObject != 0);
@@ -46,6 +47,7 @@ void mdtTcpSocket::abortWaiting()
   ///pvAbortingWaitEventCtl = true;
   pthread_kill(pvNativePthreadObject, SIGALRM);
 }
+*/
 
 void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 {

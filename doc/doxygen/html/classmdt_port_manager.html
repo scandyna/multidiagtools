@@ -86,7 +86,7 @@ Collaboration diagram for mdtPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_manager__coll__graph.png" border="0" usemap="#mdt_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_manager_coll__map" id="mdt_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="80,293,219,323"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="96,197,203,227"/><area shape="rect" id="node10" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="243,293,381,323"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="80,293,219,323"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="96,197,203,227"/><area shape="rect" id="node10" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="243,293,381,323"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_manager-members.html">List of all members.</a></p>
@@ -108,9 +108,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port object.  <a href="#afcd156b2d0c9d340999935efb6cd8cb6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a608210f908d6ac53ced36f5cf9a783f9"></a><!-- doxytag: member="mdtPortManager::detachPort" ref="a608210f908d6ac53ced36f5cf9a783f9" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a608210f908d6ac53ced36f5cf9a783f9">detachPort</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach port. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a608210f908d6ac53ced36f5cf9a783f9">detachPort</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach port.  <a href="#a608210f908d6ac53ced36f5cf9a783f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a647f85027ac2ed695a88f23c9f9167eb">setPortName</a> (const QString &amp;portName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port name.  <a href="#a647f85027ac2ed695a88f23c9f9167eb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a> ()</td></tr>
@@ -175,7 +174,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 
  <span class="comment">// Init port</span>
  port = <span class="keyword">new</span> <a class="code" href="classmdt_port.html">mdtPort</a>;
- port-&gt;<a class="code" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f" title="Set configuration.">setConfig</a>(config);
+ port-&gt;<a class="code" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f" title="Abort the waiting functions.">setConfig</a>(config);
 
  <span class="comment">// Init port manager</span>
  m.<a class="code" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort</a>(port);
@@ -270,7 +269,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <p>NOTE:</p>
 <p>This stops the threads (if exists) and close the port.<br/>
  If port was never set (with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> ), this method does nothing.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>FIXME: clean this ... </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>FIXME: clean this ... </dd></dl>
 
 </div>
 </div>
@@ -300,6 +299,27 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 </p>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">mdtSerialPortManager</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a608210f908d6ac53ced36f5cf9a783f9"></a><!-- doxytag: member="mdtPortManager::detachPort" ref="a608210f908d6ac53ced36f5cf9a783f9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::detachPort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detach port. </p>
+
+<p><p>NOTE: disconnect ? </p>
+</p>
 
 </div>
 </div>
@@ -460,7 +480,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
 
 <p><p>return pvPort-&gt;setAttributes(portName);</p>
 <p>if(pvPort-&gt;open() != <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){ return false; } pvPort-&gt;close();</p>
@@ -685,7 +705,6 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8h_source.html">mdtPortManager.h</a></li>
 <li>src/mdtport/mdtPortManager.cpp</li>
-<li>src/mdtport/moc_mdtPortManager.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -702,7 +721,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:19 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

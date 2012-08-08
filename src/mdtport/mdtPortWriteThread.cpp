@@ -48,6 +48,7 @@ mdtFrame *mdtPortWriteThread::getNewFrame()
 
 void mdtPortWriteThread::run()
 {
+  qDebug() << "WRTHD: starting ...";
   Q_ASSERT(pvPort != 0);
 
   char *bufferCursor = 0;
@@ -57,7 +58,9 @@ void mdtPortWriteThread::run()
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
-  pvPort->setNativePthreadObject(pthread_self());
+  ///pvPort->setNativePthreadObject(pthread_self());
+  pvNativePthreadObject = pthread_self();
+  Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Set the running flag
   pvRunning = true;
@@ -128,6 +131,9 @@ void mdtPortWriteThread::run()
       }
     }
   }
+  
+  qDebug() << "WRTHD: Cleanup ...";
 
   pvPort->unlockMutex();
+  qDebug() << "WRTHD: END";
 }

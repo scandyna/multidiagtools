@@ -28,11 +28,8 @@ Collaboration diagram for mdtPort:\nopagebreak
 \label{classmdt_port_ac466eac9d1a54ea0e04c998660ad75ec}
 
 \item 
-\hypertarget{classmdt_port_aa77b266f23744f1b53ae589f986be101}{
-void \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{setReadTimeout} (int timeout)}
-\label{classmdt_port_aa77b266f23744f1b53ae589f986be101}
-
-\begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{setReadTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Abort the waiting functions. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{
 void \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{setWriteTimeout} (int timeout)}
 \label{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}
@@ -76,6 +73,31 @@ Read data from port.
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly. 
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
+
+\hypertarget{classmdt_port_aa77b266f23744f1b53ae589f986be101}{
+\index{mdtPort@{mdtPort}!setReadTimeout@{setReadTimeout}}
+\index{setReadTimeout@{setReadTimeout}!mdtPort@{mdtPort}}
+\subsubsection[{setReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPort::setReadTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_aa77b266f23744f1b53ae589f986be101}
+
+
+Abort the waiting functions. 
+
+This method is called from main thread (\hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()}), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.
+
+The mutex is not handled by this method.void abortWaiting();
+
+Set the read data timeout
+
+void mdtPort::abortWaiting() \{ Q\_\-ASSERT(pvNativePthreadObject != 0);
+
+Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread\_\-kill(pvNativePthreadObject, SIGALRM); \} 
+
+Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
 
 \hypertarget{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}{
 \index{mdtPort@{mdtPort}!waitEventWriteReady@{waitEventWriteReady}}

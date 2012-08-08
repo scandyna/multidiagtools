@@ -263,9 +263,11 @@ void mdtTcpSocketThread::run()
   mdtTcpSocket *socket;
 
   pvPort->lockMutex();
+/**
 #ifdef Q_OS_UNIX
   pvPort->setNativePthreadObject(pthread_self());
 #endif
+*/
   // Init write frame
   pvWriteCurrentFrame = 0;
   // Get a RX frame

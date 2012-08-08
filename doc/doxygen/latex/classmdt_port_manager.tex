@@ -53,10 +53,7 @@ void \hyperlink{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}{newData
 \item 
 void \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
 \begin{DoxyCompactList}\small\item\em Set port object. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}{
-void \hyperlink{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}{detachPort} ()}
-\label{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}
-
+void \hyperlink{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}{detachPort} ()
 \begin{DoxyCompactList}\small\item\em Detach port. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_a647f85027ac2ed695a88f23c9f9167eb}{setPortName} (const QString \&portName)
 \begin{DoxyCompactList}\small\item\em Set port name. \end{DoxyCompactList}\item 
@@ -236,7 +233,7 @@ This stops the threads (if exists) and close the port.\par
  If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} ), this method does nothing.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]FIXME: clean this ... \end{Desc}
+\item[\hyperlink{todo__todo000004}{Todo}]FIXME: clean this ... \end{Desc}
 \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
 \index{mdtPortManager@{mdtPortManager}!config@{config}}
 \index{config@{config}!mdtPortManager@{mdtPortManager}}
@@ -269,6 +266,23 @@ Q\_\-ASSERT(pvConfig != 0); return $\ast$pvConfig;
 
 
 Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{mdtSerialPortManager}.
+
+\hypertarget{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}{
+\index{mdtPortManager@{mdtPortManager}!detachPort@{detachPort}}
+\index{detachPort@{detachPort}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{detachPort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::detachPort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}
+
+
+Detach port. 
+
+
+
+NOTE: disconnect ? 
 
 \hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
 \index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
@@ -627,5 +641,4 @@ Note that thread object should not be used without care. \begin{DoxyPrecond}{Pre
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortManager.h\item 
-src/mdtport/mdtPortManager.cpp\item 
-src/mdtport/moc\_\-mdtPortManager.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtPortManager.cpp\end{DoxyCompactItemize}

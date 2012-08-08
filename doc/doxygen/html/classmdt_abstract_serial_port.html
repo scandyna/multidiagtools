@@ -81,14 +81,14 @@ Inheritance diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__inherit__graph.png" border="0" usemap="#mdt_abstract_serial_port_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_abstract_serial_port_inherit__map" id="mdt_abstract_serial_port_inherit__map">
-<area shape="rect" id="node5" href="classmdt_serial_port.html" title="mdtSerialPort" alt="" coords="29,160,131,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,5,139,35"/></map>
+<area shape="rect" id="node5" href="classmdt_serial_port.html" title="mdtSerialPort" alt="" coords="29,160,131,189"/><area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,5,139,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtAbstractSerialPort:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_abstract_serial_port__coll__graph.png" border="0" usemap="#mdt_abstract_serial_port_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_abstract_serial_port_coll__map" id="mdt_abstract_serial_port_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)" alt="" coords="21,101,139,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="21,101,139,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="27,5,133,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_abstract_serial_port-members.html">List of all members.</a></p>
@@ -207,13 +207,13 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Comment this class </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Comment this class </dd></dl>
 <p>Interface class for serial port</p>
 <p>This is a abstract class used to build system specific implementation.<br/>
  The subclass should have <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a> as name, so it will be compatible with several classes (f.ex. <a class="el" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a>).<br/>
- To begin a implementation, please take a look at <a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> at first.<br/>
+ To begin a implementation, please take a look at <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> at first.<br/>
 </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="NOTE: file/port lock must be implemented ! (see Qt solution ? , sa: GtkTerm)">mdtAbstractPort</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="aecd76bff0f93cb86c3bbfd73e3776032"></a><!-- doxytag: member="mdtAbstractSerialPort::availableBaudRates" ref="aecd76bff0f93cb86c3bbfd73e3776032" args="()" -->
 <div class="memitem">
@@ -339,17 +339,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 <p>Close the serial port. </p>
 <p>Close serial port and clear flags (f.ex. UART Type is set to unknow).</p>
-<p>The mutex is not handled by this method.</p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass.<br/>
- To handle the port correctly, the subclass method must:</p>
-<ul>
-<li>Check if port is open with <a class="el" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen()</a> , if false, simply return.</li>
-<li>Restore original settings (f.ex. termios struct on Posix)</li>
-<li>Unlock and close the port</li>
-<li>Call this close method (with <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">mdtAbstractSerialPort::close()</a> ). At this last step, the UART type wil be set to unknown type, available baud rates list cleared. Then, the <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> method will be called.</li>
-</ul>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">mdtAbstractPort::close()</a> </dd></dl>
+<p>The mutex is not handled by this method. </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
 
@@ -530,7 +520,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <div class="memdoc">
 
 <p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
 <p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
@@ -912,7 +902,20 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <div class="memdoc">
 
 <p>Wait until a control (modem line) signal state changes. </p>
-<p>This method must be re-implemented in plateform specific subclass.</p>
+<p>This method is called from <a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> , and should not be used directly.<br/>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<p>Subclass notes:<br/>
+ This method must be re-implemented in plateform specific subclass.<br/>
+ To handle port correctly, a sequence should be something like:<br/>
+</p>
+<ul>
+<li>Do some needed calls/init</li>
+<li>Unlock the mutex</li>
+<li>Enable thread's canclel state with setCancelStateEnabled()</li>
+<li>Call system's wait function</li>
+<li>Diseable thread's canclel state with setCancelStateEnabled()</li>
+<li>Lock the mutext again</li>
+</ul>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_serial_port.html#acc51ca593b4592f806ef4b9791486f47">mdtSerialPort</a>.</p>
@@ -922,7 +925,6 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/<a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a></li>
 <li>src/mdtserialport/mdtAbstractSerialPort.cpp</li>
-<li>src/mdtserialport/moc_mdtAbstractSerialPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -939,7 +941,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 2 2012 18:50:18 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -79,6 +79,8 @@ void mdtPortTest::startStopTest()
 
   // Setup
   port.setPortName(file.fileName());
+  cfg.setReadTimeout(-1);   // Set infinite timeout
+  cfg.setWriteTimeout(-1);  // Set infinite timeout
   port.setConfig(&cfg);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);

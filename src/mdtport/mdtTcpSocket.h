@@ -48,7 +48,7 @@ class mdtTcpSocket : public mdtAbstractPort
    *
    * The mutex is not handled by this method.
    */
-  void abortWaiting();
+  ///void abortWaiting();
 
   /*! \brief Connect to host
    * 

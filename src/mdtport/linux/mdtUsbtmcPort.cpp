@@ -40,6 +40,7 @@ mdtUsbtmcPort::~mdtUsbtmcPort()
   delete pvPortLock;
 }
 
+/**
 void mdtUsbtmcPort::abortWaiting()
 {
   Q_ASSERT(pvNativePthreadObject != 0);
@@ -48,6 +49,7 @@ void mdtUsbtmcPort::abortWaiting()
   ///pvAbortingWaitEventCtl = true;
   pthread_kill(pvNativePthreadObject, SIGALRM);
 }
+*/
 
 void mdtUsbtmcPort::setReadTimeout(int timeout)
 {

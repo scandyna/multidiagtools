@@ -47,6 +47,7 @@ mdtPort::~mdtPort()
   qDebug() << "mdtPort::~mdtPort() END";
 }
 
+/**
 void mdtPort::abortWaiting()
 {
   Q_ASSERT(pvNativePthreadObject != 0);
@@ -55,17 +56,27 @@ void mdtPort::abortWaiting()
   ///pvAbortingWaitEventCtl = true;
   pthread_kill(pvNativePthreadObject, SIGALRM);
 }
-
+*/
 void mdtPort::setReadTimeout(int timeout)
 {
-  pvReadTimeout.tv_sec = timeout/1000;
-  pvReadTimeout.tv_usec = 1000*(timeout%1000);
+  if(timeout == -1){
+    pvReadTimeout.tv_sec = -1;
+    pvReadTimeout.tv_usec = 0;
+  }else{
+    pvReadTimeout.tv_sec = timeout/1000;
+    pvReadTimeout.tv_usec = 1000*(timeout%1000);
+  }
 }
 
 void mdtPort::setWriteTimeout(int timeout)
 {
-  pvWriteTimeout.tv_sec = timeout/1000;
-  pvWriteTimeout.tv_usec = 1000*(timeout%1000);
+  if(timeout == -1){
+    pvWriteTimeout.tv_sec = -1;
+    pvWriteTimeout.tv_usec = 0;
+  }else{
+    pvWriteTimeout.tv_sec = timeout/1000;
+    pvWriteTimeout.tv_usec = 1000*(timeout%1000);
+  }
 }
 
 bool mdtPort::waitForReadyRead()
@@ -79,7 +90,11 @@ bool mdtPort::waitForReadyRead()
   FD_SET(pvFd, &input);
 
   pvMutex.unlock();
-  n = select(pvFd+1, &input, 0, 0, &tv);
+  if(tv.tv_sec == -1){
+    n = select(pvFd+1, &input, 0, 0, 0);
+  }else{
+    n = select(pvFd+1, &input, 0, 0, &tv);
+  }
   pvMutex.lock();
   if(n == 0){
     updateReadTimeoutState(true);
@@ -141,7 +156,11 @@ bool mdtPort::waitEventWriteReady()
   FD_SET(pvFd, &output);
 
   pvMutex.unlock();
-  n = select(pvFd+1, 0, &output, 0, &tv);
+  if(tv.tv_sec == -1){
+    n = select(pvFd+1, 0, &output, 0, 0);
+  }else{
+    n = select(pvFd+1, 0, &output, 0, &tv);
+  }
   pvMutex.lock();
   if(n == 0){
     updateWriteTimeoutState(true);

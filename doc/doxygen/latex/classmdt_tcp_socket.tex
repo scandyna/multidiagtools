@@ -36,10 +36,8 @@ void {\bfseries decrementTransactionsCounter} ()}
 \label{classmdt_tcp_socket_aeed1a50725a8e61f86de2bf67a92feb8}
 
 \item 
-\hyperlink{classmdt_tcp_socket_ac1e7831d297471d6e5b920de5e9bb675}{$\sim$mdtTcpSocket} ()
-\item 
 void \hyperlink{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{connectToHost} (const QString \&hostName, int hostPort)
-\begin{DoxyCompactList}\small\item\em Connect to host. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Abort the waiting functions. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{setThreadObjects} (QTcpSocket $\ast$socket, \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} $\ast$thread)
 \begin{DoxyCompactList}\small\item\em Set the socket. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTimeout} (int timeout)
@@ -58,22 +56,6 @@ bool \hyperlink{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{waitEvent
 \begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{write} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
-
-
-\subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_tcp_socket_ac1e7831d297471d6e5b920de5e9bb675}{
-\index{mdtTcpSocket@{mdtTcpSocket}!$\sim$mdtTcpSocket@{$\sim$mdtTcpSocket}}
-\index{$\sim$mdtTcpSocket@{$\sim$mdtTcpSocket}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{$\sim$mdtTcpSocket}]{\setlength{\rightskip}{0pt plus 5cm}mdtTcpSocket::$\sim$mdtTcpSocket (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_tcp_socket_ac1e7831d297471d6e5b920de5e9bb675}
-
-
-\hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()}; 
-
 
 
 \subsection{Member Function Documentation}
@@ -102,7 +84,13 @@ Mutex is locked by this method. \hypertarget{classmdt_tcp_socket_aa5b229a668c0d9
 \label{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}
 
 
-Connect to host. 
+Abort the waiting functions. 
+
+This method is called from main thread (\hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()}), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.
+
+The mutex is not handled by this method.void abortWaiting();
+
+Connect to host
 
 Use this method to start a connection to a host.\par
  Mutex is locked by this method. 
@@ -113,9 +101,11 @@ Use this method to start a connection to a host.\par
 \hline
 \end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-hostPort must be $>$ 0 
+hostPort must be $>$ 0
 \end{DoxyPrecond}
-\hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
+void mdtTcpSocket::abortWaiting() \{ Q\_\-ASSERT(pvNativePthreadObject != 0);
+
+Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread\_\-kill(pvNativePthreadObject, SIGALRM); \} \hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
 \index{mdtTcpSocket@{mdtTcpSocket}!read@{read}}
 \index{read@{read}!mdtTcpSocket@{mdtTcpSocket}}
 \subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtTcpSocket::read (
@@ -131,9 +121,11 @@ Read data from port.
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.
 
+Mutex is not handled by this method.
+
 Subclass notes:\par
  This method must be implemented in subclass.\par
- Mutex is not handled by this method.
+
 
 \begin{DoxyReturn}{Returns}
 Number of bytes readen, or a error $<$ 0 
@@ -155,10 +147,14 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 Set the read data timeout. 
 
+The mutex is not handled by this method.
+
 Subclass notes:\par
- This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
+ This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix)
+
+
 \begin{DoxyParams}{Parameters}
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+{\em timeout} & Timeout \mbox{[}ms\mbox{]}. A value of -\/1 means a infinite timeout. \\
 \hline
 \end{DoxyParams}
 
@@ -201,10 +197,14 @@ thread must be a valid pointer
 
 Set the write data timeout. 
 
+The mutex is not handled by this method.
+
 Subclass notes:\par
- This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix) 
+ This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix)
+
+
 \begin{DoxyParams}{Parameters}
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+{\em timeout} & Timeout \mbox{[}ms\mbox{]}. A value of -\/1 means a infinite timeout. \\
 \hline
 \end{DoxyParams}
 
@@ -309,7 +309,9 @@ Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{
 
 Write data to port. 
 
-This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly. Mutex is not handled by this method.
+This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.
+
+Mutex is not handled by this method.
 
 Subclass notes:\par
  This method must be implemented in subclass.\par

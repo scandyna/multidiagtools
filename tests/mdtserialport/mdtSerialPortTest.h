@@ -32,10 +32,10 @@ class mdtSerialPortTest : public mdtTest
   void essais();
 
   // Test start and stop
-  void mdtSerialPortStartStopTest();
+  void startStopTest();
 
   // Test the control signals (modem lines)
-  void mdtSerialPortCtlSignalsTest();
+  void ctlSignalsTest();
 
   // Test the data transmission: RAW
   void mdtSerialPortTxRxBinaryTest();

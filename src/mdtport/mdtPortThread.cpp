@@ -33,6 +33,15 @@ mdtPortThread::mdtPortThread(QObject *parent)
   pvMinPoolSizeBeforeReadSuspend = 0;
   pvWriteMinWaitTime = 0;
   pvUseReadTimeoutProtocol = false;
+#ifdef Q_OS_UNIX
+  pvNativePthreadObject = 0;
+  // We must catch the SIGALRM signal, else the application process
+  // will be killed by pthread_kill()
+  sigemptyset(&(pvSigaction.sa_mask));
+  pvSigaction.sa_flags = 0;
+  pvSigaction.sa_handler = sigactionHandle;
+  sigaction(SIGALRM, &pvSigaction, NULL);
+#endif
 }
 
 mdtPortThread::~mdtPortThread()
@@ -92,7 +101,10 @@ void mdtPortThread::stop()
   pvPort->lockMutex();
   pvRunning = false;
   pvPort->unlockMutex();
-  pvPort->abortWaiting();
+  ///pvPort->abortWaiting();
+#ifdef Q_OS_UNIX
+  pthread_kill(pvNativePthreadObject, SIGALRM);
+#endif
 
   // Wait the end of the thread
   while(!isFinished()){
@@ -129,6 +141,10 @@ bool mdtPortThread::isFinished() const
   pvPort->unlockMutex();
 
   return QThread::isFinished();
+}
+
+void mdtPortThread::sigactionHandle(int /* signum */)
+{
 }
 
 /**
