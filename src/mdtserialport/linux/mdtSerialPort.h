@@ -30,8 +30,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
-#include <signal.h>
-#include <pthread.h>
 #include <QObject>
 
 /*
@@ -45,17 +43,6 @@ class mdtSerialPort : public mdtAbstractSerialPort
 
   mdtSerialPort(QObject *parent = 0);
   ~mdtSerialPort();
-
-  /*! \brief Abort the waiting functions
-   *
-   * This method is called from main thread (mdtPortThread::stop()),
-   * and cause the system's wait functions to be aborted.
-   * Example are select() or ioctl() on POSIX. On Windows,
-   * the appropriate event of WaitForMultipleObjects() should be set.
-   *
-   * The mutex is not handled by this method.
-   */
-  ///void abortWaiting();
 
   /*! \brief Set the baud rate
    *
@@ -170,7 +157,7 @@ class mdtSerialPort : public mdtAbstractSerialPort
    * This method is called from mdtPortReadThread , and should not be used directly.<br>
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
-  bool waitForReadyRead();
+  error_t waitForReadyRead();
 
   /*! \brief Read data from port
    *
@@ -189,8 +176,12 @@ class mdtSerialPort : public mdtAbstractSerialPort
   // Implemtation of mdtAbstractPort method
   void flushIn();
 
-  // Implemtation of mdtAbstractPort
-  bool waitEventWriteReady();
+  /*! \brief Wait until data can be written to port.
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
+  error_t waitEventWriteReady();
 
   // Implemtation of mdtAbstractPort method
   qint64 write(const char *data, qint64 maxSize);
@@ -203,7 +194,7 @@ class mdtSerialPort : public mdtAbstractSerialPort
    * This method is called from mdtSerialPortCtlThread , and should not be used directly.<br>
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
-  bool waitEventCtl();
+  error_t waitEventCtl();
 
   // Get the control signal (modem line) states and update member flags
   bool getCtlStates();
@@ -211,14 +202,6 @@ class mdtSerialPort : public mdtAbstractSerialPort
   void setRts(bool on);
 
   void setDtr(bool on);
-
-  // Must be called from signal control thread (see mdtSerialPortCtlThread)
-  ///void defineCtlThread(pthread_t ctlThread);
-
-  // Abort the waitEventCtl() function
-  // Note: the thread in witch the waitEventCtl() function
-  //       is called must be defined with defineCtlThread() before
-  ///void abortWaitEventCtl();
 
  private:
 
@@ -264,9 +247,6 @@ class mdtSerialPort : public mdtAbstractSerialPort
   // Check if configuration could be done on system
   bool checkConfig(mdtSerialPortConfig cfg);
 
-  // Used to catch the SIGALRM signal (doese nothing else)
-  ///static void sigactionHandle(int signum);
-
   // Set the RTS ON/OFF
   bool setRtsOn();
   bool setRtsOff();
@@ -278,10 +258,6 @@ class mdtSerialPort : public mdtAbstractSerialPort
   int pvPreviousDsrState;
   int pvPreviousCtsState;
   int pvPreviousRngState;
-  // Members used for control signals thread kill
-  ///pthread_t pvCtlThread;
-  ///struct sigaction pvSigaction;
-  bool pvAbortingWaitEventCtl;
   int pvFd;                         // Port file descriptor
   struct timeval pvReadTimeout;
   struct timeval pvWriteTimeout;

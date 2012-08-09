@@ -116,7 +116,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emited when write timeout state changed. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a35e7bff9413690833c832bf115da102f">mdtAbstractPort</a> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35e7bff9413690833c832bf115da102f"></a><!-- doxytag: member="mdtAbstractPort::mdtAbstractPort" ref="a35e7bff9413690833c832bf115da102f" args="(QObject *parent=0)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>mdtAbstractPort</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15">~mdtAbstractPort</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aa40baa0c593fef984f3796acafceee15"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932">setPortName</a> (const QString &amp;portName)</td></tr>
@@ -131,8 +132,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get port's open state. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">close</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#a1ace1a2bd1a04f16952980e247b04800"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f">setConfig</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *cfg)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the waiting functions.  <a href="#a48bdc0a8057c3b119763643098cf798f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48bdc0a8057c3b119763643098cf798f"></a><!-- doxytag: member="mdtAbstractPort::setConfig" ref="a48bdc0a8057c3b119763643098cf798f" args="(mdtPortConfig *cfg)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f">setConfig</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *cfg)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set configuration. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d105c90696f7c40f29c24fe9b6e4481"></a><!-- doxytag: member="mdtAbstractPort::config" ref="a3d105c90696f7c40f29c24fe9b6e4481" args="()" -->
 <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481">config</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the stored configuration. <br/></td></tr>
@@ -142,10 +144,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#a6589b04467e0073d18ba872201bdcd84"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">setWriteTimeout</a> (int timeout)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#a12eb422d52ebb09a650f8497b258c2e7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">waitForReadyRead</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#a848e3c86aa6ec480e8c471655fbcf5c5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ae77785fbad938eac5f24f437e7683277">waitForReadyRead</a> (int msecs)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#ae77785fbad938eac5f24f437e7683277"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">waitForReadyRead</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#aeda364cb191da1038a22dd1fc06a1d49"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a47f4db2e72b5fd3e32162e6a898fd391">waitForReadyRead</a> (int msecs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#a47f4db2e72b5fd3e32162e6a898fd391"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">read</a> (char *data, qint64 maxSize)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a9d9c45220d5328c9856a2445557fe970"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">suspendTransmission</a> ()</td></tr>
@@ -158,8 +160,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just for special cases.  <a href="#ab1738b5b6b78743ee2d36ccf5daa7c00"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a2235d62d9a9e4555d41773c41cc3bc70">writeOneFrame</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just for special cases.  <a href="#a2235d62d9a9e4555d41773c41cc3bc70"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">waitEventWriteReady</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a7773bc21c63ce6a275f5a0889935ac83"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">waitEventWriteReady</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a35e4686f50e2c53c7e3618cf2c485d92"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">write</a> (const char *data, qint64 maxSize)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a64d4802975a76474b9196c91f57a6d90"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">flushOut</a> ()</td></tr>
@@ -253,7 +255,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>Setup failed on a configuration option </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888"></a><!-- doxytag: member="WaitingCanceled" ref="ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888" args="" -->WaitingCanceled</em>&nbsp;</td><td>
-<p>When a thread (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> or subclass) is stopping, it will cancel blocking calls (like <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> or <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83" title="Wait until data can be written to port.">waitEventWriteReady()</a> ). At this case, this error is returned, and the thread knows that it can cleanup and end. </p>
+<p>When a thread (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> or subclass) is stopping, it will cancel blocking calls (like <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> or <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> ). At this case, this error is returned, and the thread knows that it can cleanup and end. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871"></a><!-- doxytag: member="UnknownError" ref="ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871" args="" -->UnknownError</em>&nbsp;</td><td>
 <p>Unknown error is happen. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
@@ -265,26 +267,6 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a35e7bff9413690833c832bf115da102f"></a><!-- doxytag: member="mdtAbstractPort::mdtAbstractPort" ref="a35e7bff9413690833c832bf115da102f" args="(QObject *parent=0)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mdtAbstractPort::mdtAbstractPort </td>
-          <td>(</td>
-          <td class="paramtype">QObject *&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p><p>#ifdef Q_OS_UNIX pvNativePthreadObject = 0; We must catch the SIGALRM signal, else the application process will be killed by pthread_kill() sigemptyset(&amp;(pvSigaction.sa_mask)); pvSigaction.sa_flags = 0; pvSigaction.sa_handler = sigactionHandle; sigaction(SIGALRM, &amp;pvSigaction, NULL); #endif</p>
-</p>
-
-</div>
-</div>
 <a class="anchor" id="aa40baa0c593fef984f3796acafceee15"></a><!-- doxytag: member="mdtAbstractPort::~mdtAbstractPort" ref="aa40baa0c593fef984f3796acafceee15" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -670,37 +652,6 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a48bdc0a8057c3b119763643098cf798f"></a><!-- doxytag: member="mdtAbstractPort::setConfig" ref="a48bdc0a8057c3b119763643098cf798f" args="(mdtPortConfig *cfg)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtAbstractPort::setConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *&#160;</td>
-          <td class="paramname"><em>cfg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Abort the waiting functions. </p>
-<p>This method is called from main thread (<a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a>), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.</p>
-<p>The mutex is not handled by this method.</p>
-<p>Subclass notes:<br/>
- This method must be implement in subclass, and use the system's native way to abort blocking system calls. On POSIX, the pthread_kill() can be used with SIGALRM. The pvNativePthreadObject must be used.<br/>
- On Windows, the WaitForMultipleObjects() seems to be a good aproach.virtual void abortWaiting() = 0;</p>
-<p>Set the internal pthrad_t object (POSIX only)</p>
-<p>This method is called from a thread (subclass of <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>) to set the pthread_t instance.</p>
-<p>The mutex is not handled by this method.void setNativePthreadObject(pthread_t thread);</p>
-<p>Handle function for sigaction</p>
-<p>This default implementation does nothing.static void sigactionHandle(int signum);</p>
-<p>Set configuration</p>
-<p>void mdtAbstractPort::setNativePthreadObject(pthread_t thread) { pvNativePthreadObject = thread; } void mdtAbstractPort::sigactionHandle(int) { } </p>
-
-</div>
-</div>
 <a class="anchor" id="a0ca143d32fc677bac7c1cf0e04144932"></a><!-- doxytag: member="mdtAbstractPort::setPortName" ref="a0ca143d32fc677bac7c1cf0e04144932" args="(const QString &amp;portName)" -->
 <div class="memitem">
 <div class="memproto">
@@ -870,18 +821,18 @@ A valid configuration must be set before calling this method.</dd></dl>
 <div class="memdoc">
 
 <p>Update the write timeout state. </p>
-<p>This method must be called by system dependant <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83" title="Wait until data can be written to port.">waitEventWriteReady()</a> method When the write timeout state chages, the signal <a class="el" href="classmdt_abstract_port.html#abd4a3e5738ac13167ddaafe95926ce4d" title="Emited when write timeout state changed.">writeTimeoutStateChanged()</a> is emited.<br/>
+<p>This method must be called by system dependant <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> method When the write timeout state chages, the signal <a class="el" href="classmdt_abstract_port.html#abd4a3e5738ac13167ddaafe95926ce4d" title="Emited when write timeout state changed.">writeTimeoutStateChanged()</a> is emited.<br/>
  Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </p>
 
 </div>
 </div>
-<a class="anchor" id="a7773bc21c63ce6a275f5a0889935ac83"></a><!-- doxytag: member="mdtAbstractPort::waitEventWriteReady" ref="a7773bc21c63ce6a275f5a0889935ac83" args="()=0" -->
+<a class="anchor" id="a35e4686f50e2c53c7e3618cf2c485d92"></a><!-- doxytag: member="mdtAbstractPort::waitEventWriteReady" ref="a35e4686f50e2c53c7e3618cf2c485d92" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool mdtAbstractPort::waitEventWriteReady </td>
+          <td class="memname">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> mdtAbstractPort::waitEventWriteReady </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -894,23 +845,22 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
 <p>Subclass notes:<br/>
- This method must be re-implemented in subclass.<br/>
- Notes about mutex handling:</p>
+ This method must be re-implemented in subclass. The write timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState()</a> Notes about mutex handling:</p>
 <ul>
 <li>Mutex must be released during wait, and relocked befor return.</li>
 </ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application). </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_port.html#a2307bdc3b7d89f27e65b96b8a359b70a">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#aaa58100bc6ec2a5f91a3c6bb3676a468">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a91ada4fd18d31646c2a4d630b8f9ff21">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#a815275951e5834daf5068ffb48fcdcb3">mdtSerialPort</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port.html#a85e77a391f6f5782428beb2e6aee52f8">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a24cfc5233e09b9dbcdb2adc5f700dc4a">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a33385bcde41b8065ea7eff65c754b0cb">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd">mdtSerialPort</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae77785fbad938eac5f24f437e7683277"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="ae77785fbad938eac5f24f437e7683277" args="(int msecs)" -->
+<a class="anchor" id="a47f4db2e72b5fd3e32162e6a898fd391"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="a47f4db2e72b5fd3e32162e6a898fd391" args="(int msecs)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtAbstractPort::waitForReadyRead </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtAbstractPort::waitForReadyRead </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>msecs</em></td><td>)</td>
@@ -921,27 +871,26 @@ A valid configuration must be set before calling this method.</dd></dl>
 <div class="memdoc">
 
 <p>Wait until data is available on port. </p>
-<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> ).<br/>
- Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> without argument.<br/>
+<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> ).<br/>
+ Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> without argument.<br/>
  Note: this method is called from thread , and should not be used directly<br/>
- Mutex: see <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a></p>
+ Mutex: see <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a></p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout [ms]. A value of -1 means a infinite timeout. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5" title="Wait until data is available on port.">waitForReadyRead()</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a848e3c86aa6ec480e8c471655fbcf5c5"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="a848e3c86aa6ec480e8c471655fbcf5c5" args="()=0" -->
+<a class="anchor" id="aeda364cb191da1038a22dd1fc06a1d49"></a><!-- doxytag: member="mdtAbstractPort::waitForReadyRead" ref="aeda364cb191da1038a22dd1fc06a1d49" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool mdtAbstractPort::waitForReadyRead </td>
+          <td class="memname">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> mdtAbstractPort::waitForReadyRead </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -959,14 +908,14 @@ A valid configuration must be set before calling this method.</dd></dl>
 <ul>
 <li>Mutex must be released during wait, and relocked befor return.</li>
 </ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will emit errorOccured()</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application).</dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
 <dd>
 <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd>
 <dd>
 <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_port.html#af8737cc14667f6770af7be01759253e2">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a46efba4f2d3dbb3c917368323de0333b">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a381bf5194cf180ca95f5f4bae730f73c">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#a0334aa073299f6161034e6be7c60939d">mdtSerialPort</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_port.html#a84594fdb56cd455a366c69b0a9228020">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a3c1b746acfc06857eee4b4c136cd65ad">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#adb09186cdacdac15291523c59f156cd4">mdtTcpSocket</a>, and <a class="el" href="classmdt_serial_port.html#ad150a45c68d98a501bea2f102aeadb50">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -1107,7 +1056,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 11:19:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

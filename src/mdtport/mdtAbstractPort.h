@@ -124,40 +124,6 @@ class mdtAbstractPort : public QObject
    */
   virtual void close();
 
-  /*! \brief Abort the waiting functions
-   *
-   * This method is called from main thread (mdtPortThread::stop()),
-   * and cause the system's wait functions to be aborted.
-   * Example are select() or ioctl() on POSIX. On Windows,
-   * the appropriate event of WaitForMultipleObjects() should be set.
-   *
-   * The mutex is not handled by this method.
-   *
-   * Subclass notes:<br>
-   * This method must be implement in subclass,
-   * and use the system's native way to abort blocking system calls.
-   * On POSIX, the pthread_kill() can be used with SIGALRM. The pvNativePthreadObject must be used.<br>
-   * On Windows, the WaitForMultipleObjects() seems to be a good aproach.
-   */
-  ///virtual void abortWaiting() = 0;
-
-#ifdef Q_OS_UNIX
-  /*! \brief Set the internal pthrad_t object (POSIX only)
-   *
-   * This method is called from a thread (subclass of mdtPortThread)
-   *  to set the pthread_t instance.
-   *
-   * The mutex is not handled by this method.
-   */
-  ///void setNativePthreadObject(pthread_t thread);
-
-  /*! \brief Handle function for sigaction
-   *
-   * This default implementation does nothing.
-   */
-  ///static void sigactionHandle(int signum);
-#endif
-
   /*! \brief Set configuration
    */
   void setConfig(mdtPortConfig *cfg);
@@ -217,13 +183,16 @@ class mdtAbstractPort : public QObject
    * Notes about mutex handling:
    *  - Mutex must be released during wait, and relocked befor return.
    *
-   * \return False on error, in this case, the reader thread will emit errorOccured()
+   * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
+   *          and the thread knows that it must end (case of stopping thread).
+   *          On unhandled error, UnknownError is returned. The thread also stop working, and emit
+   *          a error signal (that can be handled in mdtPortManager, or in another place in application).
    *
    * \sa mdtPortThread
    * \sa mdtPortConfig
    * \sa mdtTcpSocketThread
    */
-  virtual bool waitForReadyRead() = 0;
+  virtual error_t waitForReadyRead() = 0;
 
   /*! \brief Wait until data is available on port.
    *
@@ -234,10 +203,9 @@ class mdtAbstractPort : public QObject
    * Mutex: see waitForReadyRead()
    *
    * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
-   * \return False on error, in this case, the reader thread will be stopped.
    * \sa waitForReadyRead()
    */
-  bool waitForReadyRead(int msecs);
+  error_t waitForReadyRead(int msecs);
 
   /*! \brief Read data from port
    *
@@ -317,13 +285,16 @@ class mdtAbstractPort : public QObject
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    *
    * Subclass notes:<br>
-   * This method must be re-implemented in subclass.<br>
+   * This method must be re-implemented in subclass. The write timeout state must be updated with updateWriteTimeoutState()
    * Notes about mutex handling:
    *  - Mutex must be released during wait, and relocked befor return.
    *
-   * \return False on error, in this case, the reader thread will be stopped.
+   * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
+   *          and the thread knows that it must end (case of stopping thread).
+   *          On unhandled error, UnknownError is returned. The thread also stop working, and emit
+   *          a error signal (that can be handled in mdtPortManager, or in another place in application).
    */
-  virtual bool waitEventWriteReady() = 0;
+  virtual error_t waitEventWriteReady() = 0;
 
   /*! \brief Write data to port
    *
@@ -510,22 +481,12 @@ class mdtAbstractPort : public QObject
   QString pvPortName;     // Port name, like /dev/ttyS0 , COM1, ...
   // mutex
   QMutex pvMutex;
-#ifdef Q_OS_UNIX
-  /*! \brief pthread_t instance (POSIX only)
-   *
-   * Use this object in abortWaiting() to send signal with pthread_kill().
-   */
-  ///pthread_t pvNativePthreadObject;
-
-  // Internal sigaction
-  ///struct sigaction pvSigaction;
-#endif
 
  private:
 
   // Diseable copy
   mdtAbstractPort(mdtAbstractPort &other);
-  
+
   // Some flags
   bool pvIsOpen;
 };

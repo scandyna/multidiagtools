@@ -172,8 +172,8 @@ mdtSerialPortConfig::parity_t&#160;</td><td class="memItemRight" valign="bottom"
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable Xon/Xoff flow control.  <a href="#a05b35143f7b048ebcb2295fdc2ac5013"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a80074ba4e5bf44c3e2aebb82214499ee">flowCtlXonXoffOn</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get configured state of Xon/Xoff flow control.  <a href="#a80074ba4e5bf44c3e2aebb82214499ee"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#ac27d1224db349bcf7f161329b5f53efb">waitEventCtl</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#ac27d1224db349bcf7f161329b5f53efb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#a146bf17f4f11c173e9b123bace0f2ddf">waitEventCtl</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#a146bf17f4f11c173e9b123bace0f2ddf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">getCtlStates</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE:  <a href="#aaeacd26b220ab0f8c521cef74edfafdd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_serial_port.html#abf0be424c1a8cf01b830cc6b371e8695">carIsOn</a> ()</td></tr>
@@ -887,12 +887,12 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 </div>
 </div>
-<a class="anchor" id="ac27d1224db349bcf7f161329b5f53efb"></a><!-- doxytag: member="mdtAbstractSerialPort::waitEventCtl" ref="ac27d1224db349bcf7f161329b5f53efb" args="()=0" -->
+<a class="anchor" id="a146bf17f4f11c173e9b123bace0f2ddf"></a><!-- doxytag: member="mdtAbstractSerialPort::waitEventCtl" ref="a146bf17f4f11c173e9b123bace0f2ddf" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool mdtAbstractSerialPort::waitEventCtl </td>
+          <td class="memname">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> mdtAbstractSerialPort::waitEventCtl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -906,19 +906,14 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
 <p>Subclass notes:<br/>
  This method must be re-implemented in plateform specific subclass.<br/>
- To handle port correctly, a sequence should be something like:<br/>
-</p>
+ Notes about mutex handling:</p>
 <ul>
-<li>Do some needed calls/init</li>
-<li>Unlock the mutex</li>
-<li>Enable thread's canclel state with setCancelStateEnabled()</li>
-<li>Call system's wait function</li>
-<li>Diseable thread's canclel state with setCancelStateEnabled()</li>
-<li>Lock the mutext again</li>
+<li>Mutex must be released during wait, and relocked befor return.</li>
 </ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application).</dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classmdt_serial_port.html#acc51ca593b4592f806ef4b9791486f47">mdtSerialPort</a>.</p>
+<p>Implemented in <a class="el" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da">mdtSerialPort</a>.</p>
 
 </div>
 </div>
@@ -941,7 +936,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 11:19:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

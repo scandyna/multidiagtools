@@ -47,16 +47,6 @@ mdtPort::~mdtPort()
   qDebug() << "mdtPort::~mdtPort() END";
 }
 
-/**
-void mdtPort::abortWaiting()
-{
-  Q_ASSERT(pvNativePthreadObject != 0);
-
-  // Set aborting flag and send the signal
-  ///pvAbortingWaitEventCtl = true;
-  pthread_kill(pvNativePthreadObject, SIGALRM);
-}
-*/
 void mdtPort::setReadTimeout(int timeout)
 {
   if(timeout == -1){
@@ -79,7 +69,7 @@ void mdtPort::setWriteTimeout(int timeout)
   }
 }
 
-bool mdtPort::waitForReadyRead()
+mdtAbstractPort::error_t mdtPort::waitForReadyRead()
 {
   fd_set input;
   int n;
@@ -101,15 +91,22 @@ bool mdtPort::waitForReadyRead()
   }else{
     updateReadTimeoutState(false);
     if(n < 0){
-      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtPort");
-      e.commit();
-      return false;
+      switch(errno){
+        case EINTR:
+          // Thread has send the stop signal
+          return WaitingCanceled;
+        default:
+          // Unhandled error
+          mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+          e.setSystemError(errno, strerror(errno));
+          MDT_ERROR_SET_SRC(e, "mdtPort");
+          e.commit();
+          return UnknownError;
+      }
     }
   }
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtPort::read(char *data, qint64 maxSize)
@@ -145,7 +142,7 @@ void mdtPort::flushIn()
   mdtAbstractPort::flushIn();
 }
 
-bool mdtPort::waitEventWriteReady()
+mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
 {
   fd_set output;
   int n;
@@ -167,15 +164,22 @@ bool mdtPort::waitEventWriteReady()
   }else{
     updateWriteTimeoutState(false);
     if(n < 0){
-      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtPort");
-      e.commit();
-      return false;
+      switch(errno){
+        case EINTR:
+          // Thread has send the stop signal
+          return WaitingCanceled;
+        default:
+          // Unhandled error
+          mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+          e.setSystemError(errno, strerror(errno));
+          MDT_ERROR_SET_SRC(e, "mdtPort");
+          e.commit();
+          return UnknownError;
+      }
     }
   }
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtPort::write(const char *data, qint64 maxSize)

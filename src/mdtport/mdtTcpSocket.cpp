@@ -38,17 +38,6 @@ mdtTcpSocket::~mdtTcpSocket()
   close();
 }
 
-/**
-void mdtTcpSocket::abortWaiting()
-{
-  Q_ASSERT(pvNativePthreadObject != 0);
-
-  // Set aborting flag and send the signal
-  ///pvAbortingWaitEventCtl = true;
-  pthread_kill(pvNativePthreadObject, SIGALRM);
-}
-*/
-
 void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 {
   Q_ASSERT(pvThread != 0);
@@ -93,7 +82,7 @@ void mdtTcpSocket::waitForNewTransaction()
   pvNewTransaction.wait(&pvMutex);
 }
 
-bool mdtTcpSocket::waitForReadyRead()
+mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
 {
   Q_ASSERT(pvSocket != 0);
 
@@ -101,7 +90,7 @@ bool mdtTcpSocket::waitForReadyRead()
   if((pvTransactionsCount < 1)&&(pvSocket->bytesToWrite() < 1)){
     pvNewTransaction.wait(&pvMutex);
   }
-  
+
   // Check if it is possible to read now
   if(!pvSocket->waitForReadyRead(pvReadTimeout)){
     // Check if we have a timeout
@@ -115,12 +104,12 @@ bool mdtTcpSocket::waitForReadyRead()
         e.setSystemError(pvSocket->error(), pvSocket->errorString());
         MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
         e.commit();
-        return false;
+        return UnknownError;
       }
     }
   }
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
@@ -140,7 +129,7 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
   return n;
 }
 
-bool mdtTcpSocket::waitEventWriteReady()
+mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
 {
   Q_ASSERT(pvSocket != 0);
 
@@ -150,7 +139,7 @@ bool mdtTcpSocket::waitEventWriteReady()
   }
   // Check if something is to write , if yes, wait until there are written
   if(pvSocket->bytesToWrite() < 1){
-    return true;
+    return NoError;
   }
   if(!pvSocket->waitForBytesWritten(pvWriteTimeout)){
     // Check if we have a timeout
@@ -164,12 +153,12 @@ bool mdtTcpSocket::waitEventWriteReady()
         e.setSystemError(pvSocket->error(), pvSocket->errorString());
         MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
         e.commit();
-        return false;
+        return UnknownError;
       }
     }
   }
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)

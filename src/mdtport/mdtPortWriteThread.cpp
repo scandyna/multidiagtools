@@ -55,10 +55,10 @@ void mdtPortWriteThread::run()
   mdtFrame *frame = 0;
   qint64 toWrite = 0;
   qint64 written = 0;
+  mdtAbstractPort::error_t portError;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
-  ///pvPort->setNativePthreadObject(pthread_self());
   pvNativePthreadObject = pthread_self();
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
@@ -78,12 +78,23 @@ void mdtPortWriteThread::run()
       pvPort->lockMutex();
     }
     // Wait on write ready event
+    portError = pvPort->waitEventWriteReady();
+    if(portError == mdtAbstractPort::WaitingCanceled){
+      // Stopping
+      break;
+    }else if(portError == mdtAbstractPort::UnknownError){
+      // Unhandled error. Signal this and stop
+      emit(errorOccured(MDT_PORT_IO_ERROR));
+      break;
+    }
+    /**
     if(!pvPort->waitEventWriteReady()){
       emit(errorOccured(MDT_PORT_IO_ERROR));
       pvPort->unlockMutex();
       msleep(100);
       pvPort->lockMutex();
     }
+    */
     // Event occured, send the data to port - Check timeout state first
     if(!pvPort->writeTimeoutOccured()){
       // Check if we have something to transmit

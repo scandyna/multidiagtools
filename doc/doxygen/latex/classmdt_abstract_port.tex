@@ -59,7 +59,10 @@ void \hyperlink{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}{writeT
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{mdtAbstractPort} (QObject $\ast$parent=0)
+\hypertarget{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{
+{\bfseries mdtAbstractPort} (QObject $\ast$parent=0)}
+\label{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}
+
 \item 
 virtual \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
@@ -79,8 +82,11 @@ bool \hyperlink{classmdt_abstract_port_a2122ae3141342ff38c8388e62b244e3b}{isOpen
 \begin{DoxyCompactList}\small\item\em Get port's open state. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close} ()
 \begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_abstract_port_a48bdc0a8057c3b119763643098cf798f}{setConfig} (\hyperlink{classmdt_port_config}{mdtPortConfig} $\ast$cfg)
-\begin{DoxyCompactList}\small\item\em Abort the waiting functions. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_port_a48bdc0a8057c3b119763643098cf798f}{
+void \hyperlink{classmdt_abstract_port_a48bdc0a8057c3b119763643098cf798f}{setConfig} (\hyperlink{classmdt_port_config}{mdtPortConfig} $\ast$cfg)}
+\label{classmdt_abstract_port_a48bdc0a8057c3b119763643098cf798f}
+
+\begin{DoxyCompactList}\small\item\em Set configuration. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}{
 \hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}{config} ()}
 \label{classmdt_abstract_port_a3d105c90696f7c40f29c24fe9b6e4481}
@@ -92,9 +98,9 @@ virtual void \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84
 \begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{setWriteTimeout} (int timeout)=0
 \begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead} ()=0
+virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead} ()=0
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}{waitForReadyRead} (int msecs)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_a47f4db2e72b5fd3e32162e6a898fd391}{waitForReadyRead} (int msecs)
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 virtual qint64 \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{read} (char $\ast$data, qint64 maxSize)=0
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
@@ -108,7 +114,7 @@ virtual void \hyperlink{classmdt_abstract_port_ab1738b5b6b78743ee2d36ccf5daa7c00
 \begin{DoxyCompactList}\small\item\em Just for special cases. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_a2235d62d9a9e4555d41773c41cc3bc70}{writeOneFrame} ()
 \begin{DoxyCompactList}\small\item\em Just for special cases. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{waitEventWriteReady} ()=0
+virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{waitEventWriteReady} ()=0
 \begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
 virtual qint64 \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{write} (const char $\ast$data, qint64 maxSize)=0
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
@@ -251,7 +257,7 @@ SetupError}
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{
 WaitingCanceled}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}
-}]When a thread (\hyperlink{classmdt_port_thread}{mdtPortThread} or subclass) is stopping, it will cancel blocking calls (like \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} or \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{waitEventWriteReady()} ). At this case, this error is returned, and the thread knows that it can cleanup and end. \index{UnknownError@{UnknownError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnknownError@{UnknownError}}\item[{\em 
+}]When a thread (\hyperlink{classmdt_port_thread}{mdtPortThread} or subclass) is stopping, it will cancel blocking calls (like \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} or \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{waitEventWriteReady()} ). At this case, this error is returned, and the thread knows that it can cleanup and end. \index{UnknownError@{UnknownError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnknownError@{UnknownError}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{
 UnknownError}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}
@@ -261,19 +267,6 @@ UnknownError}
 
 
 \subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}{
-\index{mdtAbstractPort@{mdtAbstractPort}!mdtAbstractPort@{mdtAbstractPort}}
-\index{mdtAbstractPort@{mdtAbstractPort}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{mdtAbstractPort}]{\setlength{\rightskip}{0pt plus 5cm}mdtAbstractPort::mdtAbstractPort (
-\begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_port_a35e7bff9413690833c832bf115da102f}
-
-
-\#ifdef Q\_\-OS\_\-UNIX pvNativePthreadObject = 0; We must catch the SIGALRM signal, else the application process will be killed by pthread\_\-kill() sigemptyset(\&(pvSigaction.sa\_\-mask)); pvSigaction.sa\_\-flags = 0; pvSigaction.sa\_\-handler = sigactionHandle; sigaction(SIGALRM, \&pvSigaction, NULL); \#endif
-
 \hypertarget{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{
 \index{mdtAbstractPort@{mdtAbstractPort}!$\sim$mdtAbstractPort@{$\sim$mdtAbstractPort}}
 \index{$\sim$mdtAbstractPort@{$\sim$mdtAbstractPort}!mdtAbstractPort@{mdtAbstractPort}}
@@ -621,40 +614,7 @@ False on error, in this case, the reader thread will be stopped.
 
 Reimplemented in \hyperlink{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{mdtSerialPort}.
 
-\hypertarget{classmdt_abstract_port_a48bdc0a8057c3b119763643098cf798f}{
-\index{mdtAbstractPort@{mdtAbstractPort}!setConfig@{setConfig}}
-\index{setConfig@{setConfig}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{setConfig}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::setConfig (
-\begin{DoxyParamCaption}
-\item[{{\bf mdtPortConfig} $\ast$}]{cfg}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_port_a48bdc0a8057c3b119763643098cf798f}
-
-
-Abort the waiting functions. 
-
-This method is called from main thread (\hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()}), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.
-
-The mutex is not handled by this method.
-
-Subclass notes:\par
- This method must be implement in subclass, and use the system's native way to abort blocking system calls. On POSIX, the pthread\_\-kill() can be used with SIGALRM. The pvNativePthreadObject must be used.\par
- On Windows, the WaitForMultipleObjects() seems to be a good aproach.virtual void abortWaiting() = 0;
-
-Set the internal pthrad\_\-t object (POSIX only)
-
-This method is called from a thread (subclass of \hyperlink{classmdt_port_thread}{mdtPortThread}) to set the pthread\_\-t instance.
-
-The mutex is not handled by this method.void setNativePthreadObject(pthread\_\-t thread);
-
-Handle function for sigaction
-
-This default implementation does nothing.static void sigactionHandle(int signum);
-
-Set configuration
-
-void mdtAbstractPort::setNativePthreadObject(pthread\_\-t thread) \{ pvNativePthreadObject = thread; \} void mdtAbstractPort::sigactionHandle(int) \{ \} \hypertarget{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{
+\hypertarget{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{
 \index{mdtAbstractPort@{mdtAbstractPort}!setPortName@{setPortName}}
 \index{setPortName@{setPortName}!mdtAbstractPort@{mdtAbstractPort}}
 \subsubsection[{setPortName}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::setPortName (
@@ -802,17 +762,17 @@ This method must be called by system dependant waitEventRead() method. When the 
 
 Update the write timeout state. 
 
-This method must be called by system dependant \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{waitEventWriteReady()} method When the write timeout state chages, the signal \hyperlink{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}{writeTimeoutStateChanged()} is emited.\par
+This method must be called by system dependant \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{waitEventWriteReady()} method When the write timeout state chages, the signal \hyperlink{classmdt_abstract_port_abd4a3e5738ac13167ddaafe95926ce4d}{writeTimeoutStateChanged()} is emited.\par
  Note: this method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly\par
- Mutex is not handled by this method. \hypertarget{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{
+ Mutex is not handled by this method. \hypertarget{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{
 \index{mdtAbstractPort@{mdtAbstractPort}!waitEventWriteReady@{waitEventWriteReady}}
 \index{waitEventWriteReady@{waitEventWriteReady}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractPort::waitEventWriteReady (
+\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractPort::waitEventWriteReady (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}
+\label{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}
 
 
 Wait until data can be written to port. 
@@ -821,57 +781,53 @@ This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteTh
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
 
 Subclass notes:\par
- This method must be re-\/implemented in subclass.\par
- Notes about mutex handling:
+ This method must be re-\/implemented in subclass. The write timeout state must be updated with \hyperlink{classmdt_abstract_port_ab51135de1f7bbc4707c3284f924c98dc}{updateWriteTimeoutState()} Notes about mutex handling:
 \begin{DoxyItemize}
 \item Mutex must be released during wait, and relocked befor return.
 \end{DoxyItemize}
 
 \begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will be stopped. 
+On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in \hyperlink{classmdt_port_manager}{mdtPortManager}, or in another place in application). 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_port_a2307bdc3b7d89f27e65b96b8a359b70a}{mdtPort}, \hyperlink{classmdt_usbtmc_port_aaa58100bc6ec2a5f91a3c6bb3676a468}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a815275951e5834daf5068ffb48fcdcb3}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a24cfc5233e09b9dbcdb2adc5f700dc4a}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{mdtSerialPort}.
 
-\hypertarget{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}{
+\hypertarget{classmdt_abstract_port_a47f4db2e72b5fd3e32162e6a898fd391}{
 \index{mdtAbstractPort@{mdtAbstractPort}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAbstractPort::waitForReadyRead (
+\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtAbstractPort::waitForReadyRead (
 \begin{DoxyParamCaption}
 \item[{int}]{msecs}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_abstract_port_ae77785fbad938eac5f24f437e7683277}
+\label{classmdt_abstract_port_a47f4db2e72b5fd3e32162e6a898fd391}
 
 
 Wait until data is available on port. 
 
-This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} and \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} (it is a little bit slower than setting timeout one time, and call \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} ).\par
- Note that the reader thread will call \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} without argument.\par
+This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} and \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} (it is a little bit slower than setting timeout one time, and call \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} ).\par
+ Note that the reader thread will call \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} without argument.\par
  Note: this method is called from thread , and should not be used directly\par
- Mutex: see \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()}
+ Mutex: see \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()}
 
 
 \begin{DoxyParams}{Parameters}
 {\em timeout} & Timeout \mbox{[}ms\mbox{]}. A value of -\/1 means a infinite timeout. \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will be stopped. 
-\end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{waitForReadyRead()} 
+\hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{
+\hypertarget{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{
 \index{mdtAbstractPort@{mdtAbstractPort}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtAbstractPort@{mdtAbstractPort}}
-\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractPort::waitForReadyRead (
+\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractPort::waitForReadyRead (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}
+\label{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}
 
 
 Wait until data is available on port. 
@@ -887,7 +843,7 @@ Subclass notes:\par
 \end{DoxyItemize}
 
 \begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will emit errorOccured()
+On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in \hyperlink{classmdt_port_manager}{mdtPortManager}, or in another place in application).
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_thread}{mdtPortThread} 
@@ -898,7 +854,7 @@ False on error, in this case, the reader thread will emit errorOccured()
 \end{DoxySeeAlso}
 
 
-Implemented in \hyperlink{classmdt_port_af8737cc14667f6770af7be01759253e2}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a46efba4f2d3dbb3c917368323de0333b}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a381bf5194cf180ca95f5f4bae730f73c}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a0334aa073299f6161034e6be7c60939d}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_a84594fdb56cd455a366c69b0a9228020}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a3c1b746acfc06857eee4b4c136cd65ad}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 \index{mdtAbstractPort@{mdtAbstractPort}!write@{write}}

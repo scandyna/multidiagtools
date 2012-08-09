@@ -42,16 +42,6 @@ mdtSerialPort::mdtSerialPort(QObject *parent)
   pvFd = -1;
   pvPortLock = new mdtPortLock;
   Q_ASSERT(pvPortLock != 0);
-
-  // Control signal thread kill utils
-  ///pvCtlThread = 0;
-  pvAbortingWaitEventCtl = false;
-  // We must catch the SIGALRM signal, else the application process
-  // will be killed by pthread_kill()
-  ///sigemptyset(&(pvSigaction.sa_mask));
-  ///pvSigaction.sa_flags = 0;
-  ///pvSigaction.sa_handler = sigactionHandle;
-  ///sigaction(SIGALRM, &pvSigaction, NULL);
 }
 
 mdtSerialPort::~mdtSerialPort()
@@ -59,17 +49,6 @@ mdtSerialPort::~mdtSerialPort()
   close();
   delete pvPortLock;
 }
-
-/**
-void mdtSerialPort::abortWaiting()
-{
-  Q_ASSERT(pvNativePthreadObject != 0);
-
-  // Set aborting flag and send the signal
-  ///pvAbortingWaitEventCtl = true;
-  pthread_kill(pvNativePthreadObject, SIGALRM);
-}
-*/
 
 bool mdtSerialPort::setBaudRate(int rate)
 {
@@ -636,7 +615,7 @@ void mdtSerialPort::setWriteTimeout(int timeout)
   }
 }
 
-bool mdtSerialPort::waitForReadyRead()
+mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
 {
   fd_set input;
   int n;
@@ -660,15 +639,22 @@ bool mdtSerialPort::waitForReadyRead()
   }else{
     updateReadTimeoutState(false);
     if(n < 0){
-      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
+      switch(errno){
+        case EINTR:
+          // Thread has send the stop signal
+          return WaitingCanceled;
+        default:
+          // Unhandled error
+          mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+          e.setSystemError(errno, strerror(errno));
+          MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+          e.commit();
+          return UnknownError;
+      }
     }
   }
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtSerialPort::read(char *data, qint64 maxSize)
@@ -759,7 +745,7 @@ void mdtSerialPort::flushIn()
   mdtAbstractPort::flushIn();
 }
 
-bool mdtSerialPort::waitEventWriteReady()
+mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
 {
   fd_set output;
   int n;
@@ -781,15 +767,22 @@ bool mdtSerialPort::waitEventWriteReady()
   }else{
     updateWriteTimeoutState(false);
     if(n < 0){
-      mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
+      switch(errno){
+        case EINTR:
+          // Thread has send the stop signal
+          return WaitingCanceled;
+        default:
+          // Unhandled error
+          mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
+          e.setSystemError(errno, strerror(errno));
+          MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+          e.commit();
+          return UnknownError;
+      }
     }
   }
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
@@ -831,7 +824,7 @@ void mdtSerialPort::flushOut()
   mdtAbstractPort::flushOut();
 }
 
-bool mdtSerialPort::waitEventCtl()
+mdtAbstractPort::error_t mdtSerialPort::waitEventCtl()
 {
   int retVal;
 
@@ -842,28 +835,21 @@ bool mdtSerialPort::waitEventCtl()
   pvMutex.lock();
   qDebug() << "mdtSerialPort::waitEventCtl(), waiting DONE";
   if(retVal < 0){
-    if(errno == EINTR){
-      // Probably sent by pthread_kill() to stop the thread
-      if(pvAbortingWaitEventCtl){
-        pvAbortingWaitEventCtl = false;
-        return true;
-      }
-      // Unhandled case that abort the thread
-      mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Info);
-      e.setSystemError(errno, strerror(errno));
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
+    switch(errno){
+      case EINTR:
+        // Thread has send the stop signal
+        return WaitingCanceled;
+      default:
+        // Unhandled error
+        mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
+        e.setSystemError(errno, strerror(errno));
+        MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+        e.commit();
+        return UnknownError;
     }
-    // Else, we have a unhandled error
-    mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
-    e.setSystemError(errno, strerror(errno));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
   }
 
-  return true;
+  return NoError;
 }
 
 bool mdtSerialPort::getCtlStates()
@@ -973,24 +959,6 @@ void mdtSerialPort::setDtr(bool on)
   }
   pvMutex.unlock();
 }
-
-/**
-void mdtSerialPort::defineCtlThread(pthread_t ctlThread)
-{
-  pvCtlThread = ctlThread;
-}
-*/
-
-/**
-void mdtSerialPort::abortWaitEventCtl()
-{
-  Q_ASSERT(pvCtlThread != 0);
-
-  // Set aborting flag and send the signal
-  pvAbortingWaitEventCtl = true;
-  pthread_kill(pvCtlThread, SIGALRM);
-}
-*/
 
 mdtAbstractPort::error_t mdtSerialPort::pvOpen()
 {

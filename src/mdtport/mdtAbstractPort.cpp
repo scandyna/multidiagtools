@@ -32,17 +32,6 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   pvIsOpen = false;
   pvConfig = 0;
 
-/**
-#ifdef Q_OS_UNIX
-  pvNativePthreadObject = 0;
-  // We must catch the SIGALRM signal, else the application process
-  // will be killed by pthread_kill()
-  sigemptyset(&(pvSigaction.sa_mask));
-  pvSigaction.sa_flags = 0;
-  pvSigaction.sa_handler = sigactionHandle;
-  sigaction(SIGALRM, &pvSigaction, NULL);
-#endif
-*/
   // Emit signals with initial states
   emit readTimeoutStateChanged(pvReadTimeoutOccured);
   emit writeTimeoutStateChanged(pvWriteTimeoutOccured);
@@ -106,19 +95,6 @@ void mdtAbstractPort::close()
   qDebug() << "mdtAbstractPort::close() END";
 }
 
-/**
-void mdtAbstractPort::setNativePthreadObject(pthread_t thread)
-{
-  pvNativePthreadObject = thread;
-}
-*/
-
-/**
-void mdtAbstractPort::sigactionHandle(int)
-{
-}
-*/
-
 void mdtAbstractPort::setConfig(mdtPortConfig *cfg)
 {
   pvConfig = cfg;
@@ -154,7 +130,7 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
   return NoError;
 }
 
-bool mdtAbstractPort::waitForReadyRead(int msecs)
+mdtAbstractPort::error_t mdtAbstractPort::waitForReadyRead(int msecs)
 {
   setReadTimeout(msecs);
   return waitForReadyRead();

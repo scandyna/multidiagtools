@@ -37,7 +37,7 @@ void {\bfseries decrementTransactionsCounter} ()}
 
 \item 
 void \hyperlink{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{connectToHost} (const QString \&hostName, int hostPort)
-\begin{DoxyCompactList}\small\item\em Abort the waiting functions. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Connect to host. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{setThreadObjects} (QTcpSocket $\ast$socket, \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} $\ast$thread)
 \begin{DoxyCompactList}\small\item\em Set the socket. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTimeout} (int timeout)
@@ -48,11 +48,11 @@ void \hyperlink{classmdt_tcp_socket_a93984277418aee53633bd28249f484d1}{beginNewT
 \begin{DoxyCompactList}\small\item\em Start a new transaction. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_a4f81d3552d7e2a33d2e1bf2e84beb063}{waitForNewTransaction} ()
 \begin{DoxyCompactList}\small\item\em Block until a new transaction starts. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tcp_socket_a381bf5194cf180ca95f5f4bae730f73c}{waitForReadyRead} ()
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{waitForReadyRead} ()
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{read} (char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{waitEventWriteReady} ()
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{waitEventWriteReady} ()
 \begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{write} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -84,13 +84,7 @@ Mutex is locked by this method. \hypertarget{classmdt_tcp_socket_aa5b229a668c0d9
 \label{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}
 
 
-Abort the waiting functions. 
-
-This method is called from main thread (\hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()}), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.
-
-The mutex is not handled by this method.void abortWaiting();
-
-Connect to host
+Connect to host. 
 
 Use this method to start a connection to a host.\par
  Mutex is locked by this method. 
@@ -101,11 +95,9 @@ Use this method to start a connection to a host.\par
 \hline
 \end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-hostPort must be $>$ 0
+hostPort must be $>$ 0 
 \end{DoxyPrecond}
-void mdtTcpSocket::abortWaiting() \{ Q\_\-ASSERT(pvNativePthreadObject != 0);
-
-Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread\_\-kill(pvNativePthreadObject, SIGALRM); \} \hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
+\hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
 \index{mdtTcpSocket@{mdtTcpSocket}!read@{read}}
 \index{read@{read}!mdtTcpSocket@{mdtTcpSocket}}
 \subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtTcpSocket::read (
@@ -211,35 +203,23 @@ Subclass notes:\par
 
 Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
 
-\hypertarget{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}{
+\hypertarget{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitEventWriteReady@{waitEventWriteReady}}
 \index{waitEventWriteReady@{waitEventWriteReady}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocket::waitEventWriteReady (
+\subsubsection[{waitEventWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtTcpSocket::waitEventWriteReady (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_tcp_socket_a91ada4fd18d31646c2a4d630b8f9ff21}
+\label{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}
 
 
 Wait until data can be written to port. 
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass.\par
- Notes about mutex handling:
-\begin{DoxyItemize}
-\item Mutex must be released during wait, and relocked befor return.
-\end{DoxyItemize}
-
-\begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will be stopped. 
-\end{DoxyReturn}
-
-
-Implements \hyperlink{classmdt_abstract_port_a7773bc21c63ce6a275f5a0889935ac83}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 \hypertarget{classmdt_tcp_socket_a4f81d3552d7e2a33d2e1bf2e84beb063}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForNewTransaction@{waitForNewTransaction}}
@@ -258,42 +238,23 @@ Note: used by thread , should not be used directly.\par
  Mutex is locked by this method. \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
 \end{DoxySeeAlso}
-\hypertarget{classmdt_tcp_socket_a381bf5194cf180ca95f5f4bae730f73c}{
+\hypertarget{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocket::waitForReadyRead (
+\subsubsection[{waitForReadyRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtTcpSocket::waitForReadyRead (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_tcp_socket_a381bf5194cf180ca95f5f4bae730f73c}
+\label{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}
 
 
 Wait until data is available on port. 
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass. The read timeout state must be updated with \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState()}\par
- Notes about mutex handling:
-\begin{DoxyItemize}
-\item Mutex must be released during wait, and relocked befor return.
-\end{DoxyItemize}
-
-\begin{DoxyReturn}{Returns}
-False on error, in this case, the reader thread will emit errorOccured()
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_thread}{mdtPortThread} 
-
-\hyperlink{classmdt_port_config}{mdtPortConfig} 
-
-\hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
-\end{DoxySeeAlso}
-
-
-Implements \hyperlink{classmdt_abstract_port_a848e3c86aa6ec480e8c471655fbcf5c5}{mdtAbstractPort}.
+Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 
 \hypertarget{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{
 \index{mdtTcpSocket@{mdtTcpSocket}!write@{write}}

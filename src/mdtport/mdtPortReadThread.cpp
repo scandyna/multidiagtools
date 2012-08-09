@@ -79,11 +79,11 @@ void mdtPortReadThread::run()
   qint64 readen = 0;
   qint64 stored = 0;
   qint64 toStore = 0;
+  mdtAbstractPort::error_t portError;
 
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
-  ///pvPort->setNativePthreadObject(pthread_self());
   pvNativePthreadObject = pthread_self();
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
@@ -117,20 +117,27 @@ void mdtPortReadThread::run()
     if(!pvRunning){
       break;
     }
-
-    // Wait the minimal time if requierd NOTE: obesete ??
+    // Wait the minimal time if requierd NOTE: obselete ??
     /**
     if(pvReadMinWaitTime > 0){
       msleep(pvReadMinWaitTime);
     }
     */
     // Wait on Read event
-    if(!pvPort->waitForReadyRead()){
+    portError = pvPort->waitForReadyRead();
+    if(portError == mdtAbstractPort::WaitingCanceled){
+      // Stopping
+      break;
+    }else if(portError == mdtAbstractPort::UnknownError){
+      // Unhandled error. Signal this and stop
       emit(errorOccured(MDT_PORT_IO_ERROR));
+      break;
+    }
+      /**
       pvPort->unlockMutex();
       msleep(100);
       pvPort->lockMutex();
-    }
+      */
     // Event occured, get the data from port - Check timeout state first
     if(pvPort->readTimeoutOccured()){
       // In timeout protocol, the current frame is considered complete

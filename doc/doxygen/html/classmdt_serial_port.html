@@ -85,9 +85,10 @@ Collaboration diagram for mdtSerialPort:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a7b2da083885e727981c1fd4414634cae">mdtSerialPort</a> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b2da083885e727981c1fd4414634cae"></a><!-- doxytag: member="mdtSerialPort::mdtSerialPort" ref="a7b2da083885e727981c1fd4414634cae" args="(QObject *parent=0)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>mdtSerialPort</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351">setBaudRate</a> (int rate)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the waiting functions.  <a href="#ad77b6a5fd819fae6db0db888b3113351"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the baud rate.  <a href="#ad77b6a5fd819fae6db0db888b3113351"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195">baudRate</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the baud rate.  <a href="#ab7d9433433f4ec5d5e584721e5bb1195"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389">setDataBits</a> (int n)</td></tr>
@@ -114,8 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#a9105e5a3a640b56097c1156000ace933"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a036f49d743838013c9a8cbf6a1dd40d1">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#a036f49d743838013c9a8cbf6a1dd40d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a0334aa073299f6161034e6be7c60939d">waitForReadyRead</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#a0334aa073299f6161034e6be7c60939d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#ad150a45c68d98a501bea2f102aeadb50">waitForReadyRead</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#ad150a45c68d98a501bea2f102aeadb50"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a12274d7956b2af961ccdd36cfc2052cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">suspendTransmission</a> ()</td></tr>
@@ -124,14 +125,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to resume transmission.  <a href="#a02fd5ee74a7f52c3bce0545ec8a659bf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a597d013bbe18b1f946b99f68a4856a87">flushIn</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#a597d013bbe18b1f946b99f68a4856a87"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a815275951e5834daf5068ffb48fcdcb3">waitEventWriteReady</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a815275951e5834daf5068ffb48fcdcb3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd">waitEventWriteReady</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a988825b3ff2ef93a1b43e2df316055bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a282f99035c032fbb6fa86ccd10deb597"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a3a446c34c9f98e0c14637ab3dcab98d0">flushOut</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write buffers.  <a href="#a3a446c34c9f98e0c14637ab3dcab98d0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#acc51ca593b4592f806ef4b9791486f47">waitEventCtl</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#acc51ca593b4592f806ef4b9791486f47"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da">waitEventCtl</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#a9d1402c229401343a3bf66eeda4fe9da"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7">getCtlStates</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE:  <a href="#a7893e1817fe5fc59c77ee6f3b9f13ae7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">setRts</a> (bool on)</td></tr>
@@ -139,28 +140,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a91ec8a600f09b6844d36902fe1e16592">setDtr</a> (bool on)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable the DTR (Data Terminal Ready) signal.  <a href="#a91ec8a600f09b6844d36902fe1e16592"></a><br/></td></tr>
 </table>
-<hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a7b2da083885e727981c1fd4414634cae"></a><!-- doxytag: member="mdtSerialPort::mdtSerialPort" ref="a7b2da083885e727981c1fd4414634cae" args="(QObject *parent=0)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mdtSerialPort::mdtSerialPort </td>
-          <td>(</td>
-          <td class="paramtype">QObject *&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p><p>pvCtlThread = 0;</p>
-<p>sigemptyset(&amp;(pvSigaction.sa_mask)); pvSigaction.sa_flags = 0; pvSigaction.sa_handler = sigactionHandle; sigaction(SIGALRM, &amp;pvSigaction, NULL); </p>
-</p>
-
-</div>
-</div>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ab7d9433433f4ec5d5e584721e5bb1195"></a><!-- doxytag: member="mdtSerialPort::baudRate" ref="ab7d9433433f4ec5d5e584721e5bb1195" args="()" -->
 <div class="memitem">
@@ -431,14 +410,9 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Abort the waiting functions. </p>
-<p>This method is called from main thread (<a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a>), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.</p>
-<p>The mutex is not handled by this method.void abortWaiting();</p>
-<p>Set the baud rate</p>
+<p>Set the baud rate. </p>
 <p>The mutex is not handled by this method.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if baud rate is supported and could be set.</dd></dl>
-<p>void mdtSerialPort::abortWaiting() { Q_ASSERT(pvNativePthreadObject != 0);</p>
-<p>Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread_kill(pvNativePthreadObject, SIGALRM); } </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if baud rate is supported and could be set. </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ae250b30c1db5652bd2abe2caf1c9d5c7">mdtAbstractSerialPort</a>.</p>
 
@@ -730,12 +704,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acc51ca593b4592f806ef4b9791486f47"></a><!-- doxytag: member="mdtSerialPort::waitEventCtl" ref="acc51ca593b4592f806ef4b9791486f47" args="()" -->
+<a class="anchor" id="a9d1402c229401343a3bf66eeda4fe9da"></a><!-- doxytag: member="mdtSerialPort::waitEventCtl" ref="a9d1402c229401343a3bf66eeda4fe9da" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtSerialPort::waitEventCtl </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtSerialPort::waitEventCtl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -748,16 +722,16 @@ Public Member Functions</h2></td></tr>
 <p>This method is called from <a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
-<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#ac27d1224db349bcf7f161329b5f53efb">mdtAbstractSerialPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a146bf17f4f11c173e9b123bace0f2ddf">mdtAbstractSerialPort</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a815275951e5834daf5068ffb48fcdcb3"></a><!-- doxytag: member="mdtSerialPort::waitEventWriteReady" ref="a815275951e5834daf5068ffb48fcdcb3" args="()" -->
+<a class="anchor" id="a988825b3ff2ef93a1b43e2df316055bd"></a><!-- doxytag: member="mdtSerialPort::waitEventWriteReady" ref="a988825b3ff2ef93a1b43e2df316055bd" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtSerialPort::waitEventWriteReady </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtSerialPort::waitEventWriteReady </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -768,25 +742,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Wait until data can be written to port. </p>
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
-<p>Subclass notes:<br/>
- This method must be re-implemented in subclass.<br/>
- Notes about mutex handling:</p>
-<ul>
-<li>Mutex must be released during wait, and relocked befor return.</li>
-</ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the reader thread will be stopped. </dd></dl>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0334aa073299f6161034e6be7c60939d"></a><!-- doxytag: member="mdtSerialPort::waitForReadyRead" ref="a0334aa073299f6161034e6be7c60939d" args="()" -->
+<a class="anchor" id="ad150a45c68d98a501bea2f102aeadb50"></a><!-- doxytag: member="mdtSerialPort::waitForReadyRead" ref="ad150a45c68d98a501bea2f102aeadb50" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtSerialPort::waitForReadyRead </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtSerialPort::waitForReadyRead </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -799,7 +766,7 @@ Public Member Functions</h2></td></tr>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -859,7 +826,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 11:19:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

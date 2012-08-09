@@ -40,17 +40,6 @@ mdtUsbtmcPort::~mdtUsbtmcPort()
   delete pvPortLock;
 }
 
-/**
-void mdtUsbtmcPort::abortWaiting()
-{
-  Q_ASSERT(pvNativePthreadObject != 0);
-
-  // Set aborting flag and send the signal
-  ///pvAbortingWaitEventCtl = true;
-  pthread_kill(pvNativePthreadObject, SIGALRM);
-}
-*/
-
 void mdtUsbtmcPort::setReadTimeout(int timeout)
 {
   pvReadTimeout = timeout;
@@ -61,15 +50,15 @@ void mdtUsbtmcPort::setWriteTimeout(int timeout)
   pvWriteTimeout = timeout;
 }
 
-bool mdtUsbtmcPort::waitForReadyRead()
+mdtAbstractPort::error_t mdtUsbtmcPort::waitForReadyRead()
 {
   if(!pvReadCondition.wait(&pvMutex, pvReadTimeout)){
     updateReadTimeoutState(true);
-    return true;
+    return NoError;
   }
   updateReadTimeoutState(false);
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtUsbtmcPort::read(char *data, qint64 maxSize)
@@ -99,15 +88,15 @@ qint64 mdtUsbtmcPort::read(char *data, qint64 maxSize)
   return n;
 }
 
-bool mdtUsbtmcPort::waitEventWriteReady()
+mdtAbstractPort::error_t mdtUsbtmcPort::waitEventWriteReady()
 {
   if(!pvWriteCondition.wait(&pvMutex, pvWriteTimeout)){
     updateWriteTimeoutState(true);
-    return true;
+    return NoError;
   }
   updateWriteTimeoutState(false);
 
-  return true;
+  return NoError;
 }
 
 qint64 mdtUsbtmcPort::write(const char *data, qint64 maxSize)

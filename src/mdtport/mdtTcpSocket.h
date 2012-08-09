@@ -39,17 +39,6 @@ class mdtTcpSocket : public mdtAbstractPort
   mdtTcpSocket(QObject *parent = 0);
   ~mdtTcpSocket();
 
-  /*! \brief Abort the waiting functions
-   *
-   * This method is called from main thread (mdtPortThread::stop()),
-   * and cause the system's wait functions to be aborted.
-   * Example are select() or ioctl() on POSIX. On Windows,
-   * the appropriate event of WaitForMultipleObjects() should be set.
-   *
-   * The mutex is not handled by this method.
-   */
-  ///void abortWaiting();
-
   /*! \brief Connect to host
    * 
    * Use this method to start a connection to a host.<br>
@@ -92,14 +81,22 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   void waitForNewTransaction();
 
-  // Implementation of mdtAbstractPort - Locks the mutex
-  bool waitForReadyRead();
+  /*! \brief Wait until data is available on port.
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
+  error_t waitForReadyRead();
 
   // Implementation of mdtAbstractPort
   qint64 read(char *data, qint64 maxSize);
 
-  // Implementation of mdtAbstractPort - Locks the mutex
-  bool waitEventWriteReady();
+  /*! \brief Wait until data can be written to port.
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
+   */
+  error_t waitEventWriteReady();
 
   // Implementation of mdtAbstractPort
   qint64 write(const char *data, qint64 maxSize);

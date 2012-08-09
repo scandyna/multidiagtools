@@ -45,17 +45,6 @@ class mdtUsbtmcPort : public mdtAbstractPort
   mdtUsbtmcPort(QObject *parent = 0);
   ~mdtUsbtmcPort();
 
-  /*! \brief Abort the waiting functions
-   *
-   * This method is called from main thread (mdtPortThread::stop()),
-   * and cause the system's wait functions to be aborted.
-   * Example are select() or ioctl() on POSIX. On Windows,
-   * the appropriate event of WaitForMultipleObjects() should be set.
-   *
-   * The mutex is not handled by this method.
-   */
-  ///void abortWaiting();
-
   /*! \brief Set the read data timeout
    */
   void setReadTimeout(int timeout);
@@ -69,7 +58,7 @@ class mdtUsbtmcPort : public mdtAbstractPort
    * This method is called from mdtPortReadThread , and should not be used directly.<br>
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
-  bool waitForReadyRead();
+  error_t waitForReadyRead();
 
   /*! \brief Read data from port
    *
@@ -82,7 +71,7 @@ class mdtUsbtmcPort : public mdtAbstractPort
    * This method is called from mdtPortWriteThread , and should not be used directly.<br>
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
-  bool waitEventWriteReady();
+  error_t waitEventWriteReady();
 
   /*! \brief Write data to port
    *

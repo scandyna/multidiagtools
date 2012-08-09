@@ -64,6 +64,8 @@ void mdtSerialPortCtlThread::stop()
 
 void mdtSerialPortCtlThread::run()
 {
+  mdtAbstractPort::error_t portError;
+
   qDebug() << "CTLTHD: starting ...";
   Q_ASSERT(pvPort != 0);
 
@@ -72,8 +74,6 @@ void mdtSerialPortCtlThread::run()
   Q_ASSERT(port != 0);
 
 #ifdef Q_OS_UNIX
-  ///port->defineCtlThread(pthread_self());
-  ///port->setNativePthreadObject(pthread_self());
   pvNativePthreadObject = pthread_self();
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
@@ -81,29 +81,32 @@ void mdtSerialPortCtlThread::run()
   // Set the running flag
   port->lockMutex();
   pvRunning = true;
-  ///port->unlockMutex();
 
   // Run...
   while(1){
     // Read thread state
-    ///port->lockMutex();
     if(!pvRunning){
-      ///port->unlockMutex();
       break;
     }
-    ///port->unlockMutex();
     // Wait on ctl signal event
-    if(!port->waitEventCtl()){
-      ///port->lockMutex();
-      pvRunning = false;
-      ///port->unlockMutex();
+    portError = port->waitEventCtl();
+    if(portError == mdtAbstractPort::WaitingCanceled){
+      // Stopping
+      break;
+    }else if(portError == mdtAbstractPort::UnknownError){
+      // Unhandled error. Signal this and stop
+      emit(errorOccured(MDT_PORT_IO_ERROR));
       break;
     }
-    // We have a event here, update the flags
-    ///port->lockMutex();
-    if(!port->getCtlStates()){
+    /**
+    if(!port->waitEventCtl()){
       pvRunning = false;
-      ///port->unlockMutex();
+      break;
+    }
+    */
+    // We have a event here, update the flags
+    if(!port->getCtlStates()){
+      ///pvRunning = false;
       break;
     }
   }

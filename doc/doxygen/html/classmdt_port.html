@@ -87,20 +87,21 @@ Collaboration diagram for mdtPort:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac466eac9d1a54ea0e04c998660ad75ec"></a><!-- doxytag: member="mdtPort::mdtPort" ref="ac466eac9d1a54ea0e04c998660ad75ec" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtPort</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#aa77b266f23744f1b53ae589f986be101">setReadTimeout</a> (int timeout)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the waiting functions.  <a href="#aa77b266f23744f1b53ae589f986be101"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa77b266f23744f1b53ae589f986be101"></a><!-- doxytag: member="mdtPort::setReadTimeout" ref="aa77b266f23744f1b53ae589f986be101" args="(int timeout)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#aa77b266f23744f1b53ae589f986be101">setReadTimeout</a> (int timeout)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2acb6e7bedacdadf78ee735dc611abfa"></a><!-- doxytag: member="mdtPort::setWriteTimeout" ref="a2acb6e7bedacdadf78ee735dc611abfa" args="(int timeout)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a2acb6e7bedacdadf78ee735dc611abfa">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#af8737cc14667f6770af7be01759253e2">waitForReadyRead</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#af8737cc14667f6770af7be01759253e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a84594fdb56cd455a366c69b0a9228020">waitForReadyRead</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#a84594fdb56cd455a366c69b0a9228020"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#ad8a196bb21b6ca76dffb068a1692904a">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#ad8a196bb21b6ca76dffb068a1692904a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fea088c8e5ad4578f521a39c353f7c3"></a><!-- doxytag: member="mdtPort::flushIn" ref="a2fea088c8e5ad4578f521a39c353f7c3" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a2fea088c8e5ad4578f521a39c353f7c3">flushIn</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a2307bdc3b7d89f27e65b96b8a359b70a">waitEventWriteReady</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a2307bdc3b7d89f27e65b96b8a359b70a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a85e77a391f6f5782428beb2e6aee52f8">waitEventWriteReady</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a85e77a391f6f5782428beb2e6aee52f8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a62f4a6f2c547d40d3743ce893e0f64d6">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a62f4a6f2c547d40d3743ce893e0f64d6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42022f9fe08166418711b956c6aabb49"></a><!-- doxytag: member="mdtPort::flushOut" ref="a42022f9fe08166418711b956c6aabb49" args="()" -->
@@ -140,38 +141,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a class="anchor" id="aa77b266f23744f1b53ae589f986be101"></a><!-- doxytag: member="mdtPort::setReadTimeout" ref="aa77b266f23744f1b53ae589f986be101" args="(int timeout)" -->
+<a class="anchor" id="a85e77a391f6f5782428beb2e6aee52f8"></a><!-- doxytag: member="mdtPort::waitEventWriteReady" ref="a85e77a391f6f5782428beb2e6aee52f8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtPort::setReadTimeout </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Abort the waiting functions. </p>
-<p>This method is called from main thread (<a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a>), and cause the system's wait functions to be aborted. Example are select() or ioctl() on POSIX. On Windows, the appropriate event of WaitForMultipleObjects() should be set.</p>
-<p>The mutex is not handled by this method.void abortWaiting();</p>
-<p>Set the read data timeout</p>
-<p>void mdtPort::abortWaiting() { Q_ASSERT(pvNativePthreadObject != 0);</p>
-<p>Set aborting flag and send the signal /pvAbortingWaitEventCtl = true; pthread_kill(pvNativePthreadObject, SIGALRM); } </p>
-
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2307bdc3b7d89f27e65b96b8a359b70a"></a><!-- doxytag: member="mdtPort::waitEventWriteReady" ref="a2307bdc3b7d89f27e65b96b8a359b70a" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPort::waitEventWriteReady </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtPort::waitEventWriteReady </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -184,16 +159,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a7773bc21c63ce6a275f5a0889935ac83">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af8737cc14667f6770af7be01759253e2"></a><!-- doxytag: member="mdtPort::waitForReadyRead" ref="af8737cc14667f6770af7be01759253e2" args="()" -->
+<a class="anchor" id="a84594fdb56cd455a366c69b0a9228020"></a><!-- doxytag: member="mdtPort::waitForReadyRead" ref="a84594fdb56cd455a366c69b0a9228020" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtPort::waitForReadyRead </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtPort::waitForReadyRead </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -206,7 +181,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
-<p>Implements <a class="el" href="classmdt_abstract_port.html#a848e3c86aa6ec480e8c471655fbcf5c5">mdtAbstractPort</a>.</p>
+<p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
 </div>
 </div>
@@ -261,7 +236,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 8 2012 19:29:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 11:19:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -274,17 +274,17 @@ class mdtAbstractSerialPort : public mdtAbstractPort
    *
    * Subclass notes:<br>
    * This method must be re-implemented in plateform specific subclass.<br>
-   * To handle port correctly, a sequence should be something like:<br>
-   *  - Do some needed calls/init
-   *  - Unlock the mutex
-   *  - Enable thread's canclel state with setCancelStateEnabled()
-   *  - Call system's wait function
-   *  - Diseable thread's canclel state with setCancelStateEnabled()
-   *  - Lock the mutext again
+   * Notes about mutex handling:
+   *  - Mutex must be released during wait, and relocked befor return.
    *
-   * \return False on error, in this case, the thread will be stopped.
+   * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
+   *          and the thread knows that it must end (case of stopping thread).
+   *          On unhandled error, UnknownError is returned. The thread also stop working, and emit
+   *          a error signal (that can be handled in mdtPortManager, or in another place in application).
+   *
+   * \sa mdtPortThread
    */
-  virtual bool waitEventCtl(/*mdtPortThread *thread*/) = 0;
+  virtual error_t waitEventCtl() = 0;
 
   /// NOTE: \todo Update name to : updateCtlStates ?
   /*! \brief Get the control (modem line) signal states and update member flags
