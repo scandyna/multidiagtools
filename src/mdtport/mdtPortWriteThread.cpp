@@ -56,12 +56,15 @@ void mdtPortWriteThread::run()
   qint64 toWrite = 0;
   qint64 written = 0;
   mdtAbstractPort::error_t portError;
+  int interframeTime = 0;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
+  /// Get setup \todo Complete this !
+  interframeTime = pvPort->config().writeInterframeTime();
   // Set the running flag
   pvRunning = true;
 
@@ -71,7 +74,7 @@ void mdtPortWriteThread::run()
     if(!pvRunning){
       break;
     }
-    // Wait the minimal time if requierd - Used for timeout protocol and byte per byte write
+    /// Wait the minimal time if requierd - Used for timeout protocol and byte per byte write NOTE: timeout proto ??
     if(pvWriteMinWaitTime > 0){
       pvPort->unlockMutex();
       msleep(pvWriteMinWaitTime);
@@ -87,16 +90,13 @@ void mdtPortWriteThread::run()
       emit(errorOccured(MDT_PORT_IO_ERROR));
       break;
     }
-    /**
-    if(!pvPort->waitEventWriteReady()){
-      emit(errorOccured(MDT_PORT_IO_ERROR));
+    // Event occured, send the data to port - Check timeout state first
+    if(pvPort->writeTimeoutOccured()){
+      // Cannot write now, sleep some time and try later
       pvPort->unlockMutex();
       msleep(100);
       pvPort->lockMutex();
-    }
-    */
-    // Event occured, send the data to port - Check timeout state first
-    if(!pvPort->writeTimeoutOccured()){
+    }else{
       // Check if we have something to transmit
       if(frame == 0){
         frame = getNewFrame();
@@ -104,6 +104,13 @@ void mdtPortWriteThread::run()
           // New frame to transmit
           bufferCursor = frame->data();
           toWrite = frame->size();
+          // Wait before sending next frame, if requierd
+          if(interframeTime > 0){
+            pvPort->unlockMutex();
+            qDebug() << "WTHD: waiting " << interframeTime << " [ms]";
+            msleep(interframeTime);
+            pvPort->lockMutex();
+          }
         }
       }
       if(frame != 0){
@@ -114,7 +121,7 @@ void mdtPortWriteThread::run()
         }else{
           written = pvPort->write(bufferCursor, toWrite);
         }
-        //qDebug() << "WTHD: written: " << written;
+        qDebug() << "WTHD: written: " << written;
         if(written < 0){
           written = 0;
           pvPort->unlockMutex();

@@ -91,7 +91,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#aff0260f72ca05715efe3f70850e7a151">readQueueSize</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the read Queue size.  <a href="#aff0260f72ca05715efe3f70850e7a151"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742">setUseReadTimeoutProtocol</a> (bool use)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the minimal time to wait before try to read.  <a href="#a5e7857a56ab2baff4bd0a77290b3c742"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the read timeout protocol.  <a href="#a5e7857a56ab2baff4bd0a77290b3c742"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#ad90a88b06f0efebd1ee9f6d4370dec33">useReadTimeoutProtocol</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Know if read timeout protocol must be used.  <a href="#ad90a88b06f0efebd1ee9f6d4370dec33"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585">setReadTimeout</a> (int timeout)</td></tr>
@@ -129,14 +129,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the byte per byte write On/Off.  <a href="#ac6cb3d8fbefad9a832335c3f2023832c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a9b5041ba740a5918e5e1323e61d3bbdc">bytePerByteWrite</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get byte per byte write flag (On/Off)  <a href="#a9b5041ba740a5918e5e1323e61d3bbdc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a639c71f90cfeb7e2160ad90e9775054b">operator==</a> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port read only.  <a href="#a639c71f90cfeb7e2160ad90e9775054b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a639c71f90cfeb7e2160ad90e9775054b"></a><!-- doxytag: member="mdtPortConfig::operator==" ref="a639c71f90cfeb7e2160ad90e9775054b" args="(const mdtPortConfig &amp;other)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a539c86934d41306a3ed18a8292457d"></a><!-- doxytag: member="mdtPortConfig::operator!=" ref="a5a539c86934d41306a3ed18a8292457d" args="(const mdtPortConfig &amp;other)" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a6372ebc36d4476899e2274299ae5799d">matches</a> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">bool pvReadOnly; // If true, the port should be open as read only  <a href="#a6372ebc36d4476899e2274299ae5799d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6372ebc36d4476899e2274299ae5799d"></a><!-- doxytag: member="mdtPortConfig::matches" ref="a6372ebc36d4476899e2274299ae5799d" args="(const mdtPortConfig &amp;other)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>matches</b> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89f0ded07219e4ddbec5f6f20a3798d5"></a><!-- doxytag: member="mdtPortConfig::pvReadFrameSize" ref="a89f0ded07219e4ddbec5f6f20a3798d5" args="" -->
@@ -217,50 +217,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 <p>Get frame type. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType()</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a6372ebc36d4476899e2274299ae5799d"></a><!-- doxytag: member="mdtPortConfig::matches" ref="a6372ebc36d4476899e2274299ae5799d" args="(const mdtPortConfig &amp;other)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortConfig::matches </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td>
-          <td class="paramname"><em>other</em></td><td>)</td>
-          <td><code> [protected]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>bool pvReadOnly; // If true, the port should be open as read only </p>
-
-<p><p>if(pvReadOnly != other.pvReadOnly){ return false; }</p>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="a639c71f90cfeb7e2160ad90e9775054b"></a><!-- doxytag: member="mdtPortConfig::operator==" ref="a639c71f90cfeb7e2160ad90e9775054b" args="(const mdtPortConfig &amp;other)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortConfig::operator== </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td>
-          <td class="paramname"><em>other</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the port read only. </p>
-<p>void setReadOnly(bool readOnly);</p>
-<p>Get the read only flagbool readOnly();</p>
-<p>void mdtPortConfig::setReadOnly(bool readOnly) { pvReadOnly = readOnly; } bool mdtPortConfig::readOnly() { return pvReadOnly; } </p>
 
 </div>
 </div>
@@ -385,9 +341,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <li>En of frame sequence: LF (ASCII 0x0A)</li>
 <li>Byte per byte write: Off </li>
 </ul>
-
-<p><p>pvReadOnly = false; </p>
-</p>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_config.html#acabcdbda285314992582e5ffd413b555">mdtSerialPortConfig</a>.</p>
 
@@ -518,21 +471,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </div>
 <div class="memdoc">
 
-<p>Set the minimal time to wait before try to read. </p>
-<p>Internally, the event system is used for read calls.<br/>
- For exemple, on Linux, the select() call is used.<br/>
- It can happen that the underlaying system does not support it, and call returns immediately, causing the reader thread to consume all CPU ressource.<br/>
- In this situation, the solution is to wait sometime before calling the read function. This wat is done by setting this parameter to a value greater than 0. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">minWaitTime</td><td>Wait time before read [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>mdtDeviceFileReadThread</dd></dl>
-<p>Get the minimal time to wait before try to read </p>
-<dl class="see"><dt><b>See also:</b></dt><dd>setReadMinWaitTime()</dd></dl>
-<p>Use the read timeout protocol.</p>
+<p>Use the read timeout protocol. </p>
 <p>An example of read timeout protocol is MODBUS (over serial lines) RTU mode The <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> will use this parameter. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -654,7 +593,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Know if read timeout protocol must be used. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742" title="Set the minimal time to wait before try to read.">setUseReadTimeoutProtocol()</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a5e7857a56ab2baff4bd0a77290b3c742" title="Use the read timeout protocol.">setUseReadTimeoutProtocol()</a> </dd></dl>
 
 </div>
 </div>
@@ -753,7 +692,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 11:19:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 17:43:41 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

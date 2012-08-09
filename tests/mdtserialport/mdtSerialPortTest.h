@@ -42,8 +42,8 @@ class mdtSerialPortTest : public mdtTest
   void mdtSerialPortTxRxBinaryTest_data();
 
   // Test the data transmission: timeout protocol
-  void mdtSerialPortTxRxBinaryTopTest();
-  void mdtSerialPortTxRxBinaryTopTest_data();
+  void txRxBinaryTopTest();
+  void txRxBinaryTopTest_data();
 
   // Test the data transmission: ASCII
   void mdtSerialPortTxRxAsciiTest();

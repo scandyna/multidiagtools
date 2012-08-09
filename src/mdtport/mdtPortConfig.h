@@ -42,6 +42,7 @@ class mdtPortConfig
    *  - Frame type: RAW
    *  - En of frame sequence: LF (ASCII 0x0A)
    *  - Byte per byte write: Off
+   *  - Write interframe time: 0 [ms]
    */
   virtual void setDefault();
 
@@ -73,25 +74,6 @@ class mdtPortConfig
    * \sa setReadQueueSize()
    */
   int readQueueSize() const;
-
-  /*! \brief Set the minimal time to wait before try to read
-   *
-   * Internally, the event system is used for read calls.<br>
-   * For exemple, on Linux, the select() call is used.<br>
-   * It can happen that the underlaying system does not support
-   * it, and call returns immediately, causing the reader thread
-   * to consume all CPU ressource.<br>
-   * In this situation, the solution is to wait sometime before calling the read function.
-   * This wat is done by setting this parameter to a value greater than 0.
-   * \param minWaitTime Wait time before read [ms]
-   * \sa mdtDeviceFileReadThread
-   */
-  //void setReadMinWaitTime(int minWaitTime);
-
-  /*! \brief Get the minimal time to wait before try to read
-   * \sa setReadMinWaitTime()
-   */
-  //int readMinWaitTime();
 
   /*! \brief Use the read timeout protocol.
    * 
@@ -132,6 +114,22 @@ class mdtPortConfig
    * \sa setWriteMinWaitTime()
    */
   int writeMinWaitTime() const;
+
+  /*! \brief Set the write interframe time
+   *
+   * If this time is > 0 , the mdtPortWriteThread will
+   *  wait defined time before sending a new frame.
+   *  This is usefull in timeout based protocols, like Modbus RTU.
+   *
+   * \param time Interframe time [ms]
+   */
+  void setWriteInterframeTime(int time);
+
+  /*! \brief Get the write interframe time [ms]
+   *
+   * \sa setWriteInterframeTime()
+   */
+  int writeInterframeTime() const;
 
   /*! \brief Set the write timeout
    * 
@@ -219,34 +217,24 @@ class mdtPortConfig
    */
   bool bytePerByteWrite() const;
 
-  /*! \brief Set the port read only
-   */
-  ///void setReadOnly(bool readOnly);
-
-  /*! \brief Get the read only flag
-   */
-  ///bool readOnly();
-
   bool operator==(const mdtPortConfig &other);
   bool operator!=(const mdtPortConfig &other);
-
 
  protected:
 
   // Frame and frame FIFO (queue) size
   int pvReadFrameSize;            // Maximum data length to store before a frame is considered invalid
   int pvReadQueueSize;            // Maximum number of frames that can be stored
-  //int pvReadMinWaitTime;          // Minimum time to wait before read call [ms]
   bool pvUseReadTimeoutProtocol;  // Use the timeout protocol, for example, MODBUS RTU mode. Used by mdtPortReadThread
   int pvReadTimeout;              // Maximum time before reading data [ms]
   int pvWriteFrameSize;           // Maximum data length to store before a frame is considered invalid
   int pvWriteQueueSize;           // Maximum number of frames that can be stored
   int pvWriteMinWaitTime;         // Minimum time to wait before write call
+  int pvWriteInterframeTime;      // Time between each sended frame [ms]
   int pvWriteTimeout;             // Maximum time before port must be ready for writing data [ms]
   mdtFrame::type_t pvFrameType;
-  QByteArray pvEndOfFrameSeq; // End of frame sequence (valid for ASCII frames)
-  bool pvBytePerByteWrite;    // For some (very) slow devices that need time between each transmitted byte
-  ///bool pvReadOnly;                // If true, the port should be open as read only
+  QByteArray pvEndOfFrameSeq;     // End of frame sequence (valid for ASCII frames)
+  bool pvBytePerByteWrite;        // For some (very) slow devices that need time between each transmitted byte
 
   bool matches(const mdtPortConfig &other);
 };

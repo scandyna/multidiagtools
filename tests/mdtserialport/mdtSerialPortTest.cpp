@@ -367,7 +367,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest_data()
   QTest::newRow("Very long data") << str;
 }
 
-void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
+void mdtSerialPortTest::txRxBinaryTopTest()
 {
   mdtSerialPort sp;
   mdtSerialPortConfig cfg;
@@ -391,15 +391,12 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
   // Setup
   cfg.setFrameType(mdtFrame::FT_RAW_TOP);
   cfg.setWriteQueueSize(data.size()+10);
-  cfg.setWriteMinWaitTime(100);
   cfg.setReadQueueSize(data.size()+10);
-  cfg.setReadTimeout(50);
+  cfg.setReadTimeout(500);
   cfg.setUseReadTimeoutProtocol(true);
-  ///QVERIFY(sp.setAttributes(portName));
   sp.setPortName(portName);
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
   QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
-
   sp.setConfig(&cfg);
   QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
@@ -412,24 +409,62 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
   QVERIFY(txThd.start());
   QVERIFY(txThd.isRunning());
 
-  // Transmit data
-  sp.lockMutex();
+  // Transmit data too fast (interframe < read timeout)
   for(int i=0; i<data.size(); i++){
+    sp.lockMutex();
     QVERIFY(sp.writeFramesPool().size() > 0);
     frame = sp.writeFramesPool().dequeue();
     frame->clear();
     frame->append(data.at(i));
     sp.writeFrames().enqueue(frame);
+    qDebug() << "TEST , enq 1 frame for write";
+    sp.unlockMutex();
   }
-  sp.unlockMutex();
-
-  // Wait some time and verify that data was transfered
+  // Wait some time
   QTest::qWait(150*data.size()+100);
   sp.lockMutex();
   // We have a special case for empty data test
   if((data.size() == 1)&&(data.at(0).size() == 0)){
     QVERIFY(sp.readenFrames().size() == 0);
   }else{
+    // Here we have max 1 frame (timeout can happen in test because we stop sending data)
+    QVERIFY(sp.readenFrames().size() <= 1);
+    // Restore received frames to read pool
+    while(sp.readenFrames().size() > 0){
+      frame = sp.readenFrames().dequeue();
+      QVERIFY(frame != 0);
+      sp.readFramesPool().enqueue(frame);
+    }
+  }
+  sp.unlockMutex();
+
+  // Update setup with correct interframe time
+  cfg.setWriteInterframeTime(550);
+  // Restart threads (make shure that current frame is cleared in threads + update there setup)
+  rxThd.stop();
+  txThd.stop();
+  QVERIFY(rxThd.start());
+  QVERIFY(txThd.start());
+
+  // Transmit data with correct interframe time
+  for(int i=0; i<data.size(); i++){
+    sp.lockMutex();
+    QVERIFY(sp.writeFramesPool().size() > 0);
+    frame = sp.writeFramesPool().dequeue();
+    frame->clear();
+    frame->append(data.at(i));
+    sp.writeFrames().enqueue(frame);
+    qDebug() << "TEST , enq 1 frame for write";
+    sp.unlockMutex();
+  }
+  // Wait some time and verify that data was transfered
+  QTest::qWait(600*data.size()+600);
+  sp.lockMutex();
+  // We have a special case for empty data test
+  if((data.size() == 1)&&(data.at(0).size() == 0)){
+    QVERIFY(sp.readenFrames().size() == 0);
+  }else{
+    qDebug() << "data size: " << data.size() << " , sp size: " << sp.readenFrames().size();
     QVERIFY(sp.readenFrames().size() == data.size());
     // Verify each frame
     for(int i=0; i<data.size(); i++){
@@ -437,6 +472,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
       QVERIFY(frame != 0);
       QVERIFY(frame->isComplete());
       // Verify readen data
+      qDebug() << "Ref data: " << data.at(i);
+      qDebug() << "RX  data: " << *frame;
       QVERIFY(*frame == data.at(i));
       // Restore frame to pool
       sp.readFramesPool().enqueue(frame);
@@ -450,7 +487,7 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest()
   sp.close();
 }
 
-void mdtSerialPortTest::mdtSerialPortTxRxBinaryTopTest_data()
+void mdtSerialPortTest::txRxBinaryTopTest_data()
 {
   QStringList lst;
 

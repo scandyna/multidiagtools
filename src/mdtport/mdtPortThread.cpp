@@ -57,6 +57,7 @@ void mdtPortThread::setPort(mdtAbstractPort *port)
   Q_ASSERT(!QThread::isRunning());
 
   pvPort = port;
+  /// NOTE: \todo Getting config here is BAD. Setup must be taken by each thread by starting !!
   pvMinPoolSizeBeforeReadSuspend = pvPort->config().readQueueSize() / 4;
   if((pvMinPoolSizeBeforeReadSuspend < 1)&&(pvPort->config().readQueueSize() > 0)){
     pvMinPoolSizeBeforeReadSuspend = 1;
@@ -64,6 +65,9 @@ void mdtPortThread::setPort(mdtAbstractPort *port)
   pvWriteMinWaitTime = pvPort->config().writeMinWaitTime();
   pvBytePerByteWrite = pvPort->config().bytePerByteWrite();
   pvUseReadTimeoutProtocol = pvPort->config().useReadTimeoutProtocol();
+  qDebug() << "mdtPortThread::setPort() , writeMinWaitTime: " << pvWriteMinWaitTime;
+  qDebug() << "mdtPortThread::setPort() , bytePerByteWrite: " << pvBytePerByteWrite;
+  qDebug() << "mdtPortThread::setPort() , useReadTimeoutProtocol: " << pvUseReadTimeoutProtocol;
 }
 
 bool mdtPortThread::start()

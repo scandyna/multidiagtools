@@ -680,6 +680,7 @@ qint64 mdtSerialPort::read(char *data, qint64 maxSize)
         return n;
     }
   }
+  qDebug() << "readen " << n << " bytes";
 
   return n;
 }
@@ -805,6 +806,7 @@ qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
         return n;
     }
   }
+  qDebug() << "wrote " << n << " bytes";
 
   return n;
 }

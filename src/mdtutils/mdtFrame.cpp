@@ -178,7 +178,7 @@ bool mdtFrame::isComplete()
 void mdtFrame::clear()
 {
   int capa = capacity();
-  
+
   QByteArray::clear();
   reserve(capa);
   pvEOFcondition = false;
