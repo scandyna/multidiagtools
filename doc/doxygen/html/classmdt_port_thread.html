@@ -89,7 +89,7 @@ Collaboration diagram for mdtPortThread:</div>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d">ioProcessBegin</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/diseable cancel state.  <a href="#a8f3d8f3d70839e5ae7b108a3a199e94d"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when a I/O process begins.  <a href="#a8f3d8f3d70839e5ae7b108a3a199e94d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured</a> (int error)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted on error.  <a href="#ab31cbe1a85aa830cd368654d1f806326"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
@@ -115,17 +115,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>sigactionHandl
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59735ef01b761361b1055a0356be525a"></a><!-- doxytag: member="mdtPortThread::pvRunning" ref="a59735ef01b761361b1055a0356be525a" args="" -->
 volatile bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvRunning</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fee9a4cf92dd375e7d5e1e71c454754"></a><!-- doxytag: member="mdtPortThread::pvMinPoolSizeBeforeReadSuspend" ref="a7fee9a4cf92dd375e7d5e1e71c454754" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pvMinPoolSizeBeforeReadSuspend</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5c4bed0c9fb012f220fba013d0f69b8"></a><!-- doxytag: member="mdtPortThread::pvPort" ref="af5c4bed0c9fb012f220fba013d0f69b8" args="" -->
 <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvPort</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af4c41daa39ddd8f94faf0a2c2ca17e"></a><!-- doxytag: member="mdtPortThread::pvUseReadTimeoutProtocol" ref="a2af4c41daa39ddd8f94faf0a2c2ca17e" args="" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvUseReadTimeoutProtocol</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a048bcd95af9c7b33f077b73e117607"></a><!-- doxytag: member="mdtPortThread::pvWriteMinWaitTime" ref="a4a048bcd95af9c7b33f077b73e117607" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a4a048bcd95af9c7b33f077b73e117607">pvWriteMinWaitTime</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">int pvReadMinWaitTime; <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcdcd09d26fb8282fcd25b5ac28dc891"></a><!-- doxytag: member="mdtPortThread::pvBytePerByteWrite" ref="afcdcd09d26fb8282fcd25b5ac28dc891" args="" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7154af7d387eecaea113ddb5900ff23c"></a><!-- doxytag: member="mdtPortThread::pvNativePthreadObject" ref="a7154af7d387eecaea113ddb5900ff23c" args="" -->
 pthread_t&#160;</td><td class="memItemRight" valign="bottom"><b>pvNativePthreadObject</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae22f83fd56b06cdaa9b77abafe85a6b4"></a><!-- doxytag: member="mdtPortThread::pvSigaction" ref="ae22f83fd56b06cdaa9b77abafe85a6b4" args="" -->
@@ -169,11 +160,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 </div>
 <div class="memdoc">
 
-<p>Enable/diseable cancel state. </p>
-<p>If cancel state is enabled, the QThread::terminate() will work. Internally, QThread::setTerminationEnabled() is called. See the Qt's QThread documentation for more details.</p>
-<p>Subclass notes:<br/>
- In the run method, this method should be called at first with false parameter, to be shure that thread cannot be cancelled.void setCancelStateEnabled(bool enabled);</p>
-<p>Emitted when a I/O process begins</p>
+<p>Emitted when a I/O process begins. </p>
 <p>This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
 </div>
@@ -258,9 +245,6 @@ The thread must not running </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Serial port instance must be defined. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>setSerialPort() </dd></dl>
 
-<p><p>pvPort-&gt;abortWaiting(); </p>
-</p>
-
 <p>Reimplemented in <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>.</p>
 
 </div>
@@ -268,7 +252,6 @@ The thread must not running </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtport/mdtPortThread.cpp</li>
-<li>src/mdtport/moc_mdtPortThread.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -285,7 +268,7 @@ The thread must not running </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 17:43:41 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 19:10:11 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

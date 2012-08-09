@@ -1,5 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$class_ui__mdt_uic_number_widget.html" title="Ui_mdtUicNumberWidget" alt="" coords="5,5,176,35"/>
-<area shape="rect" id="node3" href="$class_ui_1_1mdt_uic_number_widget.html" title="Ui::mdtUicNumberWidget" alt="" coords="225,5,396,35"/>
-<area shape="rect" id="node5" href="$classmdt_uic_number_widget.html" title="UIC Number Widget." alt="" coords="447,5,596,35"/>
+<area shape="rect" id="node1" href="$class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ..." alt="" coords="5,5,141,35"/>
+<area shape="rect" id="node3" href="$classmdt_application.html" title="Main application." alt="" coords="191,5,297,35"/>
 </map>

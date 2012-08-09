@@ -102,6 +102,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the minimal time to wait before try to write.  <a href="#a1d7515af56919b95f060cad4f83c6ef3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a38d6957cc1103ecf348a76fd3eb97d53">writeMinWaitTime</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimal time to wait before try to write.  <a href="#a38d6957cc1103ecf348a76fd3eb97d53"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a7113f6d96e93978cc3915589c14b16b6">setWriteInterframeTime</a> (int time)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write interframe time.  <a href="#a7113f6d96e93978cc3915589c14b16b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a745f5111436fc143b75440bf90a1a4e6">writeInterframeTime</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the write interframe time [ms].  <a href="#a745f5111436fc143b75440bf90a1a4e6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#ac117f7cd1f23de163a7fe84f69c2164c">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write timeout.  <a href="#ac117f7cd1f23de163a7fe84f69c2164c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a3009e07cd66f4c4bfc1c7fdabbc9f93c">writeTimeout</a> () const </td></tr>
@@ -153,6 +157,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFrameSize</b></
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteQueueSize</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a098926b5811c5a3a876fbc01409437b9"></a><!-- doxytag: member="mdtPortConfig::pvWriteMinWaitTime" ref="a098926b5811c5a3a876fbc01409437b9" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteMinWaitTime</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace2001b084ab2611c2de56c951974457"></a><!-- doxytag: member="mdtPortConfig::pvWriteInterframeTime" ref="ace2001b084ab2611c2de56c951974457" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteInterframeTime</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad840fd68971a9ccc6092ce2aa3167591"></a><!-- doxytag: member="mdtPortConfig::pvWriteTimeout" ref="ad840fd68971a9ccc6092ce2aa3167591" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteTimeout</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bc3110b7831ca76954a8d8fc78944f1"></a><!-- doxytag: member="mdtPortConfig::pvFrameType" ref="a4bc3110b7831ca76954a8d8fc78944f1" args="" -->
@@ -339,7 +345,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <li>Read/Write timout: 500 [ms]</li>
 <li>Frame type: RAW</li>
 <li>En of frame sequence: LF (ASCII 0x0A)</li>
-<li>Byte per byte write: Off </li>
+<li>Byte per byte write: Off</li>
+<li>Write interframe time: 0 [ms] </li>
 </ul>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_config.html#acabcdbda285314992582e5ffd413b555">mdtSerialPortConfig</a>.</p>
@@ -504,6 +511,32 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 </div>
 </div>
+<a class="anchor" id="a7113f6d96e93978cc3915589c14b16b6"></a><!-- doxytag: member="mdtPortConfig::setWriteInterframeTime" ref="a7113f6d96e93978cc3915589c14b16b6" args="(int time)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortConfig::setWriteInterframeTime </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>time</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the write interframe time. </p>
+<p>If this time is &gt; 0 , the <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> will wait defined time before sending a new frame. This is usefull in timeout based protocols, like Modbus RTU.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>Interframe time [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a1d7515af56919b95f060cad4f83c6ef3"></a><!-- doxytag: member="mdtPortConfig::setWriteMinWaitTime" ref="a1d7515af56919b95f060cad4f83c6ef3" args="(int minWaitTime)" -->
 <div class="memitem">
 <div class="memproto">
@@ -616,6 +649,25 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 </div>
 </div>
+<a class="anchor" id="a745f5111436fc143b75440bf90a1a4e6"></a><!-- doxytag: member="mdtPortConfig::writeInterframeTime" ref="a745f5111436fc143b75440bf90a1a4e6" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtPortConfig::writeInterframeTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the write interframe time [ms]. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a7113f6d96e93978cc3915589c14b16b6" title="Set the write interframe time.">setWriteInterframeTime()</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a38d6957cc1103ecf348a76fd3eb97d53"></a><!-- doxytag: member="mdtPortConfig::writeMinWaitTime" ref="a38d6957cc1103ecf348a76fd3eb97d53" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -692,7 +744,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 17:43:41 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 19:10:11 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

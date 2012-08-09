@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>224</height>
+    <width>472</width>
+    <height>274</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -124,6 +124,9 @@
         </item>
         <item row="2" column="1">
          <widget class="QSpinBox" name="sbReadTimeout">
+          <property name="minimum">
+           <number>-1</number>
+          </property>
           <property name="maximum">
            <number>30000</number>
           </property>
@@ -158,6 +161,13 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="sbWriteFrameSize">
+          <property name="maximum">
+           <number>5000</number>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="lbWriteQueueSize">
           <property name="text">
@@ -187,22 +197,22 @@
         </item>
         <item row="2" column="1">
          <widget class="QSpinBox" name="sbWriteTimeout">
+          <property name="minimum">
+           <number>-1</number>
+          </property>
           <property name="maximum">
            <number>30000</number>
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QSpinBox" name="sbWriteMinWaitTime">
-          <property name="toolTip">
-           <string>Time to wait before sending a frame, or a byte if &quot;Write byte per byte&quot; option is set.</string>
-          </property>
-          <property name="maximum">
-           <number>5000</number>
+        <item row="3" column="0" colspan="2">
+         <widget class="QCheckBox" name="cbBytePerByteWrite">
+          <property name="text">
+           <string>Write byte per byte</string>
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
+        <item row="4" column="0">
          <widget class="QLabel" name="lbWriteMinWaitTime">
           <property name="text">
            <string>Wait time [ms]</string>
@@ -212,15 +222,31 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0" colspan="2">
-         <widget class="QCheckBox" name="cbBytePerByteWrite">
-          <property name="text">
-           <string>Write byte per byte</string>
+        <item row="4" column="1">
+         <widget class="QSpinBox" name="sbWriteMinWaitTime">
+          <property name="toolTip">
+           <string>Time to wait before sending a byte if &quot;Write byte per byte&quot; option is set.</string>
+          </property>
+          <property name="maximum">
+           <number>5000</number>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QSpinBox" name="sbWriteFrameSize">
+        <item row="5" column="0">
+         <widget class="QLabel" name="lbWriteInterframeTime">
+          <property name="text">
+           <string>Inter frame time [ms]</string>
+          </property>
+          <property name="buddy">
+           <cstring>sbWriteInterframeTime</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="sbWriteInterframeTime">
+          <property name="toolTip">
+           <string/>
+          </property>
           <property name="maximum">
            <number>5000</number>
           </property>
@@ -243,8 +269,9 @@
   <tabstop>sbWriteFrameSize</tabstop>
   <tabstop>sbWriteQueueSize</tabstop>
   <tabstop>sbWriteTimeout</tabstop>
-  <tabstop>sbWriteMinWaitTime</tabstop>
   <tabstop>cbBytePerByteWrite</tabstop>
+  <tabstop>sbWriteMinWaitTime</tabstop>
+  <tabstop>sbWriteInterframeTime</tabstop>
  </tabstops>
  <resources/>
  <connections/>

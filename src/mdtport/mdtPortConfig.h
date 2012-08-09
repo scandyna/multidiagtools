@@ -84,6 +84,7 @@ class mdtPortConfig
   void setUseReadTimeoutProtocol(bool use);
 
   /*! \brief Know if read timeout protocol must be used
+   *
    * \sa setUseReadTimeoutProtocol()
    */
   bool useReadTimeoutProtocol() const;

@@ -36,6 +36,10 @@ void \hyperlink{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{setWrite
 \begin{DoxyCompactList}\small\item\em Set the minimal time to wait before try to write. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_a38d6957cc1103ecf348a76fd3eb97d53}{writeMinWaitTime} () const 
 \begin{DoxyCompactList}\small\item\em Get the minimal time to wait before try to write. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}{setWriteInterframeTime} (int time)
+\begin{DoxyCompactList}\small\item\em Set the write interframe time. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_config_a745f5111436fc143b75440bf90a1a4e6}{writeInterframeTime} () const 
+\begin{DoxyCompactList}\small\item\em Get the write interframe time \mbox{[}ms\mbox{]}. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_ac117f7cd1f23de163a7fe84f69c2164c}{setWriteTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the write timeout. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_config_a3009e07cd66f4c4bfc1c7fdabbc9f93c}{writeTimeout} () const 
@@ -119,6 +123,11 @@ int {\bfseries pvWriteQueueSize}}
 \hypertarget{classmdt_port_config_a098926b5811c5a3a876fbc01409437b9}{
 int {\bfseries pvWriteMinWaitTime}}
 \label{classmdt_port_config_a098926b5811c5a3a876fbc01409437b9}
+
+\item 
+\hypertarget{classmdt_port_config_ace2001b084ab2611c2de56c951974457}{
+int {\bfseries pvWriteInterframeTime}}
+\label{classmdt_port_config_ace2001b084ab2611c2de56c951974457}
 
 \item 
 \hypertarget{classmdt_port_config_ad840fd68971a9ccc6092ce2aa3167591}{
@@ -286,7 +295,8 @@ Default configuration is:
 \item Read/Write timout: 500 \mbox{[}ms\mbox{]}
 \item Frame type: RAW
 \item En of frame sequence: LF (ASCII 0x0A)
-\item Byte per byte write: Off 
+\item Byte per byte write: Off
+\item Write interframe time: 0 \mbox{[}ms\mbox{]} 
 \end{DoxyItemize}
 
 Reimplemented in \hyperlink{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}{mdtSerialPortConfig}.
@@ -413,6 +423,26 @@ Frame size is the maximum number of bytes that can be stored before a frame is f
 \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+\hypertarget{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}{
+\index{mdtPortConfig@{mdtPortConfig}!setWriteInterframeTime@{setWriteInterframeTime}}
+\index{setWriteInterframeTime@{setWriteInterframeTime}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setWriteInterframeTime}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setWriteInterframeTime (
+\begin{DoxyParamCaption}
+\item[{int}]{time}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}
+
+
+Set the write interframe time. 
+
+If this time is $>$ 0 , the \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} will wait defined time before sending a new frame. This is usefull in timeout based protocols, like Modbus RTU.
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & Interframe time \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
 \hypertarget{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteMinWaitTime@{setWriteMinWaitTime}}
 \index{setWriteMinWaitTime@{setWriteMinWaitTime}!mdtPortConfig@{mdtPortConfig}}
@@ -500,6 +530,22 @@ Get the read frame size.
 
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{setWriteFrameSize()} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_port_config_a745f5111436fc143b75440bf90a1a4e6}{
+\index{mdtPortConfig@{mdtPortConfig}!writeInterframeTime@{writeInterframeTime}}
+\index{writeInterframeTime@{writeInterframeTime}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{writeInterframeTime}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortConfig::writeInterframeTime (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_config_a745f5111436fc143b75440bf90a1a4e6}
+
+
+Get the write interframe time \mbox{[}ms\mbox{]}. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}{setWriteInterframeTime()} 
 \end{DoxySeeAlso}
 \hypertarget{classmdt_port_config_a38d6957cc1103ecf348a76fd3eb97d53}{
 \index{mdtPortConfig@{mdtPortConfig}!writeMinWaitTime@{writeMinWaitTime}}

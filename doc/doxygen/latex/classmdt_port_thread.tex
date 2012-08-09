@@ -24,7 +24,7 @@ Collaboration diagram for mdtPortThread:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}{ioProcessBegin} ()
-\begin{DoxyCompactList}\small\item\em Enable/diseable cancel state. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Emitted when a I/O process begins. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured} (int error)
 \begin{DoxyCompactList}\small\item\em Emitted on error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -64,29 +64,9 @@ volatile bool {\bfseries pvRunning}}
 \label{classmdt_port_thread_a59735ef01b761361b1055a0356be525a}
 
 \item 
-\hypertarget{classmdt_port_thread_a7fee9a4cf92dd375e7d5e1e71c454754}{
-int {\bfseries pvMinPoolSizeBeforeReadSuspend}}
-\label{classmdt_port_thread_a7fee9a4cf92dd375e7d5e1e71c454754}
-
-\item 
 \hypertarget{classmdt_port_thread_af5c4bed0c9fb012f220fba013d0f69b8}{
 \hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$ {\bfseries pvPort}}
 \label{classmdt_port_thread_af5c4bed0c9fb012f220fba013d0f69b8}
-
-\item 
-\hypertarget{classmdt_port_thread_a2af4c41daa39ddd8f94faf0a2c2ca17e}{
-bool {\bfseries pvUseReadTimeoutProtocol}}
-\label{classmdt_port_thread_a2af4c41daa39ddd8f94faf0a2c2ca17e}
-
-\item 
-\hypertarget{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}{
-int \hyperlink{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}{pvWriteMinWaitTime}}
-\label{classmdt_port_thread_a4a048bcd95af9c7b33f077b73e117607}
-
-\begin{DoxyCompactList}\small\item\em int pvReadMinWaitTime; \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_thread_afcdcd09d26fb8282fcd25b5ac28dc891}{
-bool {\bfseries pvBytePerByteWrite}}
-\label{classmdt_port_thread_afcdcd09d26fb8282fcd25b5ac28dc891}
 
 \item 
 \hypertarget{classmdt_port_thread_a7154af7d387eecaea113ddb5900ff23c}{
@@ -131,14 +111,7 @@ When a error occurs, this signal is emited.\par
 \label{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}
 
 
-Enable/diseable cancel state. 
-
-If cancel state is enabled, the QThread::terminate() will work. Internally, QThread::setTerminationEnabled() is called. See the Qt's QThread documentation for more details.
-
-Subclass notes:\par
- In the run method, this method should be called at first with false parameter, to be shure that thread cannot be cancelled.void setCancelStateEnabled(bool enabled);
-
-Emitted when a I/O process begins
+Emitted when a I/O process begins. 
 
 This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
@@ -217,10 +190,6 @@ setSerialPort()
 \end{DoxySeeAlso}
 
 
-pvPort-\/$>$abortWaiting(); 
-
-
-
 Reimplemented in \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{mdtTcpSocketThread}.
 
 
@@ -228,5 +197,4 @@ Reimplemented in \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\item 
-src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}
