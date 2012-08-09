@@ -71,18 +71,6 @@ class mdtPortThread : public QThread
    */
   bool isFinished() const;
 
-  /*! \brief Enable/diseable cancel state
-   *
-   * If cancel state is enabled, the QThread::terminate() will work.
-   * Internally, QThread::setTerminationEnabled() is called.
-   * See the Qt's QThread documentation for more details.
-   *
-   * Subclass notes:<br>
-   * In the run method, this method should be called at first with false parameter, to
-   *  be shure that thread cannot be cancelled.
-   */
-  ///void setCancelStateEnabled(bool enabled);
-
  signals:
 
   /*! \brief Emitted when a I/O process begins
@@ -108,12 +96,7 @@ class mdtPortThread : public QThread
  protected:
 
   volatile bool pvRunning;
-  int pvMinPoolSizeBeforeReadSuspend;
   mdtAbstractPort *pvPort;
-  bool pvUseReadTimeoutProtocol;  // For example: MODBUS RTU mode
-  ///int pvReadMinWaitTime;
-  int pvWriteMinWaitTime;
-  bool pvBytePerByteWrite;
 #ifdef Q_OS_UNIX
   // Members needed to abort blocking
   //  functions sith pthread_kill()

@@ -29,6 +29,7 @@ mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
 {
   pvTransmissionSuspended = false;
+  pvMinPoolSizeBeforeReadSuspend = 0;
 }
 
 mdtFrame *mdtPortReadThread::getNewFrame()
@@ -80,12 +81,19 @@ void mdtPortReadThread::run()
   qint64 stored = 0;
   qint64 toStore = 0;
   mdtAbstractPort::error_t portError;
+  bool useReadTimeoutProtocol = false;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
+  // Get setup
+  useReadTimeoutProtocol = pvPort->config().useReadTimeoutProtocol();
+  pvMinPoolSizeBeforeReadSuspend = pvPort->config().readQueueSize() / 4;
+  if((pvMinPoolSizeBeforeReadSuspend < 1)&&(pvPort->config().readQueueSize() > 0)){
+    pvMinPoolSizeBeforeReadSuspend = 1;
+  }
   // Set the running flag and get a RX frame
   pvRunning = true;
   frame = getNewFrame();
@@ -129,7 +137,7 @@ void mdtPortReadThread::run()
     // Event occured, get the data from port - Check timeout state first
     if(pvPort->readTimeoutOccured()){
       // In timeout protocol, the current frame is considered complete
-      if(pvUseReadTimeoutProtocol){
+      if(useReadTimeoutProtocol){
         ///qDebug() << "TO et TOP";
         if(frame != 0){
           if(!frame->isEmpty()){

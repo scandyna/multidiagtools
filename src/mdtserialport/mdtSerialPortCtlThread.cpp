@@ -34,34 +34,6 @@ mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
 {
 }
 
-/**
-#ifdef Q_OS_UNIX
-void mdtSerialPortCtlThread::stop()
-{
-  qDebug() << "mdtSerialPortCtlThread::stop() ...";
-
-  Q_ASSERT(pvPort != 0);
-
-  // We need a mdtSerialPort instance here
-  mdtSerialPort *port = dynamic_cast<mdtSerialPort*>(pvPort);
-  Q_ASSERT(port != 0);
-
-  // Unset the running flag and kill ioctl() wait function
-  port->lockMutex();
-  pvRunning = false;
-  ///port->abortWaitEventCtl();
-  port->abortWaiting();
-  port->unlockMutex();
-
-  // Wait the end of the thread
-  while(!isFinished()){
-    qApp->processEvents();
-    msleep(50);
-  }
-}
-#endif
-*/
-
 void mdtSerialPortCtlThread::run()
 {
   mdtAbstractPort::error_t portError;
@@ -98,15 +70,8 @@ void mdtSerialPortCtlThread::run()
       emit(errorOccured(MDT_PORT_IO_ERROR));
       break;
     }
-    /**
-    if(!port->waitEventCtl()){
-      pvRunning = false;
-      break;
-    }
-    */
     // We have a event here, update the flags
     if(!port->getCtlStates()){
-      ///pvRunning = false;
       break;
     }
   }

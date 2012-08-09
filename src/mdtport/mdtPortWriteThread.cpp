@@ -57,14 +57,18 @@ void mdtPortWriteThread::run()
   qint64 written = 0;
   mdtAbstractPort::error_t portError;
   int interframeTime = 0;
+  int writeMinWaitTime = 0;
+  bool bytePerByteWrite = false;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
-  /// Get setup \todo Complete this !
+  // Get setup
   interframeTime = pvPort->config().writeInterframeTime();
+  writeMinWaitTime = pvPort->config().writeMinWaitTime();
+  bytePerByteWrite = pvPort->config().bytePerByteWrite();
   // Set the running flag
   pvRunning = true;
 
@@ -74,10 +78,10 @@ void mdtPortWriteThread::run()
     if(!pvRunning){
       break;
     }
-    /// Wait the minimal time if requierd - Used for timeout protocol and byte per byte write NOTE: timeout proto ??
-    if(pvWriteMinWaitTime > 0){
+    // Wait the minimal time if requierd - Used for byte per byte write
+    if(writeMinWaitTime > 0){
       pvPort->unlockMutex();
-      msleep(pvWriteMinWaitTime);
+      msleep(writeMinWaitTime);
       pvPort->lockMutex();
     }
     // Wait on write ready event
@@ -116,7 +120,7 @@ void mdtPortWriteThread::run()
       if(frame != 0){
         // Write data to port
         emit ioProcessBegin();
-        if((toWrite > 0)&&(pvBytePerByteWrite)){
+        if((toWrite > 0)&&(bytePerByteWrite)){
           written = pvPort->write(bufferCursor, 1);
         }else{
           written = pvPort->write(bufferCursor, toWrite);

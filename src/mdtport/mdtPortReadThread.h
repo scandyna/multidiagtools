@@ -64,6 +64,7 @@ class mdtPortReadThread : public mdtPortThread
   void run();
 
   bool pvTransmissionSuspended; // Flag used to remeber if a transmission suspend was request.
+  int pvMinPoolSizeBeforeReadSuspend;
 };
 
 #endif  // #ifndef MDT_PORT_READ_THREAD_H

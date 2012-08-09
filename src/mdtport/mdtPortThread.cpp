@@ -30,9 +30,6 @@ mdtPortThread::mdtPortThread(QObject *parent)
 {
   pvPort = 0;
   pvRunning = false;
-  pvMinPoolSizeBeforeReadSuspend = 0;
-  pvWriteMinWaitTime = 0;
-  pvUseReadTimeoutProtocol = false;
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = 0;
   // We must catch the SIGALRM signal, else the application process
@@ -57,17 +54,6 @@ void mdtPortThread::setPort(mdtAbstractPort *port)
   Q_ASSERT(!QThread::isRunning());
 
   pvPort = port;
-  /// NOTE: \todo Getting config here is BAD. Setup must be taken by each thread by starting !!
-  pvMinPoolSizeBeforeReadSuspend = pvPort->config().readQueueSize() / 4;
-  if((pvMinPoolSizeBeforeReadSuspend < 1)&&(pvPort->config().readQueueSize() > 0)){
-    pvMinPoolSizeBeforeReadSuspend = 1;
-  }
-  pvWriteMinWaitTime = pvPort->config().writeMinWaitTime();
-  pvBytePerByteWrite = pvPort->config().bytePerByteWrite();
-  pvUseReadTimeoutProtocol = pvPort->config().useReadTimeoutProtocol();
-  qDebug() << "mdtPortThread::setPort() , writeMinWaitTime: " << pvWriteMinWaitTime;
-  qDebug() << "mdtPortThread::setPort() , bytePerByteWrite: " << pvBytePerByteWrite;
-  qDebug() << "mdtPortThread::setPort() , useReadTimeoutProtocol: " << pvUseReadTimeoutProtocol;
 }
 
 bool mdtPortThread::start()
@@ -105,7 +91,6 @@ void mdtPortThread::stop()
   pvPort->lockMutex();
   pvRunning = false;
   pvPort->unlockMutex();
-  ///pvPort->abortWaiting();
 #ifdef Q_OS_UNIX
   pthread_kill(pvNativePthreadObject, SIGALRM);
 #endif
@@ -150,11 +135,3 @@ bool mdtPortThread::isFinished() const
 void mdtPortThread::sigactionHandle(int /* signum */)
 {
 }
-
-/**
-void mdtPortThread::setCancelStateEnabled(bool enabled)
-{
-  qDebug() << "mdtPortThread::setCancelStateEnabled(" << enabled << ")";
-  setTerminationEnabled(enabled);
-}
-*/
