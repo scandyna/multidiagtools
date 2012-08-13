@@ -105,7 +105,7 @@ int mdtUsbConfigDescriptor::maxPower() const
   return 2*pvbMaxPower;
 }
 
-QList<mdtUsbInterfaceDescriptor*> mdtUsbConfigDescriptor::interfaces()
+QList<mdtUsbInterfaceDescriptor*> &mdtUsbConfigDescriptor::interfaces()
 {
   return pvInterfaces;
 }

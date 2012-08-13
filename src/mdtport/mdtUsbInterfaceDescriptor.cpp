@@ -32,6 +32,7 @@ mdtUsbInterfaceDescriptor::mdtUsbInterfaceDescriptor()
 
 mdtUsbInterfaceDescriptor::~mdtUsbInterfaceDescriptor()
 {
+  qDeleteAll(pvEndpoints);
 }
 
 void mdtUsbInterfaceDescriptor::fetchAttributes(libusb_interface_descriptor *descriptor)
@@ -84,7 +85,7 @@ quint8 mdtUsbInterfaceDescriptor::iInterface() const
   return pviInterface;
 }
 
-QList<mdtUsbEndpointDescriptor*> mdtUsbInterfaceDescriptor::endpoints()
+QList<mdtUsbEndpointDescriptor*> &mdtUsbInterfaceDescriptor::endpoints()
 {
   return pvEndpoints;
 }

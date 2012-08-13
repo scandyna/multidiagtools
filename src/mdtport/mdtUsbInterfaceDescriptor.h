@@ -28,7 +28,6 @@
 class mdtUsbEndpointDescriptor;
 
 /*! \brief USB interface descriptor
- * \todo list by ref
  */
 class mdtUsbInterfaceDescriptor
 {
@@ -65,7 +64,7 @@ class mdtUsbInterfaceDescriptor
 
   /*! \brief List of avaliable enpoints
    */
-  QList<mdtUsbEndpointDescriptor*> endpoints();
+  QList<mdtUsbEndpointDescriptor*> &endpoints();
 
  private:
 

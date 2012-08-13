@@ -1,0 +1,135 @@
+\hypertarget{classmdt_usb_device_descriptor}{
+\section{mdtUsbDeviceDescriptor Class Reference}
+\label{classmdt_usb_device_descriptor}\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+}
+
+
+USB device descriptor.  
+
+
+
+
+{\ttfamily \#include $<$mdtUsbDeviceDescriptor.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classmdt_usb_device_descriptor_a45a9a9f10b53233cc7980e482d08aa3a}{fetchAttributes} (libusb\_\-device $\ast$device)
+\begin{DoxyCompactList}\small\item\em Ftech the device descriptor's attributes. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_add8de4e1850995461a37ed27b75b4381}{
+quint8 \hyperlink{classmdt_usb_device_descriptor_add8de4e1850995461a37ed27b75b4381}{bDescriptorType} () const }
+\label{classmdt_usb_device_descriptor_add8de4e1850995461a37ed27b75b4381}
+
+\begin{DoxyCompactList}\small\item\em Device descriptor type. \end{DoxyCompactList}\item 
+quint16 \hyperlink{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa00735d04516e86}{bcdUSB} () const 
+\begin{DoxyCompactList}\small\item\em USB Specification Release Number. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_a94e04915c8df9102db54068911b92532}{
+quint8 \hyperlink{classmdt_usb_device_descriptor_a94e04915c8df9102db54068911b92532}{bDeviceClass} () const }
+\label{classmdt_usb_device_descriptor_a94e04915c8df9102db54068911b92532}
+
+\begin{DoxyCompactList}\small\item\em Class code (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_a50b483ed26f546017bde4ae6f9762268}{
+quint8 \hyperlink{classmdt_usb_device_descriptor_a50b483ed26f546017bde4ae6f9762268}{bDeviceSubClass} () const }
+\label{classmdt_usb_device_descriptor_a50b483ed26f546017bde4ae6f9762268}
+
+\begin{DoxyCompactList}\small\item\em Subclass code (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_aac1207bd8cb91e04f48f6748b1a8ca16}{
+quint8 \hyperlink{classmdt_usb_device_descriptor_aac1207bd8cb91e04f48f6748b1a8ca16}{bDeviceProtocol} () const }
+\label{classmdt_usb_device_descriptor_aac1207bd8cb91e04f48f6748b1a8ca16}
+
+\begin{DoxyCompactList}\small\item\em Protocol code (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_usb_device_descriptor_a08b5ae262e2b966c952ee5e5bcc6fb10}{bMaxPacketSize0} () const 
+\begin{DoxyCompactList}\small\item\em Maximum packet size for endpoint zero. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_a8bbfdb3c54af6cccf15cd7e5f29e8a8e}{
+quint16 \hyperlink{classmdt_usb_device_descriptor_a8bbfdb3c54af6cccf15cd7e5f29e8a8e}{idVendor} () const }
+\label{classmdt_usb_device_descriptor_a8bbfdb3c54af6cccf15cd7e5f29e8a8e}
+
+\begin{DoxyCompactList}\small\item\em Vendor ID (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b9a1}{
+quint16 \hyperlink{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b9a1}{idProduct} () const }
+\label{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b9a1}
+
+\begin{DoxyCompactList}\small\item\em Product ID (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+quint16 \hyperlink{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}{bcdDevice} () const 
+\begin{DoxyCompactList}\small\item\em Device release number id. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_device_descriptor_a6d57046f94233381a0708a5ce4ab65d5}{
+QList$<$ \hyperlink{classmdt_usb_config_descriptor}{mdtUsbConfigDescriptor} $\ast$ $>$ {\bfseries configurations} ()}
+\label{classmdt_usb_device_descriptor_a6d57046f94233381a0708a5ce4ab65d5}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+USB device descriptor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bcdDevice@{bcdDevice}}
+\index{bcdDevice@{bcdDevice}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{bcdDevice}]{\setlength{\rightskip}{0pt plus 5cm}quint16 mdtUsbDeviceDescriptor::bcdDevice (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}
+
+
+Device release number id. 
+
+Coded in BCD. \hypertarget{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa00735d04516e86}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bcdUSB@{bcdUSB}}
+\index{bcdUSB@{bcdUSB}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{bcdUSB}]{\setlength{\rightskip}{0pt plus 5cm}quint16 mdtUsbDeviceDescriptor::bcdUSB (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa00735d04516e86}
+
+
+USB Specification Release Number. 
+
+Coded in BCD. F.ex. USB 2.0 will be 0x0200. \hypertarget{classmdt_usb_device_descriptor_a08b5ae262e2b966c952ee5e5bcc6fb10}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bMaxPacketSize0@{bMaxPacketSize0}}
+\index{bMaxPacketSize0@{bMaxPacketSize0}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{bMaxPacketSize0}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbDeviceDescriptor::bMaxPacketSize0 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_usb_device_descriptor_a08b5ae262e2b966c952ee5e5bcc6fb10}
+
+
+Maximum packet size for endpoint zero. 
+
+(only 8, 16, 32, or 64 are valid) \hypertarget{classmdt_usb_device_descriptor_a45a9a9f10b53233cc7980e482d08aa3a}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!fetchAttributes@{fetchAttributes}}
+\index{fetchAttributes@{fetchAttributes}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{fetchAttributes}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbDeviceDescriptor::fetchAttributes (
+\begin{DoxyParamCaption}
+\item[{libusb\_\-device $\ast$}]{device}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_a45a9a9f10b53233cc7980e482d08aa3a}
+
+
+Ftech the device descriptor's attributes. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, libusb error code else. On error, the attributes must be considered as invalid. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+device must be a valid pointer 
+\end{DoxyPrecond}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]Config descriptors \end{Desc}
+
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtUsbDeviceDescriptor.h\item 
+src/mdtport/mdtUsbDeviceDescriptor.cpp\end{DoxyCompactItemize}

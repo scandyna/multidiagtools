@@ -1,0 +1,76 @@
+\hypertarget{classmdt_usb_interface_descriptor}{
+\section{mdtUsbInterfaceDescriptor Class Reference}
+\label{classmdt_usb_interface_descriptor}\index{mdtUsbInterfaceDescriptor@{mdtUsbInterfaceDescriptor}}
+}
+
+
+USB interface descriptor.  
+
+
+
+
+{\ttfamily \#include $<$mdtUsbInterfaceDescriptor.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_usb_interface_descriptor_a1050edfdbea744abe0bb4948b16f03fb}{fetchAttributes} (libusb\_\-interface\_\-descriptor $\ast$descriptor)
+\begin{DoxyCompactList}\small\item\em Ftech the interface descriptor's attributes. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_interface_descriptor_a32e43e99126954ee6b716d1f0a24b60c}{
+quint8 \hyperlink{classmdt_usb_interface_descriptor_a32e43e99126954ee6b716d1f0a24b60c}{bDescriptorType} () const }
+\label{classmdt_usb_interface_descriptor_a32e43e99126954ee6b716d1f0a24b60c}
+
+\begin{DoxyCompactList}\small\item\em INTERFACE Descriptor Type. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_interface_descriptor_a345952007f1822d7decc6b115883a250}{
+quint8 \hyperlink{classmdt_usb_interface_descriptor_a345952007f1822d7decc6b115883a250}{bInterfaceClass} () const }
+\label{classmdt_usb_interface_descriptor_a345952007f1822d7decc6b115883a250}
+
+\begin{DoxyCompactList}\small\item\em Class code (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_interface_descriptor_aad3fbaacba0b0c32daaffb14d52fd05a}{
+quint8 \hyperlink{classmdt_usb_interface_descriptor_aad3fbaacba0b0c32daaffb14d52fd05a}{bInterfaceSubClass} () const }
+\label{classmdt_usb_interface_descriptor_aad3fbaacba0b0c32daaffb14d52fd05a}
+
+\begin{DoxyCompactList}\small\item\em Subclass code (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_interface_descriptor_a9be6f58db4a2fdf1e3a1a0acf1b838f7}{
+quint8 \hyperlink{classmdt_usb_interface_descriptor_a9be6f58db4a2fdf1e3a1a0acf1b838f7}{bInterfaceProtocol} () const }
+\label{classmdt_usb_interface_descriptor_a9be6f58db4a2fdf1e3a1a0acf1b838f7}
+
+\begin{DoxyCompactList}\small\item\em Protocol code (assigned by the USB) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_interface_descriptor_aa975e2dc2a326efe391649c5096286eb}{
+quint8 \hyperlink{classmdt_usb_interface_descriptor_aa975e2dc2a326efe391649c5096286eb}{iInterface} () const }
+\label{classmdt_usb_interface_descriptor_aa975e2dc2a326efe391649c5096286eb}
+
+\begin{DoxyCompactList}\small\item\em Index of string descriptor describing this interface. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_interface_descriptor_a584bd81b092884295f1ebe1e0db55487}{
+QList$<$ \hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor} $\ast$ $>$ \& \hyperlink{classmdt_usb_interface_descriptor_a584bd81b092884295f1ebe1e0db55487}{endpoints} ()}
+\label{classmdt_usb_interface_descriptor_a584bd81b092884295f1ebe1e0db55487}
+
+\begin{DoxyCompactList}\small\item\em List of avaliable enpoints. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+USB interface descriptor. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_interface_descriptor_a1050edfdbea744abe0bb4948b16f03fb}{
+\index{mdtUsbInterfaceDescriptor@{mdtUsbInterfaceDescriptor}!fetchAttributes@{fetchAttributes}}
+\index{fetchAttributes@{fetchAttributes}!mdtUsbInterfaceDescriptor@{mdtUsbInterfaceDescriptor}}
+\subsubsection[{fetchAttributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbInterfaceDescriptor::fetchAttributes (
+\begin{DoxyParamCaption}
+\item[{libusb\_\-interface\_\-descriptor $\ast$}]{descriptor}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_interface_descriptor_a1050edfdbea744abe0bb4948b16f03fb}
+
+
+Ftech the interface descriptor's attributes. 
+
+\begin{DoxyPrecond}{Precondition}
+descriptor must be a valid pointer 
+\end{DoxyPrecond}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtUsbInterfaceDescriptor.h\item 
+src/mdtport/mdtUsbInterfaceDescriptor.cpp\end{DoxyCompactItemize}

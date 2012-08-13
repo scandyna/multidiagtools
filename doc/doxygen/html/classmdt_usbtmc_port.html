@@ -173,6 +173,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dd>
 <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> </dd></dl>
 
+<p><p>pvMutex.lock(); pvReadCondition.wakeAll(); pvMutex.unlock();</p>
+</p>
+
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ab1738b5b6b78743ee2d36ccf5daa7c00">mdtAbstractPort</a>.</p>
 
 </div>
@@ -195,6 +198,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
+<p><p>if(!pvWriteCondition.wait(&amp;pvMutex, pvWriteTimeout)){ updateWriteTimeoutState(true); return NoError; } updateWriteTimeoutState(false);</p>
+</p>
+
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
 </div>
@@ -216,6 +222,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Wait until data is available on port. </p>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+
+<p><p>if(!pvReadCondition.wait(&amp;pvMutex, pvReadTimeout)){ updateReadTimeoutState(true); return NoError; } updateReadTimeoutState(false);</p>
+</p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
@@ -270,6 +279,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Write a frame... </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>fix this class.. </dd></dl>
 
+<p><p>pvMutex.lock(); pvWriteCondition.wakeAll(); pvMutex.unlock();</p>
+</p>
+
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a2235d62d9a9e4555d41773c41cc3bc70">mdtAbstractPort</a>.</p>
 
 </div>
@@ -293,7 +305,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 19:10:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 22:30:53 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

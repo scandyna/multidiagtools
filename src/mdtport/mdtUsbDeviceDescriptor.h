@@ -24,10 +24,29 @@
 #include <libusb-1.0/libusb.h>
 #include <QtGlobal>
 #include <QList>
-
-class mdtUsbConfigDescriptor;
+#include "mdtUsbConfigDescriptor.h"
+#include "mdtUsbInterfaceDescriptor.h"
+#include "mdtUsbEndpointDescriptor.h"
 
 /*! \brief USB device descriptor
+ *
+ * Internally, once fetchAttributes() is called,
+ *  device configuration(s) will be scanned,
+ *  and, for each configuration, interfaces and
+ *  finally endpoinds will be fetched.
+ *
+ * This tree is represented by several classes:
+ *  - Device descriptor: mdtUsbDeviceDescriptor (this class)
+ *  - Configuration descriptor: mdtUsbConfigDescriptor
+ *  - Interface descriptor: mdtUsbInterfaceDescriptor
+ *  - Endpoint descriptor: mdtUsbEndpointDescriptor
+ *
+ * Each "parent" class gives access to their children with a QList<\T> method.
+ * For example, configurations are available with configurations().
+ *
+ * For current needed attributes, some helper methods are available:
+ *  - interface(int, int) : to get a interface descriptor by indexes.
+ *  - endpoint(int, int, int) : to get a endpoint descriptor by index.
  */
 class mdtUsbDeviceDescriptor
 {
@@ -38,10 +57,13 @@ class mdtUsbDeviceDescriptor
 
   /*! \brief Ftech the device descriptor's attributes
    *
+   * \param fetchActiveConfigOnly If true, the interfaces and endpoints informations will be fetched
+   *                               only for active configuration. Else, all device's avalable configurations
+   *                               will be scanned.
    * \return 0 on success, libusb error code else. On error, the attributes must be considered as invalid.
    * \pre device must be a valid pointer
    */
-  int fetchAttributes(libusb_device *device);
+  int fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly);
 
   /*! \brief Device descriptor type
    */
@@ -85,7 +107,36 @@ class mdtUsbDeviceDescriptor
    */
   quint16 bcdDevice() const;
 
-  QList<mdtUsbConfigDescriptor*> configurations();
+  /*! \brief Access configurations
+   *
+   * Configurations are available after a call of fetchAttributes()
+   */
+  QList<mdtUsbConfigDescriptor*> &configurations();
+
+  /*! \brief Get a interface descriptor by index
+   *
+   * Index checking is done in this method, and 0 (NULL pointer)
+   *  is returned on wrong index.
+   *
+   * \param configIndex Index of configuration (unsorted, ordered as during discovery)
+   * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
+   * \return Pointer to interface descriptor, or 0 on error
+   */
+  mdtUsbInterfaceDescriptor *interface(int configIndex, int ifaceIndex);
+
+  /*! \brief Get a endpoint descriptor by index
+   *
+   * Index checking is done in this method, and 0 (NULL pointer)
+   *  is returned on wrong index.
+   *
+   * \param configIndex Index of configuration (unsorted, ordered as during discovery)
+   * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
+   * \param endpointIndex Index of endpoint (unsorted, ordered as during discovery)
+   * \return Pointer to endpoint descriptor, or 0 on error
+   */
+  mdtUsbEndpointDescriptor *endpoint(int configIndex, int ifaceIndex, int endpointIndex);
+
+  /*! \brief 
 
  private:
 

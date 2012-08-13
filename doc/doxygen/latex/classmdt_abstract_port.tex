@@ -323,6 +323,10 @@ Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6e
 
 Flush read buffers. 
 
+NOTE:\begin{Desc}
+\item[\hyperlink{todo__todo000004}{Todo}]Clean this part\end{Desc}
+
+
 Subclass notes:\par
  This method must be implemented in subclass.\par
  To handle port correctly, subclass must:
@@ -333,7 +337,7 @@ Subclass notes:\par
  Note: if subclass has nothing to do it must lock the mutex and call this method. 
 \end{DoxyItemize}
 
-Reimplemented in \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{mdtPort}, and \hyperlink{classmdt_serial_port_a597d013bbe18b1f946b99f68a4856a87}{mdtSerialPort}.
+Reimplemented in \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{mdtPort}, \hyperlink{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a597d013bbe18b1f946b99f68a4856a87}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flushOut@{flushOut}}
@@ -348,6 +352,10 @@ Reimplemented in \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{mdt
 
 Flush write buffers. 
 
+NOTE:\begin{Desc}
+\item[\hyperlink{todo__todo000005}{Todo}]Clean this part\end{Desc}
+
+
 Subclass notes:\par
  This method must be implemented in subclass.\par
  To handle port correctly, subclass must:
@@ -358,7 +366,7 @@ Subclass notes:\par
  Note: if subclass has nothing to do it must lock the mutex and call this method. 
 \end{DoxyItemize}
 
-Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdtPort}, and \hyperlink{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}{mdtSerialPort}.
+Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdtPort}, \hyperlink{classmdt_usb_port_ad17584feba55650ed580cf54e2ced99e}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_adf06d095d6c3e6ce939a3998bcf8b829}{
 \index{mdtAbstractPort@{mdtAbstractPort}!initQueues@{initQueues}}
@@ -519,7 +527,7 @@ Number of bytes readen, or a error $<$ 0
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a91f45336ca9a71284e0309182f5e8ca1}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a91f45336ca9a71284e0309182f5e8ca1}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_a05356a33dc546a11d2794a0419d749e0}{
 \index{mdtAbstractPort@{mdtAbstractPort}!readenFrames@{readenFrames}}
@@ -652,7 +660,7 @@ Subclass notes:\par
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{mdtPort}, \hyperlink{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_aa77b266f23744f1b53ae589f986be101}{mdtPort}, \hyperlink{classmdt_usbtmc_port_ad3ec37dab7918fad36190b1c4c58c266}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_a44ed5024a81a573b5196b8f64c42cd6a}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_abc9f1154ac71c4e31ac3e7a3ff4c5182}{
 \index{mdtAbstractPort@{mdtAbstractPort}!setup@{setup}}
@@ -702,7 +710,7 @@ Subclass notes:\par
 \end{DoxyParams}
 
 
-Implemented in \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a18ff8b76d07cd75339204f9389e1dd5c}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a18ff8b76d07cd75339204f9389e1dd5c}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_aff3d79248baf96e670eba6d2fef700b9}{
 \index{mdtAbstractPort@{mdtAbstractPort}!suspendTransmission@{suspendTransmission}}
@@ -791,7 +799,7 @@ On success, NoError is returned. If waiting is canceled, WaitingCanceled is retu
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a24cfc5233e09b9dbcdb2adc5f700dc4a}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a24cfc5233e09b9dbcdb2adc5f700dc4a}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_a47f4db2e72b5fd3e32162e6a898fd391}{
 \index{mdtAbstractPort@{mdtAbstractPort}!waitForReadyRead@{waitForReadyRead}}
@@ -854,7 +862,7 @@ On success, NoError is returned. If waiting is canceled, WaitingCanceled is retu
 \end{DoxySeeAlso}
 
 
-Implemented in \hyperlink{classmdt_port_a84594fdb56cd455a366c69b0a9228020}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a3c1b746acfc06857eee4b4c136cd65ad}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_a84594fdb56cd455a366c69b0a9228020}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a3c1b746acfc06857eee4b4c136cd65ad}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 \index{mdtAbstractPort@{mdtAbstractPort}!write@{write}}
@@ -883,7 +891,7 @@ Number of bytes written, or $<$0 on error
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a32b98d2a61617293c328a343d62d52c3}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{mdtTcpSocket}, and \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{mdtSerialPort}.
+Implemented in \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a32b98d2a61617293c328a343d62d52c3}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{mdtSerialPort}.
 
 \hypertarget{classmdt_abstract_port_a4fed10be147dfce6ca315467ff3fb968}{
 \index{mdtAbstractPort@{mdtAbstractPort}!writeFrames@{writeFrames}}

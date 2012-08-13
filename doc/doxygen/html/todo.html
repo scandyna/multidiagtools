@@ -61,25 +61,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort::close</a> () </dt>
 <dd>Actuellement, les queues sont deletée ici, que faire ? </dd>
 </dl>
+<p><a class="anchor" id="_todo000004"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">mdtAbstractPort::flushIn</a> () </dt>
+<dd>Clean this part</dd>
+</dl>
 <p><a class="anchor" id="_todo000005"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">mdtAbstractPort::flushOut</a> () </dt>
+<dd>Clean this part</dd>
+</dl>
+<p><a class="anchor" id="_todo000011"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000006"></a> </p>
+<p><a class="anchor" id="_todo000012"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
+</dl>
+<p><a class="anchor" id="_todo000013"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787">mdtFrameCodecModbus::decode</a> (const QByteArray &amp;pdu) </dt>
+<dd>Base 16 ?? </dd>
 </dl>
 <p><a class="anchor" id="_todo000001"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
 <dd>Implement UUCP format in LCK.. files </dd>
 </dl>
-<p><a class="anchor" id="_todo000004"></a> </p>
+<p><a class="anchor" id="_todo000010"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">mdtPortManager::closePort</a> () </dt>
-<dd>FIXME: clean this ... </dd>
+<dt>Class <a class="el" href="classmdt_usb_port.html">mdtUsbPort</a>  </dt>
+<dd>Note about setPortName() with vid:pid syntax </dd>
+</dl>
+<p><a class="anchor" id="_todo000008"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7">mdtUsbPort::waitEventWriteReady</a> () </dt>
+<dd><p class="startdd">: Implement.... Note: use select ?? Mutex !! </p>
+<p class="enddd">: map correct error </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000006"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36">mdtUsbPort::waitForReadyRead</a> () </dt>
+<dd><p class="startdd">: Implement.... Note: use select ?? Mutex !! </p>
+<p class="enddd">: map correct error </p>
+</dd>
 </dl>
 <p><a class="anchor" id="_todo000002"></a> </p>
 <dl>
@@ -101,7 +130,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 19:10:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 22:30:51 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

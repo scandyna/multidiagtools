@@ -1,4 +1,4 @@
-window_sizes 1280 1001 304 970 803 120
+window_sizes 1272 993 304 962 795 120
 diagrams
   classdiagram_ref 255234 // mdtAbstractPort
     776 647 100 4 276 0
@@ -19,13 +19,13 @@ diagrams
   classdiagram_ref 462082 // Interactions
     776 642 100 4 0 0
   active  classdiagram_ref 468610 // mdtUsbPort
-    970 803 100 4 416 0
+    962 795 100 4 144 0
 end
 show_stereotypes
 selected operation_ref 939906 // bInterval
 open
   
-  package_ref 128002 // mdtutils
+package_ref 128002 // mdtutils
   classview_ref 201218 // mdtPort
   operation_ref 934402 // mdtUsbDeviceDescriptor
   operation_ref 934530 // ~mdtUsbDeviceDescriptor

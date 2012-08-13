@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtUsbDeviceDescriptor.h"
-#include "mdtUsbConfigDescriptor.h"
 #include "mdtError.h"
 #include <QString>
 
@@ -44,7 +43,7 @@ mdtUsbDeviceDescriptor::~mdtUsbDeviceDescriptor()
   qDeleteAll(pvConfigs);
 }
 
-int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device)
+int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchActiveConfigOnly)
 {
   Q_ASSERT(device != 0);
 
@@ -69,12 +68,11 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device)
   pvidVendor = descriptor.idVendor;
   pvidProduct = descriptor.idProduct;
   pvbcdDevice = descriptor.bcdDevice;
-  /// \todo Config descriptors
-  // Get configurations
+  // Get configuration(s)
   qDeleteAll(pvConfigs);
   pvConfigs.clear();
-  for(i=0; i<descriptor.bNumConfigurations; i++){
-    err = libusb_get_config_descriptor(device, i, &configDescriptor);
+  if(fetchActiveConfigOnly){
+    err = libusb_get_active_config_descriptor(device, &configDescriptor);
     switch(err){
       case 0:
         config = new mdtUsbConfigDescriptor;
@@ -85,15 +83,37 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device)
         break;
       case LIBUSB_ERROR_NOT_FOUND:
       {
-        mdtError e(MDT_USB_IO_ERROR, "Unable to find get configuration descriptor at index " + QString::number(i), mdtError::Warning);
+        mdtError e(MDT_USB_IO_ERROR, "Unable to find get current configuration descriptor", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtUsbDeviceDescriptor");
         e.commit();
         break;
       }
       default:
-        qDeleteAll(pvConfigs);
-        pvConfigs.clear();
         return err;
+    }
+  }else{
+    for(i=0; i<descriptor.bNumConfigurations; i++){
+      err = libusb_get_config_descriptor(device, i, &configDescriptor);
+      switch(err){
+        case 0:
+          config = new mdtUsbConfigDescriptor;
+          Q_ASSERT(config != 0);
+          config->fetchAttributes(configDescriptor);
+          libusb_free_config_descriptor(configDescriptor);
+          pvConfigs.append(config);
+          break;
+        case LIBUSB_ERROR_NOT_FOUND:
+        {
+          mdtError e(MDT_USB_IO_ERROR, "Unable to find get configuration descriptor at index " + QString::number(i), mdtError::Warning);
+          MDT_ERROR_SET_SRC(e, "mdtUsbDeviceDescriptor");
+          e.commit();
+          break;
+        }
+        default:
+          qDeleteAll(pvConfigs);
+          pvConfigs.clear();
+          return err;
+      }
     }
   }
 
@@ -145,7 +165,47 @@ quint16 mdtUsbDeviceDescriptor::bcdDevice() const
   return pvbcdDevice;
 }
 
-QList<mdtUsbConfigDescriptor*> mdtUsbDeviceDescriptor::configurations()
+QList<mdtUsbConfigDescriptor*> &mdtUsbDeviceDescriptor::configurations()
 {
   return pvConfigs;
+}
+
+mdtUsbInterfaceDescriptor *mdtUsbDeviceDescriptor::interface(int configIndex, int ifaceIndex)
+{
+  mdtUsbConfigDescriptor *configDescriptor;
+
+  if(configIndex < 0){
+    return 0;
+  }
+  if(configIndex >= pvConfigs.size()){
+    return 0;
+  }
+  if(ifaceIndex < 0){
+    return 0;
+  }
+  configDescriptor = pvConfigs.at(configIndex);
+  Q_ASSERT(configDescriptor != 0);
+  if(ifaceIndex >= configDescriptor->interfaces().size()){
+    return 0;
+  }
+
+  return configDescriptor->interfaces().at(ifaceIndex);
+}
+
+mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::endpoint(int configIndex, int ifaceIndex, int endpointIndex)
+{
+  mdtUsbInterfaceDescriptor *interfaceDescriptor;
+
+  interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor == 0){
+    return 0;
+  }
+  if(endpointIndex < 0){
+    return 0;
+  }
+  if(endpointIndex >= interfaceDescriptor->endpoints().size()){
+    return 0;
+  }
+
+  return interfaceDescriptor->endpoints().at(endpointIndex);
 }

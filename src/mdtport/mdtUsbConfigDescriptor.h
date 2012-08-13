@@ -85,7 +85,7 @@ class mdtUsbConfigDescriptor
    */
   int maxPower() const;
 
-  QList<mdtUsbInterfaceDescriptor*> interfaces();
+  QList<mdtUsbInterfaceDescriptor*> &interfaces();
 
  private:
 

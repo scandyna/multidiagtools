@@ -104,16 +104,18 @@ Signals</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new data was readen.  <a href="#a000ffb4df553fad9ec90e62caaccc91f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a5ec36523089b7528d973e29cdbc64d01">mdtPortManager</a> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ec36523089b7528d973e29cdbc64d01"></a><!-- doxytag: member="mdtPortManager::mdtPortManager" ref="a5ec36523089b7528d973e29cdbc64d01" args="(QObject *parent=0)" -->
+&#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortManager</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port object.  <a href="#afcd156b2d0c9d340999935efb6cd8cb6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a608210f908d6ac53ced36f5cf9a783f9">detachPort</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach port.  <a href="#a608210f908d6ac53ced36f5cf9a783f9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a647f85027ac2ed695a88f23c9f9167eb">setPortName</a> (const QString &amp;portName)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port name.  <a href="#a647f85027ac2ed695a88f23c9f9167eb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a608210f908d6ac53ced36f5cf9a783f9"></a><!-- doxytag: member="mdtPortManager::detachPort" ref="a608210f908d6ac53ced36f5cf9a783f9" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a608210f908d6ac53ced36f5cf9a783f9">detachPort</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach port. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a">setPortName</a> (const QString &amp;portName)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port name.  <a href="#a2b2ed690cbba9f544c6ac1b46684e59a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the config object.  <a href="#a9cf3ea2da38f81682695b37448712ffd"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a9cf3ea2da38f81682695b37448712ffd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">openPort</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aab594613e8985590c835194efbc27b5e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">closePort</a> ()</td></tr>
@@ -152,8 +154,7 @@ Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21da115c51338357c50243742be8f814"></a><!-- doxytag: member="mdtPortManager::pvWriteThread" ref="a21da115c51338357c50243742be8f814" args="" -->
 <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteThread</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adaa5de4e693944494c78fe9c7e8207d2"></a><!-- doxytag: member="mdtPortManager::pvLastReadenFrame" ref="adaa5de4e693944494c78fe9c7e8207d2" args="" -->
-QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adaa5de4e693944494c78fe9c7e8207d2">pvLastReadenFrame</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *pvConfig; <br/></td></tr>
+QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFrame</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27b171edec4e273e048593bbec7c37dc"></a><!-- doxytag: member="mdtPortManager::pvLastReadenData" ref="a27b171edec4e273e048593bbec7c37dc" args="" -->
 QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenData</b></td></tr>
 </table>
@@ -165,7 +166,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <p>Example: </p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> m;
  <a class="code" href="classmdt_port.html">mdtPort</a> *port;
- <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Set the config object.">config</a>;
+ <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the config object.">config</a>;
 
  <span class="comment">// Setup</span>
  config = <span class="keyword">new</span> <a class="code" href="classmdt_port_config.html">mdtPortConfig</a>;
@@ -178,9 +179,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 
  <span class="comment">// Init port manager</span>
  m.<a class="code" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort</a>(port);
- <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#a647f85027ac2ed695a88f23c9f9167eb" title="Set port name.">setPortName</a>(<span class="stringliteral">&quot;/dev/xyz&quot;</span>)){
-  <span class="comment">// Handle error</span>
- }
+ m.<a class="code" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName</a>(<span class="stringliteral">&quot;/dev/xyz&quot;</span>));
  <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
   <span class="comment">// Handle error</span>
  }
@@ -204,33 +203,13 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
  
  <span class="comment">// End</span>
  m.<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
- <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Set the config object.">config</a>;
+ <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the config object.">config</a>;
  <span class="keyword">delete</span> port;
 </pre></div><p>This is a base class for port manager. Port type specific classes are available.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> </dd>
 <dd>
 <a class="el" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> (Linux only) </dd></dl>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5ec36523089b7528d973e29cdbc64d01"></a><!-- doxytag: member="mdtPortManager::mdtPortManager" ref="a5ec36523089b7528d973e29cdbc64d01" args="(QObject *parent=0)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mdtPortManager::mdtPortManager </td>
-          <td>(</td>
-          <td class="paramtype">QObject *&#160;</td>
-          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p><p>pvConfig = 0; </p>
-</p>
-
-</div>
-</div>
 <a class="anchor" id="adf797f8fd7a3ffdc000890a224e4c1b6"></a><!-- doxytag: member="mdtPortManager::~mdtPortManager" ref="adf797f8fd7a3ffdc000890a224e4c1b6" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -266,10 +245,8 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <div class="memdoc">
 
 <p>Close the port. </p>
-<p>NOTE:</p>
 <p>This stops the threads (if exists) and close the port.<br/>
- If port was never set (with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> ), this method does nothing.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>FIXME: clean this ... </dd></dl>
+ If port was never set (with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> ), this method does nothing. </p>
 
 </div>
 </div>
@@ -287,39 +264,11 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 </div>
 <div class="memdoc">
 
-<p>Set the config object. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>config must be a valid pointer to expected a object type.void setConfig(mdtPortConfig *config);</dd></dl>
-<p>Get the config object</p>
+<p>Get the config object. </p>
 <p>Usefull to alter internal port configuration</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method.</dd></dl>
-<p>void mdtPortManager::setConfig(mdtPortConfig *config) { Q_ASSERT(config != 0);</p>
-<p>pvConfig = config; } </p>
-
-<p><p>Q_ASSERT(pvConfig != 0); return *pvConfig; </p>
-</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">mdtSerialPortManager</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a608210f908d6ac53ced36f5cf9a783f9"></a><!-- doxytag: member="mdtPortManager::detachPort" ref="a608210f908d6ac53ced36f5cf9a783f9" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortManager::detachPort </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Detach port. </p>
-
-<p><p>NOTE: disconnect ? </p>
-</p>
 
 </div>
 </div>
@@ -396,17 +345,9 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <div class="memdoc">
 
 <p>Open the port. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a647f85027ac2ed695a88f23c9f9167eb" title="Set port name.">setPortName()</a> must be called first </dd>
-<dd>
-Port must have a valid configuration, and be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before calling this method</dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a647f85027ac2ed695a88f23c9f9167eb" title="Set port name.">setPortName()</a> </dd>
-<dd>
-<a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
-
-<p><p>Q_ASSERT(pvConfig != 0);</p>
-<p>return pvPort-&gt;open(*pvConfig); </p>
-</p>
+<p>Will try to open port defined with <a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName()</a>.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685">mdtSerialPortManager</a>.</p>
 
@@ -450,16 +391,16 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <p>Set port object. </p>
 <p>The read and write threads will be created if not allready exists, port assigned to them, and signals/slots connection made.<br/>
  Please take care to never call this method while threads are running.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer to the expected class instance (for ex: <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>) </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer to the expected class instance (for ex: <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>), and threads must not run. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a647f85027ac2ed695a88f23c9f9167eb"></a><!-- doxytag: member="mdtPortManager::setPortName" ref="a647f85027ac2ed695a88f23c9f9167eb" args="(const QString &amp;portName)" -->
+<a class="anchor" id="a2b2ed690cbba9f544c6ac1b46684e59a"></a><!-- doxytag: member="mdtPortManager::setPortName" ref="a2b2ed690cbba9f544c6ac1b46684e59a" args="(const QString &amp;portName)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtPortManager::setPortName </td>
+          <td class="memname">void mdtPortManager::setPortName </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>portName</em></td><td>)</td>
@@ -470,21 +411,9 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <div class="memdoc">
 
 <p>Set port name. </p>
-<p>Try to open given port. If ok, the port name will be kept.<br/>
- mdtAbstractPort::setAttributes() will be called to fetch some attributes (for example available baud rates if port is a <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a> object). </p>
+<p>Set the port name to internally port object. Does nothing else. To open the port, use <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort()</a>.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set before with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> </dd></dl>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">portName</td><td>Port to open </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
-
-<p><p>return pvPort-&gt;setAttributes(portName);</p>
-<p>if(pvPort-&gt;open() != <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){ return false; } pvPort-&gt;close();</p>
-</p>
 
 </div>
 </div>
@@ -503,14 +432,10 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <div class="memdoc">
 
 <p>Start reading and writing threads. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4" title="Start the read thread.">startReading()</a> </dd>
 <dd>
 <a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc" title="Start the write thread.">startWriting()</a> </dd></dl>
-
-<p><p>if(!config().readOnly()){</p>
-<p>} </p>
-</p>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">mdtSerialPortManager</a>.</p>
 
@@ -532,6 +457,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 
 <p>Start the read thread. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull start </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>mdtThread </dd>
 <dd>
 <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> </dd></dl>
@@ -553,14 +479,11 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <div class="memdoc">
 
 <p>Start the write thread. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull start </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>mdtThread </dd>
 <dd>
 <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> </dd></dl>
-
-<p><p>if(<a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Set the config object.">config()</a>.readOnly()){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, "start writing called on a read only port", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtPortManager"); e.commit(); return false; }</p>
-</p>
 
 </div>
 </div>
@@ -579,7 +502,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <div class="memdoc">
 
 <p>Stop reading and writing threads. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start reading and writing threads.">start()</a> </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298">mdtSerialPortManager</a>.</p>
@@ -601,7 +524,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <div class="memdoc">
 
 <p>Stop the read thread. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4" title="Start the read thread.">startReading()</a> </dd></dl>
 
 </div>
@@ -621,7 +544,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 <div class="memdoc">
 
 <p>Stop the write thread. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc" title="Start the write thread.">startWriting()</a> </dd></dl>
 
 </div>
@@ -721,7 +644,7 @@ Port must have a valid configuration, and be set with <a class="el" href="classm
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Aug 9 2012 19:10:11 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 22:30:52 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

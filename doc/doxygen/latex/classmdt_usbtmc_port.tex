@@ -111,6 +111,10 @@ setWaitingFrame()
 \end{DoxySeeAlso}
 
 
+pvMutex.lock(); pvReadCondition.wakeAll(); pvMutex.unlock();
+
+
+
 Reimplemented from \hyperlink{classmdt_abstract_port_ab1738b5b6b78743ee2d36ccf5daa7c00}{mdtAbstractPort}.
 
 \hypertarget{classmdt_usbtmc_port_a24cfc5233e09b9dbcdb2adc5f700dc4a}{
@@ -129,6 +133,10 @@ Wait until data can be written to port.
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
+if(!pvWriteCondition.wait(\&pvMutex, pvWriteTimeout))\{ updateWriteTimeoutState(true); return NoError; \} updateWriteTimeoutState(false);
+
+
+
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 \hypertarget{classmdt_usbtmc_port_a3c1b746acfc06857eee4b4c136cd65ad}{
@@ -146,6 +154,10 @@ Wait until data is available on port.
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+
+if(!pvReadCondition.wait(\&pvMutex, pvReadTimeout))\{ updateReadTimeoutState(true); return NoError; \} updateReadTimeoutState(false);
+
+
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 
@@ -182,6 +194,10 @@ Write a frame...
 
 \begin{Desc}
 \item[\hyperlink{todo__todo000002}{Todo}]fix this class.. \end{Desc}
+
+
+pvMutex.lock(); pvWriteCondition.wakeAll(); pvMutex.unlock();
+
 
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a2235d62d9a9e4555d41773c41cc3bc70}{mdtAbstractPort}.

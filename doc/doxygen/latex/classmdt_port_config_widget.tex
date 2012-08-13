@@ -5,48 +5,21 @@
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_port_config_widget_a5887fadc0001e3438c67de884f8e8f67}{mdtPortConfigWidget} (QWidget $\ast$parent=0)
+\hypertarget{classmdt_port_config_widget_a5887fadc0001e3438c67de884f8e8f67}{
+{\bfseries mdtPortConfigWidget} (QWidget $\ast$parent=0)}
+\label{classmdt_port_config_widget_a5887fadc0001e3438c67de884f8e8f67}
+
 \item 
-void \hyperlink{classmdt_port_config_widget_a44c1690242f5f8680fb4f32a5771534f}{displayConfig} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&config)
+\hypertarget{classmdt_port_config_widget_a44c1690242f5f8680fb4f32a5771534f}{
+void \hyperlink{classmdt_port_config_widget_a44c1690242f5f8680fb4f32a5771534f}{displayConfig} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&config)}
+\label{classmdt_port_config_widget_a44c1690242f5f8680fb4f32a5771534f}
+
 \begin{DoxyCompactList}\small\item\em Read the config instance and update GUI. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_config_widget_a23fba4fe5aa0c07b95a9b85218456456}{updateConfig} (\hyperlink{classmdt_port_config}{mdtPortConfig} \&config)
 \begin{DoxyCompactList}\small\item\em Get GUI's selected options and update config. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_port_config_widget_a5887fadc0001e3438c67de884f8e8f67}{
-\index{mdtPortConfigWidget@{mdtPortConfigWidget}!mdtPortConfigWidget@{mdtPortConfigWidget}}
-\index{mdtPortConfigWidget@{mdtPortConfigWidget}!mdtPortConfigWidget@{mdtPortConfigWidget}}
-\subsubsection[{mdtPortConfigWidget}]{\setlength{\rightskip}{0pt plus 5cm}mdtPortConfigWidget::mdtPortConfigWidget (
-\begin{DoxyParamCaption}
-\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_config_widget_a5887fadc0001e3438c67de884f8e8f67}
-
-
-gbWriteOptions-\/$>$setEnabled(!cbReadOnly-\/$>$isChecked()); 
-
-
-
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_config_widget_a44c1690242f5f8680fb4f32a5771534f}{
-\index{mdtPortConfigWidget@{mdtPortConfigWidget}!displayConfig@{displayConfig}}
-\index{displayConfig@{displayConfig}!mdtPortConfigWidget@{mdtPortConfigWidget}}
-\subsubsection[{displayConfig}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfigWidget::displayConfig (
-\begin{DoxyParamCaption}
-\item[{{\bf mdtPortConfig} \&}]{config}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_config_widget_a44c1690242f5f8680fb4f32a5771534f}
-
-
-Read the config instance and update GUI. 
-
-
-
-cbReadOnly-\/$>$setChecked(config.readOnly()); 
-
 \hypertarget{classmdt_port_config_widget_a23fba4fe5aa0c07b95a9b85218456456}{
 \index{mdtPortConfigWidget@{mdtPortConfigWidget}!updateConfig@{updateConfig}}
 \index{updateConfig@{updateConfig}!mdtPortConfigWidget@{mdtPortConfigWidget}}
@@ -61,10 +34,6 @@ cbReadOnly-\/$>$setChecked(config.readOnly());
 Get GUI's selected options and update config. 
 
 Once done, the config is read again and displayed, so the user can see what was really applied. 
-
-config.setReadOnly(cbReadOnly-\/$>$isChecked()); 
-
-
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

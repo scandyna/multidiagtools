@@ -48,23 +48,13 @@ void mdtUsbPortTest::essais()
   mdtPortReadThread rThd;
   mdtPortWriteThread wThd;
   mdtPortConfig cfg;
-  
-  // Setup
-  port.setConfig(&cfg);
-  port.setPortName("0x0957:0x4d18");
-  rThd.setPort(&port);
-  wThd.setPort(&port);
-  
-  QVERIFY(port.open() == mdtAbstractPort::NoError);
-  
+
   int retVal;
   uint16_t searchedVid = 0x0957;
   ///uint16_t searchedVid = 0x10cf;
   unsigned char data[5000];
   int written = 0;
   int len = 0;
-  struct libusb_config_descriptor *cfgDescriptor;
-  struct libusb_interface iface;
 
   libusb_context *ctx;
 
@@ -77,11 +67,8 @@ void mdtUsbPortTest::essais()
   // Scan ...
   libusb_device **list;
   libusb_device_handle *handle;
-  //libusb_device *found = 0;
   ssize_t i = 0;
-  quint8 j, k;
-  int l, n, o, p;
-  quint8 m;
+  int n, o, p;
   ssize_t cnt = libusb_get_device_list(0, &list);
   if(cnt < 0){
     qDebug() << "libusb_get_device_list() failed";
@@ -103,7 +90,7 @@ void mdtUsbPortTest::essais()
       continue;
     }
     // Get attributes
-    QVERIFY(deviceDescriptor.fetchAttributes(dev) == 0);
+    QVERIFY(deviceDescriptor.fetchAttributes(dev, true) == 0);
     qDebug() << "->  IDV: " << hex << deviceDescriptor.idVendor() << " , IDP: " << deviceDescriptor.idProduct() << dec;
     if(deviceDescriptor.idVendor() == searchedVid){
       qDebug() << "->  Found IDV !";
@@ -170,43 +157,18 @@ void mdtUsbPortTest::essais()
         }
       }
     }
-    /*
-    qDebug() << "->  bNumConfigurations: " << desc.bNumConfigurations;
-    for(j=0; j<desc.bNumConfigurations; j++){
-      retVal = libusb_get_config_descriptor(dev, j, &cfgDescriptor);
-      if(retVal != 0){
-        qDebug() << "->   Cannot get config descriptor, code: " << retVal;
-        continue;
-      }
-      // Interfaces
-      qDebug() << "->   bNumInterfaces: " << cfgDescriptor->bNumInterfaces;
-      for(k=0; k<cfgDescriptor->bNumInterfaces; k++){
-        iface = cfgDescriptor->interface[k];
-        qDebug() << "->    Number of descriptors: " << iface.num_altsetting;
-        for(l=0; l<iface.num_altsetting; l++){
-          qDebug() << "->     Iface class: " << iface.altsetting[l].bInterfaceClass;
-          qDebug() << "->     Iface SubCl: " << iface.altsetting[l].bInterfaceSubClass;
-          qDebug() << "->     Iface proto: " << iface.altsetting[l].bInterfaceProtocol;
-          qDebug() << "->     Iface endpoints: " << iface.altsetting[l].bNumEndpoints;
-          for(m=0; m<iface.altsetting[l].bNumEndpoints; m++){
-            int dir;
-            qDebug() << "->      EP type: " << iface.altsetting[l].endpoint[m].bDescriptorType;
-            qDebug() << "->      EP addr: " << hex << iface.altsetting[l].endpoint[m].bEndpointAddress;
-            dir = iface.altsetting[l].endpoint[m].bEndpointAddress;
-            if(dir & 0x80){
-              qDebug() << "->      EP dir : IN";
-            }else{
-              qDebug() << "->      EP dir : OUT";
-            }
-          }
-        }
-      }
-    }
-    */
   }
   libusb_free_device_list(list, 1);
-  
-  return;
+
+  // Setup
+  port.setConfig(&cfg);
+  port.setPortName("0x0957:0x4d18");
+  rThd.setPort(&port);
+  wThd.setPort(&port);
+
+  //QVERIFY(port.open() == mdtAbstractPort::NoError);
+
+  //return;
   
   // Open specific device
   handle = libusb_open_device_with_vid_pid(ctx, 0x0957, 0x4d18);
