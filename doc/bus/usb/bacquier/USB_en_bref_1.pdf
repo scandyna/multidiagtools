@@ -1,0 +1,601 @@
+%PDF-1.2 
+%‚„œ”
+ 
+14 0 obj
+<<
+/Length 15 0 R
+>>
+stream
+BT28.32 38.76  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD 0  Tc 0.024  Tw ( ) Tj3.36 0  TD -0.0096  Tc 0  Tw (CHAP1) Tj39.84 0  TD 0  Tc 0.024  Tw ( ) Tj58.8 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (1) Tj6.72 0  TD -0.084  Tc (/5) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (14/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-453.6 764.88  TD /F1 9.96  Tf0.0243  Tc -0.0502  Tw (Document traduit du site ) Tj129.12 0  TD 0.0139  Tc -0.0398  Tw (Beyond Logic Chapitre 1) TjET157.44 802.2 122.28 0.6 re fBT279.72 803.64  TD/F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) Tj28.44 0  TD ( ) Tj35.4 0  TD ( ) Tj35.4 0  TD ( ) Tj35.4 0  TD ( ) Tj-389.4 -13.2  TD ( ) Tj3.36 0  TD ( ) Tj3.36 0  TD /F2 12  Tf0  Tw ( ) Tj180.36 -27  TD /F1 24  Tf-0.0109  Tc -0.0371  Tw (L'USB en bref) Tj164.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) Tj-199.08 -32.4  TD /F3 13.56  Tf0.0132  Tc 0.0137  Tw (Donner un sens au standard USB) Tj227.16 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-365.76 -30.96  TD /F0 12  Tf0.024  Tw ( ) Tj0 -14.64  TD ( ) Tj3.36 0  TD ( ) Tj3.36 0  TD /F4 12  Tf0.026  Tc 0  Tw (Introduction) Tj85.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj3.36 0  TD ( ) Tj-95.4 -26.64  TD /F1 9.96  Tf0.014  Tc -0.0399  Tw (Commencer de nouveau avec l'USB peut \352tre intimidant. Avec la ) Tj328.92 0  TD 0.0242  Tc -0.0502  Tw (sp\351cification de l'USB 2.0) TjET374.4 657.36 127.44 0.6 re fBT501.84 658.8  TD0.011  Tc -0.0369  Tw ( de 650 ) Tj-456.36 -12.24  TD 0.0121  Tc -0.0288  Tw (pages on pourrait facilement \352tre d\351courag\351 par la dimension absolue du standard. C'est ) Tj0 -12.24  TD 0.0123  Tc -0.0283  Tw (seulement le commencement d'une longue liste de standards associ\351s pour l'USB. Il ) Tj427.08 0  TD -0.0105  Tc -0.0154  Tw (y a des ) Tj-427.08 -12.12  TD 0.0071  Tc -0.0331  Tw (standards de Classes USB) TjET45.48 620.76 130.08 0.6 re fBT175.56 622.2  TD0.0246  Tc -0.0505  Tw ( tel que la Sp\351cification Classe HID qui d\351taille l'op\351ration commune des ) Tj-130.08 -12.12  TD 0.007  Tc -0.0237  Tw (appareils \(claviers, souris, etc. \) tombant sous la Classe HID \(Interface Homme Machine\) ) Tj452.4 0  TD 0.0382  Tc 0  Tw (-) Tj-452.4 -12.12  TD 0.0045  Tc -0.0305  Tw (Seulement 97 autres pages. Si vous concevez un H\364te \(Host\) USB, alors vous avez trois standards ) Tj0 -12.24  TD 0.0031  Tc -0.029  Tw (d'Interfaces Contr\364leurs d\222h\364te \340 choisir. Aucun de ceux) Tj281.16 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0308  Tc -0.0568  Tw (ci n'est d\351taill\351 dans la sp\351cification de ) Tj-285.72 -12  TD 0.0195  Tc -0.0455  Tw (l'USB 2.0. ) Tj53.4 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-53.4 -26.28  TD /F1 9.96  Tf0.0119  Tc -0.0378  Tw (La bonne nouvelle est que vous n'avez pas besoin) Tj251.16 0  TD 0.0121  Tc -0.026  Tw ( de vous ennuyer \340 lire le standard USB en ) Tj-251.16 -12.12  TD 0.0106  Tc -0.0286  Tw (entier. Quelques chapitres ont \351t\351 pondus par le marketing, d'autres parlent de couches bas niveau ) Tj0 -12.12  TD 0.0082  Tc -0.0341  Tw (pris en charge par le circuit int\351gr\351 contr\364leur d'USB et une partie concerne les d\351veloppeurs de ) Tj0 -12.24  TD -0.0124  Tc -0.0135  Tw (Host et de HUB. ) Tj83.64 0  TD 0.0162  Tc -0.0421  Tw (Parcourons les diff\351rents chapitres de la sp\351cification 2.0 et introduisons les points ) Tj-83.64 -12  TD 0.0022  Tc -0.0281  Tw (cl\351s. ) Tj26.16 0  TD 0  Tc -0.0259  Tw ( ) Tj3.48 0  TD ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) TjET0 0 1 rg 78.48 463.08 47.64 12.12 re fBT78.6 465.12  TD1 1 1 rg /F4 9.96  Tf-0.0187  Tc (Chapitre) Tj47.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 73.2 475.2 58.32 5.28 re f73.2 463.08 5.28 12.12 re f126.12 463.08 5.4 12.12 re f73.2 457.8 58.32 5.28 re f139.68 463.08 63.6 12.12 re fBT158.52 465.12  TD1 1 1 rg /F4 9.96  Tf-0.0054  Tc 0  Tw (Nom) Tj25.8 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 134.4 475.2 74.16 5.28 re f134.4 463.08 5.28 12.12 re f203.28 463.08 5.28 12.12 re f134.4 457.8 74.16 5.28 re f216.72 463.08 252.84 12.12 re fBT311.28 465.12  TD1 1 1 rg /F4 9.96  Tf-0.0112  Tc 0  Tw (Description) Tj63.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 211.44 475.2 263.4 5.28 re f211.44 463.08 5.28 12.12 re f469.56 463.08 5.28 12.12 re f211.44 457.8 263.4 5.28 re f483.12 463.08 33.6 12.12 re fBT483.24 465.12  TD1 1 1 rg /F4 9.96  Tf-0.0151  Tc 0  Tw (Pages) Tj33.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET0 0 1 rg 477.84 475.2 44.16 5.28 re f477.84 463.08 5.28 12.12 re f516.72 463.08 5.28 12.12 re f477.84 457.8 44.16 5.28 re f1 1 0.502 rg 78.48 437.52 47.64 12.12 re fBT99.12 439.56  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (1) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 449.64 58.32 5.28 re f73.2 437.52 5.28 12.12 re f126.12 437.52 5.4 12.12 re f73.2 395.76 58.32 41.76 re f139.68 437.52 63.6 12.12 re fBT140.64 439.56  TD0 0 0 rg /F1 9.96  Tf0.0014  Tc 0  Tw (Introduction) Tj61.56 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 449.64 74.16 5.28 re f134.4 437.52 5.28 12.12 re f203.28 437.52 5.28 12.12 re f134.4 395.76 74.16 41.76 re f216.72 437.52 252.84 12.12 re fBT216.72 439.56  TD0 0 0 rg /F1 9.96  Tf0.0244  Tc -0.0503  Tw (Inclut la motivation et le domaine pour l'USB. Le ) TjET1 1 0.502 rg 216.72 425.28 252.84 12.24 re fBT216.72 427.44  TD0 0 0 rg 0.018  Tc -0.0439  Tw (renseignement le plus important de ce chapitre ) TjET1 1 0.502 rg 216.72 413.16 252.84 12.12 re fBT216.72 415.2  TD0 0 0 rg -0.0135  Tc -0.0124  Tw (est de faire r\351f) Tj73.56 0  TD 0.0151  Tc -0.041  Tw (\351rence aux Sp\351cifications de la ) TjET1 1 0.502 rg 216.72 401.04 252.84 12.12 re fBT216.72 403.08  TD0 0 0 rg 0.0151  Tc -0.0411  Tw (Classe USB. Aucun int\351r\352t. ) Tj138.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 449.64 263.4 5.28 re f211.44 401.04 5.28 48.6 re f469.56 401.04 5.28 48.6 re f211.44 395.76 263.4 5.28 re f483.12 437.52 33.6 12.12 re fBT496.68 439.56  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (2) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 449.64 44.16 5.28 re f477.84 437.52 5.28 12.12 re f516.72 437.52 5.28 12.12 re f477.84 395.76 44.16 41.76 re f78.48 375.36 47.64 12.12 re fBT99.12 377.4  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (2) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 387.48 58.32 5.28 re f73.2 375.36 5.28 12.12 re f126.12 375.36 5.4 12.12 re f73.2 357.84 58.32 17.52 re f139.68 375.36 63.6 12.12 re fBT146.28 377.4  TD0 0 0 rg /F1 9.96  Tf-0.0252  Tc 0.0592  Tw (Termes et ) TjET1 1 0.502 rg 139.68 363.24 63.6 12.12 re fBT140.28 365.28  TD0 0 0 rg 0.0324  Tc 0  Tw (Abr\351viations) Tj62.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 387.48 74.16 5.28 re f134.4 363.24 5.28 24.24 re f203.28 363.24 5.28 24.24 re f134.4 357.84 74.16 5.4 re f216.72 375.36 252.84 12.12 re fBT216.72 377.4  TD0 0 0 rg /F1 9.96  Tf0.022  Tc -0.0479  Tw (Ce chapitre s'explique de lui) Tj141.72 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0129  Tc -0.0148  Tw (m\352me et est un mal ) TjET1 1 0.502 rg 216.72 363.24 252.84 12.12 re fBT216.72 365.28  TD0 0 0 rg -0.0011  Tc -0.0248  Tw (n\351cessaire pour tout standard) Tj150.24 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 387.48 263.4 5.28 re f211.44 363.24 5.28 24.24 re f469.56 363.24 5.28 24.24 re f211.44 357.84 263.4 5.4 re f483.12 375.36 33.6 12.12 re fBT496.68 377.4  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (8) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 387.48 44.16 5.28 re f477.84 375.36 5.28 12.12 re f516.72 375.36 5.28 12.12 re f477.84 357.84 44.16 17.52 re f78.48 337.56 47.64 12.12 re fBT99.12 339.6  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (3) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 349.68 58.32 5.28 re f73.2 337.56 5.28 12.12 re f126.12 337.56 5.4 12.12 re f73.2 271.44 58.32 66.12 re f139.68 337.56 63.6 12.12 re fBT153.36 339.6  TD0 0 0 rg /F1 9.96  Tf0.0349  Tc -0.0609  Tw (Origine ) Tj39.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 349.68 74.16 5.28 re f134.4 337.56 5.28 12.12 re f203.28 337.56 5.28 12.12 re f134.4 271.44 74.16 66.12 re f216.72 337.56 252.84 12.12 re fBT216.72 339.6  TD0 0 0 rg /F1 9.96  Tf0.0288  Tc -0.0414  Tw (Explique les objectifs de l'USB qui est Plug And ) TjET1 1 0.502 rg 216.72 325.44 252.84 12.12 re fBT216.72 327.48  TD0 0 0 rg 0.0491  Tc -0.0451  Tw (Play et la simplification ) Tj119.88 0  TD 0.0391  Tc -0.0651  Tw (pour l'utilisateur final \(pas ) TjET1 1 0.502 rg 216.72 313.32 252.84 12.12 re fBT216.72 315.36  TD0 0 0 rg 0.0159  Tc -0.0418  Tw (pour le d\351veloppeur\). Il introduit les gammes de ) TjET1 1 0.502 rg 216.72 301.08 252.84 12.24 re fBT216.72 303.24  TD0 0 0 rg 0.0069  Tc -0.0329  Tw (Vitesse Basses, Pleines et Hautes avec une liste ) TjET1 1 0.502 rg 216.72 288.96 252.84 12.12 re fBT216.72 291  TD0 0 0 rg 0.0157  Tc -0.0416  Tw (de caract\351ristique venant tout droit du Marketing. ) TjET1 1 0.502 rg 216.72 276.84 252.84 12.12 re fBT216.72 278.88  TD0 0 0 rg 0.022  Tc -0.0479  Tw (Nul besoin de lire aussi ce chapitre. ) Tj182.4 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 349.68 263.4 5.28 re f211.44 276.84 5.28 72.84 re f469.56 276.84 5.28 72.84 re f211.44 271.44 263.4 5.4 re f483.12 337.56 33.6 12.12 re fBT496.68 339.6  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (4) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 349.68 44.16 5.28 re f477.84 337.56 5.28 12.12 re f516.72 337.56 5.28 12.12 re f477.84 271.44 44.16 66.12 re f78.48 251.16 47.64 12.12 re fBT99.12 253.2  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (4) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 263.28 58.32 5.28 re f73.2 251.16 5.28 12.12 re f126.12 251.16 5.4 12.12 re f73.2 197.28 58.32 53.88 re f139.68 251.16 63.6 12.12 re fBT161.88 253.2  TD0 0 0 rg /F1 9.96  Tf0.0088  Tc -0.0348  Tw (Vue ) TjET1 1 0.502 rg 139.68 239.04 63.6 12.12 re fBT141.24 241.08  TD0 0 0 rg 0.0039  Tc -0.0298  Tw (d'ensemble, ) TjET1 1 0.502 rg 139.68 226.8 63.6 12.24 re fBT141.48 228.96  TD0 0 0 rg 0.0059  Tc 0  Tw (architecture) Tj60 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 263.28 74.16 5.28 re f134.4 226.8 5.28 36.48 re f203.28 226.8 5.28 36.48 re f134.4 197.28 74.16 29.52 re f216.72 251.16 252.84 12.12 re fBT216.72 253.2  TD0 0 0 rg /F1 9.96  Tf-0.0292  Tc 0  Tw (C'es) Tj20.64 0  TD 0.0091  Tc -0.035  Tw (t \340 partir d'ici que vous pouvez commencer \340 ) TjET1 1 0.502 rg 216.72 239.04 252.84 12.12 re fBT216.72 241.08  TD0 0 0 rg 0.0132  Tc -0.0391  Tw (lire. Ce chapitre fournit une vue d'ensemble de ) TjET1 1 0.502 rg 216.72 226.8 252.84 12.24 re fBT216.72 228.96  TD0 0 0 rg 0.008  Tc -0.034  Tw (base d'un syst\350me USB y compris sa topologie, le ) TjET1 1 0.502 rg 216.72 214.68 252.84 12.12 re fBT216.72 216.72  TD0 0 0 rg 0.0052  Tc -0.0311  Tw (d\351bit de donn\351es, les types de flux de donn\351es, ) TjET1 1 0.502 rg 216.72 202.56 252.84 12.12 re fBT216.72 204.6  TD0 0 0 rg 0.0103  Tc -0.0362  Tw (les sp\351cifications \351lectriques de bases etc. ) Tj215.64 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 263.28 263.4 5.28 re f211.44 202.56 5.28 60.72 re f469.56 202.56 5.28 60.72 re f211.44 197.28 263.4 5.28 re f483.12 251.16 33.6 12.12 re fBT493.56 253.2  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (10) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 263.28 44.16 5.28 re f477.84 251.16 5.28 12.12 re f516.72 251.16 5.28 12.12 re f477.84 197.28 44.16 53.88 re f78.48 176.88 47.64 12.12 re fBT99.12 178.92  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (5) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 189 58.32 5.28 re f73.2 176.88 5.28 12.12 re f126.12 176.88 5.4 12.12 re f73.2 74.4 58.32 102.48 re f139.68 176.88 63.6 12.12 re fBT146.04 178.92  TD0 0 0 rg /F1 9.96  Tf0.0013  Tc -0.0272  Tw (Mod\350le de ) TjET1 1 0.502 rg 139.68 164.76 63.6 12.12 re fBT154.32 166.8  TD0 0 0 rg 0.071  Tc 0  Tw (flux) Tj18.6 0  TD -0.0106  Tc -0.0153  Tw ( de ) TjET1 1 0.502 rg 139.68 152.52 63.6 12.24 re fBT142.68 154.68  TD0 0 0 rg -0.007  Tc -0.0189  Tw (donn\351es de ) TjET1 1 0.502 rg 139.68 140.4 63.6 12.12 re fBT158.16 142.44  TD0 0 0 rg 0.0352  Tc 0  Tw (l'USB) Tj26.52 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 189 74.16 5.28 re f134.4 140.4 5.28 48.6 re f203.28 140.4 5.28 48.6 re f134.4 74.4 74.16 66 re f216.72 176.88 252.84 12.12 re fBT216.72 178.92  TD0 0 0 rg /F1 9.96  Tf0.0078  Tc -0.0337  Tw (Ce chapitre commence \340 parler de la mani\350re ) TjET1 1 0.502 rg 216.72 164.76 252.84 12.12 re fBT216.72 166.8  TD0 0 0 rg 0.0212  Tc -0.0321  Tw (dont les donn\351es transitent sur l'USB. Il introduit ) TjET1 1 0.502 rg 216.72 152.52 252.84 12.24 re fBT216.72 154.68  TD0 0 0 rg 0.0126  Tc -0.0214  Tw (des termes tel que Terminaisons \(endpoints\) et ) TjET1 1 0.502 rg 216.72 140.4 252.84 12.12 re fBT216.72 142.44  TD0 0 0 rg 0.0266  Tc -0.0525  Tw ("pipes" \(tuyaux\) puis passe la plupart du chapitre ) TjET1 1 0.502 rg 216.72 128.28 252.84 12.12 re fBT216.72 130.32  TD0 0 0 rg 0.0029  Tc -0.0288  Tw (sur chacun des types de flux de donn\351es ) TjET1 1 0.502 rg 216.72 116.16 252.84 12.12 re fBT216.72 118.2  TD0 0 0 rg 0.0382  Tc 0  Tw (\() Tj4.56 0  TD -0.0021  Tc -0.0238  Tw (Contr\364le, Interruption, Isochrone et en Bloc\). ) TjET1 1 0.502 rg 216.72 103.92 252.84 12.24 re fBT216.72 106.08  TD0 0 0 rg 0.0208  Tc -0.0467  Tw (Tandis qu'il est important de conna\356tre chaque ) TjET1 1 0.502 rg 216.72 91.8 252.84 12.12 re fBT216.72 93.84  TD0 0 0 rg -0.0066  Tc -0.006  Tw (type de transfert et ses propri\351t\351s, c'est un peu ) TjET1 1 0.502 rg 216.72 79.68 252.84 12.12 re fBT216.72 81.72  TD0 0 0 rg 0.0054  Tc -0.0313  Tw (lourd pour une premi\350re lecture. ) Tj167.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 189 263.4 5.28 re f211.44 79.68 5.28 109.32 re f469.56 79.68 5.28 109.32 re f211.44 74.4 263.4 5.28 re f483.12 176.88 33.6 12.12 re fBT493.56 178.92  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (60) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 189 44.16 5.28 re f477.84 176.88 5.28 12.12 re f516.72 176.88 5.28 12.12 re f477.84 74.4 44.16 102.48 re fendstream
+endobj
+15 0 obj
+14926
+endobj
+4 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+/F2 10 0 R 
+/F3 12 0 R 
+/F4 16 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 14 0 R
+>>
+endobj
+19 0 obj
+<<
+/Length 20 0 R
+>>
+stream
+BT28.32 38.76  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD 0  Tc 0.024  Tw ( ) Tj3.36 0  TD -0.0096  Tc 0  Tw (CHAP1) Tj39.84 0  TD 0  Tc 0.024  Tw ( ) Tj58.8 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (2) Tj6.72 0  TD -0.084  Tc (/5) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (14/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 78.48 791.76 47.64 12.24 re fBT99.12 793.92  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (6) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 804 58.32 5.28 re f73.2 791.76 5.28 12.24 re f126.12 791.76 5.4 12.24 re f73.2 616.44 58.32 175.32 re f139.68 791.76 63.6 12.24 re fBT165.72 793.92  TD0 0 0 rg /F1 9.96  Tf-0.0068  Tc -0.0191  Tw (La ) TjET1 1 0.502 rg 139.68 779.64 63.6 12.12 re fBT144.24 781.68  TD0 0 0 rg 0.0353  Tc 0  Tw (m\351canique) Tj54.48 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 804 74.16 5.28 re f134.4 779.64 5.28 24.36 re f203.28 779.64 5.28 24.36 re f134.4 616.44 74.16 163.2 re f216.72 791.76 252.84 12.24 re fBT216.72 793.92  TD0 0 0 rg /F1 9.96  Tf0.0143  Tc -0.0403  Tw (Ce chapitre d\351taille les deux connecteurs ) TjET1 1 0.502 rg 216.72 779.64 252.84 12.12 re fBT216.72 781.68  TD0 0 0 rg 0.015  Tc -0.0409  Tw (standards de l'US) Tj88.08 0  TD 0.0253  Tc -0.0213  Tw (B. L'information importante ici ) TjET1 1 0.502 rg 216.72 767.52 252.84 12.12 re fBT216.72 769.56  TD0 0 0 rg -0  Tc -0.0138  Tw (est que le connecteur de type A est orient\351 en ) TjET1 1 0.502 rg 216.72 755.4 252.84 12.12 re fBT216.72 757.44  TD0 0 0 rg 0.0069  Tc -0.0329  Tw (aval et que le connecteur de type B en amont. ) TjET1 1 0.502 rg 216.72 743.16 252.84 12.24 re fBT216.72 745.32  TD0 0 0 rg 0.0165  Tc -0.0425  Tw (Par cons\351quent il devrait \352tre impossible de ) TjET1 1 0.502 rg 216.72 731.04 252.84 12.12 re fBT216.72 733.08  TD0 0 0 rg 0.0068  Tc -0.0327  Tw (brancher un c\342ble dans deux ports amont. Tous ) TjET1 1 0.502 rg 216.72 718.92 252.84 12.12 re fBT216.72 720.96  TD0 0 0 rg 0.0049  Tc -0.0308  Tw (Les c\342bles d\351tachables doivent \352tre Plei) Tj199.8 0  TD -0.0101  Tc 0.0442  Tw (nes et ) TjET1 1 0.502 rg 216.72 706.8 252.84 12.12 re fBT216.72 708.84  TD0 0 0 rg 0.0092  Tc -0.0352  Tw (Hautes vitesses, tandis que tout c\342ble basse ) TjET1 1 0.502 rg 216.72 694.56 252.84 12.24 re fBT216.72 696.72  TD0 0 0 rg 0.0067  Tc -0.0326  Tw (vitesse doit \352tre connect\351 durablement \340 ) TjET1 1 0.502 rg 216.72 682.44 252.84 12.12 re fBT216.72 684.48  TD0 0 0 rg 0.0274  Tc -0.0534  Tw (l'appareil. A part un rapide coup d'\234il aux ) TjET1 1 0.502 rg 216.72 670.32 252.84 12.12 re fBT216.72 672.36  TD0 0 0 rg -0.0022  Tc -0.0237  Tw (connecteurs, vous pouvez sauter ce chapitre \340 ) TjET1 1 0.502 rg 216.72 658.08 252.84 12.24 re fBT216.72 660.24  TD0 0 0 rg 0.0082  Tc -0.0341  Tw (moins que vous ne projetiez de fabriquer des ) TjET1 1 0.502 rg 216.72 645.96 252.84 12.12 re fBT216.72 648  TD0 0 0 rg 0.0032  Tc -0.0291  Tw (connecteurs et/ou c\342bles USB) Tj150 0  TD -0.0028  Tc -0.0231  Tw (. Les dessinateurs ) TjET1 1 0.502 rg 216.72 633.84 252.84 12.12 re fBT216.72 635.88  TD0 0 0 rg -0.0019  Tc -0.024  Tw (PCB peuvent trouver des empreintes de pas ) TjET1 1 0.502 rg 216.72 621.72 252.84 12.12 re fBT216.72 623.76  TD0 0 0 rg 0.0081  Tc -0.034  Tw (standards dans ce chapitre. ) Tj142.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 804 263.4 5.28 re f211.44 621.72 5.28 182.28 re f469.56 621.72 5.28 182.28 re f211.44 616.44 263.4 5.28 re f483.12 791.76 33.6 12.24 re fBT493.56 793.92  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (33) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 804 44.16 5.28 re f477.84 791.76 5.28 12.24 re f516.72 791.76 5.28 12.24 re f477.84 616.44 44.16 175.32 re f78.48 596.04 47.64 12.12 re fBT99.12 598.08  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (7) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 608.16 58.32 5.28 re f73.2 596.04 5.28 12.12 re f126.12 596.04 5.4 12.12 re f73.2 408.48 58.32 187.56 re f139.68 596.04 63.6 12.12 re fBT142.56 598.08  TD0 0 0 rg /F1 9.96  Tf0.0193  Tc 0  Tw (L'Electrique) Tj57.84 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 608.16 74.16 5.28 re f134.4 596.04 5.28 12.12 re f203.28 596.04 5.28 12.12 re f134.4 408.48 74.16 187.56 re f216.72 596.04 252.84 12.12 re fBT216.72 598.08  TD0 0 0 rg /F1 9.96  Tf0.007  Tc -0.0329  Tw (Ce chapitre regarde la couche bas niveau des ) TjET1 1 0.502 rg 216.72 583.92 252.84 12.12 re fBT216.72 585.96  TD0 0 0 rg 0.0217  Tc -0.0476  Tw (signaux \351lectriques y compris l'imp\351dance de la ) TjET1 1 0.502 rg 216.72 571.68 252.84 12.24 re fBT216.72 573.84  TD0 0 0 rg 0.007  Tc -0.0329  Tw (ligne, les temps de mont\351e et descente, les ) TjET1 1 0.502 rg 216.72 559.56 252.84 12.12 re fBT216.72 561.6  TD0 0 0 rg 0.0217  Tc 0  Tw (sp\351cificat) Tj46.8 0  TD 0.002  Tc -0.0279  Tw (ions de l'\351metteur/r\351cepteur et les ) TjET1 1 0.502 rg 216.72 547.44 252.84 12.12 re fBT216.72 549.48  TD0 0 0 rg 0.0057  Tc -0.0316  Tw (niveaux de codage des bits, rembourrage de bits, ) TjET1 1 0.502 rg 216.72 535.2 252.84 12.24 re fBT216.72 537.36  TD0 0 0 rg 0.0083  Tc -0.0342  Tw (etc. Les parties plus importantes de ce chapitre ) TjET1 1 0.502 rg 216.72 523.08 252.84 12.12 re fBT216.72 525.12  TD0 0 0 rg 0.0296  Tc -0.0405  Tw (sont l'identification de la vitesse de l'appareil en ) TjET1 1 0.502 rg 216.72 510.96 252.84 12.12 re fBT216.72 513  TD0 0 0 rg 0.0257  Tc -0.0345  Tw (utilisant une r\351sistance pour polariser aussi bien ) TjET1 1 0.502 rg 216.72 498.84 252.84 12.12 re fBT216.72 500.88  TD0 0 0 rg 0.0312  Tc -0.0571  Tw (la ligne de donn\351e) Tj92.4 0  TD 0.0268  Tc -0.0527  Tw (s et le Bus d'alimentation de ) TjET1 1 0.502 rg 216.72 486.6 252.84 12.24 re fBT216.72 488.76  TD0 0 0 rg 0.0219  Tc -0.0478  Tw (l'appareil contre des appareils auto) Tj176.4 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0269  Tc -0.0529  Tw (aliment\351s. A ) TjET1 1 0.502 rg 216.72 474.48 252.84 12.12 re fBT216.72 476.52  TD0 0 0 rg 0.0055  Tc -0.0314  Tw (moins que vous ne conceviez des \351metteur) Tj216.72 0  TD 0.0382  Tc 0  Tw (-) TjET1 1 0.502 rg 216.72 462.36 252.84 12.12 re fBT216.72 464.4  TD0 0 0 rg 0.018  Tc -0.0268  Tw (r\351cepteurs USB au niveau silicium, vous pouvez ) TjET1 1 0.502 rg 216.72 450.24 252.84 12.12 re fBT216.72 452.28  TD0 0 0 rg 0.0114  Tc -0.0373  Tw (feuilleter ce chapitre. Les bonnes documentations ) TjET1 1 0.502 rg 216.72 438 252.84 12.24 re fBT216.72 440.16  TD0 0 0 rg 0.0238  Tc -0.0497  Tw (techniques des circuits USB d\351taillero) Tj189 0  TD 0.038  Tc -0.0639  Tw (nt quelles ) TjET1 1 0.502 rg 216.72 425.88 252.84 12.12 re fBT216.72 427.92  TD0 0 0 rg 0.0067  Tc -0.0154  Tw (valeurs de r\351sistances de terminaison vous aurez ) TjET1 1 0.502 rg 216.72 413.76 252.84 12.12 re fBT216.72 415.8  TD0 0 0 rg 0.011  Tc -0.037  Tw (besoin pour une imp\351dance de Bus ad\351quate. ) Tj233.28 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 608.16 263.4 5.28 re f211.44 413.76 5.28 194.4 re f469.56 413.76 5.28 194.4 re f211.44 408.48 263.4 5.28 re f483.12 596.04 33.6 12.12 re fBT493.56 598.08  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (75) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 608.16 44.16 5.28 re f477.84 596.04 5.28 12.12 re f516.72 596.04 5.28 12.12 re f477.84 408.48 44.16 187.56 re f78.48 388.08 47.64 12.12 re fBT99.12 390.12  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (8) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 400.2 58.32 5.28 re f73.2 388.08 5.28 12.12 re f126.12 388.08 5.4 12.12 re f73.2 261.24 58.32 126.84 re f139.68 388.08 63.6 12.12 re fBT145.56 390.12  TD0 0 0 rg /F1 9.96  Tf-0.0033  Tc -0.0226  Tw (La Couche ) TjET1 1 0.502 rg 139.68 375.96 63.6 12.12 re fBT148.32 378  TD0 0 0 rg 0.0207  Tc 0  Tw (protocole) Tj46.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 400.2 74.16 5.28 re f134.4 375.96 5.28 24.24 re f203.28 375.96 5.28 24.24 re f134.4 261.24 74.16 114.72 re f216.72 388.08 252.84 12.12 re fBT216.72 390.12  TD0 0 0 rg /F1 9.96  Tf0.0095  Tc -0.0354  Tw (Maintenant nous commen\347ons \340 entrer dans les ) TjET1 1 0.502 rg 216.72 375.96 252.84 12.12 re fBT216.72 378  TD0 0 0 rg 0.0049  Tc -0.0308  Tw (couches du protocole. Ce chapitre d\351crit les ) TjET1 1 0.502 rg 216.72 363.72 252.84 12.24 re fBT216.72 365.88  TD0 0 0 rg 0.0142  Tc -0.0401  Tw (paquets USB au niveau de l'octet y c) Tj184.56 0  TD 0.0315  Tc -0.0574  Tw (ompris la ) TjET1 1 0.502 rg 216.72 351.6 252.84 12.12 re fBT216.72 353.64  TD0 0 0 rg 0.019  Tc -0.0449  Tw (synchronisation, pid, l'adressage, l'endpoint, les ) TjET1 1 0.502 rg 216.72 339.48 252.84 12.12 re fBT216.72 341.52  TD0 0 0 rg 0.0132  Tc -0.0271  Tw (champs CRC. Une fois que cela a \351t\351 saisi, on ) TjET1 1 0.502 rg 216.72 327.36 252.84 12.12 re fBT216.72 329.4  TD0 0 0 rg 0.0095  Tc -0.0354  Tw (passe \340 la couche suivante du protocole, les ) TjET1 1 0.502 rg 216.72 315.12 252.84 12.24 re fBT216.72 317.28  TD0 0 0 rg 0.009  Tc -0.035  Tw (paquets USB. La plupart des d\351veloppeurs ne ) TjET1 1 0.502 rg 216.72 303 252.84 12.12 re fBT216.72 305.04  TD0 0 0 rg 0.0017  Tc -0.0276  Tw (voient pas ces couches inf\351rieures du protocole ) TjET1 1 0.502 rg 216.72 290.88 252.84 12.12 re fBT216.72 292.92  TD0 0 0 rg 0.0338  Tc -0.0597  Tw (car leur cir) Tj53.88 0  TD 0.0098  Tc -0.0357  Tw (cuit USB s'en occupe. Cependant une ) TjET1 1 0.502 rg 216.72 278.64 252.84 12.24 re fBT216.72 280.8  TD0 0 0 rg 0.0207  Tc -0.0466  Tw (compr\351hension des indications de situation et des ) TjET1 1 0.502 rg 216.72 266.52 252.84 12.12 re fBT216.72 268.56  TD0 0 0 rg 0.0215  Tc -0.0474  Tw (\351changes \(Handshaking\) en vaut la peine. ) Tj216.12 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 400.2 263.4 5.28 re f211.44 266.52 5.28 133.68 re f469.56 266.52 5.28 133.68 re f211.44 261.24 263.4 5.28 re f483.12 388.08 33.6 12.12 re fBT493.56 390.12  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (45) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 400.2 44.16 5.28 re f477.84 388.08 5.28 12.12 re f516.72 388.08 5.28 12.12 re f477.84 261.24 44.16 126.84 re f78.48 240.84 47.64 12.24 re fBT99.12 243  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (9) Tj6.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 253.08 58.32 5.28 re f73.2 240.84 5.28 12.24 re f126.12 240.84 5.4 12.24 re f73.2 75.96 58.32 164.88 re f139.68 240.84 63.6 12.24 re fBT149.04 243  TD0 0 0 rg /F1 9.96  Tf-0.0105  Tc -0.0154  Tw (Cadre de ) TjET1 1 0.502 rg 139.68 228.72 63.6 12.12 re fBT147.48 230.76  TD0 0 0 rg 0.043  Tc -0.0089  Tw (travail du ) TjET1 1 0.502 rg 139.68 216.6 63.6 12.12 re fBT143.88 218.64  TD0 0 0 rg 0.0346  Tc -0.0605  Tw (circuit USB) Tj55.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 253.08 74.16 5.28 re f134.4 216.6 5.28 36.48 re f203.28 216.6 5.28 36.48 re f134.4 75.96 74.16 140.64 re f216.72 240.84 252.84 12.24 re fBT216.72 243  TD0 0 0 rg /F1 9.96  Tf0.0232  Tc -0.0492  Tw (C'est le chapitre le plus fr\351quemment utilis\351 dans ) TjET1 1 0.502 rg 216.72 228.72 252.84 12.12 re fBT216.72 230.76  TD0 0 0 rg 0.0277  Tc -0.0536  Tw (la sp\351cification enti\350re et le seul que) Tj184.2 0  TD -0.0051  Tc -0.0208  Tw ( je ne me ) TjET1 1 0.502 rg 216.72 216.6 252.84 12.12 re fBT216.72 218.64  TD0 0 0 rg 0.0132  Tc -0.0391  Tw (suis pas lass\351 d'imprimer et de relier. Ce chapitre ) TjET1 1 0.502 rg 216.72 204.48 252.84 12.12 re fBT216.72 206.52  TD0 0 0 rg 0.0196  Tc -0.0455  Tw (d\351taille l'\351num\351ration du Bus et les codes de ) TjET1 1 0.502 rg 216.72 192.24 252.84 12.24 re fBT216.72 194.4  TD0 0 0 rg 0.0091  Tc -0.0179  Tw (demande \(mise en place d'une adresse, obtention ) TjET1 1 0.502 rg 216.72 180.12 252.84 12.12 re fBT216.72 182.16  TD0 0 0 rg 0.0094  Tc -0.0353  Tw (d'un descripteur, etc.\) qui composent la couche ) TjET1 1 0.502 rg 216.72 168 252.84 12.12 re fBT216.72 170.04  TD0 0 0 rg 0.0184  Tc -0.0443  Tw (du protocole la plus commune que les ) TjET1 1 0.502 rg 216.72 155.76 252.84 12.24 re fBT216.72 157.92  TD0 0 0 rg -0.0167  Tc -0.0093  Tw (programmeurs et) Tj87.24 0  TD -0.0034  Tc -0.0226  Tw ( concepteurs USB devront voir. ) TjET1 1 0.502 rg 216.72 143.64 252.84 12.12 re fBT216.72 145.68  TD0 0 0 rg 0.0228  Tc -0.0487  Tw (Ce chapitre doit \352tre lu en d\351tail. ) Tj169.8 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 253.08 263.4 5.28 re f211.44 143.64 5.28 109.44 re f469.56 143.64 5.28 109.44 re f211.44 75.96 263.4 67.68 re f483.12 240.84 33.6 12.24 re fBT493.56 243  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (36) Tj12.72 0  TD 0  Tc -0.0259  Tw ( ) TjET1 1 0.502 rg 483.12 228.72 33.6 12.12 re fBT499.92 230.76  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 216.6 33.6 12.12 re fBT499.92 218.64  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 204.48 33.6 12.12 re fBT499.92 206.52  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 192.24 33.6 12.24 re fBT499.92 194.4  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 180.12 33.6 12.12 re fBT499.92 182.16  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 168 33.6 12.12 re fBT499.92 170.04  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 155.76 33.6 12.24 re fBT499.92 157.92  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 143.64 33.6 12.12 re fBT499.92 145.68  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 131.52 33.6 12.12 re fBT499.92 133.56  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 119.4 33.6 12.12 re fBT499.92 121.44  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 107.16 33.6 12.24 re fBT499.92 109.32  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 95.04 33.6 12.12 re fBT499.92 97.08  TD0 0 0 rg ( ) TjET1 1 0.502 rg 483.12 81.24 33.6 13.8 re fBT499.92 84  TD0 0 0 rg /F0 12  Tf0.024  Tw ( ) TjET1 1 0.502 rg 477.84 253.08 44.16 5.28 re f477.84 81.24 5.28 171.84 re f516.72 81.24 5.28 171.84 re f477.84 75.96 44.16 5.28 re fendstream
+endobj
+20 0 obj
+14639
+endobj
+18 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 19 0 R
+>>
+endobj
+22 0 obj
+<<
+/Length 23 0 R
+>>
+stream
+BT28.32 38.76  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD 0  Tc 0.024  Tw ( ) Tj3.36 0  TD -0.0096  Tc 0  Tw (CHAP1) Tj39.84 0  TD 0  Tc 0.024  Tw ( ) Tj58.8 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (3) Tj6.72 0  TD -0.084  Tc (/5) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (14/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 78.48 791.76 47.64 12.24 re fBT95.88 793.92  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (10) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 804 58.32 5.28 re f73.2 791.76 5.28 12.24 re f126.12 791.76 5.4 12.24 re f73.2 725.76 58.32 66 re f139.68 791.76 63.6 12.24 re fBT147.96 793.92  TD0 0 0 rg /F1 9.96  Tf-0.0021  Tc 0.0362  Tw (USB Host ) TjET1 1 0.502 rg 139.68 779.64 63.6 12.12 re fBT155.28 781.68  TD0 0 0 rg -0.005  Tc 0.099  Tw (\(H\364te\) ) TjET1 1 0.502 rg 139.68 767.52 63.6 12.12 re fBT144.72 769.56  TD0 0 0 rg 0.017  Tc 0.0171  Tw (Mat\351riel et ) TjET1 1 0.502 rg 139.68 755.4 63.6 12.12 re fBT152.76 757.44  TD0 0 0 rg 0.0411  Tc 0.053  Tw (Logiciel ) Tj40.92 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 804 74.16 5.28 re f134.4 755.4 5.28 48.6 re f203.28 755.4 5.28 48.6 re f134.4 725.76 74.16 29.64 re f216.72 791.76 252.84 12.24 re fBT216.72 793.92  TD0 0 0 rg /F1 9.96  Tf0.0022  Tc -0.0081  Tw (Ce chapitre couvre des questions concernant ) TjET1 1 0.502 rg 216.72 779.64 252.84 12.12 re fBT216.72 781.68  TD0 0 0 rg 0.0211  Tc -0.047  Tw (l'Host. Cela inclut la structure et la g\351n\351ration de ) TjET1 1 0.502 rg 216.72 767.52 252.84 12.12 re fBT216.72 769.56  TD0 0 0 rg 0.0031  Tc -0.029  Tw (microstructure, exigences du cont) Tj170.64 0  TD -0.001  Tc -0.0249  Tw (r\364leur de l'Host, ) TjET1 1 0.502 rg 216.72 755.4 252.84 12.12 re fBT216.72 757.44  TD0 0 0 rg 0.0167  Tc -0.0427  Tw (m\351canismes logiciels et le mod\350le de driver de ) TjET1 1 0.502 rg 216.72 743.16 252.84 12.24 re fBT216.72 745.32  TD0 0 0 rg 0.0057  Tc -0.0316  Tw (l'USB. \300 moins que vous conceviez des Host, ) TjET1 1 0.502 rg 216.72 731.04 252.84 12.12 re fBT216.72 733.08  TD0 0 0 rg -0  Tc -0.0258  Tw (vous pouvez sauter ce chapitre. ) Tj163.32 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 804 263.4 5.28 re f211.44 731.04 5.28 72.96 re f469.56 731.04 5.28 72.96 re f211.44 725.76 263.4 5.28 re f483.12 791.76 33.6 12.24 re fBT493.56 793.92  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (23) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 804 44.16 5.28 re f477.84 791.76 5.28 12.24 re f516.72 791.76 5.28 12.24 re f477.84 725.76 44.16 66 re f78.48 705.36 47.64 12.24 re fBT95.88 707.52  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (11) Tj12.72 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 73.2 717.6 58.32 5.28 re f73.2 705.36 5.28 12.24 re f126.12 705.36 5.4 12.24 re f73.2 639.36 58.32 66 re f139.68 705.36 63.6 12.24 re fBT165.72 707.52  TD0 0 0 rg /F1 9.96  Tf-0.0068  Tc -0.0191  Tw (La ) TjET1 1 0.502 rg 139.68 693.24 63.6 12.12 re fBT139.68 695.28  TD0 0 0 rg 0.0242  Tc -0.0501  Tw (Sp\351cification ) TjET1 1 0.502 rg 139.68 681.12 63.6 12.12 re fBT152.64 683.16  TD0 0 0 rg 0.0174  Tc -0.0433  Tw (du HUB ) Tj41.16 0  TD 0  Tc -0.0259  Tw ( ) TjET1 1 0.502 rg 139.68 668.88 63.6 12.24 re fBT146.52 671.04  TD0 0 0 rg -0.0111  Tc -0.0148  Tw (\( moyeu \)) Tj49.92 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 134.4 717.6 74.16 5.28 re f134.4 668.88 5.28 48.72 re f203.28 668.88 5.28 48.72 re f134.4 639.36 74.16 29.52 re f216.72 705.36 252.84 12.24 re fBT216.72 707.52  TD0 0 0 rg /F1 9.96  Tf0.0195  Tc -0.0454  Tw (Ce chapitre d\351taille les m\351canismes des hubs ) TjET1 1 0.502 rg 216.72 693.24 252.84 12.12 re fBT216.72 695.28  TD0 0 0 rg 0.0202  Tc -0.0462  Tw (USB y compris leur configur) Tj140.16 0  TD 0.0126  Tc -0.0385  Tw (ation, partage de ) TjET1 1 0.502 rg 216.72 681.12 252.84 12.12 re fBT216.72 683.16  TD0 0 0 rg 0.0098  Tc -0.0357  Tw (transactions, descripteurs standards pour la ) TjET1 1 0.502 rg 216.72 668.88 252.84 12.24 re fBT216.72 671.04  TD0 0 0 rg 0.011  Tc -0.0369  Tw (classe du hub, etc. A moins que vous ne ) TjET1 1 0.502 rg 216.72 656.76 252.84 12.12 re fBT216.72 658.8  TD0 0 0 rg -0.0019  Tc -0.024  Tw (conceviez des hubs, vous pouvez sauter ce ) TjET1 1 0.502 rg 216.72 644.64 252.84 12.12 re fBT216.72 646.68  TD0 0 0 rg 0.0141  Tc -0.0401  Tw (chapitre. ) Tj47.76 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 211.44 717.6 263.4 5.28 re f211.44 644.64 5.28 72.96 re f469.56 644.64 5.28 72.96 re f211.44 639.36 263.4 5.28 re f483.12 705.36 33.6 12.24 re fBT490.32 707.52  TD0 0 0 rg /F1 9.96  Tf0.0254  Tc 0  Tw (143) Tj19.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) TjET1 1 0.502 rg 477.84 717.6 44.16 5.28 re f477.84 705.36 5.28 12.24 re f516.72 705.36 5.28 12.24 re f477.84 639.36 44.16 66 re fBT45.48 613.08  TD0 0 0 rg /F1 9.96  Tf0.0134  Tc -0.0394  Tw (Donc maintenant nous pouvons commencer \340 lire les chapitres relatifs \340 nos besoins. Si vous ) Tj0 -12.24  TD -0.0125  Tc 0  Tw (d\351v) Tj18 0  TD 0.0165  Tc -0.0425  Tw (eloppez des pilotes \(Logiciels\) pour les p\351riph\351riques USB alors vous pouvez avoir besoin de lire ) Tj-18 -12  TD 0.0133  Tc -0.0392  Tw (seulement les chapitres, ) Tj125.88 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-71.88 -26.28  TD /F5 9.96  Tf0.024  Tc (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (4 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0042  Tc -0.0302  Tw ( Vue d'ensemble, architecture.) Tj153.6 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-186 -12.12  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (5 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0083  Tc -0.0342  Tw ( Mod\350le de flux de donn\351es de l'USB.) Tj186.6 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-219 -12.24  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (9 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0235  Tc -0.0494  Tw ( Cadre de travail du circuit USB.) Tj161.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-194.28 -12  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (10 ) Tj16.2 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0189  Tc -0.0448  Tw ( USB Host Mat\351rie) Tj91.2 0  TD 0.0362  Tc -0.0621  Tw (l et Logiciel. ) Tj64.2 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-248.16 -26.28  TD /F1 9.96  Tf-0.0259  Tw ( ) Tj0 -12.12  TD ( ) Tj3.48 0  TD 0.009  Tc -0.0349  Tw ( Les concepteurs de p\351riph\351riques \351lectroniques peuvent seulement avoir besoin de lire les ) Tj-3.48 -12.12  TD 0.0162  Tc 0.0779  Tw (chapitres: ) Tj53.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj0.12 -26.16  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (4 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0042  Tc -0.0302  Tw ( Vue d'ensemble, architecture. ) Tj157.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-189.48 -12.24  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (5 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0083  Tc -0.0342  Tw ( Mod\350le de flux de donn\351es de l'USB. ) Tj190.08 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-222.48 -12.12  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (6 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0013  Tc -0.0272  Tw ( La m\351canique, et) Tj89.88 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-122.28 -12  TD /F5 9.96  Tf0.024  Tc 0  Tw (o) Tj6 0  TD 0  Tc 0.024  Tw ( ) Tj12 0  TD /F1 9.96  Tf0.0254  Tc -0.0514  Tw (7 ) Tj9.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0065  Tc -0.0325  Tw ( L'\351lectrique.) Tj64.56 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-150.96 -26.16  TD /F4 9.96  Tf-0.0104  Tc -0.0359  Tw (L'USB en bref pour l) Tj111.36 0  TD -0.0125  Tc -0.0338  Tw (es concepteurs de p\351riph\351riques) Tj181.68 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-296.52 -26.28  TD /F1 9.96  Tf0.0081  Tc -0.034  Tw (Maintenant voyons les choses en face, \(1\) la plupart d'entre nous sommes ici pour d\351velopper des ) Tj0 -12.12  TD 0.0204  Tc -0.0463  Tw (p\351riph\351riques USB et \(2\) il est courant de lire la documentation d'un standard sans avoir une id\351e ) Tj0 -12.24  TD 0.0328  Tc -0.0387  Tw (de la mani\350re dont il faut ) Tj130.92 0  TD 0.0144  Tc -0.0403  Tw (se servir de l'appareil. Aussi dans les 7 prochains chapitres, nous nous ) Tj-130.92 -12.12  TD 0.008  Tc -0.0339  Tw (concentrons sur les parties pertinentes n\351cessaires au d\351veloppement d'un appareil USB. Ceci vous ) Tj0 -12.12  TD -0.0026  Tc -0.0234  Tw (permet de comprendre l'USB et ces probl\350mes et vous guidera dans une recherche approf) Tj452.52 0  TD 0.0111  Tc -0.037  Tw (ondie des ) Tj-452.52 -12  TD 0.0178  Tc -0.0437  Tw (probl\350mes sp\351cifiques relatifs \340 votre application. ) Tj252.96 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-252.96 -26.28  TD /F1 9.96  Tf0.0169  Tc -0.0428  Tw (Le standard USB 1.1 \351tait suffisamment complexe avant que la Haute vitesse soit introduite dans ) Tj0 -12.24  TD 0.0152  Tc -0.0411  Tw (l'USB 2.0. Afin d'aider \340 la compr\351hension des principes fondamentaux de l'USB, nous omettons ) Tj0 -12.12  TD -0.0504  Tc 0  Tw (vol) Tj14.76 0  TD 0.012  Tc -0.0379  Tw (ontairement beaucoup de domaines sp\351cifiques aux appareils Hautes vitesses. ) Tj398.52 0  TD 0  Tc -0.0259  Tw ( ) Tj-413.28 -12.12  TD ( ) Tj3.48 0  TD ( ) Tj3.48 0  TD ( ) Tj-6.96 -12  TD /F4 9.96  Tf-0.018  Tc -0.0283  Tw (Pr\351sentation du Bus S\351rie Universel) Tj200.28 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-203.76 -26.28  TD /F1 9.96  Tf0.0078  Tc -0.0337  Tw (L'USB version 1.1 comprenait 2 vitesses, un mode vitesse rapide de 12Mbits/s et un mode vitesse ) Tj0 -12.24  TD 0.0111  Tc -0.0371  Tw (lente de 1,5Mbits/s. Le mode de 1,5Mbits/s ) Tj221.76 0  TD 0.02  Tc -0.0459  Tw (est plus lent et moins sujet aux perturbations ) Tj-221.76 -12.12  TD 0.0071  Tc -0.033  Tw (Electromagn\351tiques \(EMI\) r\351duisant ainsi le co\373t de perles de ferrites et des composants de ) Tj0 -12.12  TD 0.0063  Tc -0.0322  Tw (qualit\351. Par exemple les Quartz peuvent \352tre remplac\351s par des r\351sonateurs meilleur march\351. ) TjT* 0.0015  Tc -0.0274  Tw (L'USB 2.0 qui est encore ) Tj126.84 0  TD 0.0234  Tc -0.0493  Tw (\340 la veille de voir le jour sur les ordinateurs grand public a fait monter les ) Tj-126.84 -12.24  TD 0.0053  Tc -0.0313  Tw (ench\350res jusqu'\340 480Mbits/s. Le 480Mbits/s est connu sous le nom de mode Haute vitesse et a \351t\351 ) Tj0 -12.12  TD 0.0029  Tc -0.0288  Tw (cr\351e pour entrer en comp\351tition avec le Bus S\351rie Firewire. ) Tj299.64 0  TD 0  Tc -0.0259  Tw ( ) Tj-299.64 -12  TD ( ) Tj3.48 0  TD ( ) Tj3.48 0  TD ( ) Tj-6.96 -26.16  TD ( ) TjETendstream
+endobj
+23 0 obj
+11443
+endobj
+21 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+/F2 10 0 R 
+/F4 16 0 R 
+/F5 24 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 22 0 R
+>>
+endobj
+31 0 obj
+<<
+/Length 32 0 R
+>>
+stream
+BT28.32 38.76  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD 0  Tc 0.024  Tw ( ) Tj3.36 0  TD -0.0096  Tc 0  Tw (CHAP1) Tj39.84 0  TD 0  Tc 0.024  Tw ( ) Tj58.8 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (4) Tj6.72 0  TD -0.084  Tc (/5) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (14/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-436.44 762  TD /F4 9.96  Tf-0.0158  Tc -0.0306  Tw (Les vitesses USB) Tj93.48 0  TD /F1 9.96  Tf0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-78.96 -26.28  TD /F6 9.96  Tf-0.0216  Tc (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F1 9.96  Tf0.0044  Tc -0.0303  Tw (Vitesse Haute ) Tj72.36 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0103  Tc -0.0362  Tw ( 480Mbits/s.....) Tj76.92 0  TD /F7 9.96  Tf-0.0021  Tc -0.0442  Tw (High Speed) Tj63.36 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-235.2 -12.12  TD /F6 9.96  Tf-0.0216  Tc 0  Tw (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F1 9.96  Tf0.0217  Tc -0.0476  Tw (Vitesse Pleine ) Tj72.6 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0092  Tc -0.0351  Tw ( 12Mbits/s.....) Tj70.56 0  TD /F7 9.96  Tf-0.0134  Tc -0.0329  Tw (Full Speed) Tj57.84 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-223.56 -12.12  TD /F6 9.96  Tf-0.0216  Tc 0  Tw (\267) Tj4.56 0  TD 0  Tc 0.03  Tw ( ) Tj13.44 0  TD /F1 9.96  Tf-0.0041  Tc -0.0218  Tw (Vitesse Basse ) Tj71.76 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0069  Tc -0.0328  Tw ( 1,5Mbits/s.....) Tj74.16 0  TD /F7 9.96  Tf-0.0038  Tc -0.0425  Tw (Low Speed) Tj60.48 0  TD /F0 12  Tf0  Tc 0.024  Tw ( ) Tj-246.96 -26.28  TD /F1 9.96  Tf0.0037  Tc -0.0296  Tw (Le Bus S\351rie Universel est contr\364l\351 par l'H\364te. Il ne peut y avoir qu'un H\364te par Bus. La ) Tj0 -12.12  TD 0.0424  Tc -0.0684  Tw (sp\351cification en elle) Tj98.76 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD -0.0132  Tc -0.0127  Tw (m\352me ne comporte ) Tj101.04 0  TD 0.009  Tc -0.0349  Tw (aucune forme d'arrangement multi) Tj175.32 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0148  Tc -0.0407  Tw (ma\356tre. Cependant la ) Tj-384.24 -12.12  TD 0.0203  Tc -0.0463  Tw (sp\351cification "au pied lev\351" \() Tj143.76 0  TD -0.0516  Tc 0  Tw (On) Tj14.16 0  TD 0.0382  Tc (-) Tj4.56 0  TD 0.0346  Tc (The) Tj18.36 0  TD 0.0382  Tc (-) Tj4.56 0  TD 0.0115  Tc -0.0374  Tw (Go specification) TjET189.24 698.28 120.84 0.6 re fBT310.08 699.72  TD0.0273  Tc -0.0423  Tw (\) qui a \351t\351 rajout\351 \340 l'USB 2.0 a introduit un ) Tj-264.6 -12.24  TD 0.0122  Tc -0.0381  Tw (protocole de n\351gociation de l'H\364te qui permet \340 2 appareils d) Tj307.32 0  TD -0.0026  Tc -0.0084  Tw (e n\351gocier pour le r\364le d'H\364te. Ceci est ) Tj-307.32 -12.12  TD 0.0205  Tc -0.0385  Tw (uniquement r\351serv\351 \340 des connexions simples point par point tel qu'un t\351l\351phone mobile ou un ) Tj0 -12.12  TD 0.0194  Tc -0.0373  Tw (organisateur personnel et non \340 un Hub multiple ou \340 des configurations d'appareils de bureau ) TjT* 0.0234  Tc -0.0493  Tw (multiples. L'H\364te USB a la c) Tj139.44 0  TD 0.0062  Tc -0.0321  Tw (harge de mener \340 bien toutes les transactions et de programmer la ) Tj-139.44 -12.24  TD -0.0033  Tc -0.0134  Tw (bande passante. Les donn\351es peuvent \352tre envoy\351es par diff\351rentes m\351thodes de transactions en ) Tj0 -12  TD 0.0109  Tc -0.0368  Tw (utilisant un protocole bas\351 sur un syst\350me de jetons \(Token\). ) Tj313.56 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-313.56 -26.28  TD /F1 9.96  Tf0.0303  Tc -0.0562  Tw (A mon avis la topologie du Bus de) Tj171.24 0  TD 0.0332  Tc -0.0591  Tw ( l'USB limite quelque peu. L'une des intentions original de l'USB ) Tj-171.24 -12.12  TD 0.0125  Tc -0.0321  Tw (\351tait de r\351duire la quantit\351 de c\342ble \340 l'arri\350re de votre PC. Les gens d'Apple diront que l'id\351e est ) Tj0 -12.12  TD 0.0136  Tc -0.0395  Tw (venue du Bus pour appareil de bureau de chez Apple, o\371 le clavier, la souris et d'autres) Tj440.28 0  TD 0  Tc -0.0259  Tw ( ) Tj-440.28 -12.24  TD 0.0145  Tc -0.0304  Tw (p\351riph\351riques pouvaient \352tre connect\351s ensemble \(daisy chained ou connexions en guirlandes\) en ) Tj0 -12  TD 0.0357  Tc -0.0616  Tw (utilisant le m\352me c\342ble. ) Tj124.08 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-124.08 -26.28  TD /F1 9.96  Tf0.0162  Tc -0.0421  Tw (Cependant USB utilise une topologie en \351toile \340 \351tages, qui ressemble \340 celle d'Ethernet base10. ) Tj0 -12.12  TD 0.0388  Tc -0.0647  Tw (Ceci impose l'utilisation d'un Hub qu) Tj183.24 0  TD 0.0191  Tc -0.045  Tw (elque part, ce qui sous) Tj114.36 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0099  Tc -0.0358  Tw (entend une plus grande d\351pense, ) Tj-302.16 -12.12  TD 0.0082  Tc -0.0341  Tw (d'avantages de bo\356tes sur votre bureau et d'avantages de c\342bles. Cependant la situation n'est pas ) Tj0 -12.24  TD 0.0084  Tc -0.0343  Tw (aussi mauvaise qu'on le croit. Beaucoup d'appareils comprennent des Hubs USB. Par exemple votre ) Tj0 -12.12  TD 0.0757  Tc 0  Tw (clavie) Tj28.68 0  TD 0.0072  Tc -0.0331  Tw (r peut contenir un Hub qui est connect\351 \340 votre ordinateur. Votre souris et d'autres appareils ) Tj-28.68 -12.12  TD 0.0054  Tc -0.0313  Tw (tel qu'un cam\351scope num\351rique peuvent \352tre branch\351s facilement au dos de votre clavier. Les ) Tj0 -12.24  TD 0.0145  Tc -0.0404  Tw (moniteurs ne sont que d'autres p\351riph\351riques sur une longue liste d'a) Tj350.04 0  TD 0.0214  Tc -0.0073  Tw (ppareils qui comportent ) Tj-350.04 -12  TD 0.0048  Tc -0.0307  Tw (commun\351ment des Hubs int\351gr\351s. ) Tj175.68 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-175.68 -26.28  TD /F1 9.96  Tf0.0152  Tc -0.0411  Tw (Cette topologie en \351toile \340 \351tages, compar\351 \340 des appareils \340 simple connexion en guirlandes ) Tj0 -12.12  TD 0.019  Tc -0.0357  Tw (\(daisy chaining\) comporte tout de m\352me des avantages. D'abord l'alimentation de chaque appareil ) TjT* -0.0099  Tc -0.0161  Tw (peut \352tre c) Tj54.48 0  TD 0.0069  Tc -0.0328  Tw (ontr\364l\351e et m\352me coup\351e si des conditions de surintensit\351 se produisent sans perturber ) Tj-54.48 -12.24  TD 0.0114  Tc -0.0374  Tw (d'autres appareils USB. Les appareils \340 Haute vitesse ainsi que ceux \340 vitesse Pleine et Basse ) Tj0 -12.12  TD 0.0138  Tc -0.0398  Tw (peuvent \352tre maintenus alors que le Hub filtre les transactions de vitesse) Tj368.28 0  TD 0.0087  Tc -0.0147  Tw ( Haute et Pleine de fa\347on ) Tj-368.28 -12  TD 0.0098  Tc -0.0357  Tw (\340 ce que les appareils \340 vitesse lente ne les re\347oivent pas. ) Tj295.8 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-295.8 -26.28  TD /F1 9.96  Tf0.0132  Tc -0.0321  Tw (On peut connecter jusqu'\340 127 appareils \340 un Bus USB \340 un temps donn\351. Vous avez besoin ) Tj0 -12.12  TD 0.0115  Tc -0.0375  Tw (d'avantages d'appareils? Ajouter simplement un autre port ou un autre H\364te. Alor) Tj411.6 0  TD 0.0341  Tc -0.03  Tw (s que la plupart ) Tj-411.6 -12.24  TD 0.0042  Tc -0.0221  Tw (des H\364tes USB pr\351c\351dent n'avaient que 2 ports, la plupart des constructeurs ont consid\351r\351 ceci ) Tj0 -12.12  TD 0.009  Tc -0.0349  Tw (comme limitatif et commencent \340 introduire 4 et 5 ports H\364tes sur carte avec un port interne pour ) TjT* -0.0045  Tc -0.0214  Tw (les disques durs etc. Les H\364tes pr\351c\351dents n'a) Tj231.72 0  TD 0.0195  Tc -0.0454  Tw (vaient qu'un contr\364leur USB et ainsi les 2 ports ) Tj-231.72 -12.12  TD 0.0127  Tc -0.0387  Tw (partageaient la m\352me bande passante USB disponible. Comme les exigences des bandes passantes ) Tj0 -12.24  TD 0.0063  Tc -0.0323  Tw (ont augment\351, nous commen\347ons \340 voir des cartes multi) Tj285.96 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.011  Tc -0.0197  Tw (ports avec 2 contr\364leurs ou plus qui ) Tj-290.52 -12  TD 0.0039  Tc -0.0299  Tw (permettent des canaux i) Tj122.4 0  TD 0.046  Tc -0.0719  Tw (ndividuels. ) Tj57.84 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-180.24 -26.28  TD /F1 9.96  Tf0.0012  Tc -0.0271  Tw (Les contr\364leurs d'H\364te USB ont leurs propres caract\351ristiques. L'USB 1.1 comprenait 2 ) Tj0 -12.12  TD 0.0058  Tc -0.0317  Tw (sp\351cifications de contr\364leur d'interface H\364te, ) Tj227.28 0  TD -0.0106  Tc -0.0154  Tw (UHCI \(Contr\364leur d'Interface d'H\364te Universel) Tj229.56 0  TD 0.0382  Tc 0.0559  Tw (\) ) TjET272.76 202.92 237.6 0.6 re fBT510.36 204.36  TD(\) ) Tj-464.88 -12.12  TD 0.0168  Tc -0.0357  Tw (d\351velopp\351 par Intel qui met d'avantage le poids sur le logiciel Microsoft par exemple et qui permet ) Tj0 -12.24  TD 0.0179  Tc -0.0438  Tw (d'avoir des appareils meilleur march\351 et le ) Tj217.56 0  TD -0.0139  Tc -0.012  Tw (OHCI \(Contr\364leur d'Interface d'H\364) Tj170.28 0  TD -0.0061  Tc -0.0198  Tw (te Ouvert\)) TjET263.04 178.56 222.24 0.6 re fBT485.28 180  TD0.0028  Tc -0.0287  Tw ( d\351velopp\351 ) Tj-439.8 -12.12  TD 0.0154  Tc -0.0413  Tw (par Compaq, Microsoft et National Semiconductor qui met d'avantage la charge de travail sur ) Tj0 -12.12  TD 0.0221  Tc -0.048  Tw (l'appareil \(Intel\) et se contente de logiciel plus simple. Ce sont les relations typiques entre les ) TjT* 0.0293  Tc -0.0553  Tw (ing\351nieurs qui fabriquent le mat\351riel et c) Tj205.32 0  TD 0.0285  Tc -0.0544  Tw (eux qui font les logiciels... ) Tj135.48 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-340.8 -26.28  TD /F1 9.96  Tf0.0157  Tc -0.0416  Tw (Avec l'apparition de l'USB 2.0 on a eu besoin d'une nouvelle caract\351ristique de contr\364leur ) Tj0 -12  TD 0.0118  Tc -0.0377  Tw (d'interface d'H\364te pour d\351crire les d\351tails du niveau d'enregistrement sp\351cifique \340 l'USB 2.0.) Tj464.76 0  TD 0  Tc -0.0259  Tw ( ) Tj-464.76 -26.16  TD ( ) TjETendstream
+endobj
+32 0 obj
+9904
+endobj
+26 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font 33 0 R
+/ProcSet 2 0 R
+>>
+/Contents 31 0 R
+>>
+endobj
+33 0 obj
+<<
+/F0 6 0 R
+/F1 8 0 R
+/F2 10 0 R
+/F4 16 0 R
+/F6 27 0 R
+/F7 29 0 R
+>>
+endobj
+35 0 obj
+<<
+/Length 36 0 R
+>>
+stream
+BT28.32 38.76  TD0 0 0 rg /F0 12  Tf0.0069  Tc 0.0171  Tw (ACQUIER ) Tj58.08 0  TD -0.012  Tc 0  Tw (Bernard) Tj42.72 0  TD 0  Tc 0.024  Tw ( ) Tj3.36 0  TD -0.0096  Tc 0  Tw (CHAP1) Tj39.84 0  TD 0  Tc 0.024  Tw ( ) Tj58.8 0  TD 0.015  Tc 0.009  Tw (Page ) Tj31.44 0  TD 0.048  Tc 0  Tw (5) Tj6.72 0  TD -0.084  Tc (/5) Tj9.84 0  TD 0  Tc 0.024  Tw ( ) Tj155.76 0  TD 0.042  Tc 0  Tw (14/06/02) Tj47.04 0  TD 0  Tc 0.024  Tw ( ) Tj-436.44 761.88  TD /F1 9.96  Tf-0.0419  Tc 0.016  Tw (Le ) Tj14.88 0  TD -0.0159  Tc -0.01  Tw (EHCI \( Contr\364leur d'Interface d'H\364te Accrue\)) TjET60.36 799.2 223.68 0.6 re fBT284.04 800.64  TD0.0164  Tc -0.0424  Tw ( \351tait n\351. Les collaborateurs les plus importants ) Tj-238.56 -12.24  TD 0.0068  Tc -0.0327  Tw (comprennent Intel, Compaq, Nec, Lucent et Microsoft, il semble donc comme nous l'esp\351rons qu'ils ) Tj0 -12.12  TD -0.0028  Tc -0.0231  Tw (se seraient regroup\351s pour no) Tj150.6 0  TD 0.0169  Tc -0.0428  Tw (us fournir une interface standard et ainsi un seul nouveau driver ) Tj-150.6 -12  TD 0.0108  Tc -0.0367  Tw (\(pilote\) \340 ex\351cuter dans notre O.S. \(Operating System ou syst\350me d'exploitation\). Il \351tait temps. ) Tj492.6 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-492.6 -26.28  TD /F1 9.96  Tf0.027  Tc -0.0529  Tw (L'USB, comme son nom l'indique est un Bus S\351rie. Il utilise 4 fils isol\351s dont 2 sont l'ali) Tj439.08 0  TD 0.0305  Tc 0.0636  Tw (mentation ) Tj-439.08 -12.12  TD 0.0092  Tc -0.0351  Tw (\(+5V et GND\). Les 2 restants forment une paire torsad\351e qui v\351hiculent les signaux de donn\351es ) Tj0 -12.24  TD 0.0039  Tc -0.0298  Tw (diff\351rentiels. Il utilise un sch\351ma d'encodage NRZI \( Pas de retour \340 Z\351ro invers\351\) pour envoyer ) Tj0 -12  TD 0.0017  Tc -0.0036  Tw (des donn\351es avec un champ ) Tj145.68 0  TD /F3 9.96  Tf0.0277  Tc 0  Tw (sync) Tj22.56 0  TD /F1 9.96  Tf0.0064  Tc -0.0324  Tw ( de mani\350re \340 synchronise) Tj132.36 0  TD -0.0037  Tc -0.0223  Tw (r les horloges de l'H\364te et du r\351cepteur. ) TjETq 42.12 18 510.24 806.04 re W n BT549.48 701.64  TD/F2 12  Tf0  Tc 0  Tw ( ) TjETQ BT45.48 675.36  TD0.0101  Tc -0.0285  Tw (L'USB supporte le syst\350me " plug'n play " branchement \340 chaud avec des drivers qui sont ) Tj0 -12.12  TD 0.018  Tc -0.0439  Tw (directement chargeable et d\351chargeable. L'utilisateur branche simplement l'appareil sur le Bus. ) TjT* -0.0094  Tc -0.0166  Tw (L'H\364te d\351tectera cet ajout, i) Tj139.8 0  TD 0.0098  Tc -0.0357  Tw (nterrogera l'appareil nouvellement ins\351r\351 et chargera le driver ) Tj-139.8 -12.24  TD 0.0151  Tc -0.041  Tw (appropri\351 pendant le temps qu'il faut au sablier pour clignoter sur votre \351cran assurant qu'un driver ) Tj0 -12.12  TD 0.0165  Tc -0.0425  Tw (est install\351 pour votre appareil. L'utilisateur final n'a pas besoin de se soucier des ter) Tj427.68 0  TD 0.0254  Tc -0.0513  Tw (minaisons, de ) Tj-427.68 -12.12  TD 0.0119  Tc -0.0378  Tw (termes tel que IRQs et adresses de ports, ou de la r\351initialisation de l'ordinateur. Une fois que ) Tj0 -12.12  TD 0.0117  Tc -0.029  Tw (l'utilisateur a termin\351, on peut simplement retirer le c\342ble, l'H\364te d\351tectera cette absence et ) TjT* 0.0109  Tc -0.0368  Tw (d\351chargera automatiquement le driver. ) Tj201 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-201 -26.28  TD /F1 9.96  Tf0  Tc -0.0262  Tw (Le charge) Tj48.72 0  TD 0.0167  Tc -0.0426  Tw (ment du driver appropri\351 sera r\351alis\351 en utilisant une combinaison PID / VID ) Tj390 0  TD 0  Tc -0.0259  Tw ( ) Tj-438.72 -12.12  TD 0.003  Tc -0.029  Tw (\( Interface Produit Machine / Vendeur Machine\). On peut se procurer le VID au forum des ) Tj0 -12.12  TD 0.0085  Tc -0.0345  Tw (fournisseurs USB en payant, ce qui est consid\351r\351 comme un autre point de blocage par USB. ) Tj470.04 0  TD 0.0084  Tc 0.0857  Tw (On ) Tj-470.04 -12  TD 0.0101  Tc -0.036  Tw (peut trouver le catalogue des tarifs r\351actualis\351s sur le ) Tj274.44 0  TD 0.003  Tc -0.0289  Tw (site web des fournisseurs USB.) TjET319.92 526.44 155.16 0.6 re fBT475.08 527.88  TD0  Tc -0.0259  Tw ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-433.08 -26.28  TD /F1 9.96  Tf0.0136  Tc -0.0295  Tw (D'autres organisations fournissent un VID suppl\351mentaire pour des activit\351s non commerciales tel ) Tj0 -12.24  TD 0.0295  Tc -0.0554  Tw (que l'ens) Tj44.88 0  TD 0.0053  Tc -0.0312  Tw (eignement, la recherche ou le bricolage. Le forum des fournisseurs USB ne peut pas ) Tj-44.88 -12.12  TD -0.0135  Tc -0.0124  Tw (encore vous procurer ce service. Dans ce cas vous voudrez peut) Tj321.84 0  TD 0.0382  Tc 0  Tw (-) Tj4.56 0  TD 0.0323  Tc -0.0583  Tw (\352tre utiliser un appareil distribu\351 ) Tj-326.4 -12.12  TD 0.0053  Tc -0.0312  Tw (chez le constructeur de votre syst\350me de d\351veloppement. Par exemple la plu) Tj387.84 0  TD -0.0053  Tc -0.0206  Tw (part des constructeurs ) Tj-387.84 -12.24  TD 0.0095  Tc -0.0354  Tw (de puces auront une combinaison VID/ PID que vous pouvez utiliser pour vos puces et qui n'est pas ) Tj0 -12.12  TD 0.0022  Tc -0.0281  Tw (connu comme appareil commercialis\351. D'autres constructeurs de puces peuvent m\352me vous vendre ) Tj0 -12  TD 0.0057  Tc -0.0316  Tw (un PID \340 utiliser avec leur VID pour votre) Tj208.08 0  TD 0.0224  Tc -0.0483  Tw ( appareil commercial. ) Tj111.96 0  TD /F2 12  Tf0  Tc 0  Tw ( ) Tj-320.04 -26.28  TD /F1 9.96  Tf0.0042  Tc -0.0216  Tw (Une autre caract\351ristique int\351ressante de l'USB r\351side dans ces modes de transferts. L'USB soutient ) Tj0 -12.12  TD -0.0013  Tc -0.0246  Tw (des transferts de contr\364les, d'interruptions, en Bloc et Isochrone. Lorsque nous examinerons les ) Tj0 -12.24  TD 0.0039  Tc -0.0298  Tw (autres modes de transferts ult\351rieur) Tj181.56 0  TD -0.0048  Tc -0.0211  Tw (ement, nous nous rendrons compte que l'Isochrone permet \340 ) Tj-181.56 -12.12  TD 0.013  Tc -0.0389  Tw (un appareil de r\351server une approximation d\351finie de la bande passante avec un temps d'attente ) Tj0 -12.12  TD 0.0161  Tc -0.034  Tw (garanti. Ce syst\350me se r\351v\350le id\351al dans les applications Audio et Vid\351o ou l'encombrement peut ) TjT* 0.0312  Tc 0  Tw (suscite) Tj34.56 0  TD 0  Tc -0.0191  Tw (r une perte de donn\351es ou une chute de trames. Chaque mode de transfert fourni au ) Tj-34.56 -12.24  TD 0.0049  Tc -0.0308  Tw (concepteur des compromis dans les domaines de la d\351tection d'erreur et de la reprise, du temps ) Tj0 -12.12  TD 0.0148  Tc -0.0407  Tw (d'attente garanti et de la bande passante. ) Tj214.8 0  TD 0  Tc -0.0259  Tw ( ) Tj-214.8 -12.12  TD ( ) Tj3.48 0  TD ( ) Tj3.48 0  TD /F2 12  Tf0  Tw ( ) Tj-24.12 -16.2  TD /F0 12  Tf0.024  Tw ( ) Tj0 -13.68  TD ( ) Tj0 -13.8  TD ( ) TjETendstream
+endobj
+36 0 obj
+6851
+endobj
+34 0 obj
+<<
+/Type /Page
+/Parent 5 0 R
+/Resources <<
+/Font <<
+/F0 6 0 R 
+/F1 8 0 R 
+/F2 10 0 R 
+/F3 12 0 R 
+>>
+/ProcSet 2 0 R
+>>
+/Contents 35 0 R
+>>
+endobj
+6 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F0
+/BaseFont /Arial
+/FirstChar 31
+/LastChar 255
+/Widths [ 750 278 278 355 556 556 889 667 191 333 333 389 584 278 333 278 
+278 556 556 556 556 556 556 556 556 556 556 278 278 584 584 584 
+556 1015 667 667 722 722 667 611 778 722 278 500 667 556 833 722 
+778 667 778 722 667 611 722 667 944 667 667 611 278 278 278 469 
+556 333 556 556 500 556 556 278 556 556 222 222 500 222 833 556 
+556 556 556 333 500 278 556 500 722 500 500 500 334 260 334 584 
+750 556 750 222 556 333 1000 556 556 333 1000 667 333 1000 750 750 
+750 750 222 222 333 333 350 556 1000 333 1000 500 333 944 750 750 
+667 278 333 556 556 556 556 260 556 333 737 370 556 584 333 737 
+552 400 549 333 333 333 576 537 278 333 333 365 556 834 834 834 
+611 667 667 667 667 667 667 1000 722 667 667 667 667 278 278 278 
+278 722 722 778 778 778 778 778 584 778 722 722 722 722 667 667 
+611 556 556 556 556 556 556 889 500 556 556 556 556 278 278 278 
+278 556 556 556 556 556 556 556 549 611 556 556 556 556 500 556 
+500 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 7 0 R
+>>
+endobj
+7 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Arial
+/Flags 32
+/FontBBox [ -250 -220 1224 900 ]
+/MissingWidth 750
+/StemV 80
+/StemH 80
+/ItalicAngle 0
+/CapHeight 900
+/XHeight 630
+/Ascent 900
+/Descent -220
+/Leading 150
+/MaxWidth 1020
+/AvgWidth 440
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F1
+/BaseFont /Verdana
+/FirstChar 31
+/LastChar 255
+/Widths [ 1000 352 394 459 818 636 1076 727 269 454 454 636 818 364 454 364 
+454 636 636 636 636 636 636 636 636 636 636 454 454 818 818 818 
+545 1000 684 686 698 771 632 575 775 751 421 455 693 557 843 748 
+787 603 787 695 684 616 732 684 989 685 615 685 454 454 454 818 
+636 636 601 623 521 623 596 352 623 633 274 344 592 274 973 633 
+607 623 623 427 521 394 633 592 818 592 592 525 635 454 635 818 
+1000 636 1000 269 636 459 818 636 636 636 1521 684 454 1070 1000 1000 
+1000 1000 269 269 459 459 545 636 1000 636 977 521 454 981 1000 1000 
+615 352 394 636 636 636 636 454 636 636 1000 545 645 818 454 1000 
+636 542 818 542 542 636 642 636 364 636 542 545 645 1000 1000 1000 
+545 684 684 684 684 684 684 984 698 632 632 632 632 421 421 421 
+421 775 748 787 787 787 787 787 818 787 732 732 732 732 615 605 
+620 601 601 601 601 601 601 955 521 596 596 596 596 274 274 274 
+274 612 633 607 607 607 607 607 818 607 633 633 633 633 592 623 
+592 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 9 0 R
+>>
+endobj
+9 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Verdana
+/Flags 32
+/FontBBox [ -250 -205 1822 1000 ]
+/MissingWidth 1000
+/StemV 92
+/StemH 92
+/ItalicAngle 0
+/CapHeight 1000
+/XHeight 700
+/Ascent 1000
+/Descent -205
+/Leading 205
+/MaxWidth 1518
+/AvgWidth 506
+>>
+endobj
+10 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F2
+/BaseFont /TimesNewRoman
+/FirstChar 31
+/LastChar 255
+/Widths [ 778 250 333 408 500 500 833 778 180 333 333 500 564 250 333 250 
+278 500 500 500 500 500 500 500 500 500 500 278 278 564 564 564 
+444 921 722 667 667 722 611 556 722 722 333 389 722 611 889 722 
+722 556 722 667 556 611 722 722 944 722 722 611 333 278 333 469 
+500 333 444 500 444 500 444 333 500 500 278 278 500 278 778 500 
+500 500 500 333 389 278 500 500 722 500 500 444 480 200 480 541 
+778 500 778 333 500 444 1000 500 500 333 1000 556 333 889 778 778 
+778 778 333 333 444 444 350 500 1000 333 980 389 333 722 778 778 
+722 250 333 500 500 500 500 200 500 333 760 276 500 564 333 760 
+500 400 549 300 300 333 576 453 250 333 300 310 500 750 750 750 
+444 722 722 722 722 722 722 889 667 611 611 611 611 333 333 333 
+333 722 722 722 722 722 722 722 564 722 722 722 722 722 722 556 
+500 444 444 444 444 444 444 667 444 444 444 444 444 278 278 278 
+278 500 500 500 500 500 500 500 549 500 500 500 500 500 500 500 
+500 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 11 0 R
+>>
+endobj
+11 0 obj
+<<
+/Type /FontDescriptor
+/FontName /TimesNewRoman
+/Flags 34
+/FontBBox [ -250 -240 1200 900 ]
+/MissingWidth 780
+/StemV 73
+/StemH 73
+/ItalicAngle 0
+/CapHeight 900
+/XHeight 630
+/Ascent 900
+/Descent -240
+/Leading 180
+/MaxWidth 1000
+/AvgWidth 400
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F3
+/BaseFont /Verdana,Italic
+/FirstChar 31
+/LastChar 255
+/Widths [ 1000 352 394 459 818 636 1076 727 269 454 454 636 818 364 454 364 
+454 636 636 636 636 636 636 636 636 636 636 454 454 818 818 818 
+545 1000 683 686 698 766 632 575 775 751 421 455 693 557 843 748 
+787 603 787 695 684 616 732 683 990 685 615 685 454 454 454 818 
+636 636 601 623 521 623 596 352 622 633 274 344 587 274 973 633 
+607 623 623 427 521 394 633 591 818 592 591 525 635 454 635 818 
+1000 636 1000 269 636 459 818 636 636 636 1519 684 454 1070 1000 1000 
+1000 1000 269 269 459 459 545 636 1000 636 977 521 454 980 1000 1000 
+615 352 394 636 636 636 636 454 636 636 1000 545 645 818 454 1000 
+636 542 818 542 542 636 642 636 364 636 542 545 645 1000 1000 1000 
+545 683 683 683 683 683 683 989 698 632 632 632 632 421 421 421 
+421 766 748 787 787 787 787 787 818 787 732 732 732 732 615 605 
+620 601 601 601 601 601 601 955 521 596 596 596 596 274 274 274 
+274 612 633 607 607 607 607 607 818 607 633 633 633 633 591 623 
+591 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 13 0 R
+>>
+endobj
+13 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Verdana,Italic
+/Flags 96
+/FontBBox [ -250 -212 1826 1009 ]
+/MissingWidth 1000
+/StemV 92
+/StemH 92
+/ItalicAngle -11
+/CapHeight 1009
+/XHeight 706
+/Ascent 1009
+/Descent -212
+/Leading 221
+/MaxWidth 1522
+/AvgWidth 504
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F4
+/BaseFont /Verdana,Bold
+/FirstChar 31
+/LastChar 255
+/Widths [ 1000 342 402 587 867 711 1272 862 332 543 543 711 867 361 480 361 
+689 711 711 711 711 711 711 711 711 711 711 402 402 867 867 867 
+617 964 776 762 724 830 683 650 811 837 546 555 771 637 948 847 
+850 733 850 782 710 682 812 764 1128 764 737 692 543 689 543 867 
+711 711 668 699 588 699 664 422 699 712 342 403 671 342 1058 712 
+687 699 699 497 593 456 712 650 979 669 651 597 711 543 711 867 
+1000 711 1000 332 711 587 1049 711 711 711 1777 710 543 1135 1000 1000 
+1000 1000 332 332 587 587 711 711 1000 711 964 593 543 1068 1000 1000 
+737 342 402 711 711 711 711 543 711 711 964 598 850 867 480 964 
+711 587 867 598 598 711 721 711 361 711 598 598 850 1182 1182 1182 
+617 776 776 776 776 776 776 1094 724 683 683 683 683 546 546 546 
+546 830 847 850 850 850 850 850 867 850 812 812 812 812 737 735 
+713 668 668 668 668 668 668 1018 588 664 664 664 664 342 342 342 
+342 679 712 687 687 687 687 687 867 687 712 712 712 712 651 699 
+651 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 17 0 R
+>>
+endobj
+17 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Verdana,Bold
+/Flags 16416
+/FontBBox [ -250 -210 2136 1000 ]
+/MissingWidth 1000
+/StemV 182
+/StemH 182
+/ItalicAngle 0
+/CapHeight 1000
+/XHeight 700
+/Ascent 1000
+/Descent -210
+/Leading 210
+/MaxWidth 1780
+/AvgWidth 570
+>>
+endobj
+24 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F5
+/BaseFont /CourierNew
+/FirstChar 31
+/LastChar 255
+/Widths [ 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 25 0 R
+>>
+endobj
+25 0 obj
+<<
+/Type /FontDescriptor
+/FontName /CourierNew
+/Flags 35
+/FontBBox [ -250 -277 722 783 ]
+/MissingWidth 602
+/StemV 110
+/StemH 110
+/ItalicAngle 0
+/CapHeight 783
+/XHeight 548
+/Ascent 783
+/Descent -277
+/Leading 60
+/MaxWidth 602
+/AvgWidth 602
+>>
+endobj
+27 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F6
+/BaseFont /Symbol
+/FirstChar 31
+/LastChar 255
+/Widths [ 600 250 333 713 500 549 833 778 439 333 333 500 549 250 549 250 
+278 500 500 500 500 500 500 500 500 500 500 278 278 549 549 549 
+444 549 722 667 722 612 611 763 603 722 333 631 722 686 889 722 
+722 768 741 556 592 611 690 439 768 645 795 611 333 863 333 658 
+500 500 631 549 549 494 439 521 411 603 329 603 549 549 576 521 
+549 549 521 549 603 439 576 713 686 493 686 494 480 200 480 549 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 600 
+600 600 620 247 549 167 713 500 753 753 753 753 1042 987 603 987 
+603 400 549 411 549 549 713 494 460 549 549 549 549 1000 603 1000 
+658 823 686 795 987 768 768 823 768 768 713 713 713 713 713 713 
+713 768 713 790 790 890 823 549 250 713 603 603 1042 987 603 987 
+603 494 329 790 790 786 713 384 384 384 384 384 384 494 494 494 
+494 600 329 274 686 686 686 384 384 384 384 384 384 494 494 494 
+600 ]
+/FontDescriptor 28 0 R
+>>
+endobj
+28 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Symbol
+/Flags 6
+/FontBBox [ -250 -217 1258 1000 ]
+/MissingWidth 602
+/StemV 110
+/StemH 110
+/ItalicAngle 0
+/CapHeight 1000
+/XHeight 700
+/Ascent 1000
+/Descent -217
+/Leading 217
+/MaxWidth 1048
+/AvgWidth 602
+>>
+endobj
+29 0 obj
+<<
+/Type /Font
+/Subtype /TrueType
+/Name /F7
+/BaseFont /Verdana,BoldItalic
+/FirstChar 31
+/LastChar 255
+/Widths [ 1000 342 402 587 867 711 1272 862 332 543 543 711 867 361 480 361 
+689 711 711 711 711 711 711 711 711 711 711 402 402 867 867 867 
+617 964 776 762 724 830 683 650 811 837 546 555 771 637 948 847 
+850 733 850 782 710 682 812 764 1128 764 737 692 543 689 543 867 
+711 711 668 699 588 699 664 422 699 712 342 403 671 342 1058 712 
+686 699 699 497 593 456 712 649 979 669 651 597 711 543 711 867 
+1000 711 1000 332 711 587 1049 711 711 711 1777 710 543 1135 1000 1000 
+1000 1000 332 332 587 587 711 711 1000 711 964 593 543 1068 1000 1000 
+737 342 402 711 711 711 711 543 711 711 964 598 850 867 480 964 
+711 587 867 598 598 711 721 711 361 711 598 598 850 1182 1182 1182 
+617 776 776 776 776 776 776 1094 724 683 683 683 683 546 546 546 
+546 830 847 850 850 850 850 850 867 850 812 812 812 812 737 735 
+713 668 668 668 668 668 668 1018 588 664 664 664 664 342 342 342 
+342 679 712 686 686 686 686 686 867 686 712 712 712 712 651 699 
+651 ]
+/Encoding /WinAnsiEncoding
+/FontDescriptor 30 0 R
+>>
+endobj
+30 0 obj
+<<
+/Type /FontDescriptor
+/FontName /Verdana,BoldItalic
+/Flags 16480
+/FontBBox [ -250 -205 2140 1000 ]
+/MissingWidth 1000
+/StemV 181
+/StemH 181
+/ItalicAngle -11
+/CapHeight 1000
+/XHeight 700
+/Ascent 1000
+/Descent -205
+/Leading 205
+/MaxWidth 1783
+/AvgWidth 566
+>>
+endobj
+2 0 obj
+[ /PDF /Text  ]
+endobj
+5 0 obj
+<<
+/Kids [4 0 R 18 0 R 21 0 R 26 0 R 34 0 R ]
+/Count 5
+/Type /Pages
+/MediaBox [ 0 0 595 842 ]
+>>
+endobj
+1 0 obj
+<<
+/Creator <FEFF004D006900630072006F0073006F0066007400200057006F007200640020>
+/CreationDate (D:20020614192326)
+/Title <FEFF005500530042005F0065006E005F0062007200650066005F0031002E005000440046>
+/Author <FEFF004200650072006E006100720064>
+/Producer (Acrobat PDFWriter 4.0 pour Windows)
+>>
+endobj
+3 0 obj
+<<
+/Pages 5 0 R
+/Type /Catalog
+/DefaultGray 37 0 R
+/DefaultRGB  38 0 R
+>>
+endobj
+37 0 obj
+[/CalGray
+<<
+/WhitePoint [0.9505 1 1.0891 ]
+/Gamma 0.2468 
+>>
+]
+endobj
+38 0 obj
+[/CalRGB
+<<
+/WhitePoint [0.9505 1 1.0891 ]
+/Gamma [0.2468 0.2468 0.2468 ]
+/Matrix [0.4361 0.2225 0.0139 0.3851 0.7169 0.0971 0.1431 0.0606 0.7141 ]
+>>
+]
+endobj
+xref
+0 39
+0000000000 65535 f
+0000070515 00000 n
+0000070361 00000 n
+0000070826 00000 n
+0000015033 00000 n
+0000070395 00000 n
+0000059112 00000 n
+0000060228 00000 n
+0000060499 00000 n
+0000061629 00000 n
+0000061906 00000 n
+0000063028 00000 n
+0000063308 00000 n
+0000064447 00000 n
+0000000021 00000 n
+0000015008 00000 n
+0000064734 00000 n
+0000065874 00000 n
+0000029941 00000 n
+0000015216 00000 n
+0000029916 00000 n
+0000041615 00000 n
+0000030086 00000 n
+0000041590 00000 n
+0000066162 00000 n
+0000067278 00000 n
+0000051788 00000 n
+0000067554 00000 n
+0000068642 00000 n
+0000068919 00000 n
+0000070065 00000 n
+0000041799 00000 n
+0000051764 00000 n
+0000051909 00000 n
+0000058941 00000 n
+0000052005 00000 n
+0000058917 00000 n
+0000070923 00000 n
+0000071011 00000 n
+trailer
+<<
+/Size 39
+/Root 3 0 R
+/Info 1 0 R
+/ID [<77c1ff1a872c7dcc32224c4f78858971><77c1ff1a872c7dcc32224c4f78858971>]
+>>
+startxref
+71189
+%%EOF

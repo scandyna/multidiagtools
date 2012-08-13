@@ -18,13 +18,13 @@ dirscanvas 128514 z 1000 linkcanvas_ref 128386
 4 unlockMutex()
 7 readenFrames()
 8 readFramesPool()
-9 readTimeoutOccured()" xyz 165 224 3000
+9 readTimeoutOccured()" xyz 158 209 3000
 linkcanvas 128770
   from ref 128642 z 2001 to ref 128002
 dirscanvas 128898 z 1000 linkcanvas_ref 128770
   show_full_operations_definition default show_hierarchical_rank default drawing_language default show_msg_context default
   forward_label "5 lockMutex()
-6 unlockMutex()" xyz 295 362 3000
+6 unlockMutex()" xyz 290 360 3000
 linkcanvas 129026
   from ref 128002 z 2001 to ref 128258
 dirscanvas 129154 z 1000 linkcanvas_ref 129026
@@ -35,7 +35,7 @@ dirscanvas 129154 z 1000 linkcanvas_ref 129026
 13 unlockMutex()
 14 writeFrames()
 15 writeFramesPool()
-16 writeTimeoutOccured()" xyz 458 388 3000
+16 writeTimeoutOccured()" xyz 451 390 3000
 msgs
   msg operation_ref 424962 // "waitForReadyRead() : bool"
     forward ranks 1 "1" dirscanvas_ref 128514

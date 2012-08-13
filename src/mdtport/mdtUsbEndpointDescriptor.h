@@ -1,0 +1,128 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
+#ifndef MDT_USB_ENDPOINT_DESCRIPTOR_H
+#define MDT_USB_ENDPOINT_DESCRIPTOR_H
+
+#include <QtGlobal>
+#include <libusb-1.0/libusb.h>
+
+/*! \brief USB endpoint descriptor
+ */
+class mdtUsbEndpointDescriptor
+{
+ public:
+
+  mdtUsbEndpointDescriptor();
+  ~mdtUsbEndpointDescriptor();
+
+  /*! \brief Ftech the endpoint descriptor's attributes
+   *
+   * \pre descriptor must be a valid pointer
+   */
+  void fetchAttributes(libusb_endpoint_descriptor *descriptor);
+
+  /*! \brief Endpoint address (number)
+   *
+   * Note: this is the decoded address,
+   *   i.e. bits 3..0 extracted from bEndpointAddress
+   */
+  quint8 address();
+
+  /*! \brief Endpoint direction
+   */
+  bool isDirectionIN();
+
+  /*! \brief Endpoint direction
+   */
+  bool isDirectionOUT();
+
+  /*! \brief Endpoint transfert type
+   */
+  bool isTransfertTypeControl();
+
+  /*! \brief Endpoint transfert type
+   */
+  bool isTransfertTypeIsochronus();
+
+  /*! \brief Endpoint transfert type
+   */
+  bool isTransfertTypeBulk();
+
+  /*! \brief Endpoint transfert type
+   */
+  bool isTransfertTypeInterrupt();
+
+  /*! \brief Endpoint synchronization type
+   */
+  bool isAsynchronous();
+
+  /*! \brief Endpoint synchronization type
+   */
+  bool isAdaptative();
+
+  /*! \brief Endpoint synchronization type
+   */
+  bool isSynchronous();
+
+  /*! \brief Endpoint usage type
+   */
+  bool isDataEndpoint();
+
+  /*! \brief Endpoint usage type
+   */
+  bool isFeedbackEndpoint();
+
+  /*! \brief Endpoint usage type
+   */
+  bool isImplicitFeedbackEndpoint();
+
+  /*! \brief Maximum packet size
+   *
+   * Note: this is the decoded size,
+   *   i.e. bits 10..0 extracted from wMaxPacketSize
+   */
+  int maxPacketSize();
+
+  /*! \brief Transactions per microframe
+   *
+   * Note: this is the decoded value + 1,
+   *   i.e. bits 12..11 extracted from wMaxPacketSize
+   *  Bit 12..11 give additionnal value, and this method
+   *   returns the extracted value + 1
+   *   (f.ex. if bit 12..11 give 00 as result, this method returns 1)
+   */
+  int transactionsCountPerMicroFrame();
+
+  /*! \brief Interval for polling endpoint for data transfers
+   *
+   * Value is returned as read in bInterval field (in libusb strcture)
+   */
+  quint8 bInterval();
+
+ private:
+
+  quint8 pvbEndpointAddress;
+  quint8 pvbmAttributes;
+  quint16 pvwMaxPacketSize;
+  quint8 pvbInterval;
+};
+
+#endif  // #ifndef MDT_USB_ENDPOINT_DESCRIPTOR_H

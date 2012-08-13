@@ -50,7 +50,7 @@ void mdtSerialPortManagerTest::simpleTest()
 
   // Init port manager
   qDebug() << "TEST: setPortName() ...";
-  QVERIFY(m.setPortName(portsList.at(0)));
+  m.setPortName(portsList.at(0));
   qDebug() << "TEST: setPortName() END";
   qDebug() << "TEST: openPort() ...";
   QVERIFY(m.openPort());

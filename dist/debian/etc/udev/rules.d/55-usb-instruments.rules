@@ -1,0 +1,9 @@
+
+# Set permissions of usbtmc* devices
+KERNEL=="usbtmc[0-9]", GROUP="plugdev", MODE="0660" 
+
+# Set permissions for Agilent USB devices
+SUBSYSTEM=="usb", ATTR{idVendor}=="0957", GROUP="plugdev", MODE="0660"
+
+# Set permissions for Velleman USB boards
+SUBSYSTEM=="usb", ATTR{idVendor}=="10cf", GROUP="plugdev", MODE="0660"

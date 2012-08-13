@@ -116,7 +116,10 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
       break;
     // Unknow code
     default:
-      mdtError e(MDT_FRAME_DECODE_ERROR, "Unknow function code", mdtError::Error);
+      QByteArray num;
+      /// NOTE: \todo Base 16 ??
+      num.setNum(functionCode);
+      mdtError e(MDT_FRAME_DECODE_ERROR, "Unknow function code: " + num, mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
       e.commit();
       return -1;

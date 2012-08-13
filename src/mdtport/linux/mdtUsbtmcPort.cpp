@@ -26,6 +26,8 @@
 #include <sys/ioctl.h>
 #include <errno.h>
 
+#include <QDebug>
+
 mdtUsbtmcPort::mdtUsbtmcPort(QObject *parent)
  : mdtAbstractPort(parent)
 {
@@ -36,7 +38,7 @@ mdtUsbtmcPort::mdtUsbtmcPort(QObject *parent)
 
 mdtUsbtmcPort::~mdtUsbtmcPort()
 {
-  this->close();
+  close();
   delete pvPortLock;
 }
 
@@ -52,11 +54,16 @@ void mdtUsbtmcPort::setWriteTimeout(int timeout)
 
 mdtAbstractPort::error_t mdtUsbtmcPort::waitForReadyRead()
 {
+  /**
   if(!pvReadCondition.wait(&pvMutex, pvReadTimeout)){
     updateReadTimeoutState(true);
     return NoError;
   }
   updateReadTimeoutState(false);
+  */
+  pvMutex.unlock();
+  usleep(100000);
+  pvMutex.lock();
 
   return NoError;
 }
@@ -66,15 +73,18 @@ qint64 mdtUsbtmcPort::read(char *data, qint64 maxSize)
   int n;
   int err;
 
+  qDebug() << "mdtUsbtmcPort::read() called ...";
   n = ::read(pvFd, data, maxSize);
   if(n < 0){
     // Store errno
     err = errno;
     switch(err){
       case EAGAIN:      // No data available
+        qDebug() << "mdtUsbtmcPort::read() No data";
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
         updateReadTimeoutState(true);
+        qDebug() << "mdtUsbtmcPort::read() timeout";
         return 0;
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
@@ -84,17 +94,24 @@ qint64 mdtUsbtmcPort::read(char *data, qint64 maxSize)
         return n;
     }
   }
+  
+  qDebug() << "mdtUsbtmcPort::read() Ok, readen " << n;
 
   return n;
 }
 
 mdtAbstractPort::error_t mdtUsbtmcPort::waitEventWriteReady()
 {
+  /**
   if(!pvWriteCondition.wait(&pvMutex, pvWriteTimeout)){
     updateWriteTimeoutState(true);
     return NoError;
   }
   updateWriteTimeoutState(false);
+  */
+  pvMutex.unlock();
+  usleep(100000);
+  pvMutex.lock();
 
   return NoError;
 }
@@ -125,16 +142,20 @@ qint64 mdtUsbtmcPort::write(const char *data, qint64 maxSize)
 
 void mdtUsbtmcPort::writeOneFrame()
 {
+  /**
   pvMutex.lock();
   pvWriteCondition.wakeAll();
   pvMutex.unlock();
+  */
 }
 
 void mdtUsbtmcPort::readOneFrame()
 {
+  /**
   pvMutex.lock();
   pvReadCondition.wakeAll();
   pvMutex.unlock();
+  */
 }
 
 mdtAbstractPort::error_t mdtUsbtmcPort::pvOpen()

@@ -101,11 +101,7 @@ void mdtSerialPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
     // Get current config
     updateConfig();
     // Open the port
-    if(!pvPortManager->setPortName(cbPort->currentText())){
-      setStateError(tr("Cannot fetch port attributes"));
-      enableApplyButtons();
-      return;
-    }
+    pvPortManager->setPortName(cbPort->currentText());
     if(!pvPortManager->openPort()){
       setStateError(tr("Cannot open port"));
       enableApplyButtons();
@@ -146,11 +142,7 @@ void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
   pvPortManager->closePort();
   setStateStopped();
   // Open the port
-  if(!pvPortManager->setPortName(cbPort->currentText())){
-    setStateError(tr("Cannot fetch port attributes"));
-    cbPort->setEnabled(true);
-    return;
-  }
+  pvPortManager->setPortName(cbPort->currentText());
   if(!pvPortManager->openPort()){
     setStateError(tr("Cannot fetch port attributes"));
     cbPort->setEnabled(true);

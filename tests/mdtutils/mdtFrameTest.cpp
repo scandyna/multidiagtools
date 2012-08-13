@@ -833,7 +833,7 @@ void mdtFrameTest::modbusTcpEncodeTest()
   QVERIFY(f.at(8) == 'b');
   QVERIFY(f.at(9) == 'c');
 
-/*
+
   qDebug() << "f[0]: 0x" << hex << (int)f.at(0);
   qDebug() << "f[1]: 0x" << hex << (int)f.at(1);
   qDebug() << "f[2]: 0x" << hex << (int)f.at(2);
@@ -844,7 +844,8 @@ void mdtFrameTest::modbusTcpEncodeTest()
   qDebug() << "f[7]: " << f.at(7);
   qDebug() << "f[8]: " << f.at(8);
   qDebug() << "f[9]: " << f.at(9);
-*/
+  qDebug() << "HEX string: " << f.toHex();
+
 }
 
 void mdtFrameTest::modbusTcpDecodeTest()

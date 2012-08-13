@@ -56,9 +56,7 @@
  *
  * // Init port manager
  * m.setPort(port);
- * if(!m.setPortName("/dev/xyz")){
- *  // Handle error
- * }
+ * m.setPortName("/dev/xyz"));
  * if(!m.openPort()){
  *  // Handle error
  * }
@@ -103,12 +101,13 @@ class mdtPortManager : public QThread
   ~mdtPortManager();
 
   /*! \brief Set port object
-   * 
+   *
    * The read and write threads will be created if not allready exists,
    * port assigned to them, and signals/slots connection made.<br>
    * Please take care to never call this method while threads are running.
    *
-   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort)
+   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort),
+   *       and threads must not run.
    */
   void setPort(mdtAbstractPort *port);
 
@@ -118,22 +117,13 @@ class mdtPortManager : public QThread
 
   /*! \brief Set port name
    *
-   * Try to open given port. If ok, the port name
-   * will be kept.<br>
-   * mdtAbstractPort::setAttributes() will be called to fetch some attributes
-   * (for example available baud rates if port is a mdtSerialPort object).
+   * Set the port name to internally port object.
+   * Does nothing else. To open the port, use openPort().
+   *
    * \pre Port must be set before with setPort()
-   * \param portName Port to open
-   * \return True on success, false else
    * \sa mdtAbstractPort
    */
-  bool setPortName(const QString &portName);
-
-  /*! \brief Set the config object
-   * 
-   * \pre config must be a valid pointer to expected a object type.
-   */
-  ///void setConfig(mdtPortConfig *config);
+  void setPortName(const QString &portName);
 
   /*! \brief Get the config object
    * 
@@ -144,13 +134,11 @@ class mdtPortManager : public QThread
   mdtPortConfig &config();
 
   /*! \brief Open the port
-   * 
-   * \return True on success, false else
-   * \pre setPortName() must be called first
-   * \pre Port must have a valid configuration, and be set with setPort() before calling this method
    *
-   * \sa setPortName()
-   * \sa mdtPort
+   * Will try to open port defined with setPortName().
+   *
+   * \return True on success, false else.
+   * \pre Port must be set with setPort() before use of this method.
    */
   virtual bool openPort();
 
@@ -162,7 +150,9 @@ class mdtPortManager : public QThread
   void closePort();
 
   /*! \brief Start the read thread
+   *
    * \return True on successfull start
+   * \pre Port must be set with setPort() before use of this method.
    * \sa mdtThread
    * \sa mdtPortReadThread
    */
@@ -170,14 +160,14 @@ class mdtPortManager : public QThread
 
   /*! \brief Stop the read thread
    * 
-   * \pre setPort() must be called before.
+   * \pre Port must be set with setPort() before use of this method.
    * \sa startReading()
    */
   void stopReading();
 
   /*! \brief Start the write thread
    *
-   * \pre setPort() must be called before.
+   * \pre Port must be set with setPort() before use of this method.
    * \return True on successfull start
    * \sa mdtThread
    * \sa mdtPortWriteThread
@@ -186,14 +176,14 @@ class mdtPortManager : public QThread
 
   /*! \brief Stop the write thread
    * 
-   * \pre setPort() must be called before.
+   * \pre Port must be set with setPort() before use of this method.
    * \sa startWriting()
    */
   void stopWriting();
 
   /*! \brief Start reading and writing threads
    *
-   * \pre setPort() must be called before.
+   * \pre Port must be set with setPort() before use of this method.
    * \sa startReading()
    * \sa startWriting()
    */
@@ -208,7 +198,7 @@ class mdtPortManager : public QThread
 
   /*! \brief Stop reading and writing threads
    * 
-   * \pre setPort() must be called before.
+   * \pre Port must be set with setPort() before use of this method.
    * \sa start()
    */
   virtual void stop();
@@ -275,13 +265,12 @@ class mdtPortManager : public QThread
   mdtAbstractPort *pvPort;
   mdtPortReadThread *pvReadThread;
   mdtPortWriteThread *pvWriteThread;
-  ///mdtPortConfig *pvConfig;
   QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
   QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
   
  private:
 
   // Diseable copy
-  mdtPortManager(mdtPortManager &other);
+  Q_DISABLE_COPY(mdtPortManager);
 };
 #endif  // #ifndef MDT_PORT_MANAGER_H

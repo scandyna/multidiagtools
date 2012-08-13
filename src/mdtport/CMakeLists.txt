@@ -9,7 +9,7 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Port I/O
           mdtAbstractPort.h
-          # mdtPort.h
+          # mdtUsbPort.h
           mdtPortThread.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
@@ -25,7 +25,11 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Port I/O
           mdtAbstractPort.cpp
-          # mdtPort.cpp
+          mdtUsbPort.cpp
+          mdtUsbDeviceDescriptor.cpp
+          mdtUsbConfigDescriptor.cpp
+          mdtUsbInterfaceDescriptor.cpp
+          mdtUsbEndpointDescriptor.cpp
           mdtPortThread.cpp
           mdtPortReadThread.cpp
           mdtPortWriteThread.cpp
@@ -78,6 +82,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 # Librairie du projet
 add_library (mdtport SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtport ${QT_LIBRARIES})
+target_link_libraries(mdtport "usb-1.0")
 
 # Version statique
 if(MDT_BUILD_STATIC_LIBS)

@@ -30,7 +30,6 @@ mdtPortManager::mdtPortManager(QObject *parent)
 {
   pvReadThread = 0;
   pvWriteThread = 0;
-  ///pvConfig = 0;
   pvPort = 0;
 }
 
@@ -56,6 +55,7 @@ mdtPortManager::~mdtPortManager()
 void mdtPortManager::setPort(mdtAbstractPort *port)
 {
   Q_ASSERT(port != 0);
+  Q_ASSERT(!isRunning());
 
   pvPort = port;
 
@@ -79,45 +79,28 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
 
 void mdtPortManager::detachPort()
 {
-  Q_ASSERT(pvPort != 0);
+  if(pvPort == 0){
+    return;
+  }
 
   if(isRunning()){
     stop();
   }
-  /// NOTE: disconnect ?
+  disconnect(pvReadThread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
+  disconnect(pvReadThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+  disconnect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
   pvPort = 0;
 }
 
-bool mdtPortManager::setPortName(const QString &portName)
+void mdtPortManager::setPortName(const QString &portName)
 {
   Q_ASSERT(pvPort != 0);
 
   pvPort->setPortName(portName);
-  ///return pvPort->setAttributes(portName);
-  /**
-  if(pvPort->open() != mdtAbstractPort::NoError){
-    return false;
-  }
-  pvPort->close();
-  */
-
-  return true;
 }
-
-/**
-void mdtPortManager::setConfig(mdtPortConfig *config)
-{
-  Q_ASSERT(config != 0);
-
-  pvConfig = config;
-}
-*/
 
 mdtPortConfig &mdtPortManager::config()
 {
-  ///Q_ASSERT(pvConfig != 0);
-  ///return *pvConfig;
-
   Q_ASSERT(pvPort != 0);
 
   return pvPort->config();
@@ -126,9 +109,7 @@ mdtPortConfig &mdtPortManager::config()
 bool mdtPortManager::openPort()
 {
   Q_ASSERT(pvPort != 0);
-  ///Q_ASSERT(pvConfig != 0);
 
-  ///return pvPort->open(*pvConfig);
   if(pvPort->setup() != mdtAbstractPort::NoError){
     return false;
   }
@@ -136,7 +117,6 @@ bool mdtPortManager::openPort()
   return true;
 }
 
-/// NOTE: \todo FIXME: clean this ...
 void mdtPortManager::closePort()
 {
   // It can happen that port was never set
@@ -178,15 +158,6 @@ bool mdtPortManager::startWriting()
   Q_ASSERT(pvWriteThread != 0);
   Q_ASSERT(pvPort != 0);
 
-  // Calling this method on read only port is a error
-  /**
-  if(config().readOnly()){
-    mdtError e(MDT_PORT_IO_ERROR, "start writing called on a read only port", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
-    return false;
-  }
-  */
   return pvWriteThread->start();
 }
 
@@ -202,11 +173,9 @@ void mdtPortManager::stopWriting()
 
 bool mdtPortManager::start()
 {
-  ///if(!config().readOnly()){
   if(!startWriting()){
     return false;
   }
-  ///}
   if(!startReading()){
     stopWriting();
     return false;

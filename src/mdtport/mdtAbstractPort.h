@@ -30,15 +30,6 @@
 #include <QQueue>
 #include <QMutex>
 
-/**
-#ifdef Q_OS_UNIX
- #include <pthread.h>
- #include <signal.h>
-#endif
-*/
-
-class mdtPortThread;
-
 /*! \brief Base class for port I/O
  */
 class mdtAbstractPort : public QObject
@@ -252,6 +243,8 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Flush read buffers
    *
+   * NOTE: \todo Clean this part
+   *
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
    * To handle port correctly, subclass must:
@@ -310,6 +303,8 @@ class mdtAbstractPort : public QObject
   virtual qint64 write(const char *data, qint64 maxSize) = 0;
 
   /*! \brief Flush write buffers
+   *
+   * NOTE: \todo Clean this part
    *
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
@@ -485,7 +480,7 @@ class mdtAbstractPort : public QObject
  private:
 
   // Diseable copy
-  mdtAbstractPort(mdtAbstractPort &other);
+  Q_DISABLE_COPY(mdtAbstractPort);
 
   // Some flags
   bool pvIsOpen;

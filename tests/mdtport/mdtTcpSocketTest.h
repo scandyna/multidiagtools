@@ -29,6 +29,9 @@ class mdtTcpSocketTest : public mdtTest
 
  private slots:
 
+  // Play...
+  void essais();
+
   // Test TCP/IP socket
   void tcpSocketTest();
   void tcpSocketTest_data();

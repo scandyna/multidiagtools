@@ -98,7 +98,7 @@ int mdtFrameModbusTcp::putData(const char *data, int maxLen)
       pvPdu = right(size()-7);
     }
   }
-  
+
   return stored;
 }
 

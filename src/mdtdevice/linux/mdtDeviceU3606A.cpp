@@ -44,26 +44,25 @@ QStringList mdtDeviceU3606A::scan()
   // Travel found ports
   for(i=0; i<ports.size(); i++){
     // Try to open port
-    if(pvPortManager.setPortName(ports.at(i))){
-      if(pvPortManager.openPort()){
-        if(pvPortManager.start()){
-          // Get the IDN
-          if(pvPortManager.writeData(command, true)){
-            if(pvPortManager.waitReadenFrame()){
-              if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame())){
-                if(pvCodec.values().size() >= 2){
-                  if(pvCodec.values().at(1) == "U3606A"){
-                    portsWithDevice << ports.at(i);
-                  }
+    pvPortManager.setPortName(ports.at(i));
+    if(pvPortManager.openPort()){
+      if(pvPortManager.start()){
+        // Get the IDN
+        if(pvPortManager.writeData(command, true)){
+          if(pvPortManager.waitReadenFrame()){
+            if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame())){
+              if(pvCodec.values().size() >= 2){
+                if(pvCodec.values().at(1) == "U3606A"){
+                  portsWithDevice << ports.at(i);
                 }
               }
             }
           }
         }
-        pvPortManager.stop();
       }
-      pvPortManager.closePort();
+      pvPortManager.stop();
     }
+    pvPortManager.closePort();
   }
 
   return portsWithDevice;
@@ -91,9 +90,7 @@ bool mdtDeviceU3606A::selectPort(const QStringList &ports, int index)
 bool mdtDeviceU3606A::selectPort(const QString &port)
 {
   // Open the port manager for given port
-  if(!pvPortManager.setPortName(port)){
-    return false;
-  }
+  pvPortManager.setPortName(port);
   if(!pvPortManager.openPort()){
     return false;
   }

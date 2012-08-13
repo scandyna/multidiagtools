@@ -60,7 +60,7 @@ class mdtError
   };
 
   mdtError();
-  
+
   /*! \brief Construct new error
    */
   mdtError(int number, const QString &text, level_t level);

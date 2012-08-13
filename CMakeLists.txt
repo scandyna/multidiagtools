@@ -52,6 +52,7 @@ find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
+
 # Headers directories
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
@@ -164,6 +165,8 @@ if(UNIX)
   add_test (mdtPortLockTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportlocktest)
   # mdtPortTest
   add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtporttest)
+  # mdtUsbPortTest
+  add_test (mdtUsbPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbporttest)
   # mdtUsbTmcPortTest
   add_test (mdtUsbTmcPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbtmcporttest)
   # mdtTcpSocketTest
@@ -200,7 +203,7 @@ install(FILES "${PROJECT_SOURCE_DIR}/src/config.h" DESTINATION "${HEADERS_DEST_D
 
 # Some Linux specific files
 if(UNIX)
-  install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/40-usbtmc.rules" DESTINATION "/etc/udev/rules.d/" COMPONENT lib)
+  install(FILES "${PROJECT_SOURCE_DIR}/dist/debian/etc/udev/rules.d/55-usb-instruments.rules" DESTINATION "/etc/udev/rules.d/" COMPONENT lib)
   install(DIRECTORY "${PROJECT_SOURCE_DIR}/data" DESTINATION "/usr/share/mdt/" COMPONENT lib)
 endif(UNIX)
 
@@ -275,7 +278,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   # Some Debian package specific varaibles
   if(UNIX)
     set(CPACK_DEB_COMPONENT_INSTALL ON)
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.7.0), libqtgui4 (>= 4:4.7.0), libstdc++6 , libgcc1 , libc6")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.7.0), libqtgui4 (>= 4:4.7.0), libstdc++6 , libgcc1 , libc6, libusb (>=1.0)")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
     set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
     set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})

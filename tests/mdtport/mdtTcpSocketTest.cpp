@@ -28,7 +28,74 @@
 #include "mdtTcpServer.h"
 #include "mdtApplication.h"
 
-//#include <QDebug>
+#include "mdtFrameCodecModbus.h"
+#include "mdtFrameModbusTcp.h"
+
+#include <QDebug>
+
+void mdtTcpSocketTest::essais()
+{
+  mdtTcpSocket s;
+  mdtPortConfig cfg;
+  mdtTcpSocketThread thd;
+  mdtFrameModbusTcp *frame;
+  mdtFrameCodecModbus mc;
+
+  // Setup
+  cfg.setFrameType(mdtFrame::FT_MODBUS_TCP);
+  s.setConfig(&cfg);
+  QVERIFY(s.setup() == mdtAbstractPort::NoError);
+
+  // Assign socket to the thread
+  thd.setPort(&s);
+
+  // Start
+  QVERIFY(thd.start());
+  QVERIFY(thd.isRunning());
+
+  // Init connection
+  s.connectToHost("192.168.1.104" , 502);
+
+  // Send data to server
+  s.lockMutex();
+  QVERIFY(s.writeFramesPool().size() > 0);
+  // Get a frame
+  frame = dynamic_cast<mdtFrameModbusTcp*> (s.writeFramesPool().dequeue());
+  QVERIFY(frame != 0);
+  // Add some data to frame and commit
+  ///frame->clear();
+  ///frame->append(queries.at(i).toAscii());
+  ///frame->setPdu(mc.encodeReadCoils(0x200, 1));
+  frame->setPdu(mc.encodeWriteSingleCoil(0x01, true));
+  frame->encode();
+  qDebug() << "Sending frame: " << frame->toHex();
+  for(int i=0; i<frame->size(); i++){
+    qDebug() << "frame[" << i << "]: 0x" << hex << (quint8)frame->at(i);
+  }
+  s.writeFrames().enqueue(frame);
+  s.unlockMutex();
+  s.beginNewTransaction();
+
+  // Wait some time and verify that data was exchanged
+  QTest::qWait(100);
+
+  // Check received data
+  s.lockMutex();
+  QVERIFY(s.readenFrames().size() > 0);
+  // Get a frame
+  frame = dynamic_cast<mdtFrameModbusTcp*> (s.readenFrames().dequeue());
+  QVERIFY(frame != 0);
+  qDebug() << "Received frame: " << frame->toHex();
+  for(int i=0; i<frame->size(); i++){
+    qDebug() << "frame[" << i << "]: 0x" << hex << (quint8)frame->at(i);
+  }
+  qDebug() << "RESP FC: " << mc.decode(frame->getPdu());
+
+  s.unlockMutex();
+
+  // End
+  thd.stop();
+}
 
 void mdtTcpSocketTest::tcpSocketTest()
 {
@@ -53,7 +120,6 @@ void mdtTcpSocketTest::tcpSocketTest()
   cfg.setReadTimeout(500);
   cfg.setWriteTimeout(500);
   cfg.setEndOfFrameSeq('*');
-  //QVERIFY(s.setAttributes("127.0.0.1:80"));
   s.setConfig(&cfg);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
 

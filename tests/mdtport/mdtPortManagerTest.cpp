@@ -32,7 +32,7 @@
 #include "linux/mdtUsbtmcPort.h"
 #include "linux/mdtUsbtmcPortManager.h"
 
-//#include <QDebug>
+#include <QDebug>
 
 void mdtPortManagerTest::portTest()
 {
@@ -53,7 +53,7 @@ void mdtPortManagerTest::portTest()
 
   // Init port manager
   m.setPort(port);
-  QVERIFY(m.setPortName(file.fileName()));
+  m.setPortName(file.fileName());
   QVERIFY(m.openPort());
 
   // start threads
@@ -83,7 +83,7 @@ void mdtPortManagerTest::portTest()
   m2.setPort(port2);
 
   // Setup same port than first manager, open must fail
-  QVERIFY(m2.setPortName(file.fileName()));
+  m2.setPortName(file.fileName());
   QVERIFY(!m2.openPort());
 
   // In read only, port must be open
@@ -119,11 +119,12 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(ports.size() > 0);
 
   // Init port manager
-  QVERIFY(m.setPortName(ports.at(0)));
+  m.setPortName(ports.at(0));
   QVERIFY(m.openPort());
 
   // start threads
   QVERIFY(m.start());
+  qDebug() << "TEST, threads running...";
 
   // Query without answer
   QVERIFY(m.writeData("*CLS\n", false));
@@ -134,7 +135,7 @@ void mdtPortManagerTest::usbTmcPortTest()
     QVERIFY(m.writeData("*IDN?\n", true));
     // Wait and read answer
     QVERIFY(m.lastReadenFrame().size() <= 0);
-    QVERIFY(m.waitReadenFrame());
+    QVERIFY(m.waitReadenFrame(10000));
     QVERIFY(m.lastReadenFrame().size() > 0);
   }
 }

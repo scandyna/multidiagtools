@@ -23,6 +23,15 @@ target_link_libraries(mdtporttest "mdtport")
 target_link_libraries(mdtporttest "mdttest")
 target_link_libraries(mdtporttest ${QT_LIBRARIES})
 
+# Target mdtUsbPortTest
+QT4_WRAP_CPP (MOC_MDT_USB_PORT_TEST mdtUsbPortTest.h)
+add_executable (mdtusbporttest mdtUsbPortTest.cpp ${MOC_MDT_USB_PORT_TEST})
+target_link_libraries(mdtusbporttest "mdtutils")
+target_link_libraries(mdtusbporttest "mdtport")
+target_link_libraries(mdtusbporttest "mdttest")
+target_link_libraries(mdtusbporttest "usb-1.0")
+target_link_libraries(mdtusbporttest ${QT_LIBRARIES})
+
 # Target usbTmcPortTest
 if(UNIX)
   QT4_WRAP_CPP (MOC_MDT_USB_TMC_PORT_TEST mdtUsbTmcPortTest.h)
