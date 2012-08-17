@@ -74,10 +74,12 @@ void mdtPortWriteThread::run()
 
   // Run...
   while(1){
+    qDebug() << "WTHD: run ...";
     // Read thread state
     if(!pvRunning){
       break;
     }
+    /// \todo Implement a wait condition, not allways poling when nothing is to send..
     // Wait the minimal time if requierd - Used for byte per byte write
     if(writeMinWaitTime > 0){
       pvPort->unlockMutex();

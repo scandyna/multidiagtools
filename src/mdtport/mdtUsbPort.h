@@ -24,6 +24,11 @@
 #include "mdtAbstractPort.h"
 #include <libusb-1.0/libusb.h>
 
+struct mdt_usb_port_transfer_data
+{
+  int flag1;
+};
+
 /*! \brief USB port I/O port class
  *
  * Built on top of libusb-1.x API
@@ -92,7 +97,7 @@ class mdtUsbPort : public mdtAbstractPort
 
   /*! \brief Transfert callback for asynch I/O
    */
-  static void transfertCallback(struct libusb_transfer *transfer);
+  static void transferCallback(struct libusb_transfer *transfer);
 
  private:
 
@@ -133,6 +138,20 @@ class mdtUsbPort : public mdtAbstractPort
   unsigned int pvWriteTimeout;
   libusb_context *pvLibusbContext;
   libusb_device_handle *pvHandle;
+  // Data buffers
+  char *pvReadBuffer;
+  int pvReadBufferSize;
+  int pvReadenLength;
+  quint8 pvReadEndpointAddress;
+  libusb_transfer_type pvReadTransfertType;
+  char *pvWriteBuffer;
+  int pvWriteBufferSize;
+  int pvWrittenLength;
+  quint8 pvWriteEndpointAddress;
+  libusb_transfer_type pvWriteTransfertType;
+  // Interrupt in (available on some devices)
+  char *pvInterruptInBuffer;
+  int pvInterruptInBufferSize;
 };
 
 #endif // #ifndef MDT_USB_PORT_H

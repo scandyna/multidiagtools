@@ -22,6 +22,8 @@
 #include "mdtError.h"
 #include <QString>
 
+#include <QDebug>
+
 mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
 {
   pvbDescriptorType = 0;
@@ -208,4 +210,128 @@ mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::endpoint(int configIndex, int 
   }
 
   return interfaceDescriptor->endpoints().at(endpointIndex);
+}
+
+mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstBulkOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+{
+  mdtUsbInterfaceDescriptor *interfaceDescriptor;
+  mdtUsbEndpointDescriptor *endpointDescriptor;
+  int i;
+
+  interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor == 0){
+    return 0;
+  }
+  // Search in available enpoints
+  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
+    Q_ASSERT(endpointDescriptor != 0);
+    // Check if current endpoint is direction OUT and Bulk transfert
+    if((endpointDescriptor->isDirectionOUT())&&(endpointDescriptor->isTransfertTypeBulk())){
+      // Here we found a bulk out endpoint. If needed, check if it's a data endpoint
+      if(dataEndpointOnly){
+        if(endpointDescriptor->isDataEndpoint()){
+          return endpointDescriptor;
+        }
+      }else{
+        return endpointDescriptor;
+      }
+    }
+  }
+
+  // Nothing found, return a null pointer
+  return 0;
+}
+
+mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstBulkInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+{
+  mdtUsbInterfaceDescriptor *interfaceDescriptor;
+  mdtUsbEndpointDescriptor *endpointDescriptor;
+  int i;
+
+  interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor == 0){
+    return 0;
+  }
+  // Search in available enpoints
+  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
+    Q_ASSERT(endpointDescriptor != 0);
+    // Check if current endpoint is direction IN and Bulk transfert
+    if((endpointDescriptor->isDirectionIN())&&(endpointDescriptor->isTransfertTypeBulk())){
+      // Here we found a bulk in endpoint. If needed, check if it's a data endpoint
+      if(dataEndpointOnly){
+        if(endpointDescriptor->isDataEndpoint()){
+          return endpointDescriptor;
+        }
+      }else{
+        return endpointDescriptor;
+      }
+    }
+  }
+
+  // Nothing found, return a null pointer
+  return 0;
+}
+
+mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstInterruptOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+{
+  mdtUsbInterfaceDescriptor *interfaceDescriptor;
+  mdtUsbEndpointDescriptor *endpointDescriptor;
+  int i;
+
+  interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor == 0){
+    return 0;
+  }
+  // Search in available enpoints
+  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
+    Q_ASSERT(endpointDescriptor != 0);
+    // Check if current endpoint is direction OUT and Interrupt transfert
+    if((endpointDescriptor->isDirectionOUT())&&(endpointDescriptor->isTransfertTypeInterrupt())){
+      // Here we found a interrupt out endpoint. If needed, chack if it's a data endpoint
+      if(dataEndpointOnly){
+        if(endpointDescriptor->isDataEndpoint()){
+          return endpointDescriptor;
+        }
+      }else{
+        return endpointDescriptor;
+      }
+    }
+  }
+
+  // Nothing found, return a null pointer
+  return 0;
+}
+
+mdtUsbEndpointDescriptor *mdtUsbDeviceDescriptor::firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly)
+{
+  mdtUsbInterfaceDescriptor *interfaceDescriptor;
+  mdtUsbEndpointDescriptor *endpointDescriptor;
+  int i;
+
+  interfaceDescriptor = interface(configIndex, ifaceIndex);
+  if(interfaceDescriptor == 0){
+    return 0;
+  }
+  // Search in available enpoints
+  for(i=0; i<interfaceDescriptor->endpoints().size(); i++){
+    endpointDescriptor = interfaceDescriptor->endpoints().at(i);
+    Q_ASSERT(endpointDescriptor != 0);
+    // Check if current endpoint is direction IN and Interrupt transfert
+    if((endpointDescriptor->isDirectionIN())&&(endpointDescriptor->isTransfertTypeInterrupt())){
+      // Here we found a interrupt in endpoint. If needed, chack if it's a data endpoint
+      if(dataEndpointOnly){
+        if(endpointDescriptor->isDataEndpoint()){
+          return endpointDescriptor;
+        }
+      }else{
+        return endpointDescriptor;
+      }
+    }
+  }
+
+  // Nothing found, return a null pointer
+  return 0;
 }

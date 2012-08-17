@@ -134,4 +134,5 @@ bool mdtPortThread::isFinished() const
 
 void mdtPortThread::sigactionHandle(int /* signum */)
 {
+  qDebug() << "mdtPortThread::sigactionHandle() called";
 }

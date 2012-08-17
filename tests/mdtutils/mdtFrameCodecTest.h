@@ -35,9 +35,12 @@ class mdtFrameCodecTest : public mdtTest
 
   // Check Agilent U3606A SCPI
   void mdtFrameCodecScpiTestU3606ATest();
-  
+
   // Check mdtFrameCodecModbus encode/decode
   void mdtFrameCodecModbusTest();
+
+  // Check Velleman k8055 codec
+  void mdtFrameCodecK8055Test();
 };
 
 #endif  // #ifndef MDT_FRAME_CODEC_TEST_H

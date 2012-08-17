@@ -24,6 +24,7 @@
 #include "mdtFrameCodecScpi.h"
 #include "mdtFrameCodecScpiU3606A.h"
 #include "mdtFrameCodecModbus.h"
+#include "mdtFrameCodecK8055.h"
 #include "mdtApplication.h"
 #include <QByteArray>
 
@@ -319,6 +320,187 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   QVERIFY(c.values().size() == 1);
   QVERIFY(c.values().at(0).toBool() == false);
 
+}
+
+/*
+  k8055 frame formats, taken from libk8055:
+   http://libk8055.sourceforge.net/
+
+  Input packet format
+  +---+---+---+---+---+---+---+---+
+  |DIn|Sta|A1 |A2 |   C1  |   C2  |
+  +---+---+---+---+---+---+---+---+
+  DIn = Digital input in high nibble, except for input 3 in 0x01
+  Sta = Status,x01 = OK ?
+  A1  = Analog input 1, 0-255
+  A2  = Analog input 2, 0-255
+  C1  = Counter 1, 16 bits (lsb)
+  C2  = Counter 2, 16 bits (lsb)
+
+  Output packet format
+  +---+---+---+---+---+---+---+---+
+  |CMD|DIG|An1|An2|Rs1|Rs2|Dbv|Dbv|
+  +---+---+---+---+---+---+---+---+
+  CMD = Command 
+  DIG = Digital output bitmask
+  An1 = Analog output 1 value, 0-255
+  An2 = Analog output 2 value, 0-255
+  Rs1 = Reset counter 1, command 3
+  Rs2 = Reset counter 3, command 4
+  Dbv = Debounce value for counter 1 and 2, command 1 and 2
+
+  Or split by commands
+
+  Cmd 0, Reset ??
+  Cmd 1, Set debounce Counter 1
+  +---+---+---+---+---+---+---+---+
+  |CMD|   |   |   |   |   |Dbv|   |
+  +---+---+---+---+---+---+---+---+
+  Cmd 2, Set debounce Counter 2
+  +---+---+---+---+---+---+---+---+
+  |CMD|   |   |   |   |   |   |Dbv|
+  +---+---+---+---+---+---+---+---+
+  Cmd 3, Reset counter 1
+  +---+---+---+---+---+---+---+---+
+  | 3 |   |   |   | 00|   |   |   |
+  +---+---+---+---+---+---+---+---+
+  Cmd 4, Reset counter 2
+  +---+---+---+---+---+---+---+---+
+  | 4 |   |   |   |   | 00|   |   |
+  +---+---+---+---+---+---+---+---+
+  cmd 5, Set analog/digital
+  +---+---+---+---+---+---+---+---+
+  | 5 |DIG|An1|An2|   |   |   |   |
+  +---+---+---+---+---+---+---+---+
+*/
+void mdtFrameCodecTest::mdtFrameCodecK8055Test()
+{
+  mdtFrameCodecK8055 codec;
+  QByteArray frame;
+
+  /*
+   * Initial states
+   */
+  QVERIFY(codec.values().size() == 0);
+
+  /*
+   * Decode test
+   */
+  frame.clear();
+  // Set input 0, 3, 5 to 1
+  frame.append((char)0x29);
+  // Set statu to 1
+  frame.append((char)0x01);
+  // Set analog 1 to 89
+  frame.append((char)0x59);
+  // Set analog 2 to 253
+  frame.append((char)0xFD);
+  // Set counter 1 to 260
+  frame.append((char)0x01);
+  frame.append((char)0x04);
+  // Set counter 2 to 4512
+  frame.append((char)0x11);
+  frame.append((char)0xA0);
+  // Decode and check values
+  QVERIFY(codec.decode(frame));
+  QVERIFY(codec.values().size() == 12);
+  QVERIFY(codec.values().at(0).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(0) == true);
+  QVERIFY(codec.values().at(1).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(1) == false);
+  QVERIFY(codec.values().at(2).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(2) == false);
+  QVERIFY(codec.values().at(3).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(3) == true);
+  QVERIFY(codec.values().at(4).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(4) == false);
+  QVERIFY(codec.values().at(5).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(5) == true);
+  QVERIFY(codec.values().at(6).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(6) == false);  QVERIFY(codec.values().at(5).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(7) == false);  QVERIFY(codec.values().at(5).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(7) == false);
+  QVERIFY(codec.values().at(8).type() == QVariant::Int);
+  QVERIFY(codec.values().at(8) == 89);
+  QVERIFY(codec.values().at(9).type() == QVariant::Int);
+  QVERIFY(codec.values().at(9) == 253);
+  QVERIFY(codec.values().at(10).type() == QVariant::Int);
+  QVERIFY(codec.values().at(10) == 260);
+  QVERIFY(codec.values().at(11).type() == QVariant::Int);
+  QVERIFY(codec.values().at(11) == 4512);
+
+  /*
+   * Encode reset
+   */
+  frame.clear();
+  frame = codec.encodeReset();
+  QVERIFY(frame.size() == 8);
+  QVERIFY(frame.at(0) == 0x00);
+  QVERIFY(frame.at(1) == 0x00);
+  QVERIFY(frame.at(2) == 0x00);
+  QVERIFY(frame.at(3) == 0x00);
+  QVERIFY(frame.at(4) == 0x00);
+  QVERIFY(frame.at(5) == 0x00);
+  QVERIFY(frame.at(6) == 0x00);
+  QVERIFY(frame.at(7) == 0x00);
+
+  /*
+   * Encode set counter debounce value
+   */
+  frame.clear();
+  frame = codec.encodeSetCounterDebounceValue(1, 128);
+  QVERIFY(frame.size() == 8);
+  QVERIFY((quint8)frame.at(0) == 0x01);
+  QVERIFY((quint8)frame.at(1) == 0x00);
+  QVERIFY((quint8)frame.at(2) == 0x00);
+  QVERIFY((quint8)frame.at(3) == 0x00);
+  QVERIFY((quint8)frame.at(4) == 0x00);
+  QVERIFY((quint8)frame.at(5) == 0x00);
+  QVERIFY((quint8)frame.at(6) == 128);
+  QVERIFY((quint8)frame.at(7) == 0x00);
+  frame.clear();
+  frame = codec.encodeSetCounterDebounceValue(2, 233);
+  QVERIFY(frame.size() == 8);
+  QVERIFY((quint8)frame.at(0) == 0x01);
+  QVERIFY((quint8)frame.at(1) == 0x00);
+  QVERIFY((quint8)frame.at(2) == 0x00);
+  QVERIFY((quint8)frame.at(3) == 0x00);
+  QVERIFY((quint8)frame.at(4) == 0x00);
+  QVERIFY((quint8)frame.at(5) == 0x00);
+  QVERIFY((quint8)frame.at(6) == 0x00);
+  QVERIFY((quint8)frame.at(7) == 233);
+
+  /*
+   * Encode reset counter
+   */
+  frame.clear();
+  frame = codec.encodeResetCounter(1);
+  QVERIFY(frame.size() == 8);
+  QVERIFY((quint8)frame.at(0) == 0x03);
+  frame.clear();
+  frame = codec.encodeResetCounter(2);
+  QVERIFY(frame.size() == 8);
+  QVERIFY((quint8)frame.at(0) == 0x04);
+
+  /*
+   * Encode Analog/Digital output
+   */
+  frame.clear();
+  codec.setDigitalOut(1, true);
+  codec.setDigitalOut(2, true);
+  codec.setDigitalOut(7, true);
+  codec.setAnalogOut(1, 57);
+  codec.setAnalogOut(2, 254);
+  frame = codec.encodeSetOutputs();
+  QVERIFY(frame.size() == 8);
+  QVERIFY((quint8)frame.at(0) == 0x05);
+  QVERIFY((quint8)frame.at(1) == 0x43);
+  QVERIFY((quint8)frame.at(2) == 57);
+  QVERIFY((quint8)frame.at(3) == 254);
+  QVERIFY((quint8)frame.at(4) == 0x00);
+  QVERIFY((quint8)frame.at(5) == 0x00);
+  QVERIFY((quint8)frame.at(6) == 0x00);
+  QVERIFY((quint8)frame.at(7) == 0x00);
 }
 
 int main(int argc, char **argv)

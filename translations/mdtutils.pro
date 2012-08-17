@@ -13,6 +13,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCode
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCodecScpi.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCodecScpiU3606A.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCodecModbus.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCodecK8055.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtError.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtErrorOut.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtCsvFile.cpp

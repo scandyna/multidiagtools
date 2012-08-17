@@ -28,6 +28,8 @@
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtPortConfig.h"
+#include "mdtFrame.h"
+#include "mdtFrameCodecK8055.h"
 
 #include <QDebug>
 
@@ -48,6 +50,8 @@ void mdtUsbPortTest::essais()
   mdtPortReadThread rThd;
   mdtPortWriteThread wThd;
   mdtPortConfig cfg;
+  mdtFrame *f;
+  mdtFrameCodecK8055 codec;
 
   int retVal;
   uint16_t searchedVid = 0x0957;
@@ -161,14 +165,54 @@ void mdtUsbPortTest::essais()
   libusb_free_device_list(list, 1);
 
   // Setup
+  cfg.setReadQueueSize(5000);
   port.setConfig(&cfg);
-  port.setPortName("0x0957:0x4d18");
+  ///port.setPortName("0x0957:0x4d18");
+  port.setPortName("0x10cf:0x5500");
   rThd.setPort(&port);
   wThd.setPort(&port);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
-  //QVERIFY(port.open() == mdtAbstractPort::NoError);
+  // Start threads
+  QVERIFY(rThd.start());
+  QVERIFY(wThd.start());
 
-  //return;
+  // Write/read...
+  for(int q=0; q<10; q++){
+    // Send some data
+    codec.setDigitalOut(2, true);
+    codec.setDigitalOut(4, true);
+    port.lockMutex();
+    f = port.writeFramesPool().dequeue();
+    QVERIFY(f != 0);
+    f->clear();
+    f->append(codec.encodeSetOutputs());
+    port.writeFrames().enqueue(f);
+    port.unlockMutex();
+    QTest::qWait(100);
+    // See if something was readen
+    port.lockMutex();
+    len = port.readenFrames().size();
+    for(int i=0; i<len; i++){
+      f = port.readenFrames().dequeue();
+      QVERIFY(f != 0);
+      ///qDebug() << "Frame[0]: " << (int)f->at(0);
+      QVERIFY(codec.decode(*f));
+      ///qDebug() << "Frame[0]: " << (int)f->at(0);
+      for(int i=0; i<codec.values().size(); i++){
+        qDebug() << "Value[" << i << "]: " << codec.values().at(i);
+      }
+      port.readFramesPool().enqueue(f);
+    }
+    port.unlockMutex();
+    QTest::qWait(500);
+  }
+
+  qDebug() << "TEST , about to quit";
+  rThd.stop();
+  wThd.stop();
+  return;
   
   // Open specific device
   handle = libusb_open_device_with_vid_pid(ctx, 0x0957, 0x4d18);

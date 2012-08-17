@@ -20,8 +20,11 @@
  ****************************************************************************/
 #include "mdtUsbPort.h"
 #include "mdtError.h"
+#include "mdtUsbDeviceDescriptor.h"
 #include <QString>
 #include <QStringList>
+
+#include <poll.h>
 
 #include <QDebug>
 
@@ -33,6 +36,16 @@ mdtUsbPort::mdtUsbPort(QObject *parent)
   pvReadTimeout = 0;
   pvWriteTimeout = 0;
   pvHandle = 0;
+  pvReadBuffer = 0;
+  pvReadBufferSize = 0;
+  pvReadenLength = 0;
+  pvReadEndpointAddress = 0;
+  pvWriteBuffer = 0;
+  pvWriteBufferSize = 0;
+  pvWrittenLength = 0;
+  pvWriteEndpointAddress = 0;
+  pvInterruptInBuffer = 0;
+  pvInterruptInBufferSize = 0;
   // Init libusb
   retVal = libusb_init(&pvLibusbContext);
   if(retVal != 0){
@@ -70,34 +83,217 @@ void mdtUsbPort::setWriteTimeout(int timeout)
   }
 }
 
-/// NOTE: \todo : Implement.... Note: use select ??    Mutex !!
+/// NOTE: \todo : Update timeout states !
 mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
 {
-  qDebug() << "mdtUsbPort::waitForReadyRead() ...";
-  int retVal;
-
-  /// NOTE: \todo : map correct error
-  unlockMutex();
-  retVal = libusb_handle_events(pvLibusbContext);
-  lockMutex();
-  if(retVal != 0){
-    mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed", mdtError::Error);
-    e.setSystemError(retVal, errorText(retVal));
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return UnknownError;
-  }
-
   return NoError;
 }
 
 qint64 mdtUsbPort::read(char *data, qint64 maxSize)
 {
-  qDebug() << "mdtUsbPort::read() ... (Not implemented yet)";
-  int retVal;
-  int completed = 0;
+  qDebug() << "mdtUsbPort::read() ...";
+  int err;
+  libusb_transfer *transfer;
+  ///unsigned char *data = (unsigned char*)pvReadBuffer;
+  int endpointConcernedEvent;
+  int len;
 
-  return 0;
+  // Ajust size
+  if(maxSize > (qint64)pvReadBufferSize){
+    len = pvReadBufferSize;
+  }else{
+    len = maxSize;
+  }
+  // Alloc transfert
+  transfer = libusb_alloc_transfer(0);
+  if(transfer == 0){
+    mdtError e(MDT_USB_IO_ERROR, "libusb_alloc_transfert() failed", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return -1;
+  }
+  // Fill transfert
+  if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
+    libusb_fill_bulk_transfer(transfer, pvHandle, pvReadEndpointAddress, (unsigned char*)pvReadBuffer, len, transferCallback, 0, pvReadTimeout);
+  }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
+    libusb_fill_interrupt_transfer(transfer, pvHandle, pvReadEndpointAddress, (unsigned char*)pvReadBuffer, len, transferCallback, 0, pvReadTimeout);
+  }else{
+    libusb_free_transfer(transfer);
+    mdtError e(MDT_USB_IO_ERROR, "Unknown transfert type", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return -1;
+  }
+  // Submit
+  /// \todo Handle retval
+  err = libusb_submit_transfer(transfer);
+  if(err != 0){
+    libusb_free_transfer(transfer);
+    mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return -1;
+  }
+  // Test with poll() wait
+  bool retry;
+  int i, numfds;
+  const struct libusb_pollfd **poll_fds = libusb_get_pollfds(pvLibusbContext);
+  i=0;
+  while(poll_fds[i] != 0){
+    qDebug() << "RD Found fd at " << i;
+    i++;
+  }
+  numfds = i;
+  qDebug() << "RD Alloc for " << numfds << " fds";
+  struct pollfd *fds = new struct pollfd[numfds];
+  // Copy
+  for(i=0; i<numfds; i++){
+    fds[i].fd = poll_fds[i]->fd;
+    fds[i].events = poll_fds[i]->events;
+    fds[i].revents = 0;
+    ///free(poll_fds[i]);
+  }
+  free(poll_fds);
+  // Wait until a event is for us
+  retry = true;
+  endpointConcernedEvent = -1;
+  unlockMutex();
+  usleep(50000);
+  while(retry){
+    qDebug() << "RD Entering event try...";
+    if(libusb_try_lock_events(pvLibusbContext) == 0){
+      // Have the lock, do event handling
+      qDebug() << "RD Have the lock, do events...";
+      while(endpointConcernedEvent != (int)pvReadEndpointAddress){
+        // Check if current thread can do event handling
+        qDebug() << "RD can do event handling now ?";
+        if(!libusb_event_handling_ok(pvLibusbContext)){
+          // Not OK now, retry later
+          qDebug() << "RD No, cannot do event handling now!";
+          libusb_unlock_events(pvLibusbContext);
+          continue;
+        }
+        // Ok, current thread can do event handling now
+        qDebug() << "RD Yes, can do event handling now";
+        retry = false;
+        ///unlockMutex();
+        ///usleep(50000); /// NOTE: provisoire
+        err = poll(fds, numfds, -1);
+        ///lockMutex();
+        if(err < 0){
+          qDebug() << "Poll fail !";
+        }
+        if(err > 0){
+          qDebug() << "RD Going handle events";
+          struct timeval tv = {10, 0};
+          err = libusb_handle_events_locked(pvLibusbContext, &tv);
+          qDebug() << "RD Handle events done";
+        }
+        if(err != 0){
+          ///libusb_unlock_events(pvLibusbContext);
+          break;
+        }
+        endpointConcernedEvent = transfer->endpoint;
+      }
+      qDebug() << "RD: unlock event...";
+      libusb_unlock_events(pvLibusbContext);
+    }else{
+      // Another thread is doing event handling. Wait until it signal us it has completed
+      qDebug() << "RD: another thread does events, waiting...";
+      libusb_lock_event_waiters(pvLibusbContext);
+      // Have the event waiters lock
+      while(endpointConcernedEvent != (int)pvReadEndpointAddress){
+        // Check if other thread still do event handling
+        qDebug() << "RD: checking if a thread is doing events (has the event lock)";
+        if(!libusb_event_handler_active(pvLibusbContext)){
+          // Other thread done, retry now
+          qDebug() << "WR: none active, retry now";
+          ///libusb_unlock_event_waiters(pvLibusbContext);
+          break;
+        }
+        // Wait...
+        libusb_wait_for_event(pvLibusbContext, 0);
+      }
+      libusb_unlock_event_waiters(pvLibusbContext);
+    }
+  }
+  lockMutex();
+  qDebug() << "RD: deleting fds..";
+  delete[] fds;
+
+/*
+  endpointConcernedEvent = -1;
+  while(endpointConcernedEvent != (int)pvReadEndpointAddress){
+    unlockMutex();
+    usleep(50000); /// NOTE: provisoire
+    err = poll(fds, numfds, -1);
+    lockMutex();
+    if(err < 0){
+      qDebug() << "Poll fail !";
+    }
+    if(err > 0){
+      err = libusb_handle_events(pvLibusbContext);
+    }
+    if(err != 0){
+      break;
+    }
+    endpointConcernedEvent = transfer->endpoint;
+  }
+*/
+  // Wait until a event is for us
+  /*
+  endpointConcernedEvent = -1;
+  while(endpointConcernedEvent != (int)pvReadEndpointAddress){
+    qDebug() << "Read, going wait ...";
+    unlockMutex();
+    usleep(50000); /// NOTE: provisoire
+    err = libusb_handle_events(pvLibusbContext);
+    lockMutex();
+    qDebug() << "Read, wait DONE";
+    if(err != 0){
+      // Errors are handled just after this loop
+      break;
+    }
+    endpointConcernedEvent = transfer->endpoint;
+  }
+  */
+/**
+  qDebug() << "Original:";
+  qDebug() << "-> Endpoint: " << hex << transfer->endpoint;
+  qDebug() << "-> actual_length: " << hex << transfer->actual_length;
+  qDebug() << "-> short frame stransfert NOK state: " << (transfer->flags & LIBUSB_TRANSFER_SHORT_NOT_OK);
+  qDebug() << "-> short frame stransfert NOK state: " << (transfer->flags & LIBUSB_TRANSFER_SHORT_NOT_OK);
+  qDebug() << "-> transfert complete: " << (transfer->status & LIBUSB_TRANSFER_COMPLETED);
+  qDebug() << "-> transfert failed: " << (transfer->status & LIBUSB_TRANSFER_ERROR);
+  qDebug() << "-> transfert timeout: " << (transfer->status & LIBUSB_TRANSFER_TIMED_OUT);
+  qDebug() << "-> transfert cancelled: " << (transfer->status & LIBUSB_TRANSFER_CANCELLED);
+  qDebug() << "-> transfert stall: " << (transfer->status & LIBUSB_TRANSFER_STALL);
+  qDebug() << "-> device disconnected: " << (transfer->status & LIBUSB_TRANSFER_NO_DEVICE);
+  qDebug() << "-> device sendt to much (overflow): " << (transfer->status & LIBUSB_TRANSFER_OVERFLOW);
+*/
+
+  switch(err){
+    case 0:
+      break;
+    case LIBUSB_ERROR_INTERRUPTED:  /// \todo can be because device was deconnected, handle this..
+      pvReadenLength = 0;
+      libusb_free_transfer(transfer);
+      return -1;
+    default:
+      pvReadenLength = 0;
+      libusb_free_transfer(transfer);
+      mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed", mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return -1;
+  }
+  len = transfer->actual_length;
+  memcpy(data, pvReadBuffer, len);
+  libusb_free_transfer(transfer);
+
+  qDebug() << "Readen: " << len;
+  return len;
 }
 
 void mdtUsbPort::flushIn()
@@ -106,31 +302,220 @@ void mdtUsbPort::flushIn()
   mdtAbstractPort::flushIn();
 }
 
-/// NOTE: \todo : Implement.... Note: use select ??    Mutex !!
+/// NOTE: \todo : Update timeout states !
 mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
 {
-  qDebug() << "mdtUsbPort::waitEventWriteReady() ...";
-  int retVal;
-
-  /// NOTE: \todo : map correct error
-  unlockMutex();
-  retVal = libusb_handle_events(pvLibusbContext);
-  lockMutex();
-  if(retVal != 0){
-    mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed", mdtError::Error);
-    e.setSystemError(retVal, errorText(retVal));
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return UnknownError;
-  }
-
   return NoError;
 }
 
 qint64 mdtUsbPort::write(const char *data, qint64 maxSize)
 {
-  qDebug() << "mdtUsbPort::write() ... (Not implemented yet)";
-  return 0;
+  int err;
+  libusb_transfer *transfer;
+  int endpointConcernedEvent;
+  int len;
+
+  // Ajust size
+  if(maxSize > (qint64)pvWriteBufferSize){
+    len = pvWriteBufferSize;
+  }else{
+    len = maxSize;
+  }
+  memcpy(pvWriteBuffer, data, len);
+  // Alloc transfert
+  transfer = libusb_alloc_transfer(0);
+  if(transfer == 0){
+    mdtError e(MDT_USB_IO_ERROR, "libusb_alloc_transfert() failed", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnknownError;
+  }
+  // Fill transfert
+  if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
+    libusb_fill_bulk_transfer(transfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, 0, pvWriteTimeout);
+  }else if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
+    libusb_fill_interrupt_transfer(transfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, 0, pvWriteTimeout);
+  }else{
+    libusb_free_transfer(transfer);
+    mdtError e(MDT_USB_IO_ERROR, "Unknown transfert type", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnknownError;
+  }
+  // Submit
+  /// \todo Handle retval
+  err = libusb_submit_transfer(transfer);
+  if(err != 0){
+    libusb_free_transfer(transfer);
+    mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnknownError;
+  }
+
+  // Test with poll() wait
+  bool retry;
+  int i, numfds;
+  const struct libusb_pollfd **poll_fds = libusb_get_pollfds(pvLibusbContext);
+  i=0;
+  while(poll_fds[i] != 0){
+    qDebug() << "WR Found fd at " << i;
+    i++;
+  }
+  numfds = i;
+  qDebug() << "WR Alloc for " << numfds << " fds";
+  struct pollfd *fds = new struct pollfd[numfds];
+  // Copy
+  for(i=0; i<numfds; i++){
+    fds[i].fd = poll_fds[i]->fd;
+    fds[i].events = poll_fds[i]->events;
+    fds[i].revents = 0;
+    ///free(poll_fds[i]);
+  }
+  free(poll_fds);
+  // Wait until a event is for us
+  retry = true;
+  endpointConcernedEvent = -1;
+  unlockMutex();
+  usleep(50000);
+  while(retry){
+    qDebug() << "WR Entering event try...";
+    if(libusb_try_lock_events(pvLibusbContext) == 0){
+      // Have the lock, do event handling
+      qDebug() << "WR Have the lock, do events...";
+      while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
+        // Check if current thread can do event handling
+        qDebug() << "WR can do event handling now ?";
+        if(!libusb_event_handling_ok(pvLibusbContext)){
+          // Not OK now, retry later
+          qDebug() << "WR No, cannot do event handling now!";
+          libusb_unlock_events(pvLibusbContext);
+          continue;
+        }
+        // Ok, current thread can do event handling now
+        qDebug() << "WR Yes, can do event handling now";
+        retry = false;
+        ///unlockMutex();
+        ///usleep(50000); /// NOTE: provisoire
+        err = poll(fds, numfds, -1);
+        ///lockMutex();
+        if(err < 0){
+          qDebug() << "WR Poll fail !";
+        }
+        if(err > 0){
+          qDebug() << "WR Going handle events";
+          struct timeval tv = {10, 0};
+          err = libusb_handle_events_locked(pvLibusbContext, &tv);
+          qDebug() << "WR Handle events done";
+        }
+        if(err != 0){
+          break;
+        }
+        endpointConcernedEvent = transfer->endpoint;
+      }
+      qDebug() << "WR: unlock event...";
+      libusb_unlock_events(pvLibusbContext);
+    }else{
+      // Another thread is doing event handling. Wait until it signal us it has completed
+      qDebug() << "WR: another thread does events, waiting...";
+      libusb_lock_event_waiters(pvLibusbContext);
+      // Have the event waiters lock
+      while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
+        qDebug() << "WR: checking if a thread is doing events (has the event lock)";
+        // Check if other thread still do event handling
+        if(!libusb_event_handler_active(pvLibusbContext)){
+          // Other thread done, retry now
+          qDebug() << "WR: none active, retry now";
+          ///libusb_unlock_event_waiters(pvLibusbContext);
+          break;
+        }
+        // Wait...
+        qDebug() << "WR: wait ...";
+        libusb_wait_for_event(pvLibusbContext, 0);
+      }
+      libusb_unlock_event_waiters(pvLibusbContext);
+    }
+  }
+  lockMutex();
+  qDebug() << "WR: deleting fds..";
+  delete[] fds;
+
+  // Test with poll() wait
+  /*
+  int i, numfds;
+  const struct libusb_pollfd **poll_fds = libusb_get_pollfds(pvLibusbContext);
+  i=0;
+  while(poll_fds[i] != 0){
+    qDebug() << "Found fd at " << i;
+    i++;
+  }
+  numfds = i;
+  qDebug() << "Alloc for " << numfds << " fds";
+  struct pollfd *fds = new struct pollfd[numfds];
+  // Copy
+  for(i=0; i<numfds; i++){
+    fds[i].fd = poll_fds[i]->fd;
+    fds[i].events = poll_fds[i]->events;
+    fds[i].revents = 0;
+    ///free(poll_fds[i]);
+  }
+  free(poll_fds);
+  // Wait until a event is for us
+  endpointConcernedEvent = -1;
+  while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
+    unlockMutex();
+    usleep(50000); /// NOTE: provisoire
+    err = poll(fds, numfds, -1);
+    lockMutex();
+    if(err < 0){
+      qDebug() << "Poll fail !";
+    }
+    if(err > 0){
+      err = libusb_handle_events(pvLibusbContext);
+    }
+    if(err != 0){
+      break;
+    }
+    endpointConcernedEvent = transfer->endpoint;
+  }
+  */
+
+  // Wait until a event is for us
+  /*
+  endpointConcernedEvent = -1;
+  while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
+    unlockMutex();
+    usleep(500000); /// NOTE: provisoire
+    err = libusb_handle_events(pvLibusbContext);
+    lockMutex();
+    if(err != 0){
+      break;
+    }
+    endpointConcernedEvent = transfer->endpoint;
+  }
+  */
+  switch(err){
+    case 0:
+      break;
+    case LIBUSB_ERROR_INTERRUPTED:  /// \todo can be because device was deconnected, handle this..
+      pvWrittenLength = 0;
+      libusb_free_transfer(transfer);
+      return WaitingCanceled;
+    default:
+      pvWrittenLength = 0;
+      libusb_free_transfer(transfer);
+      mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed", mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return UnknownError;
+  }
+  pvWrittenLength = transfer->actual_length;
+  ///memcpy(data, pvWriteBuffer, transfer->actual_length);
+  libusb_free_transfer(transfer);
+  qDebug() << "mdtUsbPort::write() , written: " << pvWrittenLength;
+
+  return pvWrittenLength;
 }
 
 void mdtUsbPort::flushOut()
@@ -139,11 +524,30 @@ void mdtUsbPort::flushOut()
   mdtAbstractPort::flushOut();
 }
 
-void mdtUsbPort::transfertCallback(struct libusb_transfer *transfer)
+void mdtUsbPort::transferCallback(struct libusb_transfer *transfer)
 {
+  Q_ASSERT(transfer != 0);
+
   qDebug() << "Tranfert callback ...";
-  int *completed = (int*)transfer->user_data;
-  *completed = 1;
+  qDebug() << "-> Endpoint: " << hex << transfer->endpoint;
+  qDebug() << "-> actual_length: " << hex << transfer->actual_length;
+  qDebug() << "-> short frame stransfert NOK state: " << (transfer->flags & LIBUSB_TRANSFER_SHORT_NOT_OK);
+  qDebug() << "-> transfert complete: " << (transfer->status & LIBUSB_TRANSFER_COMPLETED);
+  qDebug() << "-> transfert failed: " << (transfer->status & LIBUSB_TRANSFER_ERROR);
+  qDebug() << "-> transfert timeout: " << (transfer->status & LIBUSB_TRANSFER_TIMED_OUT);
+  qDebug() << "-> transfert cancelled: " << (transfer->status & LIBUSB_TRANSFER_CANCELLED);
+  qDebug() << "-> transfert stall: " << (transfer->status & LIBUSB_TRANSFER_STALL);
+  qDebug() << "-> device disconnected: " << (transfer->status & LIBUSB_TRANSFER_NO_DEVICE);
+  qDebug() << "-> device sendt to much (overflow): " << (transfer->status & LIBUSB_TRANSFER_OVERFLOW);
+  
+  /**
+  mdt_usb_port_transfer_data *data = (mdt_usb_port_transfer_data*)transfer->user_data;
+  Q_ASSERT(data != 0);
+  data->flag1 = transfer->status;
+  */
+  
+  ///int *completed = (int*)transfer->user_data;
+  ///*completed = 1;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvOpen()
@@ -209,13 +613,262 @@ void mdtUsbPort::pvClose()
   Q_ASSERT(isOpen());
   Q_ASSERT(pvHandle != 0);
 
+  int err;
+
+  // Release port
+  err = libusb_release_interface(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  switch(err){
+    case 0:
+      break;
+    case LIBUSB_ERROR_NOT_FOUND:
+      break;
+    case LIBUSB_ERROR_NO_DEVICE:
+      break;
+    default:
+      mdtError e(MDT_USB_IO_ERROR, "libubs_release_interface() failed", mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+  }
+  // Re-attach possibly detached driver in pvSetup()
+#ifdef Q_OS_LINUX
+  err = libusb_attach_kernel_driver(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  switch(err){
+    case 0:
+      break;
+    case LIBUSB_ERROR_NOT_FOUND:  // No driver was detached
+      break;
+    case LIBUSB_ERROR_INVALID_PARAM:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (interface not found) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      break;
+    }
+    case LIBUSB_ERROR_NO_DEVICE:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (device not found/disconnected) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      break;
+    }
+    case LIBUSB_ERROR_NOT_SUPPORTED:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (unload is not supported on current platform) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      break;
+    }
+    default:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (unhandled error) on device " + pvPortName, mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      break;
+    }
+  }
+#endif
+  // Close port
   libusb_close(pvHandle);
+  // Free memory
+  delete[] pvReadBuffer;
+  pvReadBuffer = 0;
+  delete[] pvWriteBuffer;
+  pvWriteBuffer = 0;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvSetup()
 {
   Q_ASSERT(isOpen());
-  Q_ASSERT(pvConfig != 0);
+  ///Q_ASSERT(pvConfig != 0);
+  Q_ASSERT(pvHandle != 0);
+
+  // Essais
+  libusb_device *device;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbEndpointDescriptor *bulkEndpointDescriptor;
+  mdtUsbEndpointDescriptor *interruptEndpointDescriptor;
+  int err;
+
+  // Search devices endpoints
+  device = libusb_get_device(pvHandle);
+  Q_ASSERT(device != 0);
+  err = deviceDescriptor.fetchAttributes(device, true);
+  if(err != 0){
+    switch(err){
+      case LIBUSB_ERROR_NOT_FOUND:
+        return PortNotFound;
+      default:
+        return UnknownError;
+    }
+  }
+  // Find device's output endpoints
+  bulkEndpointDescriptor = deviceDescriptor.firstBulkOutEndpoint(0, 0, true);
+  interruptEndpointDescriptor = deviceDescriptor.firstInterruptOutEndpoint(0, 0, true);
+  if((bulkEndpointDescriptor == 0)&&(interruptEndpointDescriptor == 0)){
+    mdtError e(MDT_USB_IO_ERROR, "Found no output endpoint for data in device " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return SetupError;
+  }
+  if((bulkEndpointDescriptor != 0)&&(interruptEndpointDescriptor != 0)){
+    mdtError e(MDT_USB_IO_ERROR, "Found output bulk and interrupt, choose bulk out endpoint for data in device " + pvPortName, mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    // Choose bulk out
+    interruptEndpointDescriptor = 0;
+  }
+  if(bulkEndpointDescriptor != 0){
+    ///qDebug() << "Bulk OUT address: " << bulkEndpointDescriptor->address();
+    ///qDebug() << " Max packet size: " << bulkEndpointDescriptor->maxPacketSize();
+    pvWriteBufferSize = bulkEndpointDescriptor->transactionsCountPerMicroFrame();
+    if(pvWriteBufferSize < 1){
+      pvWriteBufferSize = 1;
+    }
+    pvWriteBufferSize *= bulkEndpointDescriptor->maxPacketSize();
+    pvWriteEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
+    pvWriteBuffer = new char[pvWriteBufferSize];
+    pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
+    qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
+    qDebug() << " Max packet size: " << pvWriteBufferSize;
+  }
+  if(interruptEndpointDescriptor != 0){
+    ///qDebug() << "Interrupt OUT address: " << interruptEndpointDescriptor->address();
+    ///qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
+    pvWriteBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
+    if(pvWriteBufferSize < 1){
+      pvWriteBufferSize = 1;
+    }
+    pvWriteBufferSize *= interruptEndpointDescriptor->maxPacketSize();
+    pvWriteEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
+    pvWriteBuffer = new char[pvWriteBufferSize];
+    pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
+    qDebug() << "Interrupt OUT address: 0x" << hex << pvWriteEndpointAddress;
+    qDebug() << " Max packet size: " << pvWriteBufferSize;
+  }
+  Q_ASSERT(pvWriteBuffer != 0);
+  // Find device's input endpoints
+  bulkEndpointDescriptor = deviceDescriptor.firstBulkInEndpoint(0, 0, true);
+  interruptEndpointDescriptor = deviceDescriptor.firstInterruptInEndpoint(0, 0, true);
+  if((bulkEndpointDescriptor == 0)&&(interruptEndpointDescriptor == 0)){
+    mdtError e(MDT_USB_IO_ERROR, "Found no input endpoint for data in device " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return SetupError;
+  }
+  if(bulkEndpointDescriptor != 0){
+    pvReadBufferSize = bulkEndpointDescriptor->transactionsCountPerMicroFrame();
+    if(pvReadBufferSize < 1){
+      pvReadBufferSize = 1;
+    }
+    pvReadBufferSize *= bulkEndpointDescriptor->maxPacketSize();
+    pvReadEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
+    pvReadBuffer = new char[pvReadBufferSize];
+    pvReadTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
+    qDebug() << "Bulk IN address: 0x" << hex << pvReadEndpointAddress;
+    qDebug() << " Max packet size: " << pvReadBufferSize;
+  }
+  if(interruptEndpointDescriptor != 0){
+    ///qDebug() << "Interrupt IN address: " << interruptEndpointDescriptor->address();
+    ///qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
+    // Some device have a Bulk IN + Interrupt IN
+    if(bulkEndpointDescriptor != 0){
+      qDebug() << "Additionnal interrupt IN , currently not supported..";
+    }else{
+      pvReadBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
+      if(pvReadBufferSize < 1){
+        pvReadBufferSize = 1;
+      }
+      pvReadBufferSize *= interruptEndpointDescriptor->maxPacketSize();
+      pvReadEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
+      pvReadBuffer = new char[pvReadBufferSize];
+      pvReadTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
+      qDebug() << "Interrupt IN address: 0x" << hex << pvReadEndpointAddress;
+      qDebug() << " Max packet size: " << pvReadBufferSize;
+    }
+  }
+  Q_ASSERT(pvReadBuffer != 0);
+  // Unload possibly loaded driver that uses the device
+#ifdef Q_OS_LINUX
+  err = libusb_detach_kernel_driver(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  switch(err){
+    case 0:
+      break;
+    case LIBUSB_ERROR_NOT_FOUND:  // No driver loaded
+      break;
+    case LIBUSB_ERROR_INVALID_PARAM:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot detach kernel driver (interface not found) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return PortNotFound;
+    }
+    case LIBUSB_ERROR_NO_DEVICE:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot detach kernel driver (device not found/disconnected) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return PortNotFound;
+    }
+    case LIBUSB_ERROR_NOT_SUPPORTED:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot detach kernel driver (unload is not supported on current platform) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    default:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot detach kernel driver (unhandled error) on device " + pvPortName, mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+  }
+#endif
+  // Claim the interface
+  err = libusb_claim_interface(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  switch(err){
+    case 0:
+      break;
+    case LIBUSB_ERROR_NOT_FOUND:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot claim interface (interface not found) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return PortNotFound;
+    }
+    case LIBUSB_ERROR_BUSY:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot claim interface (interface busy) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return PortLocked;
+    }
+    case LIBUSB_ERROR_NO_DEVICE:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot claim interface (device not found/disconnected) on device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return PortNotFound;
+    }
+    default:
+    {
+      mdtError e(MDT_USB_IO_ERROR, "Cannot claim interface (unhandled error) on device " + pvPortName, mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+  }
+  
+  /// \todo Setup functions ......
+
+  /// \todo Set timeouts ...
+  
+  return NoError;
 }
 
 QString mdtUsbPort::errorText(int errorCode) const

@@ -41,12 +41,17 @@
  *  - Interface descriptor: mdtUsbInterfaceDescriptor
  *  - Endpoint descriptor: mdtUsbEndpointDescriptor
  *
- * Each "parent" class gives access to their children with a QList<\T> method.
+ * Each "parent" class gives access to their child with a QList<\T> method.
  * For example, configurations are available with configurations().
  *
  * For current needed attributes, some helper methods are available:
  *  - interface(int, int) : to get a interface descriptor by indexes.
  *  - endpoint(int, int, int) : to get a endpoint descriptor by index.
+ *
+ * When goal is to open a particular device for I/O, a simple way to get
+ *  needed informations could be to call fetchAttributes() with fetchActiveConfigOnly set true,
+ *  then get endpoints with firstBulkOutEndpoint() , firstBulkInEndpoint() , firstInterruptInEndpoint() 
+ *  with configIndex set to 0, and a valid ifaceIndex.
  */
 class mdtUsbDeviceDescriptor
 {
@@ -58,7 +63,7 @@ class mdtUsbDeviceDescriptor
   /*! \brief Ftech the device descriptor's attributes
    *
    * \param fetchActiveConfigOnly If true, the interfaces and endpoints informations will be fetched
-   *                               only for active configuration. Else, all device's avalable configurations
+   *                               only for active configuration. Else, all device's available configurations
    *                               will be scanned.
    * \return 0 on success, libusb error code else. On error, the attributes must be considered as invalid.
    * \pre device must be a valid pointer
@@ -136,7 +141,41 @@ class mdtUsbDeviceDescriptor
    */
   mdtUsbEndpointDescriptor *endpoint(int configIndex, int ifaceIndex, int endpointIndex);
 
-  /*! \brief 
+  /*! \brief Find the first bulk transfert endpoint with OUT direction
+   *
+   * \param configIndex Index of configuration (unsorted, ordered as during discovery)
+   * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
+   * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
+   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   */
+  mdtUsbEndpointDescriptor *firstBulkOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+
+  /*! \brief Find the first bulk transfert endpoint with IN direction
+   *
+   * \param configIndex Index of configuration (unsorted, ordered as during discovery)
+   * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
+   * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
+   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   */
+  mdtUsbEndpointDescriptor *firstBulkInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+
+  /*! \brief Find the first interrupt transfert endpoint with OUT direction
+   *
+   * \param configIndex Index of configuration (unsorted, ordered as during discovery)
+   * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
+   * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
+   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   */
+  mdtUsbEndpointDescriptor *firstInterruptOutEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
+
+  /*! \brief Find the first interrupt transfert endpoint with IN direction
+   *
+   * \param configIndex Index of configuration (unsorted, ordered as during discovery)
+   * \param ifaceIndex Index of interface (unsorted, ordered as during discovery)
+   * \param dataEndpointOnly If true, only data endpoints will be considered (feedback and other are ignored)
+   * \return Pointer to endpoint descriptor, 0 if none found, or on error
+   */
+  mdtUsbEndpointDescriptor *firstInterruptInEndpoint(int configIndex, int ifaceIndex, bool dataEndpointOnly);
 
  private:
 

@@ -120,6 +120,7 @@ void mdtPortReadThread::run()
 
   // Run...
   while(1){
+    qDebug() << "RTHD: run ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -222,7 +223,7 @@ void mdtPortReadThread::run()
 
   // Free memory
   Q_ASSERT(buffer != 0);
-  delete buffer;
+  delete[] buffer;
 
   pvPort->unlockMutex();
   qDebug() << "RDTHD: END";

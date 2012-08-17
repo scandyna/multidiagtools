@@ -38,7 +38,8 @@ class mdtPortConfig
    *  - Read and write frame size: 1024
    *  - Read and write queue size: 10
    *  - Use read timeout protocol: false
-   *  - Read/Write timout: 500 [ms]
+   *  - Read timout: 5000 [ms]
+   *  - Write timout: -1 (infinite)
    *  - Frame type: RAW
    *  - En of frame sequence: LF (ASCII 0x0A)
    *  - Byte per byte write: Off
@@ -217,6 +218,22 @@ class mdtPortConfig
    * \sa setBytePerByteWrite()
    */
   bool bytePerByteWrite() const;
+
+  /*! \brief Use the Query/Answer protocol
+   *
+   * Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that
+   *  mdpAbstractPort::waitForReadyRead() returns allways immediatly.
+   * For example, this is true with mdtUsbPort when dealing with the
+   *  Velleman K8055.
+   * In this situation, the purely event driven approach is not sufficient, causing heavily
+   *  usage of CPU.
+   * Another remark, is that such situation is true on transfer based port.
+   *
+   * Question: What is a important difference between a full duplex serial port and a USB port ?<br>
+   *  The answer could be: On serial port, we neven know when data are available, and we must still
+   *   ready to read them a each time. On USB port, 
+   * NOTE: \todo Rollback: voir callback libusb, si data, ...
+   */
 
   bool operator==(const mdtPortConfig &other);
   bool operator!=(const mdtPortConfig &other);

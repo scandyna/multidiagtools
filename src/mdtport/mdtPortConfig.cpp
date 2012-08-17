@@ -33,12 +33,12 @@ void mdtPortConfig::setDefault()
   pvReadFrameSize = 1024;
   pvReadQueueSize = 10;
   pvUseReadTimeoutProtocol = false;
-  pvReadTimeout = 500;
+  pvReadTimeout = 5000;
   pvWriteFrameSize = 1024;
   pvWriteQueueSize = 10;
   pvWriteInterframeTime = 0;
   pvWriteMinWaitTime = 0;
-  pvWriteTimeout = 500;
+  pvWriteTimeout = -1;
   pvFrameType = mdtFrame::FT_RAW;
   pvEndOfFrameSeq.clear();
   pvEndOfFrameSeq.append('\n');

@@ -1,39 +1,13 @@
-window_sizes 1272 993 304 962 795 120
+window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 255234 // mdtAbstractPort
-    776 647 100 4 276 0
-  classdiagram_ref 262018 // mdtPortConfig
-    970 809 100 4 84 0
-  classdiagram_ref 360706 // mdtAbstractSerialPort
-    776 647 100 4 228 0
-  classdiagram_ref 128002 // mdtSerialPort
-    970 809 100 4 0 0
-  classdiagram_ref 182914 // interactions
-    970 809 100 4 0 0
-  classdiagram_ref 461954 // mdtPortTransaction
-    970 803 100 4 0 0
-  collaborationdiagram_ref 327810 // mdtPortThreadCalls
-    776 642 100 4 0 0
-  classdiagram_ref 294658 // mdtPortManager
-    776 642 100 4 0 0
-  classdiagram_ref 462082 // Interactions
-    776 642 100 4 0 0
-  active  classdiagram_ref 468610 // mdtUsbPort
-    962 795 100 4 144 0
+  classdiagram_ref 281602 // mdtFrameCodec
+    776 642 100 4 156 0
+  active  classdiagram_ref 475138 // mdtFrameCodecK8055
+    970 803 100 4 24 0
 end
 show_stereotypes
-selected operation_ref 939906 // bInterval
+selected operation_ref 947458 // setAnalogOut
 open
-  
-package_ref 128002 // mdtutils
-  classview_ref 201218 // mdtPort
-  operation_ref 934402 // mdtUsbDeviceDescriptor
-  operation_ref 934530 // ~mdtUsbDeviceDescriptor
-  operation_ref 934274 // configurations
-  operation_ref 935938 // fetchAttributes
-  operation_ref 936066 // isSelfPowered
-  operation_ref 936322 // maxPower
-  class_ref 478722 // mdtUsbInterfaceDescriptor
-  class_ref 478850 // mdtUsbEndointDescriptor
+  classrelation_ref 578050 // <generalisation>
 end
 end

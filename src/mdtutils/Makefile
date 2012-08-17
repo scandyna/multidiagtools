@@ -492,6 +492,30 @@ mdtFrameCodecAscii.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.s
 .PHONY : mdtFrameCodecAscii.cpp.s
 
+mdtFrameCodecK8055.o: mdtFrameCodecK8055.cpp.o
+.PHONY : mdtFrameCodecK8055.o
+
+# target to build an object file
+mdtFrameCodecK8055.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecK8055.cpp.o
+.PHONY : mdtFrameCodecK8055.cpp.o
+
+mdtFrameCodecK8055.i: mdtFrameCodecK8055.cpp.i
+.PHONY : mdtFrameCodecK8055.i
+
+# target to preprocess a source file
+mdtFrameCodecK8055.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecK8055.cpp.i
+.PHONY : mdtFrameCodecK8055.cpp.i
+
+mdtFrameCodecK8055.s: mdtFrameCodecK8055.cpp.s
+.PHONY : mdtFrameCodecK8055.s
+
+# target to generate assembly for a file
+mdtFrameCodecK8055.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecK8055.cpp.s
+.PHONY : mdtFrameCodecK8055.cpp.s
+
 mdtFrameCodecModbus.o: mdtFrameCodecModbus.cpp.o
 .PHONY : mdtFrameCodecModbus.o
 
@@ -883,6 +907,9 @@ help:
 	@echo "... mdtFrameCodecAscii.o"
 	@echo "... mdtFrameCodecAscii.i"
 	@echo "... mdtFrameCodecAscii.s"
+	@echo "... mdtFrameCodecK8055.o"
+	@echo "... mdtFrameCodecK8055.i"
+	@echo "... mdtFrameCodecK8055.s"
 	@echo "... mdtFrameCodecModbus.o"
 	@echo "... mdtFrameCodecModbus.i"
 	@echo "... mdtFrameCodecModbus.s"

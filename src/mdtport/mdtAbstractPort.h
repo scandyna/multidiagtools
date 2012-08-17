@@ -40,7 +40,8 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Error
    * 
-   * 
+   * \todo add UnhandledError to complete UnknownError (+ adapt in threads)
+   * \todo add a DeviceDisconnected (+ adapt in threads)
    */
   enum error_t {
                 NoError = 0,      /*!< No error */
