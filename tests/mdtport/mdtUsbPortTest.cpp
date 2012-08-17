@@ -165,7 +165,7 @@ void mdtUsbPortTest::essais()
   libusb_free_device_list(list, 1);
 
   // Setup
-  cfg.setReadQueueSize(5000);
+  cfg.setReadQueueSize(500);
   port.setConfig(&cfg);
   ///port.setPortName("0x0957:0x4d18");
   port.setPortName("0x10cf:0x5500");
@@ -176,7 +176,7 @@ void mdtUsbPortTest::essais()
 
   // Start threads
   QVERIFY(rThd.start());
-  QVERIFY(wThd.start());
+  ///QVERIFY(wThd.start());
 
   // Write/read...
   for(int q=0; q<10; q++){
@@ -206,12 +206,12 @@ void mdtUsbPortTest::essais()
       port.readFramesPool().enqueue(f);
     }
     port.unlockMutex();
-    QTest::qWait(500);
+    QTest::qWait(100);
   }
 
   qDebug() << "TEST , about to quit";
   rThd.stop();
-  wThd.stop();
+  ///wThd.stop();
   return;
   
   // Open specific device

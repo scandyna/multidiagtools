@@ -131,10 +131,14 @@ class mdtUsbPort : public mdtAbstractPort
   // Get a text for given libusb error code
   QString errorText(int errorCode) const;
 
+  // Get poll() file descriptors from libusb
+  struct pollfd *getLibusbPollFds(int *numFds);
+
   // Diseable copy
   Q_DISABLE_COPY(mdtUsbPort);
 
   unsigned int pvReadTimeout;
+  struct timeval pvReadTimeoutTv;
   unsigned int pvWriteTimeout;
   libusb_context *pvLibusbContext;
   libusb_device_handle *pvHandle;
@@ -152,6 +156,13 @@ class mdtUsbPort : public mdtAbstractPort
   // Interrupt in (available on some devices)
   char *pvInterruptInBuffer;
   int pvInterruptInBufferSize;
+  // Transfers
+  libusb_transfer *pvReadTransfer;
+  bool pvReadTransferPending;       // Flag te see if a transfer is pending
+  bool pvReadTransferComplete;      // Will be stored in transfer struct
+  libusb_transfer *pvWriteTransfer;
+  bool pvWriteTransferPending;      // Flag te see if a transfer is pending
+  bool pvWriteTransferComplete;      // Will be stored in transfer struct
 };
 
 #endif // #ifndef MDT_USB_PORT_H

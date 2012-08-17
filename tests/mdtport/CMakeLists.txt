@@ -25,6 +25,7 @@ target_link_libraries(mdtporttest ${QT_LIBRARIES})
 
 # Target mdtUsbPortTest
 QT4_WRAP_CPP (MOC_MDT_USB_PORT_TEST mdtUsbPortTest.h)
+
 add_executable (mdtusbporttest mdtUsbPortTest.cpp ${MOC_MDT_USB_PORT_TEST})
 target_link_libraries(mdtusbporttest "mdtutils")
 target_link_libraries(mdtusbporttest "mdtport")
