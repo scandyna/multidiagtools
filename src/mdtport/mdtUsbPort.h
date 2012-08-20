@@ -140,6 +140,7 @@ class mdtUsbPort : public mdtAbstractPort
   unsigned int pvReadTimeout;
   struct timeval pvReadTimeoutTv;
   unsigned int pvWriteTimeout;
+  struct timeval pvWriteTimeoutTv;
   libusb_context *pvLibusbContext;
   libusb_device_handle *pvHandle;
   // Data buffers

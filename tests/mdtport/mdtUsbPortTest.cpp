@@ -176,13 +176,13 @@ void mdtUsbPortTest::essais()
 
   // Start threads
   QVERIFY(rThd.start());
-  ///QVERIFY(wThd.start());
+  QVERIFY(wThd.start());
 
   // Write/read...
   for(int q=0; q<10; q++){
     // Send some data
-    codec.setDigitalOut(2, true);
-    codec.setDigitalOut(4, true);
+    codec.setDigitalOut((q%7)+1, true);
+    codec.setDigitalOut((q+2)%7+1, true);
     port.lockMutex();
     f = port.writeFramesPool().dequeue();
     QVERIFY(f != 0);
@@ -211,7 +211,7 @@ void mdtUsbPortTest::essais()
 
   qDebug() << "TEST , about to quit";
   rThd.stop();
-  ///wThd.stop();
+  wThd.stop();
   return;
   
   // Open specific device

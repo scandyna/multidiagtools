@@ -87,9 +87,13 @@ void mdtUsbPort::setReadTimeout(int timeout)
 void mdtUsbPort::setWriteTimeout(int timeout)
 {
   if(timeout < 0){
-    pvWriteTimeout = 0;  // 0 means infinite on libusb
+    pvWriteTimeout = 0;  // 0 means infinite on some functions in libusb
+    pvWriteTimeoutTv.tv_sec = -1;
+    pvWriteTimeoutTv.tv_usec = 0;
   }else{
     pvWriteTimeout = timeout;
+    pvWriteTimeoutTv.tv_sec = timeout/1000;
+    pvWriteTimeoutTv.tv_usec = 1000*(timeout%1000);
   }
 }
 
@@ -184,6 +188,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
           }
         }
         // Check if transfer is finish
+        /// \todo Should not be the events locked ??
         qDebug() << "RD: unlock events ...";
         libusb_unlock_events(pvLibusbContext);
         qDebug() << "RD: checking states ...";
@@ -296,217 +301,196 @@ void mdtUsbPort::flushIn()
 /// NOTE: \todo : Update timeout states !
 mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
 {
+  qDebug() << "mdtUsbPort::waitEventWriteReady() ...";
+
+  bool complete;
+  bool *pComplete;
+  struct pollfd *fds;
+  int numFds = 0;
+  int err;
+
+  // If we have no transfer pending, simply return (write() will init a new one if needed)
+  if(!pvWriteTransferPending){
+    qDebug() << "WR: mdtUsbPort::waitEventWriteReady(): no transfer pending, return";
+    return NoError;
+  }
+  // We have a pending transfer here, wait until complete, but give a chance to other thread to handle events
+  qDebug() << "WR: Getting complete flag ...";
+  Q_ASSERT(pvWriteTransfer != 0);
+  pComplete = (bool*)pvWriteTransfer->user_data;
+  complete = *pComplete;
+  qDebug() << "WR: Getting complete flag DONE";
+  // Now, we release the I/O mutex, and deal with events
+  unlockMutex();
+  usleep(50000);  /// NOTE: provisoire !!
+  while(!complete){
+    // Try to get the event lock
+    qDebug() << "WR: try to get event lock ...";
+    if(libusb_try_lock_events(pvLibusbContext) == 0){
+      qDebug() << "WR: have the lock, check if can handle events now ...";
+      // We have the event lock here, check if it's really possible to handle events
+      if(!libusb_event_handling_ok(pvLibusbContext)){
+        // Not possible now, unlock event lock and retry later
+        qDebug() << "WR: Cannot handle events now, unlock ...";
+        libusb_unlock_events(pvLibusbContext);
+        // It can happen that other thread has complete the transfer, take a look
+        lockMutex();
+        Q_ASSERT(pvWriteTransfer != 0);
+        pComplete = (bool*)pvWriteTransfer->user_data;
+        complete = *pComplete;
+        unlockMutex();
+        continue;
+      }else{
+        // Wait on file descriptors
+        fds = getLibusbPollFds(&numFds);
+        err = poll(fds, numFds, -1);   /// NOTE: \todo timeout ?
+        free(fds);
+        if(err == 0){
+          updateWriteTimeoutState(true);
+        }else{
+          updateWriteTimeoutState(false);
+          if(err < 0){
+            libusb_unlock_events(pvLibusbContext);
+            switch(errno){
+              case EINTR:
+                /// \todo abort events ??
+                return WaitingCanceled;
+              default:
+              {
+                mdtError e(MDT_USB_IO_ERROR, "poll() call failed", mdtError::Error);
+                e.setSystemError(errno, strerror(errno));
+                MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+                e.commit();
+                return UnknownError;
+              }
+            }
+          }else{
+            qDebug() << "WR: Can handle events, go !";
+            // Can do event handling here
+            err = libusb_handle_events_locked(pvLibusbContext, &pvWriteTimeoutTv);  /// \todo: timeout ?
+            switch(err){
+              case 0:
+                break;  // All ok, continue
+              case LIBUSB_ERROR_INTERRUPTED:  /// \todo can be because device was deconnected, handle this..
+                libusb_unlock_events(pvLibusbContext);
+                return PortNotFound;
+              default:
+              {
+                mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_locked", mdtError::Error);
+                e.setSystemError(err, errorText(err));
+                MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+                e.commit();
+                libusb_unlock_events(pvLibusbContext);
+                return UnknownError;
+              }
+            }
+            // Check if transfer is finish
+            qDebug() << "WR: handle event DONE";
+          }
+        }
+        // Check if transfer is finish
+        /// \todo Should not be the events locked ??
+        qDebug() << "WR: unlock events ...";
+        libusb_unlock_events(pvLibusbContext);
+        qDebug() << "WR: checking states ...";
+        lockMutex();
+        Q_ASSERT(pvWriteTransfer != 0);
+        pComplete = (bool*)pvWriteTransfer->user_data;
+        complete = *pComplete;
+        unlockMutex();
+        qDebug() << "WR: checking states DONE";
+      }
+      // Release event lock
+      ///libusb_unlock_events(pvLibusbContext);
+    }else{
+      // Other thread is doing event handling, wait
+      libusb_lock_event_waiters(pvLibusbContext);
+      // Wait ...
+      libusb_wait_for_event(pvLibusbContext, 0);  ///  \todo : timeouts ?
+      // Release event waiter lock
+      libusb_unlock_event_waiters(pvLibusbContext);
+    }
+  }
+  qDebug() << "WR: Locking I/O mutex ...";
+  lockMutex();
+  qDebug() << "WR: I/O mutext locked, end, return NoError";
+
   return NoError;
 }
 
 qint64 mdtUsbPort::write(const char *data, qint64 maxSize)
 {
+  Q_ASSERT(data != 0);
+
   int err;
-  libusb_transfer *transfer;
-  int endpointConcernedEvent;
   int len;
+  int retLen;
+  bool *pComplete;
 
-  // Ajust size
-  if(maxSize > (qint64)pvWriteBufferSize){
-    len = pvWriteBufferSize;
+  qDebug() << "mdtUsbPort::write() ...";
+
+  if(pvWriteTransferPending){
+    // We have a transfer pending here
+    Q_ASSERT(pvWriteTransfer != 0);
+    pComplete = (bool*)pvWriteTransfer->user_data;
+    Q_ASSERT(*pComplete == true);
+    // Get size of written data
+    retLen = pvWriteTransfer->actual_length;
+    // Free transfer (NOTE: should be done in close, or something..)
+    libusb_free_transfer(pvWriteTransfer);
+    pvWriteTransfer = 0;
+    pvWriteTransferPending = false;
   }else{
-    len = maxSize;
+    retLen = 0;
   }
-  memcpy(pvWriteBuffer, data, len);
-  // Alloc transfert
-  transfer = libusb_alloc_transfer(0);
-  if(transfer == 0){
-    mdtError e(MDT_USB_IO_ERROR, "libusb_alloc_transfert() failed", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return UnknownError;
-  }
-  // Fill transfert
-  if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
-    libusb_fill_bulk_transfer(transfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, 0, pvWriteTimeout);
-  }else if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
-    libusb_fill_interrupt_transfer(transfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, 0, pvWriteTimeout);
-  }else{
-    libusb_free_transfer(transfer);
-    mdtError e(MDT_USB_IO_ERROR, "Unknown transfert type", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return UnknownError;
-  }
-  // Submit
-  /// \todo Handle retval
-  err = libusb_submit_transfer(transfer);
-  if(err != 0){
-    libusb_free_transfer(transfer);
-    mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return UnknownError;
-  }
-
-  // Test with poll() wait
-  bool retry;
-  int i, numfds;
-  const struct libusb_pollfd **poll_fds = libusb_get_pollfds(pvLibusbContext);
-  i=0;
-  while(poll_fds[i] != 0){
-    qDebug() << "WR Found fd at " << i;
-    i++;
-  }
-  numfds = i;
-  qDebug() << "WR Alloc for " << numfds << " fds";
-  struct pollfd *fds = new struct pollfd[numfds];
-  // Copy
-  for(i=0; i<numfds; i++){
-    fds[i].fd = poll_fds[i]->fd;
-    fds[i].events = poll_fds[i]->events;
-    fds[i].revents = 0;
-    ///free(poll_fds[i]);
-  }
-  free(poll_fds);
-  // Wait until a event is for us
-  retry = true;
-  endpointConcernedEvent = -1;
-  unlockMutex();
-  usleep(50000);
-  while(retry){
-    qDebug() << "WR Entering event try...";
-    if(libusb_try_lock_events(pvLibusbContext) == 0){
-      // Have the lock, do event handling
-      qDebug() << "WR Have the lock, do events...";
-      while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
-        // Check if current thread can do event handling
-        qDebug() << "WR can do event handling now ?";
-        if(!libusb_event_handling_ok(pvLibusbContext)){
-          // Not OK now, retry later
-          qDebug() << "WR No, cannot do event handling now!";
-          libusb_unlock_events(pvLibusbContext);
-          continue;
-        }
-        // Ok, current thread can do event handling now
-        qDebug() << "WR Yes, can do event handling now";
-        retry = false;
-        ///unlockMutex();
-        ///usleep(50000); /// NOTE: provisoire
-        err = poll(fds, numfds, -1);
-        ///lockMutex();
-        if(err < 0){
-          qDebug() << "WR Poll fail !";
-        }
-        if(err > 0){
-          qDebug() << "WR Going handle events";
-          struct timeval tv = {10, 0};
-          err = libusb_handle_events_locked(pvLibusbContext, &tv);
-          qDebug() << "WR Handle events done";
-        }
-        if(err != 0){
-          break;
-        }
-        endpointConcernedEvent = transfer->endpoint;
-      }
-      qDebug() << "WR: unlock event...";
-      libusb_unlock_events(pvLibusbContext);
-    }else{
-      // Another thread is doing event handling. Wait until it signal us it has completed
-      qDebug() << "WR: another thread does events, waiting...";
-      libusb_lock_event_waiters(pvLibusbContext);
-      // Have the event waiters lock
-      while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
-        qDebug() << "WR: checking if a thread is doing events (has the event lock)";
-        // Check if other thread still do event handling
-        if(!libusb_event_handler_active(pvLibusbContext)){
-          // Other thread done, retry now
-          qDebug() << "WR: none active, retry now";
-          ///libusb_unlock_event_waiters(pvLibusbContext);
-          break;
-        }
-        // Wait...
-        qDebug() << "WR: wait ...";
-        libusb_wait_for_event(pvLibusbContext, 0);
-      }
-      libusb_unlock_event_waiters(pvLibusbContext);
-    }
-  }
-  lockMutex();
-  qDebug() << "WR: deleting fds..";
-  delete[] fds;
-
-  // Test with poll() wait
-  /*
-  int i, numfds;
-  const struct libusb_pollfd **poll_fds = libusb_get_pollfds(pvLibusbContext);
-  i=0;
-  while(poll_fds[i] != 0){
-    qDebug() << "Found fd at " << i;
-    i++;
-  }
-  numfds = i;
-  qDebug() << "Alloc for " << numfds << " fds";
-  struct pollfd *fds = new struct pollfd[numfds];
-  // Copy
-  for(i=0; i<numfds; i++){
-    fds[i].fd = poll_fds[i]->fd;
-    fds[i].events = poll_fds[i]->events;
-    fds[i].revents = 0;
-    ///free(poll_fds[i]);
-  }
-  free(poll_fds);
-  // Wait until a event is for us
-  endpointConcernedEvent = -1;
-  while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
-    unlockMutex();
-    usleep(50000); /// NOTE: provisoire
-    err = poll(fds, numfds, -1);
-    lockMutex();
-    if(err < 0){
-      qDebug() << "Poll fail !";
-    }
-    if(err > 0){
-      err = libusb_handle_events(pvLibusbContext);
-    }
-    if(err != 0){
-      break;
-    }
-    endpointConcernedEvent = transfer->endpoint;
-  }
-  */
-
-  // Wait until a event is for us
-  /*
-  endpointConcernedEvent = -1;
-  while(endpointConcernedEvent != (int)pvWriteEndpointAddress){
-    unlockMutex();
-    usleep(500000); /// NOTE: provisoire
-    err = libusb_handle_events(pvLibusbContext);
-    lockMutex();
-    if(err != 0){
-      break;
-    }
-    endpointConcernedEvent = transfer->endpoint;
-  }
-  */
-  switch(err){
-    case 0:
-      break;
-    case LIBUSB_ERROR_INTERRUPTED:  /// \todo can be because device was deconnected, handle this..
-      pvWrittenLength = 0;
-      libusb_free_transfer(transfer);
-      return WaitingCanceled;
-    default:
-      pvWrittenLength = 0;
-      libusb_free_transfer(transfer);
-      mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed", mdtError::Error);
-      e.setSystemError(err, errorText(err));
+  // If no transfer is pending, create one
+  if(!pvWriteTransferPending){
+    qDebug() << "WR: init transfer ...";
+    // Alloc the new transfer
+    pvWriteTransfer = libusb_alloc_transfer(0);  /// \todo Could be done once by setup ?
+    if(pvWriteTransfer == 0){
+      mdtError e(MDT_USB_IO_ERROR, "libusb_alloc_transfert() failed", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
-      return UnknownError;
+      return -1;
+    }
+    pvWriteTransferPending = true;
+    // Ajust possible max length
+    if(maxSize > (qint64)pvWriteBufferSize){
+      len = pvWriteBufferSize;
+    }else{
+      len = maxSize;
+    }
+    // Copy data to write
+    memcpy(pvWriteBuffer, data, len);
+    // Fill the transfer
+    pvWriteTransferComplete = false;
+    if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
+      libusb_fill_bulk_transfer(pvWriteTransfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, (void*)&pvWriteTransferComplete, pvWriteTimeout);
+    }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
+      libusb_fill_interrupt_transfer(pvWriteTransfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, (void*)&pvWriteTransferComplete, pvWriteTimeout);
+    }else{
+      libusb_free_transfer(pvWriteTransfer);
+      mdtError e(MDT_USB_IO_ERROR, "Unknown transfer type", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return -1;
+    }
+    // Submit transfer
+    err = libusb_submit_transfer(pvWriteTransfer); /// \todo Handle retval
+    if(err != 0){
+      libusb_free_transfer(pvWriteTransfer);
+      mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return -1;
+    }
+    // Report that 0 data was readen
+    //return 0; /// \todo Case of breaking: transfer will not be freed
   }
-  pvWrittenLength = transfer->actual_length;
-  ///memcpy(data, pvWriteBuffer, transfer->actual_length);
-  libusb_free_transfer(transfer);
-  qDebug() << "mdtUsbPort::write() , written: " << pvWrittenLength;
 
-  return pvWrittenLength;
+  qDebug() << "Written: " << retLen;
+  return retLen;
 }
 
 void mdtUsbPort::flushOut()
