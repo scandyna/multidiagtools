@@ -1,0 +1,292 @@
+\hypertarget{classmdt_frame_usb_tmc}{
+\section{mdtFrameUsbTmc Class Reference}
+\label{classmdt_frame_usb_tmc}\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+}
+
+
+USBTMC frame.  
+
+
+
+
+{\ttfamily \#include $<$mdtFrameUsbTmc.h$>$}
+
+
+
+Inheritance diagram for mdtFrameUsbTmc:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classmdt_frame_usb_tmc__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtFrameUsbTmc:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classmdt_frame_usb_tmc__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} \{ \par
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253ba5faf83c861e5c3ea0faa73d276b3cebd}{MSG\_\-ZERO} =  0, 
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253bac179e40351460bf53a74d5654ae6a79e}{DEV\_\-DEP\_\-MSG\_\-OUT} =  1, 
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253ba89fd5ab2298285f5a91e3b2f3822a7aa}{DEV\_\-DEP\_\-MSG\_\-IN} =  2, 
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253bafb1be2ba00b4830e457e933e4497a593}{VENDOR\_\-SPECIFIC\_\-OUT} =  126, 
+\par
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253baf6fe219e0ce27a6a793db4b4a5c2a686}{VENDOR\_\-SPECIFIC\_\-IN} =  127
+ \}
+\begin{DoxyCompactList}\small\item\em USBTMC MsgID. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clear internal data. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_frame_usb_tmc_a8a29586ba0f9e3ab9b52601f92818a54}{putData} (char data, int maxLen)
+\begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}{setMsgID} (\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} MsgID)
+\begin{DoxyCompactList}\small\item\em Set the MsgID. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} \hyperlink{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}{MsgID} ()
+\begin{DoxyCompactList}\small\item\em Get the MsgID. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_usb_tmc_aff7b19ad83013402dd115089d31b8642}{setbTag} (quint8 bTag)
+\begin{DoxyCompactList}\small\item\em Set the bTag. \end{DoxyCompactList}\item 
+quint8 \hyperlink{classmdt_frame_usb_tmc_a660956348627e01fedfea0383e2b27e2}{bTag} ()
+\begin{DoxyCompactList}\small\item\em Get the bTag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_usb_tmc_ab6e494c35eba34905987a75101fc48fe}{setEOM} (bool EOM)
+\begin{DoxyCompactList}\small\item\em Set the EOM flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}{isEOM} ()
+\begin{DoxyCompactList}\small\item\em Get the EOM flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}{setMessageData} (const QByteArray \&data)
+\begin{DoxyCompactList}\small\item\em Set the message data. \end{DoxyCompactList}\item 
+QByteArray \& \hyperlink{classmdt_frame_usb_tmc_a03d9a1c16099ba7ea1e3a2b0c4e1493e}{messageData} ()
+\begin{DoxyCompactList}\small\item\em Get the message data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{encode} ()
+\begin{DoxyCompactList}\small\item\em Encode the USBTMC frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+USBTMC frame. 
+
+Used by mdtport API to send en receive frames in USBTMC standard.
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000037}{Todo}]Clarify what this class does: USBTMC message or transfer ?\end{Desc}
+
+
+References:
+\begin{DoxyItemize}
+\item USBTMC Revision 1.0 (2003)
+\item \href{http://www.usb.org/developers/devclass_docs#approved}{\tt http://www.usb.org/developers/devclass\_\-docs\#approved}
+\item \href{http://www.usb.org/developers/devclass_docs/USBTMC_1_006a.zip}{\tt http://www.usb.org/developers/devclass\_\-docs/USBTMC\_\-1\_\-006a.zip} 
+\end{DoxyItemize}
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!msg\_\-id\_\-t@{msg\_\-id\_\-t}}
+\index{msg\_\-id\_\-t@{msg\_\-id\_\-t}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{msg\_\-id\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtFrameUsbTmc::msg\_\-id\_\-t}}}
+\label{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}
+
+
+USBTMC MsgID. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{MSG\_\-ZERO@{MSG\_\-ZERO}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!MSG\_\-ZERO@{MSG\_\-ZERO}}\item[{\em 
+\hypertarget{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253ba5faf83c861e5c3ea0faa73d276b3cebd}{
+MSG\_\-ZERO}
+\label{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253ba5faf83c861e5c3ea0faa73d276b3cebd}
+}]Reserved \index{DEV\_\-DEP\_\-MSG\_\-OUT@{DEV\_\-DEP\_\-MSG\_\-OUT}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!DEV\_\-DEP\_\-MSG\_\-OUT@{DEV\_\-DEP\_\-MSG\_\-OUT}}\item[{\em 
+\hypertarget{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253bac179e40351460bf53a74d5654ae6a79e}{
+DEV\_\-DEP\_\-MSG\_\-OUT}
+\label{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253bac179e40351460bf53a74d5654ae6a79e}
+}]USBTMC device dependent command message \index{DEV\_\-DEP\_\-MSG\_\-IN@{DEV\_\-DEP\_\-MSG\_\-IN}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!DEV\_\-DEP\_\-MSG\_\-IN@{DEV\_\-DEP\_\-MSG\_\-IN}}\item[{\em 
+\hypertarget{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253ba89fd5ab2298285f5a91e3b2f3822a7aa}{
+DEV\_\-DEP\_\-MSG\_\-IN}
+\label{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253ba89fd5ab2298285f5a91e3b2f3822a7aa}
+}]USBTMC response message on the Bulk-\/IN endpoint. Represent the REQUEST\_\-DEV\_\-DEP\_\-MSG\_\-IN if frame is sent from host (OUT) \index{VENDOR\_\-SPECIFIC\_\-OUT@{VENDOR\_\-SPECIFIC\_\-OUT}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!VENDOR\_\-SPECIFIC\_\-OUT@{VENDOR\_\-SPECIFIC\_\-OUT}}\item[{\em 
+\hypertarget{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253bafb1be2ba00b4830e457e933e4497a593}{
+VENDOR\_\-SPECIFIC\_\-OUT}
+\label{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253bafb1be2ba00b4830e457e933e4497a593}
+}]USBTMC vendor specific command message \index{VENDOR\_\-SPECIFIC\_\-IN@{VENDOR\_\-SPECIFIC\_\-IN}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!VENDOR\_\-SPECIFIC\_\-IN@{VENDOR\_\-SPECIFIC\_\-IN}}\item[{\em 
+\hypertarget{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253baf6fe219e0ce27a6a793db4b4a5c2a686}{
+VENDOR\_\-SPECIFIC\_\-IN}
+\label{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253baf6fe219e0ce27a6a793db4b4a5c2a686}
+}]USBTMC vendor specific response message on the Bulk-\/IN endpoint. Represent the REQUEST\_\-VENDOR\_\-SPECIFIC\_\-IN if frame is sent from host (OUT) \end{description}
+\end{Desc}
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_frame_usb_tmc_a660956348627e01fedfea0383e2b27e2}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!bTag@{bTag}}
+\index{bTag@{bTag}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{bTag}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtFrameUsbTmc::bTag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a660956348627e01fedfea0383e2b27e2}
+
+
+Get the bTag. 
+
+Usefull for frames received from device \hypertarget{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!clear@{clear}}
+\index{clear@{clear}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}
+
+
+Clear internal data. 
+
+Calls \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame::clear()} internally after. 
+
+Reimplemented from \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame}.
+
+\hypertarget{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!encode@{encode}}
+\index{encode@{encode}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{encode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::encode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}
+
+
+Encode the USBTMC frame. 
+
+To use to build a frame that will be sent to device.
+
+Note: \hyperlink{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{clear()} is called internally. \hypertarget{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!isEOM@{isEOM}}
+\index{isEOM@{isEOM}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{isEOM}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameUsbTmc::isEOM (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}
+
+
+Get the EOM flag. 
+
+If true, this transfer is the last in current message \hypertarget{classmdt_frame_usb_tmc_a03d9a1c16099ba7ea1e3a2b0c4e1493e}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!messageData@{messageData}}
+\index{messageData@{messageData}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{messageData}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray \& mdtFrameUsbTmc::messageData (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a03d9a1c16099ba7ea1e3a2b0c4e1493e}
+
+
+Get the message data. 
+
+Usefull for frames received from device \hypertarget{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!MsgID@{MsgID}}
+\index{MsgID@{MsgID}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{MsgID}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrameUsbTmc::msg\_\-id\_\-t} mdtFrameUsbTmc::MsgID (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}
+
+
+Get the MsgID. 
+
+Usefull for frames received from device \hypertarget{classmdt_frame_usb_tmc_a8a29586ba0f9e3ab9b52601f92818a54}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!putData@{putData}}
+\index{putData@{putData}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{putData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrameUsbTmc::putData (
+\begin{DoxyParamCaption}
+\item[{char}]{data, }
+\item[{int}]{maxLen}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a8a29586ba0f9e3ab9b52601f92818a54}
+
+
+Put data into the frame. 
+
+This method is called by the read thread, and should not be used directly. \hypertarget{classmdt_frame_usb_tmc_aff7b19ad83013402dd115089d31b8642}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setbTag@{setbTag}}
+\index{setbTag@{setbTag}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{setbTag}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::setbTag (
+\begin{DoxyParamCaption}
+\item[{quint8}]{bTag}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_aff7b19ad83013402dd115089d31b8642}
+
+
+Set the bTag. 
+
+The bTag should be incremented each time a new USBTMC message is sent, (each time a new USBTMC header is sent).
+
+To use to build a frame that will be sent to device.
+
+\begin{DoxyPrecond}{Precondition}
+bTag must be $<$$>$ 0 
+\end{DoxyPrecond}
+\hypertarget{classmdt_frame_usb_tmc_ab6e494c35eba34905987a75101fc48fe}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setEOM@{setEOM}}
+\index{setEOM@{setEOM}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{setEOM}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::setEOM (
+\begin{DoxyParamCaption}
+\item[{bool}]{EOM}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_ab6e494c35eba34905987a75101fc48fe}
+
+
+Set the EOM flag. 
+
+EOM: End Of (USBTMC) Message.
+
+If true, tells the device that this USBTMC transfer is the last in message. \hypertarget{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setMessageData@{setMessageData}}
+\index{setMessageData@{setMessageData}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{setMessageData}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::setMessageData (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}
+
+
+Set the message data. 
+
+To use to build a frame that will be sent to device. \hypertarget{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}{
+\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setMsgID@{setMsgID}}
+\index{setMsgID@{setMsgID}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
+\subsubsection[{setMsgID}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::setMsgID (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtFrameUsbTmc::msg\_\-id\_\-t}}]{MsgID}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}
+
+
+Set the MsgID. 
+
+To use to build a frame that will be sent to device. 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtFrameUsbTmc.h\item 
+src/mdtutils/mdtFrameUsbTmc.cpp\end{DoxyCompactItemize}

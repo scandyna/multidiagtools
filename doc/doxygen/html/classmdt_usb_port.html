@@ -116,14 +116,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write buffers. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99743a3deab63e9e021cd16b004df51d"></a><!-- doxytag: member="mdtUsbPort::transfertCallback" ref="a99743a3deab63e9e021cd16b004df51d" args="(struct libusb_transfer *transfer)" -->
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a99743a3deab63e9e021cd16b004df51d">transfertCallback</a> (struct libusb_transfer *transfer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfert callback for asynch I/O. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ab1d37a64b7b4e471b4b9790e3c25d853">transferCallback</a> (struct libusb_transfer *transfer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfert callback for asynch I/O.  <a href="#ab1d37a64b7b4e471b4b9790e3c25d853"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USB port I/O port class. </p>
 <p>Built on top of libusb-1.x API</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Note about <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> with vid:pid syntax </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>Note about <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> with vid:pid syntax </dd></dl>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="abce257345c8af47494215cd7ee75f82d"></a><!-- doxytag: member="mdtUsbPort::read" ref="abce257345c8af47494215cd7ee75f82d" args="(char *data, qint64 maxSize)" -->
 <div class="memitem">
@@ -152,7 +151,12 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Read data from port. </p>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
-<p>Mutex is not handled by this method. </p>
+<p>Mutex is not handled by this method.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Echanger fin et début transfert (sinon ne se fait pas de suite...) </dd></dl>
+
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Could be done once by setup ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Handle retval </dd></dl>
+</p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
@@ -202,6 +206,28 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a class="anchor" id="ab1d37a64b7b4e471b4b9790e3c25d853"></a><!-- doxytag: member="mdtUsbPort::transferCallback" ref="ab1d37a64b7b4e471b4b9790e3c25d853" args="(struct libusb_transfer *transfer)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbPort::transferCallback </td>
+          <td>(</td>
+          <td class="paramtype">struct libusb_transfer *&#160;</td>
+          <td class="paramname"><em>transfer</em></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Transfert callback for asynch I/O. </p>
+
+<p><p><a class="el" href="structmdt__usb__port__transfer__data.html">mdt_usb_port_transfer_data</a> *data = (mdt_usb_port_transfer_data*)transfer-&gt;user_data; Q_ASSERT(data != 0); data-&gt;flag1 = transfer-&gt;status;</p>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a3be875f6f10ae94fd3a94f925bb935e7"></a><!-- doxytag: member="mdtUsbPort::waitEventWriteReady" ref="a3be875f6f10ae94fd3a94f925bb935e7" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -220,10 +246,17 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>NOTE:</p>
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>: Implement.... Note: use select ?? Mutex !! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>: Update timeout states ! </dd></dl>
 
-<p><p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: map correct error </dd></dl>
+<p><p>NOTE: provisoire !!</p>
+<p>NOTE:</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>timeout ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>abort events ?? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>: timeout ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>can be because device was deconnected, handle this.. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Should not be the events locked ?? </dd></dl>
+<p>libusb_unlock_events(pvLibusbContext);</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>: timeouts ? </dd></dl>
 </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
@@ -248,10 +281,17 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>NOTE:</p>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>: Implement.... Note: use select ?? Mutex !! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>: Update timeout states ! </dd></dl>
 
-<p><p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>: map correct error </dd></dl>
+<p><p>NOTE: provisoire !!</p>
+<p>NOTE:</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>timeout ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>abort events ?? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>: timeout ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>can be because device was deconnected, handle this.. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Should not be the events locked ?? </dd></dl>
+<p>libusb_unlock_events(pvLibusbContext);</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>: timeouts ? </dd></dl>
 </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
@@ -287,6 +327,10 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.</p>
 <p>Mutex is not handled by this method. </p>
 
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Could be done once by setup ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Handle retval </dd></dl>
+</p>
+
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
 </div>
@@ -310,7 +354,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 22:30:52 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

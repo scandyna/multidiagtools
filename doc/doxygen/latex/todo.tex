@@ -1,43 +1,73 @@
-\label{todo__todo000003}
-\hypertarget{todo__todo000003}{}
+\label{todo__todo000004}
+\hypertarget{todo__todo000004}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort::close}() ]Actuellement, les queues sont deletée ici, que faire ? 
 \end{DoxyDescription}
 
-\label{todo__todo000004}
-\hypertarget{todo__todo000004}{}
+\label{todo__todo000003}
+\hypertarget{todo__todo000003}{}
  
 \begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn}() ]Clean this part
+\item[Member \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} ]add UnhandledError to complete UnknownError (+ adapt in threads) 
+
+add a DeviceDisconnected (+ adapt in threads) 
 \end{DoxyDescription}
 
 \label{todo__todo000005}
 \hypertarget{todo__todo000005}{}
  
 \begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn}() ]Clean this part
+\end{DoxyDescription}
+
+\label{todo__todo000006}
+\hypertarget{todo__todo000006}{}
+ 
+\begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut}() ]Clean this part
 \end{DoxyDescription}
 
-\label{todo__todo000011}
-\hypertarget{todo__todo000011}{}
+\label{todo__todo000033}
+\hypertarget{todo__todo000033}{}
  
 \begin{DoxyDescription}
 \item[Class \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} ]Comment this class 
 \end{DoxyDescription}
 
-\label{todo__todo000012}
-\hypertarget{todo__todo000012}{}
+\label{todo__todo000034}
+\hypertarget{todo__todo000034}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort::getCtlStates}()=0 ]Update name to : updateCtlStates ? 
 \end{DoxyDescription}
 
-\label{todo__todo000013}
-\hypertarget{todo__todo000013}{}
+\label{todo__todo000035}
+\hypertarget{todo__todo000035}{}
+ 
+\begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}{mdtFrameCodecK8055::decode}(QByteArray \&data) ]check statu field ?? 
+\end{DoxyDescription}
+
+\label{todo__todo000036}
+\hypertarget{todo__todo000036}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}{mdtFrameCodecModbus::decode}(const QByteArray \&pdu) ]Base 16 ?? 
+\end{DoxyDescription}
+
+\label{todo__todo000037}
+\hypertarget{todo__todo000037}{}
+ 
+\begin{DoxyDescription}
+\item[Class \hyperlink{classmdt_frame_usb_tmc}{mdtFrameUsbTmc} ]Clarify what this class does: USBTMC message or transfer ?
+\end{DoxyDescription}
+
+\label{todo__todo000007}
+\hypertarget{todo__todo000007}{}
+ 
+\begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{mdtPortConfig::operator==}(const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other) ]Rollback: voir callback libusb, si data, ... 
 \end{DoxyDescription}
 
 \label{todo__todo000001}
@@ -47,29 +77,69 @@
 \item[Class \hyperlink{classmdt_port_lock}{mdtPortLock} ]Implement UUCP format in LCK.. files 
 \end{DoxyDescription}
 
-\label{todo__todo000010}
-\hypertarget{todo__todo000010}{}
+\label{todo__todo000032}
+\hypertarget{todo__todo000032}{}
  
 \begin{DoxyDescription}
 \item[Class \hyperlink{classmdt_usb_port}{mdtUsbPort} ]Note about setPortName() with vid:pid syntax 
 \end{DoxyDescription}
 
-\label{todo__todo000008}
-\hypertarget{todo__todo000008}{}
+\label{todo__todo000016}
+\hypertarget{todo__todo000016}{}
  
 \begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{mdtUsbPort::waitEventWriteReady}() ]: Implement.... Note: use select ?? Mutex !! 
+\item[Member \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{mdtUsbPort::read}(char $\ast$data, qint64 maxSize) ]Echanger fin et début transfert (sinon ne se fait pas de suite...) 
 
-: map correct error 
+Could be done once by setup ? 
+
+Handle retval 
 \end{DoxyDescription}
 
-\label{todo__todo000006}
-\hypertarget{todo__todo000006}{}
+\label{todo__todo000019}
+\hypertarget{todo__todo000019}{}
  
 \begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{mdtUsbPort::waitForReadyRead}() ]: Implement.... Note: use select ?? Mutex !! 
+\item[Member \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{mdtUsbPort::waitEventWriteReady}() ]: Update timeout states ! 
 
-: map correct error 
+timeout ? 
+
+abort events ?? 
+
+: timeout ? 
+
+can be because device was deconnected, handle this.. 
+
+Should not be the events locked ?? 
+
+: timeouts ? 
+\end{DoxyDescription}
+
+\label{todo__todo000009}
+\hypertarget{todo__todo000009}{}
+ 
+\begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{mdtUsbPort::waitForReadyRead}() ]: Update timeout states ! 
+
+timeout ? 
+
+abort events ?? 
+
+: timeout ? 
+
+can be because device was deconnected, handle this.. 
+
+Should not be the events locked ?? 
+
+: timeouts ? 
+\end{DoxyDescription}
+
+\label{todo__todo000026}
+\hypertarget{todo__todo000026}{}
+ 
+\begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{mdtUsbPort::write}(const char $\ast$data, qint64 maxSize) ]Could be done once by setup ? 
+
+Handle retval 
 \end{DoxyDescription}
 
 \label{todo__todo000002}

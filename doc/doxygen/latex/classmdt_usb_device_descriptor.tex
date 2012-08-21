@@ -14,7 +14,7 @@ USB device descriptor.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \hyperlink{classmdt_usb_device_descriptor_a45a9a9f10b53233cc7980e482d08aa3a}{fetchAttributes} (libusb\_\-device $\ast$device)
+int \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes} (libusb\_\-device $\ast$device, bool fetchActiveConfigOnly)
 \begin{DoxyCompactList}\small\item\em Ftech the device descriptor's attributes. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_usb_device_descriptor_add8de4e1850995461a37ed27b75b4381}{
 quint8 \hyperlink{classmdt_usb_device_descriptor_add8de4e1850995461a37ed27b75b4381}{bDescriptorType} () const }
@@ -52,15 +52,44 @@ quint16 \hyperlink{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b
 \begin{DoxyCompactList}\small\item\em Product ID (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
 quint16 \hyperlink{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}{bcdDevice} () const 
 \begin{DoxyCompactList}\small\item\em Device release number id. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_device_descriptor_a6d57046f94233381a0708a5ce4ab65d5}{
-QList$<$ \hyperlink{classmdt_usb_config_descriptor}{mdtUsbConfigDescriptor} $\ast$ $>$ {\bfseries configurations} ()}
-\label{classmdt_usb_device_descriptor_a6d57046f94233381a0708a5ce4ab65d5}
-
-\end{DoxyCompactItemize}
+QList$<$ \hyperlink{classmdt_usb_config_descriptor}{mdtUsbConfigDescriptor} $\ast$ $>$ \& \hyperlink{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}{configurations} ()
+\begin{DoxyCompactList}\small\item\em Access configurations. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_interface_descriptor}{mdtUsbInterfaceDescriptor} $\ast$ \hyperlink{classmdt_usb_device_descriptor_af1e27ae69d3c77c9dfc53a3f261caeae}{interface} (int configIndex, int ifaceIndex)
+\begin{DoxyCompactList}\small\item\em Get a interface descriptor by index. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor} $\ast$ \hyperlink{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}{endpoint} (int configIndex, int ifaceIndex, int endpointIndex)
+\begin{DoxyCompactList}\small\item\em Get a endpoint descriptor by index. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor} $\ast$ \hyperlink{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{firstBulkOutEndpoint} (int configIndex, int ifaceIndex, bool dataEndpointOnly)
+\begin{DoxyCompactList}\small\item\em Find the first bulk transfert endpoint with OUT direction. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor} $\ast$ \hyperlink{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}{firstBulkInEndpoint} (int configIndex, int ifaceIndex, bool dataEndpointOnly)
+\begin{DoxyCompactList}\small\item\em Find the first bulk transfert endpoint with IN direction. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor} $\ast$ \hyperlink{classmdt_usb_device_descriptor_ad30b3579b0c77585df29acdfdf0fc179}{firstInterruptOutEndpoint} (int configIndex, int ifaceIndex, bool dataEndpointOnly)
+\begin{DoxyCompactList}\small\item\em Find the first interrupt transfert endpoint with OUT direction. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor} $\ast$ \hyperlink{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{firstInterruptInEndpoint} (int configIndex, int ifaceIndex, bool dataEndpointOnly)
+\begin{DoxyCompactList}\small\item\em Find the first interrupt transfert endpoint with IN direction. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 USB device descriptor. 
+
+Internally, once \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} is called, device configuration(s) will be scanned, and, for each configuration, interfaces and finally endpoinds will be fetched.
+
+This tree is represented by several classes:
+\begin{DoxyItemize}
+\item Device descriptor: \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} (this class)
+\item Configuration descriptor: \hyperlink{classmdt_usb_config_descriptor}{mdtUsbConfigDescriptor}
+\item Interface descriptor: \hyperlink{classmdt_usb_interface_descriptor}{mdtUsbInterfaceDescriptor}
+\item Endpoint descriptor: \hyperlink{classmdt_usb_endpoint_descriptor}{mdtUsbEndpointDescriptor}
+\end{DoxyItemize}
+
+Each \char`\"{}parent\char`\"{} class gives access to their child with a QList$<$$>$ method. For example, configurations are available with \hyperlink{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}{configurations()}.
+
+For current needed attributes, some helper methods are available:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_usb_device_descriptor_af1e27ae69d3c77c9dfc53a3f261caeae}{interface(int, int)} : to get a interface descriptor by indexes.
+\item \hyperlink{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}{endpoint(int, int, int)} : to get a endpoint descriptor by index.
+\end{DoxyItemize}
+
+When goal is to open a particular device for I/O, a simple way to get needed informations could be to call \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} with fetchActiveConfigOnly set true, then get endpoints with \hyperlink{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{firstBulkOutEndpoint()} , \hyperlink{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}{firstBulkInEndpoint()} , \hyperlink{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{firstInterruptInEndpoint()} with configIndex set to 0, and a valid ifaceIndex. 
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}{
@@ -102,31 +131,207 @@ Coded in BCD. F.ex. USB 2.0 will be 0x0200. \hypertarget{classmdt_usb_device_des
 
 Maximum packet size for endpoint zero. 
 
-(only 8, 16, 32, or 64 are valid) \hypertarget{classmdt_usb_device_descriptor_a45a9a9f10b53233cc7980e482d08aa3a}{
+(only 8, 16, 32, or 64 are valid) \hypertarget{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!configurations@{configurations}}
+\index{configurations@{configurations}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{configurations}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtUsbConfigDescriptor} $\ast$ $>$ \& mdtUsbDeviceDescriptor::configurations (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}
+
+
+Access configurations. 
+
+Configurations are available after a call of \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} \hypertarget{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!endpoint@{endpoint}}
+\index{endpoint@{endpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{endpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbEndpointDescriptor} $\ast$ mdtUsbDeviceDescriptor::endpoint (
+\begin{DoxyParamCaption}
+\item[{int}]{configIndex, }
+\item[{int}]{ifaceIndex, }
+\item[{int}]{endpointIndex}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}
+
+
+Get a endpoint descriptor by index. 
+
+Index checking is done in this method, and 0 (NULL pointer) is returned on wrong index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em configIndex} & Index of configuration (unsorted, ordered as during discovery) \\
+\hline
+{\em ifaceIndex} & Index of interface (unsorted, ordered as during discovery) \\
+\hline
+{\em endpointIndex} & Index of endpoint (unsorted, ordered as during discovery) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to endpoint descriptor, or 0 on error 
+\end{DoxyReturn}
+\hypertarget{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!fetchAttributes@{fetchAttributes}}
 \index{fetchAttributes@{fetchAttributes}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
 \subsubsection[{fetchAttributes}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbDeviceDescriptor::fetchAttributes (
 \begin{DoxyParamCaption}
-\item[{libusb\_\-device $\ast$}]{device}
+\item[{libusb\_\-device $\ast$}]{device, }
+\item[{bool}]{fetchActiveConfigOnly}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_usb_device_descriptor_a45a9a9f10b53233cc7980e482d08aa3a}
+\label{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}
 
 
 Ftech the device descriptor's attributes. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em fetchActiveConfigOnly} & If true, the interfaces and endpoints informations will be fetched only for active configuration. Else, all device's available configurations will be scanned. \\
+\hline
+\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 on success, libusb error code else. On error, the attributes must be considered as invalid. 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 device must be a valid pointer 
 \end{DoxyPrecond}
+\hypertarget{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstBulkInEndpoint@{firstBulkInEndpoint}}
+\index{firstBulkInEndpoint@{firstBulkInEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{firstBulkInEndpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbEndpointDescriptor} $\ast$ mdtUsbDeviceDescriptor::firstBulkInEndpoint (
+\begin{DoxyParamCaption}
+\item[{int}]{configIndex, }
+\item[{int}]{ifaceIndex, }
+\item[{bool}]{dataEndpointOnly}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}
 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000006}{Todo}]Config descriptors \end{Desc}
+Find the first bulk transfert endpoint with IN direction. 
 
 
+\begin{DoxyParams}{Parameters}
+{\em configIndex} & Index of configuration (unsorted, ordered as during discovery) \\
+\hline
+{\em ifaceIndex} & Index of interface (unsorted, ordered as during discovery) \\
+\hline
+{\em dataEndpointOnly} & If true, only data endpoints will be considered (feedback and other are ignored) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to endpoint descriptor, 0 if none found, or on error 
+\end{DoxyReturn}
+\hypertarget{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstBulkOutEndpoint@{firstBulkOutEndpoint}}
+\index{firstBulkOutEndpoint@{firstBulkOutEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{firstBulkOutEndpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbEndpointDescriptor} $\ast$ mdtUsbDeviceDescriptor::firstBulkOutEndpoint (
+\begin{DoxyParamCaption}
+\item[{int}]{configIndex, }
+\item[{int}]{ifaceIndex, }
+\item[{bool}]{dataEndpointOnly}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}
+
+
+Find the first bulk transfert endpoint with OUT direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em configIndex} & Index of configuration (unsorted, ordered as during discovery) \\
+\hline
+{\em ifaceIndex} & Index of interface (unsorted, ordered as during discovery) \\
+\hline
+{\em dataEndpointOnly} & If true, only data endpoints will be considered (feedback and other are ignored) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to endpoint descriptor, 0 if none found, or on error 
+\end{DoxyReturn}
+\hypertarget{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstInterruptInEndpoint@{firstInterruptInEndpoint}}
+\index{firstInterruptInEndpoint@{firstInterruptInEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{firstInterruptInEndpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbEndpointDescriptor} $\ast$ mdtUsbDeviceDescriptor::firstInterruptInEndpoint (
+\begin{DoxyParamCaption}
+\item[{int}]{configIndex, }
+\item[{int}]{ifaceIndex, }
+\item[{bool}]{dataEndpointOnly}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}
+
+
+Find the first interrupt transfert endpoint with IN direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em configIndex} & Index of configuration (unsorted, ordered as during discovery) \\
+\hline
+{\em ifaceIndex} & Index of interface (unsorted, ordered as during discovery) \\
+\hline
+{\em dataEndpointOnly} & If true, only data endpoints will be considered (feedback and other are ignored) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to endpoint descriptor, 0 if none found, or on error 
+\end{DoxyReturn}
+\hypertarget{classmdt_usb_device_descriptor_ad30b3579b0c77585df29acdfdf0fc179}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstInterruptOutEndpoint@{firstInterruptOutEndpoint}}
+\index{firstInterruptOutEndpoint@{firstInterruptOutEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{firstInterruptOutEndpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbEndpointDescriptor} $\ast$ mdtUsbDeviceDescriptor::firstInterruptOutEndpoint (
+\begin{DoxyParamCaption}
+\item[{int}]{configIndex, }
+\item[{int}]{ifaceIndex, }
+\item[{bool}]{dataEndpointOnly}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_ad30b3579b0c77585df29acdfdf0fc179}
+
+
+Find the first interrupt transfert endpoint with OUT direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em configIndex} & Index of configuration (unsorted, ordered as during discovery) \\
+\hline
+{\em ifaceIndex} & Index of interface (unsorted, ordered as during discovery) \\
+\hline
+{\em dataEndpointOnly} & If true, only data endpoints will be considered (feedback and other are ignored) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to endpoint descriptor, 0 if none found, or on error 
+\end{DoxyReturn}
+\hypertarget{classmdt_usb_device_descriptor_af1e27ae69d3c77c9dfc53a3f261caeae}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!interface@{interface}}
+\index{interface@{interface}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{interface}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbInterfaceDescriptor} $\ast$ mdtUsbDeviceDescriptor::interface (
+\begin{DoxyParamCaption}
+\item[{int}]{configIndex, }
+\item[{int}]{ifaceIndex}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_device_descriptor_af1e27ae69d3c77c9dfc53a3f261caeae}
+
+
+Get a interface descriptor by index. 
+
+Index checking is done in this method, and 0 (NULL pointer) is returned on wrong index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em configIndex} & Index of configuration (unsorted, ordered as during discovery) \\
+\hline
+{\em ifaceIndex} & Index of interface (unsorted, ordered as during discovery) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to interface descriptor, or 0 on error 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

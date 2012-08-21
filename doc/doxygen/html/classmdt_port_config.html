@@ -133,8 +133,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the byte per byte write On/Off.  <a href="#ac6cb3d8fbefad9a832335c3f2023832c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a9b5041ba740a5918e5e1323e61d3bbdc">bytePerByteWrite</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get byte per byte write flag (On/Off)  <a href="#a9b5041ba740a5918e5e1323e61d3bbdc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a639c71f90cfeb7e2160ad90e9775054b"></a><!-- doxytag: member="mdtPortConfig::operator==" ref="a639c71f90cfeb7e2160ad90e9775054b" args="(const mdtPortConfig &amp;other)" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_config.html#a639c71f90cfeb7e2160ad90e9775054b">operator==</a> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Query/Answer protocol.  <a href="#a639c71f90cfeb7e2160ad90e9775054b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a539c86934d41306a3ed18a8292457d"></a><!-- doxytag: member="mdtPortConfig::operator!=" ref="a5a539c86934d41306a3ed18a8292457d" args="(const mdtPortConfig &amp;other)" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other)</td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
@@ -223,6 +223,29 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 <p>Get frame type. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a627adcb87d26757238f844db19fc248d" title="Set frame type.">setFrameType()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a639c71f90cfeb7e2160ad90e9775054b"></a><!-- doxytag: member="mdtPortConfig::operator==" ref="a639c71f90cfeb7e2160ad90e9775054b" args="(const mdtPortConfig &amp;other)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortConfig::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Use the Query/Answer protocol. </p>
+<p>Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that mdpAbstractPort::waitForReadyRead() returns allways immediatly. For example, this is true with <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> when dealing with the Velleman K8055. In this situation, the purely event driven approach is not sufficient, causing heavily usage of CPU. Another remark, is that such situation is true on transfer based port.</p>
+<p>Question: What is a important difference between a full duplex serial port and a USB port ?<br/>
+ The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Rollback: voir callback libusb, si data, ... </dd></dl>
 
 </div>
 </div>
@@ -342,7 +365,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <li>Read and write frame size: 1024</li>
 <li>Read and write queue size: 10</li>
 <li>Use read timeout protocol: false</li>
-<li>Read/Write timout: 500 [ms]</li>
+<li>Read timout: 5000 [ms]</li>
+<li>Write timout: -1 (infinite)</li>
 <li>Frame type: RAW</li>
 <li>En of frame sequence: LF (ASCII 0x0A)</li>
 <li>Byte per byte write: Off</li>
@@ -744,7 +768,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 22:30:52 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

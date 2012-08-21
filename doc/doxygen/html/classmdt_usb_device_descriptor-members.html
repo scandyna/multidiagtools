@@ -72,10 +72,16 @@ This is the complete list of members for <a class="el" href="classmdt_usb_device
   <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#aac1207bd8cb91e04f48f6748b1a8ca16">bDeviceProtocol</a>() const </td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a50b483ed26f546017bde4ae6f9762268">bDeviceSubClass</a>() const </td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a08b5ae262e2b966c952ee5e5bcc6fb10">bMaxPacketSize0</a>() const </td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>configurations</b>() (defined in <a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a>)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a45a9a9f10b53233cc7980e482d08aa3a">fetchAttributes</a>(libusb_device *device)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02">configurations</a>()</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d">endpoint</a>(int configIndex, int ifaceIndex, int endpointIndex)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500">fetchAttributes</a>(libusb_device *device, bool fetchActiveConfigOnly)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585">firstBulkInEndpoint</a>(int configIndex, int ifaceIndex, bool dataEndpointOnly)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1">firstBulkOutEndpoint</a>(int configIndex, int ifaceIndex, bool dataEndpointOnly)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b">firstInterruptInEndpoint</a>(int configIndex, int ifaceIndex, bool dataEndpointOnly)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#ad30b3579b0c77585df29acdfdf0fc179">firstInterruptOutEndpoint</a>(int configIndex, int ifaceIndex, bool dataEndpointOnly)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1">idProduct</a>() const </td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e">idVendor</a>() const </td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae">interface</a>(int configIndex, int ifaceIndex)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtUsbDeviceDescriptor</b>() (defined in <a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a>)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtUsbDeviceDescriptor</b>() (defined in <a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a>)</td><td><a class="el" href="classmdt_usb_device_descriptor.html">mdtUsbDeviceDescriptor</a></td><td></td></tr>
 </table></div>
@@ -93,7 +99,7 @@ This is the complete list of members for <a class="el" href="classmdt_usb_device
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 13:13:29 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

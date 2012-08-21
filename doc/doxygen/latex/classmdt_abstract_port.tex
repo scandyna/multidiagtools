@@ -231,6 +231,10 @@ Base class for port I/O.
 Error. 
 
 \begin{Desc}
+\item[\hyperlink{todo__todo000003}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
+
+add a DeviceDisconnected (+ adapt in threads) \end{Desc}
+\begin{Desc}
 \item[Enumerator: ]\par
 \begin{description}
 \index{NoError@{NoError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!NoError@{NoError}}\item[{\em 
@@ -305,7 +309,7 @@ Subclass notes:\par
  Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated. Note that this method must be called from subclass destructor. See \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort()} for details.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000003}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+\item[\hyperlink{todo__todo000004}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
 
 
 Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
@@ -324,7 +328,7 @@ Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6e
 Flush read buffers. 
 
 NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000004}{Todo}]Clean this part\end{Desc}
+\item[\hyperlink{todo__todo000005}{Todo}]Clean this part\end{Desc}
 
 
 Subclass notes:\par
@@ -353,7 +357,7 @@ Reimplemented in \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{mdt
 Flush write buffers. 
 
 NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]Clean this part\end{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]Clean this part\end{Desc}
 
 
 Subclass notes:\par

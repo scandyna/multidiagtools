@@ -76,8 +76,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#a45a9a9f10b53233cc7980e482d08aa3a">fetchAttributes</a> (libusb_device *device)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Ftech the device descriptor's attributes.  <a href="#a45a9a9f10b53233cc7980e482d08aa3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500">fetchAttributes</a> (libusb_device *device, bool fetchActiveConfigOnly)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Ftech the device descriptor's attributes.  <a href="#a6239e5e56e2e25a686cac98b18158500"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add8de4e1850995461a37ed27b75b4381"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::bDescriptorType" ref="add8de4e1850995461a37ed27b75b4381" args="() const " -->
 quint8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#add8de4e1850995461a37ed27b75b4381">bDescriptorType</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Device descriptor type. <br/></td></tr>
@@ -102,11 +102,38 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Product ID (assigned by the USB-IF) <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#a6b6f21f8dfdb707bfc23d01076b7ec5e">bcdDevice</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Device release number id.  <a href="#a6b6f21f8dfdb707bfc23d01076b7ec5e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d57046f94233381a0708a5ce4ab65d5"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::configurations" ref="a6d57046f94233381a0708a5ce4ab65d5" args="()" -->
-QList&lt; <a class="el" href="classmdt_usb_config_descriptor.html">mdtUsbConfigDescriptor</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>configurations</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_usb_config_descriptor.html">mdtUsbConfigDescriptor</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02">configurations</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Access configurations.  <a href="#acfc9e29a48b251012cbc38d339dc6a02"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_interface_descriptor.html">mdtUsbInterfaceDescriptor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae">interface</a> (int configIndex, int ifaceIndex)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a interface descriptor by index.  <a href="#af1e27ae69d3c77c9dfc53a3f261caeae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d">endpoint</a> (int configIndex, int ifaceIndex, int endpointIndex)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a endpoint descriptor by index.  <a href="#a41582e524cba87f52ca3628c0b690b8d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1">firstBulkOutEndpoint</a> (int configIndex, int ifaceIndex, bool dataEndpointOnly)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the first bulk transfert endpoint with OUT direction.  <a href="#ac1991e3d800700b2c099cd1aca2274d1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585">firstBulkInEndpoint</a> (int configIndex, int ifaceIndex, bool dataEndpointOnly)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the first bulk transfert endpoint with IN direction.  <a href="#a078b5d3dfe6fd56ab2f716357a160585"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#ad30b3579b0c77585df29acdfdf0fc179">firstInterruptOutEndpoint</a> (int configIndex, int ifaceIndex, bool dataEndpointOnly)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the first interrupt transfert endpoint with OUT direction.  <a href="#ad30b3579b0c77585df29acdfdf0fc179"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b">firstInterruptInEndpoint</a> (int configIndex, int ifaceIndex, bool dataEndpointOnly)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the first interrupt transfert endpoint with IN direction.  <a href="#a95112e151605bf8b10c5eca74faaea3b"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USB device descriptor. </p>
+<p>Internally, once <a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes()</a> is called, device configuration(s) will be scanned, and, for each configuration, interfaces and finally endpoinds will be fetched.</p>
+<p>This tree is represented by several classes:</p>
+<ul>
+<li>Device descriptor: <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> (this class)</li>
+<li>Configuration descriptor: <a class="el" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a></li>
+<li>Interface descriptor: <a class="el" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a></li>
+<li>Endpoint descriptor: <a class="el" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a></li>
+</ul>
+<p>Each "parent" class gives access to their child with a QList&lt;&gt; method. For example, configurations are available with <a class="el" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">configurations()</a>.</p>
+<p>For current needed attributes, some helper methods are available:</p>
+<ul>
+<li><a class="el" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface(int, int)</a> : to get a interface descriptor by indexes.</li>
+<li><a class="el" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d" title="Get a endpoint descriptor by index.">endpoint(int, int, int)</a> : to get a endpoint descriptor by index.</li>
+</ul>
+<p>When goal is to open a particular device for I/O, a simple way to get needed informations could be to call <a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes()</a> with fetchActiveConfigOnly set true, then get endpoints with <a class="el" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1" title="Find the first bulk transfert endpoint with OUT direction.">firstBulkOutEndpoint()</a> , <a class="el" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585" title="Find the first bulk transfert endpoint with IN direction.">firstBulkInEndpoint()</a> , <a class="el" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b" title="Find the first interrupt transfert endpoint with IN direction.">firstInterruptInEndpoint()</a> with configIndex set to 0, and a valid ifaceIndex. </p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a6b6f21f8dfdb707bfc23d01076b7ec5e"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::bcdDevice" ref="a6b6f21f8dfdb707bfc23d01076b7ec5e" args="() const " -->
 <div class="memitem">
@@ -165,7 +192,71 @@ QList&lt; <a class="el" href="classmdt_usb_config_descriptor.html">mdtUsbConfigD
 
 </div>
 </div>
-<a class="anchor" id="a45a9a9f10b53233cc7980e482d08aa3a"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::fetchAttributes" ref="a45a9a9f10b53233cc7980e482d08aa3a" args="(libusb_device *device)" -->
+<a class="anchor" id="acfc9e29a48b251012cbc38d339dc6a02"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::configurations" ref="acfc9e29a48b251012cbc38d339dc6a02" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="classmdt_usb_config_descriptor.html">mdtUsbConfigDescriptor</a> * &gt; &amp; mdtUsbDeviceDescriptor::configurations </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Access configurations. </p>
+<p>Configurations are available after a call of <a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes()</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a41582e524cba87f52ca3628c0b690b8d"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::endpoint" ref="a41582e524cba87f52ca3628c0b690b8d" args="(int configIndex, int ifaceIndex, int endpointIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> * mdtUsbDeviceDescriptor::endpoint </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ifaceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>endpointIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a endpoint descriptor by index. </p>
+<p>Index checking is done in this method, and 0 (NULL pointer) is returned on wrong index.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configIndex</td><td>Index of configuration (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">ifaceIndex</td><td>Index of interface (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">endpointIndex</td><td>Index of endpoint (unsorted, ordered as during discovery) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, or 0 on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6239e5e56e2e25a686cac98b18158500"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::fetchAttributes" ref="a6239e5e56e2e25a686cac98b18158500" args="(libusb_device *device, bool fetchActiveConfigOnly)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -173,19 +264,246 @@ QList&lt; <a class="el" href="classmdt_usb_config_descriptor.html">mdtUsbConfigD
           <td class="memname">int mdtUsbDeviceDescriptor::fetchAttributes </td>
           <td>(</td>
           <td class="paramtype">libusb_device *&#160;</td>
-          <td class="paramname"><em>device</em></td><td>)</td>
+          <td class="paramname"><em>device</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fetchActiveConfigOnly</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Ftech the device descriptor's attributes. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fetchActiveConfigOnly</td><td>If true, the interfaces and endpoints informations will be fetched only for active configuration. Else, all device's available configurations will be scanned. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 on success, libusb error code else. On error, the attributes must be considered as invalid. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>device must be a valid pointer </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Config descriptors </dd></dl>
-</p>
+</div>
+</div>
+<a class="anchor" id="a078b5d3dfe6fd56ab2f716357a160585"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::firstBulkInEndpoint" ref="a078b5d3dfe6fd56ab2f716357a160585" args="(int configIndex, int ifaceIndex, bool dataEndpointOnly)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> * mdtUsbDeviceDescriptor::firstBulkInEndpoint </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ifaceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dataEndpointOnly</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Find the first bulk transfert endpoint with IN direction. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configIndex</td><td>Index of configuration (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">ifaceIndex</td><td>Index of interface (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">dataEndpointOnly</td><td>If true, only data endpoints will be considered (feedback and other are ignored) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac1991e3d800700b2c099cd1aca2274d1"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::firstBulkOutEndpoint" ref="ac1991e3d800700b2c099cd1aca2274d1" args="(int configIndex, int ifaceIndex, bool dataEndpointOnly)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> * mdtUsbDeviceDescriptor::firstBulkOutEndpoint </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ifaceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dataEndpointOnly</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Find the first bulk transfert endpoint with OUT direction. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configIndex</td><td>Index of configuration (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">ifaceIndex</td><td>Index of interface (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">dataEndpointOnly</td><td>If true, only data endpoints will be considered (feedback and other are ignored) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a95112e151605bf8b10c5eca74faaea3b"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::firstInterruptInEndpoint" ref="a95112e151605bf8b10c5eca74faaea3b" args="(int configIndex, int ifaceIndex, bool dataEndpointOnly)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> * mdtUsbDeviceDescriptor::firstInterruptInEndpoint </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ifaceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dataEndpointOnly</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Find the first interrupt transfert endpoint with IN direction. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configIndex</td><td>Index of configuration (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">ifaceIndex</td><td>Index of interface (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">dataEndpointOnly</td><td>If true, only data endpoints will be considered (feedback and other are ignored) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad30b3579b0c77585df29acdfdf0fc179"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::firstInterruptOutEndpoint" ref="ad30b3579b0c77585df29acdfdf0fc179" args="(int configIndex, int ifaceIndex, bool dataEndpointOnly)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_endpoint_descriptor.html">mdtUsbEndpointDescriptor</a> * mdtUsbDeviceDescriptor::firstInterruptOutEndpoint </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ifaceIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>dataEndpointOnly</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Find the first interrupt transfert endpoint with OUT direction. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configIndex</td><td>Index of configuration (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">ifaceIndex</td><td>Index of interface (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">dataEndpointOnly</td><td>If true, only data endpoints will be considered (feedback and other are ignored) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af1e27ae69d3c77c9dfc53a3f261caeae"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::interface" ref="af1e27ae69d3c77c9dfc53a3f261caeae" args="(int configIndex, int ifaceIndex)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_usb_interface_descriptor.html">mdtUsbInterfaceDescriptor</a> * mdtUsbDeviceDescriptor::interface </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ifaceIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get a interface descriptor by index. </p>
+<p>Index checking is done in this method, and 0 (NULL pointer) is returned on wrong index.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configIndex</td><td>Index of configuration (unsorted, ordered as during discovery) </td></tr>
+    <tr><td class="paramname">ifaceIndex</td><td>Index of interface (unsorted, ordered as during discovery) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to interface descriptor, or 0 on error </dd></dl>
 
 </div>
 </div>
@@ -208,7 +526,7 @@ QList&lt; <a class="el" href="classmdt_usb_config_descriptor.html">mdtUsbConfigD
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 13:13:29 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -69,11 +69,8 @@ void \hyperlink{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{setByteP
 \begin{DoxyCompactList}\small\item\em Set the byte per byte write On/Off. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_config_a9b5041ba740a5918e5e1323e61d3bbdc}{bytePerByteWrite} () const 
 \begin{DoxyCompactList}\small\item\em Get byte per byte write flag (On/Off) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{
-bool {\bfseries operator==} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)}
-\label{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}
-
-\item 
+bool \hyperlink{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{operator==} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)
+\begin{DoxyCompactList}\small\item\em Use the Query/Answer protocol. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_config_a5a539c86934d41306a3ed18a8292457d}{
 bool {\bfseries operator!=} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)}
 \label{classmdt_port_config_a5a539c86934d41306a3ed18a8292457d}
@@ -201,6 +198,24 @@ Get frame type.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a627adcb87d26757238f844db19fc248d}{setFrameType()} 
 \end{DoxySeeAlso}
+\hypertarget{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{
+\index{mdtPortConfig@{mdtPortConfig}!operator==@{operator==}}
+\index{operator==@{operator==}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortConfig::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtPortConfig} \&}]{other}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}
+
+
+Use the Query/Answer protocol. 
+
+Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that mdpAbstractPort::waitForReadyRead() returns allways immediatly. For example, this is true with \hyperlink{classmdt_usb_port}{mdtUsbPort} when dealing with the Velleman K8055. In this situation, the purely event driven approach is not sufficient, causing heavily usage of CPU. Another remark, is that such situation is true on transfer based port.
+
+Question: What is a important difference between a full duplex serial port and a USB port ?\par
+ The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:\begin{Desc}
+\item[\hyperlink{todo__todo000007}{Todo}]Rollback: voir callback libusb, si data, ... \end{Desc}
 \hypertarget{classmdt_port_config_ad315f8f97723abe161792c9d9a1375ec}{
 \index{mdtPortConfig@{mdtPortConfig}!readFrameSize@{readFrameSize}}
 \index{readFrameSize@{readFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -292,7 +307,8 @@ Default configuration is:
 \item Read and write frame size: 1024
 \item Read and write queue size: 10
 \item Use read timeout protocol: false
-\item Read/Write timout: 500 \mbox{[}ms\mbox{]}
+\item Read timout: 5000 \mbox{[}ms\mbox{]}
+\item Write timout: -\/1 (infinite)
 \item Frame type: RAW
 \item En of frame sequence: LF (ASCII 0x0A)
 \item Byte per byte write: Off

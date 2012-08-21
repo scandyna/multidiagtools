@@ -1,0 +1,194 @@
+\hypertarget{classmdt_frame_codec_k8055}{
+\section{mdtFrameCodecK8055 Class Reference}
+\label{classmdt_frame_codec_k8055}\index{mdtFrameCodecK8055@{mdtFrameCodecK8055}}
+}
+
+
+Frame codec for Velleman k8055 board.  
+
+
+
+
+{\ttfamily \#include $<$mdtFrameCodecK8055.h$>$}
+
+
+
+Inheritance diagram for mdtFrameCodecK8055:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{classmdt_frame_codec_k8055__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtFrameCodecK8055:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{classmdt_frame_codec_k8055__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}{decode} (QByteArray \&data)
+\begin{DoxyCompactList}\small\item\em Decode a incoming frame. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_frame_codec_k8055_ab2dbd6a524f0523902f95db665ff486b}{
+QByteArray \hyperlink{classmdt_frame_codec_k8055_ab2dbd6a524f0523902f95db665ff486b}{encodeReset} ()}
+\label{classmdt_frame_codec_k8055_ab2dbd6a524f0523902f95db665ff486b}
+
+\begin{DoxyCompactList}\small\item\em Encode a reset frame. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_k8055_aa88f104ba85532c17eaf3c2dbacb8530}{encodeSetCounterDebounceValue} (int counterNumber, int debounceValue)
+\begin{DoxyCompactList}\small\item\em Encode a frame to set counter debounce value. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_k8055_a99fd4cc7eaed0c7d83c4f66a8ecd6268}{encodeResetCounter} (int counterNumber)
+\begin{DoxyCompactList}\small\item\em Encode a frame to reset counter. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_frame_codec_k8055_aae8b095b69addd5e4c501ba3d7fe0fe0}{
+QByteArray {\bfseries encodeSetOutputs} ()}
+\label{classmdt_frame_codec_k8055_aae8b095b69addd5e4c501ba3d7fe0fe0}
+
+\item 
+void \hyperlink{classmdt_frame_codec_k8055_a81e04679d7eca9771c7516f052490942}{setDigitalOut} (int channel, bool state)
+\begin{DoxyCompactList}\small\item\em Set a digital channel state (On/Off) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_codec_k8055_a3cecf2bec01386ebf9f1d99b738118e1}{setAnalogOut} (int channel, int value)
+\begin{DoxyCompactList}\small\item\em Set a analog channel value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Frame codec for Velleman k8055 board. 
+
+The Velleman k8055 is a USB I/O board:\par
+ \href{http://www.velleman.eu/products/view/?id=351346}{\tt http://www.velleman.eu/products/view/?id=351346}\par
+ Note: I don't know if the new version, called k8055N has the same format. When looking in demo tool, could say: possibly yes, but unshure.
+
+A very usefull help to build this codec was libk8055 library: \href{http://libk8055.sourceforge.net/}{\tt http://libk8055.sourceforge.net/}\par
+ Thank to the authors witch \char`\"{}draw\char`\"{} the frames formats. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}{
+\index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!decode@{decode}}
+\index{decode@{decode}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
+\subsubsection[{decode}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecK8055::decode (
+\begin{DoxyParamCaption}
+\item[{QByteArray \&}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}
+
+
+Decode a incoming frame. 
+
+After decoding is done, the values are available with \hyperlink{classmdt_frame_codec_a599a46e2d7cb5f80bd80e303236ead73}{mdtFrameCodec::values()} with following order:
+\begin{DoxyItemize}
+\item Indexes from 0 to 4: Input 1 to 5 , type: bool
+\item Indexes from 5 to 6: Ain 1 to 2 , type: int
+\item Indexes from 7 to 8: Counter value 1 to 2 , type: int 
+\end{DoxyItemize}
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000035}{Todo}]check statu field ?? \end{Desc}
+
+
+pvValues.append((bool)(byte \& (1$<$$<$5))); pvValues.append((bool)(byte \& (1$<$$<$6))); pvValues.append((bool)(byte \& (1$<$$<$7)));
+
+\hypertarget{classmdt_frame_codec_k8055_a99fd4cc7eaed0c7d83c4f66a8ecd6268}{
+\index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!encodeResetCounter@{encodeResetCounter}}
+\index{encodeResetCounter@{encodeResetCounter}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
+\subsubsection[{encodeResetCounter}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecK8055::encodeResetCounter (
+\begin{DoxyParamCaption}
+\item[{int}]{counterNumber}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_k8055_a99fd4cc7eaed0c7d83c4f66a8ecd6268}
+
+
+Encode a frame to reset counter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em counterNumber} & Counter number, must be 1 or 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Parameters must be valid 
+\end{DoxyPrecond}
+\hypertarget{classmdt_frame_codec_k8055_aa88f104ba85532c17eaf3c2dbacb8530}{
+\index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!encodeSetCounterDebounceValue@{encodeSetCounterDebounceValue}}
+\index{encodeSetCounterDebounceValue@{encodeSetCounterDebounceValue}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
+\subsubsection[{encodeSetCounterDebounceValue}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecK8055::encodeSetCounterDebounceValue (
+\begin{DoxyParamCaption}
+\item[{int}]{counterNumber, }
+\item[{int}]{debounceValue}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_k8055_aa88f104ba85532c17eaf3c2dbacb8530}
+
+
+Encode a frame to set counter debounce value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em counterNumber} & Counter number, must be 1 or 2 \\
+\hline
+{\em debounceValue} & Debounce value, must be a value from 0 to 255 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Parameters must be valid 
+\end{DoxyPrecond}
+\hypertarget{classmdt_frame_codec_k8055_a3cecf2bec01386ebf9f1d99b738118e1}{
+\index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!setAnalogOut@{setAnalogOut}}
+\index{setAnalogOut@{setAnalogOut}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
+\subsubsection[{setAnalogOut}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameCodecK8055::setAnalogOut (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_k8055_a3cecf2bec01386ebf9f1d99b738118e1}
+
+
+Set a analog channel value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & The channel, must be from 1 to 2 \\
+\hline
+{\em value} & Value, must be from 0 to 255 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Parameters must be valid 
+\end{DoxyPrecond}
+\hypertarget{classmdt_frame_codec_k8055_a81e04679d7eca9771c7516f052490942}{
+\index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!setDigitalOut@{setDigitalOut}}
+\index{setDigitalOut@{setDigitalOut}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
+\subsubsection[{setDigitalOut}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameCodecK8055::setDigitalOut (
+\begin{DoxyParamCaption}
+\item[{int}]{channel, }
+\item[{bool}]{state}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_k8055_a81e04679d7eca9771c7516f052490942}
+
+
+Set a digital channel state (On/Off) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em channel} & The channel, must be from 1 to 8 \\
+\hline
+{\em state} & State: On or Off \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Channel must be in a valid range 
+\end{DoxyPrecond}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtFrameCodecK8055.h\item 
+src/mdtutils/mdtFrameCodecK8055.cpp\end{DoxyCompactItemize}

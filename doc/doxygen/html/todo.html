@@ -56,58 +56,105 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Todo List </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000003"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000004"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort::close</a> () </dt>
 <dd>Actuellement, les queues sont deletée ici, que faire ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000004"></a> </p>
+<p><a class="anchor" id="_todo000003"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>  </dt>
+<dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
+<p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000005"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">mdtAbstractPort::flushIn</a> () </dt>
 <dd>Clean this part</dd>
 </dl>
-<p><a class="anchor" id="_todo000005"></a> </p>
+<p><a class="anchor" id="_todo000006"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">mdtAbstractPort::flushOut</a> () </dt>
 <dd>Clean this part</dd>
 </dl>
-<p><a class="anchor" id="_todo000011"></a> </p>
+<p><a class="anchor" id="_todo000033"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000012"></a> </p>
+<p><a class="anchor" id="_todo000034"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000013"></a> </p>
+<p><a class="anchor" id="_todo000035"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_frame_codec_k8055.html#a9dfe60529b0e80d5bbd3852fdea51b18">mdtFrameCodecK8055::decode</a> (QByteArray &amp;data) </dt>
+<dd>check statu field ?? </dd>
+</dl>
+<p><a class="anchor" id="_todo000036"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787">mdtFrameCodecModbus::decode</a> (const QByteArray &amp;pdu) </dt>
 <dd>Base 16 ?? </dd>
+</dl>
+<p><a class="anchor" id="_todo000037"></a> </p>
+<dl>
+<dt>Class <a class="el" href="classmdt_frame_usb_tmc.html">mdtFrameUsbTmc</a>  </dt>
+<dd>Clarify what this class does: USBTMC message or transfer ?</dd>
+</dl>
+<p><a class="anchor" id="_todo000007"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_port_config.html#a639c71f90cfeb7e2160ad90e9775054b">mdtPortConfig::operator==</a> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other) </dt>
+<dd>Rollback: voir callback libusb, si data, ... </dd>
 </dl>
 <p><a class="anchor" id="_todo000001"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
 <dd>Implement UUCP format in LCK.. files </dd>
 </dl>
-<p><a class="anchor" id="_todo000010"></a> </p>
+<p><a class="anchor" id="_todo000032"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_usb_port.html">mdtUsbPort</a>  </dt>
 <dd>Note about setPortName() with vid:pid syntax </dd>
 </dl>
-<p><a class="anchor" id="_todo000008"></a> </p>
+<p><a class="anchor" id="_todo000016"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7">mdtUsbPort::waitEventWriteReady</a> () </dt>
-<dd><p class="startdd">: Implement.... Note: use select ?? Mutex !! </p>
-<p class="enddd">: map correct error </p>
+<dt>Member <a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d">mdtUsbPort::read</a> (char *data, qint64 maxSize) </dt>
+<dd><p class="startdd">Echanger fin et début transfert (sinon ne se fait pas de suite...) </p>
+<p>Could be done once by setup ? </p>
+<p class="enddd">Handle retval </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000006"></a> </p>
+<p><a class="anchor" id="_todo000019"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7">mdtUsbPort::waitEventWriteReady</a> () </dt>
+<dd><p class="startdd">: Update timeout states ! </p>
+<p>timeout ? </p>
+<p>abort events ?? </p>
+<p>: timeout ? </p>
+<p>can be because device was deconnected, handle this.. </p>
+<p>Should not be the events locked ?? </p>
+<p class="enddd">: timeouts ? </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000009"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36">mdtUsbPort::waitForReadyRead</a> () </dt>
-<dd><p class="startdd">: Implement.... Note: use select ?? Mutex !! </p>
-<p class="enddd">: map correct error </p>
+<dd><p class="startdd">: Update timeout states ! </p>
+<p>timeout ? </p>
+<p>abort events ?? </p>
+<p>: timeout ? </p>
+<p>can be because device was deconnected, handle this.. </p>
+<p>Should not be the events locked ?? </p>
+<p class="enddd">: timeouts ? </p>
+</dd>
+</dl>
+<p><a class="anchor" id="_todo000026"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16">mdtUsbPort::write</a> (const char *data, qint64 maxSize) </dt>
+<dd><p class="startdd">Could be done once by setup ? </p>
+<p class="enddd">Handle retval </p>
 </dd>
 </dl>
 <p><a class="anchor" id="_todo000002"></a> </p>
@@ -130,7 +177,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 13 2012 22:30:51 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
