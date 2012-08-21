@@ -612,6 +612,30 @@ mdtFrameModbusTcp.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.s
 .PHONY : mdtFrameModbusTcp.cpp.s
 
+mdtFrameUsbTmc.o: mdtFrameUsbTmc.cpp.o
+.PHONY : mdtFrameUsbTmc.o
+
+# target to build an object file
+mdtFrameUsbTmc.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbTmc.cpp.o
+.PHONY : mdtFrameUsbTmc.cpp.o
+
+mdtFrameUsbTmc.i: mdtFrameUsbTmc.cpp.i
+.PHONY : mdtFrameUsbTmc.i
+
+# target to preprocess a source file
+mdtFrameUsbTmc.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbTmc.cpp.i
+.PHONY : mdtFrameUsbTmc.cpp.i
+
+mdtFrameUsbTmc.s: mdtFrameUsbTmc.cpp.s
+.PHONY : mdtFrameUsbTmc.s
+
+# target to generate assembly for a file
+mdtFrameUsbTmc.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbTmc.cpp.s
+.PHONY : mdtFrameUsbTmc.cpp.s
+
 mdtPartitionAttributes.o: mdtPartitionAttributes.cpp.o
 .PHONY : mdtPartitionAttributes.o
 
@@ -922,6 +946,9 @@ help:
 	@echo "... mdtFrameModbusTcp.o"
 	@echo "... mdtFrameModbusTcp.i"
 	@echo "... mdtFrameModbusTcp.s"
+	@echo "... mdtFrameUsbTmc.o"
+	@echo "... mdtFrameUsbTmc.i"
+	@echo "... mdtFrameUsbTmc.s"
 	@echo "... mdtPartitionAttributes.o"
 	@echo "... mdtPartitionAttributes.i"
 	@echo "... mdtPartitionAttributes.s"

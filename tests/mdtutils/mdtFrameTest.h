@@ -51,5 +51,11 @@ class mdtFrameTest : public mdtTest
 
   // Check mdtFrameModbusTcp decoding
   void modbusTcpDecodeTest();
+
+  // Check mdtFrameUsbTmc encoding
+  void usbTmcEncodeTest();
+
+  // Check mdtFrameUsbTmc decoding
+  void usbTmcDecodeTest();
 };
 #endif // idnfef MDT_FRAME_TEST_H

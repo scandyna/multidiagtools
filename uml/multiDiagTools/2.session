@@ -1,11 +1,17 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  active  classdiagram_ref 189442 // mdtFrame
+  classdiagram_ref 189442 // mdtFrame
     970 803 100 4 246 0
+  active  classdiagram_ref 481666 // mdtFrameUsbTmc
+    970 803 100 4 36 0
+  classdiagram_ref 481794 // mdtFrameAscii
+    776 642 100 4 0 0
+  classdiagram_ref 481922 // mdtFrameModbusTcp
+    776 642 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 189442 // mdtFrame
+selected operation_ref 954882 // MsgID
 open
-  classview_ref 181634 // mdtFrame
+  attribute_ref 610946 // pvTermChar
 end
 end

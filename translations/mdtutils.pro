@@ -7,6 +7,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtBuffer.cp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrame.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameAscii.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameModbusTcp.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameUsbTmc.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtTime.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCodec.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFrameCodecAscii.cpp

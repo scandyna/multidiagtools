@@ -22,6 +22,7 @@
 #include "mdtFrame.h"
 #include "mdtFrameAscii.h"
 #include "mdtFrameModbusTcp.h"
+#include "mdtFrameUsbTmc.h"
 #include "mdtApplication.h"
 #include <QTest>
 #include <cstring>
@@ -1205,7 +1206,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   srcData.append(0xFF); // Frame size L
   srcData = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   QVERIFY(srcData.size() > 20);
-  
+
   // Init frame
   f.reserve(20);
   f.clear();
@@ -1220,6 +1221,51 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(f.unitId() == 0xFF);
   QVERIFY(f.getPdu().size() == 0);
 }
+
+void mdtFrameTest::usbTmcEncodeTest()
+{
+  mdtFrameUsbTmc f;
+
+  // Initial values
+  QVERIFY(f.MsgID() == mdtFrameUsbTmc::MSG_ZERO);
+  QVERIFY(f.bTag() == 0);
+  QVERIFY(f.isEOM());
+
+  // Build a Bulk-OUT frame (Not end padding)
+  f.setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  f.setbTag(1);
+  f.setMessageData("1234");
+  f.encode();
+  // Check flags
+  QVERIFY(f.size() == 16);
+  QVERIFY(f.MsgID() == 1);
+  QVERIFY(f.bTag() == 1);
+  QVERIFY(f.isEOM());
+  // Check frame
+  QVERIFY((quint8)f.at(0) == 1);      // MsgID
+  QVERIFY((quint8)f.at(1) == 0x01);   // bTag
+  QVERIFY((quint8)f.at(2) == 0xFE);   // bTagInverse
+  QVERIFY((quint8)f.at(3) == 0);      // Reserved
+  QVERIFY((quint8)f.at(4) == 4);      // TransferSize, LLSB
+  QVERIFY((quint8)f.at(5) == 0);      // TransferSize, LSB
+  QVERIFY((quint8)f.at(6) == 0);      // TransferSize, MSB
+  QVERIFY((quint8)f.at(7) == 0);      // TransferSize, MMSB
+  QVERIFY((quint8)f.at(8) == 0x01);   // bmTransferAttributes
+  QVERIFY((quint8)f.at(9) == 0x00);   // Reserved
+  QVERIFY((quint8)f.at(10) == 0x00);  // Reserved
+  QVERIFY((quint8)f.at(11) == 0x00);  // Reserved
+  QVERIFY(f.at(12) == '1');   // Message data
+  QVERIFY(f.at(13) == '2');   // Message data
+  QVERIFY(f.at(14) == '3');   // Message data
+  QVERIFY(f.at(15) == '4');   // Message data
+
+}
+
+void mdtFrameTest::usbTmcDecodeTest()
+{
+  
+}
+
 
 int main(int argc, char **argv)
 {
