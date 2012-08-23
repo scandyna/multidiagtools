@@ -31,6 +31,8 @@
  * An example of this is MODBUS (over serial line) in RTU mode.
  * 
  * \sa mdtPortConfig
+ *
+ * \todo suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now.
  */
 class mdtPortReadThread : public mdtPortThread
 {
@@ -40,25 +42,12 @@ class mdtPortReadThread : public mdtPortThread
 
   mdtPortReadThread(QObject *parent = 0);
 
- signals:
-
-  /*! \brief Emited when a new frame is available
-   * 
-   * This signal is emited when a new frame is available.<br>
-   * To get the frame, the simplest way is to use a mdtPortManager.<br>
-   * It's also possible to use mdtPort, but this solution needs to handle
-   * the mutex, verify the readen queue state, ...
-   * \sa mdtPortManager
-   * \sa mdtPort
-   */
-  void newFrameReaden();
-
  private:
 
   // Get a new frame from RX frames pool
   // If no frame is available, a null pointer is returned
   // Note: this function handle not the serial port mutex
-  mdtFrame *getNewFrame();
+  ///mdtFrame *getNewFrame();
 
   // Thread implementation
   void run();

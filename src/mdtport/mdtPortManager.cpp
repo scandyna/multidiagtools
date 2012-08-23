@@ -303,7 +303,7 @@ void mdtPortManager::onThreadsErrorOccured(int error)
     }
     start();
   }
-  if(error == MDT_PORT_QUEUE_EMPY_ERROR){
+  if(error == MDT_PORT_QUEUE_EMPTY_ERROR){
     qDebug() << "Queue empty !";
   }
 }

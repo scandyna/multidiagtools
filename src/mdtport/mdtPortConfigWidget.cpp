@@ -40,6 +40,7 @@ void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
     cbFrameType->addItem(tr("Binary timeout protocol") , mdtFrame::FT_RAW_TOP);
     cbFrameType->addItem(tr("ASCII") , mdtFrame::FT_ASCII);
     cbFrameType->addItem(tr("Modbus TCP") , mdtFrame::FT_MODBUS_TCP);
+    cbFrameType->addItem(tr("USBTMC") , mdtFrame::FT_USBTMC);
   }
   index = cbFrameType->findData(config.frameType());
   if(index >= 0){

@@ -33,7 +33,7 @@ mdtErrorOut *mdtErrorOut::pvInstance = 0;
 mdtErrorOut::mdtErrorOut()
 {
   // Default log levels
-  pvLogLevelsMask = (mdtError::Warning | mdtError::Error);
+  pvLogLevelsMask = (mdtError::Info | mdtError::Warning | mdtError::Error);
   pvDialogLevelsMask = (mdtError::Warning | mdtError::Error);
   qRegisterMetaType<mdtError>();
   // Logger

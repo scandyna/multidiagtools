@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtAbstractPort.h"
+#include "mdtFrameUsbTmc.h"
 
 #include <QDebug>
 
@@ -225,6 +226,12 @@ void mdtAbstractPort::initQueues()
       case mdtFrame::FT_MODBUS_TCP:
         frame = new mdtFrameModbusTcp;
         break;
+      // USBTMC frame type
+      case mdtFrame::FT_USBTMC:
+        /// frame = new mdtFrameUsbTmc; \todo Change again !!
+        frame = new mdtFrame;
+        frame->setDirectlyComplete(true);
+        break;
       // Base frame type
       default:
         frame = new mdtFrame;
@@ -251,6 +258,10 @@ void mdtAbstractPort::initQueues()
       // MODBUS/TCP frame type
       case mdtFrame::FT_MODBUS_TCP:
         frame = new mdtFrameModbusTcp;
+        break;
+      // USBTMC frame type
+      case mdtFrame::FT_USBTMC:
+        frame = new mdtFrameUsbTmc;
         break;
       // Base frame type
       default:

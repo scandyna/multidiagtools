@@ -100,7 +100,7 @@ void mdtFrameUsbTmc::encode()
     reserve(16);
   }
   clear();
-  // Calc size NOTE: padding
+  // Get initial message data size (will be ajusted later whenn add alignment bytes)
   pvTransferSize = pvMessageData.size();
   // Build USBTMC header
   append((char)pvMsgID);
@@ -121,5 +121,10 @@ void mdtFrameUsbTmc::encode()
   append((char)0x00);                           // Reserved
   // Add data
   append(pvMessageData);
+  // Add alignment bytes if requierd
+  while((pvTransferSize % 4) != 0){
+    append((char)0x00);
+    pvTransferSize++;
+  }
 }
 

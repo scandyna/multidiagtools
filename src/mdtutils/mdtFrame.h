@@ -58,7 +58,8 @@ class mdtFrame : public QByteArray
               FT_RAW,           /*!< Raw binary data */
               FT_RAW_TOP,       /*!< Raw binary data for usage with timeout protocol */
               FT_ASCII,         /*!< ASCII frame type */
-              FT_MODBUS_TCP     /*!< MODBUS/TCP frame type */
+              FT_MODBUS_TCP,    /*!< MODBUS/TCP frame type */
+              FT_USBTMC         /*!< USBTMC frame type */
              };
 
   /*! \brief Set the ignore null values flag.

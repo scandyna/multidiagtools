@@ -30,8 +30,8 @@
  #include <signal.h>
 #endif
 
-class mdtAbstractPort;
 class mdtFrame;
+class mdtAbstractPort;
 
 class mdtPortThread : public QThread
 {
@@ -84,6 +84,17 @@ class mdtPortThread : public QThread
    */
   void ioProcessBegin();
 
+  /*! \brief Emited when a new frame is available
+   * 
+   * This signal is emited when a new frame is available.<br>
+   * To get the frame, the simplest way is to use a mdtPortManager.<br>
+   * It's also possible to use mdtPort, but this solution needs to handle
+   * the mutex, verify the readen queue state, ...
+   * \sa mdtPortManager
+   * \sa mdtPort
+   */
+  void newFrameReaden();
+
   /*! \brief Emitted on error
    * 
    * When a error occurs, this signal is emited.<br>
@@ -95,6 +106,53 @@ class mdtPortThread : public QThread
 
  protected:
 
+  /*! \brief Get a new frame for reading data from port
+   *
+   * This is a helper method for subclass to get a new frame
+   *  in port's read frames pool.
+   *
+   * It can hapen that the read frames pool is empty.
+   *  In this case, a error will be generated in the mdtError
+   *  log system, the signal errorOccured() will be emited
+   *  with MDT_PORT_QUEUE_EMPTY_ERROR value, and method
+   *  will go sleep until a new frame is available in pool.
+   *
+   * \todo Currently implemented in polling, should be done with a wait condition.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutext must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \return A pointer to a new frame. This frame is cleared (with mdtFrame::clear() ).
+   *          If the runnig flag becomes false, a Null pointer is returned, and thread
+   *          should stop.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   */
+  mdtFrame *getNewFrameRead();
+
+  /*! \brief Read data from port
+   *
+   * This is a helper method for subclass
+   *  to store chunk of data into a frame.
+   * Note about port mutex handling:<br>
+   *  The port mutext must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \param frame Data readen from port will be stored in this frame.
+   *
+   * \return A pointer to the current frame. It can happen that a Null pointer
+   *          is returned, and this is a fatal error, and thread should be stopped.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   * \pre frame must be a valid pointer (not Null).
+   */
+  mdtFrame *readFromPort(mdtFrame *frame);
+
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;
 #ifdef Q_OS_UNIX
@@ -104,6 +162,12 @@ class mdtPortThread : public QThread
   pthread_t pvNativePthreadObject;
   struct sigaction pvSigaction;
 #endif
+
+ private:
+
+  // Members used by readFromPort()
+  char *pvReadBuffer;
+  qint64 pvReadBufferSize;
 };
 
 #endif  // #ifndef MDT_PORT_THREAD_H

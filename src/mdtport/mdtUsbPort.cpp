@@ -429,6 +429,15 @@ qint64 mdtUsbPort::write(const char *data, qint64 maxSize)
 
   qDebug() << "mdtUsbPort::write() ...";
 
+  /*
+   * If a transfer is pending, terminate it
+   *  and return the length of written data.
+   * We must not init a new transfert directly,
+   *  because the caller must first do his job
+   *  with actually pending data.
+   * On next call, the transfer will be initalized
+   *  and submitted, and this method returns a length of 0.
+   */
   if(pvWriteTransferPending){
     // We have a transfer pending here
     Q_ASSERT(pvWriteTransfer != 0);
@@ -440,10 +449,11 @@ qint64 mdtUsbPort::write(const char *data, qint64 maxSize)
     libusb_free_transfer(pvWriteTransfer);
     pvWriteTransfer = 0;
     pvWriteTransferPending = false;
-  }else{
-    retLen = 0;
+    return retLen;
   }
   // If no transfer is pending, create one
+  Q_ASSERT(!pvWriteTransferPending);
+  retLen = 0;
   if(!pvWriteTransferPending){
     qDebug() << "WR: init transfer ...";
     // Alloc the new transfer
@@ -465,6 +475,7 @@ qint64 mdtUsbPort::write(const char *data, qint64 maxSize)
     memcpy(pvWriteBuffer, data, len);
     // Fill the transfer
     pvWriteTransferComplete = false;
+    qDebug() << "WR: fill a new transfert, size: " << len;
     if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
       libusb_fill_bulk_transfer(pvWriteTransfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, (void*)&pvWriteTransferComplete, pvWriteTimeout);
     }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){

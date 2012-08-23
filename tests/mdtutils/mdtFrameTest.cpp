@@ -1231,7 +1231,7 @@ void mdtFrameTest::usbTmcEncodeTest()
   QVERIFY(f.bTag() == 0);
   QVERIFY(f.isEOM());
 
-  // Build a Bulk-OUT frame (Not end padding)
+  // Build a Bulk-OUT frame (No end alignment bytes)
   f.setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
   f.setbTag(1);
   f.setMessageData("1234");
@@ -1243,7 +1243,7 @@ void mdtFrameTest::usbTmcEncodeTest()
   QVERIFY(f.isEOM());
   // Check frame
   QVERIFY((quint8)f.at(0) == 1);      // MsgID
-  QVERIFY((quint8)f.at(1) == 0x01);   // bTag
+  QVERIFY((quint8)f.at(1) == 1);      // bTag
   QVERIFY((quint8)f.at(2) == 0xFE);   // bTagInverse
   QVERIFY((quint8)f.at(3) == 0);      // Reserved
   QVERIFY((quint8)f.at(4) == 4);      // TransferSize, LLSB
@@ -1259,6 +1259,37 @@ void mdtFrameTest::usbTmcEncodeTest()
   QVERIFY(f.at(14) == '3');   // Message data
   QVERIFY(f.at(15) == '4');   // Message data
 
+  // Build a Bulk-OUT frame (With end alignment bytes)
+  f.setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  f.setbTag(2);
+  f.setMessageData("ABC");
+  f.encode();
+  // Check flags
+  QVERIFY(f.size() == 16);
+  QVERIFY(f.MsgID() == 1);
+  QVERIFY(f.bTag() == 2);
+  QVERIFY(f.isEOM());
+  // Check frame
+  QVERIFY((quint8)f.at(0) == 1);      // MsgID
+  QVERIFY((quint8)f.at(1) == 2);      // bTag
+  QVERIFY((quint8)f.at(2) == 0xFD);   // bTagInverse
+  QVERIFY((quint8)f.at(3) == 0);      // Reserved
+  QVERIFY((quint8)f.at(4) == 3);      // TransferSize, LLSB
+  QVERIFY((quint8)f.at(5) == 0);      // TransferSize, LSB
+  QVERIFY((quint8)f.at(6) == 0);      // TransferSize, MSB
+  QVERIFY((quint8)f.at(7) == 0);      // TransferSize, MMSB
+  QVERIFY((quint8)f.at(8) == 0x01);   // bmTransferAttributes
+  QVERIFY((quint8)f.at(9) == 0x00);   // Reserved
+  QVERIFY((quint8)f.at(10) == 0x00);  // Reserved
+  QVERIFY((quint8)f.at(11) == 0x00);  // Reserved
+  QVERIFY(f.at(12) == 'A');   // Message data
+  QVERIFY(f.at(13) == 'B');   // Message data
+  QVERIFY(f.at(14) == 'C');   // Message data
+  QVERIFY(f.at(15) == 0x00);  // Alignment byte (not requierd to be 0x00, but should)
+
+  /// \todo Add frame with sizes: 20, 40, 70
+  
+  /// \todo Add size tests (very big sizes :) )
 }
 
 void mdtFrameTest::usbTmcDecodeTest()

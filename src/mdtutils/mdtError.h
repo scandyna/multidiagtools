@@ -31,7 +31,7 @@ enum mdt_error_t{
   MDT_UNDEFINED_ERROR = -1000,  /*!< Unknow error */
   MDT_FILE_IO_ERROR,            /*!< File I/O error */
   MDT_PORT_IO_ERROR,            /*!< Unknow port I/O error */
-  MDT_PORT_QUEUE_EMPY_ERROR,    /*!< A I/O Queue is empty \sa mdtPortThread */
+  MDT_PORT_QUEUE_EMPTY_ERROR,   /*!< A I/O Queue is empty \sa mdtPortThread */
   MDT_SERIAL_PORT_IO_ERROR,
   MDT_USB_IO_ERROR,
   MDT_TCP_IO_ERROR,
@@ -40,7 +40,8 @@ enum mdt_error_t{
   MDT_DEVICE_ERROR,
   MDT_PARSE_ERROR,              /*!< Parsing error */
   MDT_DATABASE_ERROR,           /*!< Database error */
-  MDT_QM_FILE_LOAD_ERROR        /*!< A translation file (.qm) could not be loaded */
+  MDT_QM_FILE_LOAD_ERROR,       /*!< A translation file (.qm) could not be loaded */
+  MDT_MEMORY_ALLOC_ERROR        /*!< A memory allocation failed */
 };
 
 /*! \brief Add source information to error

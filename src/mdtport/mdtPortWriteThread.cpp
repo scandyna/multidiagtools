@@ -74,7 +74,7 @@ void mdtPortWriteThread::run()
 
   // Run...
   while(1){
-    qDebug() << "WTHD: run ...";
+    ///qDebug() << "WTHD: run ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -127,7 +127,7 @@ void mdtPortWriteThread::run()
         }else{
           written = pvPort->write(bufferCursor, toWrite);
         }
-        qDebug() << "WTHD: written: " << written;
+        ///qDebug() << "WTHD: written: " << written;
         if(written < 0){
           written = 0;
           pvPort->unlockMutex();
