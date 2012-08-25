@@ -174,7 +174,7 @@ class mdtSerialPort : public mdtAbstractSerialPort
   bool resumeTransmission();
 
   // Implemtation of mdtAbstractPort method
-  void flushIn();
+  ///void flushIn();
 
   /*! \brief Wait until data can be written to port.
    *
@@ -187,7 +187,7 @@ class mdtSerialPort : public mdtAbstractSerialPort
   qint64 write(const char *data, qint64 maxSize);
 
   // Implemtation of mdtAbstractPort method
-  void flushOut();
+  ///void flushOut();
 
   /*! \brief Wait until a control (modem line) signal state changes
    *
@@ -235,6 +235,32 @@ class mdtSerialPort : public mdtAbstractSerialPort
    * \sa error_t
    */
   error_t pvSetup();
+
+  /*! \brief Flush read port
+   *
+   * This method is called from flushIn(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushIn() and should not
+   *  be handled here.
+   */
+  void pvFlushIn();
+
+  /*! \brief Flush write port
+   *
+   * This method is called from flushout(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushOut() and should not
+   *  be handled here.
+   */
+  void pvFlushOut();
 
   /*! \brief Map the system defined UART type to internal one.
    */

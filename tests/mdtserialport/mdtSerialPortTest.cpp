@@ -230,11 +230,10 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Setup
   cfg.setFrameType(mdtFrame::FT_RAW);
   cfg.setReadQueueSize(data.size()+10);    // In raw mode, we don't know how many frames that will be used at read (depend on OS, UART, ...)
-  ///QVERIFY(sp.setAttributes(portName));
   sp.setPortName(portName);
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
   QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
-  
+
   sp.setConfig(&cfg);
   QVERIFY(sp.setup() == mdtAbstractPort::NoError);
 
@@ -261,9 +260,12 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
+  sp.addFrameToWrite(frame);
+  /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
   sp.unlockMutex();
+  */
 
   // Wait some time and verify that data was transfered
   QTest::qWait(3*data.size()+100);
@@ -321,9 +323,12 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
+  sp.addFrameToWrite(frame);
+  /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
   sp.unlockMutex();
+  */
 
   // Wait some time and verify that data was transfered
   QTest::qWait(3*data.size()+100);
@@ -443,6 +448,7 @@ void mdtSerialPortTest::txRxBinaryTopTest()
   // Restart threads (make shure that current frame is cleared in threads + update there setup)
   rxThd.stop();
   txThd.stop();
+  sp.flush();
   QVERIFY(rxThd.start());
   QVERIFY(txThd.start());
 
@@ -451,11 +457,11 @@ void mdtSerialPortTest::txRxBinaryTopTest()
     sp.lockMutex();
     QVERIFY(sp.writeFramesPool().size() > 0);
     frame = sp.writeFramesPool().dequeue();
+    sp.unlockMutex();
     frame->clear();
     frame->append(data.at(i));
-    sp.writeFrames().enqueue(frame);
+    sp.addFrameToWrite(frame);
     qDebug() << "TEST , enq 1 frame for write";
-    sp.unlockMutex();
   }
   // Wait some time and verify that data was transfered
   QTest::qWait(600*data.size()+600);
@@ -539,7 +545,6 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setEndOfFrameSeq("*");
   cfg.setReadQueueSize(10);
-  ///QVERIFY(sp.setAttributes(portName));
   sp.setPortName(portName);
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
   QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
@@ -566,9 +571,12 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
+  sp.addFrameToWrite(frame);
+  /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
   sp.unlockMutex();
+  */
 
   // Wait some time and verify that data was transfered
   QTest::qWait(3*data.size()+100);
@@ -617,9 +625,12 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
+  sp.addFrameToWrite(frame);
+  /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
   sp.unlockMutex();
+  */
 
   // Wait some time and verify that data was transfered
   QTest::qWait(3*data.size()+100);

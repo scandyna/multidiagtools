@@ -213,3 +213,11 @@ mdtAbstractPort::error_t mdtUsbtmcPort::pvSetup()
 
   return NoError;
 }
+
+void mdtUsbtmcPort::pvFlushIn()
+{
+}
+
+void mdtUsbtmcPort::pvFlushOut()
+{
+}

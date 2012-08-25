@@ -30,6 +30,13 @@ mdtPortWriteThread::mdtPortWriteThread(QObject *parent)
 {
 }
 
+void mdtPortWriteThread::stop()
+{
+  pvPort->abortFrameToWriteWait();
+  mdtPortThread::stop();
+}
+
+/**
 mdtFrame *mdtPortWriteThread::getNewFrame()
 {
   Q_ASSERT(pvPort != 0);
@@ -45,6 +52,7 @@ mdtFrame *mdtPortWriteThread::getNewFrame()
 
   return frame;
 }
+*/
 
 void mdtPortWriteThread::run()
 {
@@ -74,12 +82,34 @@ void mdtPortWriteThread::run()
 
   // Run...
   while(1){
-    ///qDebug() << "WTHD: run ...";
+    qDebug() << "WTHD: run ...";
     // Read thread state
     if(!pvRunning){
       break;
     }
+    // Wait for interframe time if needed
+    if(interframeTime > 0){
+      pvPort->unlockMutex();
+      qDebug() << "WTHD: waiting " << interframeTime << " [ms]";
+      msleep(interframeTime);
+      pvPort->lockMutex();
+    }
+    // Get a frame - will block if nothing is to write
+    qDebug() << "WTHD: getNewFrameWrite() ...";
+    frame = getNewFrameWrite();
+    // If thread is stopping, it can happen that a Null pointer is returned
+    if(frame == 0){
+      break;  /// \todo handle pvRunning flag ??
+    }
+    // Write
+    qDebug() << "WTHD: writeToPort() ...";
+    if(!writeToPort(frame, bytePerByteWrite, writeMinWaitTime)){
+      // Stop request or fatal error
+      break;  /// \todo handle pvRunning flag ??
+    }
+    
     /// \todo Implement a wait condition, not allways poling when nothing is to send..
+    /**
     // Wait the minimal time if requierd - Used for byte per byte write
     if(writeMinWaitTime > 0){
       pvPort->unlockMutex();
@@ -154,6 +184,7 @@ void mdtPortWriteThread::run()
         pvPort->lockMutex();
       }
     }
+    */
   }
   
   qDebug() << "WRTHD: Cleanup ...";

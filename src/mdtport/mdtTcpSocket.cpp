@@ -209,3 +209,11 @@ mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
 
   return NoError;
 }
+
+void mdtTcpSocket::pvFlushIn()
+{
+}
+
+void mdtTcpSocket::pvFlushOut()
+{
+}

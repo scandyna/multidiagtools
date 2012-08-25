@@ -240,6 +240,78 @@ mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
   return f;
 }
 
+mdtFrame *mdtPortThread::getNewFrameWrite()
+{
+  Q_ASSERT(pvPort != 0);
+
+  return pvPort->getFrameToWrite();
+}
+
+bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(frame != 0);
+
+  char *bufferCursor = 0;
+  qint64 toWrite = 0;
+  qint64 written = 0;
+  mdtAbstractPort::error_t portError;
+
+  // Write the frame to port
+  bufferCursor = frame->data();
+  toWrite = frame->size();
+  while(toWrite > 0){
+    // Wait on write ready event
+    portError = pvPort->waitEventWriteReady();
+    if(portError == mdtAbstractPort::WaitingCanceled){
+      // Stopping
+      return false;
+    }else if(portError == mdtAbstractPort::UnknownError){
+      // Unhandled error. Signal this and stop
+      emit(errorOccured(MDT_PORT_IO_ERROR));
+      return false;
+    }
+    // Event occured, send the data to port - Check timeout state first
+    if(pvPort->writeTimeoutOccured()){
+      // Cannot write now, sleep some time and try later
+      pvPort->unlockMutex();
+      msleep(100);
+      pvPort->lockMutex();
+    }else{
+      // Write data to port
+      emit ioProcessBegin();
+      if(bytePerByteWrite){
+        written = pvPort->write(bufferCursor, 1);
+        pvPort->unlockMutex();
+        msleep(interByteTime);
+        pvPort->lockMutex();
+      }else{
+        written = pvPort->write(bufferCursor, toWrite);
+      }
+      if(written < 0){
+        emit(errorOccured(MDT_PORT_IO_ERROR));
+        return false;
+      }
+      frame->take(written);
+      // Update cursor and toWrite
+      if(frame->isEmpty()){
+        toWrite = 0;
+      }else{
+        bufferCursor = frame->data();
+        Q_ASSERT(bufferCursor < (frame->data() + frame->size()));
+        toWrite -= written;
+        Q_ASSERT(toWrite >= 0);
+      }
+    }
+  }
+  // Here, frame is completly sent
+  Q_ASSERT(frame->isEmpty());
+  pvPort->writeFramesPool().enqueue(frame);
+  ///emit frameWritten();
+
+  return true;
+}
+
 void mdtPortThread::sigactionHandle(int /* signum */)
 {
   qDebug() << "mdtPortThread::sigactionHandle() called";

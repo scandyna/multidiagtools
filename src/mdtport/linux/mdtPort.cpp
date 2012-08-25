@@ -136,11 +136,13 @@ qint64 mdtPort::read(char *data, qint64 maxSize)
   return n;
 }
 
+/**
 void mdtPort::flushIn()
 {
   lockMutex();
   mdtAbstractPort::flushIn();
 }
+*/
 
 mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
 {
@@ -267,4 +269,12 @@ mdtAbstractPort::error_t mdtPort::pvSetup()
   setWriteTimeout(config().writeTimeout());
 
   return NoError;
+}
+
+void mdtPort::pvFlushIn()
+{
+}
+
+void mdtPort::pvFlushOut()
+{
 }

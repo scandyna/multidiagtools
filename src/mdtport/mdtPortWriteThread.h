@@ -32,6 +32,10 @@ class mdtPortWriteThread : public mdtPortThread
 
   mdtPortWriteThread(QObject *parent = 0);
 
+  /*! \brief Stop the thread
+   */
+  void stop();
+
  signals:
 
   /*! \brief Emited when a complete frame was written
@@ -45,7 +49,7 @@ class mdtPortWriteThread : public mdtPortThread
   // Get a new frame from TX frames
   // If no frame is available, a null pointer is returned
   // Note: this function handle not the serial port mutex
-  mdtFrame *getNewFrame();
+  ///mdtFrame *getNewFrame();
 
   // Thread implementation
   void run();

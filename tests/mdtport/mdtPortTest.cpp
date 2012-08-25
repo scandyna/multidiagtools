@@ -166,7 +166,6 @@ void mdtPortTest::writeRawTest()
   // Setup
   cfg.setWriteQueueSize(1);
   cfg.setFrameType(mdtFrame::FT_RAW);
-  ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
   port.setConfig(&cfg);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
@@ -192,9 +191,12 @@ void mdtPortTest::writeRawTest()
 
   // Add some data to frame and commit
   frame->append(data);
+  port.addFrameToWrite(frame);
+  /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
   port.unlockMutex();
+  */
 
   // Wait some time and verify that data was written
   QTest::qWait(100);
@@ -220,7 +222,6 @@ void mdtPortTest::writeRawTest()
 
   // Setup
   cfg.setWriteQueueSize(1);
-  ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   cfg.setBytePerByteWrite(true, 1);
@@ -247,9 +248,12 @@ void mdtPortTest::writeRawTest()
 
   // Add some data to frame and commit
   frame->append(data);
+  port.addFrameToWrite(frame);
+  /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
   port.unlockMutex();
+  */
 
   // Wait some time and verify that data was written
   QTest::qWait(3*data.size()+100);
@@ -307,7 +311,6 @@ void mdtPortTest::writeAsciiTest()
   // Setup
   cfg.setWriteQueueSize(1);
   cfg.setFrameType(mdtFrame::FT_ASCII);
-  ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   port.setConfig(&cfg);
@@ -333,9 +336,12 @@ void mdtPortTest::writeAsciiTest()
 
   // Add some data to frame and commit
   frame->append(data);
+  port.addFrameToWrite(frame);
+  /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
   port.unlockMutex();
+  */
 
   // Wait some time and verify that data was written
   QTest::qWait(100);
@@ -361,7 +367,6 @@ void mdtPortTest::writeAsciiTest()
 
   // Setup
   cfg.setWriteQueueSize(1);
-  ///QVERIFY(port.setAttributes(file.fileName()));
   port.setPortName(file.fileName());
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   cfg.setBytePerByteWrite(true, 1);
@@ -388,9 +393,12 @@ void mdtPortTest::writeAsciiTest()
 
   // Add some data to frame and commit
   frame->append(data);
+  port.addFrameToWrite(frame);
+  /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
   port.unlockMutex();
+  */
 
   // Wait some time and verify that data was written
   QTest::qWait(3*data.size()+100);

@@ -29,6 +29,7 @@
 #include <QString>
 #include <QQueue>
 #include <QMutex>
+#include <QWaitCondition>
 
 /*! \brief Base class for port I/O
  */
@@ -102,7 +103,7 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Close the port
    *
-   * Close port if it is open.
+   * Flush and close port if it is open.
    *
    * The mutex is not handled by this method.
    *
@@ -244,18 +245,12 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Flush read buffers
    *
-   * NOTE: \todo Clean this part
+   * Will move all readen frames to pool,
+   *  and call pvFlushIn() to flush system's buffers.
    *
-   * Subclass notes:<br>
-   * This method must be implemented in subclass.<br>
-   * To handle port correctly, subclass must:
-   *  - Lock the mutex with lockMutex()
-   *  - Call specific system flush function
-   *  - Call this flush method ( with mdtAbstractPort::flushIn() ).
-   * The last step will move all pending frames to read pool.<br>
-   * Note: if subclass has nothing to do it must lock the mutex and call this method.
+   * Mutex is locked in this method.
    */
-  virtual void flushIn();
+  void flushIn();
 
   /*! \brief Just for special cases
    * 
@@ -305,18 +300,12 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Flush write buffers
    *
-   * NOTE: \todo Clean this part
+   * Will move all write frames to pool,
+   *  and call pvFlushOut() to flush system's buffers.
    *
-   * Subclass notes:<br>
-   * This method must be implemented in subclass.<br>
-   * To handle port correctly, subclass must:
-   *  - Lock the mutex with lockMutex()
-   *  - Call specific system flush function
-   *  - Call this flush method ( with mdtAbstractPort::flushOut() ).
-   * The last step will move all pending frames to read pool.<br>
-   * Note: if subclass has nothing to do it must lock the mutex and call this method.
+   * Mutex is locked in this method.
    */
-  virtual void flushOut();
+  void flushOut();
 
   /*! \brief Update the read timeout state
    *
@@ -348,6 +337,15 @@ class mdtAbstractPort : public QObject
    */
   bool writeTimeoutOccured();
 
+  /*! \brief Flush read/write buffers
+   *
+   * Will move all read and write frames to their pool,
+   *  and call pvFlushIn() and pvFlushOut() to flush system's buffers.
+   *
+   * Mutex is locked in this method.
+   */
+  void flush();
+
   /*! \brief Init the read ans write queues
    *
    * \pre A valid configuration must be set before using this method.
@@ -369,6 +367,48 @@ class mdtAbstractPort : public QObject
    * Mutex is not handled by this method.
    */
   QQueue<mdtFrame*> &readFramesPool();
+
+  /*! \brief Add a frame to write
+   *
+   * Once the frame is added to the write queue,
+   *  waiting thread will be woken up (if waiting)
+   *  and will send the frame.
+   *
+   * The mutex is locked internally, and should not be locked
+   *  before calling this method.
+   * The mutex is unlocked before returning.
+   *
+   * \pre frame must be a vail pointer.
+   */
+  void addFrameToWrite(mdtFrame *frame);
+
+  /*! \brief Wait until a frame to write is available and get it
+   *
+   * If a frame is available in write frames queue, it will be returned.
+   *  Else, thit method will block calling thread until a frame is available in
+   *  write frames queue, and return one.
+   *
+   * This method is called from mdtPortThread
+   *  and should not be used directly.
+   *
+   * The mutex must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and locked
+   *  again before returning.
+   *
+   * \return A pointer to a frame, or Null (Null happens after stop request)
+   */
+  mdtFrame *getFrameToWrite();
+
+  /*! \brief Abort the frame tp write waiting
+   *
+   * Will wake thread(s) waiting on a frame to write
+   *  with getFrameToWrite() .
+   * This method is called from mdtPortThread::stop() ,
+   *  and should not be called directly.
+   *
+   * Mutex is not handled by this method.
+   */
+  void abortFrameToWriteWait();
 
   /*! \brief Get the write frames Queue
    *
@@ -462,6 +502,32 @@ class mdtAbstractPort : public QObject
    */
   virtual error_t pvSetup() = 0;
 
+  /*! \brief Flush read port
+   *
+   * This method is called from flushIn(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushIn() and should not
+   *  be handled here.
+   */
+  virtual void pvFlushIn() = 0;
+
+  /*! \brief Flush write port
+   *
+   * This method is called from flushout(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushOut() and should not
+   *  be handled here.
+   */
+  virtual void pvFlushOut() = 0;
+
   bool pvReadTimeoutOccured;
   bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
@@ -485,6 +551,8 @@ class mdtAbstractPort : public QObject
 
   // Some flags
   bool pvIsOpen;
+  // Wait conditions
+  QWaitCondition pvWriteFrameAvailable;
 };
 
 #endif  // #ifndef MDT_ABSTRACT_PORT_H

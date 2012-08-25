@@ -81,6 +81,9 @@ void mdtAbstractPort::close()
   if(!isOpen()){
     return;
   }
+  // Call system's flush methods
+  pvFlushIn();
+  pvFlushOut();
   // Call system close method
   pvClose();
   // Delete queues
@@ -149,17 +152,21 @@ bool mdtAbstractPort::resumeTransmission()
 
 void mdtAbstractPort::flushIn()
 {
+  lockMutex();
   while(pvReadenFrames.size() > 0){
     pvReadFramesPool.enqueue(pvReadenFrames.dequeue());
   }
+  pvFlushIn();
   unlockMutex();
 }
 
 void mdtAbstractPort::flushOut()
 {
+  lockMutex();
   while(pvWriteFrames.size() > 0){
     pvWriteFramesPool.enqueue(pvWriteFrames.dequeue());
   }
+  pvFlushOut();
   unlockMutex();
 }
 
@@ -197,6 +204,20 @@ bool mdtAbstractPort::readTimeoutOccured()
 bool mdtAbstractPort::writeTimeoutOccured()
 {
   return pvWriteTimeoutOccured;
+}
+
+void mdtAbstractPort::flush()
+{
+  lockMutex();
+  while(pvReadenFrames.size() > 0){
+    pvReadFramesPool.enqueue(pvReadenFrames.dequeue());
+  }
+  pvFlushIn();
+  while(pvWriteFrames.size() > 0){
+    pvWriteFramesPool.enqueue(pvWriteFrames.dequeue());
+  }
+  pvFlushOut();
+  unlockMutex();
 }
 
 void mdtAbstractPort::initQueues()
@@ -281,6 +302,38 @@ QQueue<mdtFrame*> &mdtAbstractPort::readenFrames()
 QQueue<mdtFrame*> &mdtAbstractPort::readFramesPool()
 {
   return pvReadFramesPool;
+}
+
+void mdtAbstractPort::addFrameToWrite(mdtFrame *frame)
+{
+  Q_ASSERT(frame != 0);
+
+  pvMutex.lock();
+  pvWriteFrames.enqueue(frame);
+  pvMutex.unlock();
+  pvWriteFrameAvailable.wakeAll();
+}
+
+mdtFrame *mdtAbstractPort::getFrameToWrite()
+{
+  mdtFrame *frame;
+
+  if(pvWriteFrames.size() < 1){
+    pvWriteFrameAvailable.wait(&pvMutex);
+  }
+  // If abortFrameToWriteWait() was called, it can happen that queue is empty
+  if(pvWriteFrames.size() < 1){
+    return 0;
+  }
+  frame = pvWriteFrames.dequeue();
+  Q_ASSERT(frame != 0);
+
+  return frame;
+}
+
+void mdtAbstractPort::abortFrameToWriteWait()
+{
+  pvWriteFrameAvailable.wakeAll();
 }
 
 QQueue<mdtFrame*> &mdtAbstractPort::writeFrames()

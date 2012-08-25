@@ -137,6 +137,7 @@ class mdtPortThread : public QThread
    *
    * This is a helper method for subclass
    *  to store chunk of data into a frame.
+   *
    * Note about port mutex handling:<br>
    *  The port mutext must be locked before calling this method.
    *  Internally, it will be unlocked during wait, and will be
@@ -152,6 +153,52 @@ class mdtPortThread : public QThread
    * \pre frame must be a valid pointer (not Null).
    */
   mdtFrame *readFromPort(mdtFrame *frame);
+
+  /*! \brief Get a new frame for writing data to port
+   *
+   * This is a helper method for subclass to get a new frame
+   *  in port's write frames.
+   *
+   * If no frame is available for write, this method
+   *  will block the caller thread until one is avaliable.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutext must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \return A pointer to a new frame, or Null on stop request.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   * \sa mdtAbstractPort
+   */
+  mdtFrame *getNewFrameWrite();
+
+  /*! \brief Write data to port
+   *
+   * This is a helper method for subclass
+   *  to write a frame to the port.
+   *  Internally, it will call mdtAbstractPort::waitEventWriteReady()
+   *   before writing.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutext must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \param frame Data stored in thos frame will be written to port.
+   * \param bytePerByteWrite If true, one byte will be written once.
+   * \param interByteTime Time between each byte write [ms] (has only effect if bytePerByteWrite is true)
+   *
+   * \return True on successfull transfert, or false on error or by stop request.
+   *          If this method returns false, the thread should be stopped.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   * \pre frame must be a valid pointer (not Null).
+   */
+  bool writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime);
 
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;

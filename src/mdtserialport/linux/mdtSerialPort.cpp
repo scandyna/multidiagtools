@@ -731,6 +731,7 @@ bool mdtSerialPort::resumeTransmission()
   return true;
 }
 
+/**
 void mdtSerialPort::flushIn()
 {
   int err;
@@ -745,6 +746,7 @@ void mdtSerialPort::flushIn()
   }
   mdtAbstractPort::flushIn();
 }
+*/
 
 mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
 {
@@ -811,6 +813,7 @@ qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
   return n;
 }
 
+/**
 void mdtSerialPort::flushOut()
 {
   int err;
@@ -825,6 +828,7 @@ void mdtSerialPort::flushOut()
   }
   mdtAbstractPort::flushOut();
 }
+*/
 
 mdtAbstractPort::error_t mdtSerialPort::waitEventCtl()
 {
@@ -1106,6 +1110,26 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   qDebug() << "-> CTS/RTS: " << flowCtlRtsCtsOn();
 
   return NoError;
+}
+
+void mdtSerialPort::pvFlushIn()
+{
+  if(tcflush(pvFd, TCIFLUSH) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+  }
+}
+
+void mdtSerialPort::pvFlushOut()
+{
+  if(tcflush(pvFd, TCOFLUSH) < 0){
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
+    e.setSystemError(errno, strerror(errno));
+    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
+    e.commit();
+  }
 }
 
 void mdtSerialPort::mapUartType()

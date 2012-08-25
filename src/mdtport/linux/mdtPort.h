@@ -61,7 +61,7 @@ class mdtPort : public mdtAbstractPort
 
   /*! \brief Flush read buffers
    */
-  void flushIn();
+  ///void flushIn();
 
   /*! \brief Wait until data can be written to port.
    *
@@ -113,6 +113,32 @@ class mdtPort : public mdtAbstractPort
    * \sa error_t
    */
   error_t pvSetup();
+
+  /*! \brief Flush read port
+   *
+   * This method is called from flushIn(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushIn() and should not
+   *  be handled here.
+   */
+  void pvFlushIn();
+
+  /*! \brief Flush write port
+   *
+   * This method is called from flushout(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushOut() and should not
+   *  be handled here.
+   */
+  void pvFlushOut();
 
   struct timeval pvReadTimeout;
   struct timeval pvWriteTimeout;

@@ -866,6 +866,14 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   return NoError;
 }
 
+void mdtUsbPort::pvFlushIn()
+{
+}
+
+void mdtUsbPort::pvFlushOut()
+{
+}
+
 QString mdtUsbPort::errorText(int errorCode) const
 {
   switch(errorCode){

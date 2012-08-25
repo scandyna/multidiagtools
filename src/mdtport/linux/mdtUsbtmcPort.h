@@ -130,6 +130,32 @@ class mdtUsbtmcPort : public mdtAbstractPort
    */
   error_t pvSetup();
 
+  /*! \brief Flush read port
+   *
+   * This method is called from flushIn(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushIn() and should not
+   *  be handled here.
+   */
+  void pvFlushIn();
+
+  /*! \brief Flush write port
+   *
+   * This method is called from flushout(),
+   *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
+   *
+   * This method must be implemented in subclass.
+   *
+   * The mutex is handled by flushOut() and should not
+   *  be handled here.
+   */
+  void pvFlushOut();
+
   QWaitCondition pvReadCondition;
   QWaitCondition pvWriteCondition;
   int pvReadTimeout;
