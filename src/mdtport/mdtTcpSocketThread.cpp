@@ -28,8 +28,8 @@
 mdtTcpSocketThread::mdtTcpSocketThread(QObject *parent)
  : mdtPortThread(parent)
 {
-  pvReadBuffer = 0;
-  pvReadBufferSize = 0;
+  ///pvReadBuffer = 0;
+  ///pvReadBufferSize = 0;
   pvSocket = 0;
   pvPeerPort = 0;
   // Diseable auto reconnections
@@ -40,6 +40,10 @@ void mdtTcpSocketThread::stop()
 {
   Q_ASSERT(pvPort != 0);
 
+  pvPort->abortFrameToWriteWait();
+  mdtPortThread::stop();
+
+  /**
   mdtTcpSocket *socket;
 
   // Unset the running flag
@@ -56,6 +60,7 @@ void mdtTcpSocketThread::stop()
     qApp->processEvents();
     msleep(50);
   }
+  */
 }
 
 void mdtTcpSocketThread::connectToHost(QString hostName, quint16 hostPort)
@@ -65,6 +70,7 @@ void mdtTcpSocketThread::connectToHost(QString hostName, quint16 hostPort)
   pvPeerPort = hostPort;
 }
 
+/**
 void mdtTcpSocketThread::readFromSocket()
 {
   char *bufferCursor;
@@ -85,6 +91,7 @@ void mdtTcpSocketThread::readFromSocket()
   toStore = readen;
   // Store readen data
   while(toStore > 0){
+    qDebug() << "To store: " << toStore;
     // Check for new frame if needed
     while(pvReadCurrentFrame == 0){
       pvReadCurrentFrame = getNewFrameRead();
@@ -105,6 +112,7 @@ void mdtTcpSocketThread::readFromSocket()
     // If frame is full, enqueue to readen frames and get a new one
     if(pvReadCurrentFrame->bytesToStore() == 0){
       stored += pvReadCurrentFrame->eofSeqLen();
+      qDebug() << "New frame readen";
       pvPort->readenFrames().enqueue(pvReadCurrentFrame);
       // emit a Readen frame signal if complete
       emit newFrameReaden();
@@ -121,7 +129,9 @@ void mdtTcpSocketThread::readFromSocket()
     Q_ASSERT(bufferCursor < (pvReadBuffer + pvReadBufferSize));
   }
 }
+*/
 
+/**
 mdtFrame *mdtTcpSocketThread::getNewFrameRead()
 {
   Q_ASSERT(pvPort != 0);
@@ -140,7 +150,9 @@ mdtFrame *mdtTcpSocketThread::getNewFrameRead()
 
   return frame;
 }
+*/
 
+/**
 void mdtTcpSocketThread::writeToSocket()
 {
   char *bufferCursor = 0;
@@ -180,7 +192,9 @@ void mdtTcpSocketThread::writeToSocket()
     }
   }
 }
+*/
 
+/**
 mdtFrame *mdtTcpSocketThread::getNewFrameWrite()
 {
   Q_ASSERT(pvPort != 0);
@@ -196,6 +210,7 @@ mdtFrame *mdtTcpSocketThread::getNewFrameWrite()
 
   return frame;
 }
+*/
 
 bool mdtTcpSocketThread::reconnectToHost()
 {
@@ -260,12 +275,20 @@ void mdtTcpSocketThread::run()
   Q_ASSERT(pvPort != 0);
 
   mdtTcpSocket *socket;
+  mdtFrame *writeFrame = 0;
+  mdtFrame *readFrame = 0;
+  mdtAbstractPort::error_t portError;
 
   pvPort->lockMutex();
+#ifdef Q_OS_UNIX
+  pvNativePthreadObject = pthread_self();
+  Q_ASSERT(pvNativePthreadObject != 0);
+#endif
 
   // Init write frame
-  pvWriteCurrentFrame = 0;
+  ///pvWriteCurrentFrame = 0;
   // Get a RX frame
+  /**
   pvReadCurrentFrame = getNewFrameRead();
   if(pvReadCurrentFrame == 0){
     mdtError e(MDT_TCP_IO_ERROR, "No frame available in read frames pool, stopping thread", mdtError::Error);
@@ -275,7 +298,9 @@ void mdtTcpSocketThread::run()
     pvPort->unlockMutex();
     return;
   }
+  */
   // Alloc the local buffer
+  /**
   pvReadBufferSize = pvReadCurrentFrame->capacity();
   pvReadBuffer = new char[pvReadBufferSize];
   if(pvReadBuffer == 0){
@@ -287,6 +312,7 @@ void mdtTcpSocketThread::run()
     pvPort->unlockMutex();
     return;
   }
+  */
   //bufferCursor = buffer;
   // Create a Tcp socket
   pvSocket = new QTcpSocket;
@@ -298,9 +324,15 @@ void mdtTcpSocketThread::run()
   socket->setThreadObjects(pvSocket, this);
   // Set the running flag
   pvRunning = true;
+  // Get frames
+  readFrame = getNewFrameRead();
+  if(readFrame == 0){
+    return;
+  }
 
   // Run...
   while(1){
+    qDebug() << "TCPTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -310,35 +342,100 @@ void mdtTcpSocketThread::run()
       socket->waitForNewTransaction();
     }
     if(pvSocket->state() == QAbstractSocket::ConnectedState){
-      // Wait on write ready event
+      // Read thread state
+      if(!pvRunning){
+        break;
+      }
+      qDebug() << "TCPTHD: connected, get a new frame for write ...";
+      // Get a frame - will block if nothing is to write
+      writeFrame = getNewFrameWrite();
+      // If thread is stopping, it can happen that a Null pointer is returned
+      if(writeFrame == 0){
+        qDebug() << "TCPTHD: aborting ...";
+        break;
+      }
+      qDebug() << "TCPTHD: have a frame, writing ...";
+      // Write
+      if(!writeToPort(writeFrame, false, 0)){
+        // Stop request or fatal error
+        break;
+      }
+      qDebug() << "TCPTHD: have a frame, writing DONE, waiting written ...";
+      // Wait until all data was written
+      portError = pvPort->waitEventWriteReady();
+      if(portError == mdtAbstractPort::WaitingCanceled){  // Not implementd in mdtTcpSocket now
+        // Stopping
+        break;
+      }else if(portError == mdtAbstractPort::UnknownError){
+        // Unhandled error. Signal this and stop
+        emit(errorOccured(MDT_TCP_IO_ERROR));
+        break;
+      }
+
+      /**
       if(!pvPort->waitEventWriteReady()){
         emit(errorOccured(MDT_TCP_IO_ERROR));
-        /// NOTE: sleep ?
-      }
-      // Read thread state
-      if(!pvRunning){
         break;
       }
+      */
+      qDebug() << "TCPTHD: written";
       // **********************
       // Event occured, send the data to port - Check timeout state first
-      if(!pvPort->writeTimeoutOccured()){
+   ///   if(!pvPort->writeTimeoutOccured()){
         // Write data to send
-        writeToSocket();
+        ///writeToSocket();
+        
+///      }
+      // Read thread state
+      if(!pvRunning){
+        break;
       }
+
       // Wait until data is available for read
-      if(pvPort->waitForReadyRead() != mdtAbstractPort::NoError){
+      portError = pvPort->waitForReadyRead();
+      if(portError == mdtAbstractPort::WaitingCanceled){  // Not implementd in mdtTcpSocket now
+        // Stopping
+        break;
+      }else if(portError == mdtAbstractPort::UnknownError){
+        // Unhandled error. Signal this and stop
         emit(errorOccured(MDT_TCP_IO_ERROR));
-        /// NOTE: sleep ?
+        break;
       }
       // Read thread state
       if(!pvRunning){
         break;
       }
-      // **********************
-      // Event occured, get the data from port - Check timeout state first
-      if(!pvPort->readTimeoutOccured()){
-        // We received data , read it
-        readFromSocket();
+      // Read until no more data is available
+      while(pvSocket->bytesAvailable() > 0){
+        // Read thread state
+        if(!pvRunning){
+          break;
+        }
+        // Check timeout state
+        if(pvPort->readTimeoutOccured()){
+          qDebug() << "TCPTHD: read timeout";
+          break;
+        }
+        qDebug() << "Available: " << pvSocket->bytesAvailable();
+        // Read
+        ///readFromSocket();
+        readFrame = readFromPort(readFrame);
+        if(readFrame == 0){
+          pvRunning = false;
+          break;
+        }
+        // Wait until new data is available for read
+        qDebug() << "waitForReadyRead ...";
+        portError = pvPort->waitForReadyRead();
+        if(portError == mdtAbstractPort::WaitingCanceled){  // Not implementd in mdtTcpSocket now
+          // Stopping
+          break;
+        }else if(portError == mdtAbstractPort::UnknownError){
+          // Unhandled error. Signal this and stop
+          emit(errorOccured(MDT_TCP_IO_ERROR));
+          pvRunning = false;
+          break;
+        }
       }
     }else{
       // Try to (Re-)connect
@@ -348,11 +445,23 @@ void mdtTcpSocketThread::run()
       }
     }
   }
+  
+  qDebug() << "TCPTHD: cleanup ...";
 
   // Put current frame into pool
+  if(readFrame != 0){
+    pvPort->readFramesPool().enqueue(readFrame);
+  }
+  if(writeFrame != 0){
+    ///pvPort->writeFramesPool().enqueue(writeFrame);
+  }
+
+
+  /**
   if(pvReadCurrentFrame != 0){
     pvPort->readFramesPool().enqueue(pvReadCurrentFrame);
   }
+  */
   // End connection
   if(pvSocket->state() == QAbstractSocket::ConnectedState){
     pvSocket->disconnectFromHost();
@@ -367,9 +476,11 @@ void mdtTcpSocketThread::run()
     }
   }
   // Free memory
-  Q_ASSERT(pvReadBuffer != 0);
-  delete pvReadBuffer;
+  ///Q_ASSERT(pvReadBuffer != 0);
+  ///delete pvReadBuffer;
 
+  qDebug() << "TCPTHD: END";
+  
   pvPort->unlockMutex();
 }
 

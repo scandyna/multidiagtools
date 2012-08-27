@@ -116,9 +116,10 @@ void mdtTcpSocketTest::tcpSocketTest()
   // Setup
   cfg.setFrameType(mdtFrame::FT_ASCII);
   cfg.setReadQueueSize(10);
+  cfg.setReadFrameSize(10000);
   cfg.setWriteQueueSize(10);
-  cfg.setReadTimeout(500);
-  cfg.setWriteTimeout(500);
+  cfg.setReadTimeout(5000);
+  cfg.setWriteTimeout(5000);
   cfg.setEndOfFrameSeq('*');
   s.setConfig(&cfg);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
@@ -134,6 +135,7 @@ void mdtTcpSocketTest::tcpSocketTest()
   responses = responsesRef;
   // Add the EOF sequence
   for(int i=0; i<responses.size(); i++){
+    qDebug() << "responses[" << i << "]: " << responses.at(i).size();
     responses[i].append("*");
   }
 
@@ -142,6 +144,7 @@ void mdtTcpSocketTest::tcpSocketTest()
 
   // Init connection
   s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  ///s.connectToHost("192.168.1.101" , tcpServer.serverPort());
 
   // Send data to server
   s.lockMutex();
@@ -155,8 +158,9 @@ void mdtTcpSocketTest::tcpSocketTest()
     // Add some data to frame and commit
     frame->clear();
     frame->append(queries.at(i).toAscii());
-    s.writeFrames().enqueue(frame);
+    ///s.writeFrames().enqueue(frame);
     s.unlockMutex();
+    s.addFrameToWrite(frame);
     s.beginNewTransaction();
   }
   s.unlockMutex();
@@ -183,6 +187,7 @@ void mdtTcpSocketTest::tcpSocketTest_data()
 {
   QStringList q;
   QStringList r;
+  QString f1, f2, f3;
 
   QTest::addColumn<QStringList>("queries");
   QTest::addColumn<QStringList>("responsesRef");
@@ -234,9 +239,20 @@ void mdtTcpSocketTest::tcpSocketTest_data()
   q << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << "0123456789" << "abcdefghijklmnopqrstuvwxyz";
   r << "0123456789" << "ABCDEFGHIJK0055LMNOPQRSTUVWXYZ" << "abcdefghijklmnopqrstuvwxyz8545";
   QTest::newRow("Multi frame long data") << q << r;
+
+  q.clear();
+  r.clear();
+  for(int i=0; i<100; i++){
+    f1 += "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+    f2 += "abcdefghijklmnopqrstuvwxyz";
+    f3 += "0123456789";
+  }
+  q << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << "0123456789" << "abcdefghijklmnopqrstuvwxyz";
+  r << f1 << f2 << f3;
+  QTest::newRow("Multi frame very long data") << q << r;
 }
 
-void mdtTcpSocketTest::tcpSocketRreadInvalidDataTest()
+void mdtTcpSocketTest::readInvalidDataTest()
 {
   mdtTcpSocket s;
   mdtPortConfig cfg;
@@ -253,8 +269,8 @@ void mdtTcpSocketTest::tcpSocketRreadInvalidDataTest()
   cfg.setReadQueueSize(10);
   cfg.setReadFrameSize(10);
   cfg.setWriteQueueSize(10);
-  cfg.setReadTimeout(500);
-  cfg.setWriteTimeout(500);
+  cfg.setReadTimeout(5000);
+  cfg.setWriteTimeout(5000);
   cfg.setEndOfFrameSeq('*');
   s.setConfig(&cfg);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
@@ -280,6 +296,16 @@ void mdtTcpSocketTest::tcpSocketRreadInvalidDataTest()
 
   // Init connection
   s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  s.lockMutex();
+  // Get a frame
+  frame = s.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  // Add some data to frame and commit
+  frame->clear();
+  frame->append("");
+  s.unlockMutex();
+  s.addFrameToWrite(frame);
+  s.beginNewTransaction();
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);
@@ -313,6 +339,15 @@ void mdtTcpSocketTest::tcpSocketRreadInvalidDataTest()
 
   // Init connection
   s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  s.lockMutex();
+  // Get a frame
+  frame = s.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  // Add some data to frame and commit
+  frame->clear();
+  frame->append("*");
+  s.unlockMutex();
+  s.addFrameToWrite(frame);
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);
@@ -353,6 +388,15 @@ void mdtTcpSocketTest::tcpSocketRreadInvalidDataTest()
 
   // Init connection
   s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  s.lockMutex();
+  // Get a frame
+  frame = s.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  // Add some data to frame and commit
+  frame->clear();
+  frame->append("");
+  s.unlockMutex();
+  s.addFrameToWrite(frame);
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);

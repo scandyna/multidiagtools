@@ -126,7 +126,7 @@ void mdtPortReadThread::run()
             frame = getNewFrameRead();
           }
         }
-      } /// NOTE: else ???
+      }
     }else{
       frame = readFromPort(frame);
       if(frame == 0){

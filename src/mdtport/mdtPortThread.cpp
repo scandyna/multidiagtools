@@ -94,6 +94,7 @@ void mdtPortThread::stop()
   pvRunning = false;
   pvPort->unlockMutex();
 #ifdef Q_OS_UNIX
+  Q_ASSERT(pvNativePthreadObject != 0);
   pthread_kill(pvNativePthreadObject, SIGALRM);
 #endif
 

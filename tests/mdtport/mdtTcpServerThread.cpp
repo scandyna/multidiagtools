@@ -41,7 +41,12 @@ void mdtTcpServerThread::run()
   // Send the data
   for(i=0; i<pvResponses.size(); i++){
     socket.write(pvResponses.at(i).toAscii());
-    QVERIFY2(socket.waitForBytesWritten() , "Note: it's possible that host (client) has closed the connection");
+    if(!socket.waitForBytesWritten()){
+      qDebug() << "mdtTcpServerThread::run(): waitForBytesWritten() failed";
+      qDebug() << "mdtTcpServerThread::run(): system returned: " << socket.errorString();
+      break;
+    }
+    ///QVERIFY2(socket.waitForBytesWritten() , "Note: it's possible that host (client) has closed the connection");
   }
   pvResponses.clear();
   socket.disconnectFromHost();

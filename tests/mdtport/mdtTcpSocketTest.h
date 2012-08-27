@@ -37,7 +37,7 @@ class mdtTcpSocketTest : public mdtTest
   void tcpSocketTest_data();
 
   // Check that TCP/IP read works with invalid frames
-  void tcpSocketRreadInvalidDataTest();
+  void readInvalidDataTest();
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_TEST_H
