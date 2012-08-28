@@ -71,7 +71,7 @@ class mdtTcpSocket : public mdtAbstractPort
    * 
    * Mutex is locked by this method.
    */
-  void beginNewTransaction();
+  ///void beginNewTransaction();
 
   /*! \brief Block until a new transaction starts
    * 
@@ -79,7 +79,7 @@ class mdtTcpSocket : public mdtAbstractPort
    * Mutex is locked by this method.
    * \sa mdtTcpSocketThread
    */
-  void waitForNewTransaction();
+  ///void waitForNewTransaction();
 
   /*! \brief Wait until data is available on port.
    *
@@ -104,7 +104,7 @@ class mdtTcpSocket : public mdtAbstractPort
  public slots:
 
   // Connected to newFrameReaden() from thread
-  void decrementTransactionsCounter();
+  ///void decrementTransactionsCounter();
 
  private:
 
@@ -167,9 +167,9 @@ class mdtTcpSocket : public mdtAbstractPort
 
   int pvReadTimeout;
   int pvWriteTimeout;
-  QWaitCondition pvNewTransaction;
+  ///QWaitCondition pvNewTransaction;
   QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
-  int pvTransactionsCount;          // Count the number of transactions that are pending
+  ///int pvTransactionsCount;          // Count the number of transactions that are pending
   mdtTcpSocketThread *pvThread;
 };
 

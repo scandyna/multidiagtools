@@ -33,8 +33,8 @@ class mdtTcpSocketTest : public mdtTest
   void essais();
 
   // Test TCP/IP socket
-  void tcpSocketTest();
-  void tcpSocketTest_data();
+  void writeReadTest();
+  void writeReadTest_data();
 
   // Check that TCP/IP read works with invalid frames
   void readInvalidDataTest();

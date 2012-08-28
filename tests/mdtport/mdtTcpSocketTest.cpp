@@ -54,7 +54,7 @@ void mdtTcpSocketTest::essais()
   QVERIFY(thd.isRunning());
 
   // Init connection
-  s.connectToHost("192.168.1.104" , 502);
+  s.connectToHost("192.168.1.102" , 502);
 
   // Send data to server
   s.lockMutex();
@@ -72,9 +72,10 @@ void mdtTcpSocketTest::essais()
   for(int i=0; i<frame->size(); i++){
     qDebug() << "frame[" << i << "]: 0x" << hex << (quint8)frame->at(i);
   }
-  s.writeFrames().enqueue(frame);
+  ///s.writeFrames().enqueue(frame);
   s.unlockMutex();
-  s.beginNewTransaction();
+  ///s.beginNewTransaction();
+  s.addFrameToWrite(frame);
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);
@@ -97,7 +98,7 @@ void mdtTcpSocketTest::essais()
   thd.stop();
 }
 
-void mdtTcpSocketTest::tcpSocketTest()
+void mdtTcpSocketTest::writeReadTest()
 {
   mdtTcpSocket s;
   mdtPortConfig cfg;
@@ -161,7 +162,7 @@ void mdtTcpSocketTest::tcpSocketTest()
     ///s.writeFrames().enqueue(frame);
     s.unlockMutex();
     s.addFrameToWrite(frame);
-    s.beginNewTransaction();
+    ///s.beginNewTransaction();
   }
   s.unlockMutex();
 
@@ -183,7 +184,7 @@ void mdtTcpSocketTest::tcpSocketTest()
   thd.stop();
 }
 
-void mdtTcpSocketTest::tcpSocketTest_data()
+void mdtTcpSocketTest::writeReadTest_data()
 {
   QStringList q;
   QStringList r;
@@ -305,7 +306,7 @@ void mdtTcpSocketTest::readInvalidDataTest()
   frame->append("");
   s.unlockMutex();
   s.addFrameToWrite(frame);
-  s.beginNewTransaction();
+  ///s.beginNewTransaction();
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);

@@ -136,8 +136,15 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
 
 mdtAbstractPort::error_t mdtAbstractPort::waitForReadyRead(int msecs)
 {
+  Q_ASSERT(pvConfig != 0);
+
+  error_t retVal;
+
   setReadTimeout(msecs);
-  return waitForReadyRead();
+  retVal = waitForReadyRead();
+  setReadTimeout(pvConfig->readTimeout());
+
+  return retVal;
 }
 
 bool mdtAbstractPort::suspendTransmission()

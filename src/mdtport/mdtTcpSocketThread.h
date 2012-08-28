@@ -54,16 +54,6 @@ class mdtTcpSocketThread : public mdtPortThread
 
  private:
 
-  ///void readFromSocket();
-
-  // Get a frame in read frames pool
-  ///mdtFrame *getNewFrameRead();
-
-  ///void writeToSocket();
-
-  // Get a frame in frames to write
-  ///mdtFrame *getNewFrameWrite();
-
   // Try to reconnect when host disconnected
   // Returns true on success reconnection
   // If the maximum reconnect is reached, this method returns false
@@ -72,10 +62,6 @@ class mdtTcpSocketThread : public mdtPortThread
 
   void run();
 
-  ///char *pvReadBuffer;
-  ///qint64 pvReadBufferSize;
-  ///mdtFrame *pvReadCurrentFrame;
-  ///mdtFrame *pvWriteCurrentFrame;
   QTcpSocket *pvSocket;
   int pvMaxReconnect;               // Max. number of reconnections
   QString pvPeerName;               // Host name or IP

@@ -189,7 +189,7 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Wait until data is available on port.
    *
-   * This method calls setReadTimeout() and waitForReadyRead()
+   * This method calls setReadTimeout() , waitForReadyRead() and setReadTimeout() again to restore original setting.
    * (it is a little bit slower than setting timeout one time, and call waitForReadyRead() ).<br>
    * Note that the reader thread will call waitForReadyRead() without argument.<br>
    * Note: this method is called from thread , and should not be used directly<br>
