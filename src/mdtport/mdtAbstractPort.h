@@ -54,7 +54,10 @@ class mdtAbstractPort : public QObject
                                         cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
                                         At this case, this error is returned, and the thread knows that it can 
                                         cleanup and end. */
-                UnknownError      /*!< Unknown error is happen.
+                UnknownError,     /*!< Unknown error is happen.
+                                       Logfile could give more information, see mdtError and mdtApplication */
+                UnhandledError    /*!< Unhandled error happen.
+                                       In this case, thread will stop working.
                                        Logfile could give more information, see mdtError and mdtApplication */
                };
 

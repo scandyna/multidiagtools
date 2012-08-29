@@ -32,44 +32,6 @@ mdtPortReadThread::mdtPortReadThread(QObject *parent)
   pvMinPoolSizeBeforeReadSuspend = 0;
 }
 
-/**
-mdtFrame *mdtPortReadThread::getNewFrame()
-{
-  Q_ASSERT(pvPort != 0);
-
-  mdtFrame *frame;
-
-  if(pvPort->readFramesPool().size() < 1){
-    mdtError e(MDT_UNDEFINED_ERROR, "Read frames pool is empty", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortReadThread");
-    e.commit();
-    return 0;
-  }
-  if(pvPort->readFramesPool().size() < pvMinPoolSizeBeforeReadSuspend){
-    if(!pvPort->suspendTransmission()){
-      pvRunning = false;  /// \todo ???
-      return 0;
-    }
-    pvTransmissionSuspended = true;
-    qDebug() << "RTHD: requ SUSPEND";
-  }else{
-    if(pvTransmissionSuspended){
-      if(!pvPort->resumeTransmission()){
-        pvRunning = false;
-        return 0;
-      }
-      pvTransmissionSuspended = false;
-      qDebug() << "RTHD: requ Resume";
-    }
-  }
-  frame = pvPort->readFramesPool().dequeue();
-  Q_ASSERT(frame != 0);
-  frame->clear();
-
-  return frame;
-}
-*/
-
 void mdtPortReadThread::run()
 {
   qDebug() << "RDTHD: starting ...";

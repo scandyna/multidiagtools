@@ -67,20 +67,6 @@ class mdtTcpSocket : public mdtAbstractPort
   // Implementation of mdtAbstractPort
   void setWriteTimeout(int timeout);
 
-  /*! \brief Start a new transaction
-   * 
-   * Mutex is locked by this method.
-   */
-  ///void beginNewTransaction();
-
-  /*! \brief Block until a new transaction starts
-   * 
-   * Note: used by thread , should not be used directly.<br>
-   * Mutex is locked by this method.
-   * \sa mdtTcpSocketThread
-   */
-  ///void waitForNewTransaction();
-
   /*! \brief Wait until data is available on port.
    *
    * This method is called from mdtPortReadThread , and should not be used directly.<br>
@@ -100,11 +86,6 @@ class mdtTcpSocket : public mdtAbstractPort
 
   // Implementation of mdtAbstractPort
   qint64 write(const char *data, qint64 maxSize);
-
- public slots:
-
-  // Connected to newFrameReaden() from thread
-  ///void decrementTransactionsCounter();
 
  private:
 
@@ -167,9 +148,7 @@ class mdtTcpSocket : public mdtAbstractPort
 
   int pvReadTimeout;
   int pvWriteTimeout;
-  ///QWaitCondition pvNewTransaction;
   QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
-  ///int pvTransactionsCount;          // Count the number of transactions that are pending
   mdtTcpSocketThread *pvThread;
 };
 

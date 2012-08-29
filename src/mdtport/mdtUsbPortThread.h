@@ -18,54 +18,53 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_TCP_SOCKET_THREAD_H
-#define MDT_TCP_SOCKET_THREAD_H
+#ifndef MDT_USB_PORT_THREAD_H
+#define MDT_USB_PORT_THREAD_H
 
 #include <QObject>
-#include <QTcpSocket>
 #include <QQueue>
 #include <QWaitCondition>
 #include <QMutex>
 #include "mdtPortThread.h"
 #include "mdtFrame.h"
 
-class mdtTcpSocketThread : public mdtPortThread
+class mdtUsbPort;
+
+class mdtUsbPortThread : public mdtPortThread
 {
  Q_OBJECT
 
  public:
 
-  mdtTcpSocketThread(QObject *parent = 0);
+  mdtUsbPortThread(QObject *parent = 0);
 
   // Overload of mdtPortThread
   void stop();
 
-  void connectToHost(QString hostName, quint16 hostPort);
-
- ///signals:
-
-  /*! \brief New frame was readen.
-   * 
-   * This signal is emitted when a new frame was readen.
-   * The frame can be complete or not (depending of the EOF condition)
-   * \sa mdtFrame
+  /*! \brief Write data to port
+   *
+   * This is a helper method to write a frame to the USB port.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutext must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \param port A valid instance of mdtUsbPort
+   * \param frame Data stored in thos frame will be written to port.
+   *
+   * \return True on successfull transfert, or false on error or by stop request.
+   *          If this method returns false, the thread should be stopped.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   * \pre frame must be a valid pointer (not Null).
    */
-  ///void newFrameReaden();
+  bool writeToPort(mdtUsbPort *port, mdtFrame *frame);
 
  private:
 
-  // Try to reconnect when host disconnected
-  // Returns true on success reconnection
-  // If the maximum reconnect is reached, this method returns false
-  // Note: on each retry, a sleep time is increased
-  bool reconnectToHost();
-
   void run();
-
-  QTcpSocket *pvSocket;
-  int pvMaxReconnect;               // Max. number of reconnections
-  QString pvPeerName;               // Host name or IP
-  quint16 pvPeerPort;               // Host port
 };
 
-#endif  // #ifndef MDT_TCP_SOCKET_THREAD_H
+#endif  // #ifndef MDT_USB_PORT_THREAD_H

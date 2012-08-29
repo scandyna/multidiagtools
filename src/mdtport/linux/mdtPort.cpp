@@ -69,6 +69,7 @@ void mdtPort::setWriteTimeout(int timeout)
   }
 }
 
+/// \todo Infinite timeout: NULL pointer Ok ???
 mdtAbstractPort::error_t mdtPort::waitForReadyRead()
 {
   fd_set input;

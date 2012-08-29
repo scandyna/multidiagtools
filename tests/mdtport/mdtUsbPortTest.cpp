@@ -25,8 +25,7 @@
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
-#include "mdtPortReadThread.h"
-#include "mdtPortWriteThread.h"
+#include "mdtUsbPortThread.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecK8055.h"
@@ -48,8 +47,7 @@ void mdtUsbPortTest::essais()
   mdtUsbConfigDescriptor *configDescriptor;
   mdtUsbInterfaceDescriptor *ifaceDescriptor;
   mdtUsbEndpointDescriptor *endpointDescriptor;
-  mdtPortReadThread rThd;
-  mdtPortWriteThread wThd;
+  mdtUsbPortThread thd;
   mdtPortConfig cfg;
   mdtFrame *f;
   mdtFrameUsbTmc *uf;
@@ -170,18 +168,17 @@ void mdtUsbPortTest::essais()
   cfg.setReadQueueSize(500);
   cfg.setFrameType(mdtFrame::FT_USBTMC);
   port.setConfig(&cfg);
-  port.setPortName("0x0957:0x4d18");
-  ///port.setPortName("0x10cf:0x5500");
-  rThd.setPort(&port);
-  wThd.setPort(&port);
+  ///port.setPortName("0x0957:0x4d18");
+  port.setPortName("0x10cf:0x5500");
+  thd.setPort(&port);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
 
-  // Start threads
-  ///QVERIFY(rThd.start());
-  QVERIFY(wThd.start());
+  // Start thread
+  QVERIFY(thd.start());
 
-  // Send a message
+  // USBTMC --- Send a message
+  /**
   QByteArray msg;
   
   msg = "*IDN?";
@@ -223,9 +220,9 @@ void mdtUsbPortTest::essais()
   }
   port.unlockMutex();
   QTest::qWait(3000);
+  */
 
-  // Write/read...
-  /**
+  // k8055 tests
   for(int q=0; q<10; q++){
     // Send some data
     codec.setDigitalOut((q%7)+1, true);
@@ -235,10 +232,13 @@ void mdtUsbPortTest::essais()
     QVERIFY(f != 0);
     f->clear();
     f->append(codec.encodeSetOutputs());
-    port.writeFrames().enqueue(f);
+    ///port.writeFrames().enqueue(f);
     port.unlockMutex();
+    port.addFrameToWrite(f);
     QTest::qWait(100);
+    
     // See if something was readen
+    QTest::qWait(100);
     port.lockMutex();
     len = port.readenFrames().size();
     for(int i=0; i<len; i++){
@@ -255,12 +255,13 @@ void mdtUsbPortTest::essais()
     port.unlockMutex();
     QTest::qWait(100);
   }
-  */
 
   qDebug() << "TEST , about to quit";
-  rThd.stop();
-  wThd.stop();
+  thd.stop();
   return;
+  
+  
+  
   
   // Open specific device
   handle = libusb_open_device_with_vid_pid(ctx, 0x0957, 0x4d18);

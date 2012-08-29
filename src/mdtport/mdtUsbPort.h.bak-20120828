@@ -24,6 +24,11 @@
 #include "mdtAbstractPort.h"
 #include <libusb-1.0/libusb.h>
 
+struct mdt_usb_port_transfer_data
+{
+  int flag1;
+};
+
 /*! \brief USB port I/O port class
  *
  * Built on top of libusb-1.x API
@@ -52,13 +57,6 @@ class mdtUsbPort : public mdtAbstractPort
    */
   void setWriteTimeout(int timeout);
 
-  /*! \brief Request a new bulk/interrupt input transfer
-   *
-   * Will fill and init a new bulk/interrupt (depending setup) transfer
-   *  and submit it to libusb.
-   */
-  error_t initReadTransfer(qint64 maxSize);
-
   /*! \brief Wait until data is available on port.
    *
    * This method is called from mdtPortReadThread , and should not be used directly.<br>
@@ -71,21 +69,12 @@ class mdtUsbPort : public mdtAbstractPort
    * This method is called from mdtPortReadThread , and should not be used directly.
    *
    * Mutex is not handled by this method.
-   *
-   * \pre A transfert must be initialized with initReadTransfer() before using this method.
    */
   qint64 read(char *data, qint64 maxSize);
 
   /*! \brief Flush read buffers
    */
   void flushIn();
-
-  /*! \brief Request a new bulk/interrupt out transfer
-   *
-   * Will fill and init a new bulk/interrupt (depending setup) transfer
-   *  and submit it to libusb.
-   */
-  error_t initWriteTransfer(const char *data, qint64 maxSize);
 
   /*! \brief Wait until data can be written to port.
    *
@@ -197,10 +186,10 @@ class mdtUsbPort : public mdtAbstractPort
   // Transfers
   libusb_transfer *pvReadTransfer;
   bool pvReadTransferPending;       // Flag te see if a transfer is pending
-  int pvReadTransferComplete;      // Will be stored in transfer struct
+  bool pvReadTransferComplete;      // Will be stored in transfer struct
   libusb_transfer *pvWriteTransfer;
   bool pvWriteTransferPending;      // Flag te see if a transfer is pending
-  int pvWriteTransferComplete;      // Will be stored in transfer struct
+  bool pvWriteTransferComplete;      // Will be stored in transfer struct
 };
 
 #endif // #ifndef MDT_USB_PORT_H

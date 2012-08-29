@@ -30,7 +30,6 @@ mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvSocket = 0;
-  ///pvTransactionsCount = 0;
 }
 
 mdtTcpSocket::~mdtTcpSocket()
@@ -45,7 +44,6 @@ void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 
   pvMutex.lock();
   pvThread->connectToHost(hostName, hostPort);
-  ///pvNewTransaction.wakeAll();
   pvMutex.unlock();
 }
 
@@ -56,7 +54,6 @@ void mdtTcpSocket::setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thre
 
   pvSocket = socket;
   pvThread = thread;
-  ///connect(pvThread, SIGNAL(newFrameReaden()), this, SLOT(decrementTransactionsCounter()), Qt::DirectConnection);
 }
 
 void mdtTcpSocket::setReadTimeout(int timeout)
@@ -69,32 +66,9 @@ void mdtTcpSocket::setWriteTimeout(int timeout)
   pvWriteTimeout = timeout;
 }
 
-/**
-void mdtTcpSocket::beginNewTransaction()
-{
-  pvMutex.lock();
-  pvTransactionsCount++;
-  ///pvNewTransaction.wakeAll();
-  pvMutex.unlock();
-}
-*/
-
-/**
-void mdtTcpSocket::waitForNewTransaction()
-{
-  ///pvNewTransaction.wait(&pvMutex);
-}
-*/
 mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
 {
   Q_ASSERT(pvSocket != 0);
-
-  // Check if something is to do, if not, wait
-  /**
-  if((pvTransactionsCount < 1)&&(pvSocket->bytesToWrite() < 1)){
-    ///pvNewTransaction.wait(&pvMutex);
-  }
-  */
 
   // Check if it is possible to read now
   if(!pvSocket->waitForReadyRead(pvReadTimeout)){
@@ -138,12 +112,6 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
 {
   Q_ASSERT(pvSocket != 0);
 
-  // Check if something is to do, if not, wait
-  /**
-  if((pvTransactionsCount < 1)&&(pvSocket->bytesToWrite() < 1)){
-    ///pvNewTransaction.wait(&pvMutex);
-  }
-  */
   // Check if something is to write , if yes, wait until there are written
   if(pvSocket->bytesToWrite() < 1){
     return NoError;
@@ -185,15 +153,6 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   return n;
 }
 
-/**
-void mdtTcpSocket::decrementTransactionsCounter()
-{
-  if(pvTransactionsCount > 0){
-    pvTransactionsCount--;
-  }
-}
-*/
-
 mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
 {
   Q_ASSERT(!isOpen());
@@ -201,12 +160,9 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
   return NoError;
 }
 
-/// \todo disconnect ??
 void mdtTcpSocket::pvClose()
 {
   Q_ASSERT(isOpen());
-
-  ///pvTransactionsCount = 0;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::pvSetup()

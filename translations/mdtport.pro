@@ -4,6 +4,7 @@ TRANSLATIONS = /home/philippe/programmation/multiDiagTools/src/mdtport/../../tra
 TRANSLATIONS += /home/philippe/programmation/multiDiagTools/src/mdtport/../../translations/mdtport_de.ts
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtAbstractPort.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbPort.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbPortThread.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbDeviceDescriptor.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbConfigDescriptor.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbInterfaceDescriptor.cpp
