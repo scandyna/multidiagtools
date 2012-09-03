@@ -42,13 +42,8 @@ void \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{setWriteTimeout
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{read} (char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{
-void \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{flushIn} ()}
-\label{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}
-
-\begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{waitEventWriteReady} ()
-\begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{write} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_a42022f9fe08166418711b956c6aabb49}{
@@ -88,10 +83,16 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 \label{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}
 
 
-Wait until data can be written to port. 
+Flush read buffers. 
+
+void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()};
+
+Wait until data can be written to port.
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+
+void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtPort::flushIn()} \{ \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn()}; \} 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
@@ -109,7 +110,11 @@ Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{
 Wait until data is available on port. 
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000001}{Todo}]Infinite timeout: NULL pointer Ok ??? \end{Desc}
+
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 

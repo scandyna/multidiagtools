@@ -123,16 +123,12 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to suspend transmission.  <a href="#a9412faf413eca5ee3516139fdfaaf2fe"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf">resumeTransmission</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to resume transmission.  <a href="#a02fd5ee74a7f52c3bce0545ec8a659bf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a597d013bbe18b1f946b99f68a4856a87">flushIn</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#a597d013bbe18b1f946b99f68a4856a87"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd">waitEventWriteReady</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a988825b3ff2ef93a1b43e2df316055bd"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a>;  <a href="#a988825b3ff2ef93a1b43e2df316055bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a282f99035c032fbb6fa86ccd10deb597"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a3a446c34c9f98e0c14637ab3dcab98d0">flushOut</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write buffers.  <a href="#a3a446c34c9f98e0c14637ab3dcab98d0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da">waitEventCtl</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a control (modem line) signal state changes.  <a href="#a9d1402c229401343a3bf66eeda4fe9da"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">void <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a>;  <a href="#a9d1402c229401343a3bf66eeda4fe9da"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7">getCtlStates</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">NOTE:  <a href="#a7893e1817fe5fc59c77ee6f3b9f13ae7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">setRts</a> (bool on)</td></tr>
@@ -229,68 +225,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a597d013bbe18b1f946b99f68a4856a87"></a><!-- doxytag: member="mdtSerialPort::flushIn" ref="a597d013bbe18b1f946b99f68a4856a87" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtSerialPort::flushIn </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Flush read buffers. </p>
-<p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Clean this part</dd></dl>
-<p>Subclass notes:<br/>
- This method must be implemented in subclass.<br/>
- To handle port correctly, subclass must:</p>
-<ul>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Call specific system flush function</li>
-<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtAbstractPort::flushIn()</a> ). The last step will move all pending frames to read pool.<br/>
- Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
-</ul>
-
-<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3a446c34c9f98e0c14637ab3dcab98d0"></a><!-- doxytag: member="mdtSerialPort::flushOut" ref="a3a446c34c9f98e0c14637ab3dcab98d0" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtSerialPort::flushOut </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Flush write buffers. </p>
-<p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Clean this part</dd></dl>
-<p>Subclass notes:<br/>
- This method must be implemented in subclass.<br/>
- To handle port correctly, subclass must:</p>
-<ul>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Call specific system flush function</li>
-<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtAbstractPort::flushOut()</a> ). The last step will move all pending frames to read pool.<br/>
- Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
-</ul>
-
-<p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">mdtAbstractPort</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a7893e1817fe5fc59c77ee6f3b9f13ae7"></a><!-- doxytag: member="mdtSerialPort::getCtlStates" ref="a7893e1817fe5fc59c77ee6f3b9f13ae7" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -306,7 +240,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000034">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
 <p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
@@ -722,9 +656,12 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Wait until a control (modem line) signal state changes. </p>
+<p>void <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a>; </p>
+<p>Wait until a control (modem line) signal state changes</p>
 <p>This method is called from <a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<p>void <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtSerialPort::flushOut()</a> { int err;</p>
+<p><a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>; if(tcflush(pvFd, TCOFLUSH) &lt; 0){ err = errno; <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error); e.setSystemError(err, strerror(err)); MDT_ERROR_SET_SRC(e, "mdtSerialPort"); e.commit(); } <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtAbstractPort::flushOut()</a>; } </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a146bf17f4f11c173e9b123bace0f2ddf">mdtAbstractSerialPort</a>.</p>
 
@@ -744,9 +681,12 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Wait until data can be written to port. </p>
+<p>void <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a>; </p>
+<p>Wait until data can be written to port.</p>
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<p>void <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtSerialPort::flushIn()</a> { int err;</p>
+<p><a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>; if(tcflush(pvFd, TCIFLUSH) &lt; 0){ err = errno; <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error); e.setSystemError(err, strerror(err)); MDT_ERROR_SET_SRC(e, "mdtSerialPort"); e.commit(); } <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtAbstractPort::flushIn()</a>; } </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
@@ -830,7 +770,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -102,7 +102,8 @@ Public Types</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888">WaitingCanceled</a>, 
-<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">UnknownError</a>
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">UnknownError</a>, 
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Error.  <a href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">More...</a><br/></td></tr>
@@ -154,7 +155,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to suspend transmission.  <a href="#aff3d79248baf96e670eba6d2fef700b9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">resumeTransmission</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to resume transmission.  <a href="#ad4a04c995df881593db0a309000be7a7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">flushIn</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44">flushIn</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#a32329b4188db796401e4f454755acb44"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ab1738b5b6b78743ee2d36ccf5daa7c00">readOneFrame</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Just for special cases.  <a href="#ab1738b5b6b78743ee2d36ccf5daa7c00"></a><br/></td></tr>
@@ -164,7 +165,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a35e4686f50e2c53c7e3618cf2c485d92"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">write</a> (const char *data, qint64 maxSize)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a64d4802975a76474b9196c91f57a6d90"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">flushOut</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc">flushOut</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write buffers.  <a href="#ad199c6310801893f1f7de2a2391606fc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9">updateReadTimeoutState</a> (bool state)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the read timeout state.  <a href="#a0fc7317e988d5dea53a999cd1bf4faa9"></a><br/></td></tr>
@@ -174,12 +175,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns read timeout state.  <a href="#aec94143165e486cbbe6e0979be887c7e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67">writeTimeoutOccured</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns write timeout state.  <a href="#a7c05a1abe77f0c3c334016c6ad866f67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#abde440c49b95833f821e1333c40a7398">flush</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read/write buffers.  <a href="#abde440c49b95833f821e1333c40a7398"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#adf06d095d6c3e6ce939a3998bcf8b829">initQueues</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Init the read ans write queues.  <a href="#adf06d095d6c3e6ce939a3998bcf8b829"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0">readenFrames</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the readen frames Queue.  <a href="#a05356a33dc546a11d2794a0419d749e0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274">readFramesPool</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the read frames Queue pool.  <a href="#a3850ab819a8fc5dad22af14b74c45274"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d">addFrameToWrite</a> (<a class="el" href="classmdt_frame.html">mdtFrame</a> *frame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a frame to write.  <a href="#a9a69eb2fc07d551ab37c011487fa319d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame.html">mdtFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a6c5ebd4451aec959efc4e71ab1b13941">getFrameToWrite</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a frame to write is available and get it.  <a href="#a6c5ebd4451aec959efc4e71ab1b13941"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b">abortFrameToWriteWait</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort the frame tp write waiting.  <a href="#ae67c815f68317c70e398eaa86622af6b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968">writeFrames</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the write frames Queue.  <a href="#a4fed10be147dfce6ca315467ff3fb968"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7">writeFramesPool</a> ()</td></tr>
@@ -198,6 +207,10 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close port.  <a href="#add29e91ccc4be62ab5c0dcb2a68ae8f0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a880e5ae1699af102f9a80501bb6a0021">pvSetup</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup port with given configurations.  <a href="#a880e5ae1699af102f9a80501bb6a0021"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958">pvFlushIn</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read port.  <a href="#a1fe88e9d56c0881b9566664b094b0958"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369">pvFlushOut</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush write port.  <a href="#a1667fa938d3a7578b73f54c32015c369"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9faa5966fcf4232b3d25034c0f67dd7c"></a><!-- doxytag: member="mdtAbstractPort::pvReadTimeoutOccured" ref="a9faa5966fcf4232b3d25034c0f67dd7c" args="" -->
@@ -238,7 +251,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
 <p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
 </dd></dl>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
@@ -262,6 +275,9 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871"></a><!-- doxytag: member="UnknownError" ref="ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871" args="" -->UnknownError</em>&nbsp;</td><td>
 <p>Unknown error is happen. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712"></a><!-- doxytag: member="UnhandledError" ref="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712" args="" -->UnhandledError</em>&nbsp;</td><td>
+<p>Unhandled error happen. In this case, thread will stop working. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
 </td></tr>
 </table>
 </dd>
@@ -291,6 +307,48 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ae67c815f68317c70e398eaa86622af6b"></a><!-- doxytag: member="mdtAbstractPort::abortFrameToWriteWait" ref="ae67c815f68317c70e398eaa86622af6b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtAbstractPort::abortFrameToWriteWait </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Abort the frame tp write waiting. </p>
+<p>Will wake thread(s) waiting on a frame to write with <a class="el" href="classmdt_abstract_port.html#a6c5ebd4451aec959efc4e71ab1b13941" title="Wait until a frame to write is available and get it.">getFrameToWrite()</a> . This method is called from <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a> , and should not be called directly.</p>
+<p>Mutex is not handled by this method. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9a69eb2fc07d551ab37c011487fa319d"></a><!-- doxytag: member="mdtAbstractPort::addFrameToWrite" ref="a9a69eb2fc07d551ab37c011487fa319d" args="(mdtFrame *frame)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtAbstractPort::addFrameToWrite </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_frame.html">mdtFrame</a> *&#160;</td>
+          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a frame to write. </p>
+<p>Once the frame is added to the write queue, waiting thread will be woken up (if waiting) and will send the frame.</p>
+<p>The mutex is locked internally, and should not be locked before calling this method. The mutex is unlocked before returning.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>frame must be a vail pointer. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a1ace1a2bd1a04f16952980e247b04800"></a><!-- doxytag: member="mdtAbstractPort::close" ref="a1ace1a2bd1a04f16952980e247b04800" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -306,13 +364,33 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Close the port. </p>
-<p>Close port if it is open.</p>
+<p>Flush and close port if it is open.</p>
 <p>The mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
  Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated. Note that this method must be called from subclass destructor. See <a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort()</a> for details.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805">mdtAbstractSerialPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abde440c49b95833f821e1333c40a7398"></a><!-- doxytag: member="mdtAbstractPort::flush" ref="abde440c49b95833f821e1333c40a7398" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtAbstractPort::flush </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush read/write buffers. </p>
+<p>Will move all read and write frames to their pool, and call <a class="el" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn()</a> and <a class="el" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut()</a> to flush system's buffers.</p>
+<p>Mutex is locked in this method. </p>
 
 </div>
 </div>
@@ -324,26 +402,17 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
           <td class="memname">void mdtAbstractPort::flushIn </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Flush read buffers. </p>
-<p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Clean this part</dd></dl>
-<p>Subclass notes:<br/>
- This method must be implemented in subclass.<br/>
- To handle port correctly, subclass must:</p>
-<ul>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Call specific system flush function</li>
-<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtAbstractPort::flushIn()</a> ). The last step will move all pending frames to read pool.<br/>
- Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
-</ul>
+<p>Will move all readen frames to pool, and call <a class="el" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn()</a> to flush system's buffers.</p>
+<p>Mutex is locked in this method. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_port.html#a2fea088c8e5ad4578f521a39c353f7c3">mdtPort</a>, <a class="el" href="classmdt_usb_port.html#a3bffadb42f159b04225b95c6aa7fbf29">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a597d013bbe18b1f946b99f68a4856a87">mdtSerialPort</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_usb_port.html#a3bffadb42f159b04225b95c6aa7fbf29">mdtUsbPort</a>.</p>
 
 </div>
 </div>
@@ -355,26 +424,39 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
           <td class="memname">void mdtAbstractPort::flushOut </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Flush write buffers. </p>
-<p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Clean this part</dd></dl>
-<p>Subclass notes:<br/>
- This method must be implemented in subclass.<br/>
- To handle port correctly, subclass must:</p>
-<ul>
-<li>Lock the mutex with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a></li>
-<li>Call specific system flush function</li>
-<li>Call this flush method ( with <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtAbstractPort::flushOut()</a> ). The last step will move all pending frames to read pool.<br/>
- Note: if subclass has nothing to do it must lock the mutex and call this method. </li>
-</ul>
+<p>Will move all write frames to pool, and call <a class="el" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut()</a> to flush system's buffers.</p>
+<p>Mutex is locked in this method. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_port.html#a42022f9fe08166418711b956c6aabb49">mdtPort</a>, <a class="el" href="classmdt_usb_port.html#ad17584feba55650ed580cf54e2ced99e">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a3a446c34c9f98e0c14637ab3dcab98d0">mdtSerialPort</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_port.html#a42022f9fe08166418711b956c6aabb49">mdtPort</a>, and <a class="el" href="classmdt_usb_port.html#ad17584feba55650ed580cf54e2ced99e">mdtUsbPort</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6c5ebd4451aec959efc4e71ab1b13941"></a><!-- doxytag: member="mdtAbstractPort::getFrameToWrite" ref="a6c5ebd4451aec959efc4e71ab1b13941" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_frame.html">mdtFrame</a> * mdtAbstractPort::getFrameToWrite </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Wait until a frame to write is available and get it. </p>
+<p>If a frame is available in write frames queue, it will be returned. Else, thit method will block calling thread until a frame is available in write frames queue, and return one.</p>
+<p>This method is called from <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> and should not be used directly.</p>
+<p>The mutex must be locked before calling this method. Internally, it will be unlocked during wait, and locked again before returning.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to a frame, or Null (Null happens after stop request) </dd></dl>
 
 </div>
 </div>
@@ -444,6 +526,48 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <li>Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>.</li>
 <li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </li>
 </ul>
+
+</div>
+</div>
+<a class="anchor" id="a1fe88e9d56c0881b9566664b094b0958"></a><!-- doxytag: member="mdtAbstractPort::pvFlushIn" ref="a1fe88e9d56c0881b9566664b094b0958" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mdtAbstractPort::pvFlushIn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush read port. </p>
+<p>This method is called from <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a>, and is usefull if subsystem needs to be flushed. (For ex. serial port).</p>
+<p>This method must be implemented in subclass.</p>
+<p>The mutex is handled by <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a> and should not be handled here. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1667fa938d3a7578b73f54c32015c369"></a><!-- doxytag: member="mdtAbstractPort::pvFlushOut" ref="a1667fa938d3a7578b73f54c32015c369" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mdtAbstractPort::pvFlushOut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected, pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush write port. </p>
+<p>This method is called from flushout(), and is usefull if subsystem needs to be flushed. (For ex. serial port).</p>
+<p>This method must be implemented in subclass.</p>
+<p>The mutex is handled by <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a> and should not be handled here. </p>
 
 </div>
 </div>
@@ -878,7 +1002,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <div class="memdoc">
 
 <p>Wait until data is available on port. </p>
-<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> and <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> ).<br/>
+<p>This method calls <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> , <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> and <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout()</a> again to restore original setting. (it is a little bit slower than setting timeout one time, and call <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> ).<br/>
  Note that the reader thread will call <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> without argument.<br/>
  Note: this method is called from thread , and should not be used directly<br/>
  Mutex: see <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a></p>
@@ -1063,7 +1187,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:34 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

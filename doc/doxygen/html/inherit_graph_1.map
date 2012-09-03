@@ -1,9 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,112,123,141"/>
-<area shape="rect" id="node3" href="$classmdt_abstract_serial_port.html" title="NOTE:" alt="" coords="172,5,321,35"/>
-<area shape="rect" id="node7" href="$classmdt_port.html" title="mdtPort" alt="" coords="213,59,280,88"/>
-<area shape="rect" id="node9" href="$classmdt_tcp_socket.html" title="mdtTcpSocket" alt="" coords="193,112,300,141"/>
-<area shape="rect" id="node11" href="$classmdt_usb_port.html" title="USB port I/O port class." alt="" coords="201,165,292,195"/>
-<area shape="rect" id="node13" href="$classmdt_usbtmc_port.html" title="USBTMC device file calss." alt="" coords="189,219,304,248"/>
-<area shape="rect" id="node5" href="$classmdt_serial_port.html" title="mdtSerialPort" alt="" coords="371,5,472,35"/>
+<area shape="rect" id="node1" href="$classmdt_buffer.html" title="Stockage d&#39;éléments basé sur le principe du tampon circulaire." alt="" coords="7,5,116,35"/>
 </map>

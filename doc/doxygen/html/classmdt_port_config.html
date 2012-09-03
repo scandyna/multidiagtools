@@ -245,7 +245,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <p>Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that mdpAbstractPort::waitForReadyRead() returns allways immediatly. For example, this is true with <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> when dealing with the Velleman K8055. In this situation, the purely event driven approach is not sufficient, causing heavily usage of CPU. Another remark, is that such situation is true on transfer based port.</p>
 <p>Question: What is a important difference between a full duplex serial port and a USB port ?<br/>
  The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Rollback: voir callback libusb, si data, ... </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Rollback: voir callback libusb, si data, ... </dd></dl>
 
 </div>
 </div>
@@ -768,7 +768,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

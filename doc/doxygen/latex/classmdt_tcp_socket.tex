@@ -13,21 +13,14 @@ Inheritance diagram for mdtTcpSocket:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtTcpSocket:\nopagebreak
+Collaboration diagram for mdtTcpSocket:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=309pt]{classmdt_tcp_socket__coll__graph}
+\includegraphics[width=246pt]{classmdt_tcp_socket__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Slots}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{classmdt_tcp_socket_a826d1c8df5a852a396878587606812b8}{
-void {\bfseries decrementTransactionsCounter} ()}
-\label{classmdt_tcp_socket_a826d1c8df5a852a396878587606812b8}
-
-\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -44,10 +37,6 @@ void \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTi
 \begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{setWriteTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_tcp_socket_a93984277418aee53633bd28249f484d1}{beginNewTransaction} ()
-\begin{DoxyCompactList}\small\item\em Start a new transaction. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_tcp_socket_a4f81d3552d7e2a33d2e1bf2e84beb063}{waitForNewTransaction} ()
-\begin{DoxyCompactList}\small\item\em Block until a new transaction starts. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{waitForReadyRead} ()
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{read} (char $\ast$data, qint64 maxSize)
@@ -59,20 +48,7 @@ qint64 \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{write} 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_tcp_socket_a93984277418aee53633bd28249f484d1}{
-\index{mdtTcpSocket@{mdtTcpSocket}!beginNewTransaction@{beginNewTransaction}}
-\index{beginNewTransaction@{beginNewTransaction}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{beginNewTransaction}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocket::beginNewTransaction (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_tcp_socket_a93984277418aee53633bd28249f484d1}
-
-
-Start a new transaction. 
-
-Mutex is locked by this method. \hypertarget{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{
+\hypertarget{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{
 \index{mdtTcpSocket@{mdtTcpSocket}!connectToHost@{connectToHost}}
 \index{connectToHost@{connectToHost}!mdtTcpSocket@{mdtTcpSocket}}
 \subsubsection[{connectToHost}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocket::connectToHost (
@@ -221,23 +197,6 @@ This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteTh
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
-\hypertarget{classmdt_tcp_socket_a4f81d3552d7e2a33d2e1bf2e84beb063}{
-\index{mdtTcpSocket@{mdtTcpSocket}!waitForNewTransaction@{waitForNewTransaction}}
-\index{waitForNewTransaction@{waitForNewTransaction}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{waitForNewTransaction}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocket::waitForNewTransaction (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_tcp_socket_a4f81d3552d7e2a33d2e1bf2e84beb063}
-
-
-Block until a new transaction starts. 
-
-Note: used by thread , should not be used directly.\par
- Mutex is locked by this method. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
-\end{DoxySeeAlso}
 \hypertarget{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtTcpSocket@{mdtTcpSocket}}

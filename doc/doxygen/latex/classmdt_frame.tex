@@ -13,8 +13,7 @@ Provide an array of bytes.
 
 
 
-Inheritance diagram for mdtFrame:
-\nopagebreak
+Inheritance diagram for mdtFrame:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -24,10 +23,13 @@ Inheritance diagram for mdtFrame:
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
-enum \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{type\_\-t} \{ \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f}{FT\_\-RAW}, 
+enum \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{type\_\-t} \{ \par
+\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aeb10e33f775c33799273fcb130fee86f}{FT\_\-RAW}, 
 \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac91a1c1827fa634eadaddb861f805c96}{FT\_\-RAW\_\-TOP}, 
 \hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17ac649559564652abbe656b97d4a84b722}{FT\_\-ASCII}, 
-\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}{FT\_\-MODBUS\_\-TCP}
+\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}{FT\_\-MODBUS\_\-TCP}, 
+\par
+\hyperlink{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aca438ff6b553a819f22090facc562c86}{FT\_\-USBTMC}
  \}
 \begin{DoxyCompactList}\small\item\em Frame type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -60,19 +62,22 @@ bool \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete} ()
 \label{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}
 
 \begin{DoxyCompactList}\small\item\em Returns true if EOF condition was reached. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear} ()
+void \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear} ()
 \begin{DoxyCompactList}\small\item\em Overloaded function. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}{clearFlags} ()
+\begin{DoxyCompactList}\small\item\em Clear frame's specific flags. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData} (const char $\ast$data, int len)
 \begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{
-virtual int \hyperlink{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{eofSeqLen} ()}
-\label{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}
-
-\begin{DoxyCompactList}\small\item\em Get the length of the end of frame sequence Used for ASCII frames. Default implementation returns 0. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{eofSeqLen} ()
+\begin{DoxyCompactList}\small\item\em Get the length of the end of frame sequence. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_a36e4b85a3c671902ac3c8cc318ca726c}{take} (char $\ast$data, int len)
 \begin{DoxyCompactList}\small\item\em Take some data. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_ad8b184e6eb07a26fe84deaf233c1aa9b}{take} (int len)
-\begin{DoxyCompactList}\small\item\em Take some data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Take some data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_frame_a3b9a331858df9061879592fab1b346f5}{setWaitAnAnswer} (bool wait)
+\begin{DoxyCompactList}\small\item\em Tell a write/read thread that an answer is needed after a write frame. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_ab27455f2fa3415a96482786c0ec27e55}{waitAnAnswer} () const 
+\begin{DoxyCompactList}\small\item\em Know if an answer is needed after a write frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -84,6 +89,11 @@ bool {\bfseries pvIgnoreNullValues}}
 \hypertarget{classmdt_frame_a1862e197bad6e9887cfedc54a768e88d}{
 bool {\bfseries pvEOFcondition}}
 \label{classmdt_frame_a1862e197bad6e9887cfedc54a768e88d}
+
+\item 
+\hypertarget{classmdt_frame_aac030954a872c41f7fb917912e16a77f}{
+bool {\bfseries pvWaitAnAnswer}}
+\label{classmdt_frame_aac030954a872c41f7fb917912e16a77f}
 
 \end{DoxyCompactItemize}
 
@@ -135,7 +145,11 @@ FT\_\-ASCII}
 \hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}{
 FT\_\-MODBUS\_\-TCP}
 \label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17a72c8ddaf29839f4037b686bdc346828a}
-}]MODBUS/TCP frame type \end{description}
+}]MODBUS/TCP frame type \index{FT\_\-USBTMC@{FT\_\-USBTMC}!mdtFrame@{mdtFrame}}\index{mdtFrame@{mdtFrame}!FT\_\-USBTMC@{FT\_\-USBTMC}}\item[{\em 
+\hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aca438ff6b553a819f22090facc562c86}{
+FT\_\-USBTMC}
+\label{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17aca438ff6b553a819f22090facc562c86}
+}]USBTMC frame type \end{description}
 \end{Desc}
 
 
@@ -161,15 +175,53 @@ Bytes to store can be the \hyperlink{classmdt_frame_aa1cd5c914c36efb3f441b7f6e78
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}
 
 
 Overloaded function. 
 
-Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} and reserve() functions. The goal is to keep the same capacity and reset some \hyperlink{classmdt_frame}{mdtFrame} specific flags 
+Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} and reserve() methods. The goal is to keep the same capacity and reset some \hyperlink{classmdt_frame}{mdtFrame} and subclass specific flags 
 
 Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{mdtFrameModbusTcp}, and \hyperlink{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{mdtFrameUsbTmc}.
+
+\hypertarget{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}{
+\index{mdtFrame@{mdtFrame}!clearFlags@{clearFlags}}
+\index{clearFlags@{clearFlags}!mdtFrame@{mdtFrame}}
+\subsubsection[{clearFlags}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::clearFlags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}
+
+
+Clear frame's specific flags. 
+
+This method is usefull to clear some specific flags by subclasses (such as \hyperlink{classmdt_frame_usb_tmc}{mdtFrameUsbTmc})
+
+Note that QByteArray's flags are not altered.
+
+This class must be implemented is subclass if needed.
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000028}{Todo}]Not used now, clarify what to do ! \end{Desc}
+\hypertarget{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{
+\index{mdtFrame@{mdtFrame}!eofSeqLen@{eofSeqLen}}
+\index{eofSeqLen@{eofSeqLen}!mdtFrame@{mdtFrame}}
+\subsubsection[{eofSeqLen}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrame::eofSeqLen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}
+
+
+Get the length of the end of frame sequence. 
+
+Used for ASCII frames. Default implementation returns 0 
+
+Reimplemented in \hyperlink{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}{mdtFrameAscii}.
 
 \hypertarget{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{
 \index{mdtFrame@{mdtFrame}!putData@{putData}}
@@ -185,9 +237,13 @@ Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e
 
 Put data into the frame. 
 
-Must be implemented by specific frame subclass.\par
- This method is called by the read thread.\par
- Default implementation simply stores data, and set the EOF condition to true. This way, it's possible to use \hyperlink{classmdt_frame}{mdtFrame} for raw binary transferts. 
+Must be implemented by specific frame subclass.
+
+This method is called by the read thread.
+
+Default implementation simply stores data, and set the EOF condition to true. This way, it's possible to use \hyperlink{classmdt_frame}{mdtFrame} for raw binary transfers.
+
+
 \begin{DoxyParams}{Parameters}
 {\em data} & Valid pointer to the data \\
 \hline
@@ -202,7 +258,7 @@ The data pointer must be valid, and not be the internal pointer returned by data
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{mdtFrameAscii}, and \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{mdtFrameModbusTcp}.
+Reimplemented in \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{mdtFrameAscii}, \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{mdtFrameModbusTcp}, and \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{mdtFrameUsbTmc}.
 
 \hypertarget{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{
 \index{mdtFrame@{mdtFrame}!putUntil@{putUntil}}
@@ -251,7 +307,9 @@ The data pointer must be valid, and not be the internal pointer returned by data
 
 Put data until EOF token was reached. 
 
-This is an overloaded function. The token can be a sequence of bytes. \begin{DoxySeeAlso}{See also}
+This is an overloaded function. The token can be a sequence of bytes.
+
+\begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} 
 \end{DoxySeeAlso}
 \hypertarget{classmdt_frame_ab8db9882c095091109115afb8e448b37}{
@@ -280,7 +338,9 @@ This is used by \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} with ti
 
 Set the complete flag directly. 
 
-This is usefull for raw mode transfert. If true, the frame is set complete after each call of \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData()} 
+This is usefull for raw mode transfert. If true, the frame is set complete after each call of \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData()}
+
+
 \begin{DoxyParams}{Parameters}
 {\em dc} & The Directly complete flag \\
 \hline
@@ -298,7 +358,32 @@ This is usefull for raw mode transfert. If true, the frame is set complete after
 
 Set the ignore null values flag. 
 
-If set true, all null values ('$\backslash$0' or 0) are not stored by \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} methods \hypertarget{classmdt_frame_a36e4b85a3c671902ac3c8cc318ca726c}{
+If set true, all null values ('$\backslash$0' or 0) are not stored by \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} methods \hypertarget{classmdt_frame_a3b9a331858df9061879592fab1b346f5}{
+\index{mdtFrame@{mdtFrame}!setWaitAnAnswer@{setWaitAnAnswer}}
+\index{setWaitAnAnswer@{setWaitAnAnswer}!mdtFrame@{mdtFrame}}
+\subsubsection[{setWaitAnAnswer}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::setWaitAnAnswer (
+\begin{DoxyParamCaption}
+\item[{bool}]{wait}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_a3b9a331858df9061879592fab1b346f5}
+
+
+Tell a write/read thread that an answer is needed after a write frame. 
+
+In some case, typically USB, the host must allways init a transaction, for read and for write. For such case, only one thread manages the write/read process:
+\begin{DoxyItemize}
+\item Wait until a frame must be sent (can be bypassed with a flag)
+\item Init a write transaction, wait until transaction is finish
+\item Init a read transaction, wait until something was readen. The last step can be a problem if we have to write a frame (f.ex. a query), but not need an answer. After that, we have to send a second query, but need wait until data was received.
+\end{DoxyItemize}
+
+To solve this problem, we must tell the thread if it must init a read transaction after a frame was written (request) or not, and this is the goal of this method.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} 
+\end{DoxySeeAlso}
+\hypertarget{classmdt_frame_a36e4b85a3c671902ac3c8cc318ca726c}{
 \index{mdtFrame@{mdtFrame}!take@{take}}
 \index{take@{take}!mdtFrame@{mdtFrame}}
 \subsubsection[{take}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrame::take (
@@ -345,6 +430,22 @@ This method does not copy any data, but is usefull after a copy using QByteArray
 \begin{DoxyPrecond}{Precondition}
 The data pointer must be valid, and not be the internal pointer returned by data(). 
 \end{DoxyPrecond}
+\hypertarget{classmdt_frame_ab27455f2fa3415a96482786c0ec27e55}{
+\index{mdtFrame@{mdtFrame}!waitAnAnswer@{waitAnAnswer}}
+\index{waitAnAnswer@{waitAnAnswer}!mdtFrame@{mdtFrame}}
+\subsubsection[{waitAnAnswer}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrame::waitAnAnswer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_frame_ab27455f2fa3415a96482786c0ec27e55}
+
+
+Know if an answer is needed after a write frame. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_frame_a3b9a331858df9061879592fab1b346f5}{setWaitAnAnswer()} 
+\end{DoxySeeAlso}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

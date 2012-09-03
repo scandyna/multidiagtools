@@ -64,16 +64,12 @@ bool \hyperlink{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{suspendT
 \begin{DoxyCompactList}\small\item\em Request to suspend transmission. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{resumeTransmission} ()
 \begin{DoxyCompactList}\small\item\em Request to resume transmission. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_a597d013bbe18b1f946b99f68a4856a87}{flushIn} ()
-\begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{waitEventWriteReady} ()
-\begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()}; \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{write} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}{flushOut} ()
-\begin{DoxyCompactList}\small\item\em Flush write buffers. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{waitEventCtl} ()
-\begin{DoxyCompactList}\small\item\em Wait until a control (modem line) signal state changes. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()}; \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{getCtlStates} ()
 \begin{DoxyCompactList}\small\item\em NOTE: \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{setRts} (bool on)
@@ -171,64 +167,6 @@ True if Xon/Xoff flow control is enabled (and no error occured).
 
 Implements \hyperlink{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}{mdtAbstractSerialPort}.
 
-\hypertarget{classmdt_serial_port_a597d013bbe18b1f946b99f68a4856a87}{
-\index{mdtSerialPort@{mdtSerialPort}!flushIn@{flushIn}}
-\index{flushIn@{flushIn}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{flushIn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::flushIn (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a597d013bbe18b1f946b99f68a4856a87}
-
-
-Flush read buffers. 
-
-NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]Clean this part\end{Desc}
-
-
-Subclass notes:\par
- This method must be implemented in subclass.\par
- To handle port correctly, subclass must:
-\begin{DoxyItemize}
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Call specific system flush function
-\item Call this flush method ( with \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn()} ). The last step will move all pending frames to read pool.\par
- Note: if subclass has nothing to do it must lock the mutex and call this method. 
-\end{DoxyItemize}
-
-Reimplemented from \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort}.
-
-\hypertarget{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}{
-\index{mdtSerialPort@{mdtSerialPort}!flushOut@{flushOut}}
-\index{flushOut@{flushOut}!mdtSerialPort@{mdtSerialPort}}
-\subsubsection[{flushOut}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPort::flushOut (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}
-
-
-Flush write buffers. 
-
-NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000006}{Todo}]Clean this part\end{Desc}
-
-
-Subclass notes:\par
- This method must be implemented in subclass.\par
- To handle port correctly, subclass must:
-\begin{DoxyItemize}
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Call specific system flush function
-\item Call this flush method ( with \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut()} ). The last step will move all pending frames to read pool.\par
- Note: if subclass has nothing to do it must lock the mutex and call this method. 
-\end{DoxyItemize}
-
-Reimplemented from \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort}.
-
 \hypertarget{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{
 \index{mdtSerialPort@{mdtSerialPort}!getCtlStates@{getCtlStates}}
 \index{getCtlStates@{getCtlStates}!mdtSerialPort@{mdtSerialPort}}
@@ -243,7 +181,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a239
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000034}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000027}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -612,10 +550,16 @@ Reimplemented from \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fe
 \label{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}
 
 
-Wait until a control (modem line) signal state changes. 
+void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()}; 
+
+Wait until a control (modem line) signal state changes
 
 This method is called from \hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+
+void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtSerialPort::flushOut()} \{ int err;
+
+\hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(tcflush(pvFd, TCOFLUSH) $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-SERIAL\_\-PORT\_\-IO\_\-ERROR, \char`\"{}tcflush() call failed\char`\"{}, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPort\char`\"{}); e.commit(); \} \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut()}; \} 
 
 Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{mdtAbstractSerialPort}.
 
@@ -630,10 +574,16 @@ Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0
 \label{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}
 
 
-Wait until data can be written to port. 
+void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()}; 
+
+Wait until data can be written to port.
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+
+void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtSerialPort::flushIn()} \{ int err;
+
+\hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(tcflush(pvFd, TCIFLUSH) $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-SERIAL\_\-PORT\_\-IO\_\-ERROR, \char`\"{}tcflush() call failed\char`\"{}, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPort\char`\"{}); e.commit(); \} \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn()}; \} 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 

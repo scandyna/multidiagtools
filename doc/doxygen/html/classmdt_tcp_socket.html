@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtTcpSocket Class Reference</div>  </div>
@@ -79,15 +78,11 @@ Collaboration diagram for mdtTcpSocket:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_tcp_socket__coll__graph.png" border="0" usemap="#mdt_tcp_socket_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_tcp_socket_coll__map" id="mdt_tcp_socket_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="193,101,311,131"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="137,197,244,227"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="199,5,305,35"/><area shape="rect" id="node6" href="classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="97,309,244,339"/><area shape="rect" id="node11" href="classmdt_frame.html" title="Provide an array of bytes." alt="" coords="5,197,85,227"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="89,197,196,227"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/><area shape="rect" id="node6" href="classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="80,277,227,307"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_tcp_socket-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="pub-slots"></a>
-Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a826d1c8df5a852a396878587606812b8"></a><!-- doxytag: member="mdtTcpSocket::decrementTransactionsCounter" ref="a826d1c8df5a852a396878587606812b8" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>decrementTransactionsCounter</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeed1a50725a8e61f86de2bf67a92feb8"></a><!-- doxytag: member="mdtTcpSocket::mdtTcpSocket" ref="aeed1a50725a8e61f86de2bf67a92feb8" args="(QObject *parent=0)" -->
@@ -100,10 +95,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#aae23057f2e0ee326d0fee78ffe3f00f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#ac59d2dfdf405b5382f0f20d5b9f75fd0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a93984277418aee53633bd28249f484d1">beginNewTransaction</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a new transaction.  <a href="#a93984277418aee53633bd28249f484d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a4f81d3552d7e2a33d2e1bf2e84beb063">waitForNewTransaction</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Block until a new transaction starts.  <a href="#a4f81d3552d7e2a33d2e1bf2e84beb063"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#adb09186cdacdac15291523c59f156cd4">waitForReadyRead</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#adb09186cdacdac15291523c59f156cd4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">read</a> (char *data, qint64 maxSize)</td></tr>
@@ -114,25 +105,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#adbf2db44b291127a499d9f8720beb632"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a93984277418aee53633bd28249f484d1"></a><!-- doxytag: member="mdtTcpSocket::beginNewTransaction" ref="a93984277418aee53633bd28249f484d1" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtTcpSocket::beginNewTransaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Start a new transaction. </p>
-<p>Mutex is locked by this method. </p>
-
-</div>
-</div>
 <a class="anchor" id="aa5b229a668c0d9b083f8eec8efe4636f"></a><!-- doxytag: member="mdtTcpSocket::connectToHost" ref="aa5b229a668c0d9b083f8eec8efe4636f" args="(const QString &amp;hostName, int hostPort)" -->
 <div class="memitem">
 <div class="memproto">
@@ -326,27 +298,6 @@ thread must be a valid pointer </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a4f81d3552d7e2a33d2e1bf2e84beb063"></a><!-- doxytag: member="mdtTcpSocket::waitForNewTransaction" ref="a4f81d3552d7e2a33d2e1bf2e84beb063" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtTcpSocket::waitForNewTransaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Block until a new transaction starts. </p>
-<p>Note: used by thread , should not be used directly.<br/>
- Mutex is locked by this method. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="adb09186cdacdac15291523c59f156cd4"></a><!-- doxytag: member="mdtTcpSocket::waitForReadyRead" ref="adb09186cdacdac15291523c59f156cd4" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -425,7 +376,7 @@ thread must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

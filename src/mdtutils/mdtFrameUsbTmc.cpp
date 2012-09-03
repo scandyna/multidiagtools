@@ -56,9 +56,8 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
   Q_ASSERT(capacity() > 12);
 
   int frameSize = 0;
-  int alignmentBytesCount = 0;
+  ///int alignmentBytesCount = 0;
   int stored = 0;
-  int i = 0;
 
   // If frame is allready full, return
   if(bytesToStore() < 1){
@@ -106,115 +105,9 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
     }
     // Calc total frame size, without alignment bytes
     frameSize = pvTransferSize + 12;
-    // Calc alignmentBytesCount NOTE: utile ?
-    i = 0;
-    while(((frameSize+i)%4) != 0){
-      i++;
-      alignmentBytesCount++;
-    }
     // Check if we have a complete frame
     if(size() >= frameSize){
       pvEOFcondition = true;
-      qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
-      pvMessageData += right(size()-12).left(pvTransferSize);
-    }
-  }
-
-  return stored;
-  
-  
-  /// \todo frame size should be extracted one time, not every time size() is big enougth
-  // Check if it's possible to get size of incomming frame
-  if((size()+maxLen) >= 8){
-    // Check if some data must be stored before we can get the frame size
-    if(size() < 8){
-      stored = 8-size();
-      append(data, stored);
-      Q_ASSERT((data + stored) <= (data + maxLen));
-      data += stored;
-      maxLen -= stored;
-    }
-    qDebug() << "mdtFrameUsbTmc::putData(): size(): " << size();
-    qDebug() << "mdtFrameUsbTmc::putData(): maxLen (2): " << maxLen;
-    pvTransferSize = at(4);
-    pvTransferSize += (at(5) << 8);
-    pvTransferSize += (at(6) << 16);
-    pvTransferSize += (at(7) << 24);
-    // We have USBTMC transfer size , = total size - 12 (12: USBTMC header size). Add missing size
-    frameSize = pvTransferSize + 12;
-    // Considere the alignment bytes
-    while((frameSize % 4) != 0){
-      frameSize++;
-      alignmentBytesCount++;
-    }
-    qDebug() << "mdtFrameUsbTmc::putData(): message data size: " << pvTransferSize;
-    qDebug() << "mdtFrameUsbTmc::putData(): frame size: " << frameSize;
-    // Check if it is possible to store this frame
-    if(frameSize > capacity()){
-      // Problem here: fill the frame with null values, so bytesToStore() will return 0 next time
-      fill(0, capacity());
-      stored = capacity();
-      return stored;
-    }
-  }
-  // Check wat's possible to store
-  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (3): " << maxLen;
-  if(maxLen > remainCapacity()){
-    maxLen = remainCapacity();
-  }
-  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (4): " << maxLen;
-  // It can happen that device returns more data than expected. If frameSize is known, check this
-  if(frameSize > 0){
-    if((size()+maxLen) > frameSize){
-      qDebug() << "Excedet: " << maxLen + size() - frameSize;
-      // We declare that all data where stored
-      stored += maxLen + size() - frameSize;
-      // Adjust the real amout of data we take
-      maxLen = frameSize-size();
-    }
-    // It can happen that device does not send alignment bytes (this is OK regarding USBTMC specs)
-    if(size() == (frameSize-alignmentBytesCount)){
-      // We must declare that alignment bytes are readen
-      if(alignmentBytesCount > maxLen){
-        stored += maxLen;
-        maxLen = 0;
-      }else{
-        stored += alignmentBytesCount;
-      }
-    }
-  }
-  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (5): " << maxLen;
-  // Store
-  append(data, maxLen);
-  stored += maxLen;
-  qDebug() << "mdtFrameUsbTmc::putData(): stored: " << stored;
-  /// EOM ?
-  if(size() > 8){
-    qDebug() << "mdtFrameUsbTmc::putData(): EOM: " << (at(8) & 0x01);
-  }
-  // Check if frame is complete
-  if(size() == frameSize){
-  ///if((size() == frameSize)||(at(8)&0x01)){  /// \todo Clean, can happen that this not work !!
-    pvEOFcondition = true;
-    // Store members
-    pvMsgID = at(0);
-    pvbTag = at(1);
-    pvbTagInverse  = at(2);
-    // Check bTag
-    if(pvbTagInverse != (quint8)(~pvbTag)){
-      /// \todo Handle error
-      qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
-    }
-    /// \todo term char
-    // EOM
-    if(at(8) & 0x01){
-      pvEOM = true;
-    }else{
-      pvEOM = false;
-    }
-    qDebug() << "mdtFrameUsbTmc::putData(): EOM: " << pvEOM;
-    // Store message data if exists
-    if(size() >= (12+alignmentBytesCount)){
       qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
       pvMessageData += right(size()-12).left(pvTransferSize);
     }

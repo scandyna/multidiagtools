@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtPortReadThread Class Reference</div>  </div>
@@ -89,10 +88,6 @@ Collaboration diagram for mdtPortReadThread:</div>
 
 <p><a href="classmdt_port_read_thread-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="signals"></a>
-Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_read_thread.html#ae52a6651f6a7048bb16e64d68e3583f8">newFrameReaden</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emited when a new frame is available.  <a href="#ae52a6651f6a7048bb16e64d68e3583f8"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a180074c2ff60f5103d7e3aa27c1cdb01"></a><!-- doxytag: member="mdtPortReadThread::mdtPortReadThread" ref="a180074c2ff60f5103d7e3aa27c1cdb01" args="(QObject *parent=0)" -->
@@ -101,33 +96,9 @@ Public Member Functions</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Reader thread for port I/O. </p>
 <p>It's possible to use the read timeout protocol. An example of this is MODBUS (over serial line) in RTU mode.</p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd></dl>
-</div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ae52a6651f6a7048bb16e64d68e3583f8"></a><!-- doxytag: member="mdtPortReadThread::newFrameReaden" ref="ae52a6651f6a7048bb16e64d68e3583f8" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortReadThread::newFrameReaden </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [signal]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Emited when a new frame is available. </p>
-<p>This signal is emited when a new frame is available.<br/>
- To get the frame, the simplest way is to use a <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>.<br/>
- It's also possible to use <a class="el" href="classmdt_port.html">mdtPort</a>, but this solution needs to handle the mutex, verify the readen queue state, ... </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd>
-<dd>
-<a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html">mdtPortConfig</a></dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>suspendTransmission() call is no longer in <a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead()</a>, must be handled in run() now. </dd></dl>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_read_thread_8h_source.html">mdtPortReadThread.h</a></li>
 <li>src/mdtport/mdtPortReadThread.cpp</li>
 </ul>
@@ -146,7 +117,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

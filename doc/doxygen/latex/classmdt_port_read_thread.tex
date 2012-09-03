@@ -29,11 +29,6 @@ Collaboration diagram for mdtPortReadThread:\nopagebreak
 \includegraphics[width=184pt]{classmdt_port_read_thread__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Signals}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}{newFrameReaden} ()
-\begin{DoxyCompactList}\small\item\em Emited when a new frame is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -50,31 +45,10 @@ Reader thread for port I/O.
 It's possible to use the read timeout protocol. An example of this is MODBUS (over serial line) in RTU mode.
 
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_config}{mdtPortConfig} 
+\hyperlink{classmdt_port_config}{mdtPortConfig}
 \end{DoxySeeAlso}
-
-
-\subsection{Member Function Documentation}
-\hypertarget{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}{
-\index{mdtPortReadThread@{mdtPortReadThread}!newFrameReaden@{newFrameReaden}}
-\index{newFrameReaden@{newFrameReaden}!mdtPortReadThread@{mdtPortReadThread}}
-\subsubsection[{newFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortReadThread::newFrameReaden (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_port_read_thread_ae52a6651f6a7048bb16e64d68e3583f8}
-
-
-Emited when a new frame is available. 
-
-This signal is emited when a new frame is available.\par
- To get the frame, the simplest way is to use a \hyperlink{classmdt_port_manager}{mdtPortManager}.\par
- It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution needs to handle the mutex, verify the readen queue state, ... \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager}{mdtPortManager} 
-
-\hyperlink{classmdt_port}{mdtPort} 
-\end{DoxySeeAlso}
+\begin{Desc}
+\item[\hyperlink{todo__todo000007}{Todo}]suspendTransmission() call is no longer in \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead()}, must be handled in run() now. \end{Desc}
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

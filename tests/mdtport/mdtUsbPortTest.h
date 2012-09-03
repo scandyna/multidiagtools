@@ -26,6 +26,7 @@
 // Pour les essais ...
 #include <libusb-1.0/libusb.h>
 
+/// \todo Add start/stop test
 class mdtUsbPortTest : public mdtTest
 {
  Q_OBJECT

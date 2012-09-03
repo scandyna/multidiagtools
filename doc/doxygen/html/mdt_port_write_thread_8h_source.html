@@ -94,22 +94,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033   <a class="code" href="classmdt_port_write_thread.html">mdtPortWriteThread</a>(QObject *parent = 0);
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035  signals:
-<a name="l00036"></a>00036 
-<a name="l00041"></a>00041   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_write_thread.html#a8ea77f140d6d4f6fa731dbb80acf5da6" title="Emited when a complete frame was written.">frameWritten</a>();
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043  <span class="keyword">private</span>:
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <span class="comment">// Get a new frame from TX frames</span>
-<a name="l00046"></a>00046   <span class="comment">// If no frame is available, a null pointer is returned</span>
-<a name="l00047"></a>00047   <span class="comment">// Note: this function handle not the serial port mutex</span>
-<a name="l00048"></a>00048   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *getNewFrame();
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <span class="comment">// Thread implementation</span>
-<a name="l00051"></a>00051   <span class="keywordtype">void</span> run();
-<a name="l00052"></a>00052 };
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054 <span class="preprocessor">#endif  // #ifndef MDT_PORT_WRITE_THREAD_H</span>
+<a name="l00037"></a>00037   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_write_thread.html#a69702ab3a95c238fb451f866efc7cb34" title="Stop the thread.">stop</a>();
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039  signals:
+<a name="l00040"></a>00040 
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047  <span class="keyword">private</span>:
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="comment">// Thread implementation</span>
+<a name="l00050"></a>00050   <span class="keywordtype">void</span> run();
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="preprocessor">#endif  // #ifndef MDT_PORT_WRITE_THREAD_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -126,7 +123,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:08 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:34 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

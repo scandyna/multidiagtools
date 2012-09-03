@@ -97,11 +97,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#a84594fdb56cd455a366c69b0a9228020"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#ad8a196bb21b6ca76dffb068a1692904a">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#ad8a196bb21b6ca76dffb068a1692904a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fea088c8e5ad4578f521a39c353f7c3"></a><!-- doxytag: member="mdtPort::flushIn" ref="a2fea088c8e5ad4578f521a39c353f7c3" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a2fea088c8e5ad4578f521a39c353f7c3">flushIn</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a85e77a391f6f5782428beb2e6aee52f8">waitEventWriteReady</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written to port.  <a href="#a85e77a391f6f5782428beb2e6aee52f8"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush read buffers.  <a href="#a85e77a391f6f5782428beb2e6aee52f8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port.html#a62f4a6f2c547d40d3743ce893e0f64d6">write</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a62f4a6f2c547d40d3743ce893e0f64d6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42022f9fe08166418711b956c6aabb49"></a><!-- doxytag: member="mdtPort::flushOut" ref="a42022f9fe08166418711b956c6aabb49" args="()" -->
@@ -155,9 +152,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 <div class="memdoc">
 
-<p>Wait until data can be written to port. </p>
+<p>Flush read buffers. </p>
+<p>void <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a>;</p>
+<p>Wait until data can be written to port.</p>
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<p>void <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtPort::flushIn()</a> { <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>; <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">mdtAbstractPort::flushIn()</a>; } </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
@@ -179,7 +179,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Wait until data is available on port. </p>
 <p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+ Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Infinite timeout: NULL pointer Ok ??? </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
@@ -236,7 +237,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -40,7 +40,8 @@ enum \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\
 \par
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307}{SetupError}, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{WaitingCanceled}, 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{UnknownError}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{UnknownError}, 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{UnhandledError}
  \}
 \begin{DoxyCompactList}\small\item\em Error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
@@ -108,7 +109,7 @@ virtual bool \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fef700b9
 \begin{DoxyCompactList}\small\item\em Request to suspend transmission. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_abstract_port_ad4a04c995df881593db0a309000be7a7}{resumeTransmission} ()
 \begin{DoxyCompactList}\small\item\em Request to resume transmission. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn} ()
+void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn} ()
 \begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_abstract_port_ab1738b5b6b78743ee2d36ccf5daa7c00}{readOneFrame} ()
 \begin{DoxyCompactList}\small\item\em Just for special cases. \end{DoxyCompactList}\item 
@@ -118,7 +119,7 @@ virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{err
 \begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
 virtual qint64 \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{write} (const char $\ast$data, qint64 maxSize)=0
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut} ()
+void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut} ()
 \begin{DoxyCompactList}\small\item\em Flush write buffers. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{updateReadTimeoutState} (bool state)
 \begin{DoxyCompactList}\small\item\em Update the read timeout state. \end{DoxyCompactList}\item 
@@ -128,12 +129,20 @@ bool \hyperlink{classmdt_abstract_port_aec94143165e486cbbe6e0979be887c7e}{readTi
 \begin{DoxyCompactList}\small\item\em Returns read timeout state. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_abstract_port_a7c05a1abe77f0c3c334016c6ad866f67}{writeTimeoutOccured} ()
 \begin{DoxyCompactList}\small\item\em Returns write timeout state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{flush} ()
+\begin{DoxyCompactList}\small\item\em Flush read/write buffers. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_port_adf06d095d6c3e6ce939a3998bcf8b829}{initQueues} ()
 \begin{DoxyCompactList}\small\item\em Init the read ans write queues. \end{DoxyCompactList}\item 
 QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_a05356a33dc546a11d2794a0419d749e0}{readenFrames} ()
 \begin{DoxyCompactList}\small\item\em Get the readen frames Queue. \end{DoxyCompactList}\item 
 QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_a3850ab819a8fc5dad22af14b74c45274}{readFramesPool} ()
 \begin{DoxyCompactList}\small\item\em Get the read frames Queue pool. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_port_a9a69eb2fc07d551ab37c011487fa319d}{addFrameToWrite} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$frame)
+\begin{DoxyCompactList}\small\item\em Add a frame to write. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_frame}{mdtFrame} $\ast$ \hyperlink{classmdt_abstract_port_a6c5ebd4451aec959efc4e71ab1b13941}{getFrameToWrite} ()
+\begin{DoxyCompactList}\small\item\em Wait until a frame to write is available and get it. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{abortFrameToWriteWait} ()
+\begin{DoxyCompactList}\small\item\em Abort the frame tp write waiting. \end{DoxyCompactList}\item 
 QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_a4fed10be147dfce6ca315467ff3fb968}{writeFrames} ()
 \begin{DoxyCompactList}\small\item\em Get the write frames Queue. \end{DoxyCompactList}\item 
 QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_abstract_port_abf093b67fddebffa4f3c52277b9a8cf7}{writeFramesPool} ()
@@ -156,7 +165,11 @@ virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{err
 virtual void \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose} ()=0
 \begin{DoxyCompactList}\small\item\em Close port. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_abstract_port_a880e5ae1699af102f9a80501bb6a0021}{pvSetup} ()=0
-\begin{DoxyCompactList}\small\item\em Setup port with given configurations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Setup port with given configurations. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_a1fe88e9d56c0881b9566664b094b0958}{pvFlushIn} ()=0
+\begin{DoxyCompactList}\small\item\em Flush read port. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_abstract_port_a1667fa938d3a7578b73f54c32015c369}{pvFlushOut} ()=0
+\begin{DoxyCompactList}\small\item\em Flush write port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -231,7 +244,7 @@ Base class for port I/O.
 Error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000003}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
+\item[\hyperlink{todo__todo000004}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
 
 add a DeviceDisconnected (+ adapt in threads) \end{Desc}
 \begin{Desc}
@@ -265,7 +278,11 @@ WaitingCanceled}
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{
 UnknownError}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}
-}]Unknown error is happen. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \end{description}
+}]Unknown error is happen. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \index{UnhandledError@{UnhandledError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnhandledError@{UnhandledError}}\item[{\em 
+\hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{
+UnhandledError}
+\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}
+}]Unhandled error happen. In this case, thread will stop working. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \end{description}
 \end{Desc}
 
 
@@ -288,6 +305,41 @@ Subclass notes:\par
  This destructor cannot call the \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()} method, because this will call the \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()} from destructed inherited object. So, the subclass must call \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()} in its own destructor. 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{
+\index{mdtAbstractPort@{mdtAbstractPort}!abortFrameToWriteWait@{abortFrameToWriteWait}}
+\index{abortFrameToWriteWait@{abortFrameToWriteWait}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{abortFrameToWriteWait}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::abortFrameToWriteWait (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}
+
+
+Abort the frame tp write waiting. 
+
+Will wake thread(s) waiting on a frame to write with \hyperlink{classmdt_abstract_port_a6c5ebd4451aec959efc4e71ab1b13941}{getFrameToWrite()} . This method is called from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()} , and should not be called directly.
+
+Mutex is not handled by this method. \hypertarget{classmdt_abstract_port_a9a69eb2fc07d551ab37c011487fa319d}{
+\index{mdtAbstractPort@{mdtAbstractPort}!addFrameToWrite@{addFrameToWrite}}
+\index{addFrameToWrite@{addFrameToWrite}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{addFrameToWrite}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::addFrameToWrite (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtFrame} $\ast$}]{frame}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a9a69eb2fc07d551ab37c011487fa319d}
+
+
+Add a frame to write. 
+
+Once the frame is added to the write queue, waiting thread will be woken up (if waiting) and will send the frame.
+
+The mutex is locked internally, and should not be locked before calling this method. The mutex is unlocked before returning.
+
+\begin{DoxyPrecond}{Precondition}
+frame must be a vail pointer. 
+\end{DoxyPrecond}
 \hypertarget{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{
 \index{mdtAbstractPort@{mdtAbstractPort}!close@{close}}
 \index{close@{close}!mdtAbstractPort@{mdtAbstractPort}}
@@ -301,7 +353,7 @@ Subclass notes:\par
 
 Close the port. 
 
-Close port if it is open.
+Flush and close port if it is open.
 
 The mutex is not handled by this method.
 
@@ -309,39 +361,44 @@ Subclass notes:\par
  Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated. Note that this method must be called from subclass destructor. See \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort()} for details.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000004}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+\item[\hyperlink{todo__todo000005}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
 
 
 Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
 
-\hypertarget{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{
+\hypertarget{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{
+\index{mdtAbstractPort@{mdtAbstractPort}!flush@{flush}}
+\index{flush@{flush}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::flush (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}
+
+
+Flush read/write buffers. 
+
+Will move all read and write frames to their pool, and call \hyperlink{classmdt_abstract_port_a1fe88e9d56c0881b9566664b094b0958}{pvFlushIn()} and \hyperlink{classmdt_abstract_port_a1667fa938d3a7578b73f54c32015c369}{pvFlushOut()} to flush system's buffers.
+
+Mutex is locked in this method. \hypertarget{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flushIn@{flushIn}}
 \index{flushIn@{flushIn}!mdtAbstractPort@{mdtAbstractPort}}
 \subsubsection[{flushIn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractPort::flushIn (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}
 
 
 Flush read buffers. 
 
-NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]Clean this part\end{Desc}
+Will move all readen frames to pool, and call \hyperlink{classmdt_abstract_port_a1fe88e9d56c0881b9566664b094b0958}{pvFlushIn()} to flush system's buffers.
 
+Mutex is locked in this method. 
 
-Subclass notes:\par
- This method must be implemented in subclass.\par
- To handle port correctly, subclass must:
-\begin{DoxyItemize}
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Call specific system flush function
-\item Call this flush method ( with \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn()} ). The last step will move all pending frames to read pool.\par
- Note: if subclass has nothing to do it must lock the mutex and call this method. 
-\end{DoxyItemize}
-
-Reimplemented in \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{mdtPort}, \hyperlink{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a597d013bbe18b1f946b99f68a4856a87}{mdtSerialPort}.
+Reimplemented in \hyperlink{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}{mdtUsbPort}.
 
 \hypertarget{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flushOut@{flushOut}}
@@ -350,28 +407,40 @@ Reimplemented in \hyperlink{classmdt_port_a2fea088c8e5ad4578f521a39c353f7c3}{mdt
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}
 
 
 Flush write buffers. 
 
-NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000006}{Todo}]Clean this part\end{Desc}
+Will move all write frames to pool, and call \hyperlink{classmdt_abstract_port_a1667fa938d3a7578b73f54c32015c369}{pvFlushOut()} to flush system's buffers.
+
+Mutex is locked in this method. 
+
+Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdtPort}, and \hyperlink{classmdt_usb_port_ad17584feba55650ed580cf54e2ced99e}{mdtUsbPort}.
+
+\hypertarget{classmdt_abstract_port_a6c5ebd4451aec959efc4e71ab1b13941}{
+\index{mdtAbstractPort@{mdtAbstractPort}!getFrameToWrite@{getFrameToWrite}}
+\index{getFrameToWrite@{getFrameToWrite}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{getFrameToWrite}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrame} $\ast$ mdtAbstractPort::getFrameToWrite (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_port_a6c5ebd4451aec959efc4e71ab1b13941}
 
 
-Subclass notes:\par
- This method must be implemented in subclass.\par
- To handle port correctly, subclass must:
-\begin{DoxyItemize}
-\item Lock the mutex with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}
-\item Call specific system flush function
-\item Call this flush method ( with \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut()} ). The last step will move all pending frames to read pool.\par
- Note: if subclass has nothing to do it must lock the mutex and call this method. 
-\end{DoxyItemize}
+Wait until a frame to write is available and get it. 
 
-Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdtPort}, \hyperlink{classmdt_usb_port_ad17584feba55650ed580cf54e2ced99e}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a3a446c34c9f98e0c14637ab3dcab98d0}{mdtSerialPort}.
+If a frame is available in write frames queue, it will be returned. Else, thit method will block calling thread until a frame is available in write frames queue, and return one.
 
+This method is called from \hyperlink{classmdt_port_thread}{mdtPortThread} and should not be used directly.
+
+The mutex must be locked before calling this method. Internally, it will be unlocked during wait, and locked again before returning.
+
+\begin{DoxyReturn}{Returns}
+A pointer to a frame, or Null (Null happens after stop request) 
+\end{DoxyReturn}
 \hypertarget{classmdt_abstract_port_adf06d095d6c3e6ce939a3998bcf8b829}{
 \index{mdtAbstractPort@{mdtAbstractPort}!initQueues@{initQueues}}
 \index{initQueues@{initQueues}!mdtAbstractPort@{mdtAbstractPort}}
@@ -435,7 +504,41 @@ Subclass notes:\par
 \begin{DoxyItemize}
 \item Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with \hyperlink{classmdt_port_lock}{mdtPortLock}.
 \item The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile. 
-\end{DoxyItemize}\hypertarget{classmdt_abstract_port_ac1440ea9759cbbee9efc5ea22afcdb0a}{
+\end{DoxyItemize}\hypertarget{classmdt_abstract_port_a1fe88e9d56c0881b9566664b094b0958}{
+\index{mdtAbstractPort@{mdtAbstractPort}!pvFlushIn@{pvFlushIn}}
+\index{pvFlushIn@{pvFlushIn}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{pvFlushIn}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::pvFlushIn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a1fe88e9d56c0881b9566664b094b0958}
+
+
+Flush read port. 
+
+This method is called from \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()}, and is usefull if subsystem needs to be flushed. (For ex. serial port).
+
+This method must be implemented in subclass.
+
+The mutex is handled by \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()} and should not be handled here. \hypertarget{classmdt_abstract_port_a1667fa938d3a7578b73f54c32015c369}{
+\index{mdtAbstractPort@{mdtAbstractPort}!pvFlushOut@{pvFlushOut}}
+\index{pvFlushOut@{pvFlushOut}!mdtAbstractPort@{mdtAbstractPort}}
+\subsubsection[{pvFlushOut}]{\setlength{\rightskip}{0pt plus 5cm}virtual void mdtAbstractPort::pvFlushOut (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classmdt_abstract_port_a1667fa938d3a7578b73f54c32015c369}
+
+
+Flush write port. 
+
+This method is called from flushout(), and is usefull if subsystem needs to be flushed. (For ex. serial port).
+
+This method must be implemented in subclass.
+
+The mutex is handled by \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()} and should not be handled here. \hypertarget{classmdt_abstract_port_ac1440ea9759cbbee9efc5ea22afcdb0a}{
 \index{mdtAbstractPort@{mdtAbstractPort}!pvOpen@{pvOpen}}
 \index{pvOpen@{pvOpen}!mdtAbstractPort@{mdtAbstractPort}}
 \subsubsection[{pvOpen}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractPort::pvOpen (
@@ -818,7 +921,7 @@ Implemented in \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdtPo
 
 Wait until data is available on port. 
 
-This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} and \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} (it is a little bit slower than setting timeout one time, and call \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} ).\par
+This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} , \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} and \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{setReadTimeout()} again to restore original setting. (it is a little bit slower than setting timeout one time, and call \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} ).\par
  Note that the reader thread will call \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()} without argument.\par
  Note: this method is called from thread , and should not be used directly\par
  Mutex: see \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{waitForReadyRead()}

@@ -1,0 +1,106 @@
+\hypertarget{classmdt_usb_port_thread}{
+\section{mdtUsbPortThread Class Reference}
+\label{classmdt_usb_port_thread}\index{mdtUsbPortThread@{mdtUsbPortThread}}
+}
+
+
+Inheritance diagram for mdtUsbPortThread:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classmdt_usb_port_thread__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtUsbPortThread:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classmdt_usb_port_thread__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}{
+{\bfseries mdtUsbPortThread} (QObject $\ast$parent=0)}
+\label{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}
+
+\item 
+void \hyperlink{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usb_port_thread_ae04383bb937c5b0e98d3204ef0df08ad}{writeToPort} (\hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port, \hyperlink{classmdt_frame}{mdtFrame} $\ast$frame)
+\begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{
+\index{mdtUsbPortThread@{mdtUsbPortThread}!stop@{stop}}
+\index{stop@{stop}!mdtUsbPortThread@{mdtUsbPortThread}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbPortThread::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}
+
+
+Stop the running thread. 
+
+\begin{DoxyPrecond}{Precondition}
+Serial port instance must be defined. 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+setSerialPort() 
+\end{DoxySeeAlso}
+
+
+Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread}.
+
+\hypertarget{classmdt_usb_port_thread_ae04383bb937c5b0e98d3204ef0df08ad}{
+\index{mdtUsbPortThread@{mdtUsbPortThread}!writeToPort@{writeToPort}}
+\index{writeToPort@{writeToPort}!mdtUsbPortThread@{mdtUsbPortThread}}
+\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbPortThread::writeToPort (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtUsbPort} $\ast$}]{port, }
+\item[{{\bf mdtFrame} $\ast$}]{frame}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_thread_ae04383bb937c5b0e98d3204ef0df08ad}
+
+
+Write data to port. 
+
+This is a helper method to write a frame to the USB port.
+
+Note about port mutex handling:\par
+ The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & A valid instance of \hyperlink{classmdt_usb_port}{mdtUsbPort} \\
+\hline
+{\em frame} & Data stored in thos frame will be written to port.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on successfull transfert, or false on error or by stop request. If this method returns false, the thread should be stopped.
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
+
+frame must be a valid pointer (not Null). 
+\end{DoxyPrecond}
+
+
+emit frameWritten(); 
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtUsbPortThread.h\item 
+src/mdtport/mdtUsbPortThread.cpp\end{DoxyCompactItemize}

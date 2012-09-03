@@ -1,7 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="193,101,311,131"/>
-<area shape="rect" id="node8" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="137,197,244,227"/>
-<area shape="rect" id="node4" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="199,5,305,35"/>
-<area shape="rect" id="node6" href="$classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="97,309,244,339"/>
-<area shape="rect" id="node11" href="$classmdt_frame.html" title="Provide an array of bytes." alt="" coords="5,197,85,227"/>
+<area shape="rect" id="node2" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/>
+<area shape="rect" id="node8" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="89,197,196,227"/>
+<area shape="rect" id="node4" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/>
+<area shape="rect" id="node6" href="$classmdt_tcp_socket_thread.html" title="mdtTcpSocketThread" alt="" coords="80,277,227,307"/>
 </map>

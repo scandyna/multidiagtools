@@ -67,20 +67,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 This is the complete list of members for <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a>, including all inherited members.<table>
   <tr bgcolor="#f0f0f0"><td><b>connectToHost</b>(QString hostName, quint16 hostPort) (defined in <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a>)</td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured</a>(int error)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc">getNewFrameRead</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105">getNewFrameWrite</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d">ioProcessBegin</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4">isFinished</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72">isRunning</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtPortThread</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtTcpSocketThread</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a>)</td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket_thread.html#ad288905cfcb60ed16643890bafa8b9f0">newFrameReaden</a>()</td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461">newFrameReaden</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvNativePthreadObject</b> (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvPort</b> (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvRunning</b> (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvSigaction</b> (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a7e6e152839e35b8fbd1eb299c1d0b2fe">readFromPort</a>(mdtFrame *frame)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2">setPort</a>(mdtAbstractPort *port)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>sigactionHandle</b>(int signum) (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected, static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">start</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">stop</a>()</td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ab7faa0e8bb6183bad8fc91872abdf560">writeToPort</a>(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtPortThread</b>() (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
 </table></div>
 <!-- window showing the filter options -->
@@ -97,7 +101,7 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -169,8 +169,8 @@ void mdtUsbPortTest::essais()
   cfg.setReadFrameSize(200);
   cfg.setFrameType(mdtFrame::FT_USBTMC);
   port.setConfig(&cfg);
-  port.setPortName("0x0957:0x4d18");
-  ///port.setPortName("0x0957:0x0588");
+  ///port.setPortName("0x0957:0x4d18");
+  port.setPortName("0x0957:0x0588");
   ///port.setPortName("0x10cf:0x5500");
   thd.setPort(&port);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
@@ -194,7 +194,7 @@ void mdtUsbPortTest::essais()
   // USBTMC - send DEV_DEP_MSG_IN request
   port.unlockMutex();
   port.addFrameToWrite(uf);
-  QTest::qWait(1000);
+  QTest::qWait(500);
   port.lockMutex();
   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
   QVERIFY(uf != 0);

@@ -105,8 +105,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a0b68d661df8b5e5d88594dbff4db511d">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear internal data.  <a href="#a0b68d661df8b5e5d88594dbff4db511d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a8a29586ba0f9e3ab9b52601f92818a54">putData</a> (char data, int maxLen)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Put data into the frame.  <a href="#a8a29586ba0f9e3ab9b52601f92818a54"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a06d2743a113bd2b4cf2ee44014ecd710">putData</a> (const char *data, int maxLen)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear frame's specific flags.  <a href="#a06d2743a113bd2b4cf2ee44014ecd710"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a19121b03cbb4c1bb420dc3cdb132f703">setMsgID</a> (<a class="el" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b">msg_id_t</a> MsgID)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the MsgID.  <a href="#a19121b03cbb4c1bb420dc3cdb132f703"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b">msg_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#add167ed246e03d6f2ef4e4a9855a9fae">MsgID</a> ()</td></tr>
@@ -123,13 +123,15 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the message data.  <a href="#a7fa61faeaa5d1f5820794c5943b26e26"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a03d9a1c16099ba7ea1e3a2b0c4e1493e">messageData</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the message data.  <a href="#a03d9a1c16099ba7ea1e3a2b0c4e1493e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0">setTransferSize</a> (int size)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set message data transfer size.  <a href="#a7ad2f8426ebeceaa6f84925d9a96b5c0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">encode</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode the USBTMC frame.  <a href="#a9406dddfdd70f5dac729b2dbd728de77"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USBTMC frame. </p>
 <p>Used by mdtport API to send en receive frames in USBTMC standard.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000037">Todo:</a></b></dt><dd>Clarify what this class does: USBTMC message or transfer ?</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000034">Todo:</a></b></dt><dd>Clarify what this class does: USBTMC message or transfer ?</dd></dl>
 <p>References:</p>
 <ul>
 <li>USBTMC Revision 1.0 (2003)</li>
@@ -187,7 +189,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Get the bTag. </p>
-<p>Usefull for frames received from device </p>
+<p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
 </div>
 </div>
@@ -199,7 +201,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">void mdtFrameUsbTmc::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -230,6 +232,11 @@ Public Member Functions</h2></td></tr>
 <p>To use to build a frame that will be sent to device.</p>
 <p>Note: <a class="el" href="classmdt_frame_usb_tmc.html#a0b68d661df8b5e5d88594dbff4db511d" title="Clear internal data.">clear()</a> is called internally. </p>
 
+<p><p>Get initial message data size (will be ajusted later whenn add alignment bytes)</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000033">Todo:</a></b></dt><dd>Check &gt; 0, ... </dd></dl>
+<p>pvTransferSize++; </p>
+</p>
+
 </div>
 </div>
 <a class="anchor" id="a7e989c5334db2a2f5e21a4892cf3460c"></a><!-- doxytag: member="mdtFrameUsbTmc::isEOM" ref="a7e989c5334db2a2f5e21a4892cf3460c" args="()" -->
@@ -247,7 +254,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Get the EOM flag. </p>
-<p>If true, this transfer is the last in current message </p>
+<p>If true, this transfer is the last in current message. Is only valid when the frame is complete. </p>
 
 </div>
 </div>
@@ -266,7 +273,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Get the message data. </p>
-<p>Usefull for frames received from device </p>
+<p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
 </div>
 </div>
@@ -285,18 +292,18 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Get the MsgID. </p>
-<p>Usefull for frames received from device </p>
+<p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8a29586ba0f9e3ab9b52601f92818a54"></a><!-- doxytag: member="mdtFrameUsbTmc::putData" ref="a8a29586ba0f9e3ab9b52601f92818a54" args="(char data, int maxLen)" -->
+<a class="anchor" id="a06d2743a113bd2b4cf2ee44014ecd710"></a><!-- doxytag: member="mdtFrameUsbTmc::putData" ref="a06d2743a113bd2b4cf2ee44014ecd710" args="(const char *data, int maxLen)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int mdtFrameUsbTmc::putData </td>
           <td>(</td>
-          <td class="paramtype">char&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
@@ -308,14 +315,23 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Put data into the frame. </p>
+<p>Clear frame's specific flags. </p>
+<p>This method is called from <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> and should not be called directly.void <a class="el" href="classmdt_frame.html#ae068ca1ae47516306f5180ffc1712d78" title="Clear frame&#39;s specific flags.">clearFlags()</a>;</p>
+<p>Put data into the frame</p>
 <p>This method is called by the read thread, and should not be used directly. </p>
+
+<p><p>int alignmentBytesCount = 0;</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000031">Todo:</a></b></dt><dd>Handle error </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000032">Todo:</a></b></dt><dd>other bmTransferAttributes </dd></dl>
+</p>
+
+<p>Reimplemented from <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8">mdtFrame</a>.</p>
 
 </div>
 </div>
@@ -402,6 +418,26 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7ad2f8426ebeceaa6f84925d9a96b5c0"></a><!-- doxytag: member="mdtFrameUsbTmc::setTransferSize" ref="a7ad2f8426ebeceaa6f84925d9a96b5c0" args="(int size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtFrameUsbTmc::setTransferSize </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set message data transfer size. </p>
+<p>Used when send a DEV_DEP_MSG_IN request tell the device the maximum bytes we need to receive. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_frame_usb_tmc_8h_source.html">mdtFrameUsbTmc.h</a></li>
 <li>src/mdtutils/mdtFrameUsbTmc.cpp</li>
@@ -421,7 +457,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 21 2012 20:36:09 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
