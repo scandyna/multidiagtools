@@ -146,7 +146,7 @@ class mdtPortThread : public QThread
    *
    * \param frame Data readen from port will be stored in this frame.
    *
-   * \return A pointer to the current frame. It can happen that a Null pointer
+   * \return A pointer to the current frame (can be different from frame passed as argument!). It can happen that a Null pointer
    *          is returned, and this is a fatal error, and thread should be stopped.
    *
    * \pre Port must be set with setPort() before using this method.

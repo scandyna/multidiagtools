@@ -34,7 +34,12 @@ void mdtUsbPortThread::stop()
 {
   Q_ASSERT(pvPort != 0);
 
-  pvPort->abortFrameToWriteWait();
+  // We need a pointer to mdtUsbPort
+  mdtUsbPort *port = dynamic_cast<mdtUsbPort*> (pvPort);
+  Q_ASSERT(port != 0);
+
+  port->abortFrameToWriteWait();
+  port->cancelTransfers();
   mdtPortThread::stop();
 }
 
@@ -115,8 +120,11 @@ void mdtUsbPortThread::run()
   int interframeTime = 0;
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
+  mdtFrame *readFramePrevious = 0;
   mdtAbstractPort::error_t portError;
   mdtUsbPort *port;
+  bool waitAnAnswer = true;
+  int toRead = 0;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -149,7 +157,9 @@ void mdtUsbPortThread::run()
     
     /// Get a frame for write. In poll mode, we take one only if directly available, else, we block here until one is available
     if(readPollMode){
+      port->unlockMutex();
       msleep(pollIntervall);
+      port->lockMutex();
       qDebug() << "USBTHD: write frames size: " << port->writeFrames().size();
       if(port->writeFrames().size() > 0){
         writeFrame = getNewFrameWrite();
@@ -161,43 +171,85 @@ void mdtUsbPortThread::run()
       writeFrame = getNewFrameWrite();
     }
     qDebug() << "USBTHD: write frame get DONE";
+    // Read thread state
+    if(!pvRunning){
+      break;
+    }
     // Wait for interframe time if needed
     if(interframeTime > 0){
       pvPort->unlockMutex();
       msleep(interframeTime);
       pvPort->lockMutex();
+      // Read thread state
+      if(!pvRunning){
+        break;
+      }
     }
     // Write
     if(writeFrame != 0){
+      waitAnAnswer = writeFrame->waitAnAnswer();
       if(!writeToPort(port, writeFrame)){
         // Stop request or fatal error
         break;
       }
     }
+    qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
     // Read process
-    if(readFrame == 0){
-      break;
-    }
-    // Init a read request
-    portError = port->initReadTransfer(readFrame->bytesToStore());
-    if(portError != mdtAbstractPort::NoError){
-      break;
-    }
-    // Wait until read transfer completed
-    portError = port->waitForReadyRead();
-    if(portError == mdtAbstractPort::WaitingCanceled){
-      // Stopping
-      break;
-    }else if((portError == mdtAbstractPort::UnknownError)||(portError == mdtAbstractPort::UnhandledError)){
-      // Unhandled error. Signal this and stop
-      emit(errorOccured(MDT_PORT_IO_ERROR));
-      break;
-    }
-    // read/store
-    if(!port->readTimeoutOccured()){
-      readFrame = readFromPort(readFrame);
+    if(waitAnAnswer){
       if(readFrame == 0){
         break;
+      }
+      // See what we have to read
+      toRead = readFrame->bytesToStore();
+      while(toRead > 0){
+        qDebug() << "USBTHD: toRead: " << toRead;
+        if(readFrame == 0){
+          break;
+        }
+        // Read thread state
+        if(!pvRunning){
+          break;
+        }
+        // Init a read request
+        portError = port->initReadTransfer(toRead);
+        if(portError != mdtAbstractPort::NoError){
+          break;
+        }
+        // Read thread state
+        if(!pvRunning){
+          break;
+        }
+        // Wait until read transfer completed
+        portError = port->waitForReadyRead();
+        if(portError == mdtAbstractPort::WaitingCanceled){
+          // Stopping
+          break;
+        }else if((portError == mdtAbstractPort::UnknownError)||(portError == mdtAbstractPort::UnhandledError)){
+          // Unhandled error. Signal this and stop
+          emit(errorOccured(MDT_PORT_IO_ERROR));
+          break;
+        }
+        // Read thread state
+        if(!pvRunning){
+          break;
+        }
+        // read/store
+        if(!port->readTimeoutOccured()){
+          readFramePrevious = readFrame;
+          readFrame = readFromPort(readFrame);
+          if(readFrame == 0){
+            break;
+          }
+          // If frame is the same as before readFromPort() call,
+          //  it's possibl that more data is needed.
+          if(readFrame == readFramePrevious){
+            qDebug() << "USBTHD: same frame, toRead: " << toRead;
+            toRead = readFrame->bytesToStore();
+          }else{
+            toRead = 0;
+            qDebug() << "USBTHD: Not same frame, toRead: " << toRead;
+          }
+        }
       }
     }
   }

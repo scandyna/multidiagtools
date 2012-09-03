@@ -146,9 +146,36 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
   return NoError;
 }
 
+mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
+{
+  int err;
+
+  qDebug() << "cancelReadTransfer() ...";
+  ///lockMutex();
+  if(pvReadTransfer != 0){
+    err = libusb_cancel_transfer(pvReadTransfer);
+    libusb_free_transfer(pvReadTransfer); /// \todo could be done once ?
+    pvReadTransfer = 0;
+    if(err != 0){
+      // Unhandled error
+      mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      ///unlockMutex();
+      return UnhandledError;
+    }
+  }
+  ///unlockMutex();
+
+  return NoError;
+}
+
 /// NOTE: \todo : Update timeout states !
 mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
 {
+  Q_ASSERT(pvReadTransfer != 0);
+
   qDebug() << "mdtUsbPort::waitForReadyRead() ...";
 
   int err;
@@ -156,6 +183,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
   struct timeval tv = pvReadTimeoutTv;
 
   while(pvReadTransferComplete == 0){
+    qDebug() << "mdtUsbPort::waitForReadyRead() handle events ...";
     unlockMutex();
     err = libusb_handle_events_timeout(pvLibusbContext, &tv);
     lockMutex();
@@ -182,6 +210,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
   }
   /// \todo Get some flags in transfer structure
   
+  qDebug() << "mdtUsbPort::waitForReadyRead() DONE";
   return NoError;
 }
 
@@ -260,6 +289,31 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
     e.commit();
     return UnhandledError;
   }
+
+  return NoError;
+}
+
+mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
+{
+  int err;
+
+  qDebug() << "cancelWriteTransfer() ...";
+  ///lockMutex();
+  if(pvWriteTransfer != 0){
+    err = libusb_cancel_transfer(pvWriteTransfer);
+    libusb_free_transfer(pvWriteTransfer); /// \todo could be done once ?
+    pvWriteTransfer = 0;
+    if(err != 0){
+      // Unhandled error
+      mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      ///unlockMutex();
+      return UnhandledError;
+    }
+  }
+  ///unlockMutex();
 
   return NoError;
 }
@@ -354,6 +408,27 @@ void mdtUsbPort::transferCallback(struct libusb_transfer *transfer)
   
   int *complete = (int*)transfer->user_data;
   *complete = 1;
+}
+
+/// \bug Signal 11
+mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
+{
+  mdtAbstractPort::error_t err;
+
+  lockMutex();
+  err = cancelWriteTransfer();
+  if(err != 0){
+    unlockMutex();
+    return err;
+  }
+  err = cancelReadTransfer();
+  if(err != 0){
+    unlockMutex();
+    return err;
+  }
+  unlockMutex();
+
+  return NoError;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvOpen()
@@ -725,30 +800,4 @@ QString mdtUsbPort::errorText(int errorCode) const
   }
 }
 
-struct pollfd *mdtUsbPort::getLibusbPollFds(int *numFds)
-{
-  Q_ASSERT(pvLibusbContext != 0);
-
-  int i;
-  const struct libusb_pollfd **libusbPollFds;
-
-  libusbPollFds = libusb_get_pollfds(pvLibusbContext);
-  Q_ASSERT(libusbPollFds != 0); // NOTE: not available on Windows with libusb <= 1.0.9
-  i=0;
-  while(libusbPollFds[i] != 0){
-    i++;
-  }
-  *numFds = i;
-  qDebug() << "Alloc for " << *numFds << " fds";
-  struct pollfd *fds = new struct pollfd[*numFds];
-  // Copy
-  for(i=0; i<*numFds; i++){
-    fds[i].fd = libusbPollFds[i]->fd;
-    fds[i].events = libusbPollFds[i]->events;
-    fds[i].revents = 0;
-  }
-  free(libusbPollFds);
-  Q_ASSERT(fds != 0);
-
-  return fds;
-}
+  

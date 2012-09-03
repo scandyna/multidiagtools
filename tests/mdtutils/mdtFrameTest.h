@@ -57,5 +57,10 @@ class mdtFrameTest : public mdtTest
 
   // Check mdtFrameUsbTmc decoding
   void usbTmcDecodeTest();
+
+  // Some special cases seen in real world
+  void usbTmcDecodeRealCasesTest();
+  
+  /// \todo Add size caluclation test
 };
 #endif // idnfef MDT_FRAME_TEST_H

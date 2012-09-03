@@ -61,11 +61,18 @@ class mdtFrameUsbTmc : public mdtFrame
    */
   void clear();
 
+  /*! \brief Clear frame's specific flags
+   *
+   * This method is called from mdtUsbPortThread and should not be
+   *  called directly.
+   */
+  ///void clearFlags();
+
   /*! \brief Put data into the frame
    *
    * This method is called by the read thread, and should not be used directly.
    */
-  int putData(char data, int maxLen);
+  int putData(const char *data, int maxLen);
 
   /*! \brief Set the MsgID
    *
@@ -75,7 +82,8 @@ class mdtFrameUsbTmc : public mdtFrame
 
   /*! \brief Get the MsgID
    *
-   * Usefull for frames received from device
+   * Usefull for frames received from device.
+   *  Is only valid when the frame is complete.
    */
   msg_id_t MsgID();
 
@@ -92,7 +100,8 @@ class mdtFrameUsbTmc : public mdtFrame
 
   /*! \brief Get the bTag
    *
-   * Usefull for frames received from device
+   * Usefull for frames received from device.
+   *  Is only valid when the frame is complete.
    */
   quint8 bTag();
 
@@ -106,7 +115,8 @@ class mdtFrameUsbTmc : public mdtFrame
 
   /*! \brief Get the EOM flag
    *
-   * If true, this transfer is the last in current message
+   * If true, this transfer is the last in current message.
+   *  Is only valid when the frame is complete.
    */
   bool isEOM();
 
@@ -118,9 +128,18 @@ class mdtFrameUsbTmc : public mdtFrame
 
   /*! \brief Get the message data
    *
-   * Usefull for frames received from device
+   * Usefull for frames received from device.
+   *  Is only valid when the frame is complete.
    */
   QByteArray &messageData();
+
+  /*! \brief Set message data transfer size
+   *
+   * Used when send a DEV_DEP_MSG_IN request
+   *  tell the device the maximum bytes we need
+   *  to receive.
+   */
+  void setTransferSize(int size);
 
   /*! \brief Encode the USBTMC frame
    *
@@ -130,7 +149,6 @@ class mdtFrameUsbTmc : public mdtFrame
    */
   void encode();
 
-  /// \todo Message data ?
  private:
 
   quint8 pvMsgID;

@@ -167,6 +167,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
   frame = pvPort->readFramesPool().dequeue();
   Q_ASSERT(frame != 0);
   frame->clear();
+  frame->clearFlags();
 
   return frame;
 }
@@ -212,6 +213,7 @@ mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
     }
     // Check for new frame if needed
     if(f == 0){
+      qDebug() << "mdtPortThread::readFromPort(): frame Null, get new one";
       f = getNewFrameRead();
       if(f == 0){
         return 0;
@@ -225,6 +227,7 @@ mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
       pvPort->readenFrames().enqueue(f);
       // emit a Readen frame signal
       emit newFrameReaden();
+      qDebug() << "mdtPortThread::readFromPort(): frame complete, get new one";
       f = getNewFrameRead();
     }
     // When frame becomes full and EOF seq was not reached, stored will be to big

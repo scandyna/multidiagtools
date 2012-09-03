@@ -84,6 +84,7 @@ class mdtFrame : public QByteArray
   /*! \brief Put data until EOF token was reached
    * 
    * This is an overloaded function. The token can be a sequence of bytes.
+   *
    * \sa putUntil()
    */
   int putUntil(const char *data, QByteArray &token, int maxLen);
@@ -107,6 +108,7 @@ class mdtFrame : public QByteArray
    * 
    * This is usefull for raw mode transfert.
    * If true, the frame is set complete after each call of putData()
+   *
    * \param dc The Directly complete flag
    */
   void setDirectlyComplete(bool dc);
@@ -123,17 +125,33 @@ class mdtFrame : public QByteArray
 
   /*! \brief Overloaded function
    * 
-   * Internally, it calls QByteArray's clear() and reserve() functions.
-   * The goal is to keep the same capacity and reset some mdtFrame specific flags
+   * Internally, it calls QByteArray's clear() and reserve() methods.
+   * The goal is to keep the same capacity and reset some mdtFrame and subclass specific flags
    */
-  virtual void clear();
+  void clear();
+
+  /*! \brief Clear frame's specific flags
+   *
+   * This method is usefull to clear some specific flags
+   *  by subclasses (such as mdtFrameUsbTmc)
+   *
+   * Note that QByteArray's flags are not altered.
+   *
+   * This class must be implemented is subclass if needed.
+   *
+   * \todo Not used now, clarify what to do !
+   */
+  virtual void clearFlags();
 
   /*! \brief Put data into the frame
    * 
-   * Must be implemented by specific frame subclass.<br>
-   * This method is called by the read thread.<br>
+   * Must be implemented by specific frame subclass.
+   *
+   * This method is called by the read thread.
+   *
    * Default implementation simply stores data, and set the EOF condition to true.
-   * This way, it's possible to use mdtFrame for raw binary transferts.
+   * This way, it's possible to use mdtFrame for raw binary transfers.
+   *
    * \param data Valid pointer to the data
    * \param len Maximum number of byte to store, must not be more than data size
    * \return Number of bytes that could really be stored
@@ -142,6 +160,7 @@ class mdtFrame : public QByteArray
   virtual int putData(const char *data, int len);
 
   /*! \brief Get the length of the end of frame sequence
+   *
    *  Used for ASCII frames.
    *  Default implementation returns 0
    */
@@ -165,11 +184,35 @@ class mdtFrame : public QByteArray
    */
   int take(int len);
 
+  /*! \brief Tell a write/read thread that an answer is needed after a write frame
+   *
+   * In some case, typically USB, the host must allways init a transaction, for read and for write.
+   *  For such case, only one thread manages the write/read process:
+   *  - Wait until a frame must be sent (can be bypassed with a flag)
+   *  - Init a write transaction, wait until transaction is finish
+   *  - Init a read transaction, wait until something was readen.
+   * The last step can be a problem if we have to write a frame (f.ex. a query), but not need an answer.
+   *  After that, we have to send a second query, but need wait until data was received.
+   *
+   * To solve this problem, we must tell the thread if it must init a read transaction after a frame was written
+   *  (request) or not, and this is the goal of this method.
+   *
+   * \sa mdtUsbPortThread
+   */
+  void setWaitAnAnswer(bool wait);
+
+  /*! \brief Know if an answer is needed after a write frame
+   *
+   * \sa setWaitAnAnswer()
+   */
+  bool waitAnAnswer() const;
+
  protected:
 
   bool pvIgnoreNullValues;
   bool pvEOFcondition;      // End Of Frame condition
-  
+  bool pvWaitAnAnswer;      // Used for wrte/read threads, like usbPortThread
+
  private:
 
   bool pvDirectlyComplete;  // When true, putData() will set the frame complete after each call (usefull for raw mode)

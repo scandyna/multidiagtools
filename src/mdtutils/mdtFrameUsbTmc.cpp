@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtFrameUsbTmc.h"
 
+#include <QDebug>
+
 mdtFrameUsbTmc::mdtFrameUsbTmc()
 {
   pvMsgID = 0;
@@ -37,19 +39,188 @@ mdtFrameUsbTmc::~mdtFrameUsbTmc()
 
 void mdtFrameUsbTmc::clear()
 {
-  //pvMsgID = 0;
-  //pvbTag = 0;
-  //pvbTagInverse = 0;
-  //pvTransferSize = 0;
-  //pvbmTransferAttributes = 0;
-  //pvTermChar = '\0';
-  //pvEOM = true;
+  qDebug() << "mdtFrameUsbTmc::clear()";
   mdtFrame::clear();
+  pvMsgID = 0;
+  pvbTag = 0;
+  pvbTagInverse = 0;
+  pvTransferSize = 0;
+  pvbmTransferAttributes = 0;
+  pvTermChar = '\0';
+  pvEOM = true;
+  pvMessageData.clear();
 }
 
-int mdtFrameUsbTmc::putData(char data, int maxLen)
+int mdtFrameUsbTmc::putData(const char *data, int maxLen)
 {
+  Q_ASSERT(capacity() > 12);
+
+  int frameSize = 0;
+  int alignmentBytesCount = 0;
+  int stored = 0;
+  int i = 0;
+
+  // If frame is allready full, return
+  if(bytesToStore() < 1){
+    return 0;
+  }
+
+  qDebug() << "mdtFrameUsbTmc::putData(): size(): " << size();
+  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (0): " << maxLen;
+
+  // Check wat's possible to store
+  if(maxLen > remainCapacity()){
+    maxLen = remainCapacity();
+  }
+  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (1): " << maxLen;
+  // store
+  append(data, maxLen);
+  stored = maxLen;
+
+  // Check if we have enougth data to decode header
+  if(size() >= 12){
+    // We have a header here, decode it
+    pvMsgID = at(0);
+    pvbTag = at(1);
+    pvbTagInverse = at(2);
+    // Check bTag
+    if(pvbTagInverse != (quint8)(~pvbTag)){
+      /// \todo Handle error
+      qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
+    }
+    pvTransferSize = at(4);
+    pvTransferSize += (at(5) << 8);
+    pvTransferSize += (at(6) << 16);
+    pvTransferSize += (at(7) << 24);
+    // MsgID specific part
+    if(pvMsgID == DEV_DEP_MSG_IN){
+      // EOM
+      if(at(8) & 0x01){
+        pvEOM = true;
+      }else{
+        pvEOM = false;
+      }
+      /// \todo other bmTransferAttributes
+    }else{
+      qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
+    }
+    // Calc total frame size, without alignment bytes
+    frameSize = pvTransferSize + 12;
+    // Calc alignmentBytesCount NOTE: utile ?
+    i = 0;
+    while(((frameSize+i)%4) != 0){
+      i++;
+      alignmentBytesCount++;
+    }
+    // Check if we have a complete frame
+    if(size() >= frameSize){
+      pvEOFcondition = true;
+      qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
+      pvMessageData += right(size()-12).left(pvTransferSize);
+    }
+  }
+
+  return stored;
   
+  
+  /// \todo frame size should be extracted one time, not every time size() is big enougth
+  // Check if it's possible to get size of incomming frame
+  if((size()+maxLen) >= 8){
+    // Check if some data must be stored before we can get the frame size
+    if(size() < 8){
+      stored = 8-size();
+      append(data, stored);
+      Q_ASSERT((data + stored) <= (data + maxLen));
+      data += stored;
+      maxLen -= stored;
+    }
+    qDebug() << "mdtFrameUsbTmc::putData(): size(): " << size();
+    qDebug() << "mdtFrameUsbTmc::putData(): maxLen (2): " << maxLen;
+    pvTransferSize = at(4);
+    pvTransferSize += (at(5) << 8);
+    pvTransferSize += (at(6) << 16);
+    pvTransferSize += (at(7) << 24);
+    // We have USBTMC transfer size , = total size - 12 (12: USBTMC header size). Add missing size
+    frameSize = pvTransferSize + 12;
+    // Considere the alignment bytes
+    while((frameSize % 4) != 0){
+      frameSize++;
+      alignmentBytesCount++;
+    }
+    qDebug() << "mdtFrameUsbTmc::putData(): message data size: " << pvTransferSize;
+    qDebug() << "mdtFrameUsbTmc::putData(): frame size: " << frameSize;
+    // Check if it is possible to store this frame
+    if(frameSize > capacity()){
+      // Problem here: fill the frame with null values, so bytesToStore() will return 0 next time
+      fill(0, capacity());
+      stored = capacity();
+      return stored;
+    }
+  }
+  // Check wat's possible to store
+  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (3): " << maxLen;
+  if(maxLen > remainCapacity()){
+    maxLen = remainCapacity();
+  }
+  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (4): " << maxLen;
+  // It can happen that device returns more data than expected. If frameSize is known, check this
+  if(frameSize > 0){
+    if((size()+maxLen) > frameSize){
+      qDebug() << "Excedet: " << maxLen + size() - frameSize;
+      // We declare that all data where stored
+      stored += maxLen + size() - frameSize;
+      // Adjust the real amout of data we take
+      maxLen = frameSize-size();
+    }
+    // It can happen that device does not send alignment bytes (this is OK regarding USBTMC specs)
+    if(size() == (frameSize-alignmentBytesCount)){
+      // We must declare that alignment bytes are readen
+      if(alignmentBytesCount > maxLen){
+        stored += maxLen;
+        maxLen = 0;
+      }else{
+        stored += alignmentBytesCount;
+      }
+    }
+  }
+  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (5): " << maxLen;
+  // Store
+  append(data, maxLen);
+  stored += maxLen;
+  qDebug() << "mdtFrameUsbTmc::putData(): stored: " << stored;
+  /// EOM ?
+  if(size() > 8){
+    qDebug() << "mdtFrameUsbTmc::putData(): EOM: " << (at(8) & 0x01);
+  }
+  // Check if frame is complete
+  if(size() == frameSize){
+  ///if((size() == frameSize)||(at(8)&0x01)){  /// \todo Clean, can happen that this not work !!
+    pvEOFcondition = true;
+    // Store members
+    pvMsgID = at(0);
+    pvbTag = at(1);
+    pvbTagInverse  = at(2);
+    // Check bTag
+    if(pvbTagInverse != (quint8)(~pvbTag)){
+      /// \todo Handle error
+      qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
+    }
+    /// \todo term char
+    // EOM
+    if(at(8) & 0x01){
+      pvEOM = true;
+    }else{
+      pvEOM = false;
+    }
+    qDebug() << "mdtFrameUsbTmc::putData(): EOM: " << pvEOM;
+    // Store message data if exists
+    if(size() >= (12+alignmentBytesCount)){
+      qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
+      pvMessageData += right(size()-12).left(pvTransferSize);
+    }
+  }
+
+  return stored;
 }
 
 void mdtFrameUsbTmc::setMsgID(mdtFrameUsbTmc::msg_id_t MsgID)
@@ -86,11 +257,17 @@ bool mdtFrameUsbTmc::isEOM()
 void mdtFrameUsbTmc::setMessageData(const QByteArray &data)
 {
   pvMessageData = data;
+  pvTransferSize = pvMessageData.size();
 }
 
 QByteArray &mdtFrameUsbTmc::messageData()
 {
   return pvMessageData;
+}
+
+void mdtFrameUsbTmc::setTransferSize(int size)
+{
+  pvTransferSize = size;
 }
 
 void mdtFrameUsbTmc::encode()
@@ -99,18 +276,28 @@ void mdtFrameUsbTmc::encode()
   if(capacity() < 16){
     reserve(16);
   }
-  clear();
-  // Get initial message data size (will be ajusted later whenn add alignment bytes)
-  pvTransferSize = pvMessageData.size();
+  mdtFrame::clear();
+  /// Get initial message data size (will be ajusted later whenn add alignment bytes)
+  // Get message data size
+  // Transfer size
+  if(pvMsgID == DEV_DEP_MSG_OUT){
+    pvTransferSize = pvMessageData.size();
+  }else if(pvMsgID == DEV_DEP_MSG_IN){
+    pvTransferSize = remainCapacity() - 12 - 3; /// \todo Check > 0, ...
+  }else{
+    qDebug() << "mdtFrameUsbTmc::encode(): Unknow pvMsgID, transfer size will be set to 0";
+    pvTransferSize = 0;
+  }
+  qDebug() << "Transfer size: " << pvTransferSize;
   // Build USBTMC header
   append((char)pvMsgID);
   append((char)pvbTag);
   append((char)pvbTagInverse);
   append((char)0x00);
-  append((char)pvTransferSize & 0x000F);        // TransferSize, LLSB
-  append((char)((pvTransferSize & 0x00F0)>>1)); // TransferSize, LSB
-  append((char)((pvTransferSize & 0x0F00)>>2)); // TransferSize, LSB
-  append((char)((pvTransferSize & 0xF000)>>3)); // TransferSize, LSB
+  append((char)pvTransferSize & 0x0F);          // TransferSize, LLSB
+  append((char)((pvTransferSize >> 8) & 0x0F));   // TransferSize, LSB
+  append((char)((pvTransferSize >> 16) & 0x0F));  // TransferSize, LSB
+  append((char)((pvTransferSize >> 24) & 0x0F));  // TransferSize, LSB
   if(pvEOM){
     append((char)0x01);                           // bmTransferAttributes
   }else{
@@ -122,9 +309,8 @@ void mdtFrameUsbTmc::encode()
   // Add data
   append(pvMessageData);
   // Add alignment bytes if requierd
-  while((pvTransferSize % 4) != 0){
+  while((size() % 4) != 0){
     append((char)0x00);
-    pvTransferSize++;
+    ///pvTransferSize++;
   }
 }
-

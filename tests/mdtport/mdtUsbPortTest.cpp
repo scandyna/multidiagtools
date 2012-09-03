@@ -166,10 +166,12 @@ void mdtUsbPortTest::essais()
 
   // Setup
   cfg.setReadQueueSize(500);
+  cfg.setReadFrameSize(200);
   cfg.setFrameType(mdtFrame::FT_USBTMC);
   port.setConfig(&cfg);
-  ///port.setPortName("0x0957:0x4d18");
-  port.setPortName("0x10cf:0x5500");
+  port.setPortName("0x0957:0x4d18");
+  ///port.setPortName("0x0957:0x0588");
+  ///port.setPortName("0x10cf:0x5500");
   thd.setPort(&port);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
@@ -178,15 +180,10 @@ void mdtUsbPortTest::essais()
   QVERIFY(thd.start());
 
   // USBTMC --- Send a message
-  /**
-  QByteArray msg;
-  
-  msg = "*IDN?";
-  msg.append(0x0D);
-  
   port.lockMutex();
   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
   QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(false);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
   uf->setbTag(1);
   uf->setMessageData("*IDN?");
@@ -194,35 +191,41 @@ void mdtUsbPortTest::essais()
   for(int i=0; i<uf->size(); i++){
     qDebug() << "uf[" << i << "]: " << hex << (quint8)uf->at(i) << " , char: " << dec << (char)uf->at(i);
   }
-  port.writeFrames().enqueue(uf);
+  // USBTMC - send DEV_DEP_MSG_IN request
   port.unlockMutex();
+  port.addFrameToWrite(uf);
   QTest::qWait(1000);
   port.lockMutex();
   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
   QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(true);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
   uf->setbTag(2);
   uf->setMessageData("");
+  uf->setTransferSize(150);
   uf->encode();
   for(int i=0; i<uf->size(); i++){
     qDebug() << "uf[" << i << "]: " << hex << (quint8)uf->at(i) << " , char: " << dec << (char)uf->at(i);
   }
-  port.writeFrames().enqueue(uf);
   port.unlockMutex();
-  QVERIFY(rThd.start());
-  QTest::qWait(1000);
-  // Read ...
+  port.addFrameToWrite(uf);
+  QTest::qWait(500);
+  // USBTMC - Read
   port.lockMutex();
+  QVERIFY(port.readenFrames().size() > 0);
   f = port.readenFrames().dequeue();
   QVERIFY(f != 0);
   for(int i=0; i<f->size(); i++){
-    qDebug() << "f[" << i << "]: " << f->at(i);
+    qDebug() << "f[" << i << "]: " << hex << (quint8)f->at(i) << " , char: " << dec << (char)f->at(i);
   }
+  uf = dynamic_cast<mdtFrameUsbTmc*> (f);
+  QVERIFY(uf != 0);
+  qDebug() << "Message data: " << uf->messageData();
   port.unlockMutex();
-  QTest::qWait(3000);
-  */
+  QTest::qWait(500);
 
   // k8055 tests
+  /**
   for(int q=0; q<10; q++){
     // Send some data
     codec.setDigitalOut((q%7)+1, true);
@@ -255,6 +258,7 @@ void mdtUsbPortTest::essais()
     port.unlockMutex();
     QTest::qWait(100);
   }
+  */
 
   qDebug() << "TEST , about to quit";
   thd.stop();

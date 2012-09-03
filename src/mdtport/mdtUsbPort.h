@@ -59,6 +59,14 @@ class mdtUsbPort : public mdtAbstractPort
    */
   error_t initReadTransfer(qint64 maxSize);
 
+  /*! \brief Cancel current bulk/interrupt input transfer
+   *
+   * If a input transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
+   */
+  error_t cancelReadTransfer();
+
   /*! \brief Wait until data is available on port.
    *
    * This method is called from mdtPortReadThread , and should not be used directly.<br>
@@ -87,6 +95,14 @@ class mdtUsbPort : public mdtAbstractPort
    */
   error_t initWriteTransfer(const char *data, qint64 maxSize);
 
+  /*! \brief Cancel current bulk/interrupt input transfer
+   *
+   * If a input transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
+   */
+  error_t cancelWriteTransfer();
+
   /*! \brief Wait until data can be written to port.
    *
    * This method is called from mdtPortWriteThread , and should not be used directly.<br>
@@ -109,6 +125,14 @@ class mdtUsbPort : public mdtAbstractPort
   /*! \brief Transfert callback for asynch I/O
    */
   static void transferCallback(struct libusb_transfer *transfer);
+
+  /*! \brief Cancel pending transfers
+   *
+   * Will call cancelReadTransfer() , cancelReadTransfer().
+   *
+   * This method locks the mutex.
+   */
+  error_t cancelTransfers();
 
  private:
 
@@ -167,9 +191,6 @@ class mdtUsbPort : public mdtAbstractPort
 
   // Get a text for given libusb error code
   QString errorText(int errorCode) const;
-
-  // Get poll() file descriptors from libusb
-  struct pollfd *getLibusbPollFds(int *numFds);
 
   // Diseable copy
   Q_DISABLE_COPY(mdtUsbPort);

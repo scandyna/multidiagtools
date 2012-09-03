@@ -26,6 +26,7 @@ mdtFrame::mdtFrame()
   pvEOFcondition = false;
   pvIgnoreNullValues = false;
   pvDirectlyComplete = false;
+  pvWaitAnAnswer = false;
 }
 
 mdtFrame::~mdtFrame()
@@ -184,6 +185,10 @@ void mdtFrame::clear()
   pvEOFcondition = false;
 }
 
+void mdtFrame::clearFlags()
+{
+}
+
 int mdtFrame::putData(const char *data, int len)
 {
   Q_ASSERT(data != 0);
@@ -236,4 +241,14 @@ int mdtFrame::take(int len)
   reserve(capa);
 
   return len;
+}
+
+void mdtFrame::setWaitAnAnswer(bool wait)
+{
+  pvWaitAnAnswer = wait;
+}
+
+bool mdtFrame::waitAnAnswer() const
+{
+  return pvWaitAnAnswer;
 }

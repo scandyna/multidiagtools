@@ -57,7 +57,7 @@ class mdtUsbPortThread : public mdtPortThread
    * \return True on successfull transfert, or false on error or by stop request.
    *          If this method returns false, the thread should be stopped.
    *
-   * \pre Port must be set with setPort() before using this method.
+   * \pre port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
   bool writeToPort(mdtUsbPort *port, mdtFrame *frame);

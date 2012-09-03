@@ -256,9 +256,7 @@ void mdtAbstractPort::initQueues()
         break;
       // USBTMC frame type
       case mdtFrame::FT_USBTMC:
-        /// frame = new mdtFrameUsbTmc; \todo Change again !!
-        frame = new mdtFrame;
-        frame->setDirectlyComplete(true);
+        frame = new mdtFrameUsbTmc;
         break;
       // Base frame type
       default:

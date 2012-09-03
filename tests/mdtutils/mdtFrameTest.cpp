@@ -1294,9 +1294,842 @@ void mdtFrameTest::usbTmcEncodeTest()
 
 void mdtFrameTest::usbTmcDecodeTest()
 {
-  
+  mdtFrameUsbTmc f;
+  QByteArray srcData;
+  QByteArray subData;
+  char c;
+
+  /*
+   * Simple frame: No alignement bytes
+   * Capacity == frame size (data+header)
+   * Single transfer: EOM set
+   * TermChar: not set
+   */
+
+  f.reserve(16);
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 16);
+  QVERIFY(f.bytesToStore() == 16);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Build the frame
+  srcData.clear();
+  srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
+  srcData.append((char)0xF7);                           // bTag
+  srcData.append((char)0x08);                           // bTagInverse
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)4);                              // TransferSize, LLSB
+  srcData.append((char)0);                              // TransferSize, LSB
+  srcData.append((char)0);                              // TransferSize, MSB
+  srcData.append((char)0);                              // TransferSize, MMSB
+  srcData.append((char)0x01);                           // bmTransferAttributes: EOM set
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append('A');                                  // Message data
+  srcData.append('B');                                  // Message data
+  srcData.append('C');                                  // Message data
+  srcData.append('D');                                  // Message data
+  QVERIFY(srcData.size() == 16);
+
+  /* Put byte per byte */
+
+  // MsgID
+  c = srcData.at(0);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 1);
+  QVERIFY(f.bytesToStore() == 15);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // bTag
+  c = srcData.at(1);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 2);
+  QVERIFY(f.bytesToStore() == 14);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // bTagInverse
+  c = srcData.at(2);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 3);
+  QVERIFY(f.bytesToStore() == 13);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Reserved
+  c = srcData.at(3);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 4);
+  QVERIFY(f.bytesToStore() == 12);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Transfer size, LLSB
+  c = srcData.at(4);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 5);
+  QVERIFY(f.bytesToStore() == 11);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Transfer size, LSB
+  c = srcData.at(5);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 6);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Transfer size, MSB
+  c = srcData.at(6);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 7);
+  QVERIFY(f.bytesToStore() == 9);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Transfer size, MMSB
+  c = srcData.at(7);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 8);
+  QVERIFY(f.bytesToStore() == 8);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // bmTransferAttributes
+  c = srcData.at(8);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 9);
+  QVERIFY(f.bytesToStore() == 7);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Reserved
+  c = srcData.at(9);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 10);
+  QVERIFY(f.bytesToStore() == 6);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Reserved
+  c = srcData.at(10);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 11);
+  QVERIFY(f.bytesToStore() == 5);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Reserved
+  c = srcData.at(11);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 12);
+  QVERIFY(f.bytesToStore() == 4);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Data
+  c = srcData.at(12);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 13);
+  QVERIFY(f.bytesToStore() == 3);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(13);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 14);
+  QVERIFY(f.bytesToStore() == 2);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(14);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 15);
+  QVERIFY(f.bytesToStore() == 1);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(15);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 16);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  // Now we should have a complet frame
+  QVERIFY(f.isComplete());
+  QVERIFY(f.messageData() == "ABCD");
+  QVERIFY(f.MsgID() == 2);            // MsgID: DEV_DEP_MSG_IN
+  QVERIFY(f.isEOM());
+  QVERIFY(f.bTag() == 0xF7);
+
+  /*
+   * Simple frame: With alignement bytes
+   * Capacity == frame size (header + data + alignement bytes)
+   * Single transfer: EOM set
+   * TermChar: not set
+   */
+
+  f.reserve(20);
+  f.clear();
+  f.clearFlags();
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 20);
+  QVERIFY(f.bytesToStore() == 20);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Build the frame
+  srcData.clear();
+  srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
+  srcData.append((char)0xF8);                           // bTag
+  srcData.append((char)0x07);                           // bTagInverse
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)5);                              // TransferSize, LLSB
+  srcData.append((char)0);                              // TransferSize, LSB
+  srcData.append((char)0);                              // TransferSize, MSB
+  srcData.append((char)0);                              // TransferSize, MMSB
+  srcData.append((char)0x01);                           // bmTransferAttributes: EOM set
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append('1');                                  // Message data
+  srcData.append('2');                                  // Message data
+  srcData.append('3');                                  // Message data
+  srcData.append('4');                                  // Message data
+  srcData.append('5');                                  // Message data
+  srcData.append((char)0);                              // Alignment byte
+  srcData.append((char)0);                              // Alignment bytes
+  srcData.append((char)0);                              // Alignment byte
+  QVERIFY(srcData.size() == 20);
+
+  /* Put byte per byte */
+
+  // MsgID
+  c = srcData.at(0);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 1);
+  QVERIFY(f.bytesToStore() == 19);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bTag
+  c = srcData.at(1);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 2);
+  QVERIFY(f.bytesToStore() == 18);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bTagInverse
+  c = srcData.at(2);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 3);
+  QVERIFY(f.bytesToStore() == 17);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(3);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 4);
+  QVERIFY(f.bytesToStore() == 16);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, LLSB
+  c = srcData.at(4);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 5);
+  QVERIFY(f.bytesToStore() == 15);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, LSB
+  c = srcData.at(5);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 6);
+  QVERIFY(f.bytesToStore() == 14);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, MSB
+  c = srcData.at(6);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 7);
+  QVERIFY(f.bytesToStore() == 13);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, MMSB
+  c = srcData.at(7);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 8);
+  QVERIFY(f.bytesToStore() == 12);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bmTransferAttributes
+  c = srcData.at(8);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 9);
+  QVERIFY(f.bytesToStore() == 11);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(9);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(10);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 11);
+  QVERIFY(f.bytesToStore() == 9);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(11);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 12);
+  QVERIFY(f.bytesToStore() == 8);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(12);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 13);
+  QVERIFY(f.bytesToStore() == 7);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(13);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 14);
+  QVERIFY(f.bytesToStore() == 6);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(14);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 15);
+  QVERIFY(f.bytesToStore() == 5);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(15);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 16);
+  QVERIFY(f.bytesToStore() == 4);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  /*
+   * Now, store last data byte with alignement bytes.
+   * Storing a alignement byte alone is not a realistic case
+   */
+  subData = srcData.right(4);
+  QVERIFY(f.putData(subData.data(), 4) == 4);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  // Now we should have a complete frame
+  QVERIFY(f.isComplete());
+  QVERIFY(f.messageData() == "12345");
+  QVERIFY(f.MsgID() == 2);            // MsgID: DEV_DEP_MSG_IN
+  QVERIFY(f.isEOM());
+  QVERIFY(f.bTag() == 0xF8);
+
+  /*
+   * Capacity < frame size (header + data + alignement bytes)
+   * Single transfer: EOM set
+   * TermChar: not set
+   */
+
+  f.reserve(20);
+  f.clear();
+  f.clearFlags();
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 20);
+  QVERIFY(f.bytesToStore() == 20);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Build the frame
+  srcData.clear();
+  srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
+  srcData.append((char)0xF8);                           // bTag
+  srcData.append((char)0x07);                           // bTagInverse
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)10);                             // TransferSize, LLSB
+  srcData.append((char)0);                              // TransferSize, LSB
+  srcData.append((char)0);                              // TransferSize, MSB
+  srcData.append((char)0);                              // TransferSize, MMSB
+  srcData.append((char)0x01);                           // bmTransferAttributes: EOM set
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append('a');                                  // Message data
+  srcData.append('b');                                  // Message data
+  srcData.append('c');                                  // Message data
+  srcData.append('d');                                  // Message data
+  srcData.append('e');                                  // Message data
+  srcData.append('f');                                  // Message data
+  srcData.append('g');                                  // Message data
+  srcData.append('h');                                  // Message data
+  srcData.append('i');                                  // Message data
+  srcData.append('j');                                  // Message data
+  srcData.append((char)0);                              // Alignment byte
+  srcData.append((char)0);                              // Alignment bytes
+  QVERIFY(srcData.size() == 24);
+
+  /* Put byte per byte */
+
+  // MsgID
+  c = srcData.at(0);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 1);
+  QVERIFY(f.bytesToStore() == 19);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bTag
+  c = srcData.at(1);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 2);
+  QVERIFY(f.bytesToStore() == 18);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bTagInverse
+  c = srcData.at(2);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 3);
+  QVERIFY(f.bytesToStore() == 17);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(3);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 4);
+  QVERIFY(f.bytesToStore() == 16);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, LLSB
+  c = srcData.at(4);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 5);
+  QVERIFY(f.bytesToStore() == 15);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, LSB
+  c = srcData.at(5);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 6);
+  QVERIFY(f.bytesToStore() == 14);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, MSB
+  c = srcData.at(6);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 7);
+  QVERIFY(f.bytesToStore() == 13);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, MMSB
+  c = srcData.at(7);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 8);
+  QVERIFY(f.bytesToStore() == 12);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bmTransferAttributes
+  c = srcData.at(8);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 9);
+  QVERIFY(f.bytesToStore() == 11);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(9);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 10);
+  QVERIFY(f.bytesToStore() == 10);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(10);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 11);
+  QVERIFY(f.bytesToStore() == 9);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(11);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 12);
+  QVERIFY(f.bytesToStore() == 8);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data a
+  c = srcData.at(12);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 13);
+  QVERIFY(f.bytesToStore() == 7);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data b
+  c = srcData.at(13);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 14);
+  QVERIFY(f.bytesToStore() == 6);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data c
+  c = srcData.at(14);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 15);
+  QVERIFY(f.bytesToStore() == 5);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data d
+  c = srcData.at(15);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 16);
+  QVERIFY(f.bytesToStore() == 4);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data e
+  c = srcData.at(16);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 17);
+  QVERIFY(f.bytesToStore() == 3);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data f
+  c = srcData.at(17);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 18);
+  QVERIFY(f.bytesToStore() == 2);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data g
+  c = srcData.at(18);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 19);
+  QVERIFY(f.bytesToStore() == 1);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data h - Here frame becomes full, but not complete
+  c = srcData.at(19);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Data i - Must not work
+  c = srcData.at(20);
+  QVERIFY(f.putData(&c, 1) == 0);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Data j - Must not work
+  c = srcData.at(21);
+  QVERIFY(f.putData(&c, 1) == 0);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Alignment byte - Must not work
+  c = srcData.at(22);
+  QVERIFY(f.putData(&c, 1) == 0);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Alignment byte - Must not work
+  c = srcData.at(23);
+  QVERIFY(f.putData(&c, 1) == 0);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+
+  /*
+   * Simple frame: With alignement bytes
+   * Capacity > frame size (header + data + alignement bytes)
+   * Single transfer: EOM set
+   * TermChar: not set
+   */
+
+  f.reserve(1024);
+  f.clear();
+  f.clearFlags();
+  // Initial values
+  QVERIFY(f.isEmpty());
+  QVERIFY(!f.isFull());
+  QVERIFY(f.remainCapacity() == 1024);
+  QVERIFY(f.bytesToStore() == 1024);
+  QVERIFY(!f.isComplete());
+  QVERIFY(f.messageData() == "");
+  // Build the frame
+  srcData.clear();
+  srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
+  srcData.append((char)0xF8);                           // bTag
+  srcData.append((char)0x07);                           // bTagInverse
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)5);                              // TransferSize, LLSB
+  srcData.append((char)0);                              // TransferSize, LSB
+  srcData.append((char)0);                              // TransferSize, MSB
+  srcData.append((char)0);                              // TransferSize, MMSB
+  srcData.append((char)0x01);                           // bmTransferAttributes: EOM set
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append('A');                                  // Message data
+  srcData.append('B');                                  // Message data
+  srcData.append('C');                                  // Message data
+  srcData.append('D');                                  // Message data
+  srcData.append('E');                                  // Message data
+  srcData.append((char)0);                              // Alignment byte
+  srcData.append((char)0);                              // Alignment bytes
+  srcData.append((char)0);                              // Alignment byte
+  QVERIFY(srcData.size() == 20);
+
+  /* Put byte per byte */
+
+  // MsgID
+  c = srcData.at(0);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 1);
+  QVERIFY(f.bytesToStore() == 1023);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bTag
+  c = srcData.at(1);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 2);
+  QVERIFY(f.bytesToStore() == 1022);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bTagInverse
+  c = srcData.at(2);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 3);
+  QVERIFY(f.bytesToStore() == 1021);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(3);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 4);
+  QVERIFY(f.bytesToStore() == 1020);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, LLSB
+  c = srcData.at(4);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 5);
+  QVERIFY(f.bytesToStore() == 1019);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, LSB
+  c = srcData.at(5);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 6);
+  QVERIFY(f.bytesToStore() == 1018);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, MSB
+  c = srcData.at(6);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 7);
+  QVERIFY(f.bytesToStore() == 1017);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Transfer size, MMSB
+  c = srcData.at(7);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 8);
+  QVERIFY(f.bytesToStore() == 1016);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // bmTransferAttributes
+  c = srcData.at(8);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 9);
+  QVERIFY(f.bytesToStore() == 1015);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(9);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 10);
+  QVERIFY(f.bytesToStore() == 1014);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(10);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 11);
+  QVERIFY(f.bytesToStore() == 1013);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Reserved
+  c = srcData.at(11);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 12);
+  QVERIFY(f.bytesToStore() == 1012);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(12);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 13);
+  QVERIFY(f.bytesToStore() == 1011);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(13);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 14);
+  QVERIFY(f.bytesToStore() == 1010);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(14);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 15);
+  QVERIFY(f.bytesToStore() == 1009);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Data
+  c = srcData.at(15);
+  QVERIFY(f.putData(&c, 1) == 1);
+  QVERIFY(f.size() == 16);
+  QVERIFY(f.bytesToStore() == 1008);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+
+  /*
+   * Now, store last data byte with alignement bytes.
+   * Storing a alignement byte alone is not a realistic case
+   */
+  subData = srcData.right(4);
+  QVERIFY(f.putData(subData.data(), 4) == 4);
+  QVERIFY(f.size() == 20);
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  // Now we should have a complete frame
+  QVERIFY(f.isComplete());
+  QVERIFY(f.messageData() == "ABCDE");
+  QVERIFY(f.MsgID() == 2);            // MsgID: DEV_DEP_MSG_IN
+  QVERIFY(f.isEOM());
+  QVERIFY(f.bTag() == 0xF8);
 }
 
+void mdtFrameTest::usbTmcDecodeRealCasesTest()
+{
+  mdtFrameUsbTmc f;
+  QByteArray srcData;
+  QByteArray tr1, tr2;
+
+  /*
+   * Device: Agilent U3606A
+   * Quesry: *IDN?
+   * Test: answer decode
+   */
+
+  // Build the answer like it is returned by device
+  srcData.clear();
+  srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
+  srcData.append((char)0x05);                           // bTag
+  srcData.append((char)0xFA);                           // bTagInverse
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)57);                             // TransferSize, LLSB
+  srcData.append((char)0);                              // TransferSize, LSB
+  srcData.append((char)0);                              // TransferSize, MSB
+  srcData.append((char)0);                              // TransferSize, MMSB
+  srcData.append((char)0x01);                           // bmTransferAttributes: EOM set NOTE: verify
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append("Agilent Technologies,U3606A,MYxxxxxxxx,02.00-02.00-02.01\n");
+  srcData.append((char)0);                              // Alignment byte
+  srcData.append((char)0);                              // Alignment bytes
+  srcData.append((char)0);                              // Alignment byte
+  // We have a frame size: 12 + 57 + 3 = 72
+  QVERIFY(srcData.size() == 72);
+
+  // Read happens in 2 transfers: 1x 64 Bytes + 1x 17 Bytes
+  // The second read of 17 Bytes is wrong, should be 8 (64+8=72)
+  tr1 = srcData.left(64);
+  QVERIFY(tr1.size() == 64);
+  tr2 = srcData.right(8);
+  QVERIFY(tr2.size() == 8);
+  // Add 9 unknown data
+  tr2.append("?????????");
+  QVERIFY(tr2.size() == 17);
+
+  // Init frame
+  f.reserve(512);
+  f.clear();
+  f.clearFlags();
+  // Put first transfer data
+  QVERIFY(f.putData(tr1.data(), tr1.size()) == tr1.size());
+  QVERIFY(f.size() == tr1.size());
+  QVERIFY(f.bytesToStore() > 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(!f.isComplete());
+  // Put second transfer data, frame must become complete
+  QVERIFY(f.putData(tr2.data(), tr2.size()) == tr2.size());
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isComplete());
+  QVERIFY(f.messageData() == "Agilent Technologies,U3606A,MYxxxxxxxx,02.00-02.00-02.01\n");
+
+  /*
+   * Device: Agilent DSO1012A
+   * Quesry: *IDN?
+   * Test: answer decode.
+   *  The does not add alignement bytes (that's OK regarding USBTMC specs).
+   */
+
+  // Build the answer like it is returned by device
+  srcData.clear();
+  srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
+  srcData.append((char)0x02);                           // bTag
+  srcData.append((char)0xFD);                           // bTagInverse
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)50);                             // TransferSize, LLSB
+  srcData.append((char)0);                              // TransferSize, LSB
+  srcData.append((char)0);                              // TransferSize, MSB
+  srcData.append((char)0);                              // TransferSize, MMSB
+  srcData.append((char)0x01);                           // bmTransferAttributes: EOM set
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append((char)0);                              // Reserved
+  srcData.append("Agilent Technologies,DSO1012A,CNxxxxxxxx,00.04.02\n");
+  // We have a frame size: 12 + 50 + 0 = 62
+  QVERIFY(srcData.size() == 62);
+  // Read happens in 1 transfer of 62 bytes
+  tr1 = srcData;
+  QVERIFY(tr1.size() == 62);
+  // Init frame
+  f.reserve(512);
+  f.clear();
+  ///f.clearFlags();
+  // Put data into frame and check
+  QVERIFY(f.putData(tr1.data(), tr1.size()) == tr1.size());
+  QVERIFY(f.size() == tr1.size());
+  QVERIFY(f.bytesToStore() == 0);
+  QVERIFY(!f.isEmpty());
+  QVERIFY(f.isComplete());
+  QVERIFY(f.messageData() == "Agilent Technologies,DSO1012A,CNxxxxxxxx,00.04.02\n");
+
+}
 
 int main(int argc, char **argv)
 {
