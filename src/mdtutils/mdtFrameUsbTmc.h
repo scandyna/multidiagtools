@@ -55,18 +55,9 @@ class mdtFrameUsbTmc : public mdtFrame
   mdtFrameUsbTmc();
   ~mdtFrameUsbTmc();
 
-  /*! \brief Clear internal data
-   *
-   * Calls mdtFrame::clear() internally after.
+  /*! \brief mdtFrame subclass specific clear
    */
-  void clear();
-
-  /*! \brief Clear frame's specific flags
-   *
-   * This method is called from mdtUsbPortThread and should not be
-   *  called directly.
-   */
-  ///void clearFlags();
+  void clearSub();
 
   /*! \brief Put data into the frame
    *
@@ -132,14 +123,6 @@ class mdtFrameUsbTmc : public mdtFrame
    *  Is only valid when the frame is complete.
    */
   QByteArray &messageData();
-
-  /*! \brief Set message data transfer size
-   *
-   * Used when send a DEV_DEP_MSG_IN request
-   *  tell the device the maximum bytes we need
-   *  to receive.
-   */
-  void setTransferSize(int size);
 
   /*! \brief Encode the USBTMC frame
    *

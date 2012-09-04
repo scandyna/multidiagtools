@@ -37,10 +37,9 @@ mdtFrameUsbTmc::~mdtFrameUsbTmc()
 {
 }
 
-void mdtFrameUsbTmc::clear()
+void mdtFrameUsbTmc::clearSub()
 {
-  qDebug() << "mdtFrameUsbTmc::clear()";
-  mdtFrame::clear();
+  qDebug() << "mdtFrameUsbTmc::clearSub()";
   pvMsgID = 0;
   pvbTag = 0;
   pvbTagInverse = 0;
@@ -56,7 +55,6 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
   Q_ASSERT(capacity() > 12);
 
   int frameSize = 0;
-  ///int alignmentBytesCount = 0;
   int stored = 0;
 
   // If frame is allready full, return
@@ -78,30 +76,33 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
 
   // Check if we have enougth data to decode header
   if(size() >= 12){
-    // We have a header here, decode it
-    pvMsgID = at(0);
-    pvbTag = at(1);
-    pvbTagInverse = at(2);
-    // Check bTag
-    if(pvbTagInverse != (quint8)(~pvbTag)){
-      /// \todo Handle error
-      qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
-    }
-    pvTransferSize = at(4);
-    pvTransferSize += (at(5) << 8);
-    pvTransferSize += (at(6) << 16);
-    pvTransferSize += (at(7) << 24);
-    // MsgID specific part
-    if(pvMsgID == DEV_DEP_MSG_IN){
-      // EOM
-      if(at(8) & 0x01){
-        pvEOM = true;
-      }else{
-        pvEOM = false;
+    // Check if header was not allready decoded
+    if(pvTransferSize == 0){
+      // We have a header here, decode it
+      pvMsgID = at(0);
+      pvbTag = at(1);
+      pvbTagInverse = at(2);
+      // Check bTag
+      if(pvbTagInverse != (quint8)(~pvbTag)){
+        /// \todo Handle error
+        qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
       }
-      /// \todo other bmTransferAttributes
-    }else{
-      qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
+      pvTransferSize = at(4);
+      pvTransferSize += (at(5) << 8);
+      pvTransferSize += (at(6) << 16);
+      pvTransferSize += (at(7) << 24);
+      // MsgID specific part
+      if(pvMsgID == DEV_DEP_MSG_IN){
+        // EOM
+        if(at(8) & 0x01){
+          pvEOM = true;
+        }else{
+          pvEOM = false;
+        }
+        /// \todo other bmTransferAttributes
+      }else{
+        qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
+      }
     }
     // Calc total frame size, without alignment bytes
     frameSize = pvTransferSize + 12;
@@ -156,11 +157,6 @@ void mdtFrameUsbTmc::setMessageData(const QByteArray &data)
 QByteArray &mdtFrameUsbTmc::messageData()
 {
   return pvMessageData;
-}
-
-void mdtFrameUsbTmc::setTransferSize(int size)
-{
-  pvTransferSize = size;
 }
 
 void mdtFrameUsbTmc::encode()

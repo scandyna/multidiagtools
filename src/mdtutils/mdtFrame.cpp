@@ -185,7 +185,7 @@ void mdtFrame::clear()
   pvEOFcondition = false;
 }
 
-void mdtFrame::clearFlags()
+void mdtFrame::clearSub()
 {
 }
 

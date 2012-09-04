@@ -39,6 +39,8 @@ class mdtUsbPortTest : public mdtTest
 
   // play
   void essais();
+
+
 };
 
 #endif // MDT_USB_PORT_TEST_H

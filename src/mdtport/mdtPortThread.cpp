@@ -167,7 +167,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
   frame = pvPort->readFramesPool().dequeue();
   Q_ASSERT(frame != 0);
   frame->clear();
-  frame->clearFlags();
+  frame->clearSub();
 
   return frame;
 }

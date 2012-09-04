@@ -202,7 +202,6 @@ void mdtUsbPortTest::essais()
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
   uf->setbTag(2);
   uf->setMessageData("");
-  uf->setTransferSize(150);
   uf->encode();
   for(int i=0; i<uf->size(); i++){
     qDebug() << "uf[" << i << "]: " << hex << (quint8)uf->at(i) << " , char: " << dec << (char)uf->at(i);

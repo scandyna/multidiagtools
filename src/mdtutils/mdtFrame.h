@@ -130,18 +130,19 @@ class mdtFrame : public QByteArray
    */
   void clear();
 
-  /*! \brief Clear frame's specific flags
+  /*! \brief mdtFrame subclass specific clear
    *
-   * This method is usefull to clear some specific flags
-   *  by subclasses (such as mdtFrameUsbTmc)
+   * This method is usefull to clear some specific flags and data
+   *  in subclasses (such as mdtFrameUsbTmc).
    *
-   * Note that QByteArray's flags are not altered.
+   * Note that QByteArray's flags and data are not altered.
+   *
+   * This method is called from mdtPortThread::getNewFrameRead() .
+   *  Default implementation does nothing.
    *
    * This class must be implemented is subclass if needed.
-   *
-   * \todo Not used now, clarify what to do !
    */
-  virtual void clearFlags();
+  virtual void clearSub();
 
   /*! \brief Put data into the frame
    * 
