@@ -66,6 +66,7 @@ mdtAbstractPort::error_t mdtAbstractPort::open()
   if(isOpen()){
     close();
   }
+  Q_ASSERT(!pvIsOpen);
   // Call system open method
   err = pvOpen();
   if(err == NoError){
@@ -77,7 +78,6 @@ mdtAbstractPort::error_t mdtAbstractPort::open()
 
 void mdtAbstractPort::close()
 {
-  qDebug() << "mdtAbstractPort::close() ...";
   if(!isOpen()){
     return;
   }

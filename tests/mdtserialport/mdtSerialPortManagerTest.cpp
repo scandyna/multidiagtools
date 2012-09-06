@@ -22,6 +22,9 @@
 #include "mdtSerialPortManager.h"
 #include "mdtSerialPort.h"
 #include "mdtSerialPortConfig.h"
+#include "mdtPortWriteThread.h"
+#include "mdtPortReadThread.h"
+#include "mdtSerialPortCtlThread.h"
 #include "mdtApplication.h"
 
 #include <QtGlobal>
@@ -39,22 +42,24 @@ void mdtSerialPortManagerTest::simpleTest()
   qDebug() << "* Be shure that the computer has at least one serial port, else test will fail *";
 
   // Verify that scan() function works ..
-  qDebug() << "TEST: scan() ...";
   portsList = m.scan();
-  qDebug() << "TEST: scan() END";
   QVERIFY(portsList.size() > 0);
 
-  // Port setup
-  m.config().setFrameType(mdtFrame::FT_ASCII);
-  m.config().setEndOfFrameSeq("$");
+  // Init port manager
+  m.port().config().setFrameType(mdtFrame::FT_ASCII);
+  m.port().config().setEndOfFrameSeq("$");
+  m.setPortName(portsList.at(0));
+  QVERIFY(m.openPort());
 
   // Init port manager
+  /**
   qDebug() << "TEST: setPortName() ...";
   m.setPortName(portsList.at(0));
   qDebug() << "TEST: setPortName() END";
   qDebug() << "TEST: openPort() ...";
   QVERIFY(m.openPort());
   qDebug() << "TEST: openPort() END";
+  */
 
   // Check that available baud rates contains 9600 (very standard, should exists on most device)
   QVERIFY(m.port().availableBaudRates().size() > 0);
@@ -64,6 +69,8 @@ void mdtSerialPortManagerTest::simpleTest()
 
   // Start threads
   QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+
 
   // Send some data
   QVERIFY(m.writeData("Test$"));
@@ -73,9 +80,6 @@ void mdtSerialPortManagerTest::simpleTest()
 
   // Verify received data
   QVERIFY(m.lastReadenFrame() == "Test");
- 
-  // End
-  m.closePort();
 }
 
 

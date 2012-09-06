@@ -463,6 +463,8 @@ class mdtAbstractPort : public QObject
    *  - Do the specific work. Note that port must be open in exclusive mode. On Linux, the mdtPortLock should be used for this.
    *  - The mdtError system should be used (on error) to keep trace in logfile.
    *  - If port must be closed (f.ex. on error), use the close() method to keep flags coherent.
+   *     Note that pvClose() will not be called if this method returns something else than NoError.
+   *     If some cleanup (witch are normally done in pvClose() ) must be done, do it before return.
    *  - Return the correct error code on failure (see the error_t enum)
    *
    * \sa close()

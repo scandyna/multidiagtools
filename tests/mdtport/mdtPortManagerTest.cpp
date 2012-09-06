@@ -23,6 +23,8 @@
 #include "mdtPortManager.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
+#include "mdtPortReadThread.h"
+#include "mdtPortWriteThread.h"
 #include <QTemporaryFile>
 #include <QByteArray>
 #include <QString>
@@ -38,7 +40,7 @@ void mdtPortManagerTest::portTest()
 {
   mdtPortManager m, m2;
   QTemporaryFile file;
-  mdtPortConfig *cfg, *cfg2;
+  mdtPortConfig cfg, cfg2;
   mdtPort *port, *port2;
 
   // Create a temporary file
@@ -46,13 +48,15 @@ void mdtPortManagerTest::portTest()
   file.close();
 
   // Port setup
-  cfg = new mdtPortConfig;
-  cfg->setFrameType(mdtFrame::FT_ASCII);
+  ///cfg = new mdtPortConfig;
+  cfg.setFrameType(mdtFrame::FT_ASCII);
   port = new mdtPort;
-  port->setConfig(cfg);
+  port->setConfig(&cfg);
 
   // Init port manager
   m.setPort(port);
+  m.addThread(new mdtPortWriteThread);
+  m.addThread(new mdtPortReadThread);
   m.setPortName(file.fileName());
   QVERIFY(m.openPort());
 
@@ -77,33 +81,24 @@ void mdtPortManagerTest::portTest()
 
   // Setup a second port manager
   // Port setup
-  cfg2 = new mdtPortConfig;
+  ///cfg2 = new mdtPortConfig;
   port2 = new mdtPort;
-  port2->setConfig(cfg2);
+  port2->setConfig(&cfg2);
   m2.setPort(port2);
 
   // Setup same port than first manager, open must fail
   m2.setPortName(file.fileName());
   QVERIFY(!m2.openPort());
 
-  // In read only, port must be open
-  ///m2.config().setReadOnly(true);
-  ///QVERIFY(m2.openPort());
-
-  // Chack that start and running flag works
-  ///QVERIFY(m2.start());
-  ///QVERIFY(m2.isRunning());
-
-  qDebug() << "About to close ...";
+  // Check that we can close port before detach without crash
   m.closePort();
-  ///m2.closePort();
-  qDebug() << "About to delete port ...";
-  delete port;
-  delete cfg;
-  qDebug() << "About to delete port2 ...";
-  delete port2;
-  qDebug() << "About to delete cfg2 ...";
-  delete cfg2;
+
+  // Cleanup
+  qDebug() << "About to close ...";
+  m2.detachPort(true, true);
+  m.detachPort(true, true);
+  ///delete cfg;
+  ///delete cfg2;
   qDebug() << "End";
 }
 

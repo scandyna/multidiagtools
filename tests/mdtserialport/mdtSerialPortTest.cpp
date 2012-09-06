@@ -51,7 +51,6 @@ void mdtSerialPortTest::essais()
   cfg.enableFlowCtlXonXoff();
   cfg.enableFlowCtlRtsCts();
 
-  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
   sp.setPortName("/dev/ttyS0");
   QVERIFY(sp.open() == mdtAbstractPort::NoError);
   QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
@@ -65,6 +64,133 @@ void mdtSerialPortTest::essais()
   qDebug() << "TEST end";
   //connect(this, SIGNAL(testSignal(bool)), &sp, SLOT(setRts(bool)));
   //emit testSignal(true);
+}
+
+void mdtSerialPortTest::openCloseTest()
+{
+  mdtSerialPort port;
+  mdtSerialPortConfig cfg;
+  QString portName;
+  QFileInfo fileInfo;
+
+  // Initial state
+  QVERIFY(!port.isOpen());
+
+  // Port name
+#ifdef Q_OS_UNIX
+  portName = "/dev/ttyS0";
+#elif defined Q_OS_WIN
+  portName = "COM1";
+#endif
+
+  // Open port
+  port.setPortName(portName);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  fileInfo.setFile(portName);
+  qDebug() << "mdtPortTest::openCloseTest() , lock file: LCK.." << fileInfo.fileName();
+  QVERIFY(QFile::exists("/tmp/LCK.." + fileInfo.fileName()));
+  QVERIFY(QFile::exists("/var/lock/LCK.." + fileInfo.fileName()));
+#endif
+
+  // Setup
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+
+  // Close
+  port.close();
+  QVERIFY(!port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  fileInfo.setFile(portName);
+  QVERIFY(!QFile::exists("/tmp/LCK.." + fileInfo.fileName()));
+  QVERIFY(!QFile::exists("/var/lock/LCK.." + fileInfo.fileName()));
+#endif
+
+  /*
+   * When port open fails, lockfiles must not exists
+   */
+
+  // Open port
+  port.setPortName("akjdhuhdhkehdhieahdahiduhuhdjshiheihdu4545ffdf23dweheiuh");
+  QVERIFY(port.open() != mdtAbstractPort::NoError);
+  QVERIFY(!port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  QVERIFY(!QFile::exists("/tmp/LCK..akjdhuhdhkehdhieahdahiduhuhdjshiheihdu4545ffdf23dweheiuh"));
+  QVERIFY(!QFile::exists("/var/lock/LCK..akjdhuhdhkehdhieahdahiduhuhdjshiheihdu4545ffdf23dweheiuh"));
+#endif
+
+  /*
+   * After a fail, we must be able to re-open a port
+   */
+
+  // Open port
+  port.setPortName(portName);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  fileInfo.setFile(portName);
+  QVERIFY(QFile::exists("/tmp/LCK.." + fileInfo.fileName()));
+  QVERIFY(QFile::exists("/var/lock/LCK.." + fileInfo.fileName()));
+#endif
+
+  // Setup
+  port.setConfig(&cfg);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+
+  // Close
+  port.close();
+  QVERIFY(!port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  fileInfo.setFile(portName);
+  QVERIFY(!QFile::exists("/tmp/LCK.." + fileInfo.fileName()));
+  QVERIFY(!QFile::exists("/var/lock/LCK.." + fileInfo.fileName()));
+#endif
+
+#ifdef Q_OS_UNIX
+  /*
+   * It can happen that device file /dev/ttyXXX exists, but that no port
+   *  is really avalable.
+   * In that case, library had a bug with lockfiles management.
+   */
+
+  if(!QFile::exists("/dev/ttyS30")){
+    QSKIP("/dev/ttyS30 not found", SkipSingle);
+  }
+
+  // Open port
+  qDebug() << "TEST: /dev/ttyS30";
+  port.setPortName("/dev/ttyS30");
+  QVERIFY(port.open() != mdtAbstractPort::NoError);
+  QVERIFY(!port.isOpen());
+
+  // Check about lock file
+  QVERIFY(!QFile::exists("/tmp/LCK..ttyS30"));
+  QVERIFY(!QFile::exists("/var/lock/LCK..ttyS30"));
+#endif
+
+  /*
+   * Closing by destructor: must not crash
+   */
+  // Open port
+  port.setPortName(portName);
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
+  qDebug() << "Test END";
 }
 
 void mdtSerialPortTest::startStopTest()

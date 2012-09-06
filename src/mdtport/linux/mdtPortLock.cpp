@@ -41,14 +41,14 @@ mdtPortLock::~mdtPortLock()
   unlock();
 }
 
-int mdtPortLock::openLocked(const QString & portName, int flags)
+int mdtPortLock::openLocked(const QString &portName, int flags)
 {
   int i;
   int err;
 
-  // If this method is called second time without unlocking port before, it''sa error
+  // If this method is called second time without unlocking port before, it's a error
   if(pvIsLocked){
-    mdtError e(MDT_PORT_IO_ERROR , "Port " + pvPort.absoluteFilePath() + " is allready locked by this instance, please unlock it first", mdtError::Info);
+    mdtError e(MDT_PORT_IO_ERROR , "Port " + portName + " is allready locked by this instance, please unlock it first", mdtError::Info);
     MDT_ERROR_SET_SRC(e, "mdtPortLock");
     e.commit();
     return -1;

@@ -27,60 +27,76 @@
 #include "mdtAbstractSerialPort.h"
 #include "mdtSerialPort.h"
 #include "mdtSerialPortConfig.h"
+#include "mdtPortWriteThread.h"
+#include "mdtPortReadThread.h"
 #include "mdtSerialPortCtlThread.h"
 #include "mdtPortManager.h"
 
+
 /*! \brief Port manager base class
- * 
- * This is the easiest way to use the serial port API.<br>
- * 
- * 
- * 
+ *
+ * This is the easiest way to use the serial port API.
+ *
+ * All needed object are created by constructor.
+ *  To alter configuration, use config().
+ *  To access the serial port object, use port().
+ *
+ * To start() to begin read/write and stop to end.
  */
 class mdtSerialPortManager : public mdtPortManager
 {
  public:
 
-  /*! \brief Contruct a serial port manager
-   * 
-   * This will create a serial port and config instances
+  /*! \brief Construct a serial port manager
+   *
+   * Creates a mdtSerialPortConfig, a mdtSerialPort,
+   *  and threads objects.
    */
   mdtSerialPortManager(QObject *parent = 0);
+
+  /*! \brief Destructor
+   *
+   * Stop the manager (if running), and close the port (if open).
+   *  All internal objects (port, config and threads) are deleted here.
+   */
   ~mdtSerialPortManager();
 
   /*! \brief Scan for available serial ports
    * 
    * Try to open available ports on system and get some attributes.
    * If both steps works, the found port is considered existing.
+   *
+   * \pre Manager must no running.
    * \return List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows)
    */
   QStringList scan();
 
-  /*! \brief Set the port
-   * Affects port to the line control thread,
-   * and calls mdtPortManager::setPort()
+  /*! \brief Set serial port object
+   *
+   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort).
+   * \pre Manager must no running
    */
-  void setPort(mdtSerialPort *port);
+  ///void setPort(mdtSerialPort *port);
 
   /*! \brief Open the port
    * 
    * \return True on success, false else
    */
-  bool openPort();
+  ///bool openPort();
 
   /*! \brief Start threads
    * 
    * Start the line control thread, then calls mdtPortManager::start()
    * \sa mdtPortManager
    */
-  bool start();
+  ///bool start();
 
   /*! \brief Stop threads
    * 
    * Calls mdtPortManager::stop() and stop the line control thread.
    * \sa mdtPortManager
    */
-  void stop();
+  ///void stop();
 
   /*! \brief Get the config object
    * 
@@ -89,16 +105,34 @@ class mdtSerialPortManager : public mdtPortManager
   mdtSerialPortConfig &config();
 
   /*! \brief Get the serial port instance
+   *
    * \pre Port must be set with a mdtAbstractSerialPort instance (not mdtAbstractPort)
    */
   mdtAbstractSerialPort &port();
-  
+
+  /*! \brief Get the write thread object
+   */
+  mdtPortWriteThread *writeThread();
+
+  /*! \brief Get the read thread object
+   */
+  mdtPortReadThread *readThread();
+
+  /*! \brief Get the modem lines thread object
+   */
+  mdtSerialPortCtlThread *ctlThread();
+
  private:
 
   // Diseable copy
-  mdtSerialPortManager(mdtSerialPortManager &other);
-  
-  mdtSerialPortCtlThread pvCtlThread;
+  ///mdtSerialPortManager(mdtSerialPortManager &other);
+  // Diseable copy
+  Q_DISABLE_COPY(mdtSerialPortManager);
+
+  // Threads
+  mdtPortWriteThread *pvWriteThread;
+  mdtPortReadThread *pvReadThread;
+  mdtSerialPortCtlThread *pvCtlThread;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_MANAGER_H

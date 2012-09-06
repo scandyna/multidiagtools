@@ -34,9 +34,11 @@
 /*! \brief Open a port and lock it
  *
  * On Linux (or all POSIX ?) system, file locking is avaliable with fcntl().
- * But several applications uses LCK..name for locking.<br>
+ * But several applications uses LCK..name for locking.
+ *
  * This class will try to find if a port is allready locked
- * using LCK..name system in several directories (/var/lock, /tmp, ...).<br>
+ * using LCK..name system in several directories (/var/lock, /tmp, ...).
+ *
  * If nothing is found, then port will be opened, and several lockfiles created.
  * The port is then locked with fcntl().
  */
@@ -46,7 +48,6 @@ class mdtPortLock
 
     mdtPortLock();
     ~mdtPortLock();
-
 
   /*! \brief Open a port locked
    * 
@@ -64,7 +65,8 @@ class mdtPortLock
   /*! \brief Unlock the port
    * 
    * Will remove lockfiles and unlock port
-   * with fcntl().
+   *  with fcntl().
+   *
    * Note: use close() if file is not used later, this is not done by this method.
    */
   void unlock();

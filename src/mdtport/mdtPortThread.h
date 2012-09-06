@@ -43,10 +43,18 @@ class mdtPortThread : public QThread
   ~mdtPortThread();
 
   /*! \brief Set the port instance
+   *
    * \pre port must be a valid pointer
    * \pre The thread must not running
    */
   void setPort(mdtAbstractPort *port);
+
+  /*! \brief Detach the port from thread
+   *
+   * \param releaseMemory If true, the port object that was set with setPort() will be deleted.
+   * \pre The thread must not running
+   */
+  void detachPort(bool releaseMemory);
 
   /*! \brief Start the thread
    *  \return True on sucsessfull start, or flase on start timeout
@@ -57,7 +65,7 @@ class mdtPortThread : public QThread
   /*! \brief Stop the running thread
    *  \pre Serial port instance must be defined. \see setSerialPort()
    */
-  void stop();
+  virtual void stop();
 
   /*! \brief Returns true if the thread is running
    *  This function overloads the QThread::isRunning() function.
@@ -78,7 +86,7 @@ class mdtPortThread : public QThread
    * This can be used to display read/write state.
    * Please consider that this signal is emitted each time the I/O process begins,
    * and not when it ends.
-   * This is because asynch I/O calls are fast, and nothing will be seend from user
+   * This is because asynch I/O calls are fast, and nothing will be seen from user
    * if we update state before/after I/O call.
    * To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms])
    */

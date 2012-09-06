@@ -33,28 +33,45 @@ mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
   ///setConfig(new mdtSerialPortConfig);
-  mdtSerialPort *port = new mdtSerialPort;
+
+  // Port setup
   mdtSerialPortConfig *config = new mdtSerialPortConfig;
-  
+  mdtSerialPort *port = new mdtSerialPort;
   port->setConfig(config);
   setPort(port);
-  Q_ASSERT(pvPort != 0);
-  pvPort->setConfig(new mdtSerialPortConfig);
+
+  // Threads setup
+  pvWriteThread = new mdtPortWriteThread;
+  pvReadThread = new mdtPortReadThread;
+  pvCtlThread = new mdtSerialPortCtlThread;
+  addThread(pvWriteThread);
+  addThread(pvReadThread);
+  addThread(pvCtlThread);
+
+  ///setPort(port);
+  ///Q_ASSERT(pvPort != 0);
+  ///pvPort->setConfig(new mdtSerialPortConfig);
 }
 
 mdtSerialPortManager::~mdtSerialPortManager()
 {
+  Q_ASSERT(pvPort != 0);
+  delete &pvPort->config();
+  detachPort(true, true);
+
   ///Q_ASSERT(pvConfig != 0);
 
-  closePort();
+  ///closePort();
 
   ///delete pvConfig;
-  delete &pvPort->config();
-  delete pvPort;
+  ///delete &pvPort->config();
+  ///delete pvPort;
 }
 
 QStringList mdtSerialPortManager::scan()
 {
+  Q_ASSERT(!isRunning());
+
   mdtSerialPort *port;
   QStringList portNames;
   QStringList availablePorts;
@@ -106,49 +123,58 @@ QStringList mdtSerialPortManager::scan()
 #endif  // #ifdef Q_OS_WIN
 
   // For each port name, try to open the port and get some attributes (to see if it really exists)
+  port = new mdtSerialPort;
   for(int i=0; i<portNames.size(); ++i){
     // Try to open port and get UART type
-    port = new mdtSerialPort;
     Q_ASSERT(port != 0);
     port->setPortName(portNames.at(i));
+    /// \bug décalage nom ! ...
+    qDebug() << "Scan, trying " << portNames.at(i) << " ...";
     if(port->open() == mdtAbstractPort::NoError){
+      qDebug() << "Scan, port " << portNames.at(i) << " is open";
       if(port->uartType() != mdtAbstractSerialPort::UT_UNKNOW){
         availablePorts.append(portNames.at(i));
         qDebug() << "mdtSerialPortManager::scan(): adding port " << port->portName() << " to list";
       }
+      qDebug() << "Scan, closing port " << portNames.at(i) << " ...";
+      port->close();
     }
     /**
     if(port->setAttributes(portNames.at(i))){/// NOTE...
       availablePorts.append(portNames.at(i));
     }
     */
-    delete port;
   }
+  delete port;
 
   return availablePorts;
 }
 
+/**
 void mdtSerialPortManager::setPort(mdtSerialPort *port)
 {
   Q_ASSERT(port != 0);
+  Q_ASSERT(!isRunning());
 
-  pvCtlThread.setPort(port);
-  mdtPortManager::setPort(port);
+  pvPort = port;
+
+  ///pvCtlThread.setPort(port);
+  ///mdtPortManager::setPort(port);
 }
+*/
 
+/**
 bool mdtSerialPortManager::openPort()
 {
   Q_ASSERT(pvPort != 0);
   ///Q_ASSERT(pvConfig != 0);
 
-  // We must typecast to the mdtSerialPort* classes
+  // We must typecast to the mdtSerialPort* class
   mdtSerialPort *p = dynamic_cast<mdtSerialPort*>(pvPort);
   Q_ASSERT(p != 0);
-  
-  /**
-  mdtSerialPortConfig *c = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
-  Q_ASSERT(c != 0);
-  */
+
+  ///mdtSerialPortConfig *c = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
+  ///Q_ASSERT(c != 0);
 
   ///return p->open(*c);
   if(p->setup() != mdtAbstractPort::NoError){
@@ -157,7 +183,9 @@ bool mdtSerialPortManager::openPort()
 
   return true;
 }
+*/
 
+/**
 bool mdtSerialPortManager::start()
 {
   if(!pvCtlThread.start()){
@@ -165,7 +193,9 @@ bool mdtSerialPortManager::start()
   }
   return mdtPortManager::start();
 }
+*/
 
+/**
 void mdtSerialPortManager::stop()
 {
   mdtPortManager::stop();
@@ -173,6 +203,7 @@ void mdtSerialPortManager::stop()
     pvCtlThread.stop();
   }
 }
+*/
 
 mdtSerialPortConfig &mdtSerialPortManager::config()
 {
@@ -195,4 +226,25 @@ mdtAbstractSerialPort &mdtSerialPortManager::port()
   Q_ASSERT(sp != 0);
 
   return *sp;
+}
+
+mdtPortWriteThread *mdtSerialPortManager::writeThread()
+{
+  Q_ASSERT(pvWriteThread != 0);
+
+  return pvWriteThread;
+}
+
+mdtPortReadThread *mdtSerialPortManager::readThread()
+{
+  Q_ASSERT(pvReadThread != 0);
+
+  return pvReadThread;
+}
+
+mdtSerialPortCtlThread *mdtSerialPortManager::ctlThread()
+{
+  Q_ASSERT(pvCtlThread != 0);
+
+  return pvCtlThread;
 }

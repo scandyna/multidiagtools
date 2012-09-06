@@ -122,13 +122,14 @@ void mdtSerialPortCtlWidget::makeConnections(mdtSerialPortManager *manager)
   connect(pbDtr, SIGNAL(toggled(bool)), port, SLOT(setDtr(bool)));
   connect(pbRts, SIGNAL(toggled(bool)), port, SLOT(setRts(bool)));
   // TX/RX
+  /// \todo Create threads somwere here, and connect signals/slots
   connect(manager->writeThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigTxState()));
-  connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(updateTxTimeoutState(bool)));
+  ///connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(updateTxTimeoutState(bool)));
   connect(manager->readThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigRxState()));
-  connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(updateRxTimeoutState(bool)));
+  ///connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(updateRxTimeoutState(bool)));
   // IO error
-  connect(manager->writeThread(), SIGNAL(errorOccured(int)), this, SLOT(trigTxErrorState()));
-  connect(manager->readThread(), SIGNAL(errorOccured(int)), this, SLOT(trigRxErrorState()));
+  ///connect(manager->writeThread(), SIGNAL(errorOccured(int)), this, SLOT(trigTxErrorState()));
+  ///connect(manager->readThread(), SIGNAL(errorOccured(int)), this, SLOT(trigRxErrorState()));
 }
 
 void mdtSerialPortCtlWidget::trigTxState()

@@ -26,6 +26,7 @@
 #include "mdtPortWriteThread.h"
 #include "mdtFrame.h"
 #include <QTemporaryFile>
+#include <QFileInfo>
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
@@ -38,6 +39,7 @@ void mdtPortTest::openCloseTest()
   mdtPort port;
   mdtPortConfig cfg;
   QTemporaryFile file;
+  QFileInfo fileInfo;
 
   // Initial state
   QVERIFY(!port.isOpen());
@@ -45,10 +47,19 @@ void mdtPortTest::openCloseTest()
   // Create a temporary file
   QVERIFY(file.open());
 
-  // Attributes fetch
+  // Open port
   port.setPortName(file.fileName());
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  fileInfo.setFile(file);
+  ///qDebug() << "mdtPortTest::openCloseTest() , lock file: LCK.." << fileInfo.fileName();
+  QVERIFY(QFile::exists("/tmp/LCK.." + fileInfo.fileName()));
+  QVERIFY(QFile::exists("/var/lock/LCK.." + fileInfo.fileName()));
+#endif
+
   // Setup
   port.setConfig(&cfg);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
@@ -58,9 +69,36 @@ void mdtPortTest::openCloseTest()
   port.close();
   QVERIFY(!port.isOpen());
 
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  fileInfo.setFile(file);
+  QVERIFY(!QFile::exists("/tmp/LCK.." + fileInfo.fileName()));
+  QVERIFY(!QFile::exists("/var/lock/LCK.." + fileInfo.fileName()));
+#endif
+
+  /*
+   * When port open fails, lockfiles must not exists
+   */
+
+  // Open port
+  port.setPortName("akjdhuhdhkehdhieahdahiduhuhdjshiheihdu4545ffdf23dweheiuh");
+  QVERIFY(port.open() != mdtAbstractPort::NoError);
+  QVERIFY(!port.isOpen());
+
+#ifdef Q_OS_UNIX
+  // Check about lock file
+  QVERIFY(!QFile::exists("/tmp/LCK..akjdhuhdhkehdhieahdahiduhuhdjshiheihdu4545ffdf23dweheiuh"));
+  QVERIFY(!QFile::exists("/var/lock/LCK..akjdhuhdhkehdhieahdahiduhuhdjshiheihdu4545ffdf23dweheiuh"));
+#endif
+
+
   /*
    * Closing by destructor: must not crash
    */
+  // Open port
+  port.setPortName(file.fileName());
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.isOpen());
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
   QVERIFY(port.isOpen());
   qDebug() << "Test END";

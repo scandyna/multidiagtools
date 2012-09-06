@@ -58,6 +58,16 @@ void mdtPortThread::setPort(mdtAbstractPort *port)
   pvPort = port;
 }
 
+void mdtPortThread::detachPort(bool releaseMemory)
+{
+  Q_ASSERT(!QThread::isRunning());
+
+  if(releaseMemory){
+    delete pvPort;
+  }
+  pvPort = 0;
+}
+
 bool mdtPortThread::start()
 {
   Q_ASSERT(pvPort != 0);

@@ -15,8 +15,8 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   // Alloc a port and connect signals
   setPort(new mdtUsbtmcPort);
   pvPort->setConfig(new mdtPortConfig);
-  Q_ASSERT(pvWriteThread != 0);
-  connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten()));
+  ///Q_ASSERT(pvWriteThread != 0);
+  ///connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten()));
   // Set USBTMC specific configuration
   ///setConfig(new mdtPortConfig);
   config().setFrameType(mdtFrame::FT_ASCII);

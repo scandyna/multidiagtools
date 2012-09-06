@@ -23,33 +23,37 @@
 #include <QTimer>
 #include <QApplication>
 
+#include "mdtPortThread.h"
+
 #include <QDebug>
 
 mdtPortManager::mdtPortManager(QObject *parent)
  : QThread(parent)
 {
-  pvReadThread = 0;
-  pvWriteThread = 0;
   pvPort = 0;
 }
 
 mdtPortManager::~mdtPortManager()
 {
   qDebug() << "mdtPortManager::~mdtPortManager() ...";
-  // Stop threads and close the port
-  ///closePort();
-  detachPort();
+  if(pvPort != 0){
+    if(isRunning()){
+      stop();
+    }
+    if(pvPort->isOpen()){
+      pvPort->close();
+    }
+  }
   qDebug() << "mdtPortManager::~mdtPortManager() port closed";
-  // Release memory
-  if(pvReadThread != 0){
-    delete pvReadThread;
-    pvReadThread = 0;
-  }
-  if(pvWriteThread != 0){
-    delete pvWriteThread;
-    pvWriteThread = 0;
-  }
+
   qDebug() << "mdtPortManager::~mdtPortManager() END";
+}
+
+QStringList mdtPortManager::scan()
+{
+  Q_ASSERT(!isRunning());
+
+  return QStringList();
 }
 
 void mdtPortManager::setPort(mdtAbstractPort *port)
@@ -58,26 +62,9 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
   Q_ASSERT(!isRunning());
 
   pvPort = port;
-
-  // If thread not exists, create it first
-  if(pvReadThread == 0){
-    pvReadThread = new mdtPortReadThread;
-  }
-  if(pvWriteThread == 0){
-    pvWriteThread = new mdtPortWriteThread;
-  }
-  // Assign port to threads
-  Q_ASSERT(pvReadThread != 0);
-  pvReadThread->setPort(pvPort);
-  connect(pvReadThread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
-  Q_ASSERT(pvWriteThread != 0);
-  pvWriteThread->setPort(pvPort);
-  // Connect thread's error signals
-  connect(pvReadThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
-  connect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
 }
 
-void mdtPortManager::detachPort()
+void mdtPortManager::detachPort(bool deletePort, bool deleteThreads)
 {
   if(pvPort == 0){
     return;
@@ -86,10 +73,91 @@ void mdtPortManager::detachPort()
   if(isRunning()){
     stop();
   }
-  disconnect(pvReadThread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
-  disconnect(pvReadThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
-  disconnect(pvWriteThread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+  // Detach each thread
+  removeThreads(deleteThreads);
+  // Close and detach port
+  if(pvPort->isOpen()){
+    pvPort->close();
+  }
+  if(deletePort){
+    delete pvPort;
+  }
   pvPort = 0;
+}
+
+void mdtPortManager::addThread(mdtPortThread *thread)
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(!isRunning());
+  Q_ASSERT(thread != 0);
+
+  // Assign port to thread
+  thread->setPort(pvPort);
+  connect(thread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
+  connect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+  // Add thread to list
+  pvThreads.append(thread);
+}
+
+void mdtPortManager::removeThreads(bool releaseMemory)
+{
+  Q_ASSERT(!isRunning());
+
+  int i;
+  mdtPortThread *thread;
+
+  for(i=0; i<pvThreads.size(); i++){
+    thread = pvThreads.at(i);
+    disconnect(thread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
+    disconnect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
+    if(releaseMemory){
+      delete thread;
+    }
+  }
+  pvThreads.clear();
+}
+
+bool mdtPortManager::start()
+{
+  Q_ASSERT(pvPort != 0);
+
+  int i;
+
+  for(i=0; i<pvThreads.size(); i++){
+    if(!pvThreads.at(i)->start()){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtPortManager::isRunning()
+{
+  int i;
+
+  if(pvPort == 0){
+    return false;
+  }
+
+  for(i=0; i<pvThreads.size(); i++){
+    if(pvThreads.at(i)->isRunning()){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+void mdtPortManager::stop()
+{
+  int i;
+
+  for(i=0; i<pvThreads.size(); i++){
+    if(pvThreads.at(i)->isRunning()){
+      pvThreads.at(i)->stop();
+    }
+  }
 }
 
 void mdtPortManager::setPortName(const QString &portName)
@@ -123,88 +191,9 @@ void mdtPortManager::closePort()
   if(pvPort == 0){
     return;
   }
-  // If threads exists, call stop methods
-  if(pvReadThread != 0){
-    stopReading();
-  }
-  if(pvWriteThread != 0){
-    stopWriting();
-  }
   stop();
   // Close the port
   pvPort->close();
-}
-
-bool mdtPortManager::startReading()
-{
-  Q_ASSERT(pvPort != 0);
-  Q_ASSERT(pvReadThread != 0);
-
-  return pvReadThread->start();
-}
-
-void mdtPortManager::stopReading()
-{
-  Q_ASSERT(pvReadThread != 0);
-  Q_ASSERT(pvPort != 0);
-
-  if(pvReadThread->isRunning()){
-    pvReadThread->stop();
-  }
-}
-
-bool mdtPortManager::startWriting()
-{
-  Q_ASSERT(pvWriteThread != 0);
-  Q_ASSERT(pvPort != 0);
-
-  return pvWriteThread->start();
-}
-
-void mdtPortManager::stopWriting()
-{
-  Q_ASSERT(pvWriteThread != 0);
-  Q_ASSERT(pvPort != 0);
-
-  if(pvWriteThread->isRunning()){
-    pvWriteThread->stop();
-  }
-}
-
-bool mdtPortManager::start()
-{
-  if(!startWriting()){
-    return false;
-  }
-  if(!startReading()){
-    stopWriting();
-    return false;
-  }
-  return true;
-}
-
-bool mdtPortManager::isRunning()
-{
-  if(pvPort == 0){
-    return false;
-  }
-  if(pvReadThread != 0){
-    if(pvReadThread->isRunning()){
-      return true;
-    }
-  }
-  if(pvWriteThread != 0){
-    if(pvWriteThread->isRunning()){
-      return true;
-    }
-  }
-  return false;
-}
-
-void mdtPortManager::stop()
-{
-  stopWriting();
-  stopReading();
 }
 
 bool mdtPortManager::writeData(QByteArray data)
@@ -227,10 +216,11 @@ bool mdtPortManager::writeData(QByteArray data)
   frame = pvPort->writeFramesPool().dequeue();
   Q_ASSERT(frame != 0);
   frame->clear();
+  frame->clearSub();
   // Store data and add frame to write queue
   frame->append(data);
-  pvPort->writeFrames().enqueue(frame);
   pvPort->unlockMutex();
+  pvPort->addFrameToWrite(frame);
 
   return true;
 }
@@ -257,20 +247,6 @@ bool mdtPortManager::waitReadenFrame(int timeout)
   }
 
   return true;
-}
-
-mdtPortReadThread *mdtPortManager::readThread()
-{
-  Q_ASSERT(pvReadThread != 0);
-
-  return pvReadThread;
-}
-
-mdtPortWriteThread *mdtPortManager::writeThread()
-{
-  Q_ASSERT(pvWriteThread != 0);
-
-  return pvWriteThread;
 }
 
 void mdtPortManager::newFrameReaden()

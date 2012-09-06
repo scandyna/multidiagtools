@@ -22,6 +22,7 @@
 #define MDT_PORT_MANAGER_H
 
 #include <QString>
+#include <QStringList>
 #include <QObject>
 #include <QThread>
 #include "mdtAbstractPort.h"
@@ -33,12 +34,15 @@
 #include "mdtFrame.h"
 #include <QByteArray>
 
+#include <QList>
+
+class mdtPortThread;
+
 /*! \brief Port manager base class
- * 
- * This is the easiest way to use the port API.<br>
- * The read and write threads will be created by setPort() ,
- * and port affected to them.<br>
- * 
+ *
+ * Manages a port based on mdtAbstractPort an several threads based on mdtPortThread.
+ *  The goal is to hide the complexity of the port API.
+ *
  * Example:
  * \code
  * mdtPortManager m;
@@ -56,6 +60,8 @@
  *
  * // Init port manager
  * m.setPort(port);
+ * m.addThread(mew mdtPortWriteThread);
+ * m.addThread(mew mdtPortReadThread);
  * m.setPortName("/dev/xyz"));
  * if(!m.openPort()){
  *  // Handle error
@@ -78,10 +84,9 @@
  * // Do something with received data
  * qDebug() << m.lastReadenFrame();
  * 
- * // End
- * m.closePort();
+ * // Cleanup - detachPort() will delete port and threads objects
+ * m.detachPort(true, true);
  * delete config;
- * delete port;
  *
  * \endcode
  * 
@@ -98,22 +103,77 @@ class mdtPortManager : public QThread
  public:
 
   mdtPortManager(QObject *parent = 0);
-  ~mdtPortManager();
+
+  /*! \brief Destructor
+   *
+   * If a port was set, the manager will stop (if running), and port will be closed (if open).
+   *
+   * Note that port set by setPort() and threads are not deleted.
+   */
+  virtual ~mdtPortManager();
+
+  /*! \brief Scan for available ports
+   *
+   * This method is implemented is port's specific subclass.
+   *  Default implementation returns a empty string list.
+   *
+   * \pre Manager must no running
+   */
+  virtual QStringList scan();
 
   /*! \brief Set port object
    *
-   * The read and write threads will be created if not allready exists,
-   * port assigned to them, and signals/slots connection made.<br>
-   * Please take care to never call this method while threads are running.
-   *
-   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort),
-   *       and threads must not run.
+   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort).
+   * \pre Manager must no running
    */
-  void setPort(mdtAbstractPort *port);
+  virtual void setPort(mdtAbstractPort *port);
 
   /*! \brief Detach port
+   *
+   * Will detach port from each thread and from port manager.
+   *  If port was not set, this method does nothing.
+   *  If manager is running, it will be stopped.
+   *  If port is open, it will be closed.
+   *
+   * \param deletePort If true, the port object that was set with setPort() will be deleted.
+   * \param deleteThreads If true, each thread added with addThread() will be deleted.
    */
-  void detachPort();
+  void detachPort(bool deletePort, bool deleteThreads);
+
+  /*! \brief Add a thread and assign it to port
+   *
+   * \pre Port must be set with setPort before using this method
+   * \pre Manager must no running
+   * \pre thread must be a valid pointer
+   */
+  void addThread(mdtPortThread *thread);
+
+  /*! \brief Detach threads from port and remove threads
+   *
+   * \param releaseMemory If true, all threads are deleted
+   * \pre Port manager must not running.
+   */
+  void removeThreads(bool releaseMemory);
+
+  /*! \brief Start threads
+   *
+   * \pre Port must be set with setPort() before use of this method.
+   */
+  bool start();
+
+  /*! \brief Get the running state
+   *
+   * If one of the threads is running, true is returned.
+   *
+   * If port was not set, it returns false.
+   */
+  bool isRunning();
+
+  /*! \brief Stop threads
+   * 
+   * \pre Port must be set with setPort() before use of this method.
+   */
+  void stop();
 
   /*! \brief Set port name
    *
@@ -123,15 +183,15 @@ class mdtPortManager : public QThread
    * \pre Port must be set before with setPort()
    * \sa mdtAbstractPort
    */
-  void setPortName(const QString &portName);
+  virtual void setPortName(const QString &portName);
 
-  /*! \brief Get the config object
+  /*! \brief Get the port's config object
    * 
    * Usefull to alter internal port configuration
    *
    * \pre Port must be set with setPort() before use of this method.
    */
-  mdtPortConfig &config();
+  virtual mdtPortConfig &config();
 
   /*! \brief Open the port
    *
@@ -140,76 +200,25 @@ class mdtPortManager : public QThread
    * \return True on success, false else.
    * \pre Port must be set with setPort() before use of this method.
    */
-  virtual bool openPort();
+  bool openPort();
 
   /*! \brief Close the port
    * 
-   * This stops the threads (if exists) and close the port.<br>
+   * This stops the threads (if exists) and close the port.
+   *
    * If port was never set (with setPort() ), this method does nothing.
    */
   void closePort();
 
-  /*! \brief Start the read thread
-   *
-   * \return True on successfull start
-   * \pre Port must be set with setPort() before use of this method.
-   * \sa mdtThread
-   * \sa mdtPortReadThread
-   */
-  bool startReading();
-
-  /*! \brief Stop the read thread
-   * 
-   * \pre Port must be set with setPort() before use of this method.
-   * \sa startReading()
-   */
-  void stopReading();
-
-  /*! \brief Start the write thread
-   *
-   * \pre Port must be set with setPort() before use of this method.
-   * \return True on successfull start
-   * \sa mdtThread
-   * \sa mdtPortWriteThread
-   */
-  bool startWriting();
-
-  /*! \brief Stop the write thread
-   * 
-   * \pre Port must be set with setPort() before use of this method.
-   * \sa startWriting()
-   */
-  void stopWriting();
-
-  /*! \brief Start reading and writing threads
-   *
-   * \pre Port must be set with setPort() before use of this method.
-   * \sa startReading()
-   * \sa startWriting()
-   */
-  virtual bool start();
-
-  /*! \brief Get the running state
-   * 
-   * If port was set, it returns false.<br>
-   * If one of the threads is running, true is returned.
-   */
-  bool isRunning();
-
-  /*! \brief Stop reading and writing threads
-   * 
-   * \pre Port must be set with setPort() before use of this method.
-   * \sa start()
-   */
-  virtual void stop();
-
   /*! \brief Write data by copy
    *
-   * The data conatined in frame will be passed to the mdtPort's
+   * Data will be passed to the mdtPort's
    * write queue by copy. This method returns immediatly after enqueue,
    * and don't wait until data was written.
-   * \param frame Frame to write
-   * \return True on success. False if write queue is full
+   *
+   * \param data Data to write
+   * \return True on success. False if write queue is full.
+   * \pre Port must be set with setPort() before use of this method.
    */
   bool writeData(QByteArray data);
 
@@ -228,20 +237,6 @@ class mdtPortManager : public QThread
    */
   QByteArray &lastReadenFrame();
 
-  /*! \brief Get read thread object
-   * 
-   * Note that thread object should not be used without care.
-   * \pre setPort() must be called before, because threads are created at this time (becaus of subclassing).
-   */
-  mdtPortReadThread *readThread();
-
-  /*! \brief Get write thread object
-   * 
-   * Note that thread object should not be used without care.
-   * \pre setPort() must be called before, because threads are created at this time (becaus of subclassing).
-   */
-  mdtPortWriteThread *writeThread();
-
  public slots:
 
   /*! \brief Called by the read thread whenn a complete frame was readen
@@ -259,14 +254,14 @@ class mdtPortManager : public QThread
    * \sa newFrameReaden()
    */
   void newDataReaden();
-  
+
  protected:
 
   mdtAbstractPort *pvPort;
-  mdtPortReadThread *pvReadThread;
-  mdtPortWriteThread *pvWriteThread;
   QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
   QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
+  
+  QList<mdtPortThread*> pvThreads;
   
  private:
 

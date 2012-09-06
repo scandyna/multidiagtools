@@ -990,6 +990,7 @@ mdtAbstractPort::error_t mdtSerialPort::pvOpen()
     e.setSystemError(err, strerror(err));
     MDT_ERROR_SET_SRC(e, "mdtSerialPort");
     e.commit();
+    // Here me must explicitly unlock the port because we return a error
     pvPortLock->unlock();
     // Check error and return a possibly correct code
     switch(err){
@@ -1004,12 +1005,20 @@ mdtAbstractPort::error_t mdtSerialPort::pvOpen()
   // Get current config and save it to pvOriginalTermios
   if(tcgetattr(pvFd, &pvOriginalTermios) < 0){
     close();
+    // Here me must explicitly do close because we return a error
+    pvPortLock->unlock();
+    ::close(pvFd);
+    pvFd = -1;
     // Most of cases, this function fails because the physical port is not attached
     return PortNotFound;
   }
   // Get current system config on "work copy"
   if(tcgetattr(pvFd, &pvTermios) < 0){
     close();
+    // Here me must explicitly do close because we return a error
+    pvPortLock->unlock();
+    ::close(pvFd);
+    pvFd = -1;
     // Most of cases, this function fails because the physical port is not attached
     return PortNotFound;
   }

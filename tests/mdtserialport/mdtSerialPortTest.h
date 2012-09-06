@@ -31,6 +31,9 @@ class mdtSerialPortTest : public mdtTest
 
   void essais();
 
+  // Open/Close and check state
+  void openCloseTest();
+
   // Test start and stop
   void startStopTest();
 
