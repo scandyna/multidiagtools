@@ -192,8 +192,10 @@ void mdtUsbPortTest::essais()
     qDebug() << "uf[" << i << "]: " << hex << (quint8)uf->at(i) << " , char: " << dec << (char)uf->at(i);
   }
   // USBTMC - send DEV_DEP_MSG_IN request
-  port.unlockMutex();
+  ///port.unlockMutex();
   port.addFrameToWrite(uf);
+  port.unlockMutex();
+  
   QTest::qWait(500);
   port.lockMutex();
   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
@@ -206,8 +208,10 @@ void mdtUsbPortTest::essais()
   for(int i=0; i<uf->size(); i++){
     qDebug() << "uf[" << i << "]: " << hex << (quint8)uf->at(i) << " , char: " << dec << (char)uf->at(i);
   }
-  port.unlockMutex();
+  ///port.unlockMutex();
   port.addFrameToWrite(uf);
+  port.unlockMutex();
+  
   QTest::qWait(500);
   // USBTMC - Read
   port.lockMutex();
@@ -235,8 +239,8 @@ void mdtUsbPortTest::essais()
     f->clear();
     f->append(codec.encodeSetOutputs());
     ///port.writeFrames().enqueue(f);
-    port.unlockMutex();
     port.addFrameToWrite(f);
+    port.unlockMutex();
     QTest::qWait(100);
     
     // See if something was readen

@@ -4,8 +4,7 @@
 }
 
 
-Inheritance diagram for mdtPortThread:
-\nopagebreak
+Inheritance diagram for mdtPortThread:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -40,9 +39,11 @@ void \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOcc
 \item 
 void \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
 \begin{DoxyCompactList}\small\item\em Set the port instance. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_thread_a29b434534a5564efbd9dfe570a61b143}{detachPort} (bool releaseMemory)
+\begin{DoxyCompactList}\small\item\em Detach the port from thread. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{start} ()
 \begin{DoxyCompactList}\small\item\em Start the thread. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{stop} ()
+virtual void \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{stop} ()
 \begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{
 bool \hyperlink{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{isRunning} () const }
@@ -96,6 +97,27 @@ struct sigaction {\bfseries pvSigaction}}
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_port_thread_a29b434534a5564efbd9dfe570a61b143}{
+\index{mdtPortThread@{mdtPortThread}!detachPort@{detachPort}}
+\index{detachPort@{detachPort}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{detachPort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::detachPort (
+\begin{DoxyParamCaption}
+\item[{bool}]{releaseMemory}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_thread_a29b434534a5564efbd9dfe570a61b143}
+
+
+Detach the port from thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em releaseMemory} & If true, the port object that was set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} will be deleted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+The thread must not running 
+\end{DoxyPrecond}
 \hypertarget{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{
 \index{mdtPortThread@{mdtPortThread}!errorOccured@{errorOccured}}
 \index{errorOccured@{errorOccured}!mdtPortThread@{mdtPortThread}}
@@ -186,7 +208,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 
 Emitted when a I/O process begins. 
 
-This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
+This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
 \index{isFinished@{isFinished}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{isFinished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isFinished (
@@ -300,7 +322,7 @@ setSerialPort()
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}
 
 
@@ -362,4 +384,5 @@ emit frameWritten();
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\item 
+src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}

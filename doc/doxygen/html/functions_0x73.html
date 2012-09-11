@@ -102,7 +102,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>scan()
 : <a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327">mdtDeviceU3606A</a>
-, <a class="el" href="classmdt_usbtmc_port_manager.html#ab26aebdb694fab232f62e7c6084cc0fb">mdtUsbtmcPortManager</a>
+, <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927">mdtPortManager</a>
 , <a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">mdtSerialPortManager</a>
 </li>
 <li>selectPort()
@@ -306,7 +306,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>setPort()
 : <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">mdtPortManager</a>
 , <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2">mdtPortThread</a>
-, <a class="el" href="classmdt_serial_port_manager.html#aa33e4efc1a98d8e2edf8eee7a15b6cad">mdtSerialPortManager</a>
 </li>
 <li>setPortManager()
 : <a class="el" href="classmdt_serial_port_setup_dialog.html#a90f315f66728387fb7b4b8d23dba33a8">mdtSerialPortSetupDialog</a>
@@ -322,11 +321,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634">mdtPortConfig</a>
 </li>
 <li>setReadTimeout()
-: <a class="el" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585">mdtPortConfig</a>
-, <a class="el" href="classmdt_port.html#aa77b266f23744f1b53ae589f986be101">mdtPort</a>
+: <a class="el" href="classmdt_port.html#aa77b266f23744f1b53ae589f986be101">mdtPort</a>
+, <a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">mdtTcpSocket</a>
 , <a class="el" href="classmdt_usbtmc_port.html#ad3ec37dab7918fad36190b1c4c58c266">mdtUsbtmcPort</a>
 , <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>
-, <a class="el" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9">mdtTcpSocket</a>
+, <a class="el" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585">mdtPortConfig</a>
 , <a class="el" href="classmdt_usb_port.html#a44ed5024a81a573b5196b8f64c42cd6a">mdtUsbPort</a>
 , <a class="el" href="classmdt_serial_port.html#a9105e5a3a640b56097c1156000ace933">mdtSerialPort</a>
 </li>
@@ -374,9 +373,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>setTransactionId()
 : <a class="el" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd">mdtFrameModbusTcp</a>
 </li>
-<li>setTransferSize()
-: <a class="el" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0">mdtFrameUsbTmc</a>
-</li>
 <li>setUicDbsDir()
 : <a class="el" href="classmdt_uic_number_widget.html#a1ca77bc9c81ba3aa8ad4205186b05114">mdtUicNumberWidget</a>
 </li>
@@ -411,12 +407,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5">mdtPortConfig</a>
 </li>
 <li>setWriteTimeout()
-: <a class="el" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c">mdtUsbtmcPort</a>
-, <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>
+: <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>
 , <a class="el" href="classmdt_port_config.html#ac117f7cd1f23de163a7fe84f69c2164c">mdtPortConfig</a>
 , <a class="el" href="classmdt_usb_port.html#a592af88bd7e7f45dd80df0ecab375ace">mdtUsbPort</a>
-, <a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">mdtTcpSocket</a>
 , <a class="el" href="classmdt_serial_port.html#a036f49d743838013c9a8cbf6a1dd40d1">mdtSerialPort</a>
+, <a class="el" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0">mdtTcpSocket</a>
+, <a class="el" href="classmdt_usbtmc_port.html#a18ff8b76d07cd75339204f9389e1dd5c">mdtUsbtmcPort</a>
 , <a class="el" href="classmdt_port.html#a2acb6e7bedacdadf78ee735dc611abfa">mdtPort</a>
 </li>
 <li>SLAVE_DEVICE_BUSY
@@ -447,44 +443,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classmdt_file_copier_item.html#ace10385b5d1b591935ace03139c5a3db">mdtFileCopierItem</a>
 </li>
 <li>start()
-: <a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">mdtSerialPortManager</a>
-, <a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">mdtPortThread</a>
+: <a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">mdtPortThread</a>
 , <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">mdtPortManager</a>
 </li>
 <li>startCopy()
 : <a class="el" href="classmdt_file_copier.html#acd5397fbea57f8169a5dddd2809d26cb">mdtFileCopier</a>
 </li>
-<li>startReading()
-: <a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4">mdtPortManager</a>
-</li>
-<li>startWriting()
-: <a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc">mdtPortManager</a>
-</li>
 <li>stop()
-: <a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">mdtPortManager</a>
-, <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>
-, <a class="el" href="classmdt_port_write_thread.html#a69702ab3a95c238fb451f866efc7cb34">mdtPortWriteThread</a>
-, <a class="el" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b">mdtUsbPortThread</a>
+: <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>
 , <a class="el" href="classmdt_time.html#aa833a5d3857b988caec2b35b035801a6">mdtTime</a>
-, <a class="el" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298">mdtSerialPortManager</a>
+, <a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">mdtPortManager</a>
+, <a class="el" href="classmdt_port_write_thread.html#a69702ab3a95c238fb451f866efc7cb34">mdtPortWriteThread</a>
 , <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">mdtPortThread</a>
+, <a class="el" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b">mdtUsbPortThread</a>
 </li>
 <li>stopBits()
-: <a class="el" href="classmdt_serial_port.html#a163a83bdcac2c81a5c6b097c4afde41f">mdtSerialPort</a>
-, <a class="el" href="classmdt_abstract_serial_port.html#abae48c24634c3e2d298f1cff98b250ed">mdtAbstractSerialPort</a>
-</li>
-<li>stopReading()
-: <a class="el" href="classmdt_port_manager.html#a6a06371d61f8f227df2806cde2ac1d11">mdtPortManager</a>
-</li>
-<li>stopWriting()
-: <a class="el" href="classmdt_port_manager.html#a29b0d41eb5b72ef58031e4b7c96bb7e5">mdtPortManager</a>
+: <a class="el" href="classmdt_abstract_serial_port.html#abae48c24634c3e2d298f1cff98b250ed">mdtAbstractSerialPort</a>
+, <a class="el" href="classmdt_serial_port.html#a163a83bdcac2c81a5c6b097c4afde41f">mdtSerialPort</a>
 </li>
 <li>supportsRemoteWakeup()
 : <a class="el" href="classmdt_usb_config_descriptor.html#a307f766cfd0cb917490b7d0e4dd7a3ec">mdtUsbConfigDescriptor</a>
 </li>
 <li>suspendTransmission()
-: <a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">mdtAbstractPort</a>
-, <a class="el" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">mdtSerialPort</a>
+: <a class="el" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">mdtSerialPort</a>
+, <a class="el" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9">mdtAbstractPort</a>
 </li>
 <li>syncAfterCopy()
 : <a class="el" href="classmdt_file_copier_item.html#a82827e5a959e9fb9b437552fe80fa7a6">mdtFileCopierItem</a>
@@ -514,7 +496,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:41 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

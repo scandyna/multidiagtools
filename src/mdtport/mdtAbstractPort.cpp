@@ -177,14 +177,6 @@ void mdtAbstractPort::flushOut()
   unlockMutex();
 }
 
-void mdtAbstractPort::readOneFrame()
-{
-}
-
-void mdtAbstractPort::writeOneFrame()
-{
-}
-
 void mdtAbstractPort::updateReadTimeoutState(bool state)
 {
   if(state != pvReadTimeoutOccuredPrevious){
@@ -313,9 +305,9 @@ void mdtAbstractPort::addFrameToWrite(mdtFrame *frame)
 {
   Q_ASSERT(frame != 0);
 
-  pvMutex.lock();
+  ///pvMutex.lock();
   pvWriteFrames.enqueue(frame);
-  pvMutex.unlock();
+  ///pvMutex.unlock();
   pvWriteFrameAvailable.wakeAll();
 }
 

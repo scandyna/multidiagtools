@@ -18,6 +18,7 @@ set (HEADER_FILES
           mdtUsbPortThread.h
           # Port manager
           mdtPortManager.h
+          mdtUsbtmcPortManager.h
           # Port config
           mdtPortConfigWidget.h
     )
@@ -39,6 +40,7 @@ set (SOURCES_FILES
           mdtTcpSocketThread.cpp
           # Port manager
           mdtPortManager.cpp
+          mdtUsbtmcPortManager.cpp
           # Port config
           mdtPortConfig.cpp
           mdtPortConfigWidget.cpp
@@ -63,12 +65,12 @@ if(UNIX)
     linux/mdtPort.cpp
     linux/mdtPortLock.cpp
     linux/mdtUsbtmcPort.cpp
-    linux/mdtUsbtmcPortManager.h
-    linux/mdtUsbtmcPortManager.cpp
+    #linux/mdtUsbtmcPortManager.h
+    #linux/mdtUsbtmcPortManager.cpp
   )
   set (HEADER_FILES ${HEADER_FILES} 
     linux/mdtUsbtmcPort.h
-    linux/mdtUsbtmcPortManager.h
+    #linux/mdtUsbtmcPortManager.h
   )
 endif(UNIX)
 

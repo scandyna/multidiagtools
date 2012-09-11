@@ -101,9 +101,11 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortThread</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port instance.  <a href="#acd51474c3a2683676423317bc9cb31b2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a29b434534a5564efbd9dfe570a61b143">detachPort</a> (bool releaseMemory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach the port from thread.  <a href="#a29b434534a5564efbd9dfe570a61b143"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">start</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the thread.  <a href="#a9c45f260b8d58b7475151df79b3d8510"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">stop</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">stop</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the running thread.  <a href="#a5746ea96689ed80179751ad1353f0b39"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1becf17263dd9fbf5dfcc6c51eddd72"></a><!-- doxytag: member="mdtPortThread::isRunning" ref="ae1becf17263dd9fbf5dfcc6c51eddd72" args="() const " -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72">isRunning</a> () const </td></tr>
@@ -136,6 +138,32 @@ pthread_t&#160;</td><td class="memItemRight" valign="bottom"><b>pvNativePthreadO
 struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigaction</b></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a29b434534a5564efbd9dfe570a61b143"></a><!-- doxytag: member="mdtPortThread::detachPort" ref="a29b434534a5564efbd9dfe570a61b143" args="(bool releaseMemory)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortThread::detachPort </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>releaseMemory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detach the port from thread. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">releaseMemory</td><td>If true, the port object that was set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> will be deleted. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>The thread must not running </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ab31cbe1a85aa830cd368654d1f806326"></a><!-- doxytag: member="mdtPortThread::errorOccured" ref="ab31cbe1a85aa830cd368654d1f806326" args="(int error)" -->
 <div class="memitem">
 <div class="memproto">
@@ -224,7 +252,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <div class="memdoc">
 
 <p>Emitted when a I/O process begins. </p>
-<p>This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seend from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
+<p>This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
 </div>
 </div>
@@ -354,7 +382,7 @@ The thread must not running </dd></dl>
           <td class="memname">void mdtPortThread::stop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -424,6 +452,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtport/mdtPortThread.cpp</li>
+<li>src/mdtport/moc_mdtPortThread.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -440,7 +469,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

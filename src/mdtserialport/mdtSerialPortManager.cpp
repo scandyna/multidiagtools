@@ -32,8 +32,6 @@
 mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
-  ///setConfig(new mdtSerialPortConfig);
-
   // Port setup
   mdtSerialPortConfig *config = new mdtSerialPortConfig;
   mdtSerialPort *port = new mdtSerialPort;
@@ -47,25 +45,14 @@ mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
   addThread(pvWriteThread);
   addThread(pvReadThread);
   addThread(pvCtlThread);
-
-  ///setPort(port);
-  ///Q_ASSERT(pvPort != 0);
-  ///pvPort->setConfig(new mdtSerialPortConfig);
 }
 
 mdtSerialPortManager::~mdtSerialPortManager()
 {
   Q_ASSERT(pvPort != 0);
+
   delete &pvPort->config();
   detachPort(true, true);
-
-  ///Q_ASSERT(pvConfig != 0);
-
-  ///closePort();
-
-  ///delete pvConfig;
-  ///delete &pvPort->config();
-  ///delete pvPort;
 }
 
 QStringList mdtSerialPortManager::scan()
@@ -128,7 +115,6 @@ QStringList mdtSerialPortManager::scan()
     // Try to open port and get UART type
     Q_ASSERT(port != 0);
     port->setPortName(portNames.at(i));
-    /// \bug décalage nom ! ...
     qDebug() << "Scan, trying " << portNames.at(i) << " ...";
     if(port->open() == mdtAbstractPort::NoError){
       qDebug() << "Scan, port " << portNames.at(i) << " is open";
@@ -139,77 +125,15 @@ QStringList mdtSerialPortManager::scan()
       qDebug() << "Scan, closing port " << portNames.at(i) << " ...";
       port->close();
     }
-    /**
-    if(port->setAttributes(portNames.at(i))){/// NOTE...
-      availablePorts.append(portNames.at(i));
-    }
-    */
   }
   delete port;
 
   return availablePorts;
 }
 
-/**
-void mdtSerialPortManager::setPort(mdtSerialPort *port)
-{
-  Q_ASSERT(port != 0);
-  Q_ASSERT(!isRunning());
-
-  pvPort = port;
-
-  ///pvCtlThread.setPort(port);
-  ///mdtPortManager::setPort(port);
-}
-*/
-
-/**
-bool mdtSerialPortManager::openPort()
-{
-  Q_ASSERT(pvPort != 0);
-  ///Q_ASSERT(pvConfig != 0);
-
-  // We must typecast to the mdtSerialPort* class
-  mdtSerialPort *p = dynamic_cast<mdtSerialPort*>(pvPort);
-  Q_ASSERT(p != 0);
-
-  ///mdtSerialPortConfig *c = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
-  ///Q_ASSERT(c != 0);
-
-  ///return p->open(*c);
-  if(p->setup() != mdtAbstractPort::NoError){
-    return false;
-  }
-
-  return true;
-}
-*/
-
-/**
-bool mdtSerialPortManager::start()
-{
-  if(!pvCtlThread.start()){
-    return false;
-  }
-  return mdtPortManager::start();
-}
-*/
-
-/**
-void mdtSerialPortManager::stop()
-{
-  mdtPortManager::stop();
-  if(pvCtlThread.isRunning()){
-    pvCtlThread.stop();
-  }
-}
-*/
-
 mdtSerialPortConfig &mdtSerialPortManager::config()
 {
-  ///mdtSerialPortConfig *config = dynamic_cast<mdtSerialPortConfig*>(pvConfig);
-  ///Q_ASSERT(config != 0);
-  ///return *config;
+  Q_ASSERT(pvPort != 0);
 
   // We must typecast to the mdtSerialPort* classes
   mdtSerialPort *p = dynamic_cast<mdtSerialPort*>(pvPort);

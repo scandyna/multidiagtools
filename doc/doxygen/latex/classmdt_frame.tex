@@ -64,8 +64,8 @@ bool \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete} ()
 \begin{DoxyCompactList}\small\item\em Returns true if EOF condition was reached. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear} ()
 \begin{DoxyCompactList}\small\item\em Overloaded function. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}{clearFlags} ()
-\begin{DoxyCompactList}\small\item\em Clear frame's specific flags. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_frame_aecc64d3846dee0049ee7b10b73a402f4}{clearSub} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmdt_frame}{mdtFrame} subclass specific clear \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData} (const char $\ast$data, int len)
 \begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{eofSeqLen} ()
@@ -183,29 +183,31 @@ Overloaded function.
 
 Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} and reserve() methods. The goal is to keep the same capacity and reset some \hyperlink{classmdt_frame}{mdtFrame} and subclass specific flags 
 
-Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{mdtFrameModbusTcp}, and \hyperlink{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{mdtFrameUsbTmc}.
+Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{mdtFrameModbusTcp}.
 
-\hypertarget{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}{
-\index{mdtFrame@{mdtFrame}!clearFlags@{clearFlags}}
-\index{clearFlags@{clearFlags}!mdtFrame@{mdtFrame}}
-\subsubsection[{clearFlags}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::clearFlags (
+\hypertarget{classmdt_frame_aecc64d3846dee0049ee7b10b73a402f4}{
+\index{mdtFrame@{mdtFrame}!clearSub@{clearSub}}
+\index{clearSub@{clearSub}!mdtFrame@{mdtFrame}}
+\subsubsection[{clearSub}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::clearSub (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}
+\label{classmdt_frame_aecc64d3846dee0049ee7b10b73a402f4}
 
 
-Clear frame's specific flags. 
+\hyperlink{classmdt_frame}{mdtFrame} subclass specific clear 
 
-This method is usefull to clear some specific flags by subclasses (such as \hyperlink{classmdt_frame_usb_tmc}{mdtFrameUsbTmc})
+This method is usefull to clear some specific flags and data in subclasses (such as \hyperlink{classmdt_frame_usb_tmc}{mdtFrameUsbTmc}).
 
-Note that QByteArray's flags are not altered.
+Note that QByteArray's flags and data are not altered.
 
-This class must be implemented is subclass if needed.
+This method is called from \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{mdtPortThread::getNewFrameRead()} . Default implementation does nothing.
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000028}{Todo}]Not used now, clarify what to do ! \end{Desc}
+This class must be implemented is subclass if needed. 
+
+Reimplemented in \hyperlink{classmdt_frame_usb_tmc_afb0b0e071e328b55ce8e2c73359153d6}{mdtFrameUsbTmc}.
+
 \hypertarget{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{
 \index{mdtFrame@{mdtFrame}!eofSeqLen@{eofSeqLen}}
 \index{eofSeqLen@{eofSeqLen}!mdtFrame@{mdtFrame}}

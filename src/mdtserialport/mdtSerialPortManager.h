@@ -33,7 +33,7 @@
 #include "mdtPortManager.h"
 
 
-/*! \brief Port manager base class
+/*! \brief Serial port manager class
  *
  * This is the easiest way to use the serial port API.
  *
@@ -41,7 +41,7 @@
  *  To alter configuration, use config().
  *  To access the serial port object, use port().
  *
- * To start() to begin read/write and stop to end.
+ * Use start() to begin read/write and stop to end.
  */
 class mdtSerialPortManager : public mdtPortManager
 {
@@ -71,33 +71,6 @@ class mdtSerialPortManager : public mdtPortManager
    */
   QStringList scan();
 
-  /*! \brief Set serial port object
-   *
-   * \pre port must be a valid pointer to the expected class instance (for ex: mdtSerialPort).
-   * \pre Manager must no running
-   */
-  ///void setPort(mdtSerialPort *port);
-
-  /*! \brief Open the port
-   * 
-   * \return True on success, false else
-   */
-  ///bool openPort();
-
-  /*! \brief Start threads
-   * 
-   * Start the line control thread, then calls mdtPortManager::start()
-   * \sa mdtPortManager
-   */
-  ///bool start();
-
-  /*! \brief Stop threads
-   * 
-   * Calls mdtPortManager::stop() and stop the line control thread.
-   * \sa mdtPortManager
-   */
-  ///void stop();
-
   /*! \brief Get the config object
    * 
    * Usefull to alter internal port configuration
@@ -124,8 +97,6 @@ class mdtSerialPortManager : public mdtPortManager
 
  private:
 
-  // Diseable copy
-  ///mdtSerialPortManager(mdtSerialPortManager &other);
   // Diseable copy
   Q_DISABLE_COPY(mdtSerialPortManager);
 

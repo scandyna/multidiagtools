@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+/// \todo Becomes obselete !
 /*! \brief USBTMC device file calss
  * 
  * With USBTMC, when we try to read, and no data are available,

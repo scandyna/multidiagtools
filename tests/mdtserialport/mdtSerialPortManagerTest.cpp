@@ -79,7 +79,9 @@ void mdtSerialPortManagerTest::simpleTest()
   QVERIFY(m.waitReadenFrame(500));
 
   // Verify received data
-  QVERIFY(m.lastReadenFrame() == "Test");
+  ///QVERIFY(m.lastReadenFrame() == "Test");
+  QVERIFY(m.readenFrames().size() == 1);
+  QVERIFY(m.readenFrames().at(0) == "Test");
 }
 
 

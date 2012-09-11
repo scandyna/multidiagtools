@@ -12,7 +12,7 @@ mdtFrameCodecScpi::~mdtFrameCodecScpi()
 {
 }
 
-bool mdtFrameCodecScpi::decodeIdn(QByteArray &frame)
+bool mdtFrameCodecScpi::decodeIdn(const QByteArray &frame)
 {
   QVariant value;
   QStringList nodeValues;

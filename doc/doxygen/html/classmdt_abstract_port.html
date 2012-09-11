@@ -595,7 +595,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <ul>
 <li>Do the specific work. Note that port must be open in exclusive mode. On Linux, the <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a> should be used for this.</li>
 <li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile.</li>
-<li>If port must be closed (f.ex. on error), use the <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> method to keep flags coherent.</li>
+<li>If port must be closed (f.ex. on error), use the <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> method to keep flags coherent. Note that <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a> will not be called if this method returns something else than NoError. If some cleanup (witch are normally done in <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a> ) must be done, do it before return.</li>
 <li>Return the correct error code on failure (see the error_t enum)</li>
 </ul>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> </dd>
@@ -1171,6 +1171,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a></li>
 <li>src/mdtport/mdtAbstractPort.cpp</li>
+<li>src/mdtport/moc_mdtAbstractPort.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -1187,7 +1188,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:41 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

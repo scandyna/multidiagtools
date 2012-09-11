@@ -79,14 +79,14 @@ Inheritance diagram for mdtPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_manager__inherit__graph.png" border="0" usemap="#mdt_port_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_port_manager_inherit__map" id="mdt_port_manager_inherit__map">
-<area shape="rect" id="node3" href="classmdt_serial_port_manager.html" title="Port manager base class." alt="" coords="5,83,155,112"/><area shape="rect" id="node5" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="179,83,341,112"/></map>
+<area shape="rect" id="node3" href="classmdt_serial_port_manager.html" title="Serial port manager class." alt="" coords="5,83,155,112"/><area shape="rect" id="node5" href="classmdt_usbtmc_port_manager.html" title="#include &quot;mdtUsbtmcPort.h&quot;" alt="" coords="179,83,341,112"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_port_manager__coll__graph.png" border="0" usemap="#mdt_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_port_manager_coll__map" id="mdt_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="80,293,219,323"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="96,197,203,227"/><area shape="rect" id="node10" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="243,293,381,323"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node4" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_port_manager-members.html">List of all members.</a></p>
@@ -106,34 +106,32 @@ Signals</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ec36523089b7528d973e29cdbc64d01"></a><!-- doxytag: member="mdtPortManager::mdtPortManager" ref="a5ec36523089b7528d973e29cdbc64d01" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtPortManager</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#adf797f8fd7a3ffdc000890a224e4c1b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927">scan</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available ports.  <a href="#aceb9b570a2ebf354e347b8d9b46f6927"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">setPort</a> (<a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *port)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port object.  <a href="#afcd156b2d0c9d340999935efb6cd8cb6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a608210f908d6ac53ced36f5cf9a783f9"></a><!-- doxytag: member="mdtPortManager::detachPort" ref="a608210f908d6ac53ced36f5cf9a783f9" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a608210f908d6ac53ced36f5cf9a783f9">detachPort</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach port. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a">setPortName</a> (const QString &amp;portName)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1">detachPort</a> (bool deletePort, bool deleteThreads)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach port.  <a href="#a39cb4af4aedc0b6b7c4d4f53002c3fd1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f">addThread</a> (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *thread)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a thread and assign it to port.  <a href="#ab62591409d019a4a2576b4310c411b8f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aaa0a474183bcae0fff4fb9ef43023c25">removeThreads</a> (bool releaseMemory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Detach threads from port and remove threads.  <a href="#aaa0a474183bcae0fff4fb9ef43023c25"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">start</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start threads.  <a href="#af1fb103ffafc227337a59c7e82f44fbc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2">isRunning</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the running state.  <a href="#af460167e604b8b6e2e933a98b2b6b5a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop threads.  <a href="#aacbf87cc3d9c37c87e21696f8a6514bd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a">setPortName</a> (const QString &amp;portName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set port name.  <a href="#a2b2ed690cbba9f544c6ac1b46684e59a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a9cf3ea2da38f81682695b37448712ffd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">openPort</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the port's config object.  <a href="#a9cf3ea2da38f81682695b37448712ffd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">openPort</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aab594613e8985590c835194efbc27b5e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">closePort</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the port.  <a href="#ace8065f1f5083041ee7f65c2892bc77d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4">startReading</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the read thread.  <a href="#a696c2d649764ba7b5f299b0a8f3e5cc4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a6a06371d61f8f227df2806cde2ac1d11">stopReading</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the read thread.  <a href="#a6a06371d61f8f227df2806cde2ac1d11"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc">startWriting</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the write thread.  <a href="#ac769ac4eb2b43a5a37be5b5d2a7bccbc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a29b0d41eb5b72ef58031e4b7c96bb7e5">stopWriting</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the write thread.  <a href="#a29b0d41eb5b72ef58031e4b7c96bb7e5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">start</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start reading and writing threads.  <a href="#af1fb103ffafc227337a59c7e82f44fbc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2">isRunning</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the running state.  <a href="#af460167e604b8b6e2e933a98b2b6b5a2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop reading and writing threads.  <a href="#aacbf87cc3d9c37c87e21696f8a6514bd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a6d3cc4e522326e2a6ca0da401ae58271">writeData</a> (QByteArray data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a6d3cc4e522326e2a6ca0da401ae58271"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">waitReadenFrame</a> (int timeout=500)</td></tr>
@@ -141,32 +139,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac289078134036e05eaa3eabc6799443a"></a><!-- doxytag: member="mdtPortManager::lastReadenFrame" ref="ac289078134036e05eaa3eabc6799443a" args="()" -->
 QByteArray &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ac289078134036e05eaa3eabc6799443a">lastReadenFrame</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last readen frame. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adb7669da204438b7b802c8efad422a71">readThread</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get read thread object.  <a href="#adb7669da204438b7b802c8efad422a71"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aeac5a4abfd2a2f4e4ecb608ca9d38fcf">writeThread</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get write thread object.  <a href="#aeac5a4abfd2a2f4e4ecb608ca9d38fcf"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af856162aab4f1c5202c1dfb330fae538"></a><!-- doxytag: member="mdtPortManager::pvPort" ref="af856162aab4f1c5202c1dfb330fae538" args="" -->
 <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvPort</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00a4396199165f0e4bc7dab802e924e6"></a><!-- doxytag: member="mdtPortManager::pvReadThread" ref="a00a4396199165f0e4bc7dab802e924e6" args="" -->
-<a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadThread</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21da115c51338357c50243742be8f814"></a><!-- doxytag: member="mdtPortManager::pvWriteThread" ref="a21da115c51338357c50243742be8f814" args="" -->
-<a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteThread</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adaa5de4e693944494c78fe9c7e8207d2"></a><!-- doxytag: member="mdtPortManager::pvLastReadenFrame" ref="adaa5de4e693944494c78fe9c7e8207d2" args="" -->
 QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenFrame</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27b171edec4e273e048593bbec7c37dc"></a><!-- doxytag: member="mdtPortManager::pvLastReadenData" ref="a27b171edec4e273e048593bbec7c37dc" args="" -->
 QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenData</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e0d49b789f8b01d469e84b487799573"></a><!-- doxytag: member="mdtPortManager::pvThreads" ref="a8e0d49b789f8b01d469e84b487799573" args="" -->
+QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvThreads</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Port manager base class. </p>
-<p>This is the easiest way to use the port API.<br/>
- The read and write threads will be created by <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> , and port affected to them.<br/>
-</p>
+<p>Manages a port based on <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> an several threads based on <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>. The goal is to hide the complexity of the port API.</p>
 <p>Example: </p>
 <div class="fragment"><pre class="fragment"> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> m;
  <a class="code" href="classmdt_port.html">mdtPort</a> *port;
- <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the config object.">config</a>;
+ <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>;
 
  <span class="comment">// Setup</span>
  config = <span class="keyword">new</span> <a class="code" href="classmdt_port_config.html">mdtPortConfig</a>;
@@ -179,13 +169,15 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 
  <span class="comment">// Init port manager</span>
  m.<a class="code" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort</a>(port);
+ m.<a class="code" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread</a>(mew <a class="code" href="classmdt_port_write_thread.html">mdtPortWriteThread</a>);
+ m.<a class="code" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread</a>(mew <a class="code" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a>);
  m.<a class="code" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName</a>(<span class="stringliteral">&quot;/dev/xyz&quot;</span>));
  <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
   <span class="comment">// Handle error</span>
  }
 
  <span class="comment">// Start threads</span>
- <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start reading and writing threads.">start</a>()){
+ <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
   <span class="comment">// Handle error</span>
  }
  
@@ -201,14 +193,13 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
  <span class="comment">// Do something with received data</span>
  qDebug() &lt;&lt; m.<a class="code" href="classmdt_port_manager.html#ac289078134036e05eaa3eabc6799443a" title="Get the last readen frame.">lastReadenFrame</a>();
  
- <span class="comment">// End</span>
- m.<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
- <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the config object.">config</a>;
- <span class="keyword">delete</span> port;
+ <span class="comment">// Cleanup - detachPort() will delete port and threads objects</span>
+ m.<a class="code" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1" title="Detach port.">detachPort</a>(<span class="keyword">true</span>, <span class="keyword">true</span>);
+ <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>;
 </pre></div><p>This is a base class for port manager. Port type specific classes are available.</p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_serial_port_manager.html" title="Port manager base class.">mdtSerialPortManager</a> </dd>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> </dd>
 <dd>
-<a class="el" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> (Linux only) </dd></dl>
+<a class="el" href="classmdt_usbtmc_port_manager.html" title="#include &quot;mdtUsbtmcPort.h&quot;">mdtUsbtmcPortManager</a> (Linux only) </dd></dl>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="adf797f8fd7a3ffdc000890a224e4c1b6"></a><!-- doxytag: member="mdtPortManager::~mdtPortManager" ref="adf797f8fd7a3ffdc000890a224e4c1b6" args="()" -->
 <div class="memitem">
@@ -218,18 +209,43 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td class="memname">mdtPortManager::~mdtPortManager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Destructor. </p>
+<p>If a port was set, the manager will stop (if running), and port will be closed (if open).</p>
+<p>Note that port set by <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> and threads are not deleted. </p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ab62591409d019a4a2576b4310c411b8f"></a><!-- doxytag: member="mdtPortManager::addThread" ref="ab62591409d019a4a2576b4310c411b8f" args="(mdtPortThread *thread)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::addThread </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *&#160;</td>
+          <td class="paramname"><em>thread</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p><p><a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort()</a>; </p>
-</p>
+<p>Add a thread and assign it to port. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with setPort before using this method </dd>
+<dd>
+Manager must no running </dd>
+<dd>
+thread must be a valid pointer </dd></dl>
 
 </div>
 </div>
-<hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ace8065f1f5083041ee7f65c2892bc77d"></a><!-- doxytag: member="mdtPortManager::closePort" ref="ace8065f1f5083041ee7f65c2892bc77d" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -245,8 +261,8 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <div class="memdoc">
 
 <p>Close the port. </p>
-<p>This stops the threads (if exists) and close the port.<br/>
- If port was never set (with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> ), this method does nothing. </p>
+<p>This stops the threads (if exists) and close the port.</p>
+<p>If port was never set (with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> ), this method does nothing. </p>
 
 </div>
 </div>
@@ -258,17 +274,54 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td class="memname"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp; mdtPortManager::config </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get the config object. </p>
+<p>Get the port's config object. </p>
 <p>Usefull to alter internal port configuration</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">mdtSerialPortManager</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a39cb4af4aedc0b6b7c4d4f53002c3fd1"></a><!-- doxytag: member="mdtPortManager::detachPort" ref="a39cb4af4aedc0b6b7c4d4f53002c3fd1" args="(bool deletePort, bool deleteThreads)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::detachPort </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>deletePort</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>deleteThreads</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Detach port. </p>
+<p>Will detach port from each thread and from port manager. If port was not set, this method does nothing. If manager is running, it will be stopped. If port is open, it will be closed.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">deletePort</td><td>If true, the port object that was set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> will be deleted. </td></tr>
+    <tr><td class="paramname">deleteThreads</td><td>If true, each thread added with <a class="el" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread()</a> will be deleted. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -287,8 +340,8 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <div class="memdoc">
 
 <p>Get the running state. </p>
-<p>If port was set, it returns false.<br/>
- If one of the threads is running, true is returned. </p>
+<p>If one of the threads is running, true is returned.</p>
+<p>If port was not set, it returns false. </p>
 
 </div>
 </div>
@@ -338,7 +391,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td class="memname">bool mdtPortManager::openPort </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -349,27 +402,53 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685">mdtSerialPortManager</a>.</p>
-
 </div>
 </div>
-<a class="anchor" id="adb7669da204438b7b802c8efad422a71"></a><!-- doxytag: member="mdtPortManager::readThread" ref="adb7669da204438b7b802c8efad422a71" args="()" -->
+<a class="anchor" id="aaa0a474183bcae0fff4fb9ef43023c25"></a><!-- doxytag: member="mdtPortManager::removeThreads" ref="aaa0a474183bcae0fff4fb9ef43023c25" args="(bool releaseMemory)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> * mdtPortManager::readThread </td>
+          <td class="memname">void mdtPortManager::removeThreads </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>releaseMemory</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get read thread object. </p>
-<p>Note that thread object should not be used without care. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before, because threads are created at this time (becaus of subclassing). </dd></dl>
+<p>Detach threads from port and remove threads. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">releaseMemory</td><td>If true, all threads are deleted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must not running. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aceb9b570a2ebf354e347b8d9b46f6927"></a><!-- doxytag: member="mdtPortManager::scan" ref="aceb9b570a2ebf354e347b8d9b46f6927" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QStringList mdtPortManager::scan </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Scan for available ports. </p>
+<p>This method is implemented is port's specific subclass. Default implementation returns a empty string list.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">mdtSerialPortManager</a>.</p>
 
 </div>
 </div>
@@ -382,16 +461,16 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a> *&#160;</td>
           <td class="paramname"><em>port</em></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Set port object. </p>
-<p>The read and write threads will be created if not allready exists, port assigned to them, and signals/slots connection made.<br/>
- Please take care to never call this method while threads are running.</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer to the expected class instance (for ex: <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>), and threads must not run. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be a valid pointer to the expected class instance (for ex: <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>). </dd>
+<dd>
+Manager must no running </dd></dl>
 
 </div>
 </div>
@@ -404,7 +483,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>portName</em></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -425,65 +504,14 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td class="memname">bool mdtPortManager::start </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Start reading and writing threads. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4" title="Start the read thread.">startReading()</a> </dd>
-<dd>
-<a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc" title="Start the write thread.">startWriting()</a> </dd></dl>
-
-<p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">mdtSerialPortManager</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a696c2d649764ba7b5f299b0a8f3e5cc4"></a><!-- doxytag: member="mdtPortManager::startReading" ref="a696c2d649764ba7b5f299b0a8f3e5cc4" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortManager::startReading </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Start the read thread. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull start </dd></dl>
+<p>Start threads. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>mdtThread </dd>
-<dd>
-<a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ac769ac4eb2b43a5a37be5b5d2a7bccbc"></a><!-- doxytag: member="mdtPortManager::startWriting" ref="ac769ac4eb2b43a5a37be5b5d2a7bccbc" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtPortManager::startWriting </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Start the write thread. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on successfull start </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>mdtThread </dd>
-<dd>
-<a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> </dd></dl>
 
 </div>
 </div>
@@ -495,57 +523,14 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
           <td class="memname">void mdtPortManager::stop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Stop reading and writing threads. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start reading and writing threads.">start()</a> </dd></dl>
-
-<p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298">mdtSerialPortManager</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6a06371d61f8f227df2806cde2ac1d11"></a><!-- doxytag: member="mdtPortManager::stopReading" ref="a6a06371d61f8f227df2806cde2ac1d11" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortManager::stopReading </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Stop the read thread. </p>
+<p>Stop threads. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4" title="Start the read thread.">startReading()</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a29b0d41eb5b72ef58031e4b7c96bb7e5"></a><!-- doxytag: member="mdtPortManager::stopWriting" ref="a29b0d41eb5b72ef58031e4b7c96bb7e5" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtPortManager::stopWriting </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Stop the write thread. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc" title="Start the write thread.">startWriting()</a> </dd></dl>
 
 </div>
 </div>
@@ -594,40 +579,24 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 <div class="memdoc">
 
 <p>Write data by copy. </p>
-<p>The data conatined in frame will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written. </p>
+<p>Data will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">frame</td><td>Frame to write </td></tr>
+    <tr><td class="paramname">data</td><td>Data to write </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. False if write queue is full </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. False if write queue is full. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-</div>
-</div>
-<a class="anchor" id="aeac5a4abfd2a2f4e4ecb608ca9d38fcf"></a><!-- doxytag: member="mdtPortManager::writeThread" ref="aeac5a4abfd2a2f4e4ecb608ca9d38fcf" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> * mdtPortManager::writeThread </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get write thread object. </p>
-<p>Note that thread object should not be used without care. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> must be called before, because threads are created at this time (becaus of subclassing). </dd></dl>
+<p>Reimplemented in <a class="el" href="classmdt_usbtmc_port_manager.html#a7ff9a9ada7919af9a90286859695a29d">mdtUsbtmcPortManager</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8h_source.html">mdtPortManager.h</a></li>
 <li>src/mdtport/mdtPortManager.cpp</li>
+<li>src/mdtport/moc_mdtPortManager.cxx</li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -644,7 +613,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><b>pvLastReadenDat
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

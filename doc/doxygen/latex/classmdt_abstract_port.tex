@@ -564,7 +564,7 @@ Subclass notes:\par
 \begin{DoxyItemize}
 \item Do the specific work. Note that port must be open in exclusive mode. On Linux, the \hyperlink{classmdt_port_lock}{mdtPortLock} should be used for this.
 \item The \hyperlink{classmdt_error}{mdtError} system should be used (on error) to keep trace in logfile.
-\item If port must be closed (f.ex. on error), use the \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()} method to keep flags coherent.
+\item If port must be closed (f.ex. on error), use the \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{close()} method to keep flags coherent. Note that \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()} will not be called if this method returns something else than NoError. If some cleanup (witch are normally done in \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()} ) must be done, do it before return.
 \item Return the correct error code on failure (see the error\_\-t enum)
 \end{DoxyItemize}
 
@@ -1068,4 +1068,5 @@ Mutex is not handled by this method.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtAbstractPort.h\item 
-src/mdtport/mdtAbstractPort.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtAbstractPort.cpp\item 
+src/mdtport/moc\_\-mdtAbstractPort.cxx\end{DoxyCompactItemize}

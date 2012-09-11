@@ -65,9 +65,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a>, including all inherited members.<table>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f">addThread</a>(mdtPortThread *thread)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">closePort</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">config</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a608210f908d6ac53ced36f5cf9a783f9">detachPort</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">config</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a9dc223afc96ec7b1fce4660ac96a3fe7">ctlThread</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1">detachPort</a>(bool deletePort, bool deleteThreads)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2">isRunning</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ac289078134036e05eaa3eabc6799443a">lastReadenFrame</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtPortManager</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
@@ -75,28 +77,23 @@ This is the complete list of members for <a class="el" href="classmdt_serial_por
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a000ffb4df553fad9ec90e62caaccc91f">newDataReaden</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a4a2a146021158aeb72f9f4b6d62b6dd0">newFrameReaden</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a7e45b8e3475e5182ed12218616664d07">onThreadsErrorOccured</a>(int error)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [slot]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685">openPort</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">openPort</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d">port</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvLastReadenData</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvLastReadenFrame</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvPort</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>pvReadThread</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>pvWriteThread</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#adb7669da204438b7b802c8efad422a71">readThread</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">scan</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#aa33e4efc1a98d8e2edf8eee7a15b6cad">setPort</a>(mdtSerialPort *port)</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">mdtPortManager::setPort</a>(mdtAbstractPort *port)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a">setPortName</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">start</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td><code> [virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a696c2d649764ba7b5f299b0a8f3e5cc4">startReading</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ac769ac4eb2b43a5a37be5b5d2a7bccbc">startWriting</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298">stop</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td><code> [virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a6a06371d61f8f227df2806cde2ac1d11">stopReading</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a29b0d41eb5b72ef58031e4b7c96bb7e5">stopWriting</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvThreads</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#aec192819e19f4679c7bba4ea37154aaf">readThread</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aaa0a474183bcae0fff4fb9ef43023c25">removeThreads</a>(bool releaseMemory)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">scan</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">setPort</a>(mdtAbstractPort *port)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a">setPortName</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">start</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">waitReadenFrame</a>(int timeout=500)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a6d3cc4e522326e2a6ca0da401ae58271">writeData</a>(QByteArray data)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aeac5a4abfd2a2f4e4ecb608ca9d38fcf">writeThread</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#a3a19cbca4adb7583b11a14d59e61233d">writeThread</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_serial_port_manager.html#abde2c5990f3ec7daf41ebc35b4731c1d">~mdtSerialPortManager</a>()</td><td><a class="el" href="classmdt_serial_port_manager.html">mdtSerialPortManager</a></td><td></td></tr>
 </table></div>
 <!-- window showing the filter options -->
@@ -113,7 +110,7 @@ This is the complete list of members for <a class="el" href="classmdt_serial_por
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

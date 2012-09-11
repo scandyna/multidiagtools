@@ -44,8 +44,6 @@ mdtPortManager::~mdtPortManager()
       pvPort->close();
     }
   }
-  qDebug() << "mdtPortManager::~mdtPortManager() port closed";
-
   qDebug() << "mdtPortManager::~mdtPortManager() END";
 }
 
@@ -93,7 +91,7 @@ void mdtPortManager::addThread(mdtPortThread *thread)
 
   // Assign port to thread
   thread->setPort(pvPort);
-  connect(thread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
+  connect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
   connect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
   // Add thread to list
   pvThreads.append(thread);
@@ -108,7 +106,7 @@ void mdtPortManager::removeThreads(bool releaseMemory)
 
   for(i=0; i<pvThreads.size(); i++){
     thread = pvThreads.at(i);
-    disconnect(thread, SIGNAL(newFrameReaden()), this, SLOT(newFrameReaden()));
+    disconnect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
     disconnect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
     if(releaseMemory){
       delete thread;
@@ -203,7 +201,8 @@ bool mdtPortManager::writeData(QByteArray data)
   mdtFrame *frame;
 
   // Clear previous readen frame
-  pvLastReadenFrame.clear();
+  ///pvLastReadenFrame.clear();
+  pvReadenFrames.clear();
   // Get a frame in pool
   pvPort->lockMutex();
   if(pvPort->writeFramesPool().size() < 1){
@@ -219,25 +218,18 @@ bool mdtPortManager::writeData(QByteArray data)
   frame->clearSub();
   // Store data and add frame to write queue
   frame->append(data);
-  pvPort->unlockMutex();
   pvPort->addFrameToWrite(frame);
+  pvPort->unlockMutex();
 
   return true;
-}
-
-QByteArray &mdtPortManager::lastReadenFrame()
-{
-  pvLastReadenData = pvLastReadenFrame;
-  pvLastReadenFrame.clear();
-
-  return pvLastReadenData;
 }
 
 bool mdtPortManager::waitReadenFrame(int timeout)
 {
   int maxIter = timeout / 50;
 
-  while(pvLastReadenFrame.size() < 1){
+  ///while(pvLastReadenFrame.size() < 1){
+  while(pvReadenFrames.size() < 1){
     if(maxIter <= 0){
       return false;
     }
@@ -249,8 +241,25 @@ bool mdtPortManager::waitReadenFrame(int timeout)
   return true;
 }
 
-void mdtPortManager::newFrameReaden()
+QList<QByteArray> &mdtPortManager::readenFrames()
 {
+  return pvReadenFrames;
+}
+
+/**
+QByteArray &mdtPortManager::lastReadenFrame()
+{
+  pvLastReadenData = pvLastReadenFrame;
+  pvLastReadenFrame.clear();
+
+  return pvLastReadenData;
+}
+*/
+
+void mdtPortManager::fromThreadNewFrameReaden()
+{
+  qDebug() << "mdtPortManager::fromThreadNewFrameReaden() ...";
+
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame;
@@ -260,12 +269,17 @@ void mdtPortManager::newFrameReaden()
   while(pvPort->readenFrames().size() > 0){
     frame = pvPort->readenFrames().dequeue();
     Q_ASSERT(frame != 0);
-    // Copy data and put frame back to pool
-    pvLastReadenFrame.append(frame->data(), frame->size());
+    // Copy data
+    if(frame->isComplete()){
+      QByteArray data;
+      data.append(frame->data(), frame->size());
+      pvReadenFrames.append(data);
+    }
+    // Restore frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
-  emit(newDataReaden());
+  emit(newReadenFrame());
 }
 
 void mdtPortManager::onThreadsErrorOccured(int error)

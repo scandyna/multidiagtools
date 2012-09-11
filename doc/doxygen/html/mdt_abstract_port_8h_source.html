@@ -194,44 +194,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00449"></a>00449 
 <a name="l00450"></a>00450  <span class="keyword">protected</span>:
 <a name="l00451"></a>00451 
-<a name="l00471"></a>00471   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="Open the port given by setPortName()">pvOpen</a>() = 0;
-<a name="l00472"></a>00472 
-<a name="l00485"></a>00485   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose</a>() = 0;
-<a name="l00486"></a>00486 
-<a name="l00506"></a>00506   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a880e5ae1699af102f9a80501bb6a0021" title="Setup port with given configurations.">pvSetup</a>() = 0;
-<a name="l00507"></a>00507 
-<a name="l00519"></a>00519   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn</a>() = 0;
-<a name="l00520"></a>00520 
-<a name="l00532"></a>00532   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut</a>() = 0;
-<a name="l00533"></a>00533 
-<a name="l00534"></a>00534   <span class="keywordtype">bool</span> pvReadTimeoutOccured;
-<a name="l00535"></a>00535   <span class="keywordtype">bool</span> pvReadTimeoutOccuredPrevious;
-<a name="l00536"></a>00536   <span class="keywordtype">bool</span> pvWriteTimeoutOccured;
-<a name="l00537"></a>00537   <span class="keywordtype">bool</span> pvWriteTimeoutOccuredPrevious;
-<a name="l00538"></a>00538   <span class="comment">// Frames queues</span>
-<a name="l00539"></a>00539   QQueue&lt;mdtFrame*&gt; pvReadenFrames;
-<a name="l00540"></a>00540   QQueue&lt;mdtFrame*&gt; pvReadFramesPool;
-<a name="l00541"></a>00541   QQueue&lt;mdtFrame*&gt; pvWriteFrames;
-<a name="l00542"></a>00542   QQueue&lt;mdtFrame*&gt; pvWriteFramesPool;
-<a name="l00543"></a>00543   <span class="comment">// Configuration</span>
-<a name="l00544"></a>00544   <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *pvConfig;
-<a name="l00545"></a>00545   <span class="comment">// Attributes</span>
-<a name="l00546"></a>00546   QString pvPortName;     <span class="comment">// Port name, like /dev/ttyS0 , COM1, ...</span>
-<a name="l00547"></a>00547   <span class="comment">// mutex</span>
-<a name="l00548"></a>00548   QMutex pvMutex;
-<a name="l00549"></a>00549 
-<a name="l00550"></a>00550  <span class="keyword">private</span>:
+<a name="l00473"></a>00473   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="Open the port given by setPortName()">pvOpen</a>() = 0;
+<a name="l00474"></a>00474 
+<a name="l00487"></a>00487   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose</a>() = 0;
+<a name="l00488"></a>00488 
+<a name="l00508"></a>00508   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a880e5ae1699af102f9a80501bb6a0021" title="Setup port with given configurations.">pvSetup</a>() = 0;
+<a name="l00509"></a>00509 
+<a name="l00521"></a>00521   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn</a>() = 0;
+<a name="l00522"></a>00522 
+<a name="l00534"></a>00534   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut</a>() = 0;
+<a name="l00535"></a>00535 
+<a name="l00536"></a>00536   <span class="keywordtype">bool</span> pvReadTimeoutOccured;
+<a name="l00537"></a>00537   <span class="keywordtype">bool</span> pvReadTimeoutOccuredPrevious;
+<a name="l00538"></a>00538   <span class="keywordtype">bool</span> pvWriteTimeoutOccured;
+<a name="l00539"></a>00539   <span class="keywordtype">bool</span> pvWriteTimeoutOccuredPrevious;
+<a name="l00540"></a>00540   <span class="comment">// Frames queues</span>
+<a name="l00541"></a>00541   QQueue&lt;mdtFrame*&gt; pvReadenFrames;
+<a name="l00542"></a>00542   QQueue&lt;mdtFrame*&gt; pvReadFramesPool;
+<a name="l00543"></a>00543   QQueue&lt;mdtFrame*&gt; pvWriteFrames;
+<a name="l00544"></a>00544   QQueue&lt;mdtFrame*&gt; pvWriteFramesPool;
+<a name="l00545"></a>00545   <span class="comment">// Configuration</span>
+<a name="l00546"></a>00546   <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *pvConfig;
+<a name="l00547"></a>00547   <span class="comment">// Attributes</span>
+<a name="l00548"></a>00548   QString pvPortName;     <span class="comment">// Port name, like /dev/ttyS0 , COM1, ...</span>
+<a name="l00549"></a>00549   <span class="comment">// mutex</span>
+<a name="l00550"></a>00550   QMutex pvMutex;
 <a name="l00551"></a>00551 
-<a name="l00552"></a>00552   <span class="comment">// Diseable copy</span>
-<a name="l00553"></a>00553   Q_DISABLE_COPY(<a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>);
-<a name="l00554"></a>00554 
-<a name="l00555"></a>00555   <span class="comment">// Some flags</span>
-<a name="l00556"></a>00556   <span class="keywordtype">bool</span> pvIsOpen;
-<a name="l00557"></a>00557   <span class="comment">// Wait conditions</span>
-<a name="l00558"></a>00558   QWaitCondition pvWriteFrameAvailable;
-<a name="l00559"></a>00559 };
-<a name="l00560"></a>00560 
-<a name="l00561"></a>00561 <span class="preprocessor">#endif  // #ifndef MDT_ABSTRACT_PORT_H</span>
+<a name="l00552"></a>00552  <span class="keyword">private</span>:
+<a name="l00553"></a>00553 
+<a name="l00554"></a>00554   <span class="comment">// Diseable copy</span>
+<a name="l00555"></a>00555   Q_DISABLE_COPY(<a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>);
+<a name="l00556"></a>00556 
+<a name="l00557"></a>00557   <span class="comment">// Some flags</span>
+<a name="l00558"></a>00558   <span class="keywordtype">bool</span> pvIsOpen;
+<a name="l00559"></a>00559   <span class="comment">// Wait conditions</span>
+<a name="l00560"></a>00560   QWaitCondition pvWriteFrameAvailable;
+<a name="l00561"></a>00561 };
+<a name="l00562"></a>00562 
+<a name="l00563"></a>00563 <span class="preprocessor">#endif  // #ifndef MDT_ABSTRACT_PORT_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -248,7 +248,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:41 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

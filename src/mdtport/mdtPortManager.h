@@ -71,27 +71,30 @@ class mdtPortThread;
  * if(!m.start()){
  *  // Handle error
  * }
- * 
+ *
  * // Send some data
  * if(!m.writeData("Test$")){
  *  // Handle error
  * }
- * 
+ *
  * // Wait on answer - Timout: 1500 [ms]
  * if(!m.waitReadenFrame(1500)){
  *  // Timout , handle error
  * }
+ *
  * // Do something with received data
- * qDebug() << m.lastReadenFrame();
- * 
+ * for(int i=0; i<m.readenFrames().size(); i++){
+ *  qDebug() << m.readenFrames().at(i);
+ * }
+ *
  * // Cleanup - detachPort() will delete port and threads objects
  * m.detachPort(true, true);
  * delete config;
  *
  * \endcode
- * 
- * This is a base class for port manager.
- * Port type specific classes are available.
+ *
+ * A alternative of using waitReadenFrame() is to connect the newReadenFrame()
+ *  signal to a slot, and get data with readenFrames() from this slot.
  *
  * \sa mdtSerialPortManager
  * \sa mdtUsbtmcPortManager (Linux only)
@@ -212,37 +215,61 @@ class mdtPortManager : public QThread
 
   /*! \brief Write data by copy
    *
-   * Data will be passed to the mdtPort's
-   * write queue by copy. This method returns immediatly after enqueue,
-   * and don't wait until data was written.
+   * Data will be passed to the mdtPort's write queue by copy.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * Note that internal previous readen frames are cleared,
+   *  so readenFrames() will return a empty list just after this call.
    *
    * \param data Data to write
    * \return True on success. False if write queue is full.
    * \pre Port must be set with setPort() before use of this method.
+   *
+   * Subclass notes:<br>
+   *  This method can be reimplemented in subclass if needed.
+   *  Typically usefull if some encoding is needed before the
+   *  frame is submitted to port.
+   *  A frame must be taken from port's write frames pool with mdtAbstractPort::writeFramesPool()
+   *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
+   *  wthen added to port's write queue with mdtAbstractPort::addFrameToWrite() .
    */
-  bool writeData(QByteArray data);
+  virtual bool writeData(QByteArray data);
 
   /*! \brief Wait until a complete frame is available
-   * 
-   * This method will return when a complete frame was readen.<br>
-   * This is usefull for query/answer protocols.<br>
+   *
+   * This method will return when a complete frame was readen.
+   *  This is usefull for query/answer protocols.
+   *
    * Internally, a couple of sleep and process event are called, so 
    * Qt's event loop will not be broken.
+   *
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
    * \return True if Ok, false on timeout
+   * \sa newReadenFrame()
+   *
+   * Subclass notes:<br>
+   *  This method can be reimplemented in subclass if needed.
    */
-  bool waitReadenFrame(int timeout = 500);
+  virtual bool waitReadenFrame(int timeout = 500);
+
+  /*! \brief Get all readen data
+   *
+   * Get a copy of all currently available data.
+   */
+  QList<QByteArray> &readenFrames();
 
   /*! \brief Get the last readen frame
    */
-  QByteArray &lastReadenFrame();
+  ///QByteArray &lastReadenFrame();
 
  public slots:
 
   /*! \brief Called by the read thread whenn a complete frame was readen
-   * \sa mdtPortReadThread
+   *
+   * \sa mdtPortThread
    */
-  void newFrameReaden();
+  void fromThreadNewFrameReaden();
 
   /*! \brief Manage errors comming from port threads
    */
@@ -250,19 +277,21 @@ class mdtPortManager : public QThread
 
  signals:
 
-  /*! \brief Emitted when new data was readen
-   * \sa newFrameReaden()
+  /*! \brief Emitted when new frame was readen
+   *
+   * \sa waitReadenFrame()
    */
-  void newDataReaden();
+  void newReadenFrame();
 
  protected:
 
   mdtAbstractPort *pvPort;
-  QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
-  QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
+  ///QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
+  ///QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
   
   QList<mdtPortThread*> pvThreads;
-  
+  QList<QByteArray> pvReadenFrames;  // Hold a copy of each frame readen by port
+
  private:
 
   // Diseable copy

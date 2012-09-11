@@ -32,7 +32,8 @@
 #include "mdtApplication.h"
 
 #include "linux/mdtUsbtmcPort.h"
-#include "linux/mdtUsbtmcPortManager.h"
+///#include "linux/mdtUsbtmcPortManager.h"
+#include "mdtUsbtmcPortManager.h"
 
 #include <QDebug>
 
@@ -77,7 +78,9 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.start());
   // Get readen data
   QVERIFY(m.waitReadenFrame());
-  QVERIFY(m.lastReadenFrame() == "Test");
+  ///QVERIFY(m.lastReadenFrame() == "Test");
+  QVERIFY(m.readenFrames().size() == 1);
+  QVERIFY(m.readenFrames().at(0) == "Test");
 
   // Setup a second port manager
   // Port setup
@@ -110,11 +113,13 @@ void mdtPortManagerTest::usbTmcPortTest()
   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
 
   // Find attached devices
-  ports = m.scan();
-  QVERIFY(ports.size() > 0);
+  ///ports = m.scan();
+  ///QVERIFY(ports.size() > 0);
 
   // Init port manager
-  m.setPortName(ports.at(0));
+  ///m.setPortName(ports.at(0));
+  ///port.setPortName("0x0957:0x4d18");
+  m.setPortName("0x0957:0x0588");
   QVERIFY(m.openPort());
 
   // start threads
@@ -122,9 +127,25 @@ void mdtPortManagerTest::usbTmcPortTest()
   qDebug() << "TEST, threads running...";
 
   // Query without answer
-  QVERIFY(m.writeData("*CLS\n", false));
+  ///QVERIFY(m.writeData("*CLS\n", false));
+  qDebug() << "TEST, sending request ...";
+  QVERIFY(m.writeData("*IDN?\n"));
+  qDebug() << "TEST, sending request DONE";
+  ///QTest::qWait(500);
+  qDebug() << "TEST, request read ...";
+  ///m.readData();
+  QVERIFY(m.waitReadenFrame());
+  qDebug() << "TEST, request read DONE";
+  QVERIFY(m.readenFrames().size() > 0);
+  qDebug() << "Data n: " << m.readenFrames().size() << ", Data[0]: " << m.readenFrames().at(0);
 
+  ///QTest::qWait(500);
+  
+  
+  qDebug() << "TEST, end";
+  
   // Try to query device
+  /**
   for(int i=0; i<5; i++){
     // Send a command
     QVERIFY(m.writeData("*IDN?\n", true));
@@ -133,6 +154,7 @@ void mdtPortManagerTest::usbTmcPortTest()
     QVERIFY(m.waitReadenFrame(10000));
     QVERIFY(m.lastReadenFrame().size() > 0);
   }
+  */
 }
 
 

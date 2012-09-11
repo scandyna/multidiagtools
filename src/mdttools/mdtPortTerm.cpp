@@ -22,6 +22,8 @@
 #include "mdtApplication.h"
 #include <QHBoxLayout>
 #include <QAction>
+#include <QByteArray>
+#include <QList>
 
 #include <QDebug>
 
@@ -74,11 +76,18 @@ void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTran
 
 void mdtPortTerm::appendReadenData()
 {
+  QList<QByteArray> data;
+  int i;
+
   if(pvCurrentPortManager == 0){
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
     return;
   }
-  teTerm->append(pvCurrentPortManager->lastReadenFrame());
+  ///teTerm->append(pvCurrentPortManager->lastReadenFrame());
+  data = pvCurrentPortManager->readenFrames();
+  for(i=0; i<data.size(); i++){
+    teTerm->append(data.at(i));
+  }
 }
 
 void mdtPortTerm::sendCmd()

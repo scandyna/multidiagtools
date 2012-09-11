@@ -224,12 +224,15 @@ void mdtPortTest::writeRawTest()
   port.lockMutex();
   QVERIFY(port.writeFramesPool().size() == 1);
   frame = port.writeFramesPool().dequeue();
-  port.unlockMutex();
+  ///port.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->append(data);
   port.addFrameToWrite(frame);
+  port.unlockMutex();
+  
+  
   /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
@@ -281,12 +284,15 @@ void mdtPortTest::writeRawTest()
   port.lockMutex();
   QVERIFY(port.writeFramesPool().size() == 1);
   frame = port.writeFramesPool().dequeue();
-  port.unlockMutex();
+  ///port.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->append(data);
   port.addFrameToWrite(frame);
+  port.unlockMutex();
+  
+  
   /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
@@ -369,12 +375,15 @@ void mdtPortTest::writeAsciiTest()
   port.lockMutex();
   QVERIFY(port.writeFramesPool().size() == 1);
   frame = port.writeFramesPool().dequeue();
-  port.unlockMutex();
+  ///port.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->append(data);
   port.addFrameToWrite(frame);
+  port.unlockMutex();
+  
+  
   /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);
@@ -426,12 +435,15 @@ void mdtPortTest::writeAsciiTest()
   port.lockMutex();
   QVERIFY(port.writeFramesPool().size() == 1);
   frame = port.writeFramesPool().dequeue();
-  port.unlockMutex();
+  ///port.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->append(data);
   port.addFrameToWrite(frame);
+  port.unlockMutex();
+  
+  
   /**
   port.lockMutex();
   port.writeFrames().enqueue(frame);

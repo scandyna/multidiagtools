@@ -35,6 +35,8 @@
 
 void mdtTcpSocketTest::essais()
 {
+  QSKIP("essais", SkipSingle);
+
   mdtTcpSocket s;
   mdtPortConfig cfg;
   mdtTcpSocketThread thd;
@@ -73,9 +75,10 @@ void mdtTcpSocketTest::essais()
     qDebug() << "frame[" << i << "]: 0x" << hex << (quint8)frame->at(i);
   }
   ///s.writeFrames().enqueue(frame);
-  s.unlockMutex();
+  ///s.unlockMutex();
   ///s.beginNewTransaction();
   s.addFrameToWrite(frame);
+  s.unlockMutex();
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);
@@ -160,8 +163,11 @@ void mdtTcpSocketTest::writeReadTest()
     frame->clear();
     frame->append(queries.at(i).toAscii());
     ///s.writeFrames().enqueue(frame);
-    s.unlockMutex();
+    ///s.unlockMutex();
     s.addFrameToWrite(frame);
+    s.unlockMutex();
+    
+    
     ///s.beginNewTransaction();
   }
   s.unlockMutex();
@@ -304,8 +310,10 @@ void mdtTcpSocketTest::readInvalidDataTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append("");
-  s.unlockMutex();
+  ///s.unlockMutex();
   s.addFrameToWrite(frame);
+  s.unlockMutex();
+  
   ///s.beginNewTransaction();
 
   // Wait some time and verify that data was exchanged
@@ -347,8 +355,9 @@ void mdtTcpSocketTest::readInvalidDataTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append("*");
-  s.unlockMutex();
+  ///s.unlockMutex();
   s.addFrameToWrite(frame);
+  s.unlockMutex();
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);
@@ -396,8 +405,9 @@ void mdtTcpSocketTest::readInvalidDataTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append("");
-  s.unlockMutex();
+  ///s.unlockMutex();
   s.addFrameToWrite(frame);
+  s.unlockMutex();
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);

@@ -67,7 +67,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="mdtSerialPortManager" --><!-- doxytag: inherits="mdtPortManager" -->
-<p>Port manager base class.  
+<p>Serial port manager class.  
  <a href="classmdt_serial_port_manager.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="mdt_serial_port_manager_8h_source.html">mdtSerialPortManager.h</a>&gt;</code></p>
@@ -83,7 +83,7 @@ Collaboration diagram for mdtSerialPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_manager__coll__graph.png" border="0" usemap="#mdt_serial_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_serial_port_manager_coll__map" id="mdt_serial_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="131,400,248,429"/><area shape="rect" id="node4" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="80,293,219,323"/><area shape="rect" id="node6" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="197,197,304,227"/><area shape="rect" id="node12" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="243,293,381,323"/><area shape="rect" id="node16" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="352,347,509,376"/><area shape="rect" id="node8" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node10" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="5,251,123,280"/><area shape="rect" id="node4" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="48,101,165,131"/><area shape="rect" id="node10" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="139,197,245,227"/><area shape="rect" id="node6" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="53,5,160,35"/><area shape="rect" id="node8" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="72,304,211,333"/><area shape="rect" id="node13" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="235,304,392,333"/><area shape="rect" id="node16" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="416,304,555,333"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_serial_port_manager-members.html">List of all members.</a></p>
@@ -91,28 +91,30 @@ Collaboration diagram for mdtSerialPortManager:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a6508372bcab37a73546fc2c24ee6415c">mdtSerialPortManager</a> (QObject *parent=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contruct a serial port manager.  <a href="#a6508372bcab37a73546fc2c24ee6415c"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a serial port manager.  <a href="#a6508372bcab37a73546fc2c24ee6415c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#abde2c5990f3ec7daf41ebc35b4731c1d">~mdtSerialPortManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#abde2c5990f3ec7daf41ebc35b4731c1d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">scan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available serial ports.  <a href="#a8b9c19a9b5a927e434a888b901a8ccff"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa33e4efc1a98d8e2edf8eee7a15b6cad"></a><!-- doxytag: member="mdtSerialPortManager::setPort" ref="aa33e4efc1a98d8e2edf8eee7a15b6cad" args="(mdtSerialPort *port)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aa33e4efc1a98d8e2edf8eee7a15b6cad">setPort</a> (<a class="el" href="classmdt_serial_port.html">mdtSerialPort</a> *port)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the port Affects port to the line control thread, and calls <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">mdtPortManager::setPort()</a> <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a406481e80014cdd6cb83ff49c3d31685">openPort</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#a406481e80014cdd6cb83ff49c3d31685"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a32af7c402d1dbce67c928f8e8274f412">start</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start threads.  <a href="#a32af7c402d1dbce67c928f8e8274f412"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a819b5aff2ea4d116ebfa3dcb311cf298">stop</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop threads.  <a href="#a819b5aff2ea4d116ebfa3dcb311cf298"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">config</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a4b8ab7b9d53966a1887d9ce8557b8416"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d">port</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the serial port instance.  <a href="#aa96937c2123fe4353b948b848d3e064d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a19cbca4adb7583b11a14d59e61233d"></a><!-- doxytag: member="mdtSerialPortManager::writeThread" ref="a3a19cbca4adb7583b11a14d59e61233d" args="()" -->
+<a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a3a19cbca4adb7583b11a14d59e61233d">writeThread</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the write thread object. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec192819e19f4679c7bba4ea37154aaf"></a><!-- doxytag: member="mdtSerialPortManager::readThread" ref="aec192819e19f4679c7bba4ea37154aaf" args="()" -->
+<a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aec192819e19f4679c7bba4ea37154aaf">readThread</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the read thread object. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dc223afc96ec7b1fce4660ac96a3fe7"></a><!-- doxytag: member="mdtSerialPortManager::ctlThread" ref="a9dc223afc96ec7b1fce4660ac96a3fe7" args="()" -->
+<a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a9dc223afc96ec7b1fce4660ac96a3fe7">ctlThread</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the modem lines thread object. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><p>Port manager base class. </p>
-<p>This is the easiest way to use the serial port API.<br/>
- </p>
+<div class="textblock"><p>Serial port manager class. </p>
+<p>This is the easiest way to use the serial port API.</p>
+<p>All needed object are created by constructor. To alter configuration, use <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416" title="Get the config object.">config()</a>. To access the serial port object, use <a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d" title="Get the serial port instance.">port()</a>.</p>
+<p>Use <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start()</a> to begin read/write and stop to end. </p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a6508372bcab37a73546fc2c24ee6415c"></a><!-- doxytag: member="mdtSerialPortManager::mdtSerialPortManager" ref="a6508372bcab37a73546fc2c24ee6415c" args="(QObject *parent=0)" -->
 <div class="memitem">
@@ -129,11 +131,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 <div class="memdoc">
 
-<p>Contruct a serial port manager. </p>
-<p>This will create a serial port and config instances </p>
-
-<p><p>setConfig(new mdtSerialPortConfig); </p>
-</p>
+<p>Construct a serial port manager. </p>
+<p>Creates a <a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a>, a <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>, and threads objects. </p>
 
 </div>
 </div>
@@ -151,9 +150,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 <div class="memdoc">
 
-<p><p>Q_ASSERT(pvConfig != 0);</p>
-<p>delete pvConfig; </p>
-</p>
+<p>Destructor. </p>
+<p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
 </div>
 </div>
@@ -166,7 +164,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname"><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp; mdtSerialPortManager::config </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -175,36 +173,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the config object. </p>
 <p>Usefull to alter internal port configuration </p>
 
-<p><p><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> *config = dynamic_cast&lt;mdtSerialPortConfig*&gt;(pvConfig); Q_ASSERT(config != 0); return *config; </p>
-</p>
-
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">mdtPortManager</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a406481e80014cdd6cb83ff49c3d31685"></a><!-- doxytag: member="mdtSerialPortManager::openPort" ref="a406481e80014cdd6cb83ff49c3d31685" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtSerialPortManager::openPort </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Open the port. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else </dd></dl>
-
-<p><p>Q_ASSERT(pvConfig != 0);</p>
-<p><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> *c = dynamic_cast&lt;mdtSerialPortConfig*&gt;(pvConfig); Q_ASSERT(c != 0);</p>
-<p>return p-&gt;open(*c); </p>
-</p>
-
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">mdtPortManager</a>.</p>
 
 </div>
 </div>
@@ -235,62 +204,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">QStringList mdtSerialPortManager::scan </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Scan for available serial ports. </p>
-<p>Try to open available ports on system and get some attributes. If both steps works, the found port is considered existing. </p>
+<p>Try to open available ports on system and get some attributes. If both steps works, the found port is considered existing.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows) </dd></dl>
 
-<p><p>if(port-&gt;setAttributes(portNames.at(i))){/// NOTE... availablePorts.append(portNames.at(i)); }</p>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="a32af7c402d1dbce67c928f8e8274f412"></a><!-- doxytag: member="mdtSerialPortManager::start" ref="a32af7c402d1dbce67c928f8e8274f412" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtSerialPortManager::start </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Start threads. </p>
-<p>Start the line control thread, then calls <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start reading and writing threads.">mdtPortManager::start()</a> </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">mdtPortManager</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a819b5aff2ea4d116ebfa3dcb311cf298"></a><!-- doxytag: member="mdtSerialPortManager::stop" ref="a819b5aff2ea4d116ebfa3dcb311cf298" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtSerialPortManager::stop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Stop threads. </p>
-<p>Calls <a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd" title="Stop reading and writing threads.">mdtPortManager::stop()</a> and stop the line control thread. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">mdtPortManager</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927">mdtPortManager</a>.</p>
 
 </div>
 </div>
@@ -313,7 +238,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

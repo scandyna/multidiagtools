@@ -380,13 +380,15 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   sp.lockMutex();
   QVERIFY(sp.writeFramesPool().size() > 0);
   frame = sp.writeFramesPool().dequeue();
-  sp.unlockMutex();
+  ///sp.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
   sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+  
   /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
@@ -443,13 +445,16 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   sp.lockMutex();
   QVERIFY(sp.writeFramesPool().size() > 0);
   frame = sp.writeFramesPool().dequeue();
-  sp.unlockMutex();
+  ///sp.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
   sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+  
+  
   /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
@@ -583,10 +588,13 @@ void mdtSerialPortTest::txRxBinaryTopTest()
     sp.lockMutex();
     QVERIFY(sp.writeFramesPool().size() > 0);
     frame = sp.writeFramesPool().dequeue();
-    sp.unlockMutex();
+    ///sp.unlockMutex();
     frame->clear();
     frame->append(data.at(i));
     sp.addFrameToWrite(frame);
+    sp.unlockMutex();
+    
+    
     qDebug() << "TEST , enq 1 frame for write";
   }
   // Wait some time and verify that data was transfered
@@ -691,13 +699,15 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   sp.lockMutex();
   QVERIFY(sp.writeFramesPool().size() > 0);
   frame = sp.writeFramesPool().dequeue();
-  sp.unlockMutex();
+  ///sp.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
   sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+  
   /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);
@@ -745,13 +755,16 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest()
   sp.lockMutex();
   QVERIFY(sp.writeFramesPool().size() > 0);
   frame = sp.writeFramesPool().dequeue();
-  sp.unlockMutex();
+  ///sp.unlockMutex();
   QVERIFY(frame != 0);
 
   // Add some data to frame and commit
   frame->clear();
   frame->append(data);
   sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+  
+  
   /**
   sp.lockMutex();
   sp.writeFrames().enqueue(frame);

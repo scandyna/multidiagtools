@@ -21,6 +21,7 @@
 #include "mdtDeviceU3606A.h"
 #include "mdtError.h"
 #include <QByteArray>
+#include <QList>
 
 #include <QDebug>
 
@@ -48,6 +49,7 @@ QStringList mdtDeviceU3606A::scan()
     if(pvPortManager.openPort()){
       if(pvPortManager.start()){
         // Get the IDN
+        /**
         if(pvPortManager.writeData(command, true)){
           if(pvPortManager.waitReadenFrame()){
             if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame())){
@@ -59,6 +61,7 @@ QStringList mdtDeviceU3606A::scan()
             }
           }
         }
+        */
       }
       pvPortManager.stop();
     }
@@ -109,21 +112,29 @@ void mdtDeviceU3606A::getIdn()
   QStringList data;
   QStringList boardsRevisions;
   int i;
+  QList<QByteArray> frames;
   
   // Default data
   for(i=0; i<6; i++){
     data << "Unknow";
   }
   
+  /**
   if(!pvPortManager.writeData(command, true)){
     emit idnChanged(data);
     return;
   }
+  */
   if(!pvPortManager.waitReadenFrame()){
     emit idnChanged(data);
     return;
   }
-  if(!pvCodec.decodeIdn(pvPortManager.lastReadenFrame())){
+  frames = pvPortManager.readenFrames();
+  if(frames.size() < 1){
+    emit idnChanged(data);
+    return;
+  }
+  if(!pvCodec.decodeIdn(frames.at(0))){
     emit idnChanged(data);
     return;
   }

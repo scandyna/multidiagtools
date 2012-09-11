@@ -13,7 +13,8 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdtPortManager:\nopagebreak
+Inheritance diagram for mdtPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,11 +23,12 @@ Inheritance diagram for mdtPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtPortManager:\nopagebreak
+Collaboration diagram for mdtPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=362pt]{classmdt_port_manager__coll__graph}
+\includegraphics[width=168pt]{classmdt_port_manager__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
@@ -52,37 +54,32 @@ void \hyperlink{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}{newData
 \label{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}
 
 \item 
-\hyperlink{classmdt_port_manager_adf797f8fd7a3ffdc000890a224e4c1b6}{$\sim$mdtPortManager} ()
-\item 
-void \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
+virtual \hyperlink{classmdt_port_manager_adf797f8fd7a3ffdc000890a224e4c1b6}{$\sim$mdtPortManager} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual QStringList \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{scan} ()
+\begin{DoxyCompactList}\small\item\em Scan for available ports. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
 \begin{DoxyCompactList}\small\item\em Set port object. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}{
-void \hyperlink{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}{detachPort} ()}
-\label{classmdt_port_manager_a608210f908d6ac53ced36f5cf9a783f9}
-
+void \hyperlink{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}{detachPort} (bool deletePort, bool deleteThreads)
 \begin{DoxyCompactList}\small\item\em Detach port. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{setPortName} (const QString \&portName)
+void \hyperlink{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{addThread} (\hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$thread)
+\begin{DoxyCompactList}\small\item\em Add a thread and assign it to port. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_aaa0a474183bcae0fff4fb9ef43023c25}{removeThreads} (bool releaseMemory)
+\begin{DoxyCompactList}\small\item\em Detach threads from port and remove threads. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start} ()
+\begin{DoxyCompactList}\small\item\em Start threads. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{isRunning} ()
+\begin{DoxyCompactList}\small\item\em Get the running state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{stop} ()
+\begin{DoxyCompactList}\small\item\em Stop threads. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{setPortName} (const QString \&portName)
 \begin{DoxyCompactList}\small\item\em Set port name. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config} ()
-\begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort} ()
+virtual \hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config} ()
+\begin{DoxyCompactList}\small\item\em Get the port's config object. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort} ()
 \begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort} ()
 \begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{startReading} ()
-\begin{DoxyCompactList}\small\item\em Start the read thread. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}{stopReading} ()
-\begin{DoxyCompactList}\small\item\em Stop the read thread. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting} ()
-\begin{DoxyCompactList}\small\item\em Start the write thread. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}{stopWriting} ()
-\begin{DoxyCompactList}\small\item\em Stop the write thread. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start} ()
-\begin{DoxyCompactList}\small\item\em Start reading and writing threads. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{isRunning} ()
-\begin{DoxyCompactList}\small\item\em Get the running state. \end{DoxyCompactList}\item 
-virtual void \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{stop} ()
-\begin{DoxyCompactList}\small\item\em Stop reading and writing threads. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}{writeData} (QByteArray data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame} (int timeout=500)
@@ -91,27 +88,13 @@ bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitRea
 QByteArray \& \hyperlink{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}{lastReadenFrame} ()}
 \label{classmdt_port_manager_ac289078134036e05eaa3eabc6799443a}
 
-\begin{DoxyCompactList}\small\item\em Get the last readen frame. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$ \hyperlink{classmdt_port_manager_adb7669da204438b7b802c8efad422a71}{readThread} ()
-\begin{DoxyCompactList}\small\item\em Get read thread object. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$ \hyperlink{classmdt_port_manager_aeac5a4abfd2a2f4e4ecb608ca9d38fcf}{writeThread} ()
-\begin{DoxyCompactList}\small\item\em Get write thread object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the last readen frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_port_manager_af856162aab4f1c5202c1dfb330fae538}{
 \hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$ {\bfseries pvPort}}
 \label{classmdt_port_manager_af856162aab4f1c5202c1dfb330fae538}
-
-\item 
-\hypertarget{classmdt_port_manager_a00a4396199165f0e4bc7dab802e924e6}{
-\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$ {\bfseries pvReadThread}}
-\label{classmdt_port_manager_a00a4396199165f0e4bc7dab802e924e6}
-
-\item 
-\hypertarget{classmdt_port_manager_a21da115c51338357c50243742be8f814}{
-\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$ {\bfseries pvWriteThread}}
-\label{classmdt_port_manager_a21da115c51338357c50243742be8f814}
 
 \item 
 \hypertarget{classmdt_port_manager_adaa5de4e693944494c78fe9c7e8207d2}{
@@ -123,15 +106,18 @@ QByteArray {\bfseries pvLastReadenFrame}}
 QByteArray {\bfseries pvLastReadenData}}
 \label{classmdt_port_manager_a27b171edec4e273e048593bbec7c37dc}
 
+\item 
+\hypertarget{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}{
+QList$<$ \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$ $>$ {\bfseries pvThreads}}
+\label{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Port manager base class. 
 
-This is the easiest way to use the port API.\par
- The read and write threads will be created by \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} , and port affected to them.\par
-
+Manages a port based on \hyperlink{classmdt_abstract_port}{mdtAbstractPort} an several threads based on \hyperlink{classmdt_port_thread}{mdtPortThread}. The goal is to hide the complexity of the port API.
 
 Example: 
 \begin{DoxyCode}
@@ -150,6 +136,8 @@ Example:
 
  // Init port manager
  m.setPort(port);
+ m.addThread(mew mdtPortWriteThread);
+ m.addThread(mew mdtPortReadThread);
  m.setPortName("/dev/xyz"));
  if(!m.openPort()){
   // Handle error
@@ -172,10 +160,9 @@ Example:
  // Do something with received data
  qDebug() << m.lastReadenFrame();
  
- // End
- m.closePort();
+ // Cleanup - detachPort() will delete port and threads objects
+ m.detachPort(true, true);
  delete config;
- delete port;
 \end{DoxyCode}
 
 
@@ -196,15 +183,37 @@ This is a base class for port manager. Port type specific classes are available.
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_manager_adf797f8fd7a3ffdc000890a224e4c1b6}
 
 
-\hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort()}; 
+Destructor. 
 
+If a port was set, the manager will stop (if running), and port will be closed (if open).
 
+Note that port set by \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} and threads are not deleted. 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{
+\index{mdtPortManager@{mdtPortManager}!addThread@{addThread}}
+\index{addThread@{addThread}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{addThread}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::addThread (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortThread} $\ast$}]{thread}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}
+
+
+Add a thread and assign it to port. 
+
+\begin{DoxyPrecond}{Precondition}
+Port must be set with setPort before using this method 
+
+Manager must no running 
+
+thread must be a valid pointer 
+\end{DoxyPrecond}
 \hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{
 \index{mdtPortManager@{mdtPortManager}!closePort@{closePort}}
 \index{closePort@{closePort}!mdtPortManager@{mdtPortManager}}
@@ -218,19 +227,20 @@ This is a base class for port manager. Port type specific classes are available.
 
 Close the port. 
 
-This stops the threads (if exists) and close the port.\par
- If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} ), this method does nothing. \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
+This stops the threads (if exists) and close the port.
+
+If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} ), this method does nothing. \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
 \index{mdtPortManager@{mdtPortManager}!config@{config}}
 \index{config@{config}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortConfig} \& mdtPortManager::config (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}
 
 
-Get the config object. 
+Get the port's config object. 
 
 Usefull to alter internal port configuration
 
@@ -241,6 +251,29 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 
 Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{mdtSerialPortManager}.
 
+\hypertarget{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}{
+\index{mdtPortManager@{mdtPortManager}!detachPort@{detachPort}}
+\index{detachPort@{detachPort}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{detachPort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::detachPort (
+\begin{DoxyParamCaption}
+\item[{bool}]{deletePort, }
+\item[{bool}]{deleteThreads}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}
+
+
+Detach port. 
+
+Will detach port from each thread and from port manager. If port was not set, this method does nothing. If manager is running, it will be stopped. If port is open, it will be closed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em deletePort} & If true, the port object that was set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} will be deleted. \\
+\hline
+{\em deleteThreads} & If true, each thread added with \hyperlink{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{addThread()} will be deleted. \\
+\hline
+\end{DoxyParams}
 \hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
 \index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
 \index{isRunning@{isRunning}!mdtPortManager@{mdtPortManager}}
@@ -254,8 +287,9 @@ Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9c
 
 Get the running state. 
 
-If port was set, it returns false.\par
- If one of the threads is running, true is returned. \hypertarget{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}{
+If one of the threads is running, true is returned.
+
+If port was not set, it returns false. \hypertarget{classmdt_port_manager_a000ffb4df553fad9ec90e62caaccc91f}{
 \index{mdtPortManager@{mdtPortManager}!newDataReaden@{newDataReaden}}
 \index{newDataReaden@{newDataReaden}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{newDataReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newDataReaden (
@@ -294,7 +328,7 @@ Called by the read thread whenn a complete frame was readen.
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}
 
 
@@ -308,26 +342,49 @@ True on success, false else.
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
+\hypertarget{classmdt_port_manager_aaa0a474183bcae0fff4fb9ef43023c25}{
+\index{mdtPortManager@{mdtPortManager}!removeThreads@{removeThreads}}
+\index{removeThreads@{removeThreads}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{removeThreads}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::removeThreads (
+\begin{DoxyParamCaption}
+\item[{bool}]{releaseMemory}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_aaa0a474183bcae0fff4fb9ef43023c25}
 
 
-Reimplemented in \hyperlink{classmdt_serial_port_manager_a406481e80014cdd6cb83ff49c3d31685}{mdtSerialPortManager}.
+Detach threads from port and remove threads. 
 
-\hypertarget{classmdt_port_manager_adb7669da204438b7b802c8efad422a71}{
-\index{mdtPortManager@{mdtPortManager}!readThread@{readThread}}
-\index{readThread@{readThread}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{readThread}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortReadThread} $\ast$ mdtPortManager::readThread (
+
+\begin{DoxyParams}{Parameters}
+{\em releaseMemory} & If true, all threads are deleted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Port manager must not running. 
+\end{DoxyPrecond}
+\hypertarget{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{
+\index{mdtPortManager@{mdtPortManager}!scan@{scan}}
+\index{scan@{scan}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtPortManager::scan (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_adb7669da204438b7b802c8efad422a71}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}
 
 
-Get read thread object. 
+Scan for available ports. 
 
-Note that thread object should not be used without care. \begin{DoxyPrecond}{Precondition}
-\hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} must be called before, because threads are created at this time (becaus of subclassing). 
+This method is implemented is port's specific subclass. Default implementation returns a empty string list.
+
+\begin{DoxyPrecond}{Precondition}
+Manager must no running 
 \end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{mdtSerialPortManager}.
+
 \hypertarget{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{
 \index{mdtPortManager@{mdtPortManager}!setPort@{setPort}}
 \index{setPort@{setPort}!mdtPortManager@{mdtPortManager}}
@@ -335,17 +392,16 @@ Note that thread object should not be used without care. \begin{DoxyPrecond}{Pre
 \begin{DoxyParamCaption}
 \item[{{\bf mdtAbstractPort} $\ast$}]{port}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}
 
 
 Set port object. 
 
-The read and write threads will be created if not allready exists, port assigned to them, and signals/slots connection made.\par
- Please take care to never call this method while threads are running.
-
 \begin{DoxyPrecond}{Precondition}
-port must be a valid pointer to the expected class instance (for ex: \hyperlink{classmdt_serial_port}{mdtSerialPort}), and threads must not run. 
+port must be a valid pointer to the expected class instance (for ex: \hyperlink{classmdt_serial_port}{mdtSerialPort}). 
+
+Manager must no running 
 \end{DoxyPrecond}
 \hypertarget{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{
 \index{mdtPortManager@{mdtPortManager}!setPortName@{setPortName}}
@@ -354,7 +410,7 @@ port must be a valid pointer to the expected class instance (for ex: \hyperlink{
 \begin{DoxyParamCaption}
 \item[{const QString \&}]{portName}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}
 
 
@@ -375,72 +431,15 @@ Port must be set before with \hyperlink{classmdt_port_manager_afcd156b2d0c9d3409
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}
 
 
-Start reading and writing threads. 
+Start threads. 
 
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{startReading()} 
-
-\hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting()} 
-\end{DoxySeeAlso}
-
-
-Reimplemented in \hyperlink{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{mdtSerialPortManager}.
-
-\hypertarget{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{
-\index{mdtPortManager@{mdtPortManager}!startReading@{startReading}}
-\index{startReading@{startReading}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{startReading}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::startReading (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}
-
-
-Start the read thread. 
-
-\begin{DoxyReturn}{Returns}
-True on successfull start 
-\end{DoxyReturn}
-\begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
-\end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-mdtThread 
-
-\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} 
-\end{DoxySeeAlso}
-\hypertarget{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{
-\index{mdtPortManager@{mdtPortManager}!startWriting@{startWriting}}
-\index{startWriting@{startWriting}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{startWriting}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::startWriting (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}
-
-
-Start the write thread. 
-
-\begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
-\end{DoxyPrecond}
-\begin{DoxyReturn}{Returns}
-True on successfull start 
-\end{DoxyReturn}
-\begin{DoxySeeAlso}{See also}
-mdtThread 
-
-\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} 
-\end{DoxySeeAlso}
 \hypertarget{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{
 \index{mdtPortManager@{mdtPortManager}!stop@{stop}}
 \index{stop@{stop}!mdtPortManager@{mdtPortManager}}
@@ -448,60 +447,15 @@ mdtThread
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}
 
 
-Stop reading and writing threads. 
+Stop threads. 
 
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} 
-\end{DoxySeeAlso}
-
-
-Reimplemented in \hyperlink{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}{mdtSerialPortManager}.
-
-\hypertarget{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}{
-\index{mdtPortManager@{mdtPortManager}!stopReading@{stopReading}}
-\index{stopReading@{stopReading}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{stopReading}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::stopReading (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_a6a06371d61f8f227df2806cde2ac1d11}
-
-
-Stop the read thread. 
-
-\begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
-\end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager_a696c2d649764ba7b5f299b0a8f3e5cc4}{startReading()} 
-\end{DoxySeeAlso}
-\hypertarget{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}{
-\index{mdtPortManager@{mdtPortManager}!stopWriting@{stopWriting}}
-\index{stopWriting@{stopWriting}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{stopWriting}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::stopWriting (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_a29b0d41eb5b72ef58031e4b7c96bb7e5}
-
-
-Stop the write thread. 
-
-\begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
-\end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager_ac769ac4eb2b43a5a37be5b5d2a7bccbc}{startWriting()} 
-\end{DoxySeeAlso}
 \hypertarget{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{
 \index{mdtPortManager@{mdtPortManager}!waitReadenFrame@{waitReadenFrame}}
 \index{waitReadenFrame@{waitReadenFrame}!mdtPortManager@{mdtPortManager}}
@@ -538,33 +492,27 @@ True if Ok, false on timeout
 
 Write data by copy. 
 
-The data conatined in frame will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written. 
+Data will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
+
+
 \begin{DoxyParams}{Parameters}
-{\em frame} & Frame to write \\
+{\em data} & Data to write \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. False if write queue is full 
+True on success. False if write queue is full. 
 \end{DoxyReturn}
-\hypertarget{classmdt_port_manager_aeac5a4abfd2a2f4e4ecb608ca9d38fcf}{
-\index{mdtPortManager@{mdtPortManager}!writeThread@{writeThread}}
-\index{writeThread@{writeThread}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{writeThread}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortWriteThread} $\ast$ mdtPortManager::writeThread (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_aeac5a4abfd2a2f4e4ecb608ca9d38fcf}
-
-
-Get write thread object. 
-
-Note that thread object should not be used without care. \begin{DoxyPrecond}{Precondition}
-\hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} must be called before, because threads are created at this time (becaus of subclassing). 
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}{mdtUsbtmcPortManager}.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortManager.h\item 
-src/mdtport/mdtPortManager.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortManager.cpp\item 
+src/mdtport/moc\_\-mdtPortManager.cxx\end{DoxyCompactItemize}

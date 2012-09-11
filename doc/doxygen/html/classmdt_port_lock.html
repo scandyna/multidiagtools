@@ -91,9 +91,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="textblock"><p>NOTE: </p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Implement UUCP format in LCK.. files </dd></dl>
 <p>Open a port and lock it</p>
-<p>On Linux (or all POSIX ?) system, file locking is avaliable with fcntl(). But several applications uses LCK..name for locking.<br/>
- This class will try to find if a port is allready locked using LCK..name system in several directories (/var/lock, /tmp, ...).<br/>
- If nothing is found, then port will be opened, and several lockfiles created. The port is then locked with fcntl(). </p>
+<p>On Linux (or all POSIX ?) system, file locking is avaliable with fcntl(). But several applications uses LCK..name for locking.</p>
+<p>This class will try to find if a port is allready locked using LCK..name system in several directories (/var/lock, /tmp, ...).</p>
+<p>If nothing is found, then port will be opened, and several lockfiles created. The port is then locked with fcntl(). </p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a25e9a2cb8a10069fae75c76b6809c27f"></a><!-- doxytag: member="mdtPortLock::openLocked" ref="a25e9a2cb8a10069fae75c76b6809c27f" args="(const QString &amp;portName, int flags)" -->
 <div class="memitem">
@@ -148,7 +148,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Unlock the port. </p>
-<p>Will remove lockfiles and unlock port with fcntl(). Note: use close() if file is not used later, this is not done by this method. </p>
+<p>Will remove lockfiles and unlock port with fcntl().</p>
+<p>Note: use close() if file is not used later, this is not done by this method. </p>
 
 </div>
 </div>
@@ -171,7 +172,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

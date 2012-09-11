@@ -4,7 +4,7 @@
 }
 
 
-Port manager base class.  
+Serial port manager class.  
 
 
 
@@ -22,7 +22,8 @@ Inheritance diagram for mdtSerialPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtSerialPortManager:\nopagebreak
+Collaboration diagram for mdtSerialPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -33,33 +34,40 @@ Collaboration diagram for mdtSerialPortManager:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{mdtSerialPortManager} (QObject $\ast$parent=0)
-\begin{DoxyCompactList}\small\item\em Contruct a serial port manager. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Construct a serial port manager. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{$\sim$mdtSerialPortManager} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 QStringList \hyperlink{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available serial ports. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}{
-void \hyperlink{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}{setPort} (\hyperlink{classmdt_serial_port}{mdtSerialPort} $\ast$port)}
-\label{classmdt_serial_port_manager_aa33e4efc1a98d8e2edf8eee7a15b6cad}
-
-\begin{DoxyCompactList}\small\item\em Set the port Affects port to the line control thread, and calls \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{mdtPortManager::setPort()} \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_manager_a406481e80014cdd6cb83ff49c3d31685}{openPort} ()
-\begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{start} ()
-\begin{DoxyCompactList}\small\item\em Start threads. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}{stop} ()
-\begin{DoxyCompactList}\small\item\em Stop threads. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \& \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config} ()
 \begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} \& \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port} ()
-\begin{DoxyCompactList}\small\item\em Get the serial port instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get the serial port instance. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_manager_a3a19cbca4adb7583b11a14d59e61233d}{
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$ \hyperlink{classmdt_serial_port_manager_a3a19cbca4adb7583b11a14d59e61233d}{writeThread} ()}
+\label{classmdt_serial_port_manager_a3a19cbca4adb7583b11a14d59e61233d}
+
+\begin{DoxyCompactList}\small\item\em Get the write thread object. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_manager_aec192819e19f4679c7bba4ea37154aaf}{
+\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$ \hyperlink{classmdt_serial_port_manager_aec192819e19f4679c7bba4ea37154aaf}{readThread} ()}
+\label{classmdt_serial_port_manager_aec192819e19f4679c7bba4ea37154aaf}
+
+\begin{DoxyCompactList}\small\item\em Get the read thread object. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{
+\hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} $\ast$ \hyperlink{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{ctlThread} ()}
+\label{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}
+
+\begin{DoxyCompactList}\small\item\em Get the modem lines thread object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Port manager base class. 
+Serial port manager class. 
 
-This is the easiest way to use the serial port API.\par
- 
+This is the easiest way to use the serial port API.
+
+All needed object are created by constructor. To alter configuration, use \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config()}. To access the serial port object, use \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port()}.
+
+Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} to begin read/write and stop to end. 
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{
@@ -73,13 +81,9 @@ This is the easiest way to use the serial port API.\par
 \label{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}
 
 
-Contruct a serial port manager. 
+Construct a serial port manager. 
 
-This will create a serial port and config instances 
-
-setConfig(new mdtSerialPortConfig); 
-
-\hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{
+Creates a \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig}, a \hyperlink{classmdt_serial_port}{mdtSerialPort}, and threads objects. \hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}}
 \index{$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
 \subsubsection[{$\sim$mdtSerialPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPortManager::$\sim$mdtSerialPortManager (
@@ -90,11 +94,9 @@ setConfig(new mdtSerialPortConfig);
 \label{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}
 
 
-Q\_\-ASSERT(pvConfig != 0);
+Destructor. 
 
-delete pvConfig; 
-
-
+Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{
@@ -104,7 +106,7 @@ delete pvConfig;
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}
 
 
@@ -112,39 +114,7 @@ Get the config object.
 
 Usefull to alter internal port configuration 
 
-\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} $\ast$config = dynamic\_\-cast$<$mdtSerialPortConfig$\ast$$>$(pvConfig); Q\_\-ASSERT(config != 0); return $\ast$config; 
-
-
-
 Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager}.
-
-\hypertarget{classmdt_serial_port_manager_a406481e80014cdd6cb83ff49c3d31685}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!openPort@{openPort}}
-\index{openPort@{openPort}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{openPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortManager::openPort (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_manager_a406481e80014cdd6cb83ff49c3d31685}
-
-
-Open the port. 
-
-\begin{DoxyReturn}{Returns}
-True on success, false else 
-\end{DoxyReturn}
-
-
-Q\_\-ASSERT(pvConfig != 0);
-
-\hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} $\ast$c = dynamic\_\-cast$<$mdtSerialPortConfig$\ast$$>$(pvConfig); Q\_\-ASSERT(c != 0);
-
-return p-\/$>$open($\ast$c); 
-
-
-
-Reimplemented from \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{mdtPortManager}.
 
 \hypertarget{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!port@{port}}
@@ -169,58 +139,23 @@ Port must be set with a \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSer
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}
 
 
 Scan for available serial ports. 
 
-Try to open available ports on system and get some attributes. If both steps works, the found port is considered existing. \begin{DoxyReturn}{Returns}
+Try to open available ports on system and get some attributes. If both steps works, the found port is considered existing.
+
+\begin{DoxyPrecond}{Precondition}
+Manager must no running. 
+\end{DoxyPrecond}
+\begin{DoxyReturn}{Returns}
 List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows) 
 \end{DoxyReturn}
 
 
-if(port-\/$>$setAttributes(portNames.at(i)))\{/// NOTE... availablePorts.append(portNames.at(i)); \}
-
-\hypertarget{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!start@{start}}
-\index{start@{start}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortManager::start (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_manager_a32af7c402d1dbce67c928f8e8274f412}
-
-
-Start threads. 
-
-Start the line control thread, then calls \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager::start()} \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager}{mdtPortManager} 
-\end{DoxySeeAlso}
-
-
-Reimplemented from \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{mdtPortManager}.
-
-\hypertarget{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}{
-\index{mdtSerialPortManager@{mdtSerialPortManager}!stop@{stop}}
-\index{stop@{stop}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSerialPortManager::stop (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_manager_a819b5aff2ea4d116ebfa3dcb311cf298}
-
-
-Stop threads. 
-
-Calls \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{mdtPortManager::stop()} and stop the line control thread. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager}{mdtPortManager} 
-\end{DoxySeeAlso}
-
-
-Reimplemented from \hyperlink{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{mdtPortManager}.
+Reimplemented from \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{mdtPortManager}.
 
 
 

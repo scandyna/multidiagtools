@@ -93,50 +93,49 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00031"></a>00031 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
 <a name="l00032"></a>00032 
 <a name="l00034"></a>00034 
-<a name="l00043"></a><a class="code" href="classmdt_port_lock.html">00043</a> <span class="keyword">class </span><a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>
-<a name="l00044"></a>00044 {
-<a name="l00045"></a>00045  <span class="keyword">public</span>:
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047     <a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>();
-<a name="l00048"></a>00048     ~<a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>();
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 
-<a name="l00062"></a>00062   <span class="keywordtype">int</span> <a class="code" href="classmdt_port_lock.html#a25e9a2cb8a10069fae75c76b6809c27f" title="Open a port locked.">openLocked</a>(<span class="keyword">const</span> QString &amp; portName, <span class="keywordtype">int</span> flags);
-<a name="l00063"></a>00063 
-<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();
-<a name="l00071"></a>00071 
-<a name="l00074"></a>00074   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_lock.html#a07a7d13509147d65dde89e95ac343eb2" title="Returns true if port is locked by current instance.">isLocked</a>();
-<a name="l00075"></a>00075 
-<a name="l00078"></a>00078   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98" title="Returns true if port is locked by another instance.">isLockedByAnother</a>();
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080  <span class="keyword">private</span>:
+<a name="l00045"></a><a class="code" href="classmdt_port_lock.html">00045</a> <span class="keyword">class </span><a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>
+<a name="l00046"></a>00046 {
+<a name="l00047"></a>00047  <span class="keyword">public</span>:
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>();
+<a name="l00050"></a>00050     ~<a class="code" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>();
+<a name="l00051"></a>00051 
+<a name="l00063"></a>00063   <span class="keywordtype">int</span> <a class="code" href="classmdt_port_lock.html#a25e9a2cb8a10069fae75c76b6809c27f" title="Open a port locked.">openLocked</a>(<span class="keyword">const</span> QString &amp; portName, <span class="keywordtype">int</span> flags);
+<a name="l00064"></a>00064 
+<a name="l00072"></a>00072   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();
+<a name="l00073"></a>00073 
+<a name="l00076"></a>00076   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_lock.html#a07a7d13509147d65dde89e95ac343eb2" title="Returns true if port is locked by current instance.">isLocked</a>();
+<a name="l00077"></a>00077 
+<a name="l00080"></a>00080   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98" title="Returns true if port is locked by another instance.">isLockedByAnother</a>();
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="comment">// Search in several directories that could contain</span>
-<a name="l00083"></a>00083   <span class="comment">// lockfiles (/var/lock , /tmp , ...)</span>
-<a name="l00084"></a>00084   <span class="comment">// All writeble directories are appended to pvWritableLockDirectories</span>
-<a name="l00085"></a>00085   <span class="keywordtype">void</span> scanForLockDirectories();
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <span class="comment">// Build the lock file name reagrding pvPort name.</span>
-<a name="l00088"></a>00088   <span class="comment">// Then, build a lockfile for each lock directories found.</span>
-<a name="l00089"></a>00089   <span class="keywordtype">void</span> buildLockFilesList();
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="comment">// Create a lockfile</span>
-<a name="l00092"></a>00092   <span class="keywordtype">bool</span> createLockFile(<span class="keyword">const</span> QFileInfo &amp;file);
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094   <span class="comment">// Remove created lock files</span>
-<a name="l00095"></a>00095   <span class="keywordtype">void</span> removeLockFiles();
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097   QFileInfo pvPort;                       <span class="comment">// Port to lock</span>
-<a name="l00098"></a>00098   <span class="keywordtype">int</span> pvFd;                               <span class="comment">// Port file descriptor</span>
-<a name="l00099"></a>00099   QFileInfoList pvLockfiles;              <span class="comment">// Lockfiles in realtion to pvPort</span>
-<a name="l00100"></a>00100   QFileInfoList pvCreatedLockFiles;       <span class="comment">// Lockfiles that where created</span>
-<a name="l00101"></a>00101   QStringList pvWritableLockDirectories;  <span class="comment">// Directories for lockfiles</span>
-<a name="l00102"></a>00102   <span class="keywordtype">bool</span> pvIsLocked;                        <span class="comment">// Internall lock flag</span>
-<a name="l00103"></a>00103   <span class="keywordtype">bool</span> pvIsLockedByAnother;               <span class="comment">// Internall lock flag</span>
-<a name="l00104"></a>00104   <span class="keyword">struct </span>flock pvLock;                    <span class="comment">// Internall flock struct</span>
-<a name="l00105"></a>00105 };
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107 <span class="preprocessor">#endif  // #ifndef MDT_PORT_LOCK_H</span>
+<a name="l00082"></a>00082  <span class="keyword">private</span>:
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   <span class="comment">// Search in several directories that could contain</span>
+<a name="l00085"></a>00085   <span class="comment">// lockfiles (/var/lock , /tmp , ...)</span>
+<a name="l00086"></a>00086   <span class="comment">// All writeble directories are appended to pvWritableLockDirectories</span>
+<a name="l00087"></a>00087   <span class="keywordtype">void</span> scanForLockDirectories();
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089   <span class="comment">// Build the lock file name reagrding pvPort name.</span>
+<a name="l00090"></a>00090   <span class="comment">// Then, build a lockfile for each lock directories found.</span>
+<a name="l00091"></a>00091   <span class="keywordtype">void</span> buildLockFilesList();
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093   <span class="comment">// Create a lockfile</span>
+<a name="l00094"></a>00094   <span class="keywordtype">bool</span> createLockFile(<span class="keyword">const</span> QFileInfo &amp;file);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096   <span class="comment">// Remove created lock files</span>
+<a name="l00097"></a>00097   <span class="keywordtype">void</span> removeLockFiles();
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099   QFileInfo pvPort;                       <span class="comment">// Port to lock</span>
+<a name="l00100"></a>00100   <span class="keywordtype">int</span> pvFd;                               <span class="comment">// Port file descriptor</span>
+<a name="l00101"></a>00101   QFileInfoList pvLockfiles;              <span class="comment">// Lockfiles in realtion to pvPort</span>
+<a name="l00102"></a>00102   QFileInfoList pvCreatedLockFiles;       <span class="comment">// Lockfiles that where created</span>
+<a name="l00103"></a>00103   QStringList pvWritableLockDirectories;  <span class="comment">// Directories for lockfiles</span>
+<a name="l00104"></a>00104   <span class="keywordtype">bool</span> pvIsLocked;                        <span class="comment">// Internall lock flag</span>
+<a name="l00105"></a>00105   <span class="keywordtype">bool</span> pvIsLockedByAnother;               <span class="comment">// Internall lock flag</span>
+<a name="l00106"></a>00106   <span class="keyword">struct </span>flock pvLock;                    <span class="comment">// Internall flock struct</span>
+<a name="l00107"></a>00107 };
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 <span class="preprocessor">#endif  // #ifndef MDT_PORT_LOCK_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -153,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Sep 3 2012 21:11:34 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:41 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -23,7 +23,8 @@
 
 
 #include "mdtDevice.h"
-#include "linux/mdtUsbtmcPortManager.h"
+//#include "linux/mdtUsbtmcPortManager.h"
+#include "mdtUsbtmcPortManager.h"
 #include "mdtFrameCodecScpiU3606A.h"
 
 #include <QObject>

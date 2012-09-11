@@ -44,10 +44,13 @@ enum \hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{clear} ()
-\begin{DoxyCompactList}\small\item\em Clear internal data. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_frame_usb_tmc_afb0b0e071e328b55ce8e2c73359153d6}{
+void \hyperlink{classmdt_frame_usb_tmc_afb0b0e071e328b55ce8e2c73359153d6}{clearSub} ()}
+\label{classmdt_frame_usb_tmc_afb0b0e071e328b55ce8e2c73359153d6}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmdt_frame}{mdtFrame} subclass specific clear \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{putData} (const char $\ast$data, int maxLen)
-\begin{DoxyCompactList}\small\item\em Clear frame's specific flags. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}{setMsgID} (\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} MsgID)
 \begin{DoxyCompactList}\small\item\em Set the MsgID. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} \hyperlink{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}{MsgID} ()
@@ -64,8 +67,6 @@ void \hyperlink{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}{setMes
 \begin{DoxyCompactList}\small\item\em Set the message data. \end{DoxyCompactList}\item 
 QByteArray \& \hyperlink{classmdt_frame_usb_tmc_a03d9a1c16099ba7ea1e3a2b0c4e1493e}{messageData} ()
 \begin{DoxyCompactList}\small\item\em Get the message data. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_frame_usb_tmc_a7ad2f8426ebeceaa6f84925d9a96b5c0}{setTransferSize} (int size)
-\begin{DoxyCompactList}\small\item\em Set message data transfer size. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{encode} ()
 \begin{DoxyCompactList}\small\item\em Encode the USBTMC frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -138,24 +139,7 @@ VENDOR\_\-SPECIFIC\_\-IN}
 
 Get the bTag. 
 
-Usefull for frames received from device. Is only valid when the frame is complete. \hypertarget{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{
-\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!clear@{clear}}
-\index{clear@{clear}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
-\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::clear (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}
-
-
-Clear internal data. 
-
-Calls \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame::clear()} internally after. 
-
-Reimplemented from \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame}.
-
-\hypertarget{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{
+Usefull for frames received from device. Is only valid when the frame is complete. \hypertarget{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!encode@{encode}}
 \index{encode@{encode}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
 \subsubsection[{encode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::encode (
@@ -170,7 +154,7 @@ Encode the USBTMC frame.
 
 To use to build a frame that will be sent to device.
 
-Note: \hyperlink{classmdt_frame_usb_tmc_a0b68d661df8b5e5d88594dbff4db511d}{clear()} is called internally. 
+Note: \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} is called internally. 
 
 Get initial message data size (will be ajusted later whenn add alignment bytes)
 
@@ -231,15 +215,9 @@ Usefull for frames received from device. Is only valid when the frame is complet
 \label{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}
 
 
-Clear frame's specific flags. 
-
-This method is called from \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} and should not be called directly.void \hyperlink{classmdt_frame_ae068ca1ae47516306f5180ffc1712d78}{clearFlags()};
-
-Put data into the frame
+Put data into the frame. 
 
 This method is called by the read thread, and should not be used directly. 
-
-int alignmentBytesCount = 0;
 
 \begin{Desc}
 \item[\hyperlink{todo__todo000031}{Todo}]Handle error \end{Desc}
@@ -314,20 +292,7 @@ To use to build a frame that will be sent to device. \hypertarget{classmdt_frame
 
 Set the MsgID. 
 
-To use to build a frame that will be sent to device. \hypertarget{classmdt_frame_usb_tmc_a7ad2f8426ebeceaa6f84925d9a96b5c0}{
-\index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setTransferSize@{setTransferSize}}
-\index{setTransferSize@{setTransferSize}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
-\subsubsection[{setTransferSize}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameUsbTmc::setTransferSize (
-\begin{DoxyParamCaption}
-\item[{int}]{size}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_usb_tmc_a7ad2f8426ebeceaa6f84925d9a96b5c0}
-
-
-Set message data transfer size. 
-
-Used when send a DEV\_\-DEP\_\-MSG\_\-IN request tell the device the maximum bytes we need to receive. 
+To use to build a frame that will be sent to device. 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

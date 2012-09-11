@@ -255,22 +255,6 @@ class mdtAbstractPort : public QObject
    */
   void flushIn();
 
-  /*! \brief Just for special cases
-   * 
-   * In some case, this method is implemented in subclass.
-   * Default implementation does nothing.
-   * \sa mdtUsbtmcPort
-   */
-  virtual void readOneFrame();
-
-  /*! \brief Just for special cases
-   * 
-   * In some case, this method is implemented in subclass.
-   * Default implementation does nothing.
-   * \sa mdtUsbtmcPort
-   */
-  virtual void writeOneFrame();
-
   /*! \brief Wait until data can be written to port.
    *
    * This method is called from mdtPortWriteThread , and should not be used directly.<br>
@@ -377,9 +361,8 @@ class mdtAbstractPort : public QObject
    *  waiting thread will be woken up (if waiting)
    *  and will send the frame.
    *
-   * The mutex is locked internally, and should not be locked
-   *  before calling this method.
-   * The mutex is unlocked before returning.
+   * The mutex must be locked before calling this method,
+   *  and still locked inside.
    *
    * \pre frame must be a vail pointer.
    */

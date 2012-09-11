@@ -20,7 +20,7 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    * When decode was done, the values
    * are available with values()
    */
-  bool decodeIdn(QByteArray &frame);
+  bool decodeIdn(const QByteArray &frame);
 
   /*! \brief Decode a signle value in integer format
    *
