@@ -48,23 +48,6 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
   // USBTMC specific
   pvCurrentWritebTag = 0;
-
-  // Alloc a port and connect signals
-  /**
-  setPort(new mdtUsbtmcPort);
-  pvPort->setConfig(new mdtPortConfig);
-  ///Q_ASSERT(pvWriteThread != 0);
-  ///connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten()));
-  // Set USBTMC specific configuration
-  ///setConfig(new mdtPortConfig);
-  config().setFrameType(mdtFrame::FT_ASCII);
-  config().setEndOfFrameSeq("\n");
-  config().setReadFrameSize(512);
-  config().setWriteFrameSize(512);
-  // Flags
-  pvFrameWritten = false;
-  pvWaitingFrame = false;
-  */
 }
 
 mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
@@ -73,8 +56,6 @@ mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
 
   delete &pvPort->config();
   detachPort(true, true);
-
-  ///delete pvPort;
 }
 
 /**
@@ -125,37 +106,13 @@ QStringList mdtUsbtmcPortManager::scan()
 }
 */
 
-/**
-bool mdtUsbtmcPortManager::writeData(QByteArray data, bool waitAnswer)
-{
-  Q_ASSERT(pvPort != 0);
-
-  // Set flags
-  pvFrameWritten = false;
-  pvWaitingFrame = waitAnswer;
-
-  if(!mdtPortManager::writeData(data)){
-    return false;
-  }
-
-  // Wait until frame was written
-  while(!pvFrameWritten){
-    qApp->processEvents();
-    msleep(50);
-  }
-
-  return true;
-}
-*/
-
 bool mdtUsbtmcPortManager::writeData(QByteArray data)
 {
   Q_ASSERT(pvPort != 0);
 
   mdtFrameUsbTmc *frame;
 
-  // Clear previous readen frame
-  ///pvLastReadenFrame.clear();
+  // Clear previous readen frames
   pvReadenFrames.clear();
   // Get a frame in pool
   pvPort->lockMutex();
@@ -187,18 +144,12 @@ bool mdtUsbtmcPortManager::writeData(QByteArray data)
   return true;
 }
 
-bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
+bool mdtUsbtmcPortManager::sendReadRequest()
 {
   Q_ASSERT(pvPort != 0);
 
   mdtFrameUsbTmc *frame;
 
-  /*
-   * Send request
-   */
-
-  // Clear previous readen frame
-  ///pvLastReadenFrame.clear();
   // Get a frame in pool
   pvPort->lockMutex();
   if(pvPort->writeFramesPool().size() < 1){
@@ -226,46 +177,18 @@ bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
   pvPort->addFrameToWrite(frame);
   pvPort->unlockMutex();
 
-  return mdtPortManager::waitReadenFrame(timeout);
+  return true;
 }
 
-QByteArray mdtUsbtmcPortManager::readData()
+bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtFrameUsbTmc *frame;
-
-  /*
-   * Send request
-   */
-
-  // Clear previous readen frame
-  ///pvLastReadenFrame.clear();
-  // Get a frame in pool
-  pvPort->lockMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
-    e.commit();
-    return "";
+  if(!sendReadRequest()){
+    return false;
   }
-  frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data, encode and add frame to write queue
-  frame->setWaitAnAnswer(true);
-  frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
-  frame->setbTag(2);
-  frame->setMessageData("");
-  frame->encode();
-  qDebug() << "mdtUsbtmcPortManager::readData() , encode done";
-  ///pvPort->unlockMutex();
-  pvPort->addFrameToWrite(frame);
-  pvPort->unlockMutex();
 
-  return "";
+  return mdtPortManager::waitReadenFrame(timeout);
 }
 
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
@@ -292,14 +215,3 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   pvPort->unlockMutex();
   emit(newReadenFrame());
 }
-/**
-void mdtUsbtmcPortManager::frameWritten()
-{
-  Q_ASSERT(pvPort != 0);
-  
-  ///pvFrameWritten = true;
-  ///if(pvWaitingFrame){
-    ///pvPort->readOneFrame();
-  ///}
-}
-*/

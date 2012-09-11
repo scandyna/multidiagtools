@@ -34,12 +34,17 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   // Serial port members
   pvSerialPortManager = 0;
   pvSerialPortCtlWidget = 0;
+  // USBTMC port members
+  pvUsbtmcPortManager = 0;
   // Current port manager
   pvCurrentPortManager = 0;
   
   connect(pbSendCmd, SIGNAL(clicked()), this, SLOT(sendCmd()));
+  connect(leCmd, SIGNAL(returnPressed()), this, SLOT(sendCmd()));
+  leCmd->setFocus();
   
-  attachToSerialPort();
+  ///attachToSerialPort();
+  attachToUsbtmcPort();
   
   // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(serialPortSetup()));
@@ -48,7 +53,8 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
 
 mdtPortTerm::~mdtPortTerm()
 {
-  detachFromSerialPort();
+  ///detachFromSerialPort();
+  detachFromPorts();
 }
 
 void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey)
@@ -98,16 +104,23 @@ void mdtPortTerm::sendCmd()
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
     return;
   }
-  if(teCmd->toPlainText().size() < 1){
+  ///if(teCmd->toPlainText().size() < 1){
+  if(leCmd->text().size() < 1){
     return;
   }
   /// NOTE: essais
-  cmd = teCmd->toPlainText();
+  ///cmd = teCmd->toPlainText();
+  cmd = leCmd->text();
   //cmd.remove('\n');
-  cmd.append((char)0x0D);
+  ///cmd.append((char)0x0D);
+  cmd.append('\n');
   //cmd.append((char)0x04);
   pvCurrentPortManager->writeData(cmd.toAscii());
-  teCmd->clear();
+  if(pvCurrentPortManager == pvUsbtmcPortManager){
+    pvUsbtmcPortManager->sendReadRequest();
+  }
+  ///teCmd->clear();
+  leCmd->clear();
 }
 
 void mdtPortTerm::on_pbSendCmdAbort_clicked()
@@ -116,7 +129,8 @@ void mdtPortTerm::on_pbSendCmdAbort_clicked()
     pvSerialPortManager->port().flushOut();
     pvSerialPortManager->port().flushIn();
   }
-  teCmd->clear();
+  ///teCmd->clear();
+  leCmd->clear();
 }
 
 void mdtPortTerm::on_pbClearTerm_clicked()
@@ -131,6 +145,7 @@ void mdtPortTerm::retranslate()
 
 void mdtPortTerm::attachToSerialPort()
 {
+  detachFromPorts();
   // Create objects
   pvSerialPortManager = new mdtSerialPortManager;
   pvSerialPortCtlWidget = new mdtSerialPortCtlWidget;
@@ -139,15 +154,17 @@ void mdtPortTerm::attachToSerialPort()
   bottomHLayout->insertWidget(0, pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
 
-  connect(pvSerialPortManager, SIGNAL(newDataReaden()), this, SLOT(appendReadenData()));
+  connect(pvSerialPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
 }
 
 void mdtPortTerm::detachFromSerialPort()
 {
   if(pvSerialPortManager != 0){
+    disconnect(pvSerialPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
     delete pvSerialPortManager;
     pvSerialPortManager = 0;
   }
+  pvCurrentPortManager = 0;
   /// NOTE: à compléter
 }
 
@@ -159,4 +176,42 @@ void mdtPortTerm::serialPortSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }
+}
+
+void mdtPortTerm::attachToUsbtmcPort()
+{
+  detachFromPorts();
+  // Create objects
+  pvUsbtmcPortManager = new mdtUsbtmcPortManager;
+  /// \todo Provisoire
+  pvUsbtmcPortManager->setPortName("0x0957:0x0588");
+  if(!pvUsbtmcPortManager->openPort()){
+    qDebug() << "Port term: cannot open USBTMC port";
+    detachFromUsbtmcPort();
+  }
+  if(!pvUsbtmcPortManager->start()){
+    qDebug() << "Port term: cannot start USBTMC port";
+    detachFromUsbtmcPort();
+  }
+
+  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
+  pvCurrentPortManager = pvUsbtmcPortManager;
+  
+}
+
+void mdtPortTerm::detachFromUsbtmcPort()
+{
+  if(pvUsbtmcPortManager != 0){
+    connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
+    delete pvUsbtmcPortManager;
+    pvUsbtmcPortManager = 0;
+  }
+  pvCurrentPortManager = 0;
+}
+
+
+void mdtPortTerm::detachFromPorts()
+{
+  detachFromSerialPort();
+  detachFromUsbtmcPort();
 }

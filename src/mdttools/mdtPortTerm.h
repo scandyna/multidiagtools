@@ -23,6 +23,7 @@
 
 #include "ui_mdtPortTerm.h"
 #include "mdtPortManager.h"
+#include "mdtUsbtmcPortManager.h"
 #include "mdtSerialPortManager.h"
 #include "mdtSerialPortSetupDialog.h"
 #include "mdtSerialPortCtlWidget.h"
@@ -76,9 +77,15 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Set/unset port type to serial port
   void attachToSerialPort();
   void detachFromSerialPort();
-
   // Call serial port setup dialog
   void serialPortSetup();
+
+  // Set/unset port type to USBTMC port
+  void attachToUsbtmcPort();
+  void detachFromUsbtmcPort();
+
+  // Detach all ports
+  void detachFromPorts();
 
  private:
 
@@ -88,6 +95,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Serial port
   mdtSerialPortManager *pvSerialPortManager;
   mdtSerialPortCtlWidget *pvSerialPortCtlWidget;
+  // USBTMC port
+  mdtUsbtmcPortManager *pvUsbtmcPortManager;
   // Current port manager
   mdtPortManager *pvCurrentPortManager;
   // Translations menu

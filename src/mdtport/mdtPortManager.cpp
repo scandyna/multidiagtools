@@ -200,8 +200,7 @@ bool mdtPortManager::writeData(QByteArray data)
 
   mdtFrame *frame;
 
-  // Clear previous readen frame
-  ///pvLastReadenFrame.clear();
+  // Clear previous readen frames
   pvReadenFrames.clear();
   // Get a frame in pool
   pvPort->lockMutex();
@@ -228,7 +227,6 @@ bool mdtPortManager::waitReadenFrame(int timeout)
 {
   int maxIter = timeout / 50;
 
-  ///while(pvLastReadenFrame.size() < 1){
   while(pvReadenFrames.size() < 1){
     if(maxIter <= 0){
       return false;
@@ -245,16 +243,6 @@ QList<QByteArray> &mdtPortManager::readenFrames()
 {
   return pvReadenFrames;
 }
-
-/**
-QByteArray &mdtPortManager::lastReadenFrame()
-{
-  pvLastReadenData = pvLastReadenFrame;
-  pvLastReadenFrame.clear();
-
-  return pvLastReadenData;
-}
-*/
 
 void mdtPortManager::fromThreadNewFrameReaden()
 {
@@ -282,6 +270,7 @@ void mdtPortManager::fromThreadNewFrameReaden()
   emit(newReadenFrame());
 }
 
+/// \todo Error handling (in general ...)
 void mdtPortManager::onThreadsErrorOccured(int error)
 {
   // On IO error, we try to re-open the port

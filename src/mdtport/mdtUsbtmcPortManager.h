@@ -21,7 +21,6 @@
 #ifndef MDT_USBTMC_PORT_MANAGER_H
 #define MDT_USBTMC_PORT_MANAGER_H
 
-///#include "mdtUsbtmcPort.h"
 #include "mdtUsbPort.h"
 #include "mdtUsbPortThread.h"
 #include "mdtPortManager.h"
@@ -62,17 +61,6 @@ class mdtUsbtmcPortManager : public mdtPortManager
    */
   ///QStringList scan();
 
-  /*! \brief Write data to device
-   *
-   * By sending data, it's important to tell if
-   * the device will return some data back.
-   * This is due to large timeout of USBTMC kernel driver
-   * whenn no data are available on port.
-   * \sa mdtPortManager
-   * \sa mdtUsbtmcPort
-   */
-  ///bool writeData(QByteArray data, bool waitAnswer);
-  
   /*! \brief Write data by copy
    *
    * Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy.
@@ -84,6 +72,18 @@ class mdtUsbtmcPortManager : public mdtPortManager
    */
   bool writeData(QByteArray data);
 
+  /*! \brief Send a read request to device
+   *
+   * USBTMC standard need that a read request is sent to device
+   *  before we can read any data.
+   *  If you choose to use the mdtPortManager's newReadenFrame() signal,
+   *  this method must be explicitly called after writeData().
+   *  If you use waitReadenFrame(), this method is called automatically.
+   *
+   * \return True on success.
+   */
+  bool sendReadRequest();
+
   /*! \brief Wait until a complete frame is available
    *
    * Send a read request and call mdtPortManager::waitReadenFrame() .
@@ -93,8 +93,6 @@ class mdtUsbtmcPortManager : public mdtPortManager
    */
   bool waitReadenFrame(int timeout = 500);
 
-  QByteArray readData();
-  
  public slots:
 
   /*! \brief Called by the read thread whenn a complete frame was readen
@@ -104,9 +102,6 @@ class mdtUsbtmcPortManager : public mdtPortManager
 
  private:
 
-  ///bool pvFrameWritten;
-  ///bool pvWaitingFrame;  // If true, frameWritten() will enable the read thread flag
-  
   quint8 pvCurrentWritebTag;  // USBTMC's frame bTag
 };
 

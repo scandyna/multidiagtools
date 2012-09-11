@@ -259,10 +259,6 @@ class mdtPortManager : public QThread
    */
   QList<QByteArray> &readenFrames();
 
-  /*! \brief Get the last readen frame
-   */
-  ///QByteArray &lastReadenFrame();
-
  public slots:
 
   /*! \brief Called by the read thread whenn a complete frame was readen
@@ -286,9 +282,6 @@ class mdtPortManager : public QThread
  protected:
 
   mdtAbstractPort *pvPort;
-  ///QByteArray pvLastReadenFrame; // Will be updated each time a new frame is readen
-  ///QByteArray pvLastReadenData;  // Used in lastReadenFrame() to pass data
-  
   QList<mdtPortThread*> pvThreads;
   QList<QByteArray> pvReadenFrames;  // Hold a copy of each frame readen by port
 
