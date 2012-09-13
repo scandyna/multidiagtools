@@ -86,7 +86,7 @@ class mdtUsbPort : public mdtAbstractPort
 
   /*! \brief Flush read buffers
    */
-  void flushIn();
+  ///void flushIn();
 
   /*! \brief Request a new bulk/interrupt out transfer
    *
@@ -120,7 +120,7 @@ class mdtUsbPort : public mdtAbstractPort
 
   /*! \brief Flush write buffers
    */
-  void flushOut();
+  ///void flushOut();
 
   /*! \brief Transfert callback for asynch I/O
    */
@@ -168,11 +168,6 @@ class mdtUsbPort : public mdtAbstractPort
    * This method is called from flushIn(),
    *  and is usefull if subsystem needs to be flushed.
    *  (For ex. serial port).
-   *
-   * This method must be implemented in subclass.
-   *
-   * The mutex is handled by flushIn() and should not
-   *  be handled here.
    */
   void pvFlushIn();
 
@@ -181,11 +176,6 @@ class mdtUsbPort : public mdtAbstractPort
    * This method is called from flushout(),
    *  and is usefull if subsystem needs to be flushed.
    *  (For ex. serial port).
-   *
-   * This method must be implemented in subclass.
-   *
-   * The mutex is handled by flushOut() and should not
-   *  be handled here.
    */
   void pvFlushOut();
 

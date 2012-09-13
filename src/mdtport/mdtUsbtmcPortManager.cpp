@@ -191,6 +191,17 @@ bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
   return mdtPortManager::waitReadenFrame(timeout);
 }
 
+void mdtUsbtmcPortManager::abort()
+{
+  Q_ASSERT(pvPort != 0);
+
+  ///mdtUsbPort *port = dynamic_cast<mdtUsbPort*> (pvPort);
+  ///Q_ASSERT(port != 0);
+  qDebug() << "mdtUsbtmcPortManager::abort() ...";
+  pvPort->flushIn();
+  pvPort->flushOut();
+}
+
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);

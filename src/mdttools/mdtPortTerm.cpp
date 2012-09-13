@@ -125,9 +125,17 @@ void mdtPortTerm::sendCmd()
 
 void mdtPortTerm::on_pbSendCmdAbort_clicked()
 {
+  /**
   if(pvSerialPortManager != 0){
     pvSerialPortManager->port().flushOut();
     pvSerialPortManager->port().flushIn();
+  }
+  */
+  qDebug() << "mdtPortTerm::on_pbSendCmdAbort_clicked() ...";
+  if(pvCurrentPortManager != 0){
+    qDebug() << "mdtPortTerm::on_pbSendCmdAbort_clicked() calling abort";
+    pvCurrentPortManager->abort();
+    ///pvCurrentPortManager->port().flushOut();
   }
   ///teCmd->clear();
   leCmd->clear();

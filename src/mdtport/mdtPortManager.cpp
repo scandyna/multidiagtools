@@ -244,6 +244,14 @@ QList<QByteArray> &mdtPortManager::readenFrames()
   return pvReadenFrames;
 }
 
+void mdtPortManager::abort()
+{
+  Q_ASSERT(pvPort != 0);
+
+  pvPort->flushIn();
+  pvPort->flushOut();
+}
+
 void mdtPortManager::fromThreadNewFrameReaden()
 {
   qDebug() << "mdtPortManager::fromThreadNewFrameReaden() ...";

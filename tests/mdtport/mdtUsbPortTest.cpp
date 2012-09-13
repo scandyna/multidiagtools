@@ -470,6 +470,127 @@ void mdtUsbPortTest::essais()
   libusb_exit(ctx);
 }
 
+void mdtUsbPortTest::agilentDso1000Test()
+{
+  mdtFrameUsbTmc *uf;
+  mdtUsbPort port;
+  mdtUsbPortThread thd;
+  mdtPortConfig cfg;
+
+  // Setup
+  cfg.setReadQueueSize(500);
+  cfg.setFrameType(mdtFrame::FT_USBTMC);
+  port.setConfig(&cfg);
+  port.setPortName("0x0957:0x0588");
+  thd.setPort(&port);
+
+  // Try to open
+  if(port.open() != mdtAbstractPort::NoError){
+    QSKIP("No Agilent DSO1000 attached, or other error", SkipAll);
+  }
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+
+  // Start thread
+  QVERIFY(thd.start());
+
+  /*
+   * *IDN? query
+   */
+
+  // Send query
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(false);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  uf->setbTag(1);
+  uf->setMessageData("*IDN?");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(100);
+  // Send DEV_DEP_MSG_IN request
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(true);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
+  uf->setbTag(2);
+  uf->setMessageData("");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(100);
+  // Check readen frame
+  port.lockMutex();
+  QVERIFY(port.readenFrames().size() > 0);
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.readenFrames().dequeue());
+  QVERIFY(uf != 0);
+  qDebug() << "Message data: " << uf->messageData().left(26);
+  QVERIFY(uf->messageData().left(26) == "Agilent Technologies,DSO10");
+  port.unlockMutex();
+  QTest::qWait(500);
+
+  /*
+   * *RST command
+   */
+
+  // Send command
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(false);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  uf->setbTag(3);
+  uf->setMessageData("*RST");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(100);
+
+  /*
+   * :AUToscale command
+   */
+
+  // Send command
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(false);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  uf->setbTag(4);
+  uf->setMessageData(":AUToscale");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(2000);
+
+  /*
+   * *RST command with wait before quit
+   * Send a command and tell port that we wait
+   *  a answer. This is false, but must not turn
+   *  the application into a undefined state,
+   *  and the stop must work.
+   */
+
+  // Send command
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(true);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  uf->setbTag(3);
+  uf->setMessageData("*RST");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(100);
+
+  // End
+  qDebug() << "TEST, req stop ...";
+  thd.stop();
+  qDebug() << "TEST, stop DONE";
+}
 
 int main(int argc, char **argv)
 {

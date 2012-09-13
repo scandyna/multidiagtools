@@ -204,6 +204,7 @@ void mdtUsbPortThread::run()
       while(toRead > 0){
         qDebug() << "USBTHD: toRead: " << toRead;
         if(readFrame == 0){
+          pvRunning = false;
           break;
         }
         // Read thread state
@@ -213,6 +214,7 @@ void mdtUsbPortThread::run()
         // Init a read request
         portError = port->initReadTransfer(toRead);
         if(portError != mdtAbstractPort::NoError){
+          pvRunning = false;
           break;
         }
         // Read thread state
@@ -223,10 +225,12 @@ void mdtUsbPortThread::run()
         portError = port->waitForReadyRead();
         if(portError == mdtAbstractPort::WaitingCanceled){
           // Stopping
+          pvRunning = false;
           break;
         }else if((portError == mdtAbstractPort::UnknownError)||(portError == mdtAbstractPort::UnhandledError)){
           // Unhandled error. Signal this and stop
           emit(errorOccured(MDT_PORT_IO_ERROR));
+          pvRunning = false;
           break;
         }
         // Read thread state
@@ -238,6 +242,7 @@ void mdtUsbPortThread::run()
           readFramePrevious = readFrame;
           readFrame = readFromPort(readFrame);
           if(readFrame == 0){
+            pvRunning = false;
             break;
           }
           // If frame is the same as before readFromPort() call,

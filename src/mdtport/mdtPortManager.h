@@ -261,6 +261,9 @@ class mdtPortManager : public QThread
 
  public slots:
 
+  /// \todo Essais ...
+  virtual void abort();
+
   /*! \brief Called by the read thread whenn a complete frame was readen
    *
    * \sa mdtPortThread
