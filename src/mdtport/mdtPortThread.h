@@ -104,11 +104,18 @@ class mdtPortThread : public QThread
   void newFrameReaden();
 
   /*! \brief Emitted on error
-   * 
-   * When a error occurs, this signal is emited.<br>
-   * This can happen, for example, when a USB device becomes not present.<br>
+   *
+   * \todo Adapt threads + port managers
+   *
+   * When a error occurs, this signal is emited.
+   *
+   * The error is one of the mdtAbstractPort::error_t.
+   *
    * mdtPortManager uses this signal.
-   * \sa mdtPortManager
+   *  If the mdtAbstractPort::Disconnected error happens,
+   *  the port manager stops the thread and closes the port.
+   *  Optionnaly, it can try to re-open the port, and start
+   *  the thread again on success.
    */
   void errorOccured(int error);
 
@@ -217,6 +224,7 @@ class mdtPortThread : public QThread
   pthread_t pvNativePthreadObject;
   struct sigaction pvSigaction;
 #endif
+  // 
 
  private:
 

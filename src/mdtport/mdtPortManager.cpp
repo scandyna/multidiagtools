@@ -244,6 +244,19 @@ QList<QByteArray> &mdtPortManager::readenFrames()
   return pvReadenFrames;
 }
 
+void mdtPortManager::wait(int msecs, int granularity)
+{
+  Q_ASSERT(granularity > 0);
+
+  int i;
+  int maxIter = msecs / granularity;
+
+  for(i=0; i<maxIter; i++){
+    msleep(granularity);
+    qApp->processEvents();
+  }
+}
+
 void mdtPortManager::abort()
 {
   Q_ASSERT(pvPort != 0);
@@ -281,7 +294,36 @@ void mdtPortManager::fromThreadNewFrameReaden()
 /// \todo Error handling (in general ...)
 void mdtPortManager::onThreadsErrorOccured(int error)
 {
+  bool ok;
+  int maxTry = 5;
+
+  qDebug() << "mdtPortManager::onThreadsErrorOccured() , code: " << error;
+  
+  // Try to handle error
+  if(error == mdtAbstractPort::Disconnected){
+    qDebug() << "Disconnected , closing port ...";
+    closePort();
+    // Try re-open port
+    ok = false;
+    while(!ok){
+      wait(5000);
+      qDebug() << "Try to re-open ...";
+      ok = openPort();
+      maxTry--;
+      if(maxTry <= 0){
+        qDebug() << "Re-open failed";
+        return;
+      }
+    }
+    qDebug() << "Open OK, starting ...";
+    if(!start()){
+      qDebug() << "start failed :-(";
+      return;
+    }
+  }
+  
   // On IO error, we try to re-open the port
+  /**
   if(error == MDT_PORT_IO_ERROR){
     qDebug() << "I/O error !";
     closePort();
@@ -293,4 +335,5 @@ void mdtPortManager::onThreadsErrorOccured(int error)
   if(error == MDT_PORT_QUEUE_EMPTY_ERROR){
     qDebug() << "Queue empty !";
   }
+  */
 }

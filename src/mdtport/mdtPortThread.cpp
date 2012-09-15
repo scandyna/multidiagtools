@@ -280,11 +280,18 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
     if(portError == mdtAbstractPort::WaitingCanceled){
       // Stopping
       return false;
+    }else if(portError != mdtAbstractPort::NoError){
+      // Errors that must be signaled + stop the thread
+      emit(errorOccured(portError));
+      return false;
+    }
+    /**
     }else if(portError == mdtAbstractPort::UnknownError){
       // Unhandled error. Signal this and stop
       emit(errorOccured(MDT_PORT_IO_ERROR));
       return false;
     }
+    */
     // Event occured, send the data to port - Check timeout state first
     if(pvPort->writeTimeoutOccured()){
       // Cannot write now, sleep some time and try later
@@ -303,7 +310,7 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
         written = pvPort->write(bufferCursor, toWrite);
       }
       if(written < 0){
-        emit(errorOccured(MDT_PORT_IO_ERROR));
+        emit(errorOccured(mdtAbstractPort::UnhandledError));
         return false;
       }
       frame->take(written);
@@ -321,7 +328,6 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
   // Here, frame is completly sent
   Q_ASSERT(frame->isEmpty());
   pvPort->writeFramesPool().enqueue(frame);
-  ///emit frameWritten();
 
   return true;
 }

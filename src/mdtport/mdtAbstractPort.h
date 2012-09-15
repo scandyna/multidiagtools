@@ -54,6 +54,10 @@ class mdtAbstractPort : public QObject
                                         cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
                                         At this case, this error is returned, and the thread knows that it can 
                                         cleanup and end. */
+                Disconnected,     /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
+                                        If this error happens, the thread will stop working and signal this error at end.
+                                        The portmanager can try to re-open the port if auto-reconnection is needed, and start
+                                         the thread again on success. \todo Implement this */
                 UnknownError,     /*!< Unknown error is happen.
                                        Logfile could give more information, see mdtError and mdtApplication */
                 UnhandledError    /*!< Unhandled error happen.
@@ -170,7 +174,8 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Wait until data is available on port.
    *
-   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * This method is called from mdtPortReadThread , and should not be used directly.
+   *
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    *
    * Subclass notes:<br>

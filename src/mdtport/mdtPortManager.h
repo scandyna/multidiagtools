@@ -259,10 +259,32 @@ class mdtPortManager : public QThread
    */
   QList<QByteArray> &readenFrames();
 
+  /*! \brief Wait some time without break the GUI's event loop
+   *
+   * This is a helper method that provide a blocking wait.
+   *  Internally, a couple of sleep and event processing
+   *  is done, avoiding freesing the GUI.
+   *
+   * This wait method is not precise.
+   *
+   * \param msecs Time to wait [ms]
+   * \param granularity Sleep time between each call of event processing [ms]<br>
+   *                     A little value needs more CPU and big value can freese the GUI.
+   *                     Should be between 50 and 100, and must be > 0.
+   *                     Note that msecs must be a multiple of granularity.
+   * \pre granularity must be > 0.
+   */
+  void wait(int msecs, int granularity = 50);
+
  public slots:
 
   /// \todo Essais ...
   virtual void abort();
+
+  /*! \brief Try to 
+   * 
+   */
+  
 
   /*! \brief Called by the read thread whenn a complete frame was readen
    *

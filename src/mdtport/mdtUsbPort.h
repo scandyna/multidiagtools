@@ -84,10 +84,6 @@ class mdtUsbPort : public mdtAbstractPort
    */
   qint64 read(char *data, qint64 maxSize);
 
-  /*! \brief Flush read buffers
-   */
-  ///void flushIn();
-
   /*! \brief Request a new bulk/interrupt out transfer
    *
    * Will fill and init a new bulk/interrupt (depending setup) transfer
@@ -117,10 +113,6 @@ class mdtUsbPort : public mdtAbstractPort
    * Mutex is not handled by this method.
    */
   qint64 write(const char *data, qint64 maxSize);
-
-  /*! \brief Flush write buffers
-   */
-  ///void flushOut();
 
   /*! \brief Transfert callback for asynch I/O
    */
@@ -208,7 +200,7 @@ class mdtUsbPort : public mdtAbstractPort
   // Transfers
   libusb_transfer *pvReadTransfer;
   bool pvReadTransferPending;       // Flag te see if a transfer is pending
-  int pvReadTransferComplete;      // Will be stored in transfer struct
+  int pvReadTransferComplete;       // Will be stored in transfer struct
   libusb_transfer *pvWriteTransfer;
   bool pvWriteTransferPending;      // Flag te see if a transfer is pending
   int pvWriteTransferComplete;      // Will be stored in transfer struct

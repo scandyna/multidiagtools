@@ -305,9 +305,7 @@ void mdtAbstractPort::addFrameToWrite(mdtFrame *frame)
 {
   Q_ASSERT(frame != 0);
 
-  ///pvMutex.lock();
   pvWriteFrames.enqueue(frame);
-  ///pvMutex.unlock();
   pvWriteFrameAvailable.wakeAll();
 }
 

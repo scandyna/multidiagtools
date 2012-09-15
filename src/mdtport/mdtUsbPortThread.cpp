@@ -62,21 +62,35 @@ bool mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFrame *frame)
     if(portError == mdtAbstractPort::WaitingCanceled){
       // Stopping
       return false;
+    }else if(portError != mdtAbstractPort::NoError){
+      // Errors that must be signaled + stop the thread
+      emit(errorOccured(portError));
+      return false;
+    }
+    /**
     }else if((portError == mdtAbstractPort::UnknownError)||(portError == mdtAbstractPort::UnhandledError)){
       // Unhandled error. Signal this and stop
       emit(errorOccured(MDT_PORT_IO_ERROR));
       return false;
     }
+    */
     // Wait on write ready event
     portError = port->waitEventWriteReady();
     if(portError == mdtAbstractPort::WaitingCanceled){
       // Stopping
       return false;
+    }else if(portError != mdtAbstractPort::NoError){
+      // Errors that must be signaled + stop the thread
+      emit(errorOccured(portError));
+      return false;
+    }
+    /**
     }else if((portError == mdtAbstractPort::UnknownError)||(portError == mdtAbstractPort::UnhandledError)){
       // Unhandled error. Signal this and stop
       emit(errorOccured(MDT_PORT_IO_ERROR));
       return false;
     }
+    */
     // Transfer complete, check timeout state first, then see what was readen
     if(port->writeTimeoutOccured()){
       // Cannot write now, sleep some time and try later
@@ -88,7 +102,7 @@ bool mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFrame *frame)
       emit ioProcessBegin();
       written = port->write(bufferCursor, toWrite);
       if(written < 0){
-        emit(errorOccured(MDT_PORT_IO_ERROR));
+        emit(errorOccured(mdtAbstractPort::UnhandledError));
         return false;
       }
       frame->take(written);
@@ -106,7 +120,6 @@ bool mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFrame *frame)
   // Here, frame is completly sent
   Q_ASSERT(frame->isEmpty());
   port->writeFramesPool().enqueue(frame);
-  ///emit frameWritten();
 
   return true;
 }
@@ -227,12 +240,20 @@ void mdtUsbPortThread::run()
           // Stopping
           pvRunning = false;
           break;
+        }else if(portError != mdtAbstractPort::NoError){
+          // Errors that must be signaled + stop the thread
+          emit(errorOccured(portError));
+          pvRunning = false;
+          break;
+        }
+        /**
         }else if((portError == mdtAbstractPort::UnknownError)||(portError == mdtAbstractPort::UnhandledError)){
           // Unhandled error. Signal this and stop
           emit(errorOccured(MDT_PORT_IO_ERROR));
           pvRunning = false;
           break;
         }
+        */
         // Read thread state
         if(!pvRunning){
           break;
