@@ -38,6 +38,8 @@ set (SOURCES_FILES
           mdtPortWriteThread.cpp
           mdtTcpSocket.cpp
           mdtTcpSocketThread.cpp
+          mdtPortInfo.cpp
+          mdtDeviceInfo.cpp
           # Port manager
           mdtPortManager.cpp
           mdtUsbtmcPortManager.cpp

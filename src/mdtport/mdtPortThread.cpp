@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtPortThread.h"
-#include "mdtAbstractPort.h"
 #include "mdtError.h"
 #include <QApplication>
 
@@ -261,7 +260,7 @@ mdtFrame *mdtPortThread::getNewFrameWrite()
   return pvPort->getFrameToWrite();
 }
 
-bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)
+mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(frame != 0);
@@ -277,6 +276,16 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
   while(toWrite > 0){
     // Wait on write ready event
     portError = pvPort->waitEventWriteReady();
+    if(portError != mdtAbstractPort::NoError){
+      if(portError == mdtAbstractPort::WriteCanceled){
+        // Restore frame to pool and return
+        pvPort->writeFramesPool().enqueue(frame);
+        return mdtAbstractPort::NoError;
+      }else{
+        return portError;
+      }
+    }
+    /**
     if(portError == mdtAbstractPort::WaitingCanceled){
       // Stopping
       return false;
@@ -285,6 +294,7 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
       emit(errorOccured(portError));
       return false;
     }
+    */
     /**
     }else if(portError == mdtAbstractPort::UnknownError){
       // Unhandled error. Signal this and stop
@@ -310,8 +320,8 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
         written = pvPort->write(bufferCursor, toWrite);
       }
       if(written < 0){
-        emit(errorOccured(mdtAbstractPort::UnhandledError));
-        return false;
+        ///emit(errorOccured(mdtAbstractPort::UnhandledError));
+        return mdtAbstractPort::UnhandledError;
       }
       frame->take(written);
       // Update cursor and toWrite
@@ -329,7 +339,7 @@ bool mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int inte
   Q_ASSERT(frame->isEmpty());
   pvPort->writeFramesPool().enqueue(frame);
 
-  return true;
+  return mdtAbstractPort::NoError;
 }
 
 void mdtPortThread::sigactionHandle(int /* signum */)

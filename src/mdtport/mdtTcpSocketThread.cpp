@@ -191,10 +191,17 @@ void mdtTcpSocketThread::run()
       }
       qDebug() << "TCPTHD: have a frame, writing ...";
       // Write
+      portError = writeToPort(writeFrame, false, 0);
+      if(portError != mdtAbstractPort::NoError){
+        // Stop
+        break;
+      }
+      /**
       if(!writeToPort(writeFrame, false, 0)){
         // Stop request or fatal error
         break;
       }
+      */
       writeFrame = 0;
       qDebug() << "TCPTHD: have a frame, writing DONE, waiting written ...";
       // Wait until all data was written

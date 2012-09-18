@@ -22,6 +22,7 @@
 #define MDT_PORT_THREAD_H
 
 #include "mdtError.h"
+#include "mdtAbstractPort.h"
 #include <QThread>
 #include <QObject>
 
@@ -31,7 +32,6 @@
 #endif
 
 class mdtFrame;
-class mdtAbstractPort;
 
 class mdtPortThread : public QThread
 {
@@ -198,22 +198,21 @@ class mdtPortThread : public QThread
    *   before writing.
    *
    * Note about port mutex handling:<br>
-   *  The port mutext must be locked before calling this method.
+   *  The port mutex must be locked before calling this method.
    *  Internally, it will be unlocked during wait, and will be
    *  locked again. So, the port mutex is allways locked when this
    *  method returns.
    *
-   * \param frame Data stored in thos frame will be written to port.
+   * \param frame Data stored in this frame will be written to port.
    * \param bytePerByteWrite If true, one byte will be written once.
    * \param interByteTime Time between each byte write [ms] (has only effect if bytePerByteWrite is true)
    *
-   * \return True on successfull transfert, or false on error or by stop request.
-   *          If this method returns false, the thread should be stopped.
+   * \return NoError on success or a mdtAbstractPort::error_t error.
    *
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  bool writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime);
+  mdtAbstractPort::error_t writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime);
 
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;

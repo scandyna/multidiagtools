@@ -99,6 +99,7 @@ void mdtPortTerm::appendReadenData()
 void mdtPortTerm::sendCmd()
 {
   QString cmd;
+  bool cmdIsQuery = false;
 
   if(pvCurrentPortManager == 0){
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
@@ -113,11 +114,16 @@ void mdtPortTerm::sendCmd()
   cmd = leCmd->text();
   //cmd.remove('\n');
   ///cmd.append((char)0x0D);
+  if(cmd.trimmed().right(1) == "?"){
+    cmdIsQuery = true;
+  }
   cmd.append('\n');
   //cmd.append((char)0x04);
   pvCurrentPortManager->writeData(cmd.toAscii());
   if(pvCurrentPortManager == pvUsbtmcPortManager){
-    pvUsbtmcPortManager->sendReadRequest();
+    if(cmdIsQuery){
+      pvUsbtmcPortManager->sendReadRequest();
+    }
   }
   ///teCmd->clear();
   leCmd->clear();

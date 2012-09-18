@@ -60,7 +60,7 @@ class mdtUsbPortThread : public mdtPortThread
    * \pre port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  bool writeToPort(mdtUsbPort *port, mdtFrame *frame);
+  mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame);
 
  private:
 

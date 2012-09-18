@@ -217,11 +217,8 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
     }
     // Check if transfer was cancelled
     if(pvReadTransfer->status & LIBUSB_TRANSFER_CANCELLED){
-      // End of thread
-      /// \todo Flag spécial + gérer annulation dans thread
-      qDebug() << "mdtUsbPort::waitForReadyRead() return WaitingCanceled";
-      ///return UnhandledError;
-      return NoError;
+      qDebug() << "mdtUsbPort::waitForReadyRead() return ReadCanceled";
+      return ReadCanceled;
     }
     // Check if transfer has timed out (not valid if cancelled)
     if(pvReadTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
@@ -416,10 +413,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
     }
     // Check if transfer was cancelled
     if(pvWriteTransfer->status & LIBUSB_TRANSFER_CANCELLED){
-      // End of thread
-      /// \todo Flag spécial + gérer annulation dans thread
-      ///return UnhandledError;
-      return NoError;
+      return WriteCanceled;
     }
     // Check if transfer has timed out (not valid if cancelled)
     if(pvWriteTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
@@ -541,58 +535,204 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
 {
   Q_ASSERT(!isOpen());
 
-  quint16 vid;
-  quint16 pid;
+  quint8 busNumber = 0;
+  quint8 deviceAddress = 0;
+  quint16 vid = 0;
+  quint16 pid = 0;
   QString str;
   QStringList lst;
   bool ok = false;
+  ///libusb_device *device = 0;
+  libusb_device **devicesList;
+  ssize_t devicesCount = 0;
+  struct libusb_device_descriptor deviceDescriptor;
+  ssize_t i = 0;
+  int err;
 
-  ///qDebug() << "mdtUsbPort::pvOpen() ... (Not implemented yet)";
-
-  // Extract vendor ID and product ID
+  // Extract items
   lst = pvPortName.split(":");
-  if(lst.size() < 2){
-    mdtError e(MDT_USB_IO_ERROR, "Error in port format for " + pvPortName + " (must be idVendor:idProduct)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return SetupError;
-  }
-  // Check vendor ID format and convert
-  str = lst.at(0);
-  if(str.left(2) == "0x"){
-    vid = str.toUInt(&ok, 16);
+  // If we have 2 items, we have BusNumber:deviceAddress format
+  if(lst.size() == 2){
+    // Extract BusNumber
+    str = lst.at(0);
+    if(str.left(2) == "0x"){
+      busNumber = str.toUInt(&ok, 16);
+    }else{
+      busNumber = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract bus number in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    // Extract deviceAddress
+    str = lst.at(1);
+    if(str.left(2) == "0x"){
+      deviceAddress = str.toUInt(&ok, 16);
+    }else{
+      deviceAddress = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract device number in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+  }else if(lst.size() == 3){
+    // We have the :vendorID:productID format,
+    // extract vendor ID
+    str = lst.at(1);
+    if(str.left(2) == "0x"){
+      vid = str.toUInt(&ok, 16);
+    }else{
+      vid = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract idVendor in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    // Extract product ID
+    str = lst.at(2);
+    if(str.left(2) == "0x"){
+      pid = str.toUInt(&ok, 16);
+    }else{
+      pid = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract idProduct in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+  }else if(lst.size() == 4){
+    // We have the BusNumber:deviceAddress:VendorID:ProductID format,
+    // extract BusNumber
+    str = lst.at(0);
+    if(str.left(2) == "0x"){
+      busNumber = str.toUInt(&ok, 16);
+    }else{
+      busNumber = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract bus number in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    // Extract deviceAddress
+    str = lst.at(1);
+    if(str.left(2) == "0x"){
+      deviceAddress = str.toUInt(&ok, 16);
+    }else{
+      deviceAddress = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract device number in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    // Extract vendor ID
+    str = lst.at(2);
+    if(str.left(2) == "0x"){
+      vid = str.toUInt(&ok, 16);
+    }else{
+      vid = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract idVendor in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    // Extract product ID
+    str = lst.at(3);
+    if(str.left(2) == "0x"){
+      pid = str.toUInt(&ok, 16);
+    }else{
+      pid = str.toUInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract idProduct in " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
   }else{
-    vid = str.toUInt(&ok, 10);
-  }
-  if(!ok){
-    mdtError e(MDT_USB_IO_ERROR, "Cannot extract idVendor in " + pvPortName, mdtError::Error);
+    // Wrong format
+    mdtError e(MDT_USB_IO_ERROR, "Error in port format for " + pvPortName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
     return SetupError;
   }
-  // Check product ID format and convert
-  str = lst.at(1);
-  if(str.left(2) == "0x"){
-    pid = str.toUInt(&ok, 16);
+  // Open port: choose between VID:PID or BusNumber:deviceAddress(:VID:PID) method
+  if((busNumber == 0)&&(deviceAddress == 0)){
+    pvHandle = libusb_open_device_with_vid_pid(pvLibusbContext, vid, pid);
+    if(pvHandle == 0){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot open device " + pvPortName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return PortNotFound;
+    }
+    return NoError;
   }else{
-    pid = str.toUInt(&ok, 10);
-  }
-  if(!ok){
-    mdtError e(MDT_USB_IO_ERROR, "Cannot extract idProduct in " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return SetupError;
-  }
-  // Open port
-  pvHandle = libusb_open_device_with_vid_pid(pvLibusbContext, vid, pid);
-  if(pvHandle == 0){
-    mdtError e(MDT_USB_IO_ERROR, "Cannot open device " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return PortNotFound;
+    // Get devices list
+    devicesCount = libusb_get_device_list(pvLibusbContext, &devicesList);
+    if(devicesCount < 0){
+      mdtError e(MDT_PORT_IO_ERROR, "Cannot list devices", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return UnhandledError;
+    }
+    // Scan ...
+    for(i=0; i<devicesCount; i++){
+      // See if busNumber and deviceAddress matches
+      if((libusb_get_bus_number(devicesList[i]) == busNumber)&&(libusb_get_device_address(devicesList[i]) == deviceAddress)){
+        qDebug() << "FOUND bus:dev ...";
+        // Check if expected device is attached (if specified)
+        if((vid != 0)&&(pid != 0)){
+          qDebug() << "Checking device attahced...";
+          err = libusb_get_device_descriptor(devicesList[i], &deviceDescriptor);
+          if(err != 0){
+            mdtError e(MDT_PORT_IO_ERROR, "Cannot get a device descriptor", mdtError::Error);
+            e.setSystemError(err, errorText(err));
+            MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+            e.commit();
+            return UnhandledError;
+          }
+          if((deviceDescriptor.idVendor != vid)||(deviceDescriptor.idProduct != pid)){
+            mdtError e(MDT_PORT_IO_ERROR, "Requested device not found on requested port (port name: " + pvPortName + ")", mdtError::Error);
+            MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+            e.commit();
+            return SetupError;
+          }
+        }
+        // Open port
+        err = libusb_open(devicesList[i], &pvHandle);
+        if(err != 0){
+          mdtError e(MDT_PORT_IO_ERROR, "Cannot get a device descriptor", mdtError::Error);
+          e.setSystemError(err, errorText(err));
+          MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+          e.commit();
+          return UnhandledError;
+        }
+        // Release ressources and return
+        libusb_free_device_list(devicesList, 1);
+        return NoError;
+      }
+    }
+    // Release ressources
+    libusb_free_device_list(devicesList, 1);
   }
 
-  return NoError;
+  // Requested port not found
+  mdtError e(MDT_USB_IO_ERROR, "Cannot find port " + pvPortName, mdtError::Error);
+  MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+  e.commit();
+  return PortNotFound;
 }
 
 void mdtUsbPort::pvClose()

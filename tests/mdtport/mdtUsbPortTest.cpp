@@ -169,9 +169,9 @@ void mdtUsbPortTest::essais()
   cfg.setReadFrameSize(200);
   cfg.setFrameType(mdtFrame::FT_USBTMC);
   port.setConfig(&cfg);
-  ///port.setPortName("0x0957:0x4d18");
-  port.setPortName("0x0957:0x0588");
-  ///port.setPortName("0x10cf:0x5500");
+  ///port.setPortName(":0x0957:0x4d18");
+  port.setPortName(":0x0957:0x0588");
+  ///port.setPortName(":0x10cf:0x5500");
   thd.setPort(&port);
   QVERIFY(port.open() == mdtAbstractPort::NoError);
   QVERIFY(port.setup() == mdtAbstractPort::NoError);
@@ -481,10 +481,14 @@ void mdtUsbPortTest::agilentDso1000Test()
   cfg.setReadQueueSize(500);
   cfg.setFrameType(mdtFrame::FT_USBTMC);
   port.setConfig(&cfg);
-  port.setPortName("0x0957:0x0588");
   thd.setPort(&port);
 
+  // Check wrong format open
+  port.setPortName("0x0957:0x0588");
+  QVERIFY(port.open() != mdtAbstractPort::NoError);
+
   // Try to open
+  port.setPortName(":0x0957:0x0588");
   if(port.open() != mdtAbstractPort::NoError){
     QSKIP("No Agilent DSO1000 attached, or other error", SkipAll);
   }

@@ -54,6 +54,10 @@ class mdtAbstractPort : public QObject
                                         cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
                                         At this case, this error is returned, and the thread knows that it can 
                                         cleanup and end. */
+                WriteCanceled,    /*!< Write process was cancelled. The thread should stop the write process, restore
+                                        the current frame into pool and continue working. */
+                ReadCanceled,     /*!< Read process was cancelled. The thread should stop the write process, restore
+                                        the current frame into pool and continue working. */
                 Disconnected,     /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
                                         If this error happens, the thread will stop working and signal this error at end.
                                         The portmanager can try to re-open the port if auto-reconnection is needed, and start

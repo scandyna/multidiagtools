@@ -28,7 +28,20 @@
  *
  * Built on top of libusb-1.x API
  *
- * \todo Note about setPortName() with vid:pid syntax
+ * \todo Implement this remarks
+ * Note about the port name (set with setPortName() ):<br>
+ *  Because it can happen that multiple devices with same vendor ID and product ID
+ *   can be attached to system, this class must provide a unique identifier when
+ *   (re-)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress.
+ *  For example: 001:003 , or 1:3 .
+ *  It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified
+ *    at this case. Ex: 0x1:0x3 .
+ *  Internally, the QString::toUint() method is used.
+ *  Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress.
+ *  Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3.
+ *  This is the format that mdtUsbtmcPortManager::scan() method returns.
+ *  For some cases, the ability to open the first device with given vendor ID and product ID
+ *   can be used by beginning the name with ':', ex: :0x10cf:0x5500 .
  */
 class mdtUsbPort : public mdtAbstractPort
 {

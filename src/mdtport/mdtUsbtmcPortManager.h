@@ -24,8 +24,10 @@
 #include "mdtUsbPort.h"
 #include "mdtUsbPortThread.h"
 #include "mdtPortManager.h"
+#include "mdtPortInfo.h"
 #include <QObject>
 #include <QStringList>
+#include <QList>
 
 /*! \brief USBTMC port manager
  *
@@ -60,6 +62,7 @@ class mdtUsbtmcPortManager : public mdtPortManager
   /*! \brief Scan available USBTMC ports
    */
   ///QStringList scan();
+  QList<mdtPortInfo*> scan22();
 
   /*! \brief Write data by copy
    *

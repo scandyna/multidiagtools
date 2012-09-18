@@ -24,10 +24,14 @@
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameUsbTmc.h"
+#include "mdtUsbDeviceDescriptor.h"
+#include "mdtUsbConfigDescriptor.h"
+#include "mdtUsbInterfaceDescriptor.h"
 #include <QDir>
 #include <QFileInfoList>
 #include <QString>
 #include <QApplication>
+#include <libusb-1.0/libusb.h>
 
 #include <QDebug>
 
@@ -105,6 +109,93 @@ QStringList mdtUsbtmcPortManager::scan()
   return availablePorts;
 }
 */
+
+QList<mdtPortInfo*> mdtUsbtmcPortManager::scan22()
+{
+  Q_ASSERT(!isRunning());
+
+  QList<mdtPortInfo*> portInfoList;
+  mdtDeviceInfo *deviceInfo;
+  mdtPortInfo *portInfo;
+  libusb_context *ctx;
+  libusb_device **devicesList;
+  mdtUsbDeviceDescriptor deviceDescriptor;
+  mdtUsbConfigDescriptor *configDescriptor;
+  mdtUsbInterfaceDescriptor *ifaceDescriptor;
+  QString portName;
+  libusb_device *device;
+  ssize_t devicesCount;
+  ssize_t i;
+  int j, k;
+  int err;
+
+  // Init libusb
+  err = libusb_init(&ctx);
+  if(err != 0){
+    mdtError e(MDT_PORT_IO_ERROR, "Cannot init libusb", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+    e.commit();
+    return portInfoList;
+  }
+  // Get devices list
+  devicesCount = libusb_get_device_list(ctx, &devicesList);
+  if(devicesCount < 0){
+    mdtError e(MDT_PORT_IO_ERROR, "Cannot list devices", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+    e.commit();
+    return portInfoList;
+  }
+  // Scan ...
+  for(i=0; i<devicesCount; i++){
+    device = devicesList[i];
+    err = deviceDescriptor.fetchAttributes(device, false);
+    if(err != 0){
+      mdtError e(MDT_PORT_IO_ERROR, "Device attributes fetch failed", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      continue;
+    }
+    qDebug() << "->  IDV: " << hex << deviceDescriptor.idVendor() << " , IDP: " << deviceDescriptor.idProduct() << dec;
+    qDebug() << "->  Class: " << deviceDescriptor.bDeviceClass() << " , Subclass: " << deviceDescriptor.bDeviceSubClass();
+    // We search USBTMC devices, bDeviceClass will be set 0x00 and defined in interface descriptor
+    if(deviceDescriptor.bDeviceClass() == 0x00){
+      // Search interfaces in various configurations
+      for(j=0; j<deviceDescriptor.configurations().size(); j++){
+        configDescriptor = deviceDescriptor.configurations().at(j);
+        Q_ASSERT(configDescriptor != 0);
+        for(k=0; k<configDescriptor->interfaces().size(); k++){
+          ifaceDescriptor = configDescriptor->interfaces().at(k);
+          Q_ASSERT(ifaceDescriptor != 0);
+          qDebug() << "->   iface[" << k << "]";
+          // USBTMC has a application specific bInterfaceClass, a bInterfaceSubClass == 0x03
+          if(ifaceDescriptor->bInterfaceClass() == 0xFE){
+            if(ifaceDescriptor->bInterfaceSubClass() == 0x03){
+              // Here we found a USBTMC device
+              qDebug() << "->   Found USBTMC interface";
+              qDebug() << "Bus number [dec]: " << dec << libusb_get_bus_number(device) << " , [hex]: 0x" << hex << libusb_get_bus_number(device);
+              portInfo = new mdtPortInfo;
+              portName = "0x" + QString::number((unsigned int)libusb_get_bus_number(device), 16);
+              portName += ":0x";
+              portName += QString::number((unsigned int)libusb_get_device_address(device), 16);
+              portInfo->setPortName(portName);
+              deviceInfo = new mdtDeviceInfo;
+              deviceInfo->setVendorId(deviceDescriptor.idVendor());
+              deviceInfo->setProductId(deviceDescriptor.idProduct());
+              portInfo->addDevice(deviceInfo);
+              portInfoList.append(portInfo);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Release ressources
+  libusb_free_device_list(devicesList, 1);
+  libusb_exit(ctx);
+  
+  return portInfoList;
+}
 
 bool mdtUsbtmcPortManager::writeData(QByteArray data)
 {

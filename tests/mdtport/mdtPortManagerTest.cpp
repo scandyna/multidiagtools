@@ -25,14 +25,16 @@
 #include "mdtFrame.h"
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
+#include "mdtPortInfo.h"
 #include <QTemporaryFile>
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
+#include <QList>
 #include "mdtApplication.h"
 
+/// \todo Out !
 #include "linux/mdtUsbtmcPort.h"
-///#include "linux/mdtUsbtmcPortManager.h"
 #include "mdtUsbtmcPortManager.h"
 
 #include <QDebug>
@@ -109,7 +111,22 @@ void mdtPortManagerTest::usbTmcPortTest()
 {
   mdtUsbtmcPortManager m;
   QStringList ports;
+  QList<mdtPortInfo*> portsInfoList;
+  mdtDeviceInfo *deviceInfo;
 
+  portsInfoList = m.scan22();
+  
+  for(int i=0; i<portsInfoList.size(); i++){
+    qDebug() << "Port[" << i << "]: " << portsInfoList.at(i)->portName();
+    for(int j=0; j<portsInfoList.at(i)->deviceInfoList().size(); j++){
+      deviceInfo = portsInfoList.at(i)->deviceInfoList().at(j);
+      qDebug() << "Device[" << j << "] VID: 0x" << hex << deviceInfo->vendorId();
+      qDebug() << "Device[" << j << "] PID: 0x" << hex << deviceInfo->productId();
+    }
+  }
+  
+  return;
+  
   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
 
   // Find attached devices
