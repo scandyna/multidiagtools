@@ -1,6 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node2" href="$classmdt_device.html" title="mdtDevice" alt="" coords="5,277,91,307"/>
-<area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="#include &quot;mdtUsbtmcPort.h&quot;" alt="" coords="115,277,277,307"/>
+<area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="115,277,277,307"/>
 <area shape="rect" id="node6" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="137,197,255,227"/>
 <area shape="rect" id="node8" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="137,101,255,131"/>
 <area shape="rect" id="node10" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="143,5,249,35"/>

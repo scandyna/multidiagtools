@@ -61,7 +61,7 @@ bool \hyperlink{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{isFinish
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame}{mdtFrame} $\ast$ \hyperlink{classmdt_port_thread_acba4fce38a633da68ec23fe191ba6105}{getNewFrameWrite} ()
 \begin{DoxyCompactList}\small\item\em Get a new frame for writing data to port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_thread_ab7faa0e8bb6183bad8fc91872abdf560}{writeToPort} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$frame, bool bytePerByteWrite, int interByteTime)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_a9372a53561362b0c86f499b8a36805e1}{writeToPort} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$frame, bool bytePerByteWrite, int interByteTime)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -131,12 +131,15 @@ The thread must not running
 
 Emitted on error. 
 
-When a error occurs, this signal is emited.\par
- This can happen, for example, when a USB device becomes not present.\par
- \hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager}{mdtPortManager} 
-\end{DoxySeeAlso}
-\hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
+\begin{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]Adapt threads + port managers\end{Desc}
+
+
+When a error occurs, this signal is emited.
+
+The error is one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}.
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. If the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected} error happens, the port manager stops the thread and closes the port. Optionnaly, it can try to re-\/open the port, and start the thread again on success. \hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameRead@{getNewFrameRead}}
 \index{getNewFrameRead@{getNewFrameRead}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{getNewFrameRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrame} $\ast$ mdtPortThread::getNewFrameRead (
@@ -154,7 +157,7 @@ This is a helper method for subclass to get a new frame in port's read frames po
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdtError} log system, the signal \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} will be emited with MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR value, and method will go sleep until a new frame is available in pool.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000008}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
+\item[\hyperlink{todo__todo000013}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
 
 
 Note about port mutex handling:\par
@@ -338,17 +341,17 @@ setSerialPort()
 
 Reimplemented in \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{mdtPortWriteThread}, \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{mdtTcpSocketThread}, and \hyperlink{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{mdtUsbPortThread}.
 
-\hypertarget{classmdt_port_thread_ab7faa0e8bb6183bad8fc91872abdf560}{
+\hypertarget{classmdt_port_thread_a9372a53561362b0c86f499b8a36805e1}{
 \index{mdtPortThread@{mdtPortThread}!writeToPort@{writeToPort}}
 \index{writeToPort@{writeToPort}!mdtPortThread@{mdtPortThread}}
-\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::writeToPort (
+\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::writeToPort (
 \begin{DoxyParamCaption}
 \item[{{\bf mdtFrame} $\ast$}]{frame, }
 \item[{bool}]{bytePerByteWrite, }
 \item[{int}]{interByteTime}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_port_thread_ab7faa0e8bb6183bad8fc91872abdf560}
+\label{classmdt_port_thread_a9372a53561362b0c86f499b8a36805e1}
 
 
 Write data to port. 
@@ -356,11 +359,11 @@ Write data to port.
 This is a helper method for subclass to write a frame to the port. Internally, it will call \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort::waitEventWriteReady()} before writing.
 
 Note about port mutex handling:\par
- The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
+ The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
 
 
 \begin{DoxyParams}{Parameters}
-{\em frame} & Data stored in thos frame will be written to port. \\
+{\em frame} & Data stored in this frame will be written to port. \\
 \hline
 {\em bytePerByteWrite} & If true, one byte will be written once. \\
 \hline
@@ -368,7 +371,7 @@ Note about port mutex handling:\par
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on successfull transfert, or false on error or by stop request. If this method returns false, the thread should be stopped.
+NoError on success or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} error.
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
@@ -377,12 +380,15 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-emit frameWritten(); 
+if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{mdtAbstractPort::WaitingCanceled})\{ Stopping return false; \}else if(portError != \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; \}
+
+\}else if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{mdtAbstractPort::UnknownError})\{ Unhandled error. Signal this and stop emit(errorOccured(MDT\_\-PORT\_\-IO\_\-ERROR)); return false; \}
+
+emit(errorOccured(mdtAbstractPort::UnhandledError)); 
 
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\item 
-src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}

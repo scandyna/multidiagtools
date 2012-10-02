@@ -67,6 +67,10 @@ void \hyperlink{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}{writeOne
 \subsection{Detailed Description}
 USBTMC device file calss. 
 
+\begin{Desc}
+\item[\hyperlink{todo__todo000003}{Todo}]Becomes obselete ! \end{Desc}
+
+
 With USBTMC, when we try to read, and no data are available, both read and write threads are blocked.\par
  To start the read, call the \hyperlink{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{readOneFrame()} method.\par
  To start the write, call the \hyperlink{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}{writeOneFrame()} method. 
@@ -97,7 +101,7 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
 \label{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}
 
 
@@ -112,10 +116,6 @@ setWaitingFrame()
 
 
 pvMutex.lock(); pvReadCondition.wakeAll(); pvMutex.unlock();
-
-
-
-Reimplemented from \hyperlink{classmdt_abstract_port_ab1738b5b6b78743ee2d36ccf5daa7c00}{mdtAbstractPort}.
 
 \hypertarget{classmdt_usbtmc_port_a24cfc5233e09b9dbcdb2adc5f700dc4a}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!waitEventWriteReady@{waitEventWriteReady}}
@@ -186,21 +186,17 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}
 
 
 Write a frame... 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000003}{Todo}]fix this class.. \end{Desc}
+\item[\hyperlink{todo__todo000004}{Todo}]fix this class.. \end{Desc}
 
 
 pvMutex.lock(); pvWriteCondition.wakeAll(); pvMutex.unlock();
-
-
-
-Reimplemented from \hyperlink{classmdt_abstract_port_a2235d62d9a9e4555d41773c41cc3bc70}{mdtAbstractPort}.
 
 
 

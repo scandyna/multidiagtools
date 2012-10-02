@@ -30,7 +30,7 @@ Collaboration diagram for mdtUsbPortThread:\nopagebreak
 \item 
 void \hyperlink{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{stop} ()
 \begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_usb_port_thread_ae04383bb937c5b0e98d3204ef0df08ad}{writeToPort} (\hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port, \hyperlink{classmdt_frame}{mdtFrame} $\ast$frame)
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}{writeToPort} (\hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port, \hyperlink{classmdt_frame}{mdtFrame} $\ast$frame)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -58,16 +58,16 @@ setSerialPort()
 
 Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread}.
 
-\hypertarget{classmdt_usb_port_thread_ae04383bb937c5b0e98d3204ef0df08ad}{
+\hypertarget{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}{
 \index{mdtUsbPortThread@{mdtUsbPortThread}!writeToPort@{writeToPort}}
 \index{writeToPort@{writeToPort}!mdtUsbPortThread@{mdtUsbPortThread}}
-\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbPortThread::writeToPort (
+\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPortThread::writeToPort (
 \begin{DoxyParamCaption}
 \item[{{\bf mdtUsbPort} $\ast$}]{port, }
 \item[{{\bf mdtFrame} $\ast$}]{frame}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_usb_port_thread_ae04383bb937c5b0e98d3204ef0df08ad}
+\label{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}
 
 
 Write data to port. 
@@ -94,7 +94,15 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-emit frameWritten(); 
+if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{mdtAbstractPort::WaitingCanceled})\{ Stopping return false; \}else if(portError != \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; \}
+
+\}else if((portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{mdtAbstractPort::UnknownError})$|$$|$(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}))\{ Unhandled error. Signal this and stop emit(errorOccured(MDT\_\-PORT\_\-IO\_\-ERROR)); return false; \}
+
+if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{mdtAbstractPort::WaitingCanceled})\{ Stopping return false; \}else if(portError != \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; \}
+
+\}else if((portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{mdtAbstractPort::UnknownError})$|$$|$(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}))\{ Unhandled error. Signal this and stop emit(errorOccured(MDT\_\-PORT\_\-IO\_\-ERROR)); return false; \}
+
+emit(errorOccured(mdtAbstractPort::UnhandledError)); 
 
 
 

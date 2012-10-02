@@ -89,8 +89,8 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtUsbPortThread</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b">stop</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the running thread.  <a href="#a0be9bce0248ada81087282deea70505b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#ae04383bb937c5b0e98d3204ef0df08ad">writeToPort</a> (<a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> *port, <a class="el" href="classmdt_frame.html">mdtFrame</a> *frame)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#ae04383bb937c5b0e98d3204ef0df08ad"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a5828ae37dff22118a46322d9586fc484">writeToPort</a> (<a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> *port, <a class="el" href="classmdt_frame.html">mdtFrame</a> *frame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a5828ae37dff22118a46322d9586fc484"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a0be9bce0248ada81087282deea70505b"></a><!-- doxytag: member="mdtUsbPortThread::stop" ref="a0be9bce0248ada81087282deea70505b" args="()" -->
@@ -115,12 +115,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae04383bb937c5b0e98d3204ef0df08ad"></a><!-- doxytag: member="mdtUsbPortThread::writeToPort" ref="ae04383bb937c5b0e98d3204ef0df08ad" args="(mdtUsbPort *port, mdtFrame *frame)" -->
+<a class="anchor" id="a5828ae37dff22118a46322d9586fc484"></a><!-- doxytag: member="mdtUsbPortThread::writeToPort" ref="a5828ae37dff22118a46322d9586fc484" args="(mdtUsbPort *port, mdtFrame *frame)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtUsbPortThread::writeToPort </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPortThread::writeToPort </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classmdt_usb_port.html">mdtUsbPort</a> *&#160;</td>
           <td class="paramname"><em>port</em>, </td>
@@ -156,7 +156,11 @@ Public Member Functions</h2></td></tr>
 <dd>
 frame must be a valid pointer (not Null). </dd></dl>
 
-<p><p>emit frameWritten(); </p>
+<p><p>if(portError == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888">mdtAbstractPort::WaitingCanceled</a>){ Stopping return false; }else if(portError != <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; }</p>
+<p>}else if((portError == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">mdtAbstractPort::UnknownError</a>)||(portError == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>)){ Unhandled error. Signal this and stop emit(errorOccured(MDT_PORT_IO_ERROR)); return false; }</p>
+<p>if(portError == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888">mdtAbstractPort::WaitingCanceled</a>){ Stopping return false; }else if(portError != <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; }</p>
+<p>}else if((portError == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">mdtAbstractPort::UnknownError</a>)||(portError == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>)){ Unhandled error. Signal this and stop emit(errorOccured(MDT_PORT_IO_ERROR)); return false; }</p>
+<p>emit(errorOccured(mdtAbstractPort::UnhandledError)); </p>
 </p>
 
 </div>
@@ -180,7 +184,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:29 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

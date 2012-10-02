@@ -1,0 +1,80 @@
+\hypertarget{classmdt_port_info}{
+\section{mdtPortInfo Class Reference}
+\label{classmdt_port_info}\index{mdtPortInfo@{mdtPortInfo}}
+}
+
+
+Contains informations about a port.  
+
+
+
+
+{\ttfamily \#include $<$mdtPortInfo.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_info_a77029d8f37cfb8efcc7c427df3db0f66}{
+{\bfseries mdtPortInfo} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
+\label{classmdt_port_info_a77029d8f37cfb8efcc7c427df3db0f66}
+
+\item 
+\hypertarget{classmdt_port_info_a5de494f20c68f61332761909756f5a33}{
+void \hyperlink{classmdt_port_info_a5de494f20c68f61332761909756f5a33}{setPortName} (const QString \&name)}
+\label{classmdt_port_info_a5de494f20c68f61332761909756f5a33}
+
+\begin{DoxyCompactList}\small\item\em Set the port name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_info_ad456aac33dccc9b0583ed8aa4796cdf0}{
+QString \hyperlink{classmdt_port_info_ad456aac33dccc9b0583ed8aa4796cdf0}{portName} () const }
+\label{classmdt_port_info_ad456aac33dccc9b0583ed8aa4796cdf0}
+
+\begin{DoxyCompactList}\small\item\em Get the port name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_info_a2a8d6603b7e134ffd9e11900ece88a61}{
+void \hyperlink{classmdt_port_info_a2a8d6603b7e134ffd9e11900ece88a61}{addDevice} (\hyperlink{classmdt_device_info}{mdtDeviceInfo} $\ast$device)}
+\label{classmdt_port_info_a2a8d6603b7e134ffd9e11900ece88a61}
+
+\begin{DoxyCompactList}\small\item\em Add a device. \end{DoxyCompactList}\item 
+QList$<$ \hyperlink{classmdt_device_info}{mdtDeviceInfo} $\ast$ $>$ \& \hyperlink{classmdt_port_info_a22013ea9e2de1d12cef673a2452d5b80}{deviceInfoList} ()
+\begin{DoxyCompactList}\small\item\em Get the list of devices informations. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_info_a88bab5da09191b1ecfbb0b11f001ad24}{
+\hyperlink{classmdt_port_info}{mdtPortInfo} \& \hyperlink{classmdt_port_info_a88bab5da09191b1ecfbb0b11f001ad24}{operator=} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
+\label{classmdt_port_info_a88bab5da09191b1ecfbb0b11f001ad24}
+
+\begin{DoxyCompactList}\small\item\em Copy operator. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}{
+bool \hyperlink{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}{operator==} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
+\label{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}
+
+\begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_info_a8a198e8693bb328194ac7bba4a29271e}{
+bool \hyperlink{classmdt_port_info_a8a198e8693bb328194ac7bba4a29271e}{operator!=} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
+\label{classmdt_port_info_a8a198e8693bb328194ac7bba4a29271e}
+
+\begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains informations about a port. 
+
+Used by \hyperlink{classmdt_port_manager}{mdtPortManager} in scan() method. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_info_a22013ea9e2de1d12cef673a2452d5b80}{
+\index{mdtPortInfo@{mdtPortInfo}!deviceInfoList@{deviceInfoList}}
+\index{deviceInfoList@{deviceInfoList}!mdtPortInfo@{mdtPortInfo}}
+\subsubsection[{deviceInfoList}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtDeviceInfo} $\ast$ $>$ \& mdtPortInfo::deviceInfoList (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_a22013ea9e2de1d12cef673a2452d5b80}
+
+
+Get the list of devices informations. 
+
+Note that content of returned list is not a copy, and that all items becomes ivalid after this (\hyperlink{classmdt_port_info}{mdtPortInfo}) object was deleted. 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtPortInfo.h\item 
+src/mdtport/mdtPortInfo.cpp\end{DoxyCompactItemize}

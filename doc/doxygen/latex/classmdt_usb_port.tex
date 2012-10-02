@@ -54,11 +54,6 @@ void \hyperlink{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{setWriteTim
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{read} (char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}{
-void \hyperlink{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}{flushIn} ()}
-\label{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}
-
-\begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a3340dc3f53e857e39053988e4925fc97}{initWriteTransfer} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Request a new bulk/interrupt out transfer. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a7cbe1cd3649861aac5e6a14830f06cf9}{cancelWriteTransfer} ()
@@ -67,11 +62,6 @@ void \hyperlink{classmdt_usb_port_a3bffadb42f159b04225b95c6aa7fbf29}{flushIn} ()
 \begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{write} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_port_ad17584feba55650ed580cf54e2ced99e}{
-void \hyperlink{classmdt_usb_port_ad17584feba55650ed580cf54e2ced99e}{flushOut} ()}
-\label{classmdt_usb_port_ad17584feba55650ed580cf54e2ced99e}
-
-\begin{DoxyCompactList}\small\item\em Flush write buffers. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_afe5b473e1df8b828c17f83a45a3902fb}{cancelTransfers} ()
 \begin{DoxyCompactList}\small\item\em Cancel pending transfers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
@@ -87,7 +77,8 @@ USB port I/O port class.
 Built on top of libusb-\/1.x API
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000024}{Todo}]Note about \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} with vid:pid syntax \end{Desc}
+\item[\hyperlink{todo__todo000020}{Todo}]Implement this remarks Note about the port name (set with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} ):\par
+ Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-\/)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{mdtUsbtmcPortManager::scan()} method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . \end{Desc}
 
 
 \subsection{Member Function Documentation}
@@ -106,19 +97,7 @@ Cancel current bulk/interrupt input transfer.
 
 If a input transfer is pending it will be cancelled.
 
-Mutex is not handled by this method. 
-
-\hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()};
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000012}{Todo}]could be done once ? \end{Desc}
-
-
-\hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlockMutex()};
-
-\hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlockMutex()}; 
-
-\hypertarget{classmdt_usb_port_afe5b473e1df8b828c17f83a45a3902fb}{
+Mutex is not handled by this method. \hypertarget{classmdt_usb_port_afe5b473e1df8b828c17f83a45a3902fb}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelTransfers@{cancelTransfers}}
 \index{cancelTransfers@{cancelTransfers}!mdtUsbPort@{mdtUsbPort}}
 \subsubsection[{cancelTransfers}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::cancelTransfers (
@@ -133,11 +112,7 @@ Cancel pending transfers.
 
 Will call \hyperlink{classmdt_usb_port_a3570b708f9f51408e4bbf2f61cc8c881}{cancelReadTransfer()} , \hyperlink{classmdt_usb_port_a3570b708f9f51408e4bbf2f61cc8c881}{cancelReadTransfer()}.
 
-This method locks the mutex.
-
-\begin{Desc}
-\item[\hyperlink{bug__bug000001}{Bug}]Signal 11 \end{Desc}
-\hypertarget{classmdt_usb_port_a7cbe1cd3649861aac5e6a14830f06cf9}{
+This method locks the mutex. \hypertarget{classmdt_usb_port_a7cbe1cd3649861aac5e6a14830f06cf9}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelWriteTransfer@{cancelWriteTransfer}}
 \index{cancelWriteTransfer@{cancelWriteTransfer}!mdtUsbPort@{mdtUsbPort}}
 \subsubsection[{cancelWriteTransfer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::cancelWriteTransfer (
@@ -152,19 +127,7 @@ Cancel current bulk/interrupt input transfer.
 
 If a input transfer is pending it will be cancelled.
 
-Mutex is not handled by this method. 
-
-\hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()};
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000017}{Todo}]could be done once ? \end{Desc}
-
-
-\hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlockMutex()};
-
-\hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlockMutex()}; 
-
-\hypertarget{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{
+Mutex is not handled by this method. \hypertarget{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{
 \index{mdtUsbPort@{mdtUsbPort}!initReadTransfer@{initReadTransfer}}
 \index{initReadTransfer@{initReadTransfer}!mdtUsbPort@{mdtUsbPort}}
 \subsubsection[{initReadTransfer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::initReadTransfer (
@@ -180,11 +143,7 @@ Request a new bulk/interrupt input transfer.
 Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000010}{Todo}]Could be done once by setup ? \end{Desc}
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Handle retval \end{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]Handle retval \end{Desc}
 
 
 \hypertarget{classmdt_usb_port_a3340dc3f53e857e39053988e4925fc97}{
@@ -201,17 +160,7 @@ Will fill and init a new bulk/interrupt (depending setup) transfer and submit it
 
 Request a new bulk/interrupt out transfer. 
 
-Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. 
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000015}{Todo}]Could be done once by setup ? \end{Desc}
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000016}{Todo}]Handle retval \end{Desc}
-
-
-\hypertarget{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{
+Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. \hypertarget{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{
 \index{mdtUsbPort@{mdtUsbPort}!read@{read}}
 \index{read@{read}!mdtUsbPort@{mdtUsbPort}}
 \subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}qint64 mdtUsbPort::read (
@@ -300,20 +249,8 @@ mdt\_\-usb\_\-port\_\-transfer\_\-data $\ast$data = (mdt\_\-usb\_\-port\_\-trans
 
 Wait until data can be written to port. 
 
-NOTE:
-
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]: Update timeout states ! \end{Desc}
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000019}{Todo}]Get some flags in transfer structure \end{Desc}
-
-
-
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
@@ -330,20 +267,8 @@ Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{
 
 Wait until data is available on port. 
 
-NOTE:
-
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000013}{Todo}]: Update timeout states ! \end{Desc}
-
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000014}{Todo}]Get some flags in transfer structure \end{Desc}
-
-
-
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 

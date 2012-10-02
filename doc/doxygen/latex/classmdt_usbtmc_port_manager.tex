@@ -4,7 +4,7 @@
 }
 
 
-\#include \char`\"{}mdtUsbtmcPort.h\char`\"{}  
+USBTMC port manager.  
 
 
 
@@ -22,8 +22,7 @@ Inheritance diagram for mdtUsbtmcPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtUsbtmcPortManager:
-\nopagebreak
+Collaboration diagram for mdtUsbtmcPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -33,11 +32,10 @@ Collaboration diagram for mdtUsbtmcPortManager:
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_usbtmc_port_manager_af16af21bb713410e3441e0d092872aab}{
-void {\bfseries frameWritten} ()}
-\label{classmdt_usbtmc_port_manager_af16af21bb713410e3441e0d092872aab}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}{abort} ()
+\item 
+void \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{fromThreadNewFrameReaden} ()
+\begin{DoxyCompactList}\small\item\em Called by the read thread whenn a complete frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -45,21 +43,18 @@ void {\bfseries frameWritten} ()}
 \begin{DoxyCompactList}\small\item\em Construct a USBTMC port manager. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{$\sim$mdtUsbtmcPortManager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}{writeData} (QByteArray data, bool waitAnswer)
+QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_usbtmc_port_manager_a41d46a7104601f0259c772328c743b75}{scan22} ()
 \begin{DoxyCompactList}\small\item\em Scan available USBTMC ports. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}{writeData} (QByteArray data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usbtmc_port_manager_ad75e0cc788d1768f7fac6e63166f2cdb}{
-QByteArray {\bfseries readData} ()}
-\label{classmdt_usbtmc_port_manager_ad75e0cc788d1768f7fac6e63166f2cdb}
-
-\end{DoxyCompactItemize}
+bool \hyperlink{classmdt_usbtmc_port_manager_a2da27dcbfc9448f1d61d93679b9a2ef3}{sendReadRequest} ()
+\begin{DoxyCompactList}\small\item\em Send a read request to device. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_usbtmc_port_manager_a78ec9aec17061657f2151c677fc869eb}{waitReadenFrame} (int timeout=500)
+\begin{DoxyCompactList}\small\item\em Wait until a complete frame is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\#include \char`\"{}mdtUsbtmcPort.h\char`\"{} 
-
-USBTMC port manager
+USBTMC port manager. 
 
 This is the easiest way to use the USBTMC port API.
 
@@ -81,11 +76,7 @@ Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()}
 
 Construct a USBTMC port manager. 
 
-Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_usb_port}{mdtUsbPort}, and thread object. 
-
-setPort(new mdtUsbtmcPort); pvPort-\/$>$setConfig(new mdtPortConfig); /Q\_\-ASSERT(pvWriteThread != 0); /connect(pvWriteThread, SIGNAL(frameWritten()), this, SLOT(frameWritten())); Set USBTMC specific configuration /setConfig(new \hyperlink{classmdt_port_config}{mdtPortConfig}); \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setFrameType(mdtFrame::FT\_\-ASCII); \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setEndOfFrameSeq(\char`\"{}$\backslash$n\char`\"{}); \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setReadFrameSize(512); \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setWriteFrameSize(512); Flags pvFrameWritten = false; pvWaitingFrame = false;
-
-\hypertarget{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{
+Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_usb_port}{mdtUsbPort}, and thread object. \hypertarget{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!$\sim$mdtUsbtmcPortManager@{$\sim$mdtUsbtmcPortManager}}
 \index{$\sim$mdtUsbtmcPortManager@{$\sim$mdtUsbtmcPortManager}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
 \subsubsection[{$\sim$mdtUsbtmcPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtUsbtmcPortManager::$\sim$mdtUsbtmcPortManager (
@@ -100,52 +91,121 @@ Destructor.
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-delete pvPort; 
-
-
-
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}{
-\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
-\index{writeData@{writeData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
-\subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbtmcPortManager::writeData (
+\hypertarget{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!abort@{abort}}
+\index{abort@{abort}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{abort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbtmcPortManager::abort (
 \begin{DoxyParamCaption}
-\item[{QByteArray}]{data, }
-\item[{bool}]{waitAnswer}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
+\label{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}
+\begin{Desc}
+\item[\hyperlink{todo__todo000022}{Todo}]Essais ... \end{Desc}
+
+
+\hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port = dynamic\_\-cast$<$mdtUsbPort$\ast$$>$ (pvPort); Q\_\-ASSERT(port != 0); 
+
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{mdtPortManager}.
+
+\hypertarget{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
+\index{fromThreadNewFrameReaden@{fromThreadNewFrameReaden}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{fromThreadNewFrameReaden}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbtmcPortManager::fromThreadNewFrameReaden (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}
+
+
+Called by the read thread whenn a complete frame was readen. 
+
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{mdtPortManager}.
+
+\hypertarget{classmdt_usbtmc_port_manager_a41d46a7104601f0259c772328c743b75}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan22@{scan22}}
+\index{scan22@{scan22}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{scan22}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtPortInfo} $\ast$ $>$ mdtUsbtmcPortManager::scan22 (
+\begin{DoxyParamCaption}
+{}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_usbtmc_port_manager_afc1afc7deb3f5d7cf6031037d63e9bff}
+\label{classmdt_usbtmc_port_manager_a41d46a7104601f0259c772328c743b75}
 
 
 Scan available USBTMC ports. 
 
 QStringList \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{scan()};
 
-Write data to device
-
-By sending data, it's important to tell if the device will return some data back. This is due to large timeout of USBTMC kernel driver whenn no data are available on port. \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager}{mdtPortManager} 
-
-\hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort}
-\end{DoxySeeAlso}
 QStringList \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{mdtUsbtmcPortManager::scan()} \{ QStringList portNames; QStringList availablePorts; \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort} $\ast$port; QFileInfoList filesInfo; QDir dir; QStringList extList;
 
 We only need system files dir.setFilter(QDir::Files $|$ QDir::System); USBTMC interfaces extList $<$$<$ \char`\"{}usbtmc$\ast$\char`\"{}; Common device directory dir.setPath(\char`\"{}/dev\char`\"{}); if(!dir.exists())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}directory '\char`\"{} + dir.dirName() + \char`\"{}' not exists\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPortManagerPosix\char`\"{}); e.commit(); return availablePorts; \} dir.setNameFilters(extList); Gest list of found files filesInfo = dir.entryInfoList(); Construct the list of absolute file paths for(int i=0; i$<$filesInfo.size(); ++i)\{ portNames $<$$<$ filesInfo.at(i).absoluteFilePath(); \} Sort the list portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames); For each port name, try to open the port and get some attributes (to see if it really exists) for(int i=0; i$<$portNames.size(); ++i)\{ Try to open port port = new \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort}; Q\_\-ASSERT(port != 0); port-\/$>$setPortName(portNames.at(i)); if(port-\/$>$open() == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ availablePorts.append(portNames.at(i)); port-\/$>$close(); \} delete port; \}
 
-return availablePorts; \} \hypertarget{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}{
+return availablePorts; \} \hypertarget{classmdt_usbtmc_port_manager_a2da27dcbfc9448f1d61d93679b9a2ef3}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
+\index{sendReadRequest@{sendReadRequest}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendReadRequest}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbtmcPortManager::sendReadRequest (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_a2da27dcbfc9448f1d61d93679b9a2ef3}
+
+
+Send a read request to device. 
+
+USBTMC standard need that a read request is sent to device before we can read any data. If you choose to use the mdtPortManager's \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{newReadenFrame()} signal, this method must be explicitly called after \hyperlink{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}{writeData()}. If you use \hyperlink{classmdt_usbtmc_port_manager_a78ec9aec17061657f2151c677fc869eb}{waitReadenFrame()}, this method is called automatically.
+
+\begin{DoxyReturn}{Returns}
+True on success. 
+\end{DoxyReturn}
+\hypertarget{classmdt_usbtmc_port_manager_a78ec9aec17061657f2151c677fc869eb}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!waitReadenFrame@{waitReadenFrame}}
+\index{waitReadenFrame@{waitReadenFrame}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{waitReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbtmcPortManager::waitReadenFrame (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout = {\ttfamily 500}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usbtmc_port_manager_a78ec9aec17061657f2151c677fc869eb}
+
+
+Wait until a complete frame is available. 
+
+Send a read request and call \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{mdtPortManager::waitReadenFrame()} .
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if Ok, false on timeout 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{mdtPortManager}.
+
+\hypertarget{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
 \index{writeData@{writeData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
 \subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbtmcPortManager::writeData (
 \begin{DoxyParamCaption}
 \item[{QByteArray}]{data}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
 \label{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}
 
 
 Write data by copy. 
 
-Data will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
+Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
 
 
 \begin{DoxyParams}{Parameters}
@@ -153,11 +213,8 @@ Data will be passed to the mdtPort's write queue by copy. This method returns im
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True on success. False if write queue is full. 
+True on success. 
 \end{DoxyReturn}
-\begin{DoxyPrecond}{Precondition}
-Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
-\end{DoxyPrecond}
 
 
 Reimplemented from \hyperlink{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}{mdtPortManager}.

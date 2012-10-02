@@ -85,64 +85,73 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &quot;ui_mdtPortTerm.h&quot;</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include &quot;mdtPortManager.h&quot;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;mdtSerialPortManager.h&quot;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;mdtSerialPortSetupDialog.h&quot;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;mdtSerialPortCtlWidget.h&quot;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QWidget&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QMainWindow&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QLocale&gt;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QEvent&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;QMap&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QActionGroup&gt;</span>
-<a name="l00036"></a>00036 
-<a name="l00039"></a><a class="code" href="classmdt_port_term.html">00039</a> <span class="keyword">class </span><a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a> : <span class="keyword">public</span> QMainWindow, <span class="keyword">public</span> Ui::<a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a>
-<a name="l00040"></a>00040 {
-<a name="l00041"></a>00041  Q_OBJECT
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043  <span class="keyword">public</span>:
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a>(QWidget *parent = 0);
-<a name="l00046"></a>00046   ~<a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a>();
-<a name="l00047"></a>00047 
-<a name="l00050"></a>00050   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a9e2987c96c85189ce118aab7af77fb71" title="Build the translations menu.">setAvailableTranslations</a>(QMap&lt;QString, QString&gt; &amp;avaliableTranslations, <span class="keyword">const</span> QString &amp;currentTranslationKey);
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052  <span class="keyword">public</span> slots:
-<a name="l00053"></a>00053 
-<a name="l00058"></a>00058   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>();
-<a name="l00059"></a>00059 
-<a name="l00062"></a>00062   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a7ec568c44f862fe7aee83f1a271ac6bb" title="Send command to port.">sendCmd</a>();
-<a name="l00063"></a>00063 
-<a name="l00066"></a>00066   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9" title="Abort command transmission.">on_pbSendCmdAbort_clicked</a>();
-<a name="l00067"></a>00067 
-<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce" title="Clear terminal.">on_pbClearTerm_clicked</a>();
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   <span class="keywordtype">void</span> retranslate();
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074  <span class="keyword">private</span> slots:
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="comment">// Set/unset port type to serial port</span>
-<a name="l00077"></a>00077   <span class="keywordtype">void</span> attachToSerialPort();
-<a name="l00078"></a>00078   <span class="keywordtype">void</span> detachFromSerialPort();
-<a name="l00079"></a>00079 
+<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;mdtUsbtmcPortManager.h&quot;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;mdtSerialPortManager.h&quot;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &quot;mdtSerialPortSetupDialog.h&quot;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &quot;mdtSerialPortCtlWidget.h&quot;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QWidget&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QMainWindow&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QLocale&gt;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;QEvent&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;QMap&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;QActionGroup&gt;</span>
+<a name="l00037"></a>00037 
+<a name="l00040"></a><a class="code" href="classmdt_port_term.html">00040</a> <span class="keyword">class </span><a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a> : <span class="keyword">public</span> QMainWindow, <span class="keyword">public</span> Ui::<a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a>
+<a name="l00041"></a>00041 {
+<a name="l00042"></a>00042  Q_OBJECT
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044  <span class="keyword">public</span>:
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046   <a class="code" href="classmdt_port_term.html#a5e93890f53b5112be80983779a3ab233">mdtPortTerm</a>(QWidget *parent = 0);
+<a name="l00047"></a>00047   <a class="code" href="classmdt_port_term.html#a5576a15a2b6e39c149207ffdb7869ef7">~mdtPortTerm</a>();
+<a name="l00048"></a>00048 
+<a name="l00051"></a>00051   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a9e2987c96c85189ce118aab7af77fb71" title="Build the translations menu.">setAvailableTranslations</a>(QMap&lt;QString, QString&gt; &amp;avaliableTranslations, <span class="keyword">const</span> QString &amp;currentTranslationKey);
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053  <span class="keyword">public</span> slots:
+<a name="l00054"></a>00054 
+<a name="l00059"></a>00059   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>();
+<a name="l00060"></a>00060 
+<a name="l00063"></a>00063   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a7ec568c44f862fe7aee83f1a271ac6bb" title="Send command to port.">sendCmd</a>();
+<a name="l00064"></a>00064 
+<a name="l00067"></a>00067   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9" title="Abort command transmission.">on_pbSendCmdAbort_clicked</a>();
+<a name="l00068"></a>00068 
+<a name="l00071"></a>00071   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce" title="Clear terminal.">on_pbClearTerm_clicked</a>();
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073   <span class="keywordtype">void</span> retranslate();
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075  <span class="keyword">private</span> slots:
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077   <span class="comment">// Set/unset port type to serial port</span>
+<a name="l00078"></a>00078   <span class="keywordtype">void</span> attachToSerialPort();
+<a name="l00079"></a>00079   <span class="keywordtype">void</span> detachFromSerialPort();
 <a name="l00080"></a>00080   <span class="comment">// Call serial port setup dialog</span>
 <a name="l00081"></a>00081   <span class="keywordtype">void</span> serialPortSetup();
 <a name="l00082"></a>00082 
-<a name="l00083"></a>00083  <span class="keyword">private</span>:
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085   <span class="comment">// Diseable copy</span>
-<a name="l00086"></a>00086   <a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a>(<a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a> &amp;other);
-<a name="l00087"></a>00087   
-<a name="l00088"></a>00088   <span class="comment">// Serial port</span>
-<a name="l00089"></a>00089   <a class="code" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *pvSerialPortManager;
-<a name="l00090"></a>00090   <a class="code" href="classmdt_serial_port_ctl_widget.html">mdtSerialPortCtlWidget</a> *pvSerialPortCtlWidget;
-<a name="l00091"></a>00091   <span class="comment">// Current port manager</span>
-<a name="l00092"></a>00092   <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> *pvCurrentPortManager;
-<a name="l00093"></a>00093   <span class="comment">// Translations menu</span>
-<a name="l00094"></a>00094   QActionGroup *pvLanguageActionGroup;
-<a name="l00095"></a>00095 };
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097 <span class="preprocessor">#endif  // #ifndef MDT_PORT_TERM_H</span>
+<a name="l00083"></a>00083   <span class="comment">// Set/unset port type to USBTMC port</span>
+<a name="l00084"></a>00084   <span class="keywordtype">void</span> attachToUsbtmcPort();
+<a name="l00085"></a>00085   <span class="keywordtype">void</span> detachFromUsbtmcPort();
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087   <span class="comment">// Detach all ports</span>
+<a name="l00088"></a>00088   <span class="keywordtype">void</span> detachFromPorts();
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090  <span class="keyword">private</span>:
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   <span class="comment">// Diseable copy</span>
+<a name="l00093"></a>00093   <a class="code" href="classmdt_port_term.html#a5e93890f53b5112be80983779a3ab233">mdtPortTerm</a>(<a class="code" href="classmdt_port_term.html" title="Mini port treminal.">mdtPortTerm</a> &amp;other);
+<a name="l00094"></a>00094   
+<a name="l00095"></a>00095   <span class="comment">// Serial port</span>
+<a name="l00096"></a>00096   <a class="code" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *pvSerialPortManager;
+<a name="l00097"></a>00097   <a class="code" href="classmdt_serial_port_ctl_widget.html">mdtSerialPortCtlWidget</a> *pvSerialPortCtlWidget;
+<a name="l00098"></a>00098   <span class="comment">// USBTMC port</span>
+<a name="l00099"></a>00099   <a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> *pvUsbtmcPortManager;
+<a name="l00100"></a>00100   <span class="comment">// Current port manager</span>
+<a name="l00101"></a>00101   <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> *pvCurrentPortManager;
+<a name="l00102"></a>00102   <span class="comment">// Translations menu</span>
+<a name="l00103"></a>00103   QActionGroup *pvLanguageActionGroup;
+<a name="l00104"></a>00104 };
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106 <span class="preprocessor">#endif  // #ifndef MDT_PORT_TERM_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -159,7 +168,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:41 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

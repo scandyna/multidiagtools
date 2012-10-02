@@ -66,7 +66,11 @@ bool \hyperlink{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{selec
 
 Get the IDN. 
 
-Will get the IDN from device. The signal \hyperlink{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{idnChanged()} will be emited. \hypertarget{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{
+Will get the IDN from device. The signal \hyperlink{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{idnChanged()} will be emited. 
+
+if(!pvPortManager.writeData(command, true))\{ emit idnChanged(data); return; \}
+
+\hypertarget{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!idnChanged@{idnChanged}}
 \index{idnChanged@{idnChanged}!mdtDeviceU3606A@{mdtDeviceU3606A}}
 \subsubsection[{idnChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceU3606A::idnChanged (
@@ -107,6 +111,10 @@ Scan for available ports, then it get the IDN of found device.\par
  If IDN returns a U3606A, the port is added to ports list. \begin{DoxyReturn}{Returns}
 String list of ports that have a U3606A attached 
 \end{DoxyReturn}
+
+
+if(pvPortManager.writeData(command, true))\{ if(pvPortManager.waitReadenFrame())\{ if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame()))\{ if(pvCodec.values().size() $>$= 2)\{ if(pvCodec.values().at(1) == \char`\"{}U3606A\char`\"{})\{ portsWithDevice $<$$<$ ports.at(i); \} \} \} \} \}
+
 \hypertarget{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
 \index{selectPort@{selectPort}!mdtDeviceU3606A@{mdtDeviceU3606A}}
@@ -139,5 +147,4 @@ Before using this function, the specific device \hyperlink{classmdt_device_u3606
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/linux/mdtDeviceU3606A.h\item 
-src/mdtdevice/linux/mdtDeviceU3606A.cpp\item 
-src/mdtdevice/linux/moc\_\-mdtDeviceU3606A.cxx\end{DoxyCompactItemize}
+src/mdtdevice/linux/mdtDeviceU3606A.cpp\end{DoxyCompactItemize}

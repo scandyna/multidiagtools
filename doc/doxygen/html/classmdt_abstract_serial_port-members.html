@@ -77,6 +77,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#adf45a5006218ef5660721ecdf8454b5d">ctsChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a9bea314eefd6f4ec79456bc21e6c66af">ctsIsOn</a>()</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a63e2a14c416d9c3516ec74f5e37f4cc7">dataBits</a>()=0</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">Disconnected</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a077d8c39ed12713742f1f2ffa0dca11d">dsrChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a76816aa53a6dce0ab30b9f1d095dd045">dsrIsOn</a>()</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a> enum name</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
@@ -123,9 +124,9 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr bgcolor="#f0f0f0"><td><b>pvWriteTimeoutOccured</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvWriteTimeoutOccuredPrevious</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">read</a>(char *data, qint64 maxSize)=0</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">ReadCanceled</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0">readenFrames</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274">readFramesPool</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ab1738b5b6b78743ee2d36ccf5daa7c00">readOneFrame</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e">readTimeoutOccured</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a62c5e1f2beb6eddf740c8710ecb84ad1">readTimeoutStateChanged</a>(bool state)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">resumeTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
@@ -175,9 +176,9 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a47f4db2e72b5fd3e32162e6a898fd391">waitForReadyRead</a>(int msecs)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888">WaitingCanceled</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">write</a>(const char *data, qint64 maxSize)=0</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [pure virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">WriteCanceled</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968">writeFrames</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7">writeFramesPool</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a2235d62d9a9e4555d41773c41cc3bc70">writeOneFrame</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67">writeTimeoutOccured</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#abd4a3e5738ac13167ddaafe95926ce4d">writeTimeoutStateChanged</a>(bool state)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15">~mdtAbstractPort</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
@@ -197,7 +198,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Sep 9 2012 18:32:41 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
