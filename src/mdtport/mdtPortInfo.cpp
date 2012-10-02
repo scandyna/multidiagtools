@@ -69,6 +69,7 @@ mdtPortInfo &mdtPortInfo::operator=(const mdtPortInfo &other)
     pvPortName = other.pvPortName;
     // Copy devices list
     qDeleteAll(pvDeviceInfoList);
+    pvDeviceInfoList.clear();
     for(i=0; i<other.pvDeviceInfoList.size(); ++i){
       pvDeviceInfoList.append(new mdtDeviceInfo(*other.pvDeviceInfoList.at(i)));
     }

@@ -34,6 +34,9 @@ class mdtPortInfoTest : public mdtTest
 
   // Check that mdtPortInfo works with QVariant
   void qvariantTest();
+
+  // Check as items of a combobox
+  void comboboxTest();
 };
 
 #endif //#ifndef MDT_PORT_INFO_TEST_H

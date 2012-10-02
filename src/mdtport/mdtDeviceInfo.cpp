@@ -22,6 +22,8 @@
 
 mdtDeviceInfo::mdtDeviceInfo()
 {
+  pvVendorId = 0;
+  pvProductId = 0;
 }
 
 mdtDeviceInfo::~mdtDeviceInfo()
@@ -58,6 +60,18 @@ int mdtDeviceInfo::productId() const
 QString mdtDeviceInfo::productName() const
 {
   return pvProductName;
+}
+
+QString mdtDeviceInfo::displayText() const
+{
+  QString text;
+
+  text = "PID: 0x";
+  text += QString::number(pvVendorId, 16);
+  text += " , VID: 0x";
+  text += QString::number(pvProductId, 16);
+
+  return text;
 }
 
 bool mdtDeviceInfo::operator==(const mdtDeviceInfo &other)

@@ -4,19 +4,27 @@ diagrams
     776 642 100 4 0 0
   classdiagram_ref 255234 // mdtAbstractPort
     776 642 100 4 0 0
-  active  classdiagram_ref 488450 // mdtPortInfo
-    970 803 100 4 12 0
+  classdiagram_ref 488450 // mdtPortInfo
+    970 803 100 4 0 0
   classdiagram_ref 314242 // mdtDevice
     776 642 100 4 0 0
   classdiagram_ref 488578 // mdtDeviceInfo
     776 642 100 4 0 0
+  classdiagram_ref 495106 // mdtPortInfoCbHandler
+    776 642 100 4 0 0
+  classdiagram_ref 495234 // QComboBox
+    776 642 100 4 12 0
+  active  classdiagram_ref 468610 // mdtUsbPort
+    970 803 100 4 96 0
 end
 show_stereotypes
-selected operation_ref 969602 // productId
+selected classdiagram_ref 468610 // mdtUsbPort
 open
-  class_ref 498434 // mdtPortInfo
-  attribute_ref 617986 // pvVendorName
-  operation_ref 969346 // vendorName
-  operation_ref 969602 // productId
+  operation_ref 977538 // currentPortInfo
+  operation_ref 977666 // currentDeviceInfo
+  classview_ref 333058 // mdtUsbPort
+  classdiagram_ref 314242 // mdtDevice
+  
+  package_ref 134786 // Qt4
 end
 end

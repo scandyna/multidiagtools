@@ -22,6 +22,7 @@
 #define MDT_DEVICE_INFO_H
 
 #include <QString>
+#include <QMetaType>
 
 /*! \brief Contains informations about a device (attached to a port)
  *
@@ -59,6 +60,13 @@ class mdtDeviceInfo
    */
   QString productName() const;
 
+  /*! \brief Get the display text
+   *
+   * Returns a text that can be displayed to the user.
+   *  (F.ex. in a combo box)
+   */
+  QString displayText() const;
+
   /*! \brief Comparaison operator
    */
   bool operator==(const mdtDeviceInfo &other);
@@ -74,5 +82,7 @@ private:
   int pvProductId;
   QString pvProductName;
 };
+
+Q_DECLARE_METATYPE(mdtDeviceInfo)
 
 #endif  // #ifndef MDT_DEVICE_INFO_H

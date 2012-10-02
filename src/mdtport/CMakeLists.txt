@@ -16,6 +16,8 @@ set (HEADER_FILES
           mdtTcpSocket.h
           mdtTcpSocketThread.h
           mdtUsbPortThread.h
+          # Port info
+          mdtPortInfoCbHandler.h
           # Port manager
           mdtPortManager.h
           mdtUsbtmcPortManager.h
@@ -38,8 +40,10 @@ set (SOURCES_FILES
           mdtPortWriteThread.cpp
           mdtTcpSocket.cpp
           mdtTcpSocketThread.cpp
+          # Port info
           mdtPortInfo.cpp
           mdtDeviceInfo.cpp
+          mdtPortInfoCbHandler.cpp
           # Port manager
           mdtPortManager.cpp
           mdtUsbtmcPortManager.cpp
