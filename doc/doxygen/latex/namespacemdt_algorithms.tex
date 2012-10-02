@@ -39,7 +39,11 @@ Some usefull little (unefficient) algoritms.
 
 Convert a byte array to a hexadecimal string. 
 
-For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2C 12 5F\char`\"{}. \hypertarget{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{
+For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2C 12 5F\char`\"{}. 
+
+Definition at line 121 of file mdtAlgorithms.cpp.
+
+\hypertarget{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{
 \index{mdtAlgorithms@{mdtAlgorithms}!extractNumericPartAtEnd@{extractNumericPartAtEnd}}
 \index{extractNumericPartAtEnd@{extractNumericPartAtEnd}!mdtAlgorithms@{mdtAlgorithms}}
 \subsubsection[{extractNumericPartAtEnd}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::extractNumericPartAtEnd (
@@ -60,6 +64,10 @@ Extract the numeric part at end of string.
 \begin{DoxyReturn}{Returns}
 The numeric part, or empty string on problem 
 \end{DoxyReturn}
+
+
+Definition at line 13 of file mdtAlgorithms.cpp.
+
 \hypertarget{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{
 \index{mdtAlgorithms@{mdtAlgorithms}!hexStringToByteArray@{hexStringToByteArray}}
 \index{hexStringToByteArray@{hexStringToByteArray}!mdtAlgorithms@{mdtAlgorithms}}
@@ -80,6 +88,10 @@ hexStr must contain multiple of 2 valid chars. F.ex: 2C 12 5 is not valid.
 
 hexStr must contain valid chars (0-\/9 , a-\/f, A-\/F). F.ex: 2Z is not valid. 
 \end{DoxyPrecond}
+
+
+Definition at line 96 of file mdtAlgorithms.cpp.
+
 \hypertarget{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{
 \index{mdtAlgorithms@{mdtAlgorithms}!sortStringListWithNumericEnd@{sortStringListWithNumericEnd}}
 \index{sortStringListWithNumericEnd@{sortStringListWithNumericEnd}!mdtAlgorithms@{mdtAlgorithms}}
@@ -101,6 +113,10 @@ Sort a string list, for witch each string ends with a number Usefull for directo
 \begin{DoxyReturn}{Returns}
 The sorted list 
 \end{DoxyReturn}
+
+
+Definition at line 6 of file mdtAlgorithms.cpp.
+
 \hypertarget{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}{
 \index{mdtAlgorithms@{mdtAlgorithms}!stringWithNumericEndLessThan@{stringWithNumericEndLessThan}}
 \index{stringWithNumericEndLessThan@{stringWithNumericEndLessThan}!mdtAlgorithms@{mdtAlgorithms}}
@@ -118,3 +134,7 @@ Compare the numeric end of 2 strings This is a helper function for \hyperlink{na
 \begin{DoxyReturn}{Returns}
 True if str1 $<$ str2 
 \end{DoxyReturn}
+
+
+Definition at line 33 of file mdtAlgorithms.cpp.
+

@@ -137,6 +137,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <dl class="see"><dt><b>See also:</b></dt><dd>QApplication </dd>
 <dd>
 <a class="el" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_application_8h_source.html#l00047">47</a> of file <a class="el" href="mdt_application_8h_source.html">mdtApplication.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ab5279a8c25923ab4c570670b8a41d599"></a><!-- doxytag: member="mdtApplication::addTranslationsDirectory" ref="ab5279a8c25923ab4c570670b8a41d599" args="(const QString &amp;directory)" -->
 <div class="memitem">
@@ -157,6 +159,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>If given directory exists (and is accessible), it will be added to search paths. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The <a class="el" href="classmdt_error_out.html" title="Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile.">mdtErrorOut</a> system must be initialized before using this method, this is done by <a class="el" href="classmdt_application.html#a3b8798416e730f85e419566442adb77b" title="Some initializations.">init()</a>. </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a9ce5b5c3ca36a76ad0acc3913ce8f89a"></a><!-- doxytag: member="mdtApplication::availableTranslations" ref="a9ce5b5c3ca36a76ad0acc3913ce8f89a" args="()" -->
@@ -175,6 +179,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Get the list of available translations. </p>
 <p>The key contains the language suffix, like en , that can be reused with <a class="el" href="classmdt_application.html#a60cf66d3ebe17d1e60a7dcc26410494d" title="Change the application language.">changeLanguage()</a>. The list is built during <a class="el" href="classmdt_application.html#a3b8798416e730f85e419566442adb77b" title="Some initializations.">init()</a>. </p>
+
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
 
 </div>
 </div>
@@ -197,6 +203,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>This will remove installed translators, and install language speficifed translators. Whenn translation files could not be loaded, the application should fall back to source code's language. If no parameters are given, system's language will be used. By default, the .qm translation files are searched in system's data directory. It's possible to add other search paths using otherQmDirectories parameter.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The error system must be initalized before using this method (this is done by <a class="el" href="classmdt_application.html#a3b8798416e730f85e419566442adb77b" title="Some initializations.">init()</a> ). </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00180">180</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a7eec3fbe97863cb4a938fa58a5135b1b"></a><!-- doxytag: member="mdtApplication::changeLanguage" ref="a7eec3fbe97863cb4a938fa58a5135b1b" args="(QAction *action)" -->
@@ -218,6 +226,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>To make this slot work, the QAction must contain the language key (like en, fr, de, ...) in the data section. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>action must be a valid pointer. </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00199">199</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a531e64266be58b3a10608b21ae6afedb"></a><!-- doxytag: member="mdtApplication::currentTranslationKey" ref="a531e64266be58b3a10608b21ae6afedb" args="()" -->
@@ -236,6 +246,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Get the current translation key. </p>
 <p>The translation key could be en, de, fr, ... </p>
+
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
 
 </div>
 </div>
@@ -283,6 +295,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </li>
 </ul>
 
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af4ff7f4cbb1c93a35f06ea197e3dde42"></a><!-- doxytag: member="mdtApplication::installTranslator" ref="af4ff7f4cbb1c93a35f06ea197e3dde42" args="(QTranslator *translator)" -->
@@ -304,6 +318,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Note: this method overloads QCoreApplication::installTranslator() . The difference is that it adds new translator to a list, and delete it all in destructor. Internally, it calls QApplication::installTranslator(). To keep trace of installed translators, you should allways use this method, and never mix calls with, for example, qApp-&gt;<a class="el" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator()</a> or QCoreApplication::installTranslator() </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>translator must point to a valid object. </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a365ac79934070b0e5a42d2c7cd9b076d"></a><!-- doxytag: member="mdtApplication::instance" ref="a365ac79934070b0e5a42d2c7cd9b076d" args="()" -->
@@ -322,6 +338,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 <p>Get the instance of <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a>. </p>
 <p>This function, and returned pointer, should be used with care in multi-thread applicatopn ! </p>
+
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,6 +360,8 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Remove installed translators. </p>
 <p>This will romove all translators installed with <a class="el" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator()</a>. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_application.html#af4ff7f4cbb1c93a35f06ea197e3dde42" title="Adds the translator to the list of translators to be used for translations.">installTranslator()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00169">169</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
 
 </div>
 </div>
@@ -379,11 +399,14 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Build the application version with numeric values. </p>
 <p>Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). </p>
 
+<p>Definition at line <a class="el" href="mdt_application_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_application_8h_source.html">mdtApplication.h</a></li>
-<li>src/mdtutils/mdtApplication.cpp</li>
+<li>src/mdtutils/<a class="el" href="mdt_application_8cpp_source.html">mdtApplication.cpp</a></li>
+<li>src/mdtutils/<a class="el" href="moc__mdt_application_8cxx_source.html">moc_mdtApplication.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -400,7 +423,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

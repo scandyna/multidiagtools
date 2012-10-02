@@ -64,6 +64,10 @@ The Velleman k8055 is a USB I/O board:\par
 A very usefull help to build this codec was libk8055 library: \href{http://libk8055.sourceforge.net/}{\tt http://libk8055.sourceforge.net/}\par
  Thank to the authors witch \char`\"{}draw\char`\"{} the frames formats. 
 
+Definition at line 38 of file mdtFrameCodecK8055.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}{
 \index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!decode@{decode}}
@@ -91,6 +95,10 @@ After decoding is done, the values are available with \hyperlink{classmdt_frame_
 
 pvValues.append((bool)(byte \& (1$<$$<$5))); pvValues.append((bool)(byte \& (1$<$$<$6))); pvValues.append((bool)(byte \& (1$<$$<$7)));
 
+
+
+Definition at line 37 of file mdtFrameCodecK8055.cpp.
+
 \hypertarget{classmdt_frame_codec_k8055_a99fd4cc7eaed0c7d83c4f66a8ecd6268}{
 \index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!encodeResetCounter@{encodeResetCounter}}
 \index{encodeResetCounter@{encodeResetCounter}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
@@ -112,6 +120,10 @@ Encode a frame to reset counter.
 \begin{DoxyPrecond}{Precondition}
 Parameters must be valid 
 \end{DoxyPrecond}
+
+
+Definition at line 113 of file mdtFrameCodecK8055.cpp.
+
 \hypertarget{classmdt_frame_codec_k8055_aa88f104ba85532c17eaf3c2dbacb8530}{
 \index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!encodeSetCounterDebounceValue@{encodeSetCounterDebounceValue}}
 \index{encodeSetCounterDebounceValue@{encodeSetCounterDebounceValue}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
@@ -136,6 +148,10 @@ Encode a frame to set counter debounce value.
 \begin{DoxyPrecond}{Precondition}
 Parameters must be valid 
 \end{DoxyPrecond}
+
+
+Definition at line 86 of file mdtFrameCodecK8055.cpp.
+
 \hypertarget{classmdt_frame_codec_k8055_a3cecf2bec01386ebf9f1d99b738118e1}{
 \index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!setAnalogOut@{setAnalogOut}}
 \index{setAnalogOut@{setAnalogOut}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
@@ -160,6 +176,10 @@ Set a analog channel value.
 \begin{DoxyPrecond}{Precondition}
 Parameters must be valid 
 \end{DoxyPrecond}
+
+
+Definition at line 159 of file mdtFrameCodecK8055.cpp.
+
 \hypertarget{classmdt_frame_codec_k8055_a81e04679d7eca9771c7516f052490942}{
 \index{mdtFrameCodecK8055@{mdtFrameCodecK8055}!setDigitalOut@{setDigitalOut}}
 \index{setDigitalOut@{setDigitalOut}!mdtFrameCodecK8055@{mdtFrameCodecK8055}}
@@ -184,6 +204,10 @@ Set a digital channel state (On/Off)
 \begin{DoxyPrecond}{Precondition}
 Channel must be in a valid range 
 \end{DoxyPrecond}
+
+
+Definition at line 148 of file mdtFrameCodecK8055.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

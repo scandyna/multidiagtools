@@ -13,8 +13,7 @@ Inheritance diagram for mdtDeviceU3606A:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceU3606A:
-\nopagebreak
+Collaboration diagram for mdtDeviceU3606A:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -52,6 +51,13 @@ bool \hyperlink{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{selec
 \begin{DoxyCompactList}\small\item\em Select a port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+
+
+Definition at line 35 of file mdtDeviceU3606A.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!getIdn@{getIdn}}
@@ -69,6 +75,10 @@ Get the IDN.
 Will get the IDN from device. The signal \hyperlink{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{idnChanged()} will be emited. 
 
 if(!pvPortManager.writeData(command, true))\{ emit idnChanged(data); return; \}
+
+
+
+Definition at line 109 of file mdtDeviceU3606A.cpp.
 
 \hypertarget{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!idnChanged@{idnChanged}}
@@ -94,7 +104,11 @@ The list contains following data:
 \hyperlink{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}{getIdn()} 
 \end{DoxySeeAlso}
 
-\end{DoxyItemize}\hypertarget{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{
+\end{DoxyItemize}
+
+Definition at line 88 of file moc\_\-mdtDeviceU3606A.cxx.
+
+\hypertarget{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!scan@{scan}}
 \index{scan@{scan}!mdtDeviceU3606A@{mdtDeviceU3606A}}
 \subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtDeviceU3606A::scan (
@@ -115,6 +129,10 @@ String list of ports that have a U3606A attached
 
 if(pvPortManager.writeData(command, true))\{ if(pvPortManager.waitReadenFrame())\{ if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame()))\{ if(pvCodec.values().size() $>$= 2)\{ if(pvCodec.values().at(1) == \char`\"{}U3606A\char`\"{})\{ portsWithDevice $<$$<$ ports.at(i); \} \} \} \} \}
 
+
+
+Definition at line 37 of file mdtDeviceU3606A.cpp.
+
 \hypertarget{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
 \index{selectPort@{selectPort}!mdtDeviceU3606A@{mdtDeviceU3606A}}
@@ -128,7 +146,11 @@ if(pvPortManager.writeData(command, true))\{ if(pvPortManager.waitReadenFrame())
 
 Select a port. 
 
-Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. \hypertarget{classmdt_device_u3606_a_a425f1d22686be2d28eb3f1ce12a8eaee}{
+Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. 
+
+Definition at line 93 of file mdtDeviceU3606A.cpp.
+
+\hypertarget{classmdt_device_u3606_a_a425f1d22686be2d28eb3f1ce12a8eaee}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
 \index{selectPort@{selectPort}!mdtDeviceU3606A@{mdtDeviceU3606A}}
 \subsubsection[{selectPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceU3606A::selectPort (
@@ -144,7 +166,12 @@ Select a port.
 
 Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. Then, pass the result at argument 
 
+Definition at line 74 of file mdtDeviceU3606A.cpp.
+
+
+
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/linux/mdtDeviceU3606A.h\item 
-src/mdtdevice/linux/mdtDeviceU3606A.cpp\end{DoxyCompactItemize}
+src/mdtdevice/linux/mdtDeviceU3606A.cpp\item 
+src/mdtdevice/linux/moc\_\-mdtDeviceU3606A.cxx\end{DoxyCompactItemize}

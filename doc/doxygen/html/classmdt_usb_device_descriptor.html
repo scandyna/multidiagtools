@@ -134,6 +134,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <li><a class="el" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d" title="Get a endpoint descriptor by index.">endpoint(int, int, int)</a> : to get a endpoint descriptor by index.</li>
 </ul>
 <p>When goal is to open a particular device for I/O, a simple way to get needed informations could be to call <a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes()</a> with fetchActiveConfigOnly set true, then get endpoints with <a class="el" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1" title="Find the first bulk transfert endpoint with OUT direction.">firstBulkOutEndpoint()</a> , <a class="el" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585" title="Find the first bulk transfert endpoint with IN direction.">firstBulkInEndpoint()</a> , <a class="el" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b" title="Find the first interrupt transfert endpoint with IN direction.">firstInterruptInEndpoint()</a> with configIndex set to 0, and a valid ifaceIndex. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8h_source.html#l00056">56</a> of file <a class="el" href="mdt_usb_device_descriptor_8h_source.html">mdtUsbDeviceDescriptor.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a6b6f21f8dfdb707bfc23d01076b7ec5e"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::bcdDevice" ref="a6b6f21f8dfdb707bfc23d01076b7ec5e" args="() const " -->
 <div class="memitem">
@@ -151,6 +153,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 
 <p>Device release number id. </p>
 <p>Coded in BCD. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -171,6 +175,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>USB Specification Release Number. </p>
 <p>Coded in BCD. F.ex. USB 2.0 will be 0x0200. </p>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a08b5ae262e2b966c952ee5e5bcc6fb10"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::bMaxPacketSize0" ref="a08b5ae262e2b966c952ee5e5bcc6fb10" args="() const " -->
@@ -190,6 +196,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p>Maximum packet size for endpoint zero. </p>
 <p>(only 8, 16, 32, or 64 are valid) </p>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="acfc9e29a48b251012cbc38d339dc6a02"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::configurations" ref="acfc9e29a48b251012cbc38d339dc6a02" args="()" -->
@@ -208,6 +216,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 
 <p>Access configurations. </p>
 <p>Configurations are available after a call of <a class="el" href="classmdt_usb_device_descriptor.html#a6239e5e56e2e25a686cac98b18158500" title="Ftech the device descriptor&#39;s attributes.">fetchAttributes()</a> </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00170">170</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -254,6 +264,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, or 0 on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a6239e5e56e2e25a686cac98b18158500"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::fetchAttributes" ref="a6239e5e56e2e25a686cac98b18158500" args="(libusb_device *device, bool fetchActiveConfigOnly)" -->
@@ -290,6 +302,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 on success, libusb error code else. On error, the attributes must be considered as invalid. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>device must be a valid pointer </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -335,6 +349,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00246">246</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ac1991e3d800700b2c099cd1aca2274d1"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::firstBulkOutEndpoint" ref="ac1991e3d800700b2c099cd1aca2274d1" args="(int configIndex, int ifaceIndex, bool dataEndpointOnly)" -->
@@ -378,6 +394,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -423,6 +441,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00308">308</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ad30b3579b0c77585df29acdfdf0fc179"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::firstInterruptOutEndpoint" ref="ad30b3579b0c77585df29acdfdf0fc179" args="(int configIndex, int ifaceIndex, bool dataEndpointOnly)" -->
@@ -467,6 +487,8 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to endpoint descriptor, 0 if none found, or on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00277">277</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af1e27ae69d3c77c9dfc53a3f261caeae"></a><!-- doxytag: member="mdtUsbDeviceDescriptor::interface" ref="af1e27ae69d3c77c9dfc53a3f261caeae" args="(int configIndex, int ifaceIndex)" -->
@@ -505,11 +527,13 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to interface descriptor, or 0 on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_usb_device_descriptor_8h_source.html">mdtUsbDeviceDescriptor.h</a></li>
-<li>src/mdtport/mdtUsbDeviceDescriptor.cpp</li>
+<li>src/mdtport/<a class="el" href="mdt_usb_device_descriptor_8cpp_source.html">mdtUsbDeviceDescriptor.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -526,7 +550,7 @@ quint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

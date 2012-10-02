@@ -117,6 +117,8 @@ class mdtBuffer&lt; T &gt;</h3>
 
 <p>Stockage d'éléments basé sur le principe du tampon circulaire. </p>
 <p>Stockage d'éléments basé sur le principe du tampon circulaire Idéal pour le stockage temporaire si une taille maximale est connue. Evite de nombreuses allocations/libération mémoire </p>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8h_source.html#l00037">37</a> of file <a class="el" href="mdt_buffer_8h_source.html">mdtBuffer.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a51bc78e5a9fc926c7b898160c6a2faa3"></a><!-- doxytag: member="mdtBuffer::mdtBuffer" ref="a51bc78e5a9fc926c7b898160c6a2faa3" args="()" -->
 <div class="memitem">
@@ -136,6 +138,8 @@ template&lt;class T &gt; </div>
 
 <p>Constructeur. </p>
 <p>Constructeur, utiliser <a class="el" href="classmdt_buffer.html#a9d081b06f666fec3ff6e12ec94b2a4fd" title="Initialisation du tampon.">init()</a> avant tout autre opération </p>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00006">6</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -159,6 +163,8 @@ template&lt;class T &gt; </div>
 <p>Constructeur de copie. </p>
 <p>Constructeur de copie. Effectue une copie des données vers l'autre instance </p>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00015">15</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a54de4cebee3cab7b8c1b86bfc3bdad4f"></a><!-- doxytag: member="mdtBuffer::~mdtBuffer" ref="a54de4cebee3cab7b8c1b86bfc3bdad4f" args="()" -->
@@ -179,6 +185,8 @@ template&lt;class T &gt; </div>
 
 <p>Destructeur. </p>
 <p>Destructeur </p>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -203,6 +211,8 @@ template&lt;class T &gt; </div>
 <p>Nombre d'éléments disponibles en lecture</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Le nombre d'éléments qu'il est possible de lire </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aa6eddf7ccc533da855ebd112202a656f"></a><!-- doxytag: member="mdtBuffer::capacity" ref="aa6eddf7ccc533da855ebd112202a656f" args="()" -->
@@ -225,6 +235,8 @@ template&lt;class T &gt; </div>
 <p>Capacité totale</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>La capacité totale du tampon </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00212">212</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a697920838a6c786209607c2b6ac0858a"></a><!-- doxytag: member="mdtBuffer::clear" ref="a697920838a6c786209607c2b6ac0858a" args="()" -->
@@ -245,6 +257,8 @@ template&lt;class T &gt; </div>
 
 <p>Efface le contenu du tampon. </p>
 <p>Efface le contenu du tampon. La quantité disponible ainsi que la capacité restante sont aussi ré-initialisés </p>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00079">79</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -267,6 +281,8 @@ template&lt;class T &gt; </div>
 <p>Déterminer si le tampon est plein. </p>
 <p>Déterminer si le tampon est plein</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True si le tampon est plein </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -308,6 +324,8 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Le nombre d'éléments effectivement lus </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a9d081b06f666fec3ff6e12ec94b2a4fd"></a><!-- doxytag: member="mdtBuffer::init" ref="a9d081b06f666fec3ff6e12ec94b2a4fd" args="(size_t size)" -->
@@ -337,6 +355,8 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>false en cas de problème d'allocation mémoire (true si tout s'est bien passé) </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aba9a31eb29a39a2721205f13f80c1d8d"></a><!-- doxytag: member="mdtBuffer::operator=" ref="aba9a31eb29a39a2721205f13f80c1d8d" args="(mdtBuffer&lt; T &gt; &amp;src)" -->
@@ -358,6 +378,8 @@ template&lt;class T &gt; </div>
 
 <p>Opérateur de copie. </p>
 <p>Opérateur de copie. Effectue une copie des données vers l'autre instance </p>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -399,6 +421,8 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Le nombre d'éléments effectivement stockés </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00098">98</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a2b9fd3a6b593c2e874249aba5c305e34"></a><!-- doxytag: member="mdtBuffer::putOne" ref="a2b9fd3a6b593c2e874249aba5c305e34" args="(T data)" -->
@@ -427,6 +451,8 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True si Ok, false en cas d'erreur </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -482,6 +508,8 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Le nombre d'éléments effectivement stockés </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00166">166</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a78e8317b6ba09e9c4e26358e27f75fd6"></a><!-- doxytag: member="mdtBuffer::remainCapacity" ref="a78e8317b6ba09e9c4e26358e27f75fd6" args="()" -->
@@ -503,6 +531,8 @@ template&lt;class T &gt; </div>
 <p>Capacité restante. </p>
 <p>Capacité restante</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Le nombre d'éléments qu'il est encore possible de stocker </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00217">217</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -544,6 +574,8 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Le nombre d'éléments effectivement retirés </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00271">271</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a690e3f41a62175de48bc73c19f69208d"></a><!-- doxytag: member="mdtBuffer::takeOne" ref="a690e3f41a62175de48bc73c19f69208d" args="()" -->
@@ -565,6 +597,8 @@ template&lt;class T &gt; </div>
 <p>Retrait d'un élément. </p>
 <p>Retrait d'un élément Le cusreur de lecture interne, ainsi que le quantité disponible et la capacité restante sont altérés Test retour: 0 est retourné si aucun élément n'est disponible. Etant donnée que 0 peut très bien être un élément valide stocké dans le tampon, il faut utiliser une méthode de test avant le retrait. Voir <a class="el" href="classmdt_buffer.html#a24ca1a2d00ba1623416ec747ba440adf" title="Nombre d&#39;éléments disponibles en lecture.">available()</a></p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Un élément, ou 0 si aucune disponibilité </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00317">317</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
 
 </div>
 </div>
@@ -588,11 +622,13 @@ template&lt;class T &gt; </div>
 <p>Retourne true si l'élément de fin de copie à été atteint Voir la méthode <a class="el" href="classmdt_buffer.html#a01d74092785c9442014ee34624ffa96f" title="Stockage d&#39;un lot de données jusqu&#39;à la rencontre d&#39;un élément.">putUntil()</a> Ce flag est effacé par un appel de la méthode <a class="el" href="classmdt_buffer.html#ad4756dea3500741363092d5a85ef858e" title="Retrait d&#39;un lot de données.">take()</a> , même si l'élément n'est pas "consommé" <a class="el" href="classmdt_buffer.html#a697920838a6c786209607c2b6ac0858a" title="Efface le contenu du tampon.">clear()</a> efface aussi ce flag</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True si l'élément de fin à été atteint </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_buffer_8cpp_source.html#l00207">207</a> of file <a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_buffer_8h_source.html">mdtBuffer.h</a></li>
-<li>src/mdtutils/mdtBuffer.cpp</li>
+<li>src/mdtutils/<a class="el" href="mdt_buffer_8cpp_source.html">mdtBuffer.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -609,7 +645,7 @@ template&lt;class T &gt; </div>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

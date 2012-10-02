@@ -53,6 +53,10 @@ The file locks are advisory. This means that nothing prevents another process fr
 
 The lock provided by an instance of {\itshape \hyperlink{class_qt_locked_file}{QtLockedFile}\/} is released whenever the program terminates. This is true even when the program crashes and no destructors are called. 
 
+Definition at line 66 of file qtlockedfile.h.
+
+
+
 \subsection{Member Enumeration Documentation}
 \hypertarget{class_qt_locked_file_aef385609a0a280b52334b972b04074cc}{
 \index{QtLockedFile@{QtLockedFile}!LockMode@{LockMode}}
@@ -62,6 +66,10 @@ The lock provided by an instance of {\itshape \hyperlink{class_qt_locked_file}{Q
 This enum describes the available lock modes.
 
 ReadLock A read lock.  WriteLock A write lock.  NoLock Neither a read lock nor a write lock. 
+
+Definition at line 69 of file qtlockedfile.h.
+
+
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{class_qt_locked_file_a69bf1d82b1ca46f97466634d8f9587aa}{
@@ -78,6 +86,10 @@ Constructs an unlocked {\itshape \hyperlink{class_qt_locked_file}{QtLockedFile}\
 \begin{DoxySeeAlso}{See also}
 QFile::QFile() 
 \end{DoxySeeAlso}
+
+
+Definition at line 84 of file qtlockedfile.cpp.
+
 \hypertarget{class_qt_locked_file_a8b7a228ae02dca4bb99743219d0cdb7b}{
 \index{QtLockedFile@{QtLockedFile}!QtLockedFile@{QtLockedFile}}
 \index{QtLockedFile@{QtLockedFile}!QtLockedFile@{QtLockedFile}}
@@ -92,6 +104,10 @@ Constructs an unlocked \hyperlink{class_qt_locked_file}{QtLockedFile} object wit
 \begin{DoxySeeAlso}{See also}
 QFile::QFile() 
 \end{DoxySeeAlso}
+
+
+Definition at line 101 of file qtlockedfile.cpp.
+
 \hypertarget{class_qt_locked_file_ae22e087171c094da6cfb3282e838c9d4}{
 \index{QtLockedFile@{QtLockedFile}!$\sim$QtLockedFile@{$\sim$QtLockedFile}}
 \index{$\sim$QtLockedFile@{$\sim$QtLockedFile}!QtLockedFile@{QtLockedFile}}
@@ -102,6 +118,10 @@ QFile::QFile()
 )}}
 \label{class_qt_locked_file_ae22e087171c094da6cfb3282e838c9d4}
 Destroys the {\itshape \hyperlink{class_qt_locked_file}{QtLockedFile}\/} object. If any locks were held, they are released. 
+
+Definition at line 110 of file qtlockedfile\_\-unix.cpp.
+
+
 
 \subsection{Member Function Documentation}
 \hypertarget{class_qt_locked_file_ac93115b12ddd6c3275a5a81a94b6c919}{
@@ -118,6 +138,10 @@ Returns {\itshape true\/} if this object has a in read or write lock; otherwise 
 \begin{DoxySeeAlso}{See also}
 \hyperlink{class_qt_locked_file_aabfd6fb28f249a5fb01f3965de0e41f1}{lockMode()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 139 of file qtlockedfile.cpp.
+
 \hypertarget{class_qt_locked_file_af7876c08254a16d00022939f2fb9a8b8}{
 \index{QtLockedFile@{QtLockedFile}!lock@{lock}}
 \index{lock@{lock}!QtLockedFile@{QtLockedFile}}
@@ -143,6 +167,10 @@ This function returns {\itshape true\/} if, after it executes, the file is locke
 \begin{DoxySeeAlso}{See also}
 \hyperlink{class_qt_locked_file_abb4d7e6211d9e6e14afaa661818fb2bf}{unlock()}, \hyperlink{class_qt_locked_file_ac93115b12ddd6c3275a5a81a94b6c919}{isLocked()}, \hyperlink{class_qt_locked_file_aabfd6fb28f249a5fb01f3965de0e41f1}{lockMode()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 49 of file qtlockedfile\_\-unix.cpp.
+
 \hypertarget{class_qt_locked_file_aabfd6fb28f249a5fb01f3965de0e41f1}{
 \index{QtLockedFile@{QtLockedFile}!lockMode@{lockMode}}
 \index{lockMode@{lockMode}!QtLockedFile@{QtLockedFile}}
@@ -157,6 +185,10 @@ Returns the type of lock currently held by this object, or {\itshape QtLockedFil
 \begin{DoxySeeAlso}{See also}
 \hyperlink{class_qt_locked_file_ac93115b12ddd6c3275a5a81a94b6c919}{isLocked()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 150 of file qtlockedfile.cpp.
+
 \hypertarget{class_qt_locked_file_a2e81bbaa7b1aaa83cf79284e66dbad79}{
 \index{QtLockedFile@{QtLockedFile}!open@{open}}
 \index{open@{open}!QtLockedFile@{QtLockedFile}}
@@ -175,6 +207,10 @@ Returns true if successful; otherwise false.
 \begin{DoxySeeAlso}{See also}
 QFile::open(), QFile::resize() 
 \end{DoxySeeAlso}
+
+
+Definition at line 124 of file qtlockedfile.cpp.
+
 \hypertarget{class_qt_locked_file_abb4d7e6211d9e6e14afaa661818fb2bf}{
 \index{QtLockedFile@{QtLockedFile}!unlock@{unlock}}
 \index{unlock@{unlock}!QtLockedFile@{QtLockedFile}}
@@ -193,6 +229,10 @@ This function returns {\itshape true\/} if, after it executes, the file is not l
 \begin{DoxySeeAlso}{See also}
 \hyperlink{class_qt_locked_file_af7876c08254a16d00022939f2fb9a8b8}{lock()}, \hyperlink{class_qt_locked_file_ac93115b12ddd6c3275a5a81a94b6c919}{isLocked()}, \hyperlink{class_qt_locked_file_aabfd6fb28f249a5fb01f3965de0e41f1}{lockMode()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 84 of file qtlockedfile\_\-unix.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

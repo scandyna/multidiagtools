@@ -45,6 +45,10 @@ This class will try to find if a port is allready locked using LCK..name system 
 
 If nothing is found, then port will be opened, and several lockfiles created. The port is then locked with fcntl(). 
 
+Definition at line 45 of file mdtPortLock.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_port_lock_a25e9a2cb8a10069fae75c76b6809c27f}{
 \index{mdtPortLock@{mdtPortLock}!openLocked@{openLocked}}
@@ -72,6 +76,10 @@ At first, the lock file name will be buit for each lock directories found (searc
 \begin{DoxyReturn}{Returns}
 File descriptor returned by open() , or -\/1 on error. 
 \end{DoxyReturn}
+
+
+Definition at line 44 of file mdtPortLock.cpp.
+
 \hypertarget{classmdt_port_lock_a60b65f02d57568dc36c5e918aa5357a6}{
 \index{mdtPortLock@{mdtPortLock}!unlock@{unlock}}
 \index{unlock@{unlock}!mdtPortLock@{mdtPortLock}}
@@ -88,6 +96,10 @@ Unlock the port.
 Will remove lockfiles and unlock port with fcntl().
 
 Note: use close() if file is not used later, this is not done by this method. 
+
+Definition at line 113 of file mdtPortLock.cpp.
+
+
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

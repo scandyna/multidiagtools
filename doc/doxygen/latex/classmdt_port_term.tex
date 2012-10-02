@@ -13,8 +13,16 @@ Mini port treminal.
 
 
 
-Collaboration diagram for mdtPortTerm:
-\nopagebreak
+Inheritance diagram for mdtPortTerm:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=168pt]{classmdt_port_term__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtPortTerm:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -57,6 +65,10 @@ void \hyperlink{classmdt_port_term_a9e2987c96c85189ce118aab7af77fb71}{setAvailab
 \subsection{Detailed Description}
 Mini port treminal. 
 
+Definition at line 40 of file mdtPortTerm.h.
+
+
+
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classmdt_port_term_a5e93890f53b5112be80983779a3ab233}{
 \index{mdtPortTerm@{mdtPortTerm}!mdtPortTerm@{mdtPortTerm}}
@@ -71,6 +83,10 @@ Mini port treminal.
 
 attachToSerialPort(); 
 
+
+
+Definition at line 30 of file mdtPortTerm.cpp.
+
 \hypertarget{classmdt_port_term_a5576a15a2b6e39c149207ffdb7869ef7}{
 \index{mdtPortTerm@{mdtPortTerm}!$\sim$mdtPortTerm@{$\sim$mdtPortTerm}}
 \index{$\sim$mdtPortTerm@{$\sim$mdtPortTerm}!mdtPortTerm@{mdtPortTerm}}
@@ -83,6 +99,10 @@ attachToSerialPort();
 
 
 detachFromSerialPort(); 
+
+
+
+Definition at line 54 of file mdtPortTerm.cpp.
 
 
 
@@ -104,6 +124,10 @@ Whenn called, data will be token from active port manager
 
 teTerm-\/$>$append(pvCurrentPortManager-\/$>$lastReadenFrame()); 
 
+
+
+Definition at line 83 of file mdtPortTerm.cpp.
+
 \hypertarget{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}{
 \index{mdtPortTerm@{mdtPortTerm}!on\_\-pbSendCmdAbort\_\-clicked@{on\_\-pbSendCmdAbort\_\-clicked}}
 \index{on\_\-pbSendCmdAbort\_\-clicked@{on\_\-pbSendCmdAbort\_\-clicked}!mdtPortTerm@{mdtPortTerm}}
@@ -124,6 +148,10 @@ if(pvSerialPortManager != 0)\{ pvSerialPortManager-\/$>$port().flushOut(); pvSer
 pvCurrentPortManager-\/$>$port().flushOut();
 
 teCmd-\/$>$clear(); 
+
+
+
+Definition at line 132 of file mdtPortTerm.cpp.
 
 \hypertarget{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{
 \index{mdtPortTerm@{mdtPortTerm}!sendCmd@{sendCmd}}
@@ -147,6 +175,10 @@ NOTE: essais cmd = teCmd-\/$>$toPlainText();
 cmd.append((char)0x0D);
 
 teCmd-\/$>$clear(); 
+
+
+
+Definition at line 99 of file mdtPortTerm.cpp.
 
 
 

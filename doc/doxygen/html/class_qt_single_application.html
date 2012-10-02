@@ -143,6 +143,8 @@ Public Member Functions</h2></td></tr>
 </pre></div><p>Once this <a class="el" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a> instance is destroyed (normally when the process exits or crashes), when the user next attempts to run the application this instance will not, of course, be encountered. The next instance to call <a class="el" href="class_qt_single_application.html#aa9f0e6e4f18ac79bbb7a955cd860894d">isRunning()</a> or <a class="el" href="class_qt_single_application.html#a0e2f3900f0290913c738ec6b4b959922">sendMessage()</a> will assume the role as the new running instance.</p>
 <p>For console (non-GUI) applications, QtSingleCoreApplication may be used instead of this class, to avoid the dependency on the QtGui library.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd>QtSingleCoreApplication </dd></dl>
+
+<p>Definition at line <a class="el" href="qtsingleapplication_8h_source.html#l00063">63</a> of file <a class="el" href="qtsingleapplication_8h_source.html">qtsingleapplication.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="afe5e96d236e42949e65669eca282acbd"></a><!-- doxytag: member="QtSingleApplication::QtSingleApplication" ref="afe5e96d236e42949e65669eca282acbd" args="(int &amp;argc, char **argv, bool GUIenabled=true)" -->
 <div class="memitem">
@@ -176,6 +178,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>Creates a <a class="el" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a> object. The application identifier will be QCoreApplication::applicationFilePath(). <em>argc</em>, <em>argv</em>, and <em>GUIenabled</em> are passed on to the QAppliation constructor.</p>
 <p>If you are creating a console application (i.e. setting <em>GUIenabled</em> to false), you may consider using QtSingleCoreApplication instead. </p>
+
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00153">153</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
 
 </div>
 </div>
@@ -211,6 +215,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>Creates a <a class="el" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a> object with the application identifier <em>appId</em>. <em>argc</em> and <em>argv</em> are passed on to the QAppliation constructor. </p>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00166">166</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="adcb7a28eec3eef34c6474fb419509895"></a><!-- doxytag: member="QtSingleApplication::QtSingleApplication" ref="adcb7a28eec3eef34c6474fb419509895" args="(int &amp;argc, char **argv, Type type)" -->
@@ -245,6 +251,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>Creates a <a class="el" href="class_qt_single_application.html" title="The QtSingleApplication class provides an API to detect and communicate with running instances of an ...">QtSingleApplication</a> object. The application identifier will be QCoreApplication::applicationFilePath(). <em>argc</em>, <em>argv</em>, and <em>type</em> are passed on to the QAppliation constructor. </p>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00178">178</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
@@ -266,6 +274,8 @@ Public Member Functions</h2></td></tr>
 <p>This function should typically be called in response to the <a class="el" href="class_qt_single_application.html#a69340cef3d26d026e11424930e5a5866">messageReceived()</a> signal. By default, that will happen automatically, if an activation window has been set.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_single_application.html#acb5347f6dc6822dbe4d6a78804043528">setActivationWindow()</a>, <a class="el" href="class_qt_single_application.html#a69340cef3d26d026e11424930e5a5866">messageReceived()</a>, <a class="el" href="class_qt_single_application.html#a622807c60657c1a1fadec15ea5903b47">initialize()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00320">320</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a1e6be5adba2282fcfe547596b2aee18a"></a><!-- doxytag: member="QtSingleApplication::activationWindow" ref="a1e6be5adba2282fcfe547596b2aee18a" args="() const " -->
@@ -284,6 +294,8 @@ Public Member Functions</h2></td></tr>
 <p>Returns the applications activation window if one has been set by calling <a class="el" href="class_qt_single_application.html#acb5347f6dc6822dbe4d6a78804043528">setActivationWindow()</a>, otherwise returns 0.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_single_application.html#acb5347f6dc6822dbe4d6a78804043528">setActivationWindow()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00300">300</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="affd094410862f30fce83afcba3457b19"></a><!-- doxytag: member="QtSingleApplication::id" ref="affd094410862f30fce83afcba3457b19" args="() const " -->
@@ -301,6 +313,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>Returns the application identifier. Two processes with the same identifier will be regarded as instances of the same application. </p>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00266">266</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a622807c60657c1a1fadec15ea5903b47"></a><!-- doxytag: member="QtSingleApplication::initialize" ref="a622807c60657c1a1fadec15ea5903b47" args="(bool dummy=true)" -->
@@ -317,6 +331,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Definition at line <a class="el" href="qtsingleapplication_8h_source.html#l00084">84</a> of file <a class="el" href="qtsingleapplication_8h_source.html">qtsingleapplication.h</a>.</p>
 
 </div>
 </div>
@@ -337,6 +353,8 @@ Public Member Functions</h2></td></tr>
 <p>This function does not find instances of this application that are being run by a different user (on Windows: that are running in another session).</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_single_application.html#a0e2f3900f0290913c738ec6b4b959922">sendMessage()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00237">237</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a69340cef3d26d026e11424930e5a5866"></a><!-- doxytag: member="QtSingleApplication::messageReceived" ref="a69340cef3d26d026e11424930e5a5866" args="(const QString &amp;message)" -->
@@ -355,6 +373,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>This signal is emitted when the current instance receives a <em>message</em> from another instance of this application.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_single_application.html#a0e2f3900f0290913c738ec6b4b959922">sendMessage()</a>, <a class="el" href="class_qt_single_application.html#acb5347f6dc6822dbe4d6a78804043528">setActivationWindow()</a>, <a class="el" href="class_qt_single_application.html#a0881b32c76132b499f3180064006abc1">activateWindow()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="moc__qtsingleapplication_8cxx_source.html#l00094">94</a> of file <a class="el" href="moc__qtsingleapplication_8cxx_source.html">moc_qtsingleapplication.cxx</a>.</p>
 
 </div>
 </div>
@@ -386,6 +406,8 @@ Public Member Functions</h2></td></tr>
 <p>This function returns true if the message has been sent to, and processed by, the current instance. If there is no instance currently running, or if the running instance fails to process the message within <em>timeout</em> milliseconds, this function return false.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_single_application.html#aa9f0e6e4f18ac79bbb7a955cd860894d">isRunning()</a>, <a class="el" href="class_qt_single_application.html#a69340cef3d26d026e11424930e5a5866">messageReceived()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00256">256</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="acb5347f6dc6822dbe4d6a78804043528"></a><!-- doxytag: member="QtSingleApplication::setActivationWindow" ref="acb5347f6dc6822dbe4d6a78804043528" args="(QWidget *aw, bool activateOnMessage=true)" -->
@@ -416,11 +438,14 @@ Public Member Functions</h2></td></tr>
 <p>If <em>activateOnMessage</em> is true (the default), the window will be activated automatically every time a message is received, just prior to the <a class="el" href="class_qt_single_application.html#a69340cef3d26d026e11424930e5a5866">messageReceived()</a> signal being emitted.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_single_application.html#a0881b32c76132b499f3180064006abc1">activateWindow()</a>, <a class="el" href="class_qt_single_application.html#a69340cef3d26d026e11424930e5a5866">messageReceived()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtsingleapplication_8cpp_source.html#l00284">284</a> of file <a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/qt-solutions/qtsingleapplication/<a class="el" href="qtsingleapplication_8h_source.html">qtsingleapplication.h</a></li>
-<li>src/qt-solutions/qtsingleapplication/qtsingleapplication.cpp</li>
+<li>src/qt-solutions/qtsingleapplication/<a class="el" href="moc__qtsingleapplication_8cxx_source.html">moc_qtsingleapplication.cxx</a></li>
+<li>src/qt-solutions/qtsingleapplication/<a class="el" href="qtsingleapplication_8cpp_source.html">qtsingleapplication.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -437,7 +462,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:29 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

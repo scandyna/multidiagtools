@@ -87,6 +87,10 @@ Parse a UIC number and get details.
 \end{DoxySeeAlso}
 
 
+Definition at line 35 of file mdtUicNumber.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_uic_number_a1923dbc9f382433d3d669b32aac75888}{
 \index{mdtUicNumber@{mdtUicNumber}!compact11UicNumber@{compact11UicNumber}}
@@ -104,6 +108,10 @@ Get 11 digit compact unformated UIC number.
 A 11 digit UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}. \begin{DoxyReturn}{Returns}
 11 digit UIC number without space, without control key, or a empty string on error 
 \end{DoxyReturn}
+
+
+Definition at line 157 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_ac213145f98f8373d3300f4b3d46881cc}{
 \index{mdtUicNumber@{mdtUicNumber}!compact6UicNumber@{compact6UicNumber}}
 \index{compact6UicNumber@{compact6UicNumber}!mdtUicNumber@{mdtUicNumber}}
@@ -122,6 +130,10 @@ A 6 or 11 digit UIC number must first be set with \hyperlink{classmdt_uic_number
  F.ex: if 94 85 7 560 256-\/0 is set, this method returns 560256. \begin{DoxyReturn}{Returns}
 6 digit UIC number without space, without control key, or a empty string on error 
 \end{DoxyReturn}
+
+
+Definition at line 129 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{
 \index{mdtUicNumber@{mdtUicNumber}!controlKey@{controlKey}}
 \index{controlKey@{controlKey}!mdtUicNumber@{mdtUicNumber}}
@@ -141,6 +153,10 @@ Control key, or value $<$ 0 on error
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 196 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_a7a66af4f41cfaf69d53b9db66f465c27}{
 \index{mdtUicNumber@{mdtUicNumber}!controlKeyString@{controlKeyString}}
 \index{controlKeyString@{controlKeyString}!mdtUicNumber@{mdtUicNumber}}
@@ -160,6 +176,10 @@ Control key, $<$unknow$>$ on error
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_uic_number_acd5013109fc4b953023333ac1382edd6}{controlKey()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 215 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_a69fea97b67a745980ad4386d5ffa9505}{
 \index{mdtUicNumber@{mdtUicNumber}!country@{country}}
 \index{country@{country}!mdtUicNumber@{mdtUicNumber}}
@@ -173,7 +193,11 @@ Control key, $<$unknow$>$ on error
 
 Get the country. 
 
-The UIC number must be set, and country database loaded before this method works. \hypertarget{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{
+The UIC number must be set, and country database loaded before this method works. 
+
+Definition at line 555 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_a0eda9b614e91b32c0d99bc016d906eae}{
 \index{mdtUicNumber@{mdtUicNumber}!formatedUicNumber@{formatedUicNumber}}
 \index{formatedUicNumber@{formatedUicNumber}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{formatedUicNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::formatedUicNumber (
@@ -189,6 +213,10 @@ Get the complete formated UIC number.
 The UIC number must first be set with \hyperlink{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{setNumber()}. \begin{DoxyReturn}{Returns}
 7 or 12 digit formated UIC number, or $<$unknow$>$ on error 
 \end{DoxyReturn}
+
+
+Definition at line 78 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_aac3c9e1adb6f9646216b4327645a621a}{
 \index{mdtUicNumber@{mdtUicNumber}!isValid@{isValid}}
 \index{isValid@{isValid}!mdtUicNumber@{mdtUicNumber}}
@@ -202,7 +230,11 @@ The UIC number must first be set with \hyperlink{classmdt_uic_number_aadf5007278
 
 Check the UIC number validity. 
 
-A valid UIC number contains 6, 7, 11 or 12 digits. \hypertarget{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}{
+A valid UIC number contains 6, 7, 11 or 12 digits. 
+
+Definition at line 183 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_ad7bb1405db0de8f1d247fa5a7bdb19ce}{
 \index{mdtUicNumber@{mdtUicNumber}!loadCountriesDb@{loadCountriesDb}}
 \index{loadCountriesDb@{loadCountriesDb}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{loadCountriesDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadCountriesDb (
@@ -218,6 +250,10 @@ Load the coutries database.
 The database is a CSV file containing the correspondance between 2 digits number and the country. \begin{DoxySeeAlso}{See also}
 \href{http://www.uic.org/IMG/xls/country_code_applicable.xls}{\tt http://www.uic.org/IMG/xls/country\_\-code\_\-applicable.xls} 
 \end{DoxySeeAlso}
+
+
+Definition at line 250 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_ab7d29b1cb5fe5ac58bef5bec787e83df}{
 \index{mdtUicNumber@{mdtUicNumber}!loadDbs@{loadDbs}}
 \index{loadDbs@{loadDbs}!mdtUicNumber@{mdtUicNumber}}
@@ -237,7 +273,11 @@ The directory that contains the databeses must be given as argument. This direct
 \item uic\_\-speedandheat\_\-db.csv
 \item uic\_\-types\_\-db.csv
 \item uic\_\-usages\_\-db.csv 
-\end{DoxyItemize}\hypertarget{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}{
+\end{DoxyItemize}
+
+Definition at line 507 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_ab1d08c2ea34f310631866d2e46010363}{
 \index{mdtUicNumber@{mdtUicNumber}!loadSpeedAndHeatsDb@{loadSpeedAndHeatsDb}}
 \index{loadSpeedAndHeatsDb@{loadSpeedAndHeatsDb}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{loadSpeedAndHeatsDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadSpeedAndHeatsDb (
@@ -250,7 +290,11 @@ The directory that contains the databeses must be given as argument. This direct
 
 Load the vehicule speend and heat. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. \hypertarget{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}{
+The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. 
+
+Definition at line 443 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_a98c879c7bb7412caac4612a46586b76d}{
 \index{mdtUicNumber@{mdtUicNumber}!loadTypesDb@{loadTypesDb}}
 \index{loadTypesDb@{loadTypesDb}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{loadTypesDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadTypesDb (
@@ -263,7 +307,11 @@ The database is a CSV file containing the correspondance between 2 digits number
 
 Load the vehicule type database. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. \hypertarget{classmdt_uic_number_af496e1fb75f696258287754fe2607561}{
+The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. 
+
+Definition at line 379 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_af496e1fb75f696258287754fe2607561}{
 \index{mdtUicNumber@{mdtUicNumber}!loadUsagesDb@{loadUsagesDb}}
 \index{loadUsagesDb@{loadUsagesDb}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{loadUsagesDb}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUicNumber::loadUsagesDb (
@@ -276,7 +324,11 @@ The database is a CSV file containing the correspondance between 2 digits number
 
 Load the usage database. 
 
-The database is a CSV file containing the correspondance between 2 digits number and the usage. \hypertarget{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}{
+The database is a CSV file containing the correspondance between 2 digits number and the usage. 
+
+Definition at line 315 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_ad4fbefb268327d15c2d39d2a17f45180}{
 \index{mdtUicNumber@{mdtUicNumber}!serialNumber@{serialNumber}}
 \index{serialNumber@{serialNumber}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{serialNumber}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUicNumber::serialNumber (
@@ -292,6 +344,10 @@ Get the serial number part.
 \begin{DoxyReturn}{Returns}
 Serial number or $<$unknow$>$ on error 
 \end{DoxyReturn}
+
+
+Definition at line 227 of file mdtUicNumber.cpp.
+
 \hypertarget{classmdt_uic_number_aadf50072784344824c696da7cff5b445}{
 \index{mdtUicNumber@{mdtUicNumber}!setNumber@{setNumber}}
 \index{setNumber@{setNumber}!mdtUicNumber@{mdtUicNumber}}
@@ -305,7 +361,11 @@ Serial number or $<$unknow$>$ on error
 
 Set the UIC number. 
 
-The UIC number passed as argument is first checked. If ok, it is stored as list of digits. Note: some chars are allowed (space, -\/), but alpha (a-\/b, A-\/B) are not valid. \hypertarget{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}{
+The UIC number passed as argument is first checked. If ok, it is stored as list of digits. Note: some chars are allowed (space, -\/), but alpha (a-\/b, A-\/B) are not valid. 
+
+Definition at line 40 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_af2c13420378ec5559ce4f1eaba1f38e7}{
 \index{mdtUicNumber@{mdtUicNumber}!speedAndHeat@{speedAndHeat}}
 \index{speedAndHeat@{speedAndHeat}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{speedAndHeat}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::speedAndHeat (
@@ -318,7 +378,11 @@ The UIC number passed as argument is first checked. If ok, it is stored as list 
 
 Get the vehicule speed and heat. 
 
-The UIC number must be set, and type database loaded before this method works. \hypertarget{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}{
+The UIC number must be set, and type database loaded before this method works. 
+
+Definition at line 622 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_ae7d6500d0e939956371e152d9ca17117}{
 \index{mdtUicNumber@{mdtUicNumber}!type@{type}}
 \index{type@{type}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::type (
@@ -331,7 +395,11 @@ The UIC number must be set, and type database loaded before this method works. \
 
 Get the vehicule type. 
 
-The UIC number must be set, and type database loaded before this method works. \hypertarget{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}{
+The UIC number must be set, and type database loaded before this method works. 
+
+Definition at line 595 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_a7bb368e5de6a9e7af3a2516eb4282e04}{
 \index{mdtUicNumber@{mdtUicNumber}!unloadDbs@{unloadDbs}}
 \index{unloadDbs@{unloadDbs}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{unloadDbs}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUicNumber::unloadDbs (
@@ -344,7 +412,11 @@ The UIC number must be set, and type database loaded before this method works. \
 
 Unload databases. 
 
-This will free memory used by load$\ast$Db(). This method is automatically called by destructor. \hypertarget{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}{
+This will free memory used by load$\ast$Db(). This method is automatically called by destructor. 
+
+Definition at line 543 of file mdtUicNumber.cpp.
+
+\hypertarget{classmdt_uic_number_a8e2e1c1be4425b57e0fa60113410bfbc}{
 \index{mdtUicNumber@{mdtUicNumber}!usage@{usage}}
 \index{usage@{usage}!mdtUicNumber@{mdtUicNumber}}
 \subsubsection[{usage}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUicNumberItem} mdtUicNumber::usage (
@@ -358,6 +430,10 @@ This will free memory used by load$\ast$Db(). This method is automatically calle
 Get the usage. 
 
 The UIC number must be set, and usage database loaded before this method works. 
+
+Definition at line 575 of file mdtUicNumber.cpp.
+
+
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

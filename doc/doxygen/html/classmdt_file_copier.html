@@ -127,6 +127,8 @@ Public Member Functions</h2></td></tr>
 <li>For a simple and efficient copy, it's better to use system provided functions, QFile or others.</li>
 <li>If a file exists at destination, user will be asked about what to do. But, the ask operation, and the effective copy are not a atomic operation. So it can happen that another process creates the destination, and that file is then overwritten during copy ! </li>
 </ul>
+
+<p>Definition at line <a class="el" href="mdt_file_copier_8h_source.html#l00053">53</a> of file <a class="el" href="mdt_file_copier_8h_source.html">mdtFileCopier.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ad0730aae81b3ba64eec4563390b852a3"></a><!-- doxytag: member="mdtFileCopier::addCopy" ref="ad0730aae81b3ba64eec4563390b852a3" args="(const QString &amp;srcFilePath, const QString &amp;destFilePath, bool syncAfterCopy=false, bool checkAfterCopy=false)" -->
 <div class="memitem">
@@ -169,6 +171,8 @@ Public Member Functions</h2></td></tr>
 <p>At this point, the copy is enqueued. To process copy, call <a class="el" href="classmdt_file_copier.html#acd5397fbea57f8169a5dddd2809d26cb" title="Start the copy.">startCopy()</a>. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_file_copier.html#acd5397fbea57f8169a5dddd2809d26cb" title="Start the copy.">startCopy()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_file_copier_8cpp_source.html#l00088">88</a> of file <a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a808f01eb2a319e82a9fec5bb978ccb85"></a><!-- doxytag: member="mdtFileCopier::finished" ref="a808f01eb2a319e82a9fec5bb978ccb85" args="(bool success)" -->
@@ -193,6 +197,8 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+<p>Definition at line <a class="el" href="moc__mdt_file_copier_8cxx_source.html#l00107">107</a> of file <a class="el" href="moc__mdt_file_copier_8cxx_source.html">moc_mdtFileCopier.cxx</a>.</p>
 
 </div>
 </div>
@@ -220,6 +226,8 @@ Public Member Functions</h2></td></tr>
 </li>
 </ul>
 
+<p>Definition at line <a class="el" href="mdt_file_copier_8cpp_source.html#l00082">82</a> of file <a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ad045db0c7b84a7c9505d7ac1704f7413"></a><!-- doxytag: member="mdtFileCopier::setDirectDestOverwrite" ref="ad045db0c7b84a7c9505d7ac1704f7413" args="(bool directOverwrite)" -->
@@ -240,6 +248,8 @@ Public Member Functions</h2></td></tr>
 <p>Permit direct destination overwrite. </p>
 <p>If set false, the user will be asked about what to do if destination allready exists. </p>
 
+<p>Definition at line <a class="el" href="mdt_file_copier_8cpp_source.html#l00077">77</a> of file <a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ad971d6b727c4ceaa1a39bf356d694654"></a><!-- doxytag: member="mdtFileCopier::setTestMode" ref="ad971d6b727c4ceaa1a39bf356d694654" args="(bool enable)" -->
@@ -259,6 +269,8 @@ Public Member Functions</h2></td></tr>
 
 <p>If set true, message boxes will not be displayed, and some default decisions will be taken. </p>
 <p>Used by unit tests. Please never use this flag without you know that it can happen ! </p>
+
+<p>Definition at line <a class="el" href="mdt_file_copier_8cpp_source.html#l00322">322</a> of file <a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,6 +293,8 @@ Public Member Functions</h2></td></tr>
  To know when copy is finished, use <a class="el" href="classmdt_file_copier.html#adcfa582fe6e1e3420c8285c2301323f6" title="Wait until copies are done.">waitFinished()</a>, or connect to the <a class="el" href="classmdt_file_copier.html#a808f01eb2a319e82a9fec5bb978ccb85" title="Emitted when copy process is done.">finished()</a> signal. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if copy will be processed, or false if no copy can be done, or user cancelled copy because of some problems. </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_file_copier_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="adcfa582fe6e1e3420c8285c2301323f6"></a><!-- doxytag: member="mdtFileCopier::waitFinished" ref="adcfa582fe6e1e3420c8285c2301323f6" args="()" -->
@@ -301,11 +315,14 @@ Public Member Functions</h2></td></tr>
 <p>This function will only return when copy process is done. Internally, a couple of msleep()/process event will be called, so Qt's GUI event loop is not broken, and application will not freeze. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false on failure or abort (errors are displayed to the user, and logged with <a class="el" href="classmdt_error.html">mdtError</a> system) </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_file_copier_8cpp_source.html#l00304">304</a> of file <a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_file_copier_8h_source.html">mdtFileCopier.h</a></li>
-<li>src/mdtutils/mdtFileCopier.cpp</li>
+<li>src/mdtutils/<a class="el" href="mdt_file_copier_8cpp_source.html">mdtFileCopier.cpp</a></li>
+<li>src/mdtutils/<a class="el" href="moc__mdt_file_copier_8cxx_source.html">moc_mdtFileCopier.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -322,7 +339,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

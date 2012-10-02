@@ -125,6 +125,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USB endpoint descriptor. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html#l00029">29</a> of file <a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html">mdtUsbEndpointDescriptor.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a478bc4bdec482184c0fc9af3218afad9"></a><!-- doxytag: member="mdtUsbEndpointDescriptor::address" ref="a478bc4bdec482184c0fc9af3218afad9" args="()" -->
 <div class="memitem">
@@ -142,6 +144,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Endpoint address (number) </p>
 <p>Note: this is the decoded address, i.e. bits 3..0 extracted from bEndpointAddress </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html">mdtUsbEndpointDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -161,6 +165,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Interval for polling endpoint for data transfers. </p>
 <p>Value is returned as read in bInterval field (in libusb strcture) </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html">mdtUsbEndpointDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -182,6 +188,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Ftech the endpoint descriptor's attributes. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>descriptor must be a valid pointer </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html">mdtUsbEndpointDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ae7bdf4803a50206fdb9b30008b9bc230"></a><!-- doxytag: member="mdtUsbEndpointDescriptor::maxPacketSize" ref="ae7bdf4803a50206fdb9b30008b9bc230" args="()" -->
@@ -200,6 +208,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Maximum packet size. </p>
 <p>Note: this is the decoded size, i.e. bits 10..0 extracted from wMaxPacketSize </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html">mdtUsbEndpointDescriptor.cpp</a>.</p>
 
 </div>
 </div>
@@ -220,11 +230,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Transactions per microframe. </p>
 <p>Note: this is the decoded value + 1, i.e. bits 12..11 extracted from wMaxPacketSize Bit 12..11 give additionnal value, and this method returns the extracted value + 1 (f.ex. if bit 12..11 give 00 as result, this method returns 1) </p>
 
+<p>Definition at line <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html#l00118">118</a> of file <a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html">mdtUsbEndpointDescriptor.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_usb_endpoint_descriptor_8h_source.html">mdtUsbEndpointDescriptor.h</a></li>
-<li>src/mdtport/mdtUsbEndpointDescriptor.cpp</li>
+<li>src/mdtport/<a class="el" href="mdt_usb_endpoint_descriptor_8cpp_source.html">mdtUsbEndpointDescriptor.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -241,7 +253,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

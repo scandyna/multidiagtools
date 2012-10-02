@@ -108,6 +108,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile. </p>
+
+<p>Definition at line <a class="el" href="mdt_error_out_8h_source.html#l00038">38</a> of file <a class="el" href="mdt_error_out_8h_source.html">mdtErrorOut.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="aeb562e93216b34e7b73aa69f42065895"></a><!-- doxytag: member="mdtErrorOut::addError" ref="aeb562e93216b34e7b73aa69f42065895" args="(mdtError &amp;error)" -->
 <div class="memitem">
@@ -128,6 +130,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The system must be initialized. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">init()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a45c1370762b47a06ec597d6e89ebc73d"></a><!-- doxytag: member="mdtErrorOut::destroy" ref="a45c1370762b47a06ec597d6e89ebc73d" args="()" -->
@@ -146,6 +150,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Destroy the error output system instance. </p>
 <p>This function must be called from main thread (GUI thread) </p>
+
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
 
 </div>
 </div>
@@ -167,6 +173,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Initialize the error output system. </p>
 <p>After this call, the log and dialog levels are defined to Warning and Error This function must be called from main thread (GUI thread) </p>
 
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a7a80480a61ca1a2704ec16d69647f739"></a><!-- doxytag: member="mdtErrorOut::instance" ref="a7a80480a61ca1a2704ec16d69647f739" args="()" -->
@@ -185,6 +193,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 <p>Get the instance of the error output system. </p>
 <p>This function can return a Null pointer if <a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">init()</a> was never called. This function, and returned pointer, should be used with care in multi-thread applicatopn ! </p>
+
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00169">169</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
 
 </div>
 </div>
@@ -205,6 +215,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Get the log file path. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The system must be initialized. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">init()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00174">174</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
 
 </div>
 </div>
@@ -228,6 +240,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The system must be initialized. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">init()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a547e4e8aa75528710e4a17e9faf48621"></a><!-- doxytag: member="mdtErrorOut::setLogLevelsMask" ref="a547e4e8aa75528710e4a17e9faf48621" args="(int mask)" -->
@@ -250,11 +264,14 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The system must be initialized. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_error_out.html#a9c7f05b03d0f09ff02e8f747bdcd1de7" title="Initialize the error output system.">init()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_error_out_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_error_out_8h_source.html">mdtErrorOut.h</a></li>
-<li>src/mdtutils/mdtErrorOut.cpp</li>
+<li>src/mdtutils/<a class="el" href="mdt_error_out_8cpp_source.html">mdtErrorOut.cpp</a></li>
+<li>src/mdtutils/<a class="el" href="moc__mdt_error_out_8cxx_source.html">moc_mdtErrorOut.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -271,7 +288,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

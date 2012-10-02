@@ -95,6 +95,10 @@ QApplication
 \end{DoxySeeAlso}
 
 
+Definition at line 47 of file mdtApplication.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_application_ab5279a8c25923ab4c570670b8a41d599}{
 \index{mdtApplication@{mdtApplication}!addTranslationsDirectory@{addTranslationsDirectory}}
@@ -112,6 +116,10 @@ Add a directory that contains translations files in search paths.
 If given directory exists (and is accessible), it will be added to search paths. \begin{DoxyPrecond}{Precondition}
 The \hyperlink{classmdt_error_out}{mdtErrorOut} system must be initialized before using this method, this is done by \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()}. 
 \end{DoxyPrecond}
+
+
+Definition at line 138 of file mdtApplication.cpp.
+
 \hypertarget{classmdt_application_a9ce5b5c3ca36a76ad0acc3913ce8f89a}{
 \index{mdtApplication@{mdtApplication}!availableTranslations@{availableTranslations}}
 \index{availableTranslations@{availableTranslations}!mdtApplication@{mdtApplication}}
@@ -125,7 +133,11 @@ The \hyperlink{classmdt_error_out}{mdtErrorOut} system must be initialized befor
 
 Get the list of available translations. 
 
-The key contains the language suffix, like en , that can be reused with \hyperlink{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{changeLanguage()}. The list is built during \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()}. \hypertarget{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{
+The key contains the language suffix, like en , that can be reused with \hyperlink{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{changeLanguage()}. The list is built during \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()}. 
+
+Definition at line 151 of file mdtApplication.cpp.
+
+\hypertarget{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{
 \index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
 \index{changeLanguage@{changeLanguage}!mdtApplication@{mdtApplication}}
 \subsubsection[{changeLanguage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::changeLanguage (
@@ -143,6 +155,10 @@ This will remove installed translators, and install language speficifed translat
 \begin{DoxyPrecond}{Precondition}
 The error system must be initalized before using this method (this is done by \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()} ). 
 \end{DoxyPrecond}
+
+
+Definition at line 180 of file mdtApplication.cpp.
+
 \hypertarget{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}{
 \index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
 \index{changeLanguage@{changeLanguage}!mdtApplication@{mdtApplication}}
@@ -159,6 +175,10 @@ Change the application language (overload)
 To make this slot work, the QAction must contain the language key (like en, fr, de, ...) in the data section. \begin{DoxyPrecond}{Precondition}
 action must be a valid pointer. 
 \end{DoxyPrecond}
+
+
+Definition at line 199 of file mdtApplication.cpp.
+
 \hypertarget{classmdt_application_a531e64266be58b3a10608b21ae6afedb}{
 \index{mdtApplication@{mdtApplication}!currentTranslationKey@{currentTranslationKey}}
 \index{currentTranslationKey@{currentTranslationKey}!mdtApplication@{mdtApplication}}
@@ -172,7 +192,11 @@ action must be a valid pointer.
 
 Get the current translation key. 
 
-The translation key could be en, de, fr, ... \hypertarget{classmdt_application_a3b8798416e730f85e419566442adb77b}{
+The translation key could be en, de, fr, ... 
+
+Definition at line 156 of file mdtApplication.cpp.
+
+\hypertarget{classmdt_application_a3b8798416e730f85e419566442adb77b}{
 \index{mdtApplication@{mdtApplication}!init@{init}}
 \index{init@{init}!mdtApplication@{mdtApplication}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtApplication::init (
@@ -204,7 +228,11 @@ Several things are done here:
 \hyperlink{classmdt_error_out}{mdtErrorOut} 
 \end{DoxySeeAlso}
 
-\end{DoxyItemize}\hypertarget{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{
+\end{DoxyItemize}
+
+Definition at line 44 of file mdtApplication.cpp.
+
+\hypertarget{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{
 \index{mdtApplication@{mdtApplication}!installTranslator@{installTranslator}}
 \index{installTranslator@{installTranslator}!mdtApplication@{mdtApplication}}
 \subsubsection[{installTranslator}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::installTranslator (
@@ -220,6 +248,10 @@ Adds the translator to the list of translators to be used for translations.
 Note: this method overloads QCoreApplication::installTranslator() . The difference is that it adds new translator to a list, and delete it all in destructor. Internally, it calls QApplication::installTranslator(). To keep trace of installed translators, you should allways use this method, and never mix calls with, for example, qApp-\/$>$\hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator()} or QCoreApplication::installTranslator() \begin{DoxyPrecond}{Precondition}
 translator must point to a valid object. 
 \end{DoxyPrecond}
+
+
+Definition at line 161 of file mdtApplication.cpp.
+
 \hypertarget{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{
 \index{mdtApplication@{mdtApplication}!instance@{instance}}
 \index{instance@{instance}!mdtApplication@{mdtApplication}}
@@ -233,7 +265,11 @@ translator must point to a valid object.
 
 Get the instance of \hyperlink{classmdt_application}{mdtApplication}. 
 
-This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! \hypertarget{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{
+This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! 
+
+Definition at line 121 of file mdtApplication.cpp.
+
+\hypertarget{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{
 \index{mdtApplication@{mdtApplication}!removeCurrentTranslators@{removeCurrentTranslators}}
 \index{removeCurrentTranslators@{removeCurrentTranslators}!mdtApplication@{mdtApplication}}
 \subsubsection[{removeCurrentTranslators}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::removeCurrentTranslators (
@@ -249,6 +285,10 @@ Remove installed translators.
 This will romove all translators installed with \hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator()}. \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_application_af4ff7f4cbb1c93a35f06ea197e3dde42}{installTranslator()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 169 of file mdtApplication.cpp.
+
 \hypertarget{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{
 \index{mdtApplication@{mdtApplication}!setApplicationVersion@{setApplicationVersion}}
 \index{setApplicationVersion@{setApplicationVersion}!mdtApplication@{mdtApplication}}
@@ -266,7 +306,12 @@ Build the application version with numeric values.
 
 Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). 
 
+Definition at line 107 of file mdtApplication.cpp.
+
+
+
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtutils/mdtApplication.h\item 
-src/mdtutils/mdtApplication.cpp\end{DoxyCompactItemize}
+src/mdtutils/mdtApplication.cpp\item 
+src/mdtutils/moc\_\-mdtApplication.cxx\end{DoxyCompactItemize}

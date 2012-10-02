@@ -34,6 +34,13 @@ void \hyperlink{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{stop
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+
+
+Definition at line 33 of file mdtUsbPortThread.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{
 \index{mdtUsbPortThread@{mdtUsbPortThread}!stop@{stop}}
@@ -57,6 +64,10 @@ setSerialPort()
 
 
 Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread}.
+
+
+
+Definition at line 33 of file mdtUsbPortThread.cpp.
 
 \hypertarget{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}{
 \index{mdtUsbPortThread@{mdtUsbPortThread}!writeToPort@{writeToPort}}
@@ -103,6 +114,10 @@ if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a
 \}else if((portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{mdtAbstractPort::UnknownError})$|$$|$(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}))\{ Unhandled error. Signal this and stop emit(errorOccured(MDT\_\-PORT\_\-IO\_\-ERROR)); return false; \}
 
 emit(errorOccured(mdtAbstractPort::UnhandledError)); 
+
+
+
+Definition at line 46 of file mdtUsbPortThread.cpp.
 
 
 

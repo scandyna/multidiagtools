@@ -149,6 +149,13 @@ bool {\bfseries pvBytePerByteWrite}}
 \end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+
+
+Definition at line 28 of file mdtPortConfig.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_port_config_a9b5041ba740a5918e5e1323e61d3bbdc}{
 \index{mdtPortConfig@{mdtPortConfig}!bytePerByteWrite@{bytePerByteWrite}}
@@ -166,6 +173,10 @@ Get byte per byte write flag (On/Off)
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{setBytePerByteWrite()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 178 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a9ac77f89ee4a0baadc4814a9a95701b6}{
 \index{mdtPortConfig@{mdtPortConfig}!endOfFrameSeq@{endOfFrameSeq}}
 \index{endOfFrameSeq@{endOfFrameSeq}!mdtPortConfig@{mdtPortConfig}}
@@ -182,6 +193,10 @@ Get the end of frame sequence.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a3c5e1c444a18da7d68430bd1c14030f4}{setEndOfFrameSeq()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 167 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_af9c95090820c449412298832582a0fab}{
 \index{mdtPortConfig@{mdtPortConfig}!frameType@{frameType}}
 \index{frameType@{frameType}!mdtPortConfig@{mdtPortConfig}}
@@ -198,6 +213,10 @@ Get frame type.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a627adcb87d26757238f844db19fc248d}{setFrameType()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 151 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{
 \index{mdtPortConfig@{mdtPortConfig}!operator==@{operator==}}
 \index{operator==@{operator==}!mdtPortConfig@{mdtPortConfig}}
@@ -216,6 +235,10 @@ Dependong on type of port used (Serial, USB, ...), and device attached, it can h
 Question: What is a important difference between a full duplex serial port and a USB port ?\par
  The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:\begin{Desc}
 \item[\hyperlink{todo__todo000008}{Todo}]Rollback: voir callback libusb, si data, ... \end{Desc}
+
+
+Definition at line 183 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_ad315f8f97723abe161792c9d9a1375ec}{
 \index{mdtPortConfig@{mdtPortConfig}!readFrameSize@{readFrameSize}}
 \index{readFrameSize@{readFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -232,6 +255,10 @@ Get the read frame size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a02f3c9744b0d7a61853ab58467278bbc}{setReadFrameSize()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 55 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_aff0260f72ca05715efe3f70850e7a151}{
 \index{mdtPortConfig@{mdtPortConfig}!readQueueSize@{readQueueSize}}
 \index{readQueueSize@{readQueueSize}!mdtPortConfig@{mdtPortConfig}}
@@ -248,6 +275,10 @@ Get the read Queue size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a04d8e81844deaff20a890ea24e2f9634}{setReadQueueSize()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 67 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_ab18c2ec1628cb480a70033387e7c3333}{
 \index{mdtPortConfig@{mdtPortConfig}!readTimeout@{readTimeout}}
 \index{readTimeout@{readTimeout}!mdtPortConfig@{mdtPortConfig}}
@@ -264,6 +295,10 @@ Get read timeout.
 \begin{DoxyReturn}{Returns}
 Read timout \mbox{[}ms\mbox{]} 
 \end{DoxyReturn}
+
+
+Definition at line 87 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{
 \index{mdtPortConfig@{mdtPortConfig}!setBytePerByteWrite@{setBytePerByteWrite}}
 \index{setBytePerByteWrite@{setBytePerByteWrite}!mdtPortConfig@{mdtPortConfig}}
@@ -289,6 +324,10 @@ It can happen that a (very) slow device needs time after any received byte.\par
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} 
 \end{DoxySeeAlso}
+
+
+Definition at line 172 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}{
 \index{mdtPortConfig@{mdtPortConfig}!setDefault@{setDefault}}
 \index{setDefault@{setDefault}!mdtPortConfig@{mdtPortConfig}}
@@ -317,6 +356,10 @@ Default configuration is:
 
 Reimplemented in \hyperlink{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}{mdtSerialPortConfig}.
 
+
+
+Definition at line 31 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a9c67e95bb660a13313ec03e07a924793}{
 \index{mdtPortConfig@{mdtPortConfig}!setEndOfFrameSeq@{setEndOfFrameSeq}}
 \index{setEndOfFrameSeq@{setEndOfFrameSeq}!mdtPortConfig@{mdtPortConfig}}
@@ -333,6 +376,10 @@ Set the end of frame sequence (applies on ASCII frames)
 This is an overloaded method \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a3c5e1c444a18da7d68430bd1c14030f4}{setEndOfFrameSeq()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 161 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a627adcb87d26757238f844db19fc248d}{
 \index{mdtPortConfig@{mdtPortConfig}!setFrameType@{setFrameType}}
 \index{setFrameType@{setFrameType}!mdtPortConfig@{mdtPortConfig}}
@@ -349,6 +396,10 @@ Set frame type.
 Frame type can be an ASCII frame, binary frame, ... \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame}{mdtFrame} 
 \end{DoxySeeAlso}
+
+
+Definition at line 146 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a02f3c9744b0d7a61853ab58467278bbc}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadFrameSize@{setReadFrameSize}}
 \index{setReadFrameSize@{setReadFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -368,6 +419,10 @@ Frame size is the maximum number of bytes that can be stored before a frame is f
 \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+
+
+Definition at line 48 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a04d8e81844deaff20a890ea24e2f9634}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadQueueSize@{setReadQueueSize}}
 \index{setReadQueueSize@{setReadQueueSize}!mdtPortConfig@{mdtPortConfig}}
@@ -384,6 +439,10 @@ Set the read Queue size.
 A queue contain several frames. This parameter gives a limit of the number of frame that can be received before they are threated \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+
+
+Definition at line 60 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadTimeout@{setReadTimeout}}
 \index{setReadTimeout@{setReadTimeout}!mdtPortConfig@{mdtPortConfig}}
@@ -402,6 +461,10 @@ Set the read timeout.
 {\em timeout} & Read timout \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 82 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{
 \index{mdtPortConfig@{mdtPortConfig}!setUseReadTimeoutProtocol@{setUseReadTimeoutProtocol}}
 \index{setUseReadTimeoutProtocol@{setUseReadTimeoutProtocol}!mdtPortConfig@{mdtPortConfig}}
@@ -420,6 +483,10 @@ An example of read timeout protocol is MODBUS (over serial lines) RTU mode The \
 {\em use} & If true, read timeout protocol will be used. \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 72 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteFrameSize@{setWriteFrameSize}}
 \index{setWriteFrameSize@{setWriteFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -439,6 +506,10 @@ Frame size is the maximum number of bytes that can be stored before a frame is f
 \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+
+
+Definition at line 122 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteInterframeTime@{setWriteInterframeTime}}
 \index{setWriteInterframeTime@{setWriteInterframeTime}!mdtPortConfig@{mdtPortConfig}}
@@ -459,6 +530,10 @@ If this time is $>$ 0 , the \hyperlink{classmdt_port_write_thread}{mdtPortWriteT
 {\em time} & Interframe time \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 102 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteMinWaitTime@{setWriteMinWaitTime}}
 \index{setWriteMinWaitTime@{setWriteMinWaitTime}!mdtPortConfig@{mdtPortConfig}}
@@ -481,6 +556,10 @@ Internally, the event system is used for write calls.\par
 \begin{DoxySeeAlso}{See also}
 mdtDeviceFileWriteThread 
 \end{DoxySeeAlso}
+
+
+Definition at line 92 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a8a99771f7acfeb546d1d89d3671407e5}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteQueueSize@{setWriteQueueSize}}
 \index{setWriteQueueSize@{setWriteQueueSize}!mdtPortConfig@{mdtPortConfig}}
@@ -497,6 +576,10 @@ Set the read Queue size.
 A queue contain several frames. This parameter gives a limit of the number of frame that can be enqueued to serial port output. \begin{DoxyPrecond}{Precondition}
 size must be a positive value 
 \end{DoxyPrecond}
+
+
+Definition at line 134 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_ac117f7cd1f23de163a7fe84f69c2164c}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteTimeout@{setWriteTimeout}}
 \index{setWriteTimeout@{setWriteTimeout}!mdtPortConfig@{mdtPortConfig}}
@@ -515,6 +598,10 @@ Set the write timeout.
 {\em timeout} & Write timout \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 112 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_ad90a88b06f0efebd1ee9f6d4370dec33}{
 \index{mdtPortConfig@{mdtPortConfig}!useReadTimeoutProtocol@{useReadTimeoutProtocol}}
 \index{useReadTimeoutProtocol@{useReadTimeoutProtocol}!mdtPortConfig@{mdtPortConfig}}
@@ -531,6 +618,10 @@ Know if read timeout protocol must be used.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{setUseReadTimeoutProtocol()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 77 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a19bda9f9ce29657179994e02c6da11b9}{
 \index{mdtPortConfig@{mdtPortConfig}!writeFrameSize@{writeFrameSize}}
 \index{writeFrameSize@{writeFrameSize}!mdtPortConfig@{mdtPortConfig}}
@@ -547,6 +638,10 @@ Get the read frame size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{setWriteFrameSize()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 129 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a745f5111436fc143b75440bf90a1a4e6}{
 \index{mdtPortConfig@{mdtPortConfig}!writeInterframeTime@{writeInterframeTime}}
 \index{writeInterframeTime@{writeInterframeTime}!mdtPortConfig@{mdtPortConfig}}
@@ -563,6 +658,10 @@ Get the write interframe time \mbox{[}ms\mbox{]}.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}{setWriteInterframeTime()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 107 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a38d6957cc1103ecf348a76fd3eb97d53}{
 \index{mdtPortConfig@{mdtPortConfig}!writeMinWaitTime@{writeMinWaitTime}}
 \index{writeMinWaitTime@{writeMinWaitTime}!mdtPortConfig@{mdtPortConfig}}
@@ -579,6 +678,10 @@ Get the minimal time to wait before try to write.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{setWriteMinWaitTime()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 97 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a93d72b1ea53f188d7a35bc044394b959}{
 \index{mdtPortConfig@{mdtPortConfig}!writeQueueSize@{writeQueueSize}}
 \index{writeQueueSize@{writeQueueSize}!mdtPortConfig@{mdtPortConfig}}
@@ -595,6 +698,10 @@ Get the write Queue size.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_config_a8a99771f7acfeb546d1d89d3671407e5}{setWriteQueueSize()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 141 of file mdtPortConfig.cpp.
+
 \hypertarget{classmdt_port_config_a3009e07cd66f4c4bfc1c7fdabbc9f93c}{
 \index{mdtPortConfig@{mdtPortConfig}!writeTimeout@{writeTimeout}}
 \index{writeTimeout@{writeTimeout}!mdtPortConfig@{mdtPortConfig}}
@@ -611,6 +718,10 @@ Get write timeout.
 \begin{DoxyReturn}{Returns}
 Write timout \mbox{[}ms\mbox{]} 
 \end{DoxyReturn}
+
+
+Definition at line 117 of file mdtPortConfig.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

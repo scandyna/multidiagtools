@@ -78,6 +78,13 @@ void \hyperlink{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{setDtr} 
 \begin{DoxyCompactList}\small\item\em Enable/diseable the DTR (Data Terminal Ready) signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+
+
+Definition at line 40 of file mdtSerialPort.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_serial_port_ab7d9433433f4ec5d5e584721e5bb1195}{
 \index{mdtSerialPort@{mdtSerialPort}!baudRate@{baudRate}}
@@ -101,6 +108,10 @@ Configured baud rate, or 0 on error.
 
 Implements \hyperlink{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 210 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a65c92bdb5543c1fe0034169ffc88d09f}{
 \index{mdtSerialPort@{mdtSerialPort}!dataBits@{dataBits}}
 \index{dataBits@{dataBits}!mdtSerialPort@{mdtSerialPort}}
@@ -122,6 +133,10 @@ Configured data bits count or 0 on error.
 
 
 Implements \hyperlink{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{mdtAbstractSerialPort}.
+
+
+
+Definition at line 400 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a9315ed0c7854a09716a4585efb0094c7}{
 \index{mdtSerialPort@{mdtSerialPort}!flowCtlRtsCtsOn@{flowCtlRtsCtsOn}}
@@ -145,6 +160,10 @@ True if RTS/CTS flow control is enabled (and no error occured).
 
 Implements \hyperlink{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 543 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a8d3e3eb1d2272129b8b97377dff1d5d4}{
 \index{mdtSerialPort@{mdtSerialPort}!flowCtlXonXoffOn@{flowCtlXonXoffOn}}
 \index{flowCtlXonXoffOn@{flowCtlXonXoffOn}!mdtSerialPort@{mdtSerialPort}}
@@ -166,6 +185,10 @@ True if Xon/Xoff flow control is enabled (and no error occured).
 
 
 Implements \hyperlink{classmdt_abstract_serial_port_a80074ba4e5bf44c3e2aebb82214499ee}{mdtAbstractSerialPort}.
+
+
+
+Definition at line 582 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a7893e1817fe5fc59c77ee6f3b9f13ae7}{
 \index{mdtSerialPort@{mdtSerialPort}!getCtlStates@{getCtlStates}}
@@ -193,6 +216,10 @@ False on error, in this case, the thread will be stopped.
 
 Implements \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 861 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{
 \index{mdtSerialPort@{mdtSerialPort}!parity@{parity}}
 \index{parity@{parity}!mdtSerialPort@{mdtSerialPort}}
@@ -215,6 +242,10 @@ Configured parity or NoParity on error.
 
 Implements \hyperlink{classmdt_abstract_serial_port_ac361191b58789065fcea742019b958f9}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 500 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{
 \index{mdtSerialPort@{mdtSerialPort}!read@{read}}
 \index{read@{read}!mdtSerialPort@{mdtSerialPort}}
@@ -234,6 +265,10 @@ This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThre
 Mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
+
+
+
+Definition at line 660 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{
 \index{mdtSerialPort@{mdtSerialPort}!resumeTransmission@{resumeTransmission}}
@@ -265,6 +300,10 @@ False on error, in this case, the reader thread will be stopped.
 
 Reimplemented from \hyperlink{classmdt_abstract_port_ad4a04c995df881593db0a309000be7a7}{mdtAbstractPort}.
 
+
+
+Definition at line 711 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{
 \index{mdtSerialPort@{mdtSerialPort}!setBaudRate@{setBaudRate}}
 \index{setBaudRate@{setBaudRate}!mdtSerialPort@{mdtSerialPort}}
@@ -287,6 +326,10 @@ True if baud rate is supported and could be set.
 
 Implements \hyperlink{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 53 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_af39774b2d3c4121623253740660a0389}{
 \index{mdtSerialPort@{mdtSerialPort}!setDataBits@{setDataBits}}
 \index{setDataBits@{setDataBits}!mdtSerialPort@{mdtSerialPort}}
@@ -308,6 +351,10 @@ True if data bits count is supported and could be set.
 
 
 Implements \hyperlink{classmdt_abstract_serial_port_a323e590d6ead87033985ffff1ecfae81}{mdtAbstractSerialPort}.
+
+
+
+Definition at line 362 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a91ec8a600f09b6844d36902fe1e16592}{
 \index{mdtSerialPort@{mdtSerialPort}!setDtr@{setDtr}}
@@ -336,6 +383,10 @@ The mutex is handled in this method.
 
 Implements \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968dfeb189}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 936 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{
 \index{mdtSerialPort@{mdtSerialPort}!setFlowCtlRtsCts@{setFlowCtlRtsCts}}
 \index{setFlowCtlRtsCts@{setFlowCtlRtsCts}!mdtSerialPort@{mdtSerialPort}}
@@ -357,6 +408,10 @@ True if RTS/CTS flow control is supported and could be set.
 
 
 Implements \hyperlink{classmdt_abstract_serial_port_af01806f53cfc5ef90b34c0645cee3bdf}{mdtAbstractSerialPort}.
+
+
+
+Definition at line 520 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a34e2ac7b0d3cb7a6fb65756cbca2ce48}{
 \index{mdtSerialPort@{mdtSerialPort}!setFlowCtlXonXoff@{setFlowCtlXonXoff}}
@@ -382,6 +437,10 @@ True if Xon/Xoff flow control is supported and could be set.
 
 Implements \hyperlink{classmdt_abstract_serial_port_a05b35143f7b048ebcb2295fdc2ac5013}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 557 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_ae435f052a87dcd0b1829f1577bb5e58d}{
 \index{mdtSerialPort@{mdtSerialPort}!setParity@{setParity}}
 \index{setParity@{setParity}!mdtSerialPort@{mdtSerialPort}}
@@ -404,6 +463,10 @@ True if parity check is supported and could be set.
 
 Implements \hyperlink{classmdt_abstract_serial_port_ac9c6990ac9861f21dcfe27c989b78545}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 468 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a9105e5a3a640b56097c1156000ace933}{
 \index{mdtSerialPort@{mdtSerialPort}!setReadTimeout@{setReadTimeout}}
 \index{setReadTimeout@{setReadTimeout}!mdtSerialPort@{mdtSerialPort}}
@@ -420,6 +483,10 @@ Set the read data timeout.
 The mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
+
+
+
+Definition at line 596 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_af0534e9f2e25b44a1a127d2a34b409fb}{
 \index{mdtSerialPort@{mdtSerialPort}!setRts@{setRts}}
@@ -448,6 +515,10 @@ The mutex is handled in this method.
 
 Implements \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc16a7cc}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 922 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{
 \index{mdtSerialPort@{mdtSerialPort}!setStopBits@{setStopBits}}
 \index{setStopBits@{setStopBits}!mdtSerialPort@{mdtSerialPort}}
@@ -470,6 +541,10 @@ True if stop bits count is supported and could be set.
 
 Implements \hyperlink{classmdt_abstract_serial_port_a164c7be802a04805e5b401fc5011208b}{mdtAbstractSerialPort}.
 
+
+
+Definition at line 427 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a036f49d743838013c9a8cbf6a1dd40d1}{
 \index{mdtSerialPort@{mdtSerialPort}!setWriteTimeout@{setWriteTimeout}}
 \index{setWriteTimeout@{setWriteTimeout}!mdtSerialPort@{mdtSerialPort}}
@@ -486,6 +561,10 @@ Set the write data timeout.
 The mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
+
+
+
+Definition at line 607 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a163a83bdcac2c81a5c6b097c4afde41f}{
 \index{mdtSerialPort@{mdtSerialPort}!stopBits@{stopBits}}
@@ -508,6 +587,10 @@ Configured stop bits count or -\/1 on error.
 
 
 Implements \hyperlink{classmdt_abstract_serial_port_abae48c24634c3e2d298f1cff98b250ed}{mdtAbstractSerialPort}.
+
+
+
+Definition at line 452 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2fe}{
 \index{mdtSerialPort@{mdtSerialPort}!suspendTransmission@{suspendTransmission}}
@@ -539,6 +622,10 @@ False on error, in this case, the reader thread will be stopped.
 
 Reimplemented from \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fef700b9}{mdtAbstractPort}.
 
+
+
+Definition at line 688 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{
 \index{mdtSerialPort@{mdtSerialPort}!waitEventCtl@{waitEventCtl}}
 \index{waitEventCtl@{waitEventCtl}!mdtSerialPort@{mdtSerialPort}}
@@ -562,6 +649,10 @@ void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtSer
 \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(tcflush(pvFd, TCOFLUSH) $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-SERIAL\_\-PORT\_\-IO\_\-ERROR, \char`\"{}tcflush() call failed\char`\"{}, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPort\char`\"{}); e.commit(); \} \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut()}; \} 
 
 Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{mdtAbstractSerialPort}.
+
+
+
+Definition at line 833 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{
 \index{mdtSerialPort@{mdtSerialPort}!waitEventWriteReady@{waitEventWriteReady}}
@@ -587,6 +678,10 @@ void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtSer
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
+
+
+Definition at line 751 of file mdtSerialPort.cpp.
+
 \hypertarget{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{
 \index{mdtSerialPort@{mdtSerialPort}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtSerialPort@{mdtSerialPort}}
@@ -604,6 +699,10 @@ This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThre
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
+
+
+
+Definition at line 618 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{
 \index{mdtSerialPort@{mdtSerialPort}!write@{write}}
@@ -633,6 +732,10 @@ Number of bytes written, or $<$0 on error
 
 
 Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
+
+
+
+Definition at line 791 of file mdtSerialPort.cpp.
 
 
 

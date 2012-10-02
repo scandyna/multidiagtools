@@ -191,6 +191,10 @@ This is a abstract class used to build system specific implementation.\par
 \end{DoxySeeAlso}
 
 
+Definition at line 43 of file mdtAbstractSerialPort.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_abstract_serial_port_aecd76bff0f93cb86c3bbfd73e3776032}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!availableBaudRates@{availableBaudRates}}
@@ -207,7 +211,11 @@ Get the list of available baud rates.
 
 The mutex is not handled by this method.
 
-If the internal baud rates list is empty and port is open, \hyperlink{classmdt_abstract_serial_port_a6241c9f53d60fd477e2375bd5b36073f}{buildAvailableBaudRates()} will be called. \hypertarget{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{
+If the internal baud rates list is empty and port is open, \hyperlink{classmdt_abstract_serial_port_a6241c9f53d60fd477e2375bd5b36073f}{buildAvailableBaudRates()} will be called. 
+
+Definition at line 108 of file mdtAbstractSerialPort.cpp.
+
+\hypertarget{classmdt_abstract_serial_port_ad9f5b7e939c60cd3766d2bf76df4af4b}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!baudRate@{baudRate}}
 \index{baudRate@{baudRate}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{baudRate}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractSerialPort::baudRate (
@@ -266,6 +274,10 @@ Emited whenn CAR (CD) status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 96 of file moc\_\-mdtAbstractSerialPort.cxx.
+
 \hypertarget{classmdt_abstract_serial_port_abf0be424c1a8cf01b830cc6b371e8695}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!carIsOn@{carIsOn}}
 \index{carIsOn@{carIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -279,7 +291,11 @@ Emited whenn CAR (CD) status changed.
 
 Get the CAR (CD) state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{
+The mutex is handled in this method. 
+
+Definition at line 117 of file mdtAbstractSerialPort.cpp.
+
+\hypertarget{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!close@{close}}
 \index{close@{close}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractSerialPort::close (
@@ -297,6 +313,10 @@ Close serial port and clear flags (f.ex. UART Type is set to unknow).
 The mutex is not handled by this method. 
 
 Reimplemented from \hyperlink{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{mdtAbstractPort}.
+
+
+
+Definition at line 45 of file mdtAbstractSerialPort.cpp.
 
 \hypertarget{classmdt_abstract_serial_port_adf45a5006218ef5660721ecdf8454b5d}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!ctsChanged@{ctsChanged}}
@@ -316,6 +336,10 @@ Emited whenn CTS status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 110 of file moc\_\-mdtAbstractSerialPort.cxx.
+
 \hypertarget{classmdt_abstract_serial_port_a9bea314eefd6f4ec79456bc21e6c66af}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!ctsIsOn@{ctsIsOn}}
 \index{ctsIsOn@{ctsIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -329,7 +353,11 @@ Emited whenn CTS status changed.
 
 Get the CTS state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{
+The mutex is handled in this method. 
+
+Definition at line 139 of file mdtAbstractSerialPort.cpp.
+
+\hypertarget{classmdt_abstract_serial_port_a63e2a14c416d9c3516ec74f5e37f4cc7}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!dataBits@{dataBits}}
 \index{dataBits@{dataBits}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{dataBits}]{\setlength{\rightskip}{0pt plus 5cm}virtual int mdtAbstractSerialPort::dataBits (
@@ -370,6 +398,10 @@ Emited whenn DSR status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 103 of file moc\_\-mdtAbstractSerialPort.cxx.
+
 \hypertarget{classmdt_abstract_serial_port_a76816aa53a6dce0ab30b9f1d095dd045}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!dsrIsOn@{dsrIsOn}}
 \index{dsrIsOn@{dsrIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -383,7 +415,11 @@ Emited whenn DSR status changed.
 
 Get the DSR state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{
+The mutex is handled in this method. 
+
+Definition at line 128 of file mdtAbstractSerialPort.cpp.
+
+\hypertarget{classmdt_abstract_serial_port_a7a1163b4d44d80369bd56c65af7942ad}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!flowCtlRtsCtsOn@{flowCtlRtsCtsOn}}
 \index{flowCtlRtsCtsOn@{flowCtlRtsCtsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{flowCtlRtsCtsOn}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::flowCtlRtsCtsOn (
@@ -514,6 +550,10 @@ Emited whenn RNG (RI) status changed.
 {\em on} & When true, line signal's new state is enabled (diseabled else) \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 117 of file moc\_\-mdtAbstractSerialPort.cxx.
+
 \hypertarget{classmdt_abstract_serial_port_a0a3954438d1e8180e53717cc0fe1ce3e}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!rngIsOn@{rngIsOn}}
 \index{rngIsOn@{rngIsOn}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
@@ -527,7 +567,11 @@ Emited whenn RNG (RI) status changed.
 
 Get the RNG (RI) state. 
 
-The mutex is handled in this method. \hypertarget{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{
+The mutex is handled in this method. 
+
+Definition at line 150 of file mdtAbstractSerialPort.cpp.
+
+\hypertarget{classmdt_abstract_serial_port_ae250b30c1db5652bd2abe2caf1c9d5c7}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!setBaudRate@{setBaudRate}}
 \index{setBaudRate@{setBaudRate}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{setBaudRate}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtAbstractSerialPort::setBaudRate (
@@ -759,7 +803,11 @@ Get UART type.
 
 The mutex is not handled by this method.
 
-If UART type is unknow and port is open, \hyperlink{classmdt_abstract_serial_port_abbc98ff6721f120d68b43078e90b1195}{mapUartType()} will be called. \hypertarget{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{
+If UART type is unknow and port is open, \hyperlink{classmdt_abstract_serial_port_abbc98ff6721f120d68b43078e90b1195}{mapUartType()} will be called. 
+
+Definition at line 63 of file mdtAbstractSerialPort.cpp.
+
+\hypertarget{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{
 \index{mdtAbstractSerialPort@{mdtAbstractSerialPort}!waitEventCtl@{waitEventCtl}}
 \index{waitEventCtl@{waitEventCtl}!mdtAbstractSerialPort@{mdtAbstractSerialPort}}
 \subsubsection[{waitEventCtl}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf error\_\-t} mdtAbstractSerialPort::waitEventCtl (
@@ -797,4 +845,5 @@ Implemented in \hyperlink{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtserialport/mdtAbstractSerialPort.h\item 
-src/mdtserialport/mdtAbstractSerialPort.cpp\end{DoxyCompactItemize}
+src/mdtserialport/mdtAbstractSerialPort.cpp\item 
+src/mdtserialport/moc\_\-mdtAbstractSerialPort.cxx\end{DoxyCompactItemize}

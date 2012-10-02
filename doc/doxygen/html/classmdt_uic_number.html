@@ -133,6 +133,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="see"><dt><b>See also:</b></dt><dd><a href="http://www.uic.org/spip.php?rubrique95">http://www.uic.org/spip.php?rubrique95</a> </dd>
 <dd>
 <a href="http://en.wikipedia.org/wiki/UIC_wagon_numbers">http://en.wikipedia.org/wiki/UIC_wagon_numbers</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_uic_number_8h_source.html">mdtUicNumber.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a1923dbc9f382433d3d669b32aac75888"></a><!-- doxytag: member="mdtUicNumber::compact11UicNumber" ref="a1923dbc9f382433d3d669b32aac75888" args="()" -->
 <div class="memitem">
@@ -151,6 +153,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get 11 digit compact unformated UIC number. </p>
 <p>A 11 digit UIC number must first be set with <a class="el" href="classmdt_uic_number.html#aadf50072784344824c696da7cff5b445" title="Set the UIC number.">setNumber()</a>. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>11 digit UIC number without space, without control key, or a empty string on error </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00157">157</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -174,6 +178,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
  F.ex: if 94 85 7 560 256-0 is set, this method returns 560256. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>6 digit UIC number without space, without control key, or a empty string on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00129">129</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="acd5013109fc4b953023333ac1382edd6"></a><!-- doxytag: member="mdtUicNumber::controlKey" ref="acd5013109fc4b953023333ac1382edd6" args="()" -->
@@ -194,6 +200,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>The UIC number must be set before. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Control key, or value &lt; 0 on error </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_uic_number.html#aadf50072784344824c696da7cff5b445" title="Set the UIC number.">setNumber()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00196">196</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -216,6 +224,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="return"><dt><b>Returns:</b></dt><dd>Control key, &lt;unknow&gt; on error </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_uic_number.html#acd5013109fc4b953023333ac1382edd6" title="Get the control key.">controlKey()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a69fea97b67a745980ad4386d5ffa9505"></a><!-- doxytag: member="mdtUicNumber::country" ref="a69fea97b67a745980ad4386d5ffa9505" args="()" -->
@@ -234,6 +244,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Get the country. </p>
 <p>The UIC number must be set, and country database loaded before this method works. </p>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00555">555</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -255,6 +267,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>The UIC number must first be set with <a class="el" href="classmdt_uic_number.html#aadf50072784344824c696da7cff5b445" title="Set the UIC number.">setNumber()</a>. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>7 or 12 digit formated UIC number, or &lt;unknow&gt; on error </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aac3c9e1adb6f9646216b4327645a621a"></a><!-- doxytag: member="mdtUicNumber::isValid" ref="aac3c9e1adb6f9646216b4327645a621a" args="()" -->
@@ -273,6 +287,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Check the UIC number validity. </p>
 <p>A valid UIC number contains 6, 7, 11 or 12 digits. </p>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -294,6 +310,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Load the coutries database. </p>
 <p>The database is a CSV file containing the correspondance between 2 digits number and the country. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a href="http://www.uic.org/IMG/xls/country_code_applicable.xls">http://www.uic.org/IMG/xls/country_code_applicable.xls</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00250">250</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -321,6 +339,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <li>uic_usages_db.csv </li>
 </ul>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ab1d08c2ea34f310631866d2e46010363"></a><!-- doxytag: member="mdtUicNumber::loadSpeedAndHeatsDb" ref="ab1d08c2ea34f310631866d2e46010363" args="(const QString &amp;dbPath)" -->
@@ -340,6 +360,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Load the vehicule speend and heat. </p>
 <p>The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. </p>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00443">443</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -361,6 +383,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Load the vehicule type database. </p>
 <p>The database is a CSV file containing the correspondance between 2 digits number and the vehicule type. </p>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00379">379</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af496e1fb75f696258287754fe2607561"></a><!-- doxytag: member="mdtUicNumber::loadUsagesDb" ref="af496e1fb75f696258287754fe2607561" args="(const QString &amp;dbPath)" -->
@@ -381,6 +405,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Load the usage database. </p>
 <p>The database is a CSV file containing the correspondance between 2 digits number and the usage. </p>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00315">315</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ad4fbefb268327d15c2d39d2a17f45180"></a><!-- doxytag: member="mdtUicNumber::serialNumber" ref="ad4fbefb268327d15c2d39d2a17f45180" args="()" -->
@@ -399,6 +425,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Get the serial number part. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Serial number or &lt;unknow&gt; on error </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -420,6 +448,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set the UIC number. </p>
 <p>The UIC number passed as argument is first checked. If ok, it is stored as list of digits. Note: some chars are allowed (space, -), but alpha (a-b, A-B) are not valid. </p>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af2c13420378ec5559ce4f1eaba1f38e7"></a><!-- doxytag: member="mdtUicNumber::speedAndHeat" ref="af2c13420378ec5559ce4f1eaba1f38e7" args="()" -->
@@ -438,6 +468,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Get the vehicule speed and heat. </p>
 <p>The UIC number must be set, and type database loaded before this method works. </p>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00622">622</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -458,6 +490,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the vehicule type. </p>
 <p>The UIC number must be set, and type database loaded before this method works. </p>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00595">595</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a7bb368e5de6a9e7af3a2516eb4282e04"></a><!-- doxytag: member="mdtUicNumber::unloadDbs" ref="a7bb368e5de6a9e7af3a2516eb4282e04" args="()" -->
@@ -476,6 +510,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 <p>Unload databases. </p>
 <p>This will free memory used by load*Db(). This method is automatically called by destructor. </p>
+
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00543">543</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
 
 </div>
 </div>
@@ -496,11 +532,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the usage. </p>
 <p>The UIC number must be set, and usage database loaded before this method works. </p>
 
+<p>Definition at line <a class="el" href="mdt_uic_number_8cpp_source.html#l00575">575</a> of file <a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_uic_number_8h_source.html">mdtUicNumber.h</a></li>
-<li>src/mdtutils/mdtUicNumber.cpp</li>
+<li>src/mdtutils/<a class="el" href="mdt_uic_number_8cpp_source.html">mdtUicNumber.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -517,7 +555,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

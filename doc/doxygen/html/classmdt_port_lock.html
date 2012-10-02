@@ -94,6 +94,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>On Linux (or all POSIX ?) system, file locking is avaliable with fcntl(). But several applications uses LCK..name for locking.</p>
 <p>This class will try to find if a port is allready locked using LCK..name system in several directories (/var/lock, /tmp, ...).</p>
 <p>If nothing is found, then port will be opened, and several lockfiles created. The port is then locked with fcntl(). </p>
+
+<p>Definition at line <a class="el" href="mdt_port_lock_8h_source.html#l00045">45</a> of file <a class="el" href="mdt_port_lock_8h_source.html">mdtPortLock.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a25e9a2cb8a10069fae75c76b6809c27f"></a><!-- doxytag: member="mdtPortLock::openLocked" ref="a25e9a2cb8a10069fae75c76b6809c27f" args="(const QString &amp;portName, int flags)" -->
 <div class="memitem">
@@ -131,6 +133,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>File descriptor returned by open() , or -1 on error. </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_port_lock_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_port_lock_8cpp_source.html">mdtPortLock.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a60b65f02d57568dc36c5e918aa5357a6"></a><!-- doxytag: member="mdtPortLock::unlock" ref="a60b65f02d57568dc36c5e918aa5357a6" args="()" -->
@@ -151,11 +155,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Will remove lockfiles and unlock port with fcntl().</p>
 <p>Note: use close() if file is not used later, this is not done by this method. </p>
 
+<p>Definition at line <a class="el" href="mdt_port_lock_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_port_lock_8cpp_source.html">mdtPortLock.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/linux/<a class="el" href="mdt_port_lock_8h_source.html">mdtPortLock.h</a></li>
-<li>src/mdtport/linux/mdtPortLock.cpp</li>
+<li>src/mdtport/linux/<a class="el" href="mdt_port_lock_8cpp_source.html">mdtPortLock.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -172,7 +178,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -46,6 +46,13 @@ qint64 \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{write} 
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+
+
+Definition at line 33 of file mdtTcpSocket.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{
 \index{mdtTcpSocket@{mdtTcpSocket}!connectToHost@{connectToHost}}
@@ -72,6 +79,10 @@ Use this method to start a connection to a host.\par
 \begin{DoxyPrecond}{Precondition}
 hostPort must be $>$ 0 
 \end{DoxyPrecond}
+
+
+Definition at line 40 of file mdtTcpSocket.cpp.
+
 \hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
 \index{mdtTcpSocket@{mdtTcpSocket}!read@{read}}
 \index{read@{read}!mdtTcpSocket@{mdtTcpSocket}}
@@ -101,6 +112,10 @@ Number of bytes readen, or a error $<$ 0
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
 
+
+
+Definition at line 94 of file mdtTcpSocket.cpp.
+
 \hypertarget{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setReadTimeout@{setReadTimeout}}
 \index{setReadTimeout@{setReadTimeout}!mdtTcpSocket@{mdtTcpSocket}}
@@ -128,6 +143,10 @@ Subclass notes:\par
 
 Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{mdtAbstractPort}.
 
+
+
+Definition at line 59 of file mdtTcpSocket.cpp.
+
 \hypertarget{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setThreadObjects@{setThreadObjects}}
 \index{setThreadObjects@{setThreadObjects}!mdtTcpSocket@{mdtTcpSocket}}
@@ -151,6 +170,10 @@ thread must be a valid pointer
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
 \end{DoxySeeAlso}
+
+
+Definition at line 50 of file mdtTcpSocket.cpp.
+
 \hypertarget{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setWriteTimeout@{setWriteTimeout}}
 \index{setWriteTimeout@{setWriteTimeout}!mdtTcpSocket@{mdtTcpSocket}}
@@ -178,6 +201,10 @@ Subclass notes:\par
 
 Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{mdtAbstractPort}.
 
+
+
+Definition at line 64 of file mdtTcpSocket.cpp.
+
 \hypertarget{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitEventWriteReady@{waitEventWriteReady}}
 \index{waitEventWriteReady@{waitEventWriteReady}!mdtTcpSocket@{mdtTcpSocket}}
@@ -196,6 +223,10 @@ This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteTh
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
+
+
+Definition at line 111 of file mdtTcpSocket.cpp.
+
 \hypertarget{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForReadyRead@{waitForReadyRead}}
 \index{waitForReadyRead@{waitForReadyRead}!mdtTcpSocket@{mdtTcpSocket}}
@@ -213,6 +244,10 @@ This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThre
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
+
+
+
+Definition at line 69 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{
 \index{mdtTcpSocket@{mdtTcpSocket}!write@{write}}
@@ -242,6 +277,10 @@ Number of bytes written, or $<$0 on error
 
 
 Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
+
+
+
+Definition at line 139 of file mdtTcpSocket.cpp.
 
 
 

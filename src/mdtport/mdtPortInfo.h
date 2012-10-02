@@ -26,6 +26,8 @@
 #include <QMetaType>
 #include "mdtDeviceInfo.h"
 
+#include <std::list>
+
 /*! \brief Contains informations about a port
  *
  * Used by mdtPortManager in scan() method.
@@ -72,6 +74,9 @@ class mdtPortInfo
 
  private:
 
+  /*! \brief Devices list
+   * \link mdtDeviceInfo
+   */
   QList<mdtDeviceInfo*> pvDeviceInfoList;
   QString pvPortName;
 };

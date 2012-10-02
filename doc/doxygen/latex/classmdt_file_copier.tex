@@ -81,6 +81,10 @@ When files must be copied in a GUI application, some common situation must be ha
 \item If a file exists at destination, user will be asked about what to do. But, the ask operation, and the effective copy are not a atomic operation. So it can happen that another process creates the destination, and that file is then overwritten during copy ! 
 \end{DoxyItemize}
 
+Definition at line 53 of file mdtFileCopier.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_file_copier_ad0730aae81b3ba64eec4563390b852a3}{
 \index{mdtFileCopier@{mdtFileCopier}!addCopy@{addCopy}}
@@ -101,6 +105,10 @@ Add a source and destination file path to copy.
 At this point, the copy is enqueued. To process copy, call \hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{startCopy()}. \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{startCopy()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 88 of file mdtFileCopier.cpp.
+
 \hypertarget{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{
 \index{mdtFileCopier@{mdtFileCopier}!finished@{finished}}
 \index{finished@{finished}!mdtFileCopier@{mdtFileCopier}}
@@ -119,6 +127,10 @@ Emitted when copy process is done.
 {\em success} & True on success, false on failure (errors are displayed to the user, and logged with \hyperlink{classmdt_error}{mdtError} system) \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 107 of file moc\_\-mdtFileCopier.cxx.
+
 \hypertarget{classmdt_file_copier_a868ce61ec7d8f590002dd350276413a4}{
 \index{mdtFileCopier@{mdtFileCopier}!setDefaultSetup@{setDefaultSetup}}
 \index{setDefaultSetup@{setDefaultSetup}!mdtFileCopier@{mdtFileCopier}}
@@ -141,7 +153,11 @@ Default setup is:
 \hyperlink{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{setDirectDestOverwrite()} 
 \end{DoxySeeAlso}
 
-\end{DoxyItemize}\hypertarget{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{
+\end{DoxyItemize}
+
+Definition at line 82 of file mdtFileCopier.cpp.
+
+\hypertarget{classmdt_file_copier_ad045db0c7b84a7c9505d7ac1704f7413}{
 \index{mdtFileCopier@{mdtFileCopier}!setDirectDestOverwrite@{setDirectDestOverwrite}}
 \index{setDirectDestOverwrite@{setDirectDestOverwrite}!mdtFileCopier@{mdtFileCopier}}
 \subsubsection[{setDirectDestOverwrite}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::setDirectDestOverwrite (
@@ -154,7 +170,11 @@ Default setup is:
 
 Permit direct destination overwrite. 
 
-If set false, the user will be asked about what to do if destination allready exists. \hypertarget{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{
+If set false, the user will be asked about what to do if destination allready exists. 
+
+Definition at line 77 of file mdtFileCopier.cpp.
+
+\hypertarget{classmdt_file_copier_ad971d6b727c4ceaa1a39bf356d694654}{
 \index{mdtFileCopier@{mdtFileCopier}!setTestMode@{setTestMode}}
 \index{setTestMode@{setTestMode}!mdtFileCopier@{mdtFileCopier}}
 \subsubsection[{setTestMode}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFileCopier::setTestMode (
@@ -167,7 +187,11 @@ If set false, the user will be asked about what to do if destination allready ex
 
 If set true, message boxes will not be displayed, and some default decisions will be taken. 
 
-Used by unit tests. Please never use this flag without you know that it can happen ! \hypertarget{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{
+Used by unit tests. Please never use this flag without you know that it can happen ! 
+
+Definition at line 322 of file mdtFileCopier.cpp.
+
+\hypertarget{classmdt_file_copier_acd5397fbea57f8169a5dddd2809d26cb}{
 \index{mdtFileCopier@{mdtFileCopier}!startCopy@{startCopy}}
 \index{startCopy@{startCopy}!mdtFileCopier@{mdtFileCopier}}
 \subsubsection[{startCopy}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFileCopier::startCopy (
@@ -184,6 +208,10 @@ For all enqueued copies, some checks will be done, when ok, copies will then pro
  To know when copy is finished, use \hyperlink{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{waitFinished()}, or connect to the \hyperlink{classmdt_file_copier_a808f01eb2a319e82a9fec5bb978ccb85}{finished()} signal. \begin{DoxyReturn}{Returns}
 true if copy will be processed, or false if no copy can be done, or user cancelled copy because of some problems. 
 \end{DoxyReturn}
+
+
+Definition at line 97 of file mdtFileCopier.cpp.
+
 \hypertarget{classmdt_file_copier_adcfa582fe6e1e3420c8285c2301323f6}{
 \index{mdtFileCopier@{mdtFileCopier}!waitFinished@{waitFinished}}
 \index{waitFinished@{waitFinished}!mdtFileCopier@{mdtFileCopier}}
@@ -202,7 +230,12 @@ True on success, false on failure or abort (errors are displayed to the user, an
 \end{DoxyReturn}
 
 
+Definition at line 304 of file mdtFileCopier.cpp.
+
+
+
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtutils/mdtFileCopier.h\item 
-src/mdtutils/mdtFileCopier.cpp\end{DoxyCompactItemize}
+src/mdtutils/mdtFileCopier.cpp\item 
+src/mdtutils/moc\_\-mdtFileCopier.cxx\end{DoxyCompactItemize}

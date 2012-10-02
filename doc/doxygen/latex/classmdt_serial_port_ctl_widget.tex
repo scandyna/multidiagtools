@@ -56,6 +56,13 @@ void \hyperlink{classmdt_serial_port_ctl_widget_a9dce60a846cbf24d7ceab099ff147c1
 \begin{DoxyCompactList}\small\item\em Make the signals/slots connections. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
+\subsection{Detailed Description}
+
+
+Definition at line 31 of file mdtSerialPortCtlWidget.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_serial_port_ctl_widget_a9dce60a846cbf24d7ceab099ff147c18}{
 \index{mdtSerialPortCtlWidget@{mdtSerialPortCtlWidget}!makeConnections@{makeConnections}}
@@ -84,6 +91,10 @@ connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(\hyperlink{clas
 connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(\hyperlink{classmdt_serial_port_ctl_widget_a5cbb9a5ef4098dec46a9330372dc882c}{updateRxTimeoutState(bool)}));
 
 connect(manager-\/$>$writeThread(), SIGNAL(errorOccured(int)), this, SLOT(\hyperlink{classmdt_serial_port_ctl_widget_a0c9ceed20ee727cfd1ef1ee971460fd1}{trigTxErrorState()})); connect(manager-\/$>$readThread(), SIGNAL(errorOccured(int)), this, SLOT(\hyperlink{classmdt_serial_port_ctl_widget_a8490db062b6226b4c26ef1a85afc75bd}{trigRxErrorState()})); 
+
+
+
+Definition at line 110 of file mdtSerialPortCtlWidget.cpp.
 
 
 

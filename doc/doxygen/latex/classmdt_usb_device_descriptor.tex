@@ -91,6 +91,10 @@ For current needed attributes, some helper methods are available:
 
 When goal is to open a particular device for I/O, a simple way to get needed informations could be to call \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} with fetchActiveConfigOnly set true, then get endpoints with \hyperlink{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{firstBulkOutEndpoint()} , \hyperlink{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}{firstBulkInEndpoint()} , \hyperlink{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{firstInterruptInEndpoint()} with configIndex set to 0, and a valid ifaceIndex. 
 
+Definition at line 56 of file mdtUsbDeviceDescriptor.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bcdDevice@{bcdDevice}}
@@ -105,7 +109,11 @@ When goal is to open a particular device for I/O, a simple way to get needed inf
 
 Device release number id. 
 
-Coded in BCD. \hypertarget{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa00735d04516e86}{
+Coded in BCD. 
+
+Definition at line 165 of file mdtUsbDeviceDescriptor.cpp.
+
+\hypertarget{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa00735d04516e86}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bcdUSB@{bcdUSB}}
 \index{bcdUSB@{bcdUSB}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
 \subsubsection[{bcdUSB}]{\setlength{\rightskip}{0pt plus 5cm}quint16 mdtUsbDeviceDescriptor::bcdUSB (
@@ -118,7 +126,11 @@ Coded in BCD. \hypertarget{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa007
 
 USB Specification Release Number. 
 
-Coded in BCD. F.ex. USB 2.0 will be 0x0200. \hypertarget{classmdt_usb_device_descriptor_a08b5ae262e2b966c952ee5e5bcc6fb10}{
+Coded in BCD. F.ex. USB 2.0 will be 0x0200. 
+
+Definition at line 130 of file mdtUsbDeviceDescriptor.cpp.
+
+\hypertarget{classmdt_usb_device_descriptor_a08b5ae262e2b966c952ee5e5bcc6fb10}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bMaxPacketSize0@{bMaxPacketSize0}}
 \index{bMaxPacketSize0@{bMaxPacketSize0}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
 \subsubsection[{bMaxPacketSize0}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbDeviceDescriptor::bMaxPacketSize0 (
@@ -131,7 +143,11 @@ Coded in BCD. F.ex. USB 2.0 will be 0x0200. \hypertarget{classmdt_usb_device_des
 
 Maximum packet size for endpoint zero. 
 
-(only 8, 16, 32, or 64 are valid) \hypertarget{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}{
+(only 8, 16, 32, or 64 are valid) 
+
+Definition at line 150 of file mdtUsbDeviceDescriptor.cpp.
+
+\hypertarget{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!configurations@{configurations}}
 \index{configurations@{configurations}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
 \subsubsection[{configurations}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtUsbConfigDescriptor} $\ast$ $>$ \& mdtUsbDeviceDescriptor::configurations (
@@ -144,7 +160,11 @@ Maximum packet size for endpoint zero.
 
 Access configurations. 
 
-Configurations are available after a call of \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} \hypertarget{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}{
+Configurations are available after a call of \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} 
+
+Definition at line 170 of file mdtUsbDeviceDescriptor.cpp.
+
+\hypertarget{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!endpoint@{endpoint}}
 \index{endpoint@{endpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
 \subsubsection[{endpoint}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtUsbEndpointDescriptor} $\ast$ mdtUsbDeviceDescriptor::endpoint (
@@ -173,6 +193,10 @@ Index checking is done in this method, and 0 (NULL pointer) is returned on wrong
 \begin{DoxyReturn}{Returns}
 Pointer to endpoint descriptor, or 0 on error 
 \end{DoxyReturn}
+
+
+Definition at line 197 of file mdtUsbDeviceDescriptor.cpp.
+
 \hypertarget{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!fetchAttributes@{fetchAttributes}}
 \index{fetchAttributes@{fetchAttributes}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
@@ -198,6 +222,10 @@ Ftech the device descriptor's attributes.
 \begin{DoxyPrecond}{Precondition}
 device must be a valid pointer 
 \end{DoxyPrecond}
+
+
+Definition at line 48 of file mdtUsbDeviceDescriptor.cpp.
+
 \hypertarget{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstBulkInEndpoint@{firstBulkInEndpoint}}
 \index{firstBulkInEndpoint@{firstBulkInEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
@@ -225,6 +253,10 @@ Find the first bulk transfert endpoint with IN direction.
 \begin{DoxyReturn}{Returns}
 Pointer to endpoint descriptor, 0 if none found, or on error 
 \end{DoxyReturn}
+
+
+Definition at line 246 of file mdtUsbDeviceDescriptor.cpp.
+
 \hypertarget{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstBulkOutEndpoint@{firstBulkOutEndpoint}}
 \index{firstBulkOutEndpoint@{firstBulkOutEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
@@ -252,6 +284,10 @@ Find the first bulk transfert endpoint with OUT direction.
 \begin{DoxyReturn}{Returns}
 Pointer to endpoint descriptor, 0 if none found, or on error 
 \end{DoxyReturn}
+
+
+Definition at line 215 of file mdtUsbDeviceDescriptor.cpp.
+
 \hypertarget{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstInterruptInEndpoint@{firstInterruptInEndpoint}}
 \index{firstInterruptInEndpoint@{firstInterruptInEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
@@ -279,6 +315,10 @@ Find the first interrupt transfert endpoint with IN direction.
 \begin{DoxyReturn}{Returns}
 Pointer to endpoint descriptor, 0 if none found, or on error 
 \end{DoxyReturn}
+
+
+Definition at line 308 of file mdtUsbDeviceDescriptor.cpp.
+
 \hypertarget{classmdt_usb_device_descriptor_ad30b3579b0c77585df29acdfdf0fc179}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstInterruptOutEndpoint@{firstInterruptOutEndpoint}}
 \index{firstInterruptOutEndpoint@{firstInterruptOutEndpoint}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
@@ -306,6 +346,10 @@ Find the first interrupt transfert endpoint with OUT direction.
 \begin{DoxyReturn}{Returns}
 Pointer to endpoint descriptor, 0 if none found, or on error 
 \end{DoxyReturn}
+
+
+Definition at line 277 of file mdtUsbDeviceDescriptor.cpp.
+
 \hypertarget{classmdt_usb_device_descriptor_af1e27ae69d3c77c9dfc53a3f261caeae}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!interface@{interface}}
 \index{interface@{interface}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
@@ -332,6 +376,10 @@ Index checking is done in this method, and 0 (NULL pointer) is returned on wrong
 \begin{DoxyReturn}{Returns}
 Pointer to interface descriptor, or 0 on error 
 \end{DoxyReturn}
+
+
+Definition at line 175 of file mdtUsbDeviceDescriptor.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

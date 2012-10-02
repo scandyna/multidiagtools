@@ -62,6 +62,10 @@ All needed object are created by constructor. To alter configuration, use \hyper
 
 Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} to begin read/write and stop to end. 
 
+Definition at line 42 of file mdtUsbtmcPortManager.h.
+
+
+
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classmdt_usbtmc_port_manager_a99a24e4360e70ffc63677dbe888513f7}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -76,7 +80,11 @@ Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()}
 
 Construct a USBTMC port manager. 
 
-Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_usb_port}{mdtUsbPort}, and thread object. \hypertarget{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{
+Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_usb_port}{mdtUsbPort}, and thread object. 
+
+Definition at line 38 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!$\sim$mdtUsbtmcPortManager@{$\sim$mdtUsbtmcPortManager}}
 \index{$\sim$mdtUsbtmcPortManager@{$\sim$mdtUsbtmcPortManager}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
 \subsubsection[{$\sim$mdtUsbtmcPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtUsbtmcPortManager::$\sim$mdtUsbtmcPortManager (
@@ -90,6 +98,10 @@ Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt
 Destructor. 
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
+
+Definition at line 57 of file mdtUsbtmcPortManager.cpp.
+
+
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}{
@@ -111,6 +123,10 @@ Stop the manager (if running), and close the port (if open). All internal object
 
 Reimplemented from \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{mdtPortManager}.
 
+
+
+Definition at line 294 of file mdtUsbtmcPortManager.cpp.
+
 \hypertarget{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
 \index{fromThreadNewFrameReaden@{fromThreadNewFrameReaden}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -127,6 +143,10 @@ Called by the read thread whenn a complete frame was readen.
 
 
 Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{mdtPortManager}.
+
+
+
+Definition at line 305 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a41d46a7104601f0259c772328c743b75}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan22@{scan22}}
@@ -147,7 +167,11 @@ QStringList \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{
 
 We only need system files dir.setFilter(QDir::Files $|$ QDir::System); USBTMC interfaces extList $<$$<$ \char`\"{}usbtmc$\ast$\char`\"{}; Common device directory dir.setPath(\char`\"{}/dev\char`\"{}); if(!dir.exists())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}directory '\char`\"{} + dir.dirName() + \char`\"{}' not exists\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPortManagerPosix\char`\"{}); e.commit(); return availablePorts; \} dir.setNameFilters(extList); Gest list of found files filesInfo = dir.entryInfoList(); Construct the list of absolute file paths for(int i=0; i$<$filesInfo.size(); ++i)\{ portNames $<$$<$ filesInfo.at(i).absoluteFilePath(); \} Sort the list portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames); For each port name, try to open the port and get some attributes (to see if it really exists) for(int i=0; i$<$portNames.size(); ++i)\{ Try to open port port = new \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort}; Q\_\-ASSERT(port != 0); port-\/$>$setPortName(portNames.at(i)); if(port-\/$>$open() == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ availablePorts.append(portNames.at(i)); port-\/$>$close(); \} delete port; \}
 
-return availablePorts; \} \hypertarget{classmdt_usbtmc_port_manager_a2da27dcbfc9448f1d61d93679b9a2ef3}{
+return availablePorts; \} 
+
+Definition at line 113 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_a2da27dcbfc9448f1d61d93679b9a2ef3}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
 \index{sendReadRequest@{sendReadRequest}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
 \subsubsection[{sendReadRequest}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbtmcPortManager::sendReadRequest (
@@ -165,6 +189,10 @@ USBTMC standard need that a read request is sent to device before we can read an
 \begin{DoxyReturn}{Returns}
 True on success. 
 \end{DoxyReturn}
+
+
+Definition at line 247 of file mdtUsbtmcPortManager.cpp.
+
 \hypertarget{classmdt_usbtmc_port_manager_a78ec9aec17061657f2151c677fc869eb}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!waitReadenFrame@{waitReadenFrame}}
 \index{waitReadenFrame@{waitReadenFrame}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -192,6 +220,10 @@ True if Ok, false on timeout
 
 Reimplemented from \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{mdtPortManager}.
 
+
+
+Definition at line 283 of file mdtUsbtmcPortManager.cpp.
+
 \hypertarget{classmdt_usbtmc_port_manager_a7ff9a9ada7919af9a90286859695a29d}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
 \index{writeData@{writeData}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -218,6 +250,10 @@ True on success.
 
 
 Reimplemented from \hyperlink{classmdt_port_manager_a6d3cc4e522326e2a6ca0da401ae58271}{mdtPortManager}.
+
+
+
+Definition at line 209 of file mdtUsbtmcPortManager.cpp.
 
 
 

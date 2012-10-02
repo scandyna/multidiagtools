@@ -100,6 +100,8 @@ Public Member Functions</h2></td></tr>
 <p>A file may be locked in read or write mode. Multiple instances of <em><a class="el" href="class_qt_locked_file.html" title="namespace QtLP_Private {">QtLockedFile</a></em>, created in multiple processes running on the same machine, may have a file locked in read mode. Exactly one instance may have it locked in write mode. A read and a write lock cannot exist simultaneously on the same file.</p>
 <p>The file locks are advisory. This means that nothing prevents another process from manipulating a locked file using QFile or file system functions offered by the OS. Serialization is only guaranteed if all processes that access the file use QLockedFile. Also, while holding a lock on a file, a process must not open the same file again (through any API), or locks can be unexpectedly lost.</p>
 <p>The lock provided by an instance of <em><a class="el" href="class_qt_locked_file.html" title="namespace QtLP_Private {">QtLockedFile</a></em> is released whenever the program terminates. This is true even when the program crashes and no destructors are called. </p>
+
+<p>Definition at line <a class="el" href="qtlockedfile_8h_source.html#l00066">66</a> of file <a class="el" href="qtlockedfile_8h_source.html">qtlockedfile.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="aef385609a0a280b52334b972b04074cc"></a><!-- doxytag: member="QtLockedFile::LockMode" ref="aef385609a0a280b52334b972b04074cc" args="" -->
 <div class="memitem">
@@ -113,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>This enum describes the available lock modes.</p>
 <p>ReadLock A read lock.  WriteLock A write lock.  NoLock Neither a read lock nor a write lock. </p>
+
+<p>Definition at line <a class="el" href="qtlockedfile_8h_source.html#l00069">69</a> of file <a class="el" href="qtlockedfile_8h_source.html">qtlockedfile.h</a>.</p>
 
 </div>
 </div>
@@ -133,6 +137,8 @@ Public Member Functions</h2></td></tr>
 <p>Constructs an unlocked <em><a class="el" href="class_qt_locked_file.html" title="namespace QtLP_Private {">QtLockedFile</a></em> object. This constructor behaves in the same way as <em>QFile::QFile()</em>.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd>QFile::QFile() </dd></dl>
 
+<p>Definition at line <a class="el" href="qtlockedfile_8cpp_source.html#l00084">84</a> of file <a class="el" href="qtlockedfile_8cpp_source.html">qtlockedfile.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8b7a228ae02dca4bb99743219d0cdb7b"></a><!-- doxytag: member="QtLockedFile::QtLockedFile" ref="a8b7a228ae02dca4bb99743219d0cdb7b" args="(const QString &amp;name)" -->
@@ -152,6 +158,8 @@ Public Member Functions</h2></td></tr>
 <p>Constructs an unlocked <a class="el" href="class_qt_locked_file.html" title="namespace QtLP_Private {">QtLockedFile</a> object with file <em>name</em>. This constructor behaves in the same way as <em>QFile::QFile</em>(const QString&amp;).</p>
 <dl class="see"><dt><b>See also:</b></dt><dd>QFile::QFile() </dd></dl>
 
+<p>Definition at line <a class="el" href="qtlockedfile_8cpp_source.html#l00101">101</a> of file <a class="el" href="qtlockedfile_8cpp_source.html">qtlockedfile.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ae22e087171c094da6cfb3282e838c9d4"></a><!-- doxytag: member="QtLockedFile::~QtLockedFile" ref="ae22e087171c094da6cfb3282e838c9d4" args="()" -->
@@ -168,6 +176,8 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 <p>Destroys the <em><a class="el" href="class_qt_locked_file.html" title="namespace QtLP_Private {">QtLockedFile</a></em> object. If any locks were held, they are released. </p>
+
+<p>Definition at line <a class="el" href="qtlockedfile__unix_8cpp_source.html#l00110">110</a> of file <a class="el" href="qtlockedfile__unix_8cpp_source.html">qtlockedfile_unix.cpp</a>.</p>
 
 </div>
 </div>
@@ -187,6 +197,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>Returns <em>true</em> if this object has a in read or write lock; otherwise returns <em>false</em>.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_locked_file.html#aabfd6fb28f249a5fb01f3965de0e41f1">lockMode()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="qtlockedfile_8cpp_source.html#l00139">139</a> of file <a class="el" href="qtlockedfile_8cpp_source.html">qtlockedfile.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,6 +234,8 @@ Public Member Functions</h2></td></tr>
 <p>This function returns <em>true</em> if, after it executes, the file is locked by this object, and <em>false</em> otherwise.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_locked_file.html#abb4d7e6211d9e6e14afaa661818fb2bf">unlock()</a>, <a class="el" href="class_qt_locked_file.html#ac93115b12ddd6c3275a5a81a94b6c919">isLocked()</a>, <a class="el" href="class_qt_locked_file.html#aabfd6fb28f249a5fb01f3965de0e41f1">lockMode()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtlockedfile__unix_8cpp_source.html#l00049">49</a> of file <a class="el" href="qtlockedfile__unix_8cpp_source.html">qtlockedfile_unix.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aabfd6fb28f249a5fb01f3965de0e41f1"></a><!-- doxytag: member="QtLockedFile::lockMode" ref="aabfd6fb28f249a5fb01f3965de0e41f1" args="() const " -->
@@ -239,6 +253,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 <p>Returns the type of lock currently held by this object, or <em>QtLockedFile::NoLock</em>.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_locked_file.html#ac93115b12ddd6c3275a5a81a94b6c919">isLocked()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="qtlockedfile_8cpp_source.html#l00150">150</a> of file <a class="el" href="qtlockedfile_8cpp_source.html">qtlockedfile.cpp</a>.</p>
 
 </div>
 </div>
@@ -261,6 +277,8 @@ Public Member Functions</h2></td></tr>
 <p>Returns true if successful; otherwise false.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd>QFile::open(), QFile::resize() </dd></dl>
 
+<p>Definition at line <a class="el" href="qtlockedfile_8cpp_source.html#l00124">124</a> of file <a class="el" href="qtlockedfile_8cpp_source.html">qtlockedfile.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="abb4d7e6211d9e6e14afaa661818fb2bf"></a><!-- doxytag: member="QtLockedFile::unlock" ref="abb4d7e6211d9e6e14afaa661818fb2bf" args="()" -->
@@ -281,13 +299,15 @@ Public Member Functions</h2></td></tr>
 <p>This function returns <em>true</em> if, after it executes, the file is not locked by this object, and <em>false</em> otherwise.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_qt_locked_file.html#af7876c08254a16d00022939f2fb9a8b8" title="using namespace QtLP_Private;">lock()</a>, <a class="el" href="class_qt_locked_file.html#ac93115b12ddd6c3275a5a81a94b6c919">isLocked()</a>, <a class="el" href="class_qt_locked_file.html#aabfd6fb28f249a5fb01f3965de0e41f1">lockMode()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="qtlockedfile__unix_8cpp_source.html#l00084">84</a> of file <a class="el" href="qtlockedfile__unix_8cpp_source.html">qtlockedfile_unix.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/qt-solutions/qtsingleapplication/<a class="el" href="qtlockedfile_8h_source.html">qtlockedfile.h</a></li>
-<li>src/qt-solutions/qtsingleapplication/qtlockedfile.cpp</li>
-<li>src/qt-solutions/qtsingleapplication/qtlockedfile_unix.cpp</li>
-<li>src/qt-solutions/qtsingleapplication/qtlockedfile_win.cpp</li>
+<li>src/qt-solutions/qtsingleapplication/<a class="el" href="qtlockedfile_8cpp_source.html">qtlockedfile.cpp</a></li>
+<li>src/qt-solutions/qtsingleapplication/<a class="el" href="qtlockedfile__unix_8cpp_source.html">qtlockedfile_unix.cpp</a></li>
+<li>src/qt-solutions/qtsingleapplication/<a class="el" href="qtlockedfile__win_8cpp_source.html">qtlockedfile_win.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -304,7 +324,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:29 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

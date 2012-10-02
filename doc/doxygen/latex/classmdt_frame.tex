@@ -116,6 +116,10 @@ Frame is full, and EOF condition reached&0&true \\\cline{1-3}
 At this state, whenn \hyperlink{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{bytesToStore()} returns 0 and \hyperlink{classmdt_frame_a2a8fb9f36c941282881bba0c538d1ce5}{isComplete()} is true, the received frame is ok. The next step is to decode it, according to the used protocol (modbus, ...).\par
  Note that these states are only set when using \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} and \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{putData()} functions. 
 
+Definition at line 48 of file mdtFrame.h.
+
+
+
 \subsection{Member Enumeration Documentation}
 \hypertarget{classmdt_frame_af936e37d5fe4c066c0fb0161fafd4a17}{
 \index{mdtFrame@{mdtFrame}!type\_\-t@{type\_\-t}}
@@ -154,6 +158,10 @@ FT\_\-USBTMC}
 
 
 
+Definition at line 57 of file mdtFrame.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_frame_a8526b227a56562fddf8445060e8095d4}{
 \index{mdtFrame@{mdtFrame}!bytesToStore@{bytesToStore}}
@@ -168,7 +176,11 @@ FT\_\-USBTMC}
 
 Returns the bytes to store into the frame. 
 
-Bytes to store can be the \hyperlink{classmdt_frame_aa1cd5c914c36efb3f441b7f6e782dc24}{remainCapacity()} value if frame is not full and EOF condition was not reached. Else, it returns 0. \hypertarget{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{
+Bytes to store can be the \hyperlink{classmdt_frame_aa1cd5c914c36efb3f441b7f6e782dc24}{remainCapacity()} value if frame is not full and EOF condition was not reached. Else, it returns 0. 
+
+Definition at line 156 of file mdtFrame.cpp.
+
+\hypertarget{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{
 \index{mdtFrame@{mdtFrame}!clear@{clear}}
 \index{clear@{clear}!mdtFrame@{mdtFrame}}
 \subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::clear (
@@ -184,6 +196,10 @@ Overloaded function.
 Internally, it calls QByteArray's \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} and reserve() methods. The goal is to keep the same capacity and reset some \hyperlink{classmdt_frame}{mdtFrame} and subclass specific flags 
 
 Reimplemented in \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{mdtFrameModbusTcp}.
+
+
+
+Definition at line 179 of file mdtFrame.cpp.
 
 \hypertarget{classmdt_frame_aecc64d3846dee0049ee7b10b73a402f4}{
 \index{mdtFrame@{mdtFrame}!clearSub@{clearSub}}
@@ -208,6 +224,10 @@ This class must be implemented is subclass if needed.
 
 Reimplemented in \hyperlink{classmdt_frame_usb_tmc_afb0b0e071e328b55ce8e2c73359153d6}{mdtFrameUsbTmc}.
 
+
+
+Definition at line 188 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_a0e0dcfb9d284ac0dae550db33f0fbece}{
 \index{mdtFrame@{mdtFrame}!eofSeqLen@{eofSeqLen}}
 \index{eofSeqLen@{eofSeqLen}!mdtFrame@{mdtFrame}}
@@ -224,6 +244,10 @@ Get the length of the end of frame sequence.
 Used for ASCII frames. Default implementation returns 0 
 
 Reimplemented in \hyperlink{classmdt_frame_ascii_a9694c60a807fd2e80e293a66c193baaa}{mdtFrameAscii}.
+
+
+
+Definition at line 209 of file mdtFrame.cpp.
 
 \hypertarget{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{
 \index{mdtFrame@{mdtFrame}!putData@{putData}}
@@ -262,6 +286,10 @@ The data pointer must be valid, and not be the internal pointer returned by data
 
 Reimplemented in \hyperlink{classmdt_frame_ascii_a9ef48ef78d9603a9d8c3be7e39b03745}{mdtFrameAscii}, \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{mdtFrameModbusTcp}, and \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{mdtFrameUsbTmc}.
 
+
+
+Definition at line 192 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{
 \index{mdtFrame@{mdtFrame}!putUntil@{putUntil}}
 \index{putUntil@{putUntil}!mdtFrame@{mdtFrame}}
@@ -294,6 +322,10 @@ The number of bytes really stored
 \begin{DoxyPrecond}{Precondition}
 The data pointer must be valid, and not be the internal pointer returned by data(). 
 \end{DoxyPrecond}
+
+
+Definition at line 41 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_aaa5c15df5aaf026b02f34639438036ad}{
 \index{mdtFrame@{mdtFrame}!putUntil@{putUntil}}
 \index{putUntil@{putUntil}!mdtFrame@{mdtFrame}}
@@ -314,6 +346,10 @@ This is an overloaded function. The token can be a sequence of bytes.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 88 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_ab8db9882c095091109115afb8e448b37}{
 \index{mdtFrame@{mdtFrame}!setComplete@{setComplete}}
 \index{setComplete@{setComplete}!mdtFrame@{mdtFrame}}
@@ -327,7 +363,11 @@ This is an overloaded function. The token can be a sequence of bytes.
 
 Set the frame as complete. 
 
-This is used by \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} with timeout protocols. \hypertarget{classmdt_frame_abfd6de396626f01ebf972b7d6cd26957}{
+This is used by \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} with timeout protocols. 
+
+Definition at line 169 of file mdtFrame.cpp.
+
+\hypertarget{classmdt_frame_abfd6de396626f01ebf972b7d6cd26957}{
 \index{mdtFrame@{mdtFrame}!setDirectlyComplete@{setDirectlyComplete}}
 \index{setDirectlyComplete@{setDirectlyComplete}!mdtFrame@{mdtFrame}}
 \subsubsection[{setDirectlyComplete}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::setDirectlyComplete (
@@ -347,6 +387,10 @@ This is usefull for raw mode transfert. If true, the frame is set complete after
 {\em dc} & The Directly complete flag \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 164 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_ac1a8ad77ce7bd6d08032056c3610d5c0}{
 \index{mdtFrame@{mdtFrame}!setIgnoreNullValues@{setIgnoreNullValues}}
 \index{setIgnoreNullValues@{setIgnoreNullValues}!mdtFrame@{mdtFrame}}
@@ -360,7 +404,11 @@ This is usefull for raw mode transfert. If true, the frame is set complete after
 
 Set the ignore null values flag. 
 
-If set true, all null values ('$\backslash$0' or 0) are not stored by \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} methods \hypertarget{classmdt_frame_a3b9a331858df9061879592fab1b346f5}{
+If set true, all null values ('$\backslash$0' or 0) are not stored by \hyperlink{classmdt_frame_af03d60dadc6bd33b3a333cf484463113}{putUntil()} methods 
+
+Definition at line 36 of file mdtFrame.cpp.
+
+\hypertarget{classmdt_frame_a3b9a331858df9061879592fab1b346f5}{
 \index{mdtFrame@{mdtFrame}!setWaitAnAnswer@{setWaitAnAnswer}}
 \index{setWaitAnAnswer@{setWaitAnAnswer}!mdtFrame@{mdtFrame}}
 \subsubsection[{setWaitAnAnswer}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrame::setWaitAnAnswer (
@@ -385,6 +433,10 @@ To solve this problem, we must tell the thread if it must init a read transactio
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} 
 \end{DoxySeeAlso}
+
+
+Definition at line 246 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_a36e4b85a3c671902ac3c8cc318ca726c}{
 \index{mdtFrame@{mdtFrame}!take@{take}}
 \index{take@{take}!mdtFrame@{mdtFrame}}
@@ -409,6 +461,10 @@ Take some data.
 \begin{DoxyPrecond}{Precondition}
 The data pointer must be valid, and not be the internal pointer returned by data(). 
 \end{DoxyPrecond}
+
+
+Definition at line 214 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_ad8b184e6eb07a26fe84deaf233c1aa9b}{
 \index{mdtFrame@{mdtFrame}!take@{take}}
 \index{take@{take}!mdtFrame@{mdtFrame}}
@@ -432,6 +488,10 @@ This method does not copy any data, but is usefull after a copy using QByteArray
 \begin{DoxyPrecond}{Precondition}
 The data pointer must be valid, and not be the internal pointer returned by data(). 
 \end{DoxyPrecond}
+
+
+Definition at line 232 of file mdtFrame.cpp.
+
 \hypertarget{classmdt_frame_ab27455f2fa3415a96482786c0ec27e55}{
 \index{mdtFrame@{mdtFrame}!waitAnAnswer@{waitAnAnswer}}
 \index{waitAnAnswer@{waitAnAnswer}!mdtFrame@{mdtFrame}}
@@ -448,6 +508,10 @@ Know if an answer is needed after a write frame.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame_a3b9a331858df9061879592fab1b346f5}{setWaitAnAnswer()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 251 of file mdtFrame.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

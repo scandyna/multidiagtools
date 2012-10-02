@@ -75,6 +75,10 @@ With USBTMC, when we try to read, and no data are available, both read and write
  To start the read, call the \hyperlink{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{readOneFrame()} method.\par
  To start the write, call the \hyperlink{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}{writeOneFrame()} method. 
 
+Definition at line 40 of file mdtUsbtmcPort.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usbtmc_port_a91f45336ca9a71284e0309182f5e8ca1}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!read@{read}}
@@ -93,6 +97,10 @@ Read data from port.
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly. 
 
 Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{mdtAbstractPort}.
+
+
+
+Definition at line 71 of file mdtUsbtmcPort.cpp.
 
 \hypertarget{classmdt_usbtmc_port_a86ee5e17c32dea75e9f918389d3f7afc}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!readOneFrame@{readOneFrame}}
@@ -117,6 +125,10 @@ setWaitingFrame()
 
 pvMutex.lock(); pvReadCondition.wakeAll(); pvMutex.unlock();
 
+
+
+Definition at line 152 of file mdtUsbtmcPort.cpp.
+
 \hypertarget{classmdt_usbtmc_port_a24cfc5233e09b9dbcdb2adc5f700dc4a}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!waitEventWriteReady@{waitEventWriteReady}}
 \index{waitEventWriteReady@{waitEventWriteReady}!mdtUsbtmcPort@{mdtUsbtmcPort}}
@@ -138,6 +150,10 @@ if(!pvWriteCondition.wait(\&pvMutex, pvWriteTimeout))\{ updateWriteTimeoutState(
 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
+
+
+
+Definition at line 103 of file mdtUsbtmcPort.cpp.
 
 \hypertarget{classmdt_usbtmc_port_a3c1b746acfc06857eee4b4c136cd65ad}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!waitForReadyRead@{waitForReadyRead}}
@@ -161,6 +177,10 @@ if(!pvReadCondition.wait(\&pvMutex, pvReadTimeout))\{ updateReadTimeoutState(tru
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 
+
+
+Definition at line 55 of file mdtUsbtmcPort.cpp.
+
 \hypertarget{classmdt_usbtmc_port_a32b98d2a61617293c328a343d62d52c3}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!write@{write}}
 \index{write@{write}!mdtUsbtmcPort@{mdtUsbtmcPort}}
@@ -178,6 +198,10 @@ Write data to port.
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly. Mutex is not handled by this method. 
 
 Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
+
+
+
+Definition at line 119 of file mdtUsbtmcPort.cpp.
 
 \hypertarget{classmdt_usbtmc_port_a97fca5f136f232275d90ab5b8c5ce285}{
 \index{mdtUsbtmcPort@{mdtUsbtmcPort}!writeOneFrame@{writeOneFrame}}
@@ -197,6 +221,10 @@ Write a frame...
 
 
 pvMutex.lock(); pvWriteCondition.wakeAll(); pvMutex.unlock();
+
+
+
+Definition at line 143 of file mdtUsbtmcPort.cpp.
 
 
 

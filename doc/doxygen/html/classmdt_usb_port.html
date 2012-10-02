@@ -128,6 +128,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Built on top of libusb-1.x API</p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Implement this remarks Note about the port name (set with <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> ):<br/>
  Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927" title="Scan for available ports.">mdtUsbtmcPortManager::scan()</a> method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_usb_port_8h_source.html">mdtUsbPort.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a3570b708f9f51408e4bbf2f61cc8c881"></a><!-- doxytag: member="mdtUsbPort::cancelReadTransfer" ref="a3570b708f9f51408e4bbf2f61cc8c881" args="()" -->
 <div class="memitem">
@@ -146,6 +148,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Cancel current bulk/interrupt input transfer. </p>
 <p>If a input transfer is pending it will be cancelled.</p>
 <p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -167,6 +171,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Will call <a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer()</a> , <a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer()</a>.</p>
 <p>This method locks the mutex. </p>
 
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00514">514</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a7cbe1cd3649861aac5e6a14830f06cf9"></a><!-- doxytag: member="mdtUsbPort::cancelWriteTransfer" ref="a7cbe1cd3649861aac5e6a14830f06cf9" args="()" -->
@@ -186,6 +192,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Cancel current bulk/interrupt input transfer. </p>
 <p>If a input transfer is pending it will be cancelled.</p>
 <p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00347">347</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -209,6 +217,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Handle retval </dd></dl>
 </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00100">100</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -239,6 +249,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Request a new bulk/interrupt out transfer. </p>
 <p>Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00294">294</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -274,6 +286,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00271">271</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a44ed5024a81a573b5196b8f64c42cd6a"></a><!-- doxytag: member="mdtUsbPort::setReadTimeout" ref="a44ed5024a81a573b5196b8f64c42cd6a" args="(int timeout)" -->
@@ -295,6 +309,8 @@ Static Public Member Functions</h2></td></tr>
 <p>The mutex is not handled by this method. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -318,6 +334,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
 
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00087">87</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ab1d37a64b7b4e471b4b9790e3c25d853"></a><!-- doxytag: member="mdtUsbPort::transferCallback" ref="ab1d37a64b7b4e471b4b9790e3c25d853" args="(struct libusb_transfer *transfer)" -->
@@ -339,6 +357,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p><p>mdt_usb_port_transfer_data *data = (mdt_usb_port_transfer_data*)transfer-&gt;user_data; Q_ASSERT(data != 0); data-&gt;flag1 = transfer-&gt;status;</p>
 </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00487">487</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -362,6 +382,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00377">377</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ab8ddd4ebee603ac381e8da0383a61e36"></a><!-- doxytag: member="mdtUsbPort::waitForReadyRead" ref="ab8ddd4ebee603ac381e8da0383a61e36" args="()" -->
@@ -383,6 +405,8 @@ Static Public Member Functions</h2></td></tr>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00179">179</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -417,11 +441,13 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00465">465</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_usb_port_8h_source.html">mdtUsbPort.h</a></li>
-<li>src/mdtport/mdtUsbPort.cpp</li>
+<li>src/mdtport/<a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -438,7 +464,7 @@ Static Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

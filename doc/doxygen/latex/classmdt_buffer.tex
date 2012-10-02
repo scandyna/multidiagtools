@@ -57,6 +57,10 @@ Stockage d'éléments basé sur le principe du tampon circulaire.
 
 Stockage d'éléments basé sur le principe du tampon circulaire Idéal pour le stockage temporaire si une taille maximale est connue. Evite de nombreuses allocations/libération mémoire 
 
+Definition at line 37 of file mdtBuffer.h.
+
+
+
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classmdt_buffer_a51bc78e5a9fc926c7b898160c6a2faa3}{
 \index{mdtBuffer@{mdtBuffer}!mdtBuffer@{mdtBuffer}}
@@ -71,7 +75,11 @@ Stockage d'éléments basé sur le principe du tampon circulaire Idéal pour le 
 
 Constructeur. 
 
-Constructeur, utiliser \hyperlink{classmdt_buffer_a9d081b06f666fec3ff6e12ec94b2a4fd}{init()} avant tout autre opération \hypertarget{classmdt_buffer_a4d6c140c02257fffb37016d019e412cf}{
+Constructeur, utiliser \hyperlink{classmdt_buffer_a9d081b06f666fec3ff6e12ec94b2a4fd}{init()} avant tout autre opération 
+
+Definition at line 6 of file mdtBuffer.cpp.
+
+\hypertarget{classmdt_buffer_a4d6c140c02257fffb37016d019e412cf}{
 \index{mdtBuffer@{mdtBuffer}!mdtBuffer@{mdtBuffer}}
 \index{mdtBuffer@{mdtBuffer}!mdtBuffer@{mdtBuffer}}
 \subsubsection[{mdtBuffer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ {\bf mdtBuffer}$<$ T $>$::{\bf mdtBuffer} (
@@ -84,7 +92,11 @@ Constructeur, utiliser \hyperlink{classmdt_buffer_a9d081b06f666fec3ff6e12ec94b2a
 
 Constructeur de copie. 
 
-Constructeur de copie. Effectue une copie des données vers l'autre instance \hypertarget{classmdt_buffer_a54de4cebee3cab7b8c1b86bfc3bdad4f}{
+Constructeur de copie. Effectue une copie des données vers l'autre instance 
+
+Definition at line 15 of file mdtBuffer.cpp.
+
+\hypertarget{classmdt_buffer_a54de4cebee3cab7b8c1b86bfc3bdad4f}{
 \index{mdtBuffer@{mdtBuffer}!$\sim$mdtBuffer@{$\sim$mdtBuffer}}
 \index{$\sim$mdtBuffer@{$\sim$mdtBuffer}!mdtBuffer@{mdtBuffer}}
 \subsubsection[{$\sim$mdtBuffer}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ template {\bf mdtBuffer}$<$ T $>$::$\sim${\bf mdtBuffer} (
@@ -98,6 +110,10 @@ Constructeur de copie. Effectue une copie des données vers l'autre instance \hy
 Destructeur. 
 
 Destructeur 
+
+Definition at line 50 of file mdtBuffer.cpp.
+
+
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_buffer_a24ca1a2d00ba1623416ec747ba440adf}{
@@ -118,6 +134,10 @@ Nombre d'éléments disponibles en lecture
 \begin{DoxyReturn}{Returns}
 Le nombre d'éléments qu'il est possible de lire 
 \end{DoxyReturn}
+
+
+Definition at line 227 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_aa6eddf7ccc533da855ebd112202a656f}{
 \index{mdtBuffer@{mdtBuffer}!capacity@{capacity}}
 \index{capacity@{capacity}!mdtBuffer@{mdtBuffer}}
@@ -136,6 +156,10 @@ Capacité totale
 \begin{DoxyReturn}{Returns}
 La capacité totale du tampon 
 \end{DoxyReturn}
+
+
+Definition at line 212 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a697920838a6c786209607c2b6ac0858a}{
 \index{mdtBuffer@{mdtBuffer}!clear@{clear}}
 \index{clear@{clear}!mdtBuffer@{mdtBuffer}}
@@ -149,7 +173,11 @@ La capacité totale du tampon
 
 Efface le contenu du tampon. 
 
-Efface le contenu du tampon. La quantité disponible ainsi que la capacité restante sont aussi ré-\/initialisés \hypertarget{classmdt_buffer_a63e2b6b5e7656a5285d0ea1d152ea499}{
+Efface le contenu du tampon. La quantité disponible ainsi que la capacité restante sont aussi ré-\/initialisés 
+
+Definition at line 79 of file mdtBuffer.cpp.
+
+\hypertarget{classmdt_buffer_a63e2b6b5e7656a5285d0ea1d152ea499}{
 \index{mdtBuffer@{mdtBuffer}!full@{full}}
 \index{full@{full}!mdtBuffer@{mdtBuffer}}
 \subsubsection[{full}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ template bool {\bf mdtBuffer}$<$ T $>$::full (
@@ -167,6 +195,10 @@ Déterminer si le tampon est plein
 \begin{DoxyReturn}{Returns}
 True si le tampon est plein 
 \end{DoxyReturn}
+
+
+Definition at line 222 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a123a85c9cd59f80623aba5589709050e}{
 \index{mdtBuffer@{mdtBuffer}!get@{get}}
 \index{get@{get}!mdtBuffer@{mdtBuffer}}
@@ -193,6 +225,10 @@ La copie, basée sur memcpy, est performante Le cusreur de lecture interne, ains
 \begin{DoxyReturn}{Returns}
 Le nombre d'éléments effectivement lus 
 \end{DoxyReturn}
+
+
+Definition at line 232 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a9d081b06f666fec3ff6e12ec94b2a4fd}{
 \index{mdtBuffer@{mdtBuffer}!init@{init}}
 \index{init@{init}!mdtBuffer@{mdtBuffer}}
@@ -216,6 +252,10 @@ Initialisation du tampon. Alloue la mémoire, initialise les données à une val
 \begin{DoxyReturn}{Returns}
 false en cas de problème d'allocation mémoire (true si tout s'est bien passé) 
 \end{DoxyReturn}
+
+
+Definition at line 57 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_aba9a31eb29a39a2721205f13f80c1d8d}{
 \index{mdtBuffer@{mdtBuffer}!operator=@{operator=}}
 \index{operator=@{operator=}!mdtBuffer@{mdtBuffer}}
@@ -229,7 +269,11 @@ false en cas de problème d'allocation mémoire (true si tout s'est bien passé)
 
 Opérateur de copie. 
 
-Opérateur de copie. Effectue une copie des données vers l'autre instance \hypertarget{classmdt_buffer_abe03f0413ff7512d63d8df1408c66f63}{
+Opérateur de copie. Effectue une copie des données vers l'autre instance 
+
+Definition at line 33 of file mdtBuffer.cpp.
+
+\hypertarget{classmdt_buffer_abe03f0413ff7512d63d8df1408c66f63}{
 \index{mdtBuffer@{mdtBuffer}!put@{put}}
 \index{put@{put}!mdtBuffer@{mdtBuffer}}
 \subsubsection[{put}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ template size\_\-t {\bf mdtBuffer}$<$ T $>$::put (
@@ -255,6 +299,10 @@ Stockage d'un lot de données par copie. La copie, basée sur memcpy, est perfor
 \begin{DoxyReturn}{Returns}
 Le nombre d'éléments effectivement stockés 
 \end{DoxyReturn}
+
+
+Definition at line 98 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a2b9fd3a6b593c2e874249aba5c305e34}{
 \index{mdtBuffer@{mdtBuffer}!putOne@{putOne}}
 \index{putOne@{putOne}!mdtBuffer@{mdtBuffer}}
@@ -278,6 +326,10 @@ Stockage d'un élément par copie.
 \begin{DoxyReturn}{Returns}
 True si Ok, false en cas d'erreur 
 \end{DoxyReturn}
+
+
+Definition at line 146 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a01d74092785c9442014ee34624ffa96f}{
 \index{mdtBuffer@{mdtBuffer}!putUntil@{putUntil}}
 \index{putUntil@{putUntil}!mdtBuffer@{mdtBuffer}}
@@ -310,6 +362,10 @@ Stockage d'un lot de données par copie jusqu'à la rencontre d'un élément, ou
 \begin{DoxyReturn}{Returns}
 Le nombre d'éléments effectivement stockés 
 \end{DoxyReturn}
+
+
+Definition at line 166 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a78e8317b6ba09e9c4e26358e27f75fd6}{
 \index{mdtBuffer@{mdtBuffer}!remainCapacity@{remainCapacity}}
 \index{remainCapacity@{remainCapacity}!mdtBuffer@{mdtBuffer}}
@@ -328,6 +384,10 @@ Capacité restante
 \begin{DoxyReturn}{Returns}
 Le nombre d'éléments qu'il est encore possible de stocker 
 \end{DoxyReturn}
+
+
+Definition at line 217 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_ad4756dea3500741363092d5a85ef858e}{
 \index{mdtBuffer@{mdtBuffer}!take@{take}}
 \index{take@{take}!mdtBuffer@{mdtBuffer}}
@@ -354,6 +414,10 @@ Retrait d'un lot de données par copie. La copie, basée sur memcpy, et performa
 \begin{DoxyReturn}{Returns}
 Le nombre d'éléments effectivement retirés 
 \end{DoxyReturn}
+
+
+Definition at line 271 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a690e3f41a62175de48bc73c19f69208d}{
 \index{mdtBuffer@{mdtBuffer}!takeOne@{takeOne}}
 \index{takeOne@{takeOne}!mdtBuffer@{mdtBuffer}}
@@ -372,6 +436,10 @@ Retrait d'un élément Le cusreur de lecture interne, ainsi que le quantité dis
 \begin{DoxyReturn}{Returns}
 Un élément, ou 0 si aucune disponibilité 
 \end{DoxyReturn}
+
+
+Definition at line 317 of file mdtBuffer.cpp.
+
 \hypertarget{classmdt_buffer_a6ddc3c27c154fbfd077f83d5bfe82a19}{
 \index{mdtBuffer@{mdtBuffer}!tokenReached@{tokenReached}}
 \index{tokenReached@{tokenReached}!mdtBuffer@{mdtBuffer}}
@@ -390,6 +458,10 @@ Retourne true si l'élément de fin de copie à été atteint Voir la méthode \
 \begin{DoxyReturn}{Returns}
 True si l'élément de fin à été atteint 
 \end{DoxyReturn}
+
+
+Definition at line 207 of file mdtBuffer.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

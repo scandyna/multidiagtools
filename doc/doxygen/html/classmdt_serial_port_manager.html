@@ -115,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <p>This is the easiest way to use the serial port API.</p>
 <p>All needed object are created by constructor. To alter configuration, use <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416" title="Get the config object.">config()</a>. To access the serial port object, use <a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d" title="Get the serial port instance.">port()</a>.</p>
 <p>Use <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start()</a> to begin read/write and stop to end. </p>
+
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_serial_port_manager_8h_source.html">mdtSerialPortManager.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a6508372bcab37a73546fc2c24ee6415c"></a><!-- doxytag: member="mdtSerialPortManager::mdtSerialPortManager" ref="a6508372bcab37a73546fc2c24ee6415c" args="(QObject *parent=0)" -->
 <div class="memitem">
@@ -134,6 +136,8 @@ Public Member Functions</h2></td></tr>
 <p>Construct a serial port manager. </p>
 <p>Creates a <a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a>, a <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>, and threads objects. </p>
 
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="abde2c5990f3ec7daf41ebc35b4731c1d"></a><!-- doxytag: member="mdtSerialPortManager::~mdtSerialPortManager" ref="abde2c5990f3ec7daf41ebc35b4731c1d" args="()" -->
@@ -152,6 +156,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
+
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -175,6 +181,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">mdtPortManager</a>.</p>
 
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00134">134</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="aa96937c2123fe4353b948b848d3e064d"></a><!-- doxytag: member="mdtSerialPortManager::port" ref="aa96937c2123fe4353b948b848d3e064d" args="()" -->
@@ -193,6 +201,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the serial port instance. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with a <a class="el" href="classmdt_abstract_serial_port.html" title="NOTE:">mdtAbstractSerialPort</a> instance (not <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>) </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,11 +227,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927">mdtPortManager</a>.</p>
 
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/<a class="el" href="mdt_serial_port_manager_8h_source.html">mdtSerialPortManager.h</a></li>
-<li>src/mdtserialport/mdtSerialPortManager.cpp</li>
+<li>src/mdtserialport/<a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -238,7 +250,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

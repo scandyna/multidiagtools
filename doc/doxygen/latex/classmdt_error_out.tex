@@ -55,6 +55,10 @@ static void \hyperlink{classmdt_error_out_afd7f41eaf7e07b4fceb83297e9040e35}{set
 \subsection{Detailed Description}
 Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile. 
 
+Definition at line 38 of file mdtErrorOut.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_error_out_aeb562e93216b34e7b73aa69f42065895}{
 \index{mdtErrorOut@{mdtErrorOut}!addError@{addError}}
@@ -75,6 +79,10 @@ The system must be initialized.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 92 of file mdtErrorOut.cpp.
+
 \hypertarget{classmdt_error_out_a45c1370762b47a06ec597d6e89ebc73d}{
 \index{mdtErrorOut@{mdtErrorOut}!destroy@{destroy}}
 \index{destroy@{destroy}!mdtErrorOut@{mdtErrorOut}}
@@ -88,7 +96,11 @@ The system must be initialized.
 
 Destroy the error output system instance. 
 
-This function must be called from main thread (GUI thread) \hypertarget{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{
+This function must be called from main thread (GUI thread) 
+
+Definition at line 183 of file mdtErrorOut.cpp.
+
+\hypertarget{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{
 \index{mdtErrorOut@{mdtErrorOut}!init@{init}}
 \index{init@{init}!mdtErrorOut@{mdtErrorOut}}
 \subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtErrorOut::init (
@@ -101,7 +113,11 @@ This function must be called from main thread (GUI thread) \hypertarget{classmdt
 
 Initialize the error output system. 
 
-After this call, the log and dialog levels are defined to Warning and Error This function must be called from main thread (GUI thread) \hypertarget{classmdt_error_out_a7a80480a61ca1a2704ec16d69647f739}{
+After this call, the log and dialog levels are defined to Warning and Error This function must be called from main thread (GUI thread) 
+
+Definition at line 55 of file mdtErrorOut.cpp.
+
+\hypertarget{classmdt_error_out_a7a80480a61ca1a2704ec16d69647f739}{
 \index{mdtErrorOut@{mdtErrorOut}!instance@{instance}}
 \index{instance@{instance}!mdtErrorOut@{mdtErrorOut}}
 \subsubsection[{instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtErrorOut} $\ast$ mdtErrorOut::instance (
@@ -114,7 +130,11 @@ After this call, the log and dialog levels are defined to Warning and Error This
 
 Get the instance of the error output system. 
 
-This function can return a Null pointer if \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} was never called. This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! \hypertarget{classmdt_error_out_a22f721fff4d6368a4a3d51279c6af8fa}{
+This function can return a Null pointer if \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} was never called. This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! 
+
+Definition at line 169 of file mdtErrorOut.cpp.
+
+\hypertarget{classmdt_error_out_a22f721fff4d6368a4a3d51279c6af8fa}{
 \index{mdtErrorOut@{mdtErrorOut}!logFile@{logFile}}
 \index{logFile@{logFile}!mdtErrorOut@{mdtErrorOut}}
 \subsubsection[{logFile}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtErrorOut::logFile (
@@ -133,6 +153,10 @@ The system must be initialized.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 174 of file mdtErrorOut.cpp.
+
 \hypertarget{classmdt_error_out_afa76bdf497b750829277566ec07d44d8}{
 \index{mdtErrorOut@{mdtErrorOut}!setDialogLevelsMask@{setDialogLevelsMask}}
 \index{setDialogLevelsMask@{setDialogLevelsMask}!mdtErrorOut@{mdtErrorOut}}
@@ -152,6 +176,10 @@ The system must be initialized.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_error_out_a9c7f05b03d0f09ff02e8f747bdcd1de7}{init()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 83 of file mdtErrorOut.cpp.
+
 \hypertarget{classmdt_error_out_a547e4e8aa75528710e4a17e9faf48621}{
 \index{mdtErrorOut@{mdtErrorOut}!setLogLevelsMask@{setLogLevelsMask}}
 \index{setLogLevelsMask@{setLogLevelsMask}!mdtErrorOut@{mdtErrorOut}}
@@ -173,7 +201,12 @@ The system must be initialized.
 \end{DoxySeeAlso}
 
 
+Definition at line 74 of file mdtErrorOut.cpp.
+
+
+
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtutils/mdtErrorOut.h\item 
-src/mdtutils/mdtErrorOut.cpp\end{DoxyCompactItemize}
+src/mdtutils/mdtErrorOut.cpp\item 
+src/mdtutils/moc\_\-mdtErrorOut.cxx\end{DoxyCompactItemize}

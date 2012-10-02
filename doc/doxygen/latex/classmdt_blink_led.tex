@@ -58,6 +58,10 @@ Blinking LED.
 This class can be helpfull to get a blinking LED in a simple way.\par
  If a lot of blinking LED's are needed, it is recommanded to use \hyperlink{classmdt_led}{mdtLed} objects and one QTimer, and to connect the QTimer::timeout() signal to each \hyperlink{classmdt_led_a9e86ff65f2ec1bfb6131e2b9042609e8}{mdtLed::toggleOnOff()} slot. 
 
+Definition at line 34 of file mdtBlinkLed.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_blink_led_a1b15c8fafec0bc3aeb31ddf284ca7be2}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setBlinking@{setBlinking}}
@@ -79,6 +83,10 @@ Set the LED blinking. The blink period can be changed with \hyperlink{classmdt_b
 {\em on} & If true, the LED goes blinking. \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 38 of file mdtBlinkLed.cpp.
+
 \hypertarget{classmdt_blink_led_ae2dc395378aed0705ff19db5096a1efc}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setBlinkPeriod@{setBlinkPeriod}}
 \index{setBlinkPeriod@{setBlinkPeriod}!mdtBlinkLed@{mdtBlinkLed}}
@@ -99,6 +107,10 @@ In 1 period, the LED toogles 1x ON ant 1x OFF (The time whenn the LED is ON is 1
 {\em T} & The period \mbox{[}ms\mbox{]} (min. 160 \mbox{[}ms\mbox{]}) \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 30 of file mdtBlinkLed.cpp.
+
 \hypertarget{classmdt_blink_led_a951465e8a9ae5167e7eb05a7107ab13f}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setOff@{setOff}}
 \index{setOff@{setOff}!mdtBlinkLed@{mdtBlinkLed}}
@@ -116,6 +128,10 @@ Set the LED OFF.
 
 Reimplemented from \hyperlink{classmdt_led_a4c8f5f6aa91b7c90ae6b1aa4933ba6e0}{mdtLed}.
 
+
+
+Definition at line 68 of file mdtBlinkLed.cpp.
+
 \hypertarget{classmdt_blink_led_ae51c54f31a11dbaebe69ab2c0b814d0f}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setOn@{setOn}}
 \index{setOn@{setOn}!mdtBlinkLed@{mdtBlinkLed}}
@@ -132,6 +148,10 @@ Set the LED ON.
 
 
 Reimplemented from \hyperlink{classmdt_led_a389ee3e0082ce8fa38cb258944a04892}{mdtLed}.
+
+
+
+Definition at line 48 of file mdtBlinkLed.cpp.
 
 \hypertarget{classmdt_blink_led_aab370ebe5c53203947e49e794d0959a7}{
 \index{mdtBlinkLed@{mdtBlinkLed}!setOn@{setOn}}
@@ -154,6 +174,10 @@ The LED will set ON and hold this state for specified time. After this time, the
 {\em priority} & If true, cancel allready running shot. \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line 54 of file mdtBlinkLed.cpp.
+
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}

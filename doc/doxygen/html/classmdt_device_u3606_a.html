@@ -106,7 +106,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#af4ee162df6c67ee3b2d9e5877bea881e">selectPort</a> (const QString &amp;port)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a port.  <a href="#af4ee162df6c67ee3b2d9e5877bea881e"></a><br/></td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock">
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
+</div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="ad79d17e348854963cf32b20d370a778e"></a><!-- doxytag: member="mdtDeviceU3606A::getIdn" ref="ad79d17e348854963cf32b20d370a778e" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -126,6 +129,8 @@ Public Member Functions</h2></td></tr>
 
 <p><p>if(!pvPortManager.writeData(command, true)){ emit idnChanged(data); return; }</p>
 </p>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00109">109</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
@@ -156,6 +161,8 @@ Public Member Functions</h2></td></tr>
 </li>
 </ul>
 
+<p>Definition at line <a class="el" href="moc__mdt_device_u3606_a_8cxx_source.html#l00088">88</a> of file <a class="el" href="moc__mdt_device_u3606_a_8cxx_source.html">moc_mdtDeviceU3606A.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a3a31558c573466fc1534b43e6ee7e327"></a><!-- doxytag: member="mdtDeviceU3606A::scan" ref="a3a31558c573466fc1534b43e6ee7e327" args="()" -->
@@ -180,6 +187,8 @@ Public Member Functions</h2></td></tr>
 <p><p>if(pvPortManager.writeData(command, true)){ if(pvPortManager.waitReadenFrame()){ if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame())){ if(pvCodec.values().size() &gt;= 2){ if(pvCodec.values().at(1) == "U3606A"){ portsWithDevice &lt;&lt; ports.at(i); } } } } }</p>
 </p>
 
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="af4ee162df6c67ee3b2d9e5877bea881e"></a><!-- doxytag: member="mdtDeviceU3606A::selectPort" ref="af4ee162df6c67ee3b2d9e5877bea881e" args="(const QString &amp;port)" -->
@@ -199,6 +208,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Select a port. </p>
 <p>Before using this function, the specific device <a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327" title="Scan for attached devices.">scan()</a> method must be used to find ports with attached device. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
@@ -230,11 +241,14 @@ Public Member Functions</h2></td></tr>
 <p>Select a port. </p>
 <p>Before using this function, the specific device <a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327" title="Scan for attached devices.">scan()</a> method must be used to find ports with attached device. Then, pass the result at argument </p>
 
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtdevice/linux/<a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a></li>
-<li>src/mdtdevice/linux/mdtDeviceU3606A.cpp</li>
+<li>src/mdtdevice/linux/<a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a></li>
+<li>src/mdtdevice/linux/<a class="el" href="moc__mdt_device_u3606_a_8cxx_source.html">moc_mdtDeviceU3606A.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -251,7 +265,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

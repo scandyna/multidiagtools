@@ -214,6 +214,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
  To begin a implementation, please take a look at <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> at first.<br/>
 </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="aecd76bff0f93cb86c3bbfd73e3776032"></a><!-- doxytag: member="mdtAbstractSerialPort::availableBaudRates" ref="aecd76bff0f93cb86c3bbfd73e3776032" args="()" -->
 <div class="memitem">
@@ -232,6 +234,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>Get the list of available baud rates. </p>
 <p>The mutex is not handled by this method.</p>
 <p>If the internal baud rates list is empty and port is open, <a class="el" href="classmdt_abstract_serial_port.html#a6241c9f53d60fd477e2375bd5b36073f" title="Build the list of available baud rates.">buildAvailableBaudRates()</a> will be called. </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00108">108</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -302,6 +306,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html#l00096">96</a> of file <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html">moc_mdtAbstractSerialPort.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="abf0be424c1a8cf01b830cc6b371e8695"></a><!-- doxytag: member="mdtAbstractSerialPort::carIsOn" ref="abf0be424c1a8cf01b830cc6b371e8695" args="()" -->
@@ -320,6 +326,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 <p>Get the CAR (CD) state. </p>
 <p>The mutex is handled in this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,6 +350,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method. </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,6 +378,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html#l00110">110</a> of file <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html">moc_mdtAbstractSerialPort.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a9bea314eefd6f4ec79456bc21e6c66af"></a><!-- doxytag: member="mdtAbstractSerialPort::ctsIsOn" ref="a9bea314eefd6f4ec79456bc21e6c66af" args="()" -->
@@ -386,6 +398,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 <p>Get the CTS state. </p>
 <p>The mutex is handled in this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00139">139</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -436,6 +450,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html#l00103">103</a> of file <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html">moc_mdtAbstractSerialPort.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a76816aa53a6dce0ab30b9f1d095dd045"></a><!-- doxytag: member="mdtAbstractSerialPort::dsrIsOn" ref="a76816aa53a6dce0ab30b9f1d095dd045" args="()" -->
@@ -454,6 +470,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 <p>Get the DSR state. </p>
 <p>The mutex is handled in this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,6 +614,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html#l00117">117</a> of file <a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html">moc_mdtAbstractSerialPort.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a0a3954438d1e8180e53717cc0fe1ce3e"></a><!-- doxytag: member="mdtAbstractSerialPort::rngIsOn" ref="a0a3954438d1e8180e53717cc0fe1ce3e" args="()" -->
@@ -614,6 +634,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 
 <p>Get the RNG (RI) state. </p>
 <p>The mutex is handled in this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00150">150</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -885,6 +907,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 <p>The mutex is not handled by this method.</p>
 <p>If UART type is unknow and port is open, <a class="el" href="classmdt_abstract_serial_port.html#abbc98ff6721f120d68b43078e90b1195" title="Map the system defined UART type to internal one.">mapUartType()</a> will be called. </p>
 
+<p>Definition at line <a class="el" href="mdt_abstract_serial_port_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a146bf17f4f11c173e9b123bace0f2ddf"></a><!-- doxytag: member="mdtAbstractSerialPort::waitEventCtl" ref="a146bf17f4f11c173e9b123bace0f2ddf" args="()=0" -->
@@ -919,7 +943,8 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtserialport/<a class="el" href="mdt_abstract_serial_port_8h_source.html">mdtAbstractSerialPort.h</a></li>
-<li>src/mdtserialport/mdtAbstractSerialPort.cpp</li>
+<li>src/mdtserialport/<a class="el" href="mdt_abstract_serial_port_8cpp_source.html">mdtAbstractSerialPort.cpp</a></li>
+<li>src/mdtserialport/<a class="el" href="moc__mdt_abstract_serial_port_8cxx_source.html">moc_mdtAbstractSerialPort.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -936,7 +961,7 @@ QList&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvAvail
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

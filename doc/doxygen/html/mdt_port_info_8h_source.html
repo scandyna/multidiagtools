@@ -88,37 +88,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QMetaType&gt;</span>
 <a name="l00027"></a>00027 <span class="preprocessor">#include &quot;mdtDeviceInfo.h&quot;</span>
 <a name="l00028"></a>00028 
-<a name="l00033"></a><a class="code" href="classmdt_port_info.html">00033</a> <span class="keyword">class </span><a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035  <span class="keyword">public</span>:
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>();
-<a name="l00038"></a>00038   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
-<a name="l00039"></a>00039   ~<a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>();
-<a name="l00040"></a>00040 
-<a name="l00043"></a>00043   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(<span class="keyword">const</span> QString &amp;name);
-<a name="l00044"></a>00044 
-<a name="l00047"></a>00047   QString <a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">portName</a>() <span class="keyword">const</span>;
-<a name="l00048"></a>00048 
-<a name="l00051"></a>00051   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61" title="Add a device.">addDevice</a>(<a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *device);
-<a name="l00052"></a>00052 
-<a name="l00059"></a>00059   QList&lt;mdtDeviceInfo*&gt; &amp;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>();
-<a name="l00060"></a>00060 
-<a name="l00063"></a>00063   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;<a class="code" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24" title="Copy operator.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
-<a name="l00064"></a>00064 
-<a name="l00067"></a>00067   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4" title="Comparaison operator.">operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
-<a name="l00068"></a>00068 
-<a name="l00071"></a>00071   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e" title="Comparaison operator.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073  <span class="keyword">private</span>:
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;std::list&gt;</span>
+<a name="l00030"></a>00030 
+<a name="l00035"></a><a class="code" href="classmdt_port_info.html">00035</a> <span class="keyword">class </span><a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>
+<a name="l00036"></a>00036 {
+<a name="l00037"></a>00037  <span class="keyword">public</span>:
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>();
+<a name="l00040"></a>00040   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
+<a name="l00041"></a>00041   ~<a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>();
+<a name="l00042"></a>00042 
+<a name="l00045"></a>00045   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(<span class="keyword">const</span> QString &amp;name);
+<a name="l00046"></a>00046 
+<a name="l00049"></a>00049   QString <a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">portName</a>() <span class="keyword">const</span>;
+<a name="l00050"></a>00050 
+<a name="l00053"></a>00053   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info.html#a2a8d6603b7e134ffd9e11900ece88a61" title="Add a device.">addDevice</a>(<a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *device);
+<a name="l00054"></a>00054 
+<a name="l00061"></a>00061   QList&lt;mdtDeviceInfo*&gt; &amp;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>();
+<a name="l00062"></a>00062 
+<a name="l00065"></a>00065   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;<a class="code" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24" title="Copy operator.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
+<a name="l00066"></a>00066 
+<a name="l00069"></a>00069   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4" title="Comparaison operator.">operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
+<a name="l00070"></a>00070 
+<a name="l00073"></a>00073   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e" title="Comparaison operator.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other);
 <a name="l00074"></a>00074 
-<a name="l00075"></a>00075   QList&lt;mdtDeviceInfo*&gt; pvDeviceInfoList;
-<a name="l00076"></a>00076   QString pvPortName;
-<a name="l00077"></a>00077 };
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 Q_DECLARE_METATYPE(<a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>)
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 <span class="preprocessor">#endif  // #ifndef MDT_PORT_INFO_H</span>
+<a name="l00075"></a>00075  <span class="keyword">private</span>:
+<a name="l00076"></a>00076 
+<a name="l00080"></a>00080   QList&lt;mdtDeviceInfo*&gt; pvDeviceInfoList;
+<a name="l00081"></a>00081   QString pvPortName;
+<a name="l00082"></a>00082 };
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 Q_DECLARE_METATYPE(<a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>)
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086 <span class="preprocessor">#endif  // #ifndef MDT_PORT_INFO_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -135,7 +137,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

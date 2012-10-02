@@ -99,6 +99,8 @@ Static Public Member Functions</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Get some attributes of a file system partition. </p>
 <p>Note: this class is not thread safe </p>
+
+<p>Definition at line <a class="el" href="mdt_partition_attributes_8h_source.html#l00031">31</a> of file <a class="el" href="mdt_partition_attributes_8h_source.html">mdtPartitionAttributes.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a878661022c3f21be023e03f8b28f34b4"></a><!-- doxytag: member="mdtPartitionAttributes::availablePartitions" ref="a878661022c3f21be023e03f8b28f34b4" args="(const QStringList &amp;ignoreList=QStringList())" -->
 <div class="memitem">
@@ -126,6 +128,8 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="mdt_partition_attributes_posix_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_partition_attributes_posix_8cpp_source.html">mdtPartitionAttributesPosix.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a8040f47cee1e0c93003f47f5ece9db93"></a><!-- doxytag: member="mdtPartitionAttributes::fileSystem" ref="a8040f47cee1e0c93003f47f5ece9db93" args="()" -->
@@ -145,6 +149,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Returns the name of partition filesystem. </p>
 <p>Filesystem name could be ext3 , NTFS, ... </p>
 
+<p>Definition at line <a class="el" href="mdt_partition_attributes_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_partition_attributes_8cpp_source.html">mdtPartitionAttributes.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a365cb772d258e6752728fb66d089b31f"></a><!-- doxytag: member="mdtPartitionAttributes::name" ref="a365cb772d258e6752728fb66d089b31f" args="()" -->
@@ -163,6 +169,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Get the partition name. </p>
 <p>On Windows, name can be a CD-ROM name, USB Key partition name, ... On Linux, name is the device path like /dev/sda1 </p>
+
+<p>Definition at line <a class="el" href="mdt_partition_attributes_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_partition_attributes_8cpp_source.html">mdtPartitionAttributes.cpp</a>.</p>
 
 </div>
 </div>
@@ -186,6 +194,8 @@ Static Public Member Functions</h2></td></tr>
  Similar on Wondows, if C: was passed to <a class="el" href="classmdt_partition_attributes.html#a2d8e383af725587f0144f573da0f2bd3" title="Set the path of partition on wich the infos must be retreived.">setPath()</a> , C:/ is returned.<br/>
  On Windows, if nativeFormat is true, the \ separator is used, else, POSIX / separator is used in returned path. </p>
 
+<p>Definition at line <a class="el" href="mdt_partition_attributes_8cpp_source.html#l00035">35</a> of file <a class="el" href="mdt_partition_attributes_8cpp_source.html">mdtPartitionAttributes.cpp</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a2d8e383af725587f0144f573da0f2bd3"></a><!-- doxytag: member="mdtPartitionAttributes::setPath" ref="a2d8e383af725587f0144f573da0f2bd3" args="(const QString &amp;path)" -->
@@ -208,13 +218,15 @@ Static Public Member Functions</h2></td></tr>
  On Windows, it can be C:\ , D:\. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False if partition attributes could not be fetsched. </dd></dl>
 
+<p>Definition at line <a class="el" href="mdt_partition_attributes_posix_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_partition_attributes_posix_8cpp_source.html">mdtPartitionAttributesPosix.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_partition_attributes_8h_source.html">mdtPartitionAttributes.h</a></li>
-<li>src/mdtutils/linux/mdtPartitionAttributesPosix.cpp</li>
-<li>src/mdtutils/mdtPartitionAttributes.cpp</li>
-<li>src/mdtutils/windows/mdtPartitionAttributesWindows.cpp</li>
+<li>src/mdtutils/linux/<a class="el" href="mdt_partition_attributes_posix_8cpp_source.html">mdtPartitionAttributesPosix.cpp</a></li>
+<li>src/mdtutils/<a class="el" href="mdt_partition_attributes_8cpp_source.html">mdtPartitionAttributes.cpp</a></li>
+<li>src/mdtutils/windows/<a class="el" href="mdt_partition_attributes_windows_8cpp_source.html">mdtPartitionAttributesWindows.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -231,7 +243,7 @@ Static Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 11:42:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

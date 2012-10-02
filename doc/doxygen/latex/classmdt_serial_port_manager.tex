@@ -68,6 +68,10 @@ All needed object are created by constructor. To alter configuration, use \hyper
 
 Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()} to begin read/write and stop to end. 
 
+Definition at line 46 of file mdtSerialPortManager.h.
+
+
+
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classmdt_serial_port_manager_a6508372bcab37a73546fc2c24ee6415c}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
@@ -82,7 +86,11 @@ Use \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()}
 
 Construct a serial port manager. 
 
-Creates a \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig}, a \hyperlink{classmdt_serial_port}{mdtSerialPort}, and threads objects. \hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{
+Creates a \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig}, a \hyperlink{classmdt_serial_port}{mdtSerialPort}, and threads objects. 
+
+Definition at line 32 of file mdtSerialPortManager.cpp.
+
+\hypertarget{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}}
 \index{$\sim$mdtSerialPortManager@{$\sim$mdtSerialPortManager}!mdtSerialPortManager@{mdtSerialPortManager}}
 \subsubsection[{$\sim$mdtSerialPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtSerialPortManager::$\sim$mdtSerialPortManager (
@@ -96,6 +104,10 @@ Creates a \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig}, a \hyper
 Destructor. 
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
+
+Definition at line 50 of file mdtSerialPortManager.cpp.
+
+
 
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{
@@ -115,6 +127,10 @@ Usefull to alter internal port configuration
 
 Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager}.
 
+
+
+Definition at line 134 of file mdtSerialPortManager.cpp.
+
 \hypertarget{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!port@{port}}
 \index{port@{port}!mdtSerialPortManager@{mdtSerialPortManager}}
@@ -131,6 +147,10 @@ Get the serial port instance.
 \begin{DoxyPrecond}{Precondition}
 Port must be set with a \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} instance (not \hyperlink{classmdt_abstract_port}{mdtAbstractPort}) 
 \end{DoxyPrecond}
+
+
+Definition at line 145 of file mdtSerialPortManager.cpp.
+
 \hypertarget{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!scan@{scan}}
 \index{scan@{scan}!mdtSerialPortManager@{mdtSerialPortManager}}
@@ -155,6 +175,10 @@ List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on 
 
 
 Reimplemented from \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{mdtPortManager}.
+
+
+
+Definition at line 58 of file mdtSerialPortManager.cpp.
 
 
 

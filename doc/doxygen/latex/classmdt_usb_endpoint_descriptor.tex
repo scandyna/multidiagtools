@@ -89,6 +89,10 @@ quint8 \hyperlink{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc
 \subsection{Detailed Description}
 USB endpoint descriptor. 
 
+Definition at line 29 of file mdtUsbEndpointDescriptor.h.
+
+
+
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_usb_endpoint_descriptor_a478bc4bdec482184c0fc9af3218afad9}{
 \index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!address@{address}}
@@ -103,7 +107,11 @@ USB endpoint descriptor.
 
 Endpoint address (number) 
 
-Note: this is the decoded address, i.e. bits 3..0 extracted from bEndpointAddress \hypertarget{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}{
+Note: this is the decoded address, i.e. bits 3..0 extracted from bEndpointAddress 
+
+Definition at line 48 of file mdtUsbEndpointDescriptor.cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_ab2b12df2f8bd4024f118fe1293bc3bf4}{
 \index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!bInterval@{bInterval}}
 \index{bInterval@{bInterval}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
 \subsubsection[{bInterval}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtUsbEndpointDescriptor::bInterval (
@@ -116,7 +124,11 @@ Note: this is the decoded address, i.e. bits 3..0 extracted from bEndpointAddres
 
 Interval for polling endpoint for data transfers. 
 
-Value is returned as read in bInterval field (in libusb strcture) \hypertarget{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}{
+Value is returned as read in bInterval field (in libusb strcture) 
+
+Definition at line 123 of file mdtUsbEndpointDescriptor.cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_af001cef68ba1e177a63b1f9ba02ddc6c}{
 \index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!fetchAttributes@{fetchAttributes}}
 \index{fetchAttributes@{fetchAttributes}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
 \subsubsection[{fetchAttributes}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbEndpointDescriptor::fetchAttributes (
@@ -132,6 +144,10 @@ Ftech the endpoint descriptor's attributes.
 \begin{DoxyPrecond}{Precondition}
 descriptor must be a valid pointer 
 \end{DoxyPrecond}
+
+
+Definition at line 37 of file mdtUsbEndpointDescriptor.cpp.
+
 \hypertarget{classmdt_usb_endpoint_descriptor_ae7bdf4803a50206fdb9b30008b9bc230}{
 \index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!maxPacketSize@{maxPacketSize}}
 \index{maxPacketSize@{maxPacketSize}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
@@ -145,7 +161,11 @@ descriptor must be a valid pointer
 
 Maximum packet size. 
 
-Note: this is the decoded size, i.e. bits 10..0 extracted from wMaxPacketSize \hypertarget{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}{
+Note: this is the decoded size, i.e. bits 10..0 extracted from wMaxPacketSize 
+
+Definition at line 113 of file mdtUsbEndpointDescriptor.cpp.
+
+\hypertarget{classmdt_usb_endpoint_descriptor_acc5881f4e94f4b1014ecbe9f6a3f3405}{
 \index{mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}!transactionsCountPerMicroFrame@{transactionsCountPerMicroFrame}}
 \index{transactionsCountPerMicroFrame@{transactionsCountPerMicroFrame}!mdtUsbEndpointDescriptor@{mdtUsbEndpointDescriptor}}
 \subsubsection[{transactionsCountPerMicroFrame}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbEndpointDescriptor::transactionsCountPerMicroFrame (
@@ -159,6 +179,10 @@ Note: this is the decoded size, i.e. bits 10..0 extracted from wMaxPacketSize \h
 Transactions per microframe. 
 
 Note: this is the decoded value + 1, i.e. bits 12..11 extracted from wMaxPacketSize Bit 12..11 give additionnal value, and this method returns the extracted value + 1 (f.ex. if bit 12..11 give 00 as result, this method returns 1) 
+
+Definition at line 118 of file mdtUsbEndpointDescriptor.cpp.
+
+
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
