@@ -165,6 +165,8 @@ if(UNIX)
   add_test (mdtPortLockTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportlocktest)
   # mdtPortTest
   add_test (mdtPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtporttest)
+  # mdtPortInfoTest
+  add_test (mdtPortInfoTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtportinfotest)
   # mdtUsbPortTest
   add_test (mdtUsbPortTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtport/mdtusbporttest)
   # mdtUsbTmcPortTest

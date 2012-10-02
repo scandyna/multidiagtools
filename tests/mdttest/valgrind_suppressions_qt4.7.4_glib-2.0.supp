@@ -332,3 +332,17 @@
    fun:hb_buffer_add_glyph
    obj:*
 }
+
+# XCB in licX11.so.6.3.0
+{
+   Possible memory leak in libxcb
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+   obj:/usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+   fun:xcb_connect_to_display_with_auth_info
+   fun:xcb_connect
+   fun:_XConnectXCB
+   fun:XOpenDisplay
+   fun:_Z7qt_initP19QApplicationPrivateiP9_XDisplaymm
+}

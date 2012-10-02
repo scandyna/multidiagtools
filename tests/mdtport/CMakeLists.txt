@@ -60,3 +60,11 @@ target_link_libraries(mdtportmanagertest "mdtutils")
 target_link_libraries(mdtportmanagertest "mdtport")
 target_link_libraries(mdtportmanagertest "mdttest")
 target_link_libraries(mdtportmanagertest ${QT_LIBRARIES})
+
+# Target mdtPortInfoTest
+QT4_WRAP_CPP (MOC_MDT_PORT_INFO_TEST mdtPortInfoTest.h)
+add_executable (mdtportinfotest mdtPortInfoTest.cpp ${MOC_MDT_PORT_INFO_TEST})
+target_link_libraries(mdtportinfotest "mdtutils")
+target_link_libraries(mdtportinfotest "mdtport")
+target_link_libraries(mdtportinfotest "mdttest")
+target_link_libraries(mdtportinfotest ${QT_LIBRARIES})

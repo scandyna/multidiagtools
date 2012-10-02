@@ -23,6 +23,7 @@
 
 #include <QList>
 #include <QString>
+#include <QMetaType>
 #include "mdtDeviceInfo.h"
 
 /*! \brief Contains informations about a port
@@ -34,6 +35,7 @@ class mdtPortInfo
  public:
 
   mdtPortInfo();
+  mdtPortInfo(const mdtPortInfo &other);
   ~mdtPortInfo();
 
   /*! \brief Set the port name
@@ -49,13 +51,31 @@ class mdtPortInfo
   void addDevice(mdtDeviceInfo *device);
 
   /*! \brief Get the list of devices informations
+   *
+   * Note that content of returned list is not a copy,
+   *  and that all items becomes ivalid after
+   *  this (mdtPortInfo) object was deleted.
    */
   QList<mdtDeviceInfo*> &deviceInfoList();
+
+  /*! \brief Copy operator
+   */
+  mdtPortInfo &operator=(const mdtPortInfo &other);
+
+  /*! \brief Comparaison operator
+   */
+  bool operator==(const mdtPortInfo &other);
+
+  /*! \brief Comparaison operator
+   */
+  bool operator!=(const mdtPortInfo &other);
 
  private:
 
   QList<mdtDeviceInfo*> pvDeviceInfoList;
   QString pvPortName;
 };
+
+Q_DECLARE_METATYPE(mdtPortInfo)
 
 #endif  // #ifndef MDT_PORT_INFO_H

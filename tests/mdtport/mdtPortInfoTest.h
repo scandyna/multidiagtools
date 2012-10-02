@@ -18,61 +18,22 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEVICE_INFO_H
-#define MDT_DEVICE_INFO_H
+#ifndef MDT_PORT_INFO_TEST_H
+#define MDT_PORT_INFO_TEST_H
 
-#include <QString>
+#include "mdtTest.h"
 
-/*! \brief Contains informations about a device (attached to a port)
- *
- * Used by mdtPortManager in scan() method.
- */
-class mdtDeviceInfo
+class mdtPortInfoTest : public mdtTest
 {
- public:
+ Q_OBJECT
 
-  mdtDeviceInfo();
+ private slots:
 
-  ~mdtDeviceInfo();
+  // Check copy
+  void copyTest();
 
-  /*! \brief Set vendor ID
-   */
-  void setVendorId(int vid);
-
-  /*! \brief Get vendor ID
-   */
-  int vendorId() const;
-
-  /*! \brief Get vendor name
-   */
-  QString vendorName() const;
-
-  /*! \brief Set product ID
-   */
-  void setProductId(int pid);
-
-  /*! \brief Get product ID
-   */
-  int productId() const;
-
-  /*! \brief Get product name
-   */
-  QString productName() const;
-
-  /*! \brief Comparaison operator
-   */
-  bool operator==(const mdtDeviceInfo &other);
-
-  /*! \brief Comparaison operator
-   */
-  bool operator!=(const mdtDeviceInfo &other);
-
-private:
-
-  int pvVendorId;
-  QString pvVendorName;
-  int pvProductId;
-  QString pvProductName;
+  // Check that mdtPortInfo works with QVariant
+  void qvariantTest();
 };
 
-#endif  // #ifndef MDT_DEVICE_INFO_H
+#endif //#ifndef MDT_PORT_INFO_TEST_H

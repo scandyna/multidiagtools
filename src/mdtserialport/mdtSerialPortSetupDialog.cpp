@@ -80,6 +80,7 @@ void mdtSerialPortSetupDialog::updateConfig()
   pvSerialPortConfigWidget->updateConfig(pvPortManager->config());
 }
 
+/// \todo Is this method used ??
 void mdtSerialPortSetupDialog::applySetup()
 {
   Q_ASSERT(pvPortManager != 0);

@@ -155,10 +155,10 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan22()
       e.commit();
       continue;
     }
-    qDebug() << "->  IDV: " << hex << deviceDescriptor.idVendor() << " , IDP: " << deviceDescriptor.idProduct() << dec;
-    qDebug() << "->  Class: " << deviceDescriptor.bDeviceClass() << " , Subclass: " << deviceDescriptor.bDeviceSubClass();
     // We search USBTMC devices, bDeviceClass will be set 0x00 and defined in interface descriptor
     if(deviceDescriptor.bDeviceClass() == 0x00){
+      // Create a port info object
+      portInfo = new mdtPortInfo;
       // Search interfaces in various configurations
       for(j=0; j<deviceDescriptor.configurations().size(); j++){
         configDescriptor = deviceDescriptor.configurations().at(j);
@@ -171,29 +171,38 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan22()
           if(ifaceDescriptor->bInterfaceClass() == 0xFE){
             if(ifaceDescriptor->bInterfaceSubClass() == 0x03){
               // Here we found a USBTMC device
-              qDebug() << "->   Found USBTMC interface";
-              qDebug() << "Bus number [dec]: " << dec << libusb_get_bus_number(device) << " , [hex]: 0x" << hex << libusb_get_bus_number(device);
-              portInfo = new mdtPortInfo;
-              portName = "0x" + QString::number((unsigned int)libusb_get_bus_number(device), 16);
-              portName += ":0x";
-              portName += QString::number((unsigned int)libusb_get_device_address(device), 16);
-              portInfo->setPortName(portName);
               deviceInfo = new mdtDeviceInfo;
               deviceInfo->setVendorId(deviceDescriptor.idVendor());
               deviceInfo->setProductId(deviceDescriptor.idProduct());
               portInfo->addDevice(deviceInfo);
-              portInfoList.append(portInfo);
             }
           }
         }
       }
+      // If port info has no device, delete it, else add it to list
+      if(portInfo->deviceInfoList().size() < 1){
+        delete portInfo;
+      }else{
+        // Build port name
+        deviceInfo = portInfo->deviceInfoList().at(0);
+        Q_ASSERT(deviceInfo != 0);
+        portName = "0x" + QString::number((unsigned int)libusb_get_bus_number(device), 16);
+        portName += ":0x";
+        portName += QString::number((unsigned int)libusb_get_device_address(device), 16);
+        portName += ":0x";
+        portName += QString::number((unsigned int)deviceInfo->vendorId(), 16);
+        portName += ":0x";
+        portName += QString::number((unsigned int)deviceInfo->productId(), 16);
+        portInfo->setPortName(portName);
+        // Add port info to list
+        portInfoList.append(portInfo);
+      }
     }
   }
-  
   // Release ressources
   libusb_free_device_list(devicesList, 1);
   libusb_exit(ctx);
-  
+
   return portInfoList;
 }
 

@@ -25,8 +25,20 @@ mdtPortInfo::mdtPortInfo()
 {
 }
 
+mdtPortInfo::mdtPortInfo(const mdtPortInfo &other)
+{
+  int i;
+
+  pvPortName = other.pvPortName;
+  // Copy devices list
+  for(i=0; i<other.pvDeviceInfoList.size(); ++i){
+    pvDeviceInfoList.append(new mdtDeviceInfo(*other.pvDeviceInfoList.at(i)));
+  }
+}
+
 mdtPortInfo::~mdtPortInfo()
 {
+  qDeleteAll(pvDeviceInfoList);
 }
 
 void mdtPortInfo::setPortName(const QString &name)
@@ -47,4 +59,47 @@ void mdtPortInfo::addDevice(mdtDeviceInfo *device)
 QList<mdtDeviceInfo*> &mdtPortInfo::deviceInfoList()
 {
   return pvDeviceInfoList;
+}
+
+mdtPortInfo &mdtPortInfo::operator=(const mdtPortInfo &other)
+{
+  int i;
+
+  if(this != &other){
+    pvPortName = other.pvPortName;
+    // Copy devices list
+    qDeleteAll(pvDeviceInfoList);
+    for(i=0; i<other.pvDeviceInfoList.size(); ++i){
+      pvDeviceInfoList.append(new mdtDeviceInfo(*other.pvDeviceInfoList.at(i)));
+    }
+  }
+
+  return *this;
+}
+
+bool mdtPortInfo::operator==(const mdtPortInfo &other)
+{
+  int i;
+
+  if(pvPortName != other.pvPortName){
+    return false;
+  }
+  // Check device info list
+  if(pvDeviceInfoList.size() != other.pvDeviceInfoList.size()){
+    return false;
+  }
+  for(i=0; i<pvDeviceInfoList.size(); ++i){
+    Q_ASSERT(pvDeviceInfoList.at(i) != 0);
+    Q_ASSERT(other.pvDeviceInfoList.at(i) != 0);
+    if((*pvDeviceInfoList.at(i)) != (*other.pvDeviceInfoList.at(i))){
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool mdtPortInfo::operator!=(const mdtPortInfo &other)
+{
+  return !(*this == other);
 }

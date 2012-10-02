@@ -60,3 +60,25 @@ QString mdtDeviceInfo::productName() const
   return pvProductName;
 }
 
+bool mdtDeviceInfo::operator==(const mdtDeviceInfo &other)
+{
+  if(pvVendorId != other.pvVendorId){
+    return false;
+  }
+  if(pvVendorName != other.pvVendorName){
+    return false;
+  }
+  if(pvProductId != other.pvProductId){
+    return false;
+  }
+  if(pvProductName != other.pvProductName){
+    return false;
+  }
+
+  return true;
+}
+
+bool mdtDeviceInfo::operator!=(const mdtDeviceInfo &other)
+{
+  return !(*this == other);
+}

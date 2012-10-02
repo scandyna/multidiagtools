@@ -125,6 +125,7 @@ void mdtPortManagerTest::usbTmcPortTest()
     }
   }
   
+  qDeleteAll(portsInfoList);
   return;
   
   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
