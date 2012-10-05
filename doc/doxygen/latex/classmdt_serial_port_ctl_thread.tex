@@ -27,13 +27,39 @@ Collaboration diagram for mdtSerialPortCtlThread:\nopagebreak
 {\bfseries mdtSerialPortCtlThread} (QObject $\ast$parent=0)}
 \label{classmdt_serial_port_ctl_thread_a326a83376c644e8d43224422a6ed4735}
 
-\end{DoxyCompactItemize}
+\item 
+bool \hyperlink{classmdt_serial_port_ctl_thread_ab87413cedc8d0540eac553e55a3f6407}{isReader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
 Definition at line 8 of file mdtSerialPortCtlThread.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_serial_port_ctl_thread_ab87413cedc8d0540eac553e55a3f6407}{
+\index{mdtSerialPortCtlThread@{mdtSerialPortCtlThread}!isReader@{isReader}}
+\index{isReader@{isReader}!mdtSerialPortCtlThread@{mdtSerialPortCtlThread}}
+\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtSerialPortCtlThread::isReader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_serial_port_ctl_thread_ab87413cedc8d0540eac553e55a3f6407}
+
+
+Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
+
+Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+
+
+
+Definition at line 37 of file mdtSerialPortCtlThread.cpp.
 
 
 

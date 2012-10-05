@@ -131,40 +131,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00069"></a>00069     pvPortName = other.pvPortName;
 <a name="l00070"></a>00070     <span class="comment">// Copy devices list</span>
 <a name="l00071"></a>00071     qDeleteAll(pvDeviceInfoList);
-<a name="l00072"></a>00072     <span class="keywordflow">for</span>(i=0; i&lt;other.pvDeviceInfoList.size(); ++i){
-<a name="l00073"></a>00073       pvDeviceInfoList.append(<span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>(*other.pvDeviceInfoList.at(i)));
-<a name="l00074"></a>00074     }
-<a name="l00075"></a>00075   }
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00078"></a>00078 }
-<a name="l00079"></a>00079 
-<a name="l00080"></a><a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4">00080</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4" title="Comparaison operator.">mdtPortInfo::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
-<a name="l00081"></a>00081 {
-<a name="l00082"></a>00082   <span class="keywordtype">int</span> i;
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084   <span class="keywordflow">if</span>(pvPortName != other.pvPortName){
-<a name="l00085"></a>00085     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00086"></a>00086   }
-<a name="l00087"></a>00087   <span class="comment">// Check device info list</span>
-<a name="l00088"></a>00088   <span class="keywordflow">if</span>(pvDeviceInfoList.size() != other.pvDeviceInfoList.size()){
-<a name="l00089"></a>00089     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00090"></a>00090   }
-<a name="l00091"></a>00091   <span class="keywordflow">for</span>(i=0; i&lt;pvDeviceInfoList.size(); ++i){
-<a name="l00092"></a>00092     Q_ASSERT(pvDeviceInfoList.at(i) != 0);
-<a name="l00093"></a>00093     Q_ASSERT(other.pvDeviceInfoList.at(i) != 0);
-<a name="l00094"></a>00094     <span class="keywordflow">if</span>((*pvDeviceInfoList.at(i)) != (*other.pvDeviceInfoList.at(i))){
-<a name="l00095"></a>00095       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00096"></a>00096     }
-<a name="l00097"></a>00097   }
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00100"></a>00100 }
-<a name="l00101"></a>00101 
-<a name="l00102"></a><a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e">00102</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e" title="Comparaison operator.">mdtPortInfo::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
-<a name="l00103"></a>00103 {
-<a name="l00104"></a>00104   <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);
-<a name="l00105"></a>00105 }
+<a name="l00072"></a>00072     pvDeviceInfoList.clear();
+<a name="l00073"></a>00073     <span class="keywordflow">for</span>(i=0; i&lt;other.pvDeviceInfoList.size(); ++i){
+<a name="l00074"></a>00074       pvDeviceInfoList.append(<span class="keyword">new</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>(*other.pvDeviceInfoList.at(i)));
+<a name="l00075"></a>00075     }
+<a name="l00076"></a>00076   }
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4">00081</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4" title="Comparaison operator.">mdtPortInfo::operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
+<a name="l00082"></a>00082 {
+<a name="l00083"></a>00083   <span class="keywordtype">int</span> i;
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   <span class="keywordflow">if</span>(pvPortName != other.pvPortName){
+<a name="l00086"></a>00086     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00087"></a>00087   }
+<a name="l00088"></a>00088   <span class="comment">// Check device info list</span>
+<a name="l00089"></a>00089   <span class="keywordflow">if</span>(pvDeviceInfoList.size() != other.pvDeviceInfoList.size()){
+<a name="l00090"></a>00090     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00091"></a>00091   }
+<a name="l00092"></a>00092   <span class="keywordflow">for</span>(i=0; i&lt;pvDeviceInfoList.size(); ++i){
+<a name="l00093"></a>00093     Q_ASSERT(pvDeviceInfoList.at(i) != 0);
+<a name="l00094"></a>00094     Q_ASSERT(other.pvDeviceInfoList.at(i) != 0);
+<a name="l00095"></a>00095     <span class="keywordflow">if</span>((*pvDeviceInfoList.at(i)) != (*other.pvDeviceInfoList.at(i))){
+<a name="l00096"></a>00096       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00097"></a>00097     }
+<a name="l00098"></a>00098   }
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00101"></a>00101 }
+<a name="l00102"></a>00102 
+<a name="l00103"></a><a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e">00103</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e" title="Comparaison operator.">mdtPortInfo::operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> &amp;other)
+<a name="l00104"></a>00104 {
+<a name="l00105"></a>00105   <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);
+<a name="l00106"></a>00106 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -181,7 +182,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:36 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

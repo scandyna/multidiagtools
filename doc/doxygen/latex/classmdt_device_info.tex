@@ -44,6 +44,8 @@ QString \hyperlink{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{produ
 \label{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}
 
 \begin{DoxyCompactList}\small\item\em Get product name. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_device_info_ad005eb082bd00b4da0883508b64935dd}{displayText} () const 
+\begin{DoxyCompactList}\small\item\em Get the display text. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{
 bool \hyperlink{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{operator==} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&other)}
 \label{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}
@@ -61,7 +63,27 @@ Contains informations about a device (attached to a port)
 
 Used by \hyperlink{classmdt_port_manager}{mdtPortManager} in scan() method. 
 
-Definition at line 30 of file mdtDeviceInfo.h.
+Definition at line 31 of file mdtDeviceInfo.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_info_ad005eb082bd00b4da0883508b64935dd}{
+\index{mdtDeviceInfo@{mdtDeviceInfo}!displayText@{displayText}}
+\index{displayText@{displayText}!mdtDeviceInfo@{mdtDeviceInfo}}
+\subsubsection[{displayText}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceInfo::displayText (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_info_ad005eb082bd00b4da0883508b64935dd}
+
+
+Get the display text. 
+
+Returns a text that can be displayed to the user. (F.ex. in a combo box) 
+
+Definition at line 65 of file mdtDeviceInfo.cpp.
 
 
 

@@ -78,7 +78,7 @@ if(!pvPortManager.writeData(command, true))\{ emit idnChanged(data); return; \}
 
 
 
-Definition at line 109 of file mdtDeviceU3606A.cpp.
+Definition at line 110 of file mdtDeviceU3606A.cpp.
 
 \hypertarget{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!idnChanged@{idnChanged}}
@@ -104,11 +104,7 @@ The list contains following data:
 \hyperlink{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}{getIdn()} 
 \end{DoxySeeAlso}
 
-\end{DoxyItemize}
-
-Definition at line 88 of file moc\_\-mdtDeviceU3606A.cxx.
-
-\hypertarget{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{
+\end{DoxyItemize}\hypertarget{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!scan@{scan}}
 \index{scan@{scan}!mdtDeviceU3606A@{mdtDeviceU3606A}}
 \subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtDeviceU3606A::scan (
@@ -123,15 +119,17 @@ Scan for attached devices.
 
 Scan for available ports, then it get the IDN of found device.\par
  If IDN returns a U3606A, the port is added to ports list. \begin{DoxyReturn}{Returns}
-String list of ports that have a U3606A attached 
+String list of ports that have a U3606A attached
 \end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000001}{Todo}]Reimplement with port manager + port info \end{Desc}
 
 
 if(pvPortManager.writeData(command, true))\{ if(pvPortManager.waitReadenFrame())\{ if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame()))\{ if(pvCodec.values().size() $>$= 2)\{ if(pvCodec.values().at(1) == \char`\"{}U3606A\char`\"{})\{ portsWithDevice $<$$<$ ports.at(i); \} \} \} \} \}
 
 
 
-Definition at line 37 of file mdtDeviceU3606A.cpp.
+Definition at line 38 of file mdtDeviceU3606A.cpp.
 
 \hypertarget{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
@@ -148,7 +146,7 @@ Select a port.
 
 Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. 
 
-Definition at line 93 of file mdtDeviceU3606A.cpp.
+Definition at line 94 of file mdtDeviceU3606A.cpp.
 
 \hypertarget{classmdt_device_u3606_a_a425f1d22686be2d28eb3f1ce12a8eaee}{
 \index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
@@ -166,12 +164,11 @@ Select a port.
 
 Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. Then, pass the result at argument 
 
-Definition at line 74 of file mdtDeviceU3606A.cpp.
+Definition at line 75 of file mdtDeviceU3606A.cpp.
 
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/linux/mdtDeviceU3606A.h\item 
-src/mdtdevice/linux/mdtDeviceU3606A.cpp\item 
-src/mdtdevice/linux/moc\_\-mdtDeviceU3606A.cxx\end{DoxyCompactItemize}
+src/mdtdevice/linux/mdtDeviceU3606A.cpp\end{DoxyCompactItemize}

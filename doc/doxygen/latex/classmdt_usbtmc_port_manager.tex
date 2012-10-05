@@ -114,7 +114,7 @@ Definition at line 57 of file mdtUsbtmcPortManager.cpp.
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
 \label{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}
 \begin{Desc}
-\item[\hyperlink{todo__todo000022}{Todo}]Essais ... \end{Desc}
+\item[\hyperlink{todo__todo000024}{Todo}]Essais ... \end{Desc}
 
 
 \hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port = dynamic\_\-cast$<$mdtUsbPort$\ast$$>$ (pvPort); Q\_\-ASSERT(port != 0); 
@@ -161,9 +161,9 @@ Definition at line 305 of file mdtUsbtmcPortManager.cpp.
 
 Scan available USBTMC ports. 
 
-QStringList \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{scan()};
+QStringList \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{scan()};
 
-QStringList \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{mdtUsbtmcPortManager::scan()} \{ QStringList portNames; QStringList availablePorts; \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort} $\ast$port; QFileInfoList filesInfo; QDir dir; QStringList extList;
+QStringList \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtUsbtmcPortManager::scan()} \{ QStringList portNames; QStringList availablePorts; \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort} $\ast$port; QFileInfoList filesInfo; QDir dir; QStringList extList;
 
 We only need system files dir.setFilter(QDir::Files $|$ QDir::System); USBTMC interfaces extList $<$$<$ \char`\"{}usbtmc$\ast$\char`\"{}; Common device directory dir.setPath(\char`\"{}/dev\char`\"{}); if(!dir.exists())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}directory '\char`\"{} + dir.dirName() + \char`\"{}' not exists\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPortManagerPosix\char`\"{}); e.commit(); return availablePorts; \} dir.setNameFilters(extList); Gest list of found files filesInfo = dir.entryInfoList(); Construct the list of absolute file paths for(int i=0; i$<$filesInfo.size(); ++i)\{ portNames $<$$<$ filesInfo.at(i).absoluteFilePath(); \} Sort the list portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames); For each port name, try to open the port and get some attributes (to see if it really exists) for(int i=0; i$<$portNames.size(); ++i)\{ Try to open port port = new \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort}; Q\_\-ASSERT(port != 0); port-\/$>$setPortName(portNames.at(i)); if(port-\/$>$open() == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ availablePorts.append(portNames.at(i)); port-\/$>$close(); \} delete port; \}
 

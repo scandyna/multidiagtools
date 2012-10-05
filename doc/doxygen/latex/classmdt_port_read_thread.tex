@@ -36,7 +36,9 @@ Collaboration diagram for mdtPortReadThread:\nopagebreak
 {\bfseries mdtPortReadThread} (QObject $\ast$parent=0)}
 \label{classmdt_port_read_thread_a180074c2ff60f5103d7e3aa27c1cdb01}
 
-\end{DoxyCompactItemize}
+\item 
+bool \hyperlink{classmdt_port_read_thread_a0138d613b61056c9f8373331de2d9a84}{isReader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -48,10 +50,34 @@ It's possible to use the read timeout protocol. An example of this is MODBUS (ov
 \hyperlink{classmdt_port_config}{mdtPortConfig}
 \end{DoxySeeAlso}
 \begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]suspendTransmission() call is no longer in \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead()}, must be handled in run() now. \end{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]suspendTransmission() call is no longer in \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead()}, must be handled in run() now. \end{Desc}
 
 
 Definition at line 37 of file mdtPortReadThread.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_read_thread_a0138d613b61056c9f8373331de2d9a84}{
+\index{mdtPortReadThread@{mdtPortReadThread}!isReader@{isReader}}
+\index{isReader@{isReader}!mdtPortReadThread@{mdtPortReadThread}}
+\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortReadThread::isReader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_read_thread_a0138d613b61056c9f8373331de2d9a84}
+
+
+Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
+
+Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+
+
+
+Definition at line 35 of file mdtPortReadThread.cpp.
 
 
 

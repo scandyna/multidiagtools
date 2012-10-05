@@ -90,11 +90,37 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69702ab3a95c238fb451f866efc7cb34"></a><!-- doxytag: member="mdtPortWriteThread::stop" ref="a69702ab3a95c238fb451f866efc7cb34" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_write_thread.html#a69702ab3a95c238fb451f866efc7cb34">stop</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the thread. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_write_thread.html#ac37bb988773f624def51e841998a2f1e">isReader</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal.  <a href="#ac37bb988773f624def51e841998a2f1e"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="mdt_port_write_thread_8h_source.html#l00027">27</a> of file <a class="el" href="mdt_port_write_thread_8h_source.html">mdtPortWriteThread.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ac37bb988773f624def51e841998a2f1e"></a><!-- doxytag: member="mdtPortWriteThread::isReader" ref="ac37bb988773f624def51e841998a2f1e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortWriteThread::isReader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal. </p>
+<p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> can handle many threads. It needs to know wich one will send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal, so it can connect it to his slot. </p>
+
+<p>Implements <a class="el" href="classmdt_port_thread.html#a3d57f15a864ae45c98eb40dd89f4cec6">mdtPortThread</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_port_write_thread_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_port_write_thread_8cpp_source.html">mdtPortWriteThread.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_write_thread_8h_source.html">mdtPortWriteThread.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_port_write_thread_8cpp_source.html">mdtPortWriteThread.cpp</a></li>
 </ul>
@@ -113,7 +139,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:38 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

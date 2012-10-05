@@ -96,52 +96,57 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034 {
 <a name="l00035"></a>00035 }
 <a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="keywordtype">void</span> mdtSerialPortCtlThread::run()
-<a name="l00038"></a>00038 {
-<a name="l00039"></a>00039   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   qDebug() &lt;&lt; <span class="stringliteral">&quot;CTLTHD: starting ...&quot;</span>;
-<a name="l00042"></a>00042   Q_ASSERT(pvPort != 0);
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <span class="comment">// We need a mdtSerialPort instance here</span>
-<a name="l00045"></a>00045   <a class="code" href="classmdt_serial_port.html">mdtSerialPort</a> *port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_serial_port.html">mdtSerialPort</a>*<span class="keyword">&gt;</span>(pvPort);
-<a name="l00046"></a>00046   Q_ASSERT(port != 0);
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
-<a name="l00049"></a>00049 <span class="preprocessor"></span>  pvNativePthreadObject = pthread_self();
-<a name="l00050"></a>00050   Q_ASSERT(pvNativePthreadObject != 0);
-<a name="l00051"></a>00051 <span class="preprocessor">#endif</span>
-<a name="l00052"></a>00052 <span class="preprocessor"></span>
-<a name="l00053"></a>00053   <span class="comment">// Set the running flag</span>
-<a name="l00054"></a>00054   port-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00055"></a>00055   pvRunning = <span class="keyword">true</span>;
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057   <span class="comment">// Run...</span>
-<a name="l00058"></a>00058   <span class="keywordflow">while</span>(1){
-<a name="l00059"></a>00059     <span class="comment">// Read thread state</span>
-<a name="l00060"></a>00060     <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00061"></a>00061       <span class="keywordflow">break</span>;
-<a name="l00062"></a>00062     }
-<a name="l00063"></a>00063     <span class="comment">// Wait on ctl signal event</span>
-<a name="l00064"></a>00064     portError = port-&gt;<a class="code" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da" title="void flushOut();">waitEventCtl</a>();
-<a name="l00065"></a>00065     <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888">mdtAbstractPort::WaitingCanceled</a>){
-<a name="l00066"></a>00066       <span class="comment">// Stopping</span>
-<a name="l00067"></a>00067       <span class="keywordflow">break</span>;
-<a name="l00068"></a>00068     }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">mdtAbstractPort::UnknownError</a>){
-<a name="l00069"></a>00069       <span class="comment">// Unhandled error. Signal this and stop</span>
-<a name="l00070"></a>00070       emit(<a class="code" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured</a>(MDT_PORT_IO_ERROR));
-<a name="l00071"></a>00071       <span class="keywordflow">break</span>;
-<a name="l00072"></a>00072     }
-<a name="l00073"></a>00073     <span class="comment">// We have a event here, update the flags</span>
-<a name="l00074"></a>00074     <span class="keywordflow">if</span>(!port-&gt;<a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7" title="NOTE:">getCtlStates</a>()){
-<a name="l00075"></a>00075       <span class="keywordflow">break</span>;
-<a name="l00076"></a>00076     }
-<a name="l00077"></a>00077   }
-<a name="l00078"></a>00078   qDebug() &lt;&lt; <span class="stringliteral">&quot;CTLTHD: Cleanup ...&quot;</span>;
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080   port-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00081"></a>00081   qDebug() &lt;&lt; <span class="stringliteral">&quot;CTLTHD: END&quot;</span>;
-<a name="l00082"></a>00082 }
+<a name="l00037"></a><a class="code" href="classmdt_serial_port_ctl_thread.html#ab87413cedc8d0540eac553e55a3f6407">00037</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port_ctl_thread.html#ab87413cedc8d0540eac553e55a3f6407" title="Returns true if this thread reads data and send the newFrameReaden() signal.">mdtSerialPortCtlThread::isReader</a>()<span class="keyword"> const</span>
+<a name="l00038"></a>00038 <span class="keyword"></span>{
+<a name="l00039"></a>00039   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00040"></a>00040 }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="keywordtype">void</span> mdtSerialPortCtlThread::run()
+<a name="l00043"></a>00043 {
+<a name="l00044"></a>00044   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046   qDebug() &lt;&lt; <span class="stringliteral">&quot;CTLTHD: starting ...&quot;</span>;
+<a name="l00047"></a>00047   Q_ASSERT(pvPort != 0);
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="comment">// We need a mdtSerialPort instance here</span>
+<a name="l00050"></a>00050   <a class="code" href="classmdt_serial_port.html">mdtSerialPort</a> *port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_serial_port.html">mdtSerialPort</a>*<span class="keyword">&gt;</span>(pvPort);
+<a name="l00051"></a>00051   Q_ASSERT(port != 0);
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span>  pvNativePthreadObject = pthread_self();
+<a name="l00055"></a>00055   Q_ASSERT(pvNativePthreadObject != 0);
+<a name="l00056"></a>00056 <span class="preprocessor">#endif</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span>
+<a name="l00058"></a>00058   <span class="comment">// Set the running flag</span>
+<a name="l00059"></a>00059   port-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00060"></a>00060   pvRunning = <span class="keyword">true</span>;
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062   <span class="comment">// Run...</span>
+<a name="l00063"></a>00063   <span class="keywordflow">while</span>(1){
+<a name="l00064"></a>00064     <span class="comment">// Read thread state</span>
+<a name="l00065"></a>00065     <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00066"></a>00066       <span class="keywordflow">break</span>;
+<a name="l00067"></a>00067     }
+<a name="l00068"></a>00068     <span class="comment">// Wait on ctl signal event</span>
+<a name="l00069"></a>00069     portError = port-&gt;<a class="code" href="classmdt_serial_port.html#a9d1402c229401343a3bf66eeda4fe9da" title="void flushOut();">waitEventCtl</a>();
+<a name="l00070"></a>00070     <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888">mdtAbstractPort::WaitingCanceled</a>){
+<a name="l00071"></a>00071       <span class="comment">// Stopping</span>
+<a name="l00072"></a>00072       <span class="keywordflow">break</span>;
+<a name="l00073"></a>00073     }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">mdtAbstractPort::UnknownError</a>){
+<a name="l00074"></a>00074       <span class="comment">// Unhandled error. Signal this and stop</span>
+<a name="l00075"></a>00075       emit(<a class="code" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured</a>(MDT_PORT_IO_ERROR));
+<a name="l00076"></a>00076       <span class="keywordflow">break</span>;
+<a name="l00077"></a>00077     }
+<a name="l00078"></a>00078     <span class="comment">// We have a event here, update the flags</span>
+<a name="l00079"></a>00079     <span class="keywordflow">if</span>(!port-&gt;<a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7" title="NOTE:">getCtlStates</a>()){
+<a name="l00080"></a>00080       <span class="keywordflow">break</span>;
+<a name="l00081"></a>00081     }
+<a name="l00082"></a>00082   }
+<a name="l00083"></a>00083   qDebug() &lt;&lt; <span class="stringliteral">&quot;CTLTHD: Cleanup ...&quot;</span>;
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   port-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00086"></a>00086   qDebug() &lt;&lt; <span class="stringliteral">&quot;CTLTHD: END&quot;</span>;
+<a name="l00087"></a>00087 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -158,7 +163,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:37 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

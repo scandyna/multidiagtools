@@ -36,7 +36,7 @@ Collaboration diagram for mdtSerialPortManager:\nopagebreak
 \begin{DoxyCompactList}\small\item\em Construct a serial port manager. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_serial_port_manager_abde2c5990f3ec7daf41ebc35b4731c1d}{$\sim$mdtSerialPortManager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
-QStringList \hyperlink{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{scan} ()
+QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available serial ports. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig} \& \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9ce8557b8416}{config} ()
 \begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
@@ -129,7 +129,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b374487
 
 
 
-Definition at line 134 of file mdtSerialPortManager.cpp.
+Definition at line 137 of file mdtSerialPortManager.cpp.
 
 \hypertarget{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!port@{port}}
@@ -149,17 +149,17 @@ Port must be set with a \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSer
 \end{DoxyPrecond}
 
 
-Definition at line 145 of file mdtSerialPortManager.cpp.
+Definition at line 148 of file mdtSerialPortManager.cpp.
 
-\hypertarget{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}{
+\hypertarget{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!scan@{scan}}
 \index{scan@{scan}!mdtSerialPortManager@{mdtSerialPortManager}}
-\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtSerialPortManager::scan (
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtPortInfo} $\ast$ $>$ mdtSerialPortManager::scan (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_serial_port_manager_a8b9c19a9b5a927e434a888b901a8ccff}
+\label{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}
 
 
 Scan for available serial ports. 
@@ -174,11 +174,11 @@ List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on 
 \end{DoxyReturn}
 
 
-Reimplemented from \hyperlink{classmdt_port_manager_aceb9b570a2ebf354e347b8d9b46f6927}{mdtPortManager}.
+Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtPortManager}.
 
 
 
-Definition at line 58 of file mdtSerialPortManager.cpp.
+Definition at line 59 of file mdtSerialPortManager.cpp.
 
 
 

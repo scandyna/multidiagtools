@@ -1,0 +1,150 @@
+\hypertarget{classmdt_port_info_cb_handler}{
+\section{mdtPortInfoCbHandler Class Reference}
+\label{classmdt_port_info_cb_handler}\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+}
+
+
+Handle the port info comboBox and the device info comboBox.  
+
+
+
+
+{\ttfamily \#include $<$mdtPortInfoCbHandler.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_port_info_cb_handler_a1495b2c7f83722aaef8b244604284b51}{
+{\bfseries mdtPortInfoCbHandler} (QObject $\ast$parent=0)}
+\label{classmdt_port_info_cb_handler_a1495b2c7f83722aaef8b244604284b51}
+
+\item 
+void \hyperlink{classmdt_port_info_cb_handler_a06f9b5e8127e61026911691827f3203a}{setPortsComboBox} (QComboBox $\ast$comboBox)
+\begin{DoxyCompactList}\small\item\em Set the comboBox that must display ports. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_info_cb_handler_a59fc2180a69119e17cfa24cf84a9c96f}{setDevicesComboBox} (QComboBox $\ast$comboBox)
+\begin{DoxyCompactList}\small\item\em Set the comboBox that must display devices. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_info_cb_handler_a82c84a3eb52cd5d941377a64788a28ef}{fillComboBoxes} (const QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \&portInfoList)
+\begin{DoxyCompactList}\small\item\em Fill the comboboxes with a scan result. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_info}{mdtPortInfo} \hyperlink{classmdt_port_info_cb_handler_a5723df72c4f1eda572c04e377dde9351}{currentPortInfo} ()
+\begin{DoxyCompactList}\small\item\em Get the selected port info object. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_info}{mdtDeviceInfo} \hyperlink{classmdt_port_info_cb_handler_a266598f7f403e21730ff5ee50e6a6e5f}{currentDeviceInfo} ()
+\begin{DoxyCompactList}\small\item\em Get the selected device info object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handle the port info comboBox and the device info comboBox. 
+
+After a port scan was done (f.ex. with \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtPortManager::scan()} ), it is useful to display the result into one or two comboboxes.
+
+The first combobox will then display a list of available port (for.ex. /dev/ttyS0, /dev/ttyS1, ... for serial port, or attached devices list on USB port, etc...).
+
+The second comboBox is not allways useful. It can be used, f.ex. with USB interfaces. If a specific port manager is implemented, it gives a possibility to list devices attached on a specific RS485 port. 
+
+Definition at line 46 of file mdtPortInfoCbHandler.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_info_cb_handler_a266598f7f403e21730ff5ee50e6a6e5f}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!currentDeviceInfo@{currentDeviceInfo}}
+\index{currentDeviceInfo@{currentDeviceInfo}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{currentDeviceInfo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDeviceInfo} mdtPortInfoCbHandler::currentDeviceInfo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_a266598f7f403e21730ff5ee50e6a6e5f}
+
+
+Get the selected device info object. 
+
+Can return a empty object if nothing was set, or nothing valid is selected or device combobox was not set. 
+
+Definition at line 85 of file mdtPortInfoCbHandler.cpp.
+
+\hypertarget{classmdt_port_info_cb_handler_a5723df72c4f1eda572c04e377dde9351}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!currentPortInfo@{currentPortInfo}}
+\index{currentPortInfo@{currentPortInfo}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{currentPortInfo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortInfo} mdtPortInfoCbHandler::currentPortInfo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_a5723df72c4f1eda572c04e377dde9351}
+
+
+Get the selected port info object. 
+
+Can return a empty object if nothing was set, or nothing valid is selected. 
+
+Definition at line 72 of file mdtPortInfoCbHandler.cpp.
+
+\hypertarget{classmdt_port_info_cb_handler_a82c84a3eb52cd5d941377a64788a28ef}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!fillComboBoxes@{fillComboBoxes}}
+\index{fillComboBoxes@{fillComboBoxes}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{fillComboBoxes}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortInfoCbHandler::fillComboBoxes (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ {\bf mdtPortInfo} $\ast$ $>$ \&}]{portInfoList}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_a82c84a3eb52cd5d941377a64788a28ef}
+
+
+Fill the comboboxes with a scan result. 
+
+All ports in list ares added to the ports combobox. If the devices combobox was set, it will be updated at each ports combobox index change. 
+
+Definition at line 57 of file mdtPortInfoCbHandler.cpp.
+
+\hypertarget{classmdt_port_info_cb_handler_a59fc2180a69119e17cfa24cf84a9c96f}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!setDevicesComboBox@{setDevicesComboBox}}
+\index{setDevicesComboBox@{setDevicesComboBox}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{setDevicesComboBox}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortInfoCbHandler::setDevicesComboBox (
+\begin{DoxyParamCaption}
+\item[{QComboBox $\ast$}]{comboBox}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_a59fc2180a69119e17cfa24cf84a9c96f}
+
+
+Set the comboBox that must display devices. 
+
+Note that comboBox object will not be deleted by this clas.
+
+\begin{DoxyPrecond}{Precondition}
+comboBox must be a valid object. 
+
+Ports combobox must be set before with \hyperlink{classmdt_port_info_cb_handler_a06f9b5e8127e61026911691827f3203a}{setPortsComboBox()} 
+\end{DoxyPrecond}
+
+
+Definition at line 45 of file mdtPortInfoCbHandler.cpp.
+
+\hypertarget{classmdt_port_info_cb_handler_a06f9b5e8127e61026911691827f3203a}{
+\index{mdtPortInfoCbHandler@{mdtPortInfoCbHandler}!setPortsComboBox@{setPortsComboBox}}
+\index{setPortsComboBox@{setPortsComboBox}!mdtPortInfoCbHandler@{mdtPortInfoCbHandler}}
+\subsubsection[{setPortsComboBox}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortInfoCbHandler::setPortsComboBox (
+\begin{DoxyParamCaption}
+\item[{QComboBox $\ast$}]{comboBox}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_cb_handler_a06f9b5e8127e61026911691827f3203a}
+
+
+Set the comboBox that must display ports. 
+
+Note that comboBox object will not be deleted by this clas.
+
+\begin{DoxyPrecond}{Precondition}
+comboBox must be a valid object. 
+\end{DoxyPrecond}
+
+
+Definition at line 38 of file mdtPortInfoCbHandler.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtPortInfoCbHandler.h\item 
+src/mdtport/mdtPortInfoCbHandler.cpp\end{DoxyCompactItemize}

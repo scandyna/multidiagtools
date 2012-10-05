@@ -34,7 +34,9 @@ void \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{st
 void {\bfseries connectToHost} (QString hostName, quint16 hostPort)}
 \label{classmdt_tcp_socket_thread_a48db12819fd049de833c4789ebed134a}
 
-\end{DoxyCompactItemize}
+\item 
+bool \hyperlink{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{isReader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -45,6 +47,27 @@ Definition at line 32 of file mdtTcpSocketThread.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{
+\index{mdtTcpSocketThread@{mdtTcpSocketThread}!isReader@{isReader}}
+\index{isReader@{isReader}!mdtTcpSocketThread@{mdtTcpSocketThread}}
+\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocketThread::isReader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}
+
+
+Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
+
+Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+
+
+
+Definition at line 110 of file mdtTcpSocketThread.cpp.
+
 \hypertarget{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{
 \index{mdtTcpSocketThread@{mdtTcpSocketThread}!stop@{stop}}
 \index{stop@{stop}!mdtTcpSocketThread@{mdtTcpSocketThread}}

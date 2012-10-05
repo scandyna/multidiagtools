@@ -71,6 +71,7 @@ This is the complete list of members for <a class="el" href="classmdt_port_threa
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105">getNewFrameWrite</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d">ioProcessBegin</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4">isFinished</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a3d57f15a864ae45c98eb40dd89f4cec6">isReader</a>() const =0</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [pure virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72">isRunning</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtPortThread</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461">newFrameReaden</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
@@ -84,7 +85,7 @@ This is the complete list of members for <a class="el" href="classmdt_port_threa
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">start</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">stop</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a9372a53561362b0c86f499b8a36805e1">writeToPort</a>(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>~mdtPortThread</b>() (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>~mdtPortThread</b>() (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [virtual]</code></td></tr>
 </table></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -100,7 +101,7 @@ This is the complete list of members for <a class="el" href="classmdt_port_threa
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:38 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

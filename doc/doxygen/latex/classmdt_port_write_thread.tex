@@ -32,13 +32,39 @@ Collaboration diagram for mdtPortWriteThread:\nopagebreak
 void \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{stop} ()}
 \label{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}
 
-\begin{DoxyCompactList}\small\item\em Stop the thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Stop the thread. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{isReader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
 Definition at line 27 of file mdtPortWriteThread.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{
+\index{mdtPortWriteThread@{mdtPortWriteThread}!isReader@{isReader}}
+\index{isReader@{isReader}!mdtPortWriteThread@{mdtPortWriteThread}}
+\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortWriteThread::isReader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}
+
+
+Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
+
+Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+
+
+
+Definition at line 41 of file mdtPortWriteThread.cpp.
 
 
 

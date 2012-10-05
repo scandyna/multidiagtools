@@ -174,7 +174,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>Essais ... </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Essais ... </dd></dl>
 
 <p><p><a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port = dynamic_cast&lt;mdtUsbPort*&gt; (pvPort); Q_ASSERT(port != 0); </p>
 </p>
@@ -222,8 +222,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Scan available USBTMC ports. </p>
-<p>QStringList <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927" title="Scan for available ports.">scan()</a>;</p>
-<p>QStringList <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927" title="Scan for available ports.">mdtUsbtmcPortManager::scan()</a> { QStringList portNames; QStringList availablePorts; <a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a> *port; QFileInfoList filesInfo; QDir dir; QStringList extList;</p>
+<p>QStringList <a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">scan()</a>;</p>
+<p>QStringList <a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">mdtUsbtmcPortManager::scan()</a> { QStringList portNames; QStringList availablePorts; <a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a> *port; QFileInfoList filesInfo; QDir dir; QStringList extList;</p>
 <p>We only need system files dir.setFilter(QDir::Files | QDir::System); USBTMC interfaces extList &lt;&lt; "usbtmc*"; Common device directory dir.setPath("/dev"); if(!dir.exists()){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix"); e.commit(); return availablePorts; } dir.setNameFilters(extList); Gest list of found files filesInfo = dir.entryInfoList(); Construct the list of absolute file paths for(int i=0; i&lt;filesInfo.size(); ++i){ portNames &lt;&lt; filesInfo.at(i).absoluteFilePath(); } Sort the list portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames); For each port name, try to open the port and get some attributes (to see if it really exists) for(int i=0; i&lt;portNames.size(); ++i){ Try to open port port = new <a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a>; Q_ASSERT(port != 0); port-&gt;setPortName(portNames.at(i)); if(port-&gt;open() == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){ availablePorts.append(portNames.at(i)); port-&gt;close(); } delete port; }</p>
 <p>return availablePorts; } </p>
 
@@ -334,7 +334,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:39 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

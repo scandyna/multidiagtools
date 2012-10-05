@@ -30,8 +30,8 @@ Collaboration diagram for mdtUsbPortThread:\nopagebreak
 \item 
 void \hyperlink{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{stop} ()
 \begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}{writeToPort} (\hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port, \hyperlink{classmdt_frame}{mdtFrame} $\ast$frame)
-\begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+bool \hyperlink{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{isReader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -42,6 +42,27 @@ Definition at line 33 of file mdtUsbPortThread.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{
+\index{mdtUsbPortThread@{mdtUsbPortThread}!isReader@{isReader}}
+\index{isReader@{isReader}!mdtUsbPortThread@{mdtUsbPortThread}}
+\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbPortThread::isReader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}
+
+
+Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
+
+Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+
+
+
+Definition at line 46 of file mdtUsbPortThread.cpp.
+
 \hypertarget{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{
 \index{mdtUsbPortThread@{mdtUsbPortThread}!stop@{stop}}
 \index{stop@{stop}!mdtUsbPortThread@{mdtUsbPortThread}}
@@ -68,56 +89,6 @@ Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f
 
 
 Definition at line 33 of file mdtUsbPortThread.cpp.
-
-\hypertarget{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}{
-\index{mdtUsbPortThread@{mdtUsbPortThread}!writeToPort@{writeToPort}}
-\index{writeToPort@{writeToPort}!mdtUsbPortThread@{mdtUsbPortThread}}
-\subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPortThread::writeToPort (
-\begin{DoxyParamCaption}
-\item[{{\bf mdtUsbPort} $\ast$}]{port, }
-\item[{{\bf mdtFrame} $\ast$}]{frame}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_usb_port_thread_a5828ae37dff22118a46322d9586fc484}
-
-
-Write data to port. 
-
-This is a helper method to write a frame to the USB port.
-
-Note about port mutex handling:\par
- The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
-
-
-\begin{DoxyParams}{Parameters}
-{\em port} & A valid instance of \hyperlink{classmdt_usb_port}{mdtUsbPort} \\
-\hline
-{\em frame} & Data stored in thos frame will be written to port.\\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-True on successfull transfert, or false on error or by stop request. If this method returns false, the thread should be stopped.
-\end{DoxyReturn}
-\begin{DoxyPrecond}{Precondition}
-port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
-
-frame must be a valid pointer (not Null). 
-\end{DoxyPrecond}
-
-
-if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{mdtAbstractPort::WaitingCanceled})\{ Stopping return false; \}else if(portError != \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; \}
-
-\}else if((portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{mdtAbstractPort::UnknownError})$|$$|$(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}))\{ Unhandled error. Signal this and stop emit(errorOccured(MDT\_\-PORT\_\-IO\_\-ERROR)); return false; \}
-
-if(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea14c0ddb478968710cb057a70406e4888}{mdtAbstractPort::WaitingCanceled})\{ Stopping return false; \}else if(portError != \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ Errors that must be signaled + stop the thread emit(errorOccured(portError)); return false; \}
-
-\}else if((portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{mdtAbstractPort::UnknownError})$|$$|$(portError == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError}))\{ Unhandled error. Signal this and stop emit(errorOccured(MDT\_\-PORT\_\-IO\_\-ERROR)); return false; \}
-
-emit(errorOccured(mdtAbstractPort::UnhandledError)); 
-
-
-
-Definition at line 46 of file mdtUsbPortThread.cpp.
 
 
 

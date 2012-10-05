@@ -248,7 +248,7 @@ Definition at line 36 of file mdtAbstractPort.h.
 Error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
+\item[\hyperlink{todo__todo000006}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
 
 add a DeviceDisconnected (+ adapt in threads) \end{Desc}
 \begin{Desc}
@@ -291,7 +291,7 @@ ReadCanceled}
 Disconnected}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}
 }]For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will stop working and signal this error at end. The portmanager can try to re-\/open the port if auto-\/reconnection is needed, and start the thread again on success.\begin{Desc}
-\item[\hyperlink{todo__todo000007}{Todo}]Implement this \end{Desc}
+\item[\hyperlink{todo__todo000008}{Todo}]Implement this \end{Desc}
 \index{UnknownError@{UnknownError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnknownError@{UnknownError}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{
 UnknownError}
@@ -395,7 +395,7 @@ Subclass notes:\par
  Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated. Note that this method must be called from subclass destructor. See \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort()} for details.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000006}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+\item[\hyperlink{todo__todo000007}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
 
 
 Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
@@ -1139,5 +1139,4 @@ Definition at line 203 of file mdtAbstractPort.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtAbstractPort.h\item 
-src/mdtport/mdtAbstractPort.cpp\item 
-src/mdtport/moc\_\-mdtAbstractPort.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtAbstractPort.cpp\end{DoxyCompactItemize}

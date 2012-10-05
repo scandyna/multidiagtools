@@ -94,8 +94,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a serial port manager.  <a href="#a6508372bcab37a73546fc2c24ee6415c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#abde2c5990f3ec7daf41ebc35b4731c1d">~mdtSerialPortManager</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#abde2c5990f3ec7daf41ebc35b4731c1d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a8b9c19a9b5a927e434a888b901a8ccff">scan</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available serial ports.  <a href="#a8b9c19a9b5a927e434a888b901a8ccff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a791572f869d1d605d0c4658ca4187260">scan</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available serial ports.  <a href="#a791572f869d1d605d0c4658ca4187260"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">config</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a4b8ab7b9d53966a1887d9ce8557b8416"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d">port</a> ()</td></tr>
@@ -181,7 +181,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00134">134</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -202,16 +202,16 @@ Public Member Functions</h2></td></tr>
 <p>Get the serial port instance. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with a <a class="el" href="classmdt_abstract_serial_port.html" title="NOTE:">mdtAbstractSerialPort</a> instance (not <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00148">148</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8b9c19a9b5a927e434a888b901a8ccff"></a><!-- doxytag: member="mdtSerialPortManager::scan" ref="a8b9c19a9b5a927e434a888b901a8ccff" args="()" -->
+<a class="anchor" id="a791572f869d1d605d0c4658ca4187260"></a><!-- doxytag: member="mdtSerialPortManager::scan" ref="a791572f869d1d605d0c4658ca4187260" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QStringList mdtSerialPortManager::scan </td>
+          <td class="memname">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt; mdtSerialPortManager::scan </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -225,9 +225,9 @@ Public Member Functions</h2></td></tr>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows) </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aceb9b570a2ebf354e347b8d9b46f6927">mdtPortManager</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,7 +250,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 2 2012 14:33:50 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:38 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
