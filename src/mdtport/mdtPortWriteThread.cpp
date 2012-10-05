@@ -38,6 +38,11 @@ void mdtPortWriteThread::stop()
   mdtPortThread::stop();
 }
 
+bool mdtPortWriteThread::isReader() const
+{
+  return false;
+}
+
 void mdtPortWriteThread::run()
 {
   qDebug() << "WRTHD: starting ...";

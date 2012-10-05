@@ -32,6 +32,11 @@ mdtPortReadThread::mdtPortReadThread(QObject *parent)
   pvMinPoolSizeBeforeReadSuspend = 0;
 }
 
+bool mdtPortReadThread::isReader() const
+{
+  return true;
+}
+
 void mdtPortReadThread::run()
 {
   qDebug() << "RDTHD: starting ...";

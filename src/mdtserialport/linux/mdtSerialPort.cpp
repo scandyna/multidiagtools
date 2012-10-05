@@ -625,7 +625,6 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
   FD_ZERO(&input);
   FD_SET(pvFd, &input);
 
-  qDebug() << "mdtSerialPort::waitForReadyRead(): waiting ...";
   pvMutex.unlock();
   if(tv.tv_sec == -1){
     n = select(pvFd+1, &input, 0, 0, 0);
@@ -633,7 +632,6 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
     n = select(pvFd+1, &input, 0, 0, &tv);
   }
   pvMutex.lock();
-  qDebug() << "mdtSerialPort::waitForReadyRead(): waiting DONE";
   if(n == 0){
     updateReadTimeoutState(true);
   }else{
@@ -680,7 +678,6 @@ qint64 mdtSerialPort::read(char *data, qint64 maxSize)
         return n;
     }
   }
-  qDebug() << "readen " << n << " bytes";
 
   return n;
 }

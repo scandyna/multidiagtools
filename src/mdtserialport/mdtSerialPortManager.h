@@ -69,7 +69,7 @@ class mdtSerialPortManager : public mdtPortManager
    * \pre Manager must no running.
    * \return List of available serial ports on system (f.ex: /dev/ttyS0 on Unix , or COM1 on Windows)
    */
-  QStringList scan();
+  QList<mdtPortInfo*> scan();
 
   /*! \brief Get the config object
    * 

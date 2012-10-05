@@ -107,6 +107,11 @@ bool mdtTcpSocketThread::reconnectToHost()
   return false;
 }
 
+bool mdtTcpSocketThread::isReader() const
+{
+  return true;
+}
+
 void mdtTcpSocketThread::run()
 {
   Q_ASSERT(pvPort != 0);
@@ -221,7 +226,7 @@ void mdtTcpSocketThread::run()
       }
       // Wait until data is available for read
       portError = pvPort->waitForReadyRead();
-      if(portError == mdtAbstractPort::WaitingCanceled){  // Not implementd in mdtTcpSocket now
+      if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
         // Stopping
         break;
       }else if(portError == mdtAbstractPort::UnknownError){

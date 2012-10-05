@@ -31,6 +31,10 @@ class mdtSerialPortManagerTest : public mdtTest
 
   // Serial port manager tests
   void simpleTest();
+
+  // Check data transfer
+  void transferTest();
+  void transferTest_data();
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_MANAGER_TEST_H

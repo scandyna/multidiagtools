@@ -47,11 +47,11 @@ mdtPortManager::~mdtPortManager()
   qDebug() << "mdtPortManager::~mdtPortManager() END";
 }
 
-QStringList mdtPortManager::scan()
+QList<mdtPortInfo*> mdtPortManager::scan()
 {
   Q_ASSERT(!isRunning());
 
-  return QStringList();
+  return QList<mdtPortInfo*>();
 }
 
 void mdtPortManager::setPort(mdtAbstractPort *port)
@@ -91,7 +91,9 @@ void mdtPortManager::addThread(mdtPortThread *thread)
 
   // Assign port to thread
   thread->setPort(pvPort);
-  connect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
+  if(thread->isReader()){
+    connect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
+  }
   connect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
   // Add thread to list
   pvThreads.append(thread);
@@ -106,7 +108,9 @@ void mdtPortManager::removeThreads(bool releaseMemory)
 
   for(i=0; i<pvThreads.size(); i++){
     thread = pvThreads.at(i);
-    disconnect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
+    if(thread->isReader()){
+      disconnect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
+    }
     disconnect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
     if(releaseMemory){
       delete thread;
@@ -200,8 +204,6 @@ bool mdtPortManager::writeData(QByteArray data)
 
   mdtFrame *frame;
 
-  // Clear previous readen frames
-  pvReadenFrames.clear();
   // Get a frame in pool
   pvPort->lockMutex();
   if(pvPort->writeFramesPool().size() < 1){
@@ -241,7 +243,13 @@ bool mdtPortManager::waitReadenFrame(int timeout)
 
 QList<QByteArray> &mdtPortManager::readenFrames()
 {
-  return pvReadenFrames;
+  int i;
+
+  for(i=0; i<pvReadenFrames.size(); ++i){
+    pvReadenFramesCopy.append(pvReadenFrames.takeFirst());
+  }
+
+  return pvReadenFramesCopy;
 }
 
 void mdtPortManager::wait(int msecs, int granularity)
@@ -267,8 +275,6 @@ void mdtPortManager::abort()
 
 void mdtPortManager::fromThreadNewFrameReaden()
 {
-  qDebug() << "mdtPortManager::fromThreadNewFrameReaden() ...";
-
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame;

@@ -25,6 +25,7 @@
 #include "mdtSerialPortManager.h"
 #include "mdtPortConfigWidget.h"
 #include "mdtSerialPortConfigWidget.h"
+#include "mdtPortInfoCbHandler.h"
 #include <QDialog>
 #include <QAbstractButton>
 #include <QString>
@@ -88,6 +89,7 @@ class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDi
   mdtSerialPortManager *pvPortManager;
   mdtPortConfigWidget *pvPortConfigWidget;
   mdtSerialPortConfigWidget *pvSerialPortConfigWidget;
+  mdtPortInfoCbHandler pvPortInfoCbHandler;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H

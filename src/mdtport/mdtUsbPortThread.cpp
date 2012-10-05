@@ -43,6 +43,11 @@ void mdtUsbPortThread::stop()
   mdtPortThread::stop();
 }
 
+bool mdtUsbPortThread::isReader() const
+{
+  return true;
+}
+
 mdtAbstractPort::error_t mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFrame *frame)
 {
   Q_ASSERT(port != 0);

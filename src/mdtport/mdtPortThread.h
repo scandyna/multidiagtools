@@ -40,7 +40,7 @@ class mdtPortThread : public QThread
  public:
 
   mdtPortThread(QObject *parent = 0);
-  ~mdtPortThread();
+  virtual ~mdtPortThread();
 
   /*! \brief Set the port instance
    *
@@ -79,6 +79,15 @@ class mdtPortThread : public QThread
    */
   bool isFinished() const;
 
+  /*! \brief Returns true if this thread reads data and send the newFrameReaden() signal
+   *
+   * mdtPortManager can handle many threads. It needs to know wich one will send the
+   *  newFrameReaden() signal, so it can connect it to his slot.
+   *
+   * This method must be implemented in subclass.
+   */
+  virtual bool isReader() const = 0;
+
  signals:
 
   /*! \brief Emitted when a I/O process begins
@@ -93,11 +102,14 @@ class mdtPortThread : public QThread
   void ioProcessBegin();
 
   /*! \brief Emited when a new frame is available
-   * 
-   * This signal is emited when a new frame is available.<br>
-   * To get the frame, the simplest way is to use a mdtPortManager.<br>
+   *
+   * This signal is emited when a new frame is available.
+   *
+   * To get the frame, the simplest way is to use a mdtPortManager.
+   *
    * It's also possible to use mdtPort, but this solution needs to handle
    * the mutex, verify the readen queue state, ...
+   *
    * \sa mdtPortManager
    * \sa mdtPort
    */
@@ -218,7 +230,7 @@ class mdtPortThread : public QThread
   mdtAbstractPort *pvPort;
 #ifdef Q_OS_UNIX
   // Members needed to abort blocking
-  //  functions sith pthread_kill()
+  //  functions with pthread_kill()
   static void sigactionHandle(int signum);
   pthread_t pvNativePthreadObject;
   struct sigaction pvSigaction;

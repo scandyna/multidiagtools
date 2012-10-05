@@ -43,8 +43,8 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   connect(leCmd, SIGNAL(returnPressed()), this, SLOT(sendCmd()));
   leCmd->setFocus();
   
-  ///attachToSerialPort();
-  attachToUsbtmcPort();
+  attachToSerialPort();
+  ///attachToUsbtmcPort();
   
   // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(serialPortSetup()));
@@ -82,18 +82,22 @@ void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTran
 
 void mdtPortTerm::appendReadenData()
 {
-  QList<QByteArray> data;
-  int i;
+  //QList<QByteArray> data;
+  //int i;
 
   if(pvCurrentPortManager == 0){
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
     return;
   }
-  ///teTerm->append(pvCurrentPortManager->lastReadenFrame());
-  data = pvCurrentPortManager->readenFrames();
-  for(i=0; i<data.size(); i++){
-    teTerm->append(data.at(i));
+  while(!pvCurrentPortManager->readenFrames().isEmpty()){
+    teTerm->append(pvCurrentPortManager->readenFrames().takeFirst());
   }
+  ///teTerm->append(pvCurrentPortManager->lastReadenFrame());
+  //data = pvCurrentPortManager->readenFrames();
+  //for(i=0; i<data.size(); i++){
+  //while(!data.isEmpty()){
+  //  teTerm->append(data.takeFirst());
+  //}
 }
 
 void mdtPortTerm::sendCmd()

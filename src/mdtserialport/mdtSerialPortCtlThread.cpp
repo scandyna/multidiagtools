@@ -34,6 +34,11 @@ mdtSerialPortCtlThread::mdtSerialPortCtlThread(QObject *parent)
 {
 }
 
+bool mdtSerialPortCtlThread::isReader() const
+{
+  return false;
+}
+
 void mdtSerialPortCtlThread::run()
 {
   mdtAbstractPort::error_t portError;

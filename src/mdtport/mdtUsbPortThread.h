@@ -41,6 +41,15 @@ class mdtUsbPortThread : public mdtPortThread
   // Overload of mdtPortThread
   void stop();
 
+  /*! \brief Returns true if this thread reads data and send the newFrameReaden() signal
+   *
+   * mdtPortManager can handle many threads. It needs to know wich one will send the
+   *  newFrameReaden() signal, so it can connect it to his slot.
+   */
+  bool isReader() const;
+
+ private:
+
   /*! \brief Write data to port
    *
    * This is a helper method to write a frame to the USB port.
@@ -61,8 +70,6 @@ class mdtUsbPortThread : public mdtPortThread
    * \pre frame must be a valid pointer (not Null).
    */
   mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame);
-
- private:
 
   void run();
 };

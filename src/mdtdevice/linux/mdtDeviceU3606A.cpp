@@ -34,6 +34,7 @@ mdtDeviceU3606A::~mdtDeviceU3606A()
 {
 }
 
+/// \todo Reimplement with port manager + port info
 QStringList mdtDeviceU3606A::scan()
 {
   QStringList ports;
@@ -41,7 +42,7 @@ QStringList mdtDeviceU3606A::scan()
   QByteArray command = "*IDN?";
   int i;
 
-  ports = pvPortManager.scan();
+  //ports = pvPortManager.scan();
   // Travel found ports
   for(i=0; i<ports.size(); i++){
     // Try to open port

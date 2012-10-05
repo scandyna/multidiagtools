@@ -55,13 +55,16 @@ mdtSerialPortManager::~mdtSerialPortManager()
   detachPort(true, true);
 }
 
-QStringList mdtSerialPortManager::scan()
+//QStringList mdtSerialPortManager::scan()
+QList<mdtPortInfo*> mdtSerialPortManager::scan()
 {
   Q_ASSERT(!isRunning());
 
   mdtSerialPort *port;
   QStringList portNames;
-  QStringList availablePorts;
+  //QStringList availablePorts;
+  QList<mdtPortInfo*> availablePorts;
+  mdtPortInfo *portInfo;
 
 #ifdef Q_OS_UNIX
   QFileInfoList filesInfo;
@@ -83,7 +86,7 @@ QStringList mdtSerialPortManager::scan()
   // Common device directory
   dir.setPath("/dev");
   if(!dir.exists()){
-    mdtError e(MDT_UNDEFINED_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error);
+    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix");
     e.commit();
     return availablePorts;
@@ -115,14 +118,14 @@ QStringList mdtSerialPortManager::scan()
     // Try to open port and get UART type
     Q_ASSERT(port != 0);
     port->setPortName(portNames.at(i));
-    qDebug() << "Scan, trying " << portNames.at(i) << " ...";
     if(port->open() == mdtAbstractPort::NoError){
-      qDebug() << "Scan, port " << portNames.at(i) << " is open";
       if(port->uartType() != mdtAbstractSerialPort::UT_UNKNOW){
-        availablePorts.append(portNames.at(i));
-        qDebug() << "mdtSerialPortManager::scan(): adding port " << port->portName() << " to list";
+        portInfo = new mdtPortInfo;
+        Q_ASSERT(portInfo != 0);
+        portInfo->setPortName(portNames.at(i));
+        //availablePorts.append(portNames.at(i));
+        availablePorts.append(portInfo);
       }
-      qDebug() << "Scan, closing port " << portNames.at(i) << " ...";
       port->close();
     }
   }

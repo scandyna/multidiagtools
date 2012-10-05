@@ -43,6 +43,8 @@ mdtSerialPortSetupDialog::mdtSerialPortSetupDialog(QWidget *parent)
     twOptions->removeTab(1);
   }
   twOptions->insertTab(1, pvPortConfigWidget, tr("Advanced port options"));
+  // Add ports list combobox to handler handler
+  pvPortInfoCbHandler.setPortsComboBox(cbPort);
 }
 
 void mdtSerialPortSetupDialog::setPortManager(mdtSerialPortManager *manager)
@@ -125,8 +127,9 @@ void mdtSerialPortSetupDialog::on_pbRescan_clicked()
   Q_ASSERT(pvPortManager != 0);
 
   pbRescan->setEnabled(false);
-  cbPort->clear();
-  cbPort->addItems(pvPortManager->scan());
+  //cbPort->clear();
+  //cbPort->addItems(pvPortManager->scan());
+  pvPortInfoCbHandler.fillComboBoxes(pvPortManager->scan());
   pbRescan->setEnabled(true);
 }
 
@@ -143,7 +146,8 @@ void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
   pvPortManager->closePort();
   setStateStopped();
   // Open the port
-  pvPortManager->setPortName(cbPort->currentText());
+  //pvPortManager->setPortName(cbPort->currentText());
+  pvPortManager->setPortName(pvPortInfoCbHandler.currentPortInfo().portName());
   if(!pvPortManager->openPort()){
     setStateError(tr("Cannot fetch port attributes"));
     cbPort->setEnabled(true);

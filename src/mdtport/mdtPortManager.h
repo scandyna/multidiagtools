@@ -35,6 +35,7 @@
 #include <QByteArray>
 
 #include <QList>
+#include "mdtPortInfo.h"
 
 class mdtPortThread;
 
@@ -118,11 +119,11 @@ class mdtPortManager : public QThread
   /*! \brief Scan for available ports
    *
    * This method is implemented is port's specific subclass.
-   *  Default implementation returns a empty string list.
+   *  Default implementation returns a empty list.
    *
    * \pre Manager must no running
    */
-  virtual QStringList scan();
+  virtual QList<mdtPortInfo*> scan();
 
   /*! \brief Set port object
    *
@@ -256,6 +257,9 @@ class mdtPortManager : public QThread
   /*! \brief Get all readen data
    *
    * Get a copy of all currently available data.
+   *  Note: the list of data must be cleared explicitly
+   *   with QList::clear() after data are used.
+   *   (or remove each item with, for.ex. QList::takeFirst() )
    */
   QList<QByteArray> &readenFrames();
 
@@ -308,7 +312,8 @@ class mdtPortManager : public QThread
 
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
-  QList<QByteArray> pvReadenFrames;  // Hold a copy of each frame readen by port
+  QList<QByteArray> pvReadenFrames;       // Hold a copy of each frame readen by port
+  QList<QByteArray> pvReadenFramesCopy;   // Hold a copy of each frame readen by port, this will be returned by readenFrames()
 
  private:
 
