@@ -119,6 +119,9 @@
      <string>&amp;Port</string>
     </property>
     <addaction name="action_Setup"/>
+    <addaction name="separator"/>
+    <addaction name="action_SerialPort"/>
+    <addaction name="action_UsbTmcPort"/>
    </widget>
    <widget class="QMenu" name="menu_Language">
     <property name="title">
@@ -154,6 +157,22 @@
    </property>
    <property name="text">
     <string>&amp;German</string>
+   </property>
+  </action>
+  <action name="action_SerialPort">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Serial port</string>
+   </property>
+  </action>
+  <action name="action_UsbTmcPort">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>USBTMC port</string>
    </property>
   </action>
  </widget>

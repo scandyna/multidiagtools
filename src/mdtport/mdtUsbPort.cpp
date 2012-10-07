@@ -28,6 +28,15 @@
 #include <errno.h>
 #include <string.h>
 
+// We need a sleep function
+#ifdef Q_OS_UNIX
+ #define msleep(t) usleep(1000*t)
+#endif
+#ifdef Q_OS_WIN
+ #include <windows.h>
+ #define msleep(t) Sleep(t)
+#endif
+
 #include <QDebug>
 
 mdtUsbPort::mdtUsbPort(QObject *parent)
@@ -69,6 +78,38 @@ mdtUsbPort::~mdtUsbPort()
   close();
   // Free libusb
   libusb_exit(pvLibusbContext);
+}
+
+mdtAbstractPort::error_t mdtUsbPort ::reconnect(int timeout)
+{
+  error_t error;
+
+  close();
+
+  error = open();
+  if(error != NoError){
+    // Wait timeout and retry
+    unlockMutex();
+    msleep(timeout);
+    lockMutex();
+    error = open();
+    if(error != NoError){
+      return Disconnected;
+    }
+  }
+  error = setup();
+  if(error != NoError){
+    // Wait timeout and retry
+    unlockMutex();
+    msleep(timeout);
+    lockMutex();
+    error = setup();
+    if(error != NoError){
+      return Disconnected;
+    }
+  }
+
+  return NoError;
 }
 
 void mdtUsbPort::setReadTimeout(int timeout)
@@ -549,7 +590,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
   ssize_t i = 0;
   int err;
 
-  // Extract items
+  // Extract items from port name
   lst = pvPortName.split(":");
   // If we have 2 items, we have BusNumber:deviceAddress format
   if(lst.size() == 2){

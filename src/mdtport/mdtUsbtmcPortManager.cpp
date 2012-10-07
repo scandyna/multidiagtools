@@ -291,6 +291,7 @@ bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
   return mdtPortManager::waitReadenFrame(timeout);
 }
 
+/*
 void mdtUsbtmcPortManager::abort()
 {
   Q_ASSERT(pvPort != 0);
@@ -301,6 +302,7 @@ void mdtUsbtmcPortManager::abort()
   pvPort->flushIn();
   pvPort->flushOut();
 }
+*/
 
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 {

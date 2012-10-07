@@ -84,6 +84,9 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   void attachToUsbtmcPort();
   void detachFromUsbtmcPort();
 
+  // Select a port type
+  void selectPortType(QAction*);
+
   // Detach all ports
   void detachFromPorts();
 
@@ -101,6 +104,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   mdtPortManager *pvCurrentPortManager;
   // Translations menu
   QActionGroup *pvLanguageActionGroup;
+  // Port menu
+  QActionGroup *pvPortSelectActionGroup;
 };
 
 #endif  // #ifndef MDT_PORT_TERM_H

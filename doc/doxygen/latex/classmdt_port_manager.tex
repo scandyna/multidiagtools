@@ -33,7 +33,7 @@ Collaboration diagram for mdtPortManager:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 virtual void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort} ()
-\item 
+\begin{DoxyCompactList}\small\item\em Cancel read and write operations. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{fromThreadNewFrameReaden} ()
 \begin{DoxyCompactList}\small\item\em Try to. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{onThreadsErrorOccured} (int error)
@@ -210,11 +210,13 @@ Definition at line 36 of file mdtPortManager.cpp.
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
 \label{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}
-\begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Essais ... \end{Desc}
 
 
-Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}{mdtUsbtmcPortManager}.
+Cancel read and write operations. 
+
+Default implementation calls \hyperlink{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{mdtAbstractPort::flush()}. 
+
+pvPort-\/$>$flushIn(); pvPort-\/$>$flushOut(); 
 
 
 
@@ -340,7 +342,7 @@ Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45
 
 
 
-Definition at line 276 of file mdtPortManager.cpp.
+Definition at line 277 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
 \index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
@@ -377,6 +379,10 @@ Emitted when new frame was readen.
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame()} 
 \end{DoxySeeAlso}
+
+
+Definition at line 91 of file moc\_\-mdtPortManager.cxx.
+
 \hypertarget{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{
 \index{mdtPortManager@{mdtPortManager}!onThreadsErrorOccured@{onThreadsErrorOccured}}
 \index{onThreadsErrorOccured@{onThreadsErrorOccured}!mdtPortManager@{mdtPortManager}}
@@ -398,7 +404,7 @@ if(error == MDT\_\-PORT\_\-IO\_\-ERROR)\{ qDebug() $<$$<$ \char`\"{}I/O error !\
 
 
 
-Definition at line 301 of file mdtPortManager.cpp.
+Definition at line 302 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{
 \index{mdtPortManager@{mdtPortManager}!openPort@{openPort}}
@@ -692,4 +698,5 @@ Definition at line 201 of file mdtPortManager.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortManager.h\item 
-src/mdtport/mdtPortManager.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortManager.cpp\item 
+src/mdtport/moc\_\-mdtPortManager.cxx\end{DoxyCompactItemize}

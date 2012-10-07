@@ -282,7 +282,10 @@ class mdtPortManager : public QThread
 
  public slots:
 
-  /// \todo Essais ...
+  /*! \brief Cancel read and write operations
+   *
+   * Default implementation calls mdtAbstractPort::flush().
+   */
   virtual void abort();
 
   /*! \brief Try to 

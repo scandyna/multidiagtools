@@ -129,7 +129,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFram
       emit ioProcessBegin();
       written = port->write(bufferCursor, toWrite);
       if(written < 0){
-        ///emit(errorOccured(mdtAbstractPort::UnhandledError));
         return mdtAbstractPort::UnhandledError;
       }
       frame->take(written);
@@ -165,6 +164,8 @@ void mdtUsbPortThread::run()
   mdtUsbPort *port;
   bool waitAnAnswer = true;
   int toRead = 0;
+  int reconnectTimeout;
+  int reconnectMaxRetry;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -180,6 +181,8 @@ void mdtUsbPortThread::run()
   pollIntervall = 50;
   readPollMode = false;
   interframeTime = pvPort->config().writeInterframeTime();
+  reconnectTimeout = 5000;
+  reconnectMaxRetry = 5;
   // Get a frame for read
   readFrame = getNewFrameRead();
   if(readFrame == 0){
@@ -216,6 +219,7 @@ void mdtUsbPortThread::run()
       break;
     }
     // Wait for interframe time if needed
+    /// \todo Is this usefull in USB ?
     if(interframeTime > 0){
       pvPort->unlockMutex();
       msleep(interframeTime);
@@ -228,16 +232,22 @@ void mdtUsbPortThread::run()
     // Write
     if(writeFrame != 0){
       waitAnAnswer = writeFrame->waitAnAnswer();
-      /**
-      if(!writeToPort(port, writeFrame)){
-        // Stop request or fatal error
-        break;
-      }
-      */
       portError = writeToPort(port, writeFrame);
       if(portError != mdtAbstractPort::NoError){
-        // stop
-        break;
+        // Check about disconnection
+        if(portError == mdtAbstractPort::Disconnected){
+          // Try to reconnect
+          portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            emit(errorOccured(portError));
+            break;
+          }
+        }else{
+          // stop
+          emit(errorOccured(portError));
+          break;
+        }
       }
     }
     qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
@@ -268,6 +278,15 @@ void mdtUsbPortThread::run()
             qDebug() << "mdtUsbPortThread::run(): read cancel";
             readFrame = getNewFrameRead();
             break;
+          }else if(portError == mdtAbstractPort::Disconnected){
+            // Try to reconnect
+            portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+            if(portError != mdtAbstractPort::NoError){
+              // Errors that must be signaled + stop the thread
+              emit(errorOccured(portError));
+              pvRunning = false;
+              break;
+            }
           }else{
             // Errors that must be signaled + stop the thread
             emit(errorOccured(portError));
@@ -289,6 +308,15 @@ void mdtUsbPortThread::run()
             qDebug() << "mdtUsbPortThread::run(): read cancel";
             readFrame = getNewFrameRead();
             break;
+          }else if(portError == mdtAbstractPort::Disconnected){
+            // Try to reconnect
+            portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+            if(portError != mdtAbstractPort::NoError){
+              // Errors that must be signaled + stop the thread
+              emit(errorOccured(portError));
+              pvRunning = false;
+              break;
+            }
           }else{
             // Errors that must be signaled + stop the thread
             emit(errorOccured(portError));

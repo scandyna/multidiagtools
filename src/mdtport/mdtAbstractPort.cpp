@@ -32,6 +32,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   pvWriteTimeoutOccuredPrevious = false;
   pvIsOpen = false;
   pvConfig = 0;
+  pvCancelWrite = false;
 
   // Emit signals with initial states
   emit readTimeoutStateChanged(pvReadTimeoutOccured);
@@ -132,6 +133,11 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
   initQueues();
 
   return NoError;
+}
+
+mdtAbstractPort::error_t mdtAbstractPort::reconnect(int timeout)
+{
+  return UnhandledError;
 }
 
 mdtAbstractPort::error_t mdtAbstractPort::waitForReadyRead(int msecs)
@@ -306,6 +312,7 @@ void mdtAbstractPort::addFrameToWrite(mdtFrame *frame)
   Q_ASSERT(frame != 0);
 
   pvWriteFrames.enqueue(frame);
+  pvCancelWrite = false;
   pvWriteFrameAvailable.wakeAll();
 }
 

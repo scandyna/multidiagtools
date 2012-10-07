@@ -30,6 +30,7 @@ mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvSocket = 0;
+  pvPeerPort = 0;
 }
 
 mdtTcpSocket::~mdtTcpSocket()
@@ -37,6 +38,55 @@ mdtTcpSocket::~mdtTcpSocket()
   close();
 }
 
+mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
+{
+  Q_ASSERT(pvSocket != 0);
+
+  // If we are connected, return simply
+  if(pvSocket->state() == QAbstractSocket::ConnectedState){
+    return NoError;
+  }
+  // If a connection is about to be established, wait and return
+  if((pvSocket->state() == QAbstractSocket::HostLookupState)||(pvSocket->state() == QAbstractSocket::ConnectingState)){
+    unlockMutex();
+    if(!pvSocket->waitForConnected(timeout)){
+      lockMutex();
+      mdtError e(MDT_TCP_IO_ERROR, "Unable to reconnect to host", mdtError::Error);
+      e.setSystemError(pvSocket->error(), pvSocket->errorString());
+      MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+      e.commit();
+      return UnhandledError;
+    }
+    lockMutex();
+    return NoError;
+  }
+  // Here, we can be disconnecting or disconnected , wait to be shure
+  if(pvSocket->state() != QAbstractSocket::UnconnectedState){
+    unlockMutex();
+    if(!pvSocket->waitForDisconnected(timeout)){
+      lockMutex();
+      mdtError e(MDT_TCP_IO_ERROR, "waitForDisconnected() failed", mdtError::Error);
+      e.setSystemError(pvSocket->error(), pvSocket->errorString());
+      MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+      e.commit();
+      return UnhandledError;
+    }
+    lockMutex();
+    return Disconnected;
+  }
+  // Try to reconnect
+  pvSocket->connectToHost(pvPeerName, pvPeerPort);
+  unlockMutex();
+  if(pvSocket->waitForConnected(timeout)){
+    lockMutex();
+    return NoError;
+  }
+  lockMutex();
+
+  return Disconnected;
+}
+
+/// \todo Obelète
 void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
 {
   Q_ASSERT(pvThread != 0);
@@ -78,12 +128,14 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
     }else{
       updateReadTimeoutState(false);
       // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
-      if(pvSocket->error() != QAbstractSocket::RemoteHostClosedError){
+      if(pvSocket->error() == QAbstractSocket::RemoteHostClosedError){
+        return Disconnected;
+      }else{
         mdtError e(MDT_TCP_IO_ERROR, "waitForReadyRead() failed" , mdtError::Error);
         e.setSystemError(pvSocket->error(), pvSocket->errorString());
         MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
         e.commit();
-        return UnknownError;
+        return UnhandledError;
       }
     }
   }
@@ -123,14 +175,20 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
     }else{
       updateReadTimeoutState(false);
       // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
-      if(pvSocket->error() != QAbstractSocket::RemoteHostClosedError){
+      if(pvSocket->error() == QAbstractSocket::RemoteHostClosedError){
+        return Disconnected;
+      }else{
         mdtError e(MDT_TCP_IO_ERROR, "waitForBytesWritten() failed" , mdtError::Error);
         e.setSystemError(pvSocket->error(), pvSocket->errorString());
         MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
         e.commit();
-        return UnknownError;
+        return UnhandledError;
       }
     }
+  }
+  // Check about flushOut
+  if(pvCancelWrite){
+    return WriteCanceled;
   }
 
   return NoError;
@@ -153,9 +211,41 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   return n;
 }
 
+QString mdtTcpSocket::peerName() const
+{
+  return pvPeerName;
+}
+
+quint16 mdtTcpSocket::peerPort() const
+{
+  return pvPeerPort;
+}
+
 mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
 {
   Q_ASSERT(!isOpen());
+
+  QStringList items;
+  bool ok;
+
+  // Extract host name and port number from port name
+  items = pvPortName.split(":");
+  if(items.size() != 2){
+    mdtError e(MDT_TCP_IO_ERROR, "Cannot extract host name and port name in (format must be hostname:port) " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+    e.commit();
+    return SetupError;
+  }
+  pvPeerName = items.at(0);
+  pvPeerPort = items.at(1).toUShort(&ok);
+  if(!ok){
+    mdtError e(MDT_TCP_IO_ERROR, "Cannot extract port in (format must be hostname:port) " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+    e.commit();
+    return SetupError;
+  }
+  // No more action here. When thread starts, the QTcpSocket object will be created,
+  // and thread will get the peer name + port, and really connect.
 
   return NoError;
 }
@@ -163,6 +253,9 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
 void mdtTcpSocket::pvClose()
 {
   Q_ASSERT(isOpen());
+
+  pvThread = 0;
+  pvSocket = 0;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
@@ -172,6 +265,8 @@ mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
   // Set R/W timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
+  // Init flags
+  pvCancelWrite = false;
 
   return NoError;
 }
@@ -182,4 +277,5 @@ void mdtTcpSocket::pvFlushIn()
 
 void mdtTcpSocket::pvFlushOut()
 {
+  pvCancelWrite = true;
 }

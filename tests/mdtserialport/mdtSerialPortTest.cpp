@@ -575,11 +575,23 @@ void mdtSerialPortTest::txRxBinaryTopTest()
   sp.unlockMutex();
 
   // Update setup with correct interframe time
-  cfg.setWriteInterframeTime(550);
+  //cfg.setWriteInterframeTime(550);
   // Restart threads (make shure that current frame is cleared in threads + update there setup)
+  /*
   rxThd.stop();
   txThd.stop();
   sp.flush();
+  QVERIFY(rxThd.start());
+  QVERIFY(txThd.start());
+  */
+
+  // Update setup with correct interframe time
+  rxThd.stop();
+  txThd.stop();
+  sp.close();
+  cfg.setWriteInterframeTime(550);
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
   QVERIFY(rxThd.start());
   QVERIFY(txThd.start());
 

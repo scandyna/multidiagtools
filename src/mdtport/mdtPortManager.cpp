@@ -269,8 +269,9 @@ void mdtPortManager::abort()
 {
   Q_ASSERT(pvPort != 0);
 
-  pvPort->flushIn();
-  pvPort->flushOut();
+  ///pvPort->flushIn();
+  ///pvPort->flushOut();
+  pvPort->flush();
 }
 
 void mdtPortManager::fromThreadNewFrameReaden()

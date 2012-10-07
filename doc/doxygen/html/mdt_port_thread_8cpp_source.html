@@ -347,49 +347,74 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00285"></a>00285         <span class="keywordflow">return</span> portError;
 <a name="l00286"></a>00286       }
 <a name="l00287"></a>00287     }
-<a name="l00305"></a>00305     <span class="comment">// Event occured, send the data to port - Check timeout state first</span>
-<a name="l00306"></a>00306     <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67" title="Returns write timeout state.">writeTimeoutOccured</a>()){
-<a name="l00307"></a>00307       <span class="comment">// Cannot write now, sleep some time and try later</span>
-<a name="l00308"></a>00308       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00309"></a>00309       msleep(100);
-<a name="l00310"></a>00310       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00311"></a>00311     }<span class="keywordflow">else</span>{
-<a name="l00312"></a>00312       <span class="comment">// Write data to port</span>
-<a name="l00313"></a>00313       emit <a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>();
-<a name="l00314"></a>00314       <span class="keywordflow">if</span>(bytePerByteWrite){
-<a name="l00315"></a>00315         written = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90" title="Write data to port.">write</a>(bufferCursor, 1);
-<a name="l00316"></a>00316         pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00317"></a>00317         msleep(interByteTime);
-<a name="l00318"></a>00318         pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00319"></a>00319       }<span class="keywordflow">else</span>{
-<a name="l00320"></a>00320         written = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90" title="Write data to port.">write</a>(bufferCursor, toWrite);
-<a name="l00321"></a>00321       }
-<a name="l00322"></a>00322       <span class="keywordflow">if</span>(written &lt; 0){
-<a name="l00324"></a>00324         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
-<a name="l00325"></a>00325       }
-<a name="l00326"></a>00326       frame-&gt;<a class="code" href="classmdt_frame.html#a36e4b85a3c671902ac3c8cc318ca726c" title="Take some data.">take</a>(written);
-<a name="l00327"></a>00327       <span class="comment">// Update cursor and toWrite</span>
-<a name="l00328"></a>00328       <span class="keywordflow">if</span>(frame-&gt;isEmpty()){
-<a name="l00329"></a>00329         toWrite = 0;
-<a name="l00330"></a>00330       }<span class="keywordflow">else</span>{
-<a name="l00331"></a>00331         bufferCursor = frame-&gt;data();
-<a name="l00332"></a>00332         Q_ASSERT(bufferCursor &lt; (frame-&gt;data() + frame-&gt;size()));
-<a name="l00333"></a>00333         toWrite -= written;
-<a name="l00334"></a>00334         Q_ASSERT(toWrite &gt;= 0);
-<a name="l00335"></a>00335       }
-<a name="l00336"></a>00336     }
-<a name="l00337"></a>00337   }
-<a name="l00338"></a>00338   <span class="comment">// Here, frame is completly sent</span>
-<a name="l00339"></a>00339   Q_ASSERT(frame-&gt;isEmpty());
-<a name="l00340"></a>00340   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().enqueue(frame);
-<a name="l00341"></a>00341 
-<a name="l00342"></a>00342   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00343"></a>00343 }
-<a name="l00344"></a>00344 
-<a name="l00345"></a>00345 <span class="keywordtype">void</span> mdtPortThread::sigactionHandle(<span class="keywordtype">int</span> <span class="comment">/* signum */</span>)
-<a name="l00346"></a>00346 {
-<a name="l00347"></a>00347   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortThread::sigactionHandle() called&quot;</span>;
+<a name="l00288"></a>00288     <span class="comment">// Event occured, send the data to port - Check timeout state first</span>
+<a name="l00289"></a>00289     <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67" title="Returns write timeout state.">writeTimeoutOccured</a>()){
+<a name="l00290"></a>00290       <span class="comment">// Cannot write now, sleep some time and try later</span>
+<a name="l00291"></a>00291       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00292"></a>00292       msleep(100);
+<a name="l00293"></a>00293       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00294"></a>00294     }<span class="keywordflow">else</span>{
+<a name="l00295"></a>00295       <span class="comment">// Write data to port</span>
+<a name="l00296"></a>00296       emit <a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>();
+<a name="l00297"></a>00297       <span class="keywordflow">if</span>(bytePerByteWrite){
+<a name="l00298"></a>00298         written = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90" title="Write data to port.">write</a>(bufferCursor, 1);
+<a name="l00299"></a>00299         pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00300"></a>00300         msleep(interByteTime);
+<a name="l00301"></a>00301         pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00302"></a>00302       }<span class="keywordflow">else</span>{
+<a name="l00303"></a>00303         written = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90" title="Write data to port.">write</a>(bufferCursor, toWrite);
+<a name="l00304"></a>00304       }
+<a name="l00305"></a>00305       <span class="keywordflow">if</span>(written &lt; 0){
+<a name="l00306"></a>00306         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
+<a name="l00307"></a>00307       }
+<a name="l00308"></a>00308       frame-&gt;<a class="code" href="classmdt_frame.html#a36e4b85a3c671902ac3c8cc318ca726c" title="Take some data.">take</a>(written);
+<a name="l00309"></a>00309       <span class="comment">// Update cursor and toWrite</span>
+<a name="l00310"></a>00310       <span class="keywordflow">if</span>(frame-&gt;isEmpty()){
+<a name="l00311"></a>00311         toWrite = 0;
+<a name="l00312"></a>00312       }<span class="keywordflow">else</span>{
+<a name="l00313"></a>00313         bufferCursor = frame-&gt;data();
+<a name="l00314"></a>00314         Q_ASSERT(bufferCursor &lt; (frame-&gt;data() + frame-&gt;size()));
+<a name="l00315"></a>00315         toWrite -= written;
+<a name="l00316"></a>00316         Q_ASSERT(toWrite &gt;= 0);
+<a name="l00317"></a>00317       }
+<a name="l00318"></a>00318     }
+<a name="l00319"></a>00319   }
+<a name="l00320"></a>00320   <span class="comment">// Here, frame is completly sent</span>
+<a name="l00321"></a>00321   Q_ASSERT(frame-&gt;isEmpty());
+<a name="l00322"></a>00322   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().enqueue(frame);
+<a name="l00323"></a>00323 
+<a name="l00324"></a>00324   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
+<a name="l00325"></a>00325 }
+<a name="l00326"></a>00326 
+<a name="l00327"></a><a class="code" href="classmdt_port_thread.html#aaea2513ab1611574111dd1c2b7e61b7c">00327</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_port_thread.html#aaea2513ab1611574111dd1c2b7e61b7c" title="Try to reconnect to device/peer.">mdtPortThread::reconnect</a>(<span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> maxTry)
+<a name="l00328"></a>00328 {
+<a name="l00329"></a>00329   Q_ASSERT(pvPort != 0);
+<a name="l00330"></a>00330 
+<a name="l00331"></a>00331   <span class="keywordtype">int</span> count = maxTry;
+<a name="l00332"></a>00332   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> error;
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334   <span class="keywordflow">while</span>(count &gt; 0){
+<a name="l00335"></a>00335     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortThread::reconnect(): trying ...&quot;</span>;
+<a name="l00336"></a>00336     error = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653" title="Reconnect device/peer.">reconnect</a>(timeout);
+<a name="l00337"></a>00337     <span class="keywordflow">if</span>(error == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00338"></a>00338       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
+<a name="l00339"></a>00339     }
+<a name="l00340"></a>00340     <span class="keywordflow">if</span>(error != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00341"></a>00341       <span class="keywordflow">return</span> error;
+<a name="l00342"></a>00342     }
+<a name="l00343"></a>00343     count--;
+<a name="l00344"></a>00344   }
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortThread::reconnect(): max retry, reconnection FAILED :-(&quot;</span>;
+<a name="l00347"></a>00347   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
 <a name="l00348"></a>00348 }
+<a name="l00349"></a>00349 
+<a name="l00350"></a>00350 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
+<a name="l00351"></a>00351 <span class="preprocessor"></span><span class="keywordtype">void</span> mdtPortThread::sigactionHandle(<span class="keywordtype">int</span> <span class="comment">/* signum */</span>)
+<a name="l00352"></a>00352 {
+<a name="l00353"></a>00353   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortThread::sigactionHandle() called&quot;</span>;
+<a name="l00354"></a>00354 }
+<a name="l00355"></a>00355 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -406,7 +431,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:36 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

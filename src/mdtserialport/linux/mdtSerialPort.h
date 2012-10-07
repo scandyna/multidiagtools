@@ -270,9 +270,6 @@ class mdtSerialPort : public mdtAbstractSerialPort
    */
   void buildAvailableBaudRates();
 
-  // Check if configuration could be done on system
-  bool checkConfig(mdtSerialPortConfig cfg);
-
   // Set the RTS ON/OFF
   bool setRtsOn();
   bool setRtsOff();

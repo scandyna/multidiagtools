@@ -39,6 +39,19 @@ class mdtTcpSocket : public mdtAbstractPort
   mdtTcpSocket(QObject *parent = 0);
   ~mdtTcpSocket();
 
+  /*! \brief Reconnect to peer
+   *
+   * If one of the method returns a Disconnected error,
+   *  the thread will call this method to try to reconnect.
+   *
+   * \param timeout Timeout [ms]
+   * \return NoError if connection could be done.
+   *          Disconnected if connection could not be done,
+   *          in wich case the thread will retry (until max retry).
+   *          A UnhandledError can be returned.
+   */
+  error_t reconnect(int timeout);
+
   /*! \brief Connect to host
    * 
    * Use this method to start a connection to a host.<br>
@@ -50,21 +63,34 @@ class mdtTcpSocket : public mdtAbstractPort
   void connectToHost(const QString &hostName, int hostPort);
 
   /*! \brief Set the socket
-   * 
+   *
    * QTcpSocket must be created from thread on witch it will be used.
-   * In this case, the mdtTcpSocketThread create the instance.<br>
+   * In this case, the mdtTcpSocketThread create the instance.
+   *
    * This method will be called to store this instance and an instance of the thread itself.
-   * Note: should not be used.
+   *
+   * Note: should not be used directly.
+   *
    * \pre socket must be a valid pointer
    * \pre thread must be a valid pointer
    * \sa mdtTcpSocketThread
    */
   void setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread);
 
-  // Implementation of mdtAbstractPort
+  /*! \brief Set the read data timeout
+   *
+   * The mutex is not handled by this method.
+   *
+   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
+   */
   void setReadTimeout(int timeout);
 
-  // Implementation of mdtAbstractPort
+  /*! \brief Set the write data timeout
+   *
+   * The mutex is not handled by this method.
+   *
+   * \param timeout Timeout [ms]. A value of -1 means a infinite timeout.
+   */
   void setWriteTimeout(int timeout);
 
   /*! \brief Wait until data is available on port.
@@ -86,6 +112,18 @@ class mdtTcpSocket : public mdtAbstractPort
 
   // Implementation of mdtAbstractPort
   qint64 write(const char *data, qint64 maxSize);
+
+  /*! \brief Get the peer hostname
+   *
+   * Used by the thread (mdtTcpSocketThread).
+   */
+  QString peerName() const;
+
+  /*! \brief Get the peer port
+   *
+   * Used by the thread (mdtTcpSocketThread).
+   */
+  quint16 peerPort() const;
 
  private:
 
@@ -150,6 +188,8 @@ class mdtTcpSocket : public mdtAbstractPort
   int pvWriteTimeout;
   QTcpSocket *pvSocket;             // QTcpSocket object passed from thread
   mdtTcpSocketThread *pvThread;
+  QString pvPeerName;               // Host name or IP
+  quint16 pvPeerPort;               // Host port
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_H

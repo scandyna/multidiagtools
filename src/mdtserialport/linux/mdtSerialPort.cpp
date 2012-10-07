@@ -781,6 +781,10 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
       }
     }
   }
+  // Check about flushOut
+  if(pvCancelWrite){
+    return WriteCanceled;
+  }
 
   return NoError;
 }
@@ -1106,6 +1110,8 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   // Set the read/write timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
+  // Init flags
+  pvCancelWrite = false;
 
   qDebug() << "mdtSerialPort::pvSetup() setup:";
   qDebug() << "-> Baudrate: " << baudRate();
@@ -1120,6 +1126,7 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
 
 void mdtSerialPort::pvFlushIn()
 {
+  qDebug() << "mdtSerialPort::pvFlushIn() ...";
   if(tcflush(pvFd, TCIFLUSH) < 0){
     mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
@@ -1130,6 +1137,8 @@ void mdtSerialPort::pvFlushIn()
 
 void mdtSerialPort::pvFlushOut()
 {
+  qDebug() << "mdtSerialPort::pvFlushOut() ...";
+  pvCancelWrite = true;
   if(tcflush(pvFd, TCOFLUSH) < 0){
     mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
@@ -1276,88 +1285,6 @@ void mdtSerialPort::buildAvailableBaudRates()
       pvAvailableBaudRates << tmpAvailableBaudRates.at(i);
     }
   }
-}
-
-bool mdtSerialPort::checkConfig(mdtSerialPortConfig cfg)
-{
-  Q_ASSERT(pvFd >= 0);
-
-  // Get current system config
-  tcgetattr(pvFd, &pvTermios);
-
-  // Check static coded flags
-  if(!(pvTermios.c_cflag & (CLOCAL | CREAD))){
-    mdtError e(MDT_UNDEFINED_ERROR, "CLOCAL and CREAD are not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(pvTermios.c_lflag & (ICANON | ECHO | ECHOE | ISIG)){
-    mdtError e(MDT_UNDEFINED_ERROR, "raw data mode not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(pvTermios.c_oflag & OPOST){
-    mdtError e(MDT_UNDEFINED_ERROR, "raw data mode not set (OPOST is on)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  // Check parameters given by cfg
-  if(baudRate() != cfg.baudRate()){
-    mdtError e(MDT_UNDEFINED_ERROR, "baud rate is not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(dataBits() != cfg.dataBitsCount()){
-    mdtError e(MDT_UNDEFINED_ERROR, "data bits count is not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(stopBits() != cfg.stopBitsCount()){
-    qDebug() << "stopBits(): " << stopBits() << " , cfg: " << cfg.stopBitsCount();
-    mdtError e(MDT_UNDEFINED_ERROR, "stop bits count is not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(parity() != cfg.parity()){
-    mdtError e(MDT_UNDEFINED_ERROR, "parity is not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(flowCtlRtsCtsOn() != cfg.flowCtlRtsCtsEnabled()){
-    mdtError e(MDT_UNDEFINED_ERROR, "Flow ctl RTS/CTS is not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(flowCtlXonXoffOn() != cfg.flowCtlXonXoffEnabled()){
-    mdtError e(MDT_UNDEFINED_ERROR, "Flow ctl Xon/Xoff is not set", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    return false;
-  }
-  if(cfg.flowCtlXonXoffEnabled()){
-    if(pvTermios.c_cc[VSTART] != cfg.xonChar()){
-      mdtError e(MDT_UNDEFINED_ERROR, "Xon char is not set", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-    if(pvTermios.c_cc[VSTOP] != cfg.xoffChar()){
-      mdtError e(MDT_UNDEFINED_ERROR, "Xoff char is not set", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-      e.commit();
-      return false;
-    }
-  }
-
-  return true;
 }
 
 bool mdtSerialPort::setRtsOn()

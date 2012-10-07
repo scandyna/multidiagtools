@@ -86,6 +86,7 @@ This is the complete list of members for <a class="el" href="classmdt_usbtmc_por
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c">PortLocked</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615">portName</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvCancelWrite</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvConfig</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvMutex</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvPortName</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
@@ -104,6 +105,7 @@ This is the complete list of members for <a class="el" href="classmdt_usbtmc_por
   <tr class="memlist"><td><a class="el" href="classmdt_usbtmc_port.html#a86ee5e17c32dea75e9f918389d3f7afc">readOneFrame</a>()</td><td><a class="el" href="classmdt_usbtmc_port.html">mdtUsbtmcPort</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e">readTimeoutOccured</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a62c5e1f2beb6eddf740c8710ecb84ad1">readTimeoutStateChanged</a>(bool state)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653">reconnect</a>(int timeout)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">resumeTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f">setConfig</a>(mdtPortConfig *cfg)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932">setPortName</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
@@ -145,7 +147,7 @@ This is the complete list of members for <a class="el" href="classmdt_usbtmc_por
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:39 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

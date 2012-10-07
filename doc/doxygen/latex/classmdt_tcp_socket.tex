@@ -219,13 +219,17 @@ Definition at line 64 of file mdtTcpSocket.cpp.
 Wait until data can be written to port. 
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]Implement the CancelWrite error (see pvFlushOut() ) \end{Desc}
+
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 
 
-Definition at line 111 of file mdtTcpSocket.cpp.
+Definition at line 112 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForReadyRead@{waitForReadyRead}}
@@ -280,7 +284,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 139 of file mdtTcpSocket.cpp.
+Definition at line 140 of file mdtTcpSocket.cpp.
 
 
 

@@ -99,7 +99,7 @@ class mdtUsbtmcPortManager : public mdtPortManager
  public slots:
 
   /// \todo Essais ...
-  void abort();
+  ///void abort();
 
   /*! \brief Called by the read thread whenn a complete frame was readen
    *

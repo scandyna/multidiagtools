@@ -285,23 +285,6 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
         return portError;
       }
     }
-    /**
-    if(portError == mdtAbstractPort::WaitingCanceled){
-      // Stopping
-      return false;
-    }else if(portError != mdtAbstractPort::NoError){
-      // Errors that must be signaled + stop the thread
-      emit(errorOccured(portError));
-      return false;
-    }
-    */
-    /**
-    }else if(portError == mdtAbstractPort::UnknownError){
-      // Unhandled error. Signal this and stop
-      emit(errorOccured(MDT_PORT_IO_ERROR));
-      return false;
-    }
-    */
     // Event occured, send the data to port - Check timeout state first
     if(pvPort->writeTimeoutOccured()){
       // Cannot write now, sleep some time and try later
@@ -320,7 +303,6 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
         written = pvPort->write(bufferCursor, toWrite);
       }
       if(written < 0){
-        ///emit(errorOccured(mdtAbstractPort::UnhandledError));
         return mdtAbstractPort::UnhandledError;
       }
       frame->take(written);
@@ -342,7 +324,32 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
   return mdtAbstractPort::NoError;
 }
 
+mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry)
+{
+  Q_ASSERT(pvPort != 0);
+
+  int count = maxTry;
+  mdtAbstractPort::error_t error;
+
+  while(count > 0){
+    qDebug() << "mdtPortThread::reconnect(): trying ...";
+    error = pvPort->reconnect(timeout);
+    if(error == mdtAbstractPort::NoError){
+      return mdtAbstractPort::NoError;
+    }
+    if(error != mdtAbstractPort::Disconnected){
+      return error;
+    }
+    count--;
+  }
+
+  qDebug() << "mdtPortThread::reconnect(): max retry, reconnection FAILED :-(";
+  return mdtAbstractPort::UnhandledError;
+}
+
+#ifdef Q_OS_UNIX
 void mdtPortThread::sigactionHandle(int /* signum */)
 {
   qDebug() << "mdtPortThread::sigactionHandle() called";
 }
+#endif

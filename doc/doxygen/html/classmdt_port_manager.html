@@ -94,6 +94,7 @@ Collaboration diagram for mdtPortManager:</div>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d">abort</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel read and write operations.  <a href="#a1d185e9bb610aee16ccd9499ae7bff0d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">fromThreadNewFrameReaden</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to.  <a href="#a4fcc8f0699b655156e661bb3de6056cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a7e45b8e3475e5182ed12218616664d07">onThreadsErrorOccured</a> (int error)</td></tr>
@@ -243,9 +244,12 @@ QList&lt; QByteArray &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>
       </table>
 </div>
 <div class="memdoc">
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Essais ... </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classmdt_usbtmc_port_manager.html#a532f927dc92b167018c2e9051b0940ad">mdtUsbtmcPortManager</a>.</p>
+<p>Cancel read and write operations. </p>
+<p>Default implementation calls <a class="el" href="classmdt_abstract_port.html#abde440c49b95833f821e1333c40a7398" title="Flush read/write buffers.">mdtAbstractPort::flush()</a>. </p>
+
+<p><p>pvPort-&gt;flushIn(); pvPort-&gt;flushOut(); </p>
+</p>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00268">268</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
@@ -382,7 +386,7 @@ thread must be a valid pointer </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00276">276</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00277">277</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -425,6 +429,8 @@ thread must be a valid pointer </dd></dl>
 <p>Emitted when new frame was readen. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">waitReadenFrame()</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_manager_8cxx_source.html#l00091">91</a> of file <a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a7e45b8e3475e5182ed12218616664d07"></a><!-- doxytag: member="mdtPortManager::onThreadsErrorOccured" ref="a7e45b8e3475e5182ed12218616664d07" args="(int error)" -->
@@ -448,7 +454,7 @@ thread must be a valid pointer </dd></dl>
 <p><p>if(error == MDT_PORT_IO_ERROR){ qDebug() &lt;&lt; "I/O error !"; <a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort()</a>; if(!openPort()){ return; } <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start()</a>; } if(error == MDT_PORT_QUEUE_EMPTY_ERROR){ qDebug() &lt;&lt; "Queue empty !"; }</p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00301">301</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00302">302</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -753,6 +759,7 @@ Manager must no running </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8h_source.html">mdtPortManager.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a></li>
+<li>src/mdtport/<a class="el" href="moc__mdt_port_manager_8cxx_source.html">moc_mdtPortManager.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -769,7 +776,7 @@ Manager must no running </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:38 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

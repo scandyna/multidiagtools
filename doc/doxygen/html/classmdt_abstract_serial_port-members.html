@@ -102,6 +102,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615">portName</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a> enum value</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvAvailableBaudRates</b> (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvCancelWrite</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvCarIsOn</b> (defined in <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0">pvClose</a>()=0</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected, pure virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvConfig</b> (defined in <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [protected]</code></td></tr>
@@ -129,6 +130,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274">readFramesPool</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e">readTimeoutOccured</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#a62c5e1f2beb6eddf740c8710ecb84ad1">readTimeoutStateChanged</a>(bool state)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653">reconnect</a>(int timeout)</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7">resumeTransmission</a>()</td><td><a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a47c08ccb99dc6de76ae58ebeefc26857">rngChanged</a>(bool on)</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_serial_port.html#a0a3954438d1e8180e53717cc0fe1ce3e">rngIsOn</a>()</td><td><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a></td><td></td></tr>
@@ -198,7 +200,7 @@ This is the complete list of members for <a class="el" href="classmdt_abstract_s
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:37 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

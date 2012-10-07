@@ -226,6 +226,22 @@ class mdtPortThread : public QThread
    */
   mdtAbstractPort::error_t writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime);
 
+  /*! \brief Try to reconnect to device/peer
+   *
+   * This is a helper method for subclass.
+   *  When a port method returns a Disconnected error,
+   *  the thread can call this method, wich will try
+   *  to reconnect (using mdtAbstractPort::reconnect() )
+   *  until max retry was reached.
+   *
+   * \param timeout Timeout per try [ms]
+   * \param maxTry Maximum try
+   * \return NoError if reconnection worked or UnhandledError else.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   */
+  mdtAbstractPort::error_t reconnect(int timeout, int maxTry);
+
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;
 #ifdef Q_OS_UNIX

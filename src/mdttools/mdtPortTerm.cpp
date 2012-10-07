@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtPortTerm.h"
 #include "mdtApplication.h"
+#include "mdtPortInfo.h"
 #include <QHBoxLayout>
 #include <QAction>
 #include <QByteArray>
@@ -43,17 +44,22 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   connect(leCmd, SIGNAL(returnPressed()), this, SLOT(sendCmd()));
   leCmd->setFocus();
   
-  attachToSerialPort();
-  ///attachToUsbtmcPort();
   
   // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(serialPortSetup()));
   pvLanguageActionGroup = 0;
+  // Port selection actions
+  pvPortSelectActionGroup = new QActionGroup(this);
+  pvPortSelectActionGroup->addAction(action_SerialPort);
+  pvPortSelectActionGroup->addAction(action_UsbTmcPort);
+  connect(pvPortSelectActionGroup, SIGNAL(triggered(QAction*)), this, SLOT(selectPortType(QAction*)));
+  action_SerialPort->setChecked(true);
+  attachToSerialPort();
+  ///attachToUsbtmcPort();
 }
 
 mdtPortTerm::~mdtPortTerm()
 {
-  ///detachFromSerialPort();
   detachFromPorts();
 }
 
@@ -82,9 +88,6 @@ void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTran
 
 void mdtPortTerm::appendReadenData()
 {
-  //QList<QByteArray> data;
-  //int i;
-
   if(pvCurrentPortManager == 0){
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
     return;
@@ -92,12 +95,6 @@ void mdtPortTerm::appendReadenData()
   while(!pvCurrentPortManager->readenFrames().isEmpty()){
     teTerm->append(pvCurrentPortManager->readenFrames().takeFirst());
   }
-  ///teTerm->append(pvCurrentPortManager->lastReadenFrame());
-  //data = pvCurrentPortManager->readenFrames();
-  //for(i=0; i<data.size(); i++){
-  //while(!data.isEmpty()){
-  //  teTerm->append(data.takeFirst());
-  //}
 }
 
 void mdtPortTerm::sendCmd()
@@ -145,7 +142,6 @@ void mdtPortTerm::on_pbSendCmdAbort_clicked()
   if(pvCurrentPortManager != 0){
     qDebug() << "mdtPortTerm::on_pbSendCmdAbort_clicked() calling abort";
     pvCurrentPortManager->abort();
-    ///pvCurrentPortManager->port().flushOut();
   }
   ///teCmd->clear();
   leCmd->clear();
@@ -163,6 +159,8 @@ void mdtPortTerm::retranslate()
 
 void mdtPortTerm::attachToSerialPort()
 {
+  QList<mdtPortInfo*> ports;
+
   detachFromPorts();
   // Create objects
   pvSerialPortManager = new mdtSerialPortManager;
@@ -171,8 +169,24 @@ void mdtPortTerm::attachToSerialPort()
   // Ctl widget
   bottomHLayout->insertWidget(0, pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
+  qDebug() << "Port Term: bottomHLayout items: " << bottomHLayout->count();
 
   connect(pvSerialPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
+
+  // Try to open first port
+  ports = pvSerialPortManager->scan();
+  if(ports.size() > 0){
+    pvSerialPortManager->setPortName(ports.at(0)->portName());
+    if(!pvSerialPortManager->openPort()){
+      qDebug() << "mdtPortTerm::attachToSerialPort(): cannot open port";
+      qDeleteAll(ports);
+      return;
+    }
+  }
+  if(!pvSerialPortManager->start()){
+    qDebug() << "mdtPortTerm::attachToSerialPort(): cannot start port";
+  }
+  qDeleteAll(ports);
 }
 
 void mdtPortTerm::detachFromSerialPort()
@@ -181,6 +195,12 @@ void mdtPortTerm::detachFromSerialPort()
     disconnect(pvSerialPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
     delete pvSerialPortManager;
     pvSerialPortManager = 0;
+    // Ctl widget
+    bottomHLayout->removeWidget(pvSerialPortCtlWidget);
+    delete pvSerialPortCtlWidget;
+    pvSerialPortCtlWidget = 0;
+    /// \todo disconnect ?
+
   }
   pvCurrentPortManager = 0;
   /// NOTE: à compléter
@@ -188,7 +208,7 @@ void mdtPortTerm::detachFromSerialPort()
 
 void mdtPortTerm::serialPortSetup()
 {
-  // Show setup dialog
+  // Show the correct setup dialog
   if(pvSerialPortManager != 0){
     mdtSerialPortSetupDialog d(this);
     d.setPortManager(pvSerialPortManager);
@@ -202,14 +222,16 @@ void mdtPortTerm::attachToUsbtmcPort()
   // Create objects
   pvUsbtmcPortManager = new mdtUsbtmcPortManager;
   /// \todo Provisoire
-  pvUsbtmcPortManager->setPortName("0x0957:0x0588");
+  pvUsbtmcPortManager->setPortName(":0x0957:0x0588");
   if(!pvUsbtmcPortManager->openPort()){
     qDebug() << "Port term: cannot open USBTMC port";
     detachFromUsbtmcPort();
+    return;
   }
   if(!pvUsbtmcPortManager->start()){
     qDebug() << "Port term: cannot start USBTMC port";
     detachFromUsbtmcPort();
+    return;
   }
 
   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
@@ -220,13 +242,25 @@ void mdtPortTerm::attachToUsbtmcPort()
 void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
-    connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
+    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), this, SLOT(appendReadenData()));
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
   }
   pvCurrentPortManager = 0;
 }
 
+void mdtPortTerm::selectPortType(QAction*)
+{
+  if(action_SerialPort->isChecked()){
+    if(pvSerialPortManager == 0){
+      attachToSerialPort();
+    }
+  }else if(action_UsbTmcPort->isChecked()){
+    if(pvUsbtmcPortManager == 0){
+      attachToUsbtmcPort();
+    }
+  }
+}
 
 void mdtPortTerm::detachFromPorts()
 {

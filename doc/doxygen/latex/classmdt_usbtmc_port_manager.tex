@@ -32,8 +32,6 @@ Collaboration diagram for mdtUsbtmcPortManager:\nopagebreak
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}{abort} ()
-\item 
 void \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{fromThreadNewFrameReaden} ()
 \begin{DoxyCompactList}\small\item\em Called by the read thread whenn a complete frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
@@ -104,29 +102,6 @@ Definition at line 57 of file mdtUsbtmcPortManager.cpp.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}{
-\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!abort@{abort}}
-\index{abort@{abort}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
-\subsubsection[{abort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbtmcPortManager::abort (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
-\label{classmdt_usbtmc_port_manager_a532f927dc92b167018c2e9051b0940ad}
-\begin{Desc}
-\item[\hyperlink{todo__todo000024}{Todo}]Essais ... \end{Desc}
-
-
-\hyperlink{classmdt_usb_port}{mdtUsbPort} $\ast$port = dynamic\_\-cast$<$mdtUsbPort$\ast$$>$ (pvPort); Q\_\-ASSERT(port != 0); 
-
-
-
-Reimplemented from \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{mdtPortManager}.
-
-
-
-Definition at line 294 of file mdtUsbtmcPortManager.cpp.
-
 \hypertarget{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
 \index{fromThreadNewFrameReaden@{fromThreadNewFrameReaden}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -140,13 +115,15 @@ Definition at line 294 of file mdtUsbtmcPortManager.cpp.
 
 Called by the read thread whenn a complete frame was readen. 
 
+\begin{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
 
 
 Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{mdtPortManager}.
 
 
 
-Definition at line 305 of file mdtUsbtmcPortManager.cpp.
+Definition at line 307 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a41d46a7104601f0259c772328c743b75}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan22@{scan22}}

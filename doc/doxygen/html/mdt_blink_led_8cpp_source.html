@@ -109,8 +109,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00047"></a>00047 
 <a name="l00048"></a><a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f">00048</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">mdtBlinkLed::setOn</a>()
 <a name="l00049"></a>00049 {
-<a name="l00050"></a>00050   <a class="code" href="classmdt_blink_led.html#a1b15c8fafec0bc3aeb31ddf284ca7be2" title="Set LED blinking.">setBlinking</a>(<span class="keyword">false</span>);
-<a name="l00051"></a>00051   <a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">mdtLed::setOn</a>();
+<a name="l00050"></a>00050   setBlinking(<span class="keyword">false</span>);
+<a name="l00051"></a>00051   <a class="code" href="classmdt_led.html#a389ee3e0082ce8fa38cb258944a04892" title="Set the LED ON.">mdtLed::setOn</a>();
 <a name="l00052"></a>00052 }
 <a name="l00053"></a>00053 
 <a name="l00054"></a><a class="code" href="classmdt_blink_led.html#aab370ebe5c53203947e49e794d0959a7">00054</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">mdtBlinkLed::setOn</a>(<span class="keywordtype">int</span> holdTime, <span class="keywordtype">bool</span> priority)
@@ -123,14 +123,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00061"></a>00061     }
 <a name="l00062"></a>00062   }
 <a name="l00063"></a>00063   pvTimer.setSingleShot(<span class="keyword">true</span>);
-<a name="l00064"></a>00064   <a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">mdtLed::setOn</a>();
+<a name="l00064"></a>00064   <a class="code" href="classmdt_led.html#a389ee3e0082ce8fa38cb258944a04892" title="Set the LED ON.">mdtLed::setOn</a>();
 <a name="l00065"></a>00065   pvTimer.start(holdTime);
 <a name="l00066"></a>00066 }
 <a name="l00067"></a>00067 
 <a name="l00068"></a><a class="code" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f">00068</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f" title="Set the LED OFF.">mdtBlinkLed::setOff</a>()
 <a name="l00069"></a>00069 {
-<a name="l00070"></a>00070   <a class="code" href="classmdt_blink_led.html#a1b15c8fafec0bc3aeb31ddf284ca7be2" title="Set LED blinking.">setBlinking</a>(<span class="keyword">false</span>);
-<a name="l00071"></a>00071   <a class="code" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f" title="Set the LED OFF.">mdtLed::setOff</a>();
+<a name="l00070"></a>00070   setBlinking(<span class="keyword">false</span>);
+<a name="l00071"></a>00071   <a class="code" href="classmdt_led.html#a4c8f5f6aa91b7c90ae6b1aa4933ba6e0" title="Set the LED OFF.">mdtLed::setOff</a>();
 <a name="l00072"></a>00072 }
 </pre></div></div>
 </div>
@@ -148,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Oct 5 2012 19:21:37 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

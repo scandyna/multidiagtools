@@ -53,6 +53,19 @@ class mdtUsbPort : public mdtAbstractPort
    */
   ~mdtUsbPort();
 
+  /*! \brief Reconnect device
+   *
+   * If one of the method returns a Disconnected error,
+   *  the thread will call this method to try to reconnect.
+   *
+   * \param timeout Timeout [ms]
+   * \return NoError if connection could be done.
+   *          Disconnected if connection could not be done,
+   *          in wich case the thread will retry (until max retry).
+   *          A UnhandledError can be returned.
+   */
+  error_t reconnect(int timeout);
+
   /*! \brief Set the read data timeout
    *
    * The mutex is not handled by this method.

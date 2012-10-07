@@ -61,7 +61,7 @@ class mdtAbstractPort : public QObject
                 Disconnected,     /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
                                         If this error happens, the thread will stop working and signal this error at end.
                                         The portmanager can try to re-open the port if auto-reconnection is needed, and start
-                                         the thread again on success. \todo Implement this */
+                                         the thread again on success. \todo Implement this  \todo Implement a re-connect method */
                 UnknownError,     /*!< Unknown error is happen.
                                        Logfile could give more information, see mdtError and mdtApplication */
                 UnhandledError    /*!< Unhandled error happen.
@@ -150,6 +150,27 @@ class mdtAbstractPort : public QObject
    */
   error_t setup();
 
+  /*! \brief Reconnect device/peer
+   *
+   * If one of the method returns a Disconnected error,
+   *  the thread will call this method to try to reconnect.
+   *
+   * \param timeout Timeout [ms]
+   * \return NoError if connection could be done.
+   *          Disconnected if connection could not be done,
+   *          in wich case the thread will retry (until max retry).
+   *          A UnhandledError can be returned.
+   * 
+   * If subclass supports device (de|re)-connection, this
+   *  method must be implemented.
+   *
+   * Default implementation returns a UnhandledError.
+   *
+   * Notes about mutex handling:
+   *  - The mutex is locked when method is called, and must be locked when returns
+   */
+  virtual error_t reconnect(int timeout);
+
   /*! \brief Set the read data timeout
    *
    * The mutex is not handled by this method.
@@ -178,7 +199,7 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Wait until data is available on port.
    *
-   * This method is called from mdtPortReadThread , and should not be used directly.
+   * This method is called from reader thread , and should not be used directly.
    *
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    *
@@ -190,12 +211,14 @@ class mdtAbstractPort : public QObject
    *
    * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
    *          and the thread knows that it must end (case of stopping thread).
-   *          On unhandled error, UnknownError is returned. The thread also stop working, and emit
+   *          If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned.
+   *          On unhandled error, UnhandledError is returned. The thread also stop working, and emit
    *          a error signal (that can be handled in mdtPortManager, or in another place in application).
    *
    * \sa mdtPortThread
    * \sa mdtPortConfig
    * \sa mdtTcpSocketThread
+   * \sa mdtUsbPortThread
    */
   virtual error_t waitForReadyRead() = 0;
 
@@ -276,7 +299,9 @@ class mdtAbstractPort : public QObject
    *
    * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
    *          and the thread knows that it must end (case of stopping thread).
-   *          On unhandled error, UnknownError is returned. The thread also stop working, and emit
+   *          If flushOut() was called, WriteCanceled is returned.
+   *          If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned.
+   *          On unhandled error, UnhandledError is returned. The thread also stop working, and emit
    *          a error signal (that can be handled in mdtPortManager, or in another place in application).
    */
   virtual error_t waitEventWriteReady() = 0;
@@ -296,8 +321,14 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Flush write buffers
    *
-   * Will move all write frames to pool,
-   *  and call pvFlushOut() to flush system's buffers.
+   * Will cancel current write operation,
+   *  and all queued frames are removed.
+   *
+   * Internally, all write frames are moved
+   *  to pool.
+   *  pvFlushOut() will be called to flush system's buffers
+   *  and the next call of waitEventWriteReady() will return
+   *  the WriteCanceled error.
    *
    * Mutex is locked in this method.
    */
@@ -335,8 +366,9 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Flush read/write buffers
    *
-   * Will move all read and write frames to their pool,
-   *  and call pvFlushIn() and pvFlushOut() to flush system's buffers.
+   * Will do the same as calling
+   *  flushIn() and flushOut(),
+   *  but lock the mutex only once.
    *
    * Mutex is locked in this method.
    */
@@ -514,11 +546,14 @@ class mdtAbstractPort : public QObject
 
   /*! \brief Flush write port
    *
-   * This method is called from flushout(),
+   * This method is called from flushOut(),
    *  and is usefull if subsystem needs to be flushed.
    *  (For ex. serial port).
    *
    * This method must be implemented in subclass.
+   *  The pvCancelWrite flag must be set to true
+   *  if no other system is used to handle the
+   *  cancel flag (see waitEventWriteReady() )
    *
    * The mutex is handled by flushOut() and should not
    *  be handled here.
@@ -529,6 +564,7 @@ class mdtAbstractPort : public QObject
   bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
   bool pvWriteTimeoutOccuredPrevious;
+  bool pvCancelWrite;               // Updated by pvFlushOut() and addFrameToWrite()
   // Frames queues
   QQueue<mdtFrame*> pvReadenFrames;
   QQueue<mdtFrame*> pvReadFramesPool;

@@ -109,6 +109,7 @@ void mdtTcpSocketTest::writeReadTest()
   mdtFrame *frame;
   mdtTcpServer tcpServer;
   QStringList responses;
+  QString peerPort;
 
   // Get data set
   QFETCH(QStringList, queries);
@@ -126,6 +127,9 @@ void mdtTcpSocketTest::writeReadTest()
   cfg.setWriteTimeout(5000);
   cfg.setEndOfFrameSeq('*');
   s.setConfig(&cfg);
+  peerPort.setNum(tcpServer.serverPort());
+  s.setPortName("127.0.0.1:" + peerPort);
+  QVERIFY(s.open() == mdtAbstractPort::NoError);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
 
   // Assign socket to the thread
@@ -147,7 +151,7 @@ void mdtTcpSocketTest::writeReadTest()
   tcpServer.setResponseData(responses);
 
   // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   ///s.connectToHost("192.168.1.101" , tcpServer.serverPort());
 
   // Send data to server
@@ -267,6 +271,7 @@ void mdtTcpSocketTest::readInvalidDataTest()
   mdtFrame *frame;
   mdtTcpServer tcpServer;
   QStringList responses;
+  QString peerPort;
 
   // Init the tcp server
   QVERIFY(tcpServer.listen());
@@ -280,7 +285,11 @@ void mdtTcpSocketTest::readInvalidDataTest()
   cfg.setWriteTimeout(5000);
   cfg.setEndOfFrameSeq('*');
   s.setConfig(&cfg);
+  peerPort.setNum(tcpServer.serverPort());
+  s.setPortName("127.0.0.1:" + peerPort);
+  QVERIFY(s.open() == mdtAbstractPort::NoError);
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
+
 
   // Assign socket to the thread
   thd.setPort(&s);
@@ -302,7 +311,7 @@ void mdtTcpSocketTest::readInvalidDataTest()
   QVERIFY(tcpServer.isListening());
 
   // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   s.lockMutex();
   // Get a frame
   frame = s.writeFramesPool().dequeue();
@@ -328,11 +337,10 @@ void mdtTcpSocketTest::readInvalidDataTest()
   tcpServer.close();
   QTest::qWait(100);
 
-  // Restart
+  // Stop and close port
   thd.stop();
   QVERIFY(!thd.isRunning());
-  QVERIFY(thd.start());
-  QVERIFY(thd.isRunning());
+  s.close();
 
   /*
    * Data with EOF , size == capacity : must not crash, 1 frame must be readen
@@ -346,8 +354,16 @@ void mdtTcpSocketTest::readInvalidDataTest()
   tcpServer.setResponseData(responses);
   QVERIFY(tcpServer.listen());
 
+  // Open and start port
+  peerPort.setNum(tcpServer.serverPort());
+  s.setPortName("127.0.0.1:" + peerPort);
+  QVERIFY(s.open() == mdtAbstractPort::NoError);
+  QVERIFY(s.setup() == mdtAbstractPort::NoError);
+  QVERIFY(thd.start());
+  QVERIFY(thd.isRunning());
+
   // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   s.lockMutex();
   // Get a frame
   frame = s.writeFramesPool().dequeue();
@@ -377,11 +393,10 @@ void mdtTcpSocketTest::readInvalidDataTest()
   tcpServer.close();
   QTest::qWait(100);
 
-  // Restart
+  // Stop and close port
   thd.stop();
   QVERIFY(!thd.isRunning());
-  QVERIFY(thd.start());
-  QVERIFY(thd.isRunning());
+  s.close();
 
   /*
    * Data with EOF , size > capacity (but < 2*capacity) : must not crash, 1 frame must be readen
@@ -396,8 +411,16 @@ void mdtTcpSocketTest::readInvalidDataTest()
   tcpServer.setResponseData(responses);
   QVERIFY(tcpServer.listen());
 
+  // Open and start port
+  peerPort.setNum(tcpServer.serverPort());
+  s.setPortName("127.0.0.1:" + peerPort);
+  QVERIFY(s.open() == mdtAbstractPort::NoError);
+  QVERIFY(s.setup() == mdtAbstractPort::NoError);
+  QVERIFY(thd.start());
+  QVERIFY(thd.isRunning());
+
   // Init connection
-  s.connectToHost("127.0.0.1" , tcpServer.serverPort());
+  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   s.lockMutex();
   // Get a frame
   frame = s.writeFramesPool().dequeue();
