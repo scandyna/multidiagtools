@@ -40,8 +40,6 @@ class mdtTcpSocketThread : public mdtPortThread
   // Overload of mdtPortThread
   void stop();
 
-  void connectToHost(QString hostName, quint16 hostPort);
-
   /*! \brief Returns true if this thread reads data and send the newFrameReaden() signal
    *
    * mdtPortManager can handle many threads. It needs to know wich one will send the
@@ -49,30 +47,11 @@ class mdtTcpSocketThread : public mdtPortThread
    */
   bool isReader() const;
 
- ///signals:
-
-  /*! \brief New frame was readen.
-   * 
-   * This signal is emitted when a new frame was readen.
-   * The frame can be complete or not (depending of the EOF condition)
-   * \sa mdtFrame
-   */
-  ///void newFrameReaden();
-
  private:
-
-  // Try to reconnect when host disconnected
-  // Returns true on success reconnection
-  // If the maximum reconnect is reached, this method returns false
-  // Note: on each retry, a sleep time is increased
-  bool reconnectToHost();
 
   void run();
 
   QTcpSocket *pvSocket;
-  int pvMaxReconnect;               // Max. number of reconnections
-  QString pvPeerName;               // Host name or IP
-  quint16 pvPeerPort;               // Host port
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_THREAD_H

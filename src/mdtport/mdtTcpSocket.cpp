@@ -86,17 +86,6 @@ mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
   return Disconnected;
 }
 
-/// \todo Obelète
-void mdtTcpSocket::connectToHost(const QString &hostName, int hostPort)
-{
-  Q_ASSERT(pvThread != 0);
-  Q_ASSERT(hostPort > 0);
-
-  pvMutex.lock();
-  pvThread->connectToHost(hostName, hostPort);
-  pvMutex.unlock();
-}
-
 void mdtTcpSocket::setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread)
 {
   Q_ASSERT(socket != 0);
@@ -209,16 +198,6 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   }
 
   return n;
-}
-
-QString mdtTcpSocket::peerName() const
-{
-  return pvPeerName;
-}
-
-quint16 mdtTcpSocket::peerPort() const
-{
-  return pvPeerPort;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::pvOpen()

@@ -52,16 +52,6 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   error_t reconnect(int timeout);
 
-  /*! \brief Connect to host
-   * 
-   * Use this method to start a connection to a host.<br>
-   * Mutex is locked by this method.
-   * \param hostName Hostname or IP address
-   * \param hostPort Port
-   * \pre hostPort must be > 0
-   */
-  void connectToHost(const QString &hostName, int hostPort);
-
   /*! \brief Set the socket
    *
    * QTcpSocket must be created from thread on witch it will be used.
@@ -100,7 +90,14 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   error_t waitForReadyRead();
 
-  // Implementation of mdtAbstractPort
+  /*! \brief Read data from port
+   *
+   * This method is called from mdtPortReadThread , and should not be used directly.
+   *
+   * Mutex is not handled by this method.
+   *
+   * \return Number of bytes readen, or a error < 0
+   */
   qint64 read(char *data, qint64 maxSize);
 
   /*! \brief Wait until data can be written to port.
@@ -110,20 +107,15 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   error_t waitEventWriteReady();
 
-  // Implementation of mdtAbstractPort
+  /*! \brief Write data to port
+   *
+   * This method is called from mdtPortWriteThread , and should not be used directly.
+   *
+   * Mutex is not handled by this method.
+   *
+   * \return Number of bytes written, or <0 on error
+   */
   qint64 write(const char *data, qint64 maxSize);
-
-  /*! \brief Get the peer hostname
-   *
-   * Used by the thread (mdtTcpSocketThread).
-   */
-  QString peerName() const;
-
-  /*! \brief Get the peer port
-   *
-   * Used by the thread (mdtTcpSocketThread).
-   */
-  quint16 peerPort() const;
 
  private:
 

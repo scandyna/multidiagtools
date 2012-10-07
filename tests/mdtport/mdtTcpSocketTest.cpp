@@ -56,7 +56,7 @@ void mdtTcpSocketTest::essais()
   QVERIFY(thd.isRunning());
 
   // Init connection
-  s.connectToHost("192.168.1.102" , 502);
+  ///s.connectToHost("192.168.1.102" , 502);
 
   // Send data to server
   s.lockMutex();
@@ -150,10 +150,6 @@ void mdtTcpSocketTest::writeReadTest()
   // Set TCP server data
   tcpServer.setResponseData(responses);
 
-  // Init connection
-  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
-  ///s.connectToHost("192.168.1.101" , tcpServer.serverPort());
-
   // Send data to server
   s.lockMutex();
   QVERIFY(s.writeFramesPool().size() >= queries.size());
@@ -166,13 +162,8 @@ void mdtTcpSocketTest::writeReadTest()
     // Add some data to frame and commit
     frame->clear();
     frame->append(queries.at(i).toAscii());
-    ///s.writeFrames().enqueue(frame);
-    ///s.unlockMutex();
     s.addFrameToWrite(frame);
     s.unlockMutex();
-    
-    
-    ///s.beginNewTransaction();
   }
   s.unlockMutex();
 
@@ -310,8 +301,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   tcpServer.setResponseData(responses);
   QVERIFY(tcpServer.isListening());
 
-  // Init connection
-  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   s.lockMutex();
   // Get a frame
   frame = s.writeFramesPool().dequeue();
@@ -319,11 +308,8 @@ void mdtTcpSocketTest::readInvalidDataTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append("");
-  ///s.unlockMutex();
   s.addFrameToWrite(frame);
   s.unlockMutex();
-  
-  ///s.beginNewTransaction();
 
   // Wait some time and verify that data was exchanged
   QTest::qWait(100);
@@ -362,8 +348,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   QVERIFY(thd.start());
   QVERIFY(thd.isRunning());
 
-  // Init connection
-  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   s.lockMutex();
   // Get a frame
   frame = s.writeFramesPool().dequeue();
@@ -371,7 +355,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append("*");
-  ///s.unlockMutex();
   s.addFrameToWrite(frame);
   s.unlockMutex();
 
@@ -419,8 +402,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   QVERIFY(thd.start());
   QVERIFY(thd.isRunning());
 
-  // Init connection
-  ///s.connectToHost("127.0.0.1" , tcpServer.serverPort());
   s.lockMutex();
   // Get a frame
   frame = s.writeFramesPool().dequeue();
@@ -428,7 +409,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   // Add some data to frame and commit
   frame->clear();
   frame->append("");
-  ///s.unlockMutex();
   s.addFrameToWrite(frame);
   s.unlockMutex();
 
