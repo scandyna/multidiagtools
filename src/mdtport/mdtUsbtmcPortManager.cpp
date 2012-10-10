@@ -19,7 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcPortManager.h"
-#include "mdtAlgorithms.h"
+//#include "mdtAlgorithms.h"
 #include "mdtError.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
@@ -27,8 +27,6 @@
 #include "mdtUsbDeviceDescriptor.h"
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
-#include <QDir>
-#include <QFileInfoList>
 #include <QString>
 #include <QApplication>
 #include <libusb-1.0/libusb.h>
@@ -110,7 +108,7 @@ QStringList mdtUsbtmcPortManager::scan()
 }
 */
 
-QList<mdtPortInfo*> mdtUsbtmcPortManager::scan22()
+QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
 {
   Q_ASSERT(!isRunning());
 
@@ -128,6 +126,7 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan22()
   ssize_t i;
   int j, k;
   int err;
+  QString str;
 
   // Init libusb
   err = libusb_init(&ctx);
@@ -171,9 +170,32 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan22()
           if(ifaceDescriptor->bInterfaceClass() == 0xFE){
             if(ifaceDescriptor->bInterfaceSubClass() == 0x03){
               // Here we found a USBTMC device
+              str = deviceDescriptor.vendorName();
+              str += ", ";
+              str += deviceDescriptor.productName();
+              ///str += " VID: 0x" + QString::number(deviceDescriptor.idProduct(), 16);
+              str += " (BUS 0x" + QString::number((unsigned int)libusb_get_bus_number(device), 16);
+              str += " DEV 0x" + QString::number((unsigned int)libusb_get_device_address(device), 16);
+              str += ")";
+              portInfo->setDisplayText(str);
               deviceInfo = new mdtDeviceInfo;
               deviceInfo->setVendorId(deviceDescriptor.idVendor());
               deviceInfo->setProductId(deviceDescriptor.idProduct());
+              deviceInfo->setProtocolId(ifaceDescriptor->bInterfaceProtocol());
+              ///str = deviceDescriptor.vendorName();
+              ///str = "VID:";
+              ///str += QString::number(deviceDescriptor.idVendor());
+              /**
+              str += " PID:";
+              str += QString::number(deviceDescriptor.idProduct());
+              str += " Interface: ";
+              str += QString::number(ifaceDescriptor->bInterfaceProtocol());
+              */
+              if(ifaceDescriptor->bInterfaceProtocol() == 0x00){
+                deviceInfo->setDisplayText("USBTMC");
+              }else if(ifaceDescriptor->bInterfaceProtocol() == 0x01){
+                deviceInfo->setDisplayText("USBTMC USB488");
+              }
               portInfo->addDevice(deviceInfo);
             }
           }
@@ -212,8 +234,6 @@ bool mdtUsbtmcPortManager::writeData(QByteArray data)
 
   mdtFrameUsbTmc *frame;
 
-  // Clear previous readen frames
-  pvReadenFrames.clear();
   // Get a frame in pool
   pvPort->lockMutex();
   if(pvPort->writeFramesPool().size() < 1){
@@ -309,7 +329,6 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   Q_ASSERT(pvPort != 0);
 
   mdtFrameUsbTmc *frame;
-  QByteArray data;
 
   // Get frames in readen queue
   pvPort->lockMutex();
@@ -317,8 +336,10 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
     // Check if frame is complete
+    /// \todo Error on incomplete frame
     if(frame->isComplete()){
       // Copy data
+      QByteArray data;
       data.append(frame->messageData().data(), frame->messageData().size());
       pvReadenFrames.append(data);
     }

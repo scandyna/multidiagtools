@@ -121,6 +121,9 @@ class mdtPortManager : public QThread
    * This method is implemented is port's specific subclass.
    *  Default implementation returns a empty list.
    *
+   * Note that returned list must be freed by user
+   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
+   *
    * \pre Manager must no running
    */
   virtual QList<mdtPortInfo*> scan();
@@ -220,9 +223,6 @@ class mdtPortManager : public QThread
    *  This method returns immediatly after enqueue,
    *  and don't wait until data was written.
    *
-   * Note that internal previous readen frames are cleared,
-   *  so readenFrames() will return a empty list just after this call.
-   *
    * \param data Data to write
    * \return True on success. False if write queue is full.
    * \pre Port must be set with setPort() before use of this method.
@@ -233,7 +233,7 @@ class mdtPortManager : public QThread
    *  frame is submitted to port.
    *  A frame must be taken from port's write frames pool with mdtAbstractPort::writeFramesPool()
    *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
-   *  wthen added to port's write queue with mdtAbstractPort::addFrameToWrite() .
+   *  then added to port's write queue with mdtAbstractPort::addFrameToWrite() .
    */
   virtual bool writeData(QByteArray data);
 
@@ -297,7 +297,7 @@ class mdtPortManager : public QThread
    *
    * \sa mdtPortThread
    */
-  void fromThreadNewFrameReaden();
+  virtual void fromThreadNewFrameReaden();
 
   /*! \brief Manage errors comming from port threads
    */

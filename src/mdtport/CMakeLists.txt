@@ -21,8 +21,11 @@ set (HEADER_FILES
           # Port manager
           mdtPortManager.h
           mdtUsbtmcPortManager.h
+          mdtModbusTcpPortManager.h
           # Port config
           mdtPortConfigWidget.h
+          # Setup dialogs
+          mdtUsbtmcPortSetupDialog.h
     )
 
 # Liste des fichiers sources
@@ -47,14 +50,19 @@ set (SOURCES_FILES
           # Port manager
           mdtPortManager.cpp
           mdtUsbtmcPortManager.cpp
+          mdtModbusTcpPortManager.cpp
           # Port config
           mdtPortConfig.cpp
           mdtPortConfigWidget.cpp
+          # Setup dialogs
+          mdtUsbtmcPortSetupDialog.cpp
     )
 
 # Liste des fichiers ui
 set (FORM_FILES
           mdtPortConfigWidget.ui
+          # Setup dialogs
+          mdtUsbtmcPortSetupDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

@@ -43,11 +43,9 @@ class mdtFrameModbusTcp : public mdtFrame
   mdtFrameModbusTcp();
   ~mdtFrameModbusTcp();
 
-  /*! Clear internal data
-   * 
-   * Reset internal data and calls mdtFrame::clear()
+  /*! \brief mdtFrame subclass specific clear
    */
-  void clear();
+  void clearSub();
 
   /*! \brief Overload of mdtFrame::putData()
    * \pre Capacity must be >= 7
@@ -86,7 +84,6 @@ class mdtFrameModbusTcp : public mdtFrame
   /*! \brief Encode the MODBUS/TCP frame
    * 
    * This will build the frame with MBAP Header.
-   * Note: clear() is called internally of this method.
    * \pre Capacity must be >= 7
    */
   void encode();

@@ -157,9 +157,46 @@ quint16 mdtUsbDeviceDescriptor::idVendor() const
   return pvidVendor;
 }
 
+QString mdtUsbDeviceDescriptor::vendorName() const
+{
+  switch(pvidVendor){
+    case 2391:
+      return "Agilent Technologies, Inc.";
+    case 1133:
+      return "Logitech Inc.";
+    case 14627:
+      return "National Instruments";
+    case 1470:
+      return "Tyco Electronics";
+    default:
+      return "VID: 0x" + QString::number(pvidVendor, 16);
+  }
+}
+
 quint16 mdtUsbDeviceDescriptor::idProduct() const
 {
   return pvidProduct;
+}
+
+QString mdtUsbDeviceDescriptor::productName() const
+{
+  QString defStr = "PID: 0x" + QString::number(pvidProduct, 16);
+
+  switch(pvidVendor){
+    // Agilent products
+    case 2391:
+      switch(pvidProduct){
+        case 0x0588:
+          return "DSO1000 series oscilloscope";
+        case 0x4d18:
+          return "U3606A Multimeter/DC Power Supply";
+        default:
+          return defStr;
+      }
+    // Unknown vendor
+    default:
+      return defStr;
+  }
 }
 
 quint16 mdtUsbDeviceDescriptor::bcdDevice() const

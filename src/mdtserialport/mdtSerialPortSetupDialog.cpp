@@ -146,9 +146,9 @@ void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
   pvPortManager->closePort();
   setStateStopped();
   // Open the port
-  //pvPortManager->setPortName(cbPort->currentText());
   pvPortManager->setPortName(pvPortInfoCbHandler.currentPortInfo().portName());
-  if(!pvPortManager->openPort()){
+  ///if(!pvPortManager->openPort()){
+  if(pvPortManager->port().open() != mdtAbstractPort::NoError){
     setStateError(tr("Cannot fetch port attributes"));
     cbPort->setEnabled(true);
     return;

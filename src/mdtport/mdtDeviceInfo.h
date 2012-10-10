@@ -60,18 +60,40 @@ class mdtDeviceInfo
    */
   QString productName() const;
 
+  /*! \brief Set protocol ID
+   */
+  void setProtocolId(int pid);
+
+  /*! \brief Get product ID
+   */
+  int protocolId() const;
+
+  /*! \brief Set the display text
+   *
+   * Set a text that can be displayed to the user.
+   *  (F.ex. in a combo box)
+   */
+  void setDisplayText(const QString &text);
+
   /*! \brief Get the display text
    *
    * Returns a text that can be displayed to the user.
    *  (F.ex. in a combo box)
+   *
+   * If text was not set, a string containing
+   *  the vendor ID ans product ID is returned.
    */
   QString displayText() const;
 
   /*! \brief Comparaison operator
+   *
+   * Note that display text is not compared.
    */
   bool operator==(const mdtDeviceInfo &other);
 
   /*! \brief Comparaison operator
+   *
+   * Note that display text is not compared.
    */
   bool operator!=(const mdtDeviceInfo &other);
 
@@ -81,6 +103,8 @@ private:
   QString pvVendorName;
   int pvProductId;
   QString pvProductName;
+  int pvProtocolId;
+  QString pvDisplayText;
 };
 
 Q_DECLARE_METATYPE(mdtDeviceInfo)

@@ -21,6 +21,7 @@
 #include "mdtPortTerm.h"
 #include "mdtApplication.h"
 #include "mdtPortInfo.h"
+#include "mdtUsbtmcPortSetupDialog.h"
 #include <QHBoxLayout>
 #include <QAction>
 #include <QByteArray>
@@ -212,6 +213,10 @@ void mdtPortTerm::serialPortSetup()
   if(pvSerialPortManager != 0){
     mdtSerialPortSetupDialog d(this);
     d.setPortManager(pvSerialPortManager);
+    d.exec();
+  }else if(pvUsbtmcPortManager != 0){
+    mdtUsbtmcPortSetupDialog d(this);
+    d.setPortManager(pvUsbtmcPortManager);
     d.exec();
   }
 }

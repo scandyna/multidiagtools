@@ -24,6 +24,7 @@ mdtDeviceInfo::mdtDeviceInfo()
 {
   pvVendorId = 0;
   pvProductId = 0;
+  pvProtocolId = 0;
 }
 
 mdtDeviceInfo::~mdtDeviceInfo()
@@ -62,16 +63,33 @@ QString mdtDeviceInfo::productName() const
   return pvProductName;
 }
 
+void mdtDeviceInfo::setProtocolId(int pid)
+{
+  pvProtocolId = pid;
+}
+
+int mdtDeviceInfo::protocolId() const
+{
+  return pvProtocolId;
+}
+
+void mdtDeviceInfo::setDisplayText(const QString &text)
+{
+  pvDisplayText = text;
+}
+
 QString mdtDeviceInfo::displayText() const
 {
-  QString text;
+  if(pvDisplayText.isEmpty()){
+    QString text;
+    text = "PID: 0x";
+    text += QString::number(pvVendorId, 16);
+    text += " , VID: 0x";
+    text += QString::number(pvProductId, 16);
+    return text;
+  }
 
-  text = "PID: 0x";
-  text += QString::number(pvVendorId, 16);
-  text += " , VID: 0x";
-  text += QString::number(pvProductId, 16);
-
-  return text;
+  return pvDisplayText;
 }
 
 bool mdtDeviceInfo::operator==(const mdtDeviceInfo &other)
@@ -86,6 +104,9 @@ bool mdtDeviceInfo::operator==(const mdtDeviceInfo &other)
     return false;
   }
   if(pvProductName != other.pvProductName){
+    return false;
+  }
+  if(pvProtocolId != other.pvProtocolId){
     return false;
   }
 

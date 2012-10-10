@@ -61,6 +61,10 @@ void mdtSerialPortManagerTest::simpleTest()
   // Check that the right port is set
   QVERIFY(m.port().portName() == portInfoList.at(0)->portName());
 
+  // We not need the scan result anymore, free memory
+  qDeleteAll(portInfoList);
+  portInfoList.clear();
+
   // Start threads
   QVERIFY(m.start());
   QVERIFY(m.isRunning());
@@ -106,6 +110,10 @@ void mdtSerialPortManagerTest::transferTest()
   dataTransferRate = (1.0/8.0)*9600.0*8.0/10.0; // [B/s]
   // Set the dataTransferTime, with 10% headroom
   dataTransferTime = 1000.0*1.1*(double)data.size() / dataTransferRate;
+
+  // We not need the scan result anymore, free memory
+  qDeleteAll(portInfoList);
+  portInfoList.clear();
 
   // Start threads
   QVERIFY(m.start());

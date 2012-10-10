@@ -59,10 +59,14 @@ class mdtUsbtmcPortManager : public mdtPortManager
    */
   ~mdtUsbtmcPortManager();
 
-  /*! \brief Scan available USBTMC ports
+  /*! \brief Scan for available ports with a USBTMC compatible device attached
+   *
+   * Note that returned list must be freed by user
+   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
+   *
+   * \pre Manager must no running
    */
-  ///QStringList scan();
-  QList<mdtPortInfo*> scan22();
+  QList<mdtPortInfo*> scan();
 
   /*! \brief Write data by copy
    *
@@ -72,6 +76,7 @@ class mdtUsbtmcPortManager : public mdtPortManager
    *
    * \param data Data to write
    * \return True on success.
+   * \pre Port must be set with setPort() before use of this method.
    */
   bool writeData(QByteArray data);
 
@@ -101,7 +106,7 @@ class mdtUsbtmcPortManager : public mdtPortManager
   /// \todo Essais ...
   ///void abort();
 
-  /*! \brief Called by the read thread whenn a complete frame was readen
+  /*! \brief Called by the thread whenn a complete frame was readen
    *
    */
   void fromThreadNewFrameReaden();
@@ -109,6 +114,9 @@ class mdtUsbtmcPortManager : public mdtPortManager
  private:
 
   quint8 pvCurrentWritebTag;  // USBTMC's frame bTag
+
+  // Diseable copy
+  Q_DISABLE_COPY(mdtUsbtmcPortManager);
 };
 
 #endif  // #ifndef MDT_USBTMC_PORT_MANAGER_H

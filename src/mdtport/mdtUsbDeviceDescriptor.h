@@ -24,6 +24,7 @@
 #include <libusb-1.0/libusb.h>
 #include <QtGlobal>
 #include <QList>
+#include <QString>
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include "mdtUsbEndpointDescriptor.h"
@@ -102,9 +103,27 @@ class mdtUsbDeviceDescriptor
    */
   quint16 idVendor() const;
 
-  /*! \brief Product ID (assigned by the USB-IF)
+  /*! \brief Vendor name (assigned by the USB-IF)
+   *
+   * If vendor ID is known it is returned,
+   *  else a string containing VID:0xXXXX is returned
+   *
+   * \todo Parsing the usb.ids from http://www.linux-usb.org
+   */
+  QString vendorName() const;
+
+  /*! \brief Product ID
    */
   quint16 idProduct() const;
+
+  /*! \brief Product name
+   *
+   * If vendorID:productID is known the product name is returned,
+   *  else a string containing PID:0xXXXX is returned
+   *
+   * \todo Parsing the usb.ids from http://www.linux-usb.org
+   */
+  QString productName() const;
 
   /*! \brief Device release number id
    *

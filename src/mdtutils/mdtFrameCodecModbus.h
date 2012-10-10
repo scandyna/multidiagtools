@@ -101,11 +101,11 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    * \sa decode()
    */
   modbus_error_code_t lastModbusError();
-  
+
  private:
 
   bool decodeReadCoils();
-  
+
   bool decodeWriteSingleCoil();
 
   // Append exception code to mdtError , and store it to pvLastModbusError

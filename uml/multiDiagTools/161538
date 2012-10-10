@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 5
+  revision 6
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -96,6 +96,80 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    classdiagram 508290 "mdtDeviceModbus"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 518274 "mdtDeviceModbus"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 611842 // <generalisation>
+	relation 604546 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 611842 // <generalisation>
+	  b parent class_ref 309250 // mdtDevice
+      end
+
+      operation 992002 "mdtDeviceModbus"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 138626 // QObject
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 992130 "~mdtDeviceModbus"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 611970 // pvTcpPortManager (<directional composition>)
+	relation 604674 *-->
+	  a role_name "pvTcpPortManager" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 611970 // pvTcpPortManager (<directional composition>)
+	  b parent class_ref 511746 // mdtModbusTcpPortManager
+      end
+
+      classrelation 612098 // pvCodec (<directional composition>)
+	relation 604802 *-->
+	  a role_name "pvCodec" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 612098 // pvCodec (<directional composition>)
+	  b parent class_ref 269826 // mdtFrameCodecModbus
       end
     end
   end

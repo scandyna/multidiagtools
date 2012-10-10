@@ -30,6 +30,7 @@ mdtPortInfo::mdtPortInfo(const mdtPortInfo &other)
   int i;
 
   pvPortName = other.pvPortName;
+  pvDisplayText = other.pvDisplayText;
   // Copy devices list
   for(i=0; i<other.pvDeviceInfoList.size(); ++i){
     pvDeviceInfoList.append(new mdtDeviceInfo(*other.pvDeviceInfoList.at(i)));
@@ -61,12 +62,23 @@ QList<mdtDeviceInfo*> &mdtPortInfo::deviceInfoList()
   return pvDeviceInfoList;
 }
 
+void mdtPortInfo::setDisplayText(const QString &text)
+{
+  pvDisplayText = text;
+}
+
+QString mdtPortInfo::displayText() const
+{
+  return pvDisplayText;
+}
+
 mdtPortInfo &mdtPortInfo::operator=(const mdtPortInfo &other)
 {
   int i;
 
   if(this != &other){
     pvPortName = other.pvPortName;
+    pvDisplayText = other.pvDisplayText;
     // Copy devices list
     qDeleteAll(pvDeviceInfoList);
     pvDeviceInfoList.clear();

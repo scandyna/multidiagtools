@@ -286,6 +286,7 @@ void mdtPortManager::fromThreadNewFrameReaden()
     frame = pvPort->readenFrames().dequeue();
     Q_ASSERT(frame != 0);
     // Copy data
+    /// \todo Error on incomplete frame
     if(frame->isComplete()){
       QByteArray data;
       data.append(frame->data(), frame->size());

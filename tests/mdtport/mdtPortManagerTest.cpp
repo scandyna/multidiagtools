@@ -23,6 +23,7 @@
 #include "mdtPortManager.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
+#include "mdtFrameCodecModbus.h"
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtPortInfo.h"
@@ -31,7 +32,10 @@
 #include <QString>
 #include <QStringList>
 #include <QList>
+#include <QHash>
+#include <QHashIterator>
 #include "mdtApplication.h"
+#include "mdtModbusTcpPortManager.h"
 
 /// \todo Out !
 #include "linux/mdtUsbtmcPort.h"
@@ -110,35 +114,29 @@ void mdtPortManagerTest::portTest()
 void mdtPortManagerTest::usbTmcPortTest()
 {
   mdtUsbtmcPortManager m;
-  QStringList ports;
-  QList<mdtPortInfo*> portsInfoList;
-  mdtDeviceInfo *deviceInfo;
+  QList<mdtPortInfo*> portInfoList;
 
-  portsInfoList = m.scan22();
-  
-  for(int i=0; i<portsInfoList.size(); i++){
-    qDebug() << "Port[" << i << "]: " << portsInfoList.at(i)->portName();
-    for(int j=0; j<portsInfoList.at(i)->deviceInfoList().size(); j++){
-      deviceInfo = portsInfoList.at(i)->deviceInfoList().at(j);
-      qDebug() << "Device[" << j << "] VID: 0x" << hex << deviceInfo->vendorId();
-      qDebug() << "Device[" << j << "] PID: 0x" << hex << deviceInfo->productId();
-    }
-  }
-  
-  qDeleteAll(portsInfoList);
-  return;
-  
   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
 
-  // Find attached devices
-  ///ports = m.scan();
-  ///QVERIFY(ports.size() > 0);
+  // Verify that scan() function works ..
+  portInfoList = m.scan();
+  if(portInfoList.size() < 1){
+    QSKIP("No USBTMC device found, or other error", SkipAll);
+  }
+
+  // Init port manager
+  m.setPortName(portInfoList.at(0)->portName());
+  QVERIFY(m.openPort());
+
+  // We not need the scan result anymore, free memory
+  qDeleteAll(portInfoList);
+  portInfoList.clear();
 
   // Init port manager
   ///m.setPortName(ports.at(0));
   ///port.setPortName("0x0957:0x4d18");
-  m.setPortName("0x0957:0x0588");
-  QVERIFY(m.openPort());
+  ///m.setPortName("0x0957:0x0588");
+  ///QVERIFY(m.openPort());
 
   // start threads
   QVERIFY(m.start());
@@ -175,6 +173,60 @@ void mdtPortManagerTest::usbTmcPortTest()
   */
 }
 
+/// \todo No real check possible withous MODBUS Server available on loopback (127.0.0)
+void mdtPortManagerTest::modbusTcpPortTest()
+{
+  mdtModbusTcpPortManager m;
+  QList<mdtPortInfo*> portInfoList;
+  QStringList hosts;
+  mdtFrameCodecModbus codec;
+  QByteArray pdu;
+  QHash<quint16, QByteArray> pdus;
+
+  qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
+
+  // Verify that scan() function works ..
+  hosts << "127.0.0.1:502";
+  hosts << "192.168.1.100:502";
+  hosts << "192.168.1.101:502";
+  hosts << "192.168.1.102:502";
+  hosts << "192.168.1.103:502";
+  portInfoList = m.scan(hosts);
+  if(portInfoList.size() < 1){
+    QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
+  }
+
+  // Init port manager
+  m.setPortName(portInfoList.at(0)->portName());
+  QVERIFY(m.openPort());
+
+  // We not need the scan result anymore, free memory
+  qDeleteAll(portInfoList);
+  portInfoList.clear();
+
+  // start threads
+  QVERIFY(m.start());
+
+  // "Check" direct PDU write
+  pdu = codec.encodeReadCoils(0, 3);
+  QVERIFY(m.writeData(pdu));
+  QVERIFY(m.writeData(pdu, 76));
+  QVERIFY(!m.writeData(pdu));
+  QTest::qWait(500);
+  QVERIFY(m.waitReadenFrame(500));
+  pdus = m.readenFrames();
+  QHashIterator<quint16, QByteArray> it(pdus);
+  /*
+  while(it.hasNext()){
+    
+  }
+  if(pdus.
+  qDebug() << "RD: " << 
+  */
+  qDebug() << "RD0: " << pdus.value(0);
+  qDebug() << "RD76: " << pdus.value(76);
+  qDebug() << "RD2: " << pdus.value(2);
+}
 
 int main(int argc, char **argv)
 {

@@ -60,10 +60,10 @@ relationcanvas 129538 relation_ref 332674 // <directional composition>
   role_a_pos 248 438 3000 no_role_b
   multiplicity_a_pos 248 468 3000 no_multiplicity_b
 end
-relationcanvas 129666 relation_ref 551170 // <unidirectional association>
-  from ref 128642 z 3012 to ref 128002
-  role_a_pos 309 424 3000 no_role_b
-  multiplicity_a_pos 383 454 3000 no_multiplicity_b
+relationcanvas 130178 relation_ref 598018 // <unidirectional association>
+  from ref 128002 z 3012 to ref 128642
+  role_a_pos 141 215 3000 no_role_b
+  multiplicity_a_pos 141 245 3000 no_multiplicity_b
 end
 line 129922 -_-_
   from ref 129794 z 2001 to ref 128002

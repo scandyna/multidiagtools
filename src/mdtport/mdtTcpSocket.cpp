@@ -115,7 +115,7 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
     if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
       updateReadTimeoutState(true);
     }else{
-      updateReadTimeoutState(false);
+      ///updateReadTimeoutState(false);
       // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
       if(pvSocket->error() == QAbstractSocket::RemoteHostClosedError){
         return Disconnected;
@@ -127,6 +127,8 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
         return UnhandledError;
       }
     }
+  }else{
+    updateReadTimeoutState(false);
   }
 
   return NoError;
@@ -160,9 +162,9 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   if(!pvSocket->waitForBytesWritten(pvWriteTimeout)){
     // Check if we have a timeout
     if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
-      updateReadTimeoutState(true);
+      updateWriteTimeoutState(true);
     }else{
-      updateReadTimeoutState(false);
+      ///updateReadTimeoutState(false);
       // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
       if(pvSocket->error() == QAbstractSocket::RemoteHostClosedError){
         return Disconnected;
@@ -174,6 +176,8 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
         return UnhandledError;
       }
     }
+  }else{
+    updateWriteTimeoutState(false);
   }
   // Check about flushOut
   if(pvCancelWrite){

@@ -35,6 +35,8 @@ class mdtPortManagerTest : public mdtTest
   // Check USBTMC module (needs a device attached)
   void usbTmcPortTest();
 
+  // Check MODBUS/TCP module (needs a device attached)
+  void modbusTcpPortTest();
 };
 
 #endif  // #ifndef MDT_PORT_MANAGER_TEST_H

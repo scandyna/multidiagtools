@@ -34,13 +34,12 @@ mdtFrameModbusTcp::~mdtFrameModbusTcp()
 {
 }
 
-void mdtFrameModbusTcp::clear()
+void mdtFrameModbusTcp::clearSub()
 {
   pvTransactionId = 0;
   pvProtocolId = 0;   // MODBUS: 0
   pvUnitId = 0xFF;    // Default on MODBUS/TCP
   pvPdu.clear();
-  mdtFrame::clear();
 }
 
 int mdtFrameModbusTcp::putData(const char *data, int maxLen)
@@ -146,7 +145,7 @@ void mdtFrameModbusTcp::encode()
 
   quint16 length = pvPdu.size() + 1;
 
-  mdtFrame::clear();
+  ///mdtFrame::clear();
   // Transaction ID
   append(pvTransactionId >> 8);
   append(pvTransactionId & 0x00FF);

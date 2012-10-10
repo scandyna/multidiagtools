@@ -58,11 +58,27 @@ class mdtPortInfo
    */
   QList<mdtDeviceInfo*> &deviceInfoList();
 
+  /*! \brief Set the display text
+   *
+   * Set a text that can be displayed to the user.
+   *  (F.ex. in a combo box)
+   */
+  void setDisplayText(const QString &text);
+
+  /*! \brief Get the display text
+   *
+   * Returns a text that can be displayed to the user.
+   *  (F.ex. in a combo box)
+   */
+  QString displayText() const;
+
   /*! \brief Copy operator
    */
   mdtPortInfo &operator=(const mdtPortInfo &other);
 
   /*! \brief Comparaison operator
+   *
+   * Note that display text is not compared.
    */
   bool operator==(const mdtPortInfo &other);
 
@@ -74,6 +90,7 @@ class mdtPortInfo
 
   QList<mdtDeviceInfo*> pvDeviceInfoList;
   QString pvPortName;
+  QString pvDisplayText;
 };
 
 Q_DECLARE_METATYPE(mdtPortInfo)

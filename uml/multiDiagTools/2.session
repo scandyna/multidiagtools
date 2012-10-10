@@ -1,30 +1,24 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 255362 // mdtPort
-    776 642 100 4 0 0
-  classdiagram_ref 255234 // mdtAbstractPort
-    776 642 100 4 0 0
-  classdiagram_ref 488450 // mdtPortInfo
+  active  classdiagram_ref 508418 // mdtUsbtmcPortSetupDialog
     970 803 100 4 0 0
-  classdiagram_ref 314242 // mdtDevice
+  classdiagram_ref 374914 // mdtSerialPortSetupDialog
     776 642 100 4 0 0
-  classdiagram_ref 488578 // mdtDeviceInfo
-    776 642 100 4 0 0
-  classdiagram_ref 495106 // mdtPortInfoCbHandler
-    776 642 100 4 0 0
-  classdiagram_ref 495234 // QComboBox
-    776 642 100 4 12 0
-  active  classdiagram_ref 468610 // mdtUsbPort
-    970 803 100 4 96 0
+  classdiagram_ref 508546 // mdtIoWidgets
+    970 803 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 468610 // mdtUsbPort
+selected classdiagram_ref 508418 // mdtUsbtmcPortSetupDialog
 open
-  operation_ref 977538 // currentPortInfo
-  operation_ref 977666 // currentDeviceInfo
-  classview_ref 333058 // mdtUsbPort
-  classdiagram_ref 314242 // mdtDevice
-  
-  package_ref 134786 // Qt4
+  class_ref 518658 // mdtAbstractIoWidget
+  operation_ref 995586 // setOn
+  operation_ref 995714 // isOn
+  class_ref 518914 // mdtDigitalOutWidget
+  class_ref 519042 // mdtAnalogInWidget
+  class_ref 519170 // mdtAnalogOutWidget
+  operation_ref 992642 // displayConfig
+  operation_ref 992770 // updateConfig
+  operation_ref 992898 // applySetup
+  classview_ref 260354 // mdtSerialPortSetupDialog
 end
 end
