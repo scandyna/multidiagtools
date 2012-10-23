@@ -43,7 +43,7 @@ Collaboration diagram for mdtUsbPort:\nopagebreak
 
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_af2399348faf1abc20130eab20cfc36ee}{reconnect} (int timeout)
-\begin{DoxyCompactList}\small\item\em Reconnect device/peer. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Reconnect device. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usb_port_a44ed5024a81a573b5196b8f64c42cd6a}{setReadTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{setWriteTimeout} (int timeout)
@@ -79,8 +79,8 @@ USB port I/O port class.
 Built on top of libusb-\/1.x API
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000023}{Todo}]Implement this remarks Note about the port name (set with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} ):\par
- Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-\/)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtUsbtmcPortManager::scan()} method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . \end{Desc}
+\item[\hyperlink{todo__todo000030}{Todo}]Implement this remarks Note about the port name (set with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} ):\par
+ Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-\/)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdtUsbtmcPortManager::scan()} method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . \end{Desc}
 
 
 Definition at line 46 of file mdtUsbPort.h.
@@ -161,7 +161,7 @@ Request a new bulk/interrupt input transfer.
 Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]Handle retval \end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Handle retval \end{Desc}
 
 
 
@@ -226,7 +226,7 @@ Definition at line 312 of file mdtUsbPort.cpp.
 \label{classmdt_usb_port_af2399348faf1abc20130eab20cfc36ee}
 
 
-Reconnect device/peer. 
+Reconnect device. 
 
 If one of the method returns a Disconnected error, the thread will call this method to try to reconnect.
 

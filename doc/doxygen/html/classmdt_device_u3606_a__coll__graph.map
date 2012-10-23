@@ -2,10 +2,11 @@
 <area shape="rect" id="node2" href="$classmdt_device.html" title="mdtDevice" alt="" coords="5,277,91,307"/>
 <area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="115,277,277,307"/>
 <area shape="rect" id="node6" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="137,197,255,227"/>
-<area shape="rect" id="node8" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="137,101,255,131"/>
-<area shape="rect" id="node10" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="143,5,249,35"/>
-<area shape="rect" id="node12" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="301,277,493,307"/>
-<area shape="rect" id="node14" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="325,197,469,227"/>
-<area shape="rect" id="node16" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="324,101,471,131"/>
-<area shape="rect" id="node18" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="339,5,456,35"/>
+<area shape="rect" id="node8" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="45,101,136,131"/>
+<area shape="rect" id="node10" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="160,101,277,131"/>
+<area shape="rect" id="node12" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="165,5,272,35"/>
+<area shape="rect" id="node14" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="301,277,493,307"/>
+<area shape="rect" id="node16" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="325,197,469,227"/>
+<area shape="rect" id="node18" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="324,101,471,131"/>
+<area shape="rect" id="node20" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="339,5,456,35"/>
 </map>

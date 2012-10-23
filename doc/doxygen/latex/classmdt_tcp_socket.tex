@@ -28,8 +28,8 @@ Collaboration diagram for mdtTcpSocket:\nopagebreak
 \label{classmdt_tcp_socket_aeed1a50725a8e61f86de2bf67a92feb8}
 
 \item 
-void \hyperlink{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{connectToHost} (const QString \&hostName, int hostPort)
-\begin{DoxyCompactList}\small\item\em Connect to host. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_tcp_socket_a6a9990696ea459601b17ddbffe5b0703}{reconnect} (int timeout)
+\begin{DoxyCompactList}\small\item\em Reconnect to peer. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{setThreadObjects} (QTcpSocket $\ast$socket, \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} $\ast$thread)
 \begin{DoxyCompactList}\small\item\em Set the socket. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTimeout} (int timeout)
@@ -54,35 +54,6 @@ Definition at line 33 of file mdtTcpSocket.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}{
-\index{mdtTcpSocket@{mdtTcpSocket}!connectToHost@{connectToHost}}
-\index{connectToHost@{connectToHost}!mdtTcpSocket@{mdtTcpSocket}}
-\subsubsection[{connectToHost}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocket::connectToHost (
-\begin{DoxyParamCaption}
-\item[{const QString \&}]{hostName, }
-\item[{int}]{hostPort}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_tcp_socket_aa5b229a668c0d9b083f8eec8efe4636f}
-
-
-Connect to host. 
-
-Use this method to start a connection to a host.\par
- Mutex is locked by this method. 
-\begin{DoxyParams}{Parameters}
-{\em hostName} & Hostname or IP address \\
-\hline
-{\em hostPort} & Port \\
-\hline
-\end{DoxyParams}
-\begin{DoxyPrecond}{Precondition}
-hostPort must be $>$ 0 
-\end{DoxyPrecond}
-
-
-Definition at line 40 of file mdtTcpSocket.cpp.
-
 \hypertarget{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{
 \index{mdtTcpSocket@{mdtTcpSocket}!read@{read}}
 \index{read@{read}!mdtTcpSocket@{mdtTcpSocket}}
@@ -101,10 +72,6 @@ This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThre
 
 Mutex is not handled by this method.
 
-Subclass notes:\par
- This method must be implemented in subclass.\par
-
-
 \begin{DoxyReturn}{Returns}
 Number of bytes readen, or a error $<$ 0 
 \end{DoxyReturn}
@@ -114,7 +81,38 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 
 
-Definition at line 94 of file mdtTcpSocket.cpp.
+Definition at line 137 of file mdtTcpSocket.cpp.
+
+\hypertarget{classmdt_tcp_socket_a6a9990696ea459601b17ddbffe5b0703}{
+\index{mdtTcpSocket@{mdtTcpSocket}!reconnect@{reconnect}}
+\index{reconnect@{reconnect}!mdtTcpSocket@{mdtTcpSocket}}
+\subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtTcpSocket::reconnect (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_tcp_socket_a6a9990696ea459601b17ddbffe5b0703}
+
+
+Reconnect to peer. 
+
+If one of the method returns a Disconnected error, the thread will call this method to try to reconnect.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NoError if connection could be done. Disconnected if connection could not be done, in wich case the thread will retry (until max retry). A UnhandledError can be returned. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classmdt_abstract_port_aec74b2db1a629d98a95d8f042ea96653}{mdtAbstractPort}.
+
+
+
+Definition at line 41 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setReadTimeout@{setReadTimeout}}
@@ -131,9 +129,6 @@ Set the read data timeout.
 
 The mutex is not handled by this method.
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix)
-
 
 \begin{DoxyParams}{Parameters}
 {\em timeout} & Timeout \mbox{[}ms\mbox{]}. A value of -\/1 means a infinite timeout. \\
@@ -145,7 +140,7 @@ Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{
 
 
 
-Definition at line 59 of file mdtTcpSocket.cpp.
+Definition at line 98 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setThreadObjects@{setThreadObjects}}
@@ -161,8 +156,13 @@ Definition at line 59 of file mdtTcpSocket.cpp.
 
 Set the socket. 
 
-QTcpSocket must be created from thread on witch it will be used. In this case, the \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} create the instance.\par
- This method will be called to store this instance and an instance of the thread itself. Note: should not be used. \begin{DoxyPrecond}{Precondition}
+QTcpSocket must be created from thread on witch it will be used. In this case, the \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} create the instance.
+
+This method will be called to store this instance and an instance of the thread itself.
+
+Note: should not be used directly.
+
+\begin{DoxyPrecond}{Precondition}
 socket must be a valid pointer 
 
 thread must be a valid pointer 
@@ -172,7 +172,7 @@ thread must be a valid pointer
 \end{DoxySeeAlso}
 
 
-Definition at line 50 of file mdtTcpSocket.cpp.
+Definition at line 89 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setWriteTimeout@{setWriteTimeout}}
@@ -189,9 +189,6 @@ Set the write data timeout.
 
 The mutex is not handled by this method.
 
-Subclass notes:\par
- This method must be re-\/implemented in subclass. The subclass can convert and store the value in system specific type (f.ex: timeval struct on Posix)
-
 
 \begin{DoxyParams}{Parameters}
 {\em timeout} & Timeout \mbox{[}ms\mbox{]}. A value of -\/1 means a infinite timeout. \\
@@ -203,7 +200,7 @@ Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{
 
 
 
-Definition at line 64 of file mdtTcpSocket.cpp.
+Definition at line 103 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitEventWriteReady@{waitEventWriteReady}}
@@ -219,17 +216,17 @@ Definition at line 64 of file mdtTcpSocket.cpp.
 Wait until data can be written to port. 
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000015}{Todo}]Implement the CancelWrite error (see pvFlushOut() ) \end{Desc}
+updateReadTimeoutState(false); 
+
 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 
 
-Definition at line 112 of file mdtTcpSocket.cpp.
+Definition at line 154 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForReadyRead@{waitForReadyRead}}
@@ -247,11 +244,15 @@ Wait until data is available on port.
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
+updateReadTimeoutState(false); 
+
+
+
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 
 
 
-Definition at line 69 of file mdtTcpSocket.cpp.
+Definition at line 108 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{
 \index{mdtTcpSocket@{mdtTcpSocket}!write@{write}}
@@ -271,10 +272,6 @@ This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteTh
 
 Mutex is not handled by this method.
 
-Subclass notes:\par
- This method must be implemented in subclass.\par
-
-
 \begin{DoxyReturn}{Returns}
 Number of bytes written, or $<$0 on error 
 \end{DoxyReturn}
@@ -284,7 +281,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 140 of file mdtTcpSocket.cpp.
+Definition at line 190 of file mdtTcpSocket.cpp.
 
 
 

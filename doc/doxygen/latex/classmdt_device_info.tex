@@ -24,10 +24,7 @@ int \hyperlink{classmdt_device_info_a45edf71f1fa6a653c1bfa984e90e094e}{vendorId}
 \label{classmdt_device_info_a45edf71f1fa6a653c1bfa984e90e094e}
 
 \begin{DoxyCompactList}\small\item\em Get vendor ID. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{
-QString \hyperlink{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{vendorName} () const }
-\label{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}
-
+QString \hyperlink{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{vendorName} () const 
 \begin{DoxyCompactList}\small\item\em Get vendor name. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_info_a91ca6f02bfe86656073599c8d3d79da7}{
 void \hyperlink{classmdt_device_info_a91ca6f02bfe86656073599c8d3d79da7}{setProductId} (int pid)}
@@ -39,22 +36,25 @@ int \hyperlink{classmdt_device_info_a53006d4fbaeb0ba2fd47057f36b9b813}{productId
 \label{classmdt_device_info_a53006d4fbaeb0ba2fd47057f36b9b813}
 
 \begin{DoxyCompactList}\small\item\em Get product ID. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{
-QString \hyperlink{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{productName} () const }
-\label{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}
-
+QString \hyperlink{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{productName} () const 
 \begin{DoxyCompactList}\small\item\em Get product name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_info_ad90e39b5d34d4859527651cebb273e78}{
+void \hyperlink{classmdt_device_info_ad90e39b5d34d4859527651cebb273e78}{setProtocolId} (int pid)}
+\label{classmdt_device_info_ad90e39b5d34d4859527651cebb273e78}
+
+\begin{DoxyCompactList}\small\item\em Set protocol ID. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_info_a9b3a09adc91393f3c3940f41ea0bf067}{
+int \hyperlink{classmdt_device_info_a9b3a09adc91393f3c3940f41ea0bf067}{protocolId} () const }
+\label{classmdt_device_info_a9b3a09adc91393f3c3940f41ea0bf067}
+
+\begin{DoxyCompactList}\small\item\em Get product ID. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_info_a26e8452ed2f254943225f4463ea31ef5}{setDisplayText} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the display text. \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_device_info_ad005eb082bd00b4da0883508b64935dd}{displayText} () const 
 \begin{DoxyCompactList}\small\item\em Get the display text. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{
-bool \hyperlink{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{operator==} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&other)}
-\label{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}
-
+bool \hyperlink{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{operator==} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&other)
 \begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}{
-bool \hyperlink{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}{operator!=} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&other)}
-\label{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}
-
+bool \hyperlink{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}{operator!=} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&other)
 \begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -81,9 +81,100 @@ Definition at line 31 of file mdtDeviceInfo.h.
 
 Get the display text. 
 
-Returns a text that can be displayed to the user. (F.ex. in a combo box) 
+Returns a text that can be displayed to the user. (F.ex. in a combo box)
 
-Definition at line 65 of file mdtDeviceInfo.cpp.
+If text was not set, a string containing the vendor ID ans product ID is returned. 
+
+Definition at line 81 of file mdtDeviceInfo.cpp.
+
+\hypertarget{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}{
+\index{mdtDeviceInfo@{mdtDeviceInfo}!operator!=@{operator!=}}
+\index{operator!=@{operator!=}!mdtDeviceInfo@{mdtDeviceInfo}}
+\subsubsection[{operator!=}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceInfo::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtDeviceInfo} \&}]{other}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}
+
+
+Comparaison operator. 
+
+Note that display text is not compared. 
+
+Definition at line 116 of file mdtDeviceInfo.cpp.
+
+\hypertarget{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{
+\index{mdtDeviceInfo@{mdtDeviceInfo}!operator==@{operator==}}
+\index{operator==@{operator==}!mdtDeviceInfo@{mdtDeviceInfo}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceInfo::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtDeviceInfo} \&}]{other}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}
+
+
+Comparaison operator. 
+
+Note that display text is not compared. 
+
+Definition at line 95 of file mdtDeviceInfo.cpp.
+
+\hypertarget{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{
+\index{mdtDeviceInfo@{mdtDeviceInfo}!productName@{productName}}
+\index{productName@{productName}!mdtDeviceInfo@{mdtDeviceInfo}}
+\subsubsection[{productName}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceInfo::productName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}
+
+
+Get product name. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000010}{Todo}]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} \end{Desc}
+
+
+Definition at line 61 of file mdtDeviceInfo.cpp.
+
+\hypertarget{classmdt_device_info_a26e8452ed2f254943225f4463ea31ef5}{
+\index{mdtDeviceInfo@{mdtDeviceInfo}!setDisplayText@{setDisplayText}}
+\index{setDisplayText@{setDisplayText}!mdtDeviceInfo@{mdtDeviceInfo}}
+\subsubsection[{setDisplayText}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceInfo::setDisplayText (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_info_a26e8452ed2f254943225f4463ea31ef5}
+
+
+Set the display text. 
+
+Set a text that can be displayed to the user. (F.ex. in a combo box) 
+
+Definition at line 76 of file mdtDeviceInfo.cpp.
+
+\hypertarget{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{
+\index{mdtDeviceInfo@{mdtDeviceInfo}!vendorName@{vendorName}}
+\index{vendorName@{vendorName}!mdtDeviceInfo@{mdtDeviceInfo}}
+\subsubsection[{vendorName}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtDeviceInfo::vendorName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}
+
+
+Get vendor name. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000009}{Todo}]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} \end{Desc}
+
+
+Definition at line 45 of file mdtDeviceInfo.cpp.
 
 
 

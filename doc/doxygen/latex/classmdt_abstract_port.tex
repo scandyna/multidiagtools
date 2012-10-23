@@ -603,7 +603,7 @@ The mutex is handled by \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f
 
 Flush write port. 
 
-This method is called from flushout(), and is usefull if subsystem needs to be flushed. (For ex. serial port).
+This method is called from \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()}, and is usefull if subsystem needs to be flushed. (For ex. serial port).
 
 This method must be implemented in subclass. The pvCancelWrite flag must be set to true if no other system is used to handle the cancel flag (see \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{waitEventWriteReady()} )
 
@@ -792,7 +792,7 @@ Notes about mutex handling:
 \item The mutex is locked when method is called, and must be locked when returns 
 \end{DoxyItemize}
 
-Reimplemented in \hyperlink{classmdt_usb_port_af2399348faf1abc20130eab20cfc36ee}{mdtUsbPort}.
+Reimplemented in \hyperlink{classmdt_tcp_socket_a6a9990696ea459601b17ddbffe5b0703}{mdtTcpSocket}, and \hyperlink{classmdt_usb_port_af2399348faf1abc20130eab20cfc36ee}{mdtUsbPort}.
 
 
 
@@ -1025,7 +1025,7 @@ Subclass notes:\par
 \end{DoxyItemize}
 
 \begin{DoxyReturn}{Returns}
-On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). If \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()} was called, WriteCanceled is returned. On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in \hyperlink{classmdt_port_manager}{mdtPortManager}, or in another place in application). 
+On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). If \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushOut()} was called, WriteCanceled is returned. If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned. On unhandled error, UnhandledError is returned. The thread also stop working, and emit a error signal (that can be handled in \hyperlink{classmdt_port_manager}{mdtPortManager}, or in another place in application). 
 \end{DoxyReturn}
 
 
@@ -1044,7 +1044,7 @@ Implemented in \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{mdtPo
 
 Wait until data is available on port. 
 
-This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.
+This method is called from reader thread , and should not be used directly.
 
 Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
 
@@ -1056,7 +1056,7 @@ Subclass notes:\par
 \end{DoxyItemize}
 
 \begin{DoxyReturn}{Returns}
-On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in \hyperlink{classmdt_port_manager}{mdtPortManager}, or in another place in application).
+On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned. On unhandled error, UnhandledError is returned. The thread also stop working, and emit a error signal (that can be handled in \hyperlink{classmdt_port_manager}{mdtPortManager}, or in another place in application).
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_port_thread}{mdtPortThread} 
@@ -1064,6 +1064,8 @@ On success, NoError is returned. If waiting is canceled, WaitingCanceled is retu
 \hyperlink{classmdt_port_config}{mdtPortConfig} 
 
 \hyperlink{classmdt_tcp_socket_thread}{mdtTcpSocketThread} 
+
+\hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} 
 \end{DoxySeeAlso}
 
 
@@ -1188,5 +1190,4 @@ Definition at line 209 of file mdtAbstractPort.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtAbstractPort.h\item 
-src/mdtport/mdtAbstractPort.cpp\item 
-src/mdtport/moc\_\-mdtAbstractPort.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtAbstractPort.cpp\end{DoxyCompactItemize}

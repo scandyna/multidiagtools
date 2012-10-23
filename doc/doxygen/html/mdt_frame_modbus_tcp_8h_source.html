@@ -93,36 +93,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00043"></a>00043   <a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a>();
 <a name="l00044"></a>00044   ~<a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a>();
 <a name="l00045"></a>00045 
-<a name="l00050"></a>00050   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">clear</a>();
-<a name="l00051"></a>00051 
-<a name="l00056"></a>00056   <span class="keywordtype">int</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb" title="Overload of mdtFrame::putData()">putData</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> maxLen);
-<a name="l00057"></a>00057 
-<a name="l00060"></a>00060   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd" title="Set the transaction ID.">setTransactionId</a>(quint16 <span class="keywordtype">id</span>);
-<a name="l00061"></a>00061 
-<a name="l00064"></a>00064   quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48" title="Get the transaction ID.">transactionId</a>();
-<a name="l00065"></a>00065 
-<a name="l00068"></a>00068   quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a5213eb7e3670a191d2b75c83f5dd8d71" title="Get the length of Unit ID + PDU.">modbusLength</a>();
-<a name="l00069"></a>00069   
-<a name="l00072"></a>00072   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243" title="Set the Unit ID.">setUnitId</a>(quint8 <span class="keywordtype">id</span>);
-<a name="l00073"></a>00073 
-<a name="l00076"></a>00076   quint8 <a class="code" href="classmdt_frame_modbus_tcp.html#a8c2dad33c79f04fd11658ac0cefdf268" title="Get the Unit ID.">unitId</a>();
-<a name="l00077"></a>00077 
-<a name="l00080"></a>00080   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9" title="Set the MODBUS PDU.">setPdu</a>(<span class="keyword">const</span> QByteArray &amp;pdu);
-<a name="l00081"></a>00081 
-<a name="l00084"></a>00084   QByteArray <a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42" title="Get the MODBUS PDU.">getPdu</a>();
-<a name="l00085"></a>00085 
-<a name="l00092"></a>00092   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4" title="Encode the MODBUS/TCP frame.">encode</a>();
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094  <span class="keyword">private</span>:
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096   <span class="comment">// MBAP Header</span>
-<a name="l00097"></a>00097   quint16 pvTransactionId;
-<a name="l00098"></a>00098   quint16 pvProtocolId;
-<a name="l00099"></a>00099   quint8 pvUnitId;
-<a name="l00100"></a>00100   QByteArray pvPdu;
-<a name="l00101"></a>00101 };
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103 <span class="preprocessor">#endif  // #ifndef MDT_FRAME_MODBUS_TCP_H</span>
+<a name="l00048"></a>00048   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719" title="mdtFrame subclass specific clear">clearSub</a>();
+<a name="l00049"></a>00049 
+<a name="l00054"></a>00054   <span class="keywordtype">int</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb" title="Overload of mdtFrame::putData()">putData</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> maxLen);
+<a name="l00055"></a>00055 
+<a name="l00058"></a>00058   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd" title="Set the transaction ID.">setTransactionId</a>(quint16 <span class="keywordtype">id</span>);
+<a name="l00059"></a>00059 
+<a name="l00062"></a>00062   quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48" title="Get the transaction ID.">transactionId</a>();
+<a name="l00063"></a>00063 
+<a name="l00066"></a>00066   quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a5213eb7e3670a191d2b75c83f5dd8d71" title="Get the length of Unit ID + PDU.">modbusLength</a>();
+<a name="l00067"></a>00067   
+<a name="l00070"></a>00070   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243" title="Set the Unit ID.">setUnitId</a>(quint8 <span class="keywordtype">id</span>);
+<a name="l00071"></a>00071 
+<a name="l00074"></a>00074   quint8 <a class="code" href="classmdt_frame_modbus_tcp.html#a8c2dad33c79f04fd11658ac0cefdf268" title="Get the Unit ID.">unitId</a>();
+<a name="l00075"></a>00075 
+<a name="l00078"></a>00078   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9" title="Set the MODBUS PDU.">setPdu</a>(<span class="keyword">const</span> QByteArray &amp;pdu);
+<a name="l00079"></a>00079 
+<a name="l00082"></a>00082   QByteArray <a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42" title="Get the MODBUS PDU.">getPdu</a>();
+<a name="l00083"></a>00083 
+<a name="l00089"></a>00089   <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4" title="Encode the MODBUS/TCP frame.">encode</a>();
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091  <span class="keyword">private</span>:
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093   <span class="comment">// MBAP Header</span>
+<a name="l00094"></a>00094   quint16 pvTransactionId;
+<a name="l00095"></a>00095   quint16 pvProtocolId;
+<a name="l00096"></a>00096   quint8 pvUnitId;
+<a name="l00097"></a>00097   QByteArray pvPdu;
+<a name="l00098"></a>00098 };
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100 <span class="preprocessor">#endif  // #ifndef MDT_FRAME_MODBUS_TCP_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -139,7 +139,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

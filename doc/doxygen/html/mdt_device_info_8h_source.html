@@ -98,31 +98,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00042"></a>00042 
 <a name="l00045"></a>00045   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_info.html#a45edf71f1fa6a653c1bfa984e90e094e" title="Get vendor ID.">vendorId</a>() <span class="keyword">const</span>;
 <a name="l00046"></a>00046 
-<a name="l00049"></a>00049   QString <a class="code" href="classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c" title="Get vendor name.">vendorName</a>() <span class="keyword">const</span>;
-<a name="l00050"></a>00050 
-<a name="l00053"></a>00053   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(<span class="keywordtype">int</span> pid);
-<a name="l00054"></a>00054 
-<a name="l00057"></a>00057   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813" title="Get product ID.">productId</a>() <span class="keyword">const</span>;
-<a name="l00058"></a>00058 
-<a name="l00061"></a>00061   QString <a class="code" href="classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1" title="Get product name.">productName</a>() <span class="keyword">const</span>;
-<a name="l00062"></a>00062 
-<a name="l00068"></a>00068   QString <a class="code" href="classmdt_device_info.html#ad005eb082bd00b4da0883508b64935dd" title="Get the display text.">displayText</a>() <span class="keyword">const</span>;
-<a name="l00069"></a>00069 
-<a name="l00072"></a>00072   <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_info.html#ad029ec634403adbdd0382e9ceb1c1328" title="Comparaison operator.">operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;other);
-<a name="l00073"></a>00073 
-<a name="l00076"></a>00076   <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_info.html#a41ae61c66f404f80df4cad83fd6da138" title="Comparaison operator.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;other);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 <span class="keyword">private</span>:
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <span class="keywordtype">int</span> pvVendorId;
-<a name="l00081"></a>00081   QString pvVendorName;
-<a name="l00082"></a>00082   <span class="keywordtype">int</span> pvProductId;
-<a name="l00083"></a>00083   QString pvProductName;
-<a name="l00084"></a>00084 };
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086 Q_DECLARE_METATYPE(<a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>)
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_INFO_H</span>
+<a name="l00051"></a>00051   QString <a class="code" href="classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c" title="Get vendor name.">vendorName</a>() <span class="keyword">const</span>;
+<a name="l00052"></a>00052 
+<a name="l00055"></a>00055   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(<span class="keywordtype">int</span> pid);
+<a name="l00056"></a>00056 
+<a name="l00059"></a>00059   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813" title="Get product ID.">productId</a>() <span class="keyword">const</span>;
+<a name="l00060"></a>00060 
+<a name="l00065"></a>00065   QString <a class="code" href="classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1" title="Get product name.">productName</a>() <span class="keyword">const</span>;
+<a name="l00066"></a>00066 
+<a name="l00069"></a>00069   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_info.html#ad90e39b5d34d4859527651cebb273e78" title="Set protocol ID.">setProtocolId</a>(<span class="keywordtype">int</span> pid);
+<a name="l00070"></a>00070 
+<a name="l00073"></a>00073   <span class="keywordtype">int</span> <a class="code" href="classmdt_device_info.html#a9b3a09adc91393f3c3940f41ea0bf067" title="Get product ID.">protocolId</a>() <span class="keyword">const</span>;
+<a name="l00074"></a>00074 
+<a name="l00080"></a>00080   <span class="keywordtype">void</span> <a class="code" href="classmdt_device_info.html#a26e8452ed2f254943225f4463ea31ef5" title="Set the display text.">setDisplayText</a>(<span class="keyword">const</span> QString &amp;text);
+<a name="l00081"></a>00081 
+<a name="l00090"></a>00090   QString <a class="code" href="classmdt_device_info.html#ad005eb082bd00b4da0883508b64935dd" title="Get the display text.">displayText</a>() <span class="keyword">const</span>;
+<a name="l00091"></a>00091 
+<a name="l00096"></a>00096   <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_info.html#ad029ec634403adbdd0382e9ceb1c1328" title="Comparaison operator.">operator==</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;other);
+<a name="l00097"></a>00097 
+<a name="l00102"></a>00102   <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_info.html#a41ae61c66f404f80df4cad83fd6da138" title="Comparaison operator.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;other);
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 <span class="keyword">private</span>:
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   <span class="keywordtype">int</span> pvVendorId;
+<a name="l00107"></a>00107   QString pvVendorName;
+<a name="l00108"></a>00108   <span class="keywordtype">int</span> pvProductId;
+<a name="l00109"></a>00109   QString pvProductName;
+<a name="l00110"></a>00110   <span class="keywordtype">int</span> pvProtocolId;
+<a name="l00111"></a>00111   QString pvDisplayText;
+<a name="l00112"></a>00112 };
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114 Q_DECLARE_METATYPE(<a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a>)
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_INFO_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -139,7 +147,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

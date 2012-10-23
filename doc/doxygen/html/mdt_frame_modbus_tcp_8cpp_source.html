@@ -96,130 +96,128 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00034"></a>00034 {
 <a name="l00035"></a>00035 }
 <a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">00037</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">mdtFrameModbusTcp::clear</a>()
+<a name="l00037"></a><a class="code" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719">00037</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719" title="mdtFrame subclass specific clear">mdtFrameModbusTcp::clearSub</a>()
 <a name="l00038"></a>00038 {
 <a name="l00039"></a>00039   pvTransactionId = 0;
 <a name="l00040"></a>00040   pvProtocolId = 0;   <span class="comment">// MODBUS: 0</span>
 <a name="l00041"></a>00041   pvUnitId = 0xFF;    <span class="comment">// Default on MODBUS/TCP</span>
 <a name="l00042"></a>00042   pvPdu.clear();
-<a name="l00043"></a>00043   <a class="code" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">mdtFrame::clear</a>();
-<a name="l00044"></a>00044 }
-<a name="l00045"></a>00045 
-<a name="l00046"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb">00046</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb" title="Overload of mdtFrame::putData()">mdtFrameModbusTcp::putData</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> maxLen)
-<a name="l00047"></a>00047 {
-<a name="l00048"></a>00048   Q_ASSERT(capacity() &gt;= 7);
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <span class="keywordtype">int</span> frameSize = 0;
-<a name="l00051"></a>00051   <span class="keywordtype">int</span> stored = 0;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="comment">// If frame is allready full, return</span>
-<a name="l00054"></a>00054   <span class="keywordflow">if</span>(<a class="code" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore</a>() &lt; 1){
-<a name="l00055"></a>00055     <span class="keywordflow">return</span> 0;
-<a name="l00056"></a>00056   }
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="comment">// Check if it&#39;s possible to get size of incomming frame</span>
-<a name="l00059"></a>00059   <span class="keywordflow">if</span>((size()+maxLen) &gt;= 6){
-<a name="l00060"></a>00060     <span class="comment">// Check if some data must be stored before we can get the frame size</span>
-<a name="l00061"></a>00061     <span class="keywordflow">if</span>(size() &lt; 6){
-<a name="l00062"></a>00062       stored = 6-size();
-<a name="l00063"></a>00063       append(data, stored);
-<a name="l00064"></a>00064       Q_ASSERT((data + stored) &lt;= (data + maxLen));
-<a name="l00065"></a>00065       data += stored;
-<a name="l00066"></a>00066       maxLen -= stored;
-<a name="l00067"></a>00067     }
-<a name="l00068"></a>00068     frameSize = (at(4) &lt;&lt; 8) + at(5);
-<a name="l00069"></a>00069     <span class="comment">// We have MODBUS frame size , = Unit ID + PDU. Add missing size</span>
-<a name="l00070"></a>00070     frameSize += 6;
-<a name="l00071"></a>00071     <span class="comment">// Check if it is possible to store this frame</span>
-<a name="l00072"></a>00072     <span class="keywordflow">if</span>(frameSize &gt; capacity()){
-<a name="l00073"></a>00073       <span class="comment">// Problem here: fill the frame with null values, so bytesToStore() will return 0 next time</span>
-<a name="l00074"></a>00074       fill(0, capacity());
-<a name="l00075"></a>00075       stored = capacity();
-<a name="l00076"></a>00076       <span class="keywordflow">return</span> stored;
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078   }
-<a name="l00079"></a>00079   <span class="comment">// Check wat&#39;s possible to store</span>
-<a name="l00081"></a>00081 <span class="comment"></span>  <span class="keywordflow">if</span>(maxLen &gt; <a class="code" href="classmdt_frame.html#aa1cd5c914c36efb3f441b7f6e782dc24" title="Returns the remain capacity.">remainCapacity</a>()){
-<a name="l00082"></a>00082     maxLen = <a class="code" href="classmdt_frame.html#aa1cd5c914c36efb3f441b7f6e782dc24" title="Returns the remain capacity.">remainCapacity</a>();
-<a name="l00083"></a>00083   }
-<a name="l00085"></a>00085   <span class="comment">// Store</span>
-<a name="l00086"></a>00086   append(data, maxLen);
-<a name="l00087"></a>00087   stored += maxLen;
-<a name="l00089"></a>00089   <span class="comment">// Check if frame is complete</span>
-<a name="l00090"></a>00090   <span class="keywordflow">if</span>(size() == frameSize){
-<a name="l00091"></a>00091     pvEOFcondition = <span class="keyword">true</span>;
-<a name="l00092"></a>00092     <span class="comment">// Store members</span>
-<a name="l00093"></a>00093     pvTransactionId = (at(0) &lt;&lt; 8) + at(1);
-<a name="l00094"></a>00094     pvProtocolId = (at(2) &lt;&lt; 8) + at(3);
-<a name="l00095"></a>00095     pvUnitId = at(6);
-<a name="l00096"></a>00096     <span class="comment">// Store PDU if exists</span>
-<a name="l00097"></a>00097     <span class="keywordflow">if</span>(size() &gt; 7){
-<a name="l00098"></a>00098       pvPdu = right(size()-7);
-<a name="l00099"></a>00099     }
-<a name="l00100"></a>00100   }
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102   <span class="keywordflow">return</span> stored;
-<a name="l00103"></a>00103 }
-<a name="l00104"></a>00104 
-<a name="l00105"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd">00105</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd" title="Set the transaction ID.">mdtFrameModbusTcp::setTransactionId</a>(quint16 <span class="keywordtype">id</span>)
-<a name="l00106"></a>00106 {
-<a name="l00107"></a>00107   pvTransactionId = id;
-<a name="l00108"></a>00108 }
-<a name="l00109"></a>00109 
-<a name="l00110"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48">00110</a> quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48" title="Get the transaction ID.">mdtFrameModbusTcp::transactionId</a>()
-<a name="l00111"></a>00111 {
-<a name="l00112"></a>00112   <span class="keywordflow">return</span> pvTransactionId;
-<a name="l00113"></a>00113 }
-<a name="l00114"></a>00114 
-<a name="l00115"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a5213eb7e3670a191d2b75c83f5dd8d71">00115</a> quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a5213eb7e3670a191d2b75c83f5dd8d71" title="Get the length of Unit ID + PDU.">mdtFrameModbusTcp::modbusLength</a>()
-<a name="l00116"></a>00116 {
-<a name="l00117"></a>00117   <span class="keywordflow">if</span>(size() &lt; 6){
-<a name="l00118"></a>00118     <span class="keywordflow">return</span> 0;
-<a name="l00119"></a>00119   }
-<a name="l00120"></a>00120   <span class="keywordflow">return</span> (size() - 6);
-<a name="l00121"></a>00121 }
-<a name="l00122"></a>00122 
-<a name="l00123"></a><a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243">00123</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243" title="Set the Unit ID.">mdtFrameModbusTcp::setUnitId</a>(quint8 <span class="keywordtype">id</span>)
-<a name="l00124"></a>00124 {
-<a name="l00125"></a>00125   pvUnitId = id;
-<a name="l00126"></a>00126 }
-<a name="l00127"></a>00127 
-<a name="l00128"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a8c2dad33c79f04fd11658ac0cefdf268">00128</a> quint8 <a class="code" href="classmdt_frame_modbus_tcp.html#a8c2dad33c79f04fd11658ac0cefdf268" title="Get the Unit ID.">mdtFrameModbusTcp::unitId</a>()
-<a name="l00129"></a>00129 {
-<a name="l00130"></a>00130   <span class="keywordflow">return</span> pvUnitId;
-<a name="l00131"></a>00131 }
-<a name="l00132"></a>00132 
-<a name="l00133"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9">00133</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9" title="Set the MODBUS PDU.">mdtFrameModbusTcp::setPdu</a>(<span class="keyword">const</span> QByteArray &amp;pdu)
-<a name="l00134"></a>00134 {
-<a name="l00135"></a>00135   pvPdu = pdu;
-<a name="l00136"></a>00136 }
-<a name="l00137"></a>00137 
-<a name="l00138"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42">00138</a> QByteArray <a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42" title="Get the MODBUS PDU.">mdtFrameModbusTcp::getPdu</a>()
-<a name="l00139"></a>00139 {
-<a name="l00140"></a>00140   <span class="keywordflow">return</span> pvPdu;
-<a name="l00141"></a>00141 }
-<a name="l00142"></a>00142 
-<a name="l00143"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4">00143</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4" title="Encode the MODBUS/TCP frame.">mdtFrameModbusTcp::encode</a>()
-<a name="l00144"></a>00144 {
-<a name="l00145"></a>00145   Q_ASSERT(capacity() &gt;= 7);
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147   quint16 length = pvPdu.size() + 1;
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149   <a class="code" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">mdtFrame::clear</a>();
-<a name="l00150"></a>00150   <span class="comment">// Transaction ID</span>
-<a name="l00151"></a>00151   append(pvTransactionId &gt;&gt; 8);
-<a name="l00152"></a>00152   append(pvTransactionId &amp; 0x00FF);
-<a name="l00153"></a>00153   <span class="comment">// Protocol ID</span>
-<a name="l00154"></a>00154   append(pvProtocolId &gt;&gt; 8);
-<a name="l00155"></a>00155   append(pvProtocolId &amp; 0x00FF);
-<a name="l00156"></a>00156   <span class="comment">// Length</span>
-<a name="l00157"></a>00157   append(length &gt;&gt; 8);
-<a name="l00158"></a>00158   append(length &amp; 0x00FF);
-<a name="l00159"></a>00159   <span class="comment">// Unit ID</span>
-<a name="l00160"></a>00160   append(pvUnitId);
-<a name="l00161"></a>00161   <span class="comment">// PDU</span>
-<a name="l00162"></a>00162   append(pvPdu);
-<a name="l00163"></a>00163 }
+<a name="l00043"></a>00043 }
+<a name="l00044"></a>00044 
+<a name="l00045"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb">00045</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb" title="Overload of mdtFrame::putData()">mdtFrameModbusTcp::putData</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">int</span> maxLen)
+<a name="l00046"></a>00046 {
+<a name="l00047"></a>00047   Q_ASSERT(capacity() &gt;= 7);
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="keywordtype">int</span> frameSize = 0;
+<a name="l00050"></a>00050   <span class="keywordtype">int</span> stored = 0;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="comment">// If frame is allready full, return</span>
+<a name="l00053"></a>00053   <span class="keywordflow">if</span>(<a class="code" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore</a>() &lt; 1){
+<a name="l00054"></a>00054     <span class="keywordflow">return</span> 0;
+<a name="l00055"></a>00055   }
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <span class="comment">// Check if it&#39;s possible to get size of incomming frame</span>
+<a name="l00058"></a>00058   <span class="keywordflow">if</span>((size()+maxLen) &gt;= 6){
+<a name="l00059"></a>00059     <span class="comment">// Check if some data must be stored before we can get the frame size</span>
+<a name="l00060"></a>00060     <span class="keywordflow">if</span>(size() &lt; 6){
+<a name="l00061"></a>00061       stored = 6-size();
+<a name="l00062"></a>00062       append(data, stored);
+<a name="l00063"></a>00063       Q_ASSERT((data + stored) &lt;= (data + maxLen));
+<a name="l00064"></a>00064       data += stored;
+<a name="l00065"></a>00065       maxLen -= stored;
+<a name="l00066"></a>00066     }
+<a name="l00067"></a>00067     frameSize = (at(4) &lt;&lt; 8) + at(5);
+<a name="l00068"></a>00068     <span class="comment">// We have MODBUS frame size , = Unit ID + PDU. Add missing size</span>
+<a name="l00069"></a>00069     frameSize += 6;
+<a name="l00070"></a>00070     <span class="comment">// Check if it is possible to store this frame</span>
+<a name="l00071"></a>00071     <span class="keywordflow">if</span>(frameSize &gt; capacity()){
+<a name="l00072"></a>00072       <span class="comment">// Problem here: fill the frame with null values, so bytesToStore() will return 0 next time</span>
+<a name="l00073"></a>00073       fill(0, capacity());
+<a name="l00074"></a>00074       stored = capacity();
+<a name="l00075"></a>00075       <span class="keywordflow">return</span> stored;
+<a name="l00076"></a>00076     }
+<a name="l00077"></a>00077   }
+<a name="l00078"></a>00078   <span class="comment">// Check wat&#39;s possible to store</span>
+<a name="l00080"></a>00080 <span class="comment"></span>  <span class="keywordflow">if</span>(maxLen &gt; <a class="code" href="classmdt_frame.html#aa1cd5c914c36efb3f441b7f6e782dc24" title="Returns the remain capacity.">remainCapacity</a>()){
+<a name="l00081"></a>00081     maxLen = <a class="code" href="classmdt_frame.html#aa1cd5c914c36efb3f441b7f6e782dc24" title="Returns the remain capacity.">remainCapacity</a>();
+<a name="l00082"></a>00082   }
+<a name="l00084"></a>00084   <span class="comment">// Store</span>
+<a name="l00085"></a>00085   append(data, maxLen);
+<a name="l00086"></a>00086   stored += maxLen;
+<a name="l00088"></a>00088   <span class="comment">// Check if frame is complete</span>
+<a name="l00089"></a>00089   <span class="keywordflow">if</span>(size() == frameSize){
+<a name="l00090"></a>00090     pvEOFcondition = <span class="keyword">true</span>;
+<a name="l00091"></a>00091     <span class="comment">// Store members</span>
+<a name="l00092"></a>00092     pvTransactionId = (at(0) &lt;&lt; 8) + at(1);
+<a name="l00093"></a>00093     pvProtocolId = (at(2) &lt;&lt; 8) + at(3);
+<a name="l00094"></a>00094     pvUnitId = at(6);
+<a name="l00095"></a>00095     <span class="comment">// Store PDU if exists</span>
+<a name="l00096"></a>00096     <span class="keywordflow">if</span>(size() &gt; 7){
+<a name="l00097"></a>00097       pvPdu = right(size()-7);
+<a name="l00098"></a>00098     }
+<a name="l00099"></a>00099   }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101   <span class="keywordflow">return</span> stored;
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd">00104</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd" title="Set the transaction ID.">mdtFrameModbusTcp::setTransactionId</a>(quint16 <span class="keywordtype">id</span>)
+<a name="l00105"></a>00105 {
+<a name="l00106"></a>00106   pvTransactionId = id;
+<a name="l00107"></a>00107 }
+<a name="l00108"></a>00108 
+<a name="l00109"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48">00109</a> quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48" title="Get the transaction ID.">mdtFrameModbusTcp::transactionId</a>()
+<a name="l00110"></a>00110 {
+<a name="l00111"></a>00111   <span class="keywordflow">return</span> pvTransactionId;
+<a name="l00112"></a>00112 }
+<a name="l00113"></a>00113 
+<a name="l00114"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a5213eb7e3670a191d2b75c83f5dd8d71">00114</a> quint16 <a class="code" href="classmdt_frame_modbus_tcp.html#a5213eb7e3670a191d2b75c83f5dd8d71" title="Get the length of Unit ID + PDU.">mdtFrameModbusTcp::modbusLength</a>()
+<a name="l00115"></a>00115 {
+<a name="l00116"></a>00116   <span class="keywordflow">if</span>(size() &lt; 6){
+<a name="l00117"></a>00117     <span class="keywordflow">return</span> 0;
+<a name="l00118"></a>00118   }
+<a name="l00119"></a>00119   <span class="keywordflow">return</span> (size() - 6);
+<a name="l00120"></a>00120 }
+<a name="l00121"></a>00121 
+<a name="l00122"></a><a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243">00122</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243" title="Set the Unit ID.">mdtFrameModbusTcp::setUnitId</a>(quint8 <span class="keywordtype">id</span>)
+<a name="l00123"></a>00123 {
+<a name="l00124"></a>00124   pvUnitId = id;
+<a name="l00125"></a>00125 }
+<a name="l00126"></a>00126 
+<a name="l00127"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a8c2dad33c79f04fd11658ac0cefdf268">00127</a> quint8 <a class="code" href="classmdt_frame_modbus_tcp.html#a8c2dad33c79f04fd11658ac0cefdf268" title="Get the Unit ID.">mdtFrameModbusTcp::unitId</a>()
+<a name="l00128"></a>00128 {
+<a name="l00129"></a>00129   <span class="keywordflow">return</span> pvUnitId;
+<a name="l00130"></a>00130 }
+<a name="l00131"></a>00131 
+<a name="l00132"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9">00132</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9" title="Set the MODBUS PDU.">mdtFrameModbusTcp::setPdu</a>(<span class="keyword">const</span> QByteArray &amp;pdu)
+<a name="l00133"></a>00133 {
+<a name="l00134"></a>00134   pvPdu = pdu;
+<a name="l00135"></a>00135 }
+<a name="l00136"></a>00136 
+<a name="l00137"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42">00137</a> QByteArray <a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42" title="Get the MODBUS PDU.">mdtFrameModbusTcp::getPdu</a>()
+<a name="l00138"></a>00138 {
+<a name="l00139"></a>00139   <span class="keywordflow">return</span> pvPdu;
+<a name="l00140"></a>00140 }
+<a name="l00141"></a>00141 
+<a name="l00142"></a><a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4">00142</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4" title="Encode the MODBUS/TCP frame.">mdtFrameModbusTcp::encode</a>()
+<a name="l00143"></a>00143 {
+<a name="l00144"></a>00144   Q_ASSERT(capacity() &gt;= 7);
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146   quint16 length = pvPdu.size() + 1;
+<a name="l00147"></a>00147 
+<a name="l00149"></a>00149   <span class="comment">// Transaction ID</span>
+<a name="l00150"></a>00150   append(pvTransactionId &gt;&gt; 8);
+<a name="l00151"></a>00151   append(pvTransactionId &amp; 0x00FF);
+<a name="l00152"></a>00152   <span class="comment">// Protocol ID</span>
+<a name="l00153"></a>00153   append(pvProtocolId &gt;&gt; 8);
+<a name="l00154"></a>00154   append(pvProtocolId &amp; 0x00FF);
+<a name="l00155"></a>00155   <span class="comment">// Length</span>
+<a name="l00156"></a>00156   append(length &gt;&gt; 8);
+<a name="l00157"></a>00157   append(length &amp; 0x00FF);
+<a name="l00158"></a>00158   <span class="comment">// Unit ID</span>
+<a name="l00159"></a>00159   append(pvUnitId);
+<a name="l00160"></a>00160   <span class="comment">// PDU</span>
+<a name="l00161"></a>00161   append(pvPdu);
+<a name="l00162"></a>00162 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -236,7 +234,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

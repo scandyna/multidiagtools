@@ -122,7 +122,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00068"></a>00068 QtLocalPeer::QtLocalPeer(QObject* parent, <span class="keyword">const</span> QString &amp;appId)
 <a name="l00069"></a>00069     : QObject(parent), id(appId)
 <a name="l00070"></a>00070 {
-<a name="l00071"></a>00071     QString prefix = <a class="code" href="class_qt_single_application.html#affd094410862f30fce83afcba3457b19">id</a>;
+<a name="l00071"></a>00071     QString prefix = id;
 <a name="l00072"></a>00072     <span class="keywordflow">if</span> (<span class="keywordtype">id</span>.isEmpty()) {
 <a name="l00073"></a>00073         <span class="keywordtype">id</span> = QCoreApplication::applicationFilePath();
 <a name="l00074"></a>00074 <span class="preprocessor">#if defined(Q_OS_WIN)</span>
@@ -269,7 +269,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -56,7 +56,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Todo List </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000007"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000046"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_io_widget.html#a62b50a0701fae84ca626675827b642cc">mdtAbstractIoWidget::setDetails</a> (const QString &amp;text) </dt>
+<dd>QStringList ? Or QMap&lt;QString, QString&gt; ? </dd>
+</dl>
+<p><a class="anchor" id="_todo000007"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort::close</a> () </dt>
 <dd>Actuellement, les queues sont deletée ici, que faire ? </dd>
@@ -75,54 +80,74 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000026"></a> </p>
+<p><a class="anchor" id="_todo000035"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000027"></a> </p>
+<p><a class="anchor" id="_todo000036"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
+</dl>
+<p><a class="anchor" id="_todo000010"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1">mdtDeviceInfo::productName</a> () const  </dt>
+<dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd>
+</dl>
+<p><a class="anchor" id="_todo000009"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c">mdtDeviceInfo::vendorName</a> () const  </dt>
+<dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd>
 </dl>
 <p><a class="anchor" id="_todo000001"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327">mdtDeviceU3606A::scan</a> () </dt>
 <dd>Reimplement with port manager + port info </dd>
 </dl>
-<p><a class="anchor" id="_todo000032"></a> </p>
+<p><a class="anchor" id="_todo000040"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_k8055.html#a9dfe60529b0e80d5bbd3852fdea51b18">mdtFrameCodecK8055::decode</a> (QByteArray &amp;data) </dt>
 <dd>check statu field ?? </dd>
 </dl>
-<p><a class="anchor" id="_todo000033"></a> </p>
+<p><a class="anchor" id="_todo000041"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787">mdtFrameCodecModbus::decode</a> (const QByteArray &amp;pdu) </dt>
 <dd>Base 16 ?? </dd>
 </dl>
-<p><a class="anchor" id="_todo000037"></a> </p>
+<p><a class="anchor" id="_todo000045"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_frame_usb_tmc.html">mdtFrameUsbTmc</a>  </dt>
 <dd>Clarify what this class does: USBTMC message or transfer ?</dd>
 </dl>
-<p><a class="anchor" id="_todo000036"></a> </p>
+<p><a class="anchor" id="_todo000044"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">mdtFrameUsbTmc::encode</a> () </dt>
 <dd>Check &gt; 0, ... </dd>
 </dl>
-<p><a class="anchor" id="_todo000034"></a> </p>
+<p><a class="anchor" id="_todo000042"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_usb_tmc.html#a06d2743a113bd2b4cf2ee44014ecd710">mdtFrameUsbTmc::putData</a> (const char *data, int maxLen) </dt>
 <dd><p class="startdd">Handle error </p>
 <p class="enddd">other bmTransferAttributes </p>
 </dd>
 </dl>
+<p><a class="anchor" id="_todo000012"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">mdtModbusTcpPortManager::fromThreadNewFrameReaden</a> () </dt>
+<dd>Error on incomplete frame </dd>
+</dl>
+<p><a class="anchor" id="_todo000011"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#addd9b9336417aa964eea91ca2f95d26e">mdtModbusTcpPortManager::writeData</a> (QByteArray pdu) </dt>
+<dd>Handle this ? </dd>
+</dl>
 <p><a class="anchor" id="_todo000002"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port.html#a84594fdb56cd455a366c69b0a9228020">mdtPort::waitForReadyRead</a> () </dt>
 <dd>Infinite timeout: NULL pointer Ok ??? </dd>
 </dl>
-<p><a class="anchor" id="_todo000009"></a> </p>
+<p><a class="anchor" id="_todo000013"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_config.html#a639c71f90cfeb7e2160ad90e9775054b">mdtPortConfig::operator==</a> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other) </dt>
 <dd>Rollback: voir callback libusb, si data, ... </dd>
@@ -132,43 +157,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
 <dd>Implement UUCP format in LCK.. files </dd>
 </dl>
-<p><a class="anchor" id="_todo000010"></a> </p>
+<p><a class="anchor" id="_todo000014"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager::fromThreadNewFrameReaden</a> () </dt>
+<dd>Error on incomplete frame </dd>
+</dl>
+<p><a class="anchor" id="_todo000015"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#a7e45b8e3475e5182ed12218616664d07">mdtPortManager::onThreadsErrorOccured</a> (int error) </dt>
 <dd>Error handling (in general ...) </dd>
 </dl>
-<p><a class="anchor" id="_todo000011"></a> </p>
+<p><a class="anchor" id="_todo000016"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a>  </dt>
 <dd>suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. </dd>
 </dl>
-<p><a class="anchor" id="_todo000012"></a> </p>
+<p><a class="anchor" id="_todo000017"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">mdtPortThread::errorOccured</a> (int error) </dt>
 <dd>Adapt threads + port managers</dd>
 </dl>
-<p><a class="anchor" id="_todo000013"></a> </p>
+<p><a class="anchor" id="_todo000018"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc">mdtPortThread::getNewFrameRead</a> () </dt>
 <dd>Currently implemented in polling, should be done with a wait condition.</dd>
 </dl>
-<p><a class="anchor" id="_todo000028"></a> </p>
+<p><a class="anchor" id="_todo000037"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_serial_port_ctl_widget.html#a9dce60a846cbf24d7ceab099ff147c18">mdtSerialPortCtlWidget::makeConnections</a> (<a class="el" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *manager) </dt>
 <dd>Create threads somwere here, and connect signals/slots </dd>
 </dl>
-<p><a class="anchor" id="_todo000015"></a> </p>
+<p><a class="anchor" id="_todo000024"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_tcp_socket.html#a33385bcde41b8065ea7eff65c754b0cb">mdtTcpSocket::waitEventWriteReady</a> () </dt>
-<dd>Implement the CancelWrite error (see pvFlushOut() ) </dd>
+<dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866">mdtUsbDeviceDescriptor::productName</a> () const  </dt>
+<dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
 </dl>
 <p><a class="anchor" id="_todo000023"></a> </p>
 <dl>
+<dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">mdtUsbDeviceDescriptor::vendorName</a> () const  </dt>
+<dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
+</dl>
+<p><a class="anchor" id="_todo000030"></a> </p>
+<dl>
 <dt>Class <a class="el" href="classmdt_usb_port.html">mdtUsbPort</a>  </dt>
 <dd>Implement this remarks Note about the port name (set with setPortName() ):<br/>
- Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that <a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">mdtUsbtmcPortManager::scan()</a> method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . </dd>
+ Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">mdtUsbtmcPortManager::scan()</a> method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . </dd>
 </dl>
-<p><a class="anchor" id="_todo000018"></a> </p>
+<p><a class="anchor" id="_todo000025"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f">mdtUsbPort::initReadTransfer</a> (qint64 maxSize) </dt>
 <dd>Handle retval </dd>
@@ -183,10 +218,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_usbtmc_port.html#a97fca5f136f232275d90ab5b8c5ce285">mdtUsbtmcPort::writeOneFrame</a> () </dt>
 <dd>fix this class.. </dd>
 </dl>
-<p><a class="anchor" id="_todo000025"></a> </p>
+<p><a class="anchor" id="_todo000034"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager::fromThreadNewFrameReaden</a> () </dt>
-<dd>Essais ... void abort(); </dd>
+<dd><p class="startdd">Essais ... void abort(); </p>
+<p class="enddd">Error on incomplete frame </p>
+</dd>
 </dl>
 </div></div>
 <!-- window showing the filter options -->
@@ -203,7 +240,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -604,7 +604,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Flush write port. </p>
-<p>This method is called from flushout(), and is usefull if subsystem needs to be flushed. (For ex. serial port).</p>
+<p>This method is called from <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a>, and is usefull if subsystem needs to be flushed. (For ex. serial port).</p>
 <p>This method must be implemented in subclass. The pvCancelWrite flag must be set to true if no other system is used to handle the cancel flag (see <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> )</p>
 <p>The mutex is handled by <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a> and should not be handled here. </p>
 
@@ -808,7 +808,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <li>The mutex is locked when method is called, and must be locked when returns </li>
 </ul>
 
-<p>Reimplemented in <a class="el" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee">mdtUsbPort</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_tcp_socket.html#a6a9990696ea459601b17ddbffe5b0703">mdtTcpSocket</a>, and <a class="el" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee">mdtUsbPort</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -1052,7 +1052,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <ul>
 <li>Mutex must be released during wait, and relocked befor return.</li>
 </ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). If <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a> was called, WriteCanceled is returned. On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application). </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). If <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a> was called, WriteCanceled is returned. If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned. On unhandled error, UnhandledError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application). </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#a85e77a391f6f5782428beb2e6aee52f8">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a24cfc5233e09b9dbcdb2adc5f700dc4a">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a33385bcde41b8065ea7eff65c754b0cb">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a988825b3ff2ef93a1b43e2df316055bd">mdtSerialPort</a>.</p>
 
@@ -1073,7 +1073,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <div class="memdoc">
 
 <p>Wait until data is available on port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
+<p>This method is called from reader thread , and should not be used directly.</p>
 <p>Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns.</p>
 <p>Subclass notes:<br/>
  This method must be re-implemented in subclass. The read timeout state must be updated with <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState()</a><br/>
@@ -1081,12 +1081,14 @@ A valid configuration must be set before calling this method.</dd></dl>
 <ul>
 <li>Mutex must be released during wait, and relocked befor return.</li>
 </ul>
-<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). On unhandled error, UnknownError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application).</dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned and the thread knows that it must end (case of stopping thread). If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned. On unhandled error, UnhandledError is returned. The thread also stop working, and emit a error signal (that can be handled in <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a>, or in another place in application).</dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd>
 <dd>
 <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> </dd>
 <dd>
-<a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd></dl>
+<a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a> </dd>
+<dd>
+<a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#a84594fdb56cd455a366c69b0a9228020">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a3c1b746acfc06857eee4b4c136cd65ad">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#adb09186cdacdac15291523c59f156cd4">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#ad150a45c68d98a501bea2f102aeadb50">mdtSerialPort</a>.</p>
 
@@ -1229,7 +1231,6 @@ A valid configuration must be set before calling this method.</dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a></li>
-<li>src/mdtport/<a class="el" href="moc__mdt_abstract_port_8cxx_source.html">moc_mdtAbstractPort.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -1246,7 +1247,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

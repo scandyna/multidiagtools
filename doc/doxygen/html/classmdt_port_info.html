@@ -89,12 +89,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a device. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80">deviceInfoList</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of devices informations.  <a href="#a22013ea9e2de1d12cef673a2452d5b80"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8">setDisplayText</a> (const QString &amp;text)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the display text.  <a href="#aad09e261bafcdc72ef6b2479ec37fbe8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211">displayText</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the display text.  <a href="#a38bcac67372782228a91d8e7dbf49211"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88bab5da09191b1ecfbb0b11f001ad24"></a><!-- doxytag: member="mdtPortInfo::operator=" ref="a88bab5da09191b1ecfbb0b11f001ad24" args="(const mdtPortInfo &amp;other)" -->
 <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#a88bab5da09191b1ecfbb0b11f001ad24">operator=</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;other)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy operator. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72b265f3461d764d0e902c421e3b43e4"></a><!-- doxytag: member="mdtPortInfo::operator==" ref="a72b265f3461d764d0e902c421e3b43e4" args="(const mdtPortInfo &amp;other)" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4">operator==</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparaison operator. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#a72b265f3461d764d0e902c421e3b43e4">operator==</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparaison operator.  <a href="#a72b265f3461d764d0e902c421e3b43e4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a198e8693bb328194ac7bba4a29271e"></a><!-- doxytag: member="mdtPortInfo::operator!=" ref="a8a198e8693bb328194ac7bba4a29271e" args="(const mdtPortInfo &amp;other)" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_info.html#a8a198e8693bb328194ac7bba4a29271e">operator!=</a> (const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;other)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparaison operator. <br/></td></tr>
@@ -122,7 +125,72 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the list of devices informations. </p>
 <p>Note that content of returned list is not a copy, and that all items becomes ivalid after this (<a class="el" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>) object was deleted. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_port_info_8cpp_source.html">mdtPortInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_port_info_8cpp_source.html">mdtPortInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a38bcac67372782228a91d8e7dbf49211"></a><!-- doxytag: member="mdtPortInfo::displayText" ref="a38bcac67372782228a91d8e7dbf49211" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString mdtPortInfo::displayText </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the display text. </p>
+<p>Returns a text that can be displayed to the user. (F.ex. in a combo box) </p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_port_info_8cpp_source.html">mdtPortInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a72b265f3461d764d0e902c421e3b43e4"></a><!-- doxytag: member="mdtPortInfo::operator==" ref="a72b265f3461d764d0e902c421e3b43e4" args="(const mdtPortInfo &amp;other)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortInfo::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Comparaison operator. </p>
+<p>Note that display text is not compared. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_port_info_8cpp_source.html">mdtPortInfo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aad09e261bafcdc72ef6b2479ec37fbe8"></a><!-- doxytag: member="mdtPortInfo::setDisplayText" ref="aad09e261bafcdc72ef6b2479ec37fbe8" args="(const QString &amp;text)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortInfo::setDisplayText </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the display text. </p>
+<p>Set a text that can be displayed to the user. (F.ex. in a combo box) </p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_port_info_8cpp_source.html">mdtPortInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -145,7 +213,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

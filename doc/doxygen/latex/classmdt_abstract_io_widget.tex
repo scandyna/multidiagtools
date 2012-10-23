@@ -1,0 +1,165 @@
+\hypertarget{classmdt_abstract_io_widget}{
+\section{mdtAbstractIoWidget Class Reference}
+\label{classmdt_abstract_io_widget}\index{mdtAbstractIoWidget@{mdtAbstractIoWidget}}
+}
+
+
+Base class for I/O widgets.  
+
+
+
+
+{\ttfamily \#include $<$mdtAbstractIoWidget.h$>$}
+
+
+
+Inheritance diagram for mdtAbstractIoWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_abstract_io_widget__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_abstract_io_widget_a43208dbc9b2948561f5840bcd8fb9128}{mdtAbstractIoWidget} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_widget_a1cdc1763633570e96877a12afad19975}{
+void \hyperlink{classmdt_abstract_io_widget_a1cdc1763633570e96877a12afad19975}{setAddress} (int address)}
+\label{classmdt_abstract_io_widget_a1cdc1763633570e96877a12afad19975}
+
+\begin{DoxyCompactList}\small\item\em Set the I/O address. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_widget_a29737106ab9313f1ab5c49c7684bc74a}{
+int \hyperlink{classmdt_abstract_io_widget_a29737106ab9313f1ab5c49c7684bc74a}{address} () const }
+\label{classmdt_abstract_io_widget_a29737106ab9313f1ab5c49c7684bc74a}
+
+\begin{DoxyCompactList}\small\item\em Get the I/O address. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_io_widget_a7517c82a953604985cb502a2e852f716}{setLabelShort} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the short I/O label. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_widget_a4c89738e31de7d90ff8964c58d728199}{
+QString \hyperlink{classmdt_abstract_io_widget_a4c89738e31de7d90ff8964c58d728199}{labelShort} () const }
+\label{classmdt_abstract_io_widget_a4c89738e31de7d90ff8964c58d728199}
+
+\begin{DoxyCompactList}\small\item\em Get the short I/O label. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_io_widget_a4a948cb01e543cdddea7277b9ead7e02}{setLabel} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the complete I/O label. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_widget_aa9415778f32850c4ad712ef916bd49ca}{
+QString \hyperlink{classmdt_abstract_io_widget_aa9415778f32850c4ad712ef916bd49ca}{label} () const }
+\label{classmdt_abstract_io_widget_aa9415778f32850c4ad712ef916bd49ca}
+
+\begin{DoxyCompactList}\small\item\em Get the complete I/O label. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_io_widget_a62b50a0701fae84ca626675827b642cc}{setDetails} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set details about the I/O. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_widget_a7e4cdc43b700432ab185cbc5969e1bf2}{
+QString \hyperlink{classmdt_abstract_io_widget_a7e4cdc43b700432ab185cbc5969e1bf2}{details} () const }
+\label{classmdt_abstract_io_widget_a7e4cdc43b700432ab185cbc5969e1bf2}
+
+\begin{DoxyCompactList}\small\item\em Get details about the I/O. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_io_widget_aad383dab877e327dc910a1f01ff5a3d9}{
+QLabel $\ast$ {\bfseries lbLabel}}
+\label{classmdt_abstract_io_widget_aad383dab877e327dc910a1f01ff5a3d9}
+
+\item 
+\hypertarget{classmdt_abstract_io_widget_a9dc1ad3754eb3e00c50bfba014e887f3}{
+QPushButton $\ast$ {\bfseries pbDetails}}
+\label{classmdt_abstract_io_widget_a9dc1ad3754eb3e00c50bfba014e887f3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for I/O widgets. 
+
+Definition at line 32 of file mdtAbstractIoWidget.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_abstract_io_widget_a43208dbc9b2948561f5840bcd8fb9128}{
+\index{mdtAbstractIoWidget@{mdtAbstractIoWidget}!mdtAbstractIoWidget@{mdtAbstractIoWidget}}
+\index{mdtAbstractIoWidget@{mdtAbstractIoWidget}!mdtAbstractIoWidget@{mdtAbstractIoWidget}}
+\subsubsection[{mdtAbstractIoWidget}]{\setlength{\rightskip}{0pt plus 5cm}mdtAbstractIoWidget::mdtAbstractIoWidget (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_widget_a43208dbc9b2948561f5840bcd8fb9128}
+
+
+Constructor. 
+
+Note for subclass: Some widgets will be created in this consructor:
+\begin{DoxyItemize}
+\item lbLabel: a QLabel wich display the short label of I/O and the label of I/O as tool tip
+\item pbDetails: a QPushButton that will call a dialog wich displays details of I/O The subclass must place these labels into a layout. 
+\end{DoxyItemize}
+
+Definition at line 27 of file mdtAbstractIoWidget.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_abstract_io_widget_a62b50a0701fae84ca626675827b642cc}{
+\index{mdtAbstractIoWidget@{mdtAbstractIoWidget}!setDetails@{setDetails}}
+\index{setDetails@{setDetails}!mdtAbstractIoWidget@{mdtAbstractIoWidget}}
+\subsubsection[{setDetails}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIoWidget::setDetails (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_widget_a62b50a0701fae84ca626675827b642cc}
+
+
+Set details about the I/O. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000046}{Todo}]QStringList ? Or QMap$<$QString, QString$>$ ? \end{Desc}
+
+
+Definition at line 80 of file mdtAbstractIoWidget.cpp.
+
+\hypertarget{classmdt_abstract_io_widget_a4a948cb01e543cdddea7277b9ead7e02}{
+\index{mdtAbstractIoWidget@{mdtAbstractIoWidget}!setLabel@{setLabel}}
+\index{setLabel@{setLabel}!mdtAbstractIoWidget@{mdtAbstractIoWidget}}
+\subsubsection[{setLabel}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIoWidget::setLabel (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_widget_a4a948cb01e543cdddea7277b9ead7e02}
+
+
+Set the complete I/O label. 
+
+This label is displayed as tool tip 
+
+Definition at line 70 of file mdtAbstractIoWidget.cpp.
+
+\hypertarget{classmdt_abstract_io_widget_a7517c82a953604985cb502a2e852f716}{
+\index{mdtAbstractIoWidget@{mdtAbstractIoWidget}!setLabelShort@{setLabelShort}}
+\index{setLabelShort@{setLabelShort}!mdtAbstractIoWidget@{mdtAbstractIoWidget}}
+\subsubsection[{setLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIoWidget::setLabelShort (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_widget_a7517c82a953604985cb502a2e852f716}
+
+
+Set the short I/O label. 
+
+The short I/O label is allways displayed 
+
+Definition at line 60 of file mdtAbstractIoWidget.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtAbstractIoWidget.h\item 
+src/mdtutilsgui/mdtAbstractIoWidget.cpp\end{DoxyCompactItemize}

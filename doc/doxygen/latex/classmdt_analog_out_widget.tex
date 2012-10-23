@@ -1,0 +1,155 @@
+\hypertarget{classmdt_analog_out_widget}{
+\section{mdtAnalogOutWidget Class Reference}
+\label{classmdt_analog_out_widget}\index{mdtAnalogOutWidget@{mdtAnalogOutWidget}}
+}
+
+
+Representation of a analog output.  
+
+
+
+
+{\ttfamily \#include $<$mdtAnalogOutWidget.h$>$}
+
+
+
+Inheritance diagram for mdtAnalogOutWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{classmdt_analog_out_widget__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtAnalogOutWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{classmdt_analog_out_widget__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_analog_out_widget_a9a2e8294dfff97f4995376d31845ea4f}{
+void \hyperlink{classmdt_analog_out_widget_a9a2e8294dfff97f4995376d31845ea4f}{valueChanged} (double value)}
+\label{classmdt_analog_out_widget_a9a2e8294dfff97f4995376d31845ea4f}
+
+\begin{DoxyCompactList}\small\item\em This signal is emitted whenever the value is changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_analog_out_widget_a67b74fd871997e281321de20f3def45c}{
+{\bfseries mdtAnalogOutWidget} (QWidget $\ast$parent=0)}
+\label{classmdt_analog_out_widget_a67b74fd871997e281321de20f3def45c}
+
+\item 
+void \hyperlink{classmdt_analog_out_widget_a0c50c8fc341f37bb57dfcb98092a64d9}{setRange} (double min, double max, int steps)
+\begin{DoxyCompactList}\small\item\em Set the range. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_out_widget_a76d703aa049b5c1d1a5c4f3100d7240f}{
+void \hyperlink{classmdt_analog_out_widget_a76d703aa049b5c1d1a5c4f3100d7240f}{setUnit} (const QString \&unit)}
+\label{classmdt_analog_out_widget_a76d703aa049b5c1d1a5c4f3100d7240f}
+
+\begin{DoxyCompactList}\small\item\em Set the unit (V, A, °C, ...) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_out_widget_a43348237ff45247022d08fb244f0eae1}{
+void \hyperlink{classmdt_analog_out_widget_a43348237ff45247022d08fb244f0eae1}{setValue} (double value)}
+\label{classmdt_analog_out_widget_a43348237ff45247022d08fb244f0eae1}
+
+\begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_out_widget_a5e02254a08c9db3991b0b67d6fdef03c}{
+double \hyperlink{classmdt_analog_out_widget_a5e02254a08c9db3991b0b67d6fdef03c}{value} ()}
+\label{classmdt_analog_out_widget_a5e02254a08c9db3991b0b67d6fdef03c}
+
+\begin{DoxyCompactList}\small\item\em Get value (set with \hyperlink{classmdt_analog_out_widget_a43348237ff45247022d08fb244f0eae1}{setValue()} ) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_analog_out_widget_adcab086e53029a25a0808cf0b6d9dba8}{setValueInt} (int value)
+\begin{DoxyCompactList}\small\item\em Set the integer value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_analog_out_widget_ac60b64dd774f35a2fa2766756a2ccf01}{valueInt} ()
+\begin{DoxyCompactList}\small\item\em Get the integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representation of a analog output. 
+
+On wide range of automation application, it is usefull to display a output to the user. For example, a analog output of a I/O module, with a 8 bit encoding could be displayed with this class. 
+
+Definition at line 37 of file mdtAnalogOutWidget.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_analog_out_widget_a0c50c8fc341f37bb57dfcb98092a64d9}{
+\index{mdtAnalogOutWidget@{mdtAnalogOutWidget}!setRange@{setRange}}
+\index{setRange@{setRange}!mdtAnalogOutWidget@{mdtAnalogOutWidget}}
+\subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogOutWidget::setRange (
+\begin{DoxyParamCaption}
+\item[{double}]{min, }
+\item[{double}]{max, }
+\item[{int}]{steps}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_analog_out_widget_a0c50c8fc341f37bb57dfcb98092a64d9}
+
+
+Set the range. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & Minimum value to display (f.ex. 0V, or 4mA) \\
+\hline
+{\em max} & Maximum value to display (f.ex. 10V, or 20mA) \\
+\hline
+{\em steps} & Number of steps of the input (f.ex. 256 with 8 bits resolution) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+steps must be $>$ 1 
+
+max must be $>$ min 
+\end{DoxyPrecond}
+
+
+Definition at line 60 of file mdtAnalogOutWidget.cpp.
+
+\hypertarget{classmdt_analog_out_widget_adcab086e53029a25a0808cf0b6d9dba8}{
+\index{mdtAnalogOutWidget@{mdtAnalogOutWidget}!setValueInt@{setValueInt}}
+\index{setValueInt@{setValueInt}!mdtAnalogOutWidget@{mdtAnalogOutWidget}}
+\subsubsection[{setValueInt}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogOutWidget::setValueInt (
+\begin{DoxyParamCaption}
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_analog_out_widget_adcab086e53029a25a0808cf0b6d9dba8}
+
+
+Set the integer value. 
+
+Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_out_widget_a0c50c8fc341f37bb57dfcb98092a64d9}{setRange()} (steps parameter) 
+
+Definition at line 93 of file mdtAnalogOutWidget.cpp.
+
+\hypertarget{classmdt_analog_out_widget_ac60b64dd774f35a2fa2766756a2ccf01}{
+\index{mdtAnalogOutWidget@{mdtAnalogOutWidget}!valueInt@{valueInt}}
+\index{valueInt@{valueInt}!mdtAnalogOutWidget@{mdtAnalogOutWidget}}
+\subsubsection[{valueInt}]{\setlength{\rightskip}{0pt plus 5cm}int mdtAnalogOutWidget::valueInt (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_analog_out_widget_ac60b64dd774f35a2fa2766756a2ccf01}
+
+
+Get the integer value. 
+
+The integer value depend on value and resolution. The resolution is set with \hyperlink{classmdt_analog_out_widget_a0c50c8fc341f37bb57dfcb98092a64d9}{setRange()} (steps parameter) 
+
+Definition at line 100 of file mdtAnalogOutWidget.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtAnalogOutWidget.h\item 
+src/mdtutilsgui/mdtAnalogOutWidget.cpp\end{DoxyCompactItemize}

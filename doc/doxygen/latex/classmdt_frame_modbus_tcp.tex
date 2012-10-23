@@ -32,8 +32,11 @@ Collaboration diagram for mdtFrameModbusTcp:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{clear} ()
-\item 
+\hypertarget{classmdt_frame_modbus_tcp_ab1545b25b4c8864056d900c8ddce2719}{
+void \hyperlink{classmdt_frame_modbus_tcp_ab1545b25b4c8864056d900c8ddce2719}{clearSub} ()}
+\label{classmdt_frame_modbus_tcp_ab1545b25b4c8864056d900c8ddce2719}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmdt_frame}{mdtFrame} subclass specific clear \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{putData} (const char $\ast$data, int maxLen)
 \begin{DoxyCompactList}\small\item\em Overload of \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{mdtFrame::putData()} \end{DoxyCompactList}\item 
 \hypertarget{classmdt_frame_modbus_tcp_a3c5528d2e45111ec0563dfd3350177cd}{
@@ -92,25 +95,6 @@ Definition at line 39 of file mdtFrameModbusTcp.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{
-\index{mdtFrameModbusTcp@{mdtFrameModbusTcp}!clear@{clear}}
-\index{clear@{clear}!mdtFrameModbusTcp@{mdtFrameModbusTcp}}
-\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameModbusTcp::clear (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}
-Clear internal data
-
-Reset internal data and calls \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame::clear()} 
-
-Reimplemented from \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame}.
-
-
-
-Definition at line 37 of file mdtFrameModbusTcp.cpp.
-
 \hypertarget{classmdt_frame_modbus_tcp_a59488845873981f0e2e8f2ffd544e2f4}{
 \index{mdtFrameModbusTcp@{mdtFrameModbusTcp}!encode@{encode}}
 \index{encode@{encode}!mdtFrameModbusTcp@{mdtFrameModbusTcp}}
@@ -124,12 +108,16 @@ Definition at line 37 of file mdtFrameModbusTcp.cpp.
 
 Encode the MODBUS/TCP frame. 
 
-This will build the frame with MBAP Header. Note: \hyperlink{classmdt_frame_modbus_tcp_a622fd5104f4e91a96621e6b5e0f4f89f}{clear()} is called internally of this method. \begin{DoxyPrecond}{Precondition}
+This will build the frame with MBAP Header. \begin{DoxyPrecond}{Precondition}
 Capacity must be $>$= 7 
 \end{DoxyPrecond}
 
 
-Definition at line 143 of file mdtFrameModbusTcp.cpp.
+\hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{mdtFrame::clear()}; 
+
+
+
+Definition at line 142 of file mdtFrameModbusTcp.cpp.
 
 \hypertarget{classmdt_frame_modbus_tcp_a0f684d77c03e5fb91598c9a10715bedb}{
 \index{mdtFrameModbusTcp@{mdtFrameModbusTcp}!putData@{putData}}
@@ -165,7 +153,7 @@ Reimplemented from \hyperlink{classmdt_frame_ae63af784d2fc54430ea5db4dc80b7ec8}{
 
 
 
-Definition at line 46 of file mdtFrameModbusTcp.cpp.
+Definition at line 45 of file mdtFrameModbusTcp.cpp.
 
 
 

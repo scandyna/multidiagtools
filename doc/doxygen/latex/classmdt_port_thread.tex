@@ -131,7 +131,7 @@ The thread must not running
 \end{DoxyPrecond}
 
 
-Definition at line 60 of file mdtPortThread.cpp.
+Definition at line 61 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{
 \index{mdtPortThread@{mdtPortThread}!errorOccured@{errorOccured}}
@@ -147,18 +147,14 @@ Definition at line 60 of file mdtPortThread.cpp.
 Emitted on error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000012}{Todo}]Adapt threads + port managers\end{Desc}
+\item[\hyperlink{todo__todo000017}{Todo}]Adapt threads + port managers\end{Desc}
 
 
 When a error occurs, this signal is emited.
 
 The error is one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}.
 
-\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. If the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected} error happens, the port manager stops the thread and closes the port. Optionnaly, it can try to re-\/open the port, and start the thread again on success. 
-
-Definition at line 98 of file moc\_\-mdtPortThread.cxx.
-
-\hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
+\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. If the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected} error happens, the port manager stops the thread and closes the port. Optionnaly, it can try to re-\/open the port, and start the thread again on success. \hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameRead@{getNewFrameRead}}
 \index{getNewFrameRead@{getNewFrameRead}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{getNewFrameRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrame} $\ast$ mdtPortThread::getNewFrameRead (
@@ -176,7 +172,7 @@ This is a helper method for subclass to get a new frame in port's read frames po
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdtError} log system, the signal \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} will be emited with MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR value, and method will go sleep until a new frame is available in pool.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000013}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
+\item[\hyperlink{todo__todo000018}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
 
 
 Note about port mutex handling:\par
@@ -190,7 +186,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxyPrecond}
 
 
-Definition at line 151 of file mdtPortThread.cpp.
+Definition at line 173 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_acba4fce38a633da68ec23fe191ba6105}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameWrite@{getNewFrameWrite}}
@@ -223,7 +219,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxySeeAlso}
 
 
-Definition at line 256 of file mdtPortThread.cpp.
+Definition at line 278 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}{
 \index{mdtPortThread@{mdtPortThread}!ioProcessBegin@{ioProcessBegin}}
@@ -238,11 +234,7 @@ Definition at line 256 of file mdtPortThread.cpp.
 
 Emitted when a I/O process begins. 
 
-This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) 
-
-Definition at line 86 of file moc\_\-mdtPortThread.cxx.
-
-\hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
+This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
 \index{isFinished@{isFinished}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{isFinished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isFinished (
@@ -260,7 +252,7 @@ Returns false if the thread is running.
 \end{DoxySeeAlso}
 
 
-Definition at line 137 of file mdtPortThread.cpp.
+Definition at line 159 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{
 \index{mdtPortThread@{mdtPortThread}!isReader@{isReader}}
@@ -305,10 +297,6 @@ It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution 
 
 \hyperlink{classmdt_port}{mdtPort} 
 \end{DoxySeeAlso}
-
-
-Definition at line 92 of file moc\_\-mdtPortThread.cxx.
-
 \hypertarget{classmdt_port_thread_a7e6e152839e35b8fbd1eb299c1d0b2fe}{
 \index{mdtPortThread@{mdtPortThread}!readFromPort@{readFromPort}}
 \index{readFromPort@{readFromPort}!mdtPortThread@{mdtPortThread}}
@@ -342,7 +330,7 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-Definition at line 184 of file mdtPortThread.cpp.
+Definition at line 206 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_aaea2513ab1611574111dd1c2b7e61b7c}{
 \index{mdtPortThread@{mdtPortThread}!reconnect@{reconnect}}
@@ -375,7 +363,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxyPrecond}
 
 
-Definition at line 327 of file mdtPortThread.cpp.
+Definition at line 349 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{
 \index{mdtPortThread@{mdtPortThread}!setPort@{setPort}}
@@ -397,7 +385,7 @@ The thread must not running
 \end{DoxyPrecond}
 
 
-Definition at line 52 of file mdtPortThread.cpp.
+Definition at line 53 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{
 \index{mdtPortThread@{mdtPortThread}!start@{start}}
@@ -423,7 +411,7 @@ setSerialPort()
 \end{DoxySeeAlso}
 
 
-Definition at line 70 of file mdtPortThread.cpp.
+Definition at line 71 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{
 \index{mdtPortThread@{mdtPortThread}!stop@{stop}}
@@ -450,7 +438,7 @@ Reimplemented in \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866
 
 
 
-Definition at line 97 of file mdtPortThread.cpp.
+Definition at line 98 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a9372a53561362b0c86f499b8a36805e1}{
 \index{mdtPortThread@{mdtPortThread}!writeToPort@{writeToPort}}
@@ -491,12 +479,11 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-Definition at line 263 of file mdtPortThread.cpp.
+Definition at line 285 of file mdtPortThread.cpp.
 
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\item 
-src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}

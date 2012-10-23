@@ -142,7 +142,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00080"></a>00080   libusb_exit(pvLibusbContext);
 <a name="l00081"></a>00081 }
 <a name="l00082"></a>00082 
-<a name="l00083"></a><a class="code" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee">00083</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee" title="Reconnect device/peer.">mdtUsbPort ::reconnect</a>(<span class="keywordtype">int</span> timeout)
+<a name="l00083"></a><a class="code" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee">00083</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee" title="Reconnect device.">mdtUsbPort ::reconnect</a>(<span class="keywordtype">int</span> timeout)
 <a name="l00084"></a>00084 {
 <a name="l00085"></a>00085   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> error;
 <a name="l00086"></a>00086 
@@ -645,7 +645,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00590"></a>00590   ssize_t i = 0;
 <a name="l00591"></a>00591   <span class="keywordtype">int</span> err;
 <a name="l00592"></a>00592 
-<a name="l00593"></a>00593   <span class="comment">// Extract items</span>
+<a name="l00593"></a>00593   <span class="comment">// Extract items from port name</span>
 <a name="l00594"></a>00594   lst = pvPortName.split(<span class="stringliteral">&quot;:&quot;</span>);
 <a name="l00595"></a>00595   <span class="comment">// If we have 2 items, we have BusNumber:deviceAddress format</span>
 <a name="l00596"></a>00596   <span class="keywordflow">if</span>(lst.size() == 2){
@@ -1173,7 +1173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:53 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -90,7 +90,9 @@ Collaboration diagram for mdtFrameModbusTcp:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">clear</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1545b25b4c8864056d900c8ddce2719"></a><!-- doxytag: member="mdtFrameModbusTcp::clearSub" ref="ab1545b25b4c8864056d900c8ddce2719" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719">clearSub</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> subclass specific clear <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_modbus_tcp.html#a0f684d77c03e5fb91598c9a10715bedb">putData</a> (const char *data, int maxLen)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload of <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8" title="Put data into the frame.">mdtFrame::putData()</a>  <a href="#a0f684d77c03e5fb91598c9a10715bedb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c5528d2e45111ec0563dfd3350177cd"></a><!-- doxytag: member="mdtFrameModbusTcp::setTransactionId" ref="a3c5528d2e45111ec0563dfd3350177cd" args="(quint16 id)" -->
@@ -129,28 +131,6 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 
 <p>Definition at line <a class="el" href="mdt_frame_modbus_tcp_8h_source.html#l00039">39</a> of file <a class="el" href="mdt_frame_modbus_tcp_8h_source.html">mdtFrameModbusTcp.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a622fd5104f4e91a96621e6b5e0f4f89f"></a><!-- doxytag: member="mdtFrameModbusTcp::clear" ref="a622fd5104f4e91a96621e6b5e0f4f89f" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtFrameModbusTcp::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Clear internal data</p>
-<p>Reset internal data and calls <a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">mdtFrame::clear()</a> </p>
-
-<p>Reimplemented from <a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc">mdtFrame</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html">mdtFrameModbusTcp.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a59488845873981f0e2e8f2ffd544e2f4"></a><!-- doxytag: member="mdtFrameModbusTcp::encode" ref="a59488845873981f0e2e8f2ffd544e2f4" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -166,10 +146,13 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 <div class="memdoc">
 
 <p>Encode the MODBUS/TCP frame. </p>
-<p>This will build the frame with MBAP Header. Note: <a class="el" href="classmdt_frame_modbus_tcp.html#a622fd5104f4e91a96621e6b5e0f4f89f">clear()</a> is called internally of this method. </p>
+<p>This will build the frame with MBAP Header. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Capacity must be &gt;= 7 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html">mdtFrameModbusTcp.cpp</a>.</p>
+<p><p><a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">mdtFrame::clear()</a>; </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00142">142</a> of file <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html">mdtFrameModbusTcp.cpp</a>.</p>
 
 </div>
 </div>
@@ -209,7 +192,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 
 <p>Reimplemented from <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8">mdtFrame</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html">mdtFrameModbusTcp.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_frame_modbus_tcp_8cpp_source.html">mdtFrameModbusTcp.cpp</a>.</p>
 
 </div>
 </div>
@@ -232,7 +215,7 @@ QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Oct 7 2012 16:08:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

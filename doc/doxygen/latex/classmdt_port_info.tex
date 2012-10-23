@@ -36,15 +36,16 @@ void \hyperlink{classmdt_port_info_a2a8d6603b7e134ffd9e11900ece88a61}{addDevice}
 \begin{DoxyCompactList}\small\item\em Add a device. \end{DoxyCompactList}\item 
 QList$<$ \hyperlink{classmdt_device_info}{mdtDeviceInfo} $\ast$ $>$ \& \hyperlink{classmdt_port_info_a22013ea9e2de1d12cef673a2452d5b80}{deviceInfoList} ()
 \begin{DoxyCompactList}\small\item\em Get the list of devices informations. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_info_aad09e261bafcdc72ef6b2479ec37fbe8}{setDisplayText} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the display text. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_port_info_a38bcac67372782228a91d8e7dbf49211}{displayText} () const 
+\begin{DoxyCompactList}\small\item\em Get the display text. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_info_a88bab5da09191b1ecfbb0b11f001ad24}{
 \hyperlink{classmdt_port_info}{mdtPortInfo} \& \hyperlink{classmdt_port_info_a88bab5da09191b1ecfbb0b11f001ad24}{operator=} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
 \label{classmdt_port_info_a88bab5da09191b1ecfbb0b11f001ad24}
 
 \begin{DoxyCompactList}\small\item\em Copy operator. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}{
-bool \hyperlink{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}{operator==} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
-\label{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}
-
+bool \hyperlink{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}{operator==} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)
 \begin{DoxyCompactList}\small\item\em Comparaison operator. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_port_info_a8a198e8693bb328194ac7bba4a29271e}{
 bool \hyperlink{classmdt_port_info_a8a198e8693bb328194ac7bba4a29271e}{operator!=} (const \hyperlink{classmdt_port_info}{mdtPortInfo} \&other)}
@@ -78,7 +79,58 @@ Get the list of devices informations.
 
 Note that content of returned list is not a copy, and that all items becomes ivalid after this (\hyperlink{classmdt_port_info}{mdtPortInfo}) object was deleted. 
 
-Definition at line 59 of file mdtPortInfo.cpp.
+Definition at line 60 of file mdtPortInfo.cpp.
+
+\hypertarget{classmdt_port_info_a38bcac67372782228a91d8e7dbf49211}{
+\index{mdtPortInfo@{mdtPortInfo}!displayText@{displayText}}
+\index{displayText@{displayText}!mdtPortInfo@{mdtPortInfo}}
+\subsubsection[{displayText}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtPortInfo::displayText (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_info_a38bcac67372782228a91d8e7dbf49211}
+
+
+Get the display text. 
+
+Returns a text that can be displayed to the user. (F.ex. in a combo box) 
+
+Definition at line 70 of file mdtPortInfo.cpp.
+
+\hypertarget{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}{
+\index{mdtPortInfo@{mdtPortInfo}!operator==@{operator==}}
+\index{operator==@{operator==}!mdtPortInfo@{mdtPortInfo}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortInfo::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtPortInfo} \&}]{other}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_a72b265f3461d764d0e902c421e3b43e4}
+
+
+Comparaison operator. 
+
+Note that display text is not compared. 
+
+Definition at line 93 of file mdtPortInfo.cpp.
+
+\hypertarget{classmdt_port_info_aad09e261bafcdc72ef6b2479ec37fbe8}{
+\index{mdtPortInfo@{mdtPortInfo}!setDisplayText@{setDisplayText}}
+\index{setDisplayText@{setDisplayText}!mdtPortInfo@{mdtPortInfo}}
+\subsubsection[{setDisplayText}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortInfo::setDisplayText (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_info_aad09e261bafcdc72ef6b2479ec37fbe8}
+
+
+Set the display text. 
+
+Set a text that can be displayed to the user. (F.ex. in a combo box) 
+
+Definition at line 65 of file mdtPortInfo.cpp.
 
 
 

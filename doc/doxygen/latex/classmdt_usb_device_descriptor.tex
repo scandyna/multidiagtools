@@ -45,11 +45,15 @@ quint16 \hyperlink{classmdt_usb_device_descriptor_a8bbfdb3c54af6cccf15cd7e5f29e8
 \label{classmdt_usb_device_descriptor_a8bbfdb3c54af6cccf15cd7e5f29e8a8e}
 
 \begin{DoxyCompactList}\small\item\em Vendor ID (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}{vendorName} () const 
+\begin{DoxyCompactList}\small\item\em Vendor name (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
 \hypertarget{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b9a1}{
 quint16 \hyperlink{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b9a1}{idProduct} () const }
 \label{classmdt_usb_device_descriptor_a722dad54d42f03470508115f6394b9a1}
 
-\begin{DoxyCompactList}\small\item\em Product ID (assigned by the USB-\/IF) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Product ID. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}{productName} () const 
+\begin{DoxyCompactList}\small\item\em Product name. \end{DoxyCompactList}\item 
 quint16 \hyperlink{classmdt_usb_device_descriptor_a6b6f21f8dfdb707bfc23d01076b7ec5e}{bcdDevice} () const 
 \begin{DoxyCompactList}\small\item\em Device release number id. \end{DoxyCompactList}\item 
 QList$<$ \hyperlink{classmdt_usb_config_descriptor}{mdtUsbConfigDescriptor} $\ast$ $>$ \& \hyperlink{classmdt_usb_device_descriptor_acfc9e29a48b251012cbc38d339dc6a02}{configurations} ()
@@ -91,7 +95,7 @@ For current needed attributes, some helper methods are available:
 
 When goal is to open a particular device for I/O, a simple way to get needed informations could be to call \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} with fetchActiveConfigOnly set true, then get endpoints with \hyperlink{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{firstBulkOutEndpoint()} , \hyperlink{classmdt_usb_device_descriptor_a078b5d3dfe6fd56ab2f716357a160585}{firstBulkInEndpoint()} , \hyperlink{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{firstInterruptInEndpoint()} with configIndex set to 0, and a valid ifaceIndex. 
 
-Definition at line 56 of file mdtUsbDeviceDescriptor.h.
+Definition at line 57 of file mdtUsbDeviceDescriptor.h.
 
 
 
@@ -111,7 +115,7 @@ Device release number id.
 
 Coded in BCD. 
 
-Definition at line 165 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 202 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_ae5f4d1cabe204ca0aa00735d04516e86}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!bcdUSB@{bcdUSB}}
@@ -162,7 +166,7 @@ Access configurations.
 
 Configurations are available after a call of \hyperlink{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{fetchAttributes()} 
 
-Definition at line 170 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 207 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_a41582e524cba87f52ca3628c0b690b8d}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!endpoint@{endpoint}}
@@ -195,7 +199,7 @@ Pointer to endpoint descriptor, or 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 197 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 234 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_a6239e5e56e2e25a686cac98b18158500}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!fetchAttributes@{fetchAttributes}}
@@ -255,7 +259,7 @@ Pointer to endpoint descriptor, 0 if none found, or on error
 \end{DoxyReturn}
 
 
-Definition at line 246 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 283 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_ac1991e3d800700b2c099cd1aca2274d1}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstBulkOutEndpoint@{firstBulkOutEndpoint}}
@@ -286,7 +290,7 @@ Pointer to endpoint descriptor, 0 if none found, or on error
 \end{DoxyReturn}
 
 
-Definition at line 215 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 252 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_a95112e151605bf8b10c5eca74faaea3b}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstInterruptInEndpoint@{firstInterruptInEndpoint}}
@@ -317,7 +321,7 @@ Pointer to endpoint descriptor, 0 if none found, or on error
 \end{DoxyReturn}
 
 
-Definition at line 308 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 345 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_ad30b3579b0c77585df29acdfdf0fc179}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!firstInterruptOutEndpoint@{firstInterruptOutEndpoint}}
@@ -348,7 +352,7 @@ Pointer to endpoint descriptor, 0 if none found, or on error
 \end{DoxyReturn}
 
 
-Definition at line 277 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 314 of file mdtUsbDeviceDescriptor.cpp.
 
 \hypertarget{classmdt_usb_device_descriptor_af1e27ae69d3c77c9dfc53a3f261caeae}{
 \index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!interface@{interface}}
@@ -378,7 +382,49 @@ Pointer to interface descriptor, or 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 175 of file mdtUsbDeviceDescriptor.cpp.
+Definition at line 212 of file mdtUsbDeviceDescriptor.cpp.
+
+\hypertarget{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!productName@{productName}}
+\index{productName@{productName}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{productName}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUsbDeviceDescriptor::productName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}
+
+
+Product name. 
+
+If vendorID:productID is known the product name is returned, else a string containing PID:0xXXXX is returned
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000024}{Todo}]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) \end{Desc}
+
+
+Definition at line 181 of file mdtUsbDeviceDescriptor.cpp.
+
+\hypertarget{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}{
+\index{mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}!vendorName@{vendorName}}
+\index{vendorName@{vendorName}!mdtUsbDeviceDescriptor@{mdtUsbDeviceDescriptor}}
+\subsubsection[{vendorName}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtUsbDeviceDescriptor::vendorName (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}
+
+
+Vendor name (assigned by the USB-\/IF) 
+
+If vendor ID is known it is returned, else a string containing VID:0xXXXX is returned
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000023}{Todo}]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) \end{Desc}
+
+
+Definition at line 160 of file mdtUsbDeviceDescriptor.cpp.
 
 
 
