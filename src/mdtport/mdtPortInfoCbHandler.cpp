@@ -65,7 +65,6 @@ void mdtPortInfoCbHandler::fillComboBoxes(const QList<mdtPortInfo*> &portInfoLis
     portInfo = portInfoList.at(i);
     Q_ASSERT(portInfo != 0);
     var.setValue(*portInfo);
-    ///cbPorts->addItem(portInfo->portName(), var);
     cbPorts->addItem(portInfo->displayText(), var);
   }
 }

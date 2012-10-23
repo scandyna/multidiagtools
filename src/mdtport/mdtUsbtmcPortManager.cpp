@@ -307,6 +307,7 @@ bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
   if(!sendReadRequest()){
     return false;
   }
+  qDebug() << "mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ...";
 
   return mdtPortManager::waitReadenFrame(timeout);
 }

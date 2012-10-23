@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtPortThread.h"
 #include "mdtError.h"
+#include <errno.h>
 #include <QApplication>
 
 #include <QDebug>
@@ -84,7 +85,7 @@ bool mdtPortThread::start()
     // When something goes wrong on starting, it happens sometimes that isRunning() ruturns false forever
     // We let the thrad 500 [ms] time to start, else generate an error
     if(i >= 10){
-      mdtError e(MDT_UNDEFINED_ERROR, "Thread start timeout reached (500 [ms]) -> abort", mdtError::Error);
+      mdtError e(MDT_PORT_IO_ERROR, "Thread start timeout reached (500 [ms]) -> abort", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtPortThread");
       e.commit();
       return false;
@@ -98,24 +99,45 @@ void mdtPortThread::stop()
 {
   Q_ASSERT(pvPort != 0);
 
+  int err;
+
   // Unset the running flag
   pvPort->lockMutex();
+  if(!pvRunning){
+    pvPort->unlockMutex();
+    return;
+  }
   pvRunning = false;
   pvPort->unlockMutex();
 #ifdef Q_OS_UNIX
   Q_ASSERT(pvNativePthreadObject != 0);
-  pthread_kill(pvNativePthreadObject, SIGALRM);
+  qDebug() << "mdtPortThread::stop(): sending SIGALRM ...";
+  err = pthread_kill(pvNativePthreadObject, SIGALRM);
+  if(err != 0){
+    mdtError e(MDT_PORT_IO_ERROR, "pthread_kill() failed", mdtError::Error);
+    switch(err){
+      case EINVAL:
+        e.setSystemError(err, "Invalid signal was specified (EINVAL)");
+      case ESRCH:
+        e.setSystemError(err, "Specified thread ID not found (ESRCH)");
+    }
+    MDT_ERROR_SET_SRC(e, "mdtPortThread");
+    e.commit();
+  }
+  qDebug() << "mdtPortThread::stop(): SIGALRM sent";
 #endif
 
   // Wait the end of the thread
   while(!isFinished()){
     qApp->processEvents();
+    qDebug() << "mdtPortThread::stop(): process events ...";
     msleep(50);
   }
   // Free read/write buffers
   delete[] pvReadBuffer;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
+  qDebug() << "mdtPortThread::stop(): END";
 }
 
 bool mdtPortThread::isRunning() const

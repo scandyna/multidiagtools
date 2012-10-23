@@ -55,7 +55,6 @@ mdtSerialPortManager::~mdtSerialPortManager()
   detachPort(true, true);
 }
 
-//QStringList mdtSerialPortManager::scan()
 QList<mdtPortInfo*> mdtSerialPortManager::scan()
 {
   Q_ASSERT(!isRunning());
@@ -123,6 +122,7 @@ QList<mdtPortInfo*> mdtSerialPortManager::scan()
         portInfo = new mdtPortInfo;
         Q_ASSERT(portInfo != 0);
         portInfo->setPortName(portNames.at(i));
+        portInfo->setDisplayText(portNames.at(i));
         //availablePorts.append(portNames.at(i));
         availablePorts.append(portInfo);
       }

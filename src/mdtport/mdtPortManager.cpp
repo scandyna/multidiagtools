@@ -169,6 +169,17 @@ void mdtPortManager::setPortName(const QString &portName)
   pvPort->setPortName(portName);
 }
 
+void mdtPortManager::setPortInfo(mdtPortInfo info)
+{
+  pvPortInfo = info;
+  setPortName(pvPortInfo.portName());
+}
+
+mdtPortInfo mdtPortManager::portInfo()
+{
+  return pvPortInfo;
+}
+
 mdtPortConfig &mdtPortManager::config()
 {
   Q_ASSERT(pvPort != 0);

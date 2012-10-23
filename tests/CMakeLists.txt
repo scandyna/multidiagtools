@@ -16,6 +16,9 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/mdttest")
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutils")
 
+# * mdtutilsgui *
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdtutilsgui")
+
 # NOTE: Support Windows pas terminé
 if(UNIX)
 

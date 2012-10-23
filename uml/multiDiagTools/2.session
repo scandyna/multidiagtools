@@ -1,20 +1,20 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  active  classdiagram_ref 508418 // mdtUsbtmcPortSetupDialog
-    970 803 100 4 0 0
   classdiagram_ref 374914 // mdtSerialPortSetupDialog
     776 642 100 4 0 0
-  classdiagram_ref 508546 // mdtIoWidgets
-    970 803 100 4 0 0
+  active  classdiagram_ref 508546 // mdtIoWidgets
+    970 803 100 4 60 0
 end
 show_stereotypes
-selected classdiagram_ref 508418 // mdtUsbtmcPortSetupDialog
+selected classview_ref 346370 // mdtIoWidgets
 open
   class_ref 518658 // mdtAbstractIoWidget
   operation_ref 995586 // setOn
   operation_ref 995714 // isOn
   class_ref 518914 // mdtDigitalOutWidget
-  class_ref 519042 // mdtAnalogInWidget
+  operation_ref 1003906 // setRange
+  operation_ref 1003522 // setValueInt
+  operation_ref 1003650 // valueInt
   class_ref 519170 // mdtAnalogOutWidget
   operation_ref 992642 // displayConfig
   operation_ref 992770 // updateConfig

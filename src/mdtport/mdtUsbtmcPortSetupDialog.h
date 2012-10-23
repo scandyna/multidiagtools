@@ -24,10 +24,12 @@
 #include "ui_mdtUsbtmcPortSetupDialog.h"
 #include "mdtPortConfigWidget.h"
 #include "mdtPortInfoCbHandler.h"
+#include "mdtPortInfo.h"
 #include <QDialog>
 
 class mdtUsbtmcPortManager;
 class QWidget;
+class QAbstractButton;
 
 class mdtUsbtmcPortSetupDialog : public QDialog, Ui_mdtUsbtmcPortSetupDialog
 {
@@ -48,28 +50,34 @@ class mdtUsbtmcPortSetupDialog : public QDialog, Ui_mdtUsbtmcPortSetupDialog
   // Read options from GUI and update configuration
   void updateConfig();
 
-  // Tell the manager to re-open with new configuration
-  void applySetup();
+  // Rescan for available ports with attached USBTMC device
+  void on_pbRescan_clicked();
+
+  // Open selected port (if manager was set)
+  void on_cbInterface_currentIndexChanged(int index);
+
+  // Called when setup is accepted/canceled from user
+  void on_buttonBox_clicked(QAbstractButton *button);
+
+ private:
+
+  // Set the running state
+  void setStateRunning();
+
+  // Set the stopped state
+  void setStateStopped();
+
+  // Set the Error state
+  void setStateError(QString msg = tr("Error"));
 
   // Enable/diseable the apply buttons (Ok, Apply)
   void diseableApplyButtons();
   void enableApplyButtons();
 
-  // Rescan for available ports with attached USBTMC device
-  void on_pbRescan_clicked();
-
-  // Open selected port (if manager was set)
-  void on_cbPort_currentIndexChanged(int index);
-
- private:
-
-  void setStateRunning();
-
-  void setStateError();
-
   mdtUsbtmcPortManager * pvPortManager;
   mdtPortConfigWidget pvPortConfigWidget;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
+  mdtPortInfo pvCurrentPortInfo;
 };
 
 #endif  // #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H

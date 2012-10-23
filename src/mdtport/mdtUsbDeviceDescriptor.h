@@ -108,7 +108,7 @@ class mdtUsbDeviceDescriptor
    * If vendor ID is known it is returned,
    *  else a string containing VID:0xXXXX is returned
    *
-   * \todo Parsing the usb.ids from http://www.linux-usb.org
+   * \todo Parsing the usb.ids (see http://www.linux-usb.org)
    */
   QString vendorName() const;
 
@@ -121,7 +121,7 @@ class mdtUsbDeviceDescriptor
    * If vendorID:productID is known the product name is returned,
    *  else a string containing PID:0xXXXX is returned
    *
-   * \todo Parsing the usb.ids from http://www.linux-usb.org
+   * \todo Parsing the usb.ids (see http://www.linux-usb.org)
    */
   QString productName() const;
 

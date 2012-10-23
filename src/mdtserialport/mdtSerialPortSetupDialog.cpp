@@ -104,6 +104,7 @@ void mdtSerialPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
     // Get current config
     updateConfig();
     // Open the port
+    /// \bug Should not use display text as port name !
     pvPortManager->setPortName(cbPort->currentText());
     if(!pvPortManager->openPort()){
       setStateError(tr("Cannot open port"));
@@ -146,8 +147,8 @@ void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
   pvPortManager->closePort();
   setStateStopped();
   // Open the port
-  pvPortManager->setPortName(pvPortInfoCbHandler.currentPortInfo().portName());
-  ///if(!pvPortManager->openPort()){
+  ///pvPortManager->setPortName(pvPortInfoCbHandler.currentPortInfo().portName());
+  pvPortManager->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
   if(pvPortManager->port().open() != mdtAbstractPort::NoError){
     setStateError(tr("Cannot fetch port attributes"));
     cbPort->setEnabled(true);

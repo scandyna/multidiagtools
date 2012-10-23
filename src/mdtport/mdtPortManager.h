@@ -190,7 +190,22 @@ class mdtPortManager : public QThread
    * \pre Port must be set before with setPort()
    * \sa mdtAbstractPort
    */
-  virtual void setPortName(const QString &portName);
+  void setPortName(const QString &portName);
+
+  /*! \brief Set port info
+   *
+   * Store given port info, and call setPortName() with
+   *  port info's stored port name (see mdtPortInfo::portName() ).
+   *
+   * Setting a port info can be usefull if other informations are
+   *  needed later in application (f.ex. mdtPortInfo::displayText() ).
+   * You can get port informations later with portInfo().
+   */
+  void setPortInfo(mdtPortInfo info);
+
+  /*! \brief Get port info
+   */
+  mdtPortInfo portInfo();
 
   /*! \brief Get the port's config object
    * 
@@ -319,6 +334,8 @@ class mdtPortManager : public QThread
   QList<QByteArray> pvReadenFramesCopy;   // Hold a copy of each frame readen by port, this will be returned by readenFrames()
 
  private:
+
+  mdtPortInfo pvPortInfo;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);

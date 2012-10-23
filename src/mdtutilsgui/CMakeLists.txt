@@ -5,11 +5,31 @@
 # Project
 project (multidiagtools)
 
+# Qwt library
+find_library(Qwt REQUIRED)
+if(NOT DEFINED QWT_FOUND)
+  if(WIN32)
+    include_directories("C:/qwt")
+    include_directories("C:/qwt-6.0.0")
+    include_directories("C:/qwt-6.0.1")
+    include_directories("C:/qwt-6.0.2")
+  else(WIN32)
+    include_directories("/usr/local/include/qwt")
+    include_directories("/usr/include/qwt")
+  endif(WIN32)
+endif(NOT DEFINED QWT_FOUND)
+
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           # mdtLed
           mdtLed.h
           mdtBlinkLed.h
+          # I/O Widgets
+          mdtAbstractIoWidget.h
+          mdtAnalogInWidget.h
+          mdtAnalogOutWidget.h
+          mdtDigitalInWidget.h
+          mdtDigitalOutWidget.h
           # Database
           mdtSqlTableModel.h
           mdtDataWidgetMapper.h
@@ -23,6 +43,12 @@ set (SOURCES_FILES
           # mdtLed
           mdtLed.cpp
           mdtBlinkLed.cpp
+          # I/O Widgets
+          mdtAbstractIoWidget.cpp
+          mdtAnalogInWidget.cpp
+          mdtAnalogOutWidget.cpp
+          mdtDigitalInWidget.cpp
+          mdtDigitalOutWidget.cpp
           # Database
           mdtSqlTableModel.cpp
           mdtDataWidgetMapper.cpp
@@ -63,6 +89,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 # Librairie du projet
 add_library (mdtutilsgui SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtutilsgui ${QT_LIBRARIES})
+target_link_libraries(mdtutilsgui "qwt")
 
 # Version statique
 if(MDT_BUILD_STATIC_LIBS)

@@ -52,7 +52,6 @@ find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
-
 # Headers directories
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdtutils")
@@ -84,7 +83,6 @@ endif(WIN32)
 
 # * QtSolutions *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/qt-solutions")
-
 
 # * mdtutils *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtutils")
@@ -154,6 +152,11 @@ add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumb
 add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtdatabasetest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
+
+# * mdtutilsgui *
+
+# mdtIoWidgetTest
+add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowidgettest)
 
 
 # NOTE: Support Windows pas terminé

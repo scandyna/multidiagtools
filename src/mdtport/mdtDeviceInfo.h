@@ -45,6 +45,8 @@ class mdtDeviceInfo
   int vendorId() const;
 
   /*! \brief Get vendor name
+   * 
+   * \todo Conficting with mdtUsbDeviceDescriptor
    */
   QString vendorName() const;
 
@@ -57,6 +59,8 @@ class mdtDeviceInfo
   int productId() const;
 
   /*! \brief Get product name
+   *
+   * \todo Conficting with mdtUsbDeviceDescriptor
    */
   QString productName() const;
 

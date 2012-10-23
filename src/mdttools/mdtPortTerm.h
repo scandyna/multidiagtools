@@ -35,6 +35,8 @@
 #include <QString>
 #include <QActionGroup>
 
+class QLabel;
+
 /*! \brief Mini port treminal
  */
 class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
@@ -77,8 +79,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Set/unset port type to serial port
   void attachToSerialPort();
   void detachFromSerialPort();
-  // Call serial port setup dialog
-  void serialPortSetup();
+  // Call port setup dialog
+  void portSetup();
 
   // Set/unset port type to USBTMC port
   void attachToUsbtmcPort();
@@ -92,9 +94,18 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
  private:
 
+  // Set the running state
+  void setStateRunning(const QString &msg = tr("Ready"));
+
+  // Set the stopped state
+  void setStateStopped(const QString &msg = tr("Stopped"));
+
+  // Set the Error state
+  void setStateError(const QString &msg = tr("Error"));
+
   // Diseable copy
-  mdtPortTerm(mdtPortTerm &other);
-  
+  Q_DISABLE_COPY(mdtPortTerm);
+
   // Serial port
   mdtSerialPortManager *pvSerialPortManager;
   mdtSerialPortCtlWidget *pvSerialPortCtlWidget;
@@ -106,6 +117,10 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   QActionGroup *pvLanguageActionGroup;
   // Port menu
   QActionGroup *pvPortSelectActionGroup;
+  // Running flag (if true, command can be sent, ...)
+  bool pvRunning;
+  // Status bar
+  QLabel *lbStatusMessage;
 };
 
 #endif  // #ifndef MDT_PORT_TERM_H
