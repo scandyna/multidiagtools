@@ -76,8 +76,6 @@ class mdtAbstractIoWidget : public QWidget
   QString label() const;
 
   /*! \brief Set details about the I/O
-   *
-   * \todo QStringList ? Or QMap\<QString, QString> ?
    */
   void setDetails(const QString & text);
 

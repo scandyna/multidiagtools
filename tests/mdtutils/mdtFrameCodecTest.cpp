@@ -229,7 +229,9 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
 {
   mdtFrameCodecModbus c;
   QByteArray pdu;
-  
+  QList<quint16> aValues;
+  QList<bool> dValues;
+
   // Initial states
   QVERIFY(c.values().size() == 0);
   
@@ -291,7 +293,82 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append(0x45);   // 1000 0101
   QVERIFY(c.decode(pdu) < 0);
   QVERIFY(c.values().size() == 0);
-  
+
+  // Encode ReadDiscreteInputs (FC 02 , 0x02)
+  pdu = c.encodeReadDiscreteInputs(0x0102, 0x0304);
+  QVERIFY(pdu.size() == 5);
+  QVERIFY((quint8)pdu.at(0) == 0x02);   // Function code
+  QVERIFY((quint8)pdu.at(1) == 0x01);   // Start address H
+  QVERIFY((quint8)pdu.at(2) == 0x02);   // Start address L
+  QVERIFY((quint8)pdu.at(3) == 0x03);   // Inputs count H
+  QVERIFY((quint8)pdu.at(4) == 0x04);   // Inputs count L
+
+  // Decode ReadDiscreteInputs (FC 02 , 0x02)
+  pdu.clear();
+  // Check with 3 inputs
+  pdu.append(0x02);   // Function code
+  pdu.append(1);      // Bytes count
+  pdu.append(0x05);   // 0000 0101
+  QVERIFY(c.decode(pdu) == 0x02);
+  // The exactly amount of inputs is unknown, we only know the bytes count
+  QVERIFY(c.values().size() == 8);
+  QVERIFY(c.values().at(0) == true);
+  QVERIFY(c.values().at(1) == false);
+  QVERIFY(c.values().at(2) == true);
+  QVERIFY(c.values().at(3) == false);
+  QVERIFY(c.values().at(4) == false);
+  QVERIFY(c.values().at(5) == false);
+  QVERIFY(c.values().at(6) == false);
+  QVERIFY(c.values().at(7) == false);
+
+  // Encode ReadHoldingRegisters (FC 03 , 0x03)
+  pdu = c.encodeReadHoldingRegisters(0x0105, 0x0051);
+  QVERIFY(pdu.size() == 5);
+  QVERIFY((quint8)pdu.at(0) == 0x03);   // Function code
+  QVERIFY((quint8)pdu.at(1) == 0x01);   // Start address H
+  QVERIFY((quint8)pdu.at(2) == 0x05);   // Start address L
+  QVERIFY((quint8)pdu.at(3) == 0x00);   // Registers count H
+  QVERIFY((quint8)pdu.at(4) == 0x51);   // Registers count L
+
+  // Decode ReadHoldingRegisters (FC 03 , 0x03)
+  pdu.clear();
+  pdu.append(0x03);   // Function code
+  pdu.append(4);      // Bytes count
+  pdu.append(0x05);   // Register H
+  pdu.append(0x49);   // Register L
+  pdu.append(0x01);   // Register H
+  pdu.append(0x07);   // Register L
+  QVERIFY(c.decode(pdu) == 0x03);
+  QVERIFY(c.values().size() == 2);
+  QVERIFY(c.values().at(0) == 0x0549);
+  QVERIFY(c.values().at(1) == 0x0107);
+
+  // Encode ReadInputRegisters (FC 04 , 0x04)
+  pdu = c.encodeReadInputRegisters(0x0175, 0x0051);
+  QVERIFY(pdu.size() == 5);
+  QVERIFY((quint8)pdu.at(0) == 0x04);   // Function code
+  QVERIFY((quint8)pdu.at(1) == 0x01);   // Start address H
+  QVERIFY((quint8)pdu.at(2) == 0x75);   // Start address L
+  QVERIFY((quint8)pdu.at(3) == 0x00);   // Registers count H
+  QVERIFY((quint8)pdu.at(4) == 0x51);   // Registers count L
+
+  // Decode ReadInputRegisters (FC 04 , 0x04)
+  pdu.clear();
+  pdu.append(0x04);   // Function code
+  pdu.append(6);      // Bytes count
+  pdu.append(0x04);   // Register H
+  pdu.append(0x47);   // Register L
+  pdu.append(0x02);   // Register H
+  pdu.append(0x03);   // Register L
+  pdu.append(0x11);   // Register H
+  pdu.append(0x56);   // Register L
+  QVERIFY(c.decode(pdu) == 0x04);
+  QVERIFY(c.values().size() == 3);
+  QVERIFY(c.values().at(0) == 0x0447);
+  QVERIFY(c.values().at(1) == 0x0203);
+  QVERIFY(c.values().at(2) == 0x1156);
+
+
   // Check the encode of WriteSingleCoil
   pdu = c.encodeWriteSingleCoil(0x1258, true);
   QVERIFY(pdu.at(0) == 0x05);         // Function code
@@ -319,6 +396,103 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   QVERIFY(c.decode(pdu) == 0x05);
   QVERIFY(c.values().size() == 1);
   QVERIFY(c.values().at(0).toBool() == false);
+
+  // Encode WriteSingleRegister (FC 06 , 0x06)
+  pdu = c.encodeWriteSingleRegister(0x123, 0x7542);
+  QVERIFY(pdu.size() == 5);
+  QVERIFY(pdu.at(0) == 0x06);
+  QVERIFY((quint8)pdu.at(1) == 0x01);
+  QVERIFY((quint8)pdu.at(2) == 0x23);
+  QVERIFY((quint8)pdu.at(3) == 0x75);
+  QVERIFY((quint8)pdu.at(4) == 0x42);
+
+  // Check decode of WriteSingleRegister (FC 06 , 0x06)
+  pdu.clear();
+  pdu.append(0x06);     // Function code
+  pdu.append(0x04);     // Address H
+  pdu.append(0x12);     // Address L
+  pdu.append(0x12);     // Value H
+  pdu.append(0x85);     // Value L
+  QVERIFY(c.decode(pdu) == 0x06);
+  QVERIFY(c.values().size() == 1);
+  QVERIFY(c.values().at(0).toInt() == 0x1285);
+
+  // Encode WriteMultipleCoils (FC 15 , 0x0F)
+  dValues.clear();
+  // Check with 3 coils
+  dValues << true << false << true;
+  pdu = c.encodeWriteMultipleCoils(0x0143, dValues);
+  QVERIFY(pdu.size() == 7);
+  QVERIFY(pdu.at(0) == 0x0F);
+  QVERIFY((quint8)pdu.at(1) == 0x01);
+  QVERIFY((quint8)pdu.at(2) == 0x43);
+  QVERIFY((quint8)pdu.at(3) == 0x00);
+  QVERIFY((quint8)pdu.at(4) == 0x03);
+  QVERIFY((quint8)pdu.at(5) == 0x01);
+  QVERIFY((quint8)pdu.at(6) == 0x05);
+  // Check with 8 coils
+  dValues.clear();
+  dValues << false << true << true << false << false << true << true << false;
+  pdu = c.encodeWriteMultipleCoils(0x0140, dValues);
+  QVERIFY(pdu.size() == 7);
+  QVERIFY(pdu.at(0) == 0x0F);
+  QVERIFY((quint8)pdu.at(1) == 0x01);
+  QVERIFY((quint8)pdu.at(2) == 0x40);
+  QVERIFY((quint8)pdu.at(3) == 0x00);
+  QVERIFY((quint8)pdu.at(4) == 0x08);
+  QVERIFY((quint8)pdu.at(5) == 0x01);
+  QVERIFY((quint8)pdu.at(6) == 0x66);
+  // Check with 9 coils
+  dValues.clear();
+  dValues << true << false << true << false << false << true << true << false << true;
+  pdu = c.encodeWriteMultipleCoils(0x0241, dValues);
+  QVERIFY(pdu.size() == 8);
+  QVERIFY(pdu.at(0) == 0x0F);
+  QVERIFY((quint8)pdu.at(1) == 0x02);
+  QVERIFY((quint8)pdu.at(2) == 0x41);
+  QVERIFY((quint8)pdu.at(3) == 0x00);
+  QVERIFY((quint8)pdu.at(4) == 0x09);
+  QVERIFY((quint8)pdu.at(5) == 0x02);
+  QVERIFY((quint8)pdu.at(6) == 0x65);
+  QVERIFY((quint8)pdu.at(7) == 0x01);
+
+  // Check decode of WriteMultipleCoils (FC 15 , 0x0F)
+  pdu.clear();
+  pdu.append(0x0F);     // Function code
+  pdu.append(0x07);     // Address H
+  pdu.append(0x21);     // Address L
+  pdu.append(0x02);     // Qty H
+  pdu.append(0x12);     // Qty L
+  QVERIFY(c.decode(pdu) == 0x0F);
+  QVERIFY(c.values().size() == 0);
+
+  // Encode WriteMultipleRegisters (FC 16 , 0x10)
+  aValues.clear();
+  aValues << 0x1256 << 0x8546;
+  pdu = c.encodeWriteMultipleRegisters(0x0205, aValues);
+  QVERIFY(pdu.size() == 10);
+  QVERIFY(pdu.at(0) == 0x10);
+  QVERIFY((quint8)pdu.at(1) == 0x02);
+  QVERIFY((quint8)pdu.at(2) == 0x05);
+  QVERIFY((quint8)pdu.at(3) == 0x00);
+  QVERIFY((quint8)pdu.at(4) == 0x02);
+  QVERIFY((quint8)pdu.at(5) == 0x04);
+  // Values
+  QVERIFY((quint8)pdu.at(6) == 0x12);
+  QVERIFY((quint8)pdu.at(7) == 0x56);
+  QVERIFY((quint8)pdu.at(8) == 0x85);
+  QVERIFY((quint8)pdu.at(9) == 0x46);
+
+  // Check decode of WriteMultipleRegisters (FC 16 , 0x10)
+  pdu.clear();
+  pdu.append(0x10);     // Function code
+  pdu.append(0x06);     // Address H
+  pdu.append(0x22);     // Address L
+  pdu.append(0x02);     // Qty H
+  pdu.append(0x75);     // Qty L
+  QVERIFY(c.decode(pdu) == 0x10);
+  QVERIFY(c.values().size() == 0);
+
 
 }
 

@@ -182,6 +182,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   mdtFrameCodecModbus codec;
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
+  int tId1, tId2, tId3;
 
   qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
 
@@ -209,9 +210,12 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // "Check" direct PDU write
   pdu = codec.encodeReadCoils(0, 3);
-  QVERIFY(m.writeData(pdu));
-  QVERIFY(m.writeData(pdu, 76));
-  QVERIFY(!m.writeData(pdu));
+  tId1 = m.writePdu(pdu);
+  QVERIFY(tId1 >= 0);
+  tId2 = m.writePdu(pdu);
+  QVERIFY(tId2 >= 0);
+  tId3 = m.writePdu(pdu);
+  QVERIFY(tId3 >= 0);
   QTest::qWait(500);
   QVERIFY(m.waitReadenFrame(500));
   pdus = m.readenFrames();
@@ -223,9 +227,9 @@ void mdtPortManagerTest::modbusTcpPortTest()
   if(pdus.
   qDebug() << "RD: " << 
   */
-  qDebug() << "RD0: " << pdus.value(0);
-  qDebug() << "RD76: " << pdus.value(76);
-  qDebug() << "RD2: " << pdus.value(2);
+  qDebug() << "RD, transaction ID: " << tId1 << " : " << pdus.value(tId1);
+  qDebug() << "RD, transaction ID: " << tId2 << " : " << pdus.value(tId2);
+  qDebug() << "RD, transaction ID: " << tId3 << " : " << pdus.value(tId3);
 }
 
 int main(int argc, char **argv)

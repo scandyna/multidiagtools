@@ -183,7 +183,7 @@ if(UNIX)
   add_test (mdtSerialPortManagerTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportmanagertest)
   add_test (mdtSerialPortConfigTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtserialport/mdtserialportconfigtest)
 
-  add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtDeviceTest)
+  add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
 endif(UNIX)
 
 # * Translations section *

@@ -62,29 +62,82 @@ class mdtFrameCodecModbus : public mdtFrameCodec
   mdtFrameCodecModbus();
   ~mdtFrameCodecModbus();
 
-  /*! \brief Encode a PDU according the ReadCoils function (0x01)
+  /*! \brief Encode a PDU according the ReadCoils function (FC 1, 0x01)
    * 
    * Please take a look at MODBUS specifications for more details.
+   *
    * \return A QByteArray containing the PDU, or a empty QByteArray on error.
    */
   QByteArray encodeReadCoils(quint16 startAddress, quint16 n);
 
-  /*! \brief Encode a PDU according the WriteSingleCoil function (0x05)
+  /*! \brief Encode a PDU according the ReadDiscreteInputs function (FC 2, 0x02)
    * 
    * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeReadDiscreteInputs(quint16 startAddress, quint16 n);
+
+  /*! \brief Encode a PDU according the ReadHoldingRegisters function (FC 3, 0x03)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeReadHoldingRegisters(quint16 startAddress, quint16 n);
+
+  /*! \brief Encode a PDU according the ReadInputRegisters function (FC 4, 0x04)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeReadInputRegisters(quint16 startAddress, quint16 n);
+
+  /*! \brief Encode a PDU according the WriteSingleCoil function (FC 5, 0x05)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
    * \return A QByteArray containing the PDU, or a empty QByteArray on error.
    */
   QByteArray encodeWriteSingleCoil(quint16 address, bool state);
 
+  /*! \brief Encode a PDU according the WriteSingleRegister function (FC 6, 0x06)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeWriteSingleRegister(quint16 address, quint16 value);
+
+  /*! \brief Encode a PDU according the WriteMultipleCoils function (FC 15, 0x0F)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeWriteMultipleCoils(quint16 startAddress, const QList<bool> &states);
+
+  /*! \brief Encode a PDU according the WriteMultipleRegisters function (FC 16, 0x10)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values);
+
   /*! \brief Decode a MODBUS PDU
    * 
    * This should reconize the function code in PDU,
-   * and call the appropriate decode methode (internall).
+   * and call the appropriate decode methode (internal).
    * Once decode is done, the values are available with mdtFrameCodec::values().
-   * To know what was decoded, the function code is returned.<br>
+   * To know what was decoded, the function code is returned.
+   *
    * The values are stored in a QList\<QVariant\> , with format depending of the
    * function code:
    *  - For a ReadCoils response, values will be bool, sorted by ascending addresses.
+   *  - For a WriteSingleCoil response, 1 value as bool
+   *  - For a WriteSingleRegister response, 1 value as int
    *
    * If PDU contains a error code, the list of values will be empty, and this error code will be returned.<br>
    * If a MODBUS error code is decoded, this error code is returned as in frame (for. ex: 0x81 for a ReadCoils error)
@@ -92,6 +145,8 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *
    * \param pdu The MODBUS PDU to decode
    * \return Decoded function code, MODBUS error code or value < 0 on other error.
+   *
+   * \note Ehat to do with WriteMultipleRegisters response ?
    */
   int decode(const QByteArray &pdu);
 
@@ -104,19 +159,41 @@ class mdtFrameCodecModbus : public mdtFrameCodec
 
  private:
 
+  // Decode ReadCoils (FC 1, 0x01)
+  // Note: will allways store a multiple of 8 states
   bool decodeReadCoils();
 
+  // Decode ReadDiscreteInputs (FC 2, 0x02)
+  // Note: will allways store a multiple of 8 states
+  bool decodeReadDiscreteInputs();
+
+  // Decode ReadHoldingRegisters (FC 3, 0x03)
+  bool decodeReadHoldingRegisters();
+
+  // Decode ReadInputRegisters (FC 4, 0x04)
+  bool decodeReadInputRegisters();
+
+  // Decode WriteSingleCoil (FC 5, 0x05)
   bool decodeWriteSingleCoil();
+
+  // Decode WriteSingleRegister (FC 6, 0x06)
+  bool decodeWriteSingleRegister();
+
+  // Decode WriteMultipleCoils (FC 15 , 0x0F)
+  bool decodeWriteMultipleCoils();
+
+  // Decode WriteMultipleRegisters (FC 16 , 0x10)
+  bool decodeWriteMultipleRegisters();
 
   // Append exception code to mdtError , and store it to pvLastModbusError
   int decodeModbusError(quint8 error);
-  
+
   void appendValuesBitsFromByte(quint8 byte);
-  
+
   // Build a byte with states - First state will be stored in LSB, last state is MSB
   // Precondition: states must contain exactly 8 values
   quint8 byteFromBooleans(QList<bool> &states);
-  
+
   QByteArray pvPdu;
   modbus_error_code_t pvLastModbusError;
 };

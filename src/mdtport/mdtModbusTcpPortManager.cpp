@@ -125,7 +125,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   return portInfoList;
 }
 
-bool mdtModbusTcpPortManager::writeData(QByteArray pdu)
+int mdtModbusTcpPortManager::writePdu(QByteArray pdu)
 {
   Q_ASSERT(pvPort != 0);
 
@@ -146,23 +146,25 @@ bool mdtModbusTcpPortManager::writeData(QByteArray pdu)
   frame->clearSub();
   // Store data and add frame to write queue
   ///frame->setWaitAnAnswer(false);
-  frame->setTransactionId(pvTransactionId);
   pvTransactionId++;
+  frame->setTransactionId(pvTransactionId);
   frame->setUnitId(0);    /// \todo Handle this ?
   frame->setPdu(pdu);
   frame->encode();
   pvPort->addFrameToWrite(frame);
   pvPort->unlockMutex();
 
-  return true;
+  return pvTransactionId;
 }
 
+/**
 bool mdtModbusTcpPortManager::writeData(const QByteArray &pdu, quint16 transactionId)
 {
   pvTransactionId = transactionId;
 
-  return writeData(pdu);
+  return writePdu(pdu);
 }
+*/
 
 bool mdtModbusTcpPortManager::waitReadenFrame(int timeout)
 {

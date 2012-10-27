@@ -9,6 +9,7 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Device
           mdtDevice.h
+          mdtDeviceModbus.h
     )
 
 
@@ -16,6 +17,7 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Device
           mdtDevice.cpp
+          mdtDeviceModbus.cpp
     )
 
 # Liste des fichiers ui
@@ -75,6 +77,6 @@ install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtdevice" COM
 
 # Destinations
 install(TARGETS "mdtdevice" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-if(MDT_BUILD_STATIC_LIBS)
-  install(TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-endif(MDT_BUILD_STATIC_LIBS)
+#if(MDT_BUILD_STATIC_LIBS)
+#  install(TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+#endif(MDT_BUILD_STATIC_LIBS)

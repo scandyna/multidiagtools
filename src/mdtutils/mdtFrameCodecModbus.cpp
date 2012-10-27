@@ -57,6 +57,78 @@ QByteArray mdtFrameCodecModbus::encodeReadCoils(quint16 startAddress, quint16 n)
   return pvPdu;
 }
 
+QByteArray mdtFrameCodecModbus::encodeReadDiscreteInputs(quint16 startAddress, quint16 n)
+{
+  pvPdu.clear();
+
+  // Check n (1 to 2000)
+  if((n < 1)||(n > 2000)){
+    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request inputs count out of allowed range", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return pvPdu;
+  }
+
+  // Function code
+  pvPdu.append(0x02);
+  // Start address
+  pvPdu.append(startAddress >> 8);
+  pvPdu.append(startAddress & 0x00FF);
+  // Number of inputs
+  pvPdu.append(n >> 8);
+  pvPdu.append(n & 0x00FF);
+
+  return pvPdu;
+}
+
+QByteArray mdtFrameCodecModbus::encodeReadHoldingRegisters(quint16 startAddress, quint16 n)
+{
+  pvPdu.clear();
+
+  // Check n (1 to 125)
+  if((n < 1)||(n > 125)){
+    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return pvPdu;
+  }
+
+  // Function code
+  pvPdu.append(0x03);
+  // Start address
+  pvPdu.append(startAddress >> 8);
+  pvPdu.append(startAddress & 0x00FF);
+  // Number of registers
+  pvPdu.append(n >> 8);
+  pvPdu.append(n & 0x00FF);
+
+  return pvPdu;
+}
+
+QByteArray mdtFrameCodecModbus::encodeReadInputRegisters(quint16 startAddress, quint16 n)
+{
+  pvPdu.clear();
+
+  // Check n (1 to 125)
+  if((n < 1)||(n > 125)){
+    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return pvPdu;
+  }
+
+  // Function code
+  pvPdu.append(0x04);
+  // Start address
+  pvPdu.append(startAddress >> 8);
+  pvPdu.append(startAddress & 0x00FF);
+  // Number of registers
+  pvPdu.append(n >> 8);
+  pvPdu.append(n & 0x00FF);
+
+  return pvPdu;
+}
+
 QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil(quint16 address, bool state)
 {
   pvPdu.clear();
@@ -73,6 +145,110 @@ QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil(quint16 address, bool stat
     pvPdu.append((char)0);
   }
   pvPdu.append((char)0);
+
+  return pvPdu;
+}
+
+QByteArray mdtFrameCodecModbus::encodeWriteSingleRegister(quint16 address, quint16 value)
+{
+  pvPdu.clear();
+
+  // Function code
+  pvPdu.append(0x06);
+  // Register address
+  pvPdu.append(address >> 8);
+  pvPdu.append(address & 0x00FF);
+  // Register value
+  pvPdu.append(value >> 8);
+  pvPdu.append(value & 0x00FF);
+
+  return pvPdu;
+}
+
+QByteArray mdtFrameCodecModbus::encodeWriteMultipleCoils(quint16 startAddress, const QList<bool> &states)
+{
+  quint16 n = states.size();
+  int i;
+  quint8 nBytes;
+  QList<bool> oneByteStates;
+
+  pvPdu.clear();
+
+  // Check qty (1 to 1968)
+  if((n < 1)||(n > 1968)){
+    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return pvPdu;
+  }
+  // Calculate number of bytes needed
+  if((n%8) == 0){
+    nBytes = n/8;
+  }else{
+    nBytes = (n/8)+1;
+  }
+  // Function code
+  pvPdu.append(0x0F);
+  // Register starting address
+  pvPdu.append(startAddress >> 8);
+  pvPdu.append(startAddress & 0x00FF);
+  // Quantity of coils
+  pvPdu.append(n >> 8);
+  pvPdu.append(n & 0x00FF);
+  // Bytes count
+  pvPdu.append(nBytes);
+  // states
+  for(i=0; i<states.size(); i++){
+    oneByteStates.append(states.at(i));
+    // If we have 8 bits, append to PDU
+    if(oneByteStates.size() == 8){
+      pvPdu.append(byteFromBooleans(oneByteStates));
+      oneByteStates.clear();
+    }
+  }
+  // Remaining states
+  if(oneByteStates.size() > 0){
+    // See if we have to complete
+    for(i=oneByteStates.size()-1; i<7; i++){
+      oneByteStates.append(false);
+    }
+    // Add to PDU
+    pvPdu.append(byteFromBooleans(oneByteStates));
+  }
+
+  return pvPdu;
+}
+
+QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values)
+{
+  quint16 n = values.size();
+  int i;
+
+  pvPdu.clear();
+
+  // Check qty (1 to 123)
+  if((n < 1)||(n > 123)){
+    mdtError e(MDT_FRAME_ENCODE_ERROR, "Request registers count out of allowed range", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return pvPdu;
+  }
+
+  // Function code
+  pvPdu.append(0x10);
+  // Register starting address
+  pvPdu.append(startAddress >> 8);
+  pvPdu.append(startAddress & 0x00FF);
+  // Quantity of registers
+  pvPdu.append(n >> 8);
+  pvPdu.append(n & 0x00FF);
+  // Bytes count
+  pvPdu.append(2*n);
+  // Add values
+  for(i=0; i<values.size(); i++){
+    pvPdu.append(values.at(i) >> 8);
+    pvPdu.append(values.at(i) & 0x00FF);
+  }
 
   return pvPdu;
 }
@@ -107,12 +283,54 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
       }
       return 0x01;
       break;
+    // Read discrete inputs
+    case 0x02:
+      if(!decodeReadDiscreteInputs()){
+        return -1;
+      }
+      return 0x02;
+      break;
+    // ReadHoldingRegisters
+    case 0x03:
+      if(!decodeReadHoldingRegisters()){
+        return -1;
+      }
+      return 0x03;
+      break;
+    // ReadInputRegisters
+    case 0x04:
+      if(!decodeReadInputRegisters()){
+        return -1;
+      }
+      return 0x04;
+      break;
     // Write single coil
     case 0x05:
       if(!decodeWriteSingleCoil()){
         return -1;
       }
       return 0x05;
+      break;
+    // Write single register
+    case 0x06:
+      if(!decodeWriteSingleRegister()){
+        return -1;
+      }
+      return 0x06;
+      break;
+    // WriteMultipleCoils
+    case 0x0F:
+      if(!decodeWriteMultipleCoils()){
+        return -1;
+      }
+      return 0x0F;
+      break;
+    // WriteMultipleRegisters
+    case 0x10:
+      if(!decodeWriteMultipleRegisters()){
+        return -1;
+      }
+      return 0x10;
       break;
     // Unknow code
     default:
@@ -135,7 +353,7 @@ mdtFrameCodecModbus::modbus_error_code_t mdtFrameCodecModbus::lastModbusError()
 
 bool mdtFrameCodecModbus::decodeReadCoils()
 {
-  int bytesCount;
+  quint8 bytesCount;
   int i;
 
   // Case of not enougth data
@@ -145,7 +363,7 @@ bool mdtFrameCodecModbus::decodeReadCoils()
     e.commit();
     return false;
   }
-  // Get bytes count and check it's validity NOTE: voir N* dans la spec !!
+  // Get bytes count and check it's validity
   bytesCount = pvPdu.at(1);
   if(bytesCount != (pvPdu.size() -2)){
     mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
@@ -155,8 +373,115 @@ bool mdtFrameCodecModbus::decodeReadCoils()
   }
   // Get the values
   for(i=2; i<pvPdu.size(); i++){
-    //qDebug() << "Byte[" << i << "]: " << (int)pvPdu.at(i);
     appendValuesBitsFromByte(pvPdu.at(i));
+  }
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeReadDiscreteInputs()
+{
+  quint8 bytesCount;
+  int i;
+
+  // Case of not enougth data
+  if(pvPdu.size() < 3){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get bytes count and check it's validity
+  bytesCount = pvPdu.at(1);
+  if(bytesCount != (pvPdu.size() -2)){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get the values
+  for(i=2; i<pvPdu.size(); i++){
+    appendValuesBitsFromByte(pvPdu.at(i));
+  }
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeReadHoldingRegisters()
+{
+  quint8 bytesCount;
+  int i;
+  quint16 value;
+
+  // Case of not enougth data
+  if(pvPdu.size() < 3){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get bytes count and check it's validity
+  bytesCount = pvPdu.at(1);
+  // Check that bytesCount is mod 2
+  if((bytesCount%2) != 0){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count (not MOD 2)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Check that PDU contains right amount of data
+  if(bytesCount != (pvPdu.size() -2)){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get the values
+  for(i=2; i<pvPdu.size(); i++){
+    value = (quint8)pvPdu.at(i) << 8;
+    i++;
+    value |= (quint8)pvPdu.at(i);
+    pvValues.append(value);
+  }
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeReadInputRegisters()
+{
+  quint8 bytesCount;
+  int i;
+  quint16 value;
+
+  // Case of not enougth data
+  if(pvPdu.size() < 3){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains no data (size < 3 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get bytes count and check it's validity
+  bytesCount = pvPdu.at(1);
+  // Check that bytesCount is mod 2
+  if((bytesCount%2) != 0){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count (not MOD 2)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Check that PDU contains right amount of data
+  if(bytesCount != (pvPdu.size() -2)){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU contains a invalid bytes count", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get the values
+  for(i=2; i<pvPdu.size(); i++){
+    value = (quint8)pvPdu.at(i) << 8;
+    i++;
+    value |= (quint8)pvPdu.at(i);
+    pvValues.append(value);
   }
 
   return true;
@@ -164,7 +489,7 @@ bool mdtFrameCodecModbus::decodeReadCoils()
 
 bool mdtFrameCodecModbus::decodeWriteSingleCoil()
 {
-  // Case of unvalid bytes count
+  // Case of invalid bytes count
   if(pvPdu.size() != 5){
     mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
@@ -177,6 +502,67 @@ bool mdtFrameCodecModbus::decodeWriteSingleCoil()
   }else{
     pvValues.append(false);
   }
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeWriteSingleRegister()
+{
+  quint16 value;
+
+  // Case of invalid bytes count
+  if(pvPdu.size() != 5){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get value
+  value = (quint8)pvPdu.at(3) << 8;
+  value |= (quint8)pvPdu.at(4);
+  pvValues.append(value);
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeWriteMultipleCoils()
+{
+  quint16 n;
+
+  // Case of invalid bytes count
+  if(pvPdu.size() != 5){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get value
+  n = (quint8)pvPdu.at(3) << 8;
+  n |= (quint8)pvPdu.at(4);
+  /// \note Transmit n somwhere ?
+  //pvValues.append(value);
+  qDebug() << "mdtFrameCodecModbus::decodeWriteMultipleCoils(): set " << n << " outputs";
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeWriteMultipleRegisters()
+{
+  quint16 n;
+
+  // Case of invalid bytes count
+  if(pvPdu.size() != 5){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Get value
+  n = (quint8)pvPdu.at(3) << 8;
+  n |= (quint8)pvPdu.at(4);
+  /// \note Transmit n somwhere ?
+  //pvValues.append(value);
+  qDebug() << "mdtFrameCodecModbus::decodeWriteMultipleRegisters(): set " << n << " outputs";
 
   return true;
 }

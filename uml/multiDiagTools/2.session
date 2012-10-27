@@ -1,24 +1,29 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 374914 // mdtSerialPortSetupDialog
+  classdiagram_ref 314242 // mdtDevice
     776 642 100 4 0 0
-  active  classdiagram_ref 508546 // mdtIoWidgets
-    970 803 100 4 60 0
+  active  classdiagram_ref 508290 // mdtDeviceModbus
+    970 803 100 4 36 0
+  classdiagram_ref 314370 // mdtDeviceU3606A
+    776 642 100 4 84 0
 end
 show_stereotypes
-selected classview_ref 346370 // mdtIoWidgets
+selected operation_ref 1010690 // readDigitalOutputs
 open
-  class_ref 518658 // mdtAbstractIoWidget
-  operation_ref 995586 // setOn
-  operation_ref 995714 // isOn
-  class_ref 518914 // mdtDigitalOutWidget
-  operation_ref 1003906 // setRange
-  operation_ref 1003522 // setValueInt
-  operation_ref 1003650 // valueInt
-  class_ref 519170 // mdtAnalogOutWidget
-  operation_ref 992642 // displayConfig
-  operation_ref 992770 // updateConfig
-  operation_ref 992898 // applySetup
-  classview_ref 260354 // mdtSerialPortSetupDialog
+  attribute_ref 638850 // pvAnalogOutputs
+  attribute_ref 638594 // pvDigitalInputs
+  attribute_ref 638466 // pvDigitalOutputs
+  operation_ref 1024898 // getAnalogInputValue
+  operation_ref 1025026 // readAnalogInputs
+  operation_ref 1011330 // setAnalogOutput
+  operation_ref 1011458 // getAnalogOutputValue
+  operation_ref 1024642 // writeAnalogOutputs
+  operation_ref 1024770 // readAnalogOutputs
+  operation_ref 1010946 // getDigitalInputState
+  operation_ref 1011202 // readDigitalInputs
+  operation_ref 1010690 // readDigitalOutputs
+  class_ref 532226 // mdtDeviceModbusWago
+  
+  package_ref 161666 // linux
 end
 end

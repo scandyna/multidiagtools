@@ -75,22 +75,23 @@ class mdtModbusTcpPortManager : public mdtPortManager
    */
   QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500);
 
-  /*! \brief Write data by copy
+  /*! \brief Write PDU by copy
    *
    * Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket's write queue by copy.
    *  This method returns immediatly after enqueue,
    *  and don't wait until data was written.
    *
-   * Note that the transaction ID is incremented a each write request.
-   *  If you want to specify it, use writeData(QByteArray, quint16) .
+   * Internally, the transaction ID is incremented at each request and returned.
    *
    * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
-   * \return True on success. If the maximum of authorized transactions are reached, false is returned.
+   * \return Transaction ID on success or value < 0 on error. If the maximum of authorized transactions are reached, false is returned.
    *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix this, and
    *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
    * \pre Port must be set with setPort() before use of this method.
+   * 
+   * \todo Should return transactionId , or < 0 on error
    */
-  bool writeData(QByteArray pdu);
+  int writePdu(QByteArray pdu);
 
   /*! \brief Write data by copy
    *
@@ -102,7 +103,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \return True on success.
    * \pre Port must be set with setPort() before use of this method.
    */
-  bool writeData(const QByteArray &pdu, quint16 transactionId);
+  ///bool writeData(const QByteArray &pdu, quint16 transactionId);
 
   /*! \brief Wait until a complete frame is available
    *
@@ -120,9 +121,11 @@ class mdtModbusTcpPortManager : public mdtPortManager
   /*! \brief Get all readen data (PDUs)
    *
    * Get a copy of all currently available data.
-   *  Note: the list of data must be cleared explicitly
-   *   with QHash::clear() after data are used.
-   *   (or remove each item with, for.ex. QHash::take() )
+   *  The key is the transactionId.
+   *
+   * Note: the list of data must be cleared explicitly
+   *  with QHash::clear() after data are used.
+   *  (or remove each item with, for.ex. QHash::take() )
    */
   QHash<quint16, QByteArray> &readenFrames();
 
