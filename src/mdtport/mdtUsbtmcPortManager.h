@@ -75,31 +75,28 @@ class mdtUsbtmcPortManager : public mdtPortManager
    *  and don't wait until data was written.
    *
    * \param data Data to write
-   * \return True on success.
+   * \return bTag ID on success or value < 0 if write queue is full.
    * \pre Port must be set with setPort() before use of this method.
    */
-  bool writeData(QByteArray data);
+  int writeData(QByteArray data);
 
   /*! \brief Send a read request to device
    *
    * USBTMC standard need that a read request is sent to device
    *  before we can read any data.
-   *  If you choose to use the mdtPortManager's newReadenFrame() signal,
-   *  this method must be explicitly called after writeData().
-   *  If you use waitReadenFrame(), this method is called automatically.
    *
-   * \return True on success.
+   * \return bTag ID on success or value < 0 if write queue is full.
    */
-  bool sendReadRequest();
+  int sendReadRequest();
 
   /*! \brief Wait until a complete frame is available
    *
    * Send a read request and call mdtPortManager::waitReadenFrame() .
    *
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \return True if Ok, false on timeout
+   * \return bTag ID on success or value < 0 on timeout or if write queue is full
    */
-  bool waitReadenFrame(int timeout = 500);
+  ///int waitReadenFrame(int timeout = 500);
 
  public slots:
 

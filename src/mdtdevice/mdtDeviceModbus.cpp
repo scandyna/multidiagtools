@@ -82,17 +82,15 @@ bool mdtDeviceModbus::readAnalogInputs()
     return false;
   }
   // Send request
-  transactionId = pvTcpPortManager->writePdu(pdu);
+  transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
   /// \note Provisoire !
   pvTcpPortManager->waitReadenFrame();
-  if(pvTcpPortManager->readenFrames().size() > 0){
-    pdu = pvTcpPortManager->readenFrames().take(transactionId);
-    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    qDebug() << "DEV RD value: " << pvCodec->values();
-  }
+  pdu = pvTcpPortManager->readenFrame(transactionId);
+  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+  qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
 }
@@ -129,17 +127,15 @@ bool mdtDeviceModbus::setAnalogOutput(int address, int value, bool writeDirectly
       return false;
     }
     // Send request
-    transactionId = pvTcpPortManager->writePdu(pdu);
+    transactionId = pvTcpPortManager->writeData(pdu);
     if(transactionId < 0){
       return false;
     }
     /// \note Provisoire !
     pvTcpPortManager->waitReadenFrame();
-    if(pvTcpPortManager->readenFrames().size() > 0){
-      pdu = pvTcpPortManager->readenFrames().take(transactionId);
-      qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-      qDebug() << "DEV RD value: " << pvCodec->values();
-    }
+    pdu = pvTcpPortManager->readenFrame(transactionId);
+    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+    qDebug() << "DEV RD value: " << pvCodec->values();
   }
 
   return true;
@@ -173,17 +169,15 @@ bool mdtDeviceModbus::writeAnalogOutputs()
     return false;
   }
   // Send request
-  transactionId = pvTcpPortManager->writePdu(pdu);
+  transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
   /// \note Provisoire !
   pvTcpPortManager->waitReadenFrame();
-  if(pvTcpPortManager->readenFrames().size() > 0){
-    pdu = pvTcpPortManager->readenFrames().take(transactionId);
-    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    qDebug() << "DEV RD value: " << pvCodec->values();
-  }
+  pdu = pvTcpPortManager->readenFrame(transactionId);
+  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+  qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
 }
@@ -198,17 +192,15 @@ bool mdtDeviceModbus::readAnalogOutputs()
     return false;
   }
   // Send request
-  transactionId = pvTcpPortManager->writePdu(pdu);
+  transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
   /// \note Provisoire !
   pvTcpPortManager->waitReadenFrame();
-  if(pvTcpPortManager->readenFrames().size() > 0){
-    pdu = pvTcpPortManager->readenFrames().take(transactionId);
-    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    qDebug() << "DEV RD value: " << pvCodec->values();
-  }
+  pdu = pvTcpPortManager->readenFrame(transactionId);
+  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+  qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
 }
@@ -253,17 +245,15 @@ bool mdtDeviceModbus::readDigitalInputs()
     return false;
   }
   // Send request
-  transactionId = pvTcpPortManager->writePdu(pdu);
+  transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
   /// \note Provisoire !
   pvTcpPortManager->waitReadenFrame();
-  if(pvTcpPortManager->readenFrames().size() > 0){
-    pdu = pvTcpPortManager->readenFrames().take(transactionId);
-    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    qDebug() << "DEV RD value: " << pvCodec->values();
-  }
+  pdu = pvTcpPortManager->readenFrame(transactionId);
+  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+  qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
 }
@@ -300,7 +290,7 @@ bool mdtDeviceModbus::setDigitalOutput(int address, bool state, bool writeDirect
       return false;
     }
     // Send request
-    transactionId = pvTcpPortManager->writePdu(pdu);
+    transactionId = pvTcpPortManager->writeData(pdu);
     if(transactionId < 0){
       return false;
     }
@@ -312,10 +302,8 @@ bool mdtDeviceModbus::setDigitalOutput(int address, bool state, bool writeDirect
     }
     */
     pvTcpPortManager->waitReadenFrame();
-    if(pvTcpPortManager->readenFrames().size() > 0){
-      pdu = pvTcpPortManager->readenFrames().take(transactionId);
-      qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    }
+    pdu = pvTcpPortManager->readenFrame(transactionId);
+    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
     /**
     if(pvTcpPortManager->readenFrames().size() < 1){
       pvTcpPortManager->waitReadenFrame();
@@ -359,17 +347,15 @@ bool mdtDeviceModbus::writeDigitalOutputs()
     return false;
   }
   // Send request
-  transactionId = pvTcpPortManager->writePdu(pdu);
+  transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
   /// \note Provisoire !
   pvTcpPortManager->waitReadenFrame();
-  if(pvTcpPortManager->readenFrames().size() > 0){
-    pdu = pvTcpPortManager->readenFrames().take(transactionId);
-    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    qDebug() << "DEV RD value: " << pvCodec->values();
-  }
+  pdu = pvTcpPortManager->readenFrame(transactionId);
+  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+  qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
 }
@@ -384,17 +370,15 @@ bool mdtDeviceModbus::readDigitalOutputs()
     return false;
   }
   // Send request
-  transactionId = pvTcpPortManager->writePdu(pdu);
+  transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
   /// \note Provisoire !
   pvTcpPortManager->waitReadenFrame();
-  if(pvTcpPortManager->readenFrames().size() > 0){
-    pdu = pvTcpPortManager->readenFrames().take(transactionId);
-    qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-    qDebug() << "DEV RD value: " << pvCodec->values();
-  }
+  pdu = pvTcpPortManager->readenFrame(transactionId);
+  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
+  qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
 }

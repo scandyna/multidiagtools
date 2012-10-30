@@ -112,9 +112,15 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     return;
   }
   // Get identification
-  if(!pvPortManager->writeData("*IDN?\n")){
+  if(pvPortManager->writeData("*IDN?\n") < 0){
     pvPortManager->closePort();
     setStateError(tr("Cannot send the *IDN? query"));
+    cbInterface->setEnabled(true);
+    return;
+  }
+  if(pvPortManager->sendReadRequest() < 0){
+    pvPortManager->closePort();
+    setStateError(tr("Cannot send the *IDN? read request"));
     cbInterface->setEnabled(true);
     return;
   }

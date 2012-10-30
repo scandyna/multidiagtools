@@ -19,12 +19,13 @@
  **
  ****************************************************************************/
 #include "mdtAnalogOutWidget.h"
+#include "mdtAnalogIo.h"
 #include <qwt_slider.h>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QDoubleSpinBox>
-#include <math.h>
+#include <cmath>
 #include <float.h>
 
 mdtAnalogOutWidget::mdtAnalogOutWidget(QWidget *parent)
@@ -32,9 +33,6 @@ mdtAnalogOutWidget::mdtAnalogOutWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
-  pvStep = 1.0;
-  pvStepInverse = 1.0;
-  pvCurrentValue = 0.0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   slValue = new QwtSlider(this, Qt::Vertical, QwtSlider::LeftScale);
@@ -46,29 +44,24 @@ mdtAnalogOutWidget::mdtAnalogOutWidget(QWidget *parent)
   // Synchronize spinbox and slider
   connect(slValue, SIGNAL(valueChanged(double)), sbValue, SLOT(setValue(double)));
   connect(sbValue, SIGNAL(valueChanged(double)), slValue, SLOT(setValue(double)));
-  // value chage signal
-  connect(slValue, SIGNAL(valueChanged(double)), this, SIGNAL(valueChanged(double)));
-  // Set a default range for 0-10V / 8 bit style input
-  setRange(0.0, 10.0, 256);
-  setValue(0.0);
 }
 
 mdtAnalogOutWidget::~mdtAnalogOutWidget()
 {
 }
 
-void mdtAnalogOutWidget::setRange(double min, double max, int steps)
+void mdtAnalogOutWidget::setIo(mdtAnalogIo *io)
 {
-  Q_ASSERT(steps > 1);
-  Q_ASSERT(max > min);
+  Q_ASSERT(io != 0);
 
-  // Set factors
-  pvStep = (max-min)/(double)(steps-1);
-  pvStepInverse = 1.0/pvStep;
-  slValue->setRange(min, max);
-  sbValue->setRange(min, max);
-  // Display min value
-  setValue(min);
+  // Base Signals/slots connections
+  mdtAbstractIoWidget::setIo(io);
+  // Signals/slots from io to widget
+  connect(io, SIGNAL(unitChangedForUi(const QString&)), this, SLOT(setUnit(const QString&)));
+  connect(io, SIGNAL(rangeChangedForUi(double, double)), this, SLOT(setRange(double, double)));
+  connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
+  // Signals/slots from widget to io
+  connect(slValue, SIGNAL(valueChanged(double)), io, SLOT(setValueFromUi(double)));
 }
 
 void mdtAnalogOutWidget::setUnit(const QString &unit)
@@ -76,28 +69,13 @@ void mdtAnalogOutWidget::setUnit(const QString &unit)
   pvUnit = unit;
 }
 
+void mdtAnalogOutWidget::setRange(double min, double max)
+{
+  slValue->setRange(min, max);
+  sbValue->setRange(min, max);
+}
+
 void mdtAnalogOutWidget::setValue(double value)
 {
-  if(abs(value - pvCurrentValue) > DBL_EPSILON){
-    pvCurrentValue = value;
-    sbValue->setValue(value);
-    emit(valueChanged(value));
-  }
-}
-
-double mdtAnalogOutWidget::value()
-{
-  return pvCurrentValue;
-}
-
-void mdtAnalogOutWidget::setValueInt(int value)
-{
-  double x = pvStep*(double)value + slValue->minValue();
-
-  setValue(x);
-}
-
-int mdtAnalogOutWidget::valueInt()
-{
-  return (pvStepInverse * (pvCurrentValue - slValue->minValue()));
+  sbValue->setValue(value);
 }

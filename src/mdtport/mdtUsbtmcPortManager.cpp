@@ -228,7 +228,7 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
   return portInfoList;
 }
 
-bool mdtUsbtmcPortManager::writeData(QByteArray data)
+int mdtUsbtmcPortManager::writeData(QByteArray data)
 {
   Q_ASSERT(pvPort != 0);
 
@@ -241,7 +241,7 @@ bool mdtUsbtmcPortManager::writeData(QByteArray data)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
-    return false;
+    return -1;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
   Q_ASSERT(frame != 0);
@@ -261,10 +261,10 @@ bool mdtUsbtmcPortManager::writeData(QByteArray data)
   pvPort->addFrameToWrite(frame);
   pvPort->unlockMutex();
 
-  return true;
+  return pvCurrentWritebTag;
 }
 
-bool mdtUsbtmcPortManager::sendReadRequest()
+int mdtUsbtmcPortManager::sendReadRequest()
 {
   Q_ASSERT(pvPort != 0);
 
@@ -277,7 +277,7 @@ bool mdtUsbtmcPortManager::sendReadRequest()
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
-    return false;
+    return -1;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
   Q_ASSERT(frame != 0);
@@ -297,20 +297,28 @@ bool mdtUsbtmcPortManager::sendReadRequest()
   pvPort->addFrameToWrite(frame);
   pvPort->unlockMutex();
 
-  return true;
+  return pvCurrentWritebTag;
 }
 
+/**
 bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
 {
+  int retVal;
+
   Q_ASSERT(pvPort != 0);
 
-  if(!sendReadRequest()){
-    return false;
+  retVal = sendReadRequest();
+  if(retVal < 0){
+    return retVal;
   }
   qDebug() << "mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ...";
+  if(!mdtPortManager::waitReadenFrame(timeout)){
+    return -1;
+  }
 
-  return mdtPortManager::waitReadenFrame(timeout);
+  return retVal;
 }
+*/
 
 /*
 void mdtUsbtmcPortManager::abort()
@@ -342,7 +350,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
       // Copy data
       QByteArray data;
       data.append(frame->messageData().data(), frame->messageData().size());
-      pvReadenFrames.append(data);
+      pvReadenFrames.insert(frame->bTag(), data);
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);

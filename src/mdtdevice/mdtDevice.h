@@ -25,6 +25,28 @@
 #include <QString>
 #include <QStringList>
 
+/*! \brief Base class for a device connected to a port
+ *
+ * Give some helper methods for event handling, ....
+ *
+ * If it is needed to continiusly update the representation
+ *  of device's inputs (digital/analog I/O, voltage, temperature, ...),
+ *  two things can happen:
+ *  - 1) Used port can receive data continiusly (f.ex. RS232) and device send data automatically
+ *  - 2) Used port need that a request is sent for each read (TCP, USB, ...) or device need such request
+ * Continous update is typical usefull for a GUI representing a real device.
+ *
+ * A other usage is automated sequence. In this case, the sequence will tell when it need
+ *  to set a output and when a input value is reuqierd.
+ *
+ * A device can accept one or many request befor results must be read. This depends most case
+ *  on used port and protocol.
+ *
+ * It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application).
+ *
+ * A device can have several states (ready, busy, disconnected, ...). To help the application programmer
+ *  to keep coherence, this states are updated in this class. (signal, ...)
+ */
 class mdtDevice : public QObject
 {
  Q_OBJECT
@@ -32,8 +54,11 @@ class mdtDevice : public QObject
  public:
 
   mdtDevice(QObject *parent = 0);
-  ~mdtDevice();
+  virtual ~mdtDevice();
 
+ public slots:
+
+  
 };
 
 #endif  // #ifndef MDT_DEVICE_H

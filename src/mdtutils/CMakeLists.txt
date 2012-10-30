@@ -13,6 +13,9 @@ set (HEADER_FILES
           mdtUicNumberWidget.h
           # mdtFileSystem
           mdtFileCopier.h
+          # I/O
+          mdtAbstractIo.h
+          mdtAnalogIo.h
           # Main application
           mdtApplication.h
     )
@@ -48,6 +51,9 @@ set (SOURCES_FILES
           mdtPartitionAttributes.cpp
           mdtFileCopier.cpp
           mdtFileCopierItem.cpp
+          # I/O
+          mdtAbstractIo.cpp
+          mdtAnalogIo.cpp
           # Main application
           mdtApplication.cpp
     )

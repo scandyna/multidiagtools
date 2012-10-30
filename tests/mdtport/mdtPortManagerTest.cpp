@@ -75,7 +75,7 @@ void mdtPortManagerTest::portTest()
   QVERIFY(!m.waitReadenFrame());
 
   // Send some data
-  QVERIFY(m.writeData("Test\n"));
+  QVERIFY(m.writeData("Test\n") == 0);
 
   // We must re-open the file, else nothing will be readen
   QTest::qWait(100);
@@ -145,11 +145,12 @@ void mdtPortManagerTest::usbTmcPortTest()
   // Query without answer
   ///QVERIFY(m.writeData("*CLS\n", false));
   qDebug() << "TEST, sending request ...";
-  QVERIFY(m.writeData("*IDN?\n"));
+  QVERIFY(m.writeData("*IDN?\n") > 0);
   qDebug() << "TEST, sending request DONE";
   ///QTest::qWait(500);
   qDebug() << "TEST, request read ...";
   ///m.readData();
+  QVERIFY(m.sendReadRequest() > 0);
   QVERIFY(m.waitReadenFrame());
   qDebug() << "TEST, request read DONE";
   QVERIFY(m.readenFrames().size() > 0);
@@ -210,26 +211,14 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // "Check" direct PDU write
   pdu = codec.encodeReadCoils(0, 3);
-  tId1 = m.writePdu(pdu);
+  tId1 = m.writeData(pdu);
   QVERIFY(tId1 >= 0);
-  tId2 = m.writePdu(pdu);
+  tId2 = m.writeData(pdu);
   QVERIFY(tId2 >= 0);
-  tId3 = m.writePdu(pdu);
+  tId3 = m.writeData(pdu);
   QVERIFY(tId3 >= 0);
   QTest::qWait(500);
   QVERIFY(m.waitReadenFrame(500));
-  pdus = m.readenFrames();
-  QHashIterator<quint16, QByteArray> it(pdus);
-  /*
-  while(it.hasNext()){
-    
-  }
-  if(pdus.
-  qDebug() << "RD: " << 
-  */
-  qDebug() << "RD, transaction ID: " << tId1 << " : " << pdus.value(tId1);
-  qDebug() << "RD, transaction ID: " << tId2 << " : " << pdus.value(tId2);
-  qDebug() << "RD, transaction ID: " << tId3 << " : " << pdus.value(tId3);
 }
 
 int main(int argc, char **argv)

@@ -70,7 +70,7 @@ void mdtSerialPortManagerTest::simpleTest()
   QVERIFY(m.isRunning());
 
   // Send some data
-  QVERIFY(m.writeData("Test$"));
+  QVERIFY(m.writeData("Test$") >= 0);
 
   // Wait on answer - Timout: 500 [ms]
   QVERIFY(m.waitReadenFrame(500));
@@ -124,7 +124,7 @@ void mdtSerialPortManagerTest::transferTest()
   qDebug() << "Transfer time: " << dataTransferTime << " [ms]";
   
   // Send data
-  QVERIFY(m.writeData(data.toAscii()));
+  QVERIFY(m.writeData(data.toAscii()) >= 0);
 
   // Get incomming data
   while(receivedData.size() < data.size()){

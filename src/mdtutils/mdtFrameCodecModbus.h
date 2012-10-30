@@ -135,18 +135,24 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *
    * The values are stored in a QList\<QVariant\> , with format depending of the
    * function code:
-   *  - For a ReadCoils response, values will be bool, sorted by ascending addresses.
-   *  - For a WriteSingleCoil response, 1 value as bool
-   *  - For a WriteSingleRegister response, 1 value as int
+   *  - FC 1 (0x01), ReadCoils reply: digital output states as bool, sorted by ascending addresses.
+   *  - FC 2 (0x02), ReadDiscreteInputs reply: digital input states as bool, sorted by ascending addresses.
+   *  - FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.
+   *  - FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.
+   *  - FC 5 (0x05), WriteSingleCoil reply: first value is address as quint16, second value is the output state as bool.
+   *  - FC 6 (0x06), WriteSingleRegister reply: analog output value, as quint16.
+   *  - FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.
+   *  - FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.
+   *  - For a WriteSingleCoil reply, 1 value as bool
+   *  - For a WriteSingleRegister reply, 1 value as int
    *
-   * If PDU contains a error code, the list of values will be empty, and this error code will be returned.<br>
+   * If PDU contains a error code, the list of values will be empty, and this error code will be returned.
+   *
    * If a MODBUS error code is decoded, this error code is returned as in frame (for. ex: 0x81 for a ReadCoils error)
    * To know whitch MODBUS error was returned, use lastModbusError()
    *
    * \param pdu The MODBUS PDU to decode
    * \return Decoded function code, MODBUS error code or value < 0 on other error.
-   *
-   * \note Ehat to do with WriteMultipleRegisters response ?
    */
   int decode(const QByteArray &pdu);
 

@@ -53,3 +53,9 @@ QT4_WRAP_CPP(MDT_FILE_TEST_MOC "mdtFileTest.h")
 add_executable(mdtfiletest "mdtFileTest.cpp" ${MDT_FILE_TEST_MOC})
 target_link_libraries(mdtfiletest "mdtutils")
 target_link_libraries(mdtfiletest "mdttest")
+
+# * mdtIoTest executable *
+QT4_WRAP_CPP(MDT_IO_TEST_MOC "mdtIoTest.h")
+add_executable(mdtiotest "mdtIoTest.cpp" ${MDT_IO_TEST_MOC})
+target_link_libraries(mdtiotest "mdtutils")
+target_link_libraries(mdtiotest "mdttest")

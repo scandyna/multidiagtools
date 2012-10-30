@@ -1,28 +1,38 @@
-window_sizes 1280 1001 304 970 803 120
+window_sizes 1024 718 304 714 520 120
 diagrams
+  active  classdiagram_ref 508546 // mdtIoWidgets
+    714 520 80 3 290 206
   classdiagram_ref 314242 // mdtDevice
     776 642 100 4 0 0
-  active  classdiagram_ref 508290 // mdtDeviceModbus
-    970 803 100 4 36 0
-  classdiagram_ref 314370 // mdtDeviceU3606A
-    776 642 100 4 84 0
+  classdiagram_ref 508290 // mdtDeviceModbus
+    776 642 100 4 0 0
+  classdiagram_ref 515074 // mdtDeviceIoWidget
+    776 642 100 4 0 0
+  classdiagram_ref 515202 // mdtIo
+    776 642 100 4 228 0
 end
 show_stereotypes
-selected operation_ref 1010690 // readDigitalOutputs
+selected operation_ref 1050882 // setIo
 open
-  attribute_ref 638850 // pvAnalogOutputs
-  attribute_ref 638594 // pvDigitalInputs
-  attribute_ref 638466 // pvDigitalOutputs
-  operation_ref 1024898 // getAnalogInputValue
-  operation_ref 1025026 // readAnalogInputs
-  operation_ref 1011330 // setAnalogOutput
-  operation_ref 1011458 // getAnalogOutputValue
-  operation_ref 1024642 // writeAnalogOutputs
-  operation_ref 1024770 // readAnalogOutputs
-  operation_ref 1010946 // getDigitalInputState
-  operation_ref 1011202 // readDigitalInputs
-  operation_ref 1010690 // readDigitalOutputs
-  class_ref 532226 // mdtDeviceModbusWago
+  operation_ref 1043458 // setAddress
+  operation_ref 1043586 // address
+  operation_ref 1050498 // setUnit
+  operation_ref 1050626 // unit
+  operation_ref 1034882 // maximum
+  attribute_ref 646146 // pvStep
+  attribute_ref 646274 // pvStepInverse
+  operation_ref 1050754 // unitChangedForUi
+  operation_ref 1043970 // rangeChangedForUi
+  operation_ref 1035394 // setValueFromUi
+  operation_ref 1036162 // stateChanged
+  operation_ref 1050882 // setIo
+  operation_ref 1043842 // setAddress
+  class_ref 518786 // mdtDigitalInWidget
+  operation_ref 1035778 // setIo
+  operation_ref 1035010 // setIo
+  classrelation_ref 635522 // pvIo (<unidirectional association>)
+  operation_ref 1035266 // setIo
+  classview_ref 240514 // mdtDevice
   
   package_ref 161666 // linux
 end

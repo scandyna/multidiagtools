@@ -489,6 +489,8 @@ bool mdtFrameCodecModbus::decodeReadInputRegisters()
 
 bool mdtFrameCodecModbus::decodeWriteSingleCoil()
 {
+  quint16 address;
+
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
     mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size <> 5 Bytes)", mdtError::Error);
@@ -496,6 +498,10 @@ bool mdtFrameCodecModbus::decodeWriteSingleCoil()
     e.commit();
     return false;
   }
+  // Get address
+  address = (quint8)pvPdu.at(1) << 8;
+  address |= (quint8)pvPdu.at(2);
+  pvValues.append(address);
   // Get value
   if((quint8)pvPdu.at(3) == 0xFF){
     pvValues.append(true);
@@ -517,6 +523,10 @@ bool mdtFrameCodecModbus::decodeWriteSingleRegister()
     e.commit();
     return false;
   }
+  // Get address
+  value = (quint8)pvPdu.at(1) << 8;
+  value |= (quint8)pvPdu.at(2);
+  pvValues.append(value);
   // Get value
   value = (quint8)pvPdu.at(3) << 8;
   value |= (quint8)pvPdu.at(4);
@@ -527,7 +537,7 @@ bool mdtFrameCodecModbus::decodeWriteSingleRegister()
 
 bool mdtFrameCodecModbus::decodeWriteMultipleCoils()
 {
-  quint16 n;
+  quint16 value;
 
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
@@ -536,19 +546,21 @@ bool mdtFrameCodecModbus::decodeWriteMultipleCoils()
     e.commit();
     return false;
   }
+  // Get starting address
+  value = (quint8)pvPdu.at(1) << 8;
+  value |= (quint8)pvPdu.at(2);
+  pvValues.append(value);
   // Get value
-  n = (quint8)pvPdu.at(3) << 8;
-  n |= (quint8)pvPdu.at(4);
-  /// \note Transmit n somwhere ?
-  //pvValues.append(value);
-  qDebug() << "mdtFrameCodecModbus::decodeWriteMultipleCoils(): set " << n << " outputs";
+  value = (quint8)pvPdu.at(3) << 8;
+  value |= (quint8)pvPdu.at(4);
+  pvValues.append(value);
 
   return true;
 }
 
 bool mdtFrameCodecModbus::decodeWriteMultipleRegisters()
 {
-  quint16 n;
+  quint16 value;
 
   // Case of invalid bytes count
   if(pvPdu.size() != 5){
@@ -557,12 +569,14 @@ bool mdtFrameCodecModbus::decodeWriteMultipleRegisters()
     e.commit();
     return false;
   }
+  // Get starting address
+  value = (quint8)pvPdu.at(1) << 8;
+  value |= (quint8)pvPdu.at(2);
+  pvValues.append(value);
   // Get value
-  n = (quint8)pvPdu.at(3) << 8;
-  n |= (quint8)pvPdu.at(4);
-  /// \note Transmit n somwhere ?
-  //pvValues.append(value);
-  qDebug() << "mdtFrameCodecModbus::decodeWriteMultipleRegisters(): set " << n << " outputs";
+  value = (quint8)pvPdu.at(3) << 8;
+  value |= (quint8)pvPdu.at(4);
+  pvValues.append(value);
 
   return true;
 }

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtIoWidgetTest.h"
+#include "mdtAnalogIo.h"
 #include "mdtAnalogInWidget.h"
 #include "mdtAnalogOutWidget.h"
 #include "mdtDigitalInWidget.h"
@@ -83,70 +84,77 @@ void mdtIoWidgetTest::analogInWidgetTest()
 
 void mdtIoWidgetTest::analogOutWidgetTest()
 {
+  mdtAnalogIo ao;
   mdtAnalogOutWidget wAo;
   mdtAnalogInWidget wAi;
 
-  QObject::connect(&wAo, SIGNAL(valueChanged(double)), &wAi, SLOT(setValue(double)));
+  // Setup
+  wAo.setIo(&ao);
+  QObject::connect(&ao, SIGNAL(valueChanged(double)), &wAi, SLOT(setValue(double)));
+  ///QObject::connect(&wAo, SIGNAL(valueChanged(double)), &wAi, SLOT(setValue(double)));
 
   wAo.show();
   wAi.show();
 
   // Initial state
-  QCOMPARE(wAo.value(), 0.0);
-  QCOMPARE(wAo.valueInt(), 0);
+  ///QCOMPARE(wAo.value(), 0.0);
+  ///QCOMPARE(wAo.valueInt(), 0);
+  QCOMPARE(ao.value(), 0.0);
+  QCOMPARE(ao.valueInt(), 0);
+
 
   // 0...10V range with 8 bits resolution
-  wAo.setLabel("Output voltage of final stage");
-  wAo.setLabelShort("Vout");
-  wAo.setRange(0, 10, 256);
+  ao.setLabel("Output voltage of final stage");
+  ao.setLabelShort("Vout");
+  ao.setRange(0, 10, 256);
   wAi.setLabel("Input voltage of final stage");
   wAi.setLabelShort("Vin");
   wAi.setUnit("V");
   wAi.setRange(0, 10, 256);
-  QCOMPARE(wAo.value(), 0.0);
-  QCOMPARE(wAo.valueInt(), 0);
+  QCOMPARE(ao.value(), 0.0);
+  QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(wAi.value(), 0.0);
   QCOMPARE(wAi.valueInt(), 0);
-  wAo.setValueInt(0);
-  QCOMPARE(wAo.value(), 0.0);
-  QCOMPARE(wAo.valueInt(), 0);
+  ao.setValueInt(0);
+  QCOMPARE(ao.value(), 0.0);
+  QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(wAi.value(), 0.0);
   QCOMPARE(wAi.valueInt(), 0);
-  wAo.setValueInt(127);
-  QCOMPARE(wAo.value(), (double)(10.0*127.0/255.0));
-  QCOMPARE(wAo.valueInt(), 127);
+  ao.setValueInt(127);
+  QCOMPARE(ao.value(), (double)(10.0*127.0/255.0));
+  QCOMPARE(ao.valueInt(), 127);
   QCOMPARE(wAi.value(), (double)(10.0*127.0/255.0));
   QCOMPARE(wAi.valueInt(), 127);
-  wAo.setValueInt(255);
-  QCOMPARE(wAo.value(), 10.0);
-  QCOMPARE(wAo.valueInt(), 255);
+  ao.setValueInt(255);
+  QCOMPARE(ao.value(), 10.0);
+  QCOMPARE(ao.valueInt(), 255);
   QCOMPARE(wAi.value(), 10.0);
   QCOMPARE(wAi.valueInt(), 255);
 
   // 4...20mA range with 8 bits resolution
-  wAo.setLabel("Output current of final stage");
-  wAo.setLabelShort("Iout");
-  wAo.setRange(4, 20, 256);
+  ao.setLabel("Output current of final stage");
+  ao.setLabelShort("Iout");
+  ao.setRange(4, 20, 256);
   wAi.setRange(4, 20, 256);
   wAi.setLabelShort("Iin");
   wAi.setUnit("mA");
-  QCOMPARE(wAo.value(), 4.0);
-  QCOMPARE(wAo.valueInt(), 0);
+  QCOMPARE(ao.value(), 4.0);
+  QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(wAi.value(), 4.0);
   QCOMPARE(wAi.valueInt(), 0);
-  wAo.setValueInt(0);
-  QCOMPARE(wAo.value(), 4.0);
-  QCOMPARE(wAo.valueInt(), 0);
+  ao.setValueInt(0);
+  QCOMPARE(ao.value(), 4.0);
+  QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(wAi.value(), 4.0);
   QCOMPARE(wAi.valueInt(), 0);
-  wAo.setValueInt(127);
-  QCOMPARE(wAo.value(), (double)(4.0+16.0*127.0/255.0));
-  QCOMPARE(wAo.valueInt(), 127);
+  ao.setValueInt(127);
+  QCOMPARE(ao.value(), (double)(4.0+16.0*127.0/255.0));
+  QCOMPARE(ao.valueInt(), 127);
   QCOMPARE(wAi.value(), (double)(4.0+16.0*127.0/255.0));
   QCOMPARE(wAi.valueInt(), 127);
-  wAo.setValueInt(255);
-  QCOMPARE(wAo.value(), 20.0);
-  QCOMPARE(wAo.valueInt(), 255);
+  ao.setValueInt(255);
+  QCOMPARE(ao.value(), 20.0);
+  QCOMPARE(ao.valueInt(), 255);
   QCOMPARE(wAi.value(), 20.0);
   QCOMPARE(wAi.valueInt(), 255);
 

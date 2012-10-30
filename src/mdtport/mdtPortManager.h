@@ -35,6 +35,8 @@
 #include <QByteArray>
 
 #include <QList>
+#include <QMap>
+
 #include "mdtPortInfo.h"
 
 class mdtPortThread;
@@ -239,7 +241,8 @@ class mdtPortManager : public QThread
    *  and don't wait until data was written.
    *
    * \param data Data to write
-   * \return True on success. False if write queue is full.
+   * \return 0 on success or value < 0 if write queue is full. Some subclass can return a frame ID,
+   *          see subclass documentation for details.
    * \pre Port must be set with setPort() before use of this method.
    *
    * Subclass notes:<br>
@@ -249,8 +252,10 @@ class mdtPortManager : public QThread
    *  A frame must be taken from port's write frames pool with mdtAbstractPort::writeFramesPool()
    *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
    *  then added to port's write queue with mdtAbstractPort::addFrameToWrite() .
+   *  If protocol supports frame identification (like MODBUS's transaction ID or USBTMC's bTag),
+   *   it should be returned here and incremented.
    */
-  virtual bool writeData(QByteArray data);
+  virtual int writeData(QByteArray data);
 
   /*! \brief Wait until a complete frame is available
    *
@@ -269,10 +274,28 @@ class mdtPortManager : public QThread
    */
   virtual bool waitReadenFrame(int timeout = 500);
 
+  /*! \brief Get data by frame ID
+   *
+   * The frame ID is a protocol specific identification.
+   *  F.ex. in MODBUS/TCP, the transaction ID is used,
+   *  or bTag for USBTMC.
+   *
+   * If found, the frame is removed from received queue.
+   *
+   * If ID was not found, a empty QByteArray is returned.
+   */
+  QByteArray readenFrame(int id);
+
   /*! \brief Get all readen data
    *
    * Get a copy of all currently available data.
-   *  Note: the list of data must be cleared explicitly
+   *  Data frames are sorted by asending order, i.e. if 
+   *   frame ID is used, the sort order is this ID assending,
+   *   else it is from oldest to newest received frame (like a FIFO).
+   *
+   * After a call of this method, the internal received frames queue is cleared.
+   *
+   *  Note: the list of returned data (witch is a copy of reception queue) must be cleared explicitly
    *   with QList::clear() after data are used.
    *   (or remove each item with, for.ex. QList::takeFirst() )
    */
@@ -330,12 +353,13 @@ class mdtPortManager : public QThread
 
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
-  QList<QByteArray> pvReadenFrames;       // Hold a copy of each frame readen by port
-  QList<QByteArray> pvReadenFramesCopy;   // Hold a copy of each frame readen by port, this will be returned by readenFrames()
+  QMap<quint16, QByteArray> pvReadenFrames; // Hold a copy of each frame readen by port
+  QList<QByteArray> pvReadenFramesCopy;     // Hold a copy of each frame readen by port, this will be returned by readenFrames()
 
  private:
 
   mdtPortInfo pvPortInfo;
+  quint16 pvLastReadenFrameId;    // Used if protocol does not contain a frame id.
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);

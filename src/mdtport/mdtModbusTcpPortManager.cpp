@@ -125,7 +125,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   return portInfoList;
 }
 
-int mdtModbusTcpPortManager::writePdu(QByteArray pdu)
+int mdtModbusTcpPortManager::writeData(QByteArray pdu)
 {
   Q_ASSERT(pvPort != 0);
 
@@ -157,46 +157,6 @@ int mdtModbusTcpPortManager::writePdu(QByteArray pdu)
   return pvTransactionId;
 }
 
-/**
-bool mdtModbusTcpPortManager::writeData(const QByteArray &pdu, quint16 transactionId)
-{
-  pvTransactionId = transactionId;
-
-  return writePdu(pdu);
-}
-*/
-
-bool mdtModbusTcpPortManager::waitReadenFrame(int timeout)
-{
-  int maxIter = timeout / 50;
-
-  while(pvReadenPdus.size() < 1){
-    if(maxIter <= 0){
-      return false;
-    }
-    qApp->processEvents();
-    msleep(50);
-    maxIter--;
-  }
-
-  return true;
-}
-
-QHash<quint16, QByteArray> &mdtModbusTcpPortManager::readenFrames()
-{
-  qDebug() << "mdtModbusTcpPortManager::readenFrames()<QHash> ...";
-
-  QHashIterator<quint16, QByteArray> i(pvReadenPdus);
-
-  while(i.hasNext()){
-    i.next();
-    pvReadenPdusCopy.insert(i.key(), i.value());
-    pvReadenPdus.remove(i.key());
-  }
-
-  return pvReadenPdusCopy;
-}
-
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
 {
   qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() ...";
@@ -213,7 +173,7 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
       // Copy data
-      pvReadenPdus.insert(frame->transactionId(), frame->getPdu());
+      pvReadenFrames.insert(frame->transactionId(), frame->getPdu());
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);

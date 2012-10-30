@@ -84,50 +84,14 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Internally, the transaction ID is incremented at each request and returned.
    *
    * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
-   * \return Transaction ID on success or value < 0 on error. If the maximum of authorized transactions are reached, false is returned.
+   * \return Transaction ID on success or value < 0 on error. If the maximum of authorized transactions are reached, value < 0 is returned.
    *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix this, and
    *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
    * \pre Port must be set with setPort() before use of this method.
    * 
    * \todo Should return transactionId , or < 0 on error
    */
-  int writePdu(QByteArray pdu);
-
-  /*! \brief Write data by copy
-   *
-   * This is the same as writeData(QByteArray) , but you can specify
-   *  a transaction ID.
-   *
-   * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
-   * \param transactionId Transaction identifier. Will be encoded in MBAP header.
-   * \return True on success.
-   * \pre Port must be set with setPort() before use of this method.
-   */
-  ///bool writeData(const QByteArray &pdu, quint16 transactionId);
-
-  /*! \brief Wait until a complete frame is available
-   *
-   * This method will return when a complete frame was readen.
-   *  This is usefull for query/answer protocols.
-   *
-   * Internally, a couple of sleep and process event are called, so 
-   * Qt's event loop will not be broken.
-   *
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \return True if Ok, false on timeout
-   */
-  bool waitReadenFrame(int timeout = 500);
-
-  /*! \brief Get all readen data (PDUs)
-   *
-   * Get a copy of all currently available data.
-   *  The key is the transactionId.
-   *
-   * Note: the list of data must be cleared explicitly
-   *  with QHash::clear() after data are used.
-   *  (or remove each item with, for.ex. QHash::take() )
-   */
-  QHash<quint16, QByteArray> &readenFrames();
+  int writeData(QByteArray pdu);
 
  public slots:
 
@@ -138,8 +102,6 @@ class mdtModbusTcpPortManager : public mdtPortManager
  private:
 
   quint16 pvTransactionId;
-  QHash<quint16, QByteArray> pvReadenPdus;
-  QHash<quint16, QByteArray> pvReadenPdusCopy;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtModbusTcpPortManager);

@@ -26,6 +26,7 @@
 
 class QDoubleSpinBox;
 class QwtSlider;
+class mdtAnalogIo;
 
 /*! \brief Representation of a analog output
  *
@@ -33,6 +34,9 @@ class QwtSlider;
  *  it is usefull to display a output to the user.
  *  For example, a analog output of a I/O module, with a 8 bit
  *  encoding could be displayed with this class.
+ *
+ * This class is used to display a analog output as GUI.
+ * \sa mdtAnalogIo
  */
 class mdtAnalogOutWidget : public mdtAbstractIoWidget
 {
@@ -44,55 +48,26 @@ class mdtAnalogOutWidget : public mdtAbstractIoWidget
 
   ~mdtAnalogOutWidget();
 
-  /*! \brief Set the range
+  /*! \brief Set the I/O object
    *
-   * \param min Minimum value to display (f.ex. 0V, or 4mA)
-   * \param max Maximum value to display (f.ex. 10V, or 20mA)
-   * \param steps Number of steps of the input (f.ex. 256 with 8 bits resolution)
-   * \pre steps must be > 1
-   * \pre max must be > min
+   * Make all needed connections with the I/O
+   *  object, so that widget is allways updated.
+   *
+   * \pre io must be a valid pointer.
    */
-  void setRange(double min, double max, int steps);
+  void setIo(mdtAnalogIo *io);
 
-  /*! \brief Set the unit (V, A, °C, ...)
-   */
+ private slots:
+
+  // Used to update GUI from mdtAnalogIo object.
   void setUnit(const QString &unit);
-
-  /*! \brief Set the value to update display
-   */
+  void setRange(double min, double max);
   void setValue(double value);
-
-  /*! \brief Get value (set with setValue() )
-   */
-  double value();
-
-  /*! \brief Set the integer value
-   *
-   * Will calculate the real value depending on resolution and update display.
-   *  The resolution is set with setRange() (steps parameter)
-   */
-  void setValueInt(int value);
-
-  /*! \brief Get the integer value
-   *
-   * The integer value depend on value and resolution.
-   *  The resolution is set with setRange() (steps parameter)
-   */
-  int valueInt();
-
- signals:
-
-  /*! \brief This signal is emitted whenever the value is changed
-   */
-  void valueChanged(double value);
 
  private:
 
   Q_DISABLE_COPY(mdtAnalogOutWidget);
 
-  double pvStep;
-  double pvStepInverse;
-  double pvCurrentValue;
   QwtSlider *slValue;
   QDoubleSpinBox *sbValue;
   QString pvUnit;

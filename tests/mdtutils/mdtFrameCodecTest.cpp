@@ -368,7 +368,6 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   QVERIFY(c.values().at(1) == 0x0203);
   QVERIFY(c.values().at(2) == 0x1156);
 
-
   // Check the encode of WriteSingleCoil
   pdu = c.encodeWriteSingleCoil(0x1258, true);
   QVERIFY(pdu.at(0) == 0x05);         // Function code
@@ -385,8 +384,9 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append(0xFF);     // Value H
   pdu.append((char)0);  // Value L
   QVERIFY(c.decode(pdu) == 0x05);
-  QVERIFY(c.values().size() == 1);
-  QVERIFY(c.values().at(0).toBool() == true);
+  QVERIFY(c.values().size() == 2);
+  QVERIFY(c.values().at(0) == 0x2506);
+  QVERIFY(c.values().at(1) == true);
   pdu.clear();
   pdu.append(0x05);     // Function code
   pdu.append(0x25);     // Address H
@@ -394,8 +394,9 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append((char)0);  // Value H
   pdu.append((char)0);  // Value L
   QVERIFY(c.decode(pdu) == 0x05);
-  QVERIFY(c.values().size() == 1);
-  QVERIFY(c.values().at(0).toBool() == false);
+  QVERIFY(c.values().size() == 2);
+  QVERIFY(c.values().at(0) == 0x2506);
+  QVERIFY(c.values().at(1) == false);
 
   // Encode WriteSingleRegister (FC 06 , 0x06)
   pdu = c.encodeWriteSingleRegister(0x123, 0x7542);
@@ -414,8 +415,9 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append(0x12);     // Value H
   pdu.append(0x85);     // Value L
   QVERIFY(c.decode(pdu) == 0x06);
-  QVERIFY(c.values().size() == 1);
-  QVERIFY(c.values().at(0).toInt() == 0x1285);
+  QVERIFY(c.values().size() == 2);
+  QVERIFY(c.values().at(0) == 0x0412);
+  QVERIFY(c.values().at(1) == 0x1285);
 
   // Encode WriteMultipleCoils (FC 15 , 0x0F)
   dValues.clear();
@@ -464,7 +466,9 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append(0x02);     // Qty H
   pdu.append(0x12);     // Qty L
   QVERIFY(c.decode(pdu) == 0x0F);
-  QVERIFY(c.values().size() == 0);
+  QVERIFY(c.values().size() == 2);
+  QVERIFY(c.values().at(0) == 0x0721);
+  QVERIFY(c.values().at(1) == 0x0212);
 
   // Encode WriteMultipleRegisters (FC 16 , 0x10)
   aValues.clear();
@@ -491,9 +495,9 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   pdu.append(0x02);     // Qty H
   pdu.append(0x75);     // Qty L
   QVERIFY(c.decode(pdu) == 0x10);
-  QVERIFY(c.values().size() == 0);
-
-
+  QVERIFY(c.values().size() == 2);
+  QVERIFY(c.values().at(0) == 0x0622);
+  QVERIFY(c.values().at(1) == 0x0275);
 }
 
 /*

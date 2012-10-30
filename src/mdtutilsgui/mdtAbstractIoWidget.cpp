@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtAbstractIoWidget.h"
+#include "mdtAbstractIo.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QFrame>
@@ -47,19 +48,9 @@ mdtAbstractIoWidget::~mdtAbstractIoWidget()
   delete pvMessageBox;
 }
 
-void mdtAbstractIoWidget::setAddress(int address)
-{
-  pvAddress = address;
-}
-
 int mdtAbstractIoWidget::address() const
 {
   return pvAddress;
-}
-
-void mdtAbstractIoWidget::setLabelShort(const QString &text)
-{
-  lbLabel->setText(text);
 }
 
 QString mdtAbstractIoWidget::labelShort() const
@@ -67,14 +58,29 @@ QString mdtAbstractIoWidget::labelShort() const
   return lbLabel->text();
 }
 
-void mdtAbstractIoWidget::setLabel(const QString & text)
-{
-  lbLabel->setToolTip(text);
-}
-
 QString mdtAbstractIoWidget::label() const
 {
   return lbLabel->toolTip();
+}
+
+QString mdtAbstractIoWidget::details() const
+{
+  return pvMessageBox->detailedText();
+}
+
+void mdtAbstractIoWidget::setAddress(int address)
+{
+  pvAddress = address;
+}
+
+void mdtAbstractIoWidget::setLabelShort(const QString &text)
+{
+  lbLabel->setText(text);
+}
+
+void mdtAbstractIoWidget::setLabel(const QString & text)
+{
+  lbLabel->setToolTip(text);
 }
 
 void mdtAbstractIoWidget::setDetails(const QString & text)
@@ -82,9 +88,15 @@ void mdtAbstractIoWidget::setDetails(const QString & text)
   pvMessageBox->setDetailedText(text);
 }
 
-QString mdtAbstractIoWidget::details() const
+void mdtAbstractIoWidget::setIo(mdtAbstractIo *io)
 {
-  return pvMessageBox->detailedText();
+  Q_ASSERT(io != 0);
+
+  // Signals/slots from io to widget
+  connect(io, SIGNAL(addressChangedForUi(int)), this, SLOT(setAddress(int)));
+  connect(io, SIGNAL(labelShortChangedForUi(const QString&)), this, SLOT(setLabelShort(const QString&)));
+  connect(io, SIGNAL(labelChangedForUi(const QString&)), this, SLOT(setLabel(const QString&)));
+  connect(io, SIGNAL(detailsChangedForUi(const QString&)), this, SLOT(setDetails(const QString&)));
 }
 
 void mdtAbstractIoWidget::showIoInformations()

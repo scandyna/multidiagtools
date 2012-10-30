@@ -130,6 +130,7 @@ void mdtPortTerm::sendCmd()
   }
   cmd.append('\n');
   //cmd.append((char)0x04);
+  /// \todo Error handling !
   pvCurrentPortManager->writeData(cmd.toAscii());
   if(pvCurrentPortManager == pvUsbtmcPortManager){
     if(cmdIsQuery){

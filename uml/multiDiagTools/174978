@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 6
+  revision 9
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1421,7 +1421,7 @@ ${inlines}
     associated_deployment_view deploymentview_ref 285058 // mdtIoWidgets
     classdiagram 508546 "mdtIoWidgets"
       draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
+      size A3
     end
 
     class 518658 "mdtAbstractIoWidget"
@@ -1474,51 +1474,11 @@ ${inlines}
 	
       end
 
-      attribute 624642 "pvAddress"
-	private explicit_type "int"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 624770 "pvLabelShort"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 624898 "pvLabel"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 625026 "pvDetails"
-	private type class_ref 161026 // QString
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 994818 "setLabelShort"
-	public explicit_return_type "void"
+      operation 1050882 "setIo"
+	protected explicit_return_type "void"
 	nparams 1
-	  param in name "text" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	  param in name "io" type class_ref 538882 // mdtAbstractIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
@@ -1529,12 +1489,14 @@ ${inlines}
 	
       end
 
-      operation 994946 "labelShort"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      operation 1043842 "setAddress"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "adr" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1543,11 +1505,12 @@ ${inlines}
 	
       end
 
-      operation 995074 "setLabel"
-	public explicit_return_type "void"
+      operation 1043074 "setLabelShort"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 1
 	  param in name "text" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
@@ -1558,25 +1521,12 @@ ${inlines}
 	
       end
 
-      operation 995202 "label"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 995330 "setDetails"
-	public explicit_return_type "void"
+      operation 1043202 "setLabel"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 1
 	  param in name "text" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
@@ -1587,12 +1537,14 @@ ${inlines}
 	
       end
 
-      operation 995458 "details"
-	public return_type class_ref 161026 // QString
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      operation 1043330 "setDetails"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "text" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -1652,8 +1604,24 @@ ${inlines}
 	
       end
 
-      operation 995586 "setOn"
+      operation 1035650 "setIo"
 	public explicit_return_type "void"
+	nparams 1
+	  param in name "io" type class_ref 539138 // mdtDigitalIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 995586 "setOn"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 1
 	  param in name "on" explicit_type "bool"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -1667,18 +1635,13 @@ ${inlines}
 	
       end
 
-      operation 995714 "isOn"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      classrelation 636034 // pvIo (<unidirectional association>)
+	relation 627970 --->
+	  a role_name "pvIo" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
+	    classrelation_ref 636034 // pvIo (<unidirectional association>)
+	  b parent class_ref 539138 // mdtDigitalIo
       end
     end
 
@@ -1732,8 +1695,24 @@ ${inlines}
 	
       end
 
+      operation 1035778 "setIo"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "io" type class_ref 539138 // mdtDigitalIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 995842 "setOn"
-	public explicit_return_type "void"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 1
 	  param in name "on" explicit_type "bool"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -1747,34 +1726,13 @@ ${inlines}
 	
       end
 
-      operation 995970 "isOn"
-	public explicit_return_type "bool"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      classrelation 635906 // pvIo (<unidirectional association>)
+	relation 627842 --->
+	  a role_name "pvIo" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 996098 "stateChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "on" explicit_type "bool"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
+	    classrelation_ref 635906 // pvIo (<unidirectional association>)
+	  b parent class_ref 539138 // mdtDigitalIo
       end
     end
 
@@ -1828,12 +1786,27 @@ ${inlines}
 	
       end
 
-      operation 1003906 "setRange"
+      operation 1035010 "setIo"
 	public explicit_return_type "void"
-	nparams 3
+	nparams 1
+	  param in name "io" type class_ref 539010 // mdtAnalogIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1003906 "setRange"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 2
 	  param in name "min" explicit_type "double"
 	  param in name "max" explicit_type "double"
-	  param in name "steps" explicit_type "int"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
@@ -1846,7 +1819,8 @@ ${inlines}
       end
 
       operation 996226 "setValue"
-	public explicit_return_type "void"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 1
 	  param in name "value" explicit_type "double"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -1860,67 +1834,13 @@ ${inlines}
 	
       end
 
-      operation 996354 "value"
-	public explicit_return_type "double"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      classrelation 635522 // pvIo (<unidirectional association>)
+	relation 627458 --->
+	  a role_name "pvIo" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1003522 "setValueInt"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "value" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1003650 "valueInt"
-	public explicit_return_type "int"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 631810 "pvStep"
-	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 631938 "pvStepInverse"
-	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
+	    classrelation_ref 635522 // pvIo (<unidirectional association>)
+	  b parent class_ref 539010 // mdtAnalogIo
       end
     end
 
@@ -1974,12 +1894,27 @@ ${inlines}
 	
       end
 
-      operation 1003778 "setRange"
+      operation 1035266 "setIo"
 	public explicit_return_type "void"
-	nparams 3
+	nparams 1
+	  param in name "io" type class_ref 539010 // mdtAnalogIo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1003778 "setRange"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 2
 	  param in name "min" explicit_type "double"
 	  param in name "max" explicit_type "double"
-	  param in name "steps" explicit_type "int"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}, ${t1} ${p1}${v1}, ${t2} ${p2}${v2}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
@@ -1992,7 +1927,8 @@ ${inlines}
       end
 
       operation 996482 "setValue"
-	public explicit_return_type "void"
+	stereotype "slot"
+	private explicit_return_type "void"
 	nparams 1
 	  param in name "value" explicit_type "double"
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
@@ -2006,83 +1942,13 @@ ${inlines}
 	
       end
 
-      operation 996610 "value"
-	public explicit_return_type "double"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+      classrelation 635650 // pvIo (<unidirectional association>)
+	relation 627586 --->
+	  a role_name "pvIo" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1003266 "setValueInt"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "value" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1003394 "valueInt"
-	public explicit_return_type "int"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 996738 "valueChanged"
-	stereotype "signal"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "value" explicit_type "double"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${v0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      attribute 631554 "pvStep"
-	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 631682 "pvStepInverse"
-	private explicit_type "double"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
+	    classrelation_ref 635650 // pvIo (<unidirectional association>)
+	  b parent class_ref 539010 // mdtAnalogIo
       end
     end
   end

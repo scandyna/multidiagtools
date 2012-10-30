@@ -26,6 +26,7 @@
 class QLabel;
 class QPushButton;
 class QMessageBox;
+class mdtAbstractIo;
 
 /*! \brief Base class for I/O widgets
  */
@@ -47,13 +48,27 @@ class mdtAbstractIoWidget : public QWidget
 
   virtual ~mdtAbstractIoWidget();
 
-  /*! \brief Set the I/O address
-   */
-  void setAddress(int address);
-
   /*! \brief Get the I/O address
    */
   int address() const;
+
+  /*! \brief Get the short I/O label
+   */
+  QString labelShort() const;
+
+  /*! \brief Get the complete I/O label
+   */
+  QString label() const;
+
+  /*! \brief Get details about the I/O
+   */
+  QString details() const;
+
+ public slots:
+
+  /*! \brief Set the I/O address
+   */
+  void setAddress(int address);
 
   /*! \brief Set the short I/O label
    *
@@ -61,29 +76,28 @@ class mdtAbstractIoWidget : public QWidget
    */
   void setLabelShort(const QString & text);
 
-  /*! \brief Get the short I/O label
-   */
-  QString labelShort() const;
-
   /*! \brief Set the complete I/O label
    *
    * This label is displayed as tool tip
    */
   void setLabel(const QString & text);
 
-  /*! \brief Get the complete I/O label
-   */
-  QString label() const;
-
   /*! \brief Set details about the I/O
    */
   void setDetails(const QString & text);
 
-  /*! \brief Get details about the I/O
-   */
-  QString details() const;
-
  protected:
+
+   /*! \brief Set the I/O object
+   *
+   * Make all needed connections with the I/O
+   *  base object, so that widget is allways updated.
+   *
+   * Used only by subclass.
+   *
+   * \pre io must be a valid pointer.
+   */
+  void setIo(mdtAbstractIo *io);
 
   // Widgets that are shared with subclass
   QLabel *lbLabel;
