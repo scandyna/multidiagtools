@@ -48,46 +48,6 @@ mdtAbstractIoWidget::~mdtAbstractIoWidget()
   delete pvMessageBox;
 }
 
-int mdtAbstractIoWidget::address() const
-{
-  return pvAddress;
-}
-
-QString mdtAbstractIoWidget::labelShort() const
-{
-  return lbLabel->text();
-}
-
-QString mdtAbstractIoWidget::label() const
-{
-  return lbLabel->toolTip();
-}
-
-QString mdtAbstractIoWidget::details() const
-{
-  return pvMessageBox->detailedText();
-}
-
-void mdtAbstractIoWidget::setAddress(int address)
-{
-  pvAddress = address;
-}
-
-void mdtAbstractIoWidget::setLabelShort(const QString &text)
-{
-  lbLabel->setText(text);
-}
-
-void mdtAbstractIoWidget::setLabel(const QString & text)
-{
-  lbLabel->setToolTip(text);
-}
-
-void mdtAbstractIoWidget::setDetails(const QString & text)
-{
-  pvMessageBox->setDetailedText(text);
-}
-
 void mdtAbstractIoWidget::setIo(mdtAbstractIo *io)
 {
   Q_ASSERT(io != 0);
@@ -97,6 +57,11 @@ void mdtAbstractIoWidget::setIo(mdtAbstractIo *io)
   connect(io, SIGNAL(labelShortChangedForUi(const QString&)), this, SLOT(setLabelShort(const QString&)));
   connect(io, SIGNAL(labelChangedForUi(const QString&)), this, SLOT(setLabel(const QString&)));
   connect(io, SIGNAL(detailsChangedForUi(const QString&)), this, SLOT(setDetails(const QString&)));
+  // Get initial data
+  setAddress(io->address());
+  setLabelShort(io->labelShort());
+  setLabel(io->label());
+  setDetails(io->details());
 }
 
 void mdtAbstractIoWidget::showIoInformations()
@@ -120,4 +85,24 @@ void mdtAbstractIoWidget::showIoInformations()
   pvMessageBox->setInformativeText(str);
   pvMessageBox->setIcon(QMessageBox::Information);
   pvMessageBox->exec();
+}
+
+void mdtAbstractIoWidget::setAddress(int address)
+{
+  pvAddress = address;
+}
+
+void mdtAbstractIoWidget::setLabelShort(const QString &text)
+{
+  lbLabel->setText(text);
+}
+
+void mdtAbstractIoWidget::setLabel(const QString & text)
+{
+  lbLabel->setToolTip(text);
+}
+
+void mdtAbstractIoWidget::setDetails(const QString & text)
+{
+  pvMessageBox->setDetailedText(text);
 }

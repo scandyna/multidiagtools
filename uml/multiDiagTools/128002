@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 107
+  revision 108
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -6566,7 +6566,7 @@ ${inlines}
 	
       end
 
-      operation 1035906 "valueChangedForUi"
+      operation 1035906 "stateChangedForUi"
 	stereotype "signal"
 	private explicit_return_type "void"
 	nparams 1

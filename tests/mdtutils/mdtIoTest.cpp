@@ -22,6 +22,7 @@
 #include "mdtApplication.h"
 #include "mdtAbstractIo.h"
 #include "mdtAnalogIo.h"
+#include "mdtDigitalIo.h"
 #include <QDebug>
 
 void mdtIoTest::mdtAbstractIoTest()
@@ -66,6 +67,21 @@ void mdtIoTest::analogIoTest()
   QCOMPARE(io.value(), 10.0);
   QCOMPARE(io.valueInt(), 255);
 }
+
+void mdtIoTest::digitalIoTest()
+{
+  mdtDigitalIo io;
+
+  // Initial values
+  QVERIFY(!io.isOn());
+
+  // Toggle
+  io.setOn(true);
+  QVERIFY(io.isOn());
+  io.setOn(false);
+  QVERIFY(!io.isOn());
+}
+
 
 int main(int argc, char **argv)
 {

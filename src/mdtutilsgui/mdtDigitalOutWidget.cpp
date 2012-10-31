@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtDigitalOutWidget.h"
+#include "mdtDigitalIo.h"
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -38,7 +39,7 @@ mdtDigitalOutWidget::mdtDigitalOutWidget(QWidget *parent)
   l->addWidget(pbDetails, 2, 0);
   setLayout(l);
 
-  connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
+  ///connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
 
   setOn(false);
   pbState->setText(tr("OFF"));
@@ -46,6 +47,22 @@ mdtDigitalOutWidget::mdtDigitalOutWidget(QWidget *parent)
 
 mdtDigitalOutWidget::~mdtDigitalOutWidget()
 {
+}
+
+void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
+{
+  Q_ASSERT(io != 0);
+
+  // Base Signals/slots connections
+  mdtAbstractIoWidget::setIo(io);
+  // Signals/slots from io to widget
+  connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
+  // Signals/slots from widget to io
+  connect(pbState, SIGNAL(toggled(bool)), io, SLOT(setStateFromUi(bool)));
+  // Internal signals/slots
+  connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
+  // Set initial data
+  setOn(io->isOn());
 }
 
 void mdtDigitalOutWidget::setOn(bool on)
@@ -58,10 +75,12 @@ void mdtDigitalOutWidget::setOn(bool on)
   }
 }
 
+/**
 bool mdtDigitalOutWidget::isOn()
 {
   return pbState->isChecked();
 }
+*/
 
 void mdtDigitalOutWidget::updateState(bool state)
 {
@@ -71,6 +90,6 @@ void mdtDigitalOutWidget::updateState(bool state)
   }else{
     pbState->setText(tr("OFF"));
   }
-  emit(stateChanged(state));
+  ///emit(stateChanged(state));
 }
 

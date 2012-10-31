@@ -27,6 +27,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFileCopie
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtFileCopierItem.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtAbstractIo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtAnalogIo.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtDigitalIo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtApplication.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtutils/linux/mdtPartitionAttributesPosix.cpp
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdtutils/mdtUicNumberWidget.ui

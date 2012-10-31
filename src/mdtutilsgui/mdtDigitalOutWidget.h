@@ -24,6 +24,7 @@
 #include "mdtAbstractIoWidget.h"
 
 class QPushButton;
+class mdtDigitalIo;
 
 class mdtDigitalOutWidget : public mdtAbstractIoWidget
 {
@@ -35,18 +36,28 @@ class mdtDigitalOutWidget : public mdtAbstractIoWidget
 
   ~mdtDigitalOutWidget();
 
-  void setOn(bool on);
-
-  bool isOn();
-
- signals:
-
-  void stateChanged(bool on);
+  /*! \brief Set the I/O object
+   *
+   * Make all needed connections with the I/O
+   *  object, so that widget is allways updated.
+   *
+   * \pre io must be a valid pointer.
+   */
+  void setIo(mdtDigitalIo *io);
 
  private slots:
 
-  // if state is != from current state, text will be updated and stateChanged() emited
+  // Used to update GUI from mdtDigitalIo object.
+  void setOn(bool on);
+
+  // if state is != from current state, text will be updated
   void updateState(bool state);
+
+  ///bool isOn();
+
+ signals:
+
+  ///void stateChanged(bool on);
 
  private:
 

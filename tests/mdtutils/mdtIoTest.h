@@ -34,6 +34,9 @@ class mdtIoTest : public mdtTest
 
   // Analog I/O test
   void analogIoTest();
+
+  // Digital I/O test
+  void digitalIoTest();
 };
 
 #endif  // #ifndef MDT_FILE_TEST_H

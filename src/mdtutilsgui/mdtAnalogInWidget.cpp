@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtAnalogInWidget.h"
+#include "mdtAnalogIo.h"
 #include <qwt_thermo.h>
 #include <QGridLayout>
 #include <QLabel>
@@ -29,8 +30,6 @@ mdtAnalogInWidget::mdtAnalogInWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
-  pvStep = 1.0;
-  pvStepInverse = 1.0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   thValue = new QwtThermo;
@@ -40,26 +39,26 @@ mdtAnalogInWidget::mdtAnalogInWidget(QWidget *parent)
   l->addWidget(lbValue, 2, 0);
   l->addWidget(pbDetails, 3, 0);
   setLayout(l);
-  // Set a default range for 0-10V / 8 bit style input
-  setRange(0.0, 10.0, 256);
-  setValue(0.0);
 }
 
 mdtAnalogInWidget::~mdtAnalogInWidget()
 {
 }
 
-void mdtAnalogInWidget::setRange(double min, double max, int steps)
+void mdtAnalogInWidget::setIo(mdtAnalogIo *io)
 {
-  Q_ASSERT(steps > 1);
-  Q_ASSERT(max > min);
+  Q_ASSERT(io != 0);
 
-  // Set factors
-  pvStep = (max-min)/(double)(steps-1);
-  pvStepInverse = 1.0/pvStep;
-  thValue->setRange(min, max);
-  // Display min value
-  setValue(min);
+  // Base Signals/slots connections
+  mdtAbstractIoWidget::setIo(io);
+  // Signals/slots from io to widget
+  connect(io, SIGNAL(unitChangedForUi(const QString&)), this, SLOT(setUnit(const QString&)));
+  connect(io, SIGNAL(rangeChangedForUi(double, double)), this, SLOT(setRange(double, double)));
+  connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
+  // Set initial data
+  setUnit(io->unit());
+  setRange(io->minimum(), io->maximum());
+  setValue(io->value());
 }
 
 void mdtAnalogInWidget::setUnit(const QString &unit)
@@ -67,21 +66,9 @@ void mdtAnalogInWidget::setUnit(const QString &unit)
   pvUnit = unit;
 }
 
-double mdtAnalogInWidget::value()
+void mdtAnalogInWidget::setRange(double min, double max)
 {
-  return thValue->value();
-}
-
-void mdtAnalogInWidget::setValueInt(int value)
-{
-  double x = pvStep*(double)value + thValue->minValue();
-
-  setValue(x);
-}
-
-int mdtAnalogInWidget::valueInt()
-{
-  return (pvStepInverse * (thValue->value() - thValue->minValue()));
+  thValue->setRange(min, max);
 }
 
 void mdtAnalogInWidget::setValue(double value)

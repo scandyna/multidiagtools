@@ -348,6 +348,30 @@ mdtCsvFile.cpp.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.s
 .PHONY : mdtCsvFile.cpp.s
 
+mdtDigitalIo.o: mdtDigitalIo.cpp.o
+.PHONY : mdtDigitalIo.o
+
+# target to build an object file
+mdtDigitalIo.cpp.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDigitalIo.cpp.o
+.PHONY : mdtDigitalIo.cpp.o
+
+mdtDigitalIo.i: mdtDigitalIo.cpp.i
+.PHONY : mdtDigitalIo.i
+
+# target to preprocess a source file
+mdtDigitalIo.cpp.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDigitalIo.cpp.i
+.PHONY : mdtDigitalIo.cpp.i
+
+mdtDigitalIo.s: mdtDigitalIo.cpp.s
+.PHONY : mdtDigitalIo.s
+
+# target to generate assembly for a file
+mdtDigitalIo.cpp.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDigitalIo.cpp.s
+.PHONY : mdtDigitalIo.cpp.s
+
 mdtError.o: mdtError.cpp.o
 .PHONY : mdtError.o
 
@@ -900,6 +924,30 @@ moc_mdtApplication.cxx.s:
 	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.s
 .PHONY : moc_mdtApplication.cxx.s
 
+moc_mdtDigitalIo.o: moc_mdtDigitalIo.cxx.o
+.PHONY : moc_mdtDigitalIo.o
+
+# target to build an object file
+moc_mdtDigitalIo.cxx.o:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDigitalIo.cxx.o
+.PHONY : moc_mdtDigitalIo.cxx.o
+
+moc_mdtDigitalIo.i: moc_mdtDigitalIo.cxx.i
+.PHONY : moc_mdtDigitalIo.i
+
+# target to preprocess a source file
+moc_mdtDigitalIo.cxx.i:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDigitalIo.cxx.i
+.PHONY : moc_mdtDigitalIo.cxx.i
+
+moc_mdtDigitalIo.s: moc_mdtDigitalIo.cxx.s
+.PHONY : moc_mdtDigitalIo.s
+
+# target to generate assembly for a file
+moc_mdtDigitalIo.cxx.s:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDigitalIo.cxx.s
+.PHONY : moc_mdtDigitalIo.cxx.s
+
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.o
 
@@ -1009,6 +1057,9 @@ help:
 	@echo "... mdtCsvFile.o"
 	@echo "... mdtCsvFile.i"
 	@echo "... mdtCsvFile.s"
+	@echo "... mdtDigitalIo.o"
+	@echo "... mdtDigitalIo.i"
+	@echo "... mdtDigitalIo.s"
 	@echo "... mdtError.o"
 	@echo "... mdtError.i"
 	@echo "... mdtError.s"
@@ -1078,6 +1129,9 @@ help:
 	@echo "... moc_mdtApplication.o"
 	@echo "... moc_mdtApplication.i"
 	@echo "... moc_mdtApplication.s"
+	@echo "... moc_mdtDigitalIo.o"
+	@echo "... moc_mdtDigitalIo.i"
+	@echo "... moc_mdtDigitalIo.s"
 	@echo "... moc_mdtErrorOut.o"
 	@echo "... moc_mdtErrorOut.i"
 	@echo "... moc_mdtErrorOut.s"

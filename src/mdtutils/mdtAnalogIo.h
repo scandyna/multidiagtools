@@ -26,14 +26,14 @@
 /*! \brief Representation of a analog I/O
  *
  * On wide range of automation applications,
- *  it is usefull to display a output to the user.
+ *  it is usefull to display a I/O to the user.
  *  For example, a analog I/O module, with a 8 bit
  *  encoding could be displayed with this class
  *  togther with mdtAnalogInWidget or mdtAnalogOutWidget.
  */
 class mdtAnalogIo : public mdtAbstractIo
 {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
 
@@ -74,16 +74,6 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   double maximum() const;
 
-  /*! \brief Set the value to update display
-   *
-   * Store the value and emit valueChanged() if
-   *  new value is different from current.
-   *
-   * Note for UI developpers:
-   *  - The signal valueChangedForUi() is emited
-   */
-  void setValue(double value);
-
   /*! \brief Get value (set with setValue() )
    */
   double value() const;
@@ -106,6 +96,18 @@ class mdtAnalogIo : public mdtAbstractIo
    *  The resolution is set with setRange() (steps parameter)
    */
   int valueInt() const;
+
+ public slots:
+
+  /*! \brief Set the value to update display
+   *
+   * Store the value and emit valueChanged() if
+   *  new value is different from current.
+   *
+   * Note for UI developpers:
+   *  - The signal valueChangedForUi() is emited
+   */
+  void setValue(double value);
 
  signals:
 

@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtDigitalInWidget.h"
+#include "mdtDigitalIo.h"
 #include "mdtLed.h"
 #include <QGridLayout>
 #include <QLabel>
@@ -47,9 +48,16 @@ mdtDigitalInWidget::~mdtDigitalInWidget()
 {
 }
 
-bool mdtDigitalInWidget::isOn()
+void mdtDigitalInWidget::setIo(mdtDigitalIo *io)
 {
-  return ldState->isOn();
+  Q_ASSERT(io != 0);
+
+  // Base Signals/slots connections
+  mdtAbstractIoWidget::setIo(io);
+  // Signals/slots from io to widget
+  connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
+  // Set initial data
+  setOn(io->isOn());
 }
 
 void mdtDigitalInWidget::setOn(bool on)

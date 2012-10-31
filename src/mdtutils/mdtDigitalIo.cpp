@@ -20,24 +20,34 @@
  ****************************************************************************/
 #include "mdtDigitalIo.h"
 
- mdtDigitalIo::mdtDigitalIo(const QObject & parent) {
+mdtDigitalIo::mdtDigitalIo(QObject *parent)
+ : mdtAbstractIo(parent)
+{
+  pvIsOn = false;
 }
 
- mdtDigitalIo::~mdtDigitalIo() {
+mdtDigitalIo::~mdtDigitalIo()
+{
 }
 
-void mdtDigitalIo::setOn(bool on) {
+bool mdtDigitalIo::isOn()
+{
+  return pvIsOn;
 }
 
-bool mdtDigitalIo::isOn() {
+void mdtDigitalIo::setOn(bool on)
+{
+  if(pvIsOn != on){
+    pvIsOn = on;
+    emit(stateChanged(pvIsOn));
+    emit(stateChangedForUi(pvIsOn));
+  }
 }
 
-void mdtDigitalIo::stateChanged(bool on) {
+void mdtDigitalIo::setStateFromUi(bool on)
+{
+  if(pvIsOn != on){
+    pvIsOn = on;
+    emit(stateChanged(pvIsOn));
+  }
 }
-
-void mdtDigitalIo::setStateFromUi(bool on) {
-}
-
-void mdtDigitalIo::valueChangedForUi(bool on) {
-}
-

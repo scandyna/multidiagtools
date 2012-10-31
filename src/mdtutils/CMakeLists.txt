@@ -16,6 +16,7 @@ set (HEADER_FILES
           # I/O
           mdtAbstractIo.h
           mdtAnalogIo.h
+          mdtDigitalIo.h
           # Main application
           mdtApplication.h
     )
@@ -54,6 +55,7 @@ set (SOURCES_FILES
           # I/O
           mdtAbstractIo.cpp
           mdtAnalogIo.cpp
+          mdtDigitalIo.cpp
           # Main application
           mdtApplication.cpp
     )

@@ -2,11 +2,11 @@ format 76
 
 classcanvas 128002 class_ref 518658 // mdtAbstractIoWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 33.8 110 2000
+  xyz 33.8 110.6 2000
 end
 classcanvas 128130 class_ref 316162 // QWidget
   draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 162.6 29.6 2000
+  xyz 162.2 29.2 2000
 end
 classcanvas 128386 class_ref 518786 // mdtDigitalInWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -14,7 +14,7 @@ classcanvas 128386 class_ref 518786 // mdtDigitalInWidget
 end
 classcanvas 128642 class_ref 518914 // mdtDigitalOutWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 751.8 1045.8 2000
+  xyz 751.8 1080.8 2000
 end
 classcanvas 128898 class_ref 519042 // mdtAnalogInWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -34,7 +34,7 @@ classcanvas 129666 class_ref 539010 // mdtAnalogIo
 end
 classcanvas 129922 class_ref 539138 // mdtDigitalIo
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 775 861.8 2017
+  xyz 772.8 874.8 2017
 end
 relationcanvas 128258 relation_ref 605442 // <generalisation>
   from ref 128002 z 2001 to ref 128130
@@ -83,12 +83,12 @@ relationcanvas 130306 relation_ref 627586 // <unidirectional association>
 end
 relationcanvas 130434 relation_ref 627842 // <unidirectional association>
   from ref 128642 z 2018 to ref 129922
-  role_a_pos 942 1048 3000 no_role_b
-  multiplicity_a_pos 891 1048 3000 no_multiplicity_b
+  role_a_pos 942 1061 3000 no_role_b
+  multiplicity_a_pos 891 1061 3000 no_multiplicity_b
 end
 relationcanvas 130562 relation_ref 627970 // <unidirectional association>
   from ref 128386 z 2018 to ref 129922
-  role_a_pos 719 962 3000 no_role_b
-  multiplicity_a_pos 722 993 3000 no_multiplicity_b
+  role_a_pos 716 972 3000 no_role_b
+  multiplicity_a_pos 719 1003 3000 no_multiplicity_b
 end
 end

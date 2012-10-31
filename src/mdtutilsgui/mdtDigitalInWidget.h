@@ -25,6 +25,7 @@
 
 class mdtLed;
 class QLabel;
+class mdtDigitalIo;
 
 /*! \brief Representation of a digital input
  *
@@ -41,14 +42,18 @@ class mdtDigitalInWidget : public mdtAbstractIoWidget
 
   ~mdtDigitalInWidget();
 
-  /*! \brief Get the input state
+  /*! \brief Set the I/O object
+   *
+   * Make all needed connections with the I/O
+   *  object, so that widget is allways updated.
+   *
+   * \pre io must be a valid pointer.
    */
-  bool isOn();
+  void setIo(mdtDigitalIo *io);
 
- public slots:
+ private slots:
 
-  /*! \brief Set the input state
-   */
+  // Used to update GUI from mdtDigitalIo object.
   void setOn(bool on);
 
  private:

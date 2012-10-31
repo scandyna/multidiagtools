@@ -48,44 +48,6 @@ class mdtAbstractIoWidget : public QWidget
 
   virtual ~mdtAbstractIoWidget();
 
-  /*! \brief Get the I/O address
-   */
-  int address() const;
-
-  /*! \brief Get the short I/O label
-   */
-  QString labelShort() const;
-
-  /*! \brief Get the complete I/O label
-   */
-  QString label() const;
-
-  /*! \brief Get details about the I/O
-   */
-  QString details() const;
-
- public slots:
-
-  /*! \brief Set the I/O address
-   */
-  void setAddress(int address);
-
-  /*! \brief Set the short I/O label
-   *
-   * The short I/O label is allways displayed
-   */
-  void setLabelShort(const QString & text);
-
-  /*! \brief Set the complete I/O label
-   *
-   * This label is displayed as tool tip
-   */
-  void setLabel(const QString & text);
-
-  /*! \brief Set details about the I/O
-   */
-  void setDetails(const QString & text);
-
  protected:
 
    /*! \brief Set the I/O object
@@ -107,6 +69,12 @@ class mdtAbstractIoWidget : public QWidget
 
   // Display the message box with all I/O informations
   void showIoInformations();
+
+  // Used to update GUI from mdtAbstractIo object.
+  void setAddress(int address);
+  void setLabelShort(const QString & text);
+  void setLabel(const QString & text);
+  void setDetails(const QString & text);
 
  private:
 

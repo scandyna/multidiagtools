@@ -21,37 +21,65 @@
 #ifndef MDT_DIGITAL_IO_H
 #define MDT_DIGITAL_IO_H
 
-
 #include "mdtAbstractIo.h"
 
-/*! \brief
+/*! \brief Representation of a digital I/O
+ *
+ * On wide range of automation applications,
+ *  it is usefull to display a digital I/O to the user.
+ *  For example, a digital I/O can be displayed by
+ *  using this class together with mdtDigitalInWidget or mdtDigitalOutWidget
  */
-class mdtDigitalIo : public mdtAbstractIo {
-  public:
-     mdtDigitalIo(const QObject & parent = 0);
+class mdtDigitalIo : public mdtAbstractIo
+{
+ Q_OBJECT
 
-     ~mdtDigitalIo();
+ public:
 
-    void setOn(bool on);
+  mdtDigitalIo(QObject *parent = 0);
 
-    bool isOn();
+  ~mdtDigitalIo();
 
+  /*! \brief Get current I/O state
+   */
+  bool isOn();
 
-  private:
-    bool pvIsOn;
+ public slots:
 
+  /*! \brief Set I/O state (On or OFF)
+   *
+   * Store the state and emit stateChanged() if
+   *  new value state different from current.
+   *
+   * Note for UI developpers:
+   *  - The signal stateChangedForUi() is emited
+   */
+  void setOn(bool on);
 
-  public:
-    void stateChanged(bool on);
+ signals:
 
+  /*! \brief This signal is emitted whenever the state is changed
+   */
+  void stateChanged(bool on);
 
-  private:
-    
-    Q_DISABLE_COPY(mdtDigitalIo);
-    void setStateFromUi(bool on);
+  /*
+   * This signal is emited every time
+   *  a member is set with a setter method.
+   * Usefull to update the UI (should not be used for other purpose)
+   */
+  void stateChangedForUi(bool on);
 
-    void valueChangedForUi(bool on);
+ private slots:
 
+  // Used from UI to update internal state.
+  //  The stateChangedForUi() signal will not be emitted with this call.
+  void setStateFromUi(bool on);
+
+ private:
+
+  Q_DISABLE_COPY(mdtDigitalIo);
+
+  bool pvIsOn;
 };
 
 #endif  // #ifndef MDT_DIGITAL_IO_H
