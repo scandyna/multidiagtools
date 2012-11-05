@@ -13,8 +13,7 @@ Representation of a digital input.
 
 
 
-Inheritance diagram for mdtDigitalInWidget:
-\nopagebreak
+Inheritance diagram for mdtDigitalInWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -28,17 +27,9 @@ Collaboration diagram for mdtDigitalInWidget:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=254pt]{classmdt_digital_in_widget__coll__graph}
+\includegraphics[width=340pt]{classmdt_digital_in_widget__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Slots}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{classmdt_digital_in_widget_a91725bf4b0651183703e4f2396715607}{
-void \hyperlink{classmdt_digital_in_widget_a91725bf4b0651183703e4f2396715607}{setOn} (bool on)}
-\label{classmdt_digital_in_widget_a91725bf4b0651183703e4f2396715607}
-
-\begin{DoxyCompactList}\small\item\em Set the input state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -47,11 +38,8 @@ void \hyperlink{classmdt_digital_in_widget_a91725bf4b0651183703e4f2396715607}{se
 \label{classmdt_digital_in_widget_a749a19cba05810ad2d2fc249d8fe2827}
 
 \item 
-\hypertarget{classmdt_digital_in_widget_a238aefedbd1e9a1fd08c3976caa3c995}{
-bool \hyperlink{classmdt_digital_in_widget_a238aefedbd1e9a1fd08c3976caa3c995}{isOn} ()}
-\label{classmdt_digital_in_widget_a238aefedbd1e9a1fd08c3976caa3c995}
-
-\begin{DoxyCompactList}\small\item\em Get the input state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_digital_in_widget_a74bdc3a0b6443f9b6a601c5b763fe1c2}{setIo} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$io)
+\begin{DoxyCompactList}\small\item\em Set the I/O object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -59,7 +47,32 @@ Representation of a digital input.
 
 On wide range of automation application, it is usefull to display a input to the user. 
 
-Definition at line 34 of file mdtDigitalInWidget.h.
+Definition at line 35 of file mdtDigitalInWidget.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_digital_in_widget_a74bdc3a0b6443f9b6a601c5b763fe1c2}{
+\index{mdtDigitalInWidget@{mdtDigitalInWidget}!setIo@{setIo}}
+\index{setIo@{setIo}!mdtDigitalInWidget@{mdtDigitalInWidget}}
+\subsubsection[{setIo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDigitalInWidget::setIo (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDigitalIo} $\ast$}]{io}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_digital_in_widget_a74bdc3a0b6443f9b6a601c5b763fe1c2}
+
+
+Set the I/O object. 
+
+Make all needed connections with the I/O object, so that widget is allways updated.
+
+\begin{DoxyPrecond}{Precondition}
+io must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 50 of file mdtDigitalInWidget.cpp.
 
 
 

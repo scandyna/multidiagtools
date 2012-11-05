@@ -1,0 +1,160 @@
+\hypertarget{classmdt_abstract_io}{
+\section{mdtAbstractIo Class Reference}
+\label{classmdt_abstract_io}\index{mdtAbstractIo@{mdtAbstractIo}}
+}
+
+
+Base class for I/O handling on (G)UI.  
+
+
+
+
+{\ttfamily \#include $<$mdtAbstractIo.h$>$}
+
+
+
+Inheritance diagram for mdtAbstractIo:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{classmdt_abstract_io__inherit__graph}
+\end{center}
+\end{figure}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_io_a217c4fa4f4996a97f939d4066c88fffc}{
+void {\bfseries addressChangedForUi} (int adr)}
+\label{classmdt_abstract_io_a217c4fa4f4996a97f939d4066c88fffc}
+
+\item 
+\hypertarget{classmdt_abstract_io_aa12930a4316d7679668a07855c92e625}{
+void {\bfseries labelShortChangedForUi} (const QString \&text)}
+\label{classmdt_abstract_io_aa12930a4316d7679668a07855c92e625}
+
+\item 
+\hypertarget{classmdt_abstract_io_ab87859883a00193ac680c09cfef8dc84}{
+void {\bfseries labelChangedForUi} (const QString \&text)}
+\label{classmdt_abstract_io_ab87859883a00193ac680c09cfef8dc84}
+
+\item 
+\hypertarget{classmdt_abstract_io_aa6add53c265560420b70852ba490c2ff}{
+void {\bfseries detailsChangedForUi} (const QString \&text)}
+\label{classmdt_abstract_io_aa6add53c265560420b70852ba490c2ff}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{
+{\bfseries mdtAbstractIo} (QObject $\ast$parent=0)}
+\label{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}
+
+\item 
+\hypertarget{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{
+void \hyperlink{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{setAddress} (int address)}
+\label{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}
+
+\begin{DoxyCompactList}\small\item\em Set the I/O address. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_a52f071b6c1098e74f82eade9ead5382a}{
+int \hyperlink{classmdt_abstract_io_a52f071b6c1098e74f82eade9ead5382a}{address} () const }
+\label{classmdt_abstract_io_a52f071b6c1098e74f82eade9ead5382a}
+
+\begin{DoxyCompactList}\small\item\em Get the I/O address. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_io_a0f0a70927942f793ce93c7f0c013a39e}{setLabelShort} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the short I/O label. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_ad6490f8dda6df55cc3d1811348d0155e}{
+QString \hyperlink{classmdt_abstract_io_ad6490f8dda6df55cc3d1811348d0155e}{labelShort} () const }
+\label{classmdt_abstract_io_ad6490f8dda6df55cc3d1811348d0155e}
+
+\begin{DoxyCompactList}\small\item\em Get the short I/O label. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_io_ae614f78829c59cb7b7d8265dd59e2164}{setLabel} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Set the complete I/O label. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_a8d21d147ce526f9ad9f65bde7c68b7d9}{
+QString \hyperlink{classmdt_abstract_io_a8d21d147ce526f9ad9f65bde7c68b7d9}{label} () const }
+\label{classmdt_abstract_io_a8d21d147ce526f9ad9f65bde7c68b7d9}
+
+\begin{DoxyCompactList}\small\item\em Get the complete I/O label. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_a9844c14b0e64858c62604039681ab885}{
+void \hyperlink{classmdt_abstract_io_a9844c14b0e64858c62604039681ab885}{setDetails} (const QString \&text)}
+\label{classmdt_abstract_io_a9844c14b0e64858c62604039681ab885}
+
+\begin{DoxyCompactList}\small\item\em Set details about the I/O. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_a6e0b36f1563a045a23417145290fdf41}{
+QString \hyperlink{classmdt_abstract_io_a6e0b36f1563a045a23417145290fdf41}{details} () const }
+\label{classmdt_abstract_io_a6e0b36f1563a045a23417145290fdf41}
+
+\begin{DoxyCompactList}\small\item\em Get details about the I/O. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{
+bool \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{hasValidData} () const }
+\label{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}
+
+\begin{DoxyCompactList}\small\item\em Returns true if a valid value or state was set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}{
+int {\bfseries pvAddress}}
+\label{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}
+
+\item 
+\hypertarget{classmdt_abstract_io_ac7d552a8474559cac50488bd14891ce3}{
+bool {\bfseries pvHasValidData}}
+\label{classmdt_abstract_io_ac7d552a8474559cac50488bd14891ce3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for I/O handling on (G)UI. 
+
+Can be used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget} and subclasses. This class offers the functionnal part of I/O representation on a UI, or GUI when used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}.\begin{Desc}
+\item[\hyperlink{todo__todo000053}{Todo}]Ajouter une notion de validité \end{Desc}
+
+
+Definition at line 34 of file mdtAbstractIo.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_abstract_io_ae614f78829c59cb7b7d8265dd59e2164}{
+\index{mdtAbstractIo@{mdtAbstractIo}!setLabel@{setLabel}}
+\index{setLabel@{setLabel}!mdtAbstractIo@{mdtAbstractIo}}
+\subsubsection[{setLabel}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIo::setLabel (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_ae614f78829c59cb7b7d8265dd59e2164}
+
+
+Set the complete I/O label. 
+
+When used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}, this label is displayed as tool tip 
+
+Definition at line 56 of file mdtAbstractIo.cpp.
+
+\hypertarget{classmdt_abstract_io_a0f0a70927942f793ce93c7f0c013a39e}{
+\index{mdtAbstractIo@{mdtAbstractIo}!setLabelShort@{setLabelShort}}
+\index{setLabelShort@{setLabelShort}!mdtAbstractIo@{mdtAbstractIo}}
+\subsubsection[{setLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIo::setLabelShort (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_a0f0a70927942f793ce93c7f0c013a39e}
+
+
+Set the short I/O label. 
+
+When used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}, the short I/O label is allways displayed 
+
+Definition at line 45 of file mdtAbstractIo.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtAbstractIo.h\item 
+src/mdtutils/mdtAbstractIo.cpp\end{DoxyCompactItemize}

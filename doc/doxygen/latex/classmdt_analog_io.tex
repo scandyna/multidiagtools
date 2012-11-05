@@ -1,0 +1,262 @@
+\hypertarget{classmdt_analog_io}{
+\section{mdtAnalogIo Class Reference}
+\label{classmdt_analog_io}\index{mdtAnalogIo@{mdtAnalogIo}}
+}
+
+
+Representation of a analog I/O.  
+
+
+
+
+{\ttfamily \#include $<$mdtAnalogIo.h$>$}
+
+
+
+Inheritance diagram for mdtAnalogIo:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=158pt]{classmdt_analog_io__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtAnalogIo:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=158pt]{classmdt_analog_io__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{setValue} (double value, bool isValid)
+\begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_analog_io_a9729875cb13fa2069e40c9abce914870}{setValue} (double value)
+\begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{
+void \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged} (double newValue)}
+\label{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}
+
+\begin{DoxyCompactList}\small\item\em This signal is emitted whenever the value is changed. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_io_ab45b4b94be2a4bedf59e09ea7f60e09e}{
+void {\bfseries valueChanged} (int address, double newValue)}
+\label{classmdt_analog_io_ab45b4b94be2a4bedf59e09ea7f60e09e}
+
+\item 
+\hypertarget{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}{
+void {\bfseries unitChangedForUi} (const QString \&unit)}
+\label{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}
+
+\item 
+\hypertarget{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}{
+void {\bfseries rangeChangedForUi} (double min, double max)}
+\label{classmdt_analog_io_a40735cbbf852790067a6f9b57aac4aa3}
+
+\item 
+\hypertarget{classmdt_analog_io_aaef16a200f5a862356eaeb4a65a1e06f}{
+void {\bfseries valueChangedForUi} (double newValue)}
+\label{classmdt_analog_io_aaef16a200f5a862356eaeb4a65a1e06f}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}{
+{\bfseries mdtAnalogIo} (QObject $\ast$parent=0)}
+\label{classmdt_analog_io_affcdf039a10023b495cf49a5f476f829}
+
+\item 
+\hypertarget{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{
+void \hyperlink{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}{setUnit} (const QString \&unit)}
+\label{classmdt_analog_io_afb4cd82bee1ac1e77148c8621b1c66fa}
+
+\begin{DoxyCompactList}\small\item\em Set the unit (V, A, °C, ...) \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{
+QString \hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit} () const }
+\label{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}
+
+\begin{DoxyCompactList}\small\item\em Get unit. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{setRange} (double min, double max, int steps)
+\begin{DoxyCompactList}\small\item\em Set the range. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{
+double \hyperlink{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{minimum} () const }
+\label{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}
+
+\begin{DoxyCompactList}\small\item\em Get the minimum value of the range. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{
+double \hyperlink{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{maximum} () const }
+\label{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}
+
+\begin{DoxyCompactList}\small\item\em Get the maximum value of the range. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_analog_io_a55d3e346dd13a580dc4ac77e8e946b01}{
+double \hyperlink{classmdt_analog_io_a55d3e346dd13a580dc4ac77e8e946b01}{value} () const }
+\label{classmdt_analog_io_a55d3e346dd13a580dc4ac77e8e946b01}
+
+\begin{DoxyCompactList}\small\item\em Get value (set with \hyperlink{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{setValue()} ) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_analog_io_a867ced0c700cf2a4a72c1fa110364235}{setValueInt} (int value, bool isValid)
+\begin{DoxyCompactList}\small\item\em Set the integer value. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{valueInt} () const 
+\begin{DoxyCompactList}\small\item\em Get the integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representation of a analog I/O. 
+
+On wide range of automation applications, it is usefull to display a I/O to the user. For example, a analog I/O module, with a 8 bit encoding could be displayed with this class togther with \hyperlink{classmdt_analog_in_widget}{mdtAnalogInWidget} or \hyperlink{classmdt_analog_out_widget}{mdtAnalogOutWidget}. 
+
+Definition at line 34 of file mdtAnalogIo.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{
+\index{mdtAnalogIo@{mdtAnalogIo}!setRange@{setRange}}
+\index{setRange@{setRange}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setRange (
+\begin{DoxyParamCaption}
+\item[{double}]{min, }
+\item[{double}]{max, }
+\item[{int}]{steps}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}
+
+
+Set the range. 
+
+Store the new range and set the value to the minimum. The \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} signal is emitted.
+
+Note for UI developpers:
+\begin{DoxyItemize}
+\item The signal rangeChangedForUi() is emited
+\item The signal valueChangedForUi() is emited
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em min} & Minimum value to display (f.ex. 0V, or 4mA) \\
+\hline
+{\em max} & Maximum value to display (f.ex. 10V, or 20mA) \\
+\hline
+{\em steps} & Number of steps of the input (f.ex. 256 with 8 bits resolution) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+steps must be $>$ 1 
+
+max must be $>$ min 
+\end{DoxyPrecond}
+
+
+Definition at line 50 of file mdtAnalogIo.cpp.
+
+\hypertarget{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{
+\index{mdtAnalogIo@{mdtAnalogIo}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValue (
+\begin{DoxyParamCaption}
+\item[{double}]{value, }
+\item[{bool}]{isValid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}
+
+
+Set the value to update display. 
+
+Store the value and emit \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} if new value is different from current.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to store \\
+\hline
+{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()}\\
+\hline
+\end{DoxyParams}
+Note for UI developpers:
+\begin{DoxyItemize}
+\item The signal valueChangedForUi() is emited 
+\end{DoxyItemize}
+
+Definition at line 98 of file mdtAnalogIo.cpp.
+
+\hypertarget{classmdt_analog_io_a9729875cb13fa2069e40c9abce914870}{
+\index{mdtAnalogIo@{mdtAnalogIo}!setValue@{setValue}}
+\index{setValue@{setValue}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValue (
+\begin{DoxyParamCaption}
+\item[{double}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_analog_io_a9729875cb13fa2069e40c9abce914870}
+
+
+Set the value to update display. 
+
+Overloaded method that calls \hyperlink{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{setValue(double, bool)} with isValid = true. 
+
+Definition at line 113 of file mdtAnalogIo.cpp.
+
+\hypertarget{classmdt_analog_io_a867ced0c700cf2a4a72c1fa110364235}{
+\index{mdtAnalogIo@{mdtAnalogIo}!setValueInt@{setValueInt}}
+\index{setValueInt@{setValueInt}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{setValueInt}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValueInt (
+\begin{DoxyParamCaption}
+\item[{int}]{value, }
+\item[{bool}]{isValid}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_analog_io_a867ced0c700cf2a4a72c1fa110364235}
+
+
+Set the integer value. 
+
+Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{setRange()} (steps parameter)
+
+The \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} signal is emitted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & The value to store \\
+\hline
+{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()}\\
+\hline
+\end{DoxyParams}
+Note for UI developpers:
+\begin{DoxyItemize}
+\item The signal valueChangedForUi() is emited 
+\end{DoxyItemize}
+
+Definition at line 82 of file mdtAnalogIo.cpp.
+
+\hypertarget{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{
+\index{mdtAnalogIo@{mdtAnalogIo}!valueInt@{valueInt}}
+\index{valueInt@{valueInt}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{valueInt}]{\setlength{\rightskip}{0pt plus 5cm}int mdtAnalogIo::valueInt (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}
+
+
+Get the integer value. 
+
+The integer value depend on value and resolution. The resolution is set with \hyperlink{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{setRange()} (steps parameter) 
+
+Definition at line 93 of file mdtAnalogIo.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtAnalogIo.h\item 
+src/mdtutils/mdtAnalogIo.cpp\end{DoxyCompactItemize}

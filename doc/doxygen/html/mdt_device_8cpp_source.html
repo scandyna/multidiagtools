@@ -86,11 +86,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 mdtDevice::mdtDevice(QObject *parent)
 <a name="l00025"></a>00025  : QObject(parent)
 <a name="l00026"></a>00026 {
-<a name="l00027"></a>00027 }
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 mdtDevice::~mdtDevice() {
-<a name="l00030"></a>00030 }
-<a name="l00031"></a>00031 
+<a name="l00027"></a>00027   pvIos = 0;
+<a name="l00028"></a>00028 }
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 mdtDevice::~mdtDevice()
+<a name="l00031"></a>00031 {
+<a name="l00032"></a>00032 }
+<a name="l00033"></a>00033 
+<a name="l00034"></a><a class="code" href="classmdt_device.html#ad1f8fff7f40ab77e876fbfaeae846f82">00034</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#ad1f8fff7f40ab77e876fbfaeae846f82" title="Set the I/O&#39;s container.">mdtDevice::setIos</a>(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *ios)
+<a name="l00035"></a>00035 {
+<a name="l00036"></a>00036   Q_ASSERT(ios != 0);
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038   pvIos = ios;
+<a name="l00039"></a>00039 }
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="classmdt_device.html#a5059e971d265dcc125e507de856271b9">00041</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#a5059e971d265dcc125e507de856271b9" title="Read one analog input on physical device and update (G)UI representation.">mdtDevice::readAnalogInput</a>(<span class="keywordtype">int</span> address)
+<a name="l00042"></a>00042 {
+<a name="l00043"></a>00043   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00044"></a>00044 }
+<a name="l00045"></a>00045 
+<a name="l00046"></a><a class="code" href="classmdt_device.html#ac0023742214c29bdadd46383ae240972">00046</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ac0023742214c29bdadd46383ae240972" title="Read all analog inputs on physical device and update (G)UI representation.">mdtDevice::readAnalogInputs</a>()
+<a name="l00047"></a>00047 {
+<a name="l00048"></a>00048   <span class="keywordflow">return</span> -1;
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="classmdt_device.html#a0e43cc312b5b0685b07da8a49dd1ede6">00051</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a0e43cc312b5b0685b07da8a49dd1ede6" title="Decode incoming frames.">mdtDevice::decodeReadenFrames</a>()
+<a name="l00052"></a>00052 {
+<a name="l00053"></a>00053 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -107,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:24:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

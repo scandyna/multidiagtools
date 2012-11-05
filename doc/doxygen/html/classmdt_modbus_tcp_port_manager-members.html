@@ -82,7 +82,8 @@ This is the complete list of members for <a class="el" href="classmdt_modbus_tcp
   <tr bgcolor="#f0f0f0"><td><b>pvReadenFrames</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvReadenFramesCopy</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvThreads</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#a6dd3c77348286dfd323ae8a1becad33c">readenFrames</a>()</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac">readenFrame</a>(int id)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a4843ac996aa5da0df5dc8104ba41b4d8">readenFrames</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aaa0a474183bcae0fff4fb9ef43023c25">removeThreads</a>(bool releaseMemory)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#a216ee2495440be4eefb2faf9da3c9e47">scan</a>(const QStringList &amp;hosts, int timeout=500)</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece">mdtPortManager::scan</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
@@ -92,9 +93,8 @@ This is the complete list of members for <a class="el" href="classmdt_modbus_tcp
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc">start</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c">wait</a>(int msecs, int granularity=50)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#a233d2acf67dca192fb36ce407d90bfb7">waitReadenFrame</a>(int timeout=500)</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td><code> [virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#addd9b9336417aa964eea91ca2f95d26e">writeData</a>(QByteArray pdu)</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td><code> [virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#a043a1cb15b045037f97eebd4ffe6cef8">writeData</a>(const QByteArray &amp;pdu, quint16 transactionId)</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">waitReadenFrame</a>(int timeout=500)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f">writeData</a>(QByteArray pdu)</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_modbus_tcp_port_manager.html#aabe51a50a53c6b23884cc4862730b731">~mdtModbusTcpPortManager</a>()</td><td><a class="el" href="classmdt_modbus_tcp_port_manager.html">mdtModbusTcpPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
 </table></div>
@@ -112,7 +112,7 @@ This is the complete list of members for <a class="el" href="classmdt_modbus_tcp
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:01 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

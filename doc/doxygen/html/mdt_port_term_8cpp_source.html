@@ -187,184 +187,184 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00130"></a>00130   }
 <a name="l00131"></a>00131   cmd.append(<span class="charliteral">&#39;\n&#39;</span>);
 <a name="l00132"></a>00132   <span class="comment">//cmd.append((char)0x04);</span>
-<a name="l00133"></a>00133   pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a6d3cc4e522326e2a6ca0da401ae58271" title="Write data by copy.">writeData</a>(cmd.toAscii());
-<a name="l00134"></a>00134   <span class="keywordflow">if</span>(pvCurrentPortManager == pvUsbtmcPortManager){
-<a name="l00135"></a>00135     <span class="keywordflow">if</span>(cmdIsQuery){
-<a name="l00136"></a>00136       pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a2da27dcbfc9448f1d61d93679b9a2ef3" title="Send a read request to device.">sendReadRequest</a>();
-<a name="l00137"></a>00137     }
-<a name="l00138"></a>00138   }
-<a name="l00140"></a>00140   leCmd-&gt;clear();
-<a name="l00141"></a>00141 }
-<a name="l00142"></a>00142 
-<a name="l00143"></a><a class="code" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9">00143</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9" title="Abort command transmission.">mdtPortTerm::on_pbSendCmdAbort_clicked</a>()
-<a name="l00144"></a>00144 {
-<a name="l00151"></a>00151   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortTerm::on_pbSendCmdAbort_clicked() ...&quot;</span>;
-<a name="l00152"></a>00152   <span class="keywordflow">if</span>(pvCurrentPortManager != 0){
-<a name="l00153"></a>00153     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortTerm::on_pbSendCmdAbort_clicked() calling abort&quot;</span>;
-<a name="l00154"></a>00154     pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort</a>();
-<a name="l00155"></a>00155   }
-<a name="l00157"></a>00157   leCmd-&gt;clear();
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-<a name="l00160"></a><a class="code" href="classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce">00160</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce" title="Clear terminal.">mdtPortTerm::on_pbClearTerm_clicked</a>()
-<a name="l00161"></a>00161 {
-<a name="l00162"></a>00162   teTerm-&gt;clear();
-<a name="l00163"></a>00163 }
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165 <span class="keywordtype">void</span> mdtPortTerm::retranslate()
-<a name="l00166"></a>00166 {
-<a name="l00167"></a>00167   retranslateUi(<span class="keyword">this</span>);
-<a name="l00168"></a>00168 }
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="keywordtype">void</span> mdtPortTerm::attachToSerialPort()
-<a name="l00171"></a>00171 {
-<a name="l00172"></a>00172   QList&lt;mdtPortInfo*&gt; ports;
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174   detachFromPorts();
-<a name="l00175"></a>00175   <span class="comment">// Create objects</span>
-<a name="l00176"></a>00176   pvSerialPortManager = <span class="keyword">new</span> <a class="code" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a>;
-<a name="l00177"></a>00177   pvSerialPortCtlWidget = <span class="keyword">new</span> <a class="code" href="classmdt_serial_port_ctl_widget.html">mdtSerialPortCtlWidget</a>;
-<a name="l00178"></a>00178   pvCurrentPortManager = pvSerialPortManager;
-<a name="l00179"></a>00179   <span class="comment">// Ctl widget</span>
-<a name="l00180"></a>00180   bottomHLayout-&gt;insertWidget(0, pvSerialPortCtlWidget);
-<a name="l00181"></a>00181   pvSerialPortCtlWidget-&gt;<a class="code" href="classmdt_serial_port_ctl_widget.html#a9dce60a846cbf24d7ceab099ff147c18" title="Make the signals/slots connections.">makeConnections</a>(pvSerialPortManager);
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184   connect(pvSerialPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186   <span class="comment">// Try to open first port</span>
-<a name="l00187"></a>00187   ports = pvSerialPortManager-&gt;<a class="code" href="classmdt_serial_port_manager.html#a791572f869d1d605d0c4658ca4187260" title="Scan for available serial ports.">scan</a>();
-<a name="l00188"></a>00188   <span class="keywordflow">if</span>(ports.size() &gt; 0){
-<a name="l00190"></a>00190     pvSerialPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*ports.at(0));
-<a name="l00191"></a>00191     <span class="keywordflow">if</span>(!pvSerialPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
-<a name="l00192"></a>00192       setStateError(tr(<span class="stringliteral">&quot;Cannot open port &quot;</span>) + ports.at(0)-&gt;portName());
-<a name="l00194"></a>00194       qDeleteAll(ports);
-<a name="l00195"></a>00195       <span class="keywordflow">return</span>;
-<a name="l00196"></a>00196     }
-<a name="l00197"></a>00197   }
-<a name="l00198"></a>00198   <span class="keywordflow">if</span>(pvSerialPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
-<a name="l00199"></a>00199     setStateRunning(tr(<span class="stringliteral">&quot;Port open: &quot;</span>) + pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>().<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>());
-<a name="l00200"></a>00200   }
-<a name="l00201"></a>00201   qDeleteAll(ports);
-<a name="l00202"></a>00202 }
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204 <span class="keywordtype">void</span> mdtPortTerm::detachFromSerialPort()
-<a name="l00205"></a>00205 {
-<a name="l00206"></a>00206   <span class="keywordflow">if</span>(pvSerialPortManager != 0){
-<a name="l00207"></a>00207     disconnect(pvSerialPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
-<a name="l00208"></a>00208     <span class="keyword">delete</span> pvSerialPortManager;
-<a name="l00209"></a>00209     pvSerialPortManager = 0;
-<a name="l00210"></a>00210     <span class="comment">// Ctl widget</span>
-<a name="l00211"></a>00211     bottomHLayout-&gt;removeWidget(pvSerialPortCtlWidget);
-<a name="l00212"></a>00212     <span class="keyword">delete</span> pvSerialPortCtlWidget;
-<a name="l00213"></a>00213     pvSerialPortCtlWidget = 0;
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216   }
-<a name="l00217"></a>00217   pvCurrentPortManager = 0;
-<a name="l00219"></a>00219 }
-<a name="l00220"></a>00220 
-<a name="l00221"></a>00221 <span class="keywordtype">void</span> mdtPortTerm::portSetup()
-<a name="l00222"></a>00222 {
-<a name="l00223"></a>00223   Q_ASSERT(pvCurrentPortManager != 0);
-<a name="l00224"></a>00224 
-<a name="l00225"></a>00225   <span class="comment">// Show the correct setup dialog</span>
-<a name="l00226"></a>00226   <span class="keywordflow">if</span>(pvSerialPortManager != 0){
-<a name="l00227"></a>00227     <a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a> d(<span class="keyword">this</span>);
-<a name="l00228"></a>00228     d.setPortManager(pvSerialPortManager);
-<a name="l00229"></a>00229     d.exec();
-<a name="l00230"></a>00230   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(pvUsbtmcPortManager != 0){
-<a name="l00231"></a>00231     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
-<a name="l00232"></a>00232     <a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a> d(<span class="keyword">this</span>);
-<a name="l00233"></a>00233     d.setPortManager(pvUsbtmcPortManager);
-<a name="l00234"></a>00234     d.exec();
-<a name="l00235"></a>00235     connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
-<a name="l00236"></a>00236   }
-<a name="l00237"></a>00237   <span class="comment">// If port is running, enable terminal</span>
-<a name="l00238"></a>00238   <span class="keywordflow">if</span>(pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>()){
-<a name="l00240"></a>00240     setStateRunning(tr(<span class="stringliteral">&quot;Port open: &quot;</span>) + pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>().<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>());
-<a name="l00241"></a>00241   }<span class="keywordflow">else</span>{
-<a name="l00242"></a>00242     setStateStopped();
-<a name="l00243"></a>00243   }
-<a name="l00244"></a>00244 }
-<a name="l00245"></a>00245 
-<a name="l00246"></a>00246 <span class="keywordtype">void</span> mdtPortTerm::attachToUsbtmcPort()
-<a name="l00247"></a>00247 {
-<a name="l00248"></a>00248   QList&lt;mdtPortInfo*&gt; ports;
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250   detachFromPorts();
-<a name="l00251"></a>00251   <span class="comment">// Create objects</span>
-<a name="l00252"></a>00252   pvUsbtmcPortManager = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>;
-<a name="l00253"></a>00253   pvCurrentPortManager = pvUsbtmcPortManager;
-<a name="l00254"></a>00254 
-<a name="l00255"></a>00255   <span class="comment">// Try to open first port</span>
-<a name="l00256"></a>00256   ports = pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">scan</a>();
-<a name="l00257"></a>00257   <span class="keywordflow">if</span>(ports.size() &lt; 1){
-<a name="l00258"></a>00258     setStateError(tr(<span class="stringliteral">&quot;No USBTMC device found&quot;</span>));
-<a name="l00259"></a>00259     <span class="keywordflow">return</span>;
-<a name="l00260"></a>00260   }
-<a name="l00262"></a>00262   pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*ports.at(0));
-<a name="l00263"></a>00263   <span class="keywordflow">if</span>(!pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
-<a name="l00264"></a>00264     setStateError(tr(<span class="stringliteral">&quot;Cannot open port &quot;</span>) + ports.at(0)-&gt;portName());
-<a name="l00265"></a>00265     qDeleteAll(ports);
-<a name="l00266"></a>00266     <span class="keywordflow">return</span>;
-<a name="l00267"></a>00267   }
-<a name="l00268"></a>00268   <span class="keywordflow">if</span>(pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
-<a name="l00271"></a>00271     setStateRunning(tr(<span class="stringliteral">&quot;Port open: &quot;</span>) + pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>().<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>());
-<a name="l00272"></a>00272   }
-<a name="l00273"></a>00273   qDeleteAll(ports);
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
-<a name="l00276"></a>00276 }
-<a name="l00277"></a>00277 
-<a name="l00278"></a>00278 <span class="keywordtype">void</span> mdtPortTerm::detachFromUsbtmcPort()
-<a name="l00279"></a>00279 {
-<a name="l00280"></a>00280   <span class="keywordflow">if</span>(pvUsbtmcPortManager != 0){
-<a name="l00281"></a>00281     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
-<a name="l00282"></a>00282     <span class="keyword">delete</span> pvUsbtmcPortManager;
-<a name="l00283"></a>00283     pvUsbtmcPortManager = 0;
-<a name="l00284"></a>00284   }
-<a name="l00285"></a>00285   pvCurrentPortManager = 0;
-<a name="l00286"></a>00286 }
-<a name="l00287"></a>00287 
-<a name="l00288"></a>00288 <span class="keywordtype">void</span> mdtPortTerm::selectPortType(QAction*)
-<a name="l00289"></a>00289 {
-<a name="l00290"></a>00290   <span class="keywordflow">if</span>(action_SerialPort-&gt;isChecked()){
-<a name="l00291"></a>00291     <span class="keywordflow">if</span>(pvSerialPortManager == 0){
-<a name="l00292"></a>00292       attachToSerialPort();
-<a name="l00293"></a>00293     }
-<a name="l00294"></a>00294   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(action_UsbTmcPort-&gt;isChecked()){
-<a name="l00295"></a>00295     <span class="keywordflow">if</span>(pvUsbtmcPortManager == 0){
-<a name="l00296"></a>00296       attachToUsbtmcPort();
-<a name="l00297"></a>00297     }
-<a name="l00298"></a>00298   }
-<a name="l00299"></a>00299 }
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301 <span class="keywordtype">void</span> mdtPortTerm::detachFromPorts()
-<a name="l00302"></a>00302 {
-<a name="l00303"></a>00303   detachFromSerialPort();
-<a name="l00304"></a>00304   detachFromUsbtmcPort();
-<a name="l00305"></a>00305   setStateStopped();
-<a name="l00306"></a>00306 }
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308 <span class="keywordtype">void</span> mdtPortTerm::setStateRunning(<span class="keyword">const</span> QString &amp;msg)
-<a name="l00309"></a>00309 {
-<a name="l00310"></a>00310   pvRunning = <span class="keyword">true</span>;
-<a name="l00311"></a>00311   pbSendCmd-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00312"></a>00312   statusBar()-&gt;showMessage(msg);
-<a name="l00313"></a>00313 }
-<a name="l00314"></a>00314 
-<a name="l00315"></a>00315 <span class="keywordtype">void</span> mdtPortTerm::setStateStopped(<span class="keyword">const</span> QString &amp;msg)
-<a name="l00316"></a>00316 {
-<a name="l00317"></a>00317   pvRunning = <span class="keyword">false</span>;
-<a name="l00318"></a>00318   pbSendCmd-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00319"></a>00319   statusBar()-&gt;showMessage(msg);
-<a name="l00320"></a>00320 }
-<a name="l00321"></a>00321 
-<a name="l00322"></a>00322 <span class="keywordtype">void</span> mdtPortTerm::setStateError(<span class="keyword">const</span> QString &amp;msg)
-<a name="l00323"></a>00323 {
-<a name="l00324"></a>00324   pvRunning = <span class="keyword">false</span>;
-<a name="l00325"></a>00325   pbSendCmd-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00326"></a>00326   statusBar()-&gt;showMessage(msg);
-<a name="l00327"></a>00327 }
+<a name="l00134"></a>00134 <span class="comment"></span>  pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">writeData</a>(cmd.toAscii());
+<a name="l00135"></a>00135   <span class="keywordflow">if</span>(pvCurrentPortManager == pvUsbtmcPortManager){
+<a name="l00136"></a>00136     <span class="keywordflow">if</span>(cmdIsQuery){
+<a name="l00137"></a>00137       pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest</a>();
+<a name="l00138"></a>00138     }
+<a name="l00139"></a>00139   }
+<a name="l00141"></a>00141   leCmd-&gt;clear();
+<a name="l00142"></a>00142 }
+<a name="l00143"></a>00143 
+<a name="l00144"></a><a class="code" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9">00144</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9" title="Abort command transmission.">mdtPortTerm::on_pbSendCmdAbort_clicked</a>()
+<a name="l00145"></a>00145 {
+<a name="l00152"></a>00152   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortTerm::on_pbSendCmdAbort_clicked() ...&quot;</span>;
+<a name="l00153"></a>00153   <span class="keywordflow">if</span>(pvCurrentPortManager != 0){
+<a name="l00154"></a>00154     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortTerm::on_pbSendCmdAbort_clicked() calling abort&quot;</span>;
+<a name="l00155"></a>00155     pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort</a>();
+<a name="l00156"></a>00156   }
+<a name="l00158"></a>00158   leCmd-&gt;clear();
+<a name="l00159"></a>00159 }
+<a name="l00160"></a>00160 
+<a name="l00161"></a><a class="code" href="classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce">00161</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_term.html#abb3fc55837782dbea240b069a48b18ce" title="Clear terminal.">mdtPortTerm::on_pbClearTerm_clicked</a>()
+<a name="l00162"></a>00162 {
+<a name="l00163"></a>00163   teTerm-&gt;clear();
+<a name="l00164"></a>00164 }
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166 <span class="keywordtype">void</span> mdtPortTerm::retranslate()
+<a name="l00167"></a>00167 {
+<a name="l00168"></a>00168   retranslateUi(<span class="keyword">this</span>);
+<a name="l00169"></a>00169 }
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 <span class="keywordtype">void</span> mdtPortTerm::attachToSerialPort()
+<a name="l00172"></a>00172 {
+<a name="l00173"></a>00173   QList&lt;mdtPortInfo*&gt; ports;
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175   detachFromPorts();
+<a name="l00176"></a>00176   <span class="comment">// Create objects</span>
+<a name="l00177"></a>00177   pvSerialPortManager = <span class="keyword">new</span> <a class="code" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a>;
+<a name="l00178"></a>00178   pvSerialPortCtlWidget = <span class="keyword">new</span> <a class="code" href="classmdt_serial_port_ctl_widget.html">mdtSerialPortCtlWidget</a>;
+<a name="l00179"></a>00179   pvCurrentPortManager = pvSerialPortManager;
+<a name="l00180"></a>00180   <span class="comment">// Ctl widget</span>
+<a name="l00181"></a>00181   bottomHLayout-&gt;insertWidget(0, pvSerialPortCtlWidget);
+<a name="l00182"></a>00182   pvSerialPortCtlWidget-&gt;<a class="code" href="classmdt_serial_port_ctl_widget.html#a9dce60a846cbf24d7ceab099ff147c18" title="Make the signals/slots connections.">makeConnections</a>(pvSerialPortManager);
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   connect(pvSerialPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187   <span class="comment">// Try to open first port</span>
+<a name="l00188"></a>00188   ports = pvSerialPortManager-&gt;<a class="code" href="classmdt_serial_port_manager.html#a791572f869d1d605d0c4658ca4187260" title="Scan for available serial ports.">scan</a>();
+<a name="l00189"></a>00189   <span class="keywordflow">if</span>(ports.size() &gt; 0){
+<a name="l00191"></a>00191     pvSerialPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*ports.at(0));
+<a name="l00192"></a>00192     <span class="keywordflow">if</span>(!pvSerialPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
+<a name="l00193"></a>00193       setStateError(tr(<span class="stringliteral">&quot;Cannot open port &quot;</span>) + ports.at(0)-&gt;portName());
+<a name="l00195"></a>00195       qDeleteAll(ports);
+<a name="l00196"></a>00196       <span class="keywordflow">return</span>;
+<a name="l00197"></a>00197     }
+<a name="l00198"></a>00198   }
+<a name="l00199"></a>00199   <span class="keywordflow">if</span>(pvSerialPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
+<a name="l00200"></a>00200     setStateRunning(tr(<span class="stringliteral">&quot;Port open: &quot;</span>) + pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>().<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>());
+<a name="l00201"></a>00201   }
+<a name="l00202"></a>00202   qDeleteAll(ports);
+<a name="l00203"></a>00203 }
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205 <span class="keywordtype">void</span> mdtPortTerm::detachFromSerialPort()
+<a name="l00206"></a>00206 {
+<a name="l00207"></a>00207   <span class="keywordflow">if</span>(pvSerialPortManager != 0){
+<a name="l00208"></a>00208     disconnect(pvSerialPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
+<a name="l00209"></a>00209     <span class="keyword">delete</span> pvSerialPortManager;
+<a name="l00210"></a>00210     pvSerialPortManager = 0;
+<a name="l00211"></a>00211     <span class="comment">// Ctl widget</span>
+<a name="l00212"></a>00212     bottomHLayout-&gt;removeWidget(pvSerialPortCtlWidget);
+<a name="l00213"></a>00213     <span class="keyword">delete</span> pvSerialPortCtlWidget;
+<a name="l00214"></a>00214     pvSerialPortCtlWidget = 0;
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218   pvCurrentPortManager = 0;
+<a name="l00220"></a>00220 }
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222 <span class="keywordtype">void</span> mdtPortTerm::portSetup()
+<a name="l00223"></a>00223 {
+<a name="l00224"></a>00224   Q_ASSERT(pvCurrentPortManager != 0);
+<a name="l00225"></a>00225 
+<a name="l00226"></a>00226   <span class="comment">// Show the correct setup dialog</span>
+<a name="l00227"></a>00227   <span class="keywordflow">if</span>(pvSerialPortManager != 0){
+<a name="l00228"></a>00228     <a class="code" href="classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port.">mdtSerialPortSetupDialog</a> d(<span class="keyword">this</span>);
+<a name="l00229"></a>00229     d.setPortManager(pvSerialPortManager);
+<a name="l00230"></a>00230     d.exec();
+<a name="l00231"></a>00231   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(pvUsbtmcPortManager != 0){
+<a name="l00232"></a>00232     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
+<a name="l00233"></a>00233     <a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a> d(<span class="keyword">this</span>);
+<a name="l00234"></a>00234     d.setPortManager(pvUsbtmcPortManager);
+<a name="l00235"></a>00235     d.exec();
+<a name="l00236"></a>00236     connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
+<a name="l00237"></a>00237   }
+<a name="l00238"></a>00238   <span class="comment">// If port is running, enable terminal</span>
+<a name="l00239"></a>00239   <span class="keywordflow">if</span>(pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>()){
+<a name="l00241"></a>00241     setStateRunning(tr(<span class="stringliteral">&quot;Port open: &quot;</span>) + pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>().<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>());
+<a name="l00242"></a>00242   }<span class="keywordflow">else</span>{
+<a name="l00243"></a>00243     setStateStopped();
+<a name="l00244"></a>00244   }
+<a name="l00245"></a>00245 }
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247 <span class="keywordtype">void</span> mdtPortTerm::attachToUsbtmcPort()
+<a name="l00248"></a>00248 {
+<a name="l00249"></a>00249   QList&lt;mdtPortInfo*&gt; ports;
+<a name="l00250"></a>00250 
+<a name="l00251"></a>00251   detachFromPorts();
+<a name="l00252"></a>00252   <span class="comment">// Create objects</span>
+<a name="l00253"></a>00253   pvUsbtmcPortManager = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>;
+<a name="l00254"></a>00254   pvCurrentPortManager = pvUsbtmcPortManager;
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256   <span class="comment">// Try to open first port</span>
+<a name="l00257"></a>00257   ports = pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">scan</a>();
+<a name="l00258"></a>00258   <span class="keywordflow">if</span>(ports.size() &lt; 1){
+<a name="l00259"></a>00259     setStateError(tr(<span class="stringliteral">&quot;No USBTMC device found&quot;</span>));
+<a name="l00260"></a>00260     <span class="keywordflow">return</span>;
+<a name="l00261"></a>00261   }
+<a name="l00263"></a>00263   pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*ports.at(0));
+<a name="l00264"></a>00264   <span class="keywordflow">if</span>(!pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
+<a name="l00265"></a>00265     setStateError(tr(<span class="stringliteral">&quot;Cannot open port &quot;</span>) + ports.at(0)-&gt;portName());
+<a name="l00266"></a>00266     qDeleteAll(ports);
+<a name="l00267"></a>00267     <span class="keywordflow">return</span>;
+<a name="l00268"></a>00268   }
+<a name="l00269"></a>00269   <span class="keywordflow">if</span>(pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
+<a name="l00272"></a>00272     setStateRunning(tr(<span class="stringliteral">&quot;Port open: &quot;</span>) + pvCurrentPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>().<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>());
+<a name="l00273"></a>00273   }
+<a name="l00274"></a>00274   qDeleteAll(ports);
+<a name="l00275"></a>00275 
+<a name="l00276"></a>00276   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
+<a name="l00277"></a>00277 }
+<a name="l00278"></a>00278 
+<a name="l00279"></a>00279 <span class="keywordtype">void</span> mdtPortTerm::detachFromUsbtmcPort()
+<a name="l00280"></a>00280 {
+<a name="l00281"></a>00281   <span class="keywordflow">if</span>(pvUsbtmcPortManager != 0){
+<a name="l00282"></a>00282     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame()), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f" title="Append incomming data to terminal.">appendReadenData</a>()));
+<a name="l00283"></a>00283     <span class="keyword">delete</span> pvUsbtmcPortManager;
+<a name="l00284"></a>00284     pvUsbtmcPortManager = 0;
+<a name="l00285"></a>00285   }
+<a name="l00286"></a>00286   pvCurrentPortManager = 0;
+<a name="l00287"></a>00287 }
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289 <span class="keywordtype">void</span> mdtPortTerm::selectPortType(QAction*)
+<a name="l00290"></a>00290 {
+<a name="l00291"></a>00291   <span class="keywordflow">if</span>(action_SerialPort-&gt;isChecked()){
+<a name="l00292"></a>00292     <span class="keywordflow">if</span>(pvSerialPortManager == 0){
+<a name="l00293"></a>00293       attachToSerialPort();
+<a name="l00294"></a>00294     }
+<a name="l00295"></a>00295   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(action_UsbTmcPort-&gt;isChecked()){
+<a name="l00296"></a>00296     <span class="keywordflow">if</span>(pvUsbtmcPortManager == 0){
+<a name="l00297"></a>00297       attachToUsbtmcPort();
+<a name="l00298"></a>00298     }
+<a name="l00299"></a>00299   }
+<a name="l00300"></a>00300 }
+<a name="l00301"></a>00301 
+<a name="l00302"></a>00302 <span class="keywordtype">void</span> mdtPortTerm::detachFromPorts()
+<a name="l00303"></a>00303 {
+<a name="l00304"></a>00304   detachFromSerialPort();
+<a name="l00305"></a>00305   detachFromUsbtmcPort();
+<a name="l00306"></a>00306   setStateStopped();
+<a name="l00307"></a>00307 }
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309 <span class="keywordtype">void</span> mdtPortTerm::setStateRunning(<span class="keyword">const</span> QString &amp;msg)
+<a name="l00310"></a>00310 {
+<a name="l00311"></a>00311   pvRunning = <span class="keyword">true</span>;
+<a name="l00312"></a>00312   pbSendCmd-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00313"></a>00313   statusBar()-&gt;showMessage(msg);
+<a name="l00314"></a>00314 }
+<a name="l00315"></a>00315 
+<a name="l00316"></a>00316 <span class="keywordtype">void</span> mdtPortTerm::setStateStopped(<span class="keyword">const</span> QString &amp;msg)
+<a name="l00317"></a>00317 {
+<a name="l00318"></a>00318   pvRunning = <span class="keyword">false</span>;
+<a name="l00319"></a>00319   pbSendCmd-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00320"></a>00320   statusBar()-&gt;showMessage(msg);
+<a name="l00321"></a>00321 }
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323 <span class="keywordtype">void</span> mdtPortTerm::setStateError(<span class="keyword">const</span> QString &amp;msg)
+<a name="l00324"></a>00324 {
+<a name="l00325"></a>00325   pvRunning = <span class="keyword">false</span>;
+<a name="l00326"></a>00326   pbSendCmd-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00327"></a>00327   statusBar()-&gt;showMessage(msg);
+<a name="l00328"></a>00328 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -381,7 +381,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

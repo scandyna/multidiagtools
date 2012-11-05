@@ -62,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtAbstractIoWidget Class Reference</div>  </div>
@@ -86,27 +87,10 @@ Inheritance diagram for mdtAbstractIoWidget:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a43208dbc9b2948561f5840bcd8fb9128">mdtAbstractIoWidget</a> (QWidget *parent=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a43208dbc9b2948561f5840bcd8fb9128"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cdc1763633570e96877a12afad19975"></a><!-- doxytag: member="mdtAbstractIoWidget::setAddress" ref="a1cdc1763633570e96877a12afad19975" args="(int address)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a1cdc1763633570e96877a12afad19975">setAddress</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O address. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29737106ab9313f1ab5c49c7684bc74a"></a><!-- doxytag: member="mdtAbstractIoWidget::address" ref="a29737106ab9313f1ab5c49c7684bc74a" args="() const " -->
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a29737106ab9313f1ab5c49c7684bc74a">address</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the I/O address. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a7517c82a953604985cb502a2e852f716">setLabelShort</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the short I/O label.  <a href="#a7517c82a953604985cb502a2e852f716"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c89738e31de7d90ff8964c58d728199"></a><!-- doxytag: member="mdtAbstractIoWidget::labelShort" ref="a4c89738e31de7d90ff8964c58d728199" args="() const " -->
-QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a4c89738e31de7d90ff8964c58d728199">labelShort</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the short I/O label. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a4a948cb01e543cdddea7277b9ead7e02">setLabel</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the complete I/O label.  <a href="#a4a948cb01e543cdddea7277b9ead7e02"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9415778f32850c4ad712ef916bd49ca"></a><!-- doxytag: member="mdtAbstractIoWidget::label" ref="aa9415778f32850c4ad712ef916bd49ca" args="() const " -->
-QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#aa9415778f32850c4ad712ef916bd49ca">label</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the complete I/O label. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a62b50a0701fae84ca626675827b642cc">setDetails</a> (const QString &amp;text)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set details about the I/O.  <a href="#a62b50a0701fae84ca626675827b642cc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e4cdc43b700432ab185cbc5969e1bf2"></a><!-- doxytag: member="mdtAbstractIoWidget::details" ref="a7e4cdc43b700432ab185cbc5969e1bf2" args="() const " -->
-QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#a7e4cdc43b700432ab185cbc5969e1bf2">details</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get details about the I/O. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io_widget.html#ad6a9374234c5450dbfd261dfa43d628c">setIo</a> (<a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a> *io)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O object.  <a href="#ad6a9374234c5450dbfd261dfa43d628c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad383dab877e327dc910a1f01ff5a3d9"></a><!-- doxytag: member="mdtAbstractIoWidget::lbLabel" ref="aad383dab877e327dc910a1f01ff5a3d9" args="" -->
@@ -117,7 +101,7 @@ QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>pbDetails</b
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for I/O widgets. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8h_source.html#l00032">32</a> of file <a class="el" href="mdt_abstract_io_widget_8h_source.html">mdtAbstractIoWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8h_source.html#l00033">33</a> of file <a class="el" href="mdt_abstract_io_widget_8h_source.html">mdtAbstractIoWidget.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a43208dbc9b2948561f5840bcd8fb9128"></a><!-- doxytag: member="mdtAbstractIoWidget::mdtAbstractIoWidget" ref="a43208dbc9b2948561f5840bcd8fb9128" args="(QWidget *parent=0)" -->
 <div class="memitem">
@@ -141,74 +125,32 @@ QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>pbDetails</b
 <li>pbDetails: a QPushButton that will call a dialog wich displays details of I/O The subclass must place these labels into a layout. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8cpp_source.html#l00027">27</a> of file <a class="el" href="mdt_abstract_io_widget_8cpp_source.html">mdtAbstractIoWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8cpp_source.html#l00029">29</a> of file <a class="el" href="mdt_abstract_io_widget_8cpp_source.html">mdtAbstractIoWidget.cpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a62b50a0701fae84ca626675827b642cc"></a><!-- doxytag: member="mdtAbstractIoWidget::setDetails" ref="a62b50a0701fae84ca626675827b642cc" args="(const QString &amp;text)" -->
+<a class="anchor" id="ad6a9374234c5450dbfd261dfa43d628c"></a><!-- doxytag: member="mdtAbstractIoWidget::setIo" ref="ad6a9374234c5450dbfd261dfa43d628c" args="(mdtAbstractIo *io)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtAbstractIoWidget::setDetails </td>
+          <td class="memname">void mdtAbstractIoWidget::setIo </td>
           <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>text</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a> *&#160;</td>
+          <td class="paramname"><em>io</em></td><td>)</td>
+          <td><code> [protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Set details about the I/O. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>QStringList ? Or QMap&lt;QString, QString&gt; ? </dd></dl>
+<p>Set the I/O object. </p>
+<p>Make all needed connections with the I/O base object, so that widget is allways updated.</p>
+<p>Used only by subclass.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>io must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_abstract_io_widget_8cpp_source.html">mdtAbstractIoWidget.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4a948cb01e543cdddea7277b9ead7e02"></a><!-- doxytag: member="mdtAbstractIoWidget::setLabel" ref="a4a948cb01e543cdddea7277b9ead7e02" args="(const QString &amp;text)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtAbstractIoWidget::setLabel </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>text</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the complete I/O label. </p>
-<p>This label is displayed as tool tip </p>
-
-<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8cpp_source.html#l00070">70</a> of file <a class="el" href="mdt_abstract_io_widget_8cpp_source.html">mdtAbstractIoWidget.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7517c82a953604985cb502a2e852f716"></a><!-- doxytag: member="mdtAbstractIoWidget::setLabelShort" ref="a7517c82a953604985cb502a2e852f716" args="(const QString &amp;text)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtAbstractIoWidget::setLabelShort </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>text</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the short I/O label. </p>
-<p>The short I/O label is allways displayed </p>
-
-<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_abstract_io_widget_8cpp_source.html">mdtAbstractIoWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_io_widget_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_abstract_io_widget_8cpp_source.html">mdtAbstractIoWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -231,7 +173,7 @@ QPushButton *&#160;</td><td class="memItemRight" valign="bottom"><b>pbDetails</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

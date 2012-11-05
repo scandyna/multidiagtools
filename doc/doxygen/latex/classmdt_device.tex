@@ -4,13 +4,38 @@
 }
 
 
-Inheritance diagram for mdtDevice:\nopagebreak
+Base class for a device connected to a port.  
+
+
+
+
+{\ttfamily \#include $<$mdtDevice.h$>$}
+
+
+
+Inheritance diagram for mdtDevice:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=178pt]{classmdt_device__inherit__graph}
+\includegraphics[width=294pt]{classmdt_device__inherit__graph}
 \end{center}
 \end{figure}
+
+
+Collaboration diagram for mdtDevice:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{classmdt_device__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}{decodeReadenFrames} ()
+\begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -18,13 +43,165 @@ Inheritance diagram for mdtDevice:\nopagebreak
 {\bfseries mdtDevice} (QObject $\ast$parent=0)}
 \label{classmdt_device_a6d501791e7243358cc61b144254b80db}
 
+\item 
+void \hyperlink{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}{setIos} (\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ios)
+\begin{DoxyCompactList}\small\item\em Set the I/O's container. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_device_a5059e971d265dcc125e507de856271b9}{readAnalogInput} (int address)
+\begin{DoxyCompactList}\small\item\em Read one analog input on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_ac0023742214c29bdadd46383ae240972}{readAnalogInputs} ()
+\begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device and update (G)UI representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_aa84e01b13f98fc35476a2654f1c8d2b3}{
+\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ {\bfseries pvIos}}
+\label{classmdt_device_aa84e01b13f98fc35476a2654f1c8d2b3}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+Base class for a device connected to a port. 
+
+Give some helper methods for event handling, ....
+
+If it is needed to continiusly update the representation of device's inputs (digital/analog I/O, voltage, temperature, ...), two things can happen:
+\begin{DoxyItemize}
+\item 1) Used port can receive data continiusly (f.ex. RS232) and device send data automatically
+\item 2) Used port need that a request is sent for each read (TCP, USB, ...) or device need such request Continous update is typical usefull for a GUI representing a real device.
+\end{DoxyItemize}
+
+A other usage is automated sequence. In this case, the sequence will tell when it need to set a output and when a input value is reuqierd.
+
+A device can accept one or many request befor results must be read. This depends most case on used port and protocol.
+
+It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application).
+
+A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep coherence, this states are updated in this class. (signal, ...) 
+
+Definition at line 51 of file mdtDevice.h.
 
 
-Definition at line 28 of file mdtDevice.h.
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}{
+\index{mdtDevice@{mdtDevice}!decodeReadenFrames@{decodeReadenFrames}}
+\index{decodeReadenFrames@{decodeReadenFrames}!mdtDevice@{mdtDevice}}
+\subsubsection[{decodeReadenFrames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::decodeReadenFrames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
+\label{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}
+
+
+Decode incoming frames. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000003}{Todo}]Version \char`\"{}blocante\char`\"{} (ret: QList$<$QVariant$>$, attente avec portmanager, ...) \end{Desc}
+
+
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing.
+\item This slot should be connected with \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{mdtPortManager::newReadenFrame()} signal.
+\item In this class, this connection is not made, it is the sublcass responsability to do this.
+\item The incoming frames are available with \hyperlink{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}{mdtPortManager::readenFrames()}. 
+\end{DoxyItemize}
+
+Reimplemented in \hyperlink{classmdt_device_modbus_ad2a43c428667654e71b288d0c44eca03}{mdtDeviceModbus}.
+
+
+
+Definition at line 51 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a5059e971d265dcc125e507de856271b9}{
+\index{mdtDevice@{mdtDevice}!readAnalogInput@{readAnalogInput}}
+\index{readAnalogInput@{readAnalogInput}!mdtDevice@{mdtDevice}}
+\subsubsection[{readAnalogInput}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDevice::readAnalogInput (
+\begin{DoxyParamCaption}
+\item[{int}]{address}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_a5059e971d265dcc125e507de856271b9}
+
+
+Read one analog input on physical device and update (G)UI representation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false else.
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and returns allways false.
+\item If device handled by subclass has analog inputs, this method should be implemented.
+\item The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+\item To update (G)UI, the \hyperlink{classmdt_device_ios_a1ddb8113380483dc88e4472875cd879d}{mdtDeviceIos::updateAnalogInputValue()} should be used. 
+\end{DoxyItemize}
+
+Definition at line 41 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_ac0023742214c29bdadd46383ae240972}{
+\index{mdtDevice@{mdtDevice}!readAnalogInputs@{readAnalogInputs}}
+\index{readAnalogInputs@{readAnalogInputs}!mdtDevice@{mdtDevice}}
+\subsubsection[{readAnalogInputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDevice::readAnalogInputs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_ac0023742214c29bdadd46383ae240972}
+
+
+Read all analog inputs on physical device and update (G)UI representation. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000002}{Todo}]Version \char`\"{}blocante\char`\"{} (ret: QVariant, attente avec portmanager, ...) \end{Desc}
+
+
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details)
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and returns allways -\/1.
+\item If device handled by subclass has analog inputs, this method should be implemented.
+\item The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+\item To update (G)UI, \hyperlink{classmdt_device_ios_a82850ee99957ec5a787de71299ad785b}{mdtDeviceIos::updateAnalogInputValues()} should be used. 
+\end{DoxyItemize}
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a4bf4c1d87f6b61955a015234a928e864}{mdtDeviceModbus}.
+
+
+
+Definition at line 46 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}{
+\index{mdtDevice@{mdtDevice}!setIos@{setIos}}
+\index{setIos@{setIos}!mdtDevice@{mdtDevice}}
+\subsubsection[{setIos}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setIos (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDeviceIos} $\ast$}]{ios}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}
+
+
+Set the I/O's container. 
+
+\begin{DoxyPrecond}{Precondition}
+ios must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 34 of file mdtDevice.cpp.
 
 
 

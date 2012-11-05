@@ -13,8 +13,7 @@ Mini port treminal.
 
 
 
-Collaboration diagram for mdtPortTerm:
-\nopagebreak
+Collaboration diagram for mdtPortTerm:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -118,7 +117,7 @@ teCmd-\/$>$clear();
 
 
 
-Definition at line 143 of file mdtPortTerm.cpp.
+Definition at line 144 of file mdtPortTerm.cpp.
 
 \hypertarget{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{
 \index{mdtPortTerm@{mdtPortTerm}!sendCmd@{sendCmd}}
@@ -140,6 +139,10 @@ if(teCmd-\/$>$toPlainText().size() $<$ 1)\{
 NOTE: essais cmd = teCmd-\/$>$toPlainText();
 
 cmd.append((char)0x0D);
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000051}{Todo}]Error handling ! \end{Desc}
+
 
 teCmd-\/$>$clear(); 
 

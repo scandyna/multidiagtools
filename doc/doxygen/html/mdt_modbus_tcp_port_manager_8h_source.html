@@ -102,29 +102,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00064"></a>00064 
 <a name="l00076"></a>00076   QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">scan</a>(<span class="keyword">const</span> QStringList &amp;hosts, <span class="keywordtype">int</span> timeout = 500);
 <a name="l00077"></a>00077 
-<a name="l00093"></a>00093   <span class="keywordtype">bool</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#addd9b9336417aa964eea91ca2f95d26e" title="Write data by copy.">writeData</a>(QByteArray pdu);
-<a name="l00094"></a>00094 
-<a name="l00105"></a>00105   <span class="keywordtype">bool</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#addd9b9336417aa964eea91ca2f95d26e" title="Write data by copy.">writeData</a>(<span class="keyword">const</span> QByteArray &amp;pdu, quint16 transactionId);
-<a name="l00106"></a>00106 
-<a name="l00118"></a>00118   <span class="keywordtype">bool</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#a233d2acf67dca192fb36ce407d90bfb7" title="Wait until a complete frame is available.">waitReadenFrame</a>(<span class="keywordtype">int</span> timeout = 500);
-<a name="l00119"></a>00119 
-<a name="l00127"></a>00127   QHash&lt;quint16, QByteArray&gt; &amp;<a class="code" href="classmdt_modbus_tcp_port_manager.html#a6dd3c77348286dfd323ae8a1becad33c" title="Get all readen data (PDUs)">readenFrames</a>();
-<a name="l00128"></a>00128 
-<a name="l00129"></a>00129  <span class="keyword">public</span> slots:
-<a name="l00130"></a>00130 
-<a name="l00133"></a>00133   <span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9" title="Called by the thread whenn a complete frame was readen.">fromThreadNewFrameReaden</a>();
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135  <span class="keyword">private</span>:
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   quint16 pvTransactionId;
-<a name="l00138"></a>00138   QHash&lt;quint16, QByteArray&gt; pvReadenPdus;
-<a name="l00139"></a>00139   QHash&lt;quint16, QByteArray&gt; pvReadenPdusCopy;
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141   <span class="comment">// Diseable copy</span>
-<a name="l00142"></a>00142   Q_DISABLE_COPY(<a class="code" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager.">mdtModbusTcpPortManager</a>);
-<a name="l00143"></a>00143 };
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 <span class="preprocessor">#endif  // #ifndef MDT_MODBUS_TCP_PORTMANAGER_H</span>
+<a name="l00094"></a>00094   <span class="keywordtype">int</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f" title="Write PDU by copy.">writeData</a>(QByteArray pdu);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096  <span class="keyword">public</span> slots:
+<a name="l00097"></a>00097 
+<a name="l00100"></a>00100   <span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9" title="Called by the thread whenn a complete frame was readen.">fromThreadNewFrameReaden</a>();
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102  <span class="keyword">private</span>:
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104   quint16 pvTransactionId;
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   <span class="comment">// Diseable copy</span>
+<a name="l00107"></a>00107   Q_DISABLE_COPY(<a class="code" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager.">mdtModbusTcpPortManager</a>);
+<a name="l00108"></a>00108 };
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110 <span class="preprocessor">#endif  // #ifndef MDT_MODBUS_TCP_PORTMANAGER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -141,7 +133,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:24:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

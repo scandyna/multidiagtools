@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtAnalogOutWidget Class Reference</div>  </div>
@@ -89,125 +88,41 @@ Collaboration diagram for mdtAnalogOutWidget:</div>
 
 <p><a href="classmdt_analog_out_widget-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="signals"></a>
-Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a2e8294dfff97f4995376d31845ea4f"></a><!-- doxytag: member="mdtAnalogOutWidget::valueChanged" ref="a9a2e8294dfff97f4995376d31845ea4f" args="(double value)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#a9a2e8294dfff97f4995376d31845ea4f">valueChanged</a> (double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted whenever the value is changed. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67b74fd871997e281321de20f3def45c"></a><!-- doxytag: member="mdtAnalogOutWidget::mdtAnalogOutWidget" ref="a67b74fd871997e281321de20f3def45c" args="(QWidget *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtAnalogOutWidget</b> (QWidget *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#a0c50c8fc341f37bb57dfcb98092a64d9">setRange</a> (double min, double max, int steps)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the range.  <a href="#a0c50c8fc341f37bb57dfcb98092a64d9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76d703aa049b5c1d1a5c4f3100d7240f"></a><!-- doxytag: member="mdtAnalogOutWidget::setUnit" ref="a76d703aa049b5c1d1a5c4f3100d7240f" args="(const QString &amp;unit)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#a76d703aa049b5c1d1a5c4f3100d7240f">setUnit</a> (const QString &amp;unit)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the unit (V, A, °C, ...) <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43348237ff45247022d08fb244f0eae1"></a><!-- doxytag: member="mdtAnalogOutWidget::setValue" ref="a43348237ff45247022d08fb244f0eae1" args="(double value)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#a43348237ff45247022d08fb244f0eae1">setValue</a> (double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value to update display. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e02254a08c9db3991b0b67d6fdef03c"></a><!-- doxytag: member="mdtAnalogOutWidget::value" ref="a5e02254a08c9db3991b0b67d6fdef03c" args="()" -->
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#a5e02254a08c9db3991b0b67d6fdef03c">value</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value (set with <a class="el" href="classmdt_analog_out_widget.html#a43348237ff45247022d08fb244f0eae1" title="Set the value to update display.">setValue()</a> ) <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#adcab086e53029a25a0808cf0b6d9dba8">setValueInt</a> (int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the integer value.  <a href="#adcab086e53029a25a0808cf0b6d9dba8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#ac60b64dd774f35a2fa2766756a2ccf01">valueInt</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integer value.  <a href="#ac60b64dd774f35a2fa2766756a2ccf01"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_out_widget.html#add6cdaca3fe72fbcd19f02d4818c52cc">setIo</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *io)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O object.  <a href="#add6cdaca3fe72fbcd19f02d4818c52cc"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Representation of a analog output. </p>
-<p>On wide range of automation application, it is usefull to display a output to the user. For example, a analog output of a I/O module, with a 8 bit encoding could be displayed with this class. </p>
+<p>On wide range of automation application, it is usefull to display a output to the user. For example, a analog output of a I/O module, with a 8 bit encoding could be displayed with this class.</p>
+<p>This class is used to display a analog output as GUI. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_analog_out_widget_8h_source.html#l00037">37</a> of file <a class="el" href="mdt_analog_out_widget_8h_source.html">mdtAnalogOutWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_out_widget_8h_source.html#l00041">41</a> of file <a class="el" href="mdt_analog_out_widget_8h_source.html">mdtAnalogOutWidget.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a0c50c8fc341f37bb57dfcb98092a64d9"></a><!-- doxytag: member="mdtAnalogOutWidget::setRange" ref="a0c50c8fc341f37bb57dfcb98092a64d9" args="(double min, double max, int steps)" -->
+<a class="anchor" id="add6cdaca3fe72fbcd19f02d4818c52cc"></a><!-- doxytag: member="mdtAnalogOutWidget::setIo" ref="add6cdaca3fe72fbcd19f02d4818c52cc" args="(mdtAnalogIo *io)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtAnalogOutWidget::setRange </td>
+          <td class="memname">void mdtAnalogOutWidget::setIo </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>min</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>max</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>steps</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the range. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">min</td><td>Minimum value to display (f.ex. 0V, or 4mA) </td></tr>
-    <tr><td class="paramname">max</td><td>Maximum value to display (f.ex. 10V, or 20mA) </td></tr>
-    <tr><td class="paramname">steps</td><td>Number of steps of the input (f.ex. 256 with 8 bits resolution) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>steps must be &gt; 1 </dd>
-<dd>
-max must be &gt; min </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_analog_out_widget_8cpp_source.html">mdtAnalogOutWidget.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="adcab086e53029a25a0808cf0b6d9dba8"></a><!-- doxytag: member="mdtAnalogOutWidget::setValueInt" ref="adcab086e53029a25a0808cf0b6d9dba8" args="(int value)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtAnalogOutWidget::setValueInt </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td>
+          <td class="paramname"><em>io</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Set the integer value. </p>
-<p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_out_widget.html#a0c50c8fc341f37bb57dfcb98092a64d9" title="Set the range.">setRange()</a> (steps parameter) </p>
+<p>Set the I/O object. </p>
+<p>Make all needed connections with the I/O object, so that widget is allways updated.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>io must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_analog_out_widget_8cpp_source.html">mdtAnalogOutWidget.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac60b64dd774f35a2fa2766756a2ccf01"></a><!-- doxytag: member="mdtAnalogOutWidget::valueInt" ref="ac60b64dd774f35a2fa2766756a2ccf01" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtAnalogOutWidget::valueInt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get the integer value. </p>
-<p>The integer value depend on value and resolution. The resolution is set with <a class="el" href="classmdt_analog_out_widget.html#a0c50c8fc341f37bb57dfcb98092a64d9" title="Set the range.">setRange()</a> (steps parameter) </p>
-
-<p>Definition at line <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00100">100</a> of file <a class="el" href="mdt_analog_out_widget_8cpp_source.html">mdtAnalogOutWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_out_widget_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_analog_out_widget_8cpp_source.html">mdtAnalogOutWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -230,7 +145,7 @@ max must be &gt; min </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

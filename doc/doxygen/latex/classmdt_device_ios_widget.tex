@@ -1,0 +1,93 @@
+\hypertarget{classmdt_device_ios_widget}{
+\section{mdtDeviceIosWidget Class Reference}
+\label{classmdt_device_ios_widget}\index{mdtDeviceIosWidget@{mdtDeviceIosWidget}}
+}
+
+
+Display a set of I/O's.  
+
+
+
+
+{\ttfamily \#include $<$mdtDeviceIosWidget.h$>$}
+
+
+
+Collaboration diagram for mdtDeviceIosWidget:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=188pt]{classmdt_device_ios_widget__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_ios_widget_affd43c16896f0191038911231b52a1fd}{
+{\bfseries mdtDeviceIosWidget} (QWidget $\ast$parent=0)}
+\label{classmdt_device_ios_widget_affd43c16896f0191038911231b52a1fd}
+
+\item 
+void \hyperlink{classmdt_device_ios_widget_ad388c95b2bdb48bae976c3fbc2512c30}{setMaxColumns} (int n)
+\begin{DoxyCompactList}\small\item\em Set the maximum columns on the layout. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ios_widget_a8fc261333ffc1c3b705ae8609f687159}{setDeviceIos} (\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ios)
+\begin{DoxyCompactList}\small\item\em Add all I/O's as corresponding GUI representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Display a set of I/O's. 
+
+Definition at line 36 of file mdtDeviceIosWidget.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_ios_widget_a8fc261333ffc1c3b705ae8609f687159}{
+\index{mdtDeviceIosWidget@{mdtDeviceIosWidget}!setDeviceIos@{setDeviceIos}}
+\index{setDeviceIos@{setDeviceIos}!mdtDeviceIosWidget@{mdtDeviceIosWidget}}
+\subsubsection[{setDeviceIos}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIosWidget::setDeviceIos (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtDeviceIos} $\ast$}]{ios}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_widget_a8fc261333ffc1c3b705ae8609f687159}
+
+
+Add all I/O's as corresponding GUI representation. 
+
+Will display a I/O corresponding to the type set for each item avaliable in ios. If I/O's allready exists, they are remove first, so that this method can be called multiple times if needed.
+
+\begin{DoxyPrecond}{Precondition}
+ios must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 50 of file mdtDeviceIosWidget.cpp.
+
+\hypertarget{classmdt_device_ios_widget_ad388c95b2bdb48bae976c3fbc2512c30}{
+\index{mdtDeviceIosWidget@{mdtDeviceIosWidget}!setMaxColumns@{setMaxColumns}}
+\index{setMaxColumns@{setMaxColumns}!mdtDeviceIosWidget@{mdtDeviceIosWidget}}
+\subsubsection[{setMaxColumns}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIosWidget::setMaxColumns (
+\begin{DoxyParamCaption}
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_widget_ad388c95b2bdb48bae976c3fbc2512c30}
+
+
+Set the maximum columns on the layout. 
+
+\begin{DoxyPrecond}{Precondition}
+n must be $>$ 0 
+\end{DoxyPrecond}
+
+
+Definition at line 43 of file mdtDeviceIosWidget.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtdevice/mdtDeviceIosWidget.h\item 
+src/mdtdevice/mdtDeviceIosWidget.cpp\end{DoxyCompactItemize}

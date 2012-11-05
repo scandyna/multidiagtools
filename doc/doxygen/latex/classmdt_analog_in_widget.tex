@@ -13,8 +13,7 @@ Representation of a analog input.
 
 
 
-Inheritance diagram for mdtAnalogInWidget:
-\nopagebreak
+Inheritance diagram for mdtAnalogInWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -28,17 +27,9 @@ Collaboration diagram for mdtAnalogInWidget:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=188pt]{classmdt_analog_in_widget__coll__graph}
+\includegraphics[width=280pt]{classmdt_analog_in_widget__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Slots}
-\begin{DoxyCompactItemize}
-\item 
-\hypertarget{classmdt_analog_in_widget_ab59995a9cc04fe152224b299c5b4cb55}{
-void \hyperlink{classmdt_analog_in_widget_ab59995a9cc04fe152224b299c5b4cb55}{setValue} (double value)}
-\label{classmdt_analog_in_widget_ab59995a9cc04fe152224b299c5b4cb55}
-
-\begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -47,100 +38,46 @@ void \hyperlink{classmdt_analog_in_widget_ab59995a9cc04fe152224b299c5b4cb55}{set
 \label{classmdt_analog_in_widget_a40de3d4e8f96e0e7f6af0753d915d14d}
 
 \item 
-void \hyperlink{classmdt_analog_in_widget_a0a562239350a85cadda1353cf2e47183}{setRange} (double min, double max, int steps)
-\begin{DoxyCompactList}\small\item\em Set the range. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_in_widget_a489c8e03df8e649dea6ab96ab66d8372}{
-void \hyperlink{classmdt_analog_in_widget_a489c8e03df8e649dea6ab96ab66d8372}{setUnit} (const QString \&unit)}
-\label{classmdt_analog_in_widget_a489c8e03df8e649dea6ab96ab66d8372}
-
-\begin{DoxyCompactList}\small\item\em Set the unit (V, A, °C, ...) \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_in_widget_a2beb0201c15c67ae812146b0ae91b83b}{
-double \hyperlink{classmdt_analog_in_widget_a2beb0201c15c67ae812146b0ae91b83b}{value} ()}
-\label{classmdt_analog_in_widget_a2beb0201c15c67ae812146b0ae91b83b}
-
-\begin{DoxyCompactList}\small\item\em Get value (set with \hyperlink{classmdt_analog_in_widget_ab59995a9cc04fe152224b299c5b4cb55}{setValue()} ) \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_analog_in_widget_abd3db6845454d9869f33c716fc1084b4}{setValueInt} (int value)
-\begin{DoxyCompactList}\small\item\em Set the integer value. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_analog_in_widget_a0f29ef137b69f80a7ebf690348495a96}{valueInt} ()
-\begin{DoxyCompactList}\small\item\em Get the integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_analog_in_widget_a20a1943b4e2087f861e319d5bdb7180a}{setIo} (\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$io)
+\begin{DoxyCompactList}\small\item\em Set the I/O object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Representation of a analog input. 
 
-On wide range of automation application, it is usefull to display a state of a input to the user. For example, a analog input of a I/O module, with a 8 bit encoding could be displayed with this class. 
+On wide range of automation application, it is usefull to display a state of a input to the user. For example, a analog input of a I/O module, with a 8 bit encoding could be displayed with this class.
 
-Definition at line 37 of file mdtAnalogInWidget.h.
+This class is used to display a analog input as GUI. \begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_analog_io}{mdtAnalogIo} 
+\end{DoxySeeAlso}
+
+
+Definition at line 41 of file mdtAnalogInWidget.h.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_analog_in_widget_a0a562239350a85cadda1353cf2e47183}{
-\index{mdtAnalogInWidget@{mdtAnalogInWidget}!setRange@{setRange}}
-\index{setRange@{setRange}!mdtAnalogInWidget@{mdtAnalogInWidget}}
-\subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogInWidget::setRange (
+\hypertarget{classmdt_analog_in_widget_a20a1943b4e2087f861e319d5bdb7180a}{
+\index{mdtAnalogInWidget@{mdtAnalogInWidget}!setIo@{setIo}}
+\index{setIo@{setIo}!mdtAnalogInWidget@{mdtAnalogInWidget}}
+\subsubsection[{setIo}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogInWidget::setIo (
 \begin{DoxyParamCaption}
-\item[{double}]{min, }
-\item[{double}]{max, }
-\item[{int}]{steps}
+\item[{{\bf mdtAnalogIo} $\ast$}]{io}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_analog_in_widget_a0a562239350a85cadda1353cf2e47183}
+\label{classmdt_analog_in_widget_a20a1943b4e2087f861e319d5bdb7180a}
 
 
-Set the range. 
+Set the I/O object. 
 
+Make all needed connections with the I/O object, so that widget is allways updated.
 
-\begin{DoxyParams}{Parameters}
-{\em min} & Minimum value to display (f.ex. 0V, or 4mA) \\
-\hline
-{\em max} & Maximum value to display (f.ex. 10V, or 20mA) \\
-\hline
-{\em steps} & Number of steps of the input (f.ex. 256 with 8 bits resolution) \\
-\hline
-\end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
-steps must be $>$ 1 
-
-max must be $>$ min 
+io must be a valid pointer. 
 \end{DoxyPrecond}
 
 
-Definition at line 52 of file mdtAnalogInWidget.cpp.
-
-\hypertarget{classmdt_analog_in_widget_abd3db6845454d9869f33c716fc1084b4}{
-\index{mdtAnalogInWidget@{mdtAnalogInWidget}!setValueInt@{setValueInt}}
-\index{setValueInt@{setValueInt}!mdtAnalogInWidget@{mdtAnalogInWidget}}
-\subsubsection[{setValueInt}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogInWidget::setValueInt (
-\begin{DoxyParamCaption}
-\item[{int}]{value}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_analog_in_widget_abd3db6845454d9869f33c716fc1084b4}
-
-
-Set the integer value. 
-
-Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_in_widget_a0a562239350a85cadda1353cf2e47183}{setRange()} (steps parameter) 
-
-Definition at line 75 of file mdtAnalogInWidget.cpp.
-
-\hypertarget{classmdt_analog_in_widget_a0f29ef137b69f80a7ebf690348495a96}{
-\index{mdtAnalogInWidget@{mdtAnalogInWidget}!valueInt@{valueInt}}
-\index{valueInt@{valueInt}!mdtAnalogInWidget@{mdtAnalogInWidget}}
-\subsubsection[{valueInt}]{\setlength{\rightskip}{0pt plus 5cm}int mdtAnalogInWidget::valueInt (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_analog_in_widget_a0f29ef137b69f80a7ebf690348495a96}
-
-
-Get the integer value. 
-
-The integer value depend on value and resolution. The resolution is set with \hyperlink{classmdt_analog_in_widget_a0a562239350a85cadda1353cf2e47183}{setRange()} (steps parameter) 
-
-Definition at line 82 of file mdtAnalogInWidget.cpp.
+Definition at line 49 of file mdtAnalogInWidget.cpp.
 
 
 

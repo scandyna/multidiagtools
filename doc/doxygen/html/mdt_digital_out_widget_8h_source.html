@@ -86,38 +86,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtAbstractIoWidget.h&quot;</span>
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 <span class="keyword">class </span>QPushButton;
-<a name="l00027"></a>00027 
-<a name="l00028"></a><a class="code" href="classmdt_digital_out_widget.html">00028</a> <span class="keyword">class </span><a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets.">mdtAbstractIoWidget</a>
-<a name="l00029"></a>00029 {
-<a name="l00030"></a>00030  Q_OBJECT
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032  <span class="keyword">public</span>:
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>(QWidget *parent = 0);
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036   ~<a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>();
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038   <span class="keywordtype">void</span> setOn(<span class="keywordtype">bool</span> on);
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   <span class="keywordtype">bool</span> isOn();
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042  signals:
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <span class="keywordtype">void</span> stateChanged(<span class="keywordtype">bool</span> on);
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046  <span class="keyword">private</span> slots:
+<a name="l00027"></a>00027 <span class="keyword">class </span><a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a>;
+<a name="l00028"></a>00028 
+<a name="l00029"></a><a class="code" href="classmdt_digital_out_widget.html">00029</a> <span class="keyword">class </span><a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets.">mdtAbstractIoWidget</a>
+<a name="l00030"></a>00030 {
+<a name="l00031"></a>00031  Q_OBJECT
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033  <span class="keyword">public</span>:
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035   <a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>(QWidget *parent = 0);
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037   ~<a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>();
+<a name="l00038"></a>00038 
+<a name="l00046"></a>00046   <span class="keywordtype">void</span> <a class="code" href="classmdt_digital_out_widget.html#a3c6f8df089e3a2527d43d1f0a1fad61c" title="Set the I/O object.">setIo</a>(<a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *io);
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="comment">// if state is != from current state, text will be updated and stateChanged() emited</span>
-<a name="l00049"></a>00049   <span class="keywordtype">void</span> updateState(<span class="keywordtype">bool</span> state);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051  <span class="keyword">private</span>:
+<a name="l00048"></a>00048  <span class="keyword">private</span> slots:
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050   <span class="comment">// Used to update GUI from mdtDigitalIo object.</span>
+<a name="l00051"></a>00051   <span class="keywordtype">void</span> setOn(<span class="keywordtype">bool</span> on);
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053   Q_DISABLE_COPY(<a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>);
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055   QPushButton *pbState;
-<a name="l00056"></a>00056 };
+<a name="l00053"></a>00053   <span class="comment">// if state is != from current state, text will be updated</span>
+<a name="l00054"></a>00054   <span class="keywordtype">void</span> updateState(<span class="keywordtype">bool</span> state);
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056  <span class="keyword">private</span>:
 <a name="l00057"></a>00057 
-<a name="l00058"></a>00058 <span class="preprocessor">#endif  // #ifndef MDT_DIGITAL_OUT_WIDGET_H</span>
+<a name="l00058"></a>00058   Q_DISABLE_COPY(<a class="code" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a>);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   QPushButton *pbState;
+<a name="l00061"></a>00061   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *pvIo;
+<a name="l00062"></a>00062 };
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 <span class="preprocessor">#endif  // #ifndef MDT_DIGITAL_OUT_WIDGET_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -134,7 +133,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:26 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

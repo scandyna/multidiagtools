@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDigitalOutWidget Class Reference</div>  </div>
@@ -79,28 +78,46 @@ Collaboration diagram for mdtDigitalOutWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_digital_out_widget__coll__graph.png" border="0" usemap="#mdt_digital_out_widget_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_digital_out_widget_coll__map" id="mdt_digital_out_widget_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets." alt="" coords="5,5,149,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets." alt="" coords="5,85,149,115"/><area shape="rect" id="node4" href="classmdt_digital_io.html" title="Representation of a digital I/O." alt="" coords="173,85,264,115"/><area shape="rect" id="node6" href="classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="167,5,271,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_digital_out_widget-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="signals"></a>
-Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54ff46b84613d13564e8856715b96f76"></a><!-- doxytag: member="mdtDigitalOutWidget::stateChanged" ref="a54ff46b84613d13564e8856715b96f76" args="(bool on)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>stateChanged</b> (bool on)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71a1e8b0eb39b51bce4d3df49293fb89"></a><!-- doxytag: member="mdtDigitalOutWidget::mdtDigitalOutWidget" ref="a71a1e8b0eb39b51bce4d3df49293fb89" args="(QWidget *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtDigitalOutWidget</b> (QWidget *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36f8c64f5ab3068351de1ca876cfadf5"></a><!-- doxytag: member="mdtDigitalOutWidget::setOn" ref="a36f8c64f5ab3068351de1ca876cfadf5" args="(bool on)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setOn</b> (bool on)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a406ac62b41321b3e6c1214deb0c95621"></a><!-- doxytag: member="mdtDigitalOutWidget::isOn" ref="a406ac62b41321b3e6c1214deb0c95621" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isOn</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_out_widget.html#a3c6f8df089e3a2527d43d1f0a1fad61c">setIo</a> (<a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *io)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O object.  <a href="#a3c6f8df089e3a2527d43d1f0a1fad61c"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="mdt_digital_out_widget_8h_source.html#l00028">28</a> of file <a class="el" href="mdt_digital_out_widget_8h_source.html">mdtDigitalOutWidget.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<p>Definition at line <a class="el" href="mdt_digital_out_widget_8h_source.html#l00029">29</a> of file <a class="el" href="mdt_digital_out_widget_8h_source.html">mdtDigitalOutWidget.h</a>.</p>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a3c6f8df089e3a2527d43d1f0a1fad61c"></a><!-- doxytag: member="mdtDigitalOutWidget::setIo" ref="a3c6f8df089e3a2527d43d1f0a1fad61c" args="(mdtDigitalIo *io)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDigitalOutWidget::setIo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a> *&#160;</td>
+          <td class="paramname"><em>io</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the I/O object. </p>
+<p>Make all needed connections with the I/O object, so that widget is allways updated.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>io must be a valid pointer. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_digital_out_widget_8cpp_source.html#l00050">50</a> of file <a class="el" href="mdt_digital_out_widget_8cpp_source.html">mdtDigitalOutWidget.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutilsgui/<a class="el" href="mdt_digital_out_widget_8h_source.html">mdtDigitalOutWidget.h</a></li>
 <li>src/mdtutilsgui/<a class="el" href="mdt_digital_out_widget_8cpp_source.html">mdtDigitalOutWidget.cpp</a></li>
 </ul>
@@ -119,7 +136,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isOn</b> ()</td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

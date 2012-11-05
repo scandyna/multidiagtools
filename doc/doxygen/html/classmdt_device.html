@@ -61,30 +61,191 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-slots">Public Slots</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDevice Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtDevice" --><div class="dynheader">
+<!-- doxytag: class="mdtDevice" -->
+<p>Base class for a device connected to a port.  
+ <a href="classmdt_device.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for mdtDevice:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device__inherit__graph.png" border="0" usemap="#mdt_device_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_device_inherit__map" id="mdt_device_inherit__map">
-<area shape="rect" id="node3" href="classmdt_device_u3606_a.html" title="mdtDeviceU3606A" alt="" coords="5,83,136,112"/></map>
+<area shape="rect" id="node3" href="classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="5,83,136,112"/><area shape="rect" id="node5" href="classmdt_device_u3606_a.html" title="mdtDeviceU3606A" alt="" coords="160,83,291,112"/></map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for mdtDevice:</div>
+<div class="dyncontent">
+<div class="center"><img src="classmdt_device__coll__graph.png" border="0" usemap="#mdt_device_coll__map" alt="Collaboration graph"/></div>
+<map name="mdt_device_coll__map" id="mdt_device_coll__map">
+<area shape="rect" id="node2" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,5,107,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_device-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a0e43cc312b5b0685b07da8a49dd1ede6">decodeReadenFrames</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode incoming frames.  <a href="#a0e43cc312b5b0685b07da8a49dd1ede6"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d501791e7243358cc61b144254b80db"></a><!-- doxytag: member="mdtDevice::mdtDevice" ref="a6d501791e7243358cc61b144254b80db" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtDevice</b> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ad1f8fff7f40ab77e876fbfaeae846f82">setIos</a> (<a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *ios)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O's container.  <a href="#ad1f8fff7f40ab77e876fbfaeae846f82"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a5059e971d265dcc125e507de856271b9">readAnalogInput</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one analog input on physical device and update (G)UI representation.  <a href="#a5059e971d265dcc125e507de856271b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ac0023742214c29bdadd46383ae240972">readAnalogInputs</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog inputs on physical device and update (G)UI representation.  <a href="#ac0023742214c29bdadd46383ae240972"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa84e01b13f98fc35476a2654f1c8d2b3"></a><!-- doxytag: member="mdtDevice::pvIos" ref="aa84e01b13f98fc35476a2654f1c8d2b3" args="" -->
+<a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pvIos</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00028">28</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>Base class for a device connected to a port. </p>
+<p>Give some helper methods for event handling, ....</p>
+<p>If it is needed to continiusly update the representation of device's inputs (digital/analog I/O, voltage, temperature, ...), two things can happen:</p>
+<ul>
+<li>1) Used port can receive data continiusly (f.ex. RS232) and device send data automatically</li>
+<li>2) Used port need that a request is sent for each read (TCP, USB, ...) or device need such request Continous update is typical usefull for a GUI representing a real device.</li>
+</ul>
+<p>A other usage is automated sequence. In this case, the sequence will tell when it need to set a output and when a input value is reuqierd.</p>
+<p>A device can accept one or many request befor results must be read. This depends most case on used port and protocol.</p>
+<p>It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application).</p>
+<p>A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep coherence, this states are updated in this class. (signal, ...) </p>
+
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00051">51</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a0e43cc312b5b0685b07da8a49dd1ede6"></a><!-- doxytag: member="mdtDevice::decodeReadenFrames" ref="a0e43cc312b5b0685b07da8a49dd1ede6" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDevice::decodeReadenFrames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual, slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Decode incoming frames. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Version "blocante" (ret: QList&lt;QVariant&gt;, attente avec portmanager, ...) </dd></dl>
+<p>Subclass notes:<br/>
+</p>
+<ul>
+<li>This default implementation does nothing.</li>
+<li>This slot should be connected with <a class="el" href="classmdt_port_manager.html#abe48be6a56bff4f82842bc31c2746200" title="Emitted when new frame was readen.">mdtPortManager::newReadenFrame()</a> signal.</li>
+<li>In this class, this connection is not made, it is the sublcass responsability to do this.</li>
+<li>The incoming frames are available with <a class="el" href="classmdt_port_manager.html#a4843ac996aa5da0df5dc8104ba41b4d8" title="Get all readen data.">mdtPortManager::readenFrames()</a>. </li>
+</ul>
+
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#ad2a43c428667654e71b288d0c44eca03">mdtDeviceModbus</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5059e971d265dcc125e507de856271b9"></a><!-- doxytag: member="mdtDevice::readAnalogInput" ref="a5059e971d265dcc125e507de856271b9" args="(int address)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtDevice::readAnalogInput </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read one analog input on physical device and update (G)UI representation. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true on success, false else.</dd></dl>
+<p>Subclass notes:<br/>
+</p>
+<ul>
+<li>This default implementation does nothing and returns allways false.</li>
+<li>If device handled by subclass has analog inputs, this method should be implemented.</li>
+<li>The subclass must handle and document the behaviour of calling this method without any I/O's container set.</li>
+<li>To update (G)UI, the <a class="el" href="classmdt_device_ios.html#a1ddb8113380483dc88e4472875cd879d" title="Update (G)UI&#39;s value of a analog input.">mdtDeviceIos::updateAnalogInputValue()</a> should be used. </li>
+</ul>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac0023742214c29bdadd46383ae240972"></a><!-- doxytag: member="mdtDevice::readAnalogInputs" ref="ac0023742214c29bdadd46383ae240972" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtDevice::readAnalogInputs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read all analog inputs on physical device and update (G)UI representation. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Version "blocante" (ret: QVariant, attente avec portmanager, ...) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details)</dd></dl>
+<p>Subclass notes:<br/>
+</p>
+<ul>
+<li>This default implementation does nothing and returns allways -1.</li>
+<li>If device handled by subclass has analog inputs, this method should be implemented.</li>
+<li>The subclass must handle and document the behaviour of calling this method without any I/O's container set.</li>
+<li>To update (G)UI, <a class="el" href="classmdt_device_ios.html#a82850ee99957ec5a787de71299ad785b" title="Update (G)UI&#39;s value for a set of analog inputs.">mdtDeviceIos::updateAnalogInputValues()</a> should be used. </li>
+</ul>
+
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#a4bf4c1d87f6b61955a015234a928e864">mdtDeviceModbus</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad1f8fff7f40ab77e876fbfaeae846f82"></a><!-- doxytag: member="mdtDevice::setIos" ref="ad1f8fff7f40ab77e876fbfaeae846f82" args="(mdtDeviceIos *ios)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDevice::setIos </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_device_ios.html">mdtDeviceIos</a> *&#160;</td>
+          <td class="paramname"><em>ios</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the I/O's container. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>ios must be a valid pointer </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00034">34</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtdevice/<a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a></li>
 <li>src/mdtdevice/<a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a></li>
 </ul>
@@ -103,7 +264,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

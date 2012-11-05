@@ -101,14 +101,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aabe51a50a53c6b23884cc4862730b731"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a216ee2495440be4eefb2faf9da3c9e47">scan</a> (const QStringList &amp;hosts, int timeout=500)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available hosts with a MODBUS/TCP compatible device attached.  <a href="#a216ee2495440be4eefb2faf9da3c9e47"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#addd9b9336417aa964eea91ca2f95d26e">writeData</a> (QByteArray pdu)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#addd9b9336417aa964eea91ca2f95d26e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a043a1cb15b045037f97eebd4ffe6cef8">writeData</a> (const QByteArray &amp;pdu, quint16 transactionId)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a043a1cb15b045037f97eebd4ffe6cef8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a233d2acf67dca192fb36ce407d90bfb7">waitReadenFrame</a> (int timeout=500)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a complete frame is available.  <a href="#a233d2acf67dca192fb36ce407d90bfb7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QHash&lt; quint16, QByteArray &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a6dd3c77348286dfd323ae8a1becad33c">readenFrames</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all readen data (PDUs)  <a href="#a6dd3c77348286dfd323ae8a1becad33c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f">writeData</a> (QByteArray pdu)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write PDU by copy.  <a href="#a0c56b7d38cfb52d95e81de4ca6ac414f"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>MODBUS/TCP port manager. </p>
@@ -183,35 +177,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Called by the thread whenn a complete frame was readen. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00198">198</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a6dd3c77348286dfd323ae8a1becad33c"></a><!-- doxytag: member="mdtModbusTcpPortManager::readenFrames" ref="a6dd3c77348286dfd323ae8a1becad33c" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QHash&lt; quint16, QByteArray &gt; &amp; mdtModbusTcpPortManager::readenFrames </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get all readen data (PDUs) </p>
-<p>Get a copy of all currently available data. Note: the list of data must be cleared explicitly with QHash::clear() after data are used. (or remove each item with, for.ex. QHash::take() ) </p>
-
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4843ac996aa5da0df5dc8104ba41b4d8">mdtPortManager</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -258,85 +229,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a233d2acf67dca192fb36ce407d90bfb7"></a><!-- doxytag: member="mdtModbusTcpPortManager::waitReadenFrame" ref="a233d2acf67dca192fb36ce407d90bfb7" args="(int timeout=500)" -->
+<a class="anchor" id="a0c56b7d38cfb52d95e81de4ca6ac414f"></a><!-- doxytag: member="mdtModbusTcpPortManager::writeData" ref="a0c56b7d38cfb52d95e81de4ca6ac414f" args="(QByteArray pdu)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtModbusTcpPortManager::waitReadenFrame </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code>500</code></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Wait until a complete frame is available. </p>
-<p>This method will return when a complete frame was readen. This is usefull for query/answer protocols.</p>
-<p>Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if Ok, false on timeout </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">mdtPortManager</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00167">167</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a043a1cb15b045037f97eebd4ffe6cef8"></a><!-- doxytag: member="mdtModbusTcpPortManager::writeData" ref="a043a1cb15b045037f97eebd4ffe6cef8" args="(const QByteArray &amp;pdu, quint16 transactionId)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtModbusTcpPortManager::writeData </td>
-          <td>(</td>
-          <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>pdu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">quint16&#160;</td>
-          <td class="paramname"><em>transactionId</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Write data by copy. </p>
-<p>This is the same as <a class="el" href="classmdt_modbus_tcp_port_manager.html#addd9b9336417aa964eea91ca2f95d26e" title="Write data by copy.">writeData(QByteArray)</a> , but you can specify a transaction ID.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pdu</td><td>MODBUS PDU (see the MODBUS Application Protocol Specification for details) </td></tr>
-    <tr><td class="paramname">transactionId</td><td>Transaction identifier. Will be encoded in MBAP header. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="addd9b9336417aa964eea91ca2f95d26e"></a><!-- doxytag: member="mdtModbusTcpPortManager::writeData" ref="addd9b9336417aa964eea91ca2f95d26e" args="(QByteArray pdu)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtModbusTcpPortManager::writeData </td>
+          <td class="memname">int mdtModbusTcpPortManager::writeData </td>
           <td>(</td>
           <td class="paramtype">QByteArray&#160;</td>
           <td class="paramname"><em>pdu</em></td><td>)</td>
@@ -346,23 +244,24 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Write data by copy. </p>
+<p>Write PDU by copy. </p>
 <p>Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
-<p>Note that the transaction ID is incremented a each write request. If you want to specify it, use writeData(QByteArray, quint16) .</p>
+<p>Internally, the transaction ID is incremented at each request and returned.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">pdu</td><td>MODBUS PDU (see the MODBUS Application Protocol Specification for details) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. If the maximum of authorized transactions are reached, false is returned. Note: internally, the writeFramesPool size of <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> is used to fix this, and this is configurable in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>. See <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">mdtPortManager::config()</a> . </dd></dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Transaction ID on success or value &lt; 0 on error. If the maximum of authorized transactions are reached, value &lt; 0 is returned. Note: internally, the writeFramesPool size of <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> is used to fix this, and this is configurable in <a class="el" href="classmdt_port_config.html">mdtPortConfig</a>. See <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">mdtPortManager::config()</a> . </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd>Should return transactionId , or &lt; 0 on error </dd></dl>
 
 <p><p>frame-&gt;setWaitAnAnswer(false);</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Handle this ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000022">Todo:</a></b></dt><dd>Handle this ? </dd></dl>
 </p>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a6d3cc4e522326e2a6ca0da401ae58271">mdtPortManager</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b">mdtPortManager</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_modbus_tcp_port_manager_8cpp_source.html">mdtModbusTcpPortManager.cpp</a>.</p>
 
@@ -387,7 +286,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:01 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -92,7 +92,7 @@ Collaboration diagram for mdtUsbtmcPortManager:</div>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">fromThreadNewFrameReaden</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the thread whenn a complete frame was readen.  <a href="#aca42b343ae1f6a324e6e45968f03bbea"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a complete frame is available.  <a href="#aca42b343ae1f6a324e6e45968f03bbea"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7">mdtUsbtmcPortManager</a> (QObject *parent=0)</td></tr>
@@ -101,12 +101,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aad6b2eef9b5cfb5c324affb6962a463b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6">scan</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for available ports with a USBTMC compatible device attached.  <a href="#a992d1227810186d3c7dc166452e2e3b6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a7ff9a9ada7919af9a90286859695a29d">writeData</a> (QByteArray data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a7ff9a9ada7919af9a90286859695a29d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a2da27dcbfc9448f1d61d93679b9a2ef3">sendReadRequest</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a read request to device.  <a href="#a2da27dcbfc9448f1d61d93679b9a2ef3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a78ec9aec17061657f2151c677fc869eb">waitReadenFrame</a> (int timeout=500)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a complete frame is available.  <a href="#a78ec9aec17061657f2151c677fc869eb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3">writeData</a> (QByteArray data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#ab7229e9d519e80a6509bec90dc9239b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2">sendReadRequest</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a read request to device.  <a href="#a992d24020748e17d577b31e64a73b3e2"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USBTMC port manager. </p>
@@ -174,15 +172,28 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Called by the thread whenn a complete frame was readen. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000034">Todo:</a></b></dt><dd>Essais ... void <a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort()</a>; </dd></dl>
+<p>Wait until a complete frame is available. </p>
+<p>Send a read request and call <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">mdtPortManager::waitReadenFrame()</a> .</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 on timeout or if write queue is fullint waitReadenFrame(int timeout = 500); </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>Essais ... void <a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort()</a>; </dd></dl>
+<p>Called by the thread whenn a complete frame was readen</p>
+<p>bool <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">mdtUsbtmcPortManager::waitReadenFrame(int timeout)</a> { int retVal;</p>
+<p>Q_ASSERT(pvPort != 0);</p>
+<p>retVal = <a class="el" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest()</a>; if(retVal &lt; 0){ return retVal; } qDebug() &lt;&lt; "mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ..."; if(!mdtPortManager::waitReadenFrame(timeout)){ return -1; }</p>
+<p>return retVal; } </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000033">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000045">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00328">328</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00336">336</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -218,12 +229,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2da27dcbfc9448f1d61d93679b9a2ef3"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendReadRequest" ref="a2da27dcbfc9448f1d61d93679b9a2ef3" args="()" -->
+<a class="anchor" id="a992d24020748e17d577b31e64a73b3e2"></a><!-- doxytag: member="mdtUsbtmcPortManager::sendReadRequest" ref="a992d24020748e17d577b31e64a73b3e2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtUsbtmcPortManager::sendReadRequest </td>
+          <td class="memname">int mdtUsbtmcPortManager::sendReadRequest </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -233,50 +244,19 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Send a read request to device. </p>
-<p>USBTMC standard need that a read request is sent to device before we can read any data. If you choose to use the mdtPortManager's <a class="el" href="classmdt_port_manager.html#abe48be6a56bff4f82842bc31c2746200" title="Emitted when new frame was readen.">newReadenFrame()</a> signal, this method must be explicitly called after <a class="el" href="classmdt_usbtmc_port_manager.html#a7ff9a9ada7919af9a90286859695a29d" title="Write data by copy.">writeData()</a>. If you use <a class="el" href="classmdt_usbtmc_port_manager.html#a78ec9aec17061657f2151c677fc869eb" title="Wait until a complete frame is available.">waitReadenFrame()</a>, this method is called automatically.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. </dd></dl>
+<p>USBTMC standard need that a read request is sent to device before we can read any data.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00267">267</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a78ec9aec17061657f2151c677fc869eb"></a><!-- doxytag: member="mdtUsbtmcPortManager::waitReadenFrame" ref="a78ec9aec17061657f2151c677fc869eb" args="(int timeout=500)" -->
+<a class="anchor" id="ab7229e9d519e80a6509bec90dc9239b3"></a><!-- doxytag: member="mdtUsbtmcPortManager::writeData" ref="ab7229e9d519e80a6509bec90dc9239b3" args="(QByteArray data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtUsbtmcPortManager::waitReadenFrame </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code>500</code></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Wait until a complete frame is available. </p>
-<p>Send a read request and call <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">mdtPortManager::waitReadenFrame()</a> .</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True if Ok, false on timeout </dd></dl>
-
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">mdtPortManager</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00303">303</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7ff9a9ada7919af9a90286859695a29d"></a><!-- doxytag: member="mdtUsbtmcPortManager::writeData" ref="a7ff9a9ada7919af9a90286859695a29d" args="(QByteArray data)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtUsbtmcPortManager::writeData </td>
+          <td class="memname">int mdtUsbtmcPortManager::writeData </td>
           <td>(</td>
           <td class="paramtype">QByteArray&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -294,10 +274,10 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a6d3cc4e522326e2a6ca0da401ae58271">mdtPortManager</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b">mdtPortManager</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
@@ -322,7 +302,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:28 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:02 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

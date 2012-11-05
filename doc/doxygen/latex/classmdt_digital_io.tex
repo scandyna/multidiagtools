@@ -1,0 +1,136 @@
+\hypertarget{classmdt_digital_io}{
+\section{mdtDigitalIo Class Reference}
+\label{classmdt_digital_io}\index{mdtDigitalIo@{mdtDigitalIo}}
+}
+
+
+Representation of a digital I/O.  
+
+
+
+
+{\ttfamily \#include $<$mdtDigitalIo.h$>$}
+
+
+
+Inheritance diagram for mdtDigitalIo:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=158pt]{classmdt_digital_io__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtDigitalIo:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=158pt]{classmdt_digital_io__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_digital_io_ae43db36b2d9f2c3d38cdd97e2ea84bda}{setOn} (bool on, bool isValid)
+\begin{DoxyCompactList}\small\item\em Set I/O state (On or OFF) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_digital_io_a88308968532c1e23f695c43a62a3be40}{setOn} (bool on)
+\begin{DoxyCompactList}\small\item\em Set I/O state (On or OFF) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_digital_io_a69c20119906682c0bd90833598127328}{
+void \hyperlink{classmdt_digital_io_a69c20119906682c0bd90833598127328}{stateChanged} (bool on)}
+\label{classmdt_digital_io_a69c20119906682c0bd90833598127328}
+
+\begin{DoxyCompactList}\small\item\em This signal is emitted whenever the state is changed. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_digital_io_a0bb6637d6ee81c7c3310b04f7fb743a4}{
+void {\bfseries stateChanged} (int address, bool on)}
+\label{classmdt_digital_io_a0bb6637d6ee81c7c3310b04f7fb743a4}
+
+\item 
+\hypertarget{classmdt_digital_io_ab50657b37b4915bd142aa0f22f45fd41}{
+void {\bfseries stateChangedForUi} (bool on)}
+\label{classmdt_digital_io_ab50657b37b4915bd142aa0f22f45fd41}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_digital_io_ab5cca7698845624d99f94052d87790bb}{
+{\bfseries mdtDigitalIo} (QObject $\ast$parent=0)}
+\label{classmdt_digital_io_ab5cca7698845624d99f94052d87790bb}
+
+\item 
+\hypertarget{classmdt_digital_io_ab21b87b6e356974358c7d536131959f4}{
+bool \hyperlink{classmdt_digital_io_ab21b87b6e356974358c7d536131959f4}{isOn} ()}
+\label{classmdt_digital_io_ab21b87b6e356974358c7d536131959f4}
+
+\begin{DoxyCompactList}\small\item\em Get current I/O state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Representation of a digital I/O. 
+
+On wide range of automation applications, it is usefull to display a digital I/O to the user. For example, a digital I/O can be displayed by using this class together with \hyperlink{classmdt_digital_in_widget}{mdtDigitalInWidget} or \hyperlink{classmdt_digital_out_widget}{mdtDigitalOutWidget} 
+
+Definition at line 33 of file mdtDigitalIo.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_digital_io_ae43db36b2d9f2c3d38cdd97e2ea84bda}{
+\index{mdtDigitalIo@{mdtDigitalIo}!setOn@{setOn}}
+\index{setOn@{setOn}!mdtDigitalIo@{mdtDigitalIo}}
+\subsubsection[{setOn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDigitalIo::setOn (
+\begin{DoxyParamCaption}
+\item[{bool}]{on, }
+\item[{bool}]{isValid}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_digital_io_ae43db36b2d9f2c3d38cdd97e2ea84bda}
+
+
+Set I/O state (On or OFF) 
+
+Store the state and emit \hyperlink{classmdt_digital_io_a69c20119906682c0bd90833598127328}{stateChanged()} if new value state different from current.
+
+
+\begin{DoxyParams}{Parameters}
+{\em on} & The state to store \\
+\hline
+{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()}\\
+\hline
+\end{DoxyParams}
+Note for UI developpers:
+\begin{DoxyItemize}
+\item The signal stateChangedForUi() is emited 
+\end{DoxyItemize}
+
+Definition at line 38 of file mdtDigitalIo.cpp.
+
+\hypertarget{classmdt_digital_io_a88308968532c1e23f695c43a62a3be40}{
+\index{mdtDigitalIo@{mdtDigitalIo}!setOn@{setOn}}
+\index{setOn@{setOn}!mdtDigitalIo@{mdtDigitalIo}}
+\subsubsection[{setOn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDigitalIo::setOn (
+\begin{DoxyParamCaption}
+\item[{bool}]{on}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_digital_io_a88308968532c1e23f695c43a62a3be40}
+
+
+Set I/O state (On or OFF) 
+
+Overloaded method that calls \hyperlink{classmdt_digital_io_ae43db36b2d9f2c3d38cdd97e2ea84bda}{setOn(bool, bool)} with isValid = true. 
+
+Definition at line 52 of file mdtDigitalIo.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutils/mdtDigitalIo.h\item 
+src/mdtutils/mdtDigitalIo.cpp\end{DoxyCompactItemize}

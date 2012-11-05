@@ -53,9 +53,21 @@ enum \hyperlink{classmdt_frame_codec_modbus_a31d8291be7f8636d5d295ce3066d7ac7}{m
 \begin{DoxyCompactItemize}
 \item 
 QByteArray \hyperlink{classmdt_frame_codec_modbus_adf0a4d583aeff7b818dda94514c594f0}{encodeReadCoils} (quint16 startAddress, quint16 n)
-\begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadCoils function (0x01) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadCoils function (FC 1, 0x01) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_ad14a2d6c124cca157670595978e06150}{encodeReadDiscreteInputs} (quint16 startAddress, quint16 n)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadDiscreteInputs function (FC 2, 0x02) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_a19cac6dd7bd9078c6ab53ee2a891e537}{encodeReadHoldingRegisters} (quint16 startAddress, quint16 n)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadHoldingRegisters function (FC 3, 0x03) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_aabcadb20524749274eaf285561960aed}{encodeReadInputRegisters} (quint16 startAddress, quint16 n)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the ReadInputRegisters function (FC 4, 0x04) \end{DoxyCompactList}\item 
 QByteArray \hyperlink{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}{encodeWriteSingleCoil} (quint16 address, bool state)
-\begin{DoxyCompactList}\small\item\em Encode a PDU according the WriteSingleCoil function (0x05) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the WriteSingleCoil function (FC 5, 0x05) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_a9499bf48476368d030c015114f886ae3}{encodeWriteSingleRegister} (quint16 address, quint16 value)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the WriteSingleRegister function (FC 6, 0x06) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_a12013e4433f96b2658b464698135e9fa}{encodeWriteMultipleCoils} (quint16 startAddress, const QList$<$ bool $>$ \&states)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the WriteMultipleCoils function (FC 15, 0x0F) \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_frame_codec_modbus_abede9423d90c3dac725bbd50f9efd741}{encodeWriteMultipleRegisters} (quint16 startAddress, const QList$<$ quint16 $>$ \&values)
+\begin{DoxyCompactList}\small\item\em Encode a PDU according the WriteMultipleRegisters function (FC 16, 0x10) \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_frame_codec_modbus_a426f465363a49d70890a462b40677787}{decode} (const QByteArray \&pdu)
 \begin{DoxyCompactList}\small\item\em Decode a MODBUS PDU. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame_codec_modbus_a31d8291be7f8636d5d295ce3066d7ac7}{modbus\_\-error\_\-code\_\-t} \hyperlink{classmdt_frame_codec_modbus_a21f3102e12f1a1d9c4145c1ce1f8e6b6}{lastModbusError} ()
@@ -168,14 +180,25 @@ Definition at line 47 of file mdtFrameCodecModbus.h.
 
 Decode a MODBUS PDU. 
 
-This should reconize the function code in PDU, and call the appropriate decode methode (internall). Once decode is done, the values are available with \hyperlink{classmdt_frame_codec_a599a46e2d7cb5f80bd80e303236ead73}{mdtFrameCodec::values()}. To know what was decoded, the function code is returned.\par
- The values are stored in a QList$<$QVariant$>$ , with format depending of the function code:
+This should reconize the function code in PDU, and call the appropriate decode methode (internal). Once decode is done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{mdtFrameCodec::values()}. To know what was decoded, the function code is returned.
+
+The values are stored in a QList$<$QVariant$>$ , with format depending of the function code:
 \begin{DoxyItemize}
-\item For a ReadCoils response, values will be bool, sorted by ascending addresses.
+\item FC 1 (0x01), ReadCoils reply: digital output states as bool, sorted by ascending addresses.
+\item FC 2 (0x02), ReadDiscreteInputs reply: digital input states as bool, sorted by ascending addresses.
+\item FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.
+\item FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.
+\item FC 5 (0x05), WriteSingleCoil reply: first value is address as quint16, second value is the output state as bool.
+\item FC 6 (0x06), WriteSingleRegister reply: analog output value, as quint16.
+\item FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.
+\item FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.
+\item For a WriteSingleCoil reply, 1 value as bool
+\item For a WriteSingleRegister reply, 1 value as int
 \end{DoxyItemize}
 
-If PDU contains a error code, the list of values will be empty, and this error code will be returned.\par
- If a MODBUS error code is decoded, this error code is returned as in frame (for. ex: 0x81 for a ReadCoils error) To know whitch MODBUS error was returned, use \hyperlink{classmdt_frame_codec_modbus_a21f3102e12f1a1d9c4145c1ce1f8e6b6}{lastModbusError()}
+If PDU contains a error code, the list of values will be empty, and this error code will be returned.
+
+If a MODBUS error code is decoded, this error code is returned as in frame (for. ex: 0x81 for a ReadCoils error) To know whitch MODBUS error was returned, use \hyperlink{classmdt_frame_codec_modbus_a21f3102e12f1a1d9c4145c1ce1f8e6b6}{lastModbusError()}
 
 
 \begin{DoxyParams}{Parameters}
@@ -188,12 +211,12 @@ Decoded function code, MODBUS error code or value $<$ 0 on other error.
 
 
 NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000041}{Todo}]Base 16 ?? \end{Desc}
+\item[\hyperlink{todo__todo000055}{Todo}]Base 16 ?? \end{Desc}
 
 
 
 
-Definition at line 80 of file mdtFrameCodecModbus.cpp.
+Definition at line 256 of file mdtFrameCodecModbus.cpp.
 
 \hypertarget{classmdt_frame_codec_modbus_adf0a4d583aeff7b818dda94514c594f0}{
 \index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeReadCoils@{encodeReadCoils}}
@@ -207,14 +230,131 @@ Definition at line 80 of file mdtFrameCodecModbus.cpp.
 \label{classmdt_frame_codec_modbus_adf0a4d583aeff7b818dda94514c594f0}
 
 
-Encode a PDU according the ReadCoils function (0x01) 
+Encode a PDU according the ReadCoils function (FC 1, 0x01) 
 
-Please take a look at MODBUS specifications for more details. \begin{DoxyReturn}{Returns}
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
 A QByteArray containing the PDU, or a empty QByteArray on error. 
 \end{DoxyReturn}
 
 
 Definition at line 36 of file mdtFrameCodecModbus.cpp.
+
+\hypertarget{classmdt_frame_codec_modbus_ad14a2d6c124cca157670595978e06150}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeReadDiscreteInputs@{encodeReadDiscreteInputs}}
+\index{encodeReadDiscreteInputs@{encodeReadDiscreteInputs}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeReadDiscreteInputs}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeReadDiscreteInputs (
+\begin{DoxyParamCaption}
+\item[{quint16}]{startAddress, }
+\item[{quint16}]{n}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_ad14a2d6c124cca157670595978e06150}
+
+
+Encode a PDU according the ReadDiscreteInputs function (FC 2, 0x02) 
+
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+Definition at line 60 of file mdtFrameCodecModbus.cpp.
+
+\hypertarget{classmdt_frame_codec_modbus_a19cac6dd7bd9078c6ab53ee2a891e537}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeReadHoldingRegisters@{encodeReadHoldingRegisters}}
+\index{encodeReadHoldingRegisters@{encodeReadHoldingRegisters}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeReadHoldingRegisters}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeReadHoldingRegisters (
+\begin{DoxyParamCaption}
+\item[{quint16}]{startAddress, }
+\item[{quint16}]{n}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_a19cac6dd7bd9078c6ab53ee2a891e537}
+
+
+Encode a PDU according the ReadHoldingRegisters function (FC 3, 0x03) 
+
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+Definition at line 84 of file mdtFrameCodecModbus.cpp.
+
+\hypertarget{classmdt_frame_codec_modbus_aabcadb20524749274eaf285561960aed}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeReadInputRegisters@{encodeReadInputRegisters}}
+\index{encodeReadInputRegisters@{encodeReadInputRegisters}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeReadInputRegisters}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeReadInputRegisters (
+\begin{DoxyParamCaption}
+\item[{quint16}]{startAddress, }
+\item[{quint16}]{n}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_aabcadb20524749274eaf285561960aed}
+
+
+Encode a PDU according the ReadInputRegisters function (FC 4, 0x04) 
+
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+Definition at line 108 of file mdtFrameCodecModbus.cpp.
+
+\hypertarget{classmdt_frame_codec_modbus_a12013e4433f96b2658b464698135e9fa}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeWriteMultipleCoils@{encodeWriteMultipleCoils}}
+\index{encodeWriteMultipleCoils@{encodeWriteMultipleCoils}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeWriteMultipleCoils}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeWriteMultipleCoils (
+\begin{DoxyParamCaption}
+\item[{quint16}]{startAddress, }
+\item[{const QList$<$ bool $>$ \&}]{states}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_a12013e4433f96b2658b464698135e9fa}
+
+
+Encode a PDU according the WriteMultipleCoils function (FC 15, 0x0F) 
+
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+Definition at line 168 of file mdtFrameCodecModbus.cpp.
+
+\hypertarget{classmdt_frame_codec_modbus_abede9423d90c3dac725bbd50f9efd741}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeWriteMultipleRegisters@{encodeWriteMultipleRegisters}}
+\index{encodeWriteMultipleRegisters@{encodeWriteMultipleRegisters}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeWriteMultipleRegisters}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters (
+\begin{DoxyParamCaption}
+\item[{quint16}]{startAddress, }
+\item[{const QList$<$ quint16 $>$ \&}]{values}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_abede9423d90c3dac725bbd50f9efd741}
+
+
+Encode a PDU according the WriteMultipleRegisters function (FC 16, 0x10) 
+
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+Definition at line 222 of file mdtFrameCodecModbus.cpp.
 
 \hypertarget{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}{
 \index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeWriteSingleCoil@{encodeWriteSingleCoil}}
@@ -228,14 +368,39 @@ Definition at line 36 of file mdtFrameCodecModbus.cpp.
 \label{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}
 
 
-Encode a PDU according the WriteSingleCoil function (0x05) 
+Encode a PDU according the WriteSingleCoil function (FC 5, 0x05) 
 
-Please take a look at MODBUS specifications for more details. \begin{DoxyReturn}{Returns}
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
 A QByteArray containing the PDU, or a empty QByteArray on error. 
 \end{DoxyReturn}
 
 
-Definition at line 60 of file mdtFrameCodecModbus.cpp.
+Definition at line 132 of file mdtFrameCodecModbus.cpp.
+
+\hypertarget{classmdt_frame_codec_modbus_a9499bf48476368d030c015114f886ae3}{
+\index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeWriteSingleRegister@{encodeWriteSingleRegister}}
+\index{encodeWriteSingleRegister@{encodeWriteSingleRegister}!mdtFrameCodecModbus@{mdtFrameCodecModbus}}
+\subsubsection[{encodeWriteSingleRegister}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtFrameCodecModbus::encodeWriteSingleRegister (
+\begin{DoxyParamCaption}
+\item[{quint16}]{address, }
+\item[{quint16}]{value}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_modbus_a9499bf48476368d030c015114f886ae3}
+
+
+Encode a PDU according the WriteSingleRegister function (FC 6, 0x06) 
+
+Please take a look at MODBUS specifications for more details.
+
+\begin{DoxyReturn}{Returns}
+A QByteArray containing the PDU, or a empty QByteArray on error. 
+\end{DoxyReturn}
+
+
+Definition at line 152 of file mdtFrameCodecModbus.cpp.
 
 \hypertarget{classmdt_frame_codec_modbus_a21f3102e12f1a1d9c4145c1ce1f8e6b6}{
 \index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!lastModbusError@{lastModbusError}}
@@ -255,7 +420,7 @@ Returns the error code according to the specification, part function/error codes
 \end{DoxySeeAlso}
 
 
-Definition at line 131 of file mdtFrameCodecModbus.cpp.
+Definition at line 349 of file mdtFrameCodecModbus.cpp.
 
 
 

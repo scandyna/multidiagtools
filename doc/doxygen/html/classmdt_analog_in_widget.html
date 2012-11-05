@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtAnalogInWidget Class Reference</div>  </div>
@@ -84,127 +83,46 @@ Collaboration diagram for mdtAnalogInWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_analog_in_widget__coll__graph.png" border="0" usemap="#mdt_analog_in_widget_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_analog_in_widget_coll__map" id="mdt_analog_in_widget_coll__map">
-<area shape="rect" id="node2" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets." alt="" coords="5,5,149,35"/></map>
+<area shape="rect" id="node2" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets." alt="" coords="5,85,149,115"/><area shape="rect" id="node4" href="classmdt_analog_io.html" title="Representation of a analog I/O." alt="" coords="173,85,267,115"/><area shape="rect" id="node6" href="classmdt_abstract_io.html" title="Base class for I/O handling on (G)UI." alt="" coords="168,5,272,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_analog_in_widget-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="pub-slots"></a>
-Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab59995a9cc04fe152224b299c5b4cb55"></a><!-- doxytag: member="mdtAnalogInWidget::setValue" ref="ab59995a9cc04fe152224b299c5b4cb55" args="(double value)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#ab59995a9cc04fe152224b299c5b4cb55">setValue</a> (double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value to update display. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40de3d4e8f96e0e7f6af0753d915d14d"></a><!-- doxytag: member="mdtAnalogInWidget::mdtAnalogInWidget" ref="a40de3d4e8f96e0e7f6af0753d915d14d" args="(QWidget *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtAnalogInWidget</b> (QWidget *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#a0a562239350a85cadda1353cf2e47183">setRange</a> (double min, double max, int steps)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the range.  <a href="#a0a562239350a85cadda1353cf2e47183"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a489c8e03df8e649dea6ab96ab66d8372"></a><!-- doxytag: member="mdtAnalogInWidget::setUnit" ref="a489c8e03df8e649dea6ab96ab66d8372" args="(const QString &amp;unit)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#a489c8e03df8e649dea6ab96ab66d8372">setUnit</a> (const QString &amp;unit)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the unit (V, A, °C, ...) <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2beb0201c15c67ae812146b0ae91b83b"></a><!-- doxytag: member="mdtAnalogInWidget::value" ref="a2beb0201c15c67ae812146b0ae91b83b" args="()" -->
-double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#a2beb0201c15c67ae812146b0ae91b83b">value</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value (set with <a class="el" href="classmdt_analog_in_widget.html#ab59995a9cc04fe152224b299c5b4cb55" title="Set the value to update display.">setValue()</a> ) <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#abd3db6845454d9869f33c716fc1084b4">setValueInt</a> (int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the integer value.  <a href="#abd3db6845454d9869f33c716fc1084b4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#a0f29ef137b69f80a7ebf690348495a96">valueInt</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integer value.  <a href="#a0f29ef137b69f80a7ebf690348495a96"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a">setIo</a> (<a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *io)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O object.  <a href="#a20a1943b4e2087f861e319d5bdb7180a"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Representation of a analog input. </p>
-<p>On wide range of automation application, it is usefull to display a state of a input to the user. For example, a analog input of a I/O module, with a 8 bit encoding could be displayed with this class. </p>
+<p>On wide range of automation application, it is usefull to display a state of a input to the user. For example, a analog input of a I/O module, with a 8 bit encoding could be displayed with this class.</p>
+<p>This class is used to display a analog input as GUI. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_analog_in_widget_8h_source.html#l00037">37</a> of file <a class="el" href="mdt_analog_in_widget_8h_source.html">mdtAnalogInWidget.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_in_widget_8h_source.html#l00041">41</a> of file <a class="el" href="mdt_analog_in_widget_8h_source.html">mdtAnalogInWidget.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a0a562239350a85cadda1353cf2e47183"></a><!-- doxytag: member="mdtAnalogInWidget::setRange" ref="a0a562239350a85cadda1353cf2e47183" args="(double min, double max, int steps)" -->
+<a class="anchor" id="a20a1943b4e2087f861e319d5bdb7180a"></a><!-- doxytag: member="mdtAnalogInWidget::setIo" ref="a20a1943b4e2087f861e319d5bdb7180a" args="(mdtAnalogIo *io)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtAnalogInWidget::setRange </td>
+          <td class="memname">void mdtAnalogInWidget::setIo </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>min</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>max</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>steps</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set the range. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">min</td><td>Minimum value to display (f.ex. 0V, or 4mA) </td></tr>
-    <tr><td class="paramname">max</td><td>Maximum value to display (f.ex. 10V, or 20mA) </td></tr>
-    <tr><td class="paramname">steps</td><td>Number of steps of the input (f.ex. 256 with 8 bits resolution) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>steps must be &gt; 1 </dd>
-<dd>
-max must be &gt; min </dd></dl>
-
-<p>Definition at line <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_analog_in_widget_8cpp_source.html">mdtAnalogInWidget.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="abd3db6845454d9869f33c716fc1084b4"></a><!-- doxytag: member="mdtAnalogInWidget::setValueInt" ref="abd3db6845454d9869f33c716fc1084b4" args="(int value)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtAnalogInWidget::setValueInt </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classmdt_analog_io.html">mdtAnalogIo</a> *&#160;</td>
+          <td class="paramname"><em>io</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Set the integer value. </p>
-<p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_in_widget.html#a0a562239350a85cadda1353cf2e47183" title="Set the range.">setRange()</a> (steps parameter) </p>
+<p>Set the I/O object. </p>
+<p>Make all needed connections with the I/O object, so that widget is allways updated.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>io must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_analog_in_widget_8cpp_source.html">mdtAnalogInWidget.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a0f29ef137b69f80a7ebf690348495a96"></a><!-- doxytag: member="mdtAnalogInWidget::valueInt" ref="a0f29ef137b69f80a7ebf690348495a96" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtAnalogInWidget::valueInt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get the integer value. </p>
-<p>The integer value depend on value and resolution. The resolution is set with <a class="el" href="classmdt_analog_in_widget.html#a0a562239350a85cadda1353cf2e47183" title="Set the range.">setRange()</a> (steps parameter) </p>
-
-<p>Definition at line <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00082">82</a> of file <a class="el" href="mdt_analog_in_widget_8cpp_source.html">mdtAnalogInWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_in_widget_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_analog_in_widget_8cpp_source.html">mdtAnalogInWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -227,7 +145,7 @@ max must be &gt; min </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Tue Oct 23 2012 17:22:27 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

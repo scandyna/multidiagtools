@@ -147,7 +147,7 @@ Definition at line 61 of file mdtPortThread.cpp.
 Emitted on error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000017}{Todo}]Adapt threads + port managers\end{Desc}
+\item[\hyperlink{todo__todo000029}{Todo}]Adapt threads + port managers\end{Desc}
 
 
 When a error occurs, this signal is emited.
@@ -172,7 +172,7 @@ This is a helper method for subclass to get a new frame in port's read frames po
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdtError} log system, the signal \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} will be emited with MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR value, and method will go sleep until a new frame is available in pool.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
+\item[\hyperlink{todo__todo000030}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
 
 
 Note about port mutex handling:\par
