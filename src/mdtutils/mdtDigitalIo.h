@@ -51,8 +51,18 @@ class mdtDigitalIo : public mdtAbstractIo
    * Store the state and emit stateChanged() if
    *  new value state different from current.
    *
+   * \param on The state to store
+   * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
+   *
    * Note for UI developpers:
    *  - The signal stateChangedForUi() is emited
+   */
+  void setOn(bool on, bool isValid);
+
+  /*! \brief Set I/O state (On or OFF)
+   *
+   * Overloaded method that calls setOn(bool, bool)
+   *  with isValid = true.
    */
   void setOn(bool on);
 
@@ -61,6 +71,7 @@ class mdtDigitalIo : public mdtAbstractIo
   /*! \brief This signal is emitted whenever the state is changed
    */
   void stateChanged(bool on);
+  void stateChanged(int address, bool on);
 
   /*
    * This signal is emited every time

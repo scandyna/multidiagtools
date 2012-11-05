@@ -31,7 +31,7 @@ mdtFrameCodec::~mdtFrameCodec()
 {
 }
 
-QList<QVariant> mdtFrameCodec::values()
+QList<QVariant> &mdtFrameCodec::values()
 {
   return pvValues;
 }

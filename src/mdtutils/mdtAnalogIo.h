@@ -85,10 +85,13 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * The valueChanged() signal is emitted.
    *
+   * \param value The value to store
+   * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
+   *
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValueInt(int value);
+  void setValueInt(int value, bool isValid);
 
   /*! \brief Get the integer value
    *
@@ -104,8 +107,18 @@ class mdtAnalogIo : public mdtAbstractIo
    * Store the value and emit valueChanged() if
    *  new value is different from current.
    *
+   * \param value The value to store
+   * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
+   *
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
+   */
+  void setValue(double value, bool isValid);
+
+  /*! \brief Set the value to update display
+   *
+   * Overloaded method that calls setValue(double, bool)
+   *  with isValid = true.
    */
   void setValue(double value);
 
@@ -114,6 +127,7 @@ class mdtAnalogIo : public mdtAbstractIo
   /*! \brief This signal is emitted whenever the value is changed
    */
   void valueChanged(double newValue);
+  void valueChanged(int address, double newValue);
 
   /*
    * These signals are emited every time

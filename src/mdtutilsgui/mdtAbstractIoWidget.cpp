@@ -24,6 +24,7 @@
 #include <QPushButton>
 #include <QFrame>
 #include <QMessageBox>
+#include <QApplication>
 
 mdtAbstractIoWidget::mdtAbstractIoWidget(QWidget *parent)
  : QWidget(parent)
@@ -62,6 +63,11 @@ void mdtAbstractIoWidget::setIo(mdtAbstractIo *io)
   setLabelShort(io->labelShort());
   setLabel(io->label());
   setDetails(io->details());
+  if(qApp->applicationName().isEmpty()){
+    pvMessageBox->setWindowTitle(tr("I/O informations for ") + io->labelShort());
+  }else{
+    pvMessageBox->setWindowTitle(qApp->applicationName() + tr(" - I/O informations for ") + io->labelShort());
+  }
 }
 
 void mdtAbstractIoWidget::showIoInformations()

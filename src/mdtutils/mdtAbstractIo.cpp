@@ -24,6 +24,7 @@ mdtAbstractIo::mdtAbstractIo(QObject *parent)
  : QObject(parent)
 {
   pvAddress = 0;
+  pvHasValidData = false;
 }
 
 mdtAbstractIo::~mdtAbstractIo()
@@ -72,4 +73,9 @@ void mdtAbstractIo::setDetails(const QString &text)
 QString mdtAbstractIo::details() const
 {
   return pvDetails;
+}
+
+bool mdtAbstractIo::hasValidData() const
+{
+  return pvHasValidData;
 }

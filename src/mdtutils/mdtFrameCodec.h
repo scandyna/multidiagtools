@@ -34,7 +34,7 @@ class mdtFrameCodec
 
   /*! \brief Get the decoded values
    */
-  QList<QVariant> values();
+  QList<QVariant> &values();
 
  protected:
 

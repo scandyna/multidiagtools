@@ -31,6 +31,7 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
   /// \note Provisoire !!
+  connect(pvTcpPortManager, SIGNAL(newReadenFrame()), this, SLOT(decodeReadenFrames()));
   pvTcpPortManager->setPortName("192.168.1.102:502");
   pvTcpPortManager->openPort();
   pvTcpPortManager->start();
@@ -42,6 +43,7 @@ mdtDeviceModbus::~mdtDeviceModbus()
   delete pvCodec;
 }
 
+/**
 void mdtDeviceModbus::setupAnalogInputs(int count)
 {
   Q_ASSERT((count >= 1)&&(count <= 125));
@@ -53,6 +55,7 @@ void mdtDeviceModbus::setupAnalogInputs(int count)
     pvAnalogInputs.insert(i, 0);
   }
 }
+*/
 
 QVariant mdtDeviceModbus::getAnalogInputValue(int address, bool readDirectly)
 {
@@ -62,37 +65,46 @@ QVariant mdtDeviceModbus::getAnalogInputValue(int address, bool readDirectly)
   if(address < 0){
     return value;
   }
+  /**
   if(address >= pvAnalogInputs.size()){
     return value;
   }
-  /// \todo Implement query !
-
   value = pvAnalogInputs.value(address);
+  */
+
+  /// \todo Implement query !
 
   return value;
 }
 
-bool mdtDeviceModbus::readAnalogInputs()
+int mdtDeviceModbus::readAnalogInputs()
 {
+  Q_ASSERT(pvIos != 0);
+
   // Setup MODBUS PDU
   QByteArray pdu;
-  int transactionId;
-  pdu = pvCodec->encodeReadInputRegisters(0, pvAnalogInputs.size());
+  ///int transactionId;
+  ///pdu = pvCodec->encodeReadInputRegisters(0, pvAnalogInputs.size());
+  pdu = pvCodec->encodeReadInputRegisters(0, pvIos->analogInputsCount());
   if(pdu.isEmpty()){
-    return false;
+    return -1;
   }
   // Send request
+  return pvTcpPortManager->writeData(pdu);
+
+  /**
   transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
     return false;
   }
+  */
   /// \note Provisoire !
+  /**
   pvTcpPortManager->waitReadenFrame();
   pdu = pvTcpPortManager->readenFrame(transactionId);
   qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
   qDebug() << "DEV RD value: " << pvCodec->values();
-
-  return true;
+  */
 }
 
 void mdtDeviceModbus::setupAnalogOutputs(int count)
@@ -381,4 +393,28 @@ bool mdtDeviceModbus::readDigitalOutputs()
   qDebug() << "DEV RD value: " << pvCodec->values();
 
   return true;
+}
+
+void mdtDeviceModbus::decodeReadenFrames()
+{
+  Q_ASSERT(pvIos != 0);
+
+  QByteArray pdu;
+  int fc;
+  qDebug() << "mdtDeviceModbus::decodeReadenFrames() ...";
+
+  // Decode each readen frame and update I/O's
+  pvReadenFrames = pvTcpPortManager->readenFrames();
+  while(pvReadenFrames.size() > 0){
+    pdu = pvReadenFrames.takeFirst();
+    fc = pvCodec->decode(pdu);
+    switch(fc){
+      case 0x04:  // Read input registers
+        pvIos->updateAnalogInputValues(pvCodec->values());
+        break;
+      default:
+        /// \todo Handle errors !
+        qDebug() << "mdtDeviceModbus::decodeReadenFrames() unknow frame format";
+    }
+  }
 }

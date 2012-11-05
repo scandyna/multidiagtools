@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtDeviceTest.h"
 #include "mdtApplication.h"
+#include "mdtDeviceIos.h"
+#include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
 
 /**
@@ -30,28 +32,226 @@
 
 #include <QString>
 #include <QVariant>
+#include <QList>
 
 #include <QDebug>
+
+void mdtDeviceTest::deviceIosTest()
+{
+  mdtDeviceIos ios;
+  mdtAnalogIo *ai;
+  QList<mdtAnalogIo*> aIoList;
+  mdtAnalogIo *ao;
+  mdtDigitalIo *di;
+  QList<mdtDigitalIo*> dIoList;
+  mdtDigitalIo *dout;
+
+  // Add analog inputs
+  ai = new mdtAnalogIo;
+  ai->setAddress(12);
+  ios.addAnalogInput(ai);
+
+  // Add analog outputs
+  ao = new mdtAnalogIo;
+  ao->setAddress(15);
+  ios.addAnalogOutput(ao);
+
+  // Add digital inputs
+  di = new mdtDigitalIo;
+  di->setAddress(17);
+  ios.addDigitalInput(di);
+
+  // Add digital inputs
+  dout = new mdtDigitalIo;
+  dout->setAddress(20);
+  ios.addDigitalOutput(dout);
+
+  // Check analog inputs
+  QVERIFY(ios.analogInputAt(11) == 0);
+  QVERIFY(ios.analogInputAt(12) != 0);
+  QVERIFY(ios.analogInputAt(12)->address() == 12);
+  aIoList = ios.analogInputs();
+  for(int i=0; i<aIoList.size(); i++){
+    qDebug() << "Analog input, adr: " << aIoList.at(i)->address();
+  }
+  // Check analog outputs
+  QVERIFY(ios.analogOutputAt(13) == 0);
+  QVERIFY(ios.analogOutputAt(15) != 0);
+  QVERIFY(ios.analogOutputAt(15)->address() == 15);
+  aIoList = ios.analogOutputs();
+  for(int i=0; i<aIoList.size(); i++){
+    qDebug() << "Analog output, adr: " << aIoList.at(i)->address();
+  }
+  // Check digital inputs
+  QVERIFY(ios.digitalInputAt(11) == 0);
+  QVERIFY(ios.digitalInputAt(17) != 0);
+  QVERIFY(ios.digitalInputAt(17)->address() == 17);
+  dIoList = ios.digitalInputs();
+  for(int i=0; i<dIoList.size(); i++){
+    qDebug() << "Digital input, adr: " << dIoList.at(i)->address();
+  }
+  // Check digital outputs
+  QVERIFY(ios.digitalOutputAt(19) == 0);
+  QVERIFY(ios.digitalOutputAt(20) != 0);
+  QVERIFY(ios.digitalOutputAt(20)->address() == 20);
+  dIoList = ios.digitalOutputs();
+  for(int i=0; i<dIoList.size(); i++){
+    qDebug() << "Digital output, adr: " << dIoList.at(i)->address();
+  }
+}
+
+void mdtDeviceTest::deviceIosWidgetTest()
+{
+  mdtDeviceIosWidget w;
+  mdtDeviceIos ios;
+  mdtAnalogIo *ai;
+  mdtAnalogIo *ao;
+  mdtDigitalIo *di;
+  mdtDigitalIo *dout;
+
+  // Add analog inputs
+  ai = new mdtAnalogIo;
+  ai->setAddress(12);
+  ai->setLabelShort("Vin");
+  ai->setLabel("Input voltage");
+  ai->setDetails("Input voltage measured from AG1\nSee schema 15G");
+  ai->setRange(0.0, 10.0, 256);
+  ///ios.addAnalogInput(ai);
+
+  ai = new mdtAnalogIo;
+  ai->setAddress(13);
+  ai->setLabelShort("wX_BatUBa");
+  ai->setLabel("rBatSpannung");
+  ai->setDetails("Batteriespannung\nSchema: 06E");
+  ai->setRange(0.0, 50.0, 2048);
+  ios.addAnalogInput(ai);
+
+  // Add analog outputs
+  ao = new mdtAnalogIo;
+  ao->setAddress(15);
+  ao->setLabelShort("Vout");
+  ao->setLabel("Output voltage for AG speed");
+  ao->setDetails("Output voltage for AG speed setpoint\nSee schema 16F");
+  ao->setRange(0.0, 10.0, 1024);
+  ios.addAnalogOutput(ao);
+
+  // Add digital inputs
+  di = new mdtDigitalIo;
+  di->setAddress(17);
+  di->setLabelShort("Test");
+  di->setLabel("Test mode");
+  di->setDetails("Test mode enabled.\nIf ON, it's possible to set some outputs from tool\nSee schema 25G");
+  ios.addDigitalInput(di);
+
+  di = new mdtDigitalIo;
+  di->setAddress(18);
+  di->setLabelShort("xM_HSEin");
+  di->setLabel(tr("xHochspannung"));
+  di->setDetails("Hoschspannung vorhanden\nSchema: 06E");
+  ios.addDigitalInput(di);
+
+  di = new mdtDigitalIo;
+  di->setAddress(19);
+  di->setLabelShort("xM_MgBr");
+  di->setLabel(tr("xMgBremse"));
+  di->setDetails("Magnetische Bremse\nSchema: 06E");
+  ios.addDigitalInput(di);
+
+  // Add digital outputs
+  dout = new mdtDigitalIo;
+  dout->setAddress(20);
+  dout->setLabelShort("xB_BelEin");
+  dout->setLabel(tr("xBeleuchtungEin"));
+  dout->setDetails(tr("Drehschalter Beleuchtung Ein") + "\n" + tr("Schema: 10A"));
+  ios.addDigitalOutput(dout);
+
+  dout = new mdtDigitalIo;
+  dout->setAddress(21);
+  dout->setLabelShort("xB_BatMinU");
+  dout->setLabel(tr("xBatMinSpg"));
+  dout->setDetails(tr("Batterie Minimalspannung") + "\n" + tr("Schema: 06C"));
+  ios.addDigitalOutput(dout);
+
+  // Setup widget
+  ///w.setMaxColumns(3);
+  w.setDeviceIos(&ios);
+  w.show();
+
+  while(w.isVisible()){
+    QTest::qWait(1000);
+  }
+  // Second setup (must clear existing widget and redo layout)
+  w.setDeviceIos(&ios);
+  w.show();
+  while(w.isVisible()){
+    QTest::qWait(1000);
+  }
+
+}
 
 void mdtDeviceTest::deviceModbusTest()
 {
   mdtDeviceModbus d;
+  mdtDeviceIos ios;
+  mdtDeviceIosWidget iosw;
+  mdtAnalogIo *ai;
+
+  /*
+   * Setup I/O's
+   */
+
+  // Analog inputs
+  ai = new mdtAnalogIo;
+  ai->setAddress(0);
+  ai->setLabelShort("AI1");
+  ai->setDetails("Module type: 750-457");
+  ai->setRange(0.0, 10.0, 65536);
+  ios.addAnalogInput(ai);
+  ai = new mdtAnalogIo;
+  ai->setAddress(1);
+  ai->setLabelShort("AI2");
+  ai->setDetails("Module type: 750-457");
+  ai->setRange(-10.0, 10.0, 65536);
+  ios.addAnalogInput(ai);
+  ai = new mdtAnalogIo;
+  ai->setAddress(2);
+  ai->setLabelShort("AI3");
+  ai->setDetails("Module type: 750-457");
+  ai->setRange(-10.0, 10.0, 65536);
+  ios.addAnalogInput(ai);
+  ai = new mdtAnalogIo;
+  ai->setAddress(3);
+  ai->setLabelShort("AI4");
+  ai->setDetails("Module type: 750-457");
+  ai->setRange(-10.0, 10.0, 65536);
+  ios.addAnalogInput(ai);
+
+  // Setup I/O's widget
+  iosw.setDeviceIos(&ios);
+  iosw.show();
+
+  // Setup device
+  d.setIos(&ios);
 
   // First setup - Analog inputs
+  /**
   d.setupAnalogInputs(11);
   QVERIFY(!d.getAnalogInputValue(-1, false).isValid());
   QVERIFY(d.getAnalogInputValue(0, false).isValid());
   QVERIFY(d.getAnalogInputValue(0, false) == 0);
   QVERIFY(d.getAnalogInputValue(10, false) == 0);
   QVERIFY(!d.getAnalogInputValue(11, false).isValid());
+  */
 
   // Second setup - Analog inputs
+  /**
   d.setupAnalogInputs(5);
   QVERIFY(!d.getAnalogInputValue(-1, false).isValid());
   QVERIFY(d.getAnalogInputValue(0, false).isValid());
   QVERIFY(d.getAnalogInputValue(0, false) == 0);
   QVERIFY(d.getAnalogInputValue(4, false) == 0);
   QVERIFY(!d.getAnalogInputValue(5, false).isValid());
+  */
 
   // First setup - Analog outputs
   d.setupAnalogOutputs(11);
@@ -123,9 +323,12 @@ void mdtDeviceTest::deviceModbusTest()
   QVERIFY(d.writeDigitalOutputs());
   QVERIFY(d.readDigitalInputs());
   QVERIFY(d.readAnalogOutputs());
-  QVERIFY(d.readAnalogInputs());
   QVERIFY(d.readDigitalOutputs());
-  QTest::qWait(1000);
+
+  while(iosw.isVisible()){
+    QVERIFY(d.readAnalogInputs() >= 0);
+    QTest::qWait(100);
+  }
 }
 
 /**

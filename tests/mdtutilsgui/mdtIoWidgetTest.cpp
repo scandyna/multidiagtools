@@ -41,6 +41,7 @@ void mdtIoWidgetTest::analogInWidgetTest()
   w.show();
 
   // Initial state
+  QVERIFY(!ai.hasValidData());
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
 
@@ -51,13 +52,13 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setRange(0, 10, 256);
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(0);
+  ai.setValueInt(0, true);
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(127);
+  ai.setValueInt(127, true);
   QCOMPARE(ai.value(), (double)(10.0*127.0/255.0));
   QCOMPARE(ai.valueInt(), 127);
-  ai.setValueInt(255);
+  ai.setValueInt(255, true);
   QCOMPARE(ai.value(), 10.0);
   QCOMPARE(ai.valueInt(), 255);
 
@@ -70,19 +71,21 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setRange(4, 20, 256);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(0);
+  ai.setValueInt(0, true);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(127);
+  ai.setValueInt(127, true);
   QCOMPARE(ai.value(), (double)(4.0+16.0*127.0/255.0));
   QCOMPARE(ai.valueInt(), 127);
-  ai.setValueInt(255);
+  ai.setValueInt(255, true);
   QCOMPARE(ai.value(), 20.0);
   QCOMPARE(ai.valueInt(), 255);
 
+  /*
   while(w.isVisible()){
     QTest::qWait(1000);
   }
+  */
 }
 
 void mdtIoWidgetTest::analogOutWidgetTest()
@@ -100,8 +103,10 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   wAo.show();
 
   // Initial state
+  QVERIFY(!ai.hasValidData());
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
+  QVERIFY(!ao.hasValidData());
   QCOMPARE(ao.value(), 0.0);
   QCOMPARE(ao.valueInt(), 0);
 
@@ -117,17 +122,17 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
-  ao.setValueInt(0);
+  ao.setValueInt(0, true);
   QCOMPARE(ao.value(), 0.0);
   QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
-  ao.setValueInt(127);
+  ao.setValueInt(127, true);
   QCOMPARE(ao.value(), (double)(10.0*127.0/255.0));
   QCOMPARE(ao.valueInt(), 127);
   QCOMPARE(ai.value(), (double)(10.0*127.0/255.0));
   QCOMPARE(ai.valueInt(), 127);
-  ao.setValueInt(255);
+  ao.setValueInt(255, true);
   QCOMPARE(ao.value(), 10.0);
   QCOMPARE(ao.valueInt(), 255);
   QCOMPARE(ai.value(), 10.0);
@@ -144,25 +149,21 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
-  ao.setValueInt(0);
+  ao.setValueInt(0, true);
   QCOMPARE(ao.value(), 4.0);
   QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
-  ao.setValueInt(127);
+  ao.setValueInt(127, true);
   QCOMPARE(ao.value(), (double)(4.0+16.0*127.0/255.0));
   QCOMPARE(ao.valueInt(), 127);
   QCOMPARE(ai.value(), (double)(4.0+16.0*127.0/255.0));
   QCOMPARE(ai.valueInt(), 127);
-  ao.setValueInt(255);
+  ao.setValueInt(255, true);
   QCOMPARE(ao.value(), 20.0);
   QCOMPARE(ao.valueInt(), 255);
   QCOMPARE(ai.value(), 20.0);
   QCOMPARE(ai.valueInt(), 255);
-
-  while(wAo.isVisible()){
-    QTest::qWait(1000);
-  }
 }
 
 void mdtIoWidgetTest::digitalInWidgetTest()
@@ -180,16 +181,13 @@ void mdtIoWidgetTest::digitalInWidgetTest()
 
   // Initial state
   QVERIFY(!di.isOn());
+  QVERIFY(!di.hasValidData());
 
   // Toggle ...
-  di.setOn(true);
+  di.setOn(true, true);
   QVERIFY(di.isOn());
-  di.setOn(false);
+  di.setOn(false, true);
   QVERIFY(!di.isOn());
-
-  while(wDi.isVisible()){
-    QTest::qWait(1000);
-  }
 }
 
 void mdtIoWidgetTest::digitalOutWidgetTest()
@@ -216,18 +214,17 @@ void mdtIoWidgetTest::digitalOutWidgetTest()
   // Initial state
   QVERIFY(!di.isOn());
   QVERIFY(!dout.isOn());
-
+  QVERIFY(!di.hasValidData());
+  QVERIFY(!dout.hasValidData());
+  wDo.show();
+  wDi.show();
   // Toggle ...
-  dout.setOn(true);
+  dout.setOn(true, true);
   QVERIFY(dout.isOn());
   QVERIFY(di.isOn());
-  dout.setOn(false);
+  dout.setOn(false, true);
   QVERIFY(!dout.isOn());
   QVERIFY(!di.isOn());
-
-  while(wDo.isVisible()){
-    QTest::qWait(1000);
-  }
 }
 
 

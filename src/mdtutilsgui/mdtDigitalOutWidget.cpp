@@ -31,6 +31,7 @@ mdtDigitalOutWidget::mdtDigitalOutWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
+  pvIo = 0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   pbState = new QPushButton;
@@ -39,10 +40,7 @@ mdtDigitalOutWidget::mdtDigitalOutWidget(QWidget *parent)
   l->addWidget(pbDetails, 2, 0);
   setLayout(l);
 
-  ///connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
-
-  setOn(false);
-  pbState->setText(tr("OFF"));
+  pbState->setText("???");
 }
 
 mdtDigitalOutWidget::~mdtDigitalOutWidget()
@@ -53,6 +51,7 @@ void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
 {
   Q_ASSERT(io != 0);
 
+  pvIo = io;
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
@@ -75,21 +74,19 @@ void mdtDigitalOutWidget::setOn(bool on)
   }
 }
 
-/**
-bool mdtDigitalOutWidget::isOn()
-{
-  return pbState->isChecked();
-}
-*/
-
 void mdtDigitalOutWidget::updateState(bool state)
 {
+  Q_ASSERT(pvIo != 0);
+
   // Update text
-  if(state){
-    pbState->setText(tr("ON"));
+  if(pvIo->hasValidData()){
+    if(state){
+      pbState->setText(tr("ON"));
+    }else{
+      pbState->setText(tr("OFF"));
+    }
   }else{
-    pbState->setText(tr("OFF"));
+    pbState->setText("??");
   }
-  ///emit(stateChanged(state));
 }
 

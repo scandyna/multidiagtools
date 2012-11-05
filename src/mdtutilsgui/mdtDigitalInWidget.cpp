@@ -30,6 +30,7 @@ mdtDigitalInWidget::mdtDigitalInWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
+  pvIo = 0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   ldState = new mdtLed;
@@ -40,8 +41,6 @@ mdtDigitalInWidget::mdtDigitalInWidget(QWidget *parent)
   l->addWidget(lbState, 2, 0);
   l->addWidget(pbDetails, 3, 0);
   setLayout(l);
-
-  setOn(false);
 }
 
 mdtDigitalInWidget::~mdtDigitalInWidget()
@@ -52,6 +51,7 @@ void mdtDigitalInWidget::setIo(mdtDigitalIo *io)
 {
   Q_ASSERT(io != 0);
 
+  pvIo = io;
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
@@ -62,10 +62,17 @@ void mdtDigitalInWidget::setIo(mdtDigitalIo *io)
 
 void mdtDigitalInWidget::setOn(bool on)
 {
-  ldState->setOn(on);
-  if(on){
-    lbState->setText(tr("On"));
+  Q_ASSERT(pvIo != 0);
+
+  if(pvIo->hasValidData()){
+    ldState->setOn(on);
+    if(on){
+      lbState->setText(tr("On"));
+    }else{
+      lbState->setText(tr("Off"));
+    }
   }else{
-    lbState->setText(tr("Off"));
+    ldState->setOn(false);
+    lbState->setText("??");
   }
 }

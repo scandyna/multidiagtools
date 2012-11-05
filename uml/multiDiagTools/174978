@@ -1,6 +1,6 @@
 format 76
 "mdtutilsgui" // mdtutilsgui
-  revision 10
+  revision 13
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1635,12 +1635,11 @@ ${inlines}
 	
       end
 
-      classrelation 636034 // pvIo (<unidirectional association>)
-	relation 627970 --->
-	  a role_name "pvIo" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 636034 // pvIo (<unidirectional association>)
+      classrelation 636034 // <dependency>
+	relation 627970 -_->
+	  a private
+	    cpp default "#include dans les sources"
+	    classrelation_ref 636034 // <dependency>
 	  b parent class_ref 539138 // mdtDigitalIo
       end
     end
@@ -1726,12 +1725,11 @@ ${inlines}
 	
       end
 
-      classrelation 635906 // pvIo (<unidirectional association>)
-	relation 627842 --->
-	  a role_name "pvIo" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 635906 // pvIo (<unidirectional association>)
+      classrelation 635906 // <dependency>
+	relation 627842 -_->
+	  a private
+	    cpp default "#include dans les sources"
+	    classrelation_ref 635906 // <dependency>
 	  b parent class_ref 539138 // mdtDigitalIo
       end
     end
@@ -1834,12 +1832,11 @@ ${inlines}
 	
       end
 
-      classrelation 635522 // pvIo (<unidirectional association>)
-	relation 627458 --->
-	  a role_name "pvIo" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 635522 // pvIo (<unidirectional association>)
+      classrelation 635522 // <dependency>
+	relation 627458 -_->
+	  a private
+	    cpp default "#include dans les sources"
+	    classrelation_ref 635522 // <dependency>
 	  b parent class_ref 539010 // mdtAnalogIo
       end
     end
@@ -1942,12 +1939,11 @@ ${inlines}
 	
       end
 
-      classrelation 635650 // pvIo (<unidirectional association>)
-	relation 627586 --->
-	  a role_name "pvIo" multiplicity "0..1" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 635650 // pvIo (<unidirectional association>)
+      classrelation 635650 // <dependency>
+	relation 627586 -_->
+	  a private
+	    cpp default "#include dans les sources"
+	    classrelation_ref 635650 // <dependency>
 	  b parent class_ref 539010 // mdtAnalogIo
       end
     end

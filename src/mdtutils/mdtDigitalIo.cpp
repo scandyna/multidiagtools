@@ -35,19 +35,31 @@ bool mdtDigitalIo::isOn()
   return pvIsOn;
 }
 
-void mdtDigitalIo::setOn(bool on)
+void mdtDigitalIo::setOn(bool on, bool isValid)
 {
+  pvHasValidData = isValid;
+  if(!pvHasValidData){
+    on = false;
+  }
   if(pvIsOn != on){
     pvIsOn = on;
     emit(stateChanged(pvIsOn));
+    emit(stateChanged(pvAddress, pvIsOn));
     emit(stateChangedForUi(pvIsOn));
   }
+}
+
+void mdtDigitalIo::setOn(bool on)
+{
+  setOn(on, true);
 }
 
 void mdtDigitalIo::setStateFromUi(bool on)
 {
   if(pvIsOn != on){
+    pvHasValidData = true;
     pvIsOn = on;
     emit(stateChanged(pvIsOn));
+    emit(stateChanged(pvAddress, pvIsOn));
   }
 }

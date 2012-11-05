@@ -62,6 +62,7 @@ class mdtDigitalInWidget : public mdtAbstractIoWidget
 
   mdtLed *ldState;
   QLabel *lbState;
+  mdtDigitalIo *pvIo;
 };
 
 #endif  // #ifndef MDT_DIGITAL_IN_WIDGET_H

@@ -1,39 +1,20 @@
-window_sizes 1024 718 304 714 520 120
+window_sizes 1280 1001 304 970 803 120
 diagrams
-  active  classdiagram_ref 508546 // mdtIoWidgets
-    714 520 80 3 612 256
   classdiagram_ref 314242 // mdtDevice
     776 642 100 4 0 0
-  classdiagram_ref 508290 // mdtDeviceModbus
+  classdiagram_ref 515074 // mdtDeviceIosWidget
+    970 803 100 4 0 0
+  classdiagram_ref 314370 // mdtDeviceU3606A
     776 642 100 4 0 0
-  classdiagram_ref 515074 // mdtDeviceIoWidget
-    776 642 100 4 0 0
-  classdiagram_ref 515202 // mdtIo
-    776 642 100 4 228 0
+  active  classdiagram_ref 521730 // mdtDeviceIos
+    970 803 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1035906 // stateChangedForUi
+selected classdiagram_ref 508290 // mdtDeviceModbus
 open
-  operation_ref 1043458 // setAddress
-  operation_ref 1043586 // address
-  operation_ref 1050498 // setUnit
-  operation_ref 1050626 // unit
-  operation_ref 1034882 // maximum
-  attribute_ref 646146 // pvStep
-  attribute_ref 646274 // pvStepInverse
-  operation_ref 1050754 // unitChangedForUi
-  operation_ref 1043970 // rangeChangedForUi
-  operation_ref 1035394 // setValueFromUi
-  operation_ref 1036162 // stateChanged
-  operation_ref 1050882 // setIo
-  operation_ref 1043842 // setAddress
-  class_ref 518786 // mdtDigitalInWidget
-  operation_ref 1035778 // setIo
-  operation_ref 1035010 // setIo
-  classrelation_ref 635522 // pvIo (<unidirectional association>)
-  operation_ref 1035266 // setIo
-  classview_ref 240514 // mdtDevice
-  
-  package_ref 161666 // linux
+  classview_ref 352898 // mdtIo
+  classview_ref 346370 // mdtIoWidgets
+  class_ref 309250 // mdtDevice
+  class_ref 545666 // mdtDeviceIos
 end
 end

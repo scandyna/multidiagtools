@@ -24,6 +24,8 @@
 #include "mdtDevice.h"
 #include <QMap>
 #include <QVariant>
+#include <QList>
+#include <QByteArray>
 
 class mdtFrameCodecModbus;
 class mdtModbusTcpPortManager;
@@ -49,7 +51,7 @@ class mdtDeviceModbus : public mdtDevice
    * \param count Number of analog inputs
    * \pre count must be in range from 1 to 125
    */
-  void setupAnalogInputs(int count);
+  ///void setupAnalogInputs(int count);
 
   /*! \brief Get the value of a analog input
    *
@@ -63,13 +65,12 @@ class mdtDeviceModbus : public mdtDevice
    */
   QVariant getAnalogInputValue(int address, bool readDirectly);
 
-  /*! \brief Request values from device
+  /*! \brief Read all analog inputs on physical device and update (G)UI representation
    *
-   * Request values of all analog inputs.
-   *
-   * \return True on success.
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's container must be set with setIos()
    */
-  bool readAnalogInputs();
+  int readAnalogInputs();
 
   /*! \brief Set the number of analog outputs
    *
@@ -186,11 +187,26 @@ class mdtDeviceModbus : public mdtDevice
    */
   virtual bool readDigitalOutputs();
 
+ public slots:
+
+  /*! \brief Decode incoming frames
+   *
+   * \pre I/O's container must be set with setIos()
+   *
+   * Subclass notes:<br>
+   *  - This default implementation does nothing.
+   *  - This slot should be connected with mdtPortManager::newReadenFrame() signal.
+   *  - In this class, this connection is not made, it is the sublcass responsability to do this.
+   *  - The incoming frames are available with mdtPortManager::readenFrames().
+   */
+  void decodeReadenFrames();
+
  private:
 
   mdtModbusTcpPortManager *pvTcpPortManager;
   mdtFrameCodecModbus *pvCodec;
-  QMap<quint16,quint16> pvAnalogInputs;
+  QList<QByteArray> pvReadenFrames;     // Frames readen from port manager
+  ///QMap<quint16,quint16> pvAnalogInputs;
   QMap<quint16,quint16> pvAnalogOutputs;
   QMap<quint16,bool> pvDigitalInputs;
   QMap<quint16,bool> pvDigitalOutputs;

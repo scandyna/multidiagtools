@@ -24,8 +24,30 @@
 mdtDevice::mdtDevice(QObject *parent)
  : QObject(parent)
 {
+  pvIos = 0;
 }
 
-mdtDevice::~mdtDevice() {
+mdtDevice::~mdtDevice()
+{
 }
 
+void mdtDevice::setIos(mdtDeviceIos *ios)
+{
+  Q_ASSERT(ios != 0);
+
+  pvIos = ios;
+}
+
+bool mdtDevice::readAnalogInput(int address)
+{
+  return false;
+}
+
+int mdtDevice::readAnalogInputs()
+{
+  return -1;
+}
+
+void mdtDevice::decodeReadenFrames()
+{
+}

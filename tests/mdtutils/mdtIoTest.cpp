@@ -34,6 +34,7 @@ void mdtIoTest::mdtAbstractIoTest()
   QVERIFY(io.labelShort() == "");
   QVERIFY(io.label() == "");
   QVERIFY(io.details() == "");
+  QVERIFY(!io.hasValidData());
 
   // Set some data and check
   io.setAddress(25);
@@ -44,6 +45,7 @@ void mdtIoTest::mdtAbstractIoTest()
   QVERIFY(io.labelShort() == "Label short");
   QVERIFY(io.label() == "A label");
   QVERIFY(io.details() == "Details");
+  QVERIFY(!io.hasValidData());
 }
 
 void mdtIoTest::analogIoTest()
@@ -53,19 +55,38 @@ void mdtIoTest::analogIoTest()
   // Initial values
   QCOMPARE(io.value(), 0.0);
   QCOMPARE(io.valueInt(), 0);
+  QVERIFY(!io.hasValidData());
 
   // 0...10V range with 8 bits resolution
   io.setRange(0, 10, 256);
+  QVERIFY(!io.hasValidData());
   QCOMPARE(io.value(), 0.0);
   QCOMPARE(io.valueInt(), 0);
-  io.setValueInt(0);
+  io.setValueInt(0, true);
+  QVERIFY(io.hasValidData());
   QCOMPARE(io.valueInt(), 0);
-  io.setValueInt(127);
+  io.setValueInt(127, true);
+  QVERIFY(io.hasValidData());
   QCOMPARE(io.value(), (double)(10.0*127.0/255.0));
   QCOMPARE(io.valueInt(), 127);
-  io.setValueInt(255);
+  io.setValueInt(255, true);
+  QVERIFY(io.hasValidData());
   QCOMPARE(io.value(), 10.0);
   QCOMPARE(io.valueInt(), 255);
+  // Set invalid value
+  io.setValue(9.0, false);
+  QVERIFY(!io.hasValidData());
+  QCOMPARE(io.value(), 0.0);
+  QCOMPARE(io.valueInt(), 0);
+  // Set valid value
+  io.setValue(8.0, true);
+  QVERIFY(io.hasValidData());
+  QCOMPARE(io.value(), 8.0);
+  // Set invalid value
+  io.setValueInt(123, false);
+  QVERIFY(!io.hasValidData());
+  QCOMPARE(io.value(), 0.0);
+  QCOMPARE(io.valueInt(), 0);
 }
 
 void mdtIoTest::digitalIoTest()
@@ -74,12 +95,23 @@ void mdtIoTest::digitalIoTest()
 
   // Initial values
   QVERIFY(!io.isOn());
+  QVERIFY(!io.hasValidData());
 
   // Toggle
-  io.setOn(true);
+  io.setOn(true, true);
+  QVERIFY(io.hasValidData());
   QVERIFY(io.isOn());
-  io.setOn(false);
+  io.setOn(false, true);
+  QVERIFY(io.hasValidData());
   QVERIFY(!io.isOn());
+  // Set invalid state
+  io.setOn(true, false);
+  QVERIFY(!io.hasValidData());
+  QVERIFY(!io.isOn());
+  // Set valid state
+  io.setOn(true, true);
+  QVERIFY(io.hasValidData());
+  QVERIFY(io.isOn());
 }
 
 

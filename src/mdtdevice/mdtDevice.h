@@ -21,6 +21,7 @@
 #ifndef MDT_DEVICE_H
 #define MDT_DEVICE_H
 
+#include "mdtDeviceIos.h"
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -56,9 +57,62 @@ class mdtDevice : public QObject
   mdtDevice(QObject *parent = 0);
   virtual ~mdtDevice();
 
+  /*! \brief Set the I/O's container
+   *
+   * \pre ios must be a valid pointer
+   */
+  void setIos(mdtDeviceIos *ios);
+
+  /*! \brief Read one analog input on physical device and update (G)UI representation
+   *
+   * \param address Depending on device organisation and protocol,
+   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
+   *                 a input number, etc...
+   * \return true on success, false else.
+   *
+   * Subclass notes:<br>
+   *  - This default implementation does nothing and returns allways false.
+   *  - If device handled by subclass has analog inputs, this method should be implemented.
+   *  - The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+   *  - To update (G)UI, the mdtDeviceIos::updateAnalogInputValue() should be used.
+   */
+  virtual bool readAnalogInput(int address);
+
+  /// \todo Version "blocante" (ret: QVariant, attente avec portmanager, ...)
+
+  /*! \brief Read all analog inputs on physical device and update (G)UI representation
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   *
+   * Subclass notes:<br>
+   *  - This default implementation does nothing and returns allways -1.
+   *  - If device handled by subclass has analog inputs, this method should be implemented.
+   *  - The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+   *  - To update (G)UI, mdtDeviceIos::updateAnalogInputValues() should be used.
+   */
+  virtual int readAnalogInputs();
+
+  /// \todo Version "blocante" (ret: QList<QVariant>, attente avec portmanager, ...)
+
  public slots:
 
-  
+  /*! \brief Decode incoming frames
+   *
+   * Subclass notes:<br>
+   *  - This default implementation does nothing.
+   *  - This slot should be connected with mdtPortManager::newReadenFrame() signal.
+   *  - In this class, this connection is not made, it is the sublcass responsability to do this.
+   *  - The incoming frames are available with mdtPortManager::readenFrames().
+   */
+  virtual void decodeReadenFrames();
+
+ protected:
+
+  mdtDeviceIos *pvIos;    // I/O's container
+
+ private:
+
+  Q_DISABLE_COPY(mdtDevice);
 };
 
 #endif  // #ifndef MDT_DEVICE_H

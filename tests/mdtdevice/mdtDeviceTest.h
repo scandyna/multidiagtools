@@ -29,6 +29,12 @@ class mdtDeviceTest : public mdtTest
 
  private slots:
 
+  // I/O's container test
+  void deviceIosTest();
+
+  // I/O's widget container test
+  void deviceIosWidgetTest();
+
   // Some simple coherence tests (no real test possible without MODBUS server)
   void deviceModbusTest();
 

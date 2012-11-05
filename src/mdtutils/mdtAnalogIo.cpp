@@ -61,7 +61,7 @@ void mdtAnalogIo::setRange(double min, double max, int steps)
   pvMaximum = max;
   emit(rangeChangedForUi(min, max));
   // Set value to the minimum
-  setValue(min);
+  setValue(min, false);
 }
 
 double mdtAnalogIo::minimum() const
@@ -79,11 +79,15 @@ double mdtAnalogIo::value() const
   return pvValue;
 }
 
-void mdtAnalogIo::setValueInt(int value)
+void mdtAnalogIo::setValueInt(int value, bool isValid)
 {
+  if(!isValid){
+    setValue(pvMinimum, false);
+    return;
+  }
   double x = pvStep*(double)value + pvMinimum;
 
-  setValue(x);
+  setValue(x, true);
 }
 
 int mdtAnalogIo::valueInt() const
@@ -91,14 +95,24 @@ int mdtAnalogIo::valueInt() const
   return (pvStepInverse * (pvValue - pvMinimum));
 }
 
-void mdtAnalogIo::setValue(double value)
+void mdtAnalogIo::setValue(double value, bool isValid)
 {
+  pvHasValidData = isValid;
+  if(!pvHasValidData){
+    value = pvMinimum;
+  }
   if(fabs(value - pvValue) > DBL_EPSILON){
     pvValue = value;
     emit(valueChanged(value));
+    emit(valueChanged(pvAddress, value));
     pvUpdatingUi = true;
     emit(valueChangedForUi(value));
   }
+}
+
+void mdtAnalogIo::setValue(double value)
+{
+  setValue(value, true);
 }
 
 void mdtAnalogIo::setValueFromUi(double value)
@@ -114,7 +128,9 @@ void mdtAnalogIo::setValueFromUi(double value)
   }
   if(fabs(value - pvValue) > DBL_EPSILON){
     pvValue = value;
+    pvHasValidData = true;
     emit(valueChanged(value));
+    emit(valueChanged(pvAddress, value));
   }
 }
 

@@ -30,6 +30,7 @@ mdtAnalogInWidget::mdtAnalogInWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
+  pvIo = 0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   thValue = new QwtThermo;
@@ -49,6 +50,7 @@ void mdtAnalogInWidget::setIo(mdtAnalogIo *io)
 {
   Q_ASSERT(io != 0);
 
+  pvIo = io;
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
@@ -73,10 +75,16 @@ void mdtAnalogInWidget::setRange(double min, double max)
 
 void mdtAnalogInWidget::setValue(double value)
 {
+  Q_ASSERT(pvIo != 0);
+
   thValue->setValue(value);
-  if(pvUnit.isEmpty()){
-    lbValue->setText(QString::number(value, 'g', 4));
+  if(pvIo->hasValidData()){
+    if(pvUnit.isEmpty()){
+      lbValue->setText(QString::number(value, 'g', 4));
+    }else{
+      lbValue->setText(QString::number(value, 'g', 4) + " " + pvUnit);
+    }
   }else{
-    lbValue->setText(QString::number(value, 'g', 4) + " " + pvUnit);
+    lbValue->setText("??");
   }
 }

@@ -9,6 +9,8 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Device
           mdtDevice.h
+          mdtDeviceIos.h
+          mdtDeviceIosWidget.h
           mdtDeviceModbus.h
     )
 
@@ -17,6 +19,8 @@ set (HEADER_FILES
 set (SOURCES_FILES 
           # Device
           mdtDevice.cpp
+          mdtDeviceIos.cpp
+          mdtDeviceIosWidget.cpp
           mdtDeviceModbus.cpp
     )
 
@@ -61,6 +65,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 # Librairie du projet
 add_library (mdtdevice SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtdevice "mdtutils")
+target_link_libraries(mdtdevice "mdtutilsgui")
 target_link_libraries(mdtdevice "mdtport")
 target_link_libraries(mdtdevice ${QT_LIBRARIES})
 

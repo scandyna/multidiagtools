@@ -53,17 +53,12 @@ class mdtDigitalOutWidget : public mdtAbstractIoWidget
   // if state is != from current state, text will be updated
   void updateState(bool state);
 
-  ///bool isOn();
-
- signals:
-
-  ///void stateChanged(bool on);
-
  private:
 
   Q_DISABLE_COPY(mdtDigitalOutWidget);
 
   QPushButton *pbState;
+  mdtDigitalIo *pvIo;
 };
 
 #endif  // #ifndef MDT_DIGITAL_OUT_WIDGET_H

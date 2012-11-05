@@ -30,6 +30,7 @@
  * This class offers the functionnal part of I/O representation
  *  on a UI, or GUI when used with mdtAbstractIoWidget.
  */
+/// \todo Ajouter une notion de validité
 class mdtAbstractIo : public QObject
 {
  Q_OBJECT
@@ -78,6 +79,10 @@ class mdtAbstractIo : public QObject
    */
   QString details() const;
 
+  /*! \brief Returns true if a valid value or state was set
+   */
+  bool hasValidData() const;
+
  signals:
 
   /*
@@ -90,11 +95,15 @@ class mdtAbstractIo : public QObject
   void labelChangedForUi(const QString &text);
   void detailsChangedForUi(const QString &text);
 
+ protected:
+
+  int pvAddress;
+  bool pvHasValidData;
+
  private:
 
   Q_DISABLE_COPY(mdtAbstractIo);
 
-  int pvAddress;
   QString pvLabelShort;
   QString pvLabel;
   QString pvDetails;
