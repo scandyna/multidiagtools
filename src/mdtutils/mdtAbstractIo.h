@@ -30,7 +30,6 @@
  * This class offers the functionnal part of I/O representation
  *  on a UI, or GUI when used with mdtAbstractIoWidget.
  */
-/// \todo Ajouter une notion de validité
 class mdtAbstractIo : public QObject
 {
  Q_OBJECT

@@ -35,6 +35,9 @@ class mdtIoTest : public mdtTest
   // Analog I/O test
   void analogIoTest();
 
+  // Check some Wago analog input modules
+  void wagoAnalogInputTest();
+
   // Digital I/O test
   void digitalIoTest();
 };
