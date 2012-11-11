@@ -84,8 +84,8 @@ Collaboration diagram for mdtPortTerm:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_term.html#a5bd2b5e6c19c2c4b612f84763bb9ed6f">appendReadenData</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append incomming data to terminal.  <a href="#a5bd2b5e6c19c2c4b612f84763bb9ed6f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_term.html#aaf0e6b8d2416bf2859fdfd9a851523b8">appendReadenData</a> (int, QByteArray data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append incomming data to terminal.  <a href="#aaf0e6b8d2416bf2859fdfd9a851523b8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_term.html#a7ec568c44f862fe7aee83f1a271ac6bb">sendCmd</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send command to port.  <a href="#a7ec568c44f862fe7aee83f1a271ac6bb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_term.html#a1b232e686b401d7103eb1c682be330a9">on_pbSendCmdAbort_clicked</a> ()</td></tr>
@@ -105,7 +105,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Mini port treminal. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_term_8h_source.html#l00042">42</a> of file <a class="el" href="mdt_port_term_8h_source.html">mdtPortTerm.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_term_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_port_term_8h_source.html">mdtPortTerm.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5e93890f53b5112be80983779a3ab233"></a><!-- doxytag: member="mdtPortTerm::mdtPortTerm" ref="a5e93890f53b5112be80983779a3ab233" args="(QWidget *parent=0)" -->
 <div class="memitem">
@@ -125,20 +125,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p><p>attachToUsbtmcPort(); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a5bd2b5e6c19c2c4b612f84763bb9ed6f"></a><!-- doxytag: member="mdtPortTerm::appendReadenData" ref="a5bd2b5e6c19c2c4b612f84763bb9ed6f" args="()" -->
+<a class="anchor" id="aaf0e6b8d2416bf2859fdfd9a851523b8"></a><!-- doxytag: member="mdtPortTerm::appendReadenData" ref="aaf0e6b8d2416bf2859fdfd9a851523b8" args="(int, QByteArray data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtPortTerm::appendReadenData </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
         </tr>
       </table>
 </div>
@@ -147,7 +158,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Append incomming data to terminal. </p>
 <p>Whenn called, data will be token from active port manager </p>
 
-<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00096">96</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
+<p><p>int i;</p>
+<p>if(pvCurrentPortManager == 0){ qDebug() &lt;&lt; "TERM: err, pvCurrentPortManager == 0"; return; } for(i=0; i&lt;pvCurrentPortManager-&gt;readenFrames().size(); i++){ teTerm-&gt;append(pvCurrentPortManager-&gt;readenFrames().at(i)); }</p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
 
 </div>
 </div>
@@ -171,7 +186,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>teCmd-&gt;clear(); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00144">144</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
 
 </div>
 </div>
@@ -194,11 +209,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p><p>if(teCmd-&gt;toPlainText().size() &lt; 1){</p>
 <p>NOTE: essais cmd = teCmd-&gt;toPlainText();</p>
 <p>cmd.append((char)0x0D);</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000051">Todo:</a></b></dt><dd>Error handling ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>Error handling ! </dd></dl>
 <p>teCmd-&gt;clear(); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00107">107</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_term_8cpp_source.html#l00112">112</a> of file <a class="el" href="mdt_port_term_8cpp_source.html">mdtPortTerm.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,7 +236,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:01 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:37 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

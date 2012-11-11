@@ -126,7 +126,7 @@ Public Member Functions</h2></td></tr>
 <p>Make the signals/slots connections. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>manager must be a valid pointer </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000049">Todo:</a></b></dt><dd>Create threads somwere here, and connect signals/slots </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000048">Todo:</a></b></dt><dd>Create threads somwere here, and connect signals/slots </dd></dl>
 <p>connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(<a class="el" href="classmdt_serial_port_ctl_widget.html#a79cd97b8359da815298c99e6b90bc147" title="Change TX LED&#39;s color depending state.">updateTxTimeoutState(bool)</a>));</p>
 <p>connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(<a class="el" href="classmdt_serial_port_ctl_widget.html#a5cbb9a5ef4098dec46a9330372dc882c" title="Change RX LED&#39;s color depending state.">updateRxTimeoutState(bool)</a>));</p>
 <p>connect(manager-&gt;writeThread(), SIGNAL(errorOccured(int)), this, SLOT(<a class="el" href="classmdt_serial_port_ctl_widget.html#a0c9ceed20ee727cfd1ef1ee971460fd1" title="Change TX LED&#39;s color.">trigTxErrorState()</a>)); connect(manager-&gt;readThread(), SIGNAL(errorOccured(int)), this, SLOT(<a class="el" href="classmdt_serial_port_ctl_widget.html#a8490db062b6226b4c26ef1a85afc75bd" title="Change TX LED&#39;s color.">trigRxErrorState()</a>)); </p>
@@ -155,7 +155,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:01 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:37 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

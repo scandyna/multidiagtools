@@ -13,8 +13,7 @@ Represent a MODBUS device.
 
 
 
-Inheritance diagram for mdtDeviceModbus:
-\nopagebreak
+Inheritance diagram for mdtDeviceModbus:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtDeviceModbus:
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbus:
-\nopagebreak
+Collaboration diagram for mdtDeviceModbus:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,7 +32,7 @@ Collaboration diagram for mdtDeviceModbus:
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_device_modbus_ad2a43c428667654e71b288d0c44eca03}{decodeReadenFrames} ()
+void \hyperlink{classmdt_device_modbus_a8d38b8cc19a8c1f1a7305eb89cb1eda2}{decodeReadenFrames} (int id, QByteArray pdu)
 \begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -53,8 +51,10 @@ virtual QVariant \hyperlink{classmdt_device_modbus_ae5b1fe86e7dca9a0229110ba8183
 \begin{DoxyCompactList}\small\item\em Get the value of a analog output. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_modbus_aea63bdcba6d3acfce5eb28524b0dc6d2}{writeAnalogOutputs} ()
 \begin{DoxyCompactList}\small\item\em Write analog output values to device. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_device_modbus_a5d9dcf264581477901f598f770d9f5f3}{readAnalogOutputs} ()
-\begin{DoxyCompactList}\small\item\em Request values from device. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_modbus_a28aab79bc878490fa6bf624ddee4b62a}{readAnalogOutputs} ()
+\begin{DoxyCompactList}\small\item\em Read all analog outputs on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_modbus_aa130270b477df290a3f4ea120200b79f}{writeAnalogOutputValue} (int address, int value, int confirmationTimeout)
+\begin{DoxyCompactList}\small\item\em Set value on a analog output on physical device. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_modbus_a18a425c62e809d2f2940b1bba0ec521c}{setupDigitalInputs} (int count)
 \begin{DoxyCompactList}\small\item\em Set the number of digital inputs. \end{DoxyCompactList}\item 
 QVariant \hyperlink{classmdt_device_modbus_a467b1b7b17f80c410ff5fe5fa34bf0d2}{getDigitalInputState} (int address, bool readDirectly)
@@ -105,34 +105,35 @@ Provisoire !!
 
 
 
-Definition at line 28 of file mdtDeviceModbus.cpp.
+Definition at line 30 of file mdtDeviceModbus.cpp.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_modbus_ad2a43c428667654e71b288d0c44eca03}{
+\hypertarget{classmdt_device_modbus_a8d38b8cc19a8c1f1a7305eb89cb1eda2}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!decodeReadenFrames@{decodeReadenFrames}}
 \index{decodeReadenFrames@{decodeReadenFrames}!mdtDeviceModbus@{mdtDeviceModbus}}
 \subsubsection[{decodeReadenFrames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbus::decodeReadenFrames (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{id, }
+\item[{QByteArray}]{pdu}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
-\label{classmdt_device_modbus_ad2a43c428667654e71b288d0c44eca03}
+\label{classmdt_device_modbus_a8d38b8cc19a8c1f1a7305eb89cb1eda2}
 
 
 Decode incoming frames. 
 
 \begin{DoxyPrecond}{Precondition}
-I/O's container must be set with \hyperlink{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}{setIos()}
+I/O's container must be set with \hyperlink{classmdt_device_a61b7bb9885f77b7e733f87a6134f2509}{setIos()}
 \end{DoxyPrecond}
 Subclass notes:\par
 
 \begin{DoxyItemize}
 \item This default implementation does nothing.
-\item This slot should be connected with \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{mdtPortManager::newReadenFrame()} signal.
+\item This slot should be connected with \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{mdtPortManager::newReadenFrame()} signal.
 \item In this class, this connection is not made, it is the sublcass responsability to do this.
-\item The incoming frames are available with \hyperlink{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}{mdtPortManager::readenFrames()}. 
+\item The incoming frames are available with \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{mdtPortManager::readenFrames()}. 
 \end{DoxyItemize}
 
 \begin{Desc}
@@ -141,11 +142,11 @@ Subclass notes:\par
 
 
 
-Reimplemented from \hyperlink{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}{mdtDevice}.
+Reimplemented from \hyperlink{classmdt_device_a750ada2532cff71844a52573f62a2874}{mdtDevice}.
 
 
 
-Definition at line 398 of file mdtDeviceModbus.cpp.
+Definition at line 462 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_acf9a158bc7d9847858217e44394af07e}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!getAnalogInputValue@{getAnalogInputValue}}
@@ -181,13 +182,9 @@ When delaying the request, the currently stored value is returned.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The value of requested input, or an invalid value on error.
+The value of requested input, or an invalid value on error. 
 \end{DoxyReturn}
-void mdtDeviceModbus::setupAnalogInputs(int count) \{ Q\_\-ASSERT((count $>$= 1)\&\&(count $<$= 125));
 
-int i;
-
-pvAnalogInputs.clear(); for(i=0; i$<$count; i++)\{ pvAnalogInputs.insert(i, 0); \} \} 
 
 if(address $>$= pvAnalogInputs.size())\{ return value; \} value = pvAnalogInputs.value(address);
 
@@ -197,7 +194,7 @@ if(address $>$= pvAnalogInputs.size())\{ return value; \} value = pvAnalogInputs
 
 
 
-Definition at line 60 of file mdtDeviceModbus.cpp.
+Definition at line 50 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_ae5b1fe86e7dca9a0229110ba81830648}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!getAnalogOutputValue@{getAnalogOutputValue}}
@@ -231,7 +228,7 @@ The value of requested output, or an invalid value on error.
 
 
 
-Definition at line 156 of file mdtDeviceModbus.cpp.
+Definition at line 137 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a467b1b7b17f80c410ff5fe5fa34bf0d2}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!getDigitalInputState@{getDigitalInputState}}
@@ -267,7 +264,7 @@ The state of requested input, or an invalid value on error.
 
 
 
-Definition at line 232 of file mdtDeviceModbus.cpp.
+Definition at line 296 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a27a6e3a03f478b5395a3d96b7212fa9e}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!getDigitalOutputState@{getDigitalOutputState}}
@@ -303,7 +300,7 @@ The state of requested output, or an invalid value on error.
 
 
 
-Definition at line 334 of file mdtDeviceModbus.cpp.
+Definition at line 398 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a4bf4c1d87f6b61955a015234a928e864}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInputs@{readAnalogInputs}}
@@ -319,62 +316,45 @@ Definition at line 334 of file mdtDeviceModbus.cpp.
 Read all analog inputs on physical device and update (G)UI representation. 
 
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details)
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-I/O's container must be set with \hyperlink{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}{setIos()} 
+I/O's container must be set with \hyperlink{classmdt_device_a61b7bb9885f77b7e733f87a6134f2509}{setIos()} 
 \end{DoxyPrecond}
-
-
-int transactionId; pdu = pvCodec-\/$>$encodeReadInputRegisters(0, pvAnalogInputs.size());
-
-transactionId = pvTcpPortManager-\/$>$writeData(pdu); if(transactionId $<$ 0)\{ return false; \}
-
-\begin{DoxyNote}{Note}
-Provisoire !
-\end{DoxyNote}
-pvTcpPortManager-\/$>$waitReadenFrame(); pdu = pvTcpPortManager-\/$>$readenFrame(transactionId); qDebug() $<$$<$ \char`\"{}DEV RD reponse: \char`\"{} $<$$<$ pvCodec-\/$>$decode(pdu); qDebug() $<$$<$ \char`\"{}DEV RD value: \char`\"{} $<$$<$ pvCodec-\/$>$values();
-
 
 
 Reimplemented from \hyperlink{classmdt_device_ac0023742214c29bdadd46383ae240972}{mdtDevice}.
 
 
 
-Definition at line 80 of file mdtDeviceModbus.cpp.
+Definition at line 70 of file mdtDeviceModbus.cpp.
 
-\hypertarget{classmdt_device_modbus_a5d9dcf264581477901f598f770d9f5f3}{
+\hypertarget{classmdt_device_modbus_a28aab79bc878490fa6bf624ddee4b62a}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutputs@{readAnalogOutputs}}
 \index{readAnalogOutputs@{readAnalogOutputs}!mdtDeviceModbus@{mdtDeviceModbus}}
-\subsubsection[{readAnalogOutputs}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceModbus::readAnalogOutputs (
+\subsubsection[{readAnalogOutputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::readAnalogOutputs (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_device_modbus_a5d9dcf264581477901f598f770d9f5f3}
+\label{classmdt_device_modbus_a28aab79bc878490fa6bf624ddee4b62a}
 
 
-Request values from device. 
-
-Request values of all analog outputs.
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Offset sur adresse départ selon marque\end{Desc}
-
+Read all analog outputs on physical device and update (G)UI representation. 
 
 \begin{DoxyReturn}{Returns}
-True on success. 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details)
 \end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+I/O's container must be set with \hyperlink{classmdt_device_a61b7bb9885f77b7e733f87a6134f2509}{setIos()} 
+\end{DoxyPrecond}
 
 
-\begin{DoxyNote}{Note}
-Provisoire ! 
-\end{DoxyNote}
+Reimplemented from \hyperlink{classmdt_device_ae0a0f03cb5267232d176896acc80872c}{mdtDevice}.
 
 
 
-
-Definition at line 197 of file mdtDeviceModbus.cpp.
+Definition at line 178 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a81cbcb4d10145d1bb9a8e0708ce4b74e}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInputs@{readDigitalInputs}}
@@ -403,7 +383,7 @@ Provisoire !
 
 
 
-Definition at line 250 of file mdtDeviceModbus.cpp.
+Definition at line 314 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a8f2ca40073531b0ae063b1455a5a5b74}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutputs@{readDigitalOutputs}}
@@ -421,7 +401,7 @@ Request states from device.
 Request states of all digital outputs.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000012}{Todo}]Offset sur adresse départ selon marque\end{Desc}
+\item[\hyperlink{todo__todo000011}{Todo}]Offset sur adresse départ selon marque\end{Desc}
 
 
 \begin{DoxyReturn}{Returns}
@@ -436,7 +416,7 @@ Provisoire !
 
 
 
-Definition at line 375 of file mdtDeviceModbus.cpp.
+Definition at line 439 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a5a8f605ef4c14907cef354daac90b180}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!setAnalogOutput@{setAnalogOutput}}
@@ -476,7 +456,7 @@ Provisoire !
 
 
 
-Definition at line 122 of file mdtDeviceModbus.cpp.
+Definition at line 103 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a42f6d4b2729c8e421895c6810e4cadf8}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!setDigitalOutput@{setDigitalOutput}}
@@ -518,7 +498,7 @@ if(pvTcpPortManager-\/$>$readenFrames().size() $<$ 1)\{ pvTcpPortManager-\/$>$wa
 
 
 
-Definition at line 285 of file mdtDeviceModbus.cpp.
+Definition at line 349 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a233f0167ca1b728f9d47ebc4f597e2d1}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!setupAnalogOutputs@{setupAnalogOutputs}}
@@ -543,7 +523,7 @@ count must be in range from 1 to 123
 \end{DoxyPrecond}
 
 
-Definition at line 110 of file mdtDeviceModbus.cpp.
+Definition at line 91 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a18a425c62e809d2f2940b1bba0ec521c}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!setupDigitalInputs@{setupDigitalInputs}}
@@ -568,7 +548,7 @@ count must be in range from 1 to 2000
 \end{DoxyPrecond}
 
 
-Definition at line 220 of file mdtDeviceModbus.cpp.
+Definition at line 284 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_af0eea185443f43cef5a3d9ed8d7a635e}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!setupDigitalOutputs@{setupDigitalOutputs}}
@@ -593,7 +573,7 @@ count must be in range from 1 to 1968
 \end{DoxyPrecond}
 
 
-Definition at line 273 of file mdtDeviceModbus.cpp.
+Definition at line 337 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_aea63bdcba6d3acfce5eb28524b0dc6d2}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutputs@{writeAnalogOutputs}}
@@ -620,7 +600,55 @@ Provisoire !
 
 
 
-Definition at line 174 of file mdtDeviceModbus.cpp.
+Definition at line 155 of file mdtDeviceModbus.cpp.
+
+\hypertarget{classmdt_device_modbus_aa130270b477df290a3f4ea120200b79f}{
+\index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutputValue@{writeAnalogOutputValue}}
+\index{writeAnalogOutputValue@{writeAnalogOutputValue}!mdtDeviceModbus@{mdtDeviceModbus}}
+\subsubsection[{writeAnalogOutputValue}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceModbus::writeAnalogOutputValue (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{value, }
+\item[{int}]{confirmationTimeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_modbus_aa130270b477df290a3f4ea120200b79f}
+
+
+Set value on a analog output on physical device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Output address \\
+\hline
+{\em value} & Value encoded regarding device format \\
+\hline
+{\em confirmationTimeout} & If $>$ 0, a confirmation frame is expected from device, else not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details)
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item If device returns a confirmation, helper method \hyperlink{classmdt_port_manager_a1db6b8da9ff16221c917a1a75366e5c0}{mdtPortManager::waitOnFrame()} can be used
+\item The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+\item To update (G)UI, \hyperlink{classmdt_device_ios_aaa6fbf435ddf8760487d962e1a6307f2}{mdtDeviceIos::updateAnalogOutputValue()} should be used.
+\item Helper method \hyperlink{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{setStateFromPortError()} can be used to update device state on error. 
+\end{DoxyItemize}
+
+int retVal;
+
+if(confirmationTimeout $>$= 0)\{ qDebug() $<$$<$ \char`\"{}REQ sent, TID: \char`\"{} $<$$<$ transactionId; pdu = pvTcpPortManager-\/$>$waitOnFrame(transactionId, confirmationTimeout); if(pdu.isEmpty())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-DEVICE\_\-ERROR, \char`\"{}Received no confirmation (timeout: \char`\"{} + QString::number(confirmationTimeout) + \char`\"{} ms)\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtDeviceModbus\char`\"{}); e.commit(); ao-\/$>$setValue(0.0, false); return -\/1; \} Decode reply retVal = pvCodec-\/$>$decode(pdu); if(retVal != 0x06)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-DEVICE\_\-ERROR, \char`\"{}Receive unexptected reply from device\char`\"{}, mdtError::Error); e.setSystemError(retVal, \char`\"{}\char`\"{}); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtDeviceModbus\char`\"{}); e.commit(); ao-\/$>$setValue(0.0, false); return -\/1; \} if(pvCodec-\/$>$values().size() != 1)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-DEVICE\_\-ERROR, \char`\"{}Receive unexptected count of values from device\char`\"{}, mdtError::Error); e.setSystemError(retVal, \char`\"{}\char`\"{}); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtDeviceModbus\char`\"{}); e.commit(); ao-\/$>$setValue(0.0, false); return -\/1; \} replyValue = pvCodec-\/$>$values().at(0); if(!replyValue.isValid())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-DEVICE\_\-ERROR, \char`\"{}Receive invalid value from device\char`\"{}, mdtError::Error); e.setSystemError(retVal, \char`\"{}\char`\"{}); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtDeviceModbus\char`\"{}); e.commit(); ao-\/$>$setValue(0.0, false); return -\/1; \} Have valid data ao-\/$>$setValueInt(replyValue.toInt(), true); \}
+
+
+
+Reimplemented from \hyperlink{classmdt_device_a6670e00a26a38b26187604128ea35771}{mdtDevice}.
+
+
+
+Definition at line 201 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a43b49e8c162652210a655941c1ddaf5c}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutputs@{writeDigitalOutputs}}
@@ -647,7 +675,7 @@ Provisoire !
 
 
 
-Definition at line 352 of file mdtDeviceModbus.cpp.
+Definition at line 416 of file mdtDeviceModbus.cpp.
 
 
 

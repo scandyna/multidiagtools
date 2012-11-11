@@ -128,7 +128,7 @@ Static Public Member Functions</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USB port I/O port class. </p>
 <p>Built on top of libusb-1.x API</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Implement this remarks Note about the port name (set with <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> ):<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo:</a></b></dt><dd>Implement this remarks Note about the port name (set with <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> ):<br/>
  Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">mdtUsbtmcPortManager::scan()</a> method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_usb_port_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_usb_port_8h_source.html">mdtUsbPort.h</a>.</p>
@@ -217,7 +217,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Request a new bulk/interrupt input transfer. </p>
 <p>Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000037">Todo:</a></b></dt><dd>Handle retval </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>Handle retval </dd></dl>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
@@ -497,7 +497,7 @@ Static Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:02 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:37 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

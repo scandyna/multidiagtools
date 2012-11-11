@@ -13,8 +13,7 @@ Base class for a device connected to a port.
 
 
 
-Inheritance diagram for mdtDevice:
-\nopagebreak
+Inheritance diagram for mdtDevice:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,19 +22,39 @@ Inheritance diagram for mdtDevice:
 \end{figure}
 
 
-Collaboration diagram for mdtDevice:
-\nopagebreak
+Collaboration diagram for mdtDevice:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=156pt]{classmdt_device__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{state\_\-t} \{ \hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69}{Ready} =  0, 
+\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947}{Disconnected}, 
+\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a}{Busy}, 
+\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09}{Unknown}
+ \}
+\begin{DoxyCompactList}\small\item\em State of device. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-virtual void \hyperlink{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}{decodeReadenFrames} ()
-\begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_device_abd713b7ac9bb3c048959efa0cad88e1e}{setAnalogOutputValue} (int address, int value)
+\begin{DoxyCompactList}\small\item\em Set value on a analog output on physical device. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_device_a750ada2532cff71844a52573f62a2874}{decodeReadenFrames} (int id, QByteArray data)
+\begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries} ()
+\begin{DoxyCompactList}\small\item\em Queries to send periodically. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}{
+void \hyperlink{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}{stateChanged} (\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{state\_\-t} newState)}
+\label{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}
+
+\begin{DoxyCompactList}\small\item\em Emited when state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -44,18 +63,81 @@ virtual void \hyperlink{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}{decod
 \label{classmdt_device_a6d501791e7243358cc61b144254b80db}
 
 \item 
-void \hyperlink{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}{setIos} (\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ios)
+\hypertarget{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{
+void \hyperlink{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}{setName} (const QString \&name)}
+\label{classmdt_device_a80186f1aa6fbdc13f1652de978c35518}
+
+\begin{DoxyCompactList}\small\item\em Set the device name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{
+QString \hyperlink{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{name} () const }
+\label{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}
+
+\begin{DoxyCompactList}\small\item\em Get device name. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_a61b7bb9885f77b7e733f87a6134f2509}{setIos} (\hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ios, bool autoAnalogOutputUpdate=false)
 \begin{DoxyCompactList}\small\item\em Set the I/O's container. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ad1f52eecd93931580b9ba88919f32509}{setOutputWriteReplyTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Set reply timeout for outputs requests. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_a3477278b4fa937f7667becb14333ef2f}{setAnalogOutputAddressOffset} (int offset)
+\begin{DoxyCompactList}\small\item\em Set output address offset. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start} (int queryInterval)
+\begin{DoxyCompactList}\small\item\em Start periodic device querying. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_adc7ff8f01d68506283a3d0cc6bc25407}{
+void \hyperlink{classmdt_device_adc7ff8f01d68506283a3d0cc6bc25407}{stop} ()}
+\label{classmdt_device_adc7ff8f01d68506283a3d0cc6bc25407}
+
+\begin{DoxyCompactList}\small\item\em Stop periodic device querying. \end{DoxyCompactList}\item 
 virtual bool \hyperlink{classmdt_device_a5059e971d265dcc125e507de856271b9}{readAnalogInput} (int address)
 \begin{DoxyCompactList}\small\item\em Read one analog input on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_device_ac0023742214c29bdadd46383ae240972}{readAnalogInputs} ()
-\begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device and update (G)UI representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_ae0a0f03cb5267232d176896acc80872c}{readAnalogOutputs} ()
+\begin{DoxyCompactList}\small\item\em Read all analog outputs on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
+virtual int \hyperlink{classmdt_device_a6670e00a26a38b26187604128ea35771}{writeAnalogOutputValue} (int address, int value, int confirmationTimeout)
+\begin{DoxyCompactList}\small\item\em Set value on a analog output on physical device. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_afde11f7cb1d6a932db3824011f7ccccc}{
+\hyperlink{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{state\_\-t} \hyperlink{classmdt_device_afde11f7cb1d6a932db3824011f7ccccc}{state} () const }
+\label{classmdt_device_afde11f7cb1d6a932db3824011f7ccccc}
+
+\begin{DoxyCompactList}\small\item\em Get device state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_device_a4eeda85bf0b10ddc9955a32199c00359}{setStateReady} ()
+\begin{DoxyCompactList}\small\item\em Set the ready state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool \hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{queriesSequence} ()
+\begin{DoxyCompactList}\small\item\em Sequence of queries to send periodically. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ac3df06706c79730fde70ee6131af577c}{setStateDisconnected} ()
+\begin{DoxyCompactList}\small\item\em Set the disconnected state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_abf01ab213b91df9ff03ad6b7184abf88}{setStateBusy} (int retryTimeout=-\/1)
+\begin{DoxyCompactList}\small\item\em Set the busy state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_a312bf413dfc16765328843f3fe08a4b8}{setStateUnknown} ()
+\begin{DoxyCompactList}\small\item\em Set the unknown state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{setStateFromPortError} (int error)
+\begin{DoxyCompactList}\small\item\em Update device state regarding port error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_device_aa84e01b13f98fc35476a2654f1c8d2b3}{
 \hyperlink{classmdt_device_ios}{mdtDeviceIos} $\ast$ {\bfseries pvIos}}
 \label{classmdt_device_aa84e01b13f98fc35476a2654f1c8d2b3}
+
+\item 
+\hypertarget{classmdt_device_af0f2dce75ed1ac3471b6c26fca146747}{
+QMap$<$ int, \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ {\bfseries pvAoPendingTransactions}}
+\label{classmdt_device_af0f2dce75ed1ac3471b6c26fca146747}
+
+\item 
+\hypertarget{classmdt_device_a0b2d5512a223c9cd1e51908c4d9d45a4}{
+int {\bfseries pvOutputWriteReplyTimeout}}
+\label{classmdt_device_a0b2d5512a223c9cd1e51908c4d9d45a4}
+
+\item 
+\hypertarget{classmdt_device_a50a6824fe8b9ae2a7e7c56b8e0686a76}{
+int {\bfseries pvAnalogOutputAddressOffset}}
+\label{classmdt_device_a50a6824fe8b9ae2a7e7c56b8e0686a76}
 
 \end{DoxyCompactItemize}
 
@@ -77,44 +159,106 @@ A device can accept one or many request befor results must be read. This depends
 
 It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application).
 
-A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep coherence, this states are updated in this class. (signal, ...) 
+A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep coherence, this states are updated in this class. 
 
-Definition at line 51 of file mdtDevice.h.
+Definition at line 56 of file mdtDevice.h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}{
+\index{mdtDevice@{mdtDevice}!state\_\-t@{state\_\-t}}
+\index{state\_\-t@{state\_\-t}!mdtDevice@{mdtDevice}}
+\subsubsection[{state\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDevice::state\_\-t}}}
+\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1e}
+
+
+State of device. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{Ready@{Ready}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Ready@{Ready}}\item[{\em 
+\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69}{
+Ready}
+\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69}
+}]Device is connected and ready to receive queries \index{Disconnected@{Disconnected}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Disconnected@{Disconnected}}\item[{\em 
+\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947}{
+Disconnected}
+\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947}
+}]Device is not connected \index{Busy@{Busy}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Busy@{Busy}}\item[{\em 
+\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a}{
+Busy}
+\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a}
+}]Device is connected but cannot accept requests for the moment \index{Unknown@{Unknown}!mdtDevice@{mdtDevice}}\index{mdtDevice@{mdtDevice}!Unknown@{Unknown}}\item[{\em 
+\hypertarget{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09}{
+Unknown}
+\label{classmdt_device_a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09}
+}]Unknown (and unhandled) state \end{description}
+\end{Desc}
+
+
+
+Definition at line 64 of file mdtDevice.h.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}{
+\hypertarget{classmdt_device_a750ada2532cff71844a52573f62a2874}{
 \index{mdtDevice@{mdtDevice}!decodeReadenFrames@{decodeReadenFrames}}
 \index{decodeReadenFrames@{decodeReadenFrames}!mdtDevice@{mdtDevice}}
 \subsubsection[{decodeReadenFrames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::decodeReadenFrames (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{id, }
+\item[{QByteArray}]{data}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
-\label{classmdt_device_a0e43cc312b5b0685b07da8a49dd1ede6}
+\label{classmdt_device_a750ada2532cff71844a52573f62a2874}
 
 
 Decode incoming frames. 
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000003}{Todo}]Version \char`\"{}blocante\char`\"{} (ret: QList$<$QVariant$>$, attente avec portmanager, ...) \end{Desc}
-
 
 Subclass notes:\par
 
 \begin{DoxyItemize}
 \item This default implementation does nothing.
-\item This slot should be connected with \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{mdtPortManager::newReadenFrame()} signal.
+\item This slot should be connected with \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{mdtPortManager::newReadenFrame(int, QByteArray)} signal.
 \item In this class, this connection is not made, it is the sublcass responsability to do this.
-\item The incoming frames are available with \hyperlink{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}{mdtPortManager::readenFrames()}. 
+\item The incoming frames are available with \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{mdtPortManager::readenFrames()}. 
 \end{DoxyItemize}
 
-Reimplemented in \hyperlink{classmdt_device_modbus_ad2a43c428667654e71b288d0c44eca03}{mdtDeviceModbus}.
+Reimplemented in \hyperlink{classmdt_device_modbus_a8d38b8cc19a8c1f1a7305eb89cb1eda2}{mdtDeviceModbus}.
 
 
 
-Definition at line 51 of file mdtDevice.cpp.
+Definition at line 133 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{
+\index{mdtDevice@{mdtDevice}!queriesSequence@{queriesSequence}}
+\index{queriesSequence@{queriesSequence}!mdtDevice@{mdtDevice}}
+\subsubsection[{queriesSequence}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDevice::queriesSequence (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}
+
+
+Sequence of queries to send periodically. 
+
+This method is called from \hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries()}.
+
+\begin{DoxyReturn}{Returns}
+true if all queries are sent successfully.
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and allways returns false.
+\item This method can be reimplemented periodic queries must be sent to device. 
+\end{DoxyItemize}
+
+Definition at line 166 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_a5059e971d265dcc125e507de856271b9}{
 \index{mdtDevice@{mdtDevice}!readAnalogInput@{readAnalogInput}}
@@ -146,7 +290,7 @@ Subclass notes:\par
 \item To update (G)UI, the \hyperlink{classmdt_device_ios_a1ddb8113380483dc88e4472875cd879d}{mdtDeviceIos::updateAnalogInputValue()} should be used. 
 \end{DoxyItemize}
 
-Definition at line 41 of file mdtDevice.cpp.
+Definition at line 95 of file mdtDevice.cpp.
 
 \hypertarget{classmdt_device_ac0023742214c29bdadd46383ae240972}{
 \index{mdtDevice@{mdtDevice}!readAnalogInputs@{readAnalogInputs}}
@@ -174,34 +318,327 @@ Subclass notes:\par
 \item This default implementation does nothing and returns allways -\/1.
 \item If device handled by subclass has analog inputs, this method should be implemented.
 \item The subclass must handle and document the behaviour of calling this method without any I/O's container set.
-\item To update (G)UI, \hyperlink{classmdt_device_ios_a82850ee99957ec5a787de71299ad785b}{mdtDeviceIos::updateAnalogInputValues()} should be used. 
+\item To update (G)UI, \hyperlink{classmdt_device_ios_a82850ee99957ec5a787de71299ad785b}{mdtDeviceIos::updateAnalogInputValues()} should be used.
+\item Helper method \hyperlink{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{setStateFromPortError()} can be used to update device state on error. 
 \end{DoxyItemize}
 
 Reimplemented in \hyperlink{classmdt_device_modbus_a4bf4c1d87f6b61955a015234a928e864}{mdtDeviceModbus}.
 
 
 
-Definition at line 46 of file mdtDevice.cpp.
+Definition at line 100 of file mdtDevice.cpp.
 
-\hypertarget{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}{
+\hypertarget{classmdt_device_ae0a0f03cb5267232d176896acc80872c}{
+\index{mdtDevice@{mdtDevice}!readAnalogOutputs@{readAnalogOutputs}}
+\index{readAnalogOutputs@{readAnalogOutputs}!mdtDevice@{mdtDevice}}
+\subsubsection[{readAnalogOutputs}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDevice::readAnalogOutputs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_ae0a0f03cb5267232d176896acc80872c}
+
+
+Read all analog outputs on physical device and update (G)UI representation. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000003}{Todo}]Version \char`\"{}blocante\char`\"{} (ret: QList$<$QVariant$>$, attente avec portmanager, ...) \end{Desc}
+
+
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details)
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and returns allways -\/1.
+\item If device handled by subclass has analog inputs, this method should be implemented.
+\item The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+\item To update (G)UI, \hyperlink{classmdt_device_ios_a2c40cf4749cff1ade292bdd81bc195e9}{mdtDeviceIos::updateAnalogOutputValues()} should be used.
+\item Helper method \hyperlink{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{setStateFromPortError()} can be used to update device state on error. 
+\end{DoxyItemize}
+
+Reimplemented in \hyperlink{classmdt_device_modbus_a28aab79bc878490fa6bf624ddee4b62a}{mdtDeviceModbus}.
+
+
+
+Definition at line 105 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{
+\index{mdtDevice@{mdtDevice}!runQueries@{runQueries}}
+\index{runQueries@{runQueries}!mdtDevice@{mdtDevice}}
+\subsubsection[{runQueries}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::runQueries (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}
+
+
+Queries to send periodically. 
+
+This slot is periodically called after a call of \hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}. 
+
+pvQueryTimer-\/$>$\hyperlink{classmdt_device_adc7ff8f01d68506283a3d0cc6bc25407}{stop()};
+
+if(\hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}{queriesSequence()})\{ \hyperlink{classmdt_device_a4eeda85bf0b10ddc9955a32199c00359}{setStateReady()}; pvQueryTimer-\/$>$\hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}; \}else\{ Retry later pvQueryTimer-\/$>$\hyperlink{classmdt_device_adc7ff8f01d68506283a3d0cc6bc25407}{stop()}; QTimer::singleShot(pvQueryTimer-\/$>$interval() + 500, this, SLOT(\hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries()})); return; \}
+
+if(!pvQueryTimer-\/$>$isActive())\{ pvQueryTimer-\/$>$\hyperlink{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{start()}; \}
+
+
+
+Definition at line 137 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a3477278b4fa937f7667becb14333ef2f}{
+\index{mdtDevice@{mdtDevice}!setAnalogOutputAddressOffset@{setAnalogOutputAddressOffset}}
+\index{setAnalogOutputAddressOffset@{setAnalogOutputAddressOffset}!mdtDevice@{mdtDevice}}
+\subsubsection[{setAnalogOutputAddressOffset}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setAnalogOutputAddressOffset (
+\begin{DoxyParamCaption}
+\item[{int}]{offset}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_a3477278b4fa937f7667becb14333ef2f}
+
+
+Set output address offset. 
+
+Some devices has a offset for output addresses. F.ex. the Wago 750 system has a offset of 0x0200 
+
+Definition at line 79 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_abd713b7ac9bb3c048959efa0cad88e1e}{
+\index{mdtDevice@{mdtDevice}!setAnalogOutputValue@{setAnalogOutputValue}}
+\index{setAnalogOutputValue@{setAnalogOutputValue}!mdtDevice@{mdtDevice}}
+\subsubsection[{setAnalogOutputValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setAnalogOutputValue (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_device_abd713b7ac9bb3c048959efa0cad88e1e}
+
+
+Set value on a analog output on physical device. 
+
+Checks device's state and send request if Ready. Internally, \hyperlink{classmdt_device_a6670e00a26a38b26187604128ea35771}{writeAnalogOutputValue()} is called. 
+
+QTimer::singleShot(500, this, SLOT(\hyperlink{classmdt_device_a4eeda85bf0b10ddc9955a32199c00359}{setStateReady()})); 
+
+
+
+Definition at line 120 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a61b7bb9885f77b7e733f87a6134f2509}{
 \index{mdtDevice@{mdtDevice}!setIos@{setIos}}
 \index{setIos@{setIos}!mdtDevice@{mdtDevice}}
 \subsubsection[{setIos}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setIos (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtDeviceIos} $\ast$}]{ios}
+\item[{{\bf mdtDeviceIos} $\ast$}]{ios, }
+\item[{bool}]{autoAnalogOutputUpdate = {\ttfamily false}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_ad1f8fff7f40ab77e876fbfaeae846f82}
+\label{classmdt_device_a61b7bb9885f77b7e733f87a6134f2509}
 
 
 Set the I/O's container. 
 
+
+\begin{DoxyParams}{Parameters}
+{\em ios} & A pointer to a \hyperlink{classmdt_device_ios}{mdtDeviceIos} object \\
+\hline
+{\em autoAnalogOutputUpdate} & If true, \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{mdtAnalogIo::valueChanged()} signal will be connected to \hyperlink{classmdt_device_abd713b7ac9bb3c048959efa0cad88e1e}{setAnalogOutputValue()} slot for each analog output\\
+\hline
+\end{DoxyParams}
 \begin{DoxyPrecond}{Precondition}
 ios must be a valid pointer 
 \end{DoxyPrecond}
 
 
-Definition at line 34 of file mdtDevice.cpp.
+Definition at line 58 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_ad1f52eecd93931580b9ba88919f32509}{
+\index{mdtDevice@{mdtDevice}!setOutputWriteReplyTimeout@{setOutputWriteReplyTimeout}}
+\index{setOutputWriteReplyTimeout@{setOutputWriteReplyTimeout}!mdtDevice@{mdtDevice}}
+\subsubsection[{setOutputWriteReplyTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setOutputWriteReplyTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ad1f52eecd93931580b9ba88919f32509}
+
+
+Set reply timeout for outputs requests. 
+
+If timeout is $<$ 0, no reply is expected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 74 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_abf01ab213b91df9ff03ad6b7184abf88}{
+\index{mdtDevice@{mdtDevice}!setStateBusy@{setStateBusy}}
+\index{setStateBusy@{setStateBusy}!mdtDevice@{mdtDevice}}
+\subsubsection[{setStateBusy}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setStateBusy (
+\begin{DoxyParamCaption}
+\item[{int}]{retryTimeout = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_abf01ab213b91df9ff03ad6b7184abf88}
+
+
+Set the busy state. 
+
+Busy state can be used when physical device or computer (this software) cannot process more requests. Emit \hyperlink{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}{stateChanged()} if current state was not Busy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em retryTimeout} & If $>$= 0, device will automatically go back to ready state after this timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 189 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_ac3df06706c79730fde70ee6131af577c}{
+\index{mdtDevice@{mdtDevice}!setStateDisconnected@{setStateDisconnected}}
+\index{setStateDisconnected@{setStateDisconnected}!mdtDevice@{mdtDevice}}
+\subsubsection[{setStateDisconnected}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setStateDisconnected (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_ac3df06706c79730fde70ee6131af577c}
+
+
+Set the disconnected state. 
+
+Emit \hyperlink{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}{stateChanged()} if current state was not Disconnected. 
+
+Definition at line 180 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{
+\index{mdtDevice@{mdtDevice}!setStateFromPortError@{setStateFromPortError}}
+\index{setStateFromPortError@{setStateFromPortError}!mdtDevice@{mdtDevice}}
+\subsubsection[{setStateFromPortError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setStateFromPortError (
+\begin{DoxyParamCaption}
+\item[{int}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}
+
+
+Update device state regarding port error. 
+
+If error is unknown, the state is changed to Unknown. 
+
+Definition at line 215 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a4eeda85bf0b10ddc9955a32199c00359}{
+\index{mdtDevice@{mdtDevice}!setStateReady@{setStateReady}}
+\index{setStateReady@{setStateReady}!mdtDevice@{mdtDevice}}
+\subsubsection[{setStateReady}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setStateReady (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, slot\mbox{]}}}}
+\label{classmdt_device_a4eeda85bf0b10ddc9955a32199c00359}
+
+
+Set the ready state. 
+
+Emit \hyperlink{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}{stateChanged()} if current state was not Ready. 
+
+Definition at line 171 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a312bf413dfc16765328843f3fe08a4b8}{
+\index{mdtDevice@{mdtDevice}!setStateUnknown@{setStateUnknown}}
+\index{setStateUnknown@{setStateUnknown}!mdtDevice@{mdtDevice}}
+\subsubsection[{setStateUnknown}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::setStateUnknown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_device_a312bf413dfc16765328843f3fe08a4b8}
+
+
+Set the unknown state. 
+
+Will add a error to \hyperlink{classmdt_error}{mdtError} system. Emit \hyperlink{classmdt_device_a1ac5cf5f1102ae12a2cbe2f55770983d}{stateChanged()} if current state was not Unknown. 
+
+Definition at line 202 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}{
+\index{mdtDevice@{mdtDevice}!start@{start}}
+\index{start@{start}!mdtDevice@{mdtDevice}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::start (
+\begin{DoxyParamCaption}
+\item[{int}]{queryInterval}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_a721c5bf2cfa0eef5304333f08da182f7}
+
+
+Start periodic device querying. 
+
+Internally, the \hyperlink{classmdt_device_a14634fec6cd6bae810562b3bd88a5c05}{runQueries()} slot will be called each queryInterval of time.
+
+
+\begin{DoxyParams}{Parameters}
+{\em queryInterval} & Query interval \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 84 of file mdtDevice.cpp.
+
+\hypertarget{classmdt_device_a6670e00a26a38b26187604128ea35771}{
+\index{mdtDevice@{mdtDevice}!writeAnalogOutputValue@{writeAnalogOutputValue}}
+\index{writeAnalogOutputValue@{writeAnalogOutputValue}!mdtDevice@{mdtDevice}}
+\subsubsection[{writeAnalogOutputValue}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDevice::writeAnalogOutputValue (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{value, }
+\item[{int}]{confirmationTimeout}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_a6670e00a26a38b26187604128ea35771}
+
+
+Set value on a analog output on physical device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em address} & Output address \\
+\hline
+{\em value} & Value encoded regarding device format \\
+\hline
+{\em confirmationTimeout} & If $>$ 0, a confirmation frame is expected from device, else not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details)
+\end{DoxyReturn}
+Subclass notes:\par
+
+\begin{DoxyItemize}
+\item This default implementation does nothing and returns allways -\/1.
+\item If device handled by subclass has analog inputs, this method should be implemented.
+\item If device returns a confirmation, helper method \hyperlink{classmdt_port_manager_a1db6b8da9ff16221c917a1a75366e5c0}{mdtPortManager::waitOnFrame()} can be used
+\item The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+\item To update (G)UI, \hyperlink{classmdt_device_ios_aaa6fbf435ddf8760487d962e1a6307f2}{mdtDeviceIos::updateAnalogOutputValue()} should be used.
+\item Helper method \hyperlink{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{setStateFromPortError()} can be used to update device state on error. 
+\end{DoxyItemize}
+
+Reimplemented in \hyperlink{classmdt_device_modbus_aa130270b477df290a3f4ea120200b79f}{mdtDeviceModbus}.
+
+
+
+Definition at line 110 of file mdtDevice.cpp.
 
 
 

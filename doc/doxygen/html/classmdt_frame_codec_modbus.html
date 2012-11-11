@@ -228,7 +228,7 @@ Public Member Functions</h2></td></tr>
 <li>FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.</li>
 <li>FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.</li>
 <li>FC 5 (0x05), WriteSingleCoil reply: first value is address as quint16, second value is the output state as bool.</li>
-<li>FC 6 (0x06), WriteSingleRegister reply: analog output value, as quint16.</li>
+<li>FC 6 (0x06), WriteSingleRegister reply: analog output address and value, as quint16.</li>
 <li>FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.</li>
 <li>FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.</li>
 <li>For a WriteSingleCoil reply, 1 value as bool</li>
@@ -245,7 +245,7 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Decoded function code, MODBUS error code or value &lt; 0 on other error. </dd></dl>
 
 <p><p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000055">Todo:</a></b></dt><dd>Base 16 ?? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000053">Todo:</a></b></dt><dd>Base 16 ?? </dd></dl>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00256">256</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
@@ -557,7 +557,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:01 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:36 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -13,8 +13,7 @@ Representation of a analog I/O.
 
 
 
-Inheritance diagram for mdtAnalogIo:
-\nopagebreak
+Inheritance diagram for mdtAnalogIo:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtAnalogIo:
 \end{figure}
 
 
-Collaboration diagram for mdtAnalogIo:
-\nopagebreak
+Collaboration diagram for mdtAnalogIo:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,23 +32,15 @@ Collaboration diagram for mdtAnalogIo:
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{setValue} (double value, bool isValid)
+void \hyperlink{classmdt_analog_io_ac83abbda2bafce5c02e3ae1dbc5e2555}{setValue} (double value, bool isValid, bool emitValueChanged=true)
 \begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_analog_io_a9729875cb13fa2069e40c9abce914870}{setValue} (double value)
 \begin{DoxyCompactList}\small\item\em Set the value to update display. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{
-void \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged} (double newValue)}
-\label{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}
-
+void \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged} (int address, int value)
 \begin{DoxyCompactList}\small\item\em This signal is emitted whenever the value is changed. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_analog_io_ab45b4b94be2a4bedf59e09ea7f60e09e}{
-void {\bfseries valueChanged} (int address, double newValue)}
-\label{classmdt_analog_io_ab45b4b94be2a4bedf59e09ea7f60e09e}
-
-\item 
 \hypertarget{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}{
 void {\bfseries unitChangedForUi} (const QString \&unit)}
 \label{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}
@@ -84,8 +74,10 @@ QString \hyperlink{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}{unit} (
 \label{classmdt_analog_io_a126d5b9bf4a0bb9ce9f2ff6a010fef0e}
 
 \begin{DoxyCompactList}\small\item\em Get unit. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{setRange} (double min, double max, int steps)
-\begin{DoxyCompactList}\small\item\em Set the range. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange} (double min, double max, int intValueBitsCount, int intValueLsbIndex=0, bool intValueSigned=false)
+\begin{DoxyCompactList}\small\item\em Specify the range of values and bits decodes parameters. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{setEncodeBitSettings} (int intValueBitsCount, int intValueLsbIndex)
+\begin{DoxyCompactList}\small\item\em Set the bits encode parammeters. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{
 double \hyperlink{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}{minimum} () const }
 \label{classmdt_analog_io_acd2b8cb33d5d42abf23672ad7675825e}
@@ -100,8 +92,8 @@ double \hyperlink{classmdt_analog_io_a61e312bc7921a6ca097ea6babf3281a5}{maximum}
 double \hyperlink{classmdt_analog_io_a55d3e346dd13a580dc4ac77e8e946b01}{value} () const }
 \label{classmdt_analog_io_a55d3e346dd13a580dc4ac77e8e946b01}
 
-\begin{DoxyCompactList}\small\item\em Get value (set with \hyperlink{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{setValue()} ) \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_analog_io_a867ced0c700cf2a4a72c1fa110364235}{setValueInt} (int value, bool isValid)
+\begin{DoxyCompactList}\small\item\em Get value (set with \hyperlink{classmdt_analog_io_ac83abbda2bafce5c02e3ae1dbc5e2555}{setValue()} ) \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}{setValueInt} (int value, bool isValid, bool emitValueChanged=true)
 \begin{DoxyCompactList}\small\item\em Set the integer value. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{valueInt} () const 
 \begin{DoxyCompactList}\small\item\em Get the integer value. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -117,28 +109,67 @@ Definition at line 34 of file mdtAnalogIo.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{
+\hypertarget{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{
+\index{mdtAnalogIo@{mdtAnalogIo}!setEncodeBitSettings@{setEncodeBitSettings}}
+\index{setEncodeBitSettings@{setEncodeBitSettings}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{setEncodeBitSettings}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAnalogIo::setEncodeBitSettings (
+\begin{DoxyParamCaption}
+\item[{int}]{intValueBitsCount, }
+\item[{int}]{intValueLsbIndex}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}
+
+
+Set the bits encode parammeters. 
+
+On many analog output module, it is possible to set a value, and read it. It can happen that the bitmap differs between write and read (f.ex. Wago 750-\/550). In such case, a alternate bits count and lsb index can be set here.
+
+Note that \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange()} will overwrite thiese settings.
+
+
+\begin{DoxyParams}{Parameters}
+{\em intValueBitsCount} & Number of bits used for the value, including sign bit. (has only effect when using \hyperlink{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{valueInt()} ). \\
+\hline
+{\em intValueLsbIndex} & Index of first bit to use for value extraction. (has only effect when using \hyperlink{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{valueInt()} ).\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. Some checks are done, and if one fails, false is returned and the previous settingsare used for conversion. 
+\end{DoxyReturn}
+
+
+Definition at line 118 of file mdtAnalogIo.cpp.
+
+\hypertarget{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setRange@{setRange}}
 \index{setRange@{setRange}!mdtAnalogIo@{mdtAnalogIo}}
-\subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setRange (
+\subsubsection[{setRange}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtAnalogIo::setRange (
 \begin{DoxyParamCaption}
 \item[{double}]{min, }
 \item[{double}]{max, }
-\item[{int}]{steps}
+\item[{int}]{intValueBitsCount, }
+\item[{int}]{intValueLsbIndex = {\ttfamily 0}, }
+\item[{bool}]{intValueSigned = {\ttfamily false}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}
+\label{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}
 
 
-Set the range. 
+Specify the range of values and bits decodes parameters. 
 
-Store the new range and set the value to the minimum. The \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} signal is emitted.
+Store the new range and set the value to the minimum. The \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged()} signal is emitted.
 
-Note for UI developpers:
+It can happen that a I/O module returns, f.ex., a integer value in a 16 bits packet, but with some additional flags. (example: Wago 750-\/457). In such case, the value is, f.ex., encoded in 12 bits only. Take example of Wago 750-\/457:
 \begin{DoxyItemize}
-\item The signal rangeChangedForUi() is emited
-\item The signal valueChangedForUi() is emited
+\item Value + flags are encoded in a 16 bits word
+\item Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15
+\item Value is scaled from -\/10 V to 10 V
 \end{DoxyItemize}
+
+In this example, this method must be called with min = -\/10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 and intValueSigned = true .
+
+Note that some analog output hardware use a different resolution for read and write (f.ex. Wago 750-\/550). In such case, you can set parameters for reading here, and use \hyperlink{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{setEncodeBitSettings()} for alternate parameters for write.
 
 
 \begin{DoxyParams}{Parameters}
@@ -146,39 +177,51 @@ Note for UI developpers:
 \hline
 {\em max} & Maximum value to display (f.ex. 10V, or 20mA) \\
 \hline
-{\em steps} & Number of steps of the input (f.ex. 256 with 8 bits resolution) \\
+{\em intValueBitsCount} & Number of bits used for the value, including sign bit. (has only effect when using \hyperlink{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}{setValueInt()} ). \\
+\hline
+{\em intValueLsbIndex} & Index of first bit to use for value extraction. (has only effect when using \hyperlink{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}{setValueInt()} ). \\
+\hline
+{\em intValueSigned} & If true, decoded value is considered as signed value, i.e. the most significant bit is the sign. (has only effect when using \hyperlink{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}{setValueInt()} ).\\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success. Some checks are done, and if one fails, false is returned and the previous settingsare used for conversion.
+\end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
-steps must be $>$ 1 
-
-max must be $>$ min 
+max must be $>$ min
 \end{DoxyPrecond}
+Note for UI developpers:
+\begin{DoxyItemize}
+\item The signal rangeChangedForUi() is emited
+\item The signal valueChangedForUi() is emited 
+\end{DoxyItemize}
 
+Definition at line 61 of file mdtAnalogIo.cpp.
 
-Definition at line 50 of file mdtAnalogIo.cpp.
-
-\hypertarget{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{
+\hypertarget{classmdt_analog_io_ac83abbda2bafce5c02e3ae1dbc5e2555}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setValue@{setValue}}
 \index{setValue@{setValue}!mdtAnalogIo@{mdtAnalogIo}}
 \subsubsection[{setValue}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValue (
 \begin{DoxyParamCaption}
 \item[{double}]{value, }
-\item[{bool}]{isValid}
+\item[{bool}]{isValid, }
+\item[{bool}]{emitValueChanged = {\ttfamily true}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}
+\label{classmdt_analog_io_ac83abbda2bafce5c02e3ae1dbc5e2555}
 
 
 Set the value to update display. 
 
-Store the value and emit \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} if new value is different from current.
+Store the value and emit \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged()} if new value is different from current.
 
 
 \begin{DoxyParams}{Parameters}
 {\em value} & The value to store \\
 \hline
-{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()}\\
+{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()} \\
+\hline
+{\em emitValueChanged} & If true, \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged()} will not be emitted\\
 \hline
 \end{DoxyParams}
 Note for UI developpers:
@@ -186,7 +229,11 @@ Note for UI developpers:
 \item The signal valueChangedForUi() is emited 
 \end{DoxyItemize}
 
-Definition at line 98 of file mdtAnalogIo.cpp.
+emit(valueChanged(value)); emit(valueChanged(pvAddress, value)); 
+
+
+
+Definition at line 220 of file mdtAnalogIo.cpp.
 
 \hypertarget{classmdt_analog_io_a9729875cb13fa2069e40c9abce914870}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setValue@{setValue}}
@@ -201,33 +248,36 @@ Definition at line 98 of file mdtAnalogIo.cpp.
 
 Set the value to update display. 
 
-Overloaded method that calls \hyperlink{classmdt_analog_io_aefdee4a9c33e5939f8ee7d599c959567}{setValue(double, bool)} with isValid = true. 
+Overloaded method that calls setValue(double, bool) with isValid = true. 
 
-Definition at line 113 of file mdtAnalogIo.cpp.
+Definition at line 238 of file mdtAnalogIo.cpp.
 
-\hypertarget{classmdt_analog_io_a867ced0c700cf2a4a72c1fa110364235}{
+\hypertarget{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}{
 \index{mdtAnalogIo@{mdtAnalogIo}!setValueInt@{setValueInt}}
 \index{setValueInt@{setValueInt}!mdtAnalogIo@{mdtAnalogIo}}
 \subsubsection[{setValueInt}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::setValueInt (
 \begin{DoxyParamCaption}
 \item[{int}]{value, }
-\item[{bool}]{isValid}
+\item[{bool}]{isValid, }
+\item[{bool}]{emitValueChanged = {\ttfamily true}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_analog_io_a867ced0c700cf2a4a72c1fa110364235}
+\label{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}
 
 
 Set the integer value. 
 
-Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{setRange()} (steps parameter)
+Will calculate the real value depending on resolution and update display. The resolution is set with \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange()} (intValueBitsCount parameter)
 
-The \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} signal is emitted.
+The \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged()} signal is emitted.
 
 
 \begin{DoxyParams}{Parameters}
 {\em value} & The value to store \\
 \hline
-{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()}\\
+{\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()} \\
+\hline
+{\em emitValueChanged} & If true, \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged()} will not be emitted\\
 \hline
 \end{DoxyParams}
 Note for UI developpers:
@@ -235,9 +285,27 @@ Note for UI developpers:
 \item The signal valueChangedForUi() is emited 
 \end{DoxyItemize}
 
-Definition at line 82 of file mdtAnalogIo.cpp.
+Definition at line 173 of file mdtAnalogIo.cpp.
 
-\hypertarget{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{
+\hypertarget{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{
+\index{mdtAnalogIo@{mdtAnalogIo}!valueChanged@{valueChanged}}
+\index{valueChanged@{valueChanged}!mdtAnalogIo@{mdtAnalogIo}}
+\subsubsection[{valueChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::valueChanged (
+\begin{DoxyParamCaption}
+\item[{int}]{address, }
+\item[{int}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}
+
+
+This signal is emitted whenever the value is changed. 
+
+void valueChanged(double newValue); void valueChanged(int address, double newValue);
+
+This signal is emitted whenever the value is changed
+
+The value is converted for device specific format. \hypertarget{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{
 \index{mdtAnalogIo@{mdtAnalogIo}!valueInt@{valueInt}}
 \index{valueInt@{valueInt}!mdtAnalogIo@{mdtAnalogIo}}
 \subsubsection[{valueInt}]{\setlength{\rightskip}{0pt plus 5cm}int mdtAnalogIo::valueInt (
@@ -250,9 +318,9 @@ Definition at line 82 of file mdtAnalogIo.cpp.
 
 Get the integer value. 
 
-The integer value depend on value and resolution. The resolution is set with \hyperlink{classmdt_analog_io_a8b32a0e21e18b9b27bb614a7bbdf409d}{setRange()} (steps parameter) 
+The integer value depend on value and resolution. The resolution is set with \hyperlink{classmdt_analog_io_ab5733c8d4f49da6e6d4f11f1e1aa9555}{setRange()} (steps parameter) 
 
-Definition at line 93 of file mdtAnalogIo.cpp.
+Definition at line 199 of file mdtAnalogIo.cpp.
 
 
 

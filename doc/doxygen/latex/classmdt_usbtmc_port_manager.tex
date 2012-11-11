@@ -124,7 +124,7 @@ Send a read request and call \hyperlink{classmdt_port_manager_a44ca338c8c5689361
 bTag ID on success or value $<$ 0 on timeout or if write queue is fullint waitReadenFrame(int timeout = 500); 
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000046}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
+\item[\hyperlink{todo__todo000045}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
 
 
 Called by the thread whenn a complete frame was readen
@@ -138,8 +138,12 @@ retVal = \hyperlink{classmdt_usbtmc_port_manager_a992d24020748e17d577b31e64a73b3
 return retVal; \} 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000045}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000044}{Todo}]Error on incomplete frame \end{Desc}
 
+
+pvReadenFrames.insert(frame-\/$>$bTag(), data);
+
+if(pvReadenFrames.size() $>$ 0)\{ emit(\hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame()}); \}
 
 
 
@@ -230,7 +234,7 @@ Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's wr
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-bTag ID on success or value $<$ 0 if write queue is full. 
+bTag ID on success or \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{mdtAbstractPort::WriteQueueEmpty} ($<$ 0). 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 

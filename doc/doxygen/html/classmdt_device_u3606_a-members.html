@@ -65,19 +65,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a>, including all inherited members.<table>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a0e43cc312b5b0685b07da8a49dd1ede6">decodeReadenFrames</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual, slot]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a750ada2532cff71844a52573f62a2874">decodeReadenFrames</a>(int id, QByteArray data)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual, slot]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>essais</b>() (defined in <a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a>)</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_u3606_a.html#ad79d17e348854963cf32b20d370a778e">getIdn</a>()</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_u3606_a.html#a0a5ed6583bdf5378787e24349776d7a1">idnChanged</a>(const QStringList &amp;data)</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtDevice</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtDeviceU3606A</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a>)</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0">name</a>() const </td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvAnalogOutputAddressOffset</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvAoPendingTransactions</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvIos</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvOutputWriteReplyTimeout</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">queriesSequence</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a5059e971d265dcc125e507de856271b9">readAnalogInput</a>(int address)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ac0023742214c29bdadd46383ae240972">readAnalogInputs</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae0a0f03cb5267232d176896acc80872c">readAnalogOutputs</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05">runQueries</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327">scan</a>()</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_u3606_a.html#a425f1d22686be2d28eb3f1ce12a8eaee">selectPort</a>(const QStringList &amp;ports, int index)</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_u3606_a.html#af4ee162df6c67ee3b2d9e5877bea881e">selectPort</a>(const QString &amp;port)</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ad1f8fff7f40ab77e876fbfaeae846f82">setIos</a>(mdtDeviceIos *ios)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3477278b4fa937f7667becb14333ef2f">setAnalogOutputAddressOffset</a>(int offset)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#abd713b7ac9bb3c048959efa0cad88e1e">setAnalogOutputValue</a>(int address, int value)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [slot]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a61b7bb9885f77b7e733f87a6134f2509">setIos</a>(mdtDeviceIos *ios, bool autoAnalogOutputUpdate=false)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a>(const QString &amp;name)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ad1f52eecd93931580b9ba88919f32509">setOutputWriteReplyTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#abf01ab213b91df9ff03ad6b7184abf88">setStateBusy</a>(int retryTimeout=-1)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ac3df06706c79730fde70ee6131af577c">setStateDisconnected</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab77eb4c1bb50201e97a4dbd8b538659a">setStateFromPortError</a>(int error)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a4eeda85bf0b10ddc9955a32199c00359">setStateReady</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, slot]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a312bf413dfc16765328843f3fe08a4b8">setStateUnknown</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7">start</a>(int queryInterval)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc">state</a>() const </td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e">state_t</a> enum name</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a1ac5cf5f1102ae12a2cbe2f55770983d">stateChanged</a>(state_t newState)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09">Unknown</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a6670e00a26a38b26187604128ea35771">writeAnalogOutputValue</a>(int address, int value, int confirmationTimeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtDevice</b>() (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtDeviceU3606A</b>() (defined in <a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a>)</td><td><a class="el" href="classmdt_device_u3606_a.html">mdtDeviceU3606A</a></td><td></td></tr>
 </table></div>
@@ -95,7 +121,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_u36
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:36 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

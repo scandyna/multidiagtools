@@ -41,8 +41,10 @@ void \hyperlink{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{onThrea
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{newReadenFrame} ()
-\begin{DoxyCompactList}\small\item\em Emitted when new frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame} (int id, QByteArray data)
+\begin{DoxyCompactList}\small\item\em Emitted when new frame was readen. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_ab6a2a791de303ff20e6f7f884be681bf}{readenFramesQueueSizeChanged} (int newSize)
+\begin{DoxyCompactList}\small\item\em Emitted when internal queue of readen frames size has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -53,6 +55,10 @@ void \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{newRead
 \item 
 virtual \hyperlink{classmdt_port_manager_adf797f8fd7a3ffdc000890a224e4c1b6}{$\sim$mdtPortManager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_ae48865abce3dc2a3173ae77d7b0c107f}{setEnqueueReadenFrames} (bool enqueue)
+\begin{DoxyCompactList}\small\item\em Set the enqueue readen frames flag. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a56bb2f93ee65b4743cb19784224e3489}{setNotifyNewReadenFrame} (bool notify)
+\begin{DoxyCompactList}\small\item\em Set the incomming frame notification flag. \end{DoxyCompactList}\item 
 virtual QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available ports. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort} (\hyperlink{classmdt_abstract_port}{mdtAbstractPort} $\ast$port)
@@ -86,14 +92,23 @@ void \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePo
 \begin{DoxyCompactList}\small\item\em Close the port. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{writeData} (QByteArray data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame} (int timeout=500)
+bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame} (int timeout=500)
 \begin{DoxyCompactList}\small\item\em Wait until a complete frame is available. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_port_manager_a1db6b8da9ff16221c917a1a75366e5c0}{waitOnFrame} (int id, int timeout=500)
+\begin{DoxyCompactList}\small\item\em Wait on readen frame with defined ID. \end{DoxyCompactList}\item 
 QByteArray \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame} (int id)
 \begin{DoxyCompactList}\small\item\em Get data by frame ID. \end{DoxyCompactList}\item 
-QList$<$ QByteArray $>$ \& \hyperlink{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}{readenFrames} ()
+const QList$<$ QByteArray $>$ \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{readenFrames} () const 
 \begin{DoxyCompactList}\small\item\em Get all readen data. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}{clearReadenFrames} ()
+\begin{DoxyCompactList}\small\item\em Clear readen frames. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{wait} (int msecs, int granularity=50)
 \begin{DoxyCompactList}\small\item\em Wait some time without break the GUI's event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_port_manager_a3daaf801a26008388af390b5917d7a0c}{commitFrame} (int id, QByteArray data)
+\begin{DoxyCompactList}\small\item\em Store frame data in queue and/or emit \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -105,16 +120,6 @@ void \hyperlink{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{wait} (
 \hypertarget{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}{
 QList$<$ \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$ $>$ {\bfseries pvThreads}}
 \label{classmdt_port_manager_a8e0d49b789f8b01d469e84b487799573}
-
-\item 
-\hypertarget{classmdt_port_manager_a407ff37a8f459bb60288f33f4295ec4f}{
-QMap$<$ quint16, QByteArray $>$ {\bfseries pvReadenFrames}}
-\label{classmdt_port_manager_a407ff37a8f459bb60288f33f4295ec4f}
-
-\item 
-\hypertarget{classmdt_port_manager_afed907a6e33d0439431962aa890976b0}{
-QList$<$ QByteArray $>$ {\bfseries pvReadenFramesCopy}}
-\label{classmdt_port_manager_afed907a6e33d0439431962aa890976b0}
 
 \end{DoxyCompactItemize}
 
@@ -140,6 +145,7 @@ Example:
  port->setConfig(config);
 
  // Init port manager
+ m.setEnqueueReadenFrames(true);
  m.setPort(port);
  m.addThread(mew mdtPortWriteThread);
  m.addThread(mew mdtPortReadThread);
@@ -174,7 +180,7 @@ Example:
 \end{DoxyCode}
 
 
-A alternative of using \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame()} is to connect the \hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{newReadenFrame()} signal to a slot, and get data with \hyperlink{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}{readenFrames()} from this slot.
+A alternative of using \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame()} is to connect the \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame()} signal to a slot, and get data with \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{readenFrames()} from this slot.
 
 \begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_serial_port_manager}{mdtSerialPortManager} 
@@ -183,7 +189,7 @@ A alternative of using \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e0
 \end{DoxySeeAlso}
 
 
-Definition at line 105 of file mdtPortManager.h.
+Definition at line 106 of file mdtPortManager.h.
 
 
 
@@ -205,7 +211,7 @@ If a port was set, the manager will stop (if running), and port will be closed (
 
 Note that port set by \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} and threads are not deleted. 
 
-Definition at line 37 of file mdtPortManager.cpp.
+Definition at line 40 of file mdtPortManager.cpp.
 
 
 
@@ -229,7 +235,7 @@ pvPort-\/$>$flushIn(); pvPort-\/$>$flushOut();
 
 
 
-Definition at line 294 of file mdtPortManager.cpp.
+Definition at line 340 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{
 \index{mdtPortManager@{mdtPortManager}!addThread@{addThread}}
@@ -253,7 +259,31 @@ thread must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 87 of file mdtPortManager.cpp.
+Definition at line 100 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}{
+\index{mdtPortManager@{mdtPortManager}!clearReadenFrames@{clearReadenFrames}}
+\index{clearReadenFrames@{clearReadenFrames}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{clearReadenFrames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::clearReadenFrames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}
+
+
+Clear readen frames. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{readenFrames()} 
+\end{DoxySeeAlso}
+
+
+pvReadenFramesCopy.clear(); 
+
+
+
+Definition at line 321 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{
 \index{mdtPortManager@{mdtPortManager}!closePort@{closePort}}
@@ -272,7 +302,28 @@ This stops the threads (if exists) and close the port.
 
 If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} ), this method does nothing. 
 
-Definition at line 202 of file mdtPortManager.cpp.
+Definition at line 215 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a3daaf801a26008388af390b5917d7a0c}{
+\index{mdtPortManager@{mdtPortManager}!commitFrame@{commitFrame}}
+\index{commitFrame@{commitFrame}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{commitFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::commitFrame (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{QByteArray}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_manager_a3daaf801a26008388af390b5917d7a0c}
+
+
+Store frame data in queue and/or emit \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame()} signal. 
+
+Dependeing on pvEnqueueReadenFrames and pvNotifyNewReadenFrame, frame will be enqueued and/or the \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame(int, QByteArray)} will be emitted.
+
+Subclass notes:\par
+ The subclass should use this method to handle new incomming frames. 
+
+Definition at line 422 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
 \index{mdtPortManager@{mdtPortManager}!config@{config}}
@@ -298,7 +349,7 @@ Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9c
 
 
 
-Definition at line 184 of file mdtPortManager.cpp.
+Definition at line 197 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}{
 \index{mdtPortManager@{mdtPortManager}!detachPort@{detachPort}}
@@ -325,7 +376,7 @@ Will detach port from each thread and from port manager. If port was not set, th
 \end{DoxyParams}
 
 
-Definition at line 66 of file mdtPortManager.cpp.
+Definition at line 79 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{
 \index{mdtPortManager@{mdtPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
@@ -348,8 +399,10 @@ Called by the read thread whenn a complete frame was readen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000026}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Error on incomplete frame \end{Desc}
 
+
+pvReadenFrames.insert(pvLastReadenFrameId, data); 
 
 
 
@@ -357,7 +410,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa
 
 
 
-Definition at line 303 of file mdtPortManager.cpp.
+Definition at line 349 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
 \index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
@@ -376,23 +429,28 @@ If one of the threads is running, true is returned.
 
 If port was not set, it returns false. 
 
-Definition at line 138 of file mdtPortManager.cpp.
+Definition at line 151 of file mdtPortManager.cpp.
 
-\hypertarget{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{
+\hypertarget{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{
 \index{mdtPortManager@{mdtPortManager}!newReadenFrame@{newReadenFrame}}
 \index{newReadenFrame@{newReadenFrame}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{newReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newReadenFrame (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{id, }
+\item[{QByteArray}]{data}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}
+\label{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}
 
 
 Emitted when new frame was readen. 
 
+The id is the same than returned by \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{writeData()}.
+
+Emitted only if notifyNewReadenFrame flag is true.
+
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame()} 
+\hyperlink{classmdt_port_manager_a56bb2f93ee65b4743cb19784224e3489}{setNotifyNewReadenFrame()} 
 \end{DoxySeeAlso}
 \hypertarget{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{
 \index{mdtPortManager@{mdtPortManager}!onThreadsErrorOccured@{onThreadsErrorOccured}}
@@ -408,14 +466,14 @@ Emitted when new frame was readen.
 Manage errors comming from port threads. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000027}{Todo}]Error handling (in general ...) \end{Desc}
+\item[\hyperlink{todo__todo000026}{Todo}]Error handling (in general ...) \end{Desc}
 
 
 if(error == MDT\_\-PORT\_\-IO\_\-ERROR)\{ qDebug() $<$$<$ \char`\"{}I/O error !\char`\"{}; \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort()}; if(!openPort())\{ return; \} \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()}; \} if(error == MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR)\{ qDebug() $<$$<$ \char`\"{}Queue empty !\char`\"{}; \}
 
 
 
-Definition at line 330 of file mdtPortManager.cpp.
+Definition at line 376 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{
 \index{mdtPortManager@{mdtPortManager}!openPort@{openPort}}
@@ -440,7 +498,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 191 of file mdtPortManager.cpp.
+Definition at line 204 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{
 \index{mdtPortManager@{mdtPortManager}!readenFrame@{readenFrame}}
@@ -461,29 +519,82 @@ If found, the frame is removed from received queue.
 
 If ID was not found, a empty QByteArray is returned. 
 
-Definition at line 256 of file mdtPortManager.cpp.
+Definition at line 295 of file mdtPortManager.cpp.
 
-\hypertarget{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}{
+\hypertarget{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{
 \index{mdtPortManager@{mdtPortManager}!readenFrames@{readenFrames}}
 \index{readenFrames@{readenFrames}!mdtPortManager@{mdtPortManager}}
-\subsubsection[{readenFrames}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ QByteArray $>$ \& mdtPortManager::readenFrames (
+\subsubsection[{readenFrames}]{\setlength{\rightskip}{0pt plus 5cm}const QList$<$ QByteArray $>$ mdtPortManager::readenFrames (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_port_manager_a4843ac996aa5da0df5dc8104ba41b4d8}
+) const}}
+\label{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}
 
 
 Get all readen data. 
 
-Get a copy of all currently available data. Data frames are sorted by asending order, i.e. if frame ID is used, the sort order is this ID assending, else it is from oldest to newest received frame (like a FIFO).
+Get all currently available data. Once data are readen, don't forget to clear incoming frames list with \hyperlink{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}{clearReadenFrames()}.
 
-After a call of this method, the internal received frames queue is cleared.
+To prevent data loss, call \hyperlink{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}{clearReadenFrames()} just after data read. Do not use QApplication::processEvent() before, because this could insert a new frame, wich will be cleared. (see slot \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{fromThreadNewFrameReaden()} ).
 
-Note: the list of returned data (witch is a copy of reception queue) must be cleared explicitly with QList::clear() after data are used. (or remove each item with, for.ex. QList::takeFirst() ) 
+Yout can iterate over returned list, like: 
+\begin{DoxyCode}
+ int i;
 
-Definition at line 267 of file mdtPortManager.cpp.
+ // Get all frames
+ for(i=0; i<manager.readenFrames().size(); i++){
+   qDebug() << "Data[" << i << "]: " << manager.readenFrames().at(i);
+ }
+ // Clear readen frames
+ manager.clearReadenFrames();
+\end{DoxyCode}
+ In this example, no deep copy of frames list should occur.
 
+A other way is to reference returned list to a temporary QList: 
+\begin{DoxyCode}
+ QList<QByteArray> list;
+
+ // Get all frames
+ list = manager.readenFrames();
+ for(i=0; i<list.size(); i++){
+   qDebug() << "Data[" << i << "]: " << list.at(i);
+ }
+ // Clear readen frames
+ list.clear();
+ // Here, a deep copy occured, we must clear manager's internal list
+ manager.clearReadenFrames();
+\end{DoxyCode}
+
+
+For more details you should read Qt's documentation about implicit-\/sharing. 
+
+pvReadenFramesCopy.append(it.value()); pvReadenFrames.remove(it.key());
+
+return pvReadenFramesCopy; 
+
+
+
+Definition at line 306 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_ab6a2a791de303ff20e6f7f884be681bf}{
+\index{mdtPortManager@{mdtPortManager}!readenFramesQueueSizeChanged@{readenFramesQueueSizeChanged}}
+\index{readenFramesQueueSizeChanged@{readenFramesQueueSizeChanged}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{readenFramesQueueSizeChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::readenFramesQueueSizeChanged (
+\begin{DoxyParamCaption}
+\item[{int}]{newSize}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_port_manager_ab6a2a791de303ff20e6f7f884be681bf}
+
+
+Emitted when internal queue of readen frames size has changed. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame()} 
+
+\hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{readenFrames()} 
+\end{DoxySeeAlso}
 \hypertarget{classmdt_port_manager_aaa0a474183bcae0fff4fb9ef43023c25}{
 \index{mdtPortManager@{mdtPortManager}!removeThreads@{removeThreads}}
 \index{removeThreads@{removeThreads}!mdtPortManager@{mdtPortManager}}
@@ -507,7 +618,7 @@ Port manager must not running.
 \end{DoxyPrecond}
 
 
-Definition at line 103 of file mdtPortManager.cpp.
+Definition at line 116 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{
 \index{mdtPortManager@{mdtPortManager}!scan@{scan}}
@@ -535,7 +646,45 @@ Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc16
 
 
 
-Definition at line 51 of file mdtPortManager.cpp.
+Definition at line 64 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_ae48865abce3dc2a3173ae77d7b0c107f}{
+\index{mdtPortManager@{mdtPortManager}!setEnqueueReadenFrames@{setEnqueueReadenFrames}}
+\index{setEnqueueReadenFrames@{setEnqueueReadenFrames}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{setEnqueueReadenFrames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::setEnqueueReadenFrames (
+\begin{DoxyParamCaption}
+\item[{bool}]{enqueue}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_ae48865abce3dc2a3173ae77d7b0c107f}
+
+
+Set the enqueue readen frames flag. 
+
+If true, all incomming frames will be added in internal queue, and the \hyperlink{classmdt_port_manager_ab6a2a791de303ff20e6f7f884be681bf}{readenFramesQueueSizeChanged()} signal will be sent.
+
+By default this flag is false. 
+
+Definition at line 54 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a56bb2f93ee65b4743cb19784224e3489}{
+\index{mdtPortManager@{mdtPortManager}!setNotifyNewReadenFrame@{setNotifyNewReadenFrame}}
+\index{setNotifyNewReadenFrame@{setNotifyNewReadenFrame}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{setNotifyNewReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::setNotifyNewReadenFrame (
+\begin{DoxyParamCaption}
+\item[{bool}]{notify}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a56bb2f93ee65b4743cb19784224e3489}
+
+
+Set the incomming frame notification flag. 
+
+If true, the \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame(int, QByteArray)} signal will be emitted for each incomming frame.
+
+By default this flag is false. 
+
+Definition at line 59 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{
 \index{mdtPortManager@{mdtPortManager}!setPort@{setPort}}
@@ -557,7 +706,7 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Definition at line 58 of file mdtPortManager.cpp.
+Definition at line 71 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a7e2ef93ec2731e66aa2b2d5f7ce9bc1c}{
 \index{mdtPortManager@{mdtPortManager}!setPortInfo@{setPortInfo}}
@@ -576,7 +725,7 @@ Store given port info, and call \hyperlink{classmdt_port_manager_a2b2ed690cbba9f
 
 Setting a port info can be usefull if other informations are needed later in application (f.ex. \hyperlink{classmdt_port_info_a38bcac67372782228a91d8e7dbf49211}{mdtPortInfo::displayText()} ). You can get port informations later with \hyperlink{classmdt_port_manager_a88109b455fc5a5f5adf0636f7450143e}{portInfo()}. 
 
-Definition at line 173 of file mdtPortManager.cpp.
+Definition at line 186 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{
 \index{mdtPortManager@{mdtPortManager}!setPortName@{setPortName}}
@@ -601,7 +750,7 @@ Port must be set before with \hyperlink{classmdt_port_manager_afcd156b2d0c9d3409
 \end{DoxySeeAlso}
 
 
-Definition at line 166 of file mdtPortManager.cpp.
+Definition at line 179 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{
 \index{mdtPortManager@{mdtPortManager}!start@{start}}
@@ -621,7 +770,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 123 of file mdtPortManager.cpp.
+Definition at line 136 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{
 \index{mdtPortManager@{mdtPortManager}!stop@{stop}}
@@ -641,7 +790,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 155 of file mdtPortManager.cpp.
+Definition at line 168 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{
 \index{mdtPortManager@{mdtPortManager}!wait@{wait}}
@@ -674,7 +823,39 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 281 of file mdtPortManager.cpp.
+Definition at line 327 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a1db6b8da9ff16221c917a1a75366e5c0}{
+\index{mdtPortManager@{mdtPortManager}!waitOnFrame@{waitOnFrame}}
+\index{waitOnFrame@{waitOnFrame}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{waitOnFrame}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtPortManager::waitOnFrame (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{int}]{timeout = {\ttfamily 500}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a1db6b8da9ff16221c917a1a75366e5c0}
+
+
+Wait on readen frame with defined ID. 
+
+Will return when frame with given ID was read or after timeout.
+
+Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Frame ID. Depending on protocol, this can be a transaction ID or what else. \\
+\hline
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Frame's data on success or empty QByteArray on timeout 
+\end{DoxyReturn}
+
+
+Definition at line 269 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{
 \index{mdtPortManager@{mdtPortManager}!waitReadenFrame@{waitReadenFrame}}
@@ -683,7 +864,7 @@ Definition at line 281 of file mdtPortManager.cpp.
 \begin{DoxyParamCaption}
 \item[{int}]{timeout = {\ttfamily 500}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+)}}
 \label{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}
 
 
@@ -702,12 +883,11 @@ Internally, a couple of sleep and process event are called, so Qt's event loop w
 True if Ok, false on timeout 
 \end{DoxyReturn}
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_manager_abe48be6a56bff4f82842bc31c2746200}{newReadenFrame()}
+\hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame()} 
 \end{DoxySeeAlso}
-Subclass notes:\par
- This method can be reimplemented in subclass if needed. 
 
-Definition at line 240 of file mdtPortManager.cpp.
+
+Definition at line 253 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{
 \index{mdtPortManager@{mdtPortManager}!writeData@{writeData}}
@@ -730,7 +910,7 @@ Data will be passed to the mdtPort's write queue by copy. This method returns im
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 on success or value $<$ 0 if write queue is full. Some subclass can return a frame ID, see subclass documentation for details. 
+0 on success or value $<$ 0 on error. In this implementation, the only possible error is \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{mdtAbstractPort::WriteQueueEmpty} . Some subclass can return a frame ID on success, or a other error. See subclass documentation for details. 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method.
@@ -742,7 +922,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a0c56b7d38cfb52d95e
 
 
 
-Definition at line 213 of file mdtPortManager.cpp.
+Definition at line 226 of file mdtPortManager.cpp.
 
 
 

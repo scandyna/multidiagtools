@@ -85,99 +85,100 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00023"></a>00023 <span class="preprocessor">#ifdef Q_OS_WIN</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span><span class="preprocessor"> #include &lt;windows.h&gt;</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#endif</span>
-<a name="l00026"></a>00026 <span class="preprocessor"></span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QDebug&gt;</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 mdtError::mdtError()
-<a name="l00030"></a>00030 {
-<a name="l00031"></a>00031 }
-<a name="l00032"></a>00032 
-<a name="l00033"></a><a class="code" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">00033</a> mdtError::mdtError(<span class="keywordtype">int</span> number, <span class="keyword">const</span> QString &amp;text, mdtError::level_t level)
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035   pvNumber = <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">number</a>;
-<a name="l00036"></a>00036   pvText = <a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">text</a>;
-<a name="l00037"></a>00037   pvLevel = <a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d" title="Error level  level_t.">level</a>;
-<a name="l00038"></a>00038   pvSystemNumber = 0;
-<a name="l00039"></a>00039   pvSystemText = <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00040"></a>00040   pvFunctionName = <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00041"></a>00041   pvFileName = <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00042"></a>00042   pvFileLine = 0;
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">00045</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">mdtError::setSystemError</a>(<span class="keywordtype">int</span> number, <span class="keyword">const</span> QString &amp;text)
-<a name="l00046"></a>00046 {
-<a name="l00047"></a>00047   pvSystemNumber = <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">number</a>;
-<a name="l00048"></a>00048   pvSystemText = <a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">text</a>;
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="preprocessor">#ifdef Q_OS_WIN</span>
-<a name="l00052"></a>00052 <span class="preprocessor"></span><span class="keywordtype">void</span> mdtError::setSystemErrorWinApi()
-<a name="l00053"></a>00053 {
-<a name="l00054"></a>00054   <span class="keywordtype">char</span> *errMsg = 0;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   pvSystemNumber = (int)GetLastError();
-<a name="l00057"></a>00057   FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-<a name="l00058"></a>00058                 NULL, (DWORD)pvSystemNumber, 0, (LPTSTR)&amp;errMsg, 0, NULL);
-<a name="l00059"></a>00059   pvSystemText = (<span class="keywordtype">char</span>*)errMsg;
-<a name="l00060"></a>00060   LocalFree(errMsg);
-<a name="l00061"></a>00061 }
-<a name="l00062"></a>00062 <span class="preprocessor">#endif</span>
-<a name="l00063"></a>00063 <span class="preprocessor"></span>
-<a name="l00064"></a><a class="code" href="classmdt_error.html#a0df51beab0ddaba26d5194690303d682">00064</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a0df51beab0ddaba26d5194690303d682" title="Add system error (for Windows API)">mdtError::setSource</a>(<span class="keyword">const</span> QString &amp;fileName, <span class="keywordtype">int</span> fileLine, <span class="keyword">const</span> QString &amp;className, <span class="keyword">const</span> QString &amp;functionName)
-<a name="l00065"></a>00065 {
-<a name="l00066"></a>00066   pvFileName = <a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a" title="Error source file.">fileName</a>;
-<a name="l00067"></a>00067   pvFileLine = <a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6" title="Error source line.">fileLine</a>;
-<a name="l00068"></a>00068   pvFunctionName = className;
-<a name="l00069"></a>00069   pvFunctionName += <span class="stringliteral">&quot;::&quot;</span>;
-<a name="l00070"></a>00070   pvFunctionName += <a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6" title="Error source function.">functionName</a>;
-<a name="l00071"></a>00071   pvFunctionName += <span class="stringliteral">&quot;()&quot;</span>;
-<a name="l00072"></a>00072 }
-<a name="l00073"></a>00073 
-<a name="l00074"></a><a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">00074</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">mdtError::commit</a>()
-<a name="l00075"></a>00075 {
-<a name="l00076"></a>00076   <a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895" title="Add a error to the error output system.">mdtErrorOut::addError</a>(*<span class="keyword">this</span>);
-<a name="l00077"></a>00077 }
-<a name="l00078"></a>00078 
-<a name="l00079"></a><a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549">00079</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#ae1a118da6923baaf386c7ab5f08b3549" title="Error number.">mdtError::number</a>()
-<a name="l00080"></a>00080 {
-<a name="l00081"></a>00081   <span class="keywordflow">return</span> pvNumber;
-<a name="l00082"></a>00082 }
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6">00084</a> QString <a class="code" href="classmdt_error.html#a3d1bbc08e84ef25d45054b8d440989e6" title="Error text.">mdtError::text</a>()
-<a name="l00085"></a>00085 {
-<a name="l00086"></a>00086   <span class="keywordflow">return</span> pvText;
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d">00089</a> mdtError::level_t <a class="code" href="classmdt_error.html#a4d7df33307a07dc1c51d2806d90ea13d" title="Error level  level_t.">mdtError::level</a>()
-<a name="l00090"></a>00090 {
-<a name="l00091"></a>00091   <span class="keywordflow">return</span> pvLevel;
-<a name="l00092"></a>00092 }
-<a name="l00093"></a>00093 
-<a name="l00094"></a><a class="code" href="classmdt_error.html#a0c5d7ff948d194c31720636b8a211c38">00094</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#a0c5d7ff948d194c31720636b8a211c38" title="Error number returned from system if available.">mdtError::systemNumber</a>()
-<a name="l00095"></a>00095 {
-<a name="l00096"></a>00096   <span class="keywordflow">return</span> pvSystemNumber;
-<a name="l00097"></a>00097 }
-<a name="l00098"></a>00098 
-<a name="l00099"></a><a class="code" href="classmdt_error.html#af03eb8afe4065160aec6480f56badd43">00099</a> QString <a class="code" href="classmdt_error.html#af03eb8afe4065160aec6480f56badd43" title="Error text returned from system, if available.">mdtError::systemText</a>()
-<a name="l00100"></a>00100 {
-<a name="l00101"></a>00101   <span class="keywordflow">return</span> pvSystemText;
-<a name="l00102"></a>00102 }
-<a name="l00103"></a>00103 
-<a name="l00104"></a><a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6">00104</a> QString <a class="code" href="classmdt_error.html#a4df1fdf17b1c9356dbf3033f6181f8f6" title="Error source function.">mdtError::functionName</a>()
-<a name="l00105"></a>00105 {
-<a name="l00106"></a>00106   <span class="keywordflow">return</span> pvFunctionName;
-<a name="l00107"></a>00107 }
-<a name="l00108"></a>00108 
-<a name="l00109"></a><a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a">00109</a> QString <a class="code" href="classmdt_error.html#a61a942e42c1f5c3208501dfd20f8692a" title="Error source file.">mdtError::fileName</a>()
-<a name="l00110"></a>00110 {
-<a name="l00111"></a>00111   <span class="keywordflow">return</span> pvFileName;
-<a name="l00112"></a>00112 }
-<a name="l00113"></a>00113 
-<a name="l00114"></a><a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6">00114</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#af93bfb0b3a2e88755f8d0e61d51b0be6" title="Error source line.">mdtError::fileLine</a>()
-<a name="l00115"></a>00115 {
-<a name="l00116"></a>00116   <span class="keywordflow">return</span> pvFileLine;
-<a name="l00117"></a>00117 }
-<a name="l00118"></a>00118 
+<a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#include &lt;QFileInfo&gt;</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 mdtError::mdtError()
+<a name="l00029"></a>00029 {
+<a name="l00030"></a>00030 }
+<a name="l00031"></a>00031 
+<a name="l00032"></a><a class="code" href="classmdt_error.html#a377c175cc8e1aeae543cae2ecc5ca87b">00032</a> mdtError::mdtError(<span class="keywordtype">int</span> number, <span class="keyword">const</span> QString &amp;text, mdtError::level_t level)
+<a name="l00033"></a>00033 {
+<a name="l00034"></a>00034   pvNumber = <a class="code" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc" title="Error number.">number</a>;
+<a name="l00035"></a>00035   pvText = <a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text.">text</a>;
+<a name="l00036"></a>00036   pvLevel = <a class="code" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e" title="Error level  level_t.">level</a>;
+<a name="l00037"></a>00037   pvSystemNumber = 0;
+<a name="l00038"></a>00038   pvSystemText = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00039"></a>00039   pvFunctionName = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00040"></a>00040   pvFileName = <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00041"></a>00041   pvFileLine = 0;
+<a name="l00042"></a>00042 }
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc">00044</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">mdtError::setSystemError</a>(<span class="keywordtype">int</span> number, <span class="keyword">const</span> QString &amp;text)
+<a name="l00045"></a>00045 {
+<a name="l00046"></a>00046   pvSystemNumber = <a class="code" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc" title="Error number.">number</a>;
+<a name="l00047"></a>00047   pvSystemText = <a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text.">text</a>;
+<a name="l00048"></a>00048 }
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 <span class="preprocessor">#ifdef Q_OS_WIN</span>
+<a name="l00051"></a>00051 <span class="preprocessor"></span><span class="keywordtype">void</span> mdtError::setSystemErrorWinApi()
+<a name="l00052"></a>00052 {
+<a name="l00053"></a>00053   <span class="keywordtype">char</span> *errMsg = 0;
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055   pvSystemNumber = (int)GetLastError();
+<a name="l00056"></a>00056   FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+<a name="l00057"></a>00057                 NULL, (DWORD)pvSystemNumber, 0, (LPTSTR)&amp;errMsg, 0, NULL);
+<a name="l00058"></a>00058   pvSystemText = (<span class="keywordtype">char</span>*)errMsg;
+<a name="l00059"></a>00059   LocalFree(errMsg);
+<a name="l00060"></a>00060 }
+<a name="l00061"></a>00061 <span class="preprocessor">#endif</span>
+<a name="l00062"></a>00062 <span class="preprocessor"></span>
+<a name="l00063"></a><a class="code" href="classmdt_error.html#a8dd3203e11b308e6c2701d7f075af885">00063</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#a8dd3203e11b308e6c2701d7f075af885" title="Add system error (for Windows API)">mdtError::setSource</a>(<span class="keyword">const</span> QString &amp;filePath, <span class="keywordtype">int</span> fileLine, <span class="keyword">const</span> QString &amp;className, <span class="keyword">const</span> QString &amp;functionName)
+<a name="l00064"></a>00064 {
+<a name="l00065"></a>00065   QFileInfo file(filePath);
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   pvFileName = file.fileName();
+<a name="l00068"></a>00068   pvFileLine = <a class="code" href="classmdt_error.html#a7f5a9ac5e896ba24009bcadddcfe79cb" title="Error source line.">fileLine</a>;
+<a name="l00069"></a>00069   pvFunctionName = className;
+<a name="l00070"></a>00070   pvFunctionName += <span class="stringliteral">&quot;::&quot;</span>;
+<a name="l00071"></a>00071   pvFunctionName += <a class="code" href="classmdt_error.html#abff9bc71ff554f6f6189be88b0afa731" title="Error source function.">functionName</a>;
+<a name="l00072"></a>00072   pvFunctionName += <span class="stringliteral">&quot;()&quot;</span>;
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 
+<a name="l00075"></a><a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb">00075</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">mdtError::commit</a>()
+<a name="l00076"></a>00076 {
+<a name="l00077"></a>00077   <a class="code" href="classmdt_error_out.html#aeb562e93216b34e7b73aa69f42065895" title="Add a error to the error output system.">mdtErrorOut::addError</a>(*<span class="keyword">this</span>);
+<a name="l00078"></a>00078 }
+<a name="l00079"></a>00079 
+<a name="l00080"></a><a class="code" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc">00080</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#ad233adb8efe4180b85f584c5afdd49fc" title="Error number.">mdtError::number</a>()<span class="keyword"> const</span>
+<a name="l00081"></a>00081 <span class="keyword"></span>{
+<a name="l00082"></a>00082   <span class="keywordflow">return</span> pvNumber;
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf">00085</a> QString <a class="code" href="classmdt_error.html#a8630bb6b21b70edfe3d13eaff82a1baf" title="Error text.">mdtError::text</a>()<span class="keyword"> const</span>
+<a name="l00086"></a>00086 <span class="keyword"></span>{
+<a name="l00087"></a>00087   <span class="keywordflow">return</span> pvText;
+<a name="l00088"></a>00088 }
+<a name="l00089"></a>00089 
+<a name="l00090"></a><a class="code" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e">00090</a> mdtError::level_t <a class="code" href="classmdt_error.html#a8d8382d3008de890689df415deb7766e" title="Error level  level_t.">mdtError::level</a>()<span class="keyword"> const</span>
+<a name="l00091"></a>00091 <span class="keyword"></span>{
+<a name="l00092"></a>00092   <span class="keywordflow">return</span> pvLevel;
+<a name="l00093"></a>00093 }
+<a name="l00094"></a>00094 
+<a name="l00095"></a><a class="code" href="classmdt_error.html#a1be3f45cd56b3142f50c288df9f53204">00095</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#a1be3f45cd56b3142f50c288df9f53204" title="Error number returned from system if available.">mdtError::systemNumber</a>()<span class="keyword"> const</span>
+<a name="l00096"></a>00096 <span class="keyword"></span>{
+<a name="l00097"></a>00097   <span class="keywordflow">return</span> pvSystemNumber;
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda">00100</a> QString <a class="code" href="classmdt_error.html#a6cd449e657f321b86d234269b5e92cda" title="Error text returned from system, if available.">mdtError::systemText</a>()<span class="keyword"> const</span>
+<a name="l00101"></a>00101 <span class="keyword"></span>{
+<a name="l00102"></a>00102   <span class="keywordflow">return</span> pvSystemText;
+<a name="l00103"></a>00103 }
+<a name="l00104"></a>00104 
+<a name="l00105"></a><a class="code" href="classmdt_error.html#abff9bc71ff554f6f6189be88b0afa731">00105</a> QString <a class="code" href="classmdt_error.html#abff9bc71ff554f6f6189be88b0afa731" title="Error source function.">mdtError::functionName</a>()<span class="keyword"> const</span>
+<a name="l00106"></a>00106 <span class="keyword"></span>{
+<a name="l00107"></a>00107   <span class="keywordflow">return</span> pvFunctionName;
+<a name="l00108"></a>00108 }
+<a name="l00109"></a>00109 
+<a name="l00110"></a><a class="code" href="classmdt_error.html#af7c2c371678ebd45698a990502addbd8">00110</a> QString <a class="code" href="classmdt_error.html#af7c2c371678ebd45698a990502addbd8" title="Error source file (name only)">mdtError::fileName</a>()<span class="keyword"> const</span>
+<a name="l00111"></a>00111 <span class="keyword"></span>{
+<a name="l00112"></a>00112   <span class="keywordflow">return</span> pvFileName;
+<a name="l00113"></a>00113 }
+<a name="l00114"></a>00114 
+<a name="l00115"></a><a class="code" href="classmdt_error.html#a7f5a9ac5e896ba24009bcadddcfe79cb">00115</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_error.html#a7f5a9ac5e896ba24009bcadddcfe79cb" title="Error source line.">mdtError::fileLine</a>()<span class="keyword"> const</span>
+<a name="l00116"></a>00116 <span class="keyword"></span>{
+<a name="l00117"></a>00117   <span class="keywordflow">return</span> pvFileLine;
+<a name="l00118"></a>00118 }
+<a name="l00119"></a>00119 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -194,7 +195,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 5 2012 22:25:00 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:35 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

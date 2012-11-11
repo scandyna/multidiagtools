@@ -34,7 +34,7 @@ Collaboration diagram for mdtAbstractPort:\nopagebreak
 \item 
 enum \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \{ \par
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{NoError} =  0, 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c}{PortLocked}, 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c}{PortLocked} =  -\/1000, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0}{PortNotFound}, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eaee5a84e59e9dc5fcf27cac57068bb1f4}{PortAccess}, 
 \par
@@ -45,7 +45,8 @@ enum \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\
 \par
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{Disconnected}, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{UnknownError}, 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{UnhandledError}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{UnhandledError}, 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{WriteQueueEmpty}
  \}
 \begin{DoxyCompactList}\small\item\em Error. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Signals}
@@ -255,7 +256,7 @@ Definition at line 36 of file mdtAbstractPort.h.
 Error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000017}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
+\item[\hyperlink{todo__todo000016}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
 
 add a DeviceDisconnected (+ adapt in threads) \end{Desc}
 \begin{Desc}
@@ -298,7 +299,7 @@ ReadCanceled}
 Disconnected}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}
 }]For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will stop working and signal this error at end. The portmanager can try to re-\/open the port if auto-\/reconnection is needed, and start the thread again on success.\begin{Desc}
-\item[\hyperlink{todo__todo000019}{Todo}]Implement this 
+\item[\hyperlink{todo__todo000018}{Todo}]Implement this 
 
 Implement a re-\/connect method \end{Desc}
 \index{UnknownError@{UnknownError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnknownError@{UnknownError}}\item[{\em 
@@ -309,7 +310,11 @@ UnknownError}
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{
 UnhandledError}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}
-}]Unhandled error happen. In this case, thread will stop working. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \end{description}
+}]Unhandled error happen. In this case, thread will stop working. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \index{WriteQueueEmpty@{WriteQueueEmpty}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!WriteQueueEmpty@{WriteQueueEmpty}}\item[{\em 
+\hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{
+WriteQueueEmpty}
+\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}
+}]Write queue is empty. Says that no data can be sent for the moment \end{description}
 \end{Desc}
 
 
@@ -404,7 +409,7 @@ Subclass notes:\par
  Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated. Note that this method must be called from subclass destructor. See \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort()} for details.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+\item[\hyperlink{todo__todo000017}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
 
 
 Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
