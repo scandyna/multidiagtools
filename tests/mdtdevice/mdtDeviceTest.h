@@ -29,6 +29,9 @@ class mdtDeviceTest : public mdtTest
 
  private slots:
 
+  // Some basic tests (states, ...)
+  void deviceBaseTest();
+
   // I/O's container test
   void deviceIosTest();
 

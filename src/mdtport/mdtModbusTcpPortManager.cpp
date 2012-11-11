@@ -40,7 +40,7 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
   config->setFrameType(mdtFrame::FT_MODBUS_TCP);
   config->setReadFrameSize(260);
   config->setWriteFrameSize(260);
-  config->setWriteQueueSize(2);
+  config->setWriteQueueSize(3);
   mdtTcpSocket *port = new mdtTcpSocket;
   port->setConfig(config);
   setPort(port);
@@ -138,7 +138,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
     e.commit();
-    return false;
+    return mdtAbstractPort::WriteQueueEmpty;
   }
   frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());
   Q_ASSERT(frame != 0);
@@ -159,7 +159,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu)
 
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
 {
-  qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() ...";
+  ///qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() ...";
   Q_ASSERT(pvPort != 0);
 
   mdtFrameModbusTcp *frame;
@@ -173,12 +173,17 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
       // Copy data
-      pvReadenFrames.insert(frame->transactionId(), frame->getPdu());
+      ///pvReadenFrames.insert(frame->transactionId(), frame->getPdu());
+      commitFrame(frame->transactionId(), frame->getPdu());
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
-  emit(newReadenFrame());
+  /**
+  if(pvReadenFrames.size() > 0){
+    emit(newReadenFrame());
+  }
+  */
 }
 

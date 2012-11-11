@@ -24,6 +24,8 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QFont>
+#include <QFontMetrics>
 
 mdtAnalogInWidget::mdtAnalogInWidget(QWidget *parent)
  : mdtAbstractIoWidget(parent)
@@ -32,13 +34,15 @@ mdtAnalogInWidget::mdtAnalogInWidget(QWidget *parent)
 
   pvIo = 0;
   // Setup GUI
-  l->addWidget(lbLabel, 0, 0);
+  l->addWidget(lbLabel, 0, 0, 1, 2);
   thValue = new QwtThermo;
-  l->addWidget(thValue, 1, 0);
+  l->addWidget(thValue, 1, 0, 1, 2);
   lbValue = new QLabel;
-  lbValue->setAlignment(Qt::AlignHCenter);
-  l->addWidget(lbValue, 2, 0);
-  l->addWidget(pbDetails, 3, 0);
+  lbValue->setAlignment(Qt::AlignLeft);
+  l->addWidget(lbValue, 2, 0, 1, 1);
+  lbUnit = new QLabel;
+  l->addWidget(lbUnit, 2, 1, 1, 1);
+  l->addWidget(pbDetails, 3, 0, 1, 2);
   setLayout(l);
 }
 
@@ -60,12 +64,15 @@ void mdtAnalogInWidget::setIo(mdtAnalogIo *io)
   // Set initial data
   setUnit(io->unit());
   setRange(io->minimum(), io->maximum());
+  // Set a minimum width for lbValue
+  lbValue->setMinimumWidth(lbValue->fontMetrics().width("-0.000 "));
   setValue(io->value());
 }
 
 void mdtAnalogInWidget::setUnit(const QString &unit)
 {
   pvUnit = unit;
+  lbUnit->setText(pvUnit);
 }
 
 void mdtAnalogInWidget::setRange(double min, double max)
@@ -77,13 +84,14 @@ void mdtAnalogInWidget::setValue(double value)
 {
   Q_ASSERT(pvIo != 0);
 
+  QString sValue;
+
+  sValue.setNum(value, 'g', 4);
+  sValue = sValue.left(6);
+
   thValue->setValue(value);
   if(pvIo->hasValidData()){
-    if(pvUnit.isEmpty()){
-      lbValue->setText(QString::number(value, 'g', 4));
-    }else{
-      lbValue->setText(QString::number(value, 'g', 4) + " " + pvUnit);
-    }
+    lbValue->setText(sValue);
   }else{
     lbValue->setText("??");
   }

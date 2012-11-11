@@ -75,7 +75,7 @@ class mdtUsbtmcPortManager : public mdtPortManager
    *  and don't wait until data was written.
    *
    * \param data Data to write
-   * \return bTag ID on success or value < 0 if write queue is full.
+   * \return bTag ID on success or mdtAbstractPort::WriteQueueEmpty (< 0).
    * \pre Port must be set with setPort() before use of this method.
    */
   int writeData(QByteArray data);

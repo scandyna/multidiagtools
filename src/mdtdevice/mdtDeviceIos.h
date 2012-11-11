@@ -112,6 +112,10 @@ class mdtDeviceIos : public QObject
    */
   QList<mdtAnalogIo*> analogOutputs();
 
+  /*! \brief Get the number of analog outputs
+   */
+  int analogOutputsCount() const;
+
   /*! \brief Add a digital input
    *
    * \pre di must be a valid pointer
@@ -152,7 +156,8 @@ class mdtDeviceIos : public QObject
    *
    * The change could be done, for example, by the user on a widget.
    */
-  void analogOutputValueChanged(int address, double value);
+  ///void analogOutputValueChanged(int address, double value);
+  void analogOutputValueChanged(int address, int value);
 
   /*! \brief This signal is emited when a digital output state has changed
    *
@@ -167,6 +172,11 @@ class mdtDeviceIos : public QObject
    * Note: if address not exists, nothing will happen.
    */
   void updateAnalogInputValue(int address, double value, bool isValid);
+
+  /*! \brief Update (G)UI's value of a analog input
+   *
+   * Note: if address not exists, nothing will happen.
+   */
   void updateAnalogInputValueInt(int address, int value, bool isValid);
 
   /*! \brief Update (G)UI's value for a set of analog inputs
@@ -195,6 +205,17 @@ class mdtDeviceIos : public QObject
    * Note: if address not exists, nothing will happen.
    */
   void updateAnalogOutputValue(int address, double value, bool isValid);
+
+  /*! \brief Update (G)UI's value for a set of analog outputs
+   *
+   * Note:
+   *  - Here, it is assumed that values are stored from address 0 to N-1
+   *  - If one address not exists, nothing will happen for this address.
+   *  - If one value is invalid, concerned input will be set invalid.
+   *  - If type value is of type integer, mdtAnalogIo::setValueInt() is used,
+   *     else mdtAnalogIo::setValue() is used.
+   */
+  void updateAnalogOutputValues(const QList<QVariant> &values);
 
   /*! \brief Update (G)UI's state of a digital input
    *

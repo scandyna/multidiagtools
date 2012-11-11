@@ -68,6 +68,7 @@ class mdtDeviceModbus : public mdtDevice
   /*! \brief Read all analog inputs on physical device and update (G)UI representation
    *
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   *
    * \pre I/O's container must be set with setIos()
    */
   int readAnalogInputs();
@@ -105,15 +106,28 @@ class mdtDeviceModbus : public mdtDevice
    */
   bool writeAnalogOutputs();
 
-  /*! \brief Request values from device
+  /*! \brief Read all analog outputs on physical device and update (G)UI representation
    *
-   * Request values of all analog outputs.
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    *
-   * \todo Offset sur adresse départ selon marque
-   *
-   * \return True on success.
+   * \pre I/O's container must be set with setIos()
    */
-  virtual bool readAnalogOutputs();
+  virtual int readAnalogOutputs();
+
+  /*! \brief Set value on a analog output on physical device
+   *
+   * \param address Output address
+   * \param value Value encoded regarding device format
+   * \param confirmationTimeout If > 0, a confirmation frame is expected from device, else not.
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   *
+   * Subclass notes:<br>
+   *  - If device returns a confirmation, helper method mdtPortManager::waitOnFrame() can be used
+   *  - The subclass must handle and document the behaviour of calling this method without any I/O's container set.
+   *  - To update (G)UI, mdtDeviceIos::updateAnalogOutputValue() should be used.
+   *  - Helper method setStateFromPortError() can be used to update device state on error.
+   */
+  int writeAnalogOutputValue(int address, int value, int confirmationTimeout);
 
   /*! \brief Set the number of digital inputs
    *
@@ -199,14 +213,16 @@ class mdtDeviceModbus : public mdtDevice
    *  - In this class, this connection is not made, it is the sublcass responsability to do this.
    *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
-  void decodeReadenFrames();
+  void decodeReadenFrames(int id, QByteArray pdu);
 
  private:
+
+  // Sequence of periodic queries
+  bool queriesSequence();
 
   mdtModbusTcpPortManager *pvTcpPortManager;
   mdtFrameCodecModbus *pvCodec;
   QList<QByteArray> pvReadenFrames;     // Frames readen from port manager
-  ///QMap<quint16,quint16> pvAnalogInputs;
   QMap<quint16,quint16> pvAnalogOutputs;
   QMap<quint16,bool> pvDigitalInputs;
   QMap<quint16,bool> pvDigitalOutputs;

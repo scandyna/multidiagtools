@@ -22,8 +22,9 @@
 #include <QDebug>
 #include <QMutexLocker>
 #include <QDateTime>
-#include <QTextStream>
 #include <QMetaType>
+#include <QFile>
+#include <QFileInfo>
 #include <iostream>
 #include <stdio.h>
 #include <errno.h>
@@ -273,6 +274,15 @@ mdtErrorOutLogger::~mdtErrorOutLogger()
 {
   wait();
   delete pvMutex;
+  // Delete log file if it is empty
+  QFileInfo fileInfo(pvLogFilePath);
+  if(fileInfo.exists()){
+    if(fileInfo.size() == 0){
+      if(!QFile::remove(fileInfo.absoluteFilePath())){
+        qDebug() << "mdtErrorOutLogger::~mdtErrorOutLogger(): cannot remove log file " << pvLogFilePath;
+      }
+    }
+  }
 }
 
 bool mdtErrorOutLogger::setLogFilePath(const QString &path)

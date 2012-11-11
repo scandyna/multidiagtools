@@ -80,9 +80,10 @@ class mdtError
 #endif
 
   /*! \brief Add the source of error
+   *
    *  It's possible to use the helper macro MDT_ERROR_SET_SRC()
    */
-  void setSource(const QString &fileName, int fileLine, const QString &className, const QString &functionName);
+  void setSource(const QString &filePath, int fileLine, const QString &className, const QString &functionName);
 
   /*! \brief Send error to output
    */
@@ -90,36 +91,36 @@ class mdtError
 
   /*! \brief Error number
    */
-  int number();
+  int number() const;
 
   /*! \brief Error text
    */
-  QString text();
+  QString text() const;
 
   /*! \brief Error level
    * \See level_t
    */
-  level_t level();
+  level_t level() const;
 
   /*! \brief Error number returned from system if available
    */
-  int systemNumber();
+  int systemNumber() const;
 
   /*! \brief Error text returned from system, if available
    */
-  QString systemText();
+  QString systemText() const;
 
   /*! \brief Error source function
    */
-  QString functionName();
+  QString functionName() const;
 
-  /*! \brief Error source file
+  /*! \brief Error source file (name only)
    */
-  QString fileName();
+  QString fileName() const;
 
   /*! \brief Error source line
    */
-  int fileLine();
+  int fileLine() const;
 
  private:
 

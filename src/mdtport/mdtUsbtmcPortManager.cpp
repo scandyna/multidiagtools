@@ -241,7 +241,7 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
-    return -1;
+    return mdtAbstractPort::WriteQueueEmpty;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
   Q_ASSERT(frame != 0);
@@ -350,11 +350,16 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
       // Copy data
       QByteArray data;
       data.append(frame->messageData().data(), frame->messageData().size());
-      pvReadenFrames.insert(frame->bTag(), data);
+      ///pvReadenFrames.insert(frame->bTag(), data);
+      commitFrame(frame->bTag(), data);
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
-  emit(newReadenFrame());
+  /**
+  if(pvReadenFrames.size() > 0){
+    emit(newReadenFrame());
+  }
+  */
 }

@@ -146,7 +146,101 @@ void mdtIoTest::wagoAnalogInputTest()
   QVERIFY(qAbs(io.value()-25.0) < 0.001);
   io.setValueInt(0x7FFF, true);
   QCOMPARE(io.value(), 30.0);
+}
 
+void mdtIoTest::wagoAnalogOutputTest()
+{
+  mdtAnalogIo io;
+
+  /*
+   * 750-550 - AO - 0 to 10 V
+   */
+  QVERIFY(io.setRange(0.0, 10.0, 12, 3, false));
+  QVERIFY(io.setEncodeBitSettings(15, 0));
+  // Read test
+  io.setValueInt(0x0000, true);
+  QVERIFY(io.hasValidData());
+  QVERIFY(qAbs(io.value()) < 0.0025);
+  io.setValueInt(0x1000, true);
+  QVERIFY(qAbs(io.value()-1.25) < 0.0025);
+  io.setValueInt(0x2000, true);
+  QVERIFY(qAbs(io.value()-2.5) < 0.0025);
+  io.setValueInt(0x3000, true);
+  QVERIFY(qAbs(io.value()-3.75) < 0.0025);
+  io.setValueInt(0x4000, true);
+  QVERIFY(qAbs(io.value()-5.0) < 0.0025);
+  io.setValueInt(0x5000, true);
+  QVERIFY(qAbs(io.value()-6.25) < 0.0025);
+  io.setValueInt(0x6000, true);
+  QVERIFY(qAbs(io.value()-7.5) < 0.0025);
+  io.setValueInt(0x7000, true);
+  QVERIFY(qAbs(io.value()-8.75) < 0.0025);
+  io.setValueInt(0x7FFF, true);
+  QVERIFY(qAbs(io.value()-10.0) < 0.0025);
+  // Write test - We take values from table in manual (1 bit approximate)
+  io.setValue(0.0, true);
+  QCOMPARE(io.valueInt(), 0x0000);
+  io.setValue(1.25, true);
+  QCOMPARE(io.valueInt(), 0x0FFF);
+  io.setValue(2.5, true);
+  QCOMPARE(io.valueInt(), 0x1FFF);
+  io.setValue(3.75, true);
+  QCOMPARE(io.valueInt(), 0x2FFF);
+  io.setValue(5.0, true);
+  QCOMPARE(io.valueInt(), 0x3FFF);
+  io.setValue(6.25, true);
+  QCOMPARE(io.valueInt(), 0x4FFF);
+  io.setValue(7.5, true);
+  QCOMPARE(io.valueInt(), 0x5FFF);
+  io.setValue(8.75, true);
+  QCOMPARE(io.valueInt(), 0x6FFF);
+  io.setValue(10.0, true);
+  QCOMPARE(io.valueInt(), 0x7FFE);
+
+  /*
+   * 750-556 - AO - -10 to +10 V
+   */
+  QVERIFY(io.setRange(-10.0, 10.0, 13, 3, true));
+  QVERIFY(io.setEncodeBitSettings(16, 0));
+  // Read test
+  io.setValueInt(0x8001, true);
+  QVERIFY(io.hasValidData());
+  QVERIFY(qAbs(io.value()+10.0) < 0.0025);
+  io.setValueInt(0xA000, true);
+  QVERIFY(qAbs(io.value()+7.5) < 0.0025);
+  io.setValueInt(0xC000, true);
+  QVERIFY(qAbs(io.value()+5.0) < 0.0025);
+  io.setValueInt(0xE000, true);
+  QVERIFY(qAbs(io.value()+2.5) < 0.0025);
+  io.setValueInt(0x0000, true);
+  QVERIFY(qAbs(io.value()) < 0.0025);
+  io.setValueInt(0x2000, true);
+  QVERIFY(qAbs(io.value()-2.5) < 0.0025);
+  io.setValueInt(0x4000, true);
+  QVERIFY(qAbs(io.value()-5.0) < 0.0025);
+  io.setValueInt(0x6000, true);
+  QVERIFY(qAbs(io.value()-7.5) < 0.0025);
+  io.setValueInt(0x7FFF, true);
+  QVERIFY(qAbs(io.value()-10.0) < 0.0025);
+  // Write test - We take values from table in manual (1 bit approximate)
+  io.setValue(-10.0, true);
+  QCOMPARE(io.valueInt(), 0x8001);
+  io.setValue(-7.5, true);
+  QCOMPARE(io.valueInt(), 0xA000);
+  io.setValue(-5.0, true);
+  QCOMPARE(io.valueInt(), 0xC000);
+  io.setValue(-2.5, true);
+  QCOMPARE(io.valueInt(), 0xE000);
+  io.setValue(0.0, true);
+  QCOMPARE(io.valueInt(), 0x0000);
+  io.setValue(2.5, true);
+  QCOMPARE(io.valueInt(), 0x1FFF);
+  io.setValue(5.0, true);
+  QCOMPARE(io.valueInt(), 0x3FFF);
+  io.setValue(7.5, true);
+  QCOMPARE(io.valueInt(), 0x5FFF);
+  io.setValue(10.0, true);
+  QCOMPARE(io.valueInt(), 0x7FFE);
 }
 
 void mdtIoTest::digitalIoTest()

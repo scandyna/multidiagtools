@@ -23,8 +23,7 @@
 #ifdef Q_OS_WIN
  #include <windows.h>
 #endif
-
-#include <QDebug>
+#include <QFileInfo>
 
 mdtError::mdtError()
 {
@@ -61,9 +60,11 @@ void mdtError::setSystemErrorWinApi()
 }
 #endif
 
-void mdtError::setSource(const QString &fileName, int fileLine, const QString &className, const QString &functionName)
+void mdtError::setSource(const QString &filePath, int fileLine, const QString &className, const QString &functionName)
 {
-  pvFileName = fileName;
+  QFileInfo file(filePath);
+
+  pvFileName = file.fileName();
   pvFileLine = fileLine;
   pvFunctionName = className;
   pvFunctionName += "::";
@@ -76,42 +77,42 @@ void mdtError::commit()
   mdtErrorOut::addError(*this);
 }
 
-int mdtError::number()
+int mdtError::number() const
 {
   return pvNumber;
 }
 
-QString mdtError::text()
+QString mdtError::text() const
 {
   return pvText;
 }
 
-mdtError::level_t mdtError::level()
+mdtError::level_t mdtError::level() const
 {
   return pvLevel;
 }
 
-int mdtError::systemNumber()
+int mdtError::systemNumber() const
 {
   return pvSystemNumber;
 }
 
-QString mdtError::systemText()
+QString mdtError::systemText() const
 {
   return pvSystemText;
 }
 
-QString mdtError::functionName()
+QString mdtError::functionName() const
 {
   return pvFunctionName;
 }
 
-QString mdtError::fileName()
+QString mdtError::fileName() const
 {
   return pvFileName;
 }
 
-int mdtError::fileLine()
+int mdtError::fileLine() const
 {
   return pvFileLine;
 }

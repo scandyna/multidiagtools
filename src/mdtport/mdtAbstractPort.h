@@ -45,28 +45,29 @@ class mdtAbstractPort : public QObject
    * \todo add a DeviceDisconnected (+ adapt in threads)
    */
   enum error_t {
-                NoError = 0,      /*!< No error */
-                PortLocked,       /*!< Port is allready locked */
-                PortNotFound,     /*!< Port was not found */
-                PortAccess,       /*!< Port cannot be open with requierd access (read, write) */
-                SetupError,       /*!< Setup failed on a configuration option */
-                WaitingCanceled,  /*!< When a thread (mdtPortThread or subclass) is stopping, it will
-                                        cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
-                                        At this case, this error is returned, and the thread knows that it can 
-                                        cleanup and end. */
-                WriteCanceled,    /*!< Write process was cancelled. The thread should stop the write process, restore
-                                        the current frame into pool and continue working. */
-                ReadCanceled,     /*!< Read process was cancelled. The thread should stop the write process, restore
-                                        the current frame into pool and continue working. */
-                Disconnected,     /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
-                                        If this error happens, the thread will stop working and signal this error at end.
-                                        The portmanager can try to re-open the port if auto-reconnection is needed, and start
-                                         the thread again on success. \todo Implement this  \todo Implement a re-connect method */
-                UnknownError,     /*!< Unknown error is happen.
-                                       Logfile could give more information, see mdtError and mdtApplication */
-                UnhandledError    /*!< Unhandled error happen.
-                                       In this case, thread will stop working.
-                                       Logfile could give more information, see mdtError and mdtApplication */
+                NoError = 0,            /*!< No error */
+                PortLocked = -1000,     /*!< Port is allready locked */
+                PortNotFound,           /*!< Port was not found */
+                PortAccess,             /*!< Port cannot be open with requierd access (read, write) */
+                SetupError,             /*!< Setup failed on a configuration option */
+                WaitingCanceled,        /*!< When a thread (mdtPortThread or subclass) is stopping, it will
+                                              cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
+                                              At this case, this error is returned, and the thread knows that it can 
+                                              cleanup and end. */
+                WriteCanceled,          /*!< Write process was cancelled. The thread should stop the write process, restore
+                                              the current frame into pool and continue working. */
+                ReadCanceled,           /*!< Read process was cancelled. The thread should stop the write process, restore
+                                              the current frame into pool and continue working. */
+                Disconnected,           /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
+                                              If this error happens, the thread will stop working and signal this error at end.
+                                              The portmanager can try to re-open the port if auto-reconnection is needed, and start
+                                              the thread again on success. \todo Implement this  \todo Implement a re-connect method */
+                UnknownError,           /*!< Unknown error is happen.
+                                            Logfile could give more information, see mdtError and mdtApplication */
+                UnhandledError,         /*!< Unhandled error happen.
+                                            In this case, thread will stop working.
+                                            Logfile could give more information, see mdtError and mdtApplication */
+                WriteQueueEmpty         /*!< Write queue is empty. Says that no data can be sent for the moment */
                };
 
   mdtAbstractPort(QObject *parent = 0);

@@ -20,22 +20,76 @@
  ****************************************************************************/
 #include "mdtDevice.h"
 #include "mdtError.h"
+#include "mdtAnalogIo.h"
+#include <QTimer>
+#include <QList>
+
+#include <QDebug>
 
 mdtDevice::mdtDevice(QObject *parent)
  : QObject(parent)
 {
   pvIos = 0;
+  pvOutputWriteReplyTimeout = 500;
+  pvAnalogOutputAddressOffset = 0;
+  pvCurrentState = Unknown;
+  setStateDisconnected();
+  setName(tr("Unknown"));
+  pvQueryTimer = new QTimer(this);
+  connect(pvQueryTimer, SIGNAL(timeout()), this, SLOT(runQueries()));
 }
 
 mdtDevice::~mdtDevice()
 {
+  stop();
+  delete pvQueryTimer;
 }
 
-void mdtDevice::setIos(mdtDeviceIos *ios)
+void mdtDevice::setName(const QString &name)
+{
+  pvName = name;
+}
+
+QString mdtDevice::name() const
+{
+  return pvName;
+}
+
+void mdtDevice::setIos(mdtDeviceIos *ios, bool autoAnalogOutputUpdate)
 {
   Q_ASSERT(ios != 0);
 
+  int i;
+  QList<mdtAnalogIo*> analogOutputs;
+
   pvIos = ios;
+  if(autoAnalogOutputUpdate){
+    analogOutputs = pvIos->analogOutputs();
+    for(i=0; i<analogOutputs.size(); i++){
+      connect(analogOutputs.at(i), SIGNAL(valueChanged(int, int)), this, SLOT(setAnalogOutputValue(int, int)));
+    }
+  }
+}
+
+void mdtDevice::setOutputWriteReplyTimeout(int timeout)
+{
+  pvOutputWriteReplyTimeout = timeout;
+}
+
+void mdtDevice::setAnalogOutputAddressOffset(int offset)
+{
+  pvAnalogOutputAddressOffset = offset;
+}
+
+void mdtDevice::start(int queryInterval)
+{
+  pvQueryTimer->setInterval(queryInterval);
+  pvQueryTimer->start();
+}
+
+void mdtDevice::stop()
+{
+  pvQueryTimer->stop();
 }
 
 bool mdtDevice::readAnalogInput(int address)
@@ -48,6 +102,124 @@ int mdtDevice::readAnalogInputs()
   return -1;
 }
 
-void mdtDevice::decodeReadenFrames()
+int mdtDevice::readAnalogOutputs()
 {
+  return -1;
+}
+
+int mdtDevice::writeAnalogOutputValue(int address, int value, int confirmationTimeout)
+{
+  return -1;
+}
+
+mdtDevice::state_t mdtDevice::state() const
+{
+  return pvCurrentState;
+}
+
+void mdtDevice::setAnalogOutputValue(int address, int value)
+{
+  if(pvCurrentState != Ready){
+    // Device busy, cannot threat query , try later
+    ///QTimer::singleShot(500, this, SLOT(setStateReady()));
+    return;
+  }
+  if(writeAnalogOutputValue(address, value, pvOutputWriteReplyTimeout) < 0){
+    setStateBusy(500);
+  }
+}
+
+void mdtDevice::decodeReadenFrames(int, QByteArray)
+{
+}
+
+void mdtDevice::runQueries()
+{
+  if(pvCurrentState != Ready){
+    // Stop query timer
+    ///pvQueryTimer->stop();
+    return;
+
+    // Retry and update state if Ok
+    /**
+    if(queriesSequence()){
+      setStateReady();
+      pvQueryTimer->start();
+    }else{
+      // Retry later
+      pvQueryTimer->stop();
+      QTimer::singleShot(pvQueryTimer->interval() + 500, this, SLOT(runQueries()));
+      return;
+    }
+    */
+  }
+  // Re-arm query timer if it was stopped
+  /**
+  if(!pvQueryTimer->isActive()){
+    pvQueryTimer->start();
+  }
+  */
+  queriesSequence();
+}
+
+bool mdtDevice::queriesSequence()
+{
+  return false;
+}
+
+void mdtDevice::setStateReady()
+{
+  if(pvCurrentState != Ready){
+    pvCurrentState = Ready;
+    qDebug() << "mdtDevice: new state is Ready";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtDevice::setStateDisconnected()
+{
+  if(pvCurrentState != Disconnected){
+    pvCurrentState = Disconnected;
+    qDebug() << "mdtDevice: new state is Disconnected";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtDevice::setStateBusy(int retryTimeout)
+{
+  if(pvCurrentState != Busy){
+    pvCurrentState = Busy;
+    qDebug() << "mdtDevice: new state is Busy";
+    emit(stateChanged(pvCurrentState));
+  }
+  // Set state ready if requested
+  if(retryTimeout >= 0){
+    QTimer::singleShot(retryTimeout, this, SLOT(setStateReady()));
+  }
+}
+
+void mdtDevice::setStateUnknown()
+{
+  if(pvCurrentState != Unknown){
+    pvCurrentState = Unknown;
+    // Add a error
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to unknown state", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    qDebug() << "mdtDevice: new state is Unknown";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtDevice::setStateFromPortError(int error)
+{
+  if(error == mdtAbstractPort::NoError){
+    setStateReady();
+  }else if(error == mdtAbstractPort::Disconnected){
+    setStateDisconnected();
+  }else if(error == mdtAbstractPort::WriteQueueEmpty){
+    setStateBusy();
+  }else{
+    setStateUnknown();
+  }
 }

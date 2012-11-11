@@ -199,7 +199,8 @@ void mdtPortManagerTest::modbusTcpPortTest()
   }
 
   // Init port manager
-  m.setPortName(portInfoList.at(0)->portName());
+  //m.setPortName(portInfoList.at(0)->portName());
+  m.setPortInfo(*portInfoList.at(0));
   QVERIFY(m.openPort());
 
   // We not need the scan result anymore, free memory
@@ -218,7 +219,9 @@ void mdtPortManagerTest::modbusTcpPortTest()
   tId3 = m.writeData(pdu);
   QVERIFY(tId3 >= 0);
   QTest::qWait(500);
-  QVERIFY(m.waitReadenFrame(500));
+  QVERIFY(!m.waitOnFrame(tId1, 500).isEmpty());
+  QVERIFY(!m.waitOnFrame(tId2, 500).isEmpty());
+  QVERIFY(!m.waitOnFrame(tId3, 500).isEmpty());
 }
 
 int main(int argc, char **argv)

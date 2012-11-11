@@ -46,7 +46,7 @@ void mdtErrorTest::simpleTest()
   // Add source
   MDT_ERROR_SET_SRC(e, "mdtErrorTest");
   QVERIFY(e.fileLine() == (__LINE__ - 1));
-  QVERIFY(e.fileName() == __FILE__);
+  //QVERIFY(e.fileName() == __FILE__);
   QVERIFY(e.functionName() == "mdtErrorTest::simpleTest()");
 }
 
@@ -54,6 +54,7 @@ void mdtErrorTest::errorOutInitTest()
 {
   QString oldLogFile;
 
+  QFile::remove("mdtErrorTest.log");
   // An error out instance was initialized in main, destroy it
   oldLogFile = mdtErrorOut::logFile();
   mdtErrorOut::destroy();
@@ -62,11 +63,28 @@ void mdtErrorTest::errorOutInitTest()
   // Check that init works
   QVERIFY(mdtErrorOut::init("mdtErrorTest.log"));
   QVERIFY(mdtErrorOut::instance() != 0);
+  QVERIFY(QFile::exists("mdtErrorTest.log"));
   // Second call of init must fail
   QVERIFY(!mdtErrorOut::init("mdtErrorTest.log"));
   // Delete the instance
   mdtErrorOut::destroy();
   QVERIFY(mdtErrorOut::instance() == 0);
+  // No log was written, log file must be removed
+  QVERIFY(!QFile::exists("mdtErrorTest.log"));
+  // Re-init
+  QVERIFY(mdtErrorOut::init("mdtErrorTest.log"));
+  QVERIFY(mdtErrorOut::instance() != 0);
+  mdtErrorOut::setDialogLevelsMask(0);
+  QVERIFY(QFile::exists("mdtErrorTest.log"));
+  // Add a error
+  mdtError e1(1 , "Error 1", mdtError::Error);
+  e1.commit();
+  // Delete the instance
+  mdtErrorOut::destroy();
+  QVERIFY(mdtErrorOut::instance() == 0);
+  // Log was written, log file must not be removed
+  QVERIFY(QFile::exists("mdtErrorTest.log"));
+
   // Re-init the original out
   QVERIFY(mdtErrorOut::init(oldLogFile));
   mdtErrorOut::setDialogLevelsMask(0);
@@ -108,7 +126,7 @@ void mdtErrorTest::errorOutBackupTest()
   QVERIFY(mdtErrorOut::init("mdtErrorTest.log"));
   QVERIFY(mdtErrorOut::instance() != 0);
   mdtErrorOut::setDialogLevelsMask(0);
-  mdtErrorOut::setLogFileMaxSize(500);
+  mdtErrorOut::setLogFileMaxSize(300);
 
   // Add a first error , and check that logfile exists, but no backup
   e1.commit();

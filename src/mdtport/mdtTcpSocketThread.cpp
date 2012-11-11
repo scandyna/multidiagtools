@@ -82,7 +82,7 @@ void mdtTcpSocketThread::run()
 
   // Run...
   while(1){
-    qDebug() << "TCPTHD: running ...";
+    ///qDebug() << "TCPTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -108,7 +108,7 @@ void mdtTcpSocketThread::run()
         break;
       }
     }
-    qDebug() << "TCPTHD: connected ...";
+    ///qDebug() << "TCPTHD: connected ...";
     // Write
     portError = writeToPort(writeFrame, false, 0);
     if(portError != mdtAbstractPort::NoError){
@@ -152,7 +152,7 @@ void mdtTcpSocketThread::run()
         break;
       }
     }
-    qDebug() << "TCPTHD: written";
+    ///qDebug() << "TCPTHD: written";
     // Read thread state
     if(!pvRunning){
       break;
@@ -193,7 +193,7 @@ void mdtTcpSocketThread::run()
         qDebug() << "TCPTHD: read timeout";
         break;
       }
-      qDebug() << "Available: " << pvSocket->bytesAvailable();
+      ///qDebug() << "Available: " << pvSocket->bytesAvailable();
       // Read
       readFrame = readFromPort(readFrame);
       if(readFrame == 0){
@@ -201,7 +201,7 @@ void mdtTcpSocketThread::run()
         break;
       }
       // Wait until new data is available for read (We use a short timeout here)
-      qDebug() << "waitForReadyRead ...";
+      ///qDebug() << "waitForReadyRead ...";
       portError = pvPort->waitForReadyRead(50);
       if(portError != mdtAbstractPort::NoError){
         // Check about connection

@@ -34,12 +34,13 @@ mdtAnalogIo::mdtAnalogIo(QObject *parent)
   pvStep = 1.0;
   pvStepInverse = 1.0;
   pvIntValueLsbIndex = 0;
+  pvIntValueLsbIndexEnc = 0;
   pvIntValueSigned = false;
   // Set a full 1 mask
   pvIntValueMask = -1;
+  pvIntValueMaskEnc = -1;
   // Set sign bit mask to 0
   pvIntValueSignMask = 0;
-  qDebug() << "pvIntValueMask: 0x" << hex << (unsigned int)pvIntValueMask;
 }
 
 mdtAnalogIo::~mdtAnalogIo()
@@ -57,56 +58,40 @@ QString mdtAnalogIo::unit() const
   return pvUnit;
 }
 
-/**
-void mdtAnalogIo::setRange(double min, double max, int steps)
-{
-  Q_ASSERT(steps > 1);
-  Q_ASSERT(max > min);
-
-  pvUpdatingUi = false;
-  // Set factors
-  pvStep = (max-min)/(double)(steps-1);
-  pvStepInverse = 1.0/pvStep;
-  // Store min and max and signal
-  pvMinimum = min;
-  pvMaximum = max;
-  emit(rangeChangedForUi(min, max));
-  // Set value to the minimum
-  setValue(min, false);
-}
-*/
-
 bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex, bool intValueSigned)
 {
   Q_ASSERT(max > min);
 
   int i;
 
-  // Chack that lsb index and bits count are in acceptable range
+  // Check that lsb index and bits count are in acceptable range
   if(intValueLsbIndex < 0){
-    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex is < 0, using default conversion parameters", mdtError::Warning);
+    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex is < 0, using current conversion parameters", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
     e.commit();
     return false;
   }
   if(intValueBitsCount < 0){
-    mdtError e(MDT_PARSE_ERROR, "Specified intValueBitsCount is < 0, using default conversion parameters", mdtError::Warning);
+    mdtError e(MDT_PARSE_ERROR, "Specified intValueBitsCount is < 0, using current conversion parameters", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
     e.commit();
     return false;
   }
   if((unsigned int)(intValueLsbIndex+intValueBitsCount) > (unsigned int)(8*sizeof(int))){
-    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex/intValueBitsCount is to big, using default conversion parameters", mdtError::Warning);
+    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex + intValueBitsCount is to big, using current conversion parameters", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
     e.commit();
     return false;
   }
   // Store lsbIndex
   pvIntValueLsbIndex = intValueLsbIndex;
+  pvIntValueLsbIndexEnc = intValueLsbIndex;
   // Setup mask
   pvIntValueMask = 0;
+  pvIntValueMaskEnc = 0;
   for(i=0; i<intValueBitsCount; ++i){
     pvIntValueMask += (1<<i);
+    pvIntValueMaskEnc += (1<<i);
   }
   // Set factors + sign mask
   pvIntValueSigned = intValueSigned;
@@ -117,8 +102,6 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
     pvStep = (max-min) / (pow(2.0, intValueBitsCount) - 1);
     pvIntValueSignMask = 0;
   }
-  qDebug() << "     mask: " << hex << (unsigned int)pvIntValueMask;
-  qDebug() << "Sign mask: " << hex << (unsigned int)pvIntValueSignMask;
   pvStepInverse = 1.0/pvStep;
 
   // Store min and max and signal
@@ -128,6 +111,46 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   emit(rangeChangedForUi(min, max));
   // Set value to the minimum
   setValue(min, false);
+
+  return true;
+}
+
+bool mdtAnalogIo::setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex)
+{
+  int i;
+
+  // Check that lsb index and bits count are in acceptable range
+  if(intValueLsbIndex < 0){
+    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex is < 0, using current conversion parameters", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
+    e.commit();
+    return false;
+  }
+  if(intValueBitsCount < 0){
+    mdtError e(MDT_PARSE_ERROR, "Specified intValueBitsCount is < 0, using current conversion parameters", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
+    e.commit();
+    return false;
+  }
+  if((unsigned int)(intValueLsbIndex+intValueBitsCount) > (unsigned int)(8*sizeof(int))){
+    mdtError e(MDT_PARSE_ERROR, "Specified intValueLsbIndex + intValueBitsCount is to big, using current conversion parameters", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
+    e.commit();
+    return false;
+  }
+  // Store lsbIndex
+  pvIntValueLsbIndexEnc = intValueLsbIndex;
+  // Setup mask
+  pvIntValueMaskEnc = 0;
+  for(i=0; i<intValueBitsCount; ++i){
+    pvIntValueMaskEnc += (1<<i);
+  }
+  // Set factor
+  if(pvIntValueSigned){
+    pvStepInverse = (pow(2.0, (intValueBitsCount-1)) - 1) / pvMaximum;
+  }else{
+    pvStepInverse = (pow(2.0, intValueBitsCount) - 1) / (pvMaximum - pvMinimum);
+  }
 
   return true;
 }
@@ -147,43 +170,6 @@ double mdtAnalogIo::value() const
   return pvValue;
 }
 
-/**
-bool mdtAnalogIo::setValueBitsRange(int lsbIndex, int bitsCount)
-{
-  int i;
-
-  // Chack that lsb index is valid
-  if(lsbIndex < 0){
-    mdtError e(MDT_PARSE_ERROR, "Specified lsbIndex is < 0, using default conversion parameters", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
-    e.commit();
-    return false;
-  }
-  if(bitsCount < 0){
-    mdtError e(MDT_PARSE_ERROR, "Specified bitsCount is < 0, using default conversion parameters", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
-    e.commit();
-    return false;
-  }
-  if((unsigned int)(lsbIndex+bitsCount) > (unsigned int)(8*sizeof(int))){
-    mdtError e(MDT_PARSE_ERROR, "Specified lsbIndex/bitsCount is to big, using default conversion parameters", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtAnalogIo");
-    e.commit();
-    return false;
-  }
-  // Store lsbIndex
-  pvIntValueLsbIndex = lsbIndex;
-  // Setup mask
-  pvIntValueMask = 0;
-  for(i=0; i<bitsCount; ++i){
-    pvIntValueMask += (1<<i);
-    qDebug() << "mask: " << hex << (unsigned int)pvIntValueMask;
-  }
-  
-  return true;
-}
-*/
-
 void mdtAnalogIo::setValueInt(int value, bool isValid)
 {
   double x;
@@ -193,15 +179,12 @@ void mdtAnalogIo::setValueInt(int value, bool isValid)
     return;
   }
   // Extract bits in correct range
-  qDebug() << "value: " << value << " (hex: " << hex << value << ")";
   value = value >> pvIntValueLsbIndex;
   value &= pvIntValueMask;
-  qDebug() << "value: " << value << " (hex: " << hex << value << ")";
   // Apply C1 and negate if sign bit is present
   if(value & pvIntValueSignMask){
     value = ( (~value) & pvIntValueMask );
     value = -value;
-    qDebug() << "value: " << value << " (hex: " << hex << value << ")";
   }
   // Make conversion
   if(pvIntValueSigned){
@@ -209,14 +192,29 @@ void mdtAnalogIo::setValueInt(int value, bool isValid)
   }else{
     x = pvStep*(double)value + pvMinimum;
   }
-  ///qDebug() << "value: " << value << " (hex: " << hex << value << ")";
 
   setValue(x, true);
 }
 
 int mdtAnalogIo::valueInt() const
 {
-  return (pvStepInverse * (pvValue - pvMinimum));
+  int m;
+
+  // Make conversion
+  if(pvIntValueSigned){
+    m = pvStepInverse * pvValue;
+  }else{
+    m = pvStepInverse * (pvValue - pvMinimum);
+  }
+  // Apply C1 and negate if value < 0
+  if(pvIntValueSigned && (pvValue < 0.0)){
+    m = -m;
+    m = (~m) & pvIntValueMaskEnc;
+  }
+  m &= pvIntValueMaskEnc;
+  m = m << pvIntValueLsbIndexEnc;
+
+  return m;
 }
 
 void mdtAnalogIo::setValue(double value, bool isValid)
@@ -227,8 +225,9 @@ void mdtAnalogIo::setValue(double value, bool isValid)
   }
   if(fabs(value - pvValue) > DBL_EPSILON){
     pvValue = value;
-    emit(valueChanged(value));
-    emit(valueChanged(pvAddress, value));
+    ///emit(valueChanged(value));
+    ///emit(valueChanged(pvAddress, value));
+    emit(valueChanged(pvAddress, valueInt()));
     pvUpdatingUi = true;
     emit(valueChangedForUi(value));
   }
@@ -253,8 +252,9 @@ void mdtAnalogIo::setValueFromUi(double value)
   if(fabs(value - pvValue) > DBL_EPSILON){
     pvValue = value;
     pvHasValidData = true;
-    emit(valueChanged(value));
-    emit(valueChanged(pvAddress, value));
+    ///emit(valueChanged(value));
+    ///emit(valueChanged(pvAddress, value));
+    emit(valueChanged(pvAddress, valueInt()));
   }
 }
 

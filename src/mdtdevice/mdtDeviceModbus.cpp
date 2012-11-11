@@ -21,7 +21,9 @@
 #include "mdtDeviceModbus.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtFrameCodecModbus.h"
+#include "mdtError.h"
 #include <QByteArray>
+#include <QString>
 #include <QHash>
 #include <QList>
 
@@ -31,10 +33,12 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
   /// \note Provisoire !!
-  connect(pvTcpPortManager, SIGNAL(newReadenFrame()), this, SLOT(decodeReadenFrames()));
+  connect(pvTcpPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrames(int, QByteArray)));
+  pvTcpPortManager->setNotifyNewReadenFrame(true);
   pvTcpPortManager->setPortName("192.168.1.102:502");
   pvTcpPortManager->openPort();
   pvTcpPortManager->start();
+  setStateReady();
 }
 
 mdtDeviceModbus::~mdtDeviceModbus()
@@ -42,20 +46,6 @@ mdtDeviceModbus::~mdtDeviceModbus()
   delete pvTcpPortManager;
   delete pvCodec;
 }
-
-/**
-void mdtDeviceModbus::setupAnalogInputs(int count)
-{
-  Q_ASSERT((count >= 1)&&(count <= 125));
-
-  int i;
-
-  pvAnalogInputs.clear();
-  for(i=0; i<count; i++){
-    pvAnalogInputs.insert(i, 0);
-  }
-}
-*/
 
 QVariant mdtDeviceModbus::getAnalogInputValue(int address, bool readDirectly)
 {
@@ -81,30 +71,21 @@ int mdtDeviceModbus::readAnalogInputs()
 {
   Q_ASSERT(pvIos != 0);
 
-  // Setup MODBUS PDU
+  int retVal;
   QByteArray pdu;
-  ///int transactionId;
-  ///pdu = pvCodec->encodeReadInputRegisters(0, pvAnalogInputs.size());
+
+  // Setup MODBUS PDU
   pdu = pvCodec->encodeReadInputRegisters(0, pvIos->analogInputsCount());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu);
-
-  /**
-  transactionId = pvTcpPortManager->writeData(pdu);
-  if(transactionId < 0){
-    return false;
+  retVal = pvTcpPortManager->writeData(pdu);
+  if(retVal < 0){
+    setStateFromPortError(retVal);
   }
-  */
-  /// \note Provisoire !
-  /**
-  pvTcpPortManager->waitReadenFrame();
-  pdu = pvTcpPortManager->readenFrame(transactionId);
-  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-  qDebug() << "DEV RD value: " << pvCodec->values();
-  */
+
+  return retVal;
 }
 
 void mdtDeviceModbus::setupAnalogOutputs(int count)
@@ -194,28 +175,102 @@ bool mdtDeviceModbus::writeAnalogOutputs()
   return true;
 }
 
-bool mdtDeviceModbus::readAnalogOutputs()
+int mdtDeviceModbus::readAnalogOutputs()
 {
-  // Setup MODBUS PDU
+  Q_ASSERT(pvIos != 0);
+
+  int retVal;
   QByteArray pdu;
-  int transactionId;
-  pdu = pvCodec->encodeReadHoldingRegisters(0, pvAnalogOutputs.size());
+
+  // Setup MODBUS PDU
+  pdu = pvCodec->encodeReadHoldingRegisters(pvAnalogOutputAddressOffset, pvIos->analogOutputsCount());
   if(pdu.isEmpty()){
-    return false;
+    return -1;
+  }
+  // Send request
+  return pvTcpPortManager->writeData(pdu);
+  // Send request
+  retVal = pvTcpPortManager->writeData(pdu);
+  if(retVal < 0){
+    setStateFromPortError(retVal);
+  }
+
+  return retVal;
+}
+
+int mdtDeviceModbus::writeAnalogOutputValue(int address, int value, int confirmationTimeout)
+{
+  Q_ASSERT(pvIos != 0);
+
+  int transactionId;
+  int retVal;
+  QByteArray pdu;
+  mdtAnalogIo *ao;
+  QVariant replyValue;
+
+  // Setup MODBUS PDU
+  pdu = pvCodec->encodeWriteSingleRegister(address + pvAnalogOutputAddressOffset, value);
+  if(pdu.isEmpty()){
+    return -1;
   }
   // Send request
   transactionId = pvTcpPortManager->writeData(pdu);
   if(transactionId < 0){
-    return false;
+    setStateFromPortError(transactionId);
+    return transactionId;
   }
-  /// \note Provisoire !
-  pvTcpPortManager->waitReadenFrame();
-  pdu = pvTcpPortManager->readenFrame(transactionId);
-  qDebug() << "DEV RD reponse: " << pvCodec->decode(pdu);
-  qDebug() << "DEV RD value: " << pvCodec->values();
+  // Wait on confirmation if requested
+  if(confirmationTimeout >= 0){
+    ao = pvIos->analogOutputAt(address);
+    if(ao == 0){
+      mdtError e(MDT_DEVICE_ERROR, "No analog output assigned to address " + QString::number(address), mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
+      e.commit();
+      return -1;
+    }
+    qDebug() << "REQ sent, TID: " << transactionId;
+    pdu = pvTcpPortManager->waitOnFrame(transactionId, confirmationTimeout);
+    if(pdu.isEmpty()){
+      mdtError e(MDT_DEVICE_ERROR, "Received no confirmation (timeout: " + QString::number(confirmationTimeout) + " ms)", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
+      e.commit();
+      ao->setValue(0.0, false);
+      return -1;
+    }
+    // Decode reply
+    retVal = pvCodec->decode(pdu);
+    if(retVal != 0x06){
+      mdtError e(MDT_DEVICE_ERROR, "Receive unexptected reply from device", mdtError::Error);
+      e.setSystemError(retVal, "");
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
+      e.commit();
+      ao->setValue(0.0, false);
+      return -1;
+    }
+    if(pvCodec->values().size() != 1){
+      mdtError e(MDT_DEVICE_ERROR, "Receive unexptected count of values from device", mdtError::Error);
+      e.setSystemError(retVal, "");
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
+      e.commit();
+      ao->setValue(0.0, false);
+      return -1;
+    }
+    replyValue = pvCodec->values().at(0);
+    if(!replyValue.isValid()){
+      mdtError e(MDT_DEVICE_ERROR, "Receive invalid value from device", mdtError::Error);
+      e.setSystemError(retVal, "");
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
+      e.commit();
+      ao->setValue(0.0, false);
+      return -1;
+    }
+    // Have valid data
+    ao->setValueInt(replyValue.toInt(), true);
+  }
 
-  return true;
+  return transactionId;
 }
+
 
 void mdtDeviceModbus::setupDigitalInputs(int count)
 {
@@ -395,26 +450,46 @@ bool mdtDeviceModbus::readDigitalOutputs()
   return true;
 }
 
-void mdtDeviceModbus::decodeReadenFrames()
+void mdtDeviceModbus::decodeReadenFrames(int id, QByteArray pdu)
 {
   Q_ASSERT(pvIos != 0);
 
-  QByteArray pdu;
+  ///QByteArray pdu;
   int fc;
-  qDebug() << "mdtDeviceModbus::decodeReadenFrames() ...";
+  ///qDebug() << "mdtDeviceModbus::decodeReadenFrames() ...";
 
   // Decode each readen frame and update I/O's
   pvReadenFrames = pvTcpPortManager->readenFrames();
-  while(pvReadenFrames.size() > 0){
-    pdu = pvReadenFrames.takeFirst();
+  ///while(pvReadenFrames.size() > 0){
+    ///pdu = pvReadenFrames.takeFirst();
     fc = pvCodec->decode(pdu);
     switch(fc){
+      case 0x03:  // Read holding registers
+        pvIos->updateAnalogOutputValues(pvCodec->values());
+        qDebug() << "FC3 ..";
+        break;
       case 0x04:  // Read input registers
         pvIos->updateAnalogInputValues(pvCodec->values());
+        qDebug() << "FC4 ..";
         break;
+      //case 0x06:  // Write single register
+        //qDebug() << "RX FC 0x06 frame";
+
       default:
         /// \todo Handle errors !
-        qDebug() << "mdtDeviceModbus::decodeReadenFrames() unknow frame format";
+        mdtError e(MDT_DEVICE_ERROR, "Received frame with unhandled function code (0x" + QString::number(fc, 16) + ")", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
+        e.commit();
     }
+    ///qDebug() << "pvReadenFrames size: " << pvReadenFrames.size();
+  ///}
+}
+
+bool mdtDeviceModbus::queriesSequence()
+{
+  if(readAnalogInputs() < 0){
+    return false;
   }
+
+  return true;
 }

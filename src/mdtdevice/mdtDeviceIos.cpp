@@ -80,7 +80,8 @@ void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao)
   Q_ASSERT(ao != 0);
 
   pvAnalogOutputs.insert(ao->address(), ao);
-  connect(ao, SIGNAL(valueChanged(int, double)), this, SIGNAL(analogOutputValueChanged(int, double)));
+  ///connect(ao, SIGNAL(valueChanged(int, double)), this, SIGNAL(analogOutputValueChanged(int, double)));
+  connect(ao, SIGNAL(valueChanged(int, int)), this, SIGNAL(analogOutputValueChanged(int, int)));
 }
 
 mdtAnalogIo *mdtDeviceIos::analogOutputAt(int address)
@@ -91,6 +92,11 @@ mdtAnalogIo *mdtDeviceIos::analogOutputAt(int address)
 QList<mdtAnalogIo*> mdtDeviceIos::analogOutputs()
 {
   return pvAnalogOutputs.values();
+}
+
+int mdtDeviceIos::analogOutputsCount() const
+{
+  return pvAnalogOutputs.size();
 }
 
 void mdtDeviceIos::addDigitalInput(mdtDigitalIo *di)
@@ -164,10 +170,10 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
       if(!var.isValid()){
         ai->setValue(0.0, false);
       }else if(var.type() == QVariant::Double){
-        qDebug() << "mdtDeviceIos::updateAnalogInputValues() , have value type double: " << var;
+        ///qDebug() << "mdtDeviceIos::updateAnalogInputValues() , have value type double: " << var;
         ai->setValue(var.toDouble(), true);
       }else if(var.type() == QVariant::Int){
-        qDebug() << "mdtDeviceIos::updateAnalogInputValues() , have value type int: " << var;
+        ///qDebug() << "mdtDeviceIos::updateAnalogInputValues() , have value type int: " << var;
         ai->setValueInt(var.toInt(), true);
       }else{
         ai->setValue(0.0, false);
@@ -210,6 +216,32 @@ void mdtDeviceIos::updateAnalogOutputValue(int address, double value, bool isVal
     return;
   }
   ao->setValue(value, isValid);
+}
+
+void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
+{
+  int i;
+  QVariant var;
+  mdtAnalogIo *ao;
+
+  for(i=0; i<values.size(); i++){
+    // Get I/O and store value
+    ao = analogOutputAt(i);
+    if(ao != 0){
+      var = values.at(i);
+      if(!var.isValid()){
+        ao->setValue(0.0, false);
+      }else if(var.type() == QVariant::Double){
+        ///qDebug() << "mdtDeviceIos::updateAnalogOutputValues() , have value type double: " << var;
+        ao->setValue(var.toDouble(), true);
+      }else if(var.type() == QVariant::Int){
+        ///qDebug() << "mdtDeviceIos::updateAnalogOutputValues() , have value type int: " << var;
+        ao->setValueInt(var.toInt(), true);
+      }else{
+        ao->setValue(0.0, false);
+      }
+    }
+  }
 }
 
 void mdtDeviceIos::updateDigitalInputState(int address, double on, bool isValid)

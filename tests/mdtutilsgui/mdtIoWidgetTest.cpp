@@ -49,7 +49,7 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setLabel("Input voltage");
   ai.setLabelShort("Vin");
   ai.setUnit("V");
-  ai.setRange(0, 10, 256);
+  ai.setRange(0, 10, 8);
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
   ai.setValueInt(0, true);
@@ -68,7 +68,7 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setDetails("Input current that is used for M1 setpoint.\nShema: 10E");
   ai.setAddress(1246);
   ai.setUnit("mA");
-  ai.setRange(4, 20, 256);
+  ai.setRange(4, 20, 8);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
   ai.setValueInt(0, true);
@@ -113,11 +113,11 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   // 0...10V range with 8 bits resolution
   ao.setLabel("Output voltage of final stage");
   ao.setLabelShort("Vout");
-  ao.setRange(0, 10, 256);
+  ao.setRange(0, 10, 8);
   ai.setLabel("Input voltage of final stage");
   ai.setLabelShort("Vin");
   ai.setUnit("V");
-  ai.setRange(0, 10, 256);
+  ai.setRange(0, 10, 8);
   QCOMPARE(ao.value(), 0.0);
   QCOMPARE(ao.valueInt(), 0);
   QCOMPARE(ai.value(), 0.0);
@@ -141,8 +141,8 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   // 4...20mA range with 8 bits resolution
   ao.setLabel("Output current of final stage");
   ao.setLabelShort("Iout");
-  ao.setRange(4, 20, 256);
-  ai.setRange(4, 20, 256);
+  ao.setRange(4, 20, 8);
+  ai.setRange(4, 20, 8);
   ai.setLabelShort("Iin");
   ai.setUnit("mA");
   QCOMPARE(ao.value(), 4.0);

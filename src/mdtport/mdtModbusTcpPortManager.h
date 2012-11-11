@@ -84,8 +84,9 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Internally, the transaction ID is incremented at each request and returned.
    *
    * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
-   * \return Transaction ID on success or value < 0 on error. If the maximum of authorized transactions are reached, value < 0 is returned.
-   *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix this, and
+   * \return Transaction ID on success.
+   *          If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty (< 0) is returned.
+   *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix maximum transactions, and
    *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
    * \pre Port must be set with setPort() before use of this method.
    * 

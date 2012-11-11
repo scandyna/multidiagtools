@@ -70,6 +70,7 @@ class mdtAnalogInWidget : public mdtAbstractIoWidget
 
   QwtThermo *thValue;
   QLabel *lbValue;
+  QLabel *lbUnit;
   QString pvUnit;
   mdtAnalogIo *pvIo;
 };

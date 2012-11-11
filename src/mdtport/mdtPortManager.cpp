@@ -32,6 +32,9 @@ mdtPortManager::mdtPortManager(QObject *parent)
 {
   pvPort = 0;
   pvLastReadenFrameId = 0;
+  pvEnqueueReadenFrames = false;
+  pvNotifyNewReadenFrame = false;
+
 }
 
 mdtPortManager::~mdtPortManager()
@@ -46,6 +49,16 @@ mdtPortManager::~mdtPortManager()
     }
   }
   qDebug() << "mdtPortManager::~mdtPortManager() END";
+}
+
+void mdtPortManager::setEnqueueReadenFrames(bool enqueue)
+{
+  pvEnqueueReadenFrames = enqueue;
+}
+
+void mdtPortManager::setNotifyNewReadenFrame(bool notify)
+{
+  pvNotifyNewReadenFrame = notify;
 }
 
 QList<mdtPortInfo*> mdtPortManager::scan()
@@ -223,7 +236,7 @@ int mdtPortManager::writeData(QByteArray data)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
-    return -1;
+    return mdtAbstractPort::WriteQueueEmpty;
   }
   frame = pvPort->writeFramesPool().dequeue();
   Q_ASSERT(frame != 0);
@@ -253,6 +266,32 @@ bool mdtPortManager::waitReadenFrame(int timeout)
   return true;
 }
 
+QByteArray mdtPortManager::waitOnFrame(int id, int timeout)
+{
+  QByteArray frame;
+  int maxIter = timeout / 50;
+
+  // Try until success or timeout
+  while(frame.isEmpty()){
+    // Check if a frame is available
+    if(pvReadenFrames.size() > 0){
+      // Check if requested frame is here
+      if(pvReadenFrames.contains((quint16)id)){
+        frame = pvReadenFrames.take((quint16)id);
+        return frame;
+      }
+    }
+    if(maxIter <= 0){
+      return frame;
+    }
+    qApp->processEvents();
+    msleep(50);
+    maxIter--;
+  }
+
+  return frame;
+}
+
 QByteArray mdtPortManager::readenFrame(int id)
 {
   QByteArray frame;
@@ -264,10 +303,14 @@ QByteArray mdtPortManager::readenFrame(int id)
   return frame;
 }
 
-QList<QByteArray> &mdtPortManager::readenFrames()
+QList<QByteArray> &mdtPortManager::readenFrames(bool clearInternalCopy)
 {
   QMapIterator<quint16, QByteArray> it(pvReadenFrames);
 
+  // Clear copy
+  if(clearInternalCopy){
+    pvReadenFramesCopy.clear();
+  }
   // Copy data
   while(it.hasNext()){
     it.next();
@@ -323,7 +366,9 @@ void mdtPortManager::fromThreadNewFrameReaden()
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
-  emit(newReadenFrame());
+  if(pvReadenFrames.size() > 0){
+    emit(newReadenFrame());
+  }
 }
 
 /// \todo Error handling (in general ...)
@@ -371,4 +416,15 @@ void mdtPortManager::onThreadsErrorOccured(int error)
     qDebug() << "Queue empty !";
   }
   */
+}
+
+void mdtPortManager::commitFrame(int id, QByteArray data)
+{
+  if(pvEnqueueReadenFrames){
+    pvReadenFrames.insert(id, data);
+    emit(readenFramesQueueSizeChanged(pvReadenFrames.size()));
+  }
+  if(pvNotifyNewReadenFrame){
+    emit(newReadenFrame(id, data));
+  }
 }

@@ -49,23 +49,6 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   QString unit() const;
 
-  /*! \brief Set the range
-   *
-   * Store the new range and set the value to the minimum.
-   *  The valueChanged() signal is emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal rangeChangedForUi() is emited
-   *  - The signal valueChangedForUi() is emited
-   *
-   * \param min Minimum value to display (f.ex. 0V, or 4mA)
-   * \param max Maximum value to display (f.ex. 10V, or 20mA)
-   * \param steps Number of steps of the input (f.ex. 256 with 8 bits resolution)
-   * \pre steps must be > 1
-   * \pre max must be > min
-   */
-  ///void setRange(double min, double max, int steps);
-
   /*! \brief Specify the range of values and bits decodes parameters
    *
    * Store the new range and set the value to the minimum.
@@ -83,6 +66,10 @@ class mdtAnalogIo : public mdtAbstractIo
    * In this example, this method must be called with
    *  min = -10.0 , max = 10.0 , intValueBitsCount = 13 , intValueLsbIndex = 3 and intValueSigned = true .
    *
+   * Note that some analog output hardware use a different resolution for read and write (f.ex. Wago 750-550).
+   *  In such case, you can set parameters for reading here, and use setEncodeBitSettings() for alternate
+   *  parameters for write.
+   *
    * \param min Minimum value to display (f.ex. 0V, or 4mA)
    * \param max Maximum value to display (f.ex. 10V, or 20mA)
    * \param intValueBitsCount Number of bits used for the value, including sign bit.
@@ -93,7 +80,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *                        (has only effect when using setValueInt() ).
    *
    * \return true on success. Some checks are done, and if one fails, false is returned and
-   *          the default method is used for conversion (no shift, system's bits count and nos sign bit).
+   *          the previous settingsare used for conversion.
    *
    * \pre max must be > min
    *
@@ -102,6 +89,26 @@ class mdtAnalogIo : public mdtAbstractIo
    *  - The signal valueChangedForUi() is emited
    */
   bool setRange(double min, double max, int intValueBitsCount, int intValueLsbIndex = 0, bool intValueSigned = false);
+
+  /*! \brief Set the bits encode parammeters
+   *
+   * On many analog output module, it is possible
+   *  to set a value, and read it.
+   * It can happen that the bitmap differs between
+   *  write and read (f.ex. Wago 750-550).
+   * In such case, a alternate bits count and lsb index can be set here.
+   *
+   * Note that setRange() will overwrite thiese settings.
+   *
+   * \param intValueBitsCount Number of bits used for the value, including sign bit.
+   *                           (has only effect when using valueInt() ).
+   * \param intValueLsbIndex Index of first bit to use for value extraction.
+   *                          (has only effect when using valueInt() ).
+   *
+   * \return true on success. Some checks are done, and if one fails, false is returned and
+   *          the previous settingsare used for conversion.
+   */
+  bool setEncodeBitSettings(int intValueBitsCount, int intValueLsbIndex);
 
   /*! \brief Get the minimum value of the range
    */
@@ -115,33 +122,10 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   double value() const;
 
-  /*! \brief Specify the bits range to use to extract value
-   *
-   * It can happen that a I/O module returns, f.ex., 
-   *  a integer value in a 16 bits packet, but with
-   *  some additional flags. (example: Wago 750-457).
-   *  In such case, the value is, f.ex., encoded in
-   *  12 bits only.
-   * Take example of Wago 750-457:
-   *  - Value + flags are encoded in a 16 bits word
-   *  - Value is encoded in 12 bits, from b3 to b14
-   *
-   * In this example, this method must be called with
-   *  lsbIndex = 3 and bitsCount = 12.
-   *
-   * Note that this parameter has only effect by using setValueInt().
-   *
-   * \param lsbIndex Index of first bit to use for value extraction.
-   * \param bitsCount Number of bits used for the value.
-   * \return true on success. Some checks are done, and if one fails, false is returned and
-   *          the default method is used for conversion (no shift and nominal bits count).
-   */
-  ///bool setValueBitsRange(int lsbIndex, int bitsCount);
-
   /*! \brief Set the integer value
    *
    * Will calculate the real value depending on resolution and update display.
-   *  The resolution is set with setRange() (steps parameter)
+   *  The resolution is set with setRange() (intValueBitsCount parameter)
    *
    * The valueChanged() signal is emitted.
    *
@@ -186,8 +170,14 @@ class mdtAnalogIo : public mdtAbstractIo
 
   /*! \brief This signal is emitted whenever the value is changed
    */
-  void valueChanged(double newValue);
-  void valueChanged(int address, double newValue);
+  ///void valueChanged(double newValue);
+  ///void valueChanged(int address, double newValue);
+
+  /*! \brief This signal is emitted whenever the value is changed
+   *
+   * The value is converted for device specific format.
+   */
+  void valueChanged(int address, int value);
 
   /*
    * These signals are emited every time
@@ -215,9 +205,11 @@ class mdtAnalogIo : public mdtAbstractIo
   double pvStep;
   double pvStepInverse;
   bool pvUpdatingUi;
-  // Used for integer to float value conversion
-  int pvIntValueLsbIndex;
-  int pvIntValueMask;
+  // Members used for integer <-> float value conversion
+  int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
+  int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()
+  int pvIntValueMask;         // Mask to extract the correct bits count, used in setValueInt()
+  int pvIntValueMaskEnc;      // Mask to extract the correct bits count, used in valueInt()
   int pvIntValueSignMask;
   bool pvIntValueSigned;
 };

@@ -62,6 +62,7 @@ class mdtPortThread;
  * port->setConfig(config);
  *
  * // Init port manager
+ * m.setEnqueueReadenFrames(true);
  * m.setPort(port);
  * m.addThread(mew mdtPortWriteThread);
  * m.addThread(mew mdtPortReadThread);
@@ -117,6 +118,24 @@ class mdtPortManager : public QThread
    * Note that port set by setPort() and threads are not deleted.
    */
   virtual ~mdtPortManager();
+
+  /*! \brief Set the enqueue readen frames flag
+   *
+   * If true, all incomming frames will be added in internal queue,
+   *  and the readenFramesQueueSizeChanged() signal will be sent.
+   *
+   * By default this flag is false.
+   */
+  void setEnqueueReadenFrames(bool enqueue);
+
+  /*! \brief Set the incomming frame notification flag
+   *
+   * If true, the newReadenFrame(int, QByteArray) signal
+   *  will be emitted for each incomming frame.
+   *
+   * By default this flag is false.
+   */
+  void setNotifyNewReadenFrame(bool notify);
 
   /*! \brief Scan for available ports
    *
@@ -241,8 +260,10 @@ class mdtPortManager : public QThread
    *  and don't wait until data was written.
    *
    * \param data Data to write
-   * \return 0 on success or value < 0 if write queue is full. Some subclass can return a frame ID,
-   *          see subclass documentation for details.
+   * \return 0 on success or value < 0 on error. In this implementation,
+   *          the only possible error is mdtAbstractPort::WriteQueueEmpty .
+   *          Some subclass can return a frame ID on success,
+   *          or a other error. See subclass documentation for details.
    * \pre Port must be set with setPort() before use of this method.
    *
    * Subclass notes:<br>
@@ -268,11 +289,21 @@ class mdtPortManager : public QThread
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
    * \return True if Ok, false on timeout
    * \sa newReadenFrame()
-   *
-   * Subclass notes:<br>
-   *  This method can be reimplemented in subclass if needed.
    */
-  virtual bool waitReadenFrame(int timeout = 500);
+  bool waitReadenFrame(int timeout = 500);
+
+  /*! \brief Wait on readen frame with defined ID
+   *
+   * Will return when frame with given ID was read or after timeout.
+   *
+   * Internally, a couple of sleep and process event are called, so 
+   * Qt's event loop will not be broken.
+   *
+   * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return Frame's data on success or empty QByteArray on timeout
+   */
+  QByteArray waitOnFrame(int id, int timeout = 500);
 
   /*! \brief Get data by frame ID
    *
@@ -298,8 +329,15 @@ class mdtPortManager : public QThread
    *  Note: the list of returned data (witch is a copy of reception queue) must be cleared explicitly
    *   with QList::clear() after data are used.
    *   (or remove each item with, for.ex. QList::takeFirst() )
+   *
+   *  \param clearInternalCopy Clear internal copy of readen frames before append the new ones.
+   *                            It can happen that returned list is a reference to internal copy list.
+   *                            But, it can happen that a deep copy is made (I'm not clear about this subject)
+   *                            If you need to get copy attributes (f.ex. size() ), you should force this
+   *                            parameter to false, so that you can take data later.
+   *                            If you need to take the data, you should let this flag false.
    */
-  QList<QByteArray> &readenFrames();
+  QList<QByteArray> &readenFrames(bool clearInternalCopy = true);
 
   /*! \brief Wait some time without break the GUI's event loop
    *
@@ -346,20 +384,50 @@ class mdtPortManager : public QThread
   /*! \brief Emitted when new frame was readen
    *
    * \sa waitReadenFrame()
+   * \todo Obselete this method and suppress it
    */
   void newReadenFrame();
 
+  /*! \brief Emitted when new frame was readen
+   *
+   * The id is the same than returned by writeData().
+   *
+   * Emitted only if notifyNewReadenFrame flag is true.
+   *
+   * \sa setNotifyNewReadenFrame()
+   */
+  void newReadenFrame(int id, QByteArray data);
+
+  /*! \brief Emitted when internal queue of readen frames size has changed
+   *
+   * \sa readenFrame()
+   * \sa readenFrames()
+   */
+  void readenFramesQueueSizeChanged(int newSize);
+
  protected:
+
+  /*! \brief Store frame data in queue and/or emit newReadenFrame() signal
+   *
+   * Dependeing on pvEnqueueReadenFrames and pvNotifyNewReadenFrame,
+   *  frame will be enqueued and/or the newReadenFrame(int, QByteArray) will be emitted.
+   *
+   * Subclass notes:<br>
+   *  The subclass should use this method to handle new incomming frames.
+   */
+  void commitFrame(int id, QByteArray data);
 
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
-  QMap<quint16, QByteArray> pvReadenFrames; // Hold a copy of each frame readen by port
-  QList<QByteArray> pvReadenFramesCopy;     // Hold a copy of each frame readen by port, this will be returned by readenFrames()
 
  private:
 
   mdtPortInfo pvPortInfo;
   quint16 pvLastReadenFrameId;    // Used if protocol does not contain a frame id.
+  QMap<quint16, QByteArray> pvReadenFrames; // Hold a copy of each frame readen by port
+  QList<QByteArray> pvReadenFramesCopy;     // Hold a copy of each frame readen by port, this will be returned by readenFrames()
+  bool pvEnqueueReadenFrames;
+  bool pvNotifyNewReadenFrame;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);
