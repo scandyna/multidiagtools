@@ -319,25 +319,52 @@ class mdtPortManager : public QThread
 
   /*! \brief Get all readen data
    *
-   * Get a copy of all currently available data.
-   *  Data frames are sorted by asending order, i.e. if 
-   *   frame ID is used, the sort order is this ID assending,
-   *   else it is from oldest to newest received frame (like a FIFO).
+   * Get all currently available data.
+   *  Once data are readen, don't forget to clear incoming
+   *  frames list with clearReadenFrames().
    *
-   * After a call of this method, the internal received frames queue is cleared.
+   * To prevent data loss, call clearReadenFrames() just after
+   *  data read. Do not use QApplication::processEvent() before,
+   *  because this could insert a new frame, wich will be cleared.
+   *  (see slot fromThreadNewFrameReaden() ).
    *
-   *  Note: the list of returned data (witch is a copy of reception queue) must be cleared explicitly
-   *   with QList::clear() after data are used.
-   *   (or remove each item with, for.ex. QList::takeFirst() )
+   * Yout can iterate over returned list, like:
+   * \code
+   * int i;
    *
-   *  \param clearInternalCopy Clear internal copy of readen frames before append the new ones.
-   *                            It can happen that returned list is a reference to internal copy list.
-   *                            But, it can happen that a deep copy is made (I'm not clear about this subject)
-   *                            If you need to get copy attributes (f.ex. size() ), you should force this
-   *                            parameter to false, so that you can take data later.
-   *                            If you need to take the data, you should let this flag false.
+   * // Get all frames
+   * for(i=0; i<manager.readenFrames().size(); i++){
+   *   qDebug() << "Data[" << i << "]: " << manager.readenFrames().at(i);
+   * }
+   * // Clear readen frames
+   * manager.clearReadenFrames();
+   * \endcode
+   * In this example, no deep copy of frames list should occur.
+   *
+   * A other way is to reference returned list to a temporary QList:
+   * \code
+   * QList<QByteArray> list;
+   *
+   * // Get all frames
+   * list = manager.readenFrames();
+   * for(i=0; i<list.size(); i++){
+   *   qDebug() << "Data[" << i << "]: " << list.at(i);
+   * }
+   * // Clear readen frames
+   * list.clear();
+   * // Here, a deep copy occured, we must clear manager's internal list
+   * manager.clearReadenFrames();
+   * \endcode
+   *
+   * For more details you should read Qt's documentation about implicit-sharing.
    */
-  QList<QByteArray> &readenFrames(bool clearInternalCopy = true);
+  const QList<QByteArray> readenFrames() const;
+
+  /*! \brief Clear readen frames
+   *
+   * \sa readenFrames()
+   */
+  void clearReadenFrames();
 
   /*! \brief Wait some time without break the GUI's event loop
    *
@@ -383,13 +410,6 @@ class mdtPortManager : public QThread
 
   /*! \brief Emitted when new frame was readen
    *
-   * \sa waitReadenFrame()
-   * \todo Obselete this method and suppress it
-   */
-  void newReadenFrame();
-
-  /*! \brief Emitted when new frame was readen
-   *
    * The id is the same than returned by writeData().
    *
    * Emitted only if notifyNewReadenFrame flag is true.
@@ -425,7 +445,6 @@ class mdtPortManager : public QThread
   mdtPortInfo pvPortInfo;
   quint16 pvLastReadenFrameId;    // Used if protocol does not contain a frame id.
   QMap<quint16, QByteArray> pvReadenFrames; // Hold a copy of each frame readen by port
-  QList<QByteArray> pvReadenFramesCopy;     // Hold a copy of each frame readen by port, this will be returned by readenFrames()
   bool pvEnqueueReadenFrames;
   bool pvNotifyNewReadenFrame;
 

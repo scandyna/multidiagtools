@@ -33,6 +33,7 @@
 #include <QEvent>
 #include <QMap>
 #include <QString>
+#include <QByteArray>
 #include <QActionGroup>
 
 class QLabel;
@@ -55,10 +56,10 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
  public slots:
 
   /*! \brief Append incomming data to terminal
-   * 
+   *
    * Whenn called, data will be token from active port manager
    */
-  void appendReadenData();
+  void appendReadenData(int, QByteArray data);
 
   /*! \brief Send command to port
    */

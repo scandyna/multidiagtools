@@ -122,6 +122,7 @@ void mdtDevice::setAnalogOutputValue(int address, int value)
   if(pvCurrentState != Ready){
     // Device busy, cannot threat query , try later
     ///QTimer::singleShot(500, this, SLOT(setStateReady()));
+    qDebug() << "Device busy, retry later ...";
     return;
   }
   if(writeAnalogOutputValue(address, value, pvOutputWriteReplyTimeout) < 0){

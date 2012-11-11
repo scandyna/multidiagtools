@@ -65,7 +65,6 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   Q_ASSERT(!isRunning());
 
   QList<mdtPortInfo*> portInfoList;
-  ///mdtDeviceInfo *deviceInfo;
   mdtPortInfo *portInfo;
   int i;
   QStringList host;
@@ -159,7 +158,6 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu)
 
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
 {
-  ///qDebug() << "mdtModbusTcpPortManager::fromThreadNewFrameReaden() ...";
   Q_ASSERT(pvPort != 0);
 
   mdtFrameModbusTcp *frame;
@@ -173,17 +171,10 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
       // Copy data
-      ///pvReadenFrames.insert(frame->transactionId(), frame->getPdu());
       commitFrame(frame->transactionId(), frame->getPdu());
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
-  /**
-  if(pvReadenFrames.size() > 0){
-    emit(newReadenFrame());
-  }
-  */
 }
-

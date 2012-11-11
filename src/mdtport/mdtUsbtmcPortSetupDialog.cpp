@@ -137,7 +137,8 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     return;
   }
   // Split IDN replay infos
-  idn = pvPortManager->readenFrames().takeFirst();
+  idn = pvPortManager->readenFrames().at(0);
+  pvPortManager->clearReadenFrames();
   idn = idn.trimmed();
   idnItems = idn.split(',');
   if(idnItems.size() != 4){

@@ -303,22 +303,25 @@ QByteArray mdtPortManager::readenFrame(int id)
   return frame;
 }
 
-QList<QByteArray> &mdtPortManager::readenFrames(bool clearInternalCopy)
+const QList<QByteArray> mdtPortManager::readenFrames() const
 {
   QMapIterator<quint16, QByteArray> it(pvReadenFrames);
 
-  // Clear copy
-  if(clearInternalCopy){
-    pvReadenFramesCopy.clear();
-  }
   // Copy data
   while(it.hasNext()){
     it.next();
-    pvReadenFramesCopy.append(it.value());
-    pvReadenFrames.remove(it.key());
+    ///pvReadenFramesCopy.append(it.value());
+    ///pvReadenFrames.remove(it.key());
   }
 
-  return pvReadenFramesCopy;
+  ///return pvReadenFramesCopy;
+  return pvReadenFrames.values();
+}
+
+void mdtPortManager::clearReadenFrames()
+{
+  ///pvReadenFramesCopy.clear();
+  pvReadenFrames.clear();
 }
 
 void mdtPortManager::wait(int msecs, int granularity)
@@ -359,16 +362,14 @@ void mdtPortManager::fromThreadNewFrameReaden()
     if(frame->isComplete()){
       QByteArray data;
       data.append(frame->data(), frame->size());
-      pvReadenFrames.insert(pvLastReadenFrameId, data);
+      ///pvReadenFrames.insert(pvLastReadenFrameId, data);
+      commitFrame(pvLastReadenFrameId, data);
       pvLastReadenFrameId++;
     }
     // Restore frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
-  if(pvReadenFrames.size() > 0){
-    emit(newReadenFrame());
-  }
 }
 
 /// \todo Error handling (in general ...)

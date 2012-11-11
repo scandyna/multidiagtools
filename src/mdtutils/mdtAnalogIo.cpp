@@ -170,12 +170,12 @@ double mdtAnalogIo::value() const
   return pvValue;
 }
 
-void mdtAnalogIo::setValueInt(int value, bool isValid)
+void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
 {
   double x;
 
   if(!isValid){
-    setValue(pvMinimum, false);
+    setValue(pvMinimum, false, emitValueChanged);
     return;
   }
   // Extract bits in correct range
@@ -193,7 +193,7 @@ void mdtAnalogIo::setValueInt(int value, bool isValid)
     x = pvStep*(double)value + pvMinimum;
   }
 
-  setValue(x, true);
+  setValue(x, true, emitValueChanged);
 }
 
 int mdtAnalogIo::valueInt() const
@@ -217,7 +217,7 @@ int mdtAnalogIo::valueInt() const
   return m;
 }
 
-void mdtAnalogIo::setValue(double value, bool isValid)
+void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
 {
   pvHasValidData = isValid;
   if(!pvHasValidData){
@@ -227,7 +227,9 @@ void mdtAnalogIo::setValue(double value, bool isValid)
     pvValue = value;
     ///emit(valueChanged(value));
     ///emit(valueChanged(pvAddress, value));
-    emit(valueChanged(pvAddress, valueInt()));
+    if(emitValueChanged){
+      emit(valueChanged(pvAddress, valueInt()));
+    }
     pvUpdatingUi = true;
     emit(valueChangedForUi(value));
   }

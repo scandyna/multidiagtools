@@ -27,6 +27,7 @@
 #include <QByteArray>
 #include <QString>
 #include <QStringList>
+#include <QMap>
 
 class QTimer;
 
@@ -263,6 +264,7 @@ class mdtDevice : public QObject
   void setStateFromPortError(int error);
 
   mdtDeviceIos *pvIos;    // I/O's container
+  QMap<int, mdtAnalogIo*> pvAoPendingTransactions;
   int pvOutputWriteReplyTimeout;
   int pvAnalogOutputAddressOffset;
 

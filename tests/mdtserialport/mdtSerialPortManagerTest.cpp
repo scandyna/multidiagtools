@@ -50,6 +50,7 @@ void mdtSerialPortManagerTest::simpleTest()
   }
 
   // Init port manager
+  m.setEnqueueReadenFrames(true);
   m.port().config().setFrameType(mdtFrame::FT_ASCII);
   m.port().config().setEndOfFrameSeq("$");
   m.setPortName(portInfoList.at(0)->portName());
@@ -78,6 +79,7 @@ void mdtSerialPortManagerTest::simpleTest()
   // Verify received data
   QVERIFY(m.readenFrames().size() == 1);
   QVERIFY(m.readenFrames().at(0) == "Test");
+  m.clearReadenFrames();
 }
 
 void mdtSerialPortManagerTest::transferTest()
@@ -96,6 +98,7 @@ void mdtSerialPortManagerTest::transferTest()
    */
 
   // Init port manager
+  m.setEnqueueReadenFrames(true);
   portInfoList = m.scan();
   if(portInfoList.size() < 1){
     QSKIP("No serial port found, or other error", SkipAll);
@@ -131,10 +134,10 @@ void mdtSerialPortManagerTest::transferTest()
     // Wait on answer - Timout: 500 [ms]
     QVERIFY(m.waitReadenFrame(500));
     // Copy data
-    //for(int i=0; i<m.readenFrames().size(); i++){
-    while(!m.readenFrames().isEmpty()){
-      receivedData += m.readenFrames().takeFirst();
+    for(int i=0; i<m.readenFrames().size(); i++){
+      receivedData += m.readenFrames().at(i);
     }
+    m.clearReadenFrames();
   }
   // Verify received data
   QVERIFY(receivedData == data);

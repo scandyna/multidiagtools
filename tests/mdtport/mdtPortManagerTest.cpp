@@ -62,6 +62,7 @@ void mdtPortManagerTest::portTest()
 
   // Init port manager
   m.setPort(port);
+  m.setEnqueueReadenFrames(true);
   m.addThread(new mdtPortWriteThread);
   m.addThread(new mdtPortReadThread);
   m.setPortName(file.fileName());
@@ -84,13 +85,16 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.start());
   // Get readen data
   QVERIFY(m.waitReadenFrame());
-  ///QVERIFY(m.lastReadenFrame() == "Test");
+  // Check that multiple calls of readenFrames() does not alter frames queue
+  QVERIFY(m.readenFrames().size() == 1);
   QVERIFY(m.readenFrames().size() == 1);
   QVERIFY(m.readenFrames().at(0) == "Test");
+  QVERIFY(m.readenFrames().size() == 1);
+  m.clearReadenFrames();
+  QVERIFY(m.readenFrames().size() == 0);
 
   // Setup a second port manager
   // Port setup
-  ///cfg2 = new mdtPortConfig;
   port2 = new mdtPort;
   port2->setConfig(&cfg2);
   m2.setPort(port2);
@@ -103,12 +107,8 @@ void mdtPortManagerTest::portTest()
   m.closePort();
 
   // Cleanup
-  qDebug() << "About to close ...";
   m2.detachPort(true, true);
   m.detachPort(true, true);
-  ///delete cfg;
-  ///delete cfg2;
-  qDebug() << "End";
 }
 
 void mdtPortManagerTest::usbTmcPortTest()
@@ -125,6 +125,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   }
 
   // Init port manager
+  m.setEnqueueReadenFrames(true);
   m.setPortName(portInfoList.at(0)->portName());
   QVERIFY(m.openPort());
 
@@ -155,6 +156,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   qDebug() << "TEST, request read DONE";
   QVERIFY(m.readenFrames().size() > 0);
   qDebug() << "Data n: " << m.readenFrames().size() << ", Data[0]: " << m.readenFrames().at(0);
+  m.clearReadenFrames();
 
   ///QTest::qWait(500);
   
@@ -200,6 +202,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // Init port manager
   //m.setPortName(portInfoList.at(0)->portName());
+  m.setEnqueueReadenFrames(true);
   m.setPortInfo(*portInfoList.at(0));
   QVERIFY(m.openPort());
 
@@ -222,6 +225,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QVERIFY(!m.waitOnFrame(tId1, 500).isEmpty());
   QVERIFY(!m.waitOnFrame(tId2, 500).isEmpty());
   QVERIFY(!m.waitOnFrame(tId3, 500).isEmpty());
+  m.clearReadenFrames();
 }
 
 int main(int argc, char **argv)

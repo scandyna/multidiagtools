@@ -131,11 +131,12 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * \param value The value to store
    * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
+   * \param emitValueChanged If true, valueChanged() will not be emitted
    *
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValueInt(int value, bool isValid);
+  void setValueInt(int value, bool isValid, bool emitValueChanged = true);
 
   /*! \brief Get the integer value
    *
@@ -153,11 +154,12 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * \param value The value to store
    * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
+   * \param emitValueChanged If true, valueChanged() will not be emitted
    *
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValue(double value, bool isValid);
+  void setValue(double value, bool isValid, bool emitValueChanged = true);
 
   /*! \brief Set the value to update display
    *

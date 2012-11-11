@@ -140,7 +140,7 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *  - FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.
    *  - FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.
    *  - FC 5 (0x05), WriteSingleCoil reply: first value is address as quint16, second value is the output state as bool.
-   *  - FC 6 (0x06), WriteSingleRegister reply: analog output value, as quint16.
+   *  - FC 6 (0x06), WriteSingleRegister reply: analog output address and value, as quint16.
    *  - FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.
    *  - FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.
    *  - For a WriteSingleCoil reply, 1 value as bool

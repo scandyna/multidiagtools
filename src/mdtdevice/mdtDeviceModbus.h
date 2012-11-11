@@ -222,7 +222,7 @@ class mdtDeviceModbus : public mdtDevice
 
   mdtModbusTcpPortManager *pvTcpPortManager;
   mdtFrameCodecModbus *pvCodec;
-  QList<QByteArray> pvReadenFrames;     // Frames readen from port manager
+  ///QList<QByteArray> pvReadenFrames;     // Frames readen from port manager
   QMap<quint16,quint16> pvAnalogOutputs;
   QMap<quint16,bool> pvDigitalInputs;
   QMap<quint16,bool> pvDigitalOutputs;
