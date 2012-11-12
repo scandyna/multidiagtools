@@ -219,17 +219,21 @@ int mdtAnalogIo::valueInt() const
 
 void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
 {
+  qDebug() << labelShort() << "mdtAnalogIo::setValue() , value: " << value << " ...";
   pvHasValidData = isValid;
   if(!pvHasValidData){
     value = pvMinimum;
   }
-  if(fabs(value - pvValue) > DBL_EPSILON){
+  ///if(fabs(value - pvValue) > DBL_EPSILON){
+  if(fabs(value - pvValue) >= pvStep){
     pvValue = value;
     ///emit(valueChanged(value));
     ///emit(valueChanged(pvAddress, value));
     if(emitValueChanged){
       emit(valueChanged(pvAddress, valueInt()));
+      emit(valueChanged(pvValue));
     }
+    qDebug() << labelShort() << "mdtAnalogIo::setValue() , value " << value << " notify GUI";
     pvUpdatingUi = true;
     emit(valueChangedForUi(value));
   }
@@ -247,16 +251,21 @@ void mdtAnalogIo::setValueFromUi(double value)
   //  it can happen that these same UI emit their signal valueChanged()
   //  and cause finaly the call of this method (with altered precision).
   // We not want this, so check the flag before update.
+  qDebug() << labelShort() << "mdtAnalogIo::setValueFromUi() , value: " << value << " ...";
   if(pvUpdatingUi){
+    qDebug() << labelShort() << "mdtAnalogIo::setValueFromUi() , value: " << value << " updating GUI, abort";
     pvUpdatingUi = false;
     return;
   }
-  if(fabs(value - pvValue) > DBL_EPSILON){
+  ///if(fabs(value - pvValue) > DBL_EPSILON){
+  if(fabs(value - pvValue) >= pvStep){
     pvValue = value;
     pvHasValidData = true;
     ///emit(valueChanged(value));
     ///emit(valueChanged(pvAddress, value));
+    qDebug() << labelShort() << "mdtAnalogIo::setValueFromUi() , value: " << value << " notify !";
     emit(valueChanged(pvAddress, valueInt()));
+    emit(valueChanged(pvValue));
   }
 }
 

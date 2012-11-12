@@ -28,6 +28,7 @@
 
 #include <QTest>
 #include <QString>
+#include <qwt_slider.h>
 #include "mdtApplication.h"
 
 #include <QDebug>
@@ -128,10 +129,11 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
   ao.setValueInt(127, true);
-  QCOMPARE(ao.value(), (double)(10.0*127.0/255.0));
-  QCOMPARE(ao.valueInt(), 127);
-  QCOMPARE(ai.value(), (double)(10.0*127.0/255.0));
+  QVERIFY(qAbs(ao.value()-5.0) < (5.0/250.0));
+  QVERIFY(qAbs(ao.valueInt()-127) <= 1);
+  QVERIFY(qAbs(ai.value()-5.0) < (5.0/250.0));
   QCOMPARE(ai.valueInt(), 127);
+  QVERIFY(qAbs(ai.valueInt()-127) <= 1);
   ao.setValueInt(255, true);
   QCOMPARE(ao.value(), 10.0);
   QCOMPARE(ao.valueInt(), 255);
@@ -155,15 +157,82 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
   ao.setValueInt(127, true);
-  QCOMPARE(ao.value(), (double)(4.0+16.0*127.0/255.0));
+  QVERIFY(qAbs(ao.value()-12.0) < (12.0/250.0));
   QCOMPARE(ao.valueInt(), 127);
-  QCOMPARE(ai.value(), (double)(4.0+16.0*127.0/255.0));
+  QVERIFY(qAbs(ai.value()-12.0) < (12.0/250.0));
   QCOMPARE(ai.valueInt(), 127);
   ao.setValueInt(255, true);
   QCOMPARE(ao.value(), 20.0);
   QCOMPARE(ao.valueInt(), 255);
   QCOMPARE(ai.value(), 20.0);
   QCOMPARE(ai.valueInt(), 255);
+}
+
+void mdtIoWidgetTest::analogOutWidgetRecursifTest()
+{
+  // GUI (program)
+  mdtAnalogIo ao;
+  QwtSlider sl(0);
+  // Simulate the physical device
+  mdtAnalogIo plcAo;
+
+  // Setup
+  ao.setLabelShort("AO1");
+  ao.setRange(0.0, 10.0, 12);
+  plcAo.setLabelShort("PLC");
+  plcAo.setRange(0.0, 10.0, 12);
+  sl.setRange(0.0, 10.0);
+  QObject::connect(&sl, SIGNAL(valueChanged(double)), &ao, SLOT(setValueFromUi(double)));
+  QObject::connect(&ao, SIGNAL(valueChangedForUi(double)), &sl, SLOT(setValue(double)));
+  QObject::connect(&ao, SIGNAL(valueChanged(double)), &plcAo, SLOT(setValue(double)));
+  sl.show();
+
+  // Initial states
+  QVERIFY(ao.value() < (1.0/4050.0));
+  QVERIFY(plcAo.value() < (1.0/4050.0));
+
+  // User change the value
+  sl.setValue(1.0);
+  QVERIFY(qAbs(ao.value()-1.0) < (1.0/4050.0));
+  QVERIFY(qAbs(plcAo.value()-1.0) < (1.0/4050.0));
+  // PLC (device) confirm the same value
+  ao.setValue(1.0, true, false);
+  QVERIFY(qAbs(ao.value()-1.0) < (1.0/4050.0));
+  QVERIFY(qAbs(plcAo.value()-1.0) < (1.0/4050.0));
+
+  // User change the value
+  sl.setValue(2.0);
+  QVERIFY(qAbs(ao.value()-2.0) < (1.0/4050.0));
+  QVERIFY(qAbs(plcAo.value()-2.0) < (1.0/4050.0));
+  // PLC (device) confirm a value that differs
+  ao.setValue(1.5, true, false);
+  QVERIFY(qAbs(ao.value()-1.5) < (1.0/4050.0));
+  // Check that PLC not receives the confirmation as new value
+  QVERIFY(qAbs(plcAo.value()-2.0) < (1.0/4050.0));
+
+  // User change the value
+  sl.setValue(3.5);
+  QVERIFY(qAbs(ao.value()-3.5) < (1.0/4050.0));
+  QVERIFY(qAbs(plcAo.value()-3.5) < (1.0/4050.0));
+  // PLC (device) confirm the same value
+  ao.setValue(3.5, true, false);
+  QVERIFY(qAbs(ao.value()-3.5) < (1.0/4050.0));
+  QVERIFY(qAbs(plcAo.value()-3.5) < (1.0/4050.0));
+
+  // User change the value
+  sl.setValue(4.0);
+  QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
+  qDebug() << "PLC value: " << plcAo.value();
+  QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
+  // PLC (device) confirm the same value
+  ao.setValue(4.0, true, false);
+  QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
+  QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
+
+
+  while(sl.isVisible()){
+    QTest::qWait(100);
+  }
 }
 
 void mdtIoWidgetTest::digitalInWidgetTest()

@@ -154,7 +154,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * \param value The value to store
    * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
-   * \param emitValueChanged If true, valueChanged() will not be emitted
+   * \param emitValueChanged If true, valueChanged() will be emitted
    *
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
@@ -172,7 +172,7 @@ class mdtAnalogIo : public mdtAbstractIo
 
   /*! \brief This signal is emitted whenever the value is changed
    */
-  ///void valueChanged(double newValue);
+  void valueChanged(double newValue);
   ///void valueChanged(int address, double newValue);
 
   /*! \brief This signal is emitted whenever the value is changed

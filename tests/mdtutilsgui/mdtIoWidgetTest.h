@@ -33,6 +33,17 @@ class mdtIoWidgetTest : public mdtTest
 
   void analogOutWidgetTest();
 
+  /*
+   * Some physical device can send
+   *  a feedback after a output value was setted.
+   * We must be able to display the real value
+   *  that device confirm to the user.
+   * The problem: this can produce a infinite loop
+   *  when expected value (request) and feedback
+   *  are not the same.
+   */
+  void analogOutWidgetRecursifTest();
+
   void digitalInWidgetTest();
 
   void digitalOutWidgetTest();

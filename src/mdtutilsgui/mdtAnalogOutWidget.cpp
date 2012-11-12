@@ -62,6 +62,7 @@ void mdtAnalogOutWidget::setIo(mdtAnalogIo *io)
   connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
   // Signals/slots from widget to io
   connect(slValue, SIGNAL(valueChanged(double)), io, SLOT(setValueFromUi(double)));
+  ///connect(slValue, SIGNAL(sliderMoved(double)), io, SLOT(setValueFromUi(double)));
   // Set initial data
   setUnit(io->unit());
   setRange(io->minimum(), io->maximum());
