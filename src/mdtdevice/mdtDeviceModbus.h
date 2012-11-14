@@ -46,50 +46,6 @@ class mdtDeviceModbus : public mdtDevice
 
   virtual ~mdtDeviceModbus();
 
-  /*! \brief Get the value of a analog input
-   *
-   * When delaying the request, the currently stored value is returned.
-   *
-   * \param address Address as describe in MODBUS specification
-   *                 (first input of a node has address 0, second has address 1, ...)
-   *                 If address is out of range, a invalid value is returned (see setupAnalogInputs() ).
-   * \param readDirectly If true, the request is sent to device directly, else it can be sent with readAnalogInputs()
-   * \return The value of requested input, or an invalid value on error.
-   */
-  QVariant getAnalogInputValue(int address, bool readDirectly);
-
-  /*! \brief Read all analog inputs on physical device and update (G)UI representation
-   *
-   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-   *
-   * \pre I/O's container must be set with setIos()
-   */
-  int readAnalogInputs();
-
-  /*! \brief Get the value of a analog output
-   *
-   * \param address Address as describe in MODBUS specification
-   *                 (first output of a node has address 0, second has address 1, ...)
-   *                 If address is out of range, a invalid value is returned (see setupAnalogOutputs() ).
-   * \param readDirectly If true, the request is sent to device directly, else it can be sent with writeAnalogOutputs()
-   * \return The value of requested output, or an invalid value on error.
-   */
-  virtual QVariant getAnalogOutputValue(int address, bool readDirectly);
-
-  /*! \brief Write analog output values to device
-   *
-   * \return True on success.
-   */
-  //bool writeAnalogOutputs();
-
-  /*! \brief Read all analog outputs on physical device and update (G)UI representation
-   *
-   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-   *
-   * \pre I/O's container must be set with setIos()
-   */
-  int readAnalogOutputs();
-
   /*! \brief Set value on a analog output on physical device
    *
    * \param address Output address
@@ -103,65 +59,7 @@ class mdtDeviceModbus : public mdtDevice
    *  - To update (G)UI, mdtDeviceIos::updateAnalogOutputValue() should be used.
    *  - Helper method setStateFromPortError() can be used to update device state on error.
    */
-  int writeAnalogOutputValue(int address, int value, int confirmationTimeout);
-
-  /*! \brief Get the state of a digital input
-   *
-   * When delaying the request, the currently stored state is returned.
-   *
-   * \param address Address as describe in MODBUS specification
-   *                 (first input of a node has address 0, second has address 1, ...)
-   *                 If address is out of range, a invalid value is returned (see setupDigitalInputs() ).
-   * \param readDirectly If true, the request is sent to device directly, else it can be sent with readDigitalInputs()
-   * \return The state of requested input, or an invalid value on error.
-   */
-  QVariant getDigitalInputState(int address, bool readDirectly);
-
-  /*! \brief Request states from device
-   *
-   * Request states of all digital inputs.
-   *
-   * \return True on success.
-   */
-  bool readDigitalInputs();
-
-  /*! \brief Set the state of a digital output
-   *
-   * \param address Address as describe in MODBUS specification
-   *                 (first output of a node has address 0, second has address 1, ...)
-   *                 If address is out of range, a invalid value is returned (see setupDigitalOutputs() ).
-   * \param readDirectly If true, the request is sent to device directly, else it can be sent with writeDigitalOutputs()
-   * \return True on success.
-   */
-  bool setDigitalOutput(int address, bool state, bool writeDirectly);
-
-  /*! \brief Get the state of a digital output
-   *
-   * When delaying the request, the currently stored state is returned.
-   *
-   * \param address Address as describe in MODBUS specification
-   *                 (first output of a node has address 0, second has address 1, ...)
-   *                 If address is out of range, a invalid value is returned (see setupDigitalOutputs() ).
-   * \param readDirectly If true, the request is sent to device directly, else it can be sent with readDigitalInputs()
-   * \return The state of requested output, or an invalid value on error.
-   */
-  virtual QVariant getDigitalOutputState(int address, bool readDirectly);
-
-  /*! \brief Write digital output states to device
-   *
-   * \return True on success.
-   */
-  bool writeDigitalOutputs();
-
-  /*! \brief Request states from device
-   *
-   * Request states of all digital outputs.
-   *
-   * \todo Offset sur adresse départ selon marque
-   *
-   * \return True on success.
-   */
-  virtual bool readDigitalOutputs();
+  ///int writeAnalogOutputValue(int address, int value, int confirmationTimeout);
 
  public slots:
 
@@ -178,6 +76,40 @@ class mdtDeviceModbus : public mdtDevice
   void decodeReadenFrame(int id, QByteArray pdu);
 
  private:
+
+  /*! \brief Read one analog input on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readAnalogInput(int address);
+
+  /*! \brief Read all analog inputs on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readAnalogInputs();
+
+  /*! \brief Read one analog output on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readAnalogOutput(int address);
+
+  /*! \brief Read all analog outputs on physical device
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readAnalogOutputs();
+
+  /*! \brief Set value on a analog output on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int writeAnalogOutput(int address, int value);
 
   // Sequence of periodic queries
   bool queriesSequence();
