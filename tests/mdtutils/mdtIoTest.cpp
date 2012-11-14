@@ -31,6 +31,7 @@ void mdtIoTest::mdtAbstractIoTest()
   mdtAbstractIo io;
 
   // Initial states
+  ///QVERIFY(io.type() == mdtAbstractIo::UNKNOWN);
   QVERIFY(io.address() == 0);
   QVERIFY(io.labelShort() == "");
   QVERIFY(io.label() == "");
@@ -54,6 +55,7 @@ void mdtIoTest::analogIoTest()
   mdtAnalogIo io;
 
   // Initial values
+  ///QVERIFY(io.type() == mdtAbstractIo::ANALOG);
   QCOMPARE(io.value(), 0.0);
   QCOMPARE(io.valueInt(), 0);
   QVERIFY(!io.hasValidData());

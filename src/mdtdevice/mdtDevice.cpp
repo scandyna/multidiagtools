@@ -21,6 +21,7 @@
 #include "mdtDevice.h"
 #include "mdtError.h"
 #include "mdtAnalogIo.h"
+#include "mdtPortManager.h"
 #include <QTimer>
 #include <QList>
 
@@ -223,4 +224,70 @@ void mdtDevice::setStateFromPortError(int error)
   }else{
     setStateUnknown();
   }
+}
+
+void mdtDevice::addTransaction(int id, mdtAnalogIo *io)
+{
+  pvPendingAioTransactions.insert(id, io);
+}
+
+void mdtDevice::addTransaction(int id, mdtDigitalIo *io)
+{
+  pvPendingDioTransactions.insert(id, io);
+}
+
+mdtAnalogIo *mdtDevice::pendingAioTransaction(int id)
+{
+  if(!pvPendingAioTransactions.contains(id)){
+    return 0;
+  }
+  return pvPendingAioTransactions.take(id);
+}
+
+mdtDigitalIo *mdtDevice::pendingDioTransaction(int id)
+{
+  if(!pvPendingDioTransactions.contains(id)){
+    return 0;
+  }
+  return pvPendingDioTransactions.take(id);
+}
+
+bool mdtDevice::waitTransactionDone(int id, int timeout, int gr)
+{
+  qDebug() << "mdtDevice::waitTransactionDone() TID: " << id;
+  int i = timeout / gr;
+  // Select correct queue
+  if(pvPendingAioTransactions.contains(id)){
+    qDebug() << "mdtDevice::waitTransactionDone(): queue: " << pvPendingAioTransactions.keys();
+    while(pvPendingAioTransactions.contains(id)){
+      // Check timeout
+      if(i <= 0){
+        qDebug() << "mdtDevice::waitTransactionDone(): timeout for TID " << id;
+        pvPendingAioTransactions.remove(id);
+        setStateBusy(2000);
+        return false;
+      }
+      mdtPortManager::wait(gr, gr);
+      i--;
+    }
+  }else if(pvPendingDioTransactions.contains(id)){
+    qDebug() << "mdtDevice::waitTransactionDone(): queue: " << pvPendingDioTransactions.keys();
+    while(pvPendingDioTransactions.contains(id)){
+      // Check timeout
+      if(i <= 0){
+        qDebug() << "mdtDevice::waitTransactionDone(): timeout for TID " << id;
+        pvPendingDioTransactions.remove(id);
+        setStateBusy(2000);
+        return false;
+      }
+      mdtPortManager::wait(gr, gr);
+      i--;
+    }
+  }else{
+    qDebug() << "mdtDevice::waitTransactionDone(): id not found";
+    return false;
+  }
+  qDebug() << "mdtDevice::waitTransactionDone(): transaction DONE for TID " << id;
+
+  return true;
 }

@@ -222,17 +222,17 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   // User change the value
   sl.setValue(4.0);
   QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
-  qDebug() << "PLC value: " << plcAo.value();
   QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
   // PLC (device) confirm the same value
   ao.setValue(4.0, true, false);
   QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
   QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
 
-
+  /*
   while(sl.isVisible()){
     QTest::qWait(100);
   }
+  */
 }
 
 void mdtIoWidgetTest::digitalInWidgetTest()

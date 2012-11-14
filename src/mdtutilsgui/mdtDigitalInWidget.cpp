@@ -56,6 +56,7 @@ void mdtDigitalInWidget::setIo(mdtDigitalIo *io)
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
   connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
+  connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Set initial data
   setOn(io->isOn());
 }
@@ -75,4 +76,9 @@ void mdtDigitalInWidget::setOn(bool on)
     ldState->setOn(false);
     lbState->setText("??");
   }
+}
+
+void mdtDigitalInWidget::setEnabled(bool enabled)
+{
+  ldState->setEnabled(enabled);
 }

@@ -263,8 +263,17 @@ class mdtDevice : public QObject
    */
   void setStateFromPortError(int error);
 
+  /*! \brief
+   */
+  void addTransaction(int id, mdtAnalogIo *io);
+  void addTransaction(int id, mdtDigitalIo *io);
+  
+  mdtAnalogIo *pendingAioTransaction(int id);
+  mdtDigitalIo *pendingDioTransaction(int id);
+  
+  bool waitTransactionDone(int id, int timeout, int gr = 50);
+  
   mdtDeviceIos *pvIos;    // I/O's container
-  QMap<int, mdtAnalogIo*> pvAoPendingTransactions;
   int pvOutputWriteReplyTimeout;
   int pvAnalogOutputAddressOffset;
 
@@ -275,6 +284,8 @@ class mdtDevice : public QObject
   state_t pvCurrentState;
   QString pvName;
   QTimer *pvQueryTimer;
+  QMap<int, mdtAnalogIo*> pvPendingAioTransactions;
+  QMap<int, mdtDigitalIo*> pvPendingDioTransactions;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

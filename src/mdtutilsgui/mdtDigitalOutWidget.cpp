@@ -56,6 +56,7 @@ void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
   connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
+  connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Signals/slots from widget to io
   connect(pbState, SIGNAL(toggled(bool)), io, SLOT(setStateFromUi(bool)));
   // Internal signals/slots
@@ -88,5 +89,10 @@ void mdtDigitalOutWidget::updateState(bool state)
   }else{
     pbState->setText("??");
   }
+}
+
+void mdtDigitalOutWidget::setEnabled(bool enabled)
+{
+  pbState->setEnabled(enabled);
 }
 

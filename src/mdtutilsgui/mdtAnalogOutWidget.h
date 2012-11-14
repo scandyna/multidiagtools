@@ -63,6 +63,7 @@ class mdtAnalogOutWidget : public mdtAbstractIoWidget
   void setUnit(const QString &unit);
   void setRange(double min, double max);
   void setValue(double value);
+  void setEnabled(bool enabled);
 
  private:
 

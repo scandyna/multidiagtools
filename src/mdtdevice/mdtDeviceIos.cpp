@@ -153,7 +153,7 @@ void mdtDeviceIos::updateAnalogInputValueInt(int address, int value, bool isVali
   if(ai == 0){
     return;
   }
-  ai->setValueInt(value, isValid);
+  ai->setValueInt(value, isValid, false);
 }
 
 void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
@@ -168,15 +168,15 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
     if(ai != 0){
       var = values.at(i);
       if(!var.isValid()){
-        ai->setValue(0.0, false);
+        ai->setValue(0.0, false, false);
       }else if(var.type() == QVariant::Double){
         ///qDebug() << "mdtDeviceIos::updateAnalogInputValues() , have value type double: " << var;
-        ai->setValue(var.toDouble(), true);
+        ai->setValue(var.toDouble(), true, false);
       }else if(var.type() == QVariant::Int){
         ///qDebug() << "mdtDeviceIos::updateAnalogInputValues() , have value type int: " << var;
-        ai->setValueInt(var.toInt(), true);
+        ai->setValueInt(var.toInt(), true, false);
       }else{
-        ai->setValue(0.0, false);
+        ai->setValue(0.0, false, false);
       }
     }
   }
@@ -195,13 +195,13 @@ void mdtDeviceIos::updateAnalogInputValues(const QMap<int, QVariant> &values)
     if(ai != 0){
       var = it.value();
       if(!var.isValid()){
-        ai->setValue(0.0, false);
+        ai->setValue(0.0, false, false);
       }else if(var.type() == QVariant::Double){
-        ai->setValue(var.toDouble(), true);
+        ai->setValue(var.toDouble(), true, false);
       }else if(var.type() == QVariant::Int){
-        ai->setValueInt(var.toInt(), true);
+        ai->setValueInt(var.toInt(), true, false);
       }else{
-        ai->setValue(0.0, false);
+        ai->setValue(0.0, false, false);
       }
     }
   }
@@ -215,7 +215,7 @@ void mdtDeviceIos::updateAnalogOutputValue(int address, double value, bool isVal
   if(ao == 0){
     return;
   }
-  ao->setValue(value, isValid);
+  ao->setValue(value, isValid, false);
 }
 
 void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
@@ -230,15 +230,15 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
     if(ao != 0){
       var = values.at(i);
       if(!var.isValid()){
-        ao->setValue(0.0, false);
+        ao->setValue(0.0, false, false);
       }else if(var.type() == QVariant::Double){
         ///qDebug() << "mdtDeviceIos::updateAnalogOutputValues() , have value type double: " << var;
-        ao->setValue(var.toDouble(), true);
+        ao->setValue(var.toDouble(), true, false);
       }else if(var.type() == QVariant::Int){
         ///qDebug() << "mdtDeviceIos::updateAnalogOutputValues() , have value type int: " << var;
-        ao->setValueInt(var.toInt(), true);
+        ao->setValueInt(var.toInt(), true, false);
       }else{
-        ao->setValue(0.0, false);
+        ao->setValue(0.0, false, false);
       }
     }
   }

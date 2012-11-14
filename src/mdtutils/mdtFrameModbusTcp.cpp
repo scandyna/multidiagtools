@@ -89,9 +89,9 @@ int mdtFrameModbusTcp::putData(const char *data, int maxLen)
   if(size() == frameSize){
     pvEOFcondition = true;
     // Store members
-    pvTransactionId = (at(0) << 8) + at(1);
-    pvProtocolId = (at(2) << 8) + at(3);
-    pvUnitId = at(6);
+    pvTransactionId = ((quint8)at(0) << 8) + (quint8)at(1);
+    pvProtocolId = ((quint8)at(2) << 8) + (quint8)at(3);
+    pvUnitId = (quint8)at(6);
     // Store PDU if exists
     if(size() > 7){
       pvPdu = right(size()-7);

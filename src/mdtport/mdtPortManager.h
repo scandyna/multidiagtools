@@ -381,7 +381,7 @@ class mdtPortManager : public QThread
    *                     Note that msecs must be a multiple of granularity.
    * \pre granularity must be > 0.
    */
-  void wait(int msecs, int granularity = 50);
+  static void wait(int msecs, int granularity = 50);
 
  public slots:
 

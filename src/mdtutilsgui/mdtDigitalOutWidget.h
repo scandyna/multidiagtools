@@ -52,6 +52,7 @@ class mdtDigitalOutWidget : public mdtAbstractIoWidget
 
   // if state is != from current state, text will be updated
   void updateState(bool state);
+  void setEnabled(bool enabled);
 
  private:
 

@@ -1235,6 +1235,64 @@ void mdtFrameTest::modbusTcpDecodeTest()
   QVERIFY(mf->modbusLength() == 14);
   QVERIFY(mf->unitId() == 0xFF);
   QVERIFY(mf->getPdu().size() == 0);
+
+  /*
+   * Transaction ID bug (2012-11-13)
+   */
+
+  // Build the frame
+  srcData.clear();
+  // Transaction ID
+  srcData.append((char)0x00);
+  srcData.append(127);
+  // Protocol ID
+  srcData.append((char)0);
+  srcData.append((char)0);
+  // Length: 1
+  srcData.append((char)0);
+  srcData.append((char)1);
+  // Unit ID
+  srcData.append(0x95);
+  // PDU
+  ///srcData.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  QVERIFY(srcData.size() == 7);
+
+  // Init frame
+  f->reserve(20);
+  f->clear();
+  f->clearSub();
+  QVERIFY(f->putData(srcData.data(), srcData.size()) == 7);
+  QVERIFY(!f->isEmpty());
+  qDebug() << "TR ID: " << mf->transactionId();
+  QVERIFY(mf->transactionId() == 127);
+
+  // Build the frame
+  srcData.clear();
+  // Transaction ID
+  srcData.append((char)0x00);
+  srcData.append(128);
+  // Protocol ID
+  srcData.append((char)0);
+  srcData.append((char)0);
+  // Length: 1
+  srcData.append((char)0);
+  srcData.append((char)1);
+  // Unit ID
+  srcData.append(0x95);
+  // PDU
+  ///srcData.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  QVERIFY(srcData.size() == 7);
+
+  // Init frame
+  f->reserve(20);
+  f->clear();
+  f->clearSub();
+  QVERIFY(f->putData(srcData.data(), srcData.size()) == 7);
+  QVERIFY(!f->isEmpty());
+  qDebug() << "TR ID: " << mf->transactionId();
+  QVERIFY(mf->transactionId() == 128);
+
+
 }
 
 void mdtFrameTest::usbTmcEncodeTest()

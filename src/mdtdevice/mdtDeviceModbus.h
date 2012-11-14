@@ -46,13 +46,6 @@ class mdtDeviceModbus : public mdtDevice
 
   virtual ~mdtDeviceModbus();
 
-  /*! \brief Set the number of analog inputs
-   *
-   * \param count Number of analog inputs
-   * \pre count must be in range from 1 to 125
-   */
-  ///void setupAnalogInputs(int count);
-
   /*! \brief Get the value of a analog input
    *
    * When delaying the request, the currently stored value is returned.
@@ -73,23 +66,6 @@ class mdtDeviceModbus : public mdtDevice
    */
   int readAnalogInputs();
 
-  /*! \brief Set the number of analog outputs
-   *
-   * \param count Number of analog outputs
-   * \pre count must be in range from 1 to 123
-   */
-  void setupAnalogOutputs(int count);
-
-  /*! \brief Set the value of a analog output
-   *
-   * \param address Address as describe in MODBUS specification
-   *                 (first output of a node has address 0, second has address 1, ...)
-   *                 If address is out of range, a invalid value is returned (see setupAnalogOutputs() ).
-   * \param readDirectly If true, the request is sent to device directly, else it can be sent with writeAnalogOutputs()
-   * \return True on success.
-   */
-  bool setAnalogOutput(int address, int value, bool writeDirectly);
-
   /*! \brief Get the value of a analog output
    *
    * \param address Address as describe in MODBUS specification
@@ -104,7 +80,7 @@ class mdtDeviceModbus : public mdtDevice
    *
    * \return True on success.
    */
-  bool writeAnalogOutputs();
+  //bool writeAnalogOutputs();
 
   /*! \brief Read all analog outputs on physical device and update (G)UI representation
    *
@@ -112,7 +88,7 @@ class mdtDeviceModbus : public mdtDevice
    *
    * \pre I/O's container must be set with setIos()
    */
-  virtual int readAnalogOutputs();
+  int readAnalogOutputs();
 
   /*! \brief Set value on a analog output on physical device
    *
@@ -128,13 +104,6 @@ class mdtDeviceModbus : public mdtDevice
    *  - Helper method setStateFromPortError() can be used to update device state on error.
    */
   int writeAnalogOutputValue(int address, int value, int confirmationTimeout);
-
-  /*! \brief Set the number of digital inputs
-   *
-   * \param count Number of digital inputs
-   * \pre count must be in range from 1 to 2000
-   */
-  void setupDigitalInputs(int count);
 
   /*! \brief Get the state of a digital input
    *
@@ -161,7 +130,7 @@ class mdtDeviceModbus : public mdtDevice
    * \param count Number of digital outputs
    * \pre count must be in range from 1 to 1968
    */
-  void setupDigitalOutputs(int count);
+  ///void setupDigitalOutputs(int count);
 
   /*! \brief Set the state of a digital output
    *
@@ -222,10 +191,6 @@ class mdtDeviceModbus : public mdtDevice
 
   mdtModbusTcpPortManager *pvTcpPortManager;
   mdtFrameCodecModbus *pvCodec;
-  ///QList<QByteArray> pvReadenFrames;     // Frames readen from port manager
-  QMap<quint16,quint16> pvAnalogOutputs;
-  QMap<quint16,bool> pvDigitalInputs;
-  QMap<quint16,bool> pvDigitalOutputs;
 };
 
 #endif  // #ifndef MDT_DEVICE_MODBUS_H

@@ -61,6 +61,7 @@ void mdtAnalogInWidget::setIo(mdtAnalogIo *io)
   connect(io, SIGNAL(unitChangedForUi(const QString&)), this, SLOT(setUnit(const QString&)));
   connect(io, SIGNAL(rangeChangedForUi(double, double)), this, SLOT(setRange(double, double)));
   connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
+  connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Set initial data
   setUnit(io->unit());
   setRange(io->minimum(), io->maximum());
@@ -95,4 +96,10 @@ void mdtAnalogInWidget::setValue(double value)
   }else{
     lbValue->setText("??");
   }
+}
+
+void mdtAnalogInWidget::setEnabled(bool enabled)
+{
+  lbValue->setEnabled(enabled);
+  thValue->setEnabled(enabled);
 }

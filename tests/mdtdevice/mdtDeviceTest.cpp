@@ -302,6 +302,7 @@ void mdtDeviceTest::deviceModbusTest()
   */
 
   // First setup - Digital inputs
+  /**
   d.setupDigitalInputs(11);
   QVERIFY(!d.getDigitalInputState(-1, false).isValid());
   QVERIFY(d.getDigitalInputState(0, false).isValid());
@@ -316,8 +317,10 @@ void mdtDeviceTest::deviceModbusTest()
   QVERIFY(d.getDigitalInputState(0, false) == false);
   QVERIFY(d.getDigitalInputState(4, false) == false);
   QVERIFY(!d.getDigitalInputState(5, false).isValid());
+  */
 
   // First setup - Digital outputs
+  /**
   d.setupDigitalOutputs(11);
   QVERIFY(!d.getDigitalOutputState(-1, false).isValid());
   QVERIFY(d.getDigitalOutputState(0, false).isValid());
@@ -330,27 +333,31 @@ void mdtDeviceTest::deviceModbusTest()
   QVERIFY(d.getDigitalOutputState(0, false) == true);
   QVERIFY(d.setDigitalOutput(9, true, false));
   QVERIFY(d.getDigitalOutputState(9, false) == true);
+  */
 
   // Second setup - Digital outputs
+  /**
   d.setupDigitalOutputs(5);
   QVERIFY(!d.getDigitalOutputState(-1, false).isValid());
   QVERIFY(d.getDigitalOutputState(0, false).isValid());
   QVERIFY(d.getDigitalOutputState(0, false) == false);
   QVERIFY(d.getDigitalOutputState(4, false) == false);
   QVERIFY(!d.getDigitalOutputState(5, false).isValid());
+  */
 
   /// Essais
   ///QVERIFY(d.setAnalogOutput(0, 0x00FF, false));
   ///QVERIFY(d.setAnalogOutput(1, 0x00FF, false));
   ///QVERIFY(d.writeAnalogOutputs());
-  QVERIFY(d.setDigitalOutput(0, true, false));
-  QVERIFY(d.setDigitalOutput(1, true, false));
-  QVERIFY(d.setDigitalOutput(3, true, false));
-  QVERIFY(d.writeDigitalOutputs());
-  QVERIFY(d.readDigitalInputs());
+  ///QVERIFY(d.setDigitalOutput(0, true, false));
+  ///QVERIFY(d.setDigitalOutput(1, true, false));
+  ///QVERIFY(d.setDigitalOutput(3, true, false));
+  ///QVERIFY(d.writeDigitalOutputs());
+  ///QVERIFY(d.readDigitalInputs());
   ///QVERIFY(d.readAnalogOutputs());
-  QVERIFY(d.readDigitalOutputs());
+  ///QVERIFY(d.readDigitalOutputs());
 
+  QVERIFY(d.readAnalogOutputs() >= 0);
   d.start(100);
   while(iosw.isVisible()){
     ///QVERIFY(d.readAnalogInputs() >= 0);

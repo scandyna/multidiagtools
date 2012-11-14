@@ -36,9 +36,23 @@ class mdtAbstractIo : public QObject
 
  public:
 
+  /*! \brief I/O type
+   */
+//   enum type_t {
+//                 UNKNOWN,      /*!< Undefined I/O type */
+//                 ANALOG_IN,    /*!< Analog input */
+//                 ANALOG_OUT,   /*!< Analog output */
+//                 DIGITAL_IN,   /*!< Digital input */
+//                 DIGITAL_OUT   /*!< Digital output */
+//               };
+
   mdtAbstractIo(QObject *parent = 0);
 
   virtual  ~mdtAbstractIo();
+
+  /*! \brief Get I/O type
+   */
+  ///type_t type() const;
 
   /*! \brief Set the I/O address
    */
@@ -82,6 +96,10 @@ class mdtAbstractIo : public QObject
    */
   bool hasValidData() const;
 
+  /*! \brief Set enabled state
+   */
+  void setEnabled(bool enabled);
+
  signals:
 
   /*
@@ -93,8 +111,13 @@ class mdtAbstractIo : public QObject
   void labelShortChangedForUi(const QString &text);
   void labelChangedForUi(const QString &text);
   void detailsChangedForUi(const QString &text);
+  void enabledStateChangedForUi(bool enabled);
 
  protected:
+
+  /*! \brief Set I/O type
+   */
+  ///void setType(type_t type);
 
   int pvAddress;
   bool pvHasValidData;
@@ -103,6 +126,7 @@ class mdtAbstractIo : public QObject
 
   Q_DISABLE_COPY(mdtAbstractIo);
 
+  ///type_t pvType;
   QString pvLabelShort;
   QString pvLabel;
   QString pvDetails;

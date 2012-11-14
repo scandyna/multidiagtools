@@ -55,6 +55,7 @@ class mdtDigitalInWidget : public mdtAbstractIoWidget
 
   // Used to update GUI from mdtDigitalIo object.
   void setOn(bool on);
+  void setEnabled(bool enabled);
 
  private:
 
