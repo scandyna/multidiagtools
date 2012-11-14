@@ -125,13 +125,6 @@ class mdtDeviceModbus : public mdtDevice
    */
   bool readDigitalInputs();
 
-  /*! \brief Set the number of digital outputs
-   *
-   * \param count Number of digital outputs
-   * \pre count must be in range from 1 to 1968
-   */
-  ///void setupDigitalOutputs(int count);
-
   /*! \brief Set the state of a digital output
    *
    * \param address Address as describe in MODBUS specification
@@ -182,7 +175,7 @@ class mdtDeviceModbus : public mdtDevice
    *  - In this class, this connection is not made, it is the sublcass responsability to do this.
    *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
-  void decodeReadenFrames(int id, QByteArray pdu);
+  void decodeReadenFrame(int id, QByteArray pdu);
 
  private:
 

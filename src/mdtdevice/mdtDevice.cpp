@@ -131,7 +131,7 @@ void mdtDevice::setAnalogOutputValue(int address, int value)
   }
 }
 
-void mdtDevice::decodeReadenFrames(int, QByteArray)
+void mdtDevice::decodeReadenFrame(int, QByteArray)
 {
 }
 
@@ -252,42 +252,44 @@ mdtDigitalIo *mdtDevice::pendingDioTransaction(int id)
   return pvPendingDioTransactions.take(id);
 }
 
-bool mdtDevice::waitTransactionDone(int id, int timeout, int gr)
+bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
 {
+  Q_ASSERT(granularity > 0);
+
   qDebug() << "mdtDevice::waitTransactionDone() TID: " << id;
-  int i = timeout / gr;
+
+  int i = timeout / granularity;
+
   // Select correct queue
   if(pvPendingAioTransactions.contains(id)){
-    qDebug() << "mdtDevice::waitTransactionDone(): queue: " << pvPendingAioTransactions.keys();
     while(pvPendingAioTransactions.contains(id)){
       // Check timeout
       if(i <= 0){
-        qDebug() << "mdtDevice::waitTransactionDone(): timeout for TID " << id;
         pvPendingAioTransactions.remove(id);
-        setStateBusy(2000);
+        setStateBusy(200);
         return false;
       }
-      mdtPortManager::wait(gr, gr);
+      mdtPortManager::wait(granularity, granularity);
       i--;
     }
   }else if(pvPendingDioTransactions.contains(id)){
-    qDebug() << "mdtDevice::waitTransactionDone(): queue: " << pvPendingDioTransactions.keys();
     while(pvPendingDioTransactions.contains(id)){
       // Check timeout
       if(i <= 0){
-        qDebug() << "mdtDevice::waitTransactionDone(): timeout for TID " << id;
         pvPendingDioTransactions.remove(id);
-        setStateBusy(2000);
+        setStateBusy(200);
         return false;
       }
-      mdtPortManager::wait(gr, gr);
+      mdtPortManager::wait(granularity, granularity);
       i--;
     }
   }else{
-    qDebug() << "mdtDevice::waitTransactionDone(): id not found";
+    // Add a error
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": transaction id " + QString::number(id) + " not found", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
     return false;
   }
-  qDebug() << "mdtDevice::waitTransactionDone(): transaction DONE for TID " << id;
 
   return true;
 }

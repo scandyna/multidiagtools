@@ -33,6 +33,34 @@ class QTimer;
 
 /*! \brief Base class for a device connected to a port
  *
+ * Querying a device can be done several ways.
+ *  Some devices sends a confirmation after each query.
+ *
+ * Some queries (f.ex. read a input value or state) give
+ *  a result after query. In some applications, we need
+ *  to display the reult priodically. In other application,
+ *  we need to send the query and wait on result before
+ *  we can continue. This base class gives a interface for
+ *  these two cases.
+ *
+ * At basis, all query methods are not blocking by default.
+ *  The normal way is to connect mdtPortManager::newReadenFrame()
+ *  to decodeReadenFrame() slot (must be done in subclass).
+ *  This way, a query will be sent to device and method returns.
+ *  When device returns a result, mdtPortManager will send
+ *  the newReadenFrame() signal, and decoding will be processed
+ *  in decodeReadenFrame() and I/O's are updated.
+ *
+ * Because the blocking behaviour is sometimes needed, the concept
+ *  of transaction is implemented. At first, we tell the query method
+ *  that we will wait on a reply by passing a timeout > 0.
+ *  Then, the query is sent to device and a transaction ID is added
+ *  to a list with addTransaction(). At next, waitTransactionDone()
+ *  is called, and finally result is returned.
+ *  Note that waitTransactionDone() will not breack the Qt's event loop
+ *  because it uses the mdtPortManager::wait() method (see documentation 
+ *  of mdtPortManager for details).
+ * 
  * Give some helper methods for event handling, ....
  *
  * If it is needed to continiusly update the representation
@@ -170,10 +198,10 @@ class mdtDevice : public QObject
    *
    * Subclass notes:<br>
    *  - This default implementation does nothing and returns allways -1.
-   *  - If device handled by subclass has analog inputs, this method should be implemented.
-   *  - If device returns a confirmation, helper method mdtPortManager::waitOnFrame() can be used
+   *  - If device handled by subclass has analog outputs, this method should be implemented.
+   *  - ///If device returns a confirmation, helper method mdtPortManager::waitOnFrame() can be used
    *  - The subclass must handle and document the behaviour of calling this method without any I/O's container set.
-   *  - To update (G)UI, mdtDeviceIos::updateAnalogOutputValue() should be used.
+   *  - ///To update (G)UI, mdtDeviceIos::updateAnalogOutputValue() should be used.
    *  - Helper method setStateFromPortError() can be used to update device state on error.
    */
   virtual int writeAnalogOutputValue(int address, int value, int confirmationTimeout);
@@ -205,7 +233,7 @@ class mdtDevice : public QObject
    *  - In this class, this connection is not made, it is the sublcass responsability to do this.
    *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
-  virtual void decodeReadenFrames(int id, QByteArray data);
+  virtual void decodeReadenFrame(int id, QByteArray data);
 
   /*! \brief Queries to send periodically
    *
@@ -263,15 +291,43 @@ class mdtDevice : public QObject
    */
   void setStateFromPortError(int error);
 
-  /*! \brief
+  /*! \brief Add a query/reply transaction
    */
   void addTransaction(int id, mdtAnalogIo *io);
+
+  /*! \brief Add a query/reply transaction
+   */
   void addTransaction(int id, mdtDigitalIo *io);
-  
+
+  /*! \brief Get analog I/O in pending transactions list
+   *
+   * If transaction id was not found, 0 is returned
+   */
   mdtAnalogIo *pendingAioTransaction(int id);
+
+  /*! \brief Get digital I/O in pending transactions list
+   *
+   * If transaction id was not found, 0 is returned
+   */
   mdtDigitalIo *pendingDioTransaction(int id);
-  
-  bool waitTransactionDone(int id, int timeout, int gr = 50);
+
+  /*! \brief Wait until a transaction is done without break the GUI's event loop
+   *
+   * This is a helper method that provide a blocking wait.
+   *  Internally, a couple of sleep and event processing
+   *  is done, avoiding freesing the GUI.
+   *
+   * \param id Id returned by query method
+   * \param timeout Timeout [ms]
+   * \param granularity Sleep time between each call of event processing [ms]<br>
+   *                     A little value needs more CPU and big value can freese the GUI.
+   *                     Should be between 50 and 100, and must be > 0.
+   *                     Note that msecs must be a multiple of granularity.
+   * \return True on success, false on timeout. If id was not found in transactions list,
+   *           a warning will be generated in mdtError system, and false will be returned.
+   * \pre granularity must be > 0.
+   */
+  bool waitTransactionDone(int id, int timeout, int granularity = 50);
   
   mdtDeviceIos *pvIos;    // I/O's container
   int pvOutputWriteReplyTimeout;

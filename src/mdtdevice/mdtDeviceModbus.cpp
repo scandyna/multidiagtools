@@ -33,7 +33,7 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
   /// \note Provisoire !!
-  connect(pvTcpPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrames(int, QByteArray)));
+  connect(pvTcpPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrame(int, QByteArray)));
   pvTcpPortManager->setNotifyNewReadenFrame(true);
   pvTcpPortManager->setPortName("192.168.1.102:502");
   pvTcpPortManager->openPort();
@@ -184,7 +184,6 @@ int mdtDeviceModbus::writeAnalogOutputValue(int address, int value, int confirma
     e.commit();
     return -1;
   }
-  ///pvAoPendingTransactions.insert(transactionId, ao);
   ao->setEnabled(false);
   addTransaction(transactionId, ao);
   if(!waitTransactionDone(transactionId, 500)){
@@ -192,21 +191,6 @@ int mdtDeviceModbus::writeAnalogOutputValue(int address, int value, int confirma
     ao->setValue(0.0, false, false);
   }
   ao->setEnabled(true);
-  /**
-  qDebug() << "mdtDeviceModbus::writeAnalogOutputValue() request sent, TID: " << transactionId;
-  int i = 10;
-  while(pvAoPendingTransactions.contains(transactionId)){
-    if(i <= 0){
-      qDebug() << "mdtDeviceModbus::writeAnalogOutputValue(): timeout";
-      pvAoPendingTransactions.remove(transactionId);
-      setStateBusy(100);
-    }
-    pvTcpPortManager->wait(50);
-    i--;
-    qDebug() << "mdtDeviceModbus::writeAnalogOutputValue(): waiting , transactions queue: " << pvAoPendingTransactions.keys();
-  }
-  */
-  qDebug() << "mdtDeviceModbus::writeAnalogOutputValue(): transaction DONE";
 
   return transactionId;
 }
@@ -371,7 +355,7 @@ bool mdtDeviceModbus::readDigitalOutputs()
   return true;
 }
 
-void mdtDeviceModbus::decodeReadenFrames(int id, QByteArray pdu)
+void mdtDeviceModbus::decodeReadenFrame(int id, QByteArray pdu)
 {
   Q_ASSERT(pvIos != 0);
 
