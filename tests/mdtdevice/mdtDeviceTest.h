@@ -39,7 +39,8 @@ class mdtDeviceTest : public mdtTest
   void deviceIosWidgetTest();
 
   // Some simple coherence tests (no real test possible without MODBUS server)
-  void deviceModbusTest();
+  void modbusWagoTest();
+  void modbusBeckhoffTest();
 
 /**
 #ifdef Q_OS_UNIX

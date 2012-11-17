@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtDigitalIo.h"
 
+#include <QDebug>
+
 mdtDigitalIo::mdtDigitalIo(QObject *parent)
  : mdtAbstractIo(parent)
 {
@@ -30,21 +32,42 @@ mdtDigitalIo::~mdtDigitalIo()
 {
 }
 
-bool mdtDigitalIo::isOn()
+bool mdtDigitalIo::isOn() const
 {
   return pvIsOn;
 }
 
-void mdtDigitalIo::setOn(bool on, bool isValid)
+void mdtDigitalIo::setOn(QVariant on, bool emitValueChanged)
 {
+  if((!on.isValid())||(on.type() != QVariant::Bool)){
+    setOn(false, false, emitValueChanged);
+  }else{
+    setOn(on.toBool(), true, emitValueChanged);
+  }
+}
+
+void mdtDigitalIo::setOn(bool on, bool isValid, bool emitValueChanged)
+{
+  bool notifyUi = false;
+
+  // Check if UI must be updated
+  if((on != pvIsOn)||(isValid != pvHasValidData)){
+    notifyUi = true;
+  }
+  // Check validity
   pvHasValidData = isValid;
   if(!pvHasValidData){
     on = false;
   }
   if(pvIsOn != on){
     pvIsOn = on;
-    emit(stateChanged(pvIsOn));
-    emit(stateChanged(pvAddress, pvIsOn));
+    if(emitValueChanged){
+      emit(stateChanged(pvIsOn));
+      emit(stateChanged(pvAddress, pvIsOn));
+    }
+  }
+  if(notifyUi){
+    qDebug() << "mdtDigitalIo::setOn(): notify Ui, new state: " << pvIsOn;
     emit(stateChangedForUi(pvIsOn));
   }
 }

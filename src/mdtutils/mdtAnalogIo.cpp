@@ -217,6 +217,22 @@ int mdtAnalogIo::valueInt() const
   return m;
 }
 
+void mdtAnalogIo::setValue(QVariant value, bool emitValueChanged)
+{
+  if(!value.isValid()){
+    setValue(0.0, false, emitValueChanged);
+    return;
+  }
+  // Check type and update
+  if(value.type() == QVariant::Double){
+    setValue(value.toDouble(), true, emitValueChanged);
+  }else if(value.type() == QVariant::Int){
+    setValueInt(value.toInt(), true, emitValueChanged);
+  }else{
+    setValue(0.0, false, emitValueChanged);
+  }
+}
+
 void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
 {
   pvHasValidData = isValid;

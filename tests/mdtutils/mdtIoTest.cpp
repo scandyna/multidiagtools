@@ -31,7 +31,6 @@ void mdtIoTest::mdtAbstractIoTest()
   mdtAbstractIo io;
 
   // Initial states
-  ///QVERIFY(io.type() == mdtAbstractIo::UNKNOWN);
   QVERIFY(io.address() == 0);
   QVERIFY(io.labelShort() == "");
   QVERIFY(io.label() == "");
@@ -55,7 +54,6 @@ void mdtIoTest::analogIoTest()
   mdtAnalogIo io;
 
   // Initial values
-  ///QVERIFY(io.type() == mdtAbstractIo::ANALOG);
   QCOMPARE(io.value(), 0.0);
   QCOMPARE(io.valueInt(), 0);
   QVERIFY(!io.hasValidData());
@@ -109,6 +107,16 @@ void mdtIoTest::analogIoTest()
   QVERIFY(io.hasValidData());
   QCOMPARE(io.value(), (double)(10.0*127.0/255.0));
   QCOMPARE(io.valueInt(), 127);
+
+  // Check setValue(QVariant)
+  io.setValue(QVariant());
+  QVERIFY(!io.hasValidData());
+  io.setValue(QVariant(5.6));
+  QVERIFY(io.hasValidData());
+  QVERIFY(qAbs(io.value()-5.6) < (10.0/250.0));
+  io.setValue(QVariant(127));
+  QVERIFY(io.hasValidData());
+  QVERIFY(qAbs(io.value()-5.0) < (10.0/250.0));
 }
 
 void mdtIoTest::wagoAnalogInputTest()
@@ -268,6 +276,15 @@ void mdtIoTest::digitalIoTest()
   io.setOn(true, true);
   QVERIFY(io.hasValidData());
   QVERIFY(io.isOn());
+  // Check setOn(QVariant)
+  io.setOn(QVariant());
+  QVERIFY(!io.hasValidData());
+  io.setOn(QVariant(true));
+  QVERIFY(io.hasValidData());
+  QVERIFY(io.isOn());
+  io.setOn(QVariant(false));
+  QVERIFY(io.hasValidData());
+  QVERIFY(!io.isOn());
 }
 
 

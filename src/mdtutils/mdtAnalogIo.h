@@ -22,6 +22,7 @@
 #define MDT_ANALOG_IO_H
 
 #include "mdtAbstractIo.h"
+#include <QVariant>
 
 /*! \brief Representation of a analog I/O
  *
@@ -145,6 +146,22 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   int valueInt() const;
 
+  /*! \brief Set the value to update display
+   *
+   * Store the value and emit valueChanged() if
+   *  new value is different from current.
+   *
+   * \param value The value to store.
+   *               If value is of type int, conversion is done. (see setEncodeBitSettings() ).
+   *               If value is invalid, the validity flag is updated.
+   *               See setValue(double, bool, bool) for details.
+   * \param emitValueChanged If true, valueChanged(int, int) and valueChanged(double) will be emitted.
+   *
+   * Note for UI developpers:
+   *  - The signal valueChangedForUi() is emited
+   */
+  void setValue(QVariant value, bool emitValueChanged = true);
+
  public slots:
 
   /*! \brief Set the value to update display
@@ -154,7 +171,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * \param value The value to store
    * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
-   * \param emitValueChanged If true, valueChanged() will be emitted
+   * \param emitValueChanged If true, valueChanged(int, int) and valueChanged(double) will be emitted.
    *
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited

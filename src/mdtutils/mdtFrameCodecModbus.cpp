@@ -131,6 +131,7 @@ QByteArray mdtFrameCodecModbus::encodeReadInputRegisters(quint16 startAddress, q
 
 QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil(quint16 address, bool state)
 {
+  qDebug() << "mdtFrameCodecModbus::encodeWriteSingleCoil(): address " << address << " , state: " << state;
   pvPdu.clear();
 
   // Function code
@@ -219,7 +220,8 @@ QByteArray mdtFrameCodecModbus::encodeWriteMultipleCoils(quint16 startAddress, c
   return pvPdu;
 }
 
-QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values)
+///QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values)
+QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList<int> &values)
 {
   quint16 n = values.size();
   int i;
@@ -246,8 +248,8 @@ QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddres
   pvPdu.append(2*n);
   // Add values
   for(i=0; i<values.size(); i++){
-    pvPdu.append(values.at(i) >> 8);
-    pvPdu.append(values.at(i) & 0x00FF);
+    pvPdu.append(((quint16)values.at(i) >> 8));
+    pvPdu.append(((quint16)values.at(i) & 0x00FF));
   }
 
   return pvPdu;
@@ -376,6 +378,8 @@ bool mdtFrameCodecModbus::decodeReadCoils()
     appendValuesBitsFromByte(pvPdu.at(i));
   }
 
+  qDebug() << "mdtFrameCodecModbus::decodeReadCoils(): values: " << pvValues;
+  
   return true;
 }
 
@@ -508,6 +512,8 @@ bool mdtFrameCodecModbus::decodeWriteSingleCoil()
   }else{
     pvValues.append(false);
   }
+  
+  qDebug() << "mdtFrameCodecModbus::decodeWriteSingleCoil(): values: " << pvValues;
 
   return true;
 }

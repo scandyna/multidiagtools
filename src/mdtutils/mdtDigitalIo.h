@@ -22,6 +22,7 @@
 #define MDT_DIGITAL_IO_H
 
 #include "mdtAbstractIo.h"
+#include <QVariant>
 
 /*! \brief Representation of a digital I/O
  *
@@ -42,22 +43,29 @@ class mdtDigitalIo : public mdtAbstractIo
 
   /*! \brief Get current I/O state
    */
-  bool isOn();
+  bool isOn() const;
+
+  /*! \brief Set I/O state (On or OFF)
+   *
+   * Internally, setOn(bool, bool) is used.
+   */
+  void setOn(QVariant on, bool emitValueChanged = true);
 
  public slots:
 
   /*! \brief Set I/O state (On or OFF)
    *
-   * Store the state and emit stateChanged() if
-   *  new value state different from current.
+   * Store the state and emit stateChanged() if 
+   *  new state state different from current.
    *
    * \param on The state to store
    * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
+   * \param emitValueChanged If true, stateChanged(int, bool) and stateChanged(bool) will be emitted.
    *
    * Note for UI developpers:
    *  - The signal stateChangedForUi() is emited
    */
-  void setOn(bool on, bool isValid);
+  void setOn(bool on, bool isValid, bool emitValueChanged = true);
 
   /*! \brief Set I/O state (On or OFF)
    *

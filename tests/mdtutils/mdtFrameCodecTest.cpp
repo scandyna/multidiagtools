@@ -229,7 +229,8 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
 {
   mdtFrameCodecModbus c;
   QByteArray pdu;
-  QList<quint16> aValues;
+  ///QList<quint16> aValues;
+  QList<int> aValues;
   QList<bool> dValues;
 
   // Initial states

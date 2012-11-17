@@ -199,13 +199,15 @@ void mdtDeviceTest::deviceIosWidgetTest()
 
 }
 
-void mdtDeviceTest::deviceModbusTest()
+void mdtDeviceTest::modbusWagoTest()
 {
   mdtDeviceModbus d;
   mdtDeviceIos ios;
   mdtDeviceIosWidget iosw;
   mdtAnalogIo *ai;
   mdtAnalogIo *ao;
+  mdtDigitalIo *di;
+  mdtDigitalIo *dout;
 
   /*
    * Setup I/O's
@@ -248,6 +250,28 @@ void mdtDeviceTest::deviceModbusTest()
   QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
   QVERIFY(ao->setEncodeBitSettings(15, 0));
   ios.addAnalogOutput(ao);
+  ao = new mdtAnalogIo;
+  ao->setAddress(1);
+  ao->setLabelShort("AO2");
+  ao->setUnit("[V]");
+  ao->setDetails("Module type: 750-550");
+  QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
+  QVERIFY(ao->setEncodeBitSettings(15, 0));
+  ios.addAnalogOutput(ao);
+
+  // Digital inputs
+  di = new mdtDigitalIo;
+  di->setAddress(0);
+  di->setLabelShort("DI1");
+  di->setDetails("Module type: ??");
+  ios.addDigitalInput(di);
+
+  // Digital outputs
+  dout = new mdtDigitalIo;
+  dout->setAddress(0);
+  dout->setLabelShort("DO1");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
 
   // Setup I/O's widget
   iosw.setDeviceIos(&ios);
@@ -256,25 +280,132 @@ void mdtDeviceTest::deviceModbusTest()
   // Setup device
   d.setIos(&ios, true);
   d.setAnalogOutputAddressOffset(0x0200);
+  d.setDigitalOutputAddressOffset(0);
 
-  // Check blocking calls
+  /*
+   * Tests
+   */
+
+  // Analog inputs
   QVERIFY(d.getAnalogInputValue(0, 500, true).isValid());
   QVERIFY(!d.getAnalogInputValue(0, 0, true).isValid());
   qDebug() << "Val: " << d.getAnalogInputValue(0, 500);
   qDebug() << "Val: " << d.getAnalogInputValue(0, 500, false);
+  QVERIFY(d.getAnalogInputValue(1, 500, true).isValid());
+  QVERIFY(!d.getAnalogInputValue(1, 0, true).isValid());
+  qDebug() << "Val: " << d.getAnalogInputValue(1, 500);
+  qDebug() << "Val: " << d.getAnalogInputValue(1, 500, false);
   QVERIFY(d.getAnalogInputs(500) >= 0);
+
+  // Analog outputs
+  QVERIFY(d.setAnalogOutputValue(0, 2.5, 500) >= 0);
   QVERIFY(d.getAnalogOutputValue(0, 500, true).isValid());
-  ///QVERIFY(!d.getAnalogOutputValue(0, 0, true).isValid());
-  ///qDebug() << "Val: " << d.getAnalogOutputValue(0, 500);
-  ///qDebug() << "Val: " << d.getAnalogOutputValue(0, 500, false);
+  qDebug() << "Val: " << hex << d.getAnalogOutputValue(0, 500, false);
+  qDebug() << "Val: " << d.getAnalogOutputValue(0, 500, true);
+  QVERIFY(qAbs(d.getAnalogOutputValue(0, 500, true).toDouble()-2.5) < (10.0/4050.0));
+  QVERIFY(!d.getAnalogOutputValue(0, 0, true).isValid());
+  qDebug() << "Val: " << hex << d.getAnalogOutputValue(0, 500, false);
+  qDebug() << "Val: " << d.getAnalogOutputValue(0, 500, false);
+  // Grouped query
+  QVERIFY(d.setAnalogOutputValue(0, 1.5, -1) == 0);
+  QVERIFY(d.setAnalogOutputValue(1, 2.5, -1) == 0);
+  QVERIFY(d.setAnalogOutputs(500) >= 0);
+  QVERIFY(qAbs(d.getAnalogOutputValue(0, 500, true).toDouble()-1.5) < (10.0/4050.0));
+  QVERIFY(qAbs(d.getAnalogOutputValue(1, 500, true).toDouble()-2.5) < (10.0/4050.0));
+
+  // Digital inputs
+  QVERIFY(!d.getDigitalInputState(0, 0).isValid());
+  QVERIFY(d.getDigitalInputState(0, 500).isValid());
+  qDebug() << "State: " << d.getDigitalInputState(0, 500);
+
+  // Digital outputs
+  QVERIFY(!d.getDigitalOutputState(0, 0).isValid());
+  QVERIFY(d.getDigitalOutputState(0, 500).isValid());
+  qDebug() << "State: " << d.getDigitalOutputState(0, 500);
+  QVERIFY(d.setDigitalOutputState(0, true, 500) >= 0);
 
 
-
-  ///QVERIFY(d.getAnalogOutputs(500) >= 0);
-  d.start(100);
+  QVERIFY(d.getDigitalInputs(500) >= 0);
+  QVERIFY(d.getAnalogOutputs(500) >= 0);
+  ///d.start(100);
   while(iosw.isVisible()){
-    ///QVERIFY(d.readAnalogInputs() >= 0);
-    ///QVERIFY(d.readAnalogOutputs() >= 0);
+    QTest::qWait(500);
+  }
+}
+
+void mdtDeviceTest::modbusBeckhoffTest()
+{
+  mdtDeviceModbus d;
+  mdtDeviceIos ios;
+  mdtDeviceIosWidget iosw;
+  mdtAnalogIo *ai;
+  mdtAnalogIo *ao;
+  mdtDigitalIo *di;
+  mdtDigitalIo *dout;
+
+  /*
+   * Setup I/O's
+   */
+
+  // Analog inputs
+  ai = new mdtAnalogIo;
+  ai->setAddress(0);
+  ai->setLabelShort("AI1");
+  ai->setUnit("[V]");
+  ai->setDetails("Module type: KL3001");
+  ai->setRange(-10.0, 10.0, 13, 3, true);
+  ios.addAnalogInput(ai);
+
+  // Analog outputs
+  ao = new mdtAnalogIo;
+  ao->setAddress(0);
+  ao->setLabelShort("AO1");
+  ao->setUnit("[V]");
+  ao->setDetails("Module type: KL4001");
+  QVERIFY(ao->setRange(0.0, 10.0, 12, 3, false));
+  QVERIFY(ao->setEncodeBitSettings(15, 0));
+  ios.addAnalogOutput(ao);
+
+  // Digital inputs
+  di = new mdtDigitalIo;
+  di->setAddress(0);
+  di->setLabelShort("DI1");
+  di->setDetails("Module type: KL1002");
+  ios.addDigitalInput(di);
+  di = new mdtDigitalIo;
+  di->setAddress(1);
+  di->setLabelShort("DI2");
+  di->setDetails("Module type: KL1002");
+  ios.addDigitalInput(di);
+
+  // Digital outputs
+  dout = new mdtDigitalIo;
+  dout->setAddress(0);
+  dout->setLabelShort("DO1");
+  dout->setDetails("Module type: KL2012");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(1);
+  dout->setLabelShort("DO2");
+  dout->setDetails("Module type: KL2012");
+  ios.addDigitalOutput(dout);
+
+  // Setup I/O's widget
+  iosw.setDeviceIos(&ios);
+  iosw.show();
+
+  // Setup device
+  d.setIos(&ios, true);
+  d.setAnalogOutputAddressOffset(0x0800);
+  d.setDigitalOutputAddressOffset(0);
+
+  /*
+   * Tests
+   */
+
+  QVERIFY(d.getAnalogOutputs(500) >= 0);
+  ///d.start(100);
+  while(iosw.isVisible()){
     QTest::qWait(500);
   }
 }

@@ -124,7 +124,8 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *
    * \return A QByteArray containing the PDU, or a empty QByteArray on error.
    */
-  QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values);
+  ///QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values);
+  QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList<int> &values);
 
   /*! \brief Decode a MODBUS PDU
    * 
@@ -143,8 +144,6 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *  - FC 6 (0x06), WriteSingleRegister reply: analog output address and value, as quint16.
    *  - FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.
    *  - FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.
-   *  - For a WriteSingleCoil reply, 1 value as bool
-   *  - For a WriteSingleRegister reply, 1 value as int
    *
    * If PDU contains a error code, the list of values will be empty, and this error code will be returned.
    *

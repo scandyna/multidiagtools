@@ -60,25 +60,28 @@ void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
   // Signals/slots from widget to io
   connect(pbState, SIGNAL(toggled(bool)), io, SLOT(setStateFromUi(bool)));
   // Internal signals/slots
-  connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
+  ///connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
   // Set initial data
   setOn(io->isOn());
 }
 
 void mdtDigitalOutWidget::setOn(bool on)
 {
-  if(on != pbState->isChecked()){
-    pbState->setChecked(on);
-    updateState(on);
-  }else{
-    pbState->setChecked(on);
-  }
+  ///if(on != pbState->isChecked()){
+  qDebug() << "mdtDigitalOutWidget::setOn(): state: " << on;
+  pbState->setChecked(on);
+  updateState(on);
+  ///}else{
+    ///pbState->setChecked(on);
+  ///}
 }
 
 void mdtDigitalOutWidget::updateState(bool state)
 {
   Q_ASSERT(pvIo != 0);
 
+  qDebug() << "mdtDigitalOutWidget::updateState() state: " << state;
+  
   // Update text
   if(pvIo->hasValidData()){
     if(state){

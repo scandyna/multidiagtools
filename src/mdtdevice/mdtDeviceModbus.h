@@ -46,21 +46,6 @@ class mdtDeviceModbus : public mdtDevice
 
   virtual ~mdtDeviceModbus();
 
-  /*! \brief Set value on a analog output on physical device
-   *
-   * \param address Output address
-   * \param value Value encoded regarding device format
-   * \param confirmationTimeout If > 0, a confirmation frame is expected from device, else not.
-   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
-   *
-   * Subclass notes:<br>
-   *  - If device returns a confirmation, helper method mdtPortManager::waitOnFrame() can be used
-   *  - The subclass must handle and document the behaviour of calling this method without any I/O's container set.
-   *  - To update (G)UI, mdtDeviceIos::updateAnalogOutputValue() should be used.
-   *  - Helper method setStateFromPortError() can be used to update device state on error.
-   */
-  ///int writeAnalogOutputValue(int address, int value, int confirmationTimeout);
-
  public slots:
 
   /*! \brief Decode incoming frames
@@ -99,6 +84,7 @@ class mdtDeviceModbus : public mdtDevice
   int readAnalogOutput(int address);
 
   /*! \brief Read all analog outputs on physical device
+   *
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    */
@@ -110,6 +96,55 @@ class mdtDeviceModbus : public mdtDevice
    * \pre I/O's must be set with setIos().
    */
   int writeAnalogOutput(int address, int value);
+
+  /*! \brief Write all analog outputs to physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int writeAnalogOutputs();
+
+  /*! \brief Read one digital input on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readDigitalInput(int address);
+
+  /*! \brief Read all digital inputs on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readDigitalInputs();
+
+  /*! \brief Read one digital output on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readDigitalOutput(int address);
+
+  /*! \brief Read all digital outputs on physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int readDigitalOutputs();
+
+  /*! \brief Write state on a digital output to physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int writeDigitalOutput(int address, bool state);
+
+  /*! \brief Write all digital outputs to physical device
+   *
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \pre I/O's must be set with setIos().
+   */
+  int writeDigitalOutputs();
 
   // Sequence of periodic queries
   bool queriesSequence();
