@@ -108,17 +108,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00063"></a>00063   <span class="keywordtype">void</span> setUnit(<span class="keyword">const</span> QString &amp;unit);
 <a name="l00064"></a>00064   <span class="keywordtype">void</span> setRange(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max);
 <a name="l00065"></a>00065   <span class="keywordtype">void</span> setValue(<span class="keywordtype">double</span> value);
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067  <span class="keyword">private</span>:
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069   Q_DISABLE_COPY(<a class="code" href="classmdt_analog_out_widget.html" title="Representation of a analog output.">mdtAnalogOutWidget</a>);
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071   QwtSlider *slValue;
-<a name="l00072"></a>00072   QDoubleSpinBox *sbValue;
-<a name="l00073"></a>00073   QString pvUnit;
-<a name="l00074"></a>00074 };
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076 <span class="preprocessor">#endif  // #ifndef MDT_ANALOG_OUT_WIDGET_H</span>
+<a name="l00066"></a>00066   <span class="keywordtype">void</span> setEnabled(<span class="keywordtype">bool</span> enabled);
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068  <span class="keyword">private</span>:
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   Q_DISABLE_COPY(<a class="code" href="classmdt_analog_out_widget.html" title="Representation of a analog output.">mdtAnalogOutWidget</a>);
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072   QwtSlider *slValue;
+<a name="l00073"></a>00073   QDoubleSpinBox *sbValue;
+<a name="l00074"></a>00074   QString pvUnit;
+<a name="l00075"></a>00075 };
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077 <span class="preprocessor">#endif  // #ifndef MDT_ANALOG_OUT_WIDGET_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -135,7 +136,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

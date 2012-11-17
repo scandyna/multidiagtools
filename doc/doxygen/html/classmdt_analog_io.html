@@ -98,8 +98,11 @@ Public Slots</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value to update display.  <a href="#a9729875cb13fa2069e40c9abce914870"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad658090469cc6b69fa92d9bca73d8a16"></a><!-- doxytag: member="mdtAnalogIo::valueChanged" ref="ad658090469cc6b69fa92d9bca73d8a16" args="(double newValue)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16">valueChanged</a> (double newValue)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted whenever the value is changed. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136">valueChanged</a> (int address, int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted whenever the value is changed.  <a href="#ac36d804e82a4ca9401687700e9e6a136"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">void valueChanged(int address, double newValue);  <a href="#ac36d804e82a4ca9401687700e9e6a136"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa81b49605f601850ecfa780f2b758e98"></a><!-- doxytag: member="mdtAnalogIo::unitChangedForUi" ref="aa81b49605f601850ecfa780f2b758e98" args="(const QString &amp;unit)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>unitChangedForUi</b> (const QString &amp;unit)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40735cbbf852790067a6f9b57aac4aa3"></a><!-- doxytag: member="mdtAnalogIo::rangeChangedForUi" ref="a40735cbbf852790067a6f9b57aac4aa3" args="(double min, double max)" -->
@@ -128,17 +131,19 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum value of the range. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55d3e346dd13a580dc4ac77e8e946b01"></a><!-- doxytag: member="mdtAnalogIo::value" ref="a55d3e346dd13a580dc4ac77e8e946b01" args="() const " -->
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a55d3e346dd13a580dc4ac77e8e946b01">value</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value (set with <a class="el" href="classmdt_analog_io.html#ac83abbda2bafce5c02e3ae1dbc5e2555" title="Set the value to update display.">setValue()</a> ) <br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value (set with <a class="el" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a" title="Set the value to update display.">setValue()</a> ) <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a011fba645b655bdb3f7f8740c327e624">setValueInt</a> (int value, bool isValid, bool emitValueChanged=true)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the integer value.  <a href="#a011fba645b655bdb3f7f8740c327e624"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a7594e94e059dd3b1db9d8277c7426fb2">valueInt</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integer value.  <a href="#a7594e94e059dd3b1db9d8277c7426fb2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a">setValue</a> (QVariant value, bool emitValueChanged=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value to update display.  <a href="#a3c8a10c66650728d1878415032543e8a"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Representation of a analog I/O. </p>
 <p>On wide range of automation applications, it is usefull to display a I/O to the user. For example, a analog I/O module, with a 8 bit encoding could be displayed with this class togther with <a class="el" href="classmdt_analog_in_widget.html" title="Representation of a analog input.">mdtAnalogInWidget</a> or <a class="el" href="classmdt_analog_out_widget.html" title="Representation of a analog output.">mdtAnalogOutWidget</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8h_source.html#l00034">34</a> of file <a class="el" href="mdt_analog_io_8h_source.html">mdtAnalogIo.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_analog_io_8h_source.html">mdtAnalogIo.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a2263d9b0bf2c1b998386c590866f06e8"></a><!-- doxytag: member="mdtAnalogIo::setEncodeBitSettings" ref="a2263d9b0bf2c1b998386c590866f06e8" args="(int intValueBitsCount, int intValueLsbIndex)" -->
 <div class="memitem">
@@ -225,7 +230,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <div class="memdoc">
 
 <p>Specify the range of values and bits decodes parameters. </p>
-<p>Store the new range and set the value to the minimum. The <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="This signal is emitted whenever the value is changed.">valueChanged()</a> signal is emitted.</p>
+<p>Store the new range and set the value to the minimum. The <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged()</a> signal is emitted.</p>
 <p>It can happen that a I/O module returns, f.ex., a integer value in a 16 bits packet, but with some additional flags. (example: Wago 750-457). In such case, the value is, f.ex., encoded in 12 bits only. Take example of Wago 750-457:</p>
 <ul>
 <li>Value + flags are encoded in a 16 bits word</li>
@@ -253,6 +258,49 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 </ul>
 
 <p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c8a10c66650728d1878415032543e8a"></a><!-- doxytag: member="mdtAnalogIo::setValue" ref="a3c8a10c66650728d1878415032543e8a" args="(QVariant value, bool emitValueChanged=true)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtAnalogIo::setValue </td>
+          <td>(</td>
+          <td class="paramtype">QVariant&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>emitValueChanged</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the value to update display. </p>
+<p>Store the value and emit <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged()</a> if new value is different from current.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The value to store. If value is of type int, conversion is done. (see <a class="el" href="classmdt_analog_io.html#a2263d9b0bf2c1b998386c590866f06e8" title="Set the bits encode parammeters.">setEncodeBitSettings()</a> ). If value is invalid, the validity flag is updated. See <a class="el" href="classmdt_analog_io.html#ac83abbda2bafce5c02e3ae1dbc5e2555" title="Set the value to update display.">setValue(double, bool, bool)</a> for details. </td></tr>
+    <tr><td class="paramname">emitValueChanged</td><td>If true, <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="void valueChanged(int address, double newValue);">valueChanged(int, int)</a> and <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged(double)</a> will be emitted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note for UI developpers:</p>
+<ul>
+<li>The signal valueChangedForUi() is emited </li>
+</ul>
+
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00220">220</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -288,12 +336,12 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <div class="memdoc">
 
 <p>Set the value to update display. </p>
-<p>Store the value and emit <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="This signal is emitted whenever the value is changed.">valueChanged()</a> if new value is different from current.</p>
+<p>Store the value and emit <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged()</a> if new value is different from current.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>The value to store </td></tr>
     <tr><td class="paramname">isValid</td><td>The validity flag. This flag is later avaliable with <a class="el" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76" title="Returns true if a valid value or state was set.">mdtAbstractIo::hasValidData()</a> </td></tr>
-    <tr><td class="paramname">emitValueChanged</td><td>If true, <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="This signal is emitted whenever the value is changed.">valueChanged()</a> will not be emitted</td></tr>
+    <tr><td class="paramname">emitValueChanged</td><td>If true, <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="void valueChanged(int address, double newValue);">valueChanged(int, int)</a> and <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged(double)</a> will be emitted.</td></tr>
   </table>
   </dd>
 </dl>
@@ -302,10 +350,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <li>The signal valueChangedForUi() is emited </li>
 </ul>
 
-<p><p>emit(valueChanged(value)); emit(valueChanged(pvAddress, value)); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00220">220</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00236">236</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -327,7 +372,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <p>Set the value to update display. </p>
 <p>Overloaded method that calls setValue(double, bool) with isValid = true. </p>
 
-<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00238">238</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_analog_io_8cpp_source.html#l00253">253</a> of file <a class="el" href="mdt_analog_io_8cpp_source.html">mdtAnalogIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -364,12 +409,12 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 
 <p>Set the integer value. </p>
 <p>Will calculate the real value depending on resolution and update display. The resolution is set with <a class="el" href="classmdt_analog_io.html#ab5733c8d4f49da6e6d4f11f1e1aa9555" title="Specify the range of values and bits decodes parameters.">setRange()</a> (intValueBitsCount parameter)</p>
-<p>The <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="This signal is emitted whenever the value is changed.">valueChanged()</a> signal is emitted.</p>
+<p>The <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged()</a> signal is emitted.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>The value to store </td></tr>
     <tr><td class="paramname">isValid</td><td>The validity flag. This flag is later avaliable with <a class="el" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76" title="Returns true if a valid value or state was set.">mdtAbstractIo::hasValidData()</a> </td></tr>
-    <tr><td class="paramname">emitValueChanged</td><td>If true, <a class="el" href="classmdt_analog_io.html#ac36d804e82a4ca9401687700e9e6a136" title="This signal is emitted whenever the value is changed.">valueChanged()</a> will not be emitted</td></tr>
+    <tr><td class="paramname">emitValueChanged</td><td>If true, <a class="el" href="classmdt_analog_io.html#ad658090469cc6b69fa92d9bca73d8a16" title="This signal is emitted whenever the value is changed.">valueChanged()</a> will not be emitted</td></tr>
   </table>
   </dd>
 </dl>
@@ -407,8 +452,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 </div>
 <div class="memdoc">
 
-<p>This signal is emitted whenever the value is changed. </p>
-<p>void valueChanged(double newValue); void valueChanged(int address, double newValue);</p>
+<p>void valueChanged(int address, double newValue); </p>
 <p>This signal is emitted whenever the value is changed</p>
 <p>The value is converted for device specific format. </p>
 
@@ -454,7 +498,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

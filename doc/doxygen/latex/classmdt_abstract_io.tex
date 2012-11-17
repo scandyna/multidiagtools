@@ -42,20 +42,19 @@ void {\bfseries labelChangedForUi} (const QString \&text)}
 void {\bfseries detailsChangedForUi} (const QString \&text)}
 \label{classmdt_abstract_io_aa6add53c265560420b70852ba490c2ff}
 
+\item 
+\hypertarget{classmdt_abstract_io_a4406bc16e8decdb506b34d9ca679203e}{
+void {\bfseries enabledStateChangedForUi} (bool enabled)}
+\label{classmdt_abstract_io_a4406bc16e8decdb506b34d9ca679203e}
+
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{
-{\bfseries mdtAbstractIo} (QObject $\ast$parent=0)}
-\label{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}
-
-\item 
-\hypertarget{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{
-void \hyperlink{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{setAddress} (int address)}
-\label{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}
-
-\begin{DoxyCompactList}\small\item\em Set the I/O address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{mdtAbstractIo} (QObject $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em I/O type. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{setAddress} (int address)
+\begin{DoxyCompactList}\small\item\em Get I/O type. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_io_a52f071b6c1098e74f82eade9ead5382a}{
 int \hyperlink{classmdt_abstract_io_a52f071b6c1098e74f82eade9ead5382a}{address} () const }
 \label{classmdt_abstract_io_a52f071b6c1098e74f82eade9ead5382a}
@@ -89,15 +88,17 @@ QString \hyperlink{classmdt_abstract_io_a6e0b36f1563a045a23417145290fdf41}{detai
 bool \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{hasValidData} () const }
 \label{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}
 
-\begin{DoxyCompactList}\small\item\em Returns true if a valid value or state was set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns true if a valid value or state was set. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_abstract_io_a64f31b1d9abdec6d0b0cc05a2fe1f31b}{
+void \hyperlink{classmdt_abstract_io_a64f31b1d9abdec6d0b0cc05a2fe1f31b}{setEnabled} (bool enabled)}
+\label{classmdt_abstract_io_a64f31b1d9abdec6d0b0cc05a2fe1f31b}
+
+\begin{DoxyCompactList}\small\item\em Set enabled state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}{
-int {\bfseries pvAddress}}
-\label{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}
-
-\item 
+int \hyperlink{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}{pvAddress}
+\begin{DoxyCompactList}\small\item\em Set I/O type. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_abstract_io_ac7d552a8474559cac50488bd14891ce3}{
 bool {\bfseries pvHasValidData}}
 \label{classmdt_abstract_io_ac7d552a8474559cac50488bd14891ce3}
@@ -114,7 +115,52 @@ Definition at line 33 of file mdtAbstractIo.h.
 
 
 
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{
+\index{mdtAbstractIo@{mdtAbstractIo}!mdtAbstractIo@{mdtAbstractIo}}
+\index{mdtAbstractIo@{mdtAbstractIo}!mdtAbstractIo@{mdtAbstractIo}}
+\subsubsection[{mdtAbstractIo}]{\setlength{\rightskip}{0pt plus 5cm}mdtAbstractIo::mdtAbstractIo (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}
+
+
+I/O type. 
+
+
+
+pvType = UNKNOWN; 
+
+
+
+Definition at line 23 of file mdtAbstractIo.cpp.
+
+
+
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{
+\index{mdtAbstractIo@{mdtAbstractIo}!setAddress@{setAddress}}
+\index{setAddress@{setAddress}!mdtAbstractIo@{mdtAbstractIo}}
+\subsubsection[{setAddress}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIo::setAddress (
+\begin{DoxyParamCaption}
+\item[{int}]{adr}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}
+
+
+Get I/O type. 
+
+type\_\-t type() const;
+
+Set the I/O address
+
+mdtAbstractIo::type\_\-t mdtAbstractIo::type() const \{ return pvType; \} 
+
+Definition at line 42 of file mdtAbstractIo.cpp.
+
 \hypertarget{classmdt_abstract_io_ae614f78829c59cb7b7d8265dd59e2164}{
 \index{mdtAbstractIo@{mdtAbstractIo}!setLabel@{setLabel}}
 \index{setLabel@{setLabel}!mdtAbstractIo@{mdtAbstractIo}}
@@ -130,7 +176,7 @@ Set the complete I/O label.
 
 When used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}, this label is displayed as tool tip 
 
-Definition at line 56 of file mdtAbstractIo.cpp.
+Definition at line 64 of file mdtAbstractIo.cpp.
 
 \hypertarget{classmdt_abstract_io_a0f0a70927942f793ce93c7f0c013a39e}{
 \index{mdtAbstractIo@{mdtAbstractIo}!setLabelShort@{setLabelShort}}
@@ -147,7 +193,23 @@ Set the short I/O label.
 
 When used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}, the short I/O label is allways displayed 
 
-Definition at line 45 of file mdtAbstractIo.cpp.
+Definition at line 53 of file mdtAbstractIo.cpp.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}{
+\index{mdtAbstractIo@{mdtAbstractIo}!pvAddress@{pvAddress}}
+\index{pvAddress@{pvAddress}!mdtAbstractIo@{mdtAbstractIo}}
+\subsubsection[{pvAddress}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf mdtAbstractIo::pvAddress}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_abstract_io_a45f50dbd2bafc248428e59f2c4c6272b}
+
+
+Set I/O type. 
+
+void setType(type\_\-t type); 
+
+Definition at line 122 of file mdtAbstractIo.h.
 
 
 

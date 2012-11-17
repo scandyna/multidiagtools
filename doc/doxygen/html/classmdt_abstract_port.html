@@ -258,7 +258,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
 <p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
 </dd></dl>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
@@ -288,7 +288,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c"></a><!-- doxytag: member="Disconnected" ref="ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c" args="" -->Disconnected</em>&nbsp;</td><td>
 <p>For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will stop working and signal this error at end. The portmanager can try to re-open the port if auto-reconnection is needed, and start the thread again on success.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd><p class="startdd">Implement this </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd><p class="startdd">Implement this </p>
 <p class="enddd">Implement a re-connect method </p>
 </dd></dl>
 </td></tr>
@@ -398,7 +398,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>The mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
  Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated. Note that this method must be called from subclass destructor. See <a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort()</a> for details.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805">mdtAbstractSerialPort</a>.</p>
 
@@ -1251,7 +1251,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

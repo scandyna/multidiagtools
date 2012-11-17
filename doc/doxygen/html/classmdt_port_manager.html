@@ -64,6 +64,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
@@ -157,7 +158,9 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all readen data.  <a href="#ae5c6475a54ac4921c6df26893f261556"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ad4ff1309b267dfdcfa5a12e4617397f1">clearReadenFrames</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear readen frames.  <a href="#ad4ff1309b267dfdcfa5a12e4617397f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c">wait</a> (int msecs, int granularity=50)</td></tr>
+<tr><td colspan="2"><h2><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c">wait</a> (int msecs, int granularity=50)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait some time without break the GUI's event loop.  <a href="#acc5c63ad33fdd3cc153fc23e00c6e69c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -461,7 +464,7 @@ thread must be a valid pointer </dd></dl>
 <p>Called by the read thread whenn a complete frame was readen</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 <p>pvReadenFrames.insert(pvLastReadenFrameId, data); </p>
 </p>
 
@@ -541,7 +544,7 @@ thread must be a valid pointer </dd></dl>
 <div class="memdoc">
 
 <p>Manage errors comming from port threads. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Error handling (in general ...) </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Error handling (in general ...) </dd></dl>
 
 <p><p>if(error == MDT_PORT_IO_ERROR){ qDebug() &lt;&lt; "I/O error !"; <a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort()</a>; if(!openPort()){ return; } <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start()</a>; } if(error == MDT_PORT_QUEUE_EMPTY_ERROR){ qDebug() &lt;&lt; "Queue empty !"; }</p>
 </p>
@@ -899,7 +902,7 @@ Manager must no running </dd></dl>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td><code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -1047,7 +1050,7 @@ Manager must no running </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:36 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

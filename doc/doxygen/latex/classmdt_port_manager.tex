@@ -101,8 +101,11 @@ QByteArray \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{r
 const QList$<$ QByteArray $>$ \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{readenFrames} () const 
 \begin{DoxyCompactList}\small\item\em Get all readen data. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}{clearReadenFrames} ()
-\begin{DoxyCompactList}\small\item\em Clear readen frames. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{wait} (int msecs, int granularity=50)
+\begin{DoxyCompactList}\small\item\em Clear readen frames. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{wait} (int msecs, int granularity=50)
 \begin{DoxyCompactList}\small\item\em Wait some time without break the GUI's event loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -399,7 +402,7 @@ Called by the read thread whenn a complete frame was readen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000025}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000016}{Todo}]Error on incomplete frame \end{Desc}
 
 
 pvReadenFrames.insert(pvLastReadenFrameId, data); 
@@ -466,7 +469,7 @@ Emitted only if notifyNewReadenFrame flag is true.
 Manage errors comming from port threads. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000026}{Todo}]Error handling (in general ...) \end{Desc}
+\item[\hyperlink{todo__todo000017}{Todo}]Error handling (in general ...) \end{Desc}
 
 
 if(error == MDT\_\-PORT\_\-IO\_\-ERROR)\{ qDebug() $<$$<$ \char`\"{}I/O error !\char`\"{}; \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort()}; if(!openPort())\{ return; \} \hyperlink{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{start()}; \} if(error == MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR)\{ qDebug() $<$$<$ \char`\"{}Queue empty !\char`\"{}; \}
@@ -800,7 +803,7 @@ Definition at line 168 of file mdtPortManager.cpp.
 \item[{int}]{msecs, }
 \item[{int}]{granularity = {\ttfamily 50}}
 \end{DoxyParamCaption}
-)}}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}
 
 

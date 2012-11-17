@@ -189,7 +189,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <div class="memdoc">
 
 <p>Emitted on error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
 <p>When a error occurs, this signal is emited.</p>
 <p>The error is one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>.</p>
 <p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> uses this signal. If the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a> error happens, the port manager stops the thread and closes the port. Optionnaly, it can try to re-open the port, and start the thread again on success. </p>
@@ -213,7 +213,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <p>Get a new frame for reading data from port. </p>
 <p>This is a helper method for subclass to get a new frame in port's read frames pool.</p>
 <p>It can hapen that the read frames pool is empty. In this case, a error will be generated in the <a class="el" href="classmdt_error.html">mdtError</a> log system, the signal <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured()</a> will be emited with MDT_PORT_QUEUE_EMPTY_ERROR value, and method will go sleep until a new frame is available in pool.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000029">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
 <p>Note about port mutex handling:<br/>
  The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to a new frame. This frame is cleared (with <a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">mdtFrame::clear()</a> ). If the runnig flag becomes false, a Null pointer is returned, and thread should stop.</dd></dl>
@@ -557,7 +557,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:37 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

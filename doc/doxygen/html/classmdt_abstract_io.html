@@ -93,13 +93,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>labelShortChangedForU
 void&#160;</td><td class="memItemRight" valign="bottom"><b>labelChangedForUi</b> (const QString &amp;text)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6add53c265560420b70852ba490c2ff"></a><!-- doxytag: member="mdtAbstractIo::detailsChangedForUi" ref="aa6add53c265560420b70852ba490c2ff" args="(const QString &amp;text)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>detailsChangedForUi</b> (const QString &amp;text)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4406bc16e8decdb506b34d9ca679203e"></a><!-- doxytag: member="mdtAbstractIo::enabledStateChangedForUi" ref="a4406bc16e8decdb506b34d9ca679203e" args="(bool enabled)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>enabledStateChangedForUi</b> (bool enabled)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac138b89890471e0412f2b15f2c53f1f9"></a><!-- doxytag: member="mdtAbstractIo::mdtAbstractIo" ref="ac138b89890471e0412f2b15f2c53f1f9" args="(QObject *parent=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>mdtAbstractIo</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f3bfa0472c7e0bd4cd9a5b865c460a2"></a><!-- doxytag: member="mdtAbstractIo::setAddress" ref="a1f3bfa0472c7e0bd4cd9a5b865c460a2" args="(int address)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#a1f3bfa0472c7e0bd4cd9a5b865c460a2">setAddress</a> (int address)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O address. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#ac138b89890471e0412f2b15f2c53f1f9">mdtAbstractIo</a> (QObject *parent=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">I/O type.  <a href="#ac138b89890471e0412f2b15f2c53f1f9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#a1f3bfa0472c7e0bd4cd9a5b865c460a2">setAddress</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get I/O type.  <a href="#a1f3bfa0472c7e0bd4cd9a5b865c460a2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52f071b6c1098e74f82eade9ead5382a"></a><!-- doxytag: member="mdtAbstractIo::address" ref="a52f071b6c1098e74f82eade9ead5382a" args="() const " -->
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#a52f071b6c1098e74f82eade9ead5382a">address</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the I/O address. <br/></td></tr>
@@ -122,10 +123,13 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61d96045087fe92a0b455693970b1e76"></a><!-- doxytag: member="mdtAbstractIo::hasValidData" ref="a61d96045087fe92a0b455693970b1e76" args="() const " -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76">hasValidData</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if a valid value or state was set. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64f31b1d9abdec6d0b0cc05a2fe1f31b"></a><!-- doxytag: member="mdtAbstractIo::setEnabled" ref="a64f31b1d9abdec6d0b0cc05a2fe1f31b" args="(bool enabled)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#a64f31b1d9abdec6d0b0cc05a2fe1f31b">setEnabled</a> (bool enabled)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set enabled state. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45f50dbd2bafc248428e59f2c4c6272b"></a><!-- doxytag: member="mdtAbstractIo::pvAddress" ref="a45f50dbd2bafc248428e59f2c4c6272b" args="" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAddress</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_io.html#a45f50dbd2bafc248428e59f2c4c6272b">pvAddress</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set I/O type.  <a href="#a45f50dbd2bafc248428e59f2c4c6272b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7d552a8474559cac50488bd14891ce3"></a><!-- doxytag: member="mdtAbstractIo::pvHasValidData" ref="ac7d552a8474559cac50488bd14891ce3" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvHasValidData</b></td></tr>
 </table>
@@ -134,7 +138,56 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvHasValidData</b></t
 <p>Can be used with <a class="el" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets.">mdtAbstractIoWidget</a> and subclasses. This class offers the functionnal part of I/O representation on a UI, or GUI when used with <a class="el" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets.">mdtAbstractIoWidget</a>. </p>
 
 <p>Definition at line <a class="el" href="mdt_abstract_io_8h_source.html#l00033">33</a> of file <a class="el" href="mdt_abstract_io_8h_source.html">mdtAbstractIo.h</a>.</p>
-</div><hr/><h2>Member Function Documentation</h2>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ac138b89890471e0412f2b15f2c53f1f9"></a><!-- doxytag: member="mdtAbstractIo::mdtAbstractIo" ref="ac138b89890471e0412f2b15f2c53f1f9" args="(QObject *parent=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mdtAbstractIo::mdtAbstractIo </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>I/O type. </p>
+
+<p><p>pvType = UNKNOWN; </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_io_8cpp_source.html#l00023">23</a> of file <a class="el" href="mdt_abstract_io_8cpp_source.html">mdtAbstractIo.cpp</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a1f3bfa0472c7e0bd4cd9a5b865c460a2"></a><!-- doxytag: member="mdtAbstractIo::setAddress" ref="a1f3bfa0472c7e0bd4cd9a5b865c460a2" args="(int address)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtAbstractIo::setAddress </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>adr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get I/O type. </p>
+<p>type_t type() const;</p>
+<p>Set the I/O address</p>
+<p>mdtAbstractIo::type_t mdtAbstractIo::type() const { return pvType; } </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_io_8cpp_source.html#l00042">42</a> of file <a class="el" href="mdt_abstract_io_8cpp_source.html">mdtAbstractIo.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae614f78829c59cb7b7d8265dd59e2164"></a><!-- doxytag: member="mdtAbstractIo::setLabel" ref="ae614f78829c59cb7b7d8265dd59e2164" args="(const QString &amp;text)" -->
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +206,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvHasValidData</b></t
 <p>Set the complete I/O label. </p>
 <p>When used with <a class="el" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets.">mdtAbstractIoWidget</a>, this label is displayed as tool tip </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_io_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_abstract_io_8cpp_source.html">mdtAbstractIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_io_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_abstract_io_8cpp_source.html">mdtAbstractIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -175,7 +228,26 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvHasValidData</b></t
 <p>Set the short I/O label. </p>
 <p>When used with <a class="el" href="classmdt_abstract_io_widget.html" title="Base class for I/O widgets.">mdtAbstractIoWidget</a>, the short I/O label is allways displayed </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_io_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_abstract_io_8cpp_source.html">mdtAbstractIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_io_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_abstract_io_8cpp_source.html">mdtAbstractIo.cpp</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a45f50dbd2bafc248428e59f2c4c6272b"></a><!-- doxytag: member="mdtAbstractIo::pvAddress" ref="a45f50dbd2bafc248428e59f2c4c6272b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classmdt_abstract_io.html#a45f50dbd2bafc248428e59f2c4c6272b">mdtAbstractIo::pvAddress</a><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set I/O type. </p>
+<p>void setType(type_t type); </p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_io_8h_source.html#l00122">122</a> of file <a class="el" href="mdt_abstract_io_8h_source.html">mdtAbstractIo.h</a>.</p>
 
 </div>
 </div>
@@ -198,7 +270,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvHasValidData</b></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:35 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

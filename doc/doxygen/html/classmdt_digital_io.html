@@ -92,8 +92,8 @@ Collaboration diagram for mdtDigitalIo:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#ae43db36b2d9f2c3d38cdd97e2ea84bda">setOn</a> (bool on, bool isValid)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set I/O state (On or OFF)  <a href="#ae43db36b2d9f2c3d38cdd97e2ea84bda"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#a8feb155c430f67589ba776b7b03758d9">setOn</a> (bool on, bool isValid, bool emitValueChanged=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set I/O state (On or OFF)  <a href="#a8feb155c430f67589ba776b7b03758d9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#a88308968532c1e23f695c43a62a3be40">setOn</a> (bool on)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set I/O state (On or OFF)  <a href="#a88308968532c1e23f695c43a62a3be40"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
@@ -109,56 +109,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>stateChangedForUi</b>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5cca7698845624d99f94052d87790bb"></a><!-- doxytag: member="mdtDigitalIo::mdtDigitalIo" ref="ab5cca7698845624d99f94052d87790bb" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtDigitalIo</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab21b87b6e356974358c7d536131959f4"></a><!-- doxytag: member="mdtDigitalIo::isOn" ref="ab21b87b6e356974358c7d536131959f4" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#ab21b87b6e356974358c7d536131959f4">isOn</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bd703bced41720f1569c4e7b26059a1"></a><!-- doxytag: member="mdtDigitalIo::isOn" ref="a2bd703bced41720f1569c4e7b26059a1" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#a2bd703bced41720f1569c4e7b26059a1">isOn</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current I/O state. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#a0a9ae15796ca74638af2d6c5addfdb6f">setOn</a> (QVariant on, bool emitValueChanged=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set I/O state (On or OFF)  <a href="#a0a9ae15796ca74638af2d6c5addfdb6f"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Representation of a digital I/O. </p>
 <p>On wide range of automation applications, it is usefull to display a digital I/O to the user. For example, a digital I/O can be displayed by using this class together with <a class="el" href="classmdt_digital_in_widget.html" title="Representation of a digital input.">mdtDigitalInWidget</a> or <a class="el" href="classmdt_digital_out_widget.html">mdtDigitalOutWidget</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_digital_io_8h_source.html#l00033">33</a> of file <a class="el" href="mdt_digital_io_8h_source.html">mdtDigitalIo.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_digital_io_8h_source.html#l00034">34</a> of file <a class="el" href="mdt_digital_io_8h_source.html">mdtDigitalIo.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ae43db36b2d9f2c3d38cdd97e2ea84bda"></a><!-- doxytag: member="mdtDigitalIo::setOn" ref="ae43db36b2d9f2c3d38cdd97e2ea84bda" args="(bool on, bool isValid)" -->
+<a class="anchor" id="a0a9ae15796ca74638af2d6c5addfdb6f"></a><!-- doxytag: member="mdtDigitalIo::setOn" ref="a0a9ae15796ca74638af2d6c5addfdb6f" args="(QVariant on, bool emitValueChanged=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtDigitalIo::setOn </td>
           <td>(</td>
-          <td class="paramtype">bool&#160;</td>
+          <td class="paramtype">QVariant&#160;</td>
           <td class="paramname"><em>on</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isValid</em>&#160;</td>
+          <td class="paramname"><em>emitValueChanged</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td><code> [slot]</code></td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Set I/O state (On or OFF) </p>
-<p>Store the state and emit <a class="el" href="classmdt_digital_io.html#a69c20119906682c0bd90833598127328" title="This signal is emitted whenever the state is changed.">stateChanged()</a> if new value state different from current.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">on</td><td>The state to store </td></tr>
-    <tr><td class="paramname">isValid</td><td>The validity flag. This flag is later avaliable with <a class="el" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76" title="Returns true if a valid value or state was set.">mdtAbstractIo::hasValidData()</a></td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note for UI developpers:</p>
-<ul>
-<li>The signal stateChangedForUi() is emited </li>
-</ul>
+<p>Internally, setOn(bool, bool) is used. </p>
 
-<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -178,9 +169,59 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="memdoc">
 
 <p>Set I/O state (On or OFF) </p>
-<p>Overloaded method that calls <a class="el" href="classmdt_digital_io.html#ae43db36b2d9f2c3d38cdd97e2ea84bda" title="Set I/O state (On or OFF)">setOn(bool, bool)</a> with isValid = true. </p>
+<p>Overloaded method that calls setOn(bool, bool) with isValid = true. </p>
 
-<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8feb155c430f67589ba776b7b03758d9"></a><!-- doxytag: member="mdtDigitalIo::setOn" ref="a8feb155c430f67589ba776b7b03758d9" args="(bool on, bool isValid, bool emitValueChanged=true)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDigitalIo::setOn </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isValid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>emitValueChanged</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set I/O state (On or OFF) </p>
+<p>Store the state and emit <a class="el" href="classmdt_digital_io.html#a69c20119906682c0bd90833598127328" title="This signal is emitted whenever the state is changed.">stateChanged()</a> if new state state different from current.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">on</td><td>The state to store </td></tr>
+    <tr><td class="paramname">isValid</td><td>The validity flag. This flag is later avaliable with <a class="el" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76" title="Returns true if a valid value or state was set.">mdtAbstractIo::hasValidData()</a> </td></tr>
+    <tr><td class="paramname">emitValueChanged</td><td>If true, stateChanged(int, bool) and <a class="el" href="classmdt_digital_io.html#a69c20119906682c0bd90833598127328" title="This signal is emitted whenever the state is changed.">stateChanged(bool)</a> will be emitted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note for UI developpers:</p>
+<ul>
+<li>The signal stateChangedForUi() is emited </li>
+</ul>
+
+<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -203,7 +244,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:36 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

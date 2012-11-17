@@ -181,14 +181,14 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 on timeout or if write queue is fullint waitReadenFrame(int timeout = 500); </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000045">Todo:</a></b></dt><dd>Essais ... void <a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort()</a>; </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>Essais ... void <a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort()</a>; </dd></dl>
 <p>Called by the thread whenn a complete frame was readen</p>
 <p>bool <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">mdtUsbtmcPortManager::waitReadenFrame(int timeout)</a> { int retVal;</p>
 <p>Q_ASSERT(pvPort != 0);</p>
 <p>retVal = <a class="el" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest()</a>; if(retVal &lt; 0){ return retVal; } qDebug() &lt;&lt; "mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ..."; if(!mdtPortManager::waitReadenFrame(timeout)){ return -1; }</p>
 <p>return retVal; } </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000035">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 <p>pvReadenFrames.insert(frame-&gt;bTag(), data);</p>
 <p>if(pvReadenFrames.size() &gt; 0){ emit(<a class="el" href="classmdt_port_manager.html#a65d5d2e9edde76796714f737a7eaf204" title="Emitted when new frame was readen.">newReadenFrame()</a>); }</p>
 </p>
@@ -304,7 +304,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Nov 11 2012 22:38:37 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
