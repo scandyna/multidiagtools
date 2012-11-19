@@ -550,7 +550,8 @@ void mdtDevice::setAnalogOutputValue(int address, int value)
     return;
   }
   if(setAnalogOutputValue(address, value, pvOutputWriteReplyTimeout) < 0){
-    setStateBusy(500);
+    qDebug() << "mdtDevice::setAnalogOutputValue(): fail";
+    ///setStateBusy();
   }
 }
 
@@ -561,7 +562,8 @@ void mdtDevice::setDigitalOutputState(int address, bool state)
     return;
   }
   if(setDigitalOutputState(address, state, pvOutputWriteReplyTimeout) < 0){
-    setStateBusy(500);
+    qDebug() << "mdtDevice::setDigitalOutputState(): fail";
+    ///setStateBusy();
   }
 }
 
@@ -581,6 +583,23 @@ void mdtDevice::runQueries()
 bool mdtDevice::queriesSequence()
 {
   return false;
+}
+
+void mdtDevice::setStateFromPortError(int error)
+{
+  if(error == mdtAbstractPort::NoError){
+    qDebug() << "mdtDevice::setStateFromPortError(): NoError";
+    setStateReady();
+  }else if(error == mdtAbstractPort::Disconnected){
+    qDebug() << "mdtDevice::setStateFromPortError(): Disconnected";
+    setStateDisconnected();
+  }else if(error == mdtAbstractPort::WriteQueueEmpty){
+    qDebug() << "mdtDevice::setStateFromPortError(): WriteQueueEmpty";
+    setStateBusy();
+  }else{
+    qDebug() << "mdtDevice::setStateFromPortError(): ????";
+    setStateUnknown();
+  }
 }
 
 void mdtDevice::setStateReady()
@@ -687,24 +706,11 @@ void mdtDevice::setStateUnknown()
   }
 }
 
-void mdtDevice::setStateFromPortError(int error)
-{
-  if(error == mdtAbstractPort::NoError){
-    setStateReady();
-  }else if(error == mdtAbstractPort::Disconnected){
-    setStateDisconnected();
-  }else if(error == mdtAbstractPort::WriteQueueEmpty){
-    setStateBusy();
-  }else{
-    setStateUnknown();
-  }
-}
-
 void mdtDevice::addTransaction(int id, mdtAnalogIo *io)
 {
   // Check that queue has not to many queries
   if(pvPendingAioTransactions.size() > 20){
-    setStateBusy(500);
+    setStateBusy();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
     e.commit();
@@ -718,7 +724,7 @@ void mdtDevice::addTransaction(int id, mdtDigitalIo *io)
 {
   // Check that queue has not to many queries
   if(pvPendingDioTransactions.size() > 20){
-    setStateBusy(500);
+    setStateBusy();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
     e.commit();
@@ -732,7 +738,7 @@ void mdtDevice::addTransaction(int id)
 {
   // Check that queue has not to many queries
   if(pvPendingIoTransactions.size() > 20){
-    setStateBusy(500);
+    setStateBusy();
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
     e.commit();
@@ -782,7 +788,8 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
       // Check timeout
       if(i <= 0){
         pvPendingAioTransactions.remove(id);
-        setStateBusy(200);
+        qDebug() << "waitTransactionDone/AIO: timeout";
+        ///setStateBusy();
         return false;
       }
       mdtPortManager::wait(granularity, granularity);
@@ -793,7 +800,8 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
       // Check timeout
       if(i <= 0){
         pvPendingDioTransactions.remove(id);
-        setStateBusy(200);
+        qDebug() << "waitTransactionDone/DIO: timeout";
+        ///setStateBusy();
         return false;
       }
       mdtPortManager::wait(granularity, granularity);
@@ -805,7 +813,8 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
       // Check timeout
       if(i <= 0){
         pvPendingIoTransactions.removeAt(index);
-        setStateBusy(200);
+        qDebug() << "waitTransactionDone/IO: timeout";
+        ///setStateBusy();
         return false;
       }
       mdtPortManager::wait(granularity, granularity);

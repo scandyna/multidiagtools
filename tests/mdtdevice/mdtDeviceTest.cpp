@@ -23,6 +23,7 @@
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
+#include "mdtDeviceWindow.h"
 
 /**
 #ifdef Q_OS_UNIX
@@ -203,11 +204,12 @@ void mdtDeviceTest::modbusWagoTest()
 {
   mdtDeviceModbus d;
   mdtDeviceIos ios;
-  mdtDeviceIosWidget iosw;
+  mdtDeviceIosWidget *iosw;
   mdtAnalogIo *ai;
   mdtAnalogIo *ao;
   mdtDigitalIo *di;
   mdtDigitalIo *dout;
+  mdtDeviceWindow dw;
 
   /*
    * Setup I/O's
@@ -274,13 +276,17 @@ void mdtDeviceTest::modbusWagoTest()
   ios.addDigitalOutput(dout);
 
   // Setup I/O's widget
-  iosw.setDeviceIos(&ios);
-  iosw.show();
+  iosw = new mdtDeviceIosWidget;
+  iosw->setDeviceIos(&ios);
+  ///iosw->show();
 
   // Setup device
   d.setIos(&ios, true);
   d.setAnalogOutputAddressOffset(0x0200);
   d.setDigitalOutputAddressOffset(0);
+  dw.setDevice(&d);
+  dw.setIosWidget(iosw);
+  dw.show();
 
   /*
    * Tests
@@ -328,7 +334,8 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(d.getDigitalInputs(500) >= 0);
   QVERIFY(d.getAnalogOutputs(500) >= 0);
   ///d.start(100);
-  while(iosw.isVisible()){
+  ///while(iosw.isVisible()){
+  while(dw.isVisible()){
     QTest::qWait(500);
   }
 }
@@ -337,11 +344,12 @@ void mdtDeviceTest::modbusBeckhoffTest()
 {
   mdtDeviceModbus d;
   mdtDeviceIos ios;
-  mdtDeviceIosWidget iosw;
+  mdtDeviceIosWidget *iosw;
   mdtAnalogIo *ai;
   mdtAnalogIo *ao;
   mdtDigitalIo *di;
   mdtDigitalIo *dout;
+  mdtDeviceWindow dw;
 
   /*
    * Setup I/O's
@@ -391,13 +399,16 @@ void mdtDeviceTest::modbusBeckhoffTest()
   ios.addDigitalOutput(dout);
 
   // Setup I/O's widget
-  iosw.setDeviceIos(&ios);
-  iosw.show();
+  iosw = new mdtDeviceIosWidget;
+  iosw->setDeviceIos(&ios);
+  ///iosw.show();
 
   // Setup device
   d.setIos(&ios, true);
   d.setAnalogOutputAddressOffset(0x0800);
   d.setDigitalOutputAddressOffset(0);
+  dw.setIosWidget(iosw);
+  dw.show();
 
   /*
    * Tests
@@ -405,7 +416,8 @@ void mdtDeviceTest::modbusBeckhoffTest()
 
   QVERIFY(d.getAnalogOutputs(500) >= 0);
   ///d.start(100);
-  while(iosw.isVisible()){
+  ///while(iosw.isVisible()){
+  while(dw.isVisible()){
     QTest::qWait(500);
   }
 }

@@ -28,6 +28,8 @@
 
 #include <QTest>
 #include <QString>
+#include <QVariant>
+#include <QPushButton>
 #include <qwt_slider.h>
 #include "mdtApplication.h"
 
@@ -296,6 +298,60 @@ void mdtIoWidgetTest::digitalOutWidgetTest()
   QVERIFY(!di.isOn());
 }
 
+void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
+{
+  // GUI (program)
+  mdtDigitalIo dout;
+  mdtDigitalOutWidget doW;
+  doW.setIo(&dout);
+
+  doW.show();
+
+  // Initial state
+  QVERIFY(!doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "??");
+
+  // A request was sent to PLC, and confirm arrives
+  dout.setOn(false);
+  QVERIFY(!doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "OFF");
+
+  // User pressed button
+  doW.internalPushButton()->setChecked(true);
+  QVERIFY(doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "ON");
+  // Request was sent to PLC and confirmation arrives with same state (On)
+  dout.setOn(QVariant(true), false);
+  QVERIFY(doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "ON");
+
+  // User pressed button
+  doW.internalPushButton()->setChecked(false);
+  QVERIFY(!doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "OFF");
+  // Request was sent to PLC and confirmation arrives with same state (Off)
+  dout.setOn(QVariant(false), false);
+  QVERIFY(!doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "OFF");
+
+  // User pressed button
+  doW.internalPushButton()->setChecked(true);
+  QVERIFY(doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "ON");
+  // Request was sent to PLC and confirmation arrives with other state (Off)
+  dout.setOn(QVariant(false), false);
+  QVERIFY(!doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "OFF");
+
+  // User pressed button
+  doW.internalPushButton()->setChecked(true);
+  QVERIFY(doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "ON");
+  // Request was sent to PLC but a error occured
+  dout.setOn(QVariant(), false);
+  QVERIFY(!doW.internalPushButton()->isChecked());
+  QVERIFY(doW.internalPushButton()->text() == "??");
+}
 
 int main(int argc, char **argv)
 {

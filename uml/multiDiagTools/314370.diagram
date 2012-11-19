@@ -2,7 +2,7 @@ format 76
 
 classcanvas 128002 class_ref 309378 // mdtDeviceU3606A
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 50 214 2000
+  xyz 50 255 2000
 end
 classcanvas 128130 class_ref 309250 // mdtDevice
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -39,8 +39,8 @@ relationcanvas 128258 relation_ref 372226 // <generalisation>
 end
 relationcanvas 128642 relation_ref 372482 // <directional composition>
   from ref 128002 z 2001 to ref 128386
-  role_a_pos 374 271 3000 no_role_b
-  multiplicity_a_pos 464 301 3000 no_multiplicity_b
+  role_a_pos 374 288 3000 no_role_b
+  multiplicity_a_pos 464 318 3000 no_multiplicity_b
 end
 relationcanvas 128770 relation_ref 372354 // <directional composition>
   from ref 128002 z 2001 to ref 128386
@@ -49,8 +49,8 @@ relationcanvas 128770 relation_ref 372354 // <directional composition>
 end
 relationcanvas 129026 relation_ref 372610 // <directional composition>
   from ref 128002 z 2001 to ref 128898
-  role_a_pos 436 491 3000 no_role_b
-  multiplicity_a_pos 484 521 3000 no_multiplicity_b
+  role_a_pos 416 490 3000 no_role_b
+  multiplicity_a_pos 464 520 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 372098 // <generalisation>
   from ref 128130 z 2007 to ref 129154
@@ -69,7 +69,7 @@ relationcanvas 129922 relation_ref 379394 // <generalisation>
 end
 relationcanvas 130050 relation_ref 379522 // <directional composition>
   from ref 129410 z 2001 to ref 128002
-  role_a_pos 244 390 3000 no_role_b
-  multiplicity_a_pos 216 390 3000 no_multiplicity_b
+  role_a_pos 244 431 3000 no_role_b
+  multiplicity_a_pos 216 431 3000 no_multiplicity_b
 end
 end

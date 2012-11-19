@@ -24,7 +24,17 @@
 
 #include "mdtTcpSocketThread.h"
 
-//#include <QDebug>
+/// \note essais
+#ifdef Q_OS_UNIX
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+ #include <netinet/tcp.h>
+#endif
+
+#include <QDebug>
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
@@ -79,6 +89,41 @@ mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
   unlockMutex();
   if(pvSocket->waitForConnected(timeout)){
     lockMutex();
+    /// \note essais
+    pvSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+#ifdef Q_OS_UNIX
+    int fd = pvSocket->socketDescriptor();
+    int optval;
+    socklen_t optlen = sizeof(optval);
+    if(fd >= 0){
+      /* Check the status for the keepalive option */
+      if(getsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &optval, &optlen) < 0) {
+          perror("getsockopt()");
+          ///close(s);
+          ///exit(EXIT_FAILURE);
+      }
+      qDebug() << "mdtTcpSocket::reconnect(): SO_KEEPALIVE is " << (optval ? "ON" : "OFF");
+      // Set tcp_keepalive_probes
+      optval = 3;
+      optlen = sizeof(optval);
+      if(setsockopt(fd, SOL_TCP, TCP_KEEPCNT, &optval, optlen) < 0){
+        perror("setsockopt()");
+      }
+      // Set  tcp_keepalive_time
+      optval = 10;
+      optlen = sizeof(optval);
+      if(setsockopt(fd, SOL_TCP, TCP_KEEPIDLE, &optval, optlen) < 0){
+        perror("setsockopt()");
+      }
+      // Set   tcp_keepalive_intvl
+      optval = 2;
+      optlen = sizeof(optval);
+      if(setsockopt(fd, SOL_TCP, TCP_KEEPINTVL, &optval, optlen) < 0){
+        perror("setsockopt()");
+      }
+    }
+#endif
+
     return NoError;
   }
   lockMutex();

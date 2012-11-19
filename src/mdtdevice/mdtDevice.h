@@ -420,7 +420,7 @@ class mdtDevice : public QObject
 
   /*! \brief Emited when state has changed
    */
-  void stateChanged(state_t newState);
+  void stateChanged(int state);
 
  public slots:
 
@@ -455,6 +455,12 @@ class mdtDevice : public QObject
    * This slot is periodically called after a call of start().
    */
   void runQueries();
+
+  /*! \brief Update device state regarding port error.
+   *
+   * If error is unknown, the state is changed to Unknown.
+   */
+  void setStateFromPortError(int error);
 
  protected slots:
 
@@ -633,12 +639,6 @@ class mdtDevice : public QObject
    */
   virtual int writeDigitalOutputs();
 
-  
-  
-  
-  
-  
-  
   /*! \brief Sequence of queries to send periodically
    *
    * This method is called from runQueries().
@@ -672,12 +672,6 @@ class mdtDevice : public QObject
    * Emit stateChanged() if current state was not Unknown.
    */
   void setStateUnknown();
-
-  /*! \brief Update device state regarding port error.
-   *
-   * If error is unknown, the state is changed to Unknown.
-   */
-  void setStateFromPortError(int error);
 
   /*! \brief Add a query/reply transaction
    */

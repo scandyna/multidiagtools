@@ -11,6 +11,8 @@ set (HEADER_FILES
           mdtDevice.h
           mdtDeviceIos.h
           mdtDeviceIosWidget.h
+          mdtDeviceWindow.h
+          mdtDeviceStatusWidget.h
           mdtDeviceModbus.h
     )
 
@@ -21,12 +23,14 @@ set (SOURCES_FILES
           mdtDevice.cpp
           mdtDeviceIos.cpp
           mdtDeviceIosWidget.cpp
+          mdtDeviceWindow.cpp
+          mdtDeviceStatusWidget.cpp
           mdtDeviceModbus.cpp
     )
 
 # Liste des fichiers ui
 set (FORM_FILES
-
+          mdtDeviceWindow.ui
     )
 
 # Liste des fichiers rcc (ressources)
@@ -47,7 +51,7 @@ if(UNIX)
     linux/mdtDeviceU3606A.h
     linux/mdtDeviceU3606AWidget.h
   )
-  set (FORM_FILES
+  set (FORM_FILES ${FORM_FILES}
     linux/mdtDeviceU3606AWidget.ui
   )
 
@@ -70,11 +74,11 @@ target_link_libraries(mdtdevice "mdtport")
 target_link_libraries(mdtdevice ${QT_LIBRARIES})
 
 # Version statique
-if(MDT_BUILD_STATIC_LIBS)
-  add_library (mdtdevice_static STATIC ${SOURCES_FILES} )
-  target_link_libraries(mdtdevice_static "mdtutils")
-  target_link_libraries(mdtdevice_static ${QT_LIBRARIES})
-endif(MDT_BUILD_STATIC_LIBS)
+# if(MDT_BUILD_STATIC_LIBS)
+#   add_library (mdtdevice_static STATIC ${SOURCES_FILES} )
+#   target_link_libraries(mdtdevice_static "mdtutils")
+#   target_link_libraries(mdtdevice_static ${QT_LIBRARIES})
+# endif(MDT_BUILD_STATIC_LIBS)
 
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)

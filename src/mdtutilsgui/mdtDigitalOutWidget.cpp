@@ -40,7 +40,7 @@ mdtDigitalOutWidget::mdtDigitalOutWidget(QWidget *parent)
   l->addWidget(pbDetails, 2, 0);
   setLayout(l);
 
-  pbState->setText("???");
+  pbState->setText("??");
 }
 
 mdtDigitalOutWidget::~mdtDigitalOutWidget()
@@ -60,28 +60,26 @@ void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
   // Signals/slots from widget to io
   connect(pbState, SIGNAL(toggled(bool)), io, SLOT(setStateFromUi(bool)));
   // Internal signals/slots
-  ///connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool)));
+  connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateText(bool)));
   // Set initial data
   setOn(io->isOn());
 }
 
-void mdtDigitalOutWidget::setOn(bool on)
+QPushButton *mdtDigitalOutWidget::internalPushButton()
 {
-  ///if(on != pbState->isChecked()){
-  qDebug() << "mdtDigitalOutWidget::setOn(): state: " << on;
-  pbState->setChecked(on);
-  updateState(on);
-  ///}else{
-    ///pbState->setChecked(on);
-  ///}
+  return pbState;
 }
 
-void mdtDigitalOutWidget::updateState(bool state)
+void mdtDigitalOutWidget::setOn(bool on)
+{
+  pbState->setChecked(on);
+  updateText(on);
+}
+
+void mdtDigitalOutWidget::updateText(bool state)
 {
   Q_ASSERT(pvIo != 0);
 
-  qDebug() << "mdtDigitalOutWidget::updateState() state: " << state;
-  
   // Update text
   if(pvIo->hasValidData()){
     if(state){

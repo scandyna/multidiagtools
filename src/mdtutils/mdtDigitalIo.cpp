@@ -67,7 +67,6 @@ void mdtDigitalIo::setOn(bool on, bool isValid, bool emitValueChanged)
     }
   }
   if(notifyUi){
-    qDebug() << "mdtDigitalIo::setOn(): notify Ui, new state: " << pvIsOn;
     emit(stateChangedForUi(pvIsOn));
   }
 }

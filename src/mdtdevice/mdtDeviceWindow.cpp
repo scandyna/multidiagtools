@@ -18,37 +18,34 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_IO_WIDGET_TEST_H
-#define MDT_IO_WIDGET_TEST_H
+#include "mdtDeviceWindow.h"
+#include "mdtDeviceIosWidget.h"
+#include "mdtDeviceStatusWidget.h"
 
-#include "mdtTest.h"
+#include <QPushButton>
 
-class mdtIoWidgetTest : public mdtTest
+mdtDeviceWindow::mdtDeviceWindow(QWidget *parent)
+ : QMainWindow(parent)
 {
- Q_OBJECT
+  setupUi(this);
 
- private slots:
+  pvStatusWidget = new mdtDeviceStatusWidget;
+  statusBar()->addWidget(pvStatusWidget);
+}
 
-  void analogInWidgetTest();
+mdtDeviceWindow::~mdtDeviceWindow()
+{
+}
 
-  void analogOutWidgetTest();
+void mdtDeviceWindow::setDevice(mdtDevice *device)
+{
+  Q_ASSERT(device != 0);
 
-  /*
-   * Some physical device can send
-   *  a feedback after a output value was setted.
-   * We must be able to display the real value
-   *  that device confirm to the user.
-   * The problem: this can produce a infinite loop
-   *  when expected value (request) and feedback
-   *  are not the same.
-   */
-  void analogOutWidgetRecursifTest();
+  // Status widget
+  pvStatusWidget->setDevice(device);
+}
 
-  void digitalInWidgetTest();
-
-  void digitalOutWidgetTest();
-
-  void digitalOutWidgetRecursifTest();
-};
-
-#endif  // #ifndef MDT_IO_WIDGET_TEST_H
+void mdtDeviceWindow::setIosWidget(QWidget *widget)
+{
+  saIos->setWidget(widget);
+}

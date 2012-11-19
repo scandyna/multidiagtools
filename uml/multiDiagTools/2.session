@@ -2,19 +2,20 @@ window_sizes 1280 1001 304 970 803 120
 diagrams
   classdiagram_ref 314242 // mdtDevice
     776 642 100 4 0 0
-  classdiagram_ref 515074 // mdtDeviceIosWidget
+  classdiagram_ref 528258 // mdtDeviceWindow
     970 803 100 4 0 0
-  classdiagram_ref 314370 // mdtDeviceU3606A
+  classdiagram_ref 528386 // QMainWindow
     776 642 100 4 0 0
-  active  classdiagram_ref 521730 // mdtDeviceIos
+  active  classdiagram_ref 534914 // mdtDeviceStatusWidget
     970 803 100 4 0 0
 end
 show_stereotypes
-selected classdiagram_ref 508290 // mdtDeviceModbus
 open
   classview_ref 352898 // mdtIo
+  classview_ref 286978 // mdtDatabase
   classview_ref 346370 // mdtIoWidgets
-  class_ref 309250 // mdtDevice
-  class_ref 545666 // mdtDeviceIos
+  classview_ref 240514 // mdtDevice
+  class_ref 552194 // mdtDeviceWindow
+  class_ref 558978 // mdtDeviceStatusWidget
 end
 end

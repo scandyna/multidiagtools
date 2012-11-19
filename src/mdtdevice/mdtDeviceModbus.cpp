@@ -34,9 +34,10 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   pvCodec = new mdtFrameCodecModbus;
   /// \note Provisoire !!
   connect(pvTcpPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrame(int, QByteArray)));
+  connect(pvTcpPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
   pvTcpPortManager->setNotifyNewReadenFrame(true);
-  ///pvTcpPortManager->setPortName("192.168.1.102:502");
-  pvTcpPortManager->setPortName("192.168.1.103:502");
+  pvTcpPortManager->setPortName("192.168.1.102:502");
+  ///pvTcpPortManager->setPortName("192.168.1.103:502");
   pvTcpPortManager->openPort();
   pvTcpPortManager->start();
   setStateReady();
@@ -60,7 +61,7 @@ void mdtDeviceModbus::decodeReadenFrame(int id, QByteArray pdu)
 
   // Decode readen frame and update I/O's
   fc = pvCodec->decode(pdu);
-  qDebug() << "mdtDeviceModbus::decodeReadenFrames(): RX frame TID " << id;
+  ///qDebug() << "mdtDeviceModbus::decodeReadenFrames(): RX frame TID " << id;
   switch(fc){
     case 0x01:  // Read coils
       dout = pendingDioTransaction(id);
@@ -104,7 +105,6 @@ void mdtDeviceModbus::decodeReadenFrame(int id, QByteArray pdu)
       break;
     case 0x05:  // Write single coil reply
       dout = pendingDioTransaction(id);
-      qDebug() << "decodeReadenFrame: FC 5 ...";
       if(dout != 0){
         // Check validitiy
         if(pvCodec->values().size() != 2){
@@ -114,7 +114,6 @@ void mdtDeviceModbus::decodeReadenFrame(int id, QByteArray pdu)
           dout->setOn(QVariant(), false);
           break;
         }
-        qDebug() << "Pending FC 5 : " << pvCodec->values().at(1);
         dout->setOn(pvCodec->values().at(1), false);
       }
       break;
@@ -153,6 +152,10 @@ void mdtDeviceModbus::decodeReadenFrame(int id, QByteArray pdu)
       }
       break;
     default:
+      // Remove pending transactions
+      pendingIoTransaction(id);
+      pendingAioTransaction(id);
+      pendingDioTransaction(id);
       /// \todo Handle errors !
       mdtError e(MDT_DEVICE_ERROR, "Received frame with unhandled function code (0x" + QString::number(fc, 16) + ")", mdtError::Warning);
       MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");

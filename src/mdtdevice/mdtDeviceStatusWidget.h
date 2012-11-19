@@ -18,37 +18,54 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_IO_WIDGET_TEST_H
-#define MDT_IO_WIDGET_TEST_H
+#ifndef _MDTDEVICESTATUSWIDGET_H
+#define _MDTDEVICESTATUSWIDGET_H
 
-#include "mdtTest.h"
+#include <QWidget>
+#include <QString>
+#include "mdtDevice.h"
 
-class mdtIoWidgetTest : public mdtTest
+class mdtBlinkLed;
+class QLabel;
+class QPushButton;
+
+/*! \brief
+ */
+class mdtDeviceStatusWidget : public QWidget
 {
- Q_OBJECT
+  Q_OBJECT
 
- private slots:
+ public:
 
-  void analogInWidgetTest();
+  mdtDeviceStatusWidget(QWidget *parent = 0);
+  ~mdtDeviceStatusWidget();
 
-  void analogOutWidgetTest();
-
-  /*
-   * Some physical device can send
-   *  a feedback after a output value was setted.
-   * We must be able to display the real value
-   *  that device confirm to the user.
-   * The problem: this can produce a infinite loop
-   *  when expected value (request) and feedback
-   *  are not the same.
+  /*! \brief Set device
+   *
+   * Will make some connections
    */
-  void analogOutWidgetRecursifTest();
+  void setDevice(mdtDevice *device);
 
-  void digitalInWidgetTest();
+ public slots:
 
-  void digitalOutWidgetTest();
+  /*! \brief
+   */
+  void setState(int state);
 
-  void digitalOutWidgetRecursifTest();
+  /*! \brief
+   */
+  void setState(int state, const QString &message, const QString &details);
+
+ private:
+
+  Q_DISABLE_COPY(mdtDeviceStatusWidget);
+
+  mdtBlinkLed *ldState;
+  QPushButton *pbDetails;
+  QLabel *lbMessage;
+  QLabel *lbTx;
+  QLabel *lbRx;
+  mdtBlinkLed *ldTx;
+  mdtBlinkLed *ldRx;
 };
-
-#endif  // #ifndef MDT_IO_WIDGET_TEST_H
+#endif

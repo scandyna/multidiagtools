@@ -45,13 +45,19 @@ class mdtDigitalOutWidget : public mdtAbstractIoWidget
    */
   void setIo(mdtDigitalIo *io);
 
+  /*! \brief Get the internal push button object
+   *
+   * Used by unit testing, should not be used directly
+   */
+  QPushButton *internalPushButton();
+
  private slots:
 
   // Used to update GUI from mdtDigitalIo object.
   void setOn(bool on);
 
   // if state is != from current state, text will be updated
-  void updateState(bool state);
+  void updateText(bool state);
   void setEnabled(bool enabled);
 
  private:

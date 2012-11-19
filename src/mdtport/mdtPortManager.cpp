@@ -379,8 +379,10 @@ void mdtPortManager::onThreadsErrorOccured(int error)
   int maxTry = 5;
 
   qDebug() << "mdtPortManager::onThreadsErrorOccured() , code: " << error;
+  emit(errorStateChanged(error));
   
   // Try to handle error
+  /**
   if(error == mdtAbstractPort::Disconnected){
     qDebug() << "Disconnected , closing port ...";
     closePort();
@@ -402,6 +404,7 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       return;
     }
   }
+  */
   
   // On IO error, we try to re-open the port
   /**

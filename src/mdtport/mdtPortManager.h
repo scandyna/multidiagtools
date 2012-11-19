@@ -425,6 +425,8 @@ class mdtPortManager : public QThread
    */
   void readenFramesQueueSizeChanged(int newSize);
 
+  void errorStateChanged(int error);
+
  protected:
 
   /*! \brief Store frame data in queue and/or emit newReadenFrame() signal
