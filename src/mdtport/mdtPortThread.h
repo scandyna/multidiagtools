@@ -173,7 +173,7 @@ class mdtPortThread : public QThread
    *  to store chunk of data into a frame.
    *
    * Note about port mutex handling:<br>
-   *  The port mutext must be locked before calling this method.
+   *  The port mutex must be locked before calling this method.
    *  Internally, it will be unlocked during wait, and will be
    *  locked again. So, the port mutex is allways locked when this
    *  method returns.
@@ -187,6 +187,31 @@ class mdtPortThread : public QThread
    * \pre frame must be a valid pointer (not Null).
    */
   mdtFrame *readFromPort(mdtFrame *frame);
+
+  /*! \brief Read data from port 2 (new variant to test)
+   *
+   * This is a helper method for subclass
+   *  to store chunk of data into a frame.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutex must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \param frame Data readen from port will be stored in this frame.
+   *               Note that pointer is updated when a frame was completed
+   *               and that it can be Null (in this case the mdtAbstractPort::UnhandledError is returned)
+   *
+   * \return The number of frames completed during the process.
+   *          This can be helpful query/reply protocols in witch the standard
+   *          reply should be one frame.
+   *         On error, frame is put back into pool and one of the mdtAbstractPort::error_t is returned.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   * \pre frame must be a valid pointer (not Null).
+   */
+  int readFromPort2(mdtFrame **frame);
 
   /*! \brief Get a new frame for writing data to port
    *

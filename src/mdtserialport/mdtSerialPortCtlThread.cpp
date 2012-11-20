@@ -43,7 +43,6 @@ void mdtSerialPortCtlThread::run()
 {
   mdtAbstractPort::error_t portError;
 
-  qDebug() << "CTLTHD: starting ...";
   Q_ASSERT(pvPort != 0);
 
   // We need a mdtSerialPort instance here
@@ -52,7 +51,6 @@ void mdtSerialPortCtlThread::run()
 
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
-  qDebug() << "CTLTHD: starting TID: " << pvNativePthreadObject;
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
 
@@ -81,8 +79,6 @@ void mdtSerialPortCtlThread::run()
       break;
     }
   }
-  qDebug() << "CTLTHD: Cleanup ...";
 
   port->unlockMutex();
-  qDebug() << "CTLTHD: END";
 }

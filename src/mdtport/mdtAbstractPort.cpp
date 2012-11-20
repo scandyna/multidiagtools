@@ -320,17 +320,13 @@ mdtFrame *mdtAbstractPort::getFrameToWrite()
 {
   mdtFrame *frame;
 
-  qDebug() << "mdtAbstractPort::getFrameToWrite() ...";
   if(pvWriteFrames.size() < 1){
-    qDebug() << "mdtAbstractPort::getFrameToWrite() queue empty, wait ...";
     pvWriteFrameAvailable.wait(&pvMutex);
   }
   // If abortFrameToWriteWait() was called, it can happen that queue is empty
   if(pvWriteFrames.size() < 1){
-    qDebug() << "mdtAbstractPort::getFrameToWrite() Cancel";
     return 0;
   }
-  qDebug() << "mdtAbstractPort::getFrameToWrite() have a frame :)";
   frame = pvWriteFrames.dequeue();
   Q_ASSERT(frame != 0);
 

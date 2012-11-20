@@ -67,6 +67,7 @@ class mdtAbstractPort : public QObject
                 UnhandledError,         /*!< Unhandled error happen.
                                             In this case, thread will stop working and error is reported with mdtError system.
                                             Logfile could give more information, see mdtError and mdtApplication */
+                ReadPoolEmpty,          /*!< Read frames pool is empty. Says that no data can be received for the moment */
                 WriteQueueEmpty         /*!< Write queue is empty. Says that no data can be sent for the moment */
                };
 
@@ -245,7 +246,7 @@ class mdtAbstractPort : public QObject
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
    *
-   * \return Number of bytes readen, or a error < 0
+   * \return Number of bytes readen, or a error < 0 (see error_t) \todo adapt subclasses
    */
   virtual qint64 read(char *data, qint64 maxSize) = 0;
 
@@ -316,7 +317,7 @@ class mdtAbstractPort : public QObject
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
    *
-   * \return Number of bytes written, or <0 on error
+   * \return Number of bytes written, or error < 0 (see error_t) \todo adapt subclasses
    */
   virtual qint64 write(const char *data, qint64 maxSize) = 0;
 

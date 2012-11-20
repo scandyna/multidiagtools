@@ -346,7 +346,7 @@ void mdtUsbPortThread::run()
             break;
           }
           // If frame is the same as before readFromPort() call,
-          //  it's possibl that more data is needed.
+          //  it's possible that more data is needed.
           if(readFrame == readFramePrevious){
             qDebug() << "USBTHD: same frame, toRead: " << toRead;
             toRead = readFrame->bytesToStore();

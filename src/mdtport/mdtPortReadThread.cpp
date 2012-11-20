@@ -39,7 +39,6 @@ bool mdtPortReadThread::isReader() const
 
 void mdtPortReadThread::run()
 {
-  qDebug() << "RDTHD: starting ...";
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame;
@@ -49,7 +48,6 @@ void mdtPortReadThread::run()
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
-  qDebug() << "RDTHD: starting TID: " << pvNativePthreadObject;
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Get setup
@@ -103,13 +101,10 @@ void mdtPortReadThread::run()
     }
   }
 
-  qDebug() << "RDTHD: Cleanup ...";
-
   // Put current frame into pool
   if(frame != 0){
     pvPort->readFramesPool().enqueue(frame);
   }
 
   pvPort->unlockMutex();
-  qDebug() << "RDTHD: END";
 }

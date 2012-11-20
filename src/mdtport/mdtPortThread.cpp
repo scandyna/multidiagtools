@@ -104,8 +104,6 @@ void mdtPortThread::stop()
 
   int err;
 
-  ///qDebug() << "mdtPortThread::stop() ...";
-
   // Unset the running flag
   pvPort->lockMutex();
   if(!pvRunning){
@@ -116,11 +114,9 @@ void mdtPortThread::stop()
   if(isWriter()){
     pvPort->abortFrameToWriteWait();
   }
-  ///pvPort->unlockMutex();
 #ifdef Q_OS_UNIX
   if(QThread::isRunning()){
     Q_ASSERT(pvNativePthreadObject != 0);
-    ///qDebug() << "mdtPortThread::stop(): sending SIGALRM ..., QThread::isRunning(): " << QThread::isRunning() << ", OBL: " << pvNativePthreadObject;
     err = pthread_kill(pvNativePthreadObject, SIGALRM);
     if(err != 0){
       mdtError e(MDT_PORT_IO_ERROR, "pthread_kill() failed", mdtError::Error);
@@ -133,7 +129,6 @@ void mdtPortThread::stop()
       MDT_ERROR_SET_SRC(e, "mdtPortThread");
       e.commit();
     }
-    ///qDebug() << "mdtPortThread::stop(): SIGALRM sent";
   }
 #endif
   pvPort->unlockMutex();
@@ -201,7 +196,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
     mdtError e(MDT_PORT_QUEUE_EMPTY_ERROR, "Read frames pool is empty", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
     e.commit();
-    emit(errorOccured(MDT_PORT_QUEUE_EMPTY_ERROR));
+    notifyError(mdtAbstractPort::ReadPoolEmpty);
     // Wait until a frame is available again, or end of thread.
     while(pvPort->readFramesPool().size() < 1){
       pvPort->unlockMutex();
@@ -215,6 +210,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
     mdtError e2(MDT_NO_ERROR, "Read frames pool has now frames again (no longer empty)", mdtError::Info);
     MDT_ERROR_SET_SRC(e2, "mdtPortThread");
     e2.commit();
+    notifyError(mdtAbstractPort::NoError);
   }
   frame = pvPort->readFramesPool().dequeue();
   Q_ASSERT(frame != 0);
@@ -295,6 +291,80 @@ mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
   }
 
   return f;
+}
+
+int mdtPortThread::readFromPort2(mdtFrame **frame)
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(frame != 0);
+
+  char *bufferCursor = 0;
+  qint64 readen = 0;
+  qint64 stored = 0;
+  qint64 toStore = 0;
+  int completeFrames = 0;
+
+  // Alloc local buffer if needed
+  if(pvReadBufferSize < (*frame)->capacity()){
+    delete[] pvReadBuffer;
+    pvReadBufferSize = (*frame)->capacity();
+    pvReadBuffer = new char[pvReadBufferSize];
+    if(pvReadBuffer == 0){
+      pvReadBufferSize = 0;
+      mdtError e(MDT_MEMORY_ALLOC_ERROR, "Cannot allocate memory for local buffer", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtPortThread");
+      e.commit();
+      return 0;
+    }
+  }
+  // Reset bufferCursor
+  bufferCursor = pvReadBuffer;
+  // Read data from port
+  emit ioProcessBegin();
+  readen = pvPort->read(pvReadBuffer, pvReadBufferSize);
+  if(readen < 0){
+    pvPort->readFramesPool().enqueue(*frame);
+    return readen;
+  }
+  // Store readen data
+  toStore = readen;
+  while(toStore > 0){
+    // Check end of thread flag
+    if(!pvRunning){
+      return mdtAbstractPort::ReadCanceled;
+    }
+    // Check for new frame if needed
+    if((*frame) == 0){
+      ///qDebug() << "mdtPortThread::readFromPort(): frame Null, get new one";
+      *frame = getNewFrameRead();
+      if((*frame) == 0){
+        return mdtAbstractPort::UnhandledError;
+      }
+    }
+    // Store data
+    stored = (*frame)->putData(bufferCursor, toStore);
+    // If frame is full, enqueue to readen frames and get a new one
+    if((*frame)->bytesToStore() == 0){
+      stored += (*frame)->eofSeqLen();
+      pvPort->readenFrames().enqueue(*frame);
+      // emit a Readen frame signal
+      emit newFrameReaden();
+      ///qDebug() << "mdtPortThread::readFromPort(): frame complete, get new one";
+      *frame = getNewFrameRead();
+      completeFrames++;
+    }
+    // When frame becomes full and EOF seq was not reached, stored will be to big
+    if(stored >= pvReadBufferSize){
+      stored = pvReadBufferSize-1;
+      toStore = 0;
+    }else{
+      toStore = toStore - stored;
+    }
+    bufferCursor = bufferCursor + stored;
+    Q_ASSERT(bufferCursor < (pvReadBuffer + pvReadBufferSize));
+  }
+
+  return completeFrames;
 }
 
 mdtFrame *mdtPortThread::getNewFrameWrite()

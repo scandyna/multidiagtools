@@ -137,32 +137,24 @@ void mdtPortTest::startStopTest()
   QVERIFY(!wrThd.isRunning());
 
   // Start/stop read thread
-  qDebug() << "\n-> start RTHD ...";
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
-  qDebug() << "\n-> stop RTHD ...";
   rdThd.stop();
   QVERIFY(!rdThd.isRunning());
   // Start/stop write thread
-  qDebug() << "\n-> start WTHD ...";
   QVERIFY(wrThd.start());
   QVERIFY(wrThd.isRunning());
-  qDebug() << "\n-> stop WTHD ...";
   wrThd.stop();
   QVERIFY(!wrThd.isRunning());
 
   // Start threads (sequencial)
-  qDebug() << "\n-> start RTHD ...";
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
-  qDebug() << "\n-> start WTHD ...";
   QVERIFY(wrThd.start());
   QVERIFY(wrThd.isRunning());
-  qDebug() << "\n-> stop RTHD ...";
   rdThd.stop();
   QVERIFY(wrThd.isRunning());
   QVERIFY(!rdThd.isRunning());
-  qDebug() << "\n-> stop WTHD ...";
   wrThd.stop();
   QVERIFY(!wrThd.isRunning());
 
