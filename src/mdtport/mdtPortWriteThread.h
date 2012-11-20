@@ -43,6 +43,13 @@ class mdtPortWriteThread : public mdtPortThread
    */
   bool isReader() const;
 
+  /*! \brief Returns true if this thread writes date
+   *
+   * Is used by mdtPortThread::stop() 
+   *  to know if mdtAbstractPort::abortFrameToWriteWait() must be called.
+   */
+  bool isWriter() const;
+
  signals:
 
   /*! \brief Emited when a complete frame was written

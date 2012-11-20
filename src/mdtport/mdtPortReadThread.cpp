@@ -49,6 +49,7 @@ void mdtPortReadThread::run()
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
+  qDebug() << "RDTHD: starting TID: " << pvNativePthreadObject;
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Get setup

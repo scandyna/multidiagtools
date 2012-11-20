@@ -101,8 +101,7 @@ void mdtTcpSocketThread::run()
     // Check connection state
     if(pvSocket->state() != QAbstractSocket::ConnectedState){
       // Try to (Re-)connect
-      portError = reconnect(reconnectTimeout, reconnectMaxRetry);
-      emit(errorOccured(portError));
+      portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
       if(portError != mdtAbstractPort::NoError){
         // Stop
         break;
@@ -113,18 +112,18 @@ void mdtTcpSocketThread::run()
     portError = writeToPort(writeFrame, false, 0);
     if(portError != mdtAbstractPort::NoError){
       qDebug() << "TCPTHD: writeToPort() failed";
-      emit(errorOccured(portError));
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
         if(portError != mdtAbstractPort::NoError){
           // Stop
           break;
         }
       }else{
         // stop
-        emit(errorOccured(portError));
+        notifyError(portError);
+        ///emit(errorOccured(portError));
         break;
       }
     }
@@ -136,11 +135,11 @@ void mdtTcpSocketThread::run()
     portError = pvPort->waitEventWriteReady();
     if(portError != mdtAbstractPort::NoError){
       qDebug() << "TCPTHD: waitEventWriteReady() failed";
-      emit(errorOccured(portError));
+      ///emit(errorOccured(portError));
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
         if(portError != mdtAbstractPort::NoError){
           // Stop
           break;
@@ -150,7 +149,8 @@ void mdtTcpSocketThread::run()
         break;
       }else{
         // stop
-        emit(errorOccured(portError));
+        ///emit(errorOccured(portError));
+        notifyError(portError);
         break;
       }
     }
@@ -162,11 +162,11 @@ void mdtTcpSocketThread::run()
     // Wait until data is available for read
     portError = pvPort->waitForReadyRead();
     if(portError != mdtAbstractPort::NoError){
-      emit(errorOccured(portError));
+      ///emit(errorOccured(portError));
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
         if(portError != mdtAbstractPort::NoError){
           // Stop
           break;
@@ -176,9 +176,24 @@ void mdtTcpSocketThread::run()
         break;
       }else{
         // stop
-        emit(errorOccured(portError));
+        ///emit(errorOccured(portError));
+        notifyError(portError);
         break;
       }
+    }
+    // Check about timeout
+    if(pvPort->readTimeoutOccured()){
+      // Go back idle
+      qDebug() << "TCPTHD: read timeout";
+      // Probably disconnected. Abort and Go back idle
+      ///notifyError(mdtAbstractPort::Disconnected);
+      pvSocket->abort();
+      portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+      if(portError != mdtAbstractPort::NoError){
+        // Stop
+        break;
+      }
+      continue;
     }
     // Read thread state
     if(!pvRunning){
@@ -206,11 +221,11 @@ void mdtTcpSocketThread::run()
       ///qDebug() << "waitForReadyRead ...";
       portError = pvPort->waitForReadyRead(50);
       if(portError != mdtAbstractPort::NoError){
-        emit(errorOccured(portError));
+        ///emit(errorOccured(portError));
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
           if(portError != mdtAbstractPort::NoError){
             // Stop
             break;
@@ -220,7 +235,8 @@ void mdtTcpSocketThread::run()
           break;
         }else{
           // stop
-          emit(errorOccured(portError));
+          ///emit(errorOccured(portError));
+          notifyError(portError);
           break;
         }
       }

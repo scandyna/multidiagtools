@@ -809,7 +809,7 @@ qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
         return n;
     }
   }
-  qDebug() << "wrote " << n << " bytes";
+  ///qDebug() << "wrote " << n << " bytes";
 
   return n;
 }
@@ -836,7 +836,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventCtl()
   int retVal;
 
   // We wait until a line status change happens
-  qDebug() << "mdtSerialPort::waitEventCtl(), waiting...";
+  ///qDebug() << "mdtSerialPort::waitEventCtl(), waiting...";
   pvMutex.unlock();
   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
   pvMutex.lock();

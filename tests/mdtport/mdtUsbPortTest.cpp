@@ -42,6 +42,8 @@ void mdtUsbPortTest::transfertCallback(libusb_transfer *transfer)
 
 void mdtUsbPortTest::essais()
 {
+  QSKIP("Just a sandbox ...", SkipAll);
+
   mdtUsbPort port;
   mdtUsbDeviceDescriptor deviceDescriptor;
   mdtUsbConfigDescriptor *configDescriptor;

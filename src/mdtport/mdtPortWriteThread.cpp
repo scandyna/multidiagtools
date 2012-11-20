@@ -43,6 +43,11 @@ bool mdtPortWriteThread::isReader() const
   return false;
 }
 
+bool mdtPortWriteThread::isWriter() const
+{
+  return true;
+}
+
 void mdtPortWriteThread::run()
 {
   qDebug() << "WRTHD: starting ...";
@@ -57,6 +62,7 @@ void mdtPortWriteThread::run()
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
+  qDebug() << "WRTHD: starting TID: " << pvNativePthreadObject;
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Get setup
@@ -68,6 +74,7 @@ void mdtPortWriteThread::run()
 
   // Run...
   while(1){
+    ///qDebug() << "WRTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -79,7 +86,9 @@ void mdtPortWriteThread::run()
       pvPort->lockMutex();
     }
     // Get a frame - will block if nothing is to write
+    ///qDebug() << "WRTHD: getNewFrameWrite() ...";
     frame = getNewFrameWrite();
+    ///qDebug() << "WRTHD: getNewFrameWrite() DONE";
     // If thread is stopping, it can happen that a Null pointer is returned
     if(frame == 0){
       break;
@@ -91,11 +100,13 @@ void mdtPortWriteThread::run()
       break;
     }
     */
+    ///qDebug() << "WRTHD: writeToPort() ...";
     portError = writeToPort(frame, bytePerByteWrite, writeMinWaitTime);
     if(portError != mdtAbstractPort::NoError){
       // Stop
       break;
     }
+    ///qDebug() << "WRTHD: writeToPort() DONE";
   }
 
   /// \todo Put curent frame back to pool ??

@@ -32,6 +32,7 @@ mdtPortThread::mdtPortThread(QObject *parent)
   pvRunning = false;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
+  pvCurrentError = 0;
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = 0;
   // We must catch the SIGALRM signal, else the application process
@@ -76,6 +77,7 @@ bool mdtPortThread::start()
 
   // Start..
   QThread::start();
+  ///qDebug() << "mdtPortThread::start() ...";
 
   // Wait until the thread started
   while(!isRunning()){
@@ -91,6 +93,7 @@ bool mdtPortThread::start()
       return false;
     }
   }
+  ///qDebug() << "mdtPortThread::start() DONE";
 
   return true;
 }
@@ -101,6 +104,8 @@ void mdtPortThread::stop()
 
   int err;
 
+  ///qDebug() << "mdtPortThread::stop() ...";
+
   // Unset the running flag
   pvPort->lockMutex();
   if(!pvRunning){
@@ -108,24 +113,30 @@ void mdtPortThread::stop()
     return;
   }
   pvRunning = false;
-  pvPort->unlockMutex();
-#ifdef Q_OS_UNIX
-  Q_ASSERT(pvNativePthreadObject != 0);
-  qDebug() << "mdtPortThread::stop(): sending SIGALRM ...";
-  err = pthread_kill(pvNativePthreadObject, SIGALRM);
-  if(err != 0){
-    mdtError e(MDT_PORT_IO_ERROR, "pthread_kill() failed", mdtError::Error);
-    switch(err){
-      case EINVAL:
-        e.setSystemError(err, "Invalid signal was specified (EINVAL)");
-      case ESRCH:
-        e.setSystemError(err, "Specified thread ID not found (ESRCH)");
-    }
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
+  if(isWriter()){
+    pvPort->abortFrameToWriteWait();
   }
-  qDebug() << "mdtPortThread::stop(): SIGALRM sent";
+  ///pvPort->unlockMutex();
+#ifdef Q_OS_UNIX
+  if(QThread::isRunning()){
+    Q_ASSERT(pvNativePthreadObject != 0);
+    ///qDebug() << "mdtPortThread::stop(): sending SIGALRM ..., QThread::isRunning(): " << QThread::isRunning() << ", OBL: " << pvNativePthreadObject;
+    err = pthread_kill(pvNativePthreadObject, SIGALRM);
+    if(err != 0){
+      mdtError e(MDT_PORT_IO_ERROR, "pthread_kill() failed", mdtError::Error);
+      switch(err){
+        case EINVAL:
+          e.setSystemError(err, "Invalid signal was specified (EINVAL)");
+        case ESRCH:
+          e.setSystemError(err, "Specified thread ID not found (ESRCH)");
+      }
+      MDT_ERROR_SET_SRC(e, "mdtPortThread");
+      e.commit();
+    }
+    ///qDebug() << "mdtPortThread::stop(): SIGALRM sent";
+  }
 #endif
+  pvPort->unlockMutex();
 
   // Wait the end of the thread
   while(!isFinished()){
@@ -168,6 +179,16 @@ bool mdtPortThread::isFinished() const
   pvPort->unlockMutex();
 
   return QThread::isFinished();
+}
+
+bool mdtPortThread::isReader() const
+{
+  return false;
+}
+
+bool mdtPortThread::isWriter() const
+{
+  return false;
 }
 
 mdtFrame *mdtPortThread::getNewFrameRead()
@@ -232,6 +253,7 @@ mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
   // Read data from port
   emit ioProcessBegin();
   readen = pvPort->read(pvReadBuffer, pvReadBufferSize);
+  /// \todo don't loose the frame !?!
   if(readen < 0){
     return 0;
   }
@@ -346,32 +368,56 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
   return mdtAbstractPort::NoError;
 }
 
-mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry)
+mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool notify)
 {
   Q_ASSERT(pvPort != 0);
 
   int count = maxTry;
   mdtAbstractPort::error_t error;
 
+  if(notify){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
   while(count > 0){
     qDebug() << "mdtPortThread::reconnect(): trying ...";
     error = pvPort->reconnect(timeout);
     if(error == mdtAbstractPort::NoError){
+      if(notify){
+        notifyError(mdtAbstractPort::NoError);
+      }
       return mdtAbstractPort::NoError;
     }
     if(error != mdtAbstractPort::Disconnected){
+      if(notify){
+        notifyError(error);
+      }
       return error;
     }
     count--;
   }
+  // Max try reached
+  if(notify){
+    mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtPortThread");
+    e.commit();
+    notifyError(mdtAbstractPort::UnhandledError);
+  }
 
-  qDebug() << "mdtPortThread::reconnect(): max retry, reconnection FAILED :-(";
   return mdtAbstractPort::UnhandledError;
+}
+
+void mdtPortThread::notifyError(int error)
+{
+  if(error != pvCurrentError){
+    qDebug() << "mdtPortThread::notifyError(): error " << error << " occured";
+    pvCurrentError = error;
+    emit(errorOccured(error));
+  }
 }
 
 #ifdef Q_OS_UNIX
 void mdtPortThread::sigactionHandle(int /* signum */)
 {
-  qDebug() << "mdtPortThread::sigactionHandle() called";
+  qDebug() << "mdtPortThread::sigactionHandle() called, TID: " << pthread_self();
 }
 #endif

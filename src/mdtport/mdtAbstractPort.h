@@ -65,7 +65,7 @@ class mdtAbstractPort : public QObject
                 UnknownError,           /*!< Unknown error is happen.
                                             Logfile could give more information, see mdtError and mdtApplication */
                 UnhandledError,         /*!< Unhandled error happen.
-                                            In this case, thread will stop working.
+                                            In this case, thread will stop working and error is reported with mdtError system.
                                             Logfile could give more information, see mdtError and mdtApplication */
                 WriteQueueEmpty         /*!< Write queue is empty. Says that no data can be sent for the moment */
                };

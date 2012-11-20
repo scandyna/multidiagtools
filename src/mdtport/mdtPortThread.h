@@ -84,9 +84,20 @@ class mdtPortThread : public QThread
    * mdtPortManager can handle many threads. It needs to know wich one will send the
    *  newFrameReaden() signal, so it can connect it to his slot.
    *
-   * This method must be implemented in subclass.
+   * Default implementation returns allways false.
+   *
+   * This method should be implemented in reader subclass.
    */
-  virtual bool isReader() const = 0;
+  virtual bool isReader() const;
+
+  /*! \brief Returns true if this thread writes date
+   *
+   * Is used by mdtPortThread::stop() 
+   *  to know if mdtAbstractPort::abortFrameToWriteWait() must be called.
+   *
+   * Default implementation returns false
+   */
+  virtual bool isWriter() const;
 
  signals:
 
@@ -124,10 +135,6 @@ class mdtPortThread : public QThread
    * The error is one of the mdtAbstractPort::error_t.
    *
    * mdtPortManager uses this signal.
-   *  If the mdtAbstractPort::Disconnected error happens,
-   *  the port manager stops the thread and closes the port.
-   *  Optionnaly, it can try to re-open the port, and start
-   *  the thread again on success.
    */
   void errorOccured(int error);
 
@@ -236,11 +243,19 @@ class mdtPortThread : public QThread
    *
    * \param timeout Timeout per try [ms]
    * \param maxTry Maximum try
+   * \param notify If true, error will be notified (with errorOccured() ),
+   *                and failure after maxTry will be reported with mdtError.
    * \return NoError if reconnection worked or UnhandledError else.
    *
    * \pre Port must be set with setPort() before using this method.
    */
-  mdtAbstractPort::error_t reconnect(int timeout, int maxTry);
+  mdtAbstractPort::error_t reconnect(int timeout, int maxTry, bool notify = true);
+
+  /*! \brief Emit the errorOccured() signal if new error is different from current
+   *
+   * \todo Adapt in threads subclasses
+   */
+  void notifyError(int error);
 
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;
@@ -258,6 +273,7 @@ class mdtPortThread : public QThread
   // Members used by readFromPort()
   char *pvReadBuffer;
   qint64 pvReadBufferSize;
+  int pvCurrentError;
 };
 
 #endif  // #ifndef MDT_PORT_THREAD_H

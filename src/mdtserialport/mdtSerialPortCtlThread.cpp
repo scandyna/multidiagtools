@@ -52,6 +52,7 @@ void mdtSerialPortCtlThread::run()
 
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
+  qDebug() << "CTLTHD: starting TID: " << pvNativePthreadObject;
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
 

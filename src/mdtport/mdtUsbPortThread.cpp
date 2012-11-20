@@ -127,6 +127,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFram
     }else{
       // Write data to port
       emit ioProcessBegin();
+      /// \todo Return port's error
       written = port->write(bufferCursor, toWrite);
       if(written < 0){
         return mdtAbstractPort::UnhandledError;

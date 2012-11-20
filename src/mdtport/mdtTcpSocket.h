@@ -96,7 +96,7 @@ class mdtTcpSocket : public mdtAbstractPort
    *
    * Mutex is not handled by this method.
    *
-   * \return Number of bytes readen, or a error < 0
+   * \return Number of bytes readen, or a error < 0 (one of the mdtAbstractPort::error_t)
    */
   qint64 read(char *data, qint64 maxSize);
 
@@ -113,7 +113,7 @@ class mdtTcpSocket : public mdtAbstractPort
    *
    * Mutex is not handled by this method.
    *
-   * \return Number of bytes written, or <0 on error
+   * \return Number of bytes written, or a error < 0 (one of the mdtAbstractPort::error_t)
    */
   qint64 write(const char *data, qint64 maxSize);
 
@@ -175,6 +175,15 @@ class mdtTcpSocket : public mdtAbstractPort
    *  be handled here.
    */
   void pvFlushOut();
+
+  /*! \brief Map error returned by QTcpSocket to mdtAbstractPort error.
+   *
+   * Unhandled error is reported with mdtError and UnhandledError is returned.
+   *
+   * If SocketTimeoutError occurs, timeout state will be set with updateReadTimeoutState(true),
+   *  but it's caller's responsability to unset it later.
+   */
+  error_t mapSocketError(QAbstractSocket::SocketError error);
 
   int pvReadTimeout;
   int pvWriteTimeout;
