@@ -77,7 +77,6 @@ bool mdtPortThread::start()
 
   // Start..
   QThread::start();
-  ///qDebug() << "mdtPortThread::start() ...";
 
   // Wait until the thread started
   while(!isRunning()){
@@ -93,7 +92,6 @@ bool mdtPortThread::start()
       return false;
     }
   }
-  ///qDebug() << "mdtPortThread::start() DONE";
 
   return true;
 }
@@ -136,14 +134,12 @@ void mdtPortThread::stop()
   // Wait the end of the thread
   while(!isFinished()){
     qApp->processEvents();
-    qDebug() << "mdtPortThread::stop(): process events ...";
     msleep(50);
   }
   // Free read/write buffers
   delete[] pvReadBuffer;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
-  qDebug() << "mdtPortThread::stop(): END";
 }
 
 bool mdtPortThread::isRunning() const
@@ -335,7 +331,6 @@ int mdtPortThread::readFromPort2(mdtFrame **frame)
     }
     // Check for new frame if needed
     if((*frame) == 0){
-      ///qDebug() << "mdtPortThread::readFromPort(): frame Null, get new one";
       *frame = getNewFrameRead();
       if((*frame) == 0){
         return mdtAbstractPort::UnhandledError;
@@ -349,7 +344,6 @@ int mdtPortThread::readFromPort2(mdtFrame **frame)
       pvPort->readenFrames().enqueue(*frame);
       // emit a Readen frame signal
       emit newFrameReaden();
-      ///qDebug() << "mdtPortThread::readFromPort(): frame complete, get new one";
       *frame = getNewFrameRead();
       completeFrames++;
     }
@@ -446,7 +440,7 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
   mdtAbstractPort::error_t error;
 
   if(notify){
-    notifyError(mdtAbstractPort::Disconnected);
+    notifyError(mdtAbstractPort::Connecting);
   }
   while(count > 0){
     qDebug() << "mdtPortThread::reconnect(): trying ...";
@@ -470,7 +464,8 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
     mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
     e.commit();
-    notifyError(mdtAbstractPort::UnhandledError);
+    ///notifyError(mdtAbstractPort::UnhandledError);
+    notifyError(mdtAbstractPort::Disconnected);
   }
 
   return mdtAbstractPort::UnhandledError;

@@ -40,7 +40,8 @@ class mdtDeviceU3606A : public mdtDevice
 
   mdtDeviceU3606A(QObject *parent = 0);
   ~mdtDeviceU3606A();
-  
+ mdtPortManager *portManager();
+ 
   /*! \brief Scan for attached devices
    * 
    * Scan for available ports, then it

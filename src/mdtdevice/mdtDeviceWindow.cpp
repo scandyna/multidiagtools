@@ -31,6 +31,7 @@ mdtDeviceWindow::mdtDeviceWindow(QWidget *parent)
 
   pvStatusWidget = new mdtDeviceStatusWidget;
   statusBar()->addWidget(pvStatusWidget);
+  pvDevice = 0;
 }
 
 mdtDeviceWindow::~mdtDeviceWindow()
@@ -41,8 +42,9 @@ void mdtDeviceWindow::setDevice(mdtDevice *device)
 {
   Q_ASSERT(device != 0);
 
+  pvDevice = device;
   // Status widget
-  pvStatusWidget->setDevice(device);
+  pvStatusWidget->setDevice(pvDevice);
 }
 
 void mdtDeviceWindow::setIosWidget(QWidget *widget)

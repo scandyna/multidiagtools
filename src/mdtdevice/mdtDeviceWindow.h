@@ -55,6 +55,7 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
   Q_DISABLE_COPY(mdtDeviceWindow);
 
   mdtDeviceStatusWidget *pvStatusWidget;
+  mdtDevice *pvDevice;
 };
 
 #endif  // #ifndef MDT_DEVICE_WINDOW_H

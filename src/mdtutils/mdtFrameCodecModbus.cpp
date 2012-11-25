@@ -405,6 +405,7 @@ bool mdtFrameCodecModbus::decodeReadDiscreteInputs()
   }
   // Get the values
   for(i=2; i<pvPdu.size(); i++){
+    qDebug() << "PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);
     appendValuesBitsFromByte(pvPdu.at(i));
   }
 
@@ -512,8 +513,6 @@ bool mdtFrameCodecModbus::decodeWriteSingleCoil()
   }else{
     pvValues.append(false);
   }
-  
-  qDebug() << "mdtFrameCodecModbus::decodeWriteSingleCoil(): values: " << pvValues;
 
   return true;
 }

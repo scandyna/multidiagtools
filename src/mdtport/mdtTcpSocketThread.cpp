@@ -23,8 +23,6 @@
 #include "mdtError.h"
 #include <QApplication>
 
-//#include <QDebug>
-
 mdtTcpSocketThread::mdtTcpSocketThread(QObject *parent)
  : mdtPortThread(parent)
 {
@@ -48,7 +46,7 @@ void mdtTcpSocketThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtTcpSocket *socket;
+  mdtTcpSocket *port;
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
   mdtAbstractPort::error_t portError;
@@ -67,9 +65,9 @@ void mdtTcpSocketThread::run()
   Q_ASSERT(pvSocket != 0);
   // We must pass this socket object to pvPort
   // pvPort must be a instance of mdtTcpSocket
-  socket = dynamic_cast<mdtTcpSocket*>(pvPort);
-  Q_ASSERT(socket != 0);
-  socket->setThreadObjects(pvSocket, this);
+  port = dynamic_cast<mdtTcpSocket*>(pvPort);
+  Q_ASSERT(port != 0);
+  port->setThreadObjects(pvSocket, this);
   // Set the running flag
   pvRunning = true;
   /// Get setup \todo Take from config, or something
@@ -83,7 +81,6 @@ void mdtTcpSocketThread::run()
 
   // Run...
   while(1){
-    qDebug() << "TCPTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -96,7 +93,6 @@ void mdtTcpSocketThread::run()
     }
     // If thread is stopping, it can happen that a Null pointer is returned
     if(writeFrame == 0){
-      qDebug() << "TCPTHD: aborting ...";
       break;
     }
     // Check connection state
@@ -108,11 +104,9 @@ void mdtTcpSocketThread::run()
         break;
       }
     }
-    qDebug() << "TCPTHD: connected ...";
     // Write
     portError = writeToPort(writeFrame, false, 0);
     if(portError != mdtAbstractPort::NoError){
-      qDebug() << "TCPTHD: writeToPort() failed";
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
@@ -124,84 +118,10 @@ void mdtTcpSocketThread::run()
       }else{
         // stop
         notifyError(portError);
-        ///emit(errorOccured(portError));
         break;
       }
     }
-    /**
-    // Read thread state
-    if(!pvRunning){
-      break;
-    }
-    
-    // Wait until all data was written
-    portError = pvPort->waitEventWriteReady();
-    if(portError != mdtAbstractPort::NoError){
-      qDebug() << "TCPTHD: waitEventWriteReady() failed";
-      ///emit(errorOccured(portError));
-      // Check about connection
-      if(portError == mdtAbstractPort::Disconnected){
-        // Try to (Re-)connect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-        if(portError != mdtAbstractPort::NoError){
-          // Stop
-          break;
-        }
-      }else if(portError == mdtAbstractPort::WaitingCanceled){
-        // Stopping
-        break;
-      }else{
-        // stop
-        ///emit(errorOccured(portError));
-        notifyError(portError);
-        break;
-      }
-    }
-    qDebug() << "TCPTHD: written";
-    // Read thread state
-    if(!pvRunning){
-      break;
-    }
-    // Wait until data is available for read
-    portError = pvPort->waitForReadyRead();
-    if(portError != mdtAbstractPort::NoError){
-      // Check about connection
-      if(portError == mdtAbstractPort::Disconnected){
-        // Try to (Re-)connect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-        if(portError != mdtAbstractPort::NoError){
-          // Stop
-          break;
-        }
-      }else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
-        // Stopping
-        break;
-      }else{
-        // stop
-        ///emit(errorOccured(portError));
-        notifyError(portError);
-        break;
-      }
-    }
-    // Check about timeout
-    if(pvPort->readTimeoutOccured()){
-      // Go back idle
-      qDebug() << "TCPTHD: read timeout";
-      // Probably disconnected. Abort and Go back idle
-      ///notifyError(mdtAbstractPort::Disconnected);
-      pvSocket->abort();
-      portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-      if(portError != mdtAbstractPort::NoError){
-        // Stop
-        break;
-      }
-      continue;
-    }
-    // Read thread state
-    if(!pvRunning){
-      break;
-    }
-*/
+
     // Read until 1 frame is completed (should be ok for most query/answer protocols)
     completeFrames = 0;
     while(completeFrames < 1){
@@ -212,8 +132,6 @@ void mdtTcpSocketThread::run()
       // Wait until data is available for read
       portError = pvPort->waitForReadyRead();
       if(portError != mdtAbstractPort::NoError){
-        // Restore frame into pool
-        ///pvPort->readFramesPool().enqueue(readFrame);
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect and go back idle
@@ -238,7 +156,6 @@ void mdtTcpSocketThread::run()
       // Check about timeout
       if(pvPort->readTimeoutOccured()){
         // Probably disconnected. Abort and Go back idle
-        ///pvPort->readFramesPool().enqueue(readFrame);
         pvSocket->abort();
         portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
         if(portError != mdtAbstractPort::NoError){
@@ -252,8 +169,6 @@ void mdtTcpSocketThread::run()
       // Read ...
       completeFrames = readFromPort2(&readFrame);
       if(completeFrames < 0){
-        // Restore frame into pool
-        ///pvPort->readFramesPool().enqueue(readFrame);
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect and go back idle
@@ -277,14 +192,11 @@ void mdtTcpSocketThread::run()
       }
     }
     // In case of raw frames, loop until no more data comes with short timeouts
-    if(pvPort->config().frameType() == mdtFrame::FT_RAW){
+    if(port->unknownReadSize()){
       while(pvSocket->waitForReadyRead(50)){
-        qDebug() << "RAW mode, more bytes available ...";
         // Read ...
         completeFrames = readFromPort2(&readFrame);
         if(completeFrames < 0){
-          // Restore frame into pool
-          ///pvPort->readFramesPool().enqueue(readFrame);
           // Check about connection
           if(portError == mdtAbstractPort::Disconnected){
             // Try to (Re-)connect and go back idle
@@ -308,55 +220,7 @@ void mdtTcpSocketThread::run()
         }
       }
     }
-    
-    // Read until no more data is available
-    /**
-    while(pvSocket->bytesAvailable() > 0){
-      // Read thread state
-      if(!pvRunning){
-        break;
-      }
-      // Check timeout state
-      if(pvPort->readTimeoutOccured()){
-        qDebug() << "TCPTHD: read timeout";
-        break;
-      }
-      ///qDebug() << "Available: " << pvSocket->bytesAvailable();
-      // Read
-      readFrame = readFromPort(readFrame);
-      if(readFrame == 0){
-        pvRunning = false;
-        break;
-      }
-      // Wait until new data is available for read (We use a short timeout here)
-      ///qDebug() << "waitForReadyRead ...";
-      portError = pvPort->waitForReadyRead(50);
-      if(portError != mdtAbstractPort::NoError){
-        ///emit(errorOccured(portError));
-        // Check about connection
-        if(portError == mdtAbstractPort::Disconnected){
-          // Try to (Re-)connect
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            break;
-          }
-        }else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
-          // Stopping
-          break;
-        }else{
-          // stop
-          ///emit(errorOccured(portError));
-          notifyError(portError);
-          break;
-        }
-      }
-    }
-    */
   }
-
-  qDebug() << "TCPTHD: cleanup ...";
-
   // Put current frame into pool
   if(readFrame != 0){
     pvPort->readFramesPool().enqueue(readFrame);
@@ -374,9 +238,6 @@ void mdtTcpSocketThread::run()
       }
     }
   }
-
-  qDebug() << "TCPTHD: END";
-
   pvPort->unlockMutex();
 }
 

@@ -34,6 +34,11 @@ mdtDeviceU3606A::~mdtDeviceU3606A()
 {
 }
 
+mdtPortManager *mdtDeviceU3606A::portManager()
+{
+  return 0;
+}
+
 /// \todo Reimplement with port manager + port info
 QStringList mdtDeviceU3606A::scan()
 {

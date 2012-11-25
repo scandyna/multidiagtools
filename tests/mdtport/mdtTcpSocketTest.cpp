@@ -172,7 +172,7 @@ void mdtTcpSocketTest::writeReadTest()
 
   // Check received data
   s.lockMutex();
-  QVERIFY(s.readenFrames().size() == responses.size());
+  QCOMPARE(s.readenFrames().size(), responses.size());
   for(int i=0; i<responses.size(); i++){
     // Get a frame
     frame = s.readenFrames().dequeue();

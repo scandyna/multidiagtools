@@ -174,15 +174,15 @@ class mdtDeviceIos : public QObject
 
   /*! \brief This signal is emited when a analog output value has changed
    *
-   * The change could be done, for example, by the user on a widget.
+   * This signal is used to notify mdtDevice that a analog output must be set on device.
    */
-  void analogOutputValueChanged(int address, int value);
+  void analogOutputValueChanged(int address);
 
   /*! \brief This signal is emited when a digital output state has changed
    *
-   * The change could be done, for example, by the user on a widget.
+   * This signal is used to notify mdtDevice that a digital output must be set on device.
    */
-  void digitalOutputStateChanged(int address, bool on);
+  void digitalOutputStateChanged(int address);
 
  public slots:
 

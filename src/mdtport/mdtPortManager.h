@@ -26,18 +26,14 @@
 #include <QObject>
 #include <QThread>
 #include "mdtAbstractPort.h"
+#include "mdtPortInfo.h"
 #include "mdtPortConfig.h"
-#include "mdtPortReadThread.h"
-#include "mdtPortWriteThread.h"
+#include "mdtPortThread.h"
 #include "mdtError.h"
-
 #include "mdtFrame.h"
 #include <QByteArray>
-
 #include <QList>
 #include <QMap>
-
-#include "mdtPortInfo.h"
 
 class mdtPortThread;
 
@@ -425,6 +421,8 @@ class mdtPortManager : public QThread
    */
   void readenFramesQueueSizeChanged(int newSize);
 
+  /*! \brief Emitted when error number has changed
+   */
   void errorStateChanged(int error);
 
  protected:

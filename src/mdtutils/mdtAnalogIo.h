@@ -190,13 +190,12 @@ class mdtAnalogIo : public mdtAbstractIo
   /*! \brief This signal is emitted whenever the value is changed
    */
   void valueChanged(double newValue);
-  ///void valueChanged(int address, double newValue);
 
   /*! \brief This signal is emitted whenever the value is changed
    *
-   * The value is converted for device specific format.
+   * This signal is used by mdtDeviceIos to notify mdtDevice.
    */
-  void valueChanged(int address, int value);
+  void valueChanged(int address);
 
   /*
    * These signals are emited every time

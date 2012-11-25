@@ -76,13 +76,13 @@ void mdtDigitalOutWidget::setOn(bool on)
   updateText(on);
 }
 
-void mdtDigitalOutWidget::updateText(bool state)
+void mdtDigitalOutWidget::updateText(bool /*state*/)
 {
   Q_ASSERT(pvIo != 0);
 
   // Update text
   if(pvIo->hasValidData()){
-    if(state){
+    if(pbState->isChecked()){
       pbState->setText(tr("ON"));
     }else{
       pbState->setText(tr("OFF"));

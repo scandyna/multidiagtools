@@ -20,27 +20,15 @@
  ****************************************************************************/
 #include "mdtTcpSocket.h"
 #include "mdtError.h"
-#include <QStringList>
-
 #include "mdtTcpSocketThread.h"
-
-/// \note essais
-#ifdef Q_OS_UNIX
- #include <stdlib.h>
- #include <unistd.h>
- #include <sys/types.h>
- #include <sys/socket.h>
- #include <netinet/in.h>
- #include <netinet/tcp.h>
-#endif
-
-#include <QDebug>
+#include <QStringList>
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
 {
   pvSocket = 0;
   pvPeerPort = 0;
+  pvUnknownReadSize = true;
 }
 
 mdtTcpSocket::~mdtTcpSocket()
@@ -89,43 +77,6 @@ mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
   unlockMutex();
   if(pvSocket->waitForConnected(timeout)){
     lockMutex();
-    /// \note essais
-    /**
-    pvSocket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
-#ifdef Q_OS_UNIX
-    int fd = pvSocket->socketDescriptor();
-    int optval;
-    socklen_t optlen = sizeof(optval);
-    if(fd >= 0){
-      // Check the status for the keepalive option
-      if(getsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, &optval, &optlen) < 0) {
-          perror("getsockopt()");
-          ///close(s);
-          ///exit(EXIT_FAILURE);
-      }
-      qDebug() << "mdtTcpSocket::reconnect(): SO_KEEPALIVE is " << (optval ? "ON" : "OFF");
-      // Set tcp_keepalive_probes
-      optval = 3;
-      optlen = sizeof(optval);
-      if(setsockopt(fd, SOL_TCP, TCP_KEEPCNT, &optval, optlen) < 0){
-        perror("setsockopt()");
-      }
-      // Set  tcp_keepalive_time
-      optval = 10;
-      optlen = sizeof(optval);
-      if(setsockopt(fd, SOL_TCP, TCP_KEEPIDLE, &optval, optlen) < 0){
-        perror("setsockopt()");
-      }
-      // Set   tcp_keepalive_intvl
-      optval = 2;
-      optlen = sizeof(optval);
-      if(setsockopt(fd, SOL_TCP, TCP_KEEPINTVL, &optval, optlen) < 0){
-        perror("setsockopt()");
-      }
-    }
-#endif
-*/
-
     return NoError;
   }
   lockMutex();
@@ -152,6 +103,16 @@ void mdtTcpSocket::setWriteTimeout(int timeout)
   pvWriteTimeout = timeout;
 }
 
+void mdtTcpSocket::setUnknownReadSize(bool unknown)
+{
+  pvUnknownReadSize = unknown;
+}
+
+bool mdtTcpSocket::unknownReadSize() const
+{
+  return pvUnknownReadSize;
+}
+
 mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
 {
   Q_ASSERT(pvSocket != 0);
@@ -161,29 +122,6 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
   }else{
     return mapSocketError(pvSocket->error());
   }
-  /**
-  // Check if it is possible to read now
-  if(!pvSocket->waitForReadyRead(pvReadTimeout)){
-    // Check if we have a timeout
-    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
-      updateReadTimeoutState(true);
-    }else{
-      ///updateReadTimeoutState(false);
-      // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
-      if(pvSocket->error() == QAbstractSocket::RemoteHostClosedError){
-        return Disconnected;
-      }else{
-        mdtError e(MDT_TCP_IO_ERROR, "waitForReadyRead() failed" , mdtError::Error);
-        e.setSystemError(pvSocket->error(), pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-        e.commit();
-        return UnhandledError;
-      }
-    }
-  }else{
-    updateReadTimeoutState(false);
-  }
-  */
 
   return NoError;
 }
@@ -197,12 +135,6 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
   n = pvSocket->read(data, maxSize);
   if(n < 0){
     return mapSocketError(pvSocket->error());
-    /**
-    mdtError e(MDT_TCP_IO_ERROR, "read() failed" , mdtError::Error);
-    e.setSystemError(pvSocket->error(), pvSocket->errorString());
-    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-    e.commit();
-    */
   }
 
   return n;
@@ -226,28 +158,6 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   }else{
     return mapSocketError(pvSocket->error());
   }
-  /**
-  if(!pvSocket->waitForBytesWritten(pvWriteTimeout)){
-    // Check if we have a timeout
-    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
-      updateWriteTimeoutState(true);
-    }else{
-      ///updateReadTimeoutState(false);
-      // It can happen that host closes the connexion, this is Ok (thread will try to reconnect) - Register all other errors
-      if(pvSocket->error() == QAbstractSocket::RemoteHostClosedError){
-        return Disconnected;
-      }else{
-        mdtError e(MDT_TCP_IO_ERROR, "waitForBytesWritten() failed" , mdtError::Error);
-        e.setSystemError(pvSocket->error(), pvSocket->errorString());
-        MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-        e.commit();
-        return UnhandledError;
-      }
-    }
-  }else{
-    updateWriteTimeoutState(false);
-  }
-  */
 
   return NoError;
 }
@@ -261,12 +171,6 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   n = pvSocket->write(data, maxSize);
   if(n < 0){
     return mapSocketError(pvSocket->error());
-    /**
-    mdtError e(MDT_TCP_IO_ERROR, "write() failed" , mdtError::Error);
-    e.setSystemError(pvSocket->error(), pvSocket->errorString());
-    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-    e.commit();
-    */
   }
 
   return n;

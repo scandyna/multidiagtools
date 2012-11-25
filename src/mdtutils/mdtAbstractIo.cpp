@@ -25,19 +25,11 @@ mdtAbstractIo::mdtAbstractIo(QObject *parent)
 {
   pvAddress = 0;
   pvHasValidData = false;
-  ///pvType = UNKNOWN;
 }
 
 mdtAbstractIo::~mdtAbstractIo()
 {
 }
-
-/**
-mdtAbstractIo::type_t mdtAbstractIo::type() const
-{
-  return pvType;
-}
-*/
 
 void mdtAbstractIo::setAddress(int adr)
 {
@@ -92,10 +84,3 @@ void mdtAbstractIo::setEnabled(bool enabled)
 {
   emit(enabledStateChangedForUi(enabled));
 }
-
-/**
-void mdtAbstractIo::setType(mdtAbstractIo::type_t type)
-{
-  pvType = type;
-}
-*/

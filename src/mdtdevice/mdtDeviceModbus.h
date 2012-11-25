@@ -43,8 +43,11 @@ class mdtDeviceModbus : public mdtDevice
  public:
 
   mdtDeviceModbus(QObject *parent = 0);
+  ~mdtDeviceModbus();
 
-  virtual ~mdtDeviceModbus();
+  /*! \brief Get internal port manager instance
+   */
+  mdtPortManager *portManager();
 
  public slots:
 

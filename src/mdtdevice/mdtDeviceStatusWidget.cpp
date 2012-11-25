@@ -79,6 +79,10 @@ void mdtDeviceStatusWidget::setState(int state)
     ldState->setGreen();
     ldState->setOff();
     lbMessage->setText(tr("Disconnected"));
+  }else if(state == mdtDevice::Connecting){
+    ldState->setOrange();
+    ldState->setOn();
+    lbMessage->setText(tr("Connecting ..."));
   }else if(state == mdtDevice::Busy){
     ldState->setOrange();
     ldState->setOn();

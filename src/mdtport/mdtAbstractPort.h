@@ -59,9 +59,9 @@ class mdtAbstractPort : public QObject
                 ReadCanceled,           /*!< Read process was cancelled. The thread should stop the write process, restore
                                               the current frame into pool and continue working. */
                 Disconnected,           /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
-                                              If this error happens, the thread will stop working and signal this error at end.
-                                              The portmanager can try to re-open the port if auto-reconnection is needed, and start
-                                              the thread again on success. \todo Implement this  \todo Implement a re-connect method */
+                                              If this error happens, the thread will try to reconnect. If connection fails after
+                                               maximum trys, a notification is sent with this Disconnected error. */
+                Connecting,             /*!< Used to notify portmanager that connection is in progress (see mdtPortThread::reconnect() ) */
                 UnknownError,           /*!< Unknown error is happen.
                                             Logfile could give more information, see mdtError and mdtApplication */
                 UnhandledError,         /*!< Unhandled error happen.

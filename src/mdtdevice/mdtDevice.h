@@ -23,6 +23,7 @@
 
 #include "mdtDeviceIos.h"
 #include "mdtAbstractPort.h"
+#include "mdtPortManager.h"
 #include <QObject>
 #include <QByteArray>
 #include <QVariant>
@@ -94,6 +95,7 @@ class mdtDevice : public QObject
   enum state_t {
                 Ready = 0,              /*!< Device is connected and ready to receive queries */
                 Disconnected,           /*!< Device is not connected */
+                Connecting,             /*!< Trying to connect to device */
                 Busy,                   /*!< Device is connected but cannot accept requests for the moment */
                 Unknown                 /*!< Unknown (and unhandled) state */
                };
@@ -142,6 +144,14 @@ class mdtDevice : public QObject
    * F.ex. the Wago 750 system has a offset of 0x0200
    */
   void setDigitalOutputAddressOffset(int offset);
+
+  /*! \brief Get internal port manager instance
+   *
+   * Note that port manager is set by subclass,
+   *  and that a Null pointer can be returned.
+   *  (See subclass documentation for details)
+   */
+  virtual mdtPortManager *portManager();
 
   /*! \brief Start periodic device querying
    *
@@ -258,7 +268,7 @@ class mdtDevice : public QObject
    *               If type is bool, it will be converted by mdtAnalogIo.
    * \param address Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
+   *                 a output number, etc...
    * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
    */
   int setAnalogOutputValue(int address, QVariant value, int timeout);
@@ -375,7 +385,7 @@ class mdtDevice : public QObject
    * Behaviour of this method can vary, depending on device specific subclass.
    *  (See sublcass writeDigitalOutput() for details).
    *
-   * Once result is available, the internal analog output is updated.
+   * Once result is available, the internal digital output is updated.
    *  (See mdtDeviceIos for details).
    *
    * \param state The state (ON/OFF) to set.
@@ -383,7 +393,7 @@ class mdtDevice : public QObject
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a output number, etc...
    * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 If < 0, the analog output is updated, but no query is sent to device.
+   *                 If < 0, the digital output is updated, but no query is sent to device.
    *                 Else it will wait until a reply comes in, or timeout.
    *                 (See waitTransactionDone() ).
    * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
@@ -427,16 +437,44 @@ class mdtDevice : public QObject
   /*! \brief Set value on a analog output on physical device
    *
    * Checks device's state and send request if Ready.
-   *  Internally, setAnalogOutputValue(int, QVariant, int) is called.
+   *
+   * This slot is used by mdtDeviceIos to notify that a value has changed.
+   *
+   * Will call writeAnalogOutput(), witch also sends the request to device.
+   *  Depending on result, device's state can be updated.
+   *
+   * Behaviour of this method can vary, depending on device specific subclass.
+   *  (See sublcass writeAnalogOutput() for details).
+   *
+   * Once result is available, the internal analog output is updated.
+   *  (See mdtDeviceIos for details).
+   *
+   * \param address Depending on device organisation and protocol,
+   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
+   *                 a output number, etc...
    */
-  void setAnalogOutputValue(int address, int value);
+  void setAnalogOutputValue(int address);
 
   /*! \brief Set state on a digital output on physical device
    *
    * Checks device's state and send request if Ready.
-   *  Internally, setDigitalOutputState(int, bool, int) is called.
+   *
+   * This slot is used by mdtDeviceIos to notify that a state has changed.
+   *
+   * Will call writeDigitalOutput(), witch also sends the request to device.
+   *  Depending on result, device's state can be updated.
+   *
+   * Behaviour of this method can vary, depending on device specific subclass.
+   *  (See sublcass writeDigitalOutput() for details).
+   *
+   * Once result is available, the internal digital output is updated.
+   *  (See mdtDeviceIos for details).
+   *
+   * \param address Depending on device organisation and protocol,
+   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
+   *                 a output number, etc...
    */
-  void setDigitalOutputState(int address, bool state);
+  void setDigitalOutputState(int address);
 
   /*! \brief Decode incoming frames
    *
@@ -656,6 +694,12 @@ class mdtDevice : public QObject
    * Emit stateChanged() if current state was not Disconnected.
    */
   void setStateDisconnected();
+
+  /*! \brief Set the connecting state
+   *
+   * Emit stateChanged() if current state was not Connecting.
+   */
+  void setStateConnecting();
 
   /*! \brief Set the busy state
    *

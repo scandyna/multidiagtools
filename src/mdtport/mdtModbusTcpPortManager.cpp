@@ -43,6 +43,7 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
   config->setWriteQueueSize(3);
   mdtTcpSocket *port = new mdtTcpSocket;
   port->setConfig(config);
+  port->setUnknownReadSize(false);
   setPort(port);
 
   // Threads setup

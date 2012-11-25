@@ -83,6 +83,38 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   void setWriteTimeout(int timeout);
 
+  /*! \brief Set unknown read size flag
+   *
+   * The write/read processes are done in one thread.
+   *  First, the thread waits a write event from application,
+   *  then data is sent. After this, thread still blocked
+   *  until data are available or timeout (set with setReadTimeout() ).
+   *  After this, data are readen until one frame is completely received, then thread goes back idle.
+   *
+   * The problem is that more data can be sent from peer, and these data are lost, or stored in
+   *  frames after next transaction (write/read process), and application will probably becomes uncoherent.
+   *
+   * The solution for this was implemented so:
+   *  - Request is sent to host
+   *  - Data comes back, and is store into current frame until it is complete (or timeout).
+   *  - If the unknown read size flag is set, a loop begins with a couple of wait/read with short
+   *     timeout begins (50ms) until no more data comes in.
+   *
+   * This flag should be set as follow:
+   *  - For RAW frames: true
+   *  - For ASCII frames: true
+   *  - For MODBUS/TCP: false
+   *
+   * Default is true.
+   */
+  void setUnknownReadSize(bool unknown);
+ 
+  /*! \brief Get the unknown frame size flag
+   *
+   * For details, see setUnknownReadSize()
+   */
+  bool unknownReadSize() const;
+
   /*! \brief Wait until data is available on port.
    *
    * This method is called from mdtPortReadThread , and should not be used directly.<br>
@@ -191,6 +223,7 @@ class mdtTcpSocket : public mdtAbstractPort
   mdtTcpSocketThread *pvThread;
   QString pvPeerName;               // Host name or IP
   quint16 pvPeerPort;               // Host port
+  bool pvUnknownReadSize;           // If false, read will end after one frame is complete (see mdtTcpSocketThread::run() ).
 };
 
 #endif  // #ifndef MDT_TCP_SOCKET_H

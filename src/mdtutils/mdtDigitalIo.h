@@ -79,7 +79,12 @@ class mdtDigitalIo : public mdtAbstractIo
   /*! \brief This signal is emitted whenever the state is changed
    */
   void stateChanged(bool on);
-  void stateChanged(int address, bool on);
+
+  /*! \brief This signal is emitted whenever the state is changed
+   *
+   * This signal is used by mdtDeviceIos to notify mdtDevice.
+   */
+  void stateChanged(int address);
 
   /*
    * This signal is emited every time

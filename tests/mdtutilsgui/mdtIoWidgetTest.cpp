@@ -336,10 +336,12 @@ void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
 
   // User pressed button
   doW.internalPushButton()->setChecked(true);
+  dout.setEnabled(false);
   QVERIFY(doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "ON");
   // Request was sent to PLC and confirmation arrives with other state (Off)
   dout.setOn(QVariant(false), false);
+  dout.setEnabled(true);
   QVERIFY(!doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "OFF");
 

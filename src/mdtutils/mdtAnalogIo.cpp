@@ -242,7 +242,7 @@ void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
   if(fabs(value - pvValue) >= pvStep){
     pvValue = value;
     if(emitValueChanged){
-      emit(valueChanged(pvAddress, valueInt()));
+      emit(valueChanged(pvAddress));
       emit(valueChanged(pvValue));
     }
     pvUpdatingUi = true;
@@ -269,7 +269,7 @@ void mdtAnalogIo::setValueFromUi(double value)
   if(fabs(value - pvValue) >= pvStep){
     pvValue = value;
     pvHasValidData = true;
-    emit(valueChanged(pvAddress, valueInt()));
+    emit(valueChanged(pvAddress));
     emit(valueChanged(pvValue));
   }
 }

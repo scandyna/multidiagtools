@@ -41,8 +41,6 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
 
 mdtAbstractPort::~mdtAbstractPort()
 {
-  qDebug() << "mdtAbstractPort::~mdtAbstractPort() ...";
-  qDebug() << "mdtAbstractPort::~mdtAbstractPort() END";
 }
 
 void mdtAbstractPort::setPortName(const QString &portName)
@@ -97,7 +95,6 @@ void mdtAbstractPort::close()
   qDeleteAll(pvWriteFrames);
   pvWriteFrames.clear();
   pvIsOpen = false;
-  qDebug() << "mdtAbstractPort::close() END";
 }
 
 void mdtAbstractPort::setConfig(mdtPortConfig *cfg)

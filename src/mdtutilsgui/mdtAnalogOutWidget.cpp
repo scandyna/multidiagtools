@@ -90,4 +90,8 @@ void mdtAnalogOutWidget::setEnabled(bool enabled)
 {
   sbValue->setEnabled(enabled);
   slValue->setEnabled(enabled);
+  // It can happen that scale is not repainted,
+  //  and GUI becomes uncoherent.
+  // Force a update to avoid this.
+  slValue->update();
 }

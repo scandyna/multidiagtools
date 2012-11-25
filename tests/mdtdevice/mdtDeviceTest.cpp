@@ -263,9 +263,9 @@ void mdtDeviceTest::modbusWagoTest()
 
   // Digital inputs
   di = new mdtDigitalIo;
-  di->setAddress(0);
+  di->setAddress(8);
   di->setLabelShort("DI1");
-  di->setDetails("Module type: ??");
+  di->setDetails("Module type: 750-428");
   ios.addDigitalInput(di);
 
   // Digital outputs
@@ -274,16 +274,60 @@ void mdtDeviceTest::modbusWagoTest()
   dout->setLabelShort("DO1");
   dout->setDetails("Module type: 750-530");
   ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(1);
+  dout->setLabelShort("DO2");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(2);
+  dout->setLabelShort("DO3");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(3);
+  dout->setLabelShort("DO4");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(4);
+  dout->setLabelShort("DO5");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(5);
+  dout->setLabelShort("DO6");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(6);
+  dout->setLabelShort("DO7");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(7);
+  dout->setLabelShort("DO8");
+  dout->setDetails("Module type: 750-530");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(8);
+  dout->setLabelShort("DO9");
+  dout->setDetails("Module type: 750-517");
+  ios.addDigitalOutput(dout);
+  dout = new mdtDigitalIo;
+  dout->setAddress(9);
+  dout->setLabelShort("DO10");
+  dout->setDetails("Module type: 750-517");
+  ios.addDigitalOutput(dout);
 
   // Setup I/O's widget
   iosw = new mdtDeviceIosWidget;
   iosw->setDeviceIos(&ios);
-  ///iosw->show();
 
   // Setup device
   d.setIos(&ios, true);
   d.setAnalogOutputAddressOffset(0x0200);
-  d.setDigitalOutputAddressOffset(0);
+  d.setDigitalOutputAddressOffset(0x0200);
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();
@@ -321,20 +365,24 @@ void mdtDeviceTest::modbusWagoTest()
 
   // Digital inputs
   QVERIFY(!d.getDigitalInputState(0, 0).isValid());
-  QVERIFY(d.getDigitalInputState(0, 500).isValid());
+  ///QVERIFY(d.getDigitalInputState(0, 500).isValid());
   qDebug() << "State: " << d.getDigitalInputState(0, 500);
 
   // Digital outputs
   QVERIFY(!d.getDigitalOutputState(0, 0).isValid());
   QVERIFY(d.getDigitalOutputState(0, 500).isValid());
-  qDebug() << "State: " << d.getDigitalOutputState(0, 500);
-  QVERIFY(d.setDigitalOutputState(0, true, 500) >= 0);
+  ///qDebug() << "State: " << d.getDigitalOutputState(0, 500);
+  ///QVERIFY(d.setDigitalOutputState(0, true, 500) >= 0);
+  // Grouped query
+  QVERIFY(d.setDigitalOutputState(0, true, -1) == 0);
+  QVERIFY(d.setDigitalOutputState(8, true, -1) == 0);
+  QVERIFY(d.setDigitalOutputs(500) >= 0);
 
 
-  QVERIFY(d.getDigitalInputs(500) >= 0);
+  ///QVERIFY(d.getDigitalInputs(500) >= 0);
   QVERIFY(d.getAnalogOutputs(500) >= 0);
-  ///d.start(100);
-  ///while(iosw.isVisible()){
+  QVERIFY(d.getDigitalOutputs(500) >= 0);
+  d.start(100);
   while(dw.isVisible()){
     QTest::qWait(500);
   }

@@ -39,6 +39,7 @@ bool mdtDigitalIo::isOn() const
 
 void mdtDigitalIo::setOn(QVariant on, bool emitValueChanged)
 {
+  qDebug() << "mdtDigitalIo::setOn(): state: " << on;
   if((!on.isValid())||(on.type() != QVariant::Bool)){
     setOn(false, false, emitValueChanged);
   }else{
@@ -63,7 +64,7 @@ void mdtDigitalIo::setOn(bool on, bool isValid, bool emitValueChanged)
     pvIsOn = on;
     if(emitValueChanged){
       emit(stateChanged(pvIsOn));
-      emit(stateChanged(pvAddress, pvIsOn));
+      emit(stateChanged(pvAddress));
     }
   }
   if(notifyUi){
@@ -82,6 +83,6 @@ void mdtDigitalIo::setStateFromUi(bool on)
     pvHasValidData = true;
     pvIsOn = on;
     emit(stateChanged(pvIsOn));
-    emit(stateChanged(pvAddress, pvIsOn));
+    emit(stateChanged(pvAddress));
   }
 }

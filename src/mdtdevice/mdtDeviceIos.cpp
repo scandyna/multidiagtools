@@ -80,7 +80,7 @@ void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao)
   Q_ASSERT(ao != 0);
 
   pvAnalogOutputs.insert(ao->address(), ao);
-  connect(ao, SIGNAL(valueChanged(int, int)), this, SIGNAL(analogOutputValueChanged(int, int)));
+  connect(ao, SIGNAL(valueChanged(int)), this, SIGNAL(analogOutputValueChanged(int)));
 }
 
 mdtAnalogIo *mdtDeviceIos::analogOutputAt(int address)
@@ -152,7 +152,7 @@ void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout)
   Q_ASSERT(dout != 0);
 
   pvDigitalOutputs.insert(dout->address(), dout);
-  connect(dout, SIGNAL(stateChanged(int, bool)), this, SIGNAL(digitalOutputStateChanged(int, bool)));
+  connect(dout, SIGNAL(stateChanged(int)), this, SIGNAL(digitalOutputStateChanged(int)));
 }
 
 mdtDigitalIo *mdtDeviceIos::digitalOutputAt(int address)
@@ -209,6 +209,7 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
     ao = analogOutputAt(i);
     if(ao != 0){
       ao->setValue(values.at(i), false);
+      ao->setEnabled(true);
     }
   }
 }
@@ -237,6 +238,7 @@ void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
     dout = digitalOutputAt(i);
     if(dout != 0){
       dout->setOn(values.at(i), false);
+      dout->setEnabled(true);
     }
   }
 }
