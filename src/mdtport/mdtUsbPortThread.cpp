@@ -189,6 +189,8 @@ void mdtUsbPortThread::run()
   if(readFrame == 0){
     return;
   }
+  // Notify that we are ready
+  notifyError(mdtAbstractPort::NoError);
 
   // Run...
   while(1){
@@ -230,25 +232,28 @@ void mdtUsbPortThread::run()
         break;
       }
     }
+    // If thread is stopping, it can happen that a Null pointer is returned
+    if(writeFrame == 0){
+      break;
+    }
+    waitAnAnswer = writeFrame->waitAnAnswer();
     // Write
-    if(writeFrame != 0){
-      waitAnAnswer = writeFrame->waitAnAnswer();
-      portError = writeToPort(port, writeFrame);
-      if(portError != mdtAbstractPort::NoError){
-        // Check about disconnection
-        if(portError == mdtAbstractPort::Disconnected){
-          // Try to reconnect
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            emit(errorOccured(portError));
-            break;
-          }
-        }else{
-          // stop
-          emit(errorOccured(portError));
+    portError = writeToPort(port, writeFrame);
+    if(portError != mdtAbstractPort::NoError){
+      // Check about disconnection
+      if(portError == mdtAbstractPort::Disconnected){
+        // Try to reconnect
+        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+        if(portError != mdtAbstractPort::NoError){
+          // Stop
+          ///emit(errorOccured(portError));
           break;
         }
+      }else{
+        // stop
+        ///emit(errorOccured(portError));
+        notifyError(portError);
+        break;
       }
     }
     qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
@@ -281,16 +286,18 @@ void mdtUsbPortThread::run()
             break;
           }else if(portError == mdtAbstractPort::Disconnected){
             // Try to reconnect
-            portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+            portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
             if(portError != mdtAbstractPort::NoError){
               // Errors that must be signaled + stop the thread
-              emit(errorOccured(portError));
+              ///emit(errorOccured(portError));
+              notifyError(portError);
               pvRunning = false;
               break;
             }
           }else{
             // Errors that must be signaled + stop the thread
-            emit(errorOccured(portError));
+            ///emit(errorOccured(portError));
+            notifyError(portError);
             pvRunning = false;
             break;
           }
@@ -311,16 +318,18 @@ void mdtUsbPortThread::run()
             break;
           }else if(portError == mdtAbstractPort::Disconnected){
             // Try to reconnect
-            portError = reconnect(reconnectTimeout, reconnectMaxRetry);
+            portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
             if(portError != mdtAbstractPort::NoError){
               // Errors that must be signaled + stop the thread
-              emit(errorOccured(portError));
+              ///emit(errorOccured(portError));
+              notifyError(portError);
               pvRunning = false;
               break;
             }
           }else{
             // Errors that must be signaled + stop the thread
-            emit(errorOccured(portError));
+            ///emit(errorOccured(portError));
+            notifyError(portError);
             pvRunning = false;
             break;
           }

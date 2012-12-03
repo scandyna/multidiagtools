@@ -39,7 +39,6 @@ mdtPortManager::mdtPortManager(QObject *parent)
 
 mdtPortManager::~mdtPortManager()
 {
-  qDebug() << "mdtPortManager::~mdtPortManager() ...";
   if(pvPort != 0){
     if(isRunning()){
       stop();
@@ -48,7 +47,6 @@ mdtPortManager::~mdtPortManager()
       pvPort->close();
     }
   }
-  qDebug() << "mdtPortManager::~mdtPortManager() END";
 }
 
 void mdtPortManager::setEnqueueReadenFrames(bool enqueue)
@@ -221,6 +219,29 @@ void mdtPortManager::closePort()
   stop();
   // Close the port
   pvPort->close();
+}
+
+bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
+{
+  Q_ASSERT(granularity > 0);
+  Q_ASSERT(pvPort != 0);
+
+  int i;
+  int maxIter = timeout / granularity;
+
+  for(i=0; i<maxIter; i++){
+    // Check if a frame is available
+    pvPort->lockMutex();
+    if(pvPort->writeFramesPool().size() > 0){
+      pvPort->unlockMutex();
+      return true;
+    }
+    pvPort->unlockMutex();
+    msleep(granularity);
+    qApp->processEvents();
+  }
+
+  return false;
 }
 
 int mdtPortManager::writeData(QByteArray data)

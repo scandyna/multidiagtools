@@ -71,6 +71,45 @@ void mdtPortInfoTest::copyTest()
   QVERIFY(!(devi1 != devi2));
 
   /*
+   * mdtDeviceInfo comparaison test
+   */
+
+  // Only VID and PID comparaison
+  devi1.setVendorId(56);
+  devi1.setProductId(5);
+  devi2.setVendorId(56);
+  devi2.setProductId(5);
+  QVERIFY(devi1 == devi2);
+  QVERIFY(!(devi1 != devi2));
+  devi2.setProductId(7);
+  QVERIFY(devi1 != devi2);
+  QVERIFY(!(devi1 == devi2));
+
+  // VID, PID and serial ID comparaison
+  devi1.setVendorId(10);
+  devi1.setProductId(15);
+  devi2.setVendorId(10);
+  devi2.setProductId(15);
+  QVERIFY(devi1 == devi2);
+  QVERIFY(!(devi1 != devi2));
+  devi1.setSerialId("1015");
+  QVERIFY(devi1 != devi2);
+  QVERIFY(!(devi1 == devi2));
+  devi1.setSerialId("");
+  QVERIFY(devi1 == devi2);
+  QVERIFY(!(devi1 != devi2));
+  devi2.setSerialId("2015");
+  QVERIFY(devi1 != devi2);
+  QVERIFY(!(devi1 == devi2));
+  devi2.setSerialId("");
+  QVERIFY(devi1 == devi2);
+  QVERIFY(!(devi1 != devi2));
+  devi1.setSerialId("1015");
+  devi2.setSerialId("2015");
+  QVERIFY(devi1 != devi2);
+  QVERIFY(!(devi1 == devi2));
+
+  /*
    * mdtPortInfo copy test
    */
 

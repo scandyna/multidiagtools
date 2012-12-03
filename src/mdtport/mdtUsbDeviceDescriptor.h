@@ -125,6 +125,10 @@ class mdtUsbDeviceDescriptor
    */
   QString productName() const;
 
+  /*! \brief Get serial number
+   */
+  QString serialNumber() const;
+
   /*! \brief Device release number id
    *
    * Coded in BCD.
@@ -211,7 +215,8 @@ class mdtUsbDeviceDescriptor
   quint16 pvbcdDevice;
   quint8 pviManufactuer;
   quint8 pviProduct;
-  quint8 pviSerialNumber;
+  ///quint8 pviSerialNumber;
+  QString pvSerialNumber;
   QList<mdtUsbConfigDescriptor*> pvConfigs;
 };
 

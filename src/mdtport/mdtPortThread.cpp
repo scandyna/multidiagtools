@@ -32,7 +32,7 @@ mdtPortThread::mdtPortThread(QObject *parent)
   pvRunning = false;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
-  pvCurrentError = 0;
+  pvCurrentError = mdtAbstractPort::UnhandledError;
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = 0;
   // We must catch the SIGALRM signal, else the application process

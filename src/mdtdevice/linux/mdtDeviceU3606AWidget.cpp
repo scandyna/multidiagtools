@@ -22,6 +22,8 @@
 
 #include <QDebug>
 
+/*! \todo A supprimer !(?)!
+ */
 mdtDeviceU3606AWidget::mdtDeviceU3606AWidget(QWidget *parent)
  : QWidget(parent)
 {

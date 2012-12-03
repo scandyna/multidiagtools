@@ -89,15 +89,6 @@ class mdtUsbtmcPortManager : public mdtPortManager
    */
   int sendReadRequest();
 
-  /*! \brief Wait until a complete frame is available
-   *
-   * Send a read request and call mdtPortManager::waitReadenFrame() .
-   *
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \return bTag ID on success or value < 0 on timeout or if write queue is full
-   */
-  ///int waitReadenFrame(int timeout = 500);
-
  public slots:
 
   /// \todo Essais ...

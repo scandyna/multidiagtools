@@ -1,8 +1,29 @@
-
+/****************************************************************************
+ **
+ ** Copyright (C) 2011-2012 Philippe Steinmann.
+ **
+ ** This file is part of multiDiagTools library.
+ **
+ ** multiDiagTools is free software: you can redistribute it and/or modify
+ ** it under the terms of the GNU Lesser General Public License as published by
+ ** the Free Software Foundation, either version 3 of the License, or
+ ** (at your option) any later version.
+ **
+ ** multiDiagTools is distributed in the hope that it will be useful,
+ ** but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ** GNU Lesser General Public License for more details.
+ **
+ ** You should have received a copy of the GNU Lesser General Public License
+ ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
+ **
+ ****************************************************************************/
 #include "mdtFrameCodecScpi.h"
 #include "mdtError.h"
 #include <cfloat>
 #include <QChar>
+
+#include <QDebug>
 
 mdtFrameCodecScpi::mdtFrameCodecScpi()
 {
@@ -12,126 +33,122 @@ mdtFrameCodecScpi::~mdtFrameCodecScpi()
 {
 }
 
-bool mdtFrameCodecScpi::decodeIdn(const QByteArray &frame)
+void mdtFrameCodecScpi::addTransaction(int id, int type)
 {
-  QVariant value;
-  QStringList nodeValues;
+  // Check that queue has not to many queries
+  if(pvPendingTransactions.size() > 20){
+    mdtError e(MDT_DEVICE_ERROR, "Pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    pvPendingTransactions.clear();
+    return;
+  }
+  pvPendingTransactions.insert(id, type);
+}
+
+int mdtFrameCodecScpi::pendingTransaction(int id)
+{
+  int type;
+
+  type = pvPendingTransactions.value(id, MDT_FC_SCPI_UNKNOW);
+  pvPendingTransactions.remove(id);
+
+  return type;
+}
+
+bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
+{
   int i;
 
   // Clear previous results
   pvValues.clear();
+  pvNodes.clear();
 
   // Store raw data in local QString constainer
-  pvAsciiData = frame;
+  pvAsciiData = data;
 
-  // Remove white spaces at begin and end
-  trim();
-  // remove EofSeq
-  if(!removeEofSeq()){
+  // Remove begin/end spaces and EOF
+  if(!clean()){
     return false;
   }
 
-  // Case of no data
-  if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
-    return false;
-  }
-
-  // Build the values list
-  nodeValues = pvAsciiData.split(",");
-  // Store result in data list
-  for(i=0; i<nodeValues.size(); i++){
-    pvValues << nodeValues.at(i);
+  // Extract nodes
+  pvNodes = pvAsciiData.split(sep);
+  for(i=0; i<pvNodes.size(); i++){
+    // We ignore empty nodes
+    if(pvNodes.at(i).isEmpty()){
+      continue;
+    }
+    // Add converted value
+    /// \todo Check limits (-OL, OL) for type Double
+    pvValues.append(convertData(pvNodes.at(i)));
   }
 
   return true;
 }
 
-QVariant mdtFrameCodecScpi::decodeSingleValueInt(QByteArray &frame)
+bool mdtFrameCodecScpi::decodeIdn(const QByteArray &data)
 {
   QVariant value;
-  bool ok = false;
+  int i;
 
   // Clear previous results
   pvValues.clear();
+  pvNodes.clear();
 
   // Store raw data in local QString constainer
-  pvAsciiData = frame;
+  pvAsciiData = data;
 
-  // Remove white spaces at begin and end
-  trim();
-  // remove EofSeq
-  if(!removeEofSeq()){
-    return value;
-  }
-
-  // Case of no data
-  if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
-    return value;
-  }
-
-  // Convert value
-  value = pvAsciiData;
-  value = value.toInt(&ok);
-  if(!ok){
-    value.clear();
-    return value;
-  }
-  pvValues << value;
-
-  return value;
-}
-
-bool mdtFrameCodecScpi::decodeError(QByteArray &frame)
-{
-  QVariant value;
-  QStringList nodeValues;
-  bool ok = false;
-
-  // Clear previous results
-  pvValues.clear();
-
-  // Store raw data in local QString constainer
-  pvAsciiData = frame;
-
-  // Remove white spaces at begin and end
-  trim();
-  // remove EofSeq
-  if(!removeEofSeq()){
-    return false;
-  }
-
-  // Case of no data
-  if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
+  // Remove begin/end spaces and EOF
+  if(!clean()){
     return false;
   }
 
   // Build the values list
-  nodeValues = pvAsciiData.split(",");
+  pvNodes = pvAsciiData.split(",");
   // Store result in data list
-  if(nodeValues.size() < 2){
+  for(i=0; i<pvNodes.size(); i++){
+    pvValues << pvNodes.at(i);
+  }
+
+  return true;
+}
+
+bool mdtFrameCodecScpi::decodeError(QByteArray &data)
+{
+  QVariant value;
+  bool ok = false;
+
+  // Clear previous results
+  pvValues.clear();
+  pvNodes.clear();
+
+  // Store raw data in local QString constainer
+  pvAsciiData = data;
+
+  // Remove begin/end spaces and EOF
+  if(!clean()){
+    return false;
+  }
+
+  // Build the values list
+  pvNodes = pvAsciiData.split(",");
+  // Store result in data list
+  if(pvNodes.size() < 2){
     mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains not an error" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
   // Error code
-  value = nodeValues.at(0);
+  value = pvNodes.at(0);
   value = value.toInt(&ok);
   if(!ok){
     value.clear();
   }
   pvValues << value;
   // Error text
-  pvValues << nodeValues.at(1);
+  pvValues << pvNodes.at(1);
 
   return true;
 }

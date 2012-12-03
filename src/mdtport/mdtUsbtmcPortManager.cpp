@@ -41,6 +41,7 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   config->setFrameType(mdtFrame::FT_USBTMC);
   config->setReadFrameSize(512);
   config->setWriteFrameSize(512);
+  config->setWriteQueueSize(1);
   mdtUsbPort *port = new mdtUsbPort;
   port->setConfig(config);
   setPort(port);
@@ -59,54 +60,6 @@ mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
   delete &pvPort->config();
   detachPort(true, true);
 }
-
-/**
-QStringList mdtUsbtmcPortManager::scan()
-{
-  QStringList portNames;
-  QStringList availablePorts;
-  mdtUsbtmcPort *port;
-  QFileInfoList filesInfo;
-  QDir dir;
-  QStringList extList;
-
-  // We only need system files
-  dir.setFilter(QDir::Files | QDir::System);
-  // USBTMC interfaces
-  extList << "usbtmc*";
-  // Common device directory
-  dir.setPath("/dev");
-  if(!dir.exists()){
-    mdtError e(MDT_UNDEFINED_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix");
-    e.commit();
-    return availablePorts;
-  }
-  dir.setNameFilters(extList);
-  // Gest list of found files
-  filesInfo = dir.entryInfoList();
-  // Construct the list of absolute file paths
-  for(int i=0; i<filesInfo.size(); ++i){
-    portNames << filesInfo.at(i).absoluteFilePath();
-  }
-  // Sort the list
-  portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames);
-  // For each port name, try to open the port and get some attributes (to see if it really exists)
-  for(int i=0; i<portNames.size(); ++i){
-    // Try to open port
-    port = new mdtUsbtmcPort;
-    Q_ASSERT(port != 0);
-    port->setPortName(portNames.at(i));
-    if(port->open() == mdtAbstractPort::NoError){
-      availablePorts.append(portNames.at(i));
-      port->close();
-    }
-    delete port;
-  }
-
-  return availablePorts;
-}
-*/
 
 QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
 {
@@ -165,7 +118,7 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
         for(k=0; k<configDescriptor->interfaces().size(); k++){
           ifaceDescriptor = configDescriptor->interfaces().at(k);
           Q_ASSERT(ifaceDescriptor != 0);
-          qDebug() << "->   iface[" << k << "]";
+          ///qDebug() << "->   iface[" << k << "]";
           // USBTMC has a application specific bInterfaceClass, a bInterfaceSubClass == 0x03
           if(ifaceDescriptor->bInterfaceClass() == 0xFE){
             if(ifaceDescriptor->bInterfaceSubClass() == 0x03){
@@ -181,6 +134,7 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
               deviceInfo = new mdtDeviceInfo;
               deviceInfo->setVendorId(deviceDescriptor.idVendor());
               deviceInfo->setProductId(deviceDescriptor.idProduct());
+              deviceInfo->setSerialId(deviceDescriptor.serialNumber());
               deviceInfo->setProtocolId(ifaceDescriptor->bInterfaceProtocol());
               ///str = deviceDescriptor.vendorName();
               ///str = "VID:";
@@ -255,6 +209,7 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
+  qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData(data);
   frame->encode();
@@ -277,7 +232,7 @@ int mdtUsbtmcPortManager::sendReadRequest()
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
     e.commit();
-    return -1;
+    return mdtAbstractPort::WriteQueueEmpty;
   }
   frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
   Q_ASSERT(frame != 0);
@@ -291,6 +246,7 @@ int mdtUsbtmcPortManager::sendReadRequest()
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
+  qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData("");
   frame->encode();
@@ -300,25 +256,6 @@ int mdtUsbtmcPortManager::sendReadRequest()
   return pvCurrentWritebTag;
 }
 
-/**
-bool mdtUsbtmcPortManager::waitReadenFrame(int timeout)
-{
-  int retVal;
-
-  Q_ASSERT(pvPort != 0);
-
-  retVal = sendReadRequest();
-  if(retVal < 0){
-    return retVal;
-  }
-  qDebug() << "mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ...";
-  if(!mdtPortManager::waitReadenFrame(timeout)){
-    return -1;
-  }
-
-  return retVal;
-}
-*/
 
 /*
 void mdtUsbtmcPortManager::abort()

@@ -24,6 +24,7 @@
 #include "mdtDeviceIos.h"
 #include "mdtAbstractPort.h"
 #include "mdtPortManager.h"
+#include "mdtDeviceInfo.h"
 #include <QObject>
 #include <QByteArray>
 #include <QVariant>
@@ -111,6 +112,19 @@ class mdtDevice : public QObject
    */
   QString name() const;
 
+  /*! \brief Search and connect to physical device.
+   *
+   * Will scan available ports and open the first port that
+   *  has device attached maching request.
+   *
+   * \param devInfo Requested device's informations.
+   * \return A error listed in mdtAbstractPort::error_t (NoError on success)
+   *
+   * Note: default implementation does nothing and returns allways a UnhandledError.
+   *        See subclass documentation for more details.
+   */
+  virtual mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
+
   /*! \brief Set the I/O's container
    *
    * \param ios A pointer to a mdtDeviceIos object
@@ -130,6 +144,24 @@ class mdtDevice : public QObject
    * \param timeout Timeout [ms]
    */
   void setOutputWriteReplyTimeout(int timeout);
+
+  /*! \brief Set back to ready state timeout
+   *
+   * After some event (device disconnected, response timeout, ...)
+   *  the state can be changed from Ready to another.
+   *
+   * Note: if state is different than Ready, the slots setAnalogOutputValue(int)
+   *  and setDigitalOutputState(int) will return immediately, without
+   *  trying to send a request.
+   *
+   * In some application, it can be usefull that state comes back
+   *  automatically to ready.
+   *
+   * \param timeout Time before go back to ready state [ms]
+   *                 If timeout is < 0, device still in current state,
+   *                 and setStateReady() can be used.
+   */
+  void setBackToReadyStateTimeout(int timeout);
 
   /*! \brief Set analog output address offset
    *
@@ -500,8 +532,6 @@ class mdtDevice : public QObject
    */
   void setStateFromPortError(int error);
 
- protected slots:
-
   /*! \brief Set the ready state
    *
    * Emit stateChanged() if current state was not Ready.
@@ -766,7 +796,7 @@ class mdtDevice : public QObject
   bool waitTransactionDone(int id, int timeout, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
-  int pvOutputWriteReplyTimeout;
+  int pvOutputWriteReplyTimeout;  /// \todo Check if used
   int pvDigitalOutputAddressOffset;
   int pvAnalogOutputAddressOffset;
 
@@ -777,9 +807,12 @@ class mdtDevice : public QObject
   state_t pvCurrentState;
   QString pvName;
   QTimer *pvQueryTimer;
+  bool pvAutoQueryEnabled;  // Flag used for state handling
   QMap<int, mdtAnalogIo*> pvPendingAioTransactions;
   QMap<int, mdtDigitalIo*> pvPendingDioTransactions;
   QList<int> pvPendingIoTransactions;
+  int pvBackToReadyStateTimeout;
+  QTimer *pvBackToReadyStateTimer;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

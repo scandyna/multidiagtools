@@ -27,6 +27,8 @@
 #include "ui_mdtDeviceU3606AWidget.h"
 #include "mdtDeviceU3606A.h"
 
+/*! \todo A supprimer !(?)!
+ */
 class mdtDeviceU3606AWidget : public QWidget , private Ui::mdtDeviceU3606AWidget
 {
  Q_OBJECT

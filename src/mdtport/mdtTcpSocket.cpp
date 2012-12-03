@@ -117,7 +117,12 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
 {
   Q_ASSERT(pvSocket != 0);
 
-  if(pvSocket->waitForReadyRead(pvReadTimeout)){
+  bool ok;
+
+  unlockMutex();
+  ok = pvSocket->waitForReadyRead(pvReadTimeout);
+  lockMutex();
+  if(ok){
     updateReadTimeoutState(false);
   }else{
     return mapSocketError(pvSocket->error());
@@ -144,6 +149,8 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
 {
   Q_ASSERT(pvSocket != 0);
 
+  bool ok;
+
   // Check if something is to write , if yes, wait until there are written
   if(pvSocket->bytesToWrite() < 1){
     return NoError;
@@ -153,7 +160,10 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
     return WriteCanceled;
   }
   // Wait
-  if(pvSocket->waitForBytesWritten(pvWriteTimeout)){
+  unlockMutex();
+  ok = pvSocket->waitForBytesWritten(pvWriteTimeout);
+  lockMutex();
+  if(ok){
     updateReadTimeoutState(false);
   }else{
     return mapSocketError(pvSocket->error());

@@ -63,6 +63,16 @@ QString mdtDeviceInfo::productName() const
   return pvProductName;
 }
 
+void mdtDeviceInfo::setSerialId(const QString &id)
+{
+  pvSerialId = id;
+}
+
+QString mdtDeviceInfo::serialId() const
+{
+  return pvSerialId;
+}
+
 void mdtDeviceInfo::setProtocolId(int pid)
 {
   pvProtocolId = pid;
@@ -97,18 +107,17 @@ bool mdtDeviceInfo::operator==(const mdtDeviceInfo &other)
   if(pvVendorId != other.pvVendorId){
     return false;
   }
-  if(pvVendorName != other.pvVendorName){
-    return false;
-  }
   if(pvProductId != other.pvProductId){
     return false;
   }
-  if(pvProductName != other.pvProductName){
+  if(pvSerialId != other.pvSerialId){
     return false;
   }
+  /**
   if(pvProtocolId != other.pvProtocolId){
     return false;
   }
+  */
 
   return true;
 }

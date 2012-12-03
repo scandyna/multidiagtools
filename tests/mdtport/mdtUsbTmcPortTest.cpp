@@ -26,6 +26,8 @@
 
 #include <QDebug>
 
+/// \todo delete this ?
+
 int main(int argc, char **argv)
 {
   mdtApplication app(argc, argv);

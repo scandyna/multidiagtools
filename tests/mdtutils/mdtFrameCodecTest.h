@@ -30,11 +30,14 @@ class mdtFrameCodecTest : public mdtTest
  
  private slots:
 
+  // Check some ASCII decoding
+  void asciiDecodeTest();
+
   // Check SCPI
-  void mdtFrameCodecScpiTest();
+  void scpiDecodeTest();
 
   // Check Agilent U3606A SCPI
-  void mdtFrameCodecScpiTestU3606ATest();
+  void scpiU3606ATest();
 
   // Check mdtFrameCodecModbus encode/decode
   void mdtFrameCodecModbusTest();

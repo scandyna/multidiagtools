@@ -64,6 +64,14 @@ class mdtDeviceInfo
    */
   QString productName() const;
 
+  /*! \brief Set serial number/ID
+   */
+  void setSerialId(const QString &id);
+
+  /*! \brief Get serial number/ID
+   */
+  QString serialId() const;
+
   /*! \brief Set protocol ID
    */
   void setProtocolId(int pid);
@@ -91,7 +99,10 @@ class mdtDeviceInfo
 
   /*! \brief Comparaison operator
    *
-   * Note that display text is not compared.
+   * Devices are considered equal if
+   *  vendor ID and product ID are the same.
+   * Additionnaly, if one object contains
+   *  a serial ID, they are compared, else not.
    */
   bool operator==(const mdtDeviceInfo &other);
 
@@ -107,6 +118,7 @@ private:
   QString pvVendorName;
   int pvProductId;
   QString pvProductName;
+  QString pvSerialId;
   int pvProtocolId;
   QString pvDisplayText;
 };

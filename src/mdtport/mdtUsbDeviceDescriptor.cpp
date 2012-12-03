@@ -37,7 +37,7 @@ mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
   pvbcdDevice = 0;
   pviManufactuer = 0;
   pviProduct = 0;
-  pviSerialNumber = 0;
+  ///pviSerialNumber = 0;
 }
 
 mdtUsbDeviceDescriptor::~mdtUsbDeviceDescriptor()
@@ -51,9 +51,13 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
 
   struct libusb_device_descriptor descriptor;
   struct libusb_config_descriptor *configDescriptor;
+  libusb_device_handle *handle;
   int err;
   quint8 i;
   mdtUsbConfigDescriptor *config;
+  unsigned char uSerialNumber[256] = {'\0'};
+  char serialNumber[256] = {'\0'};
+  int serialNumberLength;
 
   // Open descriptor
   err = libusb_get_device_descriptor(device, &descriptor);
@@ -70,6 +74,20 @@ int mdtUsbDeviceDescriptor::fetchAttributes(libusb_device *device, bool fetchAct
   pvidVendor = descriptor.idVendor;
   pvidProduct = descriptor.idProduct;
   pvbcdDevice = descriptor.bcdDevice;
+  // Try to get serial number
+  handle = 0;
+  if(libusb_open(device, &handle) == 0){
+    Q_ASSERT(handle != 0);
+    serialNumberLength = libusb_get_string_descriptor_ascii(handle, descriptor.iSerialNumber, uSerialNumber, 255);
+    if(serialNumberLength > 0){
+      Q_ASSERT(serialNumberLength < 256);
+      for(i=0; i<serialNumberLength; i++){
+        serialNumber[i] = (char)uSerialNumber[i];
+      }
+      pvSerialNumber = serialNumber;
+    }
+    libusb_close(handle);
+  }
   // Get configuration(s)
   qDeleteAll(pvConfigs);
   pvConfigs.clear();
@@ -197,6 +215,11 @@ QString mdtUsbDeviceDescriptor::productName() const
     default:
       return defStr;
   }
+}
+
+QString mdtUsbDeviceDescriptor::serialNumber() const
+{
+  return pvSerialNumber;
 }
 
 quint16 mdtUsbDeviceDescriptor::bcdDevice() const

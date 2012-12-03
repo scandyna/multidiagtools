@@ -81,6 +81,7 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
       // We have a header here, decode it
       pvMsgID = at(0);
       pvbTag = at(1);
+      qDebug() << "mdtFrameUsbTmc::putData(): bTag: " << pvbTag;
       pvbTagInverse = at(2);
       // Check bTag
       if(pvbTagInverse != (quint8)(~pvbTag)){

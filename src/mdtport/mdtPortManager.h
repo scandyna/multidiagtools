@@ -238,6 +238,7 @@ class mdtPortManager : public QThread
    *
    * \return True on success, false else.
    * \pre Port must be set with setPort() before use of this method.
+   * \todo Should return mdtAbstractPort::error_t
    */
   bool openPort();
 
@@ -248,6 +249,23 @@ class mdtPortManager : public QThread
    * If port was never set (with setPort() ), this method does nothing.
    */
   void closePort();
+
+  /*! \brief Wait until data can be written
+   *
+   * Wait until a frame is available in write frames pool.
+   *  The wait will not breack Qt's event loop, so this method
+   *  can be called from GUI Thread. (See wait() for details).
+   *
+   * \param timeout Timeout [ms]
+   * \param granularity Sleep time between each call of event processing [ms]<br>
+   *                     A little value needs more CPU and big value can freese the GUI.
+   *                     Should be between 50 and 100, and must be > 0.
+   *                     Note that timeout must be a multiple of granularity.
+   * \return True if a frame is available before timeout, false else.
+   * \pre Granularity must be > 0.
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  bool waitOnWriteReady(int timeout, int granularity = 50);
 
   /*! \brief Write data by copy
    *
@@ -430,7 +448,7 @@ class mdtPortManager : public QThread
   /*! \brief Store frame data in queue and/or emit newReadenFrame() signal
    *
    * Dependeing on pvEnqueueReadenFrames and pvNotifyNewReadenFrame,
-   *  frame will be enqueued and/or the newReadenFrame(int, QByteArray) will be emitted.
+   *  frame will be enqueued and/or the newReadenFrame(int, QByteArray) signal will be emitted.
    *
    * Subclass notes:<br>
    *  The subclass should use this method to handle new incomming frames.

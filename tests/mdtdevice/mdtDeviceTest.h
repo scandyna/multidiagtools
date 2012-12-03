@@ -42,6 +42,9 @@ class mdtDeviceTest : public mdtTest
   void modbusWagoTest();
   void modbusBeckhoffTest();
 
+  // Agilent U3606A test (will be skipped if devic is not connected)
+  void usbtmcU3606ATest();
+
 /**
 #ifdef Q_OS_UNIX
   // Check U3606A device

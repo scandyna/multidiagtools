@@ -23,13 +23,8 @@
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
+#include "mdtDeviceU3606A.h"
 #include "mdtDeviceWindow.h"
-
-/**
-#ifdef Q_OS_UNIX
- #include "linux/mdtDeviceU3606A.h"
-#endif
-*/
 
 #include <QString>
 #include <QVariant>
@@ -263,7 +258,7 @@ void mdtDeviceTest::modbusWagoTest()
 
   // Digital inputs
   di = new mdtDigitalIo;
-  di->setAddress(8);
+  di->setAddress(0);
   di->setLabelShort("DI1");
   di->setDetails("Module type: 750-428");
   ios.addDigitalInput(di);
@@ -339,23 +334,19 @@ void mdtDeviceTest::modbusWagoTest()
   // Analog inputs
   QVERIFY(d.getAnalogInputValue(0, 500, true).isValid());
   QVERIFY(!d.getAnalogInputValue(0, 0, true).isValid());
-  qDebug() << "Val: " << d.getAnalogInputValue(0, 500);
-  qDebug() << "Val: " << d.getAnalogInputValue(0, 500, false);
+  ///QTest::qWait(500);
   QVERIFY(d.getAnalogInputValue(1, 500, true).isValid());
   QVERIFY(!d.getAnalogInputValue(1, 0, true).isValid());
-  qDebug() << "Val: " << d.getAnalogInputValue(1, 500);
-  qDebug() << "Val: " << d.getAnalogInputValue(1, 500, false);
+  ///QTest::qWait(500);
   QVERIFY(d.getAnalogInputs(500) >= 0);
 
   // Analog outputs
   QVERIFY(d.setAnalogOutputValue(0, 2.5, 500) >= 0);
   QVERIFY(d.getAnalogOutputValue(0, 500, true).isValid());
-  qDebug() << "Val: " << hex << d.getAnalogOutputValue(0, 500, false);
-  qDebug() << "Val: " << d.getAnalogOutputValue(0, 500, true);
+  ///QTest::qWait(500);
   QVERIFY(qAbs(d.getAnalogOutputValue(0, 500, true).toDouble()-2.5) < (10.0/4050.0));
   QVERIFY(!d.getAnalogOutputValue(0, 0, true).isValid());
-  qDebug() << "Val: " << hex << d.getAnalogOutputValue(0, 500, false);
-  qDebug() << "Val: " << d.getAnalogOutputValue(0, 500, false);
+  ///QTest::qWait(500);
   // Grouped query
   QVERIFY(d.setAnalogOutputValue(0, 1.5, -1) == 0);
   QVERIFY(d.setAnalogOutputValue(1, 2.5, -1) == 0);
@@ -366,18 +357,18 @@ void mdtDeviceTest::modbusWagoTest()
   // Digital inputs
   QVERIFY(!d.getDigitalInputState(0, 0).isValid());
   ///QVERIFY(d.getDigitalInputState(0, 500).isValid());
+  ///QTest::qWait(500);
   qDebug() << "State: " << d.getDigitalInputState(0, 500);
 
   // Digital outputs
   QVERIFY(!d.getDigitalOutputState(0, 0).isValid());
   QVERIFY(d.getDigitalOutputState(0, 500).isValid());
-  ///qDebug() << "State: " << d.getDigitalOutputState(0, 500);
-  ///QVERIFY(d.setDigitalOutputState(0, true, 500) >= 0);
+  ///QTest::qWait(500);
   // Grouped query
   QVERIFY(d.setDigitalOutputState(0, true, -1) == 0);
   QVERIFY(d.setDigitalOutputState(8, true, -1) == 0);
   QVERIFY(d.setDigitalOutputs(500) >= 0);
-
+  ///QTest::qWait(500);
 
   ///QVERIFY(d.getDigitalInputs(500) >= 0);
   QVERIFY(d.getAnalogOutputs(500) >= 0);
@@ -470,22 +461,55 @@ void mdtDeviceTest::modbusBeckhoffTest()
   }
 }
 
-/**
-void mdtDeviceTest::deviceU3606Atest()
+void mdtDeviceTest::usbtmcU3606ATest()
 {
   mdtDeviceU3606A d;
-  QStringList ports;
-  
-  qDebug() << "* A Agilent U3606A must be attached at USB port, else test will fail *";
+  mdtDeviceInfo devInfo;
+  mdtAnalogIo *ai;
+  mdtDeviceIos ios;
+  mdtDeviceIosWidget *iosw;
+  mdtDeviceWindow dw;
 
-  // Check that scan and open methods works
-  ports = d.scan();
-  QVERIFY(ports.size() > 0);
-  QVERIFY(d.selectPort(ports, 0));
+  // Try to find a device and connect if ok
+  if(d.connectToDevice(devInfo) != mdtAbstractPort::NoError){
+    QSKIP("No Agilent U3606A attached, or other error", SkipAll);
+  }
 
-  d.essais();
+  /*
+   * Setup I/O's
+   */
+
+  // Analog inputs
+  ai = new mdtAnalogIo;
+  ai->setAddress(0);
+  ai->setLabelShort("Voltage");
+  ai->setUnit("[V]");
+  //ai->setDetails("Module type: KL3001");
+  ai->setRange(0.0, 1000.0, 32);
+  ios.addAnalogInput(ai);
+
+  /*
+   * Setup devie
+   */
+
+  // Setup I/O's widget
+  iosw = new mdtDeviceIosWidget;
+  iosw->setDeviceIos(&ios);
+
+  // Setup device
+  d.setIos(&ios, true);
+  dw.setDevice(&d);
+  dw.setIosWidget(iosw);
+  dw.show();
+
+  qDebug() << "Voltage: " << d.getAnalogInputValue(0, 500, false);
+
+  while(dw.isVisible()){
+    QTest::qWait(500);
+  }
 }
-*/
+
+
 
 int main(int argc, char **argv)
 {

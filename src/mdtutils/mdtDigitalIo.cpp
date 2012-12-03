@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtDigitalIo.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtDigitalIo::mdtDigitalIo(QObject *parent)
  : mdtAbstractIo(parent)
@@ -39,7 +39,6 @@ bool mdtDigitalIo::isOn() const
 
 void mdtDigitalIo::setOn(QVariant on, bool emitValueChanged)
 {
-  qDebug() << "mdtDigitalIo::setOn(): state: " << on;
   if((!on.isValid())||(on.type() != QVariant::Bool)){
     setOn(false, false, emitValueChanged);
   }else{
