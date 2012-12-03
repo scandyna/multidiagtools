@@ -204,7 +204,7 @@ Definition at line 582 of file mdtSerialPort.cpp.
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000038}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000049}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -648,6 +648,10 @@ void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtSer
 
 \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(tcflush(pvFd, TCOFLUSH) $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-SERIAL\_\-PORT\_\-IO\_\-ERROR, \char`\"{}tcflush() call failed\char`\"{}, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPort\char`\"{}); e.commit(); \} \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut()}; \} 
 
+qDebug() $<$$<$ \char`\"{}mdtSerialPort::waitEventCtl(), waiting...\char`\"{}; 
+
+
+
 Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{mdtAbstractSerialPort}.
 
 
@@ -727,8 +731,14 @@ Subclass notes:\par
 
 
 \begin{DoxyReturn}{Returns}
-Number of bytes written, or $<$0 on error 
+Number of bytes written, or error $<$ 0 (see error\_\-t)
 \end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]adapt subclasses \end{Desc}
+
+
+qDebug() $<$$<$ \char`\"{}wrote \char`\"{} $<$$<$ n $<$$<$ \char`\"{} bytes\char`\"{}; 
+
 
 
 Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.

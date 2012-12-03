@@ -25,9 +25,9 @@ void \hyperlink{classmdt_device_ios_ae9542163fedce98b11e2d9fd0e2e7d78}{updateDig
 \subsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_device_ios_a277b53a8cfc28540b5f6dc8684bd5637}{analogOutputValueChanged} (int address, int value)
+void \hyperlink{classmdt_device_ios_a78918905dc0b04976cdc826c0fd582c1}{analogOutputValueChanged} (int address)
 \begin{DoxyCompactList}\small\item\em This signal is emited when a analog output value has changed. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_ios_a6f2647e97f836f1ff184816172a46283}{digitalOutputStateChanged} (int address, bool on)
+void \hyperlink{classmdt_device_ios_a45be7941f710e63a7d54020dee38e2ec}{digitalOutputStateChanged} (int address)
 \begin{DoxyCompactList}\small\item\em This signal is emited when a digital output state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -254,21 +254,20 @@ If no object exists at given address, a null pointer is returned.
 
 Definition at line 86 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_a277b53a8cfc28540b5f6dc8684bd5637}{
+\hypertarget{classmdt_device_ios_a78918905dc0b04976cdc826c0fd582c1}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputValueChanged@{analogOutputValueChanged}}
 \index{analogOutputValueChanged@{analogOutputValueChanged}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{analogOutputValueChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::analogOutputValueChanged (
 \begin{DoxyParamCaption}
-\item[{int}]{address, }
-\item[{int}]{value}
+\item[{int}]{address}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_device_ios_a277b53a8cfc28540b5f6dc8684bd5637}
+\label{classmdt_device_ios_a78918905dc0b04976cdc826c0fd582c1}
 
 
 This signal is emited when a analog output value has changed. 
 
-The change could be done, for example, by the user on a widget. \hypertarget{classmdt_device_ios_a272fc1fa86e1b66e6af0e58b130939e0}{
+This signal is used to notify \hyperlink{classmdt_device}{mdtDevice} that a analog output must be set on device. \hypertarget{classmdt_device_ios_a272fc1fa86e1b66e6af0e58b130939e0}{
 \index{mdtDeviceIos@{mdtDeviceIos}!deleteIos@{deleteIos}}
 \index{deleteIos@{deleteIos}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{deleteIos}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::deleteIos (
@@ -319,21 +318,20 @@ If no object exists at given address, a null pointer is returned.
 
 Definition at line 158 of file mdtDeviceIos.cpp.
 
-\hypertarget{classmdt_device_ios_a6f2647e97f836f1ff184816172a46283}{
+\hypertarget{classmdt_device_ios_a45be7941f710e63a7d54020dee38e2ec}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputStateChanged@{digitalOutputStateChanged}}
 \index{digitalOutputStateChanged@{digitalOutputStateChanged}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{digitalOutputStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::digitalOutputStateChanged (
 \begin{DoxyParamCaption}
-\item[{int}]{address, }
-\item[{bool}]{on}
+\item[{int}]{address}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_device_ios_a6f2647e97f836f1ff184816172a46283}
+\label{classmdt_device_ios_a45be7941f710e63a7d54020dee38e2ec}
 
 
 This signal is emited when a digital output state has changed. 
 
-The change could be done, for example, by the user on a widget. \hypertarget{classmdt_device_ios_af771f8080ce4a7260baa0acccacae0e1}{
+This signal is used to notify \hyperlink{classmdt_device}{mdtDevice} that a digital output must be set on device. \hypertarget{classmdt_device_ios_af771f8080ce4a7260baa0acccacae0e1}{
 \index{mdtDeviceIos@{mdtDeviceIos}!setAutoDeleteIos@{setAutoDeleteIos}}
 \index{setAutoDeleteIos@{setAutoDeleteIos}!mdtDeviceIos@{mdtDeviceIos}}
 \subsubsection[{setAutoDeleteIos}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceIos::setAutoDeleteIos (
@@ -418,7 +416,7 @@ Note:
 \item If one value is invalid, concerned input will be set invalid. 
 \end{DoxyItemize}
 
-Definition at line 216 of file mdtDeviceIos.cpp.
+Definition at line 217 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_ae9542163fedce98b11e2d9fd0e2e7d78}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateDigitalOutputStates@{updateDigitalOutputStates}}
@@ -440,7 +438,7 @@ Note:
 \item If one value is invalid, concerned input will be set invalid. 
 \end{DoxyItemize}
 
-Definition at line 230 of file mdtDeviceIos.cpp.
+Definition at line 231 of file mdtDeviceIos.cpp.
 
 
 

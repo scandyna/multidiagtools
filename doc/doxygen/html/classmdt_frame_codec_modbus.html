@@ -243,7 +243,7 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Decoded function code, MODBUS error code or value &lt; 0 on other error. </dd></dl>
 
 <p><p>NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo:</a></b></dt><dd>Base 16 ?? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000055">Todo:</a></b></dt><dd>Base 16 ?? </dd></dl>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00258">258</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
@@ -478,6 +478,9 @@ Public Member Functions</h2></td></tr>
 <p>Please take a look at MODBUS specifications for more details.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A QByteArray containing the PDU, or a empty QByteArray on error. </dd></dl>
 
+<p><p>qDebug() &lt;&lt; "mdtFrameCodecModbus::encodeWriteSingleCoil(): address " &lt;&lt; address &lt;&lt; " , state: " &lt;&lt; state; </p>
+</p>
+
 <p>Definition at line <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_frame_codec_modbus_8cpp_source.html">mdtFrameCodecModbus.cpp</a>.</p>
 
 </div>
@@ -556,7 +559,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

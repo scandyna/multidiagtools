@@ -92,6 +92,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get product ID. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1">productName</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get product name.  <a href="#afe4bbdc87acff59999905a0eeb812fe1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeefd846da860838aa5cd70a27ac961c6"></a><!-- doxytag: member="mdtDeviceInfo::setSerialId" ref="aeefd846da860838aa5cd70a27ac961c6" args="(const QString &amp;id)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_info.html#aeefd846da860838aa5cd70a27ac961c6">setSerialId</a> (const QString &amp;id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set serial number/ID. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9c2e69d8a7b81e25ee70dff9f7086e6"></a><!-- doxytag: member="mdtDeviceInfo::serialId" ref="ad9c2e69d8a7b81e25ee70dff9f7086e6" args="() const " -->
+QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_info.html#ad9c2e69d8a7b81e25ee70dff9f7086e6">serialId</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get serial number/ID. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad90e39b5d34d4859527651cebb273e78"></a><!-- doxytag: member="mdtDeviceInfo::setProtocolId" ref="ad90e39b5d34d4859527651cebb273e78" args="(int pid)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_info.html#ad90e39b5d34d4859527651cebb273e78">setProtocolId</a> (int pid)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set protocol ID. <br/></td></tr>
@@ -131,7 +137,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Returns a text that can be displayed to the user. (F.ex. in a combo box)</p>
 <p>If text was not set, a string containing the vendor ID ans product ID is returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00081">81</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00091">91</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -153,7 +159,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Comparaison operator. </p>
 <p>Note that display text is not compared. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00125">125</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -173,9 +179,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="memdoc">
 
 <p>Comparaison operator. </p>
-<p>Note that display text is not compared. </p>
+<p>Devices are considered equal if vendor ID and product ID are the same. Additionnaly, if one object contains a serial ID, they are compared, else not. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00095">95</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
+<p><p>if(pvProtocolId != other.pvProtocolId){ return false; }</p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -194,7 +203,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="memdoc">
 
 <p>Get product name. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
 
@@ -218,7 +227,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <p>Set the display text. </p>
 <p>Set a text that can be displayed to the user. (F.ex. in a combo box) </p>
 
-<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00076">76</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00086">86</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
 
 </div>
 </div>
@@ -237,7 +246,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <div class="memdoc">
 
 <p>Get vendor name. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_info_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_device_info_8cpp_source.html">mdtDeviceInfo.cpp</a>.</p>
 
@@ -262,7 +271,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -151,7 +151,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00090"></a>00090 {
 <a name="l00091"></a>00091   sbValue-&gt;setEnabled(enabled);
 <a name="l00092"></a>00092   slValue-&gt;setEnabled(enabled);
-<a name="l00093"></a>00093 }
+<a name="l00093"></a>00093   <span class="comment">// It can happen that scale is not repainted,</span>
+<a name="l00094"></a>00094   <span class="comment">//  and GUI becomes uncoherent.</span>
+<a name="l00095"></a>00095   <span class="comment">// Force a update to avoid this.</span>
+<a name="l00096"></a>00096   slValue-&gt;update();
+<a name="l00097"></a>00097 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -168,7 +172,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

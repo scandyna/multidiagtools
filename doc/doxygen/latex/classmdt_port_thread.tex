@@ -52,8 +52,10 @@ bool \hyperlink{classmdt_port_thread_ae1becf17263dd9fbf5dfcc6c51eddd72}{isRunnin
 \begin{DoxyCompactList}\small\item\em Returns true if the thread is running This function overloads the QThread::isRunning() function. Note for subclass: when the thread is started and ready, the private member pvRunning must be set to true. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{isFinished} () const 
 \begin{DoxyCompactList}\small\item\em Returns false if the thread is running. \end{DoxyCompactList}\item 
-virtual bool \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{isReader} () const =0
-\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+virtual bool \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{isReader} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{isWriter} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread writes date. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -61,12 +63,16 @@ virtual bool \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{
 \begin{DoxyCompactList}\small\item\em Get a new frame for reading data from port. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame}{mdtFrame} $\ast$ \hyperlink{classmdt_port_thread_a7e6e152839e35b8fbd1eb299c1d0b2fe}{readFromPort} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$frame)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_thread_a25b43b19a0b4a1097f06c69bf5dd9b19}{readFromPort2} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$frame)
+\begin{DoxyCompactList}\small\item\em Read data from port 2 (new variant to test) \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame}{mdtFrame} $\ast$ \hyperlink{classmdt_port_thread_acba4fce38a633da68ec23fe191ba6105}{getNewFrameWrite} ()
 \begin{DoxyCompactList}\small\item\em Get a new frame for writing data to port. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_a9372a53561362b0c86f499b8a36805e1}{writeToPort} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$frame, bool bytePerByteWrite, int interByteTime)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_aaea2513ab1611574111dd1c2b7e61b7c}{reconnect} (int timeout, int maxTry)
-\begin{DoxyCompactList}\small\item\em Try to reconnect to device/peer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_a72f5469a7b11ed6c8b4d07af165c4164}{reconnect} (int timeout, int maxTry, bool notify=true)
+\begin{DoxyCompactList}\small\item\em Try to reconnect to device/peer. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_thread_ad2c618a032c0aeed0f0cb3b30bc0aba9}{notifyError} (int error)
+\begin{DoxyCompactList}\small\item\em Emit the \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} signal if new error is different from current. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -131,7 +137,7 @@ The thread must not running
 \end{DoxyPrecond}
 
 
-Definition at line 61 of file mdtPortThread.cpp.
+Definition at line 62 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{
 \index{mdtPortThread@{mdtPortThread}!errorOccured@{errorOccured}}
@@ -147,14 +153,14 @@ Definition at line 61 of file mdtPortThread.cpp.
 Emitted on error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000019}{Todo}]Adapt threads + port managers\end{Desc}
+\item[\hyperlink{todo__todo000027}{Todo}]Adapt threads + port managers\end{Desc}
 
 
 When a error occurs, this signal is emited.
 
 The error is one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}.
 
-\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. If the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected} error happens, the port manager stops the thread and closes the port. Optionnaly, it can try to re-\/open the port, and start the thread again on success. \hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
+\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. \hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameRead@{getNewFrameRead}}
 \index{getNewFrameRead@{getNewFrameRead}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{getNewFrameRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrame} $\ast$ mdtPortThread::getNewFrameRead (
@@ -172,7 +178,7 @@ This is a helper method for subclass to get a new frame in port's read frames po
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdtError} log system, the signal \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} will be emited with MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR value, and method will go sleep until a new frame is available in pool.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000020}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
+\item[\hyperlink{todo__todo000028}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
 
 
 Note about port mutex handling:\par
@@ -186,7 +192,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxyPrecond}
 
 
-Definition at line 173 of file mdtPortThread.cpp.
+Definition at line 185 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_acba4fce38a633da68ec23fe191ba6105}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameWrite@{getNewFrameWrite}}
@@ -219,7 +225,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxySeeAlso}
 
 
-Definition at line 278 of file mdtPortThread.cpp.
+Definition at line 364 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a8f3d8f3d70839e5ae7b108a3a199e94d}{
 \index{mdtPortThread@{mdtPortThread}!ioProcessBegin@{ioProcessBegin}}
@@ -252,26 +258,55 @@ Returns false if the thread is running.
 \end{DoxySeeAlso}
 
 
-Definition at line 159 of file mdtPortThread.cpp.
+Definition at line 161 of file mdtPortThread.cpp.
 
-\hypertarget{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{
+\hypertarget{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{
 \index{mdtPortThread@{mdtPortThread}!isReader@{isReader}}
 \index{isReader@{isReader}!mdtPortThread@{mdtPortThread}}
-\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool mdtPortThread::isReader (
+\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isReader (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}
 
 
 Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
 
 \hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot.
 
-This method must be implemented in subclass. 
+Default implementation returns allways false.
 
-Implemented in \hyperlink{classmdt_port_read_thread_a0138d613b61056c9f8373331de2d9a84}{mdtPortReadThread}, \hyperlink{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{mdtPortWriteThread}, \hyperlink{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{mdtTcpSocketThread}, \hyperlink{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{mdtUsbPortThread}, and \hyperlink{classmdt_serial_port_ctl_thread_ab87413cedc8d0540eac553e55a3f6407}{mdtSerialPortCtlThread}.
+This method should be implemented in reader subclass. 
+
+Reimplemented in \hyperlink{classmdt_port_read_thread_a0138d613b61056c9f8373331de2d9a84}{mdtPortReadThread}, \hyperlink{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{mdtPortWriteThread}, \hyperlink{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{mdtTcpSocketThread}, \hyperlink{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{mdtUsbPortThread}, and \hyperlink{classmdt_serial_port_ctl_thread_ab87413cedc8d0540eac553e55a3f6407}{mdtSerialPortCtlThread}.
+
+
+
+Definition at line 175 of file mdtPortThread.cpp.
+
+\hypertarget{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{
+\index{mdtPortThread@{mdtPortThread}!isWriter@{isWriter}}
+\index{isWriter@{isWriter}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{isWriter}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isWriter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}
+
+
+Returns true if this thread writes date. 
+
+Is used by \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()} to know if \hyperlink{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{mdtAbstractPort::abortFrameToWriteWait()} must be called.
+
+Default implementation returns false 
+
+Reimplemented in \hyperlink{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{mdtPortWriteThread}.
+
+
+
+Definition at line 180 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{
 \index{mdtPortThread@{mdtPortThread}!newFrameReaden@{newFrameReaden}}
@@ -297,6 +332,25 @@ It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution 
 
 \hyperlink{classmdt_port}{mdtPort} 
 \end{DoxySeeAlso}
+\hypertarget{classmdt_port_thread_ad2c618a032c0aeed0f0cb3b30bc0aba9}{
+\index{mdtPortThread@{mdtPortThread}!notifyError@{notifyError}}
+\index{notifyError@{notifyError}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{notifyError}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortThread::notifyError (
+\begin{DoxyParamCaption}
+\item[{int}]{error}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_thread_ad2c618a032c0aeed0f0cb3b30bc0aba9}
+
+
+Emit the \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} signal if new error is different from current. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000029}{Todo}]Adapt in threads subclasses \end{Desc}
+
+
+Definition at line 474 of file mdtPortThread.cpp.
+
 \hypertarget{classmdt_port_thread_a7e6e152839e35b8fbd1eb299c1d0b2fe}{
 \index{mdtPortThread@{mdtPortThread}!readFromPort@{readFromPort}}
 \index{readFromPort@{readFromPort}!mdtPortThread@{mdtPortThread}}
@@ -313,7 +367,7 @@ Read data from port.
 This is a helper method for subclass to store chunk of data into a frame.
 
 Note about port mutex handling:\par
- The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
+ The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
 
 
 \begin{DoxyParams}{Parameters}
@@ -330,24 +384,64 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
+\begin{Desc}
+\item[\hyperlink{todo__todo000026}{Todo}]don't loose the frame !?! \end{Desc}
+
+
 qDebug() $<$$<$ \char`\"{}mdtPortThread::readFromPort(): frame Null, get new one\char`\"{};
 
 qDebug() $<$$<$ \char`\"{}mdtPortThread::readFromPort(): frame complete, get new one\char`\"{}; 
 
 
 
-Definition at line 206 of file mdtPortThread.cpp.
+Definition at line 219 of file mdtPortThread.cpp.
 
-\hypertarget{classmdt_port_thread_aaea2513ab1611574111dd1c2b7e61b7c}{
+\hypertarget{classmdt_port_thread_a25b43b19a0b4a1097f06c69bf5dd9b19}{
+\index{mdtPortThread@{mdtPortThread}!readFromPort2@{readFromPort2}}
+\index{readFromPort2@{readFromPort2}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{readFromPort2}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortThread::readFromPort2 (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtFrame} $\ast$$\ast$}]{frame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_thread_a25b43b19a0b4a1097f06c69bf5dd9b19}
+
+
+Read data from port 2 (new variant to test) 
+
+This is a helper method for subclass to store chunk of data into a frame.
+
+Note about port mutex handling:\par
+ The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Data readen from port will be stored in this frame. Note that pointer is updated when a frame was completed and that it can be Null (in this case the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{mdtAbstractPort::UnhandledError} is returned)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of frames completed during the process. This can be helpful query/reply protocols in witch the standard reply should be one frame. On error, frame is put back into pool and one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} is returned.
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
+
+frame must be a valid pointer (not Null). 
+\end{DoxyPrecond}
+
+
+Definition at line 292 of file mdtPortThread.cpp.
+
+\hypertarget{classmdt_port_thread_a72f5469a7b11ed6c8b4d07af165c4164}{
 \index{mdtPortThread@{mdtPortThread}!reconnect@{reconnect}}
 \index{reconnect@{reconnect}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::reconnect (
 \begin{DoxyParamCaption}
 \item[{int}]{timeout, }
-\item[{int}]{maxTry}
+\item[{int}]{maxTry, }
+\item[{bool}]{notify = {\ttfamily true}}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_port_thread_aaea2513ab1611574111dd1c2b7e61b7c}
+\label{classmdt_port_thread_a72f5469a7b11ed6c8b4d07af165c4164}
 
 
 Try to reconnect to device/peer. 
@@ -360,6 +454,8 @@ This is a helper method for subclass. When a port method returns a Disconnected 
 \hline
 {\em maxTry} & Maximum try \\
 \hline
+{\em notify} & If true, error will be notified (with \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} ), and failure after maxTry will be reported with \hyperlink{classmdt_error}{mdtError}. \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 NoError if reconnection worked or UnhandledError else.
@@ -369,7 +465,11 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxyPrecond}
 
 
-Definition at line 349 of file mdtPortThread.cpp.
+notifyError(mdtAbstractPort::UnhandledError); 
+
+
+
+Definition at line 435 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{
 \index{mdtPortThread@{mdtPortThread}!setPort@{setPort}}
@@ -391,7 +491,7 @@ The thread must not running
 \end{DoxyPrecond}
 
 
-Definition at line 53 of file mdtPortThread.cpp.
+Definition at line 54 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{
 \index{mdtPortThread@{mdtPortThread}!start@{start}}
@@ -417,7 +517,7 @@ setSerialPort()
 \end{DoxySeeAlso}
 
 
-Definition at line 71 of file mdtPortThread.cpp.
+Definition at line 72 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{
 \index{mdtPortThread@{mdtPortThread}!stop@{stop}}
@@ -444,7 +544,7 @@ Reimplemented in \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866
 
 
 
-Definition at line 98 of file mdtPortThread.cpp.
+Definition at line 99 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a9372a53561362b0c86f499b8a36805e1}{
 \index{mdtPortThread@{mdtPortThread}!writeToPort@{writeToPort}}
@@ -485,7 +585,7 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-Definition at line 285 of file mdtPortThread.cpp.
+Definition at line 371 of file mdtPortThread.cpp.
 
 
 

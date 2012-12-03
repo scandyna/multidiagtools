@@ -4,6 +4,15 @@
 }
 
 
+Representation of a Agilent U3606A.  
+
+
+
+
+{\ttfamily \#include $<$mdtDeviceU3606A.h$>$}
+
+
+
 Inheritance diagram for mdtDeviceU3606A:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -20,21 +29,6 @@ Collaboration diagram for mdtDeviceU3606A:\nopagebreak
 \includegraphics[width=400pt]{classmdt_device_u3606_a__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Slots}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}{getIdn} ()
-\begin{DoxyCompactList}\small\item\em Get the IDN. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_u3606_a_a41eacb2d6bc5f9a056ba9d68ffdaeba7}{
-void {\bfseries essais} ()}
-\label{classmdt_device_u3606_a_a41eacb2d6bc5f9a056ba9d68ffdaeba7}
-
-\end{DoxyCompactItemize}
-\subsection*{Signals}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{idnChanged} (const QStringList \&data)
-\begin{DoxyCompactList}\small\item\em Emitted when new IDN is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -43,132 +37,95 @@ void \hyperlink{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{idnCh
 \label{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}
 
 \item 
-QStringList \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan} ()
-\begin{DoxyCompactList}\small\item\em Scan for attached devices. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_device_u3606_a_a425f1d22686be2d28eb3f1ce12a8eaee}{selectPort} (const QStringList \&ports, int index)
-\begin{DoxyCompactList}\small\item\em Select a port. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{selectPort} (const QString \&port)
-\begin{DoxyCompactList}\small\item\em Select a port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_u3606_a_ac20d3e5177158c26bcbc5ca2d30cd563}{decodeReadenFrame} (int id, QByteArray data)
+\begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{
+void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onStateChanged} (int state)}
+\label{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}
+
+\begin{DoxyCompactList}\small\item\em Update (G)UI when device's state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+Representation of a Agilent U3606A. 
 
-
-Definition at line 35 of file mdtDeviceU3606A.h.
+Definition at line 30 of file mdtDeviceU3606A.h.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!getIdn@{getIdn}}
-\index{getIdn@{getIdn}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{getIdn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceU3606A::getIdn (
+\hypertarget{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceU3606A::connectToDevice (
 \begin{DoxyParamCaption}
-{}
+\item[{const {\bf mdtDeviceInfo} \&}]{devInfo}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}
 
 
-Get the IDN. 
+Search and connect to physical device. 
 
-Will get the IDN from device. The signal \hyperlink{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{idnChanged()} will be emited. 
-
-if(!pvPortManager.writeData(command, true))\{ emit idnChanged(data); return; \}
+Will scan available ports and open the first port that has device attached maching request.
 
 
-
-Definition at line 110 of file mdtDeviceU3606A.cpp.
-
-\hypertarget{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!idnChanged@{idnChanged}}
-\index{idnChanged@{idnChanged}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{idnChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceU3606A::idnChanged (
-\begin{DoxyParamCaption}
-\item[{const QStringList \&}]{data}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_device_u3606_a_a0a5ed6583bdf5378787e24349776d7a1}
-
-
-Emitted when new IDN is available. 
-
-The list contains following data:
-\begin{DoxyItemize}
-\item Manufacturer
-\item Model
-\item Serial number
-\item Interface revision number
-\item Measurement board revision number
-\item Source board revision number \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_device_u3606_a_ad79d17e348854963cf32b20d370a778e}{getIdn()} 
-\end{DoxySeeAlso}
-
-\end{DoxyItemize}\hypertarget{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!scan@{scan}}
-\index{scan@{scan}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtDeviceU3606A::scan (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}
-
-
-Scan for attached devices. 
-
-Scan for available ports, then it get the IDN of found device.\par
- If IDN returns a U3606A, the port is added to ports list. \begin{DoxyReturn}{Returns}
-String list of ports that have a U3606A attached
+\begin{DoxyParams}{Parameters}
+{\em devInfo} & Requested device's informations. Note: Vendor ID and/or product ID are automatically set. (in other words, a empty \hyperlink{classmdt_device_info}{mdtDeviceInfo} can be passed). Optionnaly, a serial device can be set (usefull if many U3606A devices are connected) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success) 
 \end{DoxyReturn}
+
+
 \begin{Desc}
-\item[\hyperlink{todo__todo000001}{Todo}]Reimplement with port manager + port info \end{Desc}
-
-
-if(pvPortManager.writeData(command, true))\{ if(pvPortManager.waitReadenFrame())\{ if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame()))\{ if(pvCodec.values().size() $>$= 2)\{ if(pvCodec.values().at(1) == \char`\"{}U3606A\char`\"{})\{ portsWithDevice $<$$<$ ports.at(i); \} \} \} \} \}
+\item[\hyperlink{todo__todo000005}{Todo}]Add DeviceNotFound error ? \end{Desc}
 
 
 
-Definition at line 38 of file mdtDeviceU3606A.cpp.
 
-\hypertarget{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
-\index{selectPort@{selectPort}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{selectPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceU3606A::selectPort (
+Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{mdtDevice}.
+
+
+
+Definition at line 52 of file mdtDeviceU3606A.cpp.
+
+\hypertarget{classmdt_device_u3606_a_ac20d3e5177158c26bcbc5ca2d30cd563}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!decodeReadenFrame@{decodeReadenFrame}}
+\index{decodeReadenFrame@{decodeReadenFrame}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{decodeReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceU3606A::decodeReadenFrame (
 \begin{DoxyParamCaption}
-\item[{const QString \&}]{port}
+\item[{int}]{id, }
+\item[{QByteArray}]{data}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_u3606_a_af4ee162df6c67ee3b2d9e5877bea881e}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_u3606_a_ac20d3e5177158c26bcbc5ca2d30cd563}
 
 
-Select a port. 
+Decode incoming frames. 
 
-Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. 
+\begin{DoxyPrecond}{Precondition}
+I/O's container must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}
+\end{DoxyPrecond}
+Subclass notes:\par
 
-Definition at line 94 of file mdtDeviceU3606A.cpp.
+\begin{DoxyItemize}
+\item This slot should be connected with \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{mdtPortManager::newReadenFrame()} signal.
+\item The incoming frames are available with \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{mdtPortManager::readenFrames()}. 
+\end{DoxyItemize}
 
-\hypertarget{classmdt_device_u3606_a_a425f1d22686be2d28eb3f1ce12a8eaee}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!selectPort@{selectPort}}
-\index{selectPort@{selectPort}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{selectPort}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceU3606A::selectPort (
-\begin{DoxyParamCaption}
-\item[{const QStringList \&}]{ports, }
-\item[{int}]{index}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_device_u3606_a_a425f1d22686be2d28eb3f1ce12a8eaee}
+Reimplemented from \hyperlink{classmdt_device_a96be3ca9235561c58c69190e9ed45ca9}{mdtDevice}.
 
 
-Select a port. 
 
-Before using this function, the specific device \hyperlink{classmdt_device_u3606_a_a3a31558c573466fc1534b43e6ee7e327}{scan()} method must be used to find ports with attached device. Then, pass the result at argument 
-
-Definition at line 75 of file mdtDeviceU3606A.cpp.
+Definition at line 117 of file mdtDeviceU3606A.cpp.
 
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-src/mdtdevice/linux/mdtDeviceU3606A.h\item 
-src/mdtdevice/linux/mdtDeviceU3606A.cpp\end{DoxyCompactItemize}
+src/mdtdevice/mdtDeviceU3606A.h\item 
+src/mdtdevice/mdtDeviceU3606A.cpp\end{DoxyCompactItemize}

@@ -106,8 +106,11 @@ Public Types</h2></td></tr>
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">ReadCanceled</a>, 
 <br/>
 &#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">Disconnected</a>, 
+<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">Connecting</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">UnknownError</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984">ReadPoolEmpty</a>, 
 <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">WriteQueueEmpty</a>
 <br/>
  }</td></tr>
@@ -258,7 +261,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <div class="memdoc">
 
 <p>Error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
 <p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
 </dd></dl>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
@@ -287,16 +290,19 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>Read process was cancelled. The thread should stop the write process, restore the current frame into pool and continue working. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c"></a><!-- doxytag: member="Disconnected" ref="ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c" args="" -->Disconnected</em>&nbsp;</td><td>
-<p>For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will stop working and signal this error at end. The portmanager can try to re-open the port if auto-reconnection is needed, and start the thread again on success.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd><p class="startdd">Implement this </p>
-<p class="enddd">Implement a re-connect method </p>
-</dd></dl>
+<p>For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will try to reconnect. If connection fails after maximum trys, a notification is sent with this Disconnected error. </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93"></a><!-- doxytag: member="Connecting" ref="ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93" args="" -->Connecting</em>&nbsp;</td><td>
+<p>Used to notify portmanager that connection is in progress (see <a class="el" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">mdtPortThread::reconnect()</a> ) </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871"></a><!-- doxytag: member="UnknownError" ref="ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871" args="" -->UnknownError</em>&nbsp;</td><td>
 <p>Unknown error is happen. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712"></a><!-- doxytag: member="UnhandledError" ref="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712" args="" -->UnhandledError</em>&nbsp;</td><td>
-<p>Unhandled error happen. In this case, thread will stop working. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
+<p>Unhandled error happen. In this case, thread will stop working and error is reported with <a class="el" href="classmdt_error.html">mdtError</a> system. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984"></a><!-- doxytag: member="ReadPoolEmpty" ref="ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984" args="" -->ReadPoolEmpty</em>&nbsp;</td><td>
+<p>Read frames pool is empty. Says that no data can be received for the moment </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79"></a><!-- doxytag: member="WriteQueueEmpty" ref="ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79" args="" -->WriteQueueEmpty</em>&nbsp;</td><td>
 <p>Write queue is empty. Says that no data can be sent for the moment </p>
@@ -351,7 +357,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>Will wake thread(s) waiting on a frame to write with <a class="el" href="classmdt_abstract_port.html#a6c5ebd4451aec959efc4e71ab1b13941" title="Wait until a frame to write is available and get it.">getFrameToWrite()</a> . This method is called from <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a> , and should not be called directly.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00336">336</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00333">333</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -375,7 +381,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>The mutex must be locked before calling this method, and still locked inside.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>frame must be a vail pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00310">310</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00307">307</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -398,11 +404,11 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>The mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
  Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated. Note that this method must be called from subclass destructor. See <a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort()</a> for details.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805">mdtAbstractSerialPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -424,7 +430,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>Will do the same as calling <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a> and <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a>, but lock the mutex only once.</p>
 <p>Mutex is locked in this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00214">214</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00211">211</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -446,7 +452,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>Will move all readen frames to pool, and call <a class="el" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn()</a> to flush system's buffers.</p>
 <p>Mutex is locked in this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00166">166</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00163">163</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -471,7 +477,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 
 <p>Reimplemented in <a class="el" href="classmdt_port.html#a42022f9fe08166418711b956c6aabb49">mdtPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00176">176</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00173">173</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -495,7 +501,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>The mutex must be locked before calling this method. Internally, it will be unlocked during wait, and locked again before returning.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to a frame, or Null (Null happens after stop request) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00319">319</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00316">316</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -516,7 +522,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
 <p>Init the read ans write queues. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>A valid configuration must be set before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00228">228</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00225">225</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -541,7 +547,7 @@ QMutex&#160;</td><td class="memItemRight" valign="bottom"><b>pvMutex</b></td></t
  Internally, this method calls <a class="el" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="Open the port given by setPortName()">pvOpen()</a>. Once done, the flags are updated.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -710,7 +716,8 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Subclass notes:<br/>
  This method must be implemented in subclass.<br/>
 </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 (see error_t)</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#ad8a196bb21b6ca76dffb068a1692904a">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a91f45336ca9a71284e0309182f5e8ca1">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">mdtSerialPort</a>.</p>
 
@@ -734,7 +741,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Readen frames queue contains frames that where received from device</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00300">300</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00297">297</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -756,7 +763,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Read frames queue pool contains frames that are ready to use for reception</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00305">305</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00302">302</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -777,7 +784,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Returns read timeout state. </p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00201">201</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -814,7 +821,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_tcp_socket.html#a6a9990696ea459601b17ddbffe5b0703">mdtTcpSocket</a>, and <a class="el" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee">mdtUsbPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00135">135</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -845,7 +852,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf">mdtSerialPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -867,7 +874,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Set the port name. </p>
 <p>Port name can be, f.ex. /dev/ttyS0 on Linux, or COM1 on Windows. This method just store given port name and does nothing else. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -921,7 +928,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>A valid configuration must be set before calling this method.</dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00115">115</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00112">112</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -982,7 +989,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">mdtSerialPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00153">153</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1006,7 +1013,7 @@ A valid configuration must be set before calling this method.</dd></dl>
  Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00186">186</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1030,7 +1037,7 @@ A valid configuration must be set before calling this method.</dd></dl>
  Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00195">195</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1126,7 +1133,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1161,7 +1168,8 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Subclass notes:<br/>
  This method must be implemented in subclass.<br/>
 </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or error &lt; 0 (see error_t)</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#a62f4a6f2c547d40d3743ce893e0f64d6">mdtPort</a>, <a class="el" href="classmdt_usbtmc_port.html#a32b98d2a61617293c328a343d62d52c3">mdtUsbtmcPort</a>, <a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">mdtSerialPort</a>.</p>
 
@@ -1185,7 +1193,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Write frames queue contains frames that must be sent</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00341">341</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00338">338</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1207,7 +1215,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Write frames queue pool contains frames that are ready to use for transmission</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00346">346</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00343">343</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1228,7 +1236,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Returns write timeout state. </p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00209">209</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00206">206</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1251,7 +1259,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

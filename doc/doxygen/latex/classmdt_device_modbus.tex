@@ -29,16 +29,16 @@ Collaboration diagram for mdtDeviceModbus:\nopagebreak
 \includegraphics[width=400pt]{classmdt_device_modbus__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Public Slots}
-\begin{DoxyCompactItemize}
-\item 
-void \hyperlink{classmdt_device_modbus_a0f47a5832122c3c7ee149b738075f84d}{decodeReadenFrame} (int id, QByteArray pdu)
-\begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_device_modbus_ac69cfbe26681342ba05672ab63de2a1f}{mdtDeviceModbus} (QObject $\ast$parent=0)
-\end{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}{
+\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$ \hyperlink{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}{portManager} ()}
+\label{classmdt_device_modbus_aed892b501f8cbd372ccfda1a4fafa536}
+
+\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -69,52 +69,11 @@ Definition at line 39 of file mdtDeviceModbus.h.
 \begin{DoxyNote}{Note}
 Provisoire !!
 \end{DoxyNote}
-pvTcpPortManager-\/$>$setPortName(\char`\"{}192.168.1.102:502\char`\"{}); 
+pvTcpPortManager-\/$>$setPortName(\char`\"{}192.168.1.103:502\char`\"{}); 
 
 
 
 Definition at line 30 of file mdtDeviceModbus.cpp.
-
-
-
-\subsection{Member Function Documentation}
-\hypertarget{classmdt_device_modbus_a0f47a5832122c3c7ee149b738075f84d}{
-\index{mdtDeviceModbus@{mdtDeviceModbus}!decodeReadenFrame@{decodeReadenFrame}}
-\index{decodeReadenFrame@{decodeReadenFrame}!mdtDeviceModbus@{mdtDeviceModbus}}
-\subsubsection[{decodeReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceModbus::decodeReadenFrame (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{QByteArray}]{pdu}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual, slot\mbox{]}}}}
-\label{classmdt_device_modbus_a0f47a5832122c3c7ee149b738075f84d}
-
-
-Decode incoming frames. 
-
-\begin{DoxyPrecond}{Precondition}
-I/O's container must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}
-\end{DoxyPrecond}
-Subclass notes:\par
-
-\begin{DoxyItemize}
-\item This default implementation does nothing.
-\item This slot should be connected with \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{mdtPortManager::newReadenFrame()} signal.
-\item In this class, this connection is not made, it is the sublcass responsability to do this.
-\item The incoming frames are available with \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{mdtPortManager::readenFrames()}. 
-\end{DoxyItemize}
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000002}{Todo}]Handle errors ! \end{Desc}
-
-
-
-
-Reimplemented from \hyperlink{classmdt_device_a96be3ca9235561c58c69190e9ed45ca9}{mdtDevice}.
-
-
-
-Definition at line 51 of file mdtDeviceModbus.cpp.
 
 
 

@@ -51,7 +51,10 @@ void {\bfseries enabledStateChangedForUi} (bool enabled)}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{mdtAbstractIo} (QObject $\ast$parent=0)
+\hypertarget{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{
+\hyperlink{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{mdtAbstractIo} (QObject $\ast$parent=0)}
+\label{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}
+
 \begin{DoxyCompactList}\small\item\em I/O type. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{setAddress} (int address)
 \begin{DoxyCompactList}\small\item\em Get I/O type. \end{DoxyCompactList}\item 
@@ -115,37 +118,13 @@ Definition at line 33 of file mdtAbstractIo.h.
 
 
 
-\subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}{
-\index{mdtAbstractIo@{mdtAbstractIo}!mdtAbstractIo@{mdtAbstractIo}}
-\index{mdtAbstractIo@{mdtAbstractIo}!mdtAbstractIo@{mdtAbstractIo}}
-\subsubsection[{mdtAbstractIo}]{\setlength{\rightskip}{0pt plus 5cm}mdtAbstractIo::mdtAbstractIo (
-\begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_abstract_io_ac138b89890471e0412f2b15f2c53f1f9}
-
-
-I/O type. 
-
-
-
-pvType = UNKNOWN; 
-
-
-
-Definition at line 23 of file mdtAbstractIo.cpp.
-
-
-
 \subsection{Member Function Documentation}
 \hypertarget{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}{
 \index{mdtAbstractIo@{mdtAbstractIo}!setAddress@{setAddress}}
 \index{setAddress@{setAddress}!mdtAbstractIo@{mdtAbstractIo}}
 \subsubsection[{setAddress}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAbstractIo::setAddress (
 \begin{DoxyParamCaption}
-\item[{int}]{adr}
+\item[{int}]{address}
 \end{DoxyParamCaption}
 )}}
 \label{classmdt_abstract_io_a1f3bfa0472c7e0bd4cd9a5b865c460a2}
@@ -155,11 +134,9 @@ Get I/O type.
 
 type\_\-t type() const;
 
-Set the I/O address
+Set the I/O address 
 
-mdtAbstractIo::type\_\-t mdtAbstractIo::type() const \{ return pvType; \} 
-
-Definition at line 42 of file mdtAbstractIo.cpp.
+Definition at line 34 of file mdtAbstractIo.cpp.
 
 \hypertarget{classmdt_abstract_io_ae614f78829c59cb7b7d8265dd59e2164}{
 \index{mdtAbstractIo@{mdtAbstractIo}!setLabel@{setLabel}}
@@ -176,7 +153,7 @@ Set the complete I/O label.
 
 When used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}, this label is displayed as tool tip 
 
-Definition at line 64 of file mdtAbstractIo.cpp.
+Definition at line 56 of file mdtAbstractIo.cpp.
 
 \hypertarget{classmdt_abstract_io_a0f0a70927942f793ce93c7f0c013a39e}{
 \index{mdtAbstractIo@{mdtAbstractIo}!setLabelShort@{setLabelShort}}
@@ -193,7 +170,7 @@ Set the short I/O label.
 
 When used with \hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget}, the short I/O label is allways displayed 
 
-Definition at line 53 of file mdtAbstractIo.cpp.
+Definition at line 45 of file mdtAbstractIo.cpp.
 
 
 

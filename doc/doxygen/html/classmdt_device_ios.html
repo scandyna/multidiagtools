@@ -88,10 +88,10 @@ Public Slots</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's state for a set of digital outputs.  <a href="#ae9542163fedce98b11e2d9fd0e2e7d78"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a277b53a8cfc28540b5f6dc8684bd5637">analogOutputValueChanged</a> (int address, int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emited when a analog output value has changed.  <a href="#a277b53a8cfc28540b5f6dc8684bd5637"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a6f2647e97f836f1ff184816172a46283">digitalOutputStateChanged</a> (int address, bool on)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emited when a digital output state has changed.  <a href="#a6f2647e97f836f1ff184816172a46283"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a78918905dc0b04976cdc826c0fd582c1">analogOutputValueChanged</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emited when a analog output value has changed.  <a href="#a78918905dc0b04976cdc826c0fd582c1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a45be7941f710e63a7d54020dee38e2ec">digitalOutputStateChanged</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emited when a digital output state has changed.  <a href="#a45be7941f710e63a7d54020dee38e2ec"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44939a10d66421069bdd4b8717e2798c"></a><!-- doxytag: member="mdtDeviceIos::mdtDeviceIos" ref="a44939a10d66421069bdd4b8717e2798c" args="(QObject *parent=0)" -->
@@ -301,7 +301,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a class="anchor" id="a277b53a8cfc28540b5f6dc8684bd5637"></a><!-- doxytag: member="mdtDeviceIos::analogOutputValueChanged" ref="a277b53a8cfc28540b5f6dc8684bd5637" args="(int address, int value)" -->
+<a class="anchor" id="a78918905dc0b04976cdc826c0fd582c1"></a><!-- doxytag: member="mdtDeviceIos::analogOutputValueChanged" ref="a78918905dc0b04976cdc826c0fd582c1" args="(int address)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -309,25 +309,15 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
           <td class="memname">void mdtDeviceIos::analogOutputValueChanged </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>value</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [signal]</code></td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td><code> [signal]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>This signal is emited when a analog output value has changed. </p>
-<p>The change could be done, for example, by the user on a widget. </p>
+<p>This signal is used to notify <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> that a analog output must be set on device. </p>
 
 </div>
 </div>
@@ -396,7 +386,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a class="anchor" id="a6f2647e97f836f1ff184816172a46283"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputStateChanged" ref="a6f2647e97f836f1ff184816172a46283" args="(int address, bool on)" -->
+<a class="anchor" id="a45be7941f710e63a7d54020dee38e2ec"></a><!-- doxytag: member="mdtDeviceIos::digitalOutputStateChanged" ref="a45be7941f710e63a7d54020dee38e2ec" args="(int address)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -404,25 +394,15 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
           <td class="memname">void mdtDeviceIos::digitalOutputStateChanged </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>on</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [signal]</code></td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td><code> [signal]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>This signal is emited when a digital output state has changed. </p>
-<p>The change could be done, for example, by the user on a widget. </p>
+<p>This signal is used to notify <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> that a digital output must be set on device. </p>
 
 </div>
 </div>
@@ -528,7 +508,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <li>If one value is invalid, concerned input will be set invalid. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00217">217</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -555,7 +535,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <li>If one value is invalid, concerned input will be set invalid. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00230">230</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -578,7 +558,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

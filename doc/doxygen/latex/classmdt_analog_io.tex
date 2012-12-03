@@ -44,8 +44,8 @@ void \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChang
 \label{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}
 
 \begin{DoxyCompactList}\small\item\em This signal is emitted whenever the value is changed. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged} (int address, int value)
-\begin{DoxyCompactList}\small\item\em void valueChanged(int address, double newValue); \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_analog_io_ad80031d8be66c05085fb5df651d421ef}{valueChanged} (int address)
+\begin{DoxyCompactList}\small\item\em This signal is emitted whenever the value is changed. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}{
 void {\bfseries unitChangedForUi} (const QString \&unit)}
 \label{classmdt_analog_io_aa81b49605f601850ecfa780f2b758e98}
@@ -225,7 +225,7 @@ Store the value and emit \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bc
 \begin{DoxyParams}{Parameters}
 {\em value} & The value to store. If value is of type int, conversion is done. (see \hyperlink{classmdt_analog_io_a2263d9b0bf2c1b998386c590866f06e8}{setEncodeBitSettings()} ). If value is invalid, the validity flag is updated. See \hyperlink{classmdt_analog_io_ac83abbda2bafce5c02e3ae1dbc5e2555}{setValue(double, bool, bool)} for details. \\
 \hline
-{\em emitValueChanged} & If true, \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged(int, int)} and \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged(double)} will be emitted.\\
+{\em emitValueChanged} & If true, valueChanged(int, int) and \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged(double)} will be emitted.\\
 \hline
 \end{DoxyParams}
 Note for UI developpers:
@@ -258,7 +258,7 @@ Store the value and emit \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bc
 \hline
 {\em isValid} & The validity flag. This flag is later avaliable with \hyperlink{classmdt_abstract_io_a61d96045087fe92a0b455693970b1e76}{mdtAbstractIo::hasValidData()} \\
 \hline
-{\em emitValueChanged} & If true, \hyperlink{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{valueChanged(int, int)} and \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged(double)} will be emitted.\\
+{\em emitValueChanged} & If true, valueChanged(int, int) and \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged(double)} will be emitted.\\
 \hline
 \end{DoxyParams}
 Note for UI developpers:
@@ -320,23 +320,20 @@ Note for UI developpers:
 
 Definition at line 173 of file mdtAnalogIo.cpp.
 
-\hypertarget{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}{
+\hypertarget{classmdt_analog_io_ad80031d8be66c05085fb5df651d421ef}{
 \index{mdtAnalogIo@{mdtAnalogIo}!valueChanged@{valueChanged}}
 \index{valueChanged@{valueChanged}!mdtAnalogIo@{mdtAnalogIo}}
 \subsubsection[{valueChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtAnalogIo::valueChanged (
 \begin{DoxyParamCaption}
-\item[{int}]{address, }
-\item[{int}]{value}
+\item[{int}]{address}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
-\label{classmdt_analog_io_ac36d804e82a4ca9401687700e9e6a136}
+\label{classmdt_analog_io_ad80031d8be66c05085fb5df651d421ef}
 
 
-void valueChanged(int address, double newValue); 
+This signal is emitted whenever the value is changed. 
 
-This signal is emitted whenever the value is changed
-
-The value is converted for device specific format. \hypertarget{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{
+This signal is used by \hyperlink{classmdt_device_ios}{mdtDeviceIos} to notify \hyperlink{classmdt_device}{mdtDevice}. \hypertarget{classmdt_analog_io_a7594e94e059dd3b1db9d8277c7426fb2}{
 \index{mdtAnalogIo@{mdtAnalogIo}!valueInt@{valueInt}}
 \index{valueInt@{valueInt}!mdtAnalogIo@{mdtAnalogIo}}
 \subsubsection[{valueInt}]{\setlength{\rightskip}{0pt plus 5cm}int mdtAnalogIo::valueInt (

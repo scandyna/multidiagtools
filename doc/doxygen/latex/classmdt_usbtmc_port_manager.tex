@@ -33,7 +33,7 @@ Collaboration diagram for mdtUsbtmcPortManager:\nopagebreak
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{fromThreadNewFrameReaden} ()
-\begin{DoxyCompactList}\small\item\em Wait until a complete frame is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Called by the thread whenn a complete frame was readen. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -95,7 +95,7 @@ Destructor.
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-Definition at line 55 of file mdtUsbtmcPortManager.cpp.
+Definition at line 56 of file mdtUsbtmcPortManager.cpp.
 
 
 
@@ -111,34 +111,14 @@ Definition at line 55 of file mdtUsbtmcPortManager.cpp.
 \label{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}
 
 
-Wait until a complete frame is available. 
-
-Send a read request and call \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{mdtPortManager::waitReadenFrame()} .
-
-
-\begin{DoxyParams}{Parameters}
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-bTag ID on success or value $<$ 0 on timeout or if write queue is fullint waitReadenFrame(int timeout = 500); 
-\end{DoxyReturn}
-\begin{Desc}
-\item[\hyperlink{todo__todo000036}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
-
-
-Called by the thread whenn a complete frame was readen
-
-bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{mdtUsbtmcPortManager::waitReadenFrame(int timeout)} \{ int retVal;
-
-Q\_\-ASSERT(pvPort != 0);
-
-retVal = \hyperlink{classmdt_usbtmc_port_manager_a992d24020748e17d577b31e64a73b3e2}{sendReadRequest()}; if(retVal $<$ 0)\{ return retVal; \} qDebug() $<$$<$ \char`\"{}mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ...\char`\"{}; if(!mdtPortManager::waitReadenFrame(timeout))\{ return -\/1; \}
-
-return retVal; \} 
+Called by the thread whenn a complete frame was readen. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000035}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000047}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000046}{Todo}]Error on incomplete frame \end{Desc}
 
 
 pvReadenFrames.insert(frame-\/$>$bTag(), data);
@@ -151,7 +131,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 336 of file mdtUsbtmcPortManager.cpp.
+Definition at line 273 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan@{scan}}
@@ -169,13 +149,11 @@ Scan for available ports with a USBTMC compatible device attached.
 Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).
 
 \begin{DoxyPrecond}{Precondition}
-Manager must no running
+Manager must no running 
 \end{DoxyPrecond}
-QStringList \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdtUsbtmcPortManager::scan()} \{ QStringList portNames; QStringList availablePorts; \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort} $\ast$port; QFileInfoList filesInfo; QDir dir; QStringList extList;
 
-We only need system files dir.setFilter(QDir::Files $|$ QDir::System); USBTMC interfaces extList $<$$<$ \char`\"{}usbtmc$\ast$\char`\"{}; Common device directory dir.setPath(\char`\"{}/dev\char`\"{}); if(!dir.exists())\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-UNDEFINED\_\-ERROR, \char`\"{}directory '\char`\"{} + dir.dirName() + \char`\"{}' not exists\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPortManagerPosix\char`\"{}); e.commit(); return availablePorts; \} dir.setNameFilters(extList); Gest list of found files filesInfo = dir.entryInfoList(); Construct the list of absolute file paths for(int i=0; i$<$filesInfo.size(); ++i)\{ portNames $<$$<$ filesInfo.at(i).absoluteFilePath(); \} Sort the list portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames); For each port name, try to open the port and get some attributes (to see if it really exists) for(int i=0; i$<$portNames.size(); ++i)\{ Try to open port port = new \hyperlink{classmdt_usbtmc_port}{mdtUsbtmcPort}; Q\_\-ASSERT(port != 0); port-\/$>$setPortName(portNames.at(i)); if(port-\/$>$open() == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad}{mdtAbstractPort::NoError})\{ availablePorts.append(portNames.at(i)); port-\/$>$close(); \} delete port; \}
 
-return availablePorts; \} 
+qDebug() $<$$<$ \char`\"{}-\/$>$   iface\mbox{[}\char`\"{} $<$$<$ k $<$$<$ \char`\"{}\mbox{]}\char`\"{};
 
 str += \char`\"{} VID: 0x\char`\"{} + QString::number(deviceDescriptor.idProduct(), 16);
 
@@ -189,7 +167,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca047675
 
 
 
-Definition at line 111 of file mdtUsbtmcPortManager.cpp.
+Definition at line 64 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a992d24020748e17d577b31e64a73b3e2}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
@@ -211,7 +189,7 @@ bTag ID on success or value $<$ 0 if write queue is full.
 \end{DoxyReturn}
 
 
-Definition at line 267 of file mdtUsbtmcPortManager.cpp.
+Definition at line 222 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
@@ -245,7 +223,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c
 
 
 
-Definition at line 231 of file mdtUsbtmcPortManager.cpp.
+Definition at line 185 of file mdtUsbtmcPortManager.cpp.
 
 
 

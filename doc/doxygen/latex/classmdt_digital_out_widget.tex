@@ -29,7 +29,9 @@ Collaboration diagram for mdtDigitalOutWidget:\nopagebreak
 
 \item 
 void \hyperlink{classmdt_digital_out_widget_a3c6f8df089e3a2527d43d1f0a1fad61c}{setIo} (\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$io)
-\begin{DoxyCompactList}\small\item\em Set the I/O object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set the I/O object. \end{DoxyCompactList}\item 
+QPushButton $\ast$ \hyperlink{classmdt_digital_out_widget_a5dcbe08596717b34b80d2ba10108c402}{internalPushButton} ()
+\begin{DoxyCompactList}\small\item\em Get the internal push button object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -40,6 +42,23 @@ Definition at line 29 of file mdtDigitalOutWidget.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_digital_out_widget_a5dcbe08596717b34b80d2ba10108c402}{
+\index{mdtDigitalOutWidget@{mdtDigitalOutWidget}!internalPushButton@{internalPushButton}}
+\index{internalPushButton@{internalPushButton}!mdtDigitalOutWidget@{mdtDigitalOutWidget}}
+\subsubsection[{internalPushButton}]{\setlength{\rightskip}{0pt plus 5cm}QPushButton $\ast$ mdtDigitalOutWidget::internalPushButton (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_digital_out_widget_a5dcbe08596717b34b80d2ba10108c402}
+
+
+Get the internal push button object. 
+
+Used by unit testing, should not be used directly 
+
+Definition at line 68 of file mdtDigitalOutWidget.cpp.
+
 \hypertarget{classmdt_digital_out_widget_a3c6f8df089e3a2527d43d1f0a1fad61c}{
 \index{mdtDigitalOutWidget@{mdtDigitalOutWidget}!setIo@{setIo}}
 \index{setIo@{setIo}!mdtDigitalOutWidget@{mdtDigitalOutWidget}}
@@ -58,10 +77,6 @@ Make all needed connections with the I/O object, so that widget is allways updat
 \begin{DoxyPrecond}{Precondition}
 io must be a valid pointer. 
 \end{DoxyPrecond}
-
-
-connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateState(bool))); 
-
 
 
 Definition at line 50 of file mdtDigitalOutWidget.cpp.

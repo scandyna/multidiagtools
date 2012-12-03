@@ -36,6 +36,10 @@ void \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTi
 \begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{setWriteTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_tcp_socket_a3fd73142279a256c984141cb16acf49e}{setUnknownReadSize} (bool unknown)
+\begin{DoxyCompactList}\small\item\em Set unknown read size flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tcp_socket_a0a131c24527c76dbbc0acfb8cbd6f336}{unknownReadSize} () const 
+\begin{DoxyCompactList}\small\item\em Get the unknown frame size flag. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{waitForReadyRead} ()
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{read} (char $\ast$data, qint64 maxSize)
@@ -73,7 +77,7 @@ This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThre
 Mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-Number of bytes readen, or a error $<$ 0 
+Number of bytes readen, or a error $<$ 0 (one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}) 
 \end{DoxyReturn}
 
 
@@ -81,7 +85,7 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 
 
-Definition at line 137 of file mdtTcpSocket.cpp.
+Definition at line 134 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_a6a9990696ea459601b17ddbffe5b0703}{
 \index{mdtTcpSocket@{mdtTcpSocket}!reconnect@{reconnect}}
@@ -112,7 +116,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_aec74b2db1a629d98a95d8f042e
 
 
 
-Definition at line 41 of file mdtTcpSocket.cpp.
+Definition at line 39 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setReadTimeout@{setReadTimeout}}
@@ -140,7 +144,7 @@ Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{
 
 
 
-Definition at line 98 of file mdtTcpSocket.cpp.
+Definition at line 96 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_a8a57e4b49f56c301c5f8d7a9ec191e87}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setThreadObjects@{setThreadObjects}}
@@ -172,7 +176,42 @@ thread must be a valid pointer
 \end{DoxySeeAlso}
 
 
-Definition at line 89 of file mdtTcpSocket.cpp.
+Definition at line 87 of file mdtTcpSocket.cpp.
+
+\hypertarget{classmdt_tcp_socket_a3fd73142279a256c984141cb16acf49e}{
+\index{mdtTcpSocket@{mdtTcpSocket}!setUnknownReadSize@{setUnknownReadSize}}
+\index{setUnknownReadSize@{setUnknownReadSize}!mdtTcpSocket@{mdtTcpSocket}}
+\subsubsection[{setUnknownReadSize}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocket::setUnknownReadSize (
+\begin{DoxyParamCaption}
+\item[{bool}]{unknown}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_tcp_socket_a3fd73142279a256c984141cb16acf49e}
+
+
+Set unknown read size flag. 
+
+The write/read processes are done in one thread. First, the thread waits a write event from application, then data is sent. After this, thread still blocked until data are available or timeout (set with \hyperlink{classmdt_tcp_socket_aae23057f2e0ee326d0fee78ffe3f00f9}{setReadTimeout()} ). After this, data are readen until one frame is completely received, then thread goes back idle.
+
+The problem is that more data can be sent from peer, and these data are lost, or stored in frames after next transaction (write/read process), and application will probably becomes uncoherent.
+
+The solution for this was implemented so:
+\begin{DoxyItemize}
+\item Request is sent to host
+\item Data comes back, and is store into current frame until it is complete (or timeout).
+\item If the unknown read size flag is set, a loop begins with a couple of wait/read with short timeout begins (50ms) until no more data comes in.
+\end{DoxyItemize}
+
+This flag should be set as follow:
+\begin{DoxyItemize}
+\item For RAW frames: true
+\item For ASCII frames: true
+\item For MODBUS/TCP: false
+\end{DoxyItemize}
+
+Default is true. 
+
+Definition at line 106 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_ac59d2dfdf405b5382f0f20d5b9f75fd0}{
 \index{mdtTcpSocket@{mdtTcpSocket}!setWriteTimeout@{setWriteTimeout}}
@@ -200,7 +239,24 @@ Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{
 
 
 
-Definition at line 103 of file mdtTcpSocket.cpp.
+Definition at line 101 of file mdtTcpSocket.cpp.
+
+\hypertarget{classmdt_tcp_socket_a0a131c24527c76dbbc0acfb8cbd6f336}{
+\index{mdtTcpSocket@{mdtTcpSocket}!unknownReadSize@{unknownReadSize}}
+\index{unknownReadSize@{unknownReadSize}!mdtTcpSocket@{mdtTcpSocket}}
+\subsubsection[{unknownReadSize}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocket::unknownReadSize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_tcp_socket_a0a131c24527c76dbbc0acfb8cbd6f336}
+
+
+Get the unknown frame size flag. 
+
+For details, see \hyperlink{classmdt_tcp_socket_a3fd73142279a256c984141cb16acf49e}{setUnknownReadSize()} 
+
+Definition at line 111 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_a33385bcde41b8065ea7eff65c754b0cb}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitEventWriteReady@{waitEventWriteReady}}
@@ -218,15 +274,11 @@ Wait until data can be written to port.
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
-updateReadTimeoutState(false); 
-
-
-
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 
 
-Definition at line 154 of file mdtTcpSocket.cpp.
+Definition at line 148 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_adb09186cdacdac15291523c59f156cd4}{
 \index{mdtTcpSocket@{mdtTcpSocket}!waitForReadyRead@{waitForReadyRead}}
@@ -244,15 +296,11 @@ Wait until data is available on port.
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
-updateReadTimeoutState(false); 
-
-
-
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 
 
 
-Definition at line 108 of file mdtTcpSocket.cpp.
+Definition at line 116 of file mdtTcpSocket.cpp.
 
 \hypertarget{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{
 \index{mdtTcpSocket@{mdtTcpSocket}!write@{write}}
@@ -273,7 +321,7 @@ This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteTh
 Mutex is not handled by this method.
 
 \begin{DoxyReturn}{Returns}
-Number of bytes written, or $<$0 on error 
+Number of bytes written, or a error $<$ 0 (one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}) 
 \end{DoxyReturn}
 
 
@@ -281,7 +329,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 190 of file mdtTcpSocket.cpp.
+Definition at line 175 of file mdtTcpSocket.cpp.
 
 
 

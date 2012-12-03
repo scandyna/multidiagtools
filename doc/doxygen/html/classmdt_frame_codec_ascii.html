@@ -95,10 +95,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a119506d484a807d3486d47738ee22920"></a><!-- doxytag: member="mdtFrameCodecAscii::setCaseUpper" ref="a119506d484a807d3486d47738ee22920" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_ascii.html#a119506d484a807d3486d47738ee22920">setCaseUpper</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set frame's data to upper case. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca3ccdf0bc617747e99ed1672344b880"></a><!-- doxytag: member="mdtFrameCodecAscii::convertData" ref="aca3ccdf0bc617747e99ed1672344b880" args="(const QString &amp;data) const " -->
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880">convertData</a> (const QString &amp;data) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a string to first matching type. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9aebbbadb6d40b1353634154e6a28c0"></a><!-- doxytag: member="mdtFrameCodecAscii::removeEofSeq" ref="ab9aebbbadb6d40b1353634154e6a28c0" args="()" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>removeEofSeq</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1">clean</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean frame.  <a href="#a1dc1b7eda5e034c41b27c431227881e1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_ascii.html#ab9aebbbadb6d40b1353634154e6a28c0">removeEofSeq</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the End Of Frame Sequence.  <a href="#ab9aebbbadb6d40b1353634154e6a28c0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f912b05801a0db32c9fca0f2450bdb1"></a><!-- doxytag: member="mdtFrameCodecAscii::pvAsciiData" ref="a1f912b05801a0db32c9fca0f2450bdb1" args="" -->
@@ -110,8 +115,52 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>pvNodes</b></t
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="mdt_frame_codec_ascii_8h_source.html#l00008">8</a> of file <a class="el" href="mdt_frame_codec_ascii_8h_source.html">mdtFrameCodecAscii.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_ascii_8h_source.html#l00029">29</a> of file <a class="el" href="mdt_frame_codec_ascii_8h_source.html">mdtFrameCodecAscii.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a1dc1b7eda5e034c41b27c431227881e1"></a><!-- doxytag: member="mdtFrameCodecAscii::clean" ref="a1dc1b7eda5e034c41b27c431227881e1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtFrameCodecAscii::clean </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clean frame. </p>
+<p>Helper method that removes white spaces at beginning and end of internal data (see QString::trimmed() ). Next, the EOF seuqence is removed.</p>
+<p>If a step fails, a message is added to <a class="el" href="classmdt_error.html">mdtError</a> system.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if EOF could be removed, and data size is &gt; 0 after clean. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html">mdtFrameCodecAscii.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab9aebbbadb6d40b1353634154e6a28c0"></a><!-- doxytag: member="mdtFrameCodecAscii::removeEofSeq" ref="ab9aebbbadb6d40b1353634154e6a28c0" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtFrameCodecAscii::removeEofSeq </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Remove the End Of Frame Sequence. </p>
+<p>Note: this method does nothing if EofSeq was not set </p>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html">mdtFrameCodecAscii.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a771d983498fb298595afbb97ee7a40f1"></a><!-- doxytag: member="mdtFrameCodecAscii::setEofSeq" ref="a771d983498fb298595afbb97ee7a40f1" args="(QByteArray &amp;eofSeq)" -->
 <div class="memitem">
 <div class="memproto">
@@ -135,7 +184,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>pvNodes</b></t
 <dd>
 <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html#l00015">15</a> of file <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html">mdtFrameCodecAscii.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html#l00034">34</a> of file <a class="el" href="mdt_frame_codec_ascii_8cpp_source.html">mdtFrameCodecAscii.cpp</a>.</p>
 
 </div>
 </div>
@@ -158,7 +207,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>pvNodes</b></t
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

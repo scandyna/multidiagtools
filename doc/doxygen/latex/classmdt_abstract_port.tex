@@ -44,8 +44,11 @@ enum \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc}{ReadCanceled}, 
 \par
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{Disconnected}, 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93}{Connecting}, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{UnknownError}, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{UnhandledError}, 
+\par
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984}{ReadPoolEmpty}, 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{WriteQueueEmpty}
  \}
 \begin{DoxyCompactList}\small\item\em Error. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -256,7 +259,7 @@ Definition at line 36 of file mdtAbstractPort.h.
 Error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000007}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
+\item[\hyperlink{todo__todo000012}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
 
 add a DeviceDisconnected (+ adapt in threads) \end{Desc}
 \begin{Desc}
@@ -298,11 +301,11 @@ ReadCanceled}
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{
 Disconnected}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}
-}]For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will stop working and signal this error at end. The portmanager can try to re-\/open the port if auto-\/reconnection is needed, and start the thread again on success.\begin{Desc}
-\item[\hyperlink{todo__todo000009}{Todo}]Implement this 
-
-Implement a re-\/connect method \end{Desc}
-\index{UnknownError@{UnknownError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnknownError@{UnknownError}}\item[{\em 
+}]For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will try to reconnect. If connection fails after maximum trys, a notification is sent with this Disconnected error. \index{Connecting@{Connecting}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!Connecting@{Connecting}}\item[{\em 
+\hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93}{
+Connecting}
+\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93}
+}]Used to notify portmanager that connection is in progress (see \hyperlink{classmdt_port_thread_a72f5469a7b11ed6c8b4d07af165c4164}{mdtPortThread::reconnect()} ) \index{UnknownError@{UnknownError}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!UnknownError@{UnknownError}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}{
 UnknownError}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871}
@@ -310,7 +313,11 @@ UnknownError}
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}{
 UnhandledError}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712}
-}]Unhandled error happen. In this case, thread will stop working. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \index{WriteQueueEmpty@{WriteQueueEmpty}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!WriteQueueEmpty@{WriteQueueEmpty}}\item[{\em 
+}]Unhandled error happen. In this case, thread will stop working and error is reported with \hyperlink{classmdt_error}{mdtError} system. Logfile could give more information, see \hyperlink{classmdt_error}{mdtError} and \hyperlink{classmdt_application}{mdtApplication} \index{ReadPoolEmpty@{ReadPoolEmpty}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!ReadPoolEmpty@{ReadPoolEmpty}}\item[{\em 
+\hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984}{
+ReadPoolEmpty}
+\label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984}
+}]Read frames pool is empty. Says that no data can be received for the moment \index{WriteQueueEmpty@{WriteQueueEmpty}!mdtAbstractPort@{mdtAbstractPort}}\index{mdtAbstractPort@{mdtAbstractPort}!WriteQueueEmpty@{WriteQueueEmpty}}\item[{\em 
 \hypertarget{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{
 WriteQueueEmpty}
 \label{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}
@@ -362,7 +369,7 @@ Will wake thread(s) waiting on a frame to write with \hyperlink{classmdt_abstrac
 
 Mutex is not handled by this method. 
 
-Definition at line 336 of file mdtAbstractPort.cpp.
+Definition at line 333 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a9a69eb2fc07d551ab37c011487fa319d}{
 \index{mdtAbstractPort@{mdtAbstractPort}!addFrameToWrite@{addFrameToWrite}}
@@ -386,7 +393,7 @@ frame must be a vail pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 310 of file mdtAbstractPort.cpp.
+Definition at line 307 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a1ace1a2bd1a04f16952980e247b04800}{
 \index{mdtAbstractPort@{mdtAbstractPort}!close@{close}}
@@ -409,14 +416,14 @@ Subclass notes:\par
  Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated. Note that this method must be called from subclass destructor. See \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort()} for details.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000008}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+\item[\hyperlink{todo__todo000013}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
 
 
 Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
 
 
 
-Definition at line 80 of file mdtAbstractPort.cpp.
+Definition at line 78 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flush@{flush}}
@@ -435,7 +442,7 @@ Will do the same as calling \hyperlink{classmdt_abstract_port_a32329b4188db79640
 
 Mutex is locked in this method. 
 
-Definition at line 214 of file mdtAbstractPort.cpp.
+Definition at line 211 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flushIn@{flushIn}}
@@ -454,7 +461,7 @@ Will move all readen frames to pool, and call \hyperlink{classmdt_abstract_port_
 
 Mutex is locked in this method. 
 
-Definition at line 166 of file mdtAbstractPort.cpp.
+Definition at line 163 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{
 \index{mdtAbstractPort@{mdtAbstractPort}!flushOut@{flushOut}}
@@ -479,7 +486,7 @@ Reimplemented in \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{mdt
 
 
 
-Definition at line 176 of file mdtAbstractPort.cpp.
+Definition at line 173 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a6c5ebd4451aec959efc4e71ab1b13941}{
 \index{mdtAbstractPort@{mdtAbstractPort}!getFrameToWrite@{getFrameToWrite}}
@@ -505,7 +512,7 @@ A pointer to a frame, or Null (Null happens after stop request)
 \end{DoxyReturn}
 
 
-Definition at line 319 of file mdtAbstractPort.cpp.
+Definition at line 316 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_adf06d095d6c3e6ce939a3998bcf8b829}{
 \index{mdtAbstractPort@{mdtAbstractPort}!initQueues@{initQueues}}
@@ -525,7 +532,7 @@ A valid configuration must be set before using this method.
 \end{DoxyPrecond}
 
 
-Definition at line 228 of file mdtAbstractPort.cpp.
+Definition at line 225 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a4e0f0b7f9e24257677184e4bde10fdde}{
 \index{mdtAbstractPort@{mdtAbstractPort}!open@{open}}
@@ -552,7 +559,7 @@ Subclass notes:\par
 \end{DoxySeeAlso}
 
 
-Definition at line 63 of file mdtAbstractPort.cpp.
+Definition at line 61 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{
 \index{mdtAbstractPort@{mdtAbstractPort}!pvClose@{pvClose}}
@@ -704,8 +711,10 @@ Subclass notes:\par
 
 
 \begin{DoxyReturn}{Returns}
-Number of bytes readen, or a error $<$ 0 
+Number of bytes readen, or a error $<$ 0 (see error\_\-t)
 \end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000014}{Todo}]adapt subclasses \end{Desc}
 
 
 Implemented in \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a91f45336ca9a71284e0309182f5e8ca1}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{mdtSerialPort}.
@@ -727,7 +736,7 @@ Readen frames queue contains frames that where received from device
 
 Mutex is not handled by this method. 
 
-Definition at line 300 of file mdtAbstractPort.cpp.
+Definition at line 297 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a3850ab819a8fc5dad22af14b74c45274}{
 \index{mdtAbstractPort@{mdtAbstractPort}!readFramesPool@{readFramesPool}}
@@ -746,7 +755,7 @@ Read frames queue pool contains frames that are ready to use for reception
 
 Mutex is not handled by this method. 
 
-Definition at line 305 of file mdtAbstractPort.cpp.
+Definition at line 302 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_aec94143165e486cbbe6e0979be887c7e}{
 \index{mdtAbstractPort@{mdtAbstractPort}!readTimeoutOccured@{readTimeoutOccured}}
@@ -763,7 +772,7 @@ Returns read timeout state.
 
 Mutex is not handled by this method. 
 
-Definition at line 204 of file mdtAbstractPort.cpp.
+Definition at line 201 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_aec74b2db1a629d98a95d8f042ea96653}{
 \index{mdtAbstractPort@{mdtAbstractPort}!reconnect@{reconnect}}
@@ -801,7 +810,7 @@ Reimplemented in \hyperlink{classmdt_tcp_socket_a6a9990696ea459601b17ddbffe5b070
 
 
 
-Definition at line 138 of file mdtAbstractPort.cpp.
+Definition at line 135 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_ad4a04c995df881593db0a309000be7a7}{
 \index{mdtAbstractPort@{mdtAbstractPort}!resumeTransmission@{resumeTransmission}}
@@ -835,7 +844,7 @@ Reimplemented in \hyperlink{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659
 
 
 
-Definition at line 161 of file mdtAbstractPort.cpp.
+Definition at line 158 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{
 \index{mdtAbstractPort@{mdtAbstractPort}!setPortName@{setPortName}}
@@ -852,7 +861,7 @@ Set the port name.
 
 Port name can be, f.ex. /dev/ttyS0 on Linux, or COM1 on Windows. This method just store given port name and does nothing else. 
 
-Definition at line 48 of file mdtAbstractPort.cpp.
+Definition at line 46 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{
 \index{mdtAbstractPort@{mdtAbstractPort}!setReadTimeout@{setReadTimeout}}
@@ -906,7 +915,7 @@ A valid configuration must be set before calling this method.
 \end{DoxySeeAlso}
 
 
-Definition at line 115 of file mdtAbstractPort.cpp.
+Definition at line 112 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{
 \index{mdtAbstractPort@{mdtAbstractPort}!setWriteTimeout@{setWriteTimeout}}
@@ -967,7 +976,7 @@ Reimplemented in \hyperlink{classmdt_serial_port_a9412faf413eca5ee3516139fdfaaf2
 
 
 
-Definition at line 156 of file mdtAbstractPort.cpp.
+Definition at line 153 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a0fc7317e988d5dea53a999cd1bf4faa9}{
 \index{mdtAbstractPort@{mdtAbstractPort}!updateReadTimeoutState@{updateReadTimeoutState}}
@@ -986,7 +995,7 @@ This method must be called by system dependant waitEventRead() method. When the 
  Note: this method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly\par
  Mutex is not handled by this method. 
 
-Definition at line 186 of file mdtAbstractPort.cpp.
+Definition at line 183 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_ab51135de1f7bbc4707c3284f924c98dc}{
 \index{mdtAbstractPort@{mdtAbstractPort}!updateWriteTimeoutState@{updateWriteTimeoutState}}
@@ -1005,7 +1014,7 @@ This method must be called by system dependant \hyperlink{classmdt_abstract_port
  Note: this method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly\par
  Mutex is not handled by this method. 
 
-Definition at line 195 of file mdtAbstractPort.cpp.
+Definition at line 192 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{
 \index{mdtAbstractPort@{mdtAbstractPort}!waitEventWriteReady@{waitEventWriteReady}}
@@ -1104,7 +1113,7 @@ This method calls \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201b
 \end{DoxySeeAlso}
 
 
-Definition at line 143 of file mdtAbstractPort.cpp.
+Definition at line 140 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 \index{mdtAbstractPort@{mdtAbstractPort}!write@{write}}
@@ -1129,8 +1138,10 @@ Subclass notes:\par
 
 
 \begin{DoxyReturn}{Returns}
-Number of bytes written, or $<$0 on error 
+Number of bytes written, or error $<$ 0 (see error\_\-t)
 \end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000015}{Todo}]adapt subclasses \end{Desc}
 
 
 Implemented in \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{mdtPort}, \hyperlink{classmdt_usbtmc_port_a32b98d2a61617293c328a343d62d52c3}{mdtUsbtmcPort}, \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{mdtSerialPort}.
@@ -1152,7 +1163,7 @@ Write frames queue contains frames that must be sent
 
 Mutex is not handled by this method. 
 
-Definition at line 341 of file mdtAbstractPort.cpp.
+Definition at line 338 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_abf093b67fddebffa4f3c52277b9a8cf7}{
 \index{mdtAbstractPort@{mdtAbstractPort}!writeFramesPool@{writeFramesPool}}
@@ -1171,7 +1182,7 @@ Write frames queue pool contains frames that are ready to use for transmission
 
 Mutex is not handled by this method. 
 
-Definition at line 346 of file mdtAbstractPort.cpp.
+Definition at line 343 of file mdtAbstractPort.cpp.
 
 \hypertarget{classmdt_abstract_port_a7c05a1abe77f0c3c334016c6ad866f67}{
 \index{mdtAbstractPort@{mdtAbstractPort}!writeTimeoutOccured@{writeTimeoutOccured}}
@@ -1188,7 +1199,7 @@ Returns write timeout state.
 
 Mutex is not handled by this method. 
 
-Definition at line 209 of file mdtAbstractPort.cpp.
+Definition at line 206 of file mdtAbstractPort.cpp.
 
 
 

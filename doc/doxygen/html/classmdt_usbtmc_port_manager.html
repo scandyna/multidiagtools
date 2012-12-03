@@ -92,7 +92,7 @@ Collaboration diagram for mdtUsbtmcPortManager:</div>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">fromThreadNewFrameReaden</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a complete frame is available.  <a href="#aca42b343ae1f6a324e6e45968f03bbea"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the thread whenn a complete frame was readen.  <a href="#aca42b343ae1f6a324e6e45968f03bbea"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7">mdtUsbtmcPortManager</a> (QObject *parent=0)</td></tr>
@@ -153,7 +153,7 @@ Public Member Functions</h2></td></tr>
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -172,30 +172,17 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Wait until a complete frame is available. </p>
-<p>Send a read request and call <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">mdtPortManager::waitReadenFrame()</a> .</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 on timeout or if write queue is fullint waitReadenFrame(int timeout = 500); </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>Essais ... void <a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort()</a>; </dd></dl>
-<p>Called by the thread whenn a complete frame was readen</p>
-<p>bool <a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">mdtUsbtmcPortManager::waitReadenFrame(int timeout)</a> { int retVal;</p>
-<p>Q_ASSERT(pvPort != 0);</p>
-<p>retVal = <a class="el" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest()</a>; if(retVal &lt; 0){ return retVal; } qDebug() &lt;&lt; "mdtUsbtmcPortManager::waitReadenFrame() , request sent, waiting ..."; if(!mdtPortManager::waitReadenFrame(timeout)){ return -1; }</p>
-<p>return retVal; } </p>
+<p>Called by the thread whenn a complete frame was readen. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000047">Todo:</a></b></dt><dd>Essais ... void <a class="el" href="classmdt_port_manager.html#a1d185e9bb610aee16ccd9499ae7bff0d" title="Cancel read and write operations.">abort()</a>; </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000035">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 <p>pvReadenFrames.insert(frame-&gt;bTag(), data);</p>
 <p>if(pvReadenFrames.size() &gt; 0){ emit(<a class="el" href="classmdt_port_manager.html#a65d5d2e9edde76796714f737a7eaf204" title="Emitted when new frame was readen.">newReadenFrame()</a>); }</p>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00336">336</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00273">273</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -215,19 +202,17 @@ Public Member Functions</h2></td></tr>
 
 <p>Scan for available ports with a USBTMC compatible device attached. </p>
 <p>Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running</dd></dl>
-<p>QStringList <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">mdtUsbtmcPortManager::scan()</a> { QStringList portNames; QStringList availablePorts; <a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a> *port; QFileInfoList filesInfo; QDir dir; QStringList extList;</p>
-<p>We only need system files dir.setFilter(QDir::Files | QDir::System); USBTMC interfaces extList &lt;&lt; "usbtmc*"; Common device directory dir.setPath("/dev"); if(!dir.exists()){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, "directory '" + dir.dirName() + "' not exists", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtSerialPortManagerPosix"); e.commit(); return availablePorts; } dir.setNameFilters(extList); Gest list of found files filesInfo = dir.entryInfoList(); Construct the list of absolute file paths for(int i=0; i&lt;filesInfo.size(); ++i){ portNames &lt;&lt; filesInfo.at(i).absoluteFilePath(); } Sort the list portNames = mdtAlgorithms::sortStringListWithNumericEnd(portNames); For each port name, try to open the port and get some attributes (to see if it really exists) for(int i=0; i&lt;portNames.size(); ++i){ Try to open port port = new <a class="el" href="classmdt_usbtmc_port.html" title="USBTMC device file calss.">mdtUsbtmcPort</a>; Q_ASSERT(port != 0); port-&gt;setPortName(portNames.at(i)); if(port-&gt;open() == <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){ availablePorts.append(portNames.at(i)); port-&gt;close(); } delete port; }</p>
-<p>return availablePorts; } </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
 
-<p><p>str += " VID: 0x" + QString::number(deviceDescriptor.idProduct(), 16);</p>
+<p><p>qDebug() &lt;&lt; "-&gt;   iface[" &lt;&lt; k &lt;&lt; "]";</p>
+<p>str += " VID: 0x" + QString::number(deviceDescriptor.idProduct(), 16);</p>
 <p>str = deviceDescriptor.vendorName(); str = "VID:"; str += QString::number(deviceDescriptor.idVendor());</p>
 <p>str += " PID:"; str += QString::number(deviceDescriptor.idProduct()); str += " Interface: "; str += QString::number(ifaceDescriptor-&gt;bInterfaceProtocol());</p>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -249,7 +234,7 @@ Public Member Functions</h2></td></tr>
 <p>USBTMC standard need that a read request is sent to device before we can read any data.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00267">267</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -281,7 +266,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -304,7 +289,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

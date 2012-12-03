@@ -92,6 +92,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the thread. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_write_thread.html#ac37bb988773f624def51e841998a2f1e">isReader</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal.  <a href="#ac37bb988773f624def51e841998a2f1e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_write_thread.html#ad2508c3a2433383e2de705e9f3d2e602">isWriter</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread writes date.  <a href="#ad2508c3a2433383e2de705e9f3d2e602"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
@@ -114,9 +116,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal. </p>
 <p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> can handle many threads. It needs to know wich one will send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal, so it can connect it to his slot. </p>
 
-<p>Implements <a class="el" href="classmdt_port_thread.html#a3d57f15a864ae45c98eb40dd89f4cec6">mdtPortThread</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_port_thread.html#acdb3d96287c571cc08ef39860dc324b1">mdtPortThread</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_port_write_thread_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_port_write_thread_8cpp_source.html">mdtPortWriteThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad2508c3a2433383e2de705e9f3d2e602"></a><!-- doxytag: member="mdtPortWriteThread::isWriter" ref="ad2508c3a2433383e2de705e9f3d2e602" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortWriteThread::isWriter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns true if this thread writes date. </p>
+<p>Is used by <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a> to know if <a class="el" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting.">mdtAbstractPort::abortFrameToWriteWait()</a> must be called. </p>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_thread.html#a0122a12262052cf3643241a3eaa31c58">mdtPortThread</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_port_write_thread_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_port_write_thread_8cpp_source.html">mdtPortWriteThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -139,7 +164,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

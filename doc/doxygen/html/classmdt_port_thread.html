@@ -112,20 +112,26 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the thread is running This function overloads the QThread::isRunning() function. Note for subclass: when the thread is started and ready, the private member pvRunning must be set to true. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4">isFinished</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns false if the thread is running.  <a href="#a55d7ef615447823bf9878492a2c88fd4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a3d57f15a864ae45c98eb40dd89f4cec6">isReader</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal.  <a href="#a3d57f15a864ae45c98eb40dd89f4cec6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#acdb3d96287c571cc08ef39860dc324b1">isReader</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal.  <a href="#acdb3d96287c571cc08ef39860dc324b1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a0122a12262052cf3643241a3eaa31c58">isWriter</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread writes date.  <a href="#a0122a12262052cf3643241a3eaa31c58"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame.html">mdtFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc">getNewFrameRead</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a new frame for reading data from port.  <a href="#a611211e56620ec9c699019452716e4fc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame.html">mdtFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a7e6e152839e35b8fbd1eb299c1d0b2fe">readFromPort</a> (<a class="el" href="classmdt_frame.html">mdtFrame</a> *frame)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#a7e6e152839e35b8fbd1eb299c1d0b2fe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a25b43b19a0b4a1097f06c69bf5dd9b19">readFromPort2</a> (<a class="el" href="classmdt_frame.html">mdtFrame</a> **frame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port 2 (new variant to test)  <a href="#a25b43b19a0b4a1097f06c69bf5dd9b19"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame.html">mdtFrame</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105">getNewFrameWrite</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a new frame for writing data to port.  <a href="#acba4fce38a633da68ec23fe191ba6105"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a9372a53561362b0c86f499b8a36805e1">writeToPort</a> (<a class="el" href="classmdt_frame.html">mdtFrame</a> *frame, bool bytePerByteWrite, int interByteTime)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#a9372a53561362b0c86f499b8a36805e1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#aaea2513ab1611574111dd1c2b7e61b7c">reconnect</a> (int timeout, int maxTry)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to reconnect to device/peer.  <a href="#aaea2513ab1611574111dd1c2b7e61b7c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164">reconnect</a> (int timeout, int maxTry, bool notify=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to reconnect to device/peer.  <a href="#a72f5469a7b11ed6c8b4d07af165c4164"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9">notifyError</a> (int error)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emit the <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured()</a> signal if new error is different from current.  <a href="#ad2c618a032c0aeed0f0cb3b30bc0aba9"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01d2362e0dfcece4cba242cb586d8d1c"></a><!-- doxytag: member="mdtPortThread::sigactionHandle" ref="a01d2362e0dfcece4cba242cb586d8d1c" args="(int signum)" -->
@@ -169,7 +175,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The thread must not running </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -189,10 +195,10 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <div class="memdoc">
 
 <p>Emitted on error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Adapt threads + port managers</dd></dl>
 <p>When a error occurs, this signal is emited.</p>
 <p>The error is one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>.</p>
-<p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> uses this signal. If the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a> error happens, the port manager stops the thread and closes the port. Optionnaly, it can try to re-open the port, and start the thread again on success. </p>
+<p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> uses this signal. </p>
 
 </div>
 </div>
@@ -213,13 +219,13 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <p>Get a new frame for reading data from port. </p>
 <p>This is a helper method for subclass to get a new frame in port's read frames pool.</p>
 <p>It can hapen that the read frames pool is empty. In this case, a error will be generated in the <a class="el" href="classmdt_error.html">mdtError</a> log system, the signal <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured()</a> will be emited with MDT_PORT_QUEUE_EMPTY_ERROR value, and method will go sleep until a new frame is available in pool.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Currently implemented in polling, should be done with a wait condition.</dd></dl>
 <p>Note about port mutex handling:<br/>
  The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to a new frame. This frame is cleared (with <a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">mdtFrame::clear()</a> ). If the runnig flag becomes false, a Null pointer is returned, and thread should stop.</dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00173">173</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -246,7 +252,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00278">278</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00364">364</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -286,19 +292,19 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <p>Returns false if the thread is running. </p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72" title="Returns true if the thread is running This function overloads the QThread::isRunning() function...">isRunning()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00159">159</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3d57f15a864ae45c98eb40dd89f4cec6"></a><!-- doxytag: member="mdtPortThread::isReader" ref="a3d57f15a864ae45c98eb40dd89f4cec6" args="() const =0" -->
+<a class="anchor" id="acdb3d96287c571cc08ef39860dc324b1"></a><!-- doxytag: member="mdtPortThread::isReader" ref="acdb3d96287c571cc08ef39860dc324b1" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool mdtPortThread::isReader </td>
+          <td class="memname">bool mdtPortThread::isReader </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const<code> [pure virtual]</code></td>
+          <td> const<code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -306,9 +312,36 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 
 <p>Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal. </p>
 <p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> can handle many threads. It needs to know wich one will send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal, so it can connect it to his slot.</p>
-<p>This method must be implemented in subclass. </p>
+<p>Default implementation returns allways false.</p>
+<p>This method should be implemented in reader subclass. </p>
 
-<p>Implemented in <a class="el" href="classmdt_port_read_thread.html#a0138d613b61056c9f8373331de2d9a84">mdtPortReadThread</a>, <a class="el" href="classmdt_port_write_thread.html#ac37bb988773f624def51e841998a2f1e">mdtPortWriteThread</a>, <a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">mdtTcpSocketThread</a>, <a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">mdtUsbPortThread</a>, and <a class="el" href="classmdt_serial_port_ctl_thread.html#ab87413cedc8d0540eac553e55a3f6407">mdtSerialPortCtlThread</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_port_read_thread.html#a0138d613b61056c9f8373331de2d9a84">mdtPortReadThread</a>, <a class="el" href="classmdt_port_write_thread.html#ac37bb988773f624def51e841998a2f1e">mdtPortWriteThread</a>, <a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">mdtTcpSocketThread</a>, <a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">mdtUsbPortThread</a>, and <a class="el" href="classmdt_serial_port_ctl_thread.html#ab87413cedc8d0540eac553e55a3f6407">mdtSerialPortCtlThread</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0122a12262052cf3643241a3eaa31c58"></a><!-- doxytag: member="mdtPortThread::isWriter" ref="a0122a12262052cf3643241a3eaa31c58" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortThread::isWriter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Returns true if this thread writes date. </p>
+<p>Is used by <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a> to know if <a class="el" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting.">mdtAbstractPort::abortFrameToWriteWait()</a> must be called.</p>
+<p>Default implementation returns false </p>
+
+<p>Reimplemented in <a class="el" href="classmdt_port_write_thread.html#ad2508c3a2433383e2de705e9f3d2e602">mdtPortWriteThread</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00180">180</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,6 +369,28 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 
 </div>
 </div>
+<a class="anchor" id="ad2c618a032c0aeed0f0cb3b30bc0aba9"></a><!-- doxytag: member="mdtPortThread::notifyError" ref="ad2c618a032c0aeed0f0cb3b30bc0aba9" args="(int error)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortThread::notifyError </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Emit the <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured()</a> signal if new error is different from current. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000029">Todo:</a></b></dt><dd>Adapt in threads subclasses </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00474">474</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a7e6e152839e35b8fbd1eb299c1d0b2fe"></a><!-- doxytag: member="mdtPortThread::readFromPort" ref="a7e6e152839e35b8fbd1eb299c1d0b2fe" args="(mdtFrame *frame)" -->
 <div class="memitem">
 <div class="memproto">
@@ -354,7 +409,7 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <p>Read data from port. </p>
 <p>This is a helper method for subclass to store chunk of data into a frame.</p>
 <p>Note about port mutex handling:<br/>
- The port mutext must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
+ The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">frame</td><td>Data readen from port will be stored in this frame.</td></tr>
@@ -366,15 +421,50 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <dd>
 frame must be a valid pointer (not Null). </dd></dl>
 
-<p><p>qDebug() &lt;&lt; "mdtPortThread::readFromPort(): frame Null, get new one";</p>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>don't loose the frame !?! </dd></dl>
+<p>qDebug() &lt;&lt; "mdtPortThread::readFromPort(): frame Null, get new one";</p>
 <p>qDebug() &lt;&lt; "mdtPortThread::readFromPort(): frame complete, get new one"; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00206">206</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00219">219</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aaea2513ab1611574111dd1c2b7e61b7c"></a><!-- doxytag: member="mdtPortThread::reconnect" ref="aaea2513ab1611574111dd1c2b7e61b7c" args="(int timeout, int maxTry)" -->
+<a class="anchor" id="a25b43b19a0b4a1097f06c69bf5dd9b19"></a><!-- doxytag: member="mdtPortThread::readFromPort2" ref="a25b43b19a0b4a1097f06c69bf5dd9b19" args="(mdtFrame **frame)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtPortThread::readFromPort2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_frame.html">mdtFrame</a> **&#160;</td>
+          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read data from port 2 (new variant to test) </p>
+<p>This is a helper method for subclass to store chunk of data into a frame.</p>
+<p>Note about port mutex handling:<br/>
+ The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Data readen from port will be stored in this frame. Note that pointer is updated when a frame was completed and that it can be Null (in this case the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a> is returned)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The number of frames completed during the process. This can be helpful query/reply protocols in witch the standard reply should be one frame. On error, frame is put back into pool and one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> is returned.</dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd>
+<dd>
+frame must be a valid pointer (not Null). </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00292">292</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a72f5469a7b11ed6c8b4d07af165c4164"></a><!-- doxytag: member="mdtPortThread::reconnect" ref="a72f5469a7b11ed6c8b4d07af165c4164" args="(int timeout, int maxTry, bool notify=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -388,7 +478,13 @@ frame must be a valid pointer (not Null). </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxTry</em>&#160;</td>
+          <td class="paramname"><em>maxTry</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>notify</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -405,13 +501,17 @@ frame must be a valid pointer (not Null). </dd></dl>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout per try [ms] </td></tr>
     <tr><td class="paramname">maxTry</td><td>Maximum try </td></tr>
+    <tr><td class="paramname">notify</td><td>If true, error will be notified (with <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured()</a> ), and failure after maxTry will be reported with <a class="el" href="classmdt_error.html">mdtError</a>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>NoError if reconnection worked or UnhandledError else.</dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00349">349</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p><p>notifyError(mdtAbstractPort::UnhandledError); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00435">435</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -435,7 +535,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 <dd>
 The thread must not running </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00054">54</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -458,7 +558,7 @@ The thread must not running </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Serial port instance must be defined. </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd>setSerialPort() </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00071">71</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -482,7 +582,7 @@ The thread must not running </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_port_write_thread.html#a69702ab3a95c238fb451f866efc7cb34">mdtPortWriteThread</a>, <a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">mdtTcpSocketThread</a>, and <a class="el" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b">mdtUsbPortThread</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00098">98</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00099">99</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -534,7 +634,7 @@ The thread must not running </dd></dl>
 <dd>
 frame must be a valid pointer (not Null). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00285">285</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_thread_8cpp_source.html#l00371">371</a> of file <a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -557,7 +657,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

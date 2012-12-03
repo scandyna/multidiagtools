@@ -105,139 +105,140 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00043"></a>00043   config-&gt;<a class="code" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5" title="Set the read Queue size.">setWriteQueueSize</a>(3);
 <a name="l00044"></a>00044   <a class="code" href="classmdt_tcp_socket.html">mdtTcpSocket</a> *port = <span class="keyword">new</span> <a class="code" href="classmdt_tcp_socket.html">mdtTcpSocket</a>;
 <a name="l00045"></a>00045   port-&gt;<a class="code" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f" title="Set configuration.">setConfig</a>(config);
-<a name="l00046"></a>00046   <a class="code" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort</a>(port);
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="comment">// Threads setup</span>
-<a name="l00049"></a>00049   <a class="code" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread</a>(<span class="keyword">new</span> <a class="code" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a>);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="comment">// Some flags</span>
-<a name="l00052"></a>00052   pvTransactionId = 0;
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#aabe51a50a53c6b23884cc4862730b731">00055</a> <a class="code" href="classmdt_modbus_tcp_port_manager.html#aabe51a50a53c6b23884cc4862730b731" title="Destructor.">mdtModbusTcpPortManager::~mdtModbusTcpPortManager</a>()
-<a name="l00056"></a>00056 {
-<a name="l00057"></a>00057   Q_ASSERT(pvPort != 0);
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keyword">delete</span> &amp;pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>();
-<a name="l00060"></a>00060   <a class="code" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1" title="Detach port.">detachPort</a>(<span class="keyword">true</span>, <span class="keyword">true</span>);
-<a name="l00061"></a>00061 }
-<a name="l00062"></a>00062 
-<a name="l00063"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#a216ee2495440be4eefb2faf9da3c9e47">00063</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">mdtModbusTcpPortManager::scan</a>(<span class="keyword">const</span> QStringList &amp;hosts, <span class="keywordtype">int</span> timeout)
-<a name="l00064"></a>00064 {
-<a name="l00065"></a>00065   Q_ASSERT(!<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>());
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067   QList&lt;mdtPortInfo*&gt; portInfoList;
-<a name="l00068"></a>00068   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>;
-<a name="l00069"></a>00069   <span class="keywordtype">int</span> i;
-<a name="l00070"></a>00070   QStringList host;
-<a name="l00071"></a>00071   QString hostName;
-<a name="l00072"></a>00072   quint16 hostPort;
-<a name="l00073"></a>00073   <span class="keywordtype">bool</span> ok;
-<a name="l00074"></a>00074   QTcpSocket socket;
-<a name="l00075"></a>00075   <span class="keywordtype">int</span> maxIter;
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   <span class="keywordflow">for</span>(i=0; i&lt;hosts.size(); i++){
-<a name="l00078"></a>00078     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtModbusTcpPortManager::scan(): trying host &quot;</span> &lt;&lt; hosts.at(i) &lt;&lt; <span class="stringliteral">&quot; ...&quot;</span>;
-<a name="l00079"></a>00079     <span class="comment">// Extract hostname/ip and port</span>
-<a name="l00080"></a>00080     host = hosts.at(i).split(<span class="stringliteral">&quot;:&quot;</span>);
-<a name="l00081"></a>00081     <span class="keywordflow">if</span>(host.size() != 2){
-<a name="l00082"></a>00082       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_TCP_IO_ERROR, <span class="stringliteral">&quot;Cannot extract host and port in &quot;</span> + hosts.at(i), mdtError::Warning);
-<a name="l00083"></a>00083       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtModbusTcpPortManager&quot;</span>);
-<a name="l00084"></a>00084       e.commit();
-<a name="l00085"></a>00085       <span class="keywordflow">continue</span>;
-<a name="l00086"></a>00086     }
-<a name="l00087"></a>00087     hostName = host.at(0);
-<a name="l00088"></a>00088     hostPort = host.at(1).toUShort(&amp;ok);
-<a name="l00089"></a>00089     <span class="keywordflow">if</span>(!ok){
-<a name="l00090"></a>00090       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_TCP_IO_ERROR, <span class="stringliteral">&quot;Cannot extract port in &quot;</span> + hosts.at(i), mdtError::Warning);
-<a name="l00091"></a>00091       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtModbusTcpPortManager&quot;</span>);
-<a name="l00092"></a>00092       e.commit();
-<a name="l00093"></a>00093       <span class="keywordflow">continue</span>;
-<a name="l00094"></a>00094     }
-<a name="l00095"></a>00095     <span class="comment">// Try to connect</span>
-<a name="l00096"></a>00096     socket.connectToHost(hostName, hostPort);
-<a name="l00097"></a>00097     maxIter = timeout / 50;
-<a name="l00098"></a>00098     <span class="keywordflow">while</span>(socket.state() != QAbstractSocket::ConnectedState){
-<a name="l00099"></a>00099       <span class="keywordflow">if</span>(maxIter &lt;= 0){
-<a name="l00100"></a>00100         <span class="keywordflow">break</span>;
-<a name="l00101"></a>00101       }
-<a name="l00102"></a>00102       qApp-&gt;processEvents();
-<a name="l00103"></a>00103       msleep(50);
-<a name="l00104"></a>00104       maxIter--;
-<a name="l00105"></a>00105     }
-<a name="l00106"></a>00106     <span class="keywordflow">if</span>(socket.state() != QAbstractSocket::UnconnectedState){
-<a name="l00107"></a>00107       <span class="comment">// Check if connection was successfull</span>
-<a name="l00108"></a>00108       <span class="keywordflow">if</span>(socket.state() == QAbstractSocket::ConnectedState){
-<a name="l00109"></a>00109         qDebug() &lt;&lt; <span class="stringliteral">&quot;Found device at &quot;</span> &lt;&lt; host;
-<a name="l00110"></a>00110         portInfo = <span class="keyword">new</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>;
-<a name="l00111"></a>00111         portInfo-&gt;<a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(hosts.at(i));
-<a name="l00112"></a>00112         portInfoList.append(portInfo);
-<a name="l00113"></a>00113       }
-<a name="l00114"></a>00114       <span class="comment">// Disconnect</span>
-<a name="l00115"></a>00115       <span class="comment">//socket.disconnectFromHost();</span>
-<a name="l00116"></a>00116       socket.abort();
-<a name="l00117"></a>00117       <span class="keywordflow">while</span>((socket.state() != QAbstractSocket::ClosingState)&amp;&amp;(socket.state() != QAbstractSocket::UnconnectedState)){
-<a name="l00118"></a>00118         qApp-&gt;processEvents();
-<a name="l00119"></a>00119         msleep(50);
-<a name="l00120"></a>00120       }
-<a name="l00121"></a>00121     }
-<a name="l00122"></a>00122   }
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124   <span class="keywordflow">return</span> portInfoList;
-<a name="l00125"></a>00125 }
-<a name="l00126"></a>00126 
-<a name="l00127"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f">00127</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f" title="Write PDU by copy.">mdtModbusTcpPortManager::writeData</a>(QByteArray pdu)
-<a name="l00128"></a>00128 {
-<a name="l00129"></a>00129   Q_ASSERT(pvPort != 0);
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131   <a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a> *frame;
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133   <span class="comment">// Get a frame in pool</span>
-<a name="l00134"></a>00134   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00135"></a>00135   <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().size() &lt; 1){
-<a name="l00136"></a>00136     pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00137"></a>00137     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;No frame available in write frames pool&quot;</span>, mdtError::Error);
-<a name="l00138"></a>00138     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtModbusTcpPortManager&quot;</span>);
-<a name="l00139"></a>00139     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00140"></a>00140     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">mdtAbstractPort::WriteQueueEmpty</a>;
-<a name="l00141"></a>00141   }
-<a name="l00142"></a>00142   frame = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a>*<span class="keyword">&gt;</span> (pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().dequeue());
-<a name="l00143"></a>00143   Q_ASSERT(frame != 0);
-<a name="l00144"></a>00144   frame-&gt;<a class="code" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">clear</a>();
-<a name="l00145"></a>00145   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719" title="mdtFrame subclass specific clear">clearSub</a>();
-<a name="l00146"></a>00146   <span class="comment">// Store data and add frame to write queue</span>
-<a name="l00148"></a>00148 <span class="comment"></span>  pvTransactionId++;
-<a name="l00149"></a>00149   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd" title="Set the transaction ID.">setTransactionId</a>(pvTransactionId);
-<a name="l00150"></a>00150   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243" title="Set the Unit ID.">setUnitId</a>(0);    
-<a name="l00151"></a>00151   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9" title="Set the MODBUS PDU.">setPdu</a>(pdu);
-<a name="l00152"></a>00152   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4" title="Encode the MODBUS/TCP frame.">encode</a>();
-<a name="l00153"></a>00153   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d" title="Add a frame to write.">addFrameToWrite</a>(frame);
-<a name="l00154"></a>00154   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156   <span class="keywordflow">return</span> pvTransactionId;
-<a name="l00157"></a>00157 }
-<a name="l00158"></a>00158 
-<a name="l00159"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">00159</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9" title="Called by the thread whenn a complete frame was readen.">mdtModbusTcpPortManager::fromThreadNewFrameReaden</a>()
-<a name="l00160"></a>00160 {
-<a name="l00161"></a>00161   Q_ASSERT(pvPort != 0);
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163   <a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a> *frame;
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165   <span class="comment">// Get frames in readen queue</span>
-<a name="l00166"></a>00166   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00167"></a>00167   <span class="keywordflow">while</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().size() &gt; 0){
-<a name="l00168"></a>00168     frame = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a>*<span class="keyword">&gt;</span> (pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().dequeue());
-<a name="l00169"></a>00169     Q_ASSERT(frame != 0);
-<a name="l00170"></a>00170     <span class="comment">// Check if frame is complete</span>
-<a name="l00172"></a>00172 <span class="comment"></span>    <span class="keywordflow">if</span>(frame-&gt;<a class="code" href="classmdt_frame.html#a2a8fb9f36c941282881bba0c538d1ce5" title="Returns true if EOF condition was reached.">isComplete</a>()){
-<a name="l00173"></a>00173       <span class="comment">// Copy data</span>
-<a name="l00174"></a>00174       <a class="code" href="classmdt_port_manager.html#a3daaf801a26008388af390b5917d7a0c" title="Store frame data in queue and/or emit newReadenFrame() signal.">commitFrame</a>(frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48" title="Get the transaction ID.">transactionId</a>(), frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42" title="Get the MODBUS PDU.">getPdu</a>());
-<a name="l00175"></a>00175     }
-<a name="l00176"></a>00176     <span class="comment">// Put frame back into pool</span>
-<a name="l00177"></a>00177     pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(frame);
-<a name="l00178"></a>00178   };
-<a name="l00179"></a>00179   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00180"></a>00180 }
+<a name="l00046"></a>00046   port-&gt;<a class="code" href="classmdt_tcp_socket.html#a3fd73142279a256c984141cb16acf49e" title="Set unknown read size flag.">setUnknownReadSize</a>(<span class="keyword">false</span>);
+<a name="l00047"></a>00047   <a class="code" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort</a>(port);
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="comment">// Threads setup</span>
+<a name="l00050"></a>00050   <a class="code" href="classmdt_port_manager.html#ab62591409d019a4a2576b4310c411b8f" title="Add a thread and assign it to port.">addThread</a>(<span class="keyword">new</span> <a class="code" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a>);
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="comment">// Some flags</span>
+<a name="l00053"></a>00053   pvTransactionId = 0;
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#aabe51a50a53c6b23884cc4862730b731">00056</a> <a class="code" href="classmdt_modbus_tcp_port_manager.html#aabe51a50a53c6b23884cc4862730b731" title="Destructor.">mdtModbusTcpPortManager::~mdtModbusTcpPortManager</a>()
+<a name="l00057"></a>00057 {
+<a name="l00058"></a>00058   Q_ASSERT(pvPort != 0);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="keyword">delete</span> &amp;pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>();
+<a name="l00061"></a>00061   <a class="code" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1" title="Detach port.">detachPort</a>(<span class="keyword">true</span>, <span class="keyword">true</span>);
+<a name="l00062"></a>00062 }
+<a name="l00063"></a>00063 
+<a name="l00064"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#a216ee2495440be4eefb2faf9da3c9e47">00064</a> QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">mdtModbusTcpPortManager::scan</a>(<span class="keyword">const</span> QStringList &amp;hosts, <span class="keywordtype">int</span> timeout)
+<a name="l00065"></a>00065 {
+<a name="l00066"></a>00066   Q_ASSERT(!<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>());
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068   QList&lt;mdtPortInfo*&gt; portInfoList;
+<a name="l00069"></a>00069   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>;
+<a name="l00070"></a>00070   <span class="keywordtype">int</span> i;
+<a name="l00071"></a>00071   QStringList host;
+<a name="l00072"></a>00072   QString hostName;
+<a name="l00073"></a>00073   quint16 hostPort;
+<a name="l00074"></a>00074   <span class="keywordtype">bool</span> ok;
+<a name="l00075"></a>00075   QTcpSocket socket;
+<a name="l00076"></a>00076   <span class="keywordtype">int</span> maxIter;
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   <span class="keywordflow">for</span>(i=0; i&lt;hosts.size(); i++){
+<a name="l00079"></a>00079     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtModbusTcpPortManager::scan(): trying host &quot;</span> &lt;&lt; hosts.at(i) &lt;&lt; <span class="stringliteral">&quot; ...&quot;</span>;
+<a name="l00080"></a>00080     <span class="comment">// Extract hostname/ip and port</span>
+<a name="l00081"></a>00081     host = hosts.at(i).split(<span class="stringliteral">&quot;:&quot;</span>);
+<a name="l00082"></a>00082     <span class="keywordflow">if</span>(host.size() != 2){
+<a name="l00083"></a>00083       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_TCP_IO_ERROR, <span class="stringliteral">&quot;Cannot extract host and port in &quot;</span> + hosts.at(i), mdtError::Warning);
+<a name="l00084"></a>00084       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtModbusTcpPortManager&quot;</span>);
+<a name="l00085"></a>00085       e.commit();
+<a name="l00086"></a>00086       <span class="keywordflow">continue</span>;
+<a name="l00087"></a>00087     }
+<a name="l00088"></a>00088     hostName = host.at(0);
+<a name="l00089"></a>00089     hostPort = host.at(1).toUShort(&amp;ok);
+<a name="l00090"></a>00090     <span class="keywordflow">if</span>(!ok){
+<a name="l00091"></a>00091       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_TCP_IO_ERROR, <span class="stringliteral">&quot;Cannot extract port in &quot;</span> + hosts.at(i), mdtError::Warning);
+<a name="l00092"></a>00092       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtModbusTcpPortManager&quot;</span>);
+<a name="l00093"></a>00093       e.commit();
+<a name="l00094"></a>00094       <span class="keywordflow">continue</span>;
+<a name="l00095"></a>00095     }
+<a name="l00096"></a>00096     <span class="comment">// Try to connect</span>
+<a name="l00097"></a>00097     socket.connectToHost(hostName, hostPort);
+<a name="l00098"></a>00098     maxIter = timeout / 50;
+<a name="l00099"></a>00099     <span class="keywordflow">while</span>(socket.state() != QAbstractSocket::ConnectedState){
+<a name="l00100"></a>00100       <span class="keywordflow">if</span>(maxIter &lt;= 0){
+<a name="l00101"></a>00101         <span class="keywordflow">break</span>;
+<a name="l00102"></a>00102       }
+<a name="l00103"></a>00103       qApp-&gt;processEvents();
+<a name="l00104"></a>00104       msleep(50);
+<a name="l00105"></a>00105       maxIter--;
+<a name="l00106"></a>00106     }
+<a name="l00107"></a>00107     <span class="keywordflow">if</span>(socket.state() != QAbstractSocket::UnconnectedState){
+<a name="l00108"></a>00108       <span class="comment">// Check if connection was successfull</span>
+<a name="l00109"></a>00109       <span class="keywordflow">if</span>(socket.state() == QAbstractSocket::ConnectedState){
+<a name="l00110"></a>00110         qDebug() &lt;&lt; <span class="stringliteral">&quot;Found device at &quot;</span> &lt;&lt; host;
+<a name="l00111"></a>00111         portInfo = <span class="keyword">new</span> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>;
+<a name="l00112"></a>00112         portInfo-&gt;<a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(hosts.at(i));
+<a name="l00113"></a>00113         portInfoList.append(portInfo);
+<a name="l00114"></a>00114       }
+<a name="l00115"></a>00115       <span class="comment">// Disconnect</span>
+<a name="l00116"></a>00116       <span class="comment">//socket.disconnectFromHost();</span>
+<a name="l00117"></a>00117       socket.abort();
+<a name="l00118"></a>00118       <span class="keywordflow">while</span>((socket.state() != QAbstractSocket::ClosingState)&amp;&amp;(socket.state() != QAbstractSocket::UnconnectedState)){
+<a name="l00119"></a>00119         qApp-&gt;processEvents();
+<a name="l00120"></a>00120         msleep(50);
+<a name="l00121"></a>00121       }
+<a name="l00122"></a>00122     }
+<a name="l00123"></a>00123   }
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125   <span class="keywordflow">return</span> portInfoList;
+<a name="l00126"></a>00126 }
+<a name="l00127"></a>00127 
+<a name="l00128"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f">00128</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f" title="Write PDU by copy.">mdtModbusTcpPortManager::writeData</a>(QByteArray pdu)
+<a name="l00129"></a>00129 {
+<a name="l00130"></a>00130   Q_ASSERT(pvPort != 0);
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132   <a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a> *frame;
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134   <span class="comment">// Get a frame in pool</span>
+<a name="l00135"></a>00135   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00136"></a>00136   <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().size() &lt; 1){
+<a name="l00137"></a>00137     pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00138"></a>00138     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_PORT_IO_ERROR, <span class="stringliteral">&quot;No frame available in write frames pool&quot;</span>, mdtError::Error);
+<a name="l00139"></a>00139     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtModbusTcpPortManager&quot;</span>);
+<a name="l00140"></a>00140     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00141"></a>00141     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">mdtAbstractPort::WriteQueueEmpty</a>;
+<a name="l00142"></a>00142   }
+<a name="l00143"></a>00143   frame = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a>*<span class="keyword">&gt;</span> (pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().dequeue());
+<a name="l00144"></a>00144   Q_ASSERT(frame != 0);
+<a name="l00145"></a>00145   frame-&gt;<a class="code" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">clear</a>();
+<a name="l00146"></a>00146   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#ab1545b25b4c8864056d900c8ddce2719" title="mdtFrame subclass specific clear">clearSub</a>();
+<a name="l00147"></a>00147   <span class="comment">// Store data and add frame to write queue</span>
+<a name="l00149"></a>00149 <span class="comment"></span>  pvTransactionId++;
+<a name="l00150"></a>00150   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a3c5528d2e45111ec0563dfd3350177cd" title="Set the transaction ID.">setTransactionId</a>(pvTransactionId);
+<a name="l00151"></a>00151   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#ab6bb1765abd0910c6511954a17526243" title="Set the Unit ID.">setUnitId</a>(0);    
+<a name="l00152"></a>00152   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a171095fd7a250428e4702cf9bc7620d9" title="Set the MODBUS PDU.">setPdu</a>(pdu);
+<a name="l00153"></a>00153   frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a59488845873981f0e2e8f2ffd544e2f4" title="Encode the MODBUS/TCP frame.">encode</a>();
+<a name="l00154"></a>00154   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d" title="Add a frame to write.">addFrameToWrite</a>(frame);
+<a name="l00155"></a>00155   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157   <span class="keywordflow">return</span> pvTransactionId;
+<a name="l00158"></a>00158 }
+<a name="l00159"></a>00159 
+<a name="l00160"></a><a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">00160</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9" title="Called by the thread whenn a complete frame was readen.">mdtModbusTcpPortManager::fromThreadNewFrameReaden</a>()
+<a name="l00161"></a>00161 {
+<a name="l00162"></a>00162   Q_ASSERT(pvPort != 0);
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164   <a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a> *frame;
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166   <span class="comment">// Get frames in readen queue</span>
+<a name="l00167"></a>00167   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00168"></a>00168   <span class="keywordflow">while</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().size() &gt; 0){
+<a name="l00169"></a>00169     frame = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_frame_modbus_tcp.html" title="MODBUS/TCP Frame.">mdtFrameModbusTcp</a>*<span class="keyword">&gt;</span> (pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().dequeue());
+<a name="l00170"></a>00170     Q_ASSERT(frame != 0);
+<a name="l00171"></a>00171     <span class="comment">// Check if frame is complete</span>
+<a name="l00173"></a>00173 <span class="comment"></span>    <span class="keywordflow">if</span>(frame-&gt;<a class="code" href="classmdt_frame.html#a2a8fb9f36c941282881bba0c538d1ce5" title="Returns true if EOF condition was reached.">isComplete</a>()){
+<a name="l00174"></a>00174       <span class="comment">// Copy data</span>
+<a name="l00175"></a>00175       <a class="code" href="classmdt_port_manager.html#a3daaf801a26008388af390b5917d7a0c" title="Store frame data in queue and/or emit newReadenFrame() signal.">commitFrame</a>(frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a48a7e24190190da0ae9f5dbdfcd1ee48" title="Get the transaction ID.">transactionId</a>(), frame-&gt;<a class="code" href="classmdt_frame_modbus_tcp.html#a4462aed344dcd794274a01f837a70d42" title="Get the MODBUS PDU.">getPdu</a>());
+<a name="l00176"></a>00176     }
+<a name="l00177"></a>00177     <span class="comment">// Put frame back into pool</span>
+<a name="l00178"></a>00178     pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(frame);
+<a name="l00179"></a>00179   };
+<a name="l00180"></a>00180   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00181"></a>00181 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -254,7 +255,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

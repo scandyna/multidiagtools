@@ -72,6 +72,7 @@ This is the complete list of members for <a class="el" href="classmdt_usbtmc_por
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a3daaf801a26008388af390b5917d7a0c">commitFrame</a>(int id, QByteArray data)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a39cb4af4aedc0b6b7c4d4f53002c3fd1">detachPort</a>(bool deletePort, bool deleteThreads)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a053ba62f090eced0cf635c9be5c6b052">errorStateChanged</a>(int error)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">fromThreadNewFrameReaden</a>()</td><td><a class="el" href="classmdt_usbtmc_port_manager.html">mdtUsbtmcPortManager</a></td><td><code> [virtual, slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2">isRunning</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtPortManager</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
@@ -97,6 +98,7 @@ This is the complete list of members for <a class="el" href="classmdt_usbtmc_por
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aacbf87cc3d9c37c87e21696f8a6514bd">stop</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c">wait</a>(int msecs, int granularity=50)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a1db6b8da9ff16221c917a1a75366e5c0">waitOnFrame</a>(int id, int timeout=500)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48">waitOnWriteReady</a>(int timeout, int granularity=50)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">waitReadenFrame</a>(int timeout=500)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3">writeData</a>(QByteArray data)</td><td><a class="el" href="classmdt_usbtmc_port_manager.html">mdtUsbtmcPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
@@ -116,7 +118,7 @@ This is the complete list of members for <a class="el" href="classmdt_usbtmc_por
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

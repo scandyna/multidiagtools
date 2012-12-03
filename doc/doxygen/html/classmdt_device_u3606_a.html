@@ -61,14 +61,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-slots">Public Slots</a> &#124;
-<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDeviceU3606A Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtDeviceU3606A" --><!-- doxytag: inherits="mdtDevice" --><div class="dynheader">
+<!-- doxytag: class="mdtDeviceU3606A" --><!-- doxytag: inherits="mdtDevice" -->
+<p>Representation of a Agilent U3606A.  
+ <a href="classmdt_device_u3606_a.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for mdtDeviceU3606A:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device_u3606_a__inherit__graph.png" border="0" usemap="#mdt_device_u3606_a_inherit__map" alt="Inheritance graph"/></div>
@@ -85,168 +88,100 @@ Collaboration diagram for mdtDeviceU3606A:</div>
 
 <p><a href="classmdt_device_u3606_a-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="pub-slots"></a>
-Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#ad79d17e348854963cf32b20d370a778e">getIdn</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the IDN.  <a href="#ad79d17e348854963cf32b20d370a778e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41eacb2d6bc5f9a056ba9d68ffdaeba7"></a><!-- doxytag: member="mdtDeviceU3606A::essais" ref="a41eacb2d6bc5f9a056ba9d68ffdaeba7" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>essais</b> ()</td></tr>
-<tr><td colspan="2"><h2><a name="signals"></a>
-Signals</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a0a5ed6583bdf5378787e24349776d7a1">idnChanged</a> (const QStringList &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emitted when new IDN is available.  <a href="#a0a5ed6583bdf5378787e24349776d7a1"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91201ae14df7b553a947b5857eaa1c65"></a><!-- doxytag: member="mdtDeviceU3606A::mdtDeviceU3606A" ref="a91201ae14df7b553a947b5857eaa1c65" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtDeviceU3606A</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327">scan</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scan for attached devices.  <a href="#a3a31558c573466fc1534b43e6ee7e327"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a425f1d22686be2d28eb3f1ce12a8eaee">selectPort</a> (const QStringList &amp;ports, int index)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a port.  <a href="#a425f1d22686be2d28eb3f1ce12a8eaee"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#af4ee162df6c67ee3b2d9e5877bea881e">selectPort</a> (const QString &amp;port)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Select a port.  <a href="#af4ee162df6c67ee3b2d9e5877bea881e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">connectToDevice</a> (const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#acf3b48b13bc179ad4f94b3011b7d607a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#ac20d3e5177158c26bcbc5ca2d30cd563">decodeReadenFrame</a> (int id, QByteArray data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode incoming frames.  <a href="#ac20d3e5177158c26bcbc5ca2d30cd563"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94a6f8b3f64cd35b33204c66816f3f6a"></a><!-- doxytag: member="mdtDeviceU3606A::onStateChanged" ref="a94a6f8b3f64cd35b33204c66816f3f6a" args="(int state)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a">onStateChanged</a> (int state)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI when device's state has changed. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
+<div class="textblock"><p>Representation of a Agilent U3606A. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8h_source.html#l00030">30</a> of file <a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad79d17e348854963cf32b20d370a778e"></a><!-- doxytag: member="mdtDeviceU3606A::getIdn" ref="ad79d17e348854963cf32b20d370a778e" args="()" -->
+<a class="anchor" id="acf3b48b13bc179ad4f94b3011b7d607a"></a><!-- doxytag: member="mdtDeviceU3606A::connectToDevice" ref="acf3b48b13bc179ad4f94b3011b7d607a" args="(const mdtDeviceInfo &amp;devInfo)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceU3606A::getIdn </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtDeviceU3606A::connectToDevice </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td><code> [slot]</code></td>
+          <td class="paramtype">const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>devInfo</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get the IDN. </p>
-<p>Will get the IDN from device. The signal <a class="el" href="classmdt_device_u3606_a.html#a0a5ed6583bdf5378787e24349776d7a1" title="Emitted when new IDN is available.">idnChanged()</a> will be emited. </p>
+<p>Search and connect to physical device. </p>
+<p>Will scan available ports and open the first port that has device attached maching request.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">devInfo</td><td>Requested device's informations. Note: Vendor ID and/or product ID are automatically set. (in other words, a empty <a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> can be passed). Optionnaly, a serial device can be set (usefull if many U3606A devices are connected) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success) </dd></dl>
 
-<p><p>if(!pvPortManager.writeData(command, true)){ emit idnChanged(data); return; }</p>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00110">110</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0a5ed6583bdf5378787e24349776d7a1"></a><!-- doxytag: member="mdtDeviceU3606A::idnChanged" ref="a0a5ed6583bdf5378787e24349776d7a1" args="(const QStringList &amp;data)" -->
+<a class="anchor" id="ac20d3e5177158c26bcbc5ca2d30cd563"></a><!-- doxytag: member="mdtDeviceU3606A::decodeReadenFrame" ref="ac20d3e5177158c26bcbc5ca2d30cd563" args="(int id, QByteArray data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceU3606A::idnChanged </td>
+          <td class="memname">void mdtDeviceU3606A::decodeReadenFrame </td>
           <td>(</td>
-          <td class="paramtype">const QStringList &amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td><code> [signal]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Emitted when new IDN is available. </p>
-<p>The list contains following data:</p>
-<ul>
-<li>Manufacturer</li>
-<li>Model</li>
-<li>Serial number</li>
-<li>Interface revision number</li>
-<li>Measurement board revision number</li>
-<li>Source board revision number <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device_u3606_a.html#ad79d17e348854963cf32b20d370a778e" title="Get the IDN.">getIdn()</a> </dd></dl>
-</li>
-</ul>
-
-</div>
-</div>
-<a class="anchor" id="a3a31558c573466fc1534b43e6ee7e327"></a><!-- doxytag: member="mdtDeviceU3606A::scan" ref="a3a31558c573466fc1534b43e6ee7e327" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QStringList mdtDeviceU3606A::scan </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Scan for attached devices. </p>
-<p>Scan for available ports, then it get the IDN of found device.<br/>
- If IDN returns a U3606A, the port is added to ports list. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>String list of ports that have a U3606A attached</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Reimplement with port manager + port info </dd></dl>
-
-<p><p>if(pvPortManager.writeData(command, true)){ if(pvPortManager.waitReadenFrame()){ if(pvCodec.decodeIdn(pvPortManager.lastReadenFrame())){ if(pvCodec.values().size() &gt;= 2){ if(pvCodec.values().at(1) == "U3606A"){ portsWithDevice &lt;&lt; ports.at(i); } } } } }</p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af4ee162df6c67ee3b2d9e5877bea881e"></a><!-- doxytag: member="mdtDeviceU3606A::selectPort" ref="af4ee162df6c67ee3b2d9e5877bea881e" args="(const QString &amp;port)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtDeviceU3606A::selectPort </td>
-          <td>(</td>
-          <td class="paramtype">const QString &amp;&#160;</td>
-          <td class="paramname"><em>port</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Select a port. </p>
-<p>Before using this function, the specific device <a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327" title="Scan for attached devices.">scan()</a> method must be used to find ports with attached device. </p>
-
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a425f1d22686be2d28eb3f1ce12a8eaee"></a><!-- doxytag: member="mdtDeviceU3606A::selectPort" ref="a425f1d22686be2d28eb3f1ce12a8eaee" args="(const QStringList &amp;ports, int index)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtDeviceU3606A::selectPort </td>
-          <td>(</td>
-          <td class="paramtype">const QStringList &amp;&#160;</td>
-          <td class="paramname"><em>ports</em>, </td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>index</em>&#160;</td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Select a port. </p>
-<p>Before using this function, the specific device <a class="el" href="classmdt_device_u3606_a.html#a3a31558c573466fc1534b43e6ee7e327" title="Scan for attached devices.">scan()</a> method must be used to find ports with attached device. Then, pass the result at argument </p>
+<p>Decode incoming frames. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's container must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a></dd></dl>
+<p>Subclass notes:<br/>
+</p>
+<ul>
+<li>This slot should be connected with <a class="el" href="classmdt_port_manager.html#a65d5d2e9edde76796714f737a7eaf204" title="Emitted when new frame was readen.">mdtPortManager::newReadenFrame()</a> signal.</li>
+<li>The incoming frames are available with <a class="el" href="classmdt_port_manager.html#ae5c6475a54ac4921c6df26893f261556" title="Get all readen data.">mdtPortManager::readenFrames()</a>. </li>
+</ul>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_device.html#a96be3ca9235561c58c69190e9ed45ca9">mdtDevice</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/mdtdevice/linux/<a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a></li>
-<li>src/mdtdevice/linux/<a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a></li>
+<li>src/mdtdevice/<a class="el" href="mdt_device_u3606_a_8h_source.html">mdtDeviceU3606A.h</a></li>
+<li>src/mdtdevice/<a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -263,7 +198,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

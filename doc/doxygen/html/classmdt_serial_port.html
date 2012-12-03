@@ -251,7 +251,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>NOTE: </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000038">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000049">Todo:</a></b></dt><dd>Update name to : updateCtlStates ? </dd></dl>
 <p>Get the control (modem line) signal states and update member flags</p>
 <p>This method must be re-implemented in plateform specific subclass. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>False on error, in this case, the thread will be stopped. </dd></dl>
@@ -706,6 +706,9 @@ Public Member Functions</h2></td></tr>
 <p>void <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtSerialPort::flushOut()</a> { int err;</p>
 <p><a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>; if(tcflush(pvFd, TCOFLUSH) &lt; 0){ err = errno; <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error); e.setSystemError(err, strerror(err)); MDT_ERROR_SET_SRC(e, "mdtSerialPort"); e.commit(); } <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">mdtAbstractPort::flushOut()</a>; } </p>
 
+<p><p>qDebug() &lt;&lt; "mdtSerialPort::waitEventCtl(), waiting..."; </p>
+</p>
+
 <p>Implements <a class="el" href="classmdt_abstract_serial_port.html#a146bf17f4f11c173e9b123bace0f2ddf">mdtAbstractSerialPort</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_serial_port_8cpp_source.html#l00834">834</a> of file <a class="el" href="mdt_serial_port_8cpp_source.html">mdtSerialPort.cpp</a>.</p>
@@ -794,7 +797,11 @@ Public Member Functions</h2></td></tr>
 <p>Subclass notes:<br/>
  This method must be implemented in subclass.<br/>
 </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or &lt;0 on error </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or error &lt; 0 (see error_t)</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
+
+<p><p>qDebug() &lt;&lt; "wrote " &lt;&lt; n &lt;&lt; " bytes"; </p>
+</p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
@@ -821,7 +828,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

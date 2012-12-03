@@ -90,21 +90,65 @@ Collaboration diagram for mdtFrameCodecScpi:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aedbdb078e4f652b17919cff6add22c27">decodeIdn</a> (const QByteArray &amp;frame)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the IDN answer.  <a href="#aedbdb078e4f652b17919cff6add22c27"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a7a2b463fbbd0c8d1d4d9d5c16a49d7bb">decodeSingleValueInt</a> (QByteArray &amp;frame)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a signle value in integer format.  <a href="#a7a2b463fbbd0c8d1d4d9d5c16a49d7bb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aa2a184572eae360a274c89f7b8ba33e9">decodeError</a> (QByteArray &amp;frame)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode error answer.  <a href="#aa2a184572eae360a274c89f7b8ba33e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a5287ff3f107ca10097cdb499e62f6906">addTransaction</a> (int id, int type)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a query/response transaction.  <a href="#a5287ff3f107ca10097cdb499e62f6906"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aa6f92a37f19983c9a2ef4ba8e10a3581">pendingTransaction</a> (int id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get transaction by ID.  <a href="#aa6f92a37f19983c9a2ef4ba8e10a3581"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3">decodeValues</a> (const QByteArray &amp;data, QString sep=&quot;:&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode SCPI value(s)  <a href="#a37a1703b6daee6f6bf91c6afb46191b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">decodeIdn</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the IDN answer.  <a href="#a6ddd1b8e23252dc7f03c279a030cb36f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aff616991e6223aa51f265cf7e464be12">decodeError</a> (QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode error answer.  <a href="#aff616991e6223aa51f265cf7e464be12"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a327afabbb6da25e31523ef4baa28cc87">decodeIEEEblock</a> (QString data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a IEEE block.  <a href="#a327afabbb6da25e31523ef4baa28cc87"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Decode SCPI data. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00011">11</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00040">40</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aa2a184572eae360a274c89f7b8ba33e9"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeError" ref="aa2a184572eae360a274c89f7b8ba33e9" args="(QByteArray &amp;frame)" -->
+<a class="anchor" id="a5287ff3f107ca10097cdb499e62f6906"></a><!-- doxytag: member="mdtFrameCodecScpi::addTransaction" ref="a5287ff3f107ca10097cdb499e62f6906" args="(int id, int type)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtFrameCodecScpi::addTransaction </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a query/response transaction. </p>
+<p>The SCPI defines no function code (like MODBUS, f.ex.). When coding a defined sequence, this is not a problem.</p>
+<p>When using a event based approach, it's not possible to know what type of answer the device will return.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Frame ID (f.ex. bTag for USBTMC) </td></tr>
+    <tr><td class="paramname">type</td><td>Query/response type (f.ex. MDT_FC_SCPI_VALUE) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00036">36</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff616991e6223aa51f265cf7e464be12"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeError" ref="aff616991e6223aa51f265cf7e464be12" args="(QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -112,7 +156,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">bool mdtFrameCodecScpi::decodeError </td>
           <td>(</td>
           <td class="paramtype">QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -120,13 +164,17 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode error answer. </p>
-<p>When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
+<p>When decode was done successfully, error is available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a>:</p>
+<ul>
+<li>Item 0 is the error number</li>
+<li>Item 1 is the error message string </li>
+</ul>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aedbdb078e4f652b17919cff6add22c27"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeIdn" ref="aedbdb078e4f652b17919cff6add22c27" args="(const QByteArray &amp;frame)" -->
+<a class="anchor" id="a6ddd1b8e23252dc7f03c279a030cb36f"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeIdn" ref="a6ddd1b8e23252dc7f03c279a030cb36f" args="(const QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -134,7 +182,7 @@ Public Member Functions</h2></td></tr>
           <td class="memname">bool mdtFrameCodecScpi::decodeIdn </td>
           <td>(</td>
           <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -144,7 +192,7 @@ Public Member Functions</h2></td></tr>
 <p>Decode the IDN answer. </p>
 <p>When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00015">15</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00090">90</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -166,29 +214,82 @@ Public Member Functions</h2></td></tr>
 <p>Decode a IEEE block. </p>
 <p>NOTE: not implemented yet ! </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00139">139</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7a2b463fbbd0c8d1d4d9d5c16a49d7bb"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeSingleValueInt" ref="a7a2b463fbbd0c8d1d4d9d5c16a49d7bb" args="(QByteArray &amp;frame)" -->
+<a class="anchor" id="a37a1703b6daee6f6bf91c6afb46191b3"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeValues" ref="a37a1703b6daee6f6bf91c6afb46191b3" args="(const QByteArray &amp;data, QString sep=&quot;:&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QVariant mdtFrameCodecScpi::decodeSingleValueInt </td>
+          <td class="memname">bool mdtFrameCodecScpi::decodeValues </td>
           <td>(</td>
-          <td class="paramtype">QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>sep</em> = <code>&quot;:&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Decode SCPI value(s) </p>
+<p>After decode is done, values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a>.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>String that contains one value, or many separated by sep. </td></tr>
+    <tr><td class="paramname">sep</td><td>Values separator.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True if decode could be done. </dd></dl>
+
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000056">Todo:</a></b></dt><dd>Check limits (-OL, OL) for type Double </dd></dl>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa6f92a37f19983c9a2ef4ba8e10a3581"></a><!-- doxytag: member="mdtFrameCodecScpi::pendingTransaction" ref="aa6f92a37f19983c9a2ef4ba8e10a3581" args="(int id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtFrameCodecScpi::pendingTransaction </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Decode a signle value in integer format. </p>
-<p>This method returns a QVariant. QVariant's internal data is converted to int. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid(). When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
+<p>Get transaction by ID. </p>
+<p>Used by some mdtDevice()'s subclasses. See <a class="el" href="classmdt_frame_codec_scpi.html#a5287ff3f107ca10097cdb499e62f6906" title="Add a query/response transaction.">addTransaction()</a> for details.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Frame ID (f.ex. bTag for USBTMC) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Type of query/response transaction, or MDT_FC_SCPI_UNKNOW if not found. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p><p>&lt; Initial or unknown query/response type </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00049">49</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -211,7 +312,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -77,7 +77,7 @@ USBTMC frame.
 Used by mdtport API to send en receive frames in USBTMC standard.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000048}{Todo}]Clarify what this class does: USBTMC message or transfer ?\end{Desc}
+\item[\hyperlink{todo__todo000060}{Todo}]Clarify what this class does: USBTMC message or transfer ?\end{Desc}
 
 
 References:
@@ -149,7 +149,7 @@ Get the bTag.
 
 Usefull for frames received from device. Is only valid when the frame is complete. 
 
-Definition at line 136 of file mdtFrameUsbTmc.cpp.
+Definition at line 137 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!encode@{encode}}
@@ -171,14 +171,14 @@ Note: \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} is c
 Get initial message data size (will be ajusted later whenn add alignment bytes)
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000047}{Todo}]Check $>$ 0, ... \end{Desc}
+\item[\hyperlink{todo__todo000059}{Todo}]Check $>$ 0, ... \end{Desc}
 
 
 pvTransferSize++; 
 
 
 
-Definition at line 162 of file mdtFrameUsbTmc.cpp.
+Definition at line 163 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!isEOM@{isEOM}}
@@ -195,7 +195,7 @@ Get the EOM flag.
 
 If true, this transfer is the last in current message. Is only valid when the frame is complete. 
 
-Definition at line 146 of file mdtFrameUsbTmc.cpp.
+Definition at line 147 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a03d9a1c16099ba7ea1e3a2b0c4e1493e}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!messageData@{messageData}}
@@ -212,7 +212,7 @@ Get the message data.
 
 Usefull for frames received from device. Is only valid when the frame is complete. 
 
-Definition at line 157 of file mdtFrameUsbTmc.cpp.
+Definition at line 158 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!MsgID@{MsgID}}
@@ -229,7 +229,7 @@ Get the MsgID.
 
 Usefull for frames received from device. Is only valid when the frame is complete. 
 
-Definition at line 125 of file mdtFrameUsbTmc.cpp.
+Definition at line 126 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!putData@{putData}}
@@ -248,11 +248,11 @@ Put data into the frame.
 This method is called by the read thread, and should not be used directly. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000045}{Todo}]Handle error \end{Desc}
+\item[\hyperlink{todo__todo000057}{Todo}]Handle error \end{Desc}
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000046}{Todo}]other bmTransferAttributes \end{Desc}
+\item[\hyperlink{todo__todo000058}{Todo}]other bmTransferAttributes \end{Desc}
 
 
 
@@ -285,7 +285,7 @@ bTag must be $<$$>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 130 of file mdtFrameUsbTmc.cpp.
+Definition at line 131 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_ab6e494c35eba34905987a75101fc48fe}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setEOM@{setEOM}}
@@ -304,7 +304,7 @@ EOM: End Of (USBTMC) Message.
 
 If true, tells the device that this USBTMC transfer is the last in message. 
 
-Definition at line 141 of file mdtFrameUsbTmc.cpp.
+Definition at line 142 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setMessageData@{setMessageData}}
@@ -321,7 +321,7 @@ Set the message data.
 
 To use to build a frame that will be sent to device. 
 
-Definition at line 151 of file mdtFrameUsbTmc.cpp.
+Definition at line 152 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setMsgID@{setMsgID}}
@@ -338,7 +338,7 @@ Set the MsgID.
 
 To use to build a frame that will be sent to device. 
 
-Definition at line 120 of file mdtFrameUsbTmc.cpp.
+Definition at line 121 of file mdtFrameUsbTmc.cpp.
 
 
 

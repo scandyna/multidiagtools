@@ -60,31 +60,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">src/mdtutils/mdtFrameCodecScpi.h</div>  </div>
 </div>
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MDT_FRAME_CODEC_SCPI_H</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MDT_FRAME_CODEC_SCPI_H</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &quot;mdtFrameCodecAscii.h&quot;</span>
-<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;QVariant&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00008"></a>00008 
-<a name="l00011"></a><a class="code" href="classmdt_frame_codec_scpi.html">00011</a> <span class="keyword">class </span><a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a> : <span class="keyword">public</span> <a class="code" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a>
-<a name="l00012"></a>00012 {
-<a name="l00013"></a>00013  <span class="keyword">public</span>:
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015   <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
-<a name="l00016"></a>00016   ~<a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
-<a name="l00017"></a>00017 
-<a name="l00023"></a>00023   <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#aedbdb078e4f652b17919cff6add22c27" title="Decode the IDN answer.">decodeIdn</a>(<span class="keyword">const</span> QByteArray &amp;frame);
-<a name="l00024"></a>00024 
-<a name="l00034"></a>00034   QVariant <a class="code" href="classmdt_frame_codec_scpi.html#a7a2b463fbbd0c8d1d4d9d5c16a49d7bb" title="Decode a signle value in integer format.">decodeSingleValueInt</a>(QByteArray &amp;frame);
-<a name="l00035"></a>00035 
-<a name="l00041"></a>00041   <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#aa2a184572eae360a274c89f7b8ba33e9" title="Decode error answer.">decodeError</a>(QByteArray &amp;frame);
-<a name="l00042"></a>00042 
-<a name="l00047"></a>00047   <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi.html#a327afabbb6da25e31523ef4baa28cc87" title="Decode a IEEE block.">decodeIEEEblock</a>(QString data);
-<a name="l00048"></a>00048 };
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="preprocessor">#endif  // #ifnef MDT_FRAME_CODEC_SCPI_H</span>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
+<a name="l00002"></a>00002 <span class="comment"> **</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00004"></a>00004 <span class="comment"> **</span>
+<a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
+<a name="l00006"></a>00006 <span class="comment"> **</span>
+<a name="l00007"></a>00007 <span class="comment"> ** multiDiagTools is free software: you can redistribute it and/or modify</span>
+<a name="l00008"></a>00008 <span class="comment"> ** it under the terms of the GNU Lesser General Public License as published by</span>
+<a name="l00009"></a>00009 <span class="comment"> ** the Free Software Foundation, either version 3 of the License, or</span>
+<a name="l00010"></a>00010 <span class="comment"> ** (at your option) any later version.</span>
+<a name="l00011"></a>00011 <span class="comment"> **</span>
+<a name="l00012"></a>00012 <span class="comment"> ** multiDiagTools is distributed in the hope that it will be useful,</span>
+<a name="l00013"></a>00013 <span class="comment"> ** but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<a name="l00014"></a>00014 <span class="comment"> ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<a name="l00015"></a>00015 <span class="comment"> ** GNU Lesser General Public License for more details.</span>
+<a name="l00016"></a>00016 <span class="comment"> **</span>
+<a name="l00017"></a>00017 <span class="comment"> ** You should have received a copy of the GNU Lesser General Public License</span>
+<a name="l00018"></a>00018 <span class="comment"> ** along with multiDiagTools.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<a name="l00019"></a>00019 <span class="comment"> **</span>
+<a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#ifndef MDT_FRAME_CODEC_SCPI_H</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_FRAME_CODEC_SCPI_H</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtFrameCodecAscii.h&quot;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QList&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QMap&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QVariant&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00029"></a>00029 
+<a name="l00032"></a>00032 <span class="preprocessor">#define MDT_FC_SCPI_UNKNOW 0        </span>
+<a name="l00033"></a>00033 <span class="preprocessor">#define MDT_FC_SCPI_VALUE  1        </span>
+<a name="l00034"></a>00034 <span class="preprocessor">#define MDT_FC_SCPI_IDN    2        </span>
+<a name="l00035"></a>00035 <span class="preprocessor">#define MDT_FC_SCPI_ERR    3        </span>
+<a name="l00036"></a>00036 <span class="preprocessor">#define MDT_FC_SCPI_LAST_TYPE  127  </span>
+<a name="l00040"></a><a class="code" href="classmdt_frame_codec_scpi.html">00040</a> <span class="preprocessor">class mdtFrameCodecScpi : public mdtFrameCodecAscii</span>
+<a name="l00041"></a>00041 <span class="preprocessor"></span>{
+<a name="l00042"></a>00042  <span class="keyword">public</span>:
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
+<a name="l00045"></a>00045   <span class="keyword">virtual</span> ~<a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
+<a name="l00046"></a>00046 
+<a name="l00058"></a>00058   <span class="keywordtype">void</span> addTransaction(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> type);
+<a name="l00059"></a>00059 
+<a name="l00068"></a>00068   <span class="keywordtype">int</span> pendingTransaction(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
+<a name="l00069"></a>00069 
+<a name="l00080"></a>00080   <span class="keywordtype">bool</span> decodeValues(<span class="keyword">const</span> QByteArray &amp;data, QString sep = <span class="stringliteral">&quot;:&quot;</span>);
+<a name="l00081"></a>00081 
+<a name="l00087"></a>00087   <span class="keywordtype">bool</span> decodeIdn(<span class="keyword">const</span> QByteArray &amp;data);
+<a name="l00088"></a>00088 
+<a name="l00096"></a>00096   <span class="keywordtype">bool</span> decodeError(QByteArray &amp;data);
+<a name="l00097"></a>00097 
+<a name="l00102"></a>00102   <span class="keywordtype">bool</span> decodeIEEEblock(QString data);
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104  <span class="keyword">private</span>:
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   QMap&lt;int, int&gt; pvPendingTransactions;
+<a name="l00107"></a>00107 };
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 <span class="preprocessor">#endif  // #ifnef MDT_FRAME_CODEC_SCPI_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -101,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

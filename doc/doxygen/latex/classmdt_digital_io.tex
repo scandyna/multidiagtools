@@ -44,11 +44,8 @@ void \hyperlink{classmdt_digital_io_a69c20119906682c0bd90833598127328}{stateChan
 \label{classmdt_digital_io_a69c20119906682c0bd90833598127328}
 
 \begin{DoxyCompactList}\small\item\em This signal is emitted whenever the state is changed. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_digital_io_a0bb6637d6ee81c7c3310b04f7fb743a4}{
-void {\bfseries stateChanged} (int address, bool on)}
-\label{classmdt_digital_io_a0bb6637d6ee81c7c3310b04f7fb743a4}
-
-\item 
+void \hyperlink{classmdt_digital_io_aa23bf21e08f0b0d82e430e88ac03aba8}{stateChanged} (int address)
+\begin{DoxyCompactList}\small\item\em This signal is emitted whenever the state is changed. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_digital_io_ab50657b37b4915bd142aa0f22f45fd41}{
 void {\bfseries stateChangedForUi} (bool on)}
 \label{classmdt_digital_io_ab50657b37b4915bd142aa0f22f45fd41}
@@ -114,7 +111,7 @@ Set I/O state (On or OFF)
 
 Overloaded method that calls setOn(bool, bool) with isValid = true. 
 
-Definition at line 75 of file mdtDigitalIo.cpp.
+Definition at line 74 of file mdtDigitalIo.cpp.
 
 \hypertarget{classmdt_digital_io_a8feb155c430f67589ba776b7b03758d9}{
 \index{mdtDigitalIo@{mdtDigitalIo}!setOn@{setOn}}
@@ -149,7 +146,20 @@ Note for UI developpers:
 
 Definition at line 49 of file mdtDigitalIo.cpp.
 
+\hypertarget{classmdt_digital_io_aa23bf21e08f0b0d82e430e88ac03aba8}{
+\index{mdtDigitalIo@{mdtDigitalIo}!stateChanged@{stateChanged}}
+\index{stateChanged@{stateChanged}!mdtDigitalIo@{mdtDigitalIo}}
+\subsubsection[{stateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDigitalIo::stateChanged (
+\begin{DoxyParamCaption}
+\item[{int}]{address}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}signal\mbox{]}}}}
+\label{classmdt_digital_io_aa23bf21e08f0b0d82e430e88ac03aba8}
 
+
+This signal is emitted whenever the state is changed. 
+
+This signal is used by \hyperlink{classmdt_device_ios}{mdtDeviceIos} to notify \hyperlink{classmdt_device}{mdtDevice}. 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 

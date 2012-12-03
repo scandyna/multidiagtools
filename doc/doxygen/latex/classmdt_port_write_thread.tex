@@ -34,7 +34,9 @@ void \hyperlink{classmdt_port_write_thread_a69702ab3a95c238fb451f866efc7cb34}{st
 
 \begin{DoxyCompactList}\small\item\em Stop the thread. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_write_thread_ac37bb988773f624def51e841998a2f1e}{isReader} () const 
-\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{isWriter} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread writes date. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -60,11 +62,32 @@ Returns true if this thread reads data and send the \hyperlink{classmdt_port_thr
 
 \hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
 
-Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{mdtPortThread}.
 
 
 
 Definition at line 41 of file mdtPortWriteThread.cpp.
+
+\hypertarget{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}{
+\index{mdtPortWriteThread@{mdtPortWriteThread}!isWriter@{isWriter}}
+\index{isWriter@{isWriter}!mdtPortWriteThread@{mdtPortWriteThread}}
+\subsubsection[{isWriter}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortWriteThread::isWriter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_write_thread_ad2508c3a2433383e2de705e9f3d2e602}
+
+
+Returns true if this thread writes date. 
+
+Is used by \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()} to know if \hyperlink{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{mdtAbstractPort::abortFrameToWriteWait()} must be called. 
+
+Reimplemented from \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{mdtPortThread}.
+
+
+
+Definition at line 46 of file mdtPortWriteThread.cpp.
 
 
 

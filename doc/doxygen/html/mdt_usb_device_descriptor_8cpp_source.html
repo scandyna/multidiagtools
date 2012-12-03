@@ -86,7 +86,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QDebug&gt;</span>
 <a name="l00026"></a>00026 
-<a name="l00027"></a>00027 mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor()
+<a name="l00027"></a><a class="code" href="classmdt_usb_device_descriptor.html#a56261ab887b96741e5d444e92ed80b35">00027</a> <a class="code" href="classmdt_usb_device_descriptor.html#a56261ab887b96741e5d444e92ed80b35">mdtUsbDeviceDescriptor::mdtUsbDeviceDescriptor</a>()
 <a name="l00028"></a>00028 {
 <a name="l00029"></a>00029   pvbDescriptorType = 0;
 <a name="l00030"></a>00030   pvbcdUSB = 0;
@@ -99,7 +99,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00037"></a>00037   pvbcdDevice = 0;
 <a name="l00038"></a>00038   pviManufactuer = 0;
 <a name="l00039"></a>00039   pviProduct = 0;
-<a name="l00040"></a>00040   pviSerialNumber = 0;
 <a name="l00041"></a>00041 }
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043 mdtUsbDeviceDescriptor::~mdtUsbDeviceDescriptor()
@@ -113,327 +112,350 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052   <span class="keyword">struct </span>libusb_device_descriptor descriptor;
 <a name="l00053"></a>00053   <span class="keyword">struct </span>libusb_config_descriptor *configDescriptor;
-<a name="l00054"></a>00054   <span class="keywordtype">int</span> err;
-<a name="l00055"></a>00055   quint8 i;
-<a name="l00056"></a>00056   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *config;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="comment">// Open descriptor</span>
-<a name="l00059"></a>00059   err = libusb_get_device_descriptor(device, &amp;descriptor);
-<a name="l00060"></a>00060   <span class="keywordflow">if</span>(err != 0){
-<a name="l00061"></a>00061     <span class="keywordflow">return</span> err;
-<a name="l00062"></a>00062   }
-<a name="l00063"></a>00063   <span class="comment">// Store attributes</span>
-<a name="l00064"></a>00064   pvbDescriptorType = descriptor.bDescriptorType;
-<a name="l00065"></a>00065   pvbcdUSB = descriptor.bcdUSB;
-<a name="l00066"></a>00066   pvbDeviceClass = descriptor.bDeviceClass;
-<a name="l00067"></a>00067   pvbDeviceSubClass = descriptor.bDeviceSubClass;
-<a name="l00068"></a>00068   pvbDeviceProtocol = descriptor.bDeviceProtocol;
-<a name="l00069"></a>00069   pvbMaxPacketSize0 = descriptor.bMaxPacketSize0;
-<a name="l00070"></a>00070   pvidVendor = descriptor.idVendor;
-<a name="l00071"></a>00071   pvidProduct = descriptor.idProduct;
-<a name="l00072"></a>00072   pvbcdDevice = descriptor.bcdDevice;
-<a name="l00073"></a>00073   <span class="comment">// Get configuration(s)</span>
-<a name="l00074"></a>00074   qDeleteAll(pvConfigs);
-<a name="l00075"></a>00075   pvConfigs.clear();
-<a name="l00076"></a>00076   <span class="keywordflow">if</span>(fetchActiveConfigOnly){
-<a name="l00077"></a>00077     err = libusb_get_active_config_descriptor(device, &amp;configDescriptor);
-<a name="l00078"></a>00078     <span class="keywordflow">switch</span>(err){
-<a name="l00079"></a>00079       <span class="keywordflow">case</span> 0:
-<a name="l00080"></a>00080         config = <span class="keyword">new</span> <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a>;
-<a name="l00081"></a>00081         Q_ASSERT(config != 0);
-<a name="l00082"></a>00082         config-&gt;<a class="code" href="classmdt_usb_config_descriptor.html#acece47193e1ab7184894082a40233f45" title="Ftech the configuration descriptor&#39;s attributes.">fetchAttributes</a>(configDescriptor);
-<a name="l00083"></a>00083         libusb_free_config_descriptor(configDescriptor);
-<a name="l00084"></a>00084         pvConfigs.append(config);
-<a name="l00085"></a>00085         <span class="keywordflow">break</span>;
-<a name="l00086"></a>00086       <span class="keywordflow">case</span> LIBUSB_ERROR_NOT_FOUND:
-<a name="l00087"></a>00087       {
-<a name="l00088"></a>00088         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Unable to find get current configuration descriptor&quot;</span>, mdtError::Warning);
-<a name="l00089"></a>00089         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbDeviceDescriptor&quot;</span>);
-<a name="l00090"></a>00090         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00091"></a>00091         <span class="keywordflow">break</span>;
-<a name="l00092"></a>00092       }
-<a name="l00093"></a>00093       <span class="keywordflow">default</span>:
-<a name="l00094"></a>00094         <span class="keywordflow">return</span> err;
-<a name="l00095"></a>00095     }
-<a name="l00096"></a>00096   }<span class="keywordflow">else</span>{
-<a name="l00097"></a>00097     <span class="keywordflow">for</span>(i=0; i&lt;descriptor.bNumConfigurations; i++){
-<a name="l00098"></a>00098       err = libusb_get_config_descriptor(device, i, &amp;configDescriptor);
-<a name="l00099"></a>00099       <span class="keywordflow">switch</span>(err){
-<a name="l00100"></a>00100         <span class="keywordflow">case</span> 0:
-<a name="l00101"></a>00101           config = <span class="keyword">new</span> <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a>;
-<a name="l00102"></a>00102           Q_ASSERT(config != 0);
-<a name="l00103"></a>00103           config-&gt;<a class="code" href="classmdt_usb_config_descriptor.html#acece47193e1ab7184894082a40233f45" title="Ftech the configuration descriptor&#39;s attributes.">fetchAttributes</a>(configDescriptor);
-<a name="l00104"></a>00104           libusb_free_config_descriptor(configDescriptor);
-<a name="l00105"></a>00105           pvConfigs.append(config);
-<a name="l00106"></a>00106           <span class="keywordflow">break</span>;
-<a name="l00107"></a>00107         <span class="keywordflow">case</span> LIBUSB_ERROR_NOT_FOUND:
-<a name="l00108"></a>00108         {
-<a name="l00109"></a>00109           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Unable to find get configuration descriptor at index &quot;</span> + QString::number(i), mdtError::Warning);
-<a name="l00110"></a>00110           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbDeviceDescriptor&quot;</span>);
-<a name="l00111"></a>00111           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00112"></a>00112           <span class="keywordflow">break</span>;
-<a name="l00113"></a>00113         }
-<a name="l00114"></a>00114         <span class="keywordflow">default</span>:
-<a name="l00115"></a>00115           qDeleteAll(pvConfigs);
-<a name="l00116"></a>00116           pvConfigs.clear();
-<a name="l00117"></a>00117           <span class="keywordflow">return</span> err;
-<a name="l00118"></a>00118       }
-<a name="l00119"></a>00119     }
-<a name="l00120"></a>00120   }
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122   <span class="keywordflow">return</span> 0;
-<a name="l00123"></a>00123 }
-<a name="l00124"></a>00124 
-<a name="l00125"></a><a class="code" href="classmdt_usb_device_descriptor.html#add8de4e1850995461a37ed27b75b4381">00125</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#add8de4e1850995461a37ed27b75b4381" title="Device descriptor type.">mdtUsbDeviceDescriptor::bDescriptorType</a>()<span class="keyword"> const</span>
-<a name="l00126"></a>00126 <span class="keyword"></span>{
-<a name="l00127"></a>00127   <span class="keywordflow">return</span> pvbDescriptorType;
-<a name="l00128"></a>00128 }
-<a name="l00129"></a>00129 
-<a name="l00130"></a><a class="code" href="classmdt_usb_device_descriptor.html#ae5f4d1cabe204ca0aa00735d04516e86">00130</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#ae5f4d1cabe204ca0aa00735d04516e86" title="USB Specification Release Number.">mdtUsbDeviceDescriptor::bcdUSB</a>()<span class="keyword"> const</span>
-<a name="l00131"></a>00131 <span class="keyword"></span>{
-<a name="l00132"></a>00132   <span class="keywordflow">return</span> pvbcdUSB;
-<a name="l00133"></a>00133 }
-<a name="l00134"></a>00134 
-<a name="l00135"></a><a class="code" href="classmdt_usb_device_descriptor.html#a94e04915c8df9102db54068911b92532">00135</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#a94e04915c8df9102db54068911b92532" title="Class code (assigned by the USB-IF)">mdtUsbDeviceDescriptor::bDeviceClass</a>()<span class="keyword"> const</span>
-<a name="l00136"></a>00136 <span class="keyword"></span>{
-<a name="l00137"></a>00137   <span class="keywordflow">return</span> pvbDeviceClass;
-<a name="l00138"></a>00138 }
+<a name="l00054"></a>00054   libusb_device_handle *handle;
+<a name="l00055"></a>00055   <span class="keywordtype">int</span> err;
+<a name="l00056"></a>00056   quint8 i;
+<a name="l00057"></a>00057   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *config;
+<a name="l00058"></a>00058   <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> uSerialNumber[256] = {<span class="charliteral">&#39;\0&#39;</span>};
+<a name="l00059"></a>00059   <span class="keywordtype">char</span> <a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>[256] = {<span class="charliteral">&#39;\0&#39;</span>};
+<a name="l00060"></a>00060   <span class="keywordtype">int</span> serialNumberLength;
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062   <span class="comment">// Open descriptor</span>
+<a name="l00063"></a>00063   err = libusb_get_device_descriptor(device, &amp;descriptor);
+<a name="l00064"></a>00064   <span class="keywordflow">if</span>(err != 0){
+<a name="l00065"></a>00065     <span class="keywordflow">return</span> err;
+<a name="l00066"></a>00066   }
+<a name="l00067"></a>00067   <span class="comment">// Store attributes</span>
+<a name="l00068"></a>00068   pvbDescriptorType = descriptor.bDescriptorType;
+<a name="l00069"></a>00069   pvbcdUSB = descriptor.bcdUSB;
+<a name="l00070"></a>00070   pvbDeviceClass = descriptor.bDeviceClass;
+<a name="l00071"></a>00071   pvbDeviceSubClass = descriptor.bDeviceSubClass;
+<a name="l00072"></a>00072   pvbDeviceProtocol = descriptor.bDeviceProtocol;
+<a name="l00073"></a>00073   pvbMaxPacketSize0 = descriptor.bMaxPacketSize0;
+<a name="l00074"></a>00074   pvidVendor = descriptor.idVendor;
+<a name="l00075"></a>00075   pvidProduct = descriptor.idProduct;
+<a name="l00076"></a>00076   pvbcdDevice = descriptor.bcdDevice;
+<a name="l00077"></a>00077   <span class="comment">// Try to get serial number</span>
+<a name="l00078"></a>00078   handle = 0;
+<a name="l00079"></a>00079   <span class="keywordflow">if</span>(libusb_open(device, &amp;handle) == 0){
+<a name="l00080"></a>00080     Q_ASSERT(handle != 0);
+<a name="l00081"></a>00081     serialNumberLength = libusb_get_string_descriptor_ascii(handle, descriptor.iSerialNumber, uSerialNumber, 255);
+<a name="l00082"></a>00082     <span class="keywordflow">if</span>(serialNumberLength &gt; 0){
+<a name="l00083"></a>00083       Q_ASSERT(serialNumberLength &lt; 256);
+<a name="l00084"></a>00084       <span class="keywordflow">for</span>(i=0; i&lt;serialNumberLength; i++){
+<a name="l00085"></a>00085         serialNumber[i] = (char)uSerialNumber[i];
+<a name="l00086"></a>00086       }
+<a name="l00087"></a>00087       pvSerialNumber = <a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">serialNumber</a>;
+<a name="l00088"></a>00088     }
+<a name="l00089"></a>00089     libusb_close(handle);
+<a name="l00090"></a>00090   }
+<a name="l00091"></a>00091   <span class="comment">// Get configuration(s)</span>
+<a name="l00092"></a>00092   qDeleteAll(pvConfigs);
+<a name="l00093"></a>00093   pvConfigs.clear();
+<a name="l00094"></a>00094   <span class="keywordflow">if</span>(fetchActiveConfigOnly){
+<a name="l00095"></a>00095     err = libusb_get_active_config_descriptor(device, &amp;configDescriptor);
+<a name="l00096"></a>00096     <span class="keywordflow">switch</span>(err){
+<a name="l00097"></a>00097       <span class="keywordflow">case</span> 0:
+<a name="l00098"></a>00098         config = <span class="keyword">new</span> <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a>;
+<a name="l00099"></a>00099         Q_ASSERT(config != 0);
+<a name="l00100"></a>00100         config-&gt;<a class="code" href="classmdt_usb_config_descriptor.html#acece47193e1ab7184894082a40233f45" title="Ftech the configuration descriptor&#39;s attributes.">fetchAttributes</a>(configDescriptor);
+<a name="l00101"></a>00101         libusb_free_config_descriptor(configDescriptor);
+<a name="l00102"></a>00102         pvConfigs.append(config);
+<a name="l00103"></a>00103         <span class="keywordflow">break</span>;
+<a name="l00104"></a>00104       <span class="keywordflow">case</span> LIBUSB_ERROR_NOT_FOUND:
+<a name="l00105"></a>00105       {
+<a name="l00106"></a>00106         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Unable to find get current configuration descriptor&quot;</span>, mdtError::Warning);
+<a name="l00107"></a>00107         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbDeviceDescriptor&quot;</span>);
+<a name="l00108"></a>00108         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00109"></a>00109         <span class="keywordflow">break</span>;
+<a name="l00110"></a>00110       }
+<a name="l00111"></a>00111       <span class="keywordflow">default</span>:
+<a name="l00112"></a>00112         <span class="keywordflow">return</span> err;
+<a name="l00113"></a>00113     }
+<a name="l00114"></a>00114   }<span class="keywordflow">else</span>{
+<a name="l00115"></a>00115     <span class="keywordflow">for</span>(i=0; i&lt;descriptor.bNumConfigurations; i++){
+<a name="l00116"></a>00116       err = libusb_get_config_descriptor(device, i, &amp;configDescriptor);
+<a name="l00117"></a>00117       <span class="keywordflow">switch</span>(err){
+<a name="l00118"></a>00118         <span class="keywordflow">case</span> 0:
+<a name="l00119"></a>00119           config = <span class="keyword">new</span> <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a>;
+<a name="l00120"></a>00120           Q_ASSERT(config != 0);
+<a name="l00121"></a>00121           config-&gt;<a class="code" href="classmdt_usb_config_descriptor.html#acece47193e1ab7184894082a40233f45" title="Ftech the configuration descriptor&#39;s attributes.">fetchAttributes</a>(configDescriptor);
+<a name="l00122"></a>00122           libusb_free_config_descriptor(configDescriptor);
+<a name="l00123"></a>00123           pvConfigs.append(config);
+<a name="l00124"></a>00124           <span class="keywordflow">break</span>;
+<a name="l00125"></a>00125         <span class="keywordflow">case</span> LIBUSB_ERROR_NOT_FOUND:
+<a name="l00126"></a>00126         {
+<a name="l00127"></a>00127           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;Unable to find get configuration descriptor at index &quot;</span> + QString::number(i), mdtError::Warning);
+<a name="l00128"></a>00128           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbDeviceDescriptor&quot;</span>);
+<a name="l00129"></a>00129           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00130"></a>00130           <span class="keywordflow">break</span>;
+<a name="l00131"></a>00131         }
+<a name="l00132"></a>00132         <span class="keywordflow">default</span>:
+<a name="l00133"></a>00133           qDeleteAll(pvConfigs);
+<a name="l00134"></a>00134           pvConfigs.clear();
+<a name="l00135"></a>00135           <span class="keywordflow">return</span> err;
+<a name="l00136"></a>00136       }
+<a name="l00137"></a>00137     }
+<a name="l00138"></a>00138   }
 <a name="l00139"></a>00139 
-<a name="l00140"></a><a class="code" href="classmdt_usb_device_descriptor.html#a50b483ed26f546017bde4ae6f9762268">00140</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#a50b483ed26f546017bde4ae6f9762268" title="Subclass code (assigned by the USB-IF)">mdtUsbDeviceDescriptor::bDeviceSubClass</a>()<span class="keyword"> const</span>
-<a name="l00141"></a>00141 <span class="keyword"></span>{
-<a name="l00142"></a>00142   <span class="keywordflow">return</span> pvbDeviceSubClass;
-<a name="l00143"></a>00143 }
-<a name="l00144"></a>00144 
-<a name="l00145"></a><a class="code" href="classmdt_usb_device_descriptor.html#aac1207bd8cb91e04f48f6748b1a8ca16">00145</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#aac1207bd8cb91e04f48f6748b1a8ca16" title="Protocol code (assigned by the USB-IF)">mdtUsbDeviceDescriptor::bDeviceProtocol</a>()<span class="keyword"> const</span>
-<a name="l00146"></a>00146 <span class="keyword"></span>{
-<a name="l00147"></a>00147   <span class="keywordflow">return</span> pvbDeviceProtocol;
-<a name="l00148"></a>00148 }
-<a name="l00149"></a>00149 
-<a name="l00150"></a><a class="code" href="classmdt_usb_device_descriptor.html#a08b5ae262e2b966c952ee5e5bcc6fb10">00150</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#a08b5ae262e2b966c952ee5e5bcc6fb10" title="Maximum packet size for endpoint zero.">mdtUsbDeviceDescriptor::bMaxPacketSize0</a>()<span class="keyword"> const</span>
-<a name="l00151"></a>00151 <span class="keyword"></span>{
-<a name="l00152"></a>00152   <span class="keywordflow">return</span> pvbMaxPacketSize0;
-<a name="l00153"></a>00153 }
-<a name="l00154"></a>00154 
-<a name="l00155"></a><a class="code" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e">00155</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e" title="Vendor ID (assigned by the USB-IF)">mdtUsbDeviceDescriptor::idVendor</a>()<span class="keyword"> const</span>
-<a name="l00156"></a>00156 <span class="keyword"></span>{
-<a name="l00157"></a>00157   <span class="keywordflow">return</span> pvidVendor;
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-<a name="l00160"></a><a class="code" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">00160</a> QString <a class="code" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b" title="Vendor name (assigned by the USB-IF)">mdtUsbDeviceDescriptor::vendorName</a>()<span class="keyword"> const</span>
-<a name="l00161"></a>00161 <span class="keyword"></span>{
-<a name="l00162"></a>00162   <span class="keywordflow">switch</span>(pvidVendor){
-<a name="l00163"></a>00163     <span class="keywordflow">case</span> 2391:
-<a name="l00164"></a>00164       <span class="keywordflow">return</span> <span class="stringliteral">&quot;Agilent Technologies, Inc.&quot;</span>;
-<a name="l00165"></a>00165     <span class="keywordflow">case</span> 1133:
-<a name="l00166"></a>00166       <span class="keywordflow">return</span> <span class="stringliteral">&quot;Logitech Inc.&quot;</span>;
-<a name="l00167"></a>00167     <span class="keywordflow">case</span> 14627:
-<a name="l00168"></a>00168       <span class="keywordflow">return</span> <span class="stringliteral">&quot;National Instruments&quot;</span>;
-<a name="l00169"></a>00169     <span class="keywordflow">case</span> 1470:
-<a name="l00170"></a>00170       <span class="keywordflow">return</span> <span class="stringliteral">&quot;Tyco Electronics&quot;</span>;
-<a name="l00171"></a>00171     <span class="keywordflow">default</span>:
-<a name="l00172"></a>00172       <span class="keywordflow">return</span> <span class="stringliteral">&quot;VID: 0x&quot;</span> + QString::number(pvidVendor, 16);
-<a name="l00173"></a>00173   }
-<a name="l00174"></a>00174 }
-<a name="l00175"></a>00175 
-<a name="l00176"></a><a class="code" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1">00176</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1" title="Product ID.">mdtUsbDeviceDescriptor::idProduct</a>()<span class="keyword"> const</span>
-<a name="l00177"></a>00177 <span class="keyword"></span>{
-<a name="l00178"></a>00178   <span class="keywordflow">return</span> pvidProduct;
-<a name="l00179"></a>00179 }
-<a name="l00180"></a>00180 
-<a name="l00181"></a><a class="code" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866">00181</a> QString <a class="code" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866" title="Product name.">mdtUsbDeviceDescriptor::productName</a>()<span class="keyword"> const</span>
-<a name="l00182"></a>00182 <span class="keyword"></span>{
-<a name="l00183"></a>00183   QString defStr = <span class="stringliteral">&quot;PID: 0x&quot;</span> + QString::number(pvidProduct, 16);
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185   <span class="keywordflow">switch</span>(pvidVendor){
-<a name="l00186"></a>00186     <span class="comment">// Agilent products</span>
-<a name="l00187"></a>00187     <span class="keywordflow">case</span> 2391:
-<a name="l00188"></a>00188       <span class="keywordflow">switch</span>(pvidProduct){
-<a name="l00189"></a>00189         <span class="keywordflow">case</span> 0x0588:
-<a name="l00190"></a>00190           <span class="keywordflow">return</span> <span class="stringliteral">&quot;DSO1000 series oscilloscope&quot;</span>;
-<a name="l00191"></a>00191         <span class="keywordflow">case</span> 0x4d18:
-<a name="l00192"></a>00192           <span class="keywordflow">return</span> <span class="stringliteral">&quot;U3606A Multimeter/DC Power Supply&quot;</span>;
-<a name="l00193"></a>00193         <span class="keywordflow">default</span>:
-<a name="l00194"></a>00194           <span class="keywordflow">return</span> defStr;
-<a name="l00195"></a>00195       }
-<a name="l00196"></a>00196     <span class="comment">// Unknown vendor</span>
-<a name="l00197"></a>00197     <span class="keywordflow">default</span>:
-<a name="l00198"></a>00198       <span class="keywordflow">return</span> defStr;
-<a name="l00199"></a>00199   }
-<a name="l00200"></a>00200 }
-<a name="l00201"></a>00201 
-<a name="l00202"></a><a class="code" href="classmdt_usb_device_descriptor.html#a6b6f21f8dfdb707bfc23d01076b7ec5e">00202</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#a6b6f21f8dfdb707bfc23d01076b7ec5e" title="Device release number id.">mdtUsbDeviceDescriptor::bcdDevice</a>()<span class="keyword"> const</span>
-<a name="l00203"></a>00203 <span class="keyword"></span>{
-<a name="l00204"></a>00204   <span class="keywordflow">return</span> pvbcdDevice;
-<a name="l00205"></a>00205 }
-<a name="l00206"></a>00206 
-<a name="l00207"></a><a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02">00207</a> QList&lt;mdtUsbConfigDescriptor*&gt; &amp;<a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">mdtUsbDeviceDescriptor::configurations</a>()
-<a name="l00208"></a>00208 {
-<a name="l00209"></a>00209   <span class="keywordflow">return</span> pvConfigs;
-<a name="l00210"></a>00210 }
-<a name="l00211"></a>00211 
-<a name="l00212"></a><a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae">00212</a> <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">mdtUsbDeviceDescriptor::interface</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex)
-<a name="l00213"></a>00213 {
-<a name="l00214"></a>00214   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *configDescriptor;
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216   <span class="keywordflow">if</span>(configIndex &lt; 0){
-<a name="l00217"></a>00217     <span class="keywordflow">return</span> 0;
-<a name="l00218"></a>00218   }
-<a name="l00219"></a>00219   <span class="keywordflow">if</span>(configIndex &gt;= pvConfigs.size()){
-<a name="l00220"></a>00220     <span class="keywordflow">return</span> 0;
-<a name="l00221"></a>00221   }
-<a name="l00222"></a>00222   <span class="keywordflow">if</span>(ifaceIndex &lt; 0){
-<a name="l00223"></a>00223     <span class="keywordflow">return</span> 0;
-<a name="l00224"></a>00224   }
-<a name="l00225"></a>00225   configDescriptor = pvConfigs.at(configIndex);
-<a name="l00226"></a>00226   Q_ASSERT(configDescriptor != 0);
-<a name="l00227"></a>00227   <span class="keywordflow">if</span>(ifaceIndex &gt;= configDescriptor-&gt;interfaces().size()){
-<a name="l00228"></a>00228     <span class="keywordflow">return</span> 0;
-<a name="l00229"></a>00229   }
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231   <span class="keywordflow">return</span> configDescriptor-&gt;interfaces().at(ifaceIndex);
-<a name="l00232"></a>00232 }
-<a name="l00233"></a>00233 
-<a name="l00234"></a><a class="code" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d">00234</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d" title="Get a endpoint descriptor by index.">mdtUsbDeviceDescriptor::endpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">int</span> endpointIndex)
-<a name="l00235"></a>00235 {
-<a name="l00236"></a>00236   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
-<a name="l00237"></a>00237 
-<a name="l00238"></a>00238   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
-<a name="l00239"></a>00239   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
+<a name="l00140"></a>00140   <span class="keywordflow">return</span> 0;
+<a name="l00141"></a>00141 }
+<a name="l00142"></a>00142 
+<a name="l00143"></a><a class="code" href="classmdt_usb_device_descriptor.html#add8de4e1850995461a37ed27b75b4381">00143</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#add8de4e1850995461a37ed27b75b4381" title="Device descriptor type.">mdtUsbDeviceDescriptor::bDescriptorType</a>()<span class="keyword"> const</span>
+<a name="l00144"></a>00144 <span class="keyword"></span>{
+<a name="l00145"></a>00145   <span class="keywordflow">return</span> pvbDescriptorType;
+<a name="l00146"></a>00146 }
+<a name="l00147"></a>00147 
+<a name="l00148"></a><a class="code" href="classmdt_usb_device_descriptor.html#ae5f4d1cabe204ca0aa00735d04516e86">00148</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#ae5f4d1cabe204ca0aa00735d04516e86" title="USB Specification Release Number.">mdtUsbDeviceDescriptor::bcdUSB</a>()<span class="keyword"> const</span>
+<a name="l00149"></a>00149 <span class="keyword"></span>{
+<a name="l00150"></a>00150   <span class="keywordflow">return</span> pvbcdUSB;
+<a name="l00151"></a>00151 }
+<a name="l00152"></a>00152 
+<a name="l00153"></a><a class="code" href="classmdt_usb_device_descriptor.html#a94e04915c8df9102db54068911b92532">00153</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#a94e04915c8df9102db54068911b92532" title="Class code (assigned by the USB-IF)">mdtUsbDeviceDescriptor::bDeviceClass</a>()<span class="keyword"> const</span>
+<a name="l00154"></a>00154 <span class="keyword"></span>{
+<a name="l00155"></a>00155   <span class="keywordflow">return</span> pvbDeviceClass;
+<a name="l00156"></a>00156 }
+<a name="l00157"></a>00157 
+<a name="l00158"></a><a class="code" href="classmdt_usb_device_descriptor.html#a50b483ed26f546017bde4ae6f9762268">00158</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#a50b483ed26f546017bde4ae6f9762268" title="Subclass code (assigned by the USB-IF)">mdtUsbDeviceDescriptor::bDeviceSubClass</a>()<span class="keyword"> const</span>
+<a name="l00159"></a>00159 <span class="keyword"></span>{
+<a name="l00160"></a>00160   <span class="keywordflow">return</span> pvbDeviceSubClass;
+<a name="l00161"></a>00161 }
+<a name="l00162"></a>00162 
+<a name="l00163"></a><a class="code" href="classmdt_usb_device_descriptor.html#aac1207bd8cb91e04f48f6748b1a8ca16">00163</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#aac1207bd8cb91e04f48f6748b1a8ca16" title="Protocol code (assigned by the USB-IF)">mdtUsbDeviceDescriptor::bDeviceProtocol</a>()<span class="keyword"> const</span>
+<a name="l00164"></a>00164 <span class="keyword"></span>{
+<a name="l00165"></a>00165   <span class="keywordflow">return</span> pvbDeviceProtocol;
+<a name="l00166"></a>00166 }
+<a name="l00167"></a>00167 
+<a name="l00168"></a><a class="code" href="classmdt_usb_device_descriptor.html#a08b5ae262e2b966c952ee5e5bcc6fb10">00168</a> quint8 <a class="code" href="classmdt_usb_device_descriptor.html#a08b5ae262e2b966c952ee5e5bcc6fb10" title="Maximum packet size for endpoint zero.">mdtUsbDeviceDescriptor::bMaxPacketSize0</a>()<span class="keyword"> const</span>
+<a name="l00169"></a>00169 <span class="keyword"></span>{
+<a name="l00170"></a>00170   <span class="keywordflow">return</span> pvbMaxPacketSize0;
+<a name="l00171"></a>00171 }
+<a name="l00172"></a>00172 
+<a name="l00173"></a><a class="code" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e">00173</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#a8bbfdb3c54af6cccf15cd7e5f29e8a8e" title="Vendor ID (assigned by the USB-IF)">mdtUsbDeviceDescriptor::idVendor</a>()<span class="keyword"> const</span>
+<a name="l00174"></a>00174 <span class="keyword"></span>{
+<a name="l00175"></a>00175   <span class="keywordflow">return</span> pvidVendor;
+<a name="l00176"></a>00176 }
+<a name="l00177"></a>00177 
+<a name="l00178"></a><a class="code" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">00178</a> QString <a class="code" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b" title="Vendor name (assigned by the USB-IF)">mdtUsbDeviceDescriptor::vendorName</a>()<span class="keyword"> const</span>
+<a name="l00179"></a>00179 <span class="keyword"></span>{
+<a name="l00180"></a>00180   <span class="keywordflow">switch</span>(pvidVendor){
+<a name="l00181"></a>00181     <span class="keywordflow">case</span> 2391:
+<a name="l00182"></a>00182       <span class="keywordflow">return</span> <span class="stringliteral">&quot;Agilent Technologies, Inc.&quot;</span>;
+<a name="l00183"></a>00183     <span class="keywordflow">case</span> 1133:
+<a name="l00184"></a>00184       <span class="keywordflow">return</span> <span class="stringliteral">&quot;Logitech Inc.&quot;</span>;
+<a name="l00185"></a>00185     <span class="keywordflow">case</span> 14627:
+<a name="l00186"></a>00186       <span class="keywordflow">return</span> <span class="stringliteral">&quot;National Instruments&quot;</span>;
+<a name="l00187"></a>00187     <span class="keywordflow">case</span> 1470:
+<a name="l00188"></a>00188       <span class="keywordflow">return</span> <span class="stringliteral">&quot;Tyco Electronics&quot;</span>;
+<a name="l00189"></a>00189     <span class="keywordflow">default</span>:
+<a name="l00190"></a>00190       <span class="keywordflow">return</span> <span class="stringliteral">&quot;VID: 0x&quot;</span> + QString::number(pvidVendor, 16);
+<a name="l00191"></a>00191   }
+<a name="l00192"></a>00192 }
+<a name="l00193"></a>00193 
+<a name="l00194"></a><a class="code" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1">00194</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#a722dad54d42f03470508115f6394b9a1" title="Product ID.">mdtUsbDeviceDescriptor::idProduct</a>()<span class="keyword"> const</span>
+<a name="l00195"></a>00195 <span class="keyword"></span>{
+<a name="l00196"></a>00196   <span class="keywordflow">return</span> pvidProduct;
+<a name="l00197"></a>00197 }
+<a name="l00198"></a>00198 
+<a name="l00199"></a><a class="code" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866">00199</a> QString <a class="code" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866" title="Product name.">mdtUsbDeviceDescriptor::productName</a>()<span class="keyword"> const</span>
+<a name="l00200"></a>00200 <span class="keyword"></span>{
+<a name="l00201"></a>00201   QString defStr = <span class="stringliteral">&quot;PID: 0x&quot;</span> + QString::number(pvidProduct, 16);
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203   <span class="keywordflow">switch</span>(pvidVendor){
+<a name="l00204"></a>00204     <span class="comment">// Agilent products</span>
+<a name="l00205"></a>00205     <span class="keywordflow">case</span> 2391:
+<a name="l00206"></a>00206       <span class="keywordflow">switch</span>(pvidProduct){
+<a name="l00207"></a>00207         <span class="keywordflow">case</span> 0x0588:
+<a name="l00208"></a>00208           <span class="keywordflow">return</span> <span class="stringliteral">&quot;DSO1000 series oscilloscope&quot;</span>;
+<a name="l00209"></a>00209         <span class="keywordflow">case</span> 0x4d18:
+<a name="l00210"></a>00210           <span class="keywordflow">return</span> <span class="stringliteral">&quot;U3606A Multimeter/DC Power Supply&quot;</span>;
+<a name="l00211"></a>00211         <span class="keywordflow">default</span>:
+<a name="l00212"></a>00212           <span class="keywordflow">return</span> defStr;
+<a name="l00213"></a>00213       }
+<a name="l00214"></a>00214     <span class="comment">// Unknown vendor</span>
+<a name="l00215"></a>00215     <span class="keywordflow">default</span>:
+<a name="l00216"></a>00216       <span class="keywordflow">return</span> defStr;
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218 }
+<a name="l00219"></a>00219 
+<a name="l00220"></a><a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417">00220</a> QString <a class="code" href="classmdt_usb_device_descriptor.html#a458951fc9443b80e93ad126dc1b56417" title="Get serial number.">mdtUsbDeviceDescriptor::serialNumber</a>()<span class="keyword"> const</span>
+<a name="l00221"></a>00221 <span class="keyword"></span>{
+<a name="l00222"></a>00222   <span class="keywordflow">return</span> pvSerialNumber;
+<a name="l00223"></a>00223 }
+<a name="l00224"></a>00224 
+<a name="l00225"></a><a class="code" href="classmdt_usb_device_descriptor.html#a6b6f21f8dfdb707bfc23d01076b7ec5e">00225</a> quint16 <a class="code" href="classmdt_usb_device_descriptor.html#a6b6f21f8dfdb707bfc23d01076b7ec5e" title="Device release number id.">mdtUsbDeviceDescriptor::bcdDevice</a>()<span class="keyword"> const</span>
+<a name="l00226"></a>00226 <span class="keyword"></span>{
+<a name="l00227"></a>00227   <span class="keywordflow">return</span> pvbcdDevice;
+<a name="l00228"></a>00228 }
+<a name="l00229"></a>00229 
+<a name="l00230"></a><a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02">00230</a> QList&lt;mdtUsbConfigDescriptor*&gt; &amp;<a class="code" href="classmdt_usb_device_descriptor.html#acfc9e29a48b251012cbc38d339dc6a02" title="Access configurations.">mdtUsbDeviceDescriptor::configurations</a>()
+<a name="l00231"></a>00231 {
+<a name="l00232"></a>00232   <span class="keywordflow">return</span> pvConfigs;
+<a name="l00233"></a>00233 }
+<a name="l00234"></a>00234 
+<a name="l00235"></a><a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae">00235</a> <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">mdtUsbDeviceDescriptor::interface</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex)
+<a name="l00236"></a>00236 {
+<a name="l00237"></a>00237   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *configDescriptor;
+<a name="l00238"></a>00238 
+<a name="l00239"></a>00239   <span class="keywordflow">if</span>(configIndex &lt; 0){
 <a name="l00240"></a>00240     <span class="keywordflow">return</span> 0;
 <a name="l00241"></a>00241   }
-<a name="l00242"></a>00242   <span class="keywordflow">if</span>(endpointIndex &lt; 0){
+<a name="l00242"></a>00242   <span class="keywordflow">if</span>(configIndex &gt;= pvConfigs.size()){
 <a name="l00243"></a>00243     <span class="keywordflow">return</span> 0;
 <a name="l00244"></a>00244   }
-<a name="l00245"></a>00245   <span class="keywordflow">if</span>(endpointIndex &gt;= interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size()){
+<a name="l00245"></a>00245   <span class="keywordflow">if</span>(ifaceIndex &lt; 0){
 <a name="l00246"></a>00246     <span class="keywordflow">return</span> 0;
 <a name="l00247"></a>00247   }
-<a name="l00248"></a>00248 
-<a name="l00249"></a>00249   <span class="keywordflow">return</span> interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(endpointIndex);
-<a name="l00250"></a>00250 }
-<a name="l00251"></a>00251 
-<a name="l00252"></a><a class="code" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1">00252</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1" title="Find the first bulk transfert endpoint with OUT direction.">mdtUsbDeviceDescriptor::firstBulkOutEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
-<a name="l00253"></a>00253 {
-<a name="l00254"></a>00254   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
-<a name="l00255"></a>00255   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
-<a name="l00256"></a>00256   <span class="keywordtype">int</span> i;
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
-<a name="l00259"></a>00259   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
-<a name="l00260"></a>00260     <span class="keywordflow">return</span> 0;
-<a name="l00261"></a>00261   }
-<a name="l00262"></a>00262   <span class="comment">// Search in available enpoints</span>
-<a name="l00263"></a>00263   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
-<a name="l00264"></a>00264     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
-<a name="l00265"></a>00265     Q_ASSERT(endpointDescriptor != 0);
-<a name="l00266"></a>00266     <span class="comment">// Check if current endpoint is direction OUT and Bulk transfert</span>
-<a name="l00267"></a>00267     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#ae45b2407d6f973c25ff0058eb941857a" title="Endpoint direction.">isDirectionOUT</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a7bb6ffc5624d3059289a00da48632e93" title="Endpoint transfert type.">isTransfertTypeBulk</a>())){
-<a name="l00268"></a>00268       <span class="comment">// Here we found a bulk out endpoint. If needed, check if it&#39;s a data endpoint</span>
-<a name="l00269"></a>00269       <span class="keywordflow">if</span>(dataEndpointOnly){
-<a name="l00270"></a>00270         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
-<a name="l00271"></a>00271           <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00272"></a>00272         }
-<a name="l00273"></a>00273       }<span class="keywordflow">else</span>{
-<a name="l00274"></a>00274         <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00275"></a>00275       }
-<a name="l00276"></a>00276     }
-<a name="l00277"></a>00277   }
-<a name="l00278"></a>00278 
-<a name="l00279"></a>00279   <span class="comment">// Nothing found, return a null pointer</span>
-<a name="l00280"></a>00280   <span class="keywordflow">return</span> 0;
-<a name="l00281"></a>00281 }
-<a name="l00282"></a>00282 
-<a name="l00283"></a><a class="code" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585">00283</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585" title="Find the first bulk transfert endpoint with IN direction.">mdtUsbDeviceDescriptor::firstBulkInEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
-<a name="l00284"></a>00284 {
-<a name="l00285"></a>00285   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
-<a name="l00286"></a>00286   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
-<a name="l00287"></a>00287   <span class="keywordtype">int</span> i;
-<a name="l00288"></a>00288 
-<a name="l00289"></a>00289   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
-<a name="l00290"></a>00290   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
-<a name="l00291"></a>00291     <span class="keywordflow">return</span> 0;
-<a name="l00292"></a>00292   }
-<a name="l00293"></a>00293   <span class="comment">// Search in available enpoints</span>
-<a name="l00294"></a>00294   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
-<a name="l00295"></a>00295     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
-<a name="l00296"></a>00296     Q_ASSERT(endpointDescriptor != 0);
-<a name="l00297"></a>00297     <span class="comment">// Check if current endpoint is direction IN and Bulk transfert</span>
-<a name="l00298"></a>00298     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a8f6bc6b31b436f21c3ad34f909f35ccf" title="Endpoint direction.">isDirectionIN</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a7bb6ffc5624d3059289a00da48632e93" title="Endpoint transfert type.">isTransfertTypeBulk</a>())){
-<a name="l00299"></a>00299       <span class="comment">// Here we found a bulk in endpoint. If needed, check if it&#39;s a data endpoint</span>
-<a name="l00300"></a>00300       <span class="keywordflow">if</span>(dataEndpointOnly){
-<a name="l00301"></a>00301         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
-<a name="l00302"></a>00302           <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00303"></a>00303         }
-<a name="l00304"></a>00304       }<span class="keywordflow">else</span>{
-<a name="l00305"></a>00305         <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00306"></a>00306       }
-<a name="l00307"></a>00307     }
-<a name="l00308"></a>00308   }
-<a name="l00309"></a>00309 
-<a name="l00310"></a>00310   <span class="comment">// Nothing found, return a null pointer</span>
-<a name="l00311"></a>00311   <span class="keywordflow">return</span> 0;
-<a name="l00312"></a>00312 }
-<a name="l00313"></a>00313 
-<a name="l00314"></a><a class="code" href="classmdt_usb_device_descriptor.html#ad30b3579b0c77585df29acdfdf0fc179">00314</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#ad30b3579b0c77585df29acdfdf0fc179" title="Find the first interrupt transfert endpoint with OUT direction.">mdtUsbDeviceDescriptor::firstInterruptOutEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
-<a name="l00315"></a>00315 {
-<a name="l00316"></a>00316   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
-<a name="l00317"></a>00317   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
-<a name="l00318"></a>00318   <span class="keywordtype">int</span> i;
-<a name="l00319"></a>00319 
-<a name="l00320"></a>00320   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
-<a name="l00321"></a>00321   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
-<a name="l00322"></a>00322     <span class="keywordflow">return</span> 0;
-<a name="l00323"></a>00323   }
-<a name="l00324"></a>00324   <span class="comment">// Search in available enpoints</span>
-<a name="l00325"></a>00325   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
-<a name="l00326"></a>00326     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
-<a name="l00327"></a>00327     Q_ASSERT(endpointDescriptor != 0);
-<a name="l00328"></a>00328     <span class="comment">// Check if current endpoint is direction OUT and Interrupt transfert</span>
-<a name="l00329"></a>00329     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#ae45b2407d6f973c25ff0058eb941857a" title="Endpoint direction.">isDirectionOUT</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a25f980aace01311474813f588d1618df" title="Endpoint transfert type.">isTransfertTypeInterrupt</a>())){
-<a name="l00330"></a>00330       <span class="comment">// Here we found a interrupt out endpoint. If needed, chack if it&#39;s a data endpoint</span>
-<a name="l00331"></a>00331       <span class="keywordflow">if</span>(dataEndpointOnly){
-<a name="l00332"></a>00332         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
-<a name="l00333"></a>00333           <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00334"></a>00334         }
-<a name="l00335"></a>00335       }<span class="keywordflow">else</span>{
-<a name="l00336"></a>00336         <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00337"></a>00337       }
-<a name="l00338"></a>00338     }
-<a name="l00339"></a>00339   }
-<a name="l00340"></a>00340 
-<a name="l00341"></a>00341   <span class="comment">// Nothing found, return a null pointer</span>
-<a name="l00342"></a>00342   <span class="keywordflow">return</span> 0;
-<a name="l00343"></a>00343 }
-<a name="l00344"></a>00344 
-<a name="l00345"></a><a class="code" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b">00345</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b" title="Find the first interrupt transfert endpoint with IN direction.">mdtUsbDeviceDescriptor::firstInterruptInEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
-<a name="l00346"></a>00346 {
-<a name="l00347"></a>00347   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
-<a name="l00348"></a>00348   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
-<a name="l00349"></a>00349   <span class="keywordtype">int</span> i;
-<a name="l00350"></a>00350 
-<a name="l00351"></a>00351   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
-<a name="l00352"></a>00352   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
-<a name="l00353"></a>00353     <span class="keywordflow">return</span> 0;
-<a name="l00354"></a>00354   }
-<a name="l00355"></a>00355   <span class="comment">// Search in available enpoints</span>
-<a name="l00356"></a>00356   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
-<a name="l00357"></a>00357     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
-<a name="l00358"></a>00358     Q_ASSERT(endpointDescriptor != 0);
-<a name="l00359"></a>00359     <span class="comment">// Check if current endpoint is direction IN and Interrupt transfert</span>
-<a name="l00360"></a>00360     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a8f6bc6b31b436f21c3ad34f909f35ccf" title="Endpoint direction.">isDirectionIN</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a25f980aace01311474813f588d1618df" title="Endpoint transfert type.">isTransfertTypeInterrupt</a>())){
-<a name="l00361"></a>00361       <span class="comment">// Here we found a interrupt in endpoint. If needed, chack if it&#39;s a data endpoint</span>
-<a name="l00362"></a>00362       <span class="keywordflow">if</span>(dataEndpointOnly){
-<a name="l00363"></a>00363         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
-<a name="l00364"></a>00364           <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00365"></a>00365         }
-<a name="l00366"></a>00366       }<span class="keywordflow">else</span>{
-<a name="l00367"></a>00367         <span class="keywordflow">return</span> endpointDescriptor;
-<a name="l00368"></a>00368       }
-<a name="l00369"></a>00369     }
-<a name="l00370"></a>00370   }
-<a name="l00371"></a>00371 
-<a name="l00372"></a>00372   <span class="comment">// Nothing found, return a null pointer</span>
-<a name="l00373"></a>00373   <span class="keywordflow">return</span> 0;
-<a name="l00374"></a>00374 }
+<a name="l00248"></a>00248   configDescriptor = pvConfigs.at(configIndex);
+<a name="l00249"></a>00249   Q_ASSERT(configDescriptor != 0);
+<a name="l00250"></a>00250   <span class="keywordflow">if</span>(ifaceIndex &gt;= configDescriptor-&gt;interfaces().size()){
+<a name="l00251"></a>00251     <span class="keywordflow">return</span> 0;
+<a name="l00252"></a>00252   }
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254   <span class="keywordflow">return</span> configDescriptor-&gt;interfaces().at(ifaceIndex);
+<a name="l00255"></a>00255 }
+<a name="l00256"></a>00256 
+<a name="l00257"></a><a class="code" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d">00257</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#a41582e524cba87f52ca3628c0b690b8d" title="Get a endpoint descriptor by index.">mdtUsbDeviceDescriptor::endpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">int</span> endpointIndex)
+<a name="l00258"></a>00258 {
+<a name="l00259"></a>00259   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
+<a name="l00260"></a>00260 
+<a name="l00261"></a>00261   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
+<a name="l00262"></a>00262   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
+<a name="l00263"></a>00263     <span class="keywordflow">return</span> 0;
+<a name="l00264"></a>00264   }
+<a name="l00265"></a>00265   <span class="keywordflow">if</span>(endpointIndex &lt; 0){
+<a name="l00266"></a>00266     <span class="keywordflow">return</span> 0;
+<a name="l00267"></a>00267   }
+<a name="l00268"></a>00268   <span class="keywordflow">if</span>(endpointIndex &gt;= interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size()){
+<a name="l00269"></a>00269     <span class="keywordflow">return</span> 0;
+<a name="l00270"></a>00270   }
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272   <span class="keywordflow">return</span> interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(endpointIndex);
+<a name="l00273"></a>00273 }
+<a name="l00274"></a>00274 
+<a name="l00275"></a><a class="code" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1">00275</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#ac1991e3d800700b2c099cd1aca2274d1" title="Find the first bulk transfert endpoint with OUT direction.">mdtUsbDeviceDescriptor::firstBulkOutEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
+<a name="l00276"></a>00276 {
+<a name="l00277"></a>00277   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
+<a name="l00278"></a>00278   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
+<a name="l00279"></a>00279   <span class="keywordtype">int</span> i;
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
+<a name="l00282"></a>00282   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
+<a name="l00283"></a>00283     <span class="keywordflow">return</span> 0;
+<a name="l00284"></a>00284   }
+<a name="l00285"></a>00285   <span class="comment">// Search in available enpoints</span>
+<a name="l00286"></a>00286   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
+<a name="l00287"></a>00287     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
+<a name="l00288"></a>00288     Q_ASSERT(endpointDescriptor != 0);
+<a name="l00289"></a>00289     <span class="comment">// Check if current endpoint is direction OUT and Bulk transfert</span>
+<a name="l00290"></a>00290     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#ae45b2407d6f973c25ff0058eb941857a" title="Endpoint direction.">isDirectionOUT</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a7bb6ffc5624d3059289a00da48632e93" title="Endpoint transfert type.">isTransfertTypeBulk</a>())){
+<a name="l00291"></a>00291       <span class="comment">// Here we found a bulk out endpoint. If needed, check if it&#39;s a data endpoint</span>
+<a name="l00292"></a>00292       <span class="keywordflow">if</span>(dataEndpointOnly){
+<a name="l00293"></a>00293         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
+<a name="l00294"></a>00294           <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00295"></a>00295         }
+<a name="l00296"></a>00296       }<span class="keywordflow">else</span>{
+<a name="l00297"></a>00297         <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00298"></a>00298       }
+<a name="l00299"></a>00299     }
+<a name="l00300"></a>00300   }
+<a name="l00301"></a>00301 
+<a name="l00302"></a>00302   <span class="comment">// Nothing found, return a null pointer</span>
+<a name="l00303"></a>00303   <span class="keywordflow">return</span> 0;
+<a name="l00304"></a>00304 }
+<a name="l00305"></a>00305 
+<a name="l00306"></a><a class="code" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585">00306</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#a078b5d3dfe6fd56ab2f716357a160585" title="Find the first bulk transfert endpoint with IN direction.">mdtUsbDeviceDescriptor::firstBulkInEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
+<a name="l00307"></a>00307 {
+<a name="l00308"></a>00308   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
+<a name="l00309"></a>00309   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
+<a name="l00310"></a>00310   <span class="keywordtype">int</span> i;
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
+<a name="l00313"></a>00313   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
+<a name="l00314"></a>00314     <span class="keywordflow">return</span> 0;
+<a name="l00315"></a>00315   }
+<a name="l00316"></a>00316   <span class="comment">// Search in available enpoints</span>
+<a name="l00317"></a>00317   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
+<a name="l00318"></a>00318     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
+<a name="l00319"></a>00319     Q_ASSERT(endpointDescriptor != 0);
+<a name="l00320"></a>00320     <span class="comment">// Check if current endpoint is direction IN and Bulk transfert</span>
+<a name="l00321"></a>00321     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a8f6bc6b31b436f21c3ad34f909f35ccf" title="Endpoint direction.">isDirectionIN</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a7bb6ffc5624d3059289a00da48632e93" title="Endpoint transfert type.">isTransfertTypeBulk</a>())){
+<a name="l00322"></a>00322       <span class="comment">// Here we found a bulk in endpoint. If needed, check if it&#39;s a data endpoint</span>
+<a name="l00323"></a>00323       <span class="keywordflow">if</span>(dataEndpointOnly){
+<a name="l00324"></a>00324         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
+<a name="l00325"></a>00325           <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00326"></a>00326         }
+<a name="l00327"></a>00327       }<span class="keywordflow">else</span>{
+<a name="l00328"></a>00328         <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00329"></a>00329       }
+<a name="l00330"></a>00330     }
+<a name="l00331"></a>00331   }
+<a name="l00332"></a>00332 
+<a name="l00333"></a>00333   <span class="comment">// Nothing found, return a null pointer</span>
+<a name="l00334"></a>00334   <span class="keywordflow">return</span> 0;
+<a name="l00335"></a>00335 }
+<a name="l00336"></a>00336 
+<a name="l00337"></a><a class="code" href="classmdt_usb_device_descriptor.html#ad30b3579b0c77585df29acdfdf0fc179">00337</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#ad30b3579b0c77585df29acdfdf0fc179" title="Find the first interrupt transfert endpoint with OUT direction.">mdtUsbDeviceDescriptor::firstInterruptOutEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
+<a name="l00338"></a>00338 {
+<a name="l00339"></a>00339   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
+<a name="l00340"></a>00340   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
+<a name="l00341"></a>00341   <span class="keywordtype">int</span> i;
+<a name="l00342"></a>00342 
+<a name="l00343"></a>00343   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
+<a name="l00344"></a>00344   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
+<a name="l00345"></a>00345     <span class="keywordflow">return</span> 0;
+<a name="l00346"></a>00346   }
+<a name="l00347"></a>00347   <span class="comment">// Search in available enpoints</span>
+<a name="l00348"></a>00348   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
+<a name="l00349"></a>00349     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
+<a name="l00350"></a>00350     Q_ASSERT(endpointDescriptor != 0);
+<a name="l00351"></a>00351     <span class="comment">// Check if current endpoint is direction OUT and Interrupt transfert</span>
+<a name="l00352"></a>00352     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#ae45b2407d6f973c25ff0058eb941857a" title="Endpoint direction.">isDirectionOUT</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a25f980aace01311474813f588d1618df" title="Endpoint transfert type.">isTransfertTypeInterrupt</a>())){
+<a name="l00353"></a>00353       <span class="comment">// Here we found a interrupt out endpoint. If needed, chack if it&#39;s a data endpoint</span>
+<a name="l00354"></a>00354       <span class="keywordflow">if</span>(dataEndpointOnly){
+<a name="l00355"></a>00355         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
+<a name="l00356"></a>00356           <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00357"></a>00357         }
+<a name="l00358"></a>00358       }<span class="keywordflow">else</span>{
+<a name="l00359"></a>00359         <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00360"></a>00360       }
+<a name="l00361"></a>00361     }
+<a name="l00362"></a>00362   }
+<a name="l00363"></a>00363 
+<a name="l00364"></a>00364   <span class="comment">// Nothing found, return a null pointer</span>
+<a name="l00365"></a>00365   <span class="keywordflow">return</span> 0;
+<a name="l00366"></a>00366 }
+<a name="l00367"></a>00367 
+<a name="l00368"></a><a class="code" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b">00368</a> <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *<a class="code" href="classmdt_usb_device_descriptor.html#a95112e151605bf8b10c5eca74faaea3b" title="Find the first interrupt transfert endpoint with IN direction.">mdtUsbDeviceDescriptor::firstInterruptInEndpoint</a>(<span class="keywordtype">int</span> configIndex, <span class="keywordtype">int</span> ifaceIndex, <span class="keywordtype">bool</span> dataEndpointOnly)
+<a name="l00369"></a>00369 {
+<a name="l00370"></a>00370   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *interfaceDescriptor;
+<a name="l00371"></a>00371   <a class="code" href="classmdt_usb_endpoint_descriptor.html" title="USB endpoint descriptor.">mdtUsbEndpointDescriptor</a> *endpointDescriptor;
+<a name="l00372"></a>00372   <span class="keywordtype">int</span> i;
+<a name="l00373"></a>00373 
+<a name="l00374"></a>00374   interfaceDescriptor = <a class="code" href="classmdt_usb_device_descriptor.html#af1e27ae69d3c77c9dfc53a3f261caeae" title="Get a interface descriptor by index.">interface</a>(configIndex, ifaceIndex);
+<a name="l00375"></a>00375   <span class="keywordflow">if</span>(interfaceDescriptor == 0){
+<a name="l00376"></a>00376     <span class="keywordflow">return</span> 0;
+<a name="l00377"></a>00377   }
+<a name="l00378"></a>00378   <span class="comment">// Search in available enpoints</span>
+<a name="l00379"></a>00379   <span class="keywordflow">for</span>(i=0; i&lt;interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().size(); i++){
+<a name="l00380"></a>00380     endpointDescriptor = interfaceDescriptor-&gt;<a class="code" href="classmdt_usb_interface_descriptor.html#a584bd81b092884295f1ebe1e0db55487" title="List of avaliable enpoints.">endpoints</a>().at(i);
+<a name="l00381"></a>00381     Q_ASSERT(endpointDescriptor != 0);
+<a name="l00382"></a>00382     <span class="comment">// Check if current endpoint is direction IN and Interrupt transfert</span>
+<a name="l00383"></a>00383     <span class="keywordflow">if</span>((endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a8f6bc6b31b436f21c3ad34f909f35ccf" title="Endpoint direction.">isDirectionIN</a>())&amp;&amp;(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#a25f980aace01311474813f588d1618df" title="Endpoint transfert type.">isTransfertTypeInterrupt</a>())){
+<a name="l00384"></a>00384       <span class="comment">// Here we found a interrupt in endpoint. If needed, chack if it&#39;s a data endpoint</span>
+<a name="l00385"></a>00385       <span class="keywordflow">if</span>(dataEndpointOnly){
+<a name="l00386"></a>00386         <span class="keywordflow">if</span>(endpointDescriptor-&gt;<a class="code" href="classmdt_usb_endpoint_descriptor.html#af7f74090d6964f908fb556a04853c873" title="Endpoint usage type.">isDataEndpoint</a>()){
+<a name="l00387"></a>00387           <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00388"></a>00388         }
+<a name="l00389"></a>00389       }<span class="keywordflow">else</span>{
+<a name="l00390"></a>00390         <span class="keywordflow">return</span> endpointDescriptor;
+<a name="l00391"></a>00391       }
+<a name="l00392"></a>00392     }
+<a name="l00393"></a>00393   }
+<a name="l00394"></a>00394 
+<a name="l00395"></a>00395   <span class="comment">// Nothing found, return a null pointer</span>
+<a name="l00396"></a>00396   <span class="keywordflow">return</span> 0;
+<a name="l00397"></a>00397 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -450,7 +472,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

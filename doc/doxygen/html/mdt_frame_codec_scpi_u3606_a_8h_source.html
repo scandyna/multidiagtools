@@ -60,51 +60,71 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">src/mdtutils/mdtFrameCodecScpiU3606A.h</div>  </div>
 </div>
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MDT_FRAME_CODEC_SCPI_U3606A_H</span>
-<a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MDT_FRAME_CODEC_SCPI_U3606A_H</span>
-<a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 
-<a name="l00005"></a>00005 <span class="preprocessor">#include &quot;mdtFrameCodecScpi.h&quot;</span>
-<a name="l00006"></a>00006 
-<a name="l00009"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html">00009</a> <span class="keyword">class </span><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data.">mdtFrameCodecScpiU3606A</a> : <span class="keyword">public</span> <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>
-<a name="l00010"></a>00010 {
-<a name="l00011"></a>00011  <span class="keyword">public</span>:
-<a name="l00012"></a>00012 
-<a name="l00015"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">00015</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004" title="Measure type.">measure_type_t</a> {
-<a name="l00016"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a56df4ffec0205d0bae97d56853490eec">00016</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a56df4ffec0205d0bae97d56853490eec">MT_UNKNOW</a>,          
-<a name="l00017"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a7178fed206da47e7f55e68723acf809a">00017</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a7178fed206da47e7f55e68723acf809a">MT_VOLTAGE_DC</a>,      
-<a name="l00018"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a95fc88c0223637cf3fe3a101fb568f1d">00018</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a95fc88c0223637cf3fe3a101fb568f1d">MT_VOLTAGE_AC</a>,      
-<a name="l00019"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a4b6d05bccb61870ebae4f58c34b41e31">00019</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a4b6d05bccb61870ebae4f58c34b41e31">MT_CURRENT_DC</a>,      
-<a name="l00020"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3">00020</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3">MT_CURRENT_AC</a>       
-<a name="l00021"></a>00021   };
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023   <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data.">mdtFrameCodecScpiU3606A</a>();
-<a name="l00024"></a>00024 
-<a name="l00028"></a>00028   <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#adb24e0835c2407e15be1a5a2780f965c" title="Decode the CONFigure and FUNCtion answer.">decodeConfFunc</a>(QByteArray &amp;frame);
-<a name="l00029"></a>00029 
-<a name="l00039"></a>00039   QVariant <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3ca37c46462e24f9c26d4e352fe2db40" title="Decode a signle value in double floating format.">decodeSingleValueDouble</a>(QByteArray &amp;frame);
-<a name="l00040"></a>00040 
-<a name="l00043"></a>00043   <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004" title="Measure type.">measure_type_t</a> <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a5d2c549ceee92ed152d79b643caab594" title="Get the measure type.">measureType</a>();
-<a name="l00044"></a>00044 
-<a name="l00047"></a>00047   QVariant <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a2592942192dce715fb828612e2a7e1c9" title="Get the measure range.">range</a>();
-<a name="l00048"></a>00048 
-<a name="l00051"></a>00051   QVariant <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3657c8a712ba324b1d5b10a789a32501" title="Get the measure resolution.">resolution</a>();
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
+<a name="l00002"></a>00002 <span class="comment"> **</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00004"></a>00004 <span class="comment"> **</span>
+<a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
+<a name="l00006"></a>00006 <span class="comment"> **</span>
+<a name="l00007"></a>00007 <span class="comment"> ** multiDiagTools is free software: you can redistribute it and/or modify</span>
+<a name="l00008"></a>00008 <span class="comment"> ** it under the terms of the GNU Lesser General Public License as published by</span>
+<a name="l00009"></a>00009 <span class="comment"> ** the Free Software Foundation, either version 3 of the License, or</span>
+<a name="l00010"></a>00010 <span class="comment"> ** (at your option) any later version.</span>
+<a name="l00011"></a>00011 <span class="comment"> **</span>
+<a name="l00012"></a>00012 <span class="comment"> ** multiDiagTools is distributed in the hope that it will be useful,</span>
+<a name="l00013"></a>00013 <span class="comment"> ** but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<a name="l00014"></a>00014 <span class="comment"> ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<a name="l00015"></a>00015 <span class="comment"> ** GNU Lesser General Public License for more details.</span>
+<a name="l00016"></a>00016 <span class="comment"> **</span>
+<a name="l00017"></a>00017 <span class="comment"> ** You should have received a copy of the GNU Lesser General Public License</span>
+<a name="l00018"></a>00018 <span class="comment"> ** along with multiDiagTools.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<a name="l00019"></a>00019 <span class="comment"> **</span>
+<a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
+<a name="l00021"></a>00021 <span class="preprocessor">#ifndef MDT_FRAME_CODEC_SCPI_U3606A_H</span>
+<a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_FRAME_CODEC_SCPI_U3606A_H</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtFrameCodecScpi.h&quot;</span>
+<a name="l00025"></a>00025 
+<a name="l00028"></a>00028 <span class="preprocessor">#define MDT_FC_SCPI_CONF  (MDT_FC_SCPI_LAST_TYPE + 1)   </span>
+<a name="l00032"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html">00032</a> <span class="preprocessor">class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>{
+<a name="l00034"></a>00034  <span class="keyword">public</span>:
+<a name="l00035"></a>00035 
+<a name="l00038"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">00038</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004" title="Measure type.">measure_type_t</a> {
+<a name="l00039"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a56df4ffec0205d0bae97d56853490eec">00039</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a56df4ffec0205d0bae97d56853490eec">MT_UNKNOW</a>,          
+<a name="l00040"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a7178fed206da47e7f55e68723acf809a">00040</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a7178fed206da47e7f55e68723acf809a">MT_VOLTAGE_DC</a>,      
+<a name="l00041"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a95fc88c0223637cf3fe3a101fb568f1d">00041</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a95fc88c0223637cf3fe3a101fb568f1d">MT_VOLTAGE_AC</a>,      
+<a name="l00042"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a4b6d05bccb61870ebae4f58c34b41e31">00042</a>     <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a4b6d05bccb61870ebae4f58c34b41e31">MT_CURRENT_DC</a>,      
+<a name="l00043"></a><a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3">00043</a>     MT_CURRENT_AC       
+<a name="l00044"></a>00044   };
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046   <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data.">mdtFrameCodecScpiU3606A</a>();
+<a name="l00047"></a>00047 
+<a name="l00051"></a>00051   <span class="keywordtype">bool</span> decodeConfFunc(QByteArray &amp;frame);
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053  <span class="keyword">private</span>:
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055   <span class="comment">// Decode values for a node</span>
-<a name="l00056"></a>00056   <span class="comment">// Each value will be stored in pvValues</span>
-<a name="l00057"></a>00057   <span class="keywordtype">bool</span> decodeNodeValues(QString data);
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="comment">// Convert value to double with U3606A limits check (OL, -OL)</span>
-<a name="l00060"></a>00060   QVariant convertToDouble(QVariant value);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004" title="Measure type.">measure_type_t</a> pvMeasureType;
-<a name="l00063"></a>00063   QVariant pvRange;
-<a name="l00064"></a>00064   QVariant pvResolution;
-<a name="l00065"></a>00065 };
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 <span class="preprocessor">#endif  // #ifndef MDT_FRAME_CODEC_SCPI_U3606A_H</span>
+<a name="l00062"></a>00062   QVariant decodeSingleValueDouble(QByteArray &amp;frame);
+<a name="l00063"></a>00063 
+<a name="l00066"></a>00066   measure_type_t measureType();
+<a name="l00067"></a>00067 
+<a name="l00070"></a>00070   QVariant range();
+<a name="l00071"></a>00071 
+<a name="l00074"></a>00074   QVariant resolution();
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076  <span class="keyword">private</span>:
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   <span class="comment">// Decode values for a node</span>
+<a name="l00079"></a>00079   <span class="comment">// Each value will be stored in pvValues</span>
+<a name="l00080"></a>00080   <span class="keywordtype">bool</span> decodeNodeValues(QString data);
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082   <span class="comment">// Convert value to double with U3606A limits check (OL, -OL)</span>
+<a name="l00083"></a>00083   QVariant convertToDouble(QVariant value);
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   measure_type_t pvMeasureType;
+<a name="l00086"></a>00086   QVariant pvRange;
+<a name="l00087"></a>00087   QVariant pvResolution;
+<a name="l00088"></a>00088 };
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="preprocessor">#endif  // #ifndef MDT_FRAME_CODEC_SCPI_U3606A_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -121,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

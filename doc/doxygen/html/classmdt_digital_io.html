@@ -101,8 +101,8 @@ Signals</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69c20119906682c0bd90833598127328"></a><!-- doxytag: member="mdtDigitalIo::stateChanged" ref="a69c20119906682c0bd90833598127328" args="(bool on)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#a69c20119906682c0bd90833598127328">stateChanged</a> (bool on)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted whenever the state is changed. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bb6637d6ee81c7c3310b04f7fb743a4"></a><!-- doxytag: member="mdtDigitalIo::stateChanged" ref="a0bb6637d6ee81c7c3310b04f7fb743a4" args="(int address, bool on)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>stateChanged</b> (int address, bool on)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_digital_io.html#aa23bf21e08f0b0d82e430e88ac03aba8">stateChanged</a> (int address)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signal is emitted whenever the state is changed.  <a href="#aa23bf21e08f0b0d82e430e88ac03aba8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab50657b37b4915bd142aa0f22f45fd41"></a><!-- doxytag: member="mdtDigitalIo::stateChangedForUi" ref="ab50657b37b4915bd142aa0f22f45fd41" args="(bool on)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stateChangedForUi</b> (bool on)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
@@ -171,7 +171,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set I/O state (On or OFF) </p>
 <p>Overloaded method that calls setOn(bool, bool) with isValid = true. </p>
 
-<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00075">75</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_digital_io_8cpp_source.html#l00074">74</a> of file <a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a>.</p>
 
 </div>
 </div>
@@ -225,6 +225,26 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="aa23bf21e08f0b0d82e430e88ac03aba8"></a><!-- doxytag: member="mdtDigitalIo::stateChanged" ref="aa23bf21e08f0b0d82e430e88ac03aba8" args="(int address)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDigitalIo::stateChanged </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td><code> [signal]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>This signal is emitted whenever the state is changed. </p>
+<p>This signal is used by <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> to notify <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_digital_io_8h_source.html">mdtDigitalIo.h</a></li>
 <li>src/mdtutils/<a class="el" href="mdt_digital_io_8cpp_source.html">mdtDigitalIo.cpp</a></li>
@@ -244,7 +264,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

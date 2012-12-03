@@ -50,7 +50,7 @@ It's possible to use the read timeout protocol. An example of this is MODBUS (ov
 \hyperlink{classmdt_port_config}{mdtPortConfig}
 \end{DoxySeeAlso}
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]suspendTransmission() call is no longer in \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead()}, must be handled in run() now. \end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]suspendTransmission() call is no longer in \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead()}, must be handled in run() now. \end{Desc}
 
 
 Definition at line 37 of file mdtPortReadThread.h.
@@ -73,7 +73,7 @@ Returns true if this thread reads data and send the \hyperlink{classmdt_port_thr
 
 \hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
 
-Implements \hyperlink{classmdt_port_thread_a3d57f15a864ae45c98eb40dd89f4cec6}{mdtPortThread}.
+Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{mdtPortThread}.
 
 
 

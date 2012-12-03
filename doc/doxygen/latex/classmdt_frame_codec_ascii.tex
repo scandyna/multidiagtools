@@ -34,15 +34,19 @@ void \hyperlink{classmdt_frame_codec_ascii_a0e8b9664e1451400e1b955c5180c0de8}{tr
 void \hyperlink{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}{setCaseUpper} ()}
 \label{classmdt_frame_codec_ascii_a119506d484a807d3486d47738ee22920}
 
-\begin{DoxyCompactList}\small\item\em Set frame's data to upper case. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set frame's data to upper case. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{
+QVariant \hyperlink{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}{convertData} (const QString \&data) const }
+\label{classmdt_frame_codec_ascii_aca3ccdf0bc617747e99ed1672344b880}
+
+\begin{DoxyCompactList}\small\item\em Convert a string to first matching type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{
-bool {\bfseries removeEofSeq} ()}
-\label{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}
-
-\end{DoxyCompactItemize}
+bool \hyperlink{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}{clean} ()
+\begin{DoxyCompactList}\small\item\em Clean frame. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{removeEofSeq} ()
+\begin{DoxyCompactList}\small\item\em Remove the End Of Frame Sequence. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -66,11 +70,52 @@ QStringList {\bfseries pvNodes}}
 \subsection{Detailed Description}
 
 
-Definition at line 8 of file mdtFrameCodecAscii.h.
+Definition at line 29 of file mdtFrameCodecAscii.h.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}{
+\index{mdtFrameCodecAscii@{mdtFrameCodecAscii}!clean@{clean}}
+\index{clean@{clean}!mdtFrameCodecAscii@{mdtFrameCodecAscii}}
+\subsubsection[{clean}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecAscii::clean (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_frame_codec_ascii_a1dc1b7eda5e034c41b27c431227881e1}
+
+
+Clean frame. 
+
+Helper method that removes white spaces at beginning and end of internal data (see QString::trimmed() ). Next, the EOF seuqence is removed.
+
+If a step fails, a message is added to \hyperlink{classmdt_error}{mdtError} system.
+
+\begin{DoxyReturn}{Returns}
+true if EOF could be removed, and data size is $>$ 0 after clean. 
+\end{DoxyReturn}
+
+
+Definition at line 92 of file mdtFrameCodecAscii.cpp.
+
+\hypertarget{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}{
+\index{mdtFrameCodecAscii@{mdtFrameCodecAscii}!removeEofSeq@{removeEofSeq}}
+\index{removeEofSeq@{removeEofSeq}!mdtFrameCodecAscii@{mdtFrameCodecAscii}}
+\subsubsection[{removeEofSeq}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecAscii::removeEofSeq (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_frame_codec_ascii_ab9aebbbadb6d40b1353634154e6a28c0}
+
+
+Remove the End Of Frame Sequence. 
+
+Note: this method does nothing if EofSeq was not set 
+
+Definition at line 111 of file mdtFrameCodecAscii.cpp.
+
 \hypertarget{classmdt_frame_codec_ascii_a771d983498fb298595afbb97ee7a40f1}{
 \index{mdtFrameCodecAscii@{mdtFrameCodecAscii}!setEofSeq@{setEofSeq}}
 \index{setEofSeq@{setEofSeq}!mdtFrameCodecAscii@{mdtFrameCodecAscii}}
@@ -93,7 +138,7 @@ When using mdtLibrary's communication classes, the endOfFrame sequence is allrea
 \end{DoxySeeAlso}
 
 
-Definition at line 15 of file mdtFrameCodecAscii.cpp.
+Definition at line 34 of file mdtFrameCodecAscii.cpp.
 
 
 

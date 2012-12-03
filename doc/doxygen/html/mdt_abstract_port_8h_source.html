@@ -109,132 +109,134 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00057"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">00057</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">WriteCanceled</a>,          
 <a name="l00059"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">00059</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">ReadCanceled</a>,           
 <a name="l00061"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">00061</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">Disconnected</a>,           
+<a name="l00064"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">00064</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93">Connecting</a>,             
 <a name="l00065"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">00065</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eacb8cc31d0b00dda9e25ed1cc1fa17871">UnknownError</a>,           
 <a name="l00067"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">00067</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>,         
-<a name="l00070"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">00070</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">WriteQueueEmpty</a>         
-<a name="l00071"></a>00071                };
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>(QObject *parent = 0);
-<a name="l00074"></a>00074 
-<a name="l00083"></a>00083   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort</a>();
-<a name="l00084"></a>00084 
-<a name="l00091"></a>00091   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615" title="Get port name.">portName</a>);
-<a name="l00092"></a>00092 
-<a name="l00095"></a>00095   QString &amp;<a class="code" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615" title="Get port name.">portName</a>();
-<a name="l00096"></a>00096 
-<a name="l00110"></a>00110   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde" title="Open the port given by setPortName()">open</a>();
-<a name="l00111"></a>00111 
-<a name="l00114"></a>00114   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>() <span class="keyword">const</span>;
-<a name="l00115"></a>00115 
-<a name="l00130"></a>00130   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close</a>();
-<a name="l00131"></a>00131 
-<a name="l00134"></a>00134   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f" title="Set configuration.">setConfig</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *cfg);
-<a name="l00135"></a>00135 
-<a name="l00138"></a>00138   <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>();
-<a name="l00139"></a>00139 
-<a name="l00152"></a>00152   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#abc9f1154ac71c4e31ac3e7a3ff4c5182" title="Setup port with given configurations.">setup</a>();
-<a name="l00153"></a>00153 
-<a name="l00173"></a>00173   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653" title="Reconnect device/peer.">reconnect</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00174"></a>00174 
-<a name="l00186"></a>00186   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout) = 0;
-<a name="l00187"></a>00187 
-<a name="l00199"></a>00199   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout) = 0;
-<a name="l00200"></a>00200 
-<a name="l00224"></a>00224   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead</a>() = 0;
-<a name="l00225"></a>00225 
-<a name="l00237"></a>00237   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead</a>(<span class="keywordtype">int</span> msecs);
-<a name="l00238"></a>00238 
-<a name="l00250"></a>00250   <span class="keyword">virtual</span> qint64 <a class="code" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize) = 0;
-<a name="l00251"></a>00251 
-<a name="l00265"></a>00265   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9" title="Request to suspend transmission.">suspendTransmission</a>();
-<a name="l00266"></a>00266 
-<a name="l00280"></a>00280   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7" title="Request to resume transmission.">resumeTransmission</a>();
-<a name="l00281"></a>00281 
-<a name="l00289"></a>00289   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn</a>();
-<a name="l00290"></a>00290 
-<a name="l00308"></a>00308   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady</a>() = 0;
-<a name="l00309"></a>00309 
-<a name="l00321"></a>00321   <span class="keyword">virtual</span> qint64 <a class="code" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize) = 0;
-<a name="l00322"></a>00322 
-<a name="l00336"></a>00336   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut</a>();
-<a name="l00337"></a>00337 
-<a name="l00345"></a>00345   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keywordtype">bool</span> state);
-<a name="l00346"></a>00346 
-<a name="l00354"></a>00354   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState</a>(<span class="keywordtype">bool</span> state);
-<a name="l00355"></a>00355 
-<a name="l00360"></a>00360   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e" title="Returns read timeout state.">readTimeoutOccured</a>();
-<a name="l00361"></a>00361 
-<a name="l00366"></a>00366   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67" title="Returns write timeout state.">writeTimeoutOccured</a>();
-<a name="l00367"></a>00367 
-<a name="l00376"></a>00376   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#abde440c49b95833f821e1333c40a7398" title="Flush read/write buffers.">flush</a>();
-<a name="l00377"></a>00377 
-<a name="l00382"></a>00382   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#adf06d095d6c3e6ce939a3998bcf8b829" title="Init the read ans write queues.">initQueues</a>();
-<a name="l00383"></a>00383 
-<a name="l00390"></a>00390   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>();
-<a name="l00391"></a>00391 
-<a name="l00398"></a>00398   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>();
-<a name="l00399"></a>00399 
-<a name="l00411"></a>00411   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d" title="Add a frame to write.">addFrameToWrite</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame);
-<a name="l00412"></a>00412 
-<a name="l00428"></a>00428   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *<a class="code" href="classmdt_abstract_port.html#a6c5ebd4451aec959efc4e71ab1b13941" title="Wait until a frame to write is available and get it.">getFrameToWrite</a>();
-<a name="l00429"></a>00429 
-<a name="l00439"></a>00439   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting.">abortFrameToWriteWait</a>();
-<a name="l00440"></a>00440 
-<a name="l00447"></a>00447   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>();
-<a name="l00448"></a>00448 
-<a name="l00455"></a>00455   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>();
-<a name="l00456"></a>00456 
-<a name="l00459"></a>00459   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00460"></a>00460 
-<a name="l00463"></a>00463   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00464"></a>00464 
-<a name="l00465"></a>00465  signals:
-<a name="l00466"></a>00466 
-<a name="l00469"></a>00469   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a62c5e1f2beb6eddf740c8710ecb84ad1" title="Emited when read timeout state changed.">readTimeoutStateChanged</a>(<span class="keywordtype">bool</span> state);
-<a name="l00470"></a>00470 
-<a name="l00473"></a>00473   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#abd4a3e5738ac13167ddaafe95926ce4d" title="Emited when write timeout state changed.">writeTimeoutStateChanged</a>(<span class="keywordtype">bool</span> state);
-<a name="l00474"></a>00474 
-<a name="l00475"></a>00475  <span class="keyword">protected</span>:
-<a name="l00476"></a>00476 
-<a name="l00498"></a>00498   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="Open the port given by setPortName()">pvOpen</a>() = 0;
-<a name="l00499"></a>00499 
-<a name="l00512"></a>00512   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose</a>() = 0;
-<a name="l00513"></a>00513 
-<a name="l00533"></a>00533   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a880e5ae1699af102f9a80501bb6a0021" title="Setup port with given configurations.">pvSetup</a>() = 0;
-<a name="l00534"></a>00534 
-<a name="l00546"></a>00546   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn</a>() = 0;
-<a name="l00547"></a>00547 
-<a name="l00562"></a>00562   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut</a>() = 0;
-<a name="l00563"></a>00563 
-<a name="l00564"></a>00564   <span class="keywordtype">bool</span> pvReadTimeoutOccured;
-<a name="l00565"></a>00565   <span class="keywordtype">bool</span> pvReadTimeoutOccuredPrevious;
-<a name="l00566"></a>00566   <span class="keywordtype">bool</span> pvWriteTimeoutOccured;
-<a name="l00567"></a>00567   <span class="keywordtype">bool</span> pvWriteTimeoutOccuredPrevious;
-<a name="l00568"></a>00568   <span class="keywordtype">bool</span> pvCancelWrite;               <span class="comment">// Updated by pvFlushOut() and addFrameToWrite()</span>
-<a name="l00569"></a>00569   <span class="comment">// Frames queues</span>
-<a name="l00570"></a>00570   QQueue&lt;mdtFrame*&gt; pvReadenFrames;
-<a name="l00571"></a>00571   QQueue&lt;mdtFrame*&gt; pvReadFramesPool;
-<a name="l00572"></a>00572   QQueue&lt;mdtFrame*&gt; pvWriteFrames;
-<a name="l00573"></a>00573   QQueue&lt;mdtFrame*&gt; pvWriteFramesPool;
-<a name="l00574"></a>00574   <span class="comment">// Configuration</span>
-<a name="l00575"></a>00575   <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *pvConfig;
-<a name="l00576"></a>00576   <span class="comment">// Attributes</span>
-<a name="l00577"></a>00577   QString pvPortName;     <span class="comment">// Port name, like /dev/ttyS0 , COM1, ...</span>
-<a name="l00578"></a>00578   <span class="comment">// mutex</span>
-<a name="l00579"></a>00579   QMutex pvMutex;
-<a name="l00580"></a>00580 
-<a name="l00581"></a>00581  <span class="keyword">private</span>:
-<a name="l00582"></a>00582 
-<a name="l00583"></a>00583   <span class="comment">// Diseable copy</span>
-<a name="l00584"></a>00584   Q_DISABLE_COPY(<a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>);
-<a name="l00585"></a>00585 
-<a name="l00586"></a>00586   <span class="comment">// Some flags</span>
-<a name="l00587"></a>00587   <span class="keywordtype">bool</span> pvIsOpen;
-<a name="l00588"></a>00588   <span class="comment">// Wait conditions</span>
-<a name="l00589"></a>00589   QWaitCondition pvWriteFrameAvailable;
-<a name="l00590"></a>00590 };
-<a name="l00591"></a>00591 
-<a name="l00592"></a>00592 <span class="preprocessor">#endif  // #ifndef MDT_ABSTRACT_PORT_H</span>
+<a name="l00070"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984">00070</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea5059c1f30381b95b14a0b33445d2a984">ReadPoolEmpty</a>,          
+<a name="l00071"></a><a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">00071</a>                 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">WriteQueueEmpty</a>         
+<a name="l00072"></a>00072                };
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   <a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>(QObject *parent = 0);
+<a name="l00075"></a>00075 
+<a name="l00084"></a>00084   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort</a>();
+<a name="l00085"></a>00085 
+<a name="l00092"></a>00092   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615" title="Get port name.">portName</a>);
+<a name="l00093"></a>00093 
+<a name="l00096"></a>00096   QString &amp;<a class="code" href="classmdt_abstract_port.html#ac52fbd121f7cbb848a2f3e5d29fae615" title="Get port name.">portName</a>();
+<a name="l00097"></a>00097 
+<a name="l00111"></a>00111   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a4e0f0b7f9e24257677184e4bde10fdde" title="Open the port given by setPortName()">open</a>();
+<a name="l00112"></a>00112 
+<a name="l00115"></a>00115   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>() <span class="keyword">const</span>;
+<a name="l00116"></a>00116 
+<a name="l00131"></a>00131   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close</a>();
+<a name="l00132"></a>00132 
+<a name="l00135"></a>00135   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f" title="Set configuration.">setConfig</a>(<a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *cfg);
+<a name="l00136"></a>00136 
+<a name="l00139"></a>00139   <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> &amp;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>();
+<a name="l00140"></a>00140 
+<a name="l00153"></a>00153   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#abc9f1154ac71c4e31ac3e7a3ff4c5182" title="Setup port with given configurations.">setup</a>();
+<a name="l00154"></a>00154 
+<a name="l00174"></a>00174   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653" title="Reconnect device/peer.">reconnect</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00175"></a>00175 
+<a name="l00187"></a>00187   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout) = 0;
+<a name="l00188"></a>00188 
+<a name="l00200"></a>00200   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout) = 0;
+<a name="l00201"></a>00201 
+<a name="l00225"></a>00225   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead</a>() = 0;
+<a name="l00226"></a>00226 
+<a name="l00238"></a>00238   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead</a>(<span class="keywordtype">int</span> msecs);
+<a name="l00239"></a>00239 
+<a name="l00251"></a>00251   <span class="keyword">virtual</span> qint64 <a class="code" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize) = 0;
+<a name="l00252"></a>00252 
+<a name="l00266"></a>00266   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#aff3d79248baf96e670eba6d2fef700b9" title="Request to suspend transmission.">suspendTransmission</a>();
+<a name="l00267"></a>00267 
+<a name="l00281"></a>00281   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#ad4a04c995df881593db0a309000be7a7" title="Request to resume transmission.">resumeTransmission</a>();
+<a name="l00282"></a>00282 
+<a name="l00290"></a>00290   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn</a>();
+<a name="l00291"></a>00291 
+<a name="l00309"></a>00309   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady</a>() = 0;
+<a name="l00310"></a>00310 
+<a name="l00322"></a>00322   <span class="keyword">virtual</span> qint64 <a class="code" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize) = 0;
+<a name="l00323"></a>00323 
+<a name="l00337"></a>00337   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut</a>();
+<a name="l00338"></a>00338 
+<a name="l00346"></a>00346   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keywordtype">bool</span> state);
+<a name="l00347"></a>00347 
+<a name="l00355"></a>00355   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState</a>(<span class="keywordtype">bool</span> state);
+<a name="l00356"></a>00356 
+<a name="l00361"></a>00361   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e" title="Returns read timeout state.">readTimeoutOccured</a>();
+<a name="l00362"></a>00362 
+<a name="l00367"></a>00367   <span class="keywordtype">bool</span> <a class="code" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67" title="Returns write timeout state.">writeTimeoutOccured</a>();
+<a name="l00368"></a>00368 
+<a name="l00377"></a>00377   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#abde440c49b95833f821e1333c40a7398" title="Flush read/write buffers.">flush</a>();
+<a name="l00378"></a>00378 
+<a name="l00383"></a>00383   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#adf06d095d6c3e6ce939a3998bcf8b829" title="Init the read ans write queues.">initQueues</a>();
+<a name="l00384"></a>00384 
+<a name="l00391"></a>00391   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>();
+<a name="l00392"></a>00392 
+<a name="l00399"></a>00399   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>();
+<a name="l00400"></a>00400 
+<a name="l00412"></a>00412   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d" title="Add a frame to write.">addFrameToWrite</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame);
+<a name="l00413"></a>00413 
+<a name="l00429"></a>00429   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *<a class="code" href="classmdt_abstract_port.html#a6c5ebd4451aec959efc4e71ab1b13941" title="Wait until a frame to write is available and get it.">getFrameToWrite</a>();
+<a name="l00430"></a>00430 
+<a name="l00440"></a>00440   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting.">abortFrameToWriteWait</a>();
+<a name="l00441"></a>00441 
+<a name="l00448"></a>00448   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>();
+<a name="l00449"></a>00449 
+<a name="l00456"></a>00456   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>();
+<a name="l00457"></a>00457 
+<a name="l00460"></a>00460   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00461"></a>00461 
+<a name="l00464"></a>00464   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00465"></a>00465 
+<a name="l00466"></a>00466  signals:
+<a name="l00467"></a>00467 
+<a name="l00470"></a>00470   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a62c5e1f2beb6eddf740c8710ecb84ad1" title="Emited when read timeout state changed.">readTimeoutStateChanged</a>(<span class="keywordtype">bool</span> state);
+<a name="l00471"></a>00471 
+<a name="l00474"></a>00474   <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#abd4a3e5738ac13167ddaafe95926ce4d" title="Emited when write timeout state changed.">writeTimeoutStateChanged</a>(<span class="keywordtype">bool</span> state);
+<a name="l00475"></a>00475 
+<a name="l00476"></a>00476  <span class="keyword">protected</span>:
+<a name="l00477"></a>00477 
+<a name="l00499"></a>00499   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="Open the port given by setPortName()">pvOpen</a>() = 0;
+<a name="l00500"></a>00500 
+<a name="l00513"></a>00513   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose</a>() = 0;
+<a name="l00514"></a>00514 
+<a name="l00534"></a>00534   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_abstract_port.html#a880e5ae1699af102f9a80501bb6a0021" title="Setup port with given configurations.">pvSetup</a>() = 0;
+<a name="l00535"></a>00535 
+<a name="l00547"></a>00547   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1fe88e9d56c0881b9566664b094b0958" title="Flush read port.">pvFlushIn</a>() = 0;
+<a name="l00548"></a>00548 
+<a name="l00563"></a>00563   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut</a>() = 0;
+<a name="l00564"></a>00564 
+<a name="l00565"></a>00565   <span class="keywordtype">bool</span> pvReadTimeoutOccured;
+<a name="l00566"></a>00566   <span class="keywordtype">bool</span> pvReadTimeoutOccuredPrevious;
+<a name="l00567"></a>00567   <span class="keywordtype">bool</span> pvWriteTimeoutOccured;
+<a name="l00568"></a>00568   <span class="keywordtype">bool</span> pvWriteTimeoutOccuredPrevious;
+<a name="l00569"></a>00569   <span class="keywordtype">bool</span> pvCancelWrite;               <span class="comment">// Updated by pvFlushOut() and addFrameToWrite()</span>
+<a name="l00570"></a>00570   <span class="comment">// Frames queues</span>
+<a name="l00571"></a>00571   QQueue&lt;mdtFrame*&gt; pvReadenFrames;
+<a name="l00572"></a>00572   QQueue&lt;mdtFrame*&gt; pvReadFramesPool;
+<a name="l00573"></a>00573   QQueue&lt;mdtFrame*&gt; pvWriteFrames;
+<a name="l00574"></a>00574   QQueue&lt;mdtFrame*&gt; pvWriteFramesPool;
+<a name="l00575"></a>00575   <span class="comment">// Configuration</span>
+<a name="l00576"></a>00576   <a class="code" href="classmdt_port_config.html">mdtPortConfig</a> *pvConfig;
+<a name="l00577"></a>00577   <span class="comment">// Attributes</span>
+<a name="l00578"></a>00578   QString pvPortName;     <span class="comment">// Port name, like /dev/ttyS0 , COM1, ...</span>
+<a name="l00579"></a>00579   <span class="comment">// mutex</span>
+<a name="l00580"></a>00580   QMutex pvMutex;
+<a name="l00581"></a>00581 
+<a name="l00582"></a>00582  <span class="keyword">private</span>:
+<a name="l00583"></a>00583 
+<a name="l00584"></a>00584   <span class="comment">// Diseable copy</span>
+<a name="l00585"></a>00585   Q_DISABLE_COPY(<a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>);
+<a name="l00586"></a>00586 
+<a name="l00587"></a>00587   <span class="comment">// Some flags</span>
+<a name="l00588"></a>00588   <span class="keywordtype">bool</span> pvIsOpen;
+<a name="l00589"></a>00589   <span class="comment">// Wait conditions</span>
+<a name="l00590"></a>00590   QWaitCondition pvWriteFrameAvailable;
+<a name="l00591"></a>00591 };
+<a name="l00592"></a>00592 
+<a name="l00593"></a>00593 <span class="preprocessor">#endif  // #ifndef MDT_ABSTRACT_PORT_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -251,7 +253,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

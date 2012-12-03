@@ -38,6 +38,16 @@ int \hyperlink{classmdt_device_info_a53006d4fbaeb0ba2fd47057f36b9b813}{productId
 \begin{DoxyCompactList}\small\item\em Get product ID. \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{productName} () const 
 \begin{DoxyCompactList}\small\item\em Get product name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_info_aeefd846da860838aa5cd70a27ac961c6}{
+void \hyperlink{classmdt_device_info_aeefd846da860838aa5cd70a27ac961c6}{setSerialId} (const QString \&id)}
+\label{classmdt_device_info_aeefd846da860838aa5cd70a27ac961c6}
+
+\begin{DoxyCompactList}\small\item\em Set serial number/ID. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_info_ad9c2e69d8a7b81e25ee70dff9f7086e6}{
+QString \hyperlink{classmdt_device_info_ad9c2e69d8a7b81e25ee70dff9f7086e6}{serialId} () const }
+\label{classmdt_device_info_ad9c2e69d8a7b81e25ee70dff9f7086e6}
+
+\begin{DoxyCompactList}\small\item\em Get serial number/ID. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_info_ad90e39b5d34d4859527651cebb273e78}{
 void \hyperlink{classmdt_device_info_ad90e39b5d34d4859527651cebb273e78}{setProtocolId} (int pid)}
 \label{classmdt_device_info_ad90e39b5d34d4859527651cebb273e78}
@@ -85,7 +95,7 @@ Returns a text that can be displayed to the user. (F.ex. in a combo box)
 
 If text was not set, a string containing the vendor ID ans product ID is returned. 
 
-Definition at line 81 of file mdtDeviceInfo.cpp.
+Definition at line 91 of file mdtDeviceInfo.cpp.
 
 \hypertarget{classmdt_device_info_a41ae61c66f404f80df4cad83fd6da138}{
 \index{mdtDeviceInfo@{mdtDeviceInfo}!operator!=@{operator!=}}
@@ -102,7 +112,7 @@ Comparaison operator.
 
 Note that display text is not compared. 
 
-Definition at line 116 of file mdtDeviceInfo.cpp.
+Definition at line 125 of file mdtDeviceInfo.cpp.
 
 \hypertarget{classmdt_device_info_ad029ec634403adbdd0382e9ceb1c1328}{
 \index{mdtDeviceInfo@{mdtDeviceInfo}!operator==@{operator==}}
@@ -117,9 +127,13 @@ Definition at line 116 of file mdtDeviceInfo.cpp.
 
 Comparaison operator. 
 
-Note that display text is not compared. 
+Devices are considered equal if vendor ID and product ID are the same. Additionnaly, if one object contains a serial ID, they are compared, else not. 
 
-Definition at line 95 of file mdtDeviceInfo.cpp.
+if(pvProtocolId != other.pvProtocolId)\{ return false; \}
+
+
+
+Definition at line 105 of file mdtDeviceInfo.cpp.
 
 \hypertarget{classmdt_device_info_afe4bbdc87acff59999905a0eeb812fe1}{
 \index{mdtDeviceInfo@{mdtDeviceInfo}!productName@{productName}}
@@ -135,7 +149,7 @@ Definition at line 95 of file mdtDeviceInfo.cpp.
 Get product name. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} \end{Desc}
+\item[\hyperlink{todo__todo000017}{Todo}]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} \end{Desc}
 
 
 Definition at line 61 of file mdtDeviceInfo.cpp.
@@ -155,7 +169,7 @@ Set the display text.
 
 Set a text that can be displayed to the user. (F.ex. in a combo box) 
 
-Definition at line 76 of file mdtDeviceInfo.cpp.
+Definition at line 86 of file mdtDeviceInfo.cpp.
 
 \hypertarget{classmdt_device_info_a207d7b6b49fd65726232e95cd9e0568c}{
 \index{mdtDeviceInfo@{mdtDeviceInfo}!vendorName@{vendorName}}
@@ -171,7 +185,7 @@ Definition at line 76 of file mdtDeviceInfo.cpp.
 Get vendor name. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000010}{Todo}]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} \end{Desc}
+\item[\hyperlink{todo__todo000016}{Todo}]Conficting with \hyperlink{classmdt_usb_device_descriptor}{mdtUsbDeviceDescriptor} \end{Desc}
 
 
 Definition at line 45 of file mdtDeviceInfo.cpp.

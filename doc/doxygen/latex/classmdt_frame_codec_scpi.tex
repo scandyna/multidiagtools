@@ -32,11 +32,15 @@ Collaboration diagram for mdtFrameCodecScpi:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{classmdt_frame_codec_scpi_aedbdb078e4f652b17919cff6add22c27}{decodeIdn} (const QByteArray \&frame)
+void \hyperlink{classmdt_frame_codec_scpi_a5287ff3f107ca10097cdb499e62f6906}{addTransaction} (int id, int type)
+\begin{DoxyCompactList}\small\item\em Add a query/response transaction. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_frame_codec_scpi_aa6f92a37f19983c9a2ef4ba8e10a3581}{pendingTransaction} (int id)
+\begin{DoxyCompactList}\small\item\em Get transaction by ID. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{decodeValues} (const QByteArray \&data, QString sep=\char`\"{}:\char`\"{})
+\begin{DoxyCompactList}\small\item\em Decode SCPI value(s) \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{decodeIdn} (const QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Decode the IDN answer. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_frame_codec_scpi_a7a2b463fbbd0c8d1d4d9d5c16a49d7bb}{decodeSingleValueInt} (QByteArray \&frame)
-\begin{DoxyCompactList}\small\item\em Decode a signle value in integer format. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_codec_scpi_aa2a184572eae360a274c89f7b8ba33e9}{decodeError} (QByteArray \&frame)
+bool \hyperlink{classmdt_frame_codec_scpi_aff616991e6223aa51f265cf7e464be12}{decodeError} (QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Decode error answer. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_frame_codec_scpi_a327afabbb6da25e31523ef4baa28cc87}{decodeIEEEblock} (QString data)
 \begin{DoxyCompactList}\small\item\em Decode a IEEE block. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -45,44 +49,77 @@ bool \hyperlink{classmdt_frame_codec_scpi_a327afabbb6da25e31523ef4baa28cc87}{dec
 \subsection{Detailed Description}
 Decode SCPI data. 
 
-Definition at line 11 of file mdtFrameCodecScpi.h.
+Definition at line 40 of file mdtFrameCodecScpi.h.
 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_codec_scpi_aa2a184572eae360a274c89f7b8ba33e9}{
+\hypertarget{classmdt_frame_codec_scpi_a5287ff3f107ca10097cdb499e62f6906}{
+\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!addTransaction@{addTransaction}}
+\index{addTransaction@{addTransaction}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
+\subsubsection[{addTransaction}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFrameCodecScpi::addTransaction (
+\begin{DoxyParamCaption}
+\item[{int}]{id, }
+\item[{int}]{type}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_scpi_a5287ff3f107ca10097cdb499e62f6906}
+
+
+Add a query/response transaction. 
+
+The SCPI defines no function code (like MODBUS, f.ex.). When coding a defined sequence, this is not a problem.
+
+When using a event based approach, it's not possible to know what type of answer the device will return.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Frame ID (f.ex. bTag for USBTMC) \\
+\hline
+{\em type} & Query/response type (f.ex. MDT\_\-FC\_\-SCPI\_\-VALUE) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 36 of file mdtFrameCodecScpi.cpp.
+
+\hypertarget{classmdt_frame_codec_scpi_aff616991e6223aa51f265cf7e464be12}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeError@{decodeError}}
 \index{decodeError@{decodeError}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
 \subsubsection[{decodeError}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeError (
 \begin{DoxyParamCaption}
-\item[{QByteArray \&}]{frame}
+\item[{QByteArray \&}]{data}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_frame_codec_scpi_aa2a184572eae360a274c89f7b8ba33e9}
+\label{classmdt_frame_codec_scpi_aff616991e6223aa51f265cf7e464be12}
 
 
 Decode error answer. 
 
-When decode was done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} 
+When decode was done successfully, error is available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()}:
+\begin{DoxyItemize}
+\item Item 0 is the error number
+\item Item 1 is the error message string 
+\end{DoxyItemize}
 
-Definition at line 90 of file mdtFrameCodecScpi.cpp.
+Definition at line 117 of file mdtFrameCodecScpi.cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_aedbdb078e4f652b17919cff6add22c27}{
+\hypertarget{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIdn@{decodeIdn}}
 \index{decodeIdn@{decodeIdn}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
 \subsubsection[{decodeIdn}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeIdn (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{frame}
+\item[{const QByteArray \&}]{data}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_frame_codec_scpi_aedbdb078e4f652b17919cff6add22c27}
+\label{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}
 
 
 Decode the IDN answer. 
 
 When decode was done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} 
 
-Definition at line 15 of file mdtFrameCodecScpi.cpp.
+Definition at line 90 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a327afabbb6da25e31523ef4baa28cc87}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEblock@{decodeIEEEblock}}
@@ -99,24 +136,74 @@ Decode a IEEE block.
 
 NOTE: not implemented yet ! 
 
-Definition at line 139 of file mdtFrameCodecScpi.cpp.
+Definition at line 156 of file mdtFrameCodecScpi.cpp.
 
-\hypertarget{classmdt_frame_codec_scpi_a7a2b463fbbd0c8d1d4d9d5c16a49d7bb}{
-\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeSingleValueInt@{decodeSingleValueInt}}
-\index{decodeSingleValueInt@{decodeSingleValueInt}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
-\subsubsection[{decodeSingleValueInt}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFrameCodecScpi::decodeSingleValueInt (
+\hypertarget{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{
+\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeValues@{decodeValues}}
+\index{decodeValues@{decodeValues}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
+\subsubsection[{decodeValues}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpi::decodeValues (
 \begin{DoxyParamCaption}
-\item[{QByteArray \&}]{frame}
+\item[{const QByteArray \&}]{data, }
+\item[{QString}]{sep = {\ttfamily \char`\"{}:\char`\"{}}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_frame_codec_scpi_a7a2b463fbbd0c8d1d4d9d5c16a49d7bb}
+\label{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}
 
 
-Decode a signle value in integer format. 
+Decode SCPI value(s) 
 
-This method returns a QVariant. QVariant's internal data is converted to int. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid(). When decode was done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} 
+After decode is done, values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()}.
 
-Definition at line 52 of file mdtFrameCodecScpi.cpp.
+
+\begin{DoxyParams}{Parameters}
+{\em data} & String that contains one value, or many separated by sep. \\
+\hline
+{\em sep} & Values separator.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if decode could be done. 
+\end{DoxyReturn}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000056}{Todo}]Check limits (-\/OL, OL) for type Double \end{Desc}
+
+
+
+
+Definition at line 59 of file mdtFrameCodecScpi.cpp.
+
+\hypertarget{classmdt_frame_codec_scpi_aa6f92a37f19983c9a2ef4ba8e10a3581}{
+\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!pendingTransaction@{pendingTransaction}}
+\index{pendingTransaction@{pendingTransaction}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
+\subsubsection[{pendingTransaction}]{\setlength{\rightskip}{0pt plus 5cm}int mdtFrameCodecScpi::pendingTransaction (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_frame_codec_scpi_aa6f92a37f19983c9a2ef4ba8e10a3581}
+
+
+Get transaction by ID. 
+
+Used by some mdtDevice()'s subclasses. See \hyperlink{classmdt_frame_codec_scpi_a5287ff3f107ca10097cdb499e62f6906}{addTransaction()} for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Frame ID (f.ex. bTag for USBTMC) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Type of query/response transaction, or MDT\_\-FC\_\-SCPI\_\-UNKNOW if not found. 
+\end{DoxyReturn}
+
+
+$<$ Initial or unknown query/response type 
+
+
+
+Definition at line 49 of file mdtFrameCodecScpi.cpp.
 
 
 

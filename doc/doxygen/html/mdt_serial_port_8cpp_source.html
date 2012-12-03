@@ -854,7 +854,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00809"></a>00809         <span class="keywordflow">return</span> n;
 <a name="l00810"></a>00810     }
 <a name="l00811"></a>00811   }
-<a name="l00812"></a>00812   qDebug() &lt;&lt; <span class="stringliteral">&quot;wrote &quot;</span> &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span>;
 <a name="l00813"></a>00813 
 <a name="l00814"></a>00814   <span class="keywordflow">return</span> n;
 <a name="l00815"></a>00815 }
@@ -864,8 +863,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00836"></a>00836   <span class="keywordtype">int</span> retVal;
 <a name="l00837"></a>00837 
 <a name="l00838"></a>00838   <span class="comment">// We wait until a line status change happens</span>
-<a name="l00839"></a>00839   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtSerialPort::waitEventCtl(), waiting...&quot;</span>;
-<a name="l00840"></a>00840   pvMutex.unlock();
+<a name="l00840"></a>00840 <span class="comment"></span>  pvMutex.unlock();
 <a name="l00841"></a>00841   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
 <a name="l00842"></a>00842   pvMutex.lock();
 <a name="l00843"></a>00843   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtSerialPort::waitEventCtl(), waiting DONE&quot;</span>;
@@ -1382,7 +1380,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:13 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

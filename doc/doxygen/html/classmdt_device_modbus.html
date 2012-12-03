@@ -61,7 +61,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDeviceModbus Class Reference</div>  </div>
@@ -89,13 +88,12 @@ Collaboration diagram for mdtDeviceModbus:</div>
 
 <p><a href="classmdt_device_modbus-members.html">List of all members.</a></p>
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="pub-slots"></a>
-Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#a0f47a5832122c3c7ee149b738075f84d">decodeReadenFrame</a> (int id, QByteArray pdu)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode incoming frames.  <a href="#a0f47a5832122c3c7ee149b738075f84d"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#ac69cfbe26681342ba05672ab63de2a1f">mdtDeviceModbus</a> (QObject *parent=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed892b501f8cbd372ccfda1a4fafa536"></a><!-- doxytag: member="mdtDeviceModbus::portManager" ref="aed892b501f8cbd372ccfda1a4fafa536" args="()" -->
+<a class="el" href="classmdt_port_manager.html">mdtPortManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">portManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get internal port manager instance. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Represent a MODBUS device. </p>
@@ -123,56 +121,10 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p><dl class="note"><dt><b>Note:</b></dt><dd>Provisoire !!</dd></dl>
-<p>pvTcpPortManager-&gt;setPortName("192.168.1.102:502"); </p>
+<p>pvTcpPortManager-&gt;setPortName("192.168.1.103:502"); </p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a0f47a5832122c3c7ee149b738075f84d"></a><!-- doxytag: member="mdtDeviceModbus::decodeReadenFrame" ref="a0f47a5832122c3c7ee149b738075f84d" args="(int id, QByteArray pdu)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtDeviceModbus::decodeReadenFrame </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">QByteArray&#160;</td>
-          <td class="paramname"><em>pdu</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td><code> [virtual, slot]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Decode incoming frames. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's container must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a></dd></dl>
-<p>Subclass notes:<br/>
-</p>
-<ul>
-<li>This default implementation does nothing.</li>
-<li>This slot should be connected with <a class="el" href="classmdt_port_manager.html#a65d5d2e9edde76796714f737a7eaf204" title="Emitted when new frame was readen.">mdtPortManager::newReadenFrame()</a> signal.</li>
-<li>In this class, this connection is not made, it is the sublcass responsability to do this.</li>
-<li>The incoming frames are available with <a class="el" href="classmdt_port_manager.html#ae5c6475a54ac4921c6df26893f261556" title="Get all readen data.">mdtPortManager::readenFrames()</a>. </li>
-</ul>
-
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Handle errors ! </dd></dl>
-</p>
-
-<p>Reimplemented from <a class="el" href="classmdt_device.html#a96be3ca9235561c58c69190e9ed45ca9">mdtDevice</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -195,7 +147,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Nov 17 2012 21:42:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
