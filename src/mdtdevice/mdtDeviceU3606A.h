@@ -49,6 +49,48 @@ class mdtDeviceU3606A : public mdtDevice
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
+  /*! \brief Send a command to device
+   *
+   * Wait until it's possible to write to device,
+   *  then send the command.
+   *
+   * Note that the wait will not break the GUI's event loop
+   *  (see mdtPortManager::waitOnWriteReady() for details).
+   *
+   * \param command Command to send.
+   * \param timeout Write timeout [ms]
+   * \return bTag on success, or a error < 0
+   *          (see mdtUsbtmcPortManager::writeData() for details).
+   */
+  int sendCommand(const QByteArray &command, int timeout = 1000);
+
+  /*! \brief Send a query to device
+   *
+   * Wait until it's possible to write to device,
+   *  send the query and wait until a response
+   *  is available or timeout.
+   *
+   * Note that the wait will not break the GUI's event loop.
+   *
+   * This method will not update internal I/O states.
+   *  It's recommended to use mdtDevice functions if available.
+   *
+   * \param query Query to send.
+   * \param writeTimeout Write timeout [ms]
+   * \param readTimeout Response timeout [ms]
+   * \return Result as string (empty string on error)
+   *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
+   */
+  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
+
+ public slots:
+
+  /*! \brief Update (G)UI when device's state has changed
+   */
+  void onStateChanged(int state);
+
+ private slots:
+
   /*! \brief Decode incoming frames
    *
    * \pre I/O's container must be set with setIos()
@@ -58,10 +100,6 @@ class mdtDeviceU3606A : public mdtDevice
    *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
   void decodeReadenFrame(int id, QByteArray data);
-
-  /*! \brief Update (G)UI when device's state has changed
-   */
-  void onStateChanged(int state);
 
  private:
 
@@ -79,7 +117,7 @@ class mdtDeviceU3606A : public mdtDevice
 
   mdtUsbtmcPortManager *pvPortManager;
   mdtFrameCodecScpiU3606A *pvCodec;
-
+  QByteArray pvGenericData;   // Used by sendQuery()
 };
 
 #endif  // #ifndef MDT_DEVICE_U3606A_H

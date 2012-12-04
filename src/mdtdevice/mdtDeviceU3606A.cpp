@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtDeviceU3606A.h"
 #include "mdtError.h"
+#include "mdtAnalogIo.h"
 #include <QByteArray>
 #include <QList>
 
@@ -32,6 +33,9 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
 
   pvPortManager = new mdtUsbtmcPortManager;
   pvCodec = new mdtFrameCodecScpiU3606A;
+  // Setup port manager
+  pvPortManager->config().setReadTimeout(30000);
+  pvPortManager->setNotifyNewReadenFrame(true);
   connect(pvPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrame(int, QByteArray)));
   connect(pvPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
   timeout = pvPortManager->config().readTimeout();
@@ -39,7 +43,7 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
     timeout = pvPortManager->config().writeTimeout();
   }
   setBackToReadyStateTimeout(2*timeout);
-  pvPortManager->setNotifyNewReadenFrame(true);
+  
 
 }
 
@@ -114,14 +118,92 @@ mdtAbstractPort::error_t mdtDeviceU3606A::connectToDevice(const mdtDeviceInfo &d
   return retVal;
 }
 
-void mdtDeviceU3606A::decodeReadenFrame(int id, QByteArray data)
+int mdtDeviceU3606A::sendCommand(const QByteArray &command, int timeout)
 {
-  qDebug() << "mdtDeviceU3606A::decodeReadenFrame() - ID: " << id << " , data: " << data;
+  // Wait until data can be sent
+  if(!pvPortManager->waitOnWriteReady(timeout)){
+    return mdtAbstractPort::WriteQueueEmpty;
+  }
+  // Send query
+  return pvPortManager->writeData("MEAS:VOLT:DC?\n");
+}
+
+QByteArray mdtDeviceU3606A::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
+{
+  int bTag;
+  int i = readTimeout / 50;
+
+  // Clear previous response
+  pvGenericData.clear();
+  // Wait until data can be sent
+  if(!pvPortManager->waitOnWriteReady(writeTimeout)){
+    return QByteArray();
+  }
+  // Send query
+  bTag = pvPortManager->writeData(query);
+  if(bTag < 0){
+    return QByteArray();
+  }
+  // Wait until more data can be sent
+  if(!pvPortManager->waitOnWriteReady(writeTimeout)){
+    return QByteArray();
+  }
+  // Send read request
+  bTag = pvPortManager->sendReadRequest();
+  if(bTag < 0){
+    return QByteArray();
+  }
+  // Remember query type.
+  /// \note It seems that U3606A does allways return a bTag 0 , bug in mdt lib ?
+  pvCodec->addTransaction(0, MDT_FC_SCPI_UNKNOW);
+  // Wait on response
+  while(pvGenericData.size() < 1){
+    // Check timeout
+    if(i <= 0){
+      return QByteArray();
+    }
+    pvPortManager->wait(50, 50);
+    i--;
+  }
+
+  return pvGenericData;
 }
 
 void mdtDeviceU3606A::onStateChanged(int state)
 {
   qDebug() << "mdtDeviceU3606A::onStateChanged() ...";
+}
+
+void mdtDeviceU3606A::decodeReadenFrame(int id, QByteArray data)
+{
+  int responseType;
+  mdtAnalogIo *ai;
+  bool ok;
+
+  qDebug() << "mdtDeviceU3606A::decodeReadenFrame() - ID: " << id << " , data: " << data;
+
+  responseType = pvCodec->pendingTransaction(id);
+  switch(responseType){
+    case MDT_FC_SCPI_UNKNOW:
+      // Used for sendQuery() - We decode nothing
+      pvGenericData = data;
+    case MDT_FC_SCPI_VALUE:
+      ai = pendingAioTransaction(id);
+      if(ai == 0){
+        break;
+      }
+      ok = pvCodec->decodeValues(data);
+      if(ok && (pvCodec->values().size() == 1)){
+        ai->setValue(pvCodec->values().at(0), false);
+      }else{
+        ai->setValue(QVariant(), false);
+      }
+      break;
+    default:
+      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unsupported response from device (type: " + QString::number(responseType) + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceU3606A");
+      e.commit();
+  }
 }
 
 int mdtDeviceU3606A::readAnalogInput(int address)
@@ -132,19 +214,28 @@ int mdtDeviceU3606A::readAnalogInput(int address)
 
   /// \todo Add resolution and limits (min/max)
   /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
-   // Wait until data can be sent
-   if(!pvPortManager->waitOnWriteReady(500)){
-     return mdtAbstractPort::WriteQueueEmpty;
-   }
+  // Wait until data can be sent
+  if(!pvPortManager->waitOnWriteReady(500)){
+    return mdtAbstractPort::WriteQueueEmpty;
+  }
   // Send query
-   bTag = pvPortManager->writeData("MEAS:VOLT:DC?\n");
-   if(bTag < 0){
-     return bTag;
-   }
-   // Wait until more data can be sent
-   if(!pvPortManager->waitOnWriteReady(500)){
-     return mdtAbstractPort::WriteQueueEmpty;
-   }
-   // Send read request
-   return pvPortManager->sendReadRequest();
+  bTag = pvPortManager->writeData("MEAS:VOLT:DC?\n");
+  if(bTag < 0){
+    return bTag;
+  }
+  // Wait until more data can be sent
+  if(!pvPortManager->waitOnWriteReady(500)){
+    return mdtAbstractPort::WriteQueueEmpty;
+  }
+  // Send read request
+  bTag = pvPortManager->sendReadRequest();
+  if(bTag < 0){
+    return bTag;
+  }
+  // Remember query type.
+  /// \note It seems that U3606A does allways return a bTag 0 , bug in mdt lib ?
+  pvCodec->addTransaction(0, MDT_FC_SCPI_VALUE);
+
+  //return bTag;
+  return 0;
 }

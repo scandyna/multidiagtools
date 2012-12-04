@@ -502,8 +502,26 @@ void mdtDeviceTest::usbtmcU3606ATest()
   dw.setIosWidget(iosw);
   dw.show();
 
-  qDebug() << "Voltage: " << d.getAnalogInputValue(0, 500, false);
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  
+  // Check generic command
+  QVERIFY(d.sendCommand("*CLS\n") >= 0);
+  QTest::qWait(1000);
+  // Check generic query
+  QVERIFY(d.sendQuery("*IDN?\n").left(27) == "Agilent Technologies,U3606A");
+  
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
+  // Get value
+  QVERIFY(d.getAnalogInputValue(0, 10000).isValid());
+  QVERIFY(d.getAnalogInputValue(0, 10000).type() == QVariant::Double);
+
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  
   while(dw.isVisible()){
     QTest::qWait(500);
   }

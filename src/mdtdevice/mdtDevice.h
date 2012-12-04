@@ -215,11 +215,12 @@ class mdtDevice : public QObject
    *                 If < 0, no query is sent to device and cached value is returned.
    *                 Else it will wait until a reply comes in, or timeout.
    *                 (See waitTransactionDone() ).
-   * \param convert If true , the value is converted (see mdtAnalogIo::value() for details).
+   * \param realValue If true, the real value (as double) is returned, else the device's specific integer value
+   *                   (see mdtAnalogIo::value() for details).
    * \return A valid value if timeout is > 0 and on successfull query/reply process.
    *          (See the Qt's QVariant documentation to know how to check validity).
    */
-  QVariant getAnalogInputValue(int address, int timeout, bool convert = true);
+  QVariant getAnalogInputValue(int address, int timeout, bool realValue = true);
 
   /*! \brief Read all analog inputs on physical device and update (G)UI representation
    *
@@ -508,18 +509,6 @@ class mdtDevice : public QObject
    */
   void setDigitalOutputState(int address);
 
-  /*! \brief Decode incoming frames
-   *
-   * Subclass notes:<br>
-   *  - This default implementation does nothing.
-   *  - This slot should be connected with mdtPortManager::newReadenFrame(int, QByteArray) signal.
-   *  - In this class, this connection is not made, it is the sublcass responsability to do this.
-   *  - To update (G)UI, mdtDeviceIos::updateAnalogInputValues() should be used.
-   *  - Pending transactions must be removed from respective queue
-   *     (see pendingAioTransaction(), pendingDioTransaction() and pendingIoTransaction() ).
-   */
-  virtual void decodeReadenFrame(int id, QByteArray data);
-
   /*! \brief Queries to send periodically
    *
    * This slot is periodically called after a call of start().
@@ -537,6 +526,20 @@ class mdtDevice : public QObject
    * Emit stateChanged() if current state was not Ready.
    */
   void setStateReady();
+
+ protected slots:
+
+  /*! \brief Decode incoming frames
+   *
+   * Subclass notes:<br>
+   *  - This default implementation does nothing.
+   *  - This slot should be connected with mdtPortManager::newReadenFrame(int, QByteArray) signal.
+   *  - In this class, this connection is not made, it is the sublcass responsability to do this.
+   *  - To update (G)UI, mdtDeviceIos::updateAnalogInputValues() should be used.
+   *  - Pending transactions must be removed from respective queue
+   *     (see pendingAioTransaction(), pendingDioTransaction() and pendingIoTransaction() ).
+   */
+  virtual void decodeReadenFrame(int id, QByteArray data);
 
  protected:
 

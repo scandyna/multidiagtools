@@ -132,7 +132,7 @@ void mdtDevice::stop()
   pvQueryTimer->stop();
 }
 
-QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool convert)
+QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue)
 {
   int transactionId;
   mdtAnalogIo *ai;
@@ -150,7 +150,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool convert)
       return QVariant();
     }
     // Return value
-    if(convert){
+    if(realValue){
       return QVariant(ai->value());
     }else{
       return QVariant(ai->valueInt());
@@ -176,7 +176,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool convert)
       return QVariant();
     }
     // Return value
-    if(convert){
+    if(realValue){
       return QVariant(ai->value());
     }else{
       return QVariant(ai->valueInt());
@@ -635,10 +635,6 @@ void mdtDevice::setDigitalOutputState(int address)
   addTransaction(transactionId, dout);
 }
 
-void mdtDevice::decodeReadenFrame(int, QByteArray)
-{
-}
-
 void mdtDevice::runQueries()
 {
   if(pvCurrentState != Ready){
@@ -685,6 +681,10 @@ void mdtDevice::setStateReady()
   pvCurrentState = Ready;
   qDebug() << "mdtDevice: new state is Ready";
   emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::decodeReadenFrame(int, QByteArray)
+{
 }
 
 int mdtDevice::readAnalogInput(int address)

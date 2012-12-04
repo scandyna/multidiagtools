@@ -66,7 +66,7 @@ void mdtAnalogInWidget::setIo(mdtAnalogIo *io)
   setUnit(io->unit());
   setRange(io->minimum(), io->maximum());
   // Set a minimum width for lbValue
-  lbValue->setMinimumWidth(lbValue->fontMetrics().width("-0.000 "));
+  lbValue->setMinimumWidth(lbValue->fontMetrics().width("-0.000e-00 "));
   setValue(io->value());
 }
 
@@ -88,7 +88,7 @@ void mdtAnalogInWidget::setValue(double value)
   QString sValue;
 
   sValue.setNum(value, 'g', 4);
-  sValue = sValue.left(6);
+  ///sValue = sValue.left(6);
 
   thValue->setValue(value);
   if(pvIo->hasValidData()){

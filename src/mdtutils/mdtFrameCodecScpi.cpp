@@ -44,6 +44,7 @@ void mdtFrameCodecScpi::addTransaction(int id, int type)
     return;
   }
   pvPendingTransactions.insert(id, type);
+  qDebug() << "CODEC, pt: " << pvPendingTransactions;
 }
 
 int mdtFrameCodecScpi::pendingTransaction(int id)

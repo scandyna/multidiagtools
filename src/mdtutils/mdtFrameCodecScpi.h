@@ -76,6 +76,8 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    * \param sep Values separator.
    *
    * \return True if decode could be done.
+   *
+   * Errors are logged with the mdtError system.
    */
   bool decodeValues(const QByteArray &data, QString sep = ":");
 
