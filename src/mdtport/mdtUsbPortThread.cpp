@@ -121,6 +121,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFram
     // Transfer complete, check timeout state first, then see what was readen
     if(port->writeTimeoutOccured()){
       // Cannot write now, sleep some time and try later
+      notifyError(mdtAbstractPort::WriteTimeout);
       port->unlockMutex();
       msleep(100);
       port->lockMutex();
@@ -363,6 +364,8 @@ void mdtUsbPortThread::run()
             toRead = 0;
             qDebug() << "USBTHD: Not same frame, toRead: " << toRead;
           }
+        }else{
+          notifyError(mdtAbstractPort::ReadTimeout);
         }
       }
     }

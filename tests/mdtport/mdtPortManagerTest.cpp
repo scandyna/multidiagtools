@@ -35,11 +35,8 @@
 #include <QHash>
 #include <QHashIterator>
 #include "mdtApplication.h"
-#include "mdtModbusTcpPortManager.h"
-
-/// \todo Out !
-#include "linux/mdtUsbtmcPort.h"
 #include "mdtUsbtmcPortManager.h"
+#include "mdtModbusTcpPortManager.h"
 
 #include <QDebug>
 
@@ -151,6 +148,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   ///QTest::qWait(500);
   qDebug() << "TEST, request read ...";
   ///m.readData();
+  QVERIFY(m.waitOnWriteReady(1000));
   QVERIFY(m.sendReadRequest() > 0);
   QVERIFY(m.waitReadenFrame());
   qDebug() << "TEST, request read DONE";

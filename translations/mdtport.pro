@@ -25,6 +25,5 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfig
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortSetupDialog.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPort.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtPortLock.cpp
-SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/linux/mdtUsbtmcPort.cpp
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfigWidget.ui
 FORMS += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortSetupDialog.ui

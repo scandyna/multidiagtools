@@ -137,14 +137,6 @@ class mdtDevice : public QObject
    */
   void setIos(mdtDeviceIos *ios, bool autoOutputUpdate = false);
 
-  /*! \brief Set reply timeout for outputs requests
-   *
-   * If timeout is < 0, no reply is expected.
-   *
-   * \param timeout Timeout [ms]
-   */
-  void setOutputWriteReplyTimeout(int timeout);
-
   /*! \brief Set back to ready state timeout
    *
    * After some event (device disconnected, response timeout, ...)
@@ -799,7 +791,6 @@ class mdtDevice : public QObject
   bool waitTransactionDone(int id, int timeout, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
-  int pvOutputWriteReplyTimeout;  /// \todo Check if used
   int pvDigitalOutputAddressOffset;
   int pvAnalogOutputAddressOffset;
 

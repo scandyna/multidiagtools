@@ -22,7 +22,7 @@
 #include <QString>
 #include <QStringList>
 #include "mdtApplication.h"
-#include "linux/mdtUsbtmcPort.h"
+///#include "linux/mdtUsbtmcPort.h"
 
 #include <QDebug>
 

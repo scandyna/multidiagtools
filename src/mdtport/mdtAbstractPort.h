@@ -56,19 +56,21 @@ class mdtAbstractPort : public QObject
                                               cleanup and end. */
                 WriteCanceled,          /*!< Write process was cancelled. The thread should stop the write process, restore
                                               the current frame into pool and continue working. */
-                ReadCanceled,           /*!< Read process was cancelled. The thread should stop the write process, restore
+                ReadCanceled,           /*!< Read process was cancelled. The thread should stop the read process, restore
                                               the current frame into pool and continue working. */
+                ReadTimeout,            /*!< Read process has timed out. Thread should notify this and continue working.
+                                              If thread uses the read timeout protocol, no notification should be sent */
+                WriteTimeout,           /*!< Write process has timed out. Thread should notify this and continue working.
+                                              If thread uses the write timeout protocol, no notification should be sent */
                 Disconnected,           /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
                                               If this error happens, the thread will try to reconnect. If connection fails after
                                                maximum trys, a notification is sent with this Disconnected error. */
                 Connecting,             /*!< Used to notify portmanager that connection is in progress (see mdtPortThread::reconnect() ) */
-                UnknownError,           /*!< Unknown error is happen.
-                                            Logfile could give more information, see mdtError and mdtApplication */
                 UnhandledError,         /*!< Unhandled error happen.
                                             In this case, thread will stop working and error is reported with mdtError system.
                                             Logfile could give more information, see mdtError and mdtApplication */
                 ReadPoolEmpty,          /*!< Read frames pool is empty. Says that no data can be received for the moment */
-                WriteQueueEmpty         /*!< Write queue is empty. Says that no data can be sent for the moment */
+                WritePoolEmpty          /*!< Write queue is empty. Says that no data can be sent for the moment */
                };
 
   mdtAbstractPort(QObject *parent = 0);
@@ -339,7 +341,7 @@ class mdtAbstractPort : public QObject
   /*! \brief Update the read timeout state
    *
    * This method must be called by system dependant waitEventRead() method.
-   * When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br>
+   * When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br> \todo Signal useable ?
    * Note: this method is called from mdtPortReadThread , and should not be used directly<br>
    * Mutex is not handled by this method.
    */
@@ -348,7 +350,7 @@ class mdtAbstractPort : public QObject
   /*! \brief Update the write timeout state
    *
    * This method must be called by system dependant waitEventWriteReady() method
-   * When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br>
+   * When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br> \todo Signal useable ?
    * Note: this method is called from mdtPortWriteThread , and should not be used directly<br>
    * Mutex is not handled by this method.
    */
@@ -463,15 +465,15 @@ class mdtAbstractPort : public QObject
    */
   void unlockMutex();
 
- signals:
+ ///signals:
 
   /*!  \brief Emited when read timeout state changed
    */
-  void readTimeoutStateChanged(bool state);
+  ///void readTimeoutStateChanged(bool state);
 
   /*!  \brief Emited when write timeout state changed
    */
-  void writeTimeoutStateChanged(bool state);
+  ///void writeTimeoutStateChanged(bool state);
 
  protected:
 
@@ -563,9 +565,9 @@ class mdtAbstractPort : public QObject
   virtual void pvFlushOut() = 0;
 
   bool pvReadTimeoutOccured;
-  bool pvReadTimeoutOccuredPrevious;
+  ///bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
-  bool pvWriteTimeoutOccuredPrevious;
+  ///bool pvWriteTimeoutOccuredPrevious;
   bool pvCancelWrite;               // Updated by pvFlushOut() and addFrameToWrite()
   // Frames queues
   QQueue<mdtFrame*> pvReadenFrames;

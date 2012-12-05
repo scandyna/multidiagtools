@@ -71,14 +71,24 @@ void mdtPortReadThread::run()
     }
     // Wait on Read event
     portError = pvPort->waitForReadyRead();
-    if(portError == mdtAbstractPort::WaitingCanceled){
-      // Stopping
-      break;
-    }else if(portError == mdtAbstractPort::UnknownError){
+    if(portError != mdtAbstractPort::NoError){
+      if(portError == mdtAbstractPort::WaitingCanceled){
+        // Stopping
+        notifyError(mdtAbstractPort::Disconnected);
+        break;
+      }else{
+        // Unhandled error - notify and end
+        notifyError(portError);
+        break;
+      }
+    }
+    /**
+    }else if(portError == mdtAbstractPort::UnhandledError){
       // Unhandled error. Signal this and stop
-      emit(errorOccured(MDT_PORT_IO_ERROR));
+      notifyError(portError);
       break;
     }
+    */
     // Event occured, get the data from port - Check timeout state first
     if(pvPort->readTimeoutOccured()){
       // In timeout protocol, the current frame is considered complete
@@ -92,6 +102,8 @@ void mdtPortReadThread::run()
             frame = getNewFrameRead();
           }
         }
+      }else{
+        notifyError(mdtAbstractPort::ReadTimeout);
       }
     }else{
       frame = readFromPort(frame);

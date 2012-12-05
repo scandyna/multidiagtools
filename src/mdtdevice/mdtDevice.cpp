@@ -32,7 +32,6 @@ mdtDevice::mdtDevice(QObject *parent)
 {
   qDebug() << "mdtDevice::mdtDevice() ...";
   pvIos = 0;
-  pvOutputWriteReplyTimeout = 500;
   pvDigitalOutputAddressOffset = 0;
   pvAnalogOutputAddressOffset = 0;
   pvBackToReadyStateTimeout = -1;
@@ -92,11 +91,6 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
       connect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
     }
   }
-}
-
-void mdtDevice::setOutputWriteReplyTimeout(int timeout)
-{
-  pvOutputWriteReplyTimeout = timeout;
 }
 
 void mdtDevice::setBackToReadyStateTimeout(int timeout)
@@ -660,7 +654,7 @@ void mdtDevice::setStateFromPortError(int error)
   }else if(error == mdtAbstractPort::Connecting){
     qDebug() << "mdtDevice::setStateFromPortError(): Connecting";
     setStateConnecting();
-  }else if(error == mdtAbstractPort::WriteQueueEmpty){
+  }else if(error == mdtAbstractPort::WritePoolEmpty){
     qDebug() << "mdtDevice::setStateFromPortError(): WriteQueueEmpty";
     setStateBusy(pvBackToReadyStateTimeout);
   }else{

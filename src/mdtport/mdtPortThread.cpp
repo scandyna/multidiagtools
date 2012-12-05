@@ -396,6 +396,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
     // Event occured, send the data to port - Check timeout state first
     if(pvPort->writeTimeoutOccured()){
       // Cannot write now, sleep some time and try later
+      notifyError(mdtAbstractPort::WriteTimeout);
       pvPort->unlockMutex();
       msleep(100);
       pvPort->lockMutex();

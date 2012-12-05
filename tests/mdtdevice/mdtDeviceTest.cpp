@@ -503,14 +503,11 @@ void mdtDeviceTest::usbtmcU3606ATest()
   dw.show();
 
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  
+
   // Check generic command
-  QVERIFY(d.sendCommand("*CLS\n") >= 0);
-  QTest::qWait(1000);
+  ///QVERIFY(d.sendCommand("*CLS\n") >= 0);
+  ///QTest::qWait(2000);
+  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   // Check generic query
   QVERIFY(d.sendQuery("*IDN?\n").left(27) == "Agilent Technologies,U3606A");
   
@@ -518,8 +515,10 @@ void mdtDeviceTest::usbtmcU3606ATest()
 
   // Get value
   QVERIFY(d.getAnalogInputValue(0, 10000).isValid());
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  qDebug() << "*** OPC: " << d.sendQuery("*OPC?\n");
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   QVERIFY(d.getAnalogInputValue(0, 10000).type() == QVariant::Double);
-
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   
   while(dw.isVisible()){

@@ -29,6 +29,7 @@
  * Built on top of libusb-1.x API
  *
  * \todo Implement this remarks
+ * \bug Re-open fails by reconnect(), because port change. Uniq ID must be something like VID:PID:SN
  * Note about the port name (set with setPortName() ):<br>
  *  Because it can happen that multiple devices with same vendor ID and product ID
  *   can be attached to system, this class must provide a unique identifier when

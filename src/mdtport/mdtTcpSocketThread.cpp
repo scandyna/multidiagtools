@@ -144,7 +144,8 @@ void mdtTcpSocketThread::run()
         }else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
           // Stopping
           pvRunning = false;
-          notifyError(portError);
+          ///notifyError(portError);
+          notifyError(mdtAbstractPort::Disconnected);
           break;
         }else{
           // stop
@@ -181,7 +182,8 @@ void mdtTcpSocketThread::run()
         }else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
           // Stopping
           pvRunning = false;
-          notifyError(portError);
+          ///notifyError(portError);
+          notifyError(mdtAbstractPort::Disconnected);
           break;
         }else{
           // stop
@@ -209,7 +211,8 @@ void mdtTcpSocketThread::run()
           }else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
             // Stopping
             pvRunning = false;
-            notifyError(portError);
+            ///notifyError(portError);
+            notifyError(mdtAbstractPort::Disconnected);
             break;
           }else{
             // stop

@@ -66,13 +66,24 @@ void mdtSerialPortCtlThread::run()
     }
     // Wait on ctl signal event
     portError = port->waitEventCtl();
-    if(portError == mdtAbstractPort::WaitingCanceled){
-      // Stopping
-      break;
-    }else if(portError == mdtAbstractPort::UnknownError){
-      // Unhandled error. Signal this and stop
-      emit(errorOccured(MDT_PORT_IO_ERROR));
-      break;
+    if(portError != mdtAbstractPort::NoError){
+      if(portError == mdtAbstractPort::WaitingCanceled){
+        // Stopping
+        notifyError(mdtAbstractPort::Disconnected);
+        break;
+      }else{
+        // Unhandled error. Signal this and stop
+        notifyError(portError);
+        break;
+      }
+      /**
+      }else if(portError == mdtAbstractPort::UnhandledError){
+        // Unhandled error. Signal this and stop
+        ///emit(errorOccured(MDT_PORT_IO_ERROR));
+        notifyError(MDT_PORT_IO_ERROR);
+        break;
+      }
+      */
     }
     // We have a event here, update the flags
     if(!port->getCtlStates()){

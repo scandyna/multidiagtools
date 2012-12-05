@@ -102,7 +102,7 @@ mdtAbstractPort::error_t mdtPort::waitForReadyRead()
           e.setSystemError(errno, strerror(errno));
           MDT_ERROR_SET_SRC(e, "mdtPort");
           e.commit();
-          return UnknownError;
+          return UnhandledError;
       }
     }
   }
@@ -177,7 +177,7 @@ mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
           e.setSystemError(errno, strerror(errno));
           MDT_ERROR_SET_SRC(e, "mdtPort");
           e.commit();
-          return UnknownError;
+          return UnhandledError;
       }
     }
   }
@@ -244,7 +244,7 @@ mdtAbstractPort::error_t mdtPort::pvOpen()
       case ENOENT:
         return PortNotFound;
       default:
-        return UnknownError;
+        return UnhandledError;
     }
   }
 

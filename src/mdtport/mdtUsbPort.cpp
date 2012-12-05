@@ -145,7 +145,7 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
   int len;
   int err;
 
-  qDebug() << "RD: init transfer ...";
+  ///qDebug() << "RD: init transfer ...";
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
     // Stop thread
@@ -256,15 +256,15 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
         return UnhandledError;
       }
     }
+    // Check if transfer has timed out
+    if(pvReadTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
+      updateReadTimeoutState(true);
+      ///return NoError;
+    }
     // Check if transfer was cancelled
     if(pvReadTransfer->status & LIBUSB_TRANSFER_CANCELLED){
       qDebug() << "mdtUsbPort::waitForReadyRead() return ReadCanceled";
       return ReadCanceled;
-    }
-    // Check if transfer has timed out (not valid if cancelled)
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-      updateReadTimeoutState(true);
-      return NoError;
     }
     // Check if device is disconnected (not valid if cancelled)
     if(pvReadTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
@@ -315,7 +315,7 @@ qint64 mdtUsbPort::read(char *data, qint64 maxSize)
 
   int retLen;
 
-  qDebug() << "mdtUsbPort::read() ...";
+  ///qDebug() << "mdtUsbPort::read() ...";
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
     // Stop thread
@@ -328,7 +328,7 @@ qint64 mdtUsbPort::read(char *data, qint64 maxSize)
   // Update internal flag
   pvReadTransferPending = false;
 
-  qDebug() << "Readen: " << retLen;
+  ///qDebug() << "Readen: " << retLen;
   return retLen;
 }
 
@@ -340,7 +340,7 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   int err;
   int len;
 
-  qDebug() << "WR: init transfer ...";
+  ///qDebug() << "WR: init transfer ...";
   // If transfer is null, port was closed
   if(pvWriteTransfer == 0){
     // Stop thread
@@ -356,7 +356,7 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   memcpy(pvWriteBuffer, data, len);
   // Fill the transfer
   pvWriteTransferComplete = 0;
-  qDebug() << "WR: fill a new transfert, size: " << len;
+  ///qDebug() << "WR: fill a new transfert, size: " << len;
   if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
     libusb_fill_bulk_transfer(pvWriteTransfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, (void*)&pvWriteTransferComplete, pvWriteTimeout);
   }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
@@ -452,14 +452,14 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
         return UnhandledError;
       }
     }
+    // Check if transfer has timed out
+    if(pvWriteTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
+      updateReadTimeoutState(true);
+      ///return NoError;
+    }
     // Check if transfer was cancelled
     if(pvWriteTransfer->status & LIBUSB_TRANSFER_CANCELLED){
       return WriteCanceled;
-    }
-    // Check if transfer has timed out (not valid if cancelled)
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-      updateReadTimeoutState(true);
-      return NoError;
     }
     // Check if device is disconnected (not valid if cancelled)
     if(pvWriteTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
@@ -724,6 +724,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
     devicesCount = libusb_get_device_list(pvLibusbContext, &devicesList);
     if(devicesCount < 0){
       mdtError e(MDT_PORT_IO_ERROR, "Cannot list devices", mdtError::Error);
+      e.setSystemError(devicesCount, errorText(devicesCount));
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
       return UnhandledError;
@@ -872,7 +873,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
       case LIBUSB_ERROR_NOT_FOUND:
         return PortNotFound;
       default:
-        return UnknownError;
+        return UnhandledError;
     }
   }
   // Find device's output endpoints
@@ -1055,16 +1056,13 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
 
   /// \todo Setup functions ......
 
-  /// \todo Set timeouts ...
-  ///setReadTimeout(config().readTimeout());
-  setReadTimeout(-1);
-  ///setWriteTimeout(config().writeTimeout());
-  setWriteTimeout(-1);
-  
+  setReadTimeout(config().readTimeout());
+  setWriteTimeout(config().writeTimeout());
+
   // Set some flags
   pvReadTransferPending = false;
   pvWriteTransferPending = false;
-  
+
   return NoError;
 }
 

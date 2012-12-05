@@ -34,7 +34,7 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   pvPortManager = new mdtUsbtmcPortManager;
   pvCodec = new mdtFrameCodecScpiU3606A;
   // Setup port manager
-  pvPortManager->config().setReadTimeout(30000);
+  pvPortManager->config().setReadTimeout(10000);
   pvPortManager->setNotifyNewReadenFrame(true);
   connect(pvPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrame(int, QByteArray)));
   connect(pvPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
@@ -122,10 +122,10 @@ int mdtDeviceU3606A::sendCommand(const QByteArray &command, int timeout)
 {
   // Wait until data can be sent
   if(!pvPortManager->waitOnWriteReady(timeout)){
-    return mdtAbstractPort::WriteQueueEmpty;
+    return mdtAbstractPort::WritePoolEmpty;
   }
   // Send query
-  return pvPortManager->writeData("MEAS:VOLT:DC?\n");
+  return pvPortManager->writeData(command);
 }
 
 QByteArray mdtDeviceU3606A::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
@@ -187,6 +187,7 @@ void mdtDeviceU3606A::decodeReadenFrame(int id, QByteArray data)
     case MDT_FC_SCPI_UNKNOW:
       // Used for sendQuery() - We decode nothing
       pvGenericData = data;
+      break;
     case MDT_FC_SCPI_VALUE:
       ai = pendingAioTransaction(id);
       if(ai == 0){
@@ -216,7 +217,7 @@ int mdtDeviceU3606A::readAnalogInput(int address)
   /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
   // Wait until data can be sent
   if(!pvPortManager->waitOnWriteReady(500)){
-    return mdtAbstractPort::WriteQueueEmpty;
+    return mdtAbstractPort::WritePoolEmpty;
   }
   // Send query
   bTag = pvPortManager->writeData("MEAS:VOLT:DC?\n");
@@ -225,7 +226,7 @@ int mdtDeviceU3606A::readAnalogInput(int address)
   }
   // Wait until more data can be sent
   if(!pvPortManager->waitOnWriteReady(500)){
-    return mdtAbstractPort::WriteQueueEmpty;
+    return mdtAbstractPort::WritePoolEmpty;
   }
   // Send read request
   bTag = pvPortManager->sendReadRequest();

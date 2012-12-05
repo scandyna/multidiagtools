@@ -78,13 +78,8 @@ if(UNIX)
     # linux/mdtPortPosix.cpp
     linux/mdtPort.cpp
     linux/mdtPortLock.cpp
-    linux/mdtUsbtmcPort.cpp
-    #linux/mdtUsbtmcPortManager.h
-    #linux/mdtUsbtmcPortManager.cpp
   )
   set (HEADER_FILES ${HEADER_FILES} 
-    linux/mdtUsbtmcPort.h
-    #linux/mdtUsbtmcPortManager.h
   )
 endif(UNIX)
 

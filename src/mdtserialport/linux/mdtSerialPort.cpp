@@ -647,7 +647,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
           e.setSystemError(errno, strerror(errno));
           MDT_ERROR_SET_SRC(e, "mdtSerialPort");
           e.commit();
-          return UnknownError;
+          return UnhandledError;
       }
     }
   }
@@ -777,7 +777,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
           e.setSystemError(errno, strerror(errno));
           MDT_ERROR_SET_SRC(e, "mdtSerialPort");
           e.commit();
-          return UnknownError;
+          return UnhandledError;
       }
     }
   }
@@ -852,7 +852,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventCtl()
         e.setSystemError(errno, strerror(errno));
         MDT_ERROR_SET_SRC(e, "mdtSerialPort");
         e.commit();
-        return UnknownError;
+        return UnhandledError;
     }
   }
 
@@ -1000,7 +1000,7 @@ mdtAbstractPort::error_t mdtSerialPort::pvOpen()
       case ENOENT:
         return PortNotFound;
       default:
-        return UnknownError;
+        return UnhandledError;
     }
   }
   // Get current config and save it to pvOriginalTermios
