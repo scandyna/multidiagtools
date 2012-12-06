@@ -231,7 +231,7 @@ void mdtAbstractPort::initQueues()
   mdtFrame *frame;
 
   // Create the read frames pools with requested type
-  qDebug() << "mdtAbstractPort::initQueues() , n: " << config().readQueueSize() << " , fsize: " << config().readFrameSize();
+  ///qDebug() << "mdtAbstractPort::initQueues() , n: " << config().readQueueSize() << " , fsize: " << config().readFrameSize();
   for(int i=0; i<config().readQueueSize(); i++){
     switch(config().frameType()){
       // Raw (binary) frame

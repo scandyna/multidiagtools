@@ -43,6 +43,7 @@ void mdtPortReadThread::run()
 
   mdtFrame *frame;
   mdtAbstractPort::error_t portError;
+  int n;
   bool useReadTimeoutProtocol = false;
 
   pvPort->lockMutex();
@@ -106,10 +107,20 @@ void mdtPortReadThread::run()
         notifyError(mdtAbstractPort::ReadTimeout);
       }
     }else{
-      frame = readFromPort(frame);
+      // Read
+      n = readFromPort(&frame);
+      if(n < 0){
+        // Unhandled error -> notify and stop
+        notifyError(n);
+        break;
+      }
+      Q_ASSERT(frame != 0);
+      // frame = readFromPort(frame);
+      /**
       if(frame == 0){
         break;
       }
+      */
     }
   }
 

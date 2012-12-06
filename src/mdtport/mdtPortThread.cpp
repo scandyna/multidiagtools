@@ -216,6 +216,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
   return frame;
 }
 
+/**
 mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
 {
   Q_ASSERT(pvPort != 0);
@@ -288,8 +289,9 @@ mdtFrame *mdtPortThread::readFromPort(mdtFrame *frame)
 
   return f;
 }
+*/
 
-int mdtPortThread::readFromPort2(mdtFrame **frame)
+int mdtPortThread::readFromPort(mdtFrame **frame)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(frame != 0);
@@ -484,6 +486,6 @@ void mdtPortThread::notifyError(int error)
 #ifdef Q_OS_UNIX
 void mdtPortThread::sigactionHandle(int /* signum */)
 {
-  qDebug() << "mdtPortThread::sigactionHandle() called, TID: " << pthread_self();
+  ///qDebug() << "mdtPortThread::sigactionHandle() called, TID: " << pthread_self();
 }
 #endif

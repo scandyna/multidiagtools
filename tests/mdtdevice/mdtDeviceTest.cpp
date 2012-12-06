@@ -183,16 +183,19 @@ void mdtDeviceTest::deviceIosWidgetTest()
   w.setDeviceIos(&ios);
   w.show();
 
+  /**
   while(w.isVisible()){
     QTest::qWait(1000);
   }
+  */
   // Second setup (must clear existing widget and redo layout)
   w.setDeviceIos(&ios);
   w.show();
+  /**
   while(w.isVisible()){
     QTest::qWait(1000);
   }
-
+  */
 }
 
 void mdtDeviceTest::modbusWagoTest()

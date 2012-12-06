@@ -186,7 +186,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  mdtFrame *readFromPort(mdtFrame *frame);
+  ///mdtFrame *readFromPort(mdtFrame *frame);
 
   /*! \brief Read data from port 2 (new variant to test)
    *
@@ -211,7 +211,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  int readFromPort2(mdtFrame **frame);
+  int readFromPort(mdtFrame **frame);
 
   /*! \brief Get a new frame for writing data to port
    *

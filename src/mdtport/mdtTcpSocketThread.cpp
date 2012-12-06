@@ -168,7 +168,7 @@ void mdtTcpSocketThread::run()
         break;
       }
       // Read ...
-      completeFrames = readFromPort2(&readFrame);
+      completeFrames = readFromPort(&readFrame);
       if(completeFrames < 0){
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
@@ -197,7 +197,7 @@ void mdtTcpSocketThread::run()
     if(port->unknownReadSize()){
       while(pvSocket->waitForReadyRead(50)){
         // Read ...
-        completeFrames = readFromPort2(&readFrame);
+        completeFrames = readFromPort(&readFrame);
         if(completeFrames < 0){
           // Check about connection
           if(portError == mdtAbstractPort::Disconnected){

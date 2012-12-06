@@ -161,8 +161,9 @@ void mdtUsbPortThread::run()
   int interframeTime = 0;
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
-  mdtFrame *readFramePrevious = 0;
+  ///mdtFrame *readFramePrevious = 0;
   mdtAbstractPort::error_t portError;
+  int n;
   mdtUsbPort *port;
   bool waitAnAnswer = true;
   int toRead = 0;
@@ -214,10 +215,10 @@ void mdtUsbPortThread::run()
         writeFrame = 0;
       }
     }else{
-      qDebug() << "USBTHD: write frames size: " << port->writeFrames().size();
+      ///qDebug() << "USBTHD: write frames size: " << port->writeFrames().size();
       writeFrame = getNewFrameWrite();
     }
-    qDebug() << "USBTHD: write frame get DONE";
+    ///qDebug() << "USBTHD: write frame get DONE";
     // Read thread state
     if(!pvRunning){
       break;
@@ -257,7 +258,7 @@ void mdtUsbPortThread::run()
         break;
       }
     }
-    qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
+    ///qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
     // Read process
     if(waitAnAnswer){
       if(readFrame == 0){
@@ -349,6 +350,23 @@ void mdtUsbPortThread::run()
         }
         // read/store
         if(!port->readTimeoutOccured()){
+          n = readFromPort(&readFrame);
+          if(n < 0){
+            // Unhandled error: notify and stop
+            notifyError(n);
+            pvRunning = false;
+            break;
+          }
+          Q_ASSERT(readFrame != 0);
+          // If no frame was complete, it's possible that more data is needed
+          if(n == 0){
+            toRead = readFrame->bytesToStore();
+            ///qDebug() << "USBTHD: waiting more data, toRead: " << toRead;
+          }else{
+            ///qDebug() << "USBTHD: received all expected data";
+            toRead = 0;
+          }
+          /**
           readFramePrevious = readFrame;
           readFrame = readFromPort(readFrame);
           if(readFrame == 0){
@@ -364,6 +382,7 @@ void mdtUsbPortThread::run()
             toRead = 0;
             qDebug() << "USBTHD: Not same frame, toRead: " << toRead;
           }
+          */
         }else{
           notifyError(mdtAbstractPort::ReadTimeout);
         }
