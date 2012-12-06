@@ -162,13 +162,19 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
         // Build port name
         deviceInfo = portInfo->deviceInfoList().at(0);
         Q_ASSERT(deviceInfo != 0);
+        /**
         portName = "0x" + QString::number((unsigned int)libusb_get_bus_number(device), 16);
         portName += ":0x";
         portName += QString::number((unsigned int)libusb_get_device_address(device), 16);
         portName += ":0x";
+        */
+        portName = "0x";
         portName += QString::number((unsigned int)deviceInfo->vendorId(), 16);
         portName += ":0x";
         portName += QString::number((unsigned int)deviceInfo->productId(), 16);
+        if(!deviceDescriptor.serialNumber().isEmpty()){
+          portName += ":" + deviceDescriptor.serialNumber();
+        }
         portInfo->setPortName(portName);
         // Add port info to list
         portInfoList.append(portInfo);
