@@ -106,6 +106,10 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
  private:
 
   QMap<int, int> pvPendingTransactions;
+  // Invalid floating/limits values
+  double pvInfinity;
+  double pvNinfinity;
+  double pvNan;
 };
 
 #endif  // #ifnef MDT_FRAME_CODEC_SCPI_H

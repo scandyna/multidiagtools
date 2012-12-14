@@ -23,6 +23,7 @@
 #include <QDebug>
 
 mdtFrameUsbTmc::mdtFrameUsbTmc()
+ : mdtFrame()
 {
   pvMsgID = 0;
   pvbTag = 0;
@@ -39,7 +40,6 @@ mdtFrameUsbTmc::~mdtFrameUsbTmc()
 
 void mdtFrameUsbTmc::clearSub()
 {
-  qDebug() << "mdtFrameUsbTmc::clearSub()";
   pvMsgID = 0;
   pvbTag = 0;
   pvbTagInverse = 0;
@@ -62,14 +62,10 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
     return 0;
   }
 
-  qDebug() << "mdtFrameUsbTmc::putData(): size(): " << size();
-  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (0): " << maxLen;
-
   // Check wat's possible to store
   if(maxLen > remainCapacity()){
     maxLen = remainCapacity();
   }
-  qDebug() << "mdtFrameUsbTmc::putData(): maxLen (1): " << maxLen;
   // store
   append(data, maxLen);
   stored = maxLen;
@@ -110,7 +106,7 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
     // Check if we have a complete frame
     if(size() >= frameSize){
       pvEOFcondition = true;
-      qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
+      ///qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
       pvMessageData += right(size()-12).left(pvTransferSize);
     }
   }
@@ -123,7 +119,7 @@ void mdtFrameUsbTmc::setMsgID(mdtFrameUsbTmc::msg_id_t MsgID)
   pvMsgID = MsgID;
 }
 
-mdtFrameUsbTmc::msg_id_t mdtFrameUsbTmc::MsgID()
+mdtFrameUsbTmc::msg_id_t mdtFrameUsbTmc::MsgID() const
 {
   return (msg_id_t)pvMsgID;
 }
@@ -134,7 +130,7 @@ void mdtFrameUsbTmc::setbTag(quint8 bTag)
   pvbTagInverse = ~pvbTag;
 }
 
-quint8 mdtFrameUsbTmc::bTag()
+quint8 mdtFrameUsbTmc::bTag() const
 {
   return pvbTag;
 }
@@ -144,7 +140,7 @@ void mdtFrameUsbTmc::setEOM(bool EOM)
   pvEOM = EOM;
 }
 
-bool mdtFrameUsbTmc::isEOM()
+bool mdtFrameUsbTmc::isEOM() const
 {
   return pvEOM;
 }
@@ -184,18 +180,18 @@ void mdtFrameUsbTmc::encode()
   append((char)pvbTag);
   append((char)pvbTagInverse);
   append((char)0x00);
-  append((char)pvTransferSize & 0x0F);          // TransferSize, LLSB
-  append((char)((pvTransferSize >> 8) & 0x0F));   // TransferSize, LSB
-  append((char)((pvTransferSize >> 16) & 0x0F));  // TransferSize, LSB
-  append((char)((pvTransferSize >> 24) & 0x0F));  // TransferSize, LSB
+  append((char)pvTransferSize & 0xFF);            // TransferSize, LLSB
+  append((char)((pvTransferSize >> 8) & 0xFF));   // TransferSize, LSB
+  append((char)((pvTransferSize >> 16) & 0xFF));  // TransferSize, LSB
+  append((char)((pvTransferSize >> 24) & 0xFF));  // TransferSize, LSB
   if(pvEOM){
     append((char)0x01);                           // bmTransferAttributes
   }else{
     append((char)0x00);                           // bmTransferAttributes
   }
-  append((char)0x00);                           // Reserved
-  append((char)0x00);                           // Reserved
-  append((char)0x00);                           // Reserved
+  append((char)0x00);                             // Reserved
+  append((char)0x00);                             // Reserved
+  append((char)0x00);                             // Reserved
   // Add data
   append(pvMessageData);
   // Add alignment bytes if requierd

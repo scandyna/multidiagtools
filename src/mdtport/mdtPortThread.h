@@ -179,27 +179,6 @@ class mdtPortThread : public QThread
    *  method returns.
    *
    * \param frame Data readen from port will be stored in this frame.
-   *
-   * \return A pointer to the current frame (can be different from frame passed as argument!). It can happen that a Null pointer
-   *          is returned, and this is a fatal error, and thread should be stopped.
-   *
-   * \pre Port must be set with setPort() before using this method.
-   * \pre frame must be a valid pointer (not Null).
-   */
-  ///mdtFrame *readFromPort(mdtFrame *frame);
-
-  /*! \brief Read data from port 2 (new variant to test)
-   *
-   * This is a helper method for subclass
-   *  to store chunk of data into a frame.
-   *
-   * Note about port mutex handling:<br>
-   *  The port mutex must be locked before calling this method.
-   *  Internally, it will be unlocked during wait, and will be
-   *  locked again. So, the port mutex is allways locked when this
-   *  method returns.
-   *
-   * \param frame Data readen from port will be stored in this frame.
    *               Note that pointer is updated when a frame was completed
    *               and that it can be Null (in this case the mdtAbstractPort::UnhandledError is returned)
    *

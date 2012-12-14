@@ -60,7 +60,10 @@ class mdtFrameTest : public mdtTest
 
   // Some special cases seen in real world
   void usbTmcDecodeRealCasesTest();
-  
+
   /// \todo Add size caluclation test
+
+  // USB control frame
+  void usbControlEncodeTest();
 };
 #endif // idnfef MDT_FRAME_TEST_H

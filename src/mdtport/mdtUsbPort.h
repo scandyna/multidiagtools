@@ -23,6 +23,7 @@
 
 #include "mdtAbstractPort.h"
 #include <libusb-1.0/libusb.h>
+#include "mdtFrameUsbControl.h"
 
 /*! \brief USB port I/O port class
  *
@@ -34,6 +35,22 @@
  *   (re-)open the port.
  *  Because of this, the choosen format is: vendorID:productID:serialID  (serialID is also called serial number).
  *   It's possible to omit the serialID. In this case, the first port with given vendor ID and device ID is open.
+ *
+ * For read and write of data, the mdtAbstractPort's API is used.
+ *
+ * The control transfer is a little bit different:
+ *  - If the main thread (f.ex. GUI thread) wants to send a request,
+ *     it locks the mutex using lockMutex(), then it takes a frame
+ *     in pool with controlFramesPool().
+ *     Finaly, query is submitted using addControlRequest(), witch will
+ *     wake the write wait condition.
+ *  - The thread calls handleControlQueries() periodically, witch will init
+ *     a new control transfer if a query is available in queires queue.
+ *  - Each time waitEventWriteReady() and waitForReadyRead() are called,
+ *     handleControlResponses() is called to check if a control response
+ *     is available. If true, it will be enqueued in control responses queue.
+ *  - The thread periodically checks if a response is available using controlResponseFrames()
+ *     queue's size, and emit \todo signalName if a control response is available.
  */
 class mdtUsbPort : public mdtAbstractPort
 {
@@ -70,6 +87,73 @@ class mdtUsbPort : public mdtAbstractPort
    */
   void setWriteTimeout(int timeout);
 
+  /*! \brief Get the control pool queue
+   *
+   * This queue contains the pool of control frames.
+   *
+   * Mutex is not handled by this method.
+   */
+  QQueue<mdtFrameUsbControl*> &controlFramesPool();
+
+  /*! \brief Add a control request
+   *
+   * Once the frame is added to the control queries queue,
+   *  waiting thread will be woken up (if waiting)
+   *  and will send the frame.
+   *
+   * The mutex must be locked before calling this method,
+   *  and still locked inside.
+   *
+   * \pre frame must be a valid pointer.
+   */
+  void addControlRequest(mdtFrameUsbControl *frame);
+
+  /*! \brief Check about pending control queries and init a new transfer if needed
+   *
+   * If a frame is available in control query queue,
+   *  a transfer will be initialized and submitted
+   *  to libusb.
+   *
+   * The thread can call this method periodically.
+   *  If nothing is to do, it will simply return NoError.
+   *
+   * The mutex must be locked before calling this method,
+   *  and still locked inside.
+   */
+  error_t handleControlQueries();
+
+  /*! \brief Cancel current control transfer
+   *
+   * If a control transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
+   */
+  error_t cancelControlTransfer();
+
+  /*! \brief Check pending control transfer
+   *
+   * If a control transfer is pending,
+   *  complete flag will be checked.
+   *  If transfer is complete,
+   *  some flags are checked, and
+   *  frame is enqueued in response queue if Ok.
+   *
+   * This method is called by waitEventWriteReady()
+   *  and waitForReadyRead(), witch are called from port
+   *  thread.
+   *
+   * Mutex is not handled by this method.
+   */
+  error_t handleControlResponses();
+
+  /*! \brief Get the control responses queue
+   *
+   * This queue contains the response frames returned from device.
+   *
+   * Mutex is not handled by this method.
+   */
+  QQueue<mdtFrameUsbControl*> &controlResponseFrames();
+
   /*! \brief Request a new bulk/interrupt input transfer
    *
    * Will fill and init a new bulk/interrupt (depending setup) transfer
@@ -94,13 +178,40 @@ class mdtUsbPort : public mdtAbstractPort
 
   /*! \brief Read data from port
    *
-   * This method is called from mdtPortReadThread , and should not be used directly.
+   * This method is called from mdtUsbPortThread , and should not be used directly.
    *
    * Mutex is not handled by this method.
    *
    * \pre A transfert must be initialized with initReadTransfer() before using this method.
    */
   qint64 read(char *data, qint64 maxSize);
+
+  /*! \brief Request a new interrupt input transfer for additional message input
+   *
+   * Will fill and init a new interrupt transfer
+   *  and submit it to libusb.
+   */
+  error_t initMessageInTransfer(qint64 maxSize);
+
+  /*! \brief Cancel current interrupt message input transfer
+   *
+   * If a input message transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
+   */
+  error_t cancelMessageInTransfer();
+
+  /*! \brief Read message inputs (additional interrupt IN)
+   *
+   * This method is called from mdtUsbPortThread , and should not be used directly.
+   *
+   * This method differs from read() and write().
+   *  It will automatically init a message IN transfer if
+   *  additional interrupt IN is used, and no transfer is pending.
+   * There is no wait method associated to additional interrupt IN,
+   *  it will be complete during waitEventWriteReady() or waitForReadyRead().
+   */
+  qint64 readMessageIn(char *data, qint64 maxSize);
 
   /*! \brief Request a new bulk/interrupt out transfer
    *
@@ -201,27 +312,50 @@ class mdtUsbPort : public mdtAbstractPort
   struct timeval pvWriteTimeoutTv;
   libusb_context *pvLibusbContext;
   libusb_device_handle *pvHandle;
-  // Data buffers
+  /*
+   * Control endpoint members
+   */
+  char *pvControlBuffer;
+  int pvControlBufferSize;
+  libusb_transfer *pvControlTransfer;
+  bool pvControlTransferPending;       // Flag to see if a transfer is pending
+  int pvControlTransferComplete;       // Will be stored in transfer struct
+  // Frames queues
+  QQueue<mdtFrameUsbControl*> pvControlFramesPool;
+  QQueue<mdtFrameUsbControl*> pvControlQueryFrames;
+  QQueue<mdtFrameUsbControl*> pvControlResponseFrames;
+  /*
+   * Data bulk/interrupt IN endpoint members
+   */
   char *pvReadBuffer;
   int pvReadBufferSize;
-  int pvReadenLength;
   quint8 pvReadEndpointAddress;
   libusb_transfer_type pvReadTransfertType;
+  libusb_transfer *pvReadTransfer;
+  bool pvReadTransferPending;       // Flag to see if a transfer is pending
+  int pvReadTransferComplete;       // Will be stored in transfer struct
+  /*
+   * Data bulk/interrupt OUT endpoint members
+   */
   char *pvWriteBuffer;
   int pvWriteBufferSize;
-  int pvWrittenLength;
   quint8 pvWriteEndpointAddress;
   libusb_transfer_type pvWriteTransfertType;
-  // Interrupt in (available on some devices)
-  char *pvInterruptInBuffer;
-  int pvInterruptInBufferSize;
-  // Transfers
-  libusb_transfer *pvReadTransfer;
-  bool pvReadTransferPending;       // Flag te see if a transfer is pending
-  int pvReadTransferComplete;       // Will be stored in transfer struct
   libusb_transfer *pvWriteTransfer;
-  bool pvWriteTransferPending;      // Flag te see if a transfer is pending
+  bool pvWriteTransferPending;      // Flag to see if a transfer is pending
   int pvWriteTransferComplete;      // Will be stored in transfer struct
+  /*
+   * Some devices have a additional interrupt IN endpoint
+   *  for urgent messages. Other use interrupt IN endpoint
+   *  for standard I/O. This is the reason to use another
+   *  name than ...interruptIn... for these members
+   */
+  char *pvMessageInBuffer;
+  int pvMessageInBufferSize;
+  quint8 pvMessageInEndpointAddress;
+  libusb_transfer *pvMessageInTransfer;
+  bool pvMessageInTransferPending;  // Flag to see if a transfer is pending
+  int pvMessageInTransferComplete;  // Will be stored in transfer struct
 };
 
 #endif // #ifndef MDT_USB_PORT_H

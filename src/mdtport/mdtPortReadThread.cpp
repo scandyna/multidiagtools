@@ -65,7 +65,6 @@ void mdtPortReadThread::run()
   }
   // Run...
   while(1){
-    ///qDebug() << "RTHD: run ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -83,13 +82,6 @@ void mdtPortReadThread::run()
         break;
       }
     }
-    /**
-    }else if(portError == mdtAbstractPort::UnhandledError){
-      // Unhandled error. Signal this and stop
-      notifyError(portError);
-      break;
-    }
-    */
     // Event occured, get the data from port - Check timeout state first
     if(pvPort->readTimeoutOccured()){
       // In timeout protocol, the current frame is considered complete
@@ -115,12 +107,6 @@ void mdtPortReadThread::run()
         break;
       }
       Q_ASSERT(frame != 0);
-      // frame = readFromPort(frame);
-      /**
-      if(frame == 0){
-        break;
-      }
-      */
     }
   }
 

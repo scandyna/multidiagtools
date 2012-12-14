@@ -107,13 +107,19 @@ class mdtPortConfig
    * Internally, the event system is used for write calls.<br>
    * It can be usefull (or important) to delay the write call.
    * In this case, set a minWaitTime > 0
+   *
    * \param minWaitTime Wait time before write [ms]
    * \sa mdtDeviceFileWriteThread
+   *
+   * \note used ??
    */
   void setWriteMinWaitTime(int minWaitTime);
 
   /*! \brief Get the minimal time to wait before try to write
+   *
    * \sa setWriteMinWaitTime()
+   *
+   * \note used ??
    */
   int writeMinWaitTime() const;
 
@@ -149,12 +155,14 @@ class mdtPortConfig
    *
    * Frame size is the maximum number of bytes that can be stored
    * before a frame is full.
+   *
    * \sa mdtFrame
    * \pre size must be a positive value
    */
   void setWriteFrameSize(int size);
 
   /*!\brief Get the read frame size
+   *
    * \sa setWriteFrameSize()
    */
   int writeFrameSize() const;
@@ -169,6 +177,7 @@ class mdtPortConfig
   void setWriteQueueSize(int size);
 
   /*!\brief Get the write Queue size
+   *
    * \sa setWriteQueueSize()
    */
   int writeQueueSize() const;
@@ -176,11 +185,13 @@ class mdtPortConfig
   /*! \brief Set frame type
    *
    * Frame type can be an ASCII frame, binary frame, ...
+   *
    * \sa mdtFrame
    */
   void setFrameType(const mdtFrame::type_t type);
 
   /*! \brief Get frame type
+   *
    * \sa setFrameType()
    */
   mdtFrame::type_t frameType() const;
@@ -192,7 +203,8 @@ class mdtPortConfig
   /*! \brief Set the end of frame sequence (applies on ASCII frames)
    * 
    * This is an overloaded method
-   * \sa setEndOfFrameSeq()
+   *
+   * \sa setEndOfFrameSeq(const QByteArray &)
    */
   void setEndOfFrameSeq(char c);
 
@@ -205,10 +217,12 @@ class mdtPortConfig
   /*! \brief Set the byte per byte write On/Off
    * 
    * It can happen that a (very) slow device needs time
-   * after any received byte.<br>
+   * after any received byte.
+   *
    * Enable this function in this situation.
+   * 
    * \param on True will enable this mode.
-   * \param waitTime Wait time between to bytes write [ms]
+   * \param waitTime Wait time between two bytes write [ms]
    * \sa mdtPortWriteThread
    */
   void setBytePerByteWrite(bool on, int waitTime);

@@ -195,9 +195,34 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(codec.values().at(0) == -133);
   QVERIFY(codec.values().at(1) == "\"Undefined header\"");
 
-  /// \todo Configure? response !
+  // Float OL (SCPI-99, chap. 7.2.1)
+  data = "9.9e37";
+  QVERIFY(codec.decodeValues(data));
+  QVERIFY(codec.values().size() == 1);
+  QVERIFY(!codec.values().at(0).isValid());
+  data = "9.999e37";
+  QVERIFY(codec.decodeValues(data));
+  QVERIFY(codec.values().size() == 1);
+  QVERIFY(!codec.values().at(0).isValid());
+
+  // Float -OL (SCPI-99, chap. 7.2.1)
+  data = "-9.9e37";
+  QVERIFY(codec.decodeValues(data));
+  QVERIFY(codec.values().size() == 1);
+  QVERIFY(!codec.values().at(0).isValid());
+  data = "-9.998e37";
+  QVERIFY(codec.decodeValues(data));
+  QVERIFY(codec.values().size() == 1);
+  QVERIFY(!codec.values().at(0).isValid());
+
+  // Float NAN (SCPI-99, chap. 7.2.1)
+  data = "9.91e37";
+  QVERIFY(codec.decodeValues(data));
+  QVERIFY(codec.values().size() == 1);
+  QVERIFY(!codec.values().at(0).isValid());
+
   
-  /// \todo Overload values
+  /// \todo Configure? response !
   
   /// \todo FUNC? response
   

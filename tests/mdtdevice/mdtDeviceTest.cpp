@@ -505,16 +505,40 @@ void mdtDeviceTest::usbtmcU3606ATest()
   dw.setIosWidget(iosw);
   dw.show();
 
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   // Check generic command
-  ///QVERIFY(d.sendCommand("*CLS\n") >= 0);
+  QVERIFY(d.sendCommand("*RST\n") >= 0);
+  
+  // Enable bits in Status Byte Register
+  QVERIFY(d.sendCommand("*SRE 255\n") >= 0);
+  ///qDebug() << "*SRE?: " << d.sendQuery("*SRE?\n");
+  
+  // Enable bits in Standard Events Register
+  QVERIFY(d.sendCommand("*ESE 255\n") >= 0);
+  ///qDebug() << "*ESE?: " << d.sendQuery("*ESE?\n");
+  
+  // Enable bits in Standard Operation Regsiter
+  QVERIFY(d.sendCommand(":STAT:OPER:ENAB 65535\n") >= 0);
+  ///qDebug() << "STATus:OPERation:ENABle?: " << d.sendQuery("STATus:OPERation:ENABle?\n");
+
+  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+
+  ///qDebug() << "*STB?: " << d.sendQuery("*STB?\n");
+  
+  ///qDebug() << "*IDN?: " << d.sendQuery("*IDN?\n");
+  
+  QTest::qWait(3000);
+  
+  return;
+  
+  ///d.sendQuery("*OPC?\n");
   ///QTest::qWait(2000);
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   // Check generic query
   QVERIFY(d.sendQuery("*IDN?\n").left(27) == "Agilent Technologies,U3606A");
   
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   // Get value
   QVERIFY(d.getAnalogInputValue(0, 10000).isValid());
@@ -523,6 +547,8 @@ void mdtDeviceTest::usbtmcU3606ATest()
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   QVERIFY(d.getAnalogInputValue(0, 10000).type() == QVariant::Double);
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  
+  
   
   while(dw.isVisible()){
     QTest::qWait(500);

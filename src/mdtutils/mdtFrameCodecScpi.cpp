@@ -27,6 +27,15 @@
 
 mdtFrameCodecScpi::mdtFrameCodecScpi()
 {
+  /*
+   * Values returned by device
+   *  when a measure fails
+   *  (OL or other)
+   * See SCPI-99, chap. 7.2.1
+   */
+  pvInfinity = 9.9e37;
+  pvNinfinity = -9.9e37;
+  pvNan = 9.91e37;
 }
 
 mdtFrameCodecScpi::~mdtFrameCodecScpi()
@@ -60,6 +69,8 @@ int mdtFrameCodecScpi::pendingTransaction(int id)
 bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
 {
   int i;
+  QVariant value;
+  double fltValue;
 
   // Clear previous results
   pvValues.clear();
@@ -80,9 +91,23 @@ bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
     if(pvNodes.at(i).isEmpty()){
       continue;
     }
+    // Convert node
+    value = convertData(pvNodes.at(i));
+    // Check limits if type is double
+    if(value.type() == QVariant::Double){
+      fltValue = value.toDouble();
+      // Check about Nan
+      if(qAbs(fltValue - pvNan) <= FLT_EPSILON){
+        value.clear();
+      }else{
+        // Check about -OL and OL
+        if((fltValue <= (pvNinfinity+FLT_EPSILON))||(fltValue >= (pvInfinity-FLT_EPSILON))){
+          value.clear();
+        }
+      }
+    }
     // Add converted value
-    /// \todo Check limits (-OL, OL) for type Double
-    pvValues.append(convertData(pvNodes.at(i)));
+    pvValues.append(value);
   }
 
   return true;

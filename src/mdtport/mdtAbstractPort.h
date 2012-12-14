@@ -409,7 +409,7 @@ class mdtAbstractPort : public QObject
    * The mutex must be locked before calling this method,
    *  and still locked inside.
    *
-   * \pre frame must be a vail pointer.
+   * \pre frame must be a valid pointer.
    */
   void addFrameToWrite(mdtFrame *frame);
 
@@ -580,6 +580,8 @@ class mdtAbstractPort : public QObject
   QString pvPortName;     // Port name, like /dev/ttyS0 , COM1, ...
   // mutex
   QMutex pvMutex;
+  // Wait conditions
+  QWaitCondition pvWriteFrameAvailable;
 
  private:
 
@@ -588,8 +590,6 @@ class mdtAbstractPort : public QObject
 
   // Some flags
   bool pvIsOpen;
-  // Wait conditions
-  QWaitCondition pvWriteFrameAvailable;
 };
 
 #endif  // #ifndef MDT_ABSTRACT_PORT_H

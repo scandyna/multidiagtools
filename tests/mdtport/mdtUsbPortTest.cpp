@@ -485,12 +485,8 @@ void mdtUsbPortTest::agilentDso1000Test()
   port.setConfig(&cfg);
   thd.setPort(&port);
 
-  // Check wrong format open
-  port.setPortName("0x0957:0x0588");
-  QVERIFY(port.open() != mdtAbstractPort::NoError);
-
   // Try to open
-  port.setPortName(":0x0957:0x0588");
+  port.setPortName("0x0957:0x0588");
   if(port.open() != mdtAbstractPort::NoError){
     QSKIP("No Agilent DSO1000 attached, or other error", SkipAll);
   }
@@ -548,7 +544,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   uf->setWaitAnAnswer(false);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
   uf->setbTag(3);
-  uf->setMessageData("*RST");
+  uf->setMessageData("*RST\n");
   uf->encode();
   port.addFrameToWrite(uf);
   port.unlockMutex();
@@ -565,7 +561,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   uf->setWaitAnAnswer(false);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
   uf->setbTag(4);
-  uf->setMessageData(":AUToscale");
+  uf->setMessageData(":AUToscale\n");
   uf->encode();
   port.addFrameToWrite(uf);
   port.unlockMutex();
@@ -586,7 +582,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   uf->setWaitAnAnswer(true);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
   uf->setbTag(3);
-  uf->setMessageData("*RST");
+  uf->setMessageData("*RST\n");
   uf->encode();
   port.addFrameToWrite(uf);
   port.unlockMutex();

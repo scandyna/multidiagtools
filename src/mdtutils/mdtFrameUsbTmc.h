@@ -76,7 +76,7 @@ class mdtFrameUsbTmc : public mdtFrame
    * Usefull for frames received from device.
    *  Is only valid when the frame is complete.
    */
-  msg_id_t MsgID();
+  msg_id_t MsgID() const;
 
   /*! \brief Set the bTag
    *
@@ -94,7 +94,7 @@ class mdtFrameUsbTmc : public mdtFrame
    * Usefull for frames received from device.
    *  Is only valid when the frame is complete.
    */
-  quint8 bTag();
+  quint8 bTag() const;
 
   /*! \brief Set the EOM flag
    *
@@ -109,7 +109,7 @@ class mdtFrameUsbTmc : public mdtFrame
    * If true, this transfer is the last in current message.
    *  Is only valid when the frame is complete.
    */
-  bool isEOM();
+  bool isEOM() const;
 
   /*! \brief Set the message data
    *
