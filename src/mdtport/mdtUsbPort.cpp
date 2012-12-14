@@ -95,17 +95,26 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
 
   error = open();
   if(error != NoError){
+    close();
     // Wait timeout and retry
     unlockMutex();
     msleep(timeout);
     lockMutex();
+    return Disconnected;
+    /**
     error = open();
     if(error != NoError){
       return Disconnected;
     }
+    */
   }
   error = setup();
   if(error != NoError){
+    return Disconnected;
+  }
+  /**
+  if(error != NoError){
+    close();
     // Wait timeout and retry
     unlockMutex();
     msleep(timeout);
@@ -115,6 +124,7 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
       return Disconnected;
     }
   }
+  */
 
   return NoError;
 }
@@ -161,9 +171,9 @@ QQueue<mdtFrameUsbControl*> &mdtUsbPort::controlFramesPool()
 
 mdtAbstractPort::error_t mdtUsbPort::handleControlQueries()
 {
-  ///unsigned int timeout;
   int err;
   mdtFrameUsbControl *frame;
+  error_t portError;
 
   // Check if a query frame exists
   if(pvControlQueryFrames.size() < 1){
@@ -178,7 +188,6 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlQueries()
     return UnhandledError;
   }
   // Get a frame
-  ///frame = pvControlQueryFrames.dequeue();
   frame = pvControlQueryFrames.head();
   Q_ASSERT(frame != 0);
   // Check that we have a large enough buffer
@@ -188,14 +197,6 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlQueries()
     e.commit();
     return UnhandledError;
   }
-  // See witch timeout is to use
-  /**
-  if(frame.directionIsDeviceToHost()){
-    timeout = pvReadTimeout;
-  }else{
-    timeout = pvWriteTimeout;
-  }
-  */
   // Copy data to write
   memcpy(pvControlBuffer, frame->data(), frame->size());
   // Fill the transfer
@@ -204,15 +205,14 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlQueries()
   // Submit transfer
   err = libusb_submit_transfer(pvControlTransfer);
   if(err != 0){
-    if(err == LIBUSB_ERROR_NO_DEVICE){
-      return Disconnected;
-    }else{
+    portError = mapUsbError(err, false);
+    if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed for control endpoint", mdtError::Error);
       e.setSystemError(err, errorText(err));
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
-      return UnhandledError;
     }
+    return portError;
   }
   pvControlTransferPending = true;
 
@@ -222,6 +222,7 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlQueries()
 mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
 {
   int err;
+  error_t portError;
 
   qDebug() << "cancelControlTransfer() ...";
   // If transfer is null, port was closed
@@ -232,16 +233,14 @@ mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
   if(pvControlTransferPending){
     err = libusb_cancel_transfer(pvControlTransfer);
     if(err != 0){
-      if(err == LIBUSB_ERROR_NO_DEVICE){
-        return Disconnected;
-      }else{
-        // Unhandled error
+      portError = mapUsbError(err, false);
+      if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed for control endpoint", mdtError::Error);
         e.setSystemError(err, errorText(err));
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
-        return UnhandledError;
       }
+      return portError;
     }
   }
 
@@ -250,27 +249,24 @@ mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
 
 mdtAbstractPort::error_t mdtUsbPort::handleControlResponses()
 {
-  qDebug() << "mdtUsbPort::handleControlResponses() ...";
   int *pComplete;
   mdtFrameUsbControl *frame;
+  libusb_control_setup *controlSetup;
+  char *controlData;
 
   // If no query request is pending, return
   if(pvControlQueryFrames.size() < 1){
-    qDebug() << "mdtUsbPort::handleControlResponses() No Frame";
     return NoError;
   }
   if(!pvControlTransferPending){
-    qDebug() << "mdtUsbPort::handleControlResponses() No transfer pending";
     return NoError;
   }
   // If transfer is null, port was closed
   if(pvControlTransfer == 0){
-    qDebug() << "mdtUsbPort::handleControlResponses() Transfer is Null";
     // Stop thread
     return UnhandledError;
   }
   // Get and update complete flag
-  qDebug() << "mdtUsbPort::handleControlResponses() get complete flag ..";
   pComplete = (int*)pvControlTransfer->user_data;
   pvControlTransferComplete = *pComplete;
   // If transfer is not complete, we simply return
@@ -278,7 +274,6 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlResponses()
     return NoError;
   }
   // Transfer complete, take the frame and check flags
-  qDebug() << "mdtUsbPort::handleControlResponses() DONE";
   pvControlTransferPending = false;
   frame = pvControlQueryFrames.dequeue();
   Q_ASSERT(frame != 0);
@@ -330,7 +325,18 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlResponses()
     pvControlFramesPool.enqueue(frame);
     return UnhandledError;
   }
-  // All is Ok, enqueue to responses queue
+  // All is Ok, copy data and enqueue to responses queue
+  frame->clear();
+  frame->clearSub();
+  controlSetup =  libusb_control_transfer_get_setup(pvControlTransfer);
+  Q_ASSERT(controlSetup != 0);
+  frame->setbmRequestType(controlSetup->bmRequestType);
+  frame->setbRequest(controlSetup->bRequest);
+  frame->setwValue(controlSetup->wValue);
+  frame->setwIndex(controlSetup->wIndex);
+  frame->setwLength(controlSetup->wLength);
+  controlData = (char*)libusb_control_transfer_get_data(pvControlTransfer);
+  frame->append(controlData, pvControlTransfer->actual_length);
   pvControlResponseFrames.enqueue(frame);
 
   return NoError;
@@ -347,6 +353,7 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
 
   int len;
   int err;
+  error_t portError;
 
   ///qDebug() << "RD: init transfer ...";
   // If transfer is null, port was closed
@@ -375,15 +382,14 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
   // Submit transfert
   err = libusb_submit_transfer(pvReadTransfer); /// \todo Handle retval
   if(err != 0){
-    if(err == LIBUSB_ERROR_NO_DEVICE){
-      return Disconnected;
-    }else{
+    portError = mapUsbError(err, true);
+    if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
-      return UnhandledError;
     }
+    return portError;
   }
   pvReadTransferPending = true;
 
@@ -393,6 +399,7 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
 mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
 {
   int err;
+  error_t portError;
 
   qDebug() << "cancelReadTransfer() ...";
   // If transfer is null, port was closed
@@ -404,16 +411,14 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
   if(pvReadTransferPending){
     err = libusb_cancel_transfer(pvReadTransfer);
     if(err != 0){
-      if(err == LIBUSB_ERROR_NO_DEVICE){
-        return Disconnected;
-      }else{
-        // Unhandled error
+      portError = mapUsbError(err, true);
+      if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
-        return UnhandledError;
       }
+      return portError;
     }
   }
 
@@ -422,9 +427,8 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
 
 mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
 {
-  ///qDebug() << "mdtUsbPort::waitForReadyRead() ...";
-
   int err;
+  error_t portError;
   int *pComplete;
   struct timeval tv = pvReadTimeoutTv;
 
@@ -441,80 +445,74 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
     lockMutex();
     ///qDebug() << "mdtUsbPort::waitForReadyRead() handle events DONE";
     if(err != 0){
-      // Handled errors
-      if(err == LIBUSB_ERROR_TIMEOUT){
-        updateReadTimeoutState(true);
-        return NoError;
-      }else if(err == LIBUSB_ERROR_INTERRUPTED){
-        // End of thread
-        return WaitingCanceled;
-      }else if(err == LIBUSB_ERROR_NO_DEVICE){
-        return Disconnected;
-      }else{
-        // Unhandled error
+      portError = mapUsbError(err, true);
+      if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_timeout_completed() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
-        return UnhandledError;
       }
-    }
-    /// \note : check this in loop ?? Should be checked once transfer is done ?
-    // Check if transfer has timed out
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-      updateReadTimeoutState(true);
-      ///return NoError;
+      return portError;
     }
     // Check about control transfer
-    err = handleControlResponses();
-    if(err != NoError){
-      return (error_t)err;
+    portError = handleControlResponses();
+    if(portError != NoError){
+      return portError;
     }
-    // Check if transfer was cancelled
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_CANCELLED){
-      qDebug() << "mdtUsbPort::waitForReadyRead() return ReadCanceled";
-      return ReadCanceled;
-    }
-    // Check if device is disconnected (not valid if cancelled)
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
-      qDebug() << "mdtUsbPort::waitForReadyRead(): device disconnected";
-      return Disconnected;
-    }
-    // Check if transfer stall
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_STALL){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
-    }
-    // Check if transfer failed (not valid if cancelled)
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_ERROR){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
-    }
-    // Check transfer overflow
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_OVERFLOW){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
-    }
-    // Check transfer short frames NOK
-    if(pvReadTransfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
+    // Check about message IN transfer
+    portError = handleMessageIn();
+    if(portError != NoError){
+      return portError;
     }
     // Get complete flag
     pComplete = (int*)pvReadTransfer->user_data;
     pvReadTransferComplete = *pComplete;
+  }
+  // Check if transfer has timed out
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
+    updateReadTimeoutState(true);
+  }else{
     updateReadTimeoutState(false);
   }
+  // Check if transfer was cancelled
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_CANCELLED){
+    qDebug() << "mdtUsbPort::waitForReadyRead() return ReadCanceled";
+    return ReadCanceled;
+  }
+  // Check if device is disconnected (not valid if cancelled)
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
+    qDebug() << "mdtUsbPort::waitForReadyRead(): device disconnected";
+    return Disconnected;
+  }
+  // Check if transfer stall
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_STALL){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
+  // Check if transfer failed (not valid if cancelled)
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_ERROR){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
+  // Check transfer overflow
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_OVERFLOW){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
+  // Check transfer short frames NOK
+  if(pvReadTransfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
 
-  ///qDebug() << "mdtUsbPort::waitForReadyRead() DONE";
   return NoError;
 }
 
@@ -524,7 +522,6 @@ qint64 mdtUsbPort::read(char *data, qint64 maxSize)
 
   int retLen;
 
-  ///qDebug() << "mdtUsbPort::read() ...";
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
     // Stop thread
@@ -537,7 +534,6 @@ qint64 mdtUsbPort::read(char *data, qint64 maxSize)
   // Update internal flag
   pvReadTransferPending = false;
 
-  ///qDebug() << "Readen: " << retLen;
   return retLen;
 }
 
@@ -547,13 +543,12 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
 
   int len;
   int err;
+  error_t portError;
 
   // Endpoint is optional
   if(pvMessageInTransfer == 0){
-    // Stop thread
     return NoError;
   }
-  qDebug() << " ** -> Message IN init called ...";
   // Ajust possible max length
   if(maxSize > (qint64)pvMessageInBufferSize){
     len = pvMessageInBufferSize;
@@ -566,15 +561,14 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
   // Submit transfert
   err = libusb_submit_transfer(pvMessageInTransfer); /// \todo Handle retval
   if(err != 0){
-    if(err == LIBUSB_ERROR_NO_DEVICE){
-      return Disconnected;
-    }else{
+    portError = mapUsbError(err, true);
+    if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
-      return UnhandledError;
     }
+    return portError;
   }
   pvMessageInTransferPending = true;
 
@@ -584,6 +578,7 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
 mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
 {
   int err;
+  error_t portError;
 
   // Mesage IN is optional
   if(pvMessageInTransfer == 0){
@@ -593,55 +588,115 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
   if(pvMessageInTransferPending){
     err = libusb_cancel_transfer(pvMessageInTransfer);
     if(err != 0){
-      if(err == LIBUSB_ERROR_NO_DEVICE){
-        return Disconnected;
-      }else{
-        // Unhandled error
+      portError = mapUsbError(err, true);
+      if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
-        return UnhandledError;
       }
+      return portError;
     }
   }
 
   return NoError;
 }
 
-qint64 mdtUsbPort::readMessageIn(char *data, qint64 maxSize)
+mdtAbstractPort::error_t mdtUsbPort::handleMessageIn()
 {
-  Q_ASSERT(data != 0);
-
-  int retLen = 0;
-  int err;
+  int *pComplete;
+  mdtFrame *frame;
 
   // Mesage IN is optional
   if(pvMessageInTransfer == 0){
-    return 0;
+    return NoError;
   }
-  qDebug() << " ** -> Message IN read called ...";
-
-  // Init transfer if none is pending
+  // Init a new transfer if needed
   if(!pvMessageInTransferPending){
-    return initMessageInTransfer(maxSize);
+    return initMessageInTransfer(pvMessageInBufferSize);
   }
-  // Read message if transfer is done
-  if(pvMessageInTransferComplete){
-    qDebug() << " ** -> Message IN ! <- **";
-    // Copy readen data
-    retLen = pvMessageInTransfer->actual_length;
-    memcpy(data, pvMessageInBuffer, retLen);
-    // Init a new transfer
-    err = initMessageInTransfer(maxSize);
-    if(err != NoError){
-      return err;
-    }
-    // Return readen len
-    return retLen;
+  // Transfer pending, check about completion
+  pComplete = (int*)pvMessageInTransfer->user_data;
+  pvMessageInTransferComplete = *pComplete;
+  // If transfer is not complete, we simply return
+  if(pvMessageInTransferComplete == 0){
+    return NoError;
   }
+  // Transfer complete, take the frame and check flags
+  if(pvMessageInFramesPool.size() < 1){
+    mdtError e(MDT_USB_IO_ERROR, "Message IN frames pool is empty", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return ReadPoolEmpty;
+  }
+  frame = pvMessageInFramesPool.dequeue();
+  Q_ASSERT(frame != 0);
+  pvMessageInTransferPending = false;
+  // Check if transfer has timed out
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
+    updateReadTimeoutState(true);
+  }
+  // Check if transfer was cancelled
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_CANCELLED){
+    qDebug() << "mdtUsbPort::handleControlResponses() return ReadCanceled";
+    pvMessageInFramesPool.enqueue(frame);
+    return WriteCanceled;
+  }
+  // Check if device is disconnected (not valid if cancelled)
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
+    qDebug() << "mdtUsbPort::handleControlResponses(): device disconnected";
+    pvMessageInFramesPool.enqueue(frame);
+    return Disconnected;
+  }
+  // Check if transfer stall
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_STALL){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL during a control transfer", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    pvMessageInFramesPool.enqueue(frame);
+    return UnhandledError;
+  }
+  // Check if transfer failed (not valid if cancelled)
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_ERROR){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR during a control transfer", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    pvMessageInFramesPool.enqueue(frame);
+    return UnhandledError;
+  }
+  // Check transfer overflow
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_OVERFLOW){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW during a control transfer", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    pvMessageInFramesPool.enqueue(frame);
+    return UnhandledError;
+  }
+  // Check transfer short frames NOK
+  if(pvMessageInTransfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK during a control transfer", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    pvMessageInFramesPool.enqueue(frame);
+    return UnhandledError;
+  }
+  // All is Ok, copy data and enqueue to messages IN queue
+  frame->clear();
+  frame->clearSub();
+  frame->append(pvMessageInBuffer, pvMessageInTransfer->actual_length);
+  pvMessageInFrames.append(frame);
 
-  return 0;
+  return NoError;
+}
+
+QQueue<mdtFrame*> &mdtUsbPort::messageInFramesPool()
+{
+  return pvMessageInFramesPool;
+}
+
+QQueue<mdtFrame*> &mdtUsbPort::messageInFrames()
+{
+  return pvMessageInFrames;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 maxSize)
@@ -650,9 +705,9 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   Q_ASSERT(maxSize >= 0);
 
   int err;
+  error_t portError;
   int len;
 
-  ///qDebug() << "WR: init transfer ...";
   // If transfer is null, port was closed
   if(pvWriteTransfer == 0){
     // Stop thread
@@ -668,7 +723,6 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   memcpy(pvWriteBuffer, data, len);
   // Fill the transfer
   pvWriteTransferComplete = 0;
-  ///qDebug() << "WR: fill a new transfert, size: " << len;
   if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
     libusb_fill_bulk_transfer(pvWriteTransfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, transferCallback, (void*)&pvWriteTransferComplete, pvWriteTimeout);
   }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
@@ -682,15 +736,14 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   // Submit transfer
   err = libusb_submit_transfer(pvWriteTransfer);
   if(err != 0){
-    if(err == LIBUSB_ERROR_NO_DEVICE){
-      return Disconnected;
-    }else{
+    portError = mapUsbError(err, false);
+    if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
-      return UnhandledError;
     }
+    return portError;
   }
   pvWriteTransferPending = true;
 
@@ -700,6 +753,7 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
 mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
 {
   int err;
+  error_t portError;
 
   qDebug() << "cancelWriteTransfer() ...";
   // If transfer is null, port was closed
@@ -711,16 +765,14 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
   if(pvWriteTransferPending){
     err = libusb_cancel_transfer(pvWriteTransfer);
     if(err != 0){
-      if(err == LIBUSB_ERROR_NO_DEVICE){
-        return Disconnected;
-      }else{
-        // Unhandled error
+      portError = mapUsbError(err, false);
+      if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
-        return UnhandledError;
       }
+      return portError;
     }
   }
 
@@ -730,6 +782,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
 mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
 {
   int err;
+  error_t portError;
   int *pComplete;
   struct timeval tv = pvWriteTimeoutTv;
 
@@ -744,76 +797,71 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
     err = libusb_handle_events_timeout(pvLibusbContext, &tv);
     lockMutex();
     if(err != 0){
-      // Handled errors
-      if(err == LIBUSB_ERROR_TIMEOUT){
-        updateWriteTimeoutState(true);
-        return NoError;
-      }else if(err == LIBUSB_ERROR_INTERRUPTED){
-        // End of thread
-        return UnhandledError;
-      }else if(err == LIBUSB_ERROR_NO_DEVICE){
-        return Disconnected;
-      }else{
-        // Unhandled error
+      portError = mapUsbError(err, false);
+      if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_timeout_completed() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
-        return UnhandledError;
       }
+      return portError;
     }
     // Check about control transfer
-    err = handleControlResponses();
-    if(err != NoError){
-      return (error_t)err;
+    portError = handleControlResponses();
+    if(portError != NoError){
+      return portError;
     }
-    /// \note: flags check should be done after complete !?!
-    // Check if transfer has timed out
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-      updateReadTimeoutState(true);
-      ///return NoError;
-    }
-    // Check if transfer was cancelled
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_CANCELLED){
-      return WriteCanceled;
-    }
-    // Check if device is disconnected (not valid if cancelled)
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
-      qDebug() << "mdtUsbPort::waitForReadyRead(): device disconnected";
-      return Disconnected;
-    }
-    // Check if transfer stall
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_STALL){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
-    }
-    // Check if transfer failed (not valid if cancelled)
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_ERROR){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
-    }
-    // Check transfer overflow
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_OVERFLOW){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
-    }
-    // Check transfer short frames NOK
-    if(pvWriteTransfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
-      mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return UnhandledError;
+    // Check about message IN transfer
+    portError = handleMessageIn();
+    if(portError != NoError){
+      return portError;
     }
     // Get complete flag
     pComplete = (int*)pvWriteTransfer->user_data;
     pvWriteTransferComplete = *pComplete;
+  }
+  // Check if transfer has timed out
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
+    updateReadTimeoutState(true);
+  }else{
     updateWriteTimeoutState(false);
+  }
+  // Check if transfer was cancelled
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_CANCELLED){
+    return WriteCanceled;
+  }
+  // Check if device is disconnected (not valid if cancelled)
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
+    qDebug() << "mdtUsbPort::waitForReadyRead(): device disconnected";
+    return Disconnected;
+  }
+  // Check if transfer stall
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_STALL){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
+  // Check if transfer failed (not valid if cancelled)
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_ERROR){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
+  // Check transfer overflow
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_OVERFLOW){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
+  }
+  // Check transfer short frames NOK
+  if(pvWriteTransfer->status & LIBUSB_TRANSFER_SHORT_NOT_OK){
+    mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return UnhandledError;
   }
 
   return NoError;
@@ -830,7 +878,6 @@ qint64 mdtUsbPort::write(const char *data, qint64 maxSize)
     // Stop thread
     return UnhandledError;
   }
-
   // Get size of written data
   retLen = pvWriteTransfer->actual_length;
   // Update internal flag
@@ -868,28 +915,28 @@ void mdtUsbPort::transferCallback(struct libusb_transfer *transfer)
 
 mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
 {
-  mdtAbstractPort::error_t err;
+  error_t portError;
 
   lockMutex();
-  err = cancelControlTransfer();
-  if(err != 0){
+  portError = cancelControlTransfer();
+  if(portError != NoError){
     unlockMutex();
-    return err;
+    return portError;
   }
-  err = cancelWriteTransfer();
-  if(err != 0){
+  portError = cancelWriteTransfer();
+  if(portError != NoError){
     unlockMutex();
-    return err;
+    return portError;
   }
-  err = cancelReadTransfer();
-  if(err != 0){
+  portError = cancelReadTransfer();
+  if(portError != NoError){
     unlockMutex();
-    return err;
+    return portError;
   }
-  err = cancelMessageInTransfer();
-  if(err != 0){
+  portError = cancelMessageInTransfer();
+  if(portError != NoError){
     unlockMutex();
-    return err;
+    return portError;
   }
   unlockMutex();
 
@@ -911,6 +958,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
   mdtUsbDeviceDescriptor deviceDescriptor;
   ssize_t i = 0;
   int err;
+  error_t portError;
 
   // Extract items from port name
   lst = pvPortName.split(":");
@@ -1013,13 +1061,16 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
         // Open port
         err = libusb_open(devicesList[i], &pvHandle);
         if(err != 0){
-          mdtError e(MDT_USB_IO_ERROR, "Cannot open port with device " + pvPortName, mdtError::Error);
-          e.setSystemError(err, errorText(err));
-          MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-          e.commit();
+          portError = mapUsbError(err, true);
+          if(portError == UnhandledError){
+            mdtError e(MDT_USB_IO_ERROR, "Cannot open port with device " + pvPortName, mdtError::Error);
+            e.setSystemError(err, errorText(err));
+            MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+            e.commit();
+          }
           // Release ressources and return
           libusb_free_device_list(devicesList, 1);
-          return UnhandledError;
+          return portError;
         }
         // Release ressources and return
         libusb_free_device_list(devicesList, 1);
@@ -1134,6 +1185,10 @@ void mdtUsbPort::pvClose()
     libusb_free_transfer(pvMessageInTransfer);
     pvMessageInTransfer = 0;
   }
+  qDeleteAll(pvMessageInFramesPool);
+  pvMessageInFramesPool.clear();
+  qDeleteAll(pvMessageInFrames);
+  pvMessageInFrames.clear();
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvSetup()
@@ -1391,7 +1446,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   if(pvWriteBufferSize > 0){
     pvWriteBuffer = new char[pvWriteBufferSize];
   }
-  // Alloc message IN transfert and buffer
+  // Alloc message IN transfert, buffer and frames pool
   if(pvMessageInBufferSize > 0){
     pvMessageInTransfer = libusb_alloc_transfer(0);
     if(pvMessageInTransfer == 0){
@@ -1400,9 +1455,16 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
       e.commit();
       return UnhandledError;
     }
-  }
-  if(pvMessageInBufferSize > 0){
+    // Internal buffer
     pvMessageInBuffer = new char[pvMessageInBufferSize];
+    // Frames pool - We alloc same frames count as read pool
+    mdtFrame *msgInFrame;
+    for(int i=0; i<config().readQueueSize(); i++){
+      msgInFrame = new mdtFrame;
+      msgInFrame->reserve(pvMessageInBufferSize);
+      msgInFrame->setDirectlyComplete(true);
+      pvMessageInFramesPool.enqueue(msgInFrame);
+    }
   }
 
   /// \note Current version needs 1 data IN + 1 data OUT
@@ -1433,6 +1495,48 @@ void mdtUsbPort::pvFlushOut()
 {
   qDebug() << "mdtUsbPort::pvFlushOut() ...";
   cancelWriteTransfer();
+}
+
+mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, bool byReading)
+{
+  switch(error){
+    case LIBUSB_ERROR_IO:
+      return UnhandledError;
+    case LIBUSB_ERROR_INVALID_PARAM:
+      return UnhandledError;
+    case LIBUSB_ERROR_ACCESS:
+      return PortAccess;
+    case LIBUSB_ERROR_NO_DEVICE:
+      return Disconnected;
+    case LIBUSB_ERROR_NOT_FOUND:
+      return Disconnected;
+    case LIBUSB_ERROR_BUSY:
+      return Disconnected;
+    case LIBUSB_ERROR_TIMEOUT:
+      if(byReading){
+        updateReadTimeoutState(true);
+        return ReadTimeout;
+      }else{
+        updateWriteTimeoutState(true);
+        return WriteTimeout;
+      }
+    case LIBUSB_ERROR_OVERFLOW:
+      return UnhandledError;
+    case LIBUSB_ERROR_PIPE:
+      return UnhandledError;
+    case LIBUSB_ERROR_INTERRUPTED:
+      if(byReading){
+        return ReadCanceled;
+      }else{
+        return WriteCanceled;
+      }
+    case LIBUSB_ERROR_NO_MEM:
+      return UnhandledError;
+    case LIBUSB_ERROR_NOT_SUPPORTED:
+      return UnhandledError;
+    default:
+      return UnhandledError;
+  }
 }
 
 QString mdtUsbPort::errorText(int errorCode) const

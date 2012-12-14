@@ -528,9 +528,8 @@ void mdtDeviceTest::usbtmcU3606ATest()
   
   ///qDebug() << "*IDN?: " << d.sendQuery("*IDN?\n");
   
-  QTest::qWait(3000);
-  
-  return;
+  ///QTest::qWait(3000);
+
   
   ///d.sendQuery("*OPC?\n");
   ///QTest::qWait(2000);
@@ -552,6 +551,7 @@ void mdtDeviceTest::usbtmcU3606ATest()
   
   while(dw.isVisible()){
     QTest::qWait(500);
+    qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   }
 }
 

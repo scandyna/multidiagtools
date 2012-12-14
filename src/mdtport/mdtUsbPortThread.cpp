@@ -135,7 +135,7 @@ void mdtUsbPortThread::run()
   int reconnectTimeout;
   int reconnectMaxRetry;
   /// \todo Dynamic buffer ??
-  char messageInBuffer[1024];
+  ///char messageInBuffer[1024];
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -169,8 +169,8 @@ void mdtUsbPortThread::run()
       break;
     }
     // Check about message input (additional interrupt IN endpoint)
-    n = port->readMessageIn(messageInBuffer, 1024);
-    qDebug() << "USBTHD: message len: " << n;
+    ///n = port->readMessageIn(messageInBuffer, 1024);
+    ///qDebug() << "USBTHD: message len: " << n;
     /// Prio interrupt request here ?
     
     /// Get a frame for write. In poll mode, we take one only if directly available, else, we block here until one is available
@@ -246,10 +246,13 @@ void mdtUsbPortThread::run()
     if(port->controlResponseFrames().size() > 0){
       qDebug() << "USBTHD: ******** CTL RESP !";
     }
-    
+    // Check if a message IN is available
+    if(port->messageInFrames().size() > 0){
+      qDebug() << "USBTHD: *=====* MSG IN !";
+    }
     // Check about message input (additional interrupt IN endpoint)
-    n = port->readMessageIn(messageInBuffer, 1024);
-    qDebug() << "USBTHD: message len: " << n;
+    ///n = port->readMessageIn(messageInBuffer, 1024);
+    ///qDebug() << "USBTHD: message len: " << n;
     
     ///qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
     // Read process
@@ -328,6 +331,10 @@ void mdtUsbPortThread::run()
         // Check if a control response is available
         if(port->controlResponseFrames().size() > 0){
           qDebug() << "USBTHD: ******** CTL RESP !!!!!";
+        }
+        // Check if a message IN is available
+        if(port->messageInFrames().size() > 0){
+          qDebug() << "USBTHD: *=====* MSG IN !";
         }
         // Read thread state
         if(!pvRunning){

@@ -43,14 +43,21 @@
  *     it locks the mutex using lockMutex(), then it takes a frame
  *     in pool with controlFramesPool().
  *     Finaly, query is submitted using addControlRequest(), witch will
- *     wake the write wait condition.
+ *     wake the write wait condition, and main thread unlocks the mutex with unlockMutex().
  *  - The thread calls handleControlQueries() periodically, witch will init
- *     a new control transfer if a query is available in queires queue.
+ *     a new control transfer if a query is available in queries queue.
  *  - Each time waitEventWriteReady() and waitForReadyRead() are called,
  *     handleControlResponses() is called to check if a control response
  *     is available. If true, it will be enqueued in control responses queue.
  *  - The thread periodically checks if a response is available using controlResponseFrames()
  *     queue's size, and emit \todo signalName if a control response is available.
+ *
+ * If a additional (to read and write) interrupt IN endpoint exists, it is handled as message IN as follow:
+ *  - Each time waitEventWriteReady() or waitForReadyRead() is called,
+ *     handleMessageIn() is called, witch will initiate a new transfer if needed.
+ *     If a transfer is complete, frame will be enqueued in message IN queue.
+ *  - The thread periodically checks if a message IN is available using messageInFrames()
+ *     queue's size, and emit \todo signalName if a message IN is available.
  */
 class mdtUsbPort : public mdtAbstractPort
 {
@@ -211,7 +218,31 @@ class mdtUsbPort : public mdtAbstractPort
    * There is no wait method associated to additional interrupt IN,
    *  it will be complete during waitEventWriteReady() or waitForReadyRead().
    */
-  qint64 readMessageIn(char *data, qint64 maxSize);
+  ///qint64 readMessageIn(char *data, qint64 maxSize);
+
+  /*! \brief Handle message IN
+   *
+   * Will init a new message IN transfer if needed.
+   *  If one is pending, it will check about its completion,
+   *  and enqueue the data to message IN frames queue if complete.
+   */
+  error_t handleMessageIn();
+
+  /*! \brief Get the message IN frames pool
+   *
+   * This queue contains the pool of message IN frames.
+   *
+   * Mutex is not handled by this method.
+   */
+  QQueue<mdtFrame*> &messageInFramesPool();
+
+  /*! \brief Get the message IN frames
+   *
+   * This queue contains the message IN frames.
+   *
+   * Mutex is not handled by this method.
+   */
+  QQueue<mdtFrame*> &messageInFrames();
 
   /*! \brief Request a new bulk/interrupt out transfer
    *
@@ -300,6 +331,11 @@ class mdtUsbPort : public mdtAbstractPort
    */
   void pvFlushOut();
 
+  // Map a libusb error to mdtAbstractPort::error_t
+  // If reading is true, timeout or so will be mapped
+  //  to ReadTimeout, for exemple. Else, to WriteTimeout
+  error_t mapUsbError(int error, bool byReading);
+
   // Get a text for given libusb error code
   QString errorText(int errorCode) const;
 
@@ -356,6 +392,9 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer *pvMessageInTransfer;
   bool pvMessageInTransferPending;  // Flag to see if a transfer is pending
   int pvMessageInTransferComplete;  // Will be stored in transfer struct
+  // Frames queues
+  QQueue<mdtFrame*> pvMessageInFramesPool;  // Frames pool
+  QQueue<mdtFrame*> pvMessageInFrames;      // Incomming message frames
 };
 
 #endif // #ifndef MDT_USB_PORT_H

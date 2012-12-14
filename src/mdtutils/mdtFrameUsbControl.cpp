@@ -75,6 +75,11 @@ mdtFrameUsbControl::request_recipient_t mdtFrameUsbControl::requestRecipient() c
   return (request_recipient_t)(pvbmRequestType & 0x0F);
 }
 
+void mdtFrameUsbControl::setbmRequestType(quint8 requestType)
+{
+  pvbmRequestType = requestType;
+}
+
 void mdtFrameUsbControl::setbRequest(quint8 request)
 {
   pvbRequest = request;

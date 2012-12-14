@@ -109,6 +109,10 @@ class mdtFrameUsbControl : public mdtFrame
    */
   request_recipient_t requestRecipient() const;
 
+  /*! \brief Set bmRequestType
+   */
+  void setbmRequestType(quint8 requestType);
+
   /*! \brief Set the bRequest
    */
   void setbRequest(quint8 request);
