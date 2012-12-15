@@ -91,8 +91,13 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
 {
   error_t error;
 
+  qDebug() << "mdtUsbPort::reconnect(): handle events ...";
+  handleUsbEvents(&pvReadTimeoutTv);
+
+  qDebug() << "mdtUsbPort::reconnect(): close ...";
   close();
 
+  qDebug() << "mdtUsbPort::reconnect(): open ...";
   error = open();
   if(error != NoError){
     close();
@@ -108,6 +113,7 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
     }
     */
   }
+  qDebug() << "mdtUsbPort::reconnect(): setup ...";
   error = setup();
   if(error != NoError){
     return Disconnected;
@@ -126,6 +132,7 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
   }
   */
 
+  qDebug() << "mdtUsbPort::reconnect(): DONE :-)";
   return NoError;
 }
 
@@ -242,6 +249,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
       }
       return portError;
     }
+    pvControlTransferPending = false;
   }
 
   return NoError;
@@ -420,6 +428,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
       }
       return portError;
     }
+    pvReadTransferPending = false;
   }
 
   return NoError;
@@ -427,10 +436,10 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
 
 mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
 {
-  int err;
+  ///int err;
   error_t portError;
   int *pComplete;
-  struct timeval tv = pvReadTimeoutTv;
+  ///struct timeval tv = pvReadTimeoutTv;  /// \note: ???
 
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
@@ -440,6 +449,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
 
   while(pvReadTransferComplete == 0){
     ///qDebug() << "mdtUsbPort::waitForReadyRead() handle events ...";
+    /**
     unlockMutex();
     err = libusb_handle_events_timeout(pvLibusbContext, &tv);
     lockMutex();
@@ -452,6 +462,11 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
       }
+      return portError;
+    }
+    */
+    portError = handleUsbEvents(&pvReadTimeoutTv);
+    if(portError != NoError){
       return portError;
     }
     // Check about control transfer
@@ -549,6 +564,9 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
   if(pvMessageInTransfer == 0){
     return NoError;
   }
+  
+  qDebug() << "initMessageInTransfer(): submit a new transfer ...";
+  
   // Ajust possible max length
   if(maxSize > (qint64)pvMessageInBufferSize){
     len = pvMessageInBufferSize;
@@ -584,6 +602,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
   if(pvMessageInTransfer == 0){
     return NoError;
   }
+  qDebug() << "mdtUsbPort::cancelMessageInTransfer() ...";
 
   if(pvMessageInTransferPending){
     err = libusb_cancel_transfer(pvMessageInTransfer);
@@ -597,6 +616,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
       }
       return portError;
     }
+    pvMessageInTransferPending = false;
   }
 
   return NoError;
@@ -774,6 +794,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
       }
       return portError;
     }
+    pvWriteTransferPending = false;
   }
 
   return NoError;
@@ -781,10 +802,10 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
 
 mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
 {
-  int err;
+  ///int err;
   error_t portError;
   int *pComplete;
-  struct timeval tv = pvWriteTimeoutTv;
+  ///struct timeval tv = pvWriteTimeoutTv;
 
   // If transfer is null, port was closed
   if(pvWriteTransfer == 0){
@@ -793,6 +814,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
   }
 
   while(pvWriteTransferComplete == 0){
+    /**
     unlockMutex();
     err = libusb_handle_events_timeout(pvLibusbContext, &tv);
     lockMutex();
@@ -804,6 +826,11 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
         MDT_ERROR_SET_SRC(e, "mdtUsbPort");
         e.commit();
       }
+      return portError;
+    }
+    */
+    portError = handleUsbEvents(&pvWriteTimeoutTv);
+    if(portError != NoError){
       return portError;
     }
     // Check about control transfer
@@ -943,6 +970,30 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
   return NoError;
 }
 
+mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents(struct timeval *timeout)
+{
+  Q_ASSERT(timeout != 0);
+
+  int err;
+  error_t portError;
+
+  unlockMutex();
+  err = libusb_handle_events_timeout(pvLibusbContext, timeout);
+  lockMutex();
+  if(err != 0){
+    portError = mapUsbError(err, false);
+    if(portError == UnhandledError){
+      mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_timeout_completed() failed", mdtError::Error);
+      e.setSystemError(err, errorText(err));
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+    }
+    return portError;
+  }
+
+  return NoError;
+}
+
 mdtAbstractPort::error_t mdtUsbPort::pvOpen()
 {
   Q_ASSERT(!isOpen());
@@ -1062,12 +1113,10 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
         err = libusb_open(devicesList[i], &pvHandle);
         if(err != 0){
           portError = mapUsbError(err, true);
-          if(portError == UnhandledError){
-            mdtError e(MDT_USB_IO_ERROR, "Cannot open port with device " + pvPortName, mdtError::Error);
-            e.setSystemError(err, errorText(err));
-            MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-            e.commit();
-          }
+          mdtError e(MDT_USB_IO_ERROR, "Cannot open port with device " + pvPortName, mdtError::Error);
+          e.setSystemError(err, errorText(err));
+          MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+          e.commit();
           // Release ressources and return
           libusb_free_device_list(devicesList, 1);
           return portError;
@@ -1094,15 +1143,17 @@ void mdtUsbPort::pvClose()
   Q_ASSERT(pvHandle != 0);
 
   int err;
+  bool devicePresent = true;
 
   // Release port
   err = libusb_release_interface(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
   switch(err){
     case 0:
       break;
-    case LIBUSB_ERROR_NOT_FOUND:
-      break;
+    ///case LIBUSB_ERROR_NOT_FOUND:
+      ///break;
     case LIBUSB_ERROR_NO_DEVICE:
+      devicePresent = false;
       break;
     default:
       mdtError e(MDT_USB_IO_ERROR, "libubs_release_interface() failed", mdtError::Error);
@@ -1112,47 +1163,51 @@ void mdtUsbPort::pvClose()
   }
   // Re-attach possibly detached driver in pvSetup()
 #ifdef Q_OS_LINUX
-  err = libusb_attach_kernel_driver(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
-  switch(err){
-    case 0:
-      break;
-    case LIBUSB_ERROR_NOT_FOUND:  // No driver was detached
-      break;
-    case LIBUSB_ERROR_INVALID_PARAM:
-    {
-      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (interface not found) on device " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      break;
-    }
-    case LIBUSB_ERROR_NO_DEVICE:
-    {
-      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (device not found/disconnected) on device " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      break;
-    }
-    case LIBUSB_ERROR_NOT_SUPPORTED:
-    {
-      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (unload is not supported on current platform) on device " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      break;
-    }
-    default:
-    {
-      mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (unhandled error) on device " + pvPortName, mdtError::Error);
-      e.setSystemError(err, errorText(err));
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      break;
+  if(devicePresent){
+    err = libusb_attach_kernel_driver(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+    switch(err){
+      case 0:
+        break;
+      case LIBUSB_ERROR_NOT_FOUND:  // No driver was detached
+        break;
+      case LIBUSB_ERROR_INVALID_PARAM:
+      {
+        mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (interface not found) on device " + pvPortName, mdtError::Error);
+        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+        e.commit();
+        break;
+      }
+      case LIBUSB_ERROR_NO_DEVICE:
+      {
+        mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (device not found/disconnected) on device " + pvPortName, mdtError::Error);
+        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+        e.commit();
+        break;
+      }
+      case LIBUSB_ERROR_NOT_SUPPORTED:
+      {
+        mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (unload is not supported on current platform) on device " + pvPortName, mdtError::Error);
+        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+        e.commit();
+        break;
+      }
+      default:
+      {
+        mdtError e(MDT_USB_IO_ERROR, "Cannot re-attach kernel driver (unhandled error) on device " + pvPortName, mdtError::Error);
+        e.setSystemError(err, errorText(err));
+        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+        e.commit();
+        break;
+      }
     }
   }
 #endif
   // Close port
   libusb_close(pvHandle);
+  pvHandle = 0;
   // Free memory
   delete[] pvControlBuffer;
+  pvControlBuffer = 0;
   pvControlBufferSize = 0;
   if(pvControlTransfer != 0){
     libusb_free_transfer(pvControlTransfer);

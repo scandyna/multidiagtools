@@ -495,6 +495,20 @@ void mdtUsbPortTest::agilentDso1000Test()
   // Start thread
   QVERIFY(thd.start());
 
+  // Open/close test
+  thd.stop();
+  port.close();
+  randomValueInit();
+  for(int i=0; i<10; i++){
+    QVERIFY(port.open() == mdtAbstractPort::NoError);
+    QVERIFY(port.setup() == mdtAbstractPort::NoError);
+    QTest::qWait(randomValue(0, 100));
+    port.close();
+  }
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+  QVERIFY(thd.start());
+
   /*
    * *IDN? query
    */

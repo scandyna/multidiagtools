@@ -366,6 +366,15 @@ void mdtUsbPortThread::run()
   }
 
   qDebug() << "USBTHD: cleanup ...";
+  
+  // Finish event handling
+  struct timeval finalTimeout;
+  finalTimeout.tv_sec = 5;
+  finalTimeout.tv_usec = 0;
+  portError = port->handleUsbEvents(&finalTimeout);
+  if(portError != mdtAbstractPort::NoError){
+    notifyError(portError);
+  }
 
   // Put current frame into pool
   if(readFrame != 0){
