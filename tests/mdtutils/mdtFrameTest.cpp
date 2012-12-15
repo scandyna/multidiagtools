@@ -1293,7 +1293,7 @@ void mdtFrameTest::modbusTcpDecodeTest()
   qDebug() << "TR ID: " << mf->transactionId();
   QVERIFY(mf->transactionId() == 128);
 
-
+  delete mf;
 }
 
 void mdtFrameTest::usbTmcEncodeTest()

@@ -31,14 +31,7 @@ class mdtUsbPortTest : public mdtTest
 {
  Q_OBJECT
 
- public:
-
-  static void transfertCallback(libusb_transfer *transfer);
-
  private slots:
-
-  // play
-  void essais();
 
   // Some data exchange test with Agilent DSO1000
   void agilentDso1000Test();

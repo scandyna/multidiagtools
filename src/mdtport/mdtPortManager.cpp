@@ -34,7 +34,6 @@ mdtPortManager::mdtPortManager(QObject *parent)
   pvLastReadenFrameId = 0;
   pvEnqueueReadenFrames = false;
   pvNotifyNewReadenFrame = false;
-
 }
 
 mdtPortManager::~mdtPortManager()

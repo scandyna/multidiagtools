@@ -1,21 +1,18 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 314242 // mdtDevice
+  classdiagram_ref 294658 // mdtPortManager
     776 642 100 4 0 0
-  classdiagram_ref 528258 // mdtDeviceWindow
+  classdiagram_ref 288130 // mdtUsbtmcPort
     970 803 100 4 0 0
-  classdiagram_ref 528386 // QMainWindow
-    776 642 100 4 0 0
-  active  classdiagram_ref 534914 // mdtDeviceStatusWidget
-    970 803 100 4 0 0
+  active  classdiagram_ref 541698 // mdtUsbPortManager
+    970 803 100 4 72 0
 end
 show_stereotypes
+selected operation_ref 1094786 // sendControlRequest
 open
-  classview_ref 352898 // mdtIo
-  classview_ref 286978 // mdtDatabase
-  classview_ref 346370 // mdtIoWidgets
-  classview_ref 240514 // mdtDevice
-  class_ref 552194 // mdtDeviceWindow
-  class_ref 558978 // mdtDeviceStatusWidget
+  classview_ref 227458 // mdtPortManager
+  operation_ref 1094786 // sendControlRequest
+  operation_ref 1094658 // fromThreadControlResponseReaden
+  classview_ref 220930 // mdtUsbtmcPort
 end
 end

@@ -94,10 +94,9 @@ mdtAbstractPort::error_t mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFram
     }else{
       // Write data to port
       emit ioProcessBegin();
-      /// \todo Return port's error
       written = port->write(bufferCursor, toWrite);
       if(written < 0){
-        return mdtAbstractPort::UnhandledError;
+        return (mdtAbstractPort::error_t)written;
       }
       frame->take(written);
       // Update cursor and toWrite
@@ -134,8 +133,6 @@ void mdtUsbPortThread::run()
   int toRead = 0;
   int reconnectTimeout;
   int reconnectMaxRetry;
-  /// \todo Dynamic buffer ??
-  ///char messageInBuffer[1024];
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -163,16 +160,10 @@ void mdtUsbPortThread::run()
 
   // Run...
   while(1){
-    ///qDebug() << "USBTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
     }
-    // Check about message input (additional interrupt IN endpoint)
-    ///n = port->readMessageIn(messageInBuffer, 1024);
-    ///qDebug() << "USBTHD: message len: " << n;
-    /// Prio interrupt request here ?
-    
     /// Get a frame for write. In poll mode, we take one only if directly available, else, we block here until one is available
     if(readPollMode){
       port->unlockMutex();
@@ -185,10 +176,8 @@ void mdtUsbPortThread::run()
         writeFrame = 0;
       }
     }else{
-      ///qDebug() << "USBTHD: write frames size: " << port->writeFrames().size();
       writeFrame = getNewFrameWrite();
     }
-    ///qDebug() << "USBTHD: write frame get DONE";
     // Read thread state
     if(!pvRunning){
       break;
@@ -198,6 +187,10 @@ void mdtUsbPortThread::run()
     if(portError != mdtAbstractPort::NoError){
       // Check about disconnection
       if(portError == mdtAbstractPort::Disconnected){
+        // Check about stoping
+        if(!pvRunning){
+          break;
+        }
         // Try to reconnect
         portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
         if(portError != mdtAbstractPort::NoError){
@@ -229,6 +222,10 @@ void mdtUsbPortThread::run()
       if(portError != mdtAbstractPort::NoError){
         // Check about disconnection
         if(portError == mdtAbstractPort::Disconnected){
+          // Check about stoping
+          if(!pvRunning){
+            break;
+          }
           // Try to reconnect
           portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
           if(portError != mdtAbstractPort::NoError){
@@ -250,11 +247,6 @@ void mdtUsbPortThread::run()
     if(port->messageInFrames().size() > 0){
       qDebug() << "USBTHD: *=====* MSG IN !";
     }
-    // Check about message input (additional interrupt IN endpoint)
-    ///n = port->readMessageIn(messageInBuffer, 1024);
-    ///qDebug() << "USBTHD: message len: " << n;
-    
-    ///qDebug() << "USBTHD: waitAnAnswer: " << waitAnAnswer;
     // Read process
     if(waitAnAnswer){
       if(readFrame == 0){
@@ -263,7 +255,6 @@ void mdtUsbPortThread::run()
       // See what we have to read
       toRead = readFrame->bytesToStore();
       while(toRead > 0){
-        ///qDebug() << "USBTHD: toRead: " << toRead;
         if(readFrame == 0){
           pvRunning = false;
           break;
@@ -283,6 +274,10 @@ void mdtUsbPortThread::run()
             readFrame = getNewFrameRead();
             break;
           }else if(portError == mdtAbstractPort::Disconnected){
+            // Check about stoping
+            if(!pvRunning){
+              break;
+            }
             // Try to reconnect
             portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
             if(portError != mdtAbstractPort::NoError){
@@ -313,6 +308,10 @@ void mdtUsbPortThread::run()
             readFrame = getNewFrameRead();
             break;
           }else if(portError == mdtAbstractPort::Disconnected){
+            // Check about stoping
+            if(!pvRunning){
+              break;
+            }
             // Try to reconnect
             portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
             if(portError != mdtAbstractPort::NoError){
@@ -353,9 +352,7 @@ void mdtUsbPortThread::run()
           // If no frame was complete, it's possible that more data is needed
           if(n == 0){
             toRead = readFrame->bytesToStore();
-            ///qDebug() << "USBTHD: waiting more data, toRead: " << toRead;
           }else{
-            ///qDebug() << "USBTHD: received all expected data";
             toRead = 0;
           }
         }else{
@@ -366,7 +363,7 @@ void mdtUsbPortThread::run()
   }
 
   qDebug() << "USBTHD: cleanup ...";
-  
+
   // Finish event handling
   struct timeval finalTimeout;
   finalTimeout.tv_sec = 5;

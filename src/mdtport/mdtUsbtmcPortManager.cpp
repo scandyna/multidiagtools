@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcPortManager.h"
-//#include "mdtAlgorithms.h"
 #include "mdtError.h"
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"

@@ -35,6 +35,7 @@
 #include <QHash>
 #include <QHashIterator>
 #include "mdtApplication.h"
+#include "mdtUsbPortManager.h"
 #include "mdtUsbtmcPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 
@@ -106,6 +107,26 @@ void mdtPortManagerTest::portTest()
   // Cleanup
   m2.detachPort(true, true);
   m.detachPort(true, true);
+}
+
+void mdtPortManagerTest::usbPortTest()
+{
+  mdtUsbPortManager m;
+  QList<mdtPortInfo*> portInfoList;
+
+  qDebug() << "* A USB device must be attached, else test will fail *";
+
+  // Verify that scan() function works ..
+  portInfoList = m.scan();
+  if(portInfoList.size() < 1){
+    QSKIP("No USBT device found, or other error", SkipAll);
+  }
+
+  for(int i=0; i<portInfoList.size(); i++){
+    qDebug() << "Device: " << portInfoList.at(i)->displayText();
+    qDebug() << "Port: " << portInfoList.at(i)->portName();
+  }
+  qDeleteAll(portInfoList);
 }
 
 void mdtPortManagerTest::usbTmcPortTest()

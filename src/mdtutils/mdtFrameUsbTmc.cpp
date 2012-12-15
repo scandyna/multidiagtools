@@ -77,7 +77,6 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
       // We have a header here, decode it
       pvMsgID = at(0);
       pvbTag = at(1);
-      qDebug() << "mdtFrameUsbTmc::putData(): bTag: " << pvbTag;
       pvbTagInverse = at(2);
       // Check bTag
       if(pvbTagInverse != (quint8)(~pvbTag)){
@@ -106,7 +105,6 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
     // Check if we have a complete frame
     if(size() >= frameSize){
       pvEOFcondition = true;
-      ///qDebug() << "Store: " << right(size()-12).left(pvTransferSize);
       pvMessageData += right(size()-12).left(pvTransferSize);
     }
   }
@@ -163,7 +161,6 @@ void mdtFrameUsbTmc::encode()
     reserve(16);
   }
   mdtFrame::clear();
-  /// Get initial message data size (will be ajusted later whenn add alignment bytes)
   // Get message data size
   // Transfer size
   if(pvMsgID == DEV_DEP_MSG_OUT){
@@ -174,7 +171,6 @@ void mdtFrameUsbTmc::encode()
     qDebug() << "mdtFrameUsbTmc::encode(): Unknow pvMsgID, transfer size will be set to 0";
     pvTransferSize = 0;
   }
-  qDebug() << "Transfer size: " << pvTransferSize;
   // Build USBTMC header
   append((char)pvMsgID);
   append((char)pvbTag);
@@ -197,6 +193,5 @@ void mdtFrameUsbTmc::encode()
   // Add alignment bytes if requierd
   while((size() % 4) != 0){
     append((char)0x00);
-    ///pvTransferSize++;
   }
 }

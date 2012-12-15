@@ -24,10 +24,6 @@
 #include <QString>
 #include <QStringList>
 
-#include <poll.h>
-#include <errno.h>
-#include <string.h>
-
 // We need a sleep function
 #ifdef Q_OS_UNIX
  #define msleep(t) usleep(1000*t)
@@ -91,13 +87,10 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
 {
   error_t error;
 
-  qDebug() << "mdtUsbPort::reconnect(): handle events ...";
+  // Let libusb finish pending works
   handleUsbEvents(&pvReadTimeoutTv);
-
-  qDebug() << "mdtUsbPort::reconnect(): close ...";
   close();
 
-  qDebug() << "mdtUsbPort::reconnect(): open ...";
   error = open();
   if(error != NoError){
     close();
@@ -106,33 +99,12 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
     msleep(timeout);
     lockMutex();
     return Disconnected;
-    /**
-    error = open();
-    if(error != NoError){
-      return Disconnected;
-    }
-    */
   }
-  qDebug() << "mdtUsbPort::reconnect(): setup ...";
   error = setup();
   if(error != NoError){
     return Disconnected;
   }
-  /**
-  if(error != NoError){
-    close();
-    // Wait timeout and retry
-    unlockMutex();
-    msleep(timeout);
-    lockMutex();
-    error = setup();
-    if(error != NoError){
-      return Disconnected;
-    }
-  }
-  */
 
-  qDebug() << "mdtUsbPort::reconnect(): DONE :-)";
   return NoError;
 }
 
@@ -363,7 +335,6 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
   int err;
   error_t portError;
 
-  ///qDebug() << "RD: init transfer ...";
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
     // Stop thread
@@ -436,10 +407,8 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
 
 mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
 {
-  ///int err;
   error_t portError;
   int *pComplete;
-  ///struct timeval tv = pvReadTimeoutTv;  /// \note: ???
 
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
@@ -448,23 +417,6 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
   }
 
   while(pvReadTransferComplete == 0){
-    ///qDebug() << "mdtUsbPort::waitForReadyRead() handle events ...";
-    /**
-    unlockMutex();
-    err = libusb_handle_events_timeout(pvLibusbContext, &tv);
-    lockMutex();
-    ///qDebug() << "mdtUsbPort::waitForReadyRead() handle events DONE";
-    if(err != 0){
-      portError = mapUsbError(err, true);
-      if(portError == UnhandledError){
-        mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_timeout_completed() failed", mdtError::Error);
-        e.setSystemError(err, errorText(err));
-        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-        e.commit();
-      }
-      return portError;
-    }
-    */
     portError = handleUsbEvents(&pvReadTimeoutTv);
     if(portError != NoError){
       return portError;
@@ -564,9 +516,6 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
   if(pvMessageInTransfer == 0){
     return NoError;
   }
-  
-  qDebug() << "initMessageInTransfer(): submit a new transfer ...";
-  
   // Ajust possible max length
   if(maxSize > (qint64)pvMessageInBufferSize){
     len = pvMessageInBufferSize;
@@ -802,10 +751,8 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
 
 mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
 {
-  ///int err;
   error_t portError;
   int *pComplete;
-  ///struct timeval tv = pvWriteTimeoutTv;
 
   // If transfer is null, port was closed
   if(pvWriteTransfer == 0){
@@ -814,21 +761,6 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
   }
 
   while(pvWriteTransferComplete == 0){
-    /**
-    unlockMutex();
-    err = libusb_handle_events_timeout(pvLibusbContext, &tv);
-    lockMutex();
-    if(err != 0){
-      portError = mapUsbError(err, false);
-      if(portError == UnhandledError){
-        mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_timeout_completed() failed", mdtError::Error);
-        e.setSystemError(err, errorText(err));
-        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-        e.commit();
-      }
-      return portError;
-    }
-    */
     portError = handleUsbEvents(&pvWriteTimeoutTv);
     if(portError != NoError){
       return portError;
@@ -917,7 +849,7 @@ void mdtUsbPort::transferCallback(struct libusb_transfer *transfer)
 {
   Q_ASSERT(transfer != 0);
 
-  qDebug() << "Tranfert callback ...";
+  qDebug() << "Tranfer callback ...";
   
   qDebug() << "-> Endpoint: " << hex << transfer->endpoint;
   qDebug() << "-> actual_length: " << hex << transfer->actual_length;
@@ -1294,34 +1226,27 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     interruptEndpointDescriptor = 0;
   }
   if(bulkEndpointDescriptor != 0){
-    ///qDebug() << "Bulk OUT address: " << bulkEndpointDescriptor->address();
-    ///qDebug() << " Max packet size: " << bulkEndpointDescriptor->maxPacketSize();
     pvWriteBufferSize = bulkEndpointDescriptor->transactionsCountPerMicroFrame();
     if(pvWriteBufferSize < 1){
       pvWriteBufferSize = 1;
     }
     pvWriteBufferSize *= bulkEndpointDescriptor->maxPacketSize();
     pvWriteEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
-    ///pvWriteBuffer = new char[pvWriteBufferSize];
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
     qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
     qDebug() << " Max packet size: " << pvWriteBufferSize;
   }
   if(interruptEndpointDescriptor != 0){
-    ///qDebug() << "Interrupt OUT address: " << interruptEndpointDescriptor->address();
-    ///qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
     pvWriteBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
     if(pvWriteBufferSize < 1){
       pvWriteBufferSize = 1;
     }
     pvWriteBufferSize *= interruptEndpointDescriptor->maxPacketSize();
     pvWriteEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
-    ///pvWriteBuffer = new char[pvWriteBufferSize];
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
-    qDebug() << "Interrupt OUT address: 0x" << hex << pvWriteEndpointAddress;
-    qDebug() << " Max packet size: " << pvWriteBufferSize;
+    ///qDebug() << "Interrupt OUT address: 0x" << hex << pvWriteEndpointAddress;
+    ///qDebug() << " Max packet size: " << pvWriteBufferSize;
   }
-  ///Q_ASSERT(pvWriteBuffer != 0);
   // Find device's input endpoints
   bulkEndpointDescriptor = deviceDescriptor.firstBulkInEndpoint(0, 0, true);
   interruptEndpointDescriptor = deviceDescriptor.firstInterruptInEndpoint(0, 0, true);
@@ -1338,17 +1263,16 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     }
     pvReadBufferSize *= bulkEndpointDescriptor->maxPacketSize();
     pvReadEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
-    ///pvReadBuffer = new char[pvReadBufferSize];
     pvReadTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
-    qDebug() << "Bulk IN address: 0x" << hex << pvReadEndpointAddress;
-    qDebug() << " Max packet size: " << pvReadBufferSize;
+    ///qDebug() << "Bulk IN address: 0x" << hex << pvReadEndpointAddress;
+    ///qDebug() << " Max packet size: " << pvReadBufferSize;
   }
   if(interruptEndpointDescriptor != 0){
     ///qDebug() << "Interrupt IN address: " << interruptEndpointDescriptor->address();
     ///qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
     // Some device have a Bulk IN + Interrupt IN
     if(bulkEndpointDescriptor != 0){
-      qDebug() << "Additionnal interrupt IN , currently not supported..";
+      ///qDebug() << "Additionnal interrupt IN , currently not supported..";
       // Use this interrupt IN endpoint as message IN
       pvMessageInBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
       if(pvMessageInBufferSize < 1){
@@ -1356,9 +1280,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
       }
       pvMessageInBufferSize *= interruptEndpointDescriptor->maxPacketSize();
       pvMessageInEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
-      ///pvMessageInBuffer = new char[pvMessageInBufferSize];
-      qDebug() << "Interrupt IN (for messages) address: 0x" << hex << pvMessageInEndpointAddress;
-      qDebug() << " Max packet size: " << pvMessageInBufferSize;
+      ///qDebug() << "Interrupt IN (for messages) address: 0x" << hex << pvMessageInEndpointAddress;
+      ///qDebug() << " Max packet size: " << pvMessageInBufferSize;
     }else{
       // Use this interrupt IN endpoint as read
       pvReadBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
@@ -1367,16 +1290,14 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
       }
       pvReadBufferSize *= interruptEndpointDescriptor->maxPacketSize();
       pvReadEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
-      ///pvReadBuffer = new char[pvReadBufferSize];
       pvReadTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
-      qDebug() << "Interrupt IN address: 0x" << hex << pvReadEndpointAddress;
-      qDebug() << " Max packet size: " << pvReadBufferSize;
+      ///qDebug() << "Interrupt IN address: 0x" << hex << pvReadEndpointAddress;
+      ///qDebug() << " Max packet size: " << pvReadBufferSize;
     }
   }
-  ///Q_ASSERT(pvReadBuffer != 0);
   // Unload possibly loaded driver that uses the device
 #ifdef Q_OS_LINUX
-  err = libusb_detach_kernel_driver(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  err = libusb_detach_kernel_driver(pvHandle, 0);  /// \todo interface number hardcoded, BAD
   switch(err){
     case 0:
       break;

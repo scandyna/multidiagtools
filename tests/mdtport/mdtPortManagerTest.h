@@ -32,6 +32,9 @@ class mdtPortManagerTest : public mdtTest
   // Test manager for mdtPort
   void portTest();
 
+  // Check USB module (needs a device attached)
+  void usbPortTest();
+
   // Check USBTMC module (needs a device attached)
   void usbTmcPortTest();
 

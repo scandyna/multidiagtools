@@ -367,6 +367,13 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
   int count = maxTry;
   mdtAbstractPort::error_t error;
 
+  // Check about buggy caller
+  if(!pvRunning){
+    mdtError e(MDT_PORT_IO_ERROR, "Thread called reconnect() during a stop process, aborting", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtPortThread");
+    e.commit();
+    return mdtAbstractPort::UnhandledError;
+  }
   if(notify){
     notifyError(mdtAbstractPort::Connecting);
   }
