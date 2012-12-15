@@ -254,7 +254,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <p>Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that mdpAbstractPort::waitForReadyRead() returns allways immediatly. For example, this is true with <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> when dealing with the Velleman K8055. In this situation, the purely event driven approach is not sufficient, causing heavily usage of CPU. Another remark, is that such situation is true on transfer based port.</p>
 <p>Question: What is a important difference between a full duplex serial port and a USB port ?<br/>
  The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000021">Todo:</a></b></dt><dd>Rollback: voir callback libusb, si data, ... </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Rollback: voir callback libusb, si data, ... </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_config_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_port_config_8cpp_source.html">mdtPortConfig.cpp</a>.</p>
 
@@ -349,12 +349,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Set the byte per byte write On/Off. </p>
-<p>It can happen that a (very) slow device needs time after any received byte.<br/>
- Enable this function in this situation. </p>
+<p>It can happen that a (very) slow device needs time after any received byte.</p>
+<p>Enable this function in this situation.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">on</td><td>True will enable this mode. </td></tr>
-    <tr><td class="paramname">waitTime</td><td>Wait time between to bytes write [ms] </td></tr>
+    <tr><td class="paramname">waitTime</td><td>Wait time between two bytes write [ms] </td></tr>
   </table>
   </dd>
 </dl>
@@ -414,8 +414,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Set the end of frame sequence (applies on ASCII frames) </p>
-<p>This is an overloaded method </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq()</a> </dd></dl>
+<p>This is an overloaded method</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a3c5e1c444a18da7d68430bd1c14030f4" title="Set the end of frame sequence (applies on ASCII frames)">setEndOfFrameSeq(const QByteArray &amp;)</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_config_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_port_config_8cpp_source.html">mdtPortConfig.cpp</a>.</p>
 
@@ -437,7 +437,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Set frame type. </p>
-<p>Frame type can be an ASCII frame, binary frame, ... </p>
+<p>Frame type can be an ASCII frame, binary frame, ...</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_config_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_port_config_8cpp_source.html">mdtPortConfig.cpp</a>.</p>
@@ -562,7 +562,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Set the write frame size. </p>
-<p>Frame size is the maximum number of bytes that can be stored before a frame is full. </p>
+<p>Frame size is the maximum number of bytes that can be stored before a frame is full.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>size must be a positive value </dd></dl>
 
@@ -615,14 +615,15 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 
 <p>Set the minimal time to wait before try to write. </p>
 <p>Internally, the event system is used for write calls.<br/>
- It can be usefull (or important) to delay the write call. In this case, set a minWaitTime &gt; 0 </p>
+ It can be usefull (or important) to delay the write call. In this case, set a minWaitTime &gt; 0</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">minWaitTime</td><td>Wait time before write [ms] </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>mdtDeviceFileWriteThread </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>mdtDeviceFileWriteThread</dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>used ?? </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_config_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_port_config_8cpp_source.html">mdtPortConfig.cpp</a>.</p>
 
@@ -756,7 +757,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 <div class="memdoc">
 
 <p>Get the minimal time to wait before try to write. </p>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a1d7515af56919b95f060cad4f83c6ef3" title="Set the minimal time to wait before try to write.">setWriteMinWaitTime()</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_config.html#a1d7515af56919b95f060cad4f83c6ef3" title="Set the minimal time to wait before try to write.">setWriteMinWaitTime()</a></dd></dl>
+<dl class="note"><dt><b>Note:</b></dt><dd>used ?? </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_config_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_port_config_8cpp_source.html">mdtPortConfig.cpp</a>.</p>
 
@@ -823,7 +825,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvBytePerByteWrite</b
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:47 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

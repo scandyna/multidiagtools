@@ -102,6 +102,18 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the read data timeout.  <a href="#a44ed5024a81a573b5196b8f64c42cd6a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a592af88bd7e7f45dd80df0ecab375ace">setWriteTimeout</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the write data timeout.  <a href="#a592af88bd7e7f45dd80df0ecab375ace"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e">controlFramesPool</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the control pool queue.  <a href="#af146b08006ddbe18fb537ae1a75b622e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#add6074e097f415569d052c553c99d30b">addControlRequest</a> (<a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> *frame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a control request.  <a href="#add6074e097f415569d052c553c99d30b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ae79bbc2a33a8cd8f055323d882804d36">handleControlQueries</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check about pending control queries and init a new transfer if needed.  <a href="#ae79bbc2a33a8cd8f055323d882804d36"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a6566e654df8a1c3503941702593db3c5">cancelControlTransfer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel current control transfer.  <a href="#a6566e654df8a1c3503941702593db3c5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ac91970d3fcb07b80200d0e549adbab3a">handleControlResponses</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check pending control transfer.  <a href="#ac91970d3fcb07b80200d0e549adbab3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b">controlResponseFrames</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the control responses queue.  <a href="#a304825c7d9173a3dcb5e26a412f1038b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f">initReadTransfer</a> (qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a new bulk/interrupt input transfer.  <a href="#a5e380852b8726f71e8558c86cba5bd1f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881">cancelReadTransfer</a> ()</td></tr>
@@ -110,6 +122,16 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data is available on port.  <a href="#ab8ddd4ebee603ac381e8da0383a61e36"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">qint64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d">read</a> (char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from port.  <a href="#abce257345c8af47494215cd7ee75f82d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a4e1b2c251dea880f699b6568f7fe7b6b">initMessageInTransfer</a> (qint64 maxSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a new interrupt input transfer for additional message input.  <a href="#a4e1b2c251dea880f699b6568f7fe7b6b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#afddcb02a1e2bd87609fd2b6305534560">cancelMessageInTransfer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel current interrupt message input transfer.  <a href="#afddcb02a1e2bd87609fd2b6305534560"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a4bce45f4e7b4cc238b2d68b9f5066f86">handleMessageIn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read message inputs (additional interrupt IN)  <a href="#a4bce45f4e7b4cc238b2d68b9f5066f86"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a3ad4385983122fcaf6d2560b6bd43acf">messageInFramesPool</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the message IN frames pool.  <a href="#a3ad4385983122fcaf6d2560b6bd43acf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda">messageInFrames</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the message IN frames.  <a href="#a3365431076a3197540cbc99278658bda"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a3340dc3f53e857e39053988e4925fc97">initWriteTransfer</a> (const char *data, qint64 maxSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request a new bulk/interrupt out transfer.  <a href="#a3340dc3f53e857e39053988e4925fc97"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a7cbe1cd3649861aac5e6a14830f06cf9">cancelWriteTransfer</a> ()</td></tr>
@@ -120,6 +142,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data to port.  <a href="#af81c0fc2955ed2778ccdf6c7206f2b16"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#afe5b473e1df8b828c17f83a45a3902fb">cancelTransfers</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancel pending transfers.  <a href="#afe5b473e1df8b828c17f83a45a3902fb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#a7f8bf2b599a0c83988153de3945e1d65">handleUsbEvents</a> (struct timeval *timeout)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calle libusb handle_event*() function.  <a href="#a7f8bf2b599a0c83988153de3945e1d65"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port.html#ab1d37a64b7b4e471b4b9790e3c25d853">transferCallback</a> (struct libusb_transfer *transfer)</td></tr>
@@ -128,11 +152,94 @@ Static Public Member Functions</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USB port I/O port class. </p>
 <p>Built on top of libusb-1.x API</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Implement this remarks Note about the port name (set with <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> ):<br/>
- Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">mdtUsbtmcPortManager::scan()</a> method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . </dd></dl>
+<p>Note about the port name (set with <a class="el" href="classmdt_abstract_port.html#a0ca143d32fc677bac7c1cf0e04144932" title="Set the port name.">setPortName()</a> ):<br/>
+ Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-)open the port. Because of this, the choosen format is: vendorID:productID:serialID (serialID is also called serial number). It's possible to omit the serialID. In this case, the first port with given vendor ID and device ID is open.</p>
+<p>For read and write of data, the mdtAbstractPort's API is used.</p>
+<p>The control transfer is a little bit different:</p>
+<ul>
+<li>If the main thread (f.ex. GUI thread) wants to send a request, it locks the mutex using <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>, then it takes a frame in pool with <a class="el" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool()</a>. Finaly, query is submitted using <a class="el" href="classmdt_usb_port.html#add6074e097f415569d052c553c99d30b" title="Add a control request.">addControlRequest()</a>, witch will wake the write wait condition, and main thread unlocks the mutex with <a class="el" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex()</a>.</li>
+<li>The thread calls <a class="el" href="classmdt_usb_port.html#ae79bbc2a33a8cd8f055323d882804d36" title="Check about pending control queries and init a new transfer if needed.">handleControlQueries()</a> periodically, witch will init a new control transfer if a query is available in queries queue.</li>
+<li>Each time <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady()</a> and <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead()</a> are called, <a class="el" href="classmdt_usb_port.html#ac91970d3fcb07b80200d0e549adbab3a" title="Check pending control transfer.">handleControlResponses()</a> is called to check if a control response is available. If true, it will be enqueued in control responses queue.</li>
+<li>The thread periodically checks if a response is available using <a class="el" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames()</a> queue's size, and emit<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>signalName if a control response is available.</dd></dl>
+</li>
+</ul>
+<p>If a additional (to read and write) interrupt IN endpoint exists, it is handled as message IN as follow:</p>
+<ul>
+<li>Each time <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady()</a> or <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead()</a> is called, <a class="el" href="classmdt_usb_port.html#a4bce45f4e7b4cc238b2d68b9f5066f86" title="Read message inputs (additional interrupt IN)">handleMessageIn()</a> is called, witch will initiate a new transfer if needed. If a transfer is complete, frame will be enqueued in message IN queue.</li>
+<li>The thread periodically checks if a message IN is available using <a class="el" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda" title="Get the message IN frames.">messageInFrames()</a> queue's size, and emit<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo:</a></b></dt><dd>signalName if a message IN is available. </dd></dl>
+</li>
+</ul>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8h_source.html#l00046">46</a> of file <a class="el" href="mdt_usb_port_8h_source.html">mdtUsbPort.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8h_source.html#l00062">62</a> of file <a class="el" href="mdt_usb_port_8h_source.html">mdtUsbPort.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="add6074e097f415569d052c553c99d30b"></a><!-- doxytag: member="mdtUsbPort::addControlRequest" ref="add6074e097f415569d052c553c99d30b" args="(mdtFrameUsbControl *frame)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtUsbPort::addControlRequest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> *&#160;</td>
+          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a control request. </p>
+<p>Once the frame is added to the control queries queue, waiting thread will be woken up (if waiting) and will send the frame.</p>
+<p>The mutex must be locked before calling this method, and still locked inside.</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>frame must be a valid pointer. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6566e654df8a1c3503941702593db3c5"></a><!-- doxytag: member="mdtUsbPort::cancelControlTransfer" ref="a6566e654df8a1c3503941702593db3c5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::cancelControlTransfer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cancel current control transfer. </p>
+<p>If a control transfer is pending it will be cancelled.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00201">201</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afddcb02a1e2bd87609fd2b6305534560"></a><!-- doxytag: member="mdtUsbPort::cancelMessageInTransfer" ref="afddcb02a1e2bd87609fd2b6305534560" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::cancelMessageInTransfer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Cancel current interrupt message input transfer. </p>
+<p>If a input message transfer is pending it will be cancelled.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00545">545</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3570b708f9f51408e4bbf2f61cc8c881"></a><!-- doxytag: member="mdtUsbPort::cancelReadTransfer" ref="a3570b708f9f51408e4bbf2f61cc8c881" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -151,7 +258,7 @@ Static Public Member Functions</h2></td></tr>
 <p>If a input transfer is pending it will be cancelled.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00190">190</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00378">378</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -173,7 +280,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Will call <a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer()</a> , <a class="el" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer()</a>.</p>
 <p>This method locks the mutex. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00555">555</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00875">875</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -195,7 +302,169 @@ Static Public Member Functions</h2></td></tr>
 <p>If a input transfer is pending it will be cancelled.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00388">388</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00722">722</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af146b08006ddbe18fb537ae1a75b622e"></a><!-- doxytag: member="mdtUsbPort::controlFramesPool" ref="af146b08006ddbe18fb537ae1a75b622e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QQueue&lt; <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> * &gt; &amp; mdtUsbPort::controlFramesPool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the control pool queue. </p>
+<p>This queue contains the pool of control frames.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a304825c7d9173a3dcb5e26a412f1038b"></a><!-- doxytag: member="mdtUsbPort::controlResponseFrames" ref="a304825c7d9173a3dcb5e26a412f1038b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QQueue&lt; <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> * &gt; &amp; mdtUsbPort::controlResponseFrames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the control responses queue. </p>
+<p>This queue contains the response frames returned from device.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00325">325</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae79bbc2a33a8cd8f055323d882804d36"></a><!-- doxytag: member="mdtUsbPort::handleControlQueries" ref="ae79bbc2a33a8cd8f055323d882804d36" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::handleControlQueries </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check about pending control queries and init a new transfer if needed. </p>
+<p>If a frame is available in control query queue, a transfer will be initialized and submitted to libusb.</p>
+<p>The thread can call this method periodically. If nothing is to do, it will simply return NoError.</p>
+<p>The mutex must be locked before calling this method, and still locked inside. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac91970d3fcb07b80200d0e549adbab3a"></a><!-- doxytag: member="mdtUsbPort::handleControlResponses" ref="ac91970d3fcb07b80200d0e549adbab3a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::handleControlResponses </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check pending control transfer. </p>
+<p>If a control transfer is pending, complete flag will be checked. If transfer is complete, some flags are checked, and frame is enqueued in response queue if Ok.</p>
+<p>This method is called by <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady()</a> and <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead()</a>, witch are called from port thread.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00230">230</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4bce45f4e7b4cc238b2d68b9f5066f86"></a><!-- doxytag: member="mdtUsbPort::handleMessageIn" ref="a4bce45f4e7b4cc238b2d68b9f5066f86" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::handleMessageIn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read message inputs (additional interrupt IN) </p>
+<p>This method is called from <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> , and should not be used directly.</p>
+<p>This method differs from <a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d" title="Read data from port.">read()</a> and <a class="el" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16" title="Write data to port.">write()</a>. It will automatically init a message IN transfer if additional interrupt IN is used, and no transfer is pending. There is no wait method associated to additional interrupt IN, it will be complete during <a class="el" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady()</a> or <a class="el" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead()</a>.qint64 readMessageIn(char *data, qint64 maxSize);</p>
+<p>Handle message IN</p>
+<p>Will init a new message IN transfer if needed. If one is pending, it will check about its completion, and enqueue the data to message IN frames queue if complete. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00574">574</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7f8bf2b599a0c83988153de3945e1d65"></a><!-- doxytag: member="mdtUsbPort::handleUsbEvents" ref="a7f8bf2b599a0c83988153de3945e1d65" args="(struct timeval *timeout)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::handleUsbEvents </td>
+          <td>(</td>
+          <td class="paramtype">struct timeval *&#160;</td>
+          <td class="paramname"><em>timeout</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calle libusb handle_event*() function. </p>
+<p>Notes: must be called only by I/O thread (typically <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a>). This method unlocks the mutex during wait (must be locked by call, is locked again before return)</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>timeout must be a valid pointer </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00905">905</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4e1b2c251dea880f699b6568f7fe7b6b"></a><!-- doxytag: member="mdtUsbPort::initMessageInTransfer" ref="a4e1b2c251dea880f699b6568f7fe7b6b" args="(qint64 maxSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPort::initMessageInTransfer </td>
+          <td>(</td>
+          <td class="paramtype">qint64&#160;</td>
+          <td class="paramname"><em>maxSize</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Request a new interrupt input transfer for additional message input. </p>
+<p>Will fill and init a new interrupt transfer and submit it to libusb. </p>
+
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000036">Todo:</a></b></dt><dd>Handle retval </dd></dl>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00507">507</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,10 +486,10 @@ Static Public Member Functions</h2></td></tr>
 <p>Request a new bulk/interrupt input transfer. </p>
 <p>Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000037">Todo:</a></b></dt><dd>Handle retval </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000035">Todo:</a></b></dt><dd>Handle retval </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00330">330</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -252,7 +521,51 @@ Static Public Member Functions</h2></td></tr>
 <p>Request a new bulk/interrupt out transfer. </p>
 <p>Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00335">335</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00671">671</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3365431076a3197540cbc99278658bda"></a><!-- doxytag: member="mdtUsbPort::messageInFrames" ref="a3365431076a3197540cbc99278658bda" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp; mdtUsbPort::messageInFrames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the message IN frames. </p>
+<p>This queue contains the message IN frames.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00666">666</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3ad4385983122fcaf6d2560b6bd43acf"></a><!-- doxytag: member="mdtUsbPort::messageInFramesPool" ref="a3ad4385983122fcaf6d2560b6bd43acf" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt; &amp; mdtUsbPort::messageInFramesPool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the message IN frames pool. </p>
+<p>This queue contains the pool of message IN frames.</p>
+<p>Mutex is not handled by this method. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00661">661</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,13 +595,13 @@ Static Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read data from port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
+<p>This method is called from <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> , and should not be used directly.</p>
 <p>Mutex is not handled by this method.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>A transfert must be initialized with <a class="el" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f" title="Request a new bulk/interrupt input transfer.">initReadTransfer()</a> before using this method. </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00312">312</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00486">486</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -319,7 +632,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00086">86</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -343,7 +656,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a6589b04467e0073d18ba872201bdcd84">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00115">115</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -367,7 +680,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a12eb422d52ebb09a650f8497b258c2e7">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00124">124</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -391,7 +704,7 @@ Static Public Member Functions</h2></td></tr>
 <p><p>mdt_usb_port_transfer_data *data = (mdt_usb_port_transfer_data*)transfer-&gt;user_data; Q_ASSERT(data != 0); data-&gt;flag1 = transfer-&gt;status;</p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00528">528</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00848">848</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -415,7 +728,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00418">418</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00752">752</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -439,7 +752,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00220">220</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00408">408</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -474,7 +787,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00506">506</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_8cpp_source.html#l00829">829</a> of file <a class="el" href="mdt_usb_port_8cpp_source.html">mdtUsbPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -497,7 +810,7 @@ Static Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:15 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:47 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

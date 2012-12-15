@@ -61,6 +61,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDeviceU3606A Class Reference</div>  </div>
@@ -88,17 +89,21 @@ Collaboration diagram for mdtDeviceU3606A:</div>
 
 <p><a href="classmdt_device_u3606_a-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94a6f8b3f64cd35b33204c66816f3f6a"></a><!-- doxytag: member="mdtDeviceU3606A::onStateChanged" ref="a94a6f8b3f64cd35b33204c66816f3f6a" args="(int state)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a">onStateChanged</a> (int state)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI when device's state has changed. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91201ae14df7b553a947b5857eaa1c65"></a><!-- doxytag: member="mdtDeviceU3606A::mdtDeviceU3606A" ref="a91201ae14df7b553a947b5857eaa1c65" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtDeviceU3606A</b> (QObject *parent=0)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">connectToDevice</a> (const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#acf3b48b13bc179ad4f94b3011b7d607a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#ac20d3e5177158c26bcbc5ca2d30cd563">decodeReadenFrame</a> (int id, QByteArray data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode incoming frames.  <a href="#ac20d3e5177158c26bcbc5ca2d30cd563"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94a6f8b3f64cd35b33204c66816f3f6a"></a><!-- doxytag: member="mdtDeviceU3606A::onStateChanged" ref="a94a6f8b3f64cd35b33204c66816f3f6a" args="(int state)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a">onStateChanged</a> (int state)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI when device's state has changed. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#aa9045c25f6be6797b21ea98b4958e8f1">sendCommand</a> (const QByteArray &amp;command, int timeout=1000)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#aa9045c25f6be6797b21ea98b4958e8f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_u3606_a.html#a637c4b440e9c4905c11c16a056e2c7ad">sendQuery</a> (const QByteArray &amp;query, int writeTimeout=1000, int readTimeout=30000)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#a637c4b440e9c4905c11c16a056e2c7ad"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Representation of a Agilent U3606A. </p>
@@ -130,52 +135,105 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success) </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00052">52</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac20d3e5177158c26bcbc5ca2d30cd563"></a><!-- doxytag: member="mdtDeviceU3606A::decodeReadenFrame" ref="ac20d3e5177158c26bcbc5ca2d30cd563" args="(int id, QByteArray data)" -->
+<a class="anchor" id="aa9045c25f6be6797b21ea98b4958e8f1"></a><!-- doxytag: member="mdtDeviceU3606A::sendCommand" ref="aa9045c25f6be6797b21ea98b4958e8f1" args="(const QByteArray &amp;command, int timeout=1000)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtDeviceU3606A::decodeReadenFrame </td>
+          <td class="memname">int mdtDeviceU3606A::sendCommand </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>command</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QByteArray&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>1000</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td><code> [virtual]</code></td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Decode incoming frames. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's container must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a></dd></dl>
-<p>Subclass notes:<br/>
+<p>Send a command to device. </p>
+<p>Wait until it's possible to write to device, then send the command.</p>
+<p>Note that the wait will not break the GUI's event loop (see <a class="el" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">mdtPortManager::waitOnWriteReady()</a> for details).</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">command</td><td>Command to send. </td></tr>
+    <tr><td class="paramname">timeout</td><td>Write timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a637c4b440e9c4905c11c16a056e2c7ad"></a><!-- doxytag: member="mdtDeviceU3606A::sendQuery" ref="a637c4b440e9c4905c11c16a056e2c7ad" args="(const QByteArray &amp;query, int writeTimeout=1000, int readTimeout=30000)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QByteArray mdtDeviceU3606A::sendQuery </td>
+          <td>(</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>query</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>writeTimeout</em> = <code>1000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>readTimeout</em> = <code>30000</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Send a query to device. </p>
+<p>Wait until it's possible to write to device, send the query and wait until a response is available or timeout.</p>
+<p>Note that the wait will not break the GUI's event loop.</p>
+<p>This method will not update internal I/O states. It's recommended to use <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> functions if available.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query</td><td>Query to send. </td></tr>
+    <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] </td></tr>
+    <tr><td class="paramname">readTimeout</td><td>Response timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
+
+<p><dl class="note"><dt><b>Note:</b></dt><dd>It seems that U3606A does allways return a bTag 0 , bug in mdt lib ? </dd></dl>
 </p>
-<ul>
-<li>This slot should be connected with <a class="el" href="classmdt_port_manager.html#a65d5d2e9edde76796714f737a7eaf204" title="Emitted when new frame was readen.">mdtPortManager::newReadenFrame()</a> signal.</li>
-<li>The incoming frames are available with <a class="el" href="classmdt_port_manager.html#ae5c6475a54ac4921c6df26893f261556" title="Get all readen data.">mdtPortManager::readenFrames()</a>. </li>
-</ul>
 
-<p>Reimplemented from <a class="el" href="classmdt_device.html#a96be3ca9235561c58c69190e9ed45ca9">mdtDevice</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_u3606_a_8cpp_source.html#l00131">131</a> of file <a class="el" href="mdt_device_u3606_a_8cpp_source.html">mdtDeviceU3606A.cpp</a>.</p>
 
 </div>
 </div>
@@ -198,7 +256,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

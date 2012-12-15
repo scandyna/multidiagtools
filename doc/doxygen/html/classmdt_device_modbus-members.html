@@ -73,7 +73,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">connectToDevice</a>(const mdtDeviceInfo &amp;devInfo)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51">getAnalogInputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a4f44e5dcef34b7e9f0342096913ea793">getAnalogInputValue</a>(int address, int timeout, bool convert=true)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7ff556995f38d2098eda3cf80685b542">getAnalogInputValue</a>(int address, int timeout, bool realValue=true)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a12f717202e9860d0c24b9dff8d672ef8">getAnalogOutputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a4ec0255675f27a48f35edcfd0ba7d129">getAnalogOutputValue</a>(int address, int timeout, bool convert=true)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae482b28263b2ce61735f42f1245c1e99">getDigitalInputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -88,9 +88,8 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a789ded0f30663dde43ca5d4067273eb7">pendingIoTransaction</a>(int id)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">portManager</a>()</td><td><a class="el" href="classmdt_device_modbus.html">mdtDeviceModbus</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvAnalogOutputAddressOffset</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7578dfa3df390d20b1bdce1319d45dbc">pvDigitalOutputAddressOffset</a></td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvDigitalOutputAddressOffset</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvIos</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>pvOutputWriteReplyTimeout</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05">runQueries</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3477278b4fa937f7667becb14333ef2f">setAnalogOutputAddressOffset</a>(int offset)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -104,7 +103,6 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a83b170f1805a05101409bb6d8e15d03a">setDigitalOutputState</a>(int address)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2">setIos</a>(mdtDeviceIos *ios, bool autoOutputUpdate=false)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518">setName</a>(const QString &amp;name)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ad1f52eecd93931580b9ba88919f32509">setOutputWriteReplyTimeout</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#abf01ab213b91df9ff03ad6b7184abf88">setStateBusy</a>(int retryTimeout=-1)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#afe240d2bb42c13182ea3b1b5deff006b">setStateConnecting</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ac3df06706c79730fde70ee6131af577c">setStateDisconnected</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
@@ -135,7 +133,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_mod
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -29,6 +29,14 @@ Collaboration diagram for mdtDeviceU3606A:\nopagebreak
 \includegraphics[width=400pt]{classmdt_device_u3606_a__coll__graph}
 \end{center}
 \end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{
+void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onStateChanged} (int state)}
+\label{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}
+
+\begin{DoxyCompactList}\small\item\em Update (G)UI when device's state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -39,13 +47,10 @@ Collaboration diagram for mdtDeviceU3606A:\nopagebreak
 \item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
-void \hyperlink{classmdt_device_u3606_a_ac20d3e5177158c26bcbc5ca2d30cd563}{decodeReadenFrame} (int id, QByteArray data)
-\begin{DoxyCompactList}\small\item\em Decode incoming frames. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{
-void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onStateChanged} (int state)}
-\label{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}
-
-\begin{DoxyCompactList}\small\item\em Update (G)UI when device's state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{classmdt_device_u3606_a_aa9045c25f6be6797b21ea98b4958e8f1}{sendCommand} (const QByteArray \&command, int timeout=1000)
+\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_device_u3606_a_a637c4b440e9c4905c11c16a056e2c7ad}{sendQuery} (const QByteArray \&query, int writeTimeout=1000, int readTimeout=30000)
+\begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -82,7 +87,7 @@ A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa06
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]Add DeviceNotFound error ? \end{Desc}
+\item[\hyperlink{todo__todo000004}{Todo}]Add DeviceNotFound error ? \end{Desc}
 
 
 
@@ -91,37 +96,83 @@ Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}
 
 
 
-Definition at line 52 of file mdtDeviceU3606A.cpp.
+Definition at line 56 of file mdtDeviceU3606A.cpp.
 
-\hypertarget{classmdt_device_u3606_a_ac20d3e5177158c26bcbc5ca2d30cd563}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!decodeReadenFrame@{decodeReadenFrame}}
-\index{decodeReadenFrame@{decodeReadenFrame}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{decodeReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceU3606A::decodeReadenFrame (
+\hypertarget{classmdt_device_u3606_a_aa9045c25f6be6797b21ea98b4958e8f1}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{sendCommand}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceU3606A::sendCommand (
 \begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{QByteArray}]{data}
+\item[{const QByteArray \&}]{command, }
+\item[{int}]{timeout = {\ttfamily 1000}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_device_u3606_a_ac20d3e5177158c26bcbc5ca2d30cd563}
+)}}
+\label{classmdt_device_u3606_a_aa9045c25f6be6797b21ea98b4958e8f1}
 
 
-Decode incoming frames. 
+Send a command to device. 
 
-\begin{DoxyPrecond}{Precondition}
-I/O's container must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}
-\end{DoxyPrecond}
-Subclass notes:\par
+Wait until it's possible to write to device, then send the command.
 
-\begin{DoxyItemize}
-\item This slot should be connected with \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{mdtPortManager::newReadenFrame()} signal.
-\item The incoming frames are available with \hyperlink{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{mdtPortManager::readenFrames()}. 
-\end{DoxyItemize}
-
-Reimplemented from \hyperlink{classmdt_device_a96be3ca9235561c58c69190e9ed45ca9}{mdtDevice}.
+Note that the wait will not break the GUI's event loop (see \hyperlink{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{mdtPortManager::waitOnWriteReady()} for details).
 
 
+\begin{DoxyParams}{Parameters}
+{\em command} & Command to send. \\
+\hline
+{\em timeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{mdtUsbtmcPortManager::writeData()} for details). 
+\end{DoxyReturn}
 
-Definition at line 117 of file mdtDeviceU3606A.cpp.
+
+Definition at line 121 of file mdtDeviceU3606A.cpp.
+
+\hypertarget{classmdt_device_u3606_a_a637c4b440e9c4905c11c16a056e2c7ad}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!sendQuery@{sendQuery}}
+\index{sendQuery@{sendQuery}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{sendQuery}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtDeviceU3606A::sendQuery (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{query, }
+\item[{int}]{writeTimeout = {\ttfamily 1000}, }
+\item[{int}]{readTimeout = {\ttfamily 30000}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_u3606_a_a637c4b440e9c4905c11c16a056e2c7ad}
+
+
+Send a query to device. 
+
+Wait until it's possible to write to device, send the query and wait until a response is available or timeout.
+
+Note that the wait will not break the GUI's event loop.
+
+This method will not update internal I/O states. It's recommended to use \hyperlink{classmdt_device}{mdtDevice} functions if available.
+
+
+\begin{DoxyParams}{Parameters}
+{\em query} & Query to send. \\
+\hline
+{\em writeTimeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\hline
+{\em readTimeout} & Response timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result as string (empty string on error) Note that \hyperlink{classmdt_frame_codec_scpi}{mdtFrameCodecScpi} can be helpful to decode returned result. 
+\end{DoxyReturn}
+
+
+\begin{DoxyNote}{Note}
+It seems that U3606A does allways return a bTag 0 , bug in mdt lib ? 
+\end{DoxyNote}
+
+
+
+
+Definition at line 131 of file mdtDeviceU3606A.cpp.
 
 
 

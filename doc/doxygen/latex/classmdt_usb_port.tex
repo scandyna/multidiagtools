@@ -48,6 +48,18 @@ void \hyperlink{classmdt_usb_port_a44ed5024a81a573b5196b8f64c42cd6a}{setReadTime
 \begin{DoxyCompactList}\small\item\em Set the read data timeout. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{setWriteTimeout} (int timeout)
 \begin{DoxyCompactList}\small\item\em Set the write data timeout. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} $\ast$ $>$ \& \hyperlink{classmdt_usb_port_af146b08006ddbe18fb537ae1a75b622e}{controlFramesPool} ()
+\begin{DoxyCompactList}\small\item\em Get the control pool queue. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_port_add6074e097f415569d052c553c99d30b}{addControlRequest} (\hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} $\ast$frame)
+\begin{DoxyCompactList}\small\item\em Add a control request. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_ae79bbc2a33a8cd8f055323d882804d36}{handleControlQueries} ()
+\begin{DoxyCompactList}\small\item\em Check about pending control queries and init a new transfer if needed. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a6566e654df8a1c3503941702593db3c5}{cancelControlTransfer} ()
+\begin{DoxyCompactList}\small\item\em Cancel current control transfer. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_ac91970d3fcb07b80200d0e549adbab3a}{handleControlResponses} ()
+\begin{DoxyCompactList}\small\item\em Check pending control transfer. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} $\ast$ $>$ \& \hyperlink{classmdt_usb_port_a304825c7d9173a3dcb5e26a412f1038b}{controlResponseFrames} ()
+\begin{DoxyCompactList}\small\item\em Get the control responses queue. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{initReadTransfer} (qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Request a new bulk/interrupt input transfer. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a3570b708f9f51408e4bbf2f61cc8c881}{cancelReadTransfer} ()
@@ -56,6 +68,16 @@ void \hyperlink{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{setWriteTim
 \begin{DoxyCompactList}\small\item\em Wait until data is available on port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{read} (char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a4e1b2c251dea880f699b6568f7fe7b6b}{initMessageInTransfer} (qint64 maxSize)
+\begin{DoxyCompactList}\small\item\em Request a new interrupt input transfer for additional message input. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_afddcb02a1e2bd87609fd2b6305534560}{cancelMessageInTransfer} ()
+\begin{DoxyCompactList}\small\item\em Cancel current interrupt message input transfer. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a4bce45f4e7b4cc238b2d68b9f5066f86}{handleMessageIn} ()
+\begin{DoxyCompactList}\small\item\em Read message inputs (additional interrupt IN) \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_usb_port_a3ad4385983122fcaf6d2560b6bd43acf}{messageInFramesPool} ()
+\begin{DoxyCompactList}\small\item\em Get the message IN frames pool. \end{DoxyCompactList}\item 
+QQueue$<$ \hyperlink{classmdt_frame}{mdtFrame} $\ast$ $>$ \& \hyperlink{classmdt_usb_port_a3365431076a3197540cbc99278658bda}{messageInFrames} ()
+\begin{DoxyCompactList}\small\item\em Get the message IN frames. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a3340dc3f53e857e39053988e4925fc97}{initWriteTransfer} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Request a new bulk/interrupt out transfer. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a7cbe1cd3649861aac5e6a14830f06cf9}{cancelWriteTransfer} ()
@@ -65,7 +87,9 @@ qint64 \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{read} (ch
 qint64 \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{write} (const char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_afe5b473e1df8b828c17f83a45a3902fb}{cancelTransfers} ()
-\begin{DoxyCompactList}\small\item\em Cancel pending transfers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Cancel pending transfers. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a7f8bf2b599a0c83988153de3945e1d65}{handleUsbEvents} (struct timeval $\ast$timeout)
+\begin{DoxyCompactList}\small\item\em Calle libusb handle\_\-event$\ast$() function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -78,16 +102,96 @@ USB port I/O port class.
 
 Built on top of libusb-\/1.x API
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000042}{Todo}]Implement this remarks Note about the port name (set with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} ):\par
- Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-\/)open the port. Because of this, the choosen format is: BusNumber:DeviceAddress. For example: 001:003 , or 1:3 . It's possible to give numbers in hexadecimal format, but the 0x prefix must be specified at this case. Ex: 0x1:0x3 . Internally, the QString::toUint() method is used. Optionaly, it is possible to specify a device ID's after BusNumber:DeviceAddress. Ex: 0x1:0x3:0x10cf:0x5500 is a Velleman k8055 board attached to bus number 1 as device address 3. This is the format that \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdtUsbtmcPortManager::scan()} method returns. For some cases, the ability to open the first device with given vendor ID and product ID can be used by beginning the name with ':', ex: :0x10cf:0x5500 . \end{Desc}
+Note about the port name (set with \hyperlink{classmdt_abstract_port_a0ca143d32fc677bac7c1cf0e04144932}{setPortName()} ):\par
+ Because it can happen that multiple devices with same vendor ID and product ID can be attached to system, this class must provide a unique identifier when (re-\/)open the port. Because of this, the choosen format is: vendorID:productID:serialID (serialID is also called serial number). It's possible to omit the serialID. In this case, the first port with given vendor ID and device ID is open.
 
+For read and write of data, the mdtAbstractPort's API is used.
 
-Definition at line 46 of file mdtUsbPort.h.
+The control transfer is a little bit different:
+\begin{DoxyItemize}
+\item If the main thread (f.ex. GUI thread) wants to send a request, it locks the mutex using \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}, then it takes a frame in pool with \hyperlink{classmdt_usb_port_af146b08006ddbe18fb537ae1a75b622e}{controlFramesPool()}. Finaly, query is submitted using \hyperlink{classmdt_usb_port_add6074e097f415569d052c553c99d30b}{addControlRequest()}, witch will wake the write wait condition, and main thread unlocks the mutex with \hyperlink{classmdt_abstract_port_a3523c72a06e4d950338f91e56c286e84}{unlockMutex()}.
+\item The thread calls \hyperlink{classmdt_usb_port_ae79bbc2a33a8cd8f055323d882804d36}{handleControlQueries()} periodically, witch will init a new control transfer if a query is available in queries queue.
+\item Each time \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{waitEventWriteReady()} and \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{waitForReadyRead()} are called, \hyperlink{classmdt_usb_port_ac91970d3fcb07b80200d0e549adbab3a}{handleControlResponses()} is called to check if a control response is available. If true, it will be enqueued in control responses queue.
+\item The thread periodically checks if a response is available using \hyperlink{classmdt_usb_port_a304825c7d9173a3dcb5e26a412f1038b}{controlResponseFrames()} queue's size, and emit\begin{Desc}
+\item[\hyperlink{todo__todo000043}{Todo}]signalName if a control response is available.\end{Desc}
+
+\end{DoxyItemize}
+
+If a additional (to read and write) interrupt IN endpoint exists, it is handled as message IN as follow:
+\begin{DoxyItemize}
+\item Each time \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{waitEventWriteReady()} or \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{waitForReadyRead()} is called, \hyperlink{classmdt_usb_port_a4bce45f4e7b4cc238b2d68b9f5066f86}{handleMessageIn()} is called, witch will initiate a new transfer if needed. If a transfer is complete, frame will be enqueued in message IN queue.
+\item The thread periodically checks if a message IN is available using \hyperlink{classmdt_usb_port_a3365431076a3197540cbc99278658bda}{messageInFrames()} queue's size, and emit\begin{Desc}
+\item[\hyperlink{todo__todo000044}{Todo}]signalName if a message IN is available. \end{Desc}
+
+\end{DoxyItemize}
+
+Definition at line 62 of file mdtUsbPort.h.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_port_add6074e097f415569d052c553c99d30b}{
+\index{mdtUsbPort@{mdtUsbPort}!addControlRequest@{addControlRequest}}
+\index{addControlRequest@{addControlRequest}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{addControlRequest}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbPort::addControlRequest (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtFrameUsbControl} $\ast$}]{frame}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_add6074e097f415569d052c553c99d30b}
+
+
+Add a control request. 
+
+Once the frame is added to the control queries queue, waiting thread will be woken up (if waiting) and will send the frame.
+
+The mutex must be locked before calling this method, and still locked inside.
+
+\begin{DoxyPrecond}{Precondition}
+frame must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 137 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a6566e654df8a1c3503941702593db3c5}{
+\index{mdtUsbPort@{mdtUsbPort}!cancelControlTransfer@{cancelControlTransfer}}
+\index{cancelControlTransfer@{cancelControlTransfer}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{cancelControlTransfer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::cancelControlTransfer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a6566e654df8a1c3503941702593db3c5}
+
+
+Cancel current control transfer. 
+
+If a control transfer is pending it will be cancelled.
+
+Mutex is not handled by this method. 
+
+Definition at line 201 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_afddcb02a1e2bd87609fd2b6305534560}{
+\index{mdtUsbPort@{mdtUsbPort}!cancelMessageInTransfer@{cancelMessageInTransfer}}
+\index{cancelMessageInTransfer@{cancelMessageInTransfer}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{cancelMessageInTransfer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::cancelMessageInTransfer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_afddcb02a1e2bd87609fd2b6305534560}
+
+
+Cancel current interrupt message input transfer. 
+
+If a input message transfer is pending it will be cancelled.
+
+Mutex is not handled by this method. 
+
+Definition at line 545 of file mdtUsbPort.cpp.
+
 \hypertarget{classmdt_usb_port_a3570b708f9f51408e4bbf2f61cc8c881}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelReadTransfer@{cancelReadTransfer}}
 \index{cancelReadTransfer@{cancelReadTransfer}!mdtUsbPort@{mdtUsbPort}}
@@ -105,7 +209,7 @@ If a input transfer is pending it will be cancelled.
 
 Mutex is not handled by this method. 
 
-Definition at line 190 of file mdtUsbPort.cpp.
+Definition at line 378 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_afe5b473e1df8b828c17f83a45a3902fb}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelTransfers@{cancelTransfers}}
@@ -124,7 +228,7 @@ Will call \hyperlink{classmdt_usb_port_a3570b708f9f51408e4bbf2f61cc8c881}{cancel
 
 This method locks the mutex. 
 
-Definition at line 555 of file mdtUsbPort.cpp.
+Definition at line 875 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a7cbe1cd3649861aac5e6a14830f06cf9}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelWriteTransfer@{cancelWriteTransfer}}
@@ -143,7 +247,155 @@ If a input transfer is pending it will be cancelled.
 
 Mutex is not handled by this method. 
 
-Definition at line 388 of file mdtUsbPort.cpp.
+Definition at line 722 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_af146b08006ddbe18fb537ae1a75b622e}{
+\index{mdtUsbPort@{mdtUsbPort}!controlFramesPool@{controlFramesPool}}
+\index{controlFramesPool@{controlFramesPool}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{controlFramesPool}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrameUsbControl} $\ast$ $>$ \& mdtUsbPort::controlFramesPool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_af146b08006ddbe18fb537ae1a75b622e}
+
+
+Get the control pool queue. 
+
+This queue contains the pool of control frames.
+
+Mutex is not handled by this method. 
+
+Definition at line 146 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a304825c7d9173a3dcb5e26a412f1038b}{
+\index{mdtUsbPort@{mdtUsbPort}!controlResponseFrames@{controlResponseFrames}}
+\index{controlResponseFrames@{controlResponseFrames}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{controlResponseFrames}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrameUsbControl} $\ast$ $>$ \& mdtUsbPort::controlResponseFrames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a304825c7d9173a3dcb5e26a412f1038b}
+
+
+Get the control responses queue. 
+
+This queue contains the response frames returned from device.
+
+Mutex is not handled by this method. 
+
+Definition at line 325 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_ae79bbc2a33a8cd8f055323d882804d36}{
+\index{mdtUsbPort@{mdtUsbPort}!handleControlQueries@{handleControlQueries}}
+\index{handleControlQueries@{handleControlQueries}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{handleControlQueries}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::handleControlQueries (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_ae79bbc2a33a8cd8f055323d882804d36}
+
+
+Check about pending control queries and init a new transfer if needed. 
+
+If a frame is available in control query queue, a transfer will be initialized and submitted to libusb.
+
+The thread can call this method periodically. If nothing is to do, it will simply return NoError.
+
+The mutex must be locked before calling this method, and still locked inside. 
+
+Definition at line 151 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_ac91970d3fcb07b80200d0e549adbab3a}{
+\index{mdtUsbPort@{mdtUsbPort}!handleControlResponses@{handleControlResponses}}
+\index{handleControlResponses@{handleControlResponses}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{handleControlResponses}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::handleControlResponses (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_ac91970d3fcb07b80200d0e549adbab3a}
+
+
+Check pending control transfer. 
+
+If a control transfer is pending, complete flag will be checked. If transfer is complete, some flags are checked, and frame is enqueued in response queue if Ok.
+
+This method is called by \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{waitEventWriteReady()} and \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{waitForReadyRead()}, witch are called from port thread.
+
+Mutex is not handled by this method. 
+
+Definition at line 230 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a4bce45f4e7b4cc238b2d68b9f5066f86}{
+\index{mdtUsbPort@{mdtUsbPort}!handleMessageIn@{handleMessageIn}}
+\index{handleMessageIn@{handleMessageIn}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{handleMessageIn}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::handleMessageIn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a4bce45f4e7b4cc238b2d68b9f5066f86}
+
+
+Read message inputs (additional interrupt IN) 
+
+This method is called from \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} , and should not be used directly.
+
+This method differs from \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{read()} and \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{write()}. It will automatically init a message IN transfer if additional interrupt IN is used, and no transfer is pending. There is no wait method associated to additional interrupt IN, it will be complete during \hyperlink{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{waitEventWriteReady()} or \hyperlink{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{waitForReadyRead()}.qint64 readMessageIn(char $\ast$data, qint64 maxSize);
+
+Handle message IN
+
+Will init a new message IN transfer if needed. If one is pending, it will check about its completion, and enqueue the data to message IN frames queue if complete. 
+
+Definition at line 574 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a7f8bf2b599a0c83988153de3945e1d65}{
+\index{mdtUsbPort@{mdtUsbPort}!handleUsbEvents@{handleUsbEvents}}
+\index{handleUsbEvents@{handleUsbEvents}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{handleUsbEvents}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::handleUsbEvents (
+\begin{DoxyParamCaption}
+\item[{struct timeval $\ast$}]{timeout}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a7f8bf2b599a0c83988153de3945e1d65}
+
+
+Calle libusb handle\_\-event$\ast$() function. 
+
+Notes: must be called only by I/O thread (typically \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread}). This method unlocks the mutex during wait (must be locked by call, is locked again before return)
+
+\begin{DoxyPrecond}{Precondition}
+timeout must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 905 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a4e1b2c251dea880f699b6568f7fe7b6b}{
+\index{mdtUsbPort@{mdtUsbPort}!initMessageInTransfer@{initMessageInTransfer}}
+\index{initMessageInTransfer@{initMessageInTransfer}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{initMessageInTransfer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPort::initMessageInTransfer (
+\begin{DoxyParamCaption}
+\item[{qint64}]{maxSize}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a4e1b2c251dea880f699b6568f7fe7b6b}
+
+
+Request a new interrupt input transfer for additional message input. 
+
+Will fill and init a new interrupt transfer and submit it to libusb. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000036}{Todo}]Handle retval \end{Desc}
+
+
+
+
+Definition at line 507 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{
 \index{mdtUsbPort@{mdtUsbPort}!initReadTransfer@{initReadTransfer}}
@@ -161,12 +413,12 @@ Request a new bulk/interrupt input transfer.
 Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000037}{Todo}]Handle retval \end{Desc}
+\item[\hyperlink{todo__todo000035}{Todo}]Handle retval \end{Desc}
 
 
 
 
-Definition at line 141 of file mdtUsbPort.cpp.
+Definition at line 330 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3340dc3f53e857e39053988e4925fc97}{
 \index{mdtUsbPort@{mdtUsbPort}!initWriteTransfer@{initWriteTransfer}}
@@ -184,7 +436,45 @@ Request a new bulk/interrupt out transfer.
 
 Will fill and init a new bulk/interrupt (depending setup) transfer and submit it to libusb. 
 
-Definition at line 335 of file mdtUsbPort.cpp.
+Definition at line 671 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a3365431076a3197540cbc99278658bda}{
+\index{mdtUsbPort@{mdtUsbPort}!messageInFrames@{messageInFrames}}
+\index{messageInFrames@{messageInFrames}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{messageInFrames}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrame} $\ast$ $>$ \& mdtUsbPort::messageInFrames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a3365431076a3197540cbc99278658bda}
+
+
+Get the message IN frames. 
+
+This queue contains the message IN frames.
+
+Mutex is not handled by this method. 
+
+Definition at line 666 of file mdtUsbPort.cpp.
+
+\hypertarget{classmdt_usb_port_a3ad4385983122fcaf6d2560b6bd43acf}{
+\index{mdtUsbPort@{mdtUsbPort}!messageInFramesPool@{messageInFramesPool}}
+\index{messageInFramesPool@{messageInFramesPool}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{messageInFramesPool}]{\setlength{\rightskip}{0pt plus 5cm}QQueue$<$ {\bf mdtFrame} $\ast$ $>$ \& mdtUsbPort::messageInFramesPool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a3ad4385983122fcaf6d2560b6bd43acf}
+
+
+Get the message IN frames pool. 
+
+This queue contains the pool of message IN frames.
+
+Mutex is not handled by this method. 
+
+Definition at line 661 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{
 \index{mdtUsbPort@{mdtUsbPort}!read@{read}}
@@ -200,7 +490,7 @@ Definition at line 335 of file mdtUsbPort.cpp.
 
 Read data from port. 
 
-This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.
+This method is called from \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} , and should not be used directly.
 
 Mutex is not handled by this method.
 
@@ -213,7 +503,7 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 
 
-Definition at line 312 of file mdtUsbPort.cpp.
+Definition at line 486 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_af2399348faf1abc20130eab20cfc36ee}{
 \index{mdtUsbPort@{mdtUsbPort}!reconnect@{reconnect}}
@@ -244,7 +534,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_aec74b2db1a629d98a95d8f042e
 
 
 
-Definition at line 83 of file mdtUsbPort.cpp.
+Definition at line 86 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a44ed5024a81a573b5196b8f64c42cd6a}{
 \index{mdtUsbPort@{mdtUsbPort}!setReadTimeout@{setReadTimeout}}
@@ -265,7 +555,7 @@ Implements \hyperlink{classmdt_abstract_port_a6589b04467e0073d18ba872201bdcd84}{
 
 
 
-Definition at line 115 of file mdtUsbPort.cpp.
+Definition at line 111 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a592af88bd7e7f45dd80df0ecab375ace}{
 \index{mdtUsbPort@{mdtUsbPort}!setWriteTimeout@{setWriteTimeout}}
@@ -286,7 +576,7 @@ Implements \hyperlink{classmdt_abstract_port_a12eb422d52ebb09a650f8497b258c2e7}{
 
 
 
-Definition at line 128 of file mdtUsbPort.cpp.
+Definition at line 124 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ab1d37a64b7b4e471b4b9790e3c25d853}{
 \index{mdtUsbPort@{mdtUsbPort}!transferCallback@{transferCallback}}
@@ -307,7 +597,7 @@ mdt\_\-usb\_\-port\_\-transfer\_\-data $\ast$data = (mdt\_\-usb\_\-port\_\-trans
 
 
 
-Definition at line 528 of file mdtUsbPort.cpp.
+Definition at line 848 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{
 \index{mdtUsbPort@{mdtUsbPort}!waitEventWriteReady@{waitEventWriteReady}}
@@ -329,7 +619,7 @@ Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{
 
 
 
-Definition at line 418 of file mdtUsbPort.cpp.
+Definition at line 752 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{
 \index{mdtUsbPort@{mdtUsbPort}!waitForReadyRead@{waitForReadyRead}}
@@ -351,7 +641,7 @@ Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{
 
 
 
-Definition at line 220 of file mdtUsbPort.cpp.
+Definition at line 408 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{
 \index{mdtUsbPort@{mdtUsbPort}!write@{write}}
@@ -375,7 +665,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 506 of file mdtUsbPort.cpp.
+Definition at line 829 of file mdtUsbPort.cpp.
 
 
 

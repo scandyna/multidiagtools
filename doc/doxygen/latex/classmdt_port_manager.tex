@@ -13,7 +13,8 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdtPortManager:\nopagebreak
+Inheritance diagram for mdtPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -221,7 +222,7 @@ If a port was set, the manager will stop (if running), and port will be closed (
 
 Note that port set by \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} and threads are not deleted. 
 
-Definition at line 40 of file mdtPortManager.cpp.
+Definition at line 39 of file mdtPortManager.cpp.
 
 
 
@@ -245,7 +246,7 @@ pvPort-\/$>$flushIn(); pvPort-\/$>$flushOut();
 
 
 
-Definition at line 361 of file mdtPortManager.cpp.
+Definition at line 360 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{
 \index{mdtPortManager@{mdtPortManager}!addThread@{addThread}}
@@ -269,7 +270,7 @@ thread must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 98 of file mdtPortManager.cpp.
+Definition at line 97 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ad4ff1309b267dfdcfa5a12e4617397f1}{
 \index{mdtPortManager@{mdtPortManager}!clearReadenFrames@{clearReadenFrames}}
@@ -293,7 +294,7 @@ pvReadenFramesCopy.clear();
 
 
 
-Definition at line 342 of file mdtPortManager.cpp.
+Definition at line 341 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{
 \index{mdtPortManager@{mdtPortManager}!closePort@{closePort}}
@@ -312,7 +313,7 @@ This stops the threads (if exists) and close the port.
 
 If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} ), this method does nothing. 
 
-Definition at line 213 of file mdtPortManager.cpp.
+Definition at line 212 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a3daaf801a26008388af390b5917d7a0c}{
 \index{mdtPortManager@{mdtPortManager}!commitFrame@{commitFrame}}
@@ -333,7 +334,7 @@ Dependeing on pvEnqueueReadenFrames and pvNotifyNewReadenFrame, frame will be en
 Subclass notes:\par
  The subclass should use this method to handle new incomming frames. 
 
-Definition at line 446 of file mdtPortManager.cpp.
+Definition at line 445 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
 \index{mdtPortManager@{mdtPortManager}!config@{config}}
@@ -359,7 +360,7 @@ Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9c
 
 
 
-Definition at line 195 of file mdtPortManager.cpp.
+Definition at line 194 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}{
 \index{mdtPortManager@{mdtPortManager}!detachPort@{detachPort}}
@@ -386,7 +387,7 @@ Will detach port from each thread and from port manager. If port was not set, th
 \end{DoxyParams}
 
 
-Definition at line 77 of file mdtPortManager.cpp.
+Definition at line 76 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{
 \index{mdtPortManager@{mdtPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
@@ -409,7 +410,7 @@ Called by the read thread whenn a complete frame was readen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000022}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000021}{Todo}]Error on incomplete frame \end{Desc}
 
 
 pvReadenFrames.insert(pvLastReadenFrameId, data); 
@@ -420,7 +421,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa
 
 
 
-Definition at line 370 of file mdtPortManager.cpp.
+Definition at line 369 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
 \index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
@@ -439,7 +440,7 @@ If one of the threads is running, true is returned.
 
 If port was not set, it returns false. 
 
-Definition at line 149 of file mdtPortManager.cpp.
+Definition at line 148 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{
 \index{mdtPortManager@{mdtPortManager}!newReadenFrame@{newReadenFrame}}
@@ -476,7 +477,7 @@ Emitted only if notifyNewReadenFrame flag is true.
 Manage errors comming from port threads. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000023}{Todo}]Error handling (in general ...) \end{Desc}
+\item[\hyperlink{todo__todo000022}{Todo}]Error handling (in general ...) \end{Desc}
 
 
 if(error == \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected})\{ qDebug() $<$$<$ \char`\"{}Disconnected , closing port ...\char`\"{}; \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort()}; Try re-\/open port ok = false; while(!ok)\{ wait(5000); qDebug() $<$$<$ \char`\"{}Try to re-\/open ...\char`\"{}; ok = \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort()}; maxTry-\/-\/; if(maxTry $<$= 0)\{ qDebug() $<$$<$ \char`\"{}Re-\/open failed\char`\"{}; return; \} \} qDebug() $<$$<$ \char`\"{}Open OK, starting ...\char`\"{}; if(!start())\{ qDebug() $<$$<$ \char`\"{}start failed :-\/(\char`\"{}; return; \} \}
@@ -485,7 +486,7 @@ if(error == MDT\_\-PORT\_\-IO\_\-ERROR)\{ qDebug() $<$$<$ \char`\"{}I/O error !\
 
 
 
-Definition at line 397 of file mdtPortManager.cpp.
+Definition at line 396 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{
 \index{mdtPortManager@{mdtPortManager}!openPort@{openPort}}
@@ -509,10 +510,10 @@ True on success, false else.
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000024}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
+\item[\hyperlink{todo__todo000023}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
 
 
-Definition at line 202 of file mdtPortManager.cpp.
+Definition at line 201 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{
 \index{mdtPortManager@{mdtPortManager}!readenFrame@{readenFrame}}
@@ -533,7 +534,7 @@ If found, the frame is removed from received queue.
 
 If ID was not found, a empty QByteArray is returned. 
 
-Definition at line 316 of file mdtPortManager.cpp.
+Definition at line 315 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ae5c6475a54ac4921c6df26893f261556}{
 \index{mdtPortManager@{mdtPortManager}!readenFrames@{readenFrames}}
@@ -589,7 +590,7 @@ return pvReadenFramesCopy;
 
 
 
-Definition at line 327 of file mdtPortManager.cpp.
+Definition at line 326 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ab6a2a791de303ff20e6f7f884be681bf}{
 \index{mdtPortManager@{mdtPortManager}!readenFramesQueueSizeChanged@{readenFramesQueueSizeChanged}}
@@ -632,7 +633,7 @@ Port manager must not running.
 \end{DoxyPrecond}
 
 
-Definition at line 114 of file mdtPortManager.cpp.
+Definition at line 113 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{
 \index{mdtPortManager@{mdtPortManager}!scan@{scan}}
@@ -656,11 +657,11 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdtUsbtmcPortManager}, and \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{mdtSerialPortManager}.
+Reimplemented in \hyperlink{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}{mdtUsbPortManager}, \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdtUsbtmcPortManager}, and \hyperlink{classmdt_serial_port_manager_a791572f869d1d605d0c4658ca4187260}{mdtSerialPortManager}.
 
 
 
-Definition at line 62 of file mdtPortManager.cpp.
+Definition at line 61 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ae48865abce3dc2a3173ae77d7b0c107f}{
 \index{mdtPortManager@{mdtPortManager}!setEnqueueReadenFrames@{setEnqueueReadenFrames}}
@@ -679,7 +680,7 @@ If true, all incomming frames will be added in internal queue, and the \hyperlin
 
 By default this flag is false. 
 
-Definition at line 52 of file mdtPortManager.cpp.
+Definition at line 51 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a56bb2f93ee65b4743cb19784224e3489}{
 \index{mdtPortManager@{mdtPortManager}!setNotifyNewReadenFrame@{setNotifyNewReadenFrame}}
@@ -698,7 +699,7 @@ If true, the \hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}
 
 By default this flag is false. 
 
-Definition at line 57 of file mdtPortManager.cpp.
+Definition at line 56 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{
 \index{mdtPortManager@{mdtPortManager}!setPort@{setPort}}
@@ -720,7 +721,7 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Definition at line 69 of file mdtPortManager.cpp.
+Definition at line 68 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a7e2ef93ec2731e66aa2b2d5f7ce9bc1c}{
 \index{mdtPortManager@{mdtPortManager}!setPortInfo@{setPortInfo}}
@@ -739,7 +740,7 @@ Store given port info, and call \hyperlink{classmdt_port_manager_a2b2ed690cbba9f
 
 Setting a port info can be usefull if other informations are needed later in application (f.ex. \hyperlink{classmdt_port_info_a38bcac67372782228a91d8e7dbf49211}{mdtPortInfo::displayText()} ). You can get port informations later with \hyperlink{classmdt_port_manager_a88109b455fc5a5f5adf0636f7450143e}{portInfo()}. 
 
-Definition at line 184 of file mdtPortManager.cpp.
+Definition at line 183 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{
 \index{mdtPortManager@{mdtPortManager}!setPortName@{setPortName}}
@@ -764,7 +765,7 @@ Port must be set before with \hyperlink{classmdt_port_manager_afcd156b2d0c9d3409
 \end{DoxySeeAlso}
 
 
-Definition at line 177 of file mdtPortManager.cpp.
+Definition at line 176 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{
 \index{mdtPortManager@{mdtPortManager}!start@{start}}
@@ -784,7 +785,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 134 of file mdtPortManager.cpp.
+Definition at line 133 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{
 \index{mdtPortManager@{mdtPortManager}!stop@{stop}}
@@ -804,7 +805,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 166 of file mdtPortManager.cpp.
+Definition at line 165 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{
 \index{mdtPortManager@{mdtPortManager}!wait@{wait}}
@@ -837,7 +838,7 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 348 of file mdtPortManager.cpp.
+Definition at line 347 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a1db6b8da9ff16221c917a1a75366e5c0}{
 \index{mdtPortManager@{mdtPortManager}!waitOnFrame@{waitOnFrame}}
@@ -869,7 +870,7 @@ Frame's data on success or empty QByteArray on timeout
 \end{DoxyReturn}
 
 
-Definition at line 290 of file mdtPortManager.cpp.
+Definition at line 289 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{
 \index{mdtPortManager@{mdtPortManager}!waitOnWriteReady@{waitOnWriteReady}}
@@ -905,7 +906,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 224 of file mdtPortManager.cpp.
+Definition at line 223 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{
 \index{mdtPortManager@{mdtPortManager}!waitReadenFrame@{waitReadenFrame}}
@@ -937,7 +938,7 @@ True if Ok, false on timeout
 \end{DoxySeeAlso}
 
 
-Definition at line 274 of file mdtPortManager.cpp.
+Definition at line 273 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{
 \index{mdtPortManager@{mdtPortManager}!writeData@{writeData}}
@@ -960,7 +961,7 @@ Data will be passed to the mdtPort's write queue by copy. This method returns im
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 on success or value $<$ 0 on error. In this implementation, the only possible error is \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79}{mdtAbstractPort::WriteQueueEmpty} . Some subclass can return a frame ID on success, or a other error. See subclass documentation for details. 
+0 on success or value $<$ 0 on error. In this implementation, the only possible error is mdtAbstractPort::WriteQueueEmpty . Some subclass can return a frame ID on success, or a other error. See subclass documentation for details. 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method.
@@ -972,7 +973,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_a0c56b7d38cfb52d95e
 
 
 
-Definition at line 247 of file mdtPortManager.cpp.
+Definition at line 246 of file mdtPortManager.cpp.
 
 
 

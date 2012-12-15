@@ -234,7 +234,7 @@ Dependong on type of port used (Serial, USB, ...), and device attached, it can h
 
 Question: What is a important difference between a full duplex serial port and a USB port ?\par
  The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000021}{Todo}]Rollback: voir callback libusb, si data, ... \end{Desc}
+\item[\hyperlink{todo__todo000020}{Todo}]Rollback: voir callback libusb, si data, ... \end{Desc}
 
 
 Definition at line 183 of file mdtPortConfig.cpp.
@@ -313,12 +313,15 @@ Definition at line 87 of file mdtPortConfig.cpp.
 
 Set the byte per byte write On/Off. 
 
-It can happen that a (very) slow device needs time after any received byte.\par
- Enable this function in this situation. 
+It can happen that a (very) slow device needs time after any received byte.
+
+Enable this function in this situation.
+
+
 \begin{DoxyParams}{Parameters}
 {\em on} & True will enable this mode. \\
 \hline
-{\em waitTime} & Wait time between to bytes write \mbox{[}ms\mbox{]} \\
+{\em waitTime} & Wait time between two bytes write \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See also}
@@ -373,8 +376,10 @@ Definition at line 31 of file mdtPortConfig.cpp.
 
 Set the end of frame sequence (applies on ASCII frames) 
 
-This is an overloaded method \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_config_a3c5e1c444a18da7d68430bd1c14030f4}{setEndOfFrameSeq()} 
+This is an overloaded method
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_port_config_a3c5e1c444a18da7d68430bd1c14030f4}{setEndOfFrameSeq(const QByteArray \&)} 
 \end{DoxySeeAlso}
 
 
@@ -393,7 +398,9 @@ Definition at line 161 of file mdtPortConfig.cpp.
 
 Set frame type. 
 
-Frame type can be an ASCII frame, binary frame, ... \begin{DoxySeeAlso}{See also}
+Frame type can be an ASCII frame, binary frame, ...
+
+\begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame}{mdtFrame} 
 \end{DoxySeeAlso}
 
@@ -500,7 +507,9 @@ Definition at line 72 of file mdtPortConfig.cpp.
 
 Set the write frame size. 
 
-Frame size is the maximum number of bytes that can be stored before a frame is full. \begin{DoxySeeAlso}{See also}
+Frame size is the maximum number of bytes that can be stored before a frame is full.
+
+\begin{DoxySeeAlso}{See also}
 \hyperlink{classmdt_frame}{mdtFrame} 
 \end{DoxySeeAlso}
 \begin{DoxyPrecond}{Precondition}
@@ -548,14 +557,19 @@ Definition at line 102 of file mdtPortConfig.cpp.
 Set the minimal time to wait before try to write. 
 
 Internally, the event system is used for write calls.\par
- It can be usefull (or important) to delay the write call. In this case, set a minWaitTime $>$ 0 
+ It can be usefull (or important) to delay the write call. In this case, set a minWaitTime $>$ 0
+
+
 \begin{DoxyParams}{Parameters}
 {\em minWaitTime} & Wait time before write \mbox{[}ms\mbox{]} \\
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See also}
-mdtDeviceFileWriteThread 
+mdtDeviceFileWriteThread
 \end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+used ?? 
+\end{DoxyNote}
 
 
 Definition at line 92 of file mdtPortConfig.cpp.
@@ -676,8 +690,11 @@ Definition at line 107 of file mdtPortConfig.cpp.
 Get the minimal time to wait before try to write. 
 
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{setWriteMinWaitTime()} 
+\hyperlink{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{setWriteMinWaitTime()}
 \end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+used ?? 
+\end{DoxyNote}
 
 
 Definition at line 97 of file mdtPortConfig.cpp.

@@ -1,0 +1,178 @@
+\hypertarget{classmdt_usb_port_manager}{
+\section{mdtUsbPortManager Class Reference}
+\label{classmdt_usb_port_manager}\index{mdtUsbPortManager@{mdtUsbPortManager}}
+}
+
+
+Helper class that simplify access to USB port API.  
+
+
+
+
+{\ttfamily \#include $<$mdtUsbPortManager.h$>$}
+
+
+
+Inheritance diagram for mdtUsbPortManager:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{classmdt_usb_port_manager__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtUsbPortManager:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{classmdt_usb_port_manager__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}{
+void {\bfseries fromThreadControlResponseReaden} ()}
+\label{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}
+
+\item 
+\hypertarget{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}{
+void {\bfseries fromThreadMessageInReaden} ()}
+\label{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_usb_port_manager_a7f82574e84d0a99d1c8bef7fd79283e3}{mdtUsbPortManager} (QObject $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Contruct a USB port manager. \end{DoxyCompactList}\item 
+virtual \hyperlink{classmdt_usb_port_manager_ac0da1cf62e664b78fe91b873da5835ce}{$\sim$mdtUsbPortManager} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+virtual QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}{scan} ()
+\begin{DoxyCompactList}\small\item\em Get a list of attached USB devices. \end{DoxyCompactList}\item 
+QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_usb_port_manager_ab28253c46c80bb12cbbd116b05c4bcd3}{scan} (int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)
+\begin{DoxyCompactList}\small\item\em Get a list of attached USB devices. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_port_manager_a380e25af521b2ffeab1b983162046d48}{
+int {\bfseries sendControlRequest} (const \hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} \&frame)}
+\label{classmdt_usb_port_manager_a380e25af521b2ffeab1b983162046d48}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper class that simplify access to USB port API. 
+
+Based on \hyperlink{classmdt_port_manager}{mdtPortManager}, some USB specific methods are added. The internal configuration (a \hyperlink{classmdt_port_config}{mdtPortConfig} object) is keeped default. 
+
+Definition at line 33 of file mdtUsbPortManager.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_usb_port_manager_a7f82574e84d0a99d1c8bef7fd79283e3}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!mdtUsbPortManager@{mdtUsbPortManager}}
+\index{mdtUsbPortManager@{mdtUsbPortManager}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{mdtUsbPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtUsbPortManager::mdtUsbPortManager (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_manager_a7f82574e84d0a99d1c8bef7fd79283e3}
+
+
+Contruct a USB port manager. 
+
+\#include $<$QApplication$>$
+
+Will create \hyperlink{classmdt_usb_port}{mdtUsbPort} and mdtUsbPortThred objects. 
+
+Definition at line 34 of file mdtUsbPortManager.cpp.
+
+\hypertarget{classmdt_usb_port_manager_ac0da1cf62e664b78fe91b873da5835ce}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!$\sim$mdtUsbPortManager@{$\sim$mdtUsbPortManager}}
+\index{$\sim$mdtUsbPortManager@{$\sim$mdtUsbPortManager}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{$\sim$mdtUsbPortManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtUsbPortManager::$\sim$mdtUsbPortManager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usb_port_manager_ac0da1cf62e664b78fe91b873da5835ce}
+
+
+Destructor. 
+
+Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
+
+Definition at line 47 of file mdtUsbPortManager.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_port_manager_ab28253c46c80bb12cbbd116b05c4bcd3}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!scan@{scan}}
+\index{scan@{scan}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtPortInfo} $\ast$ $>$ mdtUsbPortManager::scan (
+\begin{DoxyParamCaption}
+\item[{int}]{bDeviceClass, }
+\item[{int}]{bDeviceSubClass, }
+\item[{int}]{bDeviceProtocol}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_manager_ab28253c46c80bb12cbbd116b05c4bcd3}
+
+
+Get a list of attached USB devices. 
+
+Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).
+
+
+\begin{DoxyParams}{Parameters}
+{\em bDeviceClass} & If $>$= 0, only devices with matching bDeviceClass are listed \\
+\hline
+{\em bDeviceSubClass} & If $>$= 0, only devices with matching bDeviceSubClass are listed \\
+\hline
+{\em bDeviceProtocol} & If $>$= 0, only devices with matching bDeviceProtocol are listed\\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Manager must no running 
+\end{DoxyPrecond}
+
+
+Definition at line 60 of file mdtUsbPortManager.cpp.
+
+\hypertarget{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!scan@{scan}}
+\index{scan@{scan}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{scan}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtPortInfo} $\ast$ $>$ mdtUsbPortManager::scan (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}
+
+
+Get a list of attached USB devices. 
+
+Note that returned list must be freed by user after usage. (for.ex. with qDeletAll() and QList::clear() ).
+
+\begin{DoxyPrecond}{Precondition}
+Manager must no running 
+\end{DoxyPrecond}
+
+
+Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtPortManager}.
+
+
+
+Definition at line 55 of file mdtUsbPortManager.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtport/mdtUsbPortManager.h\item 
+src/mdtport/mdtUsbPortManager.cpp\end{DoxyCompactItemize}

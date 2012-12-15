@@ -53,15 +53,15 @@ int \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{putData
 \begin{DoxyCompactList}\small\item\em Put data into the frame. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}{setMsgID} (\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} MsgID)
 \begin{DoxyCompactList}\small\item\em Set the MsgID. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} \hyperlink{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}{MsgID} ()
+\hyperlink{classmdt_frame_usb_tmc_a10c2216157b0616b69f6cabc5c8e253b}{msg\_\-id\_\-t} \hyperlink{classmdt_frame_usb_tmc_a384a13bd456e6827868a17810d628a4a}{MsgID} () const 
 \begin{DoxyCompactList}\small\item\em Get the MsgID. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_usb_tmc_aff7b19ad83013402dd115089d31b8642}{setbTag} (quint8 bTag)
 \begin{DoxyCompactList}\small\item\em Set the bTag. \end{DoxyCompactList}\item 
-quint8 \hyperlink{classmdt_frame_usb_tmc_a660956348627e01fedfea0383e2b27e2}{bTag} ()
+quint8 \hyperlink{classmdt_frame_usb_tmc_a471c97b844331376ed1801cdb50f5cc6}{bTag} () const 
 \begin{DoxyCompactList}\small\item\em Get the bTag. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_usb_tmc_ab6e494c35eba34905987a75101fc48fe}{setEOM} (bool EOM)
 \begin{DoxyCompactList}\small\item\em Set the EOM flag. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}{isEOM} ()
+bool \hyperlink{classmdt_frame_usb_tmc_a82e93db0fc709b951c0c1f7b70692b5c}{isEOM} () const 
 \begin{DoxyCompactList}\small\item\em Get the EOM flag. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}{setMessageData} (const QByteArray \&data)
 \begin{DoxyCompactList}\small\item\em Set the message data. \end{DoxyCompactList}\item 
@@ -134,22 +134,22 @@ Definition at line 45 of file mdtFrameUsbTmc.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_usb_tmc_a660956348627e01fedfea0383e2b27e2}{
+\hypertarget{classmdt_frame_usb_tmc_a471c97b844331376ed1801cdb50f5cc6}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!bTag@{bTag}}
 \index{bTag@{bTag}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
 \subsubsection[{bTag}]{\setlength{\rightskip}{0pt plus 5cm}quint8 mdtFrameUsbTmc::bTag (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_usb_tmc_a660956348627e01fedfea0383e2b27e2}
+) const}}
+\label{classmdt_frame_usb_tmc_a471c97b844331376ed1801cdb50f5cc6}
 
 
 Get the bTag. 
 
 Usefull for frames received from device. Is only valid when the frame is complete. 
 
-Definition at line 137 of file mdtFrameUsbTmc.cpp.
+Definition at line 131 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a9406dddfdd70f5dac729b2dbd728de77}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!encode@{encode}}
@@ -168,34 +168,30 @@ To use to build a frame that will be sent to device.
 
 Note: \hyperlink{classmdt_frame_acdf8a921a3f36ca91af88b55b90febdc}{clear()} is called internally. 
 
-Get initial message data size (will be ajusted later whenn add alignment bytes)
-
 \begin{Desc}
 \item[\hyperlink{todo__todo000059}{Todo}]Check $>$ 0, ... \end{Desc}
 
 
-pvTransferSize++; 
 
 
+Definition at line 157 of file mdtFrameUsbTmc.cpp.
 
-Definition at line 163 of file mdtFrameUsbTmc.cpp.
-
-\hypertarget{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}{
+\hypertarget{classmdt_frame_usb_tmc_a82e93db0fc709b951c0c1f7b70692b5c}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!isEOM@{isEOM}}
 \index{isEOM@{isEOM}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
 \subsubsection[{isEOM}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameUsbTmc::isEOM (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_usb_tmc_a7e989c5334db2a2f5e21a4892cf3460c}
+) const}}
+\label{classmdt_frame_usb_tmc_a82e93db0fc709b951c0c1f7b70692b5c}
 
 
 Get the EOM flag. 
 
 If true, this transfer is the last in current message. Is only valid when the frame is complete. 
 
-Definition at line 147 of file mdtFrameUsbTmc.cpp.
+Definition at line 141 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a03d9a1c16099ba7ea1e3a2b0c4e1493e}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!messageData@{messageData}}
@@ -212,24 +208,24 @@ Get the message data.
 
 Usefull for frames received from device. Is only valid when the frame is complete. 
 
-Definition at line 158 of file mdtFrameUsbTmc.cpp.
+Definition at line 152 of file mdtFrameUsbTmc.cpp.
 
-\hypertarget{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}{
+\hypertarget{classmdt_frame_usb_tmc_a384a13bd456e6827868a17810d628a4a}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!MsgID@{MsgID}}
 \index{MsgID@{MsgID}!mdtFrameUsbTmc@{mdtFrameUsbTmc}}
 \subsubsection[{MsgID}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrameUsbTmc::msg\_\-id\_\-t} mdtFrameUsbTmc::MsgID (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_usb_tmc_add167ed246e03d6f2ef4e4a9855a9fae}
+) const}}
+\label{classmdt_frame_usb_tmc_a384a13bd456e6827868a17810d628a4a}
 
 
 Get the MsgID. 
 
 Usefull for frames received from device. Is only valid when the frame is complete. 
 
-Definition at line 126 of file mdtFrameUsbTmc.cpp.
+Definition at line 120 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!putData@{putData}}
@@ -285,7 +281,7 @@ bTag must be $<$$>$ 0
 \end{DoxyPrecond}
 
 
-Definition at line 131 of file mdtFrameUsbTmc.cpp.
+Definition at line 125 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_ab6e494c35eba34905987a75101fc48fe}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setEOM@{setEOM}}
@@ -304,7 +300,7 @@ EOM: End Of (USBTMC) Message.
 
 If true, tells the device that this USBTMC transfer is the last in message. 
 
-Definition at line 142 of file mdtFrameUsbTmc.cpp.
+Definition at line 136 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a7fa61faeaa5d1f5820794c5943b26e26}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setMessageData@{setMessageData}}
@@ -321,7 +317,7 @@ Set the message data.
 
 To use to build a frame that will be sent to device. 
 
-Definition at line 152 of file mdtFrameUsbTmc.cpp.
+Definition at line 146 of file mdtFrameUsbTmc.cpp.
 
 \hypertarget{classmdt_frame_usb_tmc_a19121b03cbb4c1bb420dc3cdb132f703}{
 \index{mdtFrameUsbTmc@{mdtFrameUsbTmc}!setMsgID@{setMsgID}}
@@ -338,7 +334,7 @@ Set the MsgID.
 
 To use to build a frame that will be sent to device. 
 
-Definition at line 121 of file mdtFrameUsbTmc.cpp.
+Definition at line 115 of file mdtFrameUsbTmc.cpp.
 
 
 

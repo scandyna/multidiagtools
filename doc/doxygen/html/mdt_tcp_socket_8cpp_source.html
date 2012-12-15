@@ -218,7 +218,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00156"></a>00156     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l00157"></a>00157   }
 <a name="l00158"></a>00158   <span class="comment">// Check about flushOut</span>
-<a name="l00159"></a>00159   <span class="keywordflow">if</span>(pvCancelWrite){
+<a name="l00159"></a>00159   <span class="keywordflow">if</span>(<a class="code" href="classmdt_abstract_port.html#a402cdf97259c6872bb1b6142d784c047" title="bool pvWriteTimeoutOccuredPrevious;">pvCancelWrite</a>){
 <a name="l00160"></a>00160     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">WriteCanceled</a>;
 <a name="l00161"></a>00161   }
 <a name="l00162"></a>00162   <span class="comment">// Wait</span>
@@ -293,7 +293,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00231"></a>00231   <a class="code" href="classmdt_tcp_socket.html#aae23057f2e0ee326d0fee78ffe3f00f9" title="Set the read data timeout.">setReadTimeout</a>(<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>().readTimeout());
 <a name="l00232"></a>00232   <a class="code" href="classmdt_tcp_socket.html#ac59d2dfdf405b5382f0f20d5b9f75fd0" title="Set the write data timeout.">setWriteTimeout</a>(<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>().writeTimeout());
 <a name="l00233"></a>00233   <span class="comment">// Init flags</span>
-<a name="l00234"></a>00234   pvCancelWrite = <span class="keyword">false</span>;
+<a name="l00234"></a>00234   <a class="code" href="classmdt_abstract_port.html#a402cdf97259c6872bb1b6142d784c047" title="bool pvWriteTimeoutOccuredPrevious;">pvCancelWrite</a> = <span class="keyword">false</span>;
 <a name="l00235"></a>00235 
 <a name="l00236"></a>00236   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l00237"></a>00237 }
@@ -304,7 +304,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00242"></a>00242 
 <a name="l00243"></a>00243 <span class="keywordtype">void</span> mdtTcpSocket::pvFlushOut()
 <a name="l00244"></a>00244 {
-<a name="l00245"></a>00245   pvCancelWrite = <span class="keyword">true</span>;
+<a name="l00245"></a>00245   <a class="code" href="classmdt_abstract_port.html#a402cdf97259c6872bb1b6142d784c047" title="bool pvWriteTimeoutOccuredPrevious;">pvCancelWrite</a> = <span class="keyword">true</span>;
 <a name="l00246"></a>00246 }
 <a name="l00247"></a>00247 
 <a name="l00248"></a>00248 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error)
@@ -346,7 +346,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

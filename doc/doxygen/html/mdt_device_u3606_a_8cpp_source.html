@@ -82,131 +82,221 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtDeviceU3606A.h&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtError.h&quot;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;QByteArray&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QDebug&gt;</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
-<a name="l00029"></a>00029  : <a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>(parent)
-<a name="l00030"></a>00030 {
-<a name="l00031"></a>00031   <span class="keywordtype">int</span> timeout;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033   pvPortManager = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>;
-<a name="l00034"></a>00034   pvCodec = <span class="keyword">new</span> <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data.">mdtFrameCodecScpiU3606A</a>;
-<a name="l00035"></a>00035   connect(pvPortManager, SIGNAL(newReadenFrame(<span class="keywordtype">int</span>, QByteArray)), <span class="keyword">this</span>, SLOT(decodeReadenFrame(<span class="keywordtype">int</span>, QByteArray)));
-<a name="l00036"></a>00036   connect(pvPortManager, SIGNAL(errorStateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setStateFromPortError(<span class="keywordtype">int</span>)));
-<a name="l00037"></a>00037   timeout = pvPortManager-&gt;config().readTimeout();
-<a name="l00038"></a>00038   <span class="keywordflow">if</span>(pvPortManager-&gt;config().writeTimeout() &gt; timeout){
-<a name="l00039"></a>00039     timeout = pvPortManager-&gt;config().writeTimeout();
-<a name="l00040"></a>00040   }
-<a name="l00041"></a>00041   setBackToReadyStateTimeout(2*timeout);
-<a name="l00042"></a>00042   pvPortManager-&gt;setNotifyNewReadenFrame(<span class="keyword">true</span>);
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 }
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 mdtDeviceU3606A::~mdtDeviceU3606A()
-<a name="l00047"></a>00047 {
-<a name="l00048"></a>00048   <span class="keyword">delete</span> pvPortManager;
-<a name="l00049"></a>00049   <span class="keyword">delete</span> pvCodec;
-<a name="l00050"></a>00050 }
-<a name="l00051"></a>00051 
-<a name="l00052"></a><a class="code" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">00052</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a" title="Search and connect to physical device.">mdtDeviceU3606A::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo)
-<a name="l00053"></a>00053 {
-<a name="l00054"></a>00054   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *port;
-<a name="l00055"></a>00055   QList&lt;mdtPortInfo*&gt; ports;
-<a name="l00056"></a>00056   QList&lt;mdtDeviceInfo*&gt; devices;
-<a name="l00057"></a>00057   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;
-<a name="l00058"></a>00058   <span class="keywordtype">int</span> i, j;
-<a name="l00059"></a>00059   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> retVal;
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061   <span class="comment">// Setup device info</span>
-<a name="l00062"></a>00062   device = devInfo;
-<a name="l00063"></a>00063   device.<a class="code" href="classmdt_device_info.html#a3b56cda14d31f3288353480a15731ebb" title="Set vendor ID.">setVendorId</a>(0x0957);
-<a name="l00064"></a>00064   device.<a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(0x4d18);
-<a name="l00065"></a>00065   <span class="comment">// Scan for ports having a USBTMC device attached</span>
-<a name="l00066"></a>00066   port = 0;
-<a name="l00067"></a>00067   ports = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">scan</a>();
-<a name="l00068"></a>00068   <span class="keywordflow">for</span>(i=0; i&lt;ports.size(); i++){
-<a name="l00069"></a>00069     Q_ASSERT(ports.at(i) != 0);
-<a name="l00070"></a>00070     <span class="comment">// Search in devices list</span>
-<a name="l00071"></a>00071     qDebug() &lt;&lt; <span class="stringliteral">&quot;port &quot;</span> &lt;&lt; ports.at(i)-&gt;portName();
-<a name="l00072"></a>00072     devices = ports.at(i)-&gt;deviceInfoList();
-<a name="l00073"></a>00073     <span class="keywordflow">for</span>(j=0; j&lt;devices.size(); j++){
-<a name="l00074"></a>00074       Q_ASSERT(devices.at(j) != 0);
-<a name="l00075"></a>00075       <span class="comment">// Check if VID and PID matches</span>
-<a name="l00076"></a>00076       <span class="keywordflow">if</span>((devices.at(j)-&gt;vendorId() == device.<a class="code" href="classmdt_device_info.html#a45edf71f1fa6a653c1bfa984e90e094e" title="Get vendor ID.">vendorId</a>())&amp;&amp;(devices.at(j)-&gt;productId() == device.<a class="code" href="classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813" title="Get product ID.">productId</a>())){
-<a name="l00077"></a>00077         <span class="comment">// If requested, check if serial ID matches</span>
-<a name="l00078"></a>00078         <span class="keywordflow">if</span>(!device.<a class="code" href="classmdt_device_info.html#ad9c2e69d8a7b81e25ee70dff9f7086e6" title="Get serial number/ID.">serialId</a>().isEmpty()){
-<a name="l00079"></a>00079           <span class="keywordflow">if</span>(devices.at(j)-&gt;serialId() == device.<a class="code" href="classmdt_device_info.html#ad9c2e69d8a7b81e25ee70dff9f7086e6" title="Get serial number/ID.">serialId</a>()){
-<a name="l00080"></a>00080             port = ports.at(i);
-<a name="l00081"></a>00081             i = ports.size();
-<a name="l00082"></a>00082             <span class="keywordflow">break</span>;
-<a name="l00083"></a>00083           }
-<a name="l00084"></a>00084         }<span class="keywordflow">else</span>{
-<a name="l00085"></a>00085           <span class="comment">// Only PID and VID must match</span>
-<a name="l00086"></a>00086           port = ports.at(i);
-<a name="l00087"></a>00087           i = ports.size();
-<a name="l00088"></a>00088           <span class="keywordflow">break</span>;
-<a name="l00089"></a>00089         }
-<a name="l00090"></a>00090       }
-<a name="l00091"></a>00091     }
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093   <span class="comment">// Open port if found</span>
-<a name="l00094"></a>00094   <span class="keywordflow">if</span>(port != 0){
-<a name="l00095"></a>00095     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*port);
-<a name="l00096"></a>00096     <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
-<a name="l00097"></a>00097       <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
-<a name="l00098"></a>00098         retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00099"></a>00099       }<span class="keywordflow">else</span>{
-<a name="l00100"></a>00100         retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
-<a name="l00101"></a>00101       }
-<a name="l00102"></a>00102     }<span class="keywordflow">else</span>{
-<a name="l00103"></a>00103       retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
-<a name="l00104"></a>00104     }
-<a name="l00105"></a>00105   }<span class="keywordflow">else</span>{
-<a name="l00106"></a>00106     <span class="comment">// Device not found</span>
-<a name="l00108"></a>00108 <span class="comment"></span>    retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">mdtAbstractPort::PortNotFound</a>;
-<a name="l00109"></a>00109   }
-<a name="l00110"></a>00110   <span class="comment">// Free port info list</span>
-<a name="l00111"></a>00111   qDeleteAll(ports);
-<a name="l00112"></a>00112   ports.clear();
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114   <span class="keywordflow">return</span> retVal;
-<a name="l00115"></a>00115 }
-<a name="l00116"></a>00116 
-<a name="l00117"></a><a class="code" href="classmdt_device_u3606_a.html#ac20d3e5177158c26bcbc5ca2d30cd563">00117</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_u3606_a.html#ac20d3e5177158c26bcbc5ca2d30cd563" title="Decode incoming frames.">mdtDeviceU3606A::decodeReadenFrame</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, QByteArray data)
-<a name="l00118"></a>00118 {
-<a name="l00119"></a>00119   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceU3606A::decodeReadenFrame() - ID: &quot;</span> &lt;&lt; <span class="keywordtype">id</span> &lt;&lt; <span class="stringliteral">&quot; , data: &quot;</span> &lt;&lt; data;
-<a name="l00120"></a>00120 }
-<a name="l00121"></a>00121 
-<a name="l00122"></a><a class="code" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a">00122</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a" title="Update (G)UI when device&#39;s state has changed.">mdtDeviceU3606A::onStateChanged</a>(<span class="keywordtype">int</span> state)
-<a name="l00123"></a>00123 {
-<a name="l00124"></a>00124   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceU3606A::onStateChanged() ...&quot;</span>;
-<a name="l00125"></a>00125 }
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127 <span class="keywordtype">int</span> mdtDeviceU3606A::readAnalogInput(<span class="keywordtype">int</span> address)
-<a name="l00128"></a>00128 {
-<a name="l00129"></a>00129   Q_ASSERT(pvIos != 0);
+<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;mdtAnalogIo.h&quot;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QByteArray&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QList&gt;</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QDebug&gt;</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
+<a name="l00030"></a>00030  : <a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>(parent)
+<a name="l00031"></a>00031 {
+<a name="l00032"></a>00032   <span class="keywordtype">int</span> timeout;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034   pvPortManager = <span class="keyword">new</span> <a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>;
+<a name="l00035"></a>00035   pvCodec = <span class="keyword">new</span> <a class="code" href="classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data.">mdtFrameCodecScpiU3606A</a>;
+<a name="l00036"></a>00036   <span class="comment">// Setup port manager</span>
+<a name="l00037"></a>00037   pvPortManager-&gt;config().setReadTimeout(10000);
+<a name="l00038"></a>00038   pvPortManager-&gt;setNotifyNewReadenFrame(<span class="keyword">true</span>);
+<a name="l00039"></a>00039   connect(pvPortManager, SIGNAL(newReadenFrame(<span class="keywordtype">int</span>, QByteArray)), <span class="keyword">this</span>, SLOT(decodeReadenFrame(<span class="keywordtype">int</span>, QByteArray)));
+<a name="l00040"></a>00040   connect(pvPortManager, SIGNAL(errorStateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setStateFromPortError(<span class="keywordtype">int</span>)));
+<a name="l00041"></a>00041   timeout = pvPortManager-&gt;config().readTimeout();
+<a name="l00042"></a>00042   <span class="keywordflow">if</span>(pvPortManager-&gt;config().writeTimeout() &gt; timeout){
+<a name="l00043"></a>00043     timeout = pvPortManager-&gt;config().writeTimeout();
+<a name="l00044"></a>00044   }
+<a name="l00045"></a>00045   setBackToReadyStateTimeout(2*timeout);
+<a name="l00046"></a>00046   
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 }
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 mdtDeviceU3606A::~mdtDeviceU3606A()
+<a name="l00051"></a>00051 {
+<a name="l00052"></a>00052   <span class="keyword">delete</span> pvPortManager;
+<a name="l00053"></a>00053   <span class="keyword">delete</span> pvCodec;
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">00056</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a" title="Search and connect to physical device.">mdtDeviceU3606A::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo)
+<a name="l00057"></a>00057 {
+<a name="l00058"></a>00058   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *port;
+<a name="l00059"></a>00059   QList&lt;mdtPortInfo*&gt; ports;
+<a name="l00060"></a>00060   QList&lt;mdtDeviceInfo*&gt; devices;
+<a name="l00061"></a>00061   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;
+<a name="l00062"></a>00062   <span class="keywordtype">int</span> i, j;
+<a name="l00063"></a>00063   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> retVal;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065   <span class="comment">// Setup device info</span>
+<a name="l00066"></a>00066   device = devInfo;
+<a name="l00067"></a>00067   device.<a class="code" href="classmdt_device_info.html#a3b56cda14d31f3288353480a15731ebb" title="Set vendor ID.">setVendorId</a>(0x0957);
+<a name="l00068"></a>00068   device.<a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(0x4d18);
+<a name="l00069"></a>00069   <span class="comment">// Scan for ports having a USBTMC device attached</span>
+<a name="l00070"></a>00070   port = 0;
+<a name="l00071"></a>00071   ports = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">scan</a>();
+<a name="l00072"></a>00072   <span class="keywordflow">for</span>(i=0; i&lt;ports.size(); i++){
+<a name="l00073"></a>00073     Q_ASSERT(ports.at(i) != 0);
+<a name="l00074"></a>00074     <span class="comment">// Search in devices list</span>
+<a name="l00075"></a>00075     qDebug() &lt;&lt; <span class="stringliteral">&quot;port &quot;</span> &lt;&lt; ports.at(i)-&gt;portName();
+<a name="l00076"></a>00076     devices = ports.at(i)-&gt;deviceInfoList();
+<a name="l00077"></a>00077     <span class="keywordflow">for</span>(j=0; j&lt;devices.size(); j++){
+<a name="l00078"></a>00078       Q_ASSERT(devices.at(j) != 0);
+<a name="l00079"></a>00079       <span class="comment">// Check if VID and PID matches</span>
+<a name="l00080"></a>00080       <span class="keywordflow">if</span>((devices.at(j)-&gt;vendorId() == device.<a class="code" href="classmdt_device_info.html#a45edf71f1fa6a653c1bfa984e90e094e" title="Get vendor ID.">vendorId</a>())&amp;&amp;(devices.at(j)-&gt;productId() == device.<a class="code" href="classmdt_device_info.html#a53006d4fbaeb0ba2fd47057f36b9b813" title="Get product ID.">productId</a>())){
+<a name="l00081"></a>00081         <span class="comment">// If requested, check if serial ID matches</span>
+<a name="l00082"></a>00082         <span class="keywordflow">if</span>(!device.<a class="code" href="classmdt_device_info.html#ad9c2e69d8a7b81e25ee70dff9f7086e6" title="Get serial number/ID.">serialId</a>().isEmpty()){
+<a name="l00083"></a>00083           <span class="keywordflow">if</span>(devices.at(j)-&gt;serialId() == device.<a class="code" href="classmdt_device_info.html#ad9c2e69d8a7b81e25ee70dff9f7086e6" title="Get serial number/ID.">serialId</a>()){
+<a name="l00084"></a>00084             port = ports.at(i);
+<a name="l00085"></a>00085             i = ports.size();
+<a name="l00086"></a>00086             <span class="keywordflow">break</span>;
+<a name="l00087"></a>00087           }
+<a name="l00088"></a>00088         }<span class="keywordflow">else</span>{
+<a name="l00089"></a>00089           <span class="comment">// Only PID and VID must match</span>
+<a name="l00090"></a>00090           port = ports.at(i);
+<a name="l00091"></a>00091           i = ports.size();
+<a name="l00092"></a>00092           <span class="keywordflow">break</span>;
+<a name="l00093"></a>00093         }
+<a name="l00094"></a>00094       }
+<a name="l00095"></a>00095     }
+<a name="l00096"></a>00096   }
+<a name="l00097"></a>00097   <span class="comment">// Open port if found</span>
+<a name="l00098"></a>00098   <span class="keywordflow">if</span>(port != 0){
+<a name="l00099"></a>00099     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(*port);
+<a name="l00100"></a>00100     <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
+<a name="l00101"></a>00101       <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
+<a name="l00102"></a>00102         retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
+<a name="l00103"></a>00103       }<span class="keywordflow">else</span>{
+<a name="l00104"></a>00104         retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
+<a name="l00105"></a>00105       }
+<a name="l00106"></a>00106     }<span class="keywordflow">else</span>{
+<a name="l00107"></a>00107       retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>;
+<a name="l00108"></a>00108     }
+<a name="l00109"></a>00109   }<span class="keywordflow">else</span>{
+<a name="l00110"></a>00110     <span class="comment">// Device not found</span>
+<a name="l00112"></a>00112 <span class="comment"></span>    retVal = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">mdtAbstractPort::PortNotFound</a>;
+<a name="l00113"></a>00113   }
+<a name="l00114"></a>00114   <span class="comment">// Free port info list</span>
+<a name="l00115"></a>00115   qDeleteAll(ports);
+<a name="l00116"></a>00116   ports.clear();
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118   <span class="keywordflow">return</span> retVal;
+<a name="l00119"></a>00119 }
+<a name="l00120"></a>00120 
+<a name="l00121"></a><a class="code" href="classmdt_device_u3606_a.html#aa9045c25f6be6797b21ea98b4958e8f1">00121</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_u3606_a.html#aa9045c25f6be6797b21ea98b4958e8f1" title="Send a command to device.">mdtDeviceU3606A::sendCommand</a>(<span class="keyword">const</span> QByteArray &amp;command, <span class="keywordtype">int</span> timeout)
+<a name="l00122"></a>00122 {
+<a name="l00123"></a>00123   <span class="comment">// Wait until data can be sent</span>
+<a name="l00124"></a>00124   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(timeout)){
+<a name="l00125"></a>00125     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">mdtAbstractPort::WritePoolEmpty</a>;
+<a name="l00126"></a>00126   }
+<a name="l00127"></a>00127   <span class="comment">// Send query</span>
+<a name="l00128"></a>00128   <span class="keywordflow">return</span> pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(command);
+<a name="l00129"></a>00129 }
 <a name="l00130"></a>00130 
-<a name="l00131"></a>00131   <span class="keywordtype">int</span> bTag;
-<a name="l00132"></a>00132 
-<a name="l00135"></a>00135    <span class="comment">// Wait until data can be sent</span>
-<a name="l00136"></a>00136    <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(500)){
-<a name="l00137"></a>00137      <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">mdtAbstractPort::WriteQueueEmpty</a>;
-<a name="l00138"></a>00138    }
-<a name="l00139"></a>00139   <span class="comment">// Send query</span>
-<a name="l00140"></a>00140    bTag = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(<span class="stringliteral">&quot;MEAS:VOLT:DC?\n&quot;</span>);
-<a name="l00141"></a>00141    <span class="keywordflow">if</span>(bTag &lt; 0){
-<a name="l00142"></a>00142      <span class="keywordflow">return</span> bTag;
-<a name="l00143"></a>00143    }
-<a name="l00144"></a>00144    <span class="comment">// Wait until more data can be sent</span>
-<a name="l00145"></a>00145    <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(500)){
-<a name="l00146"></a>00146      <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea0ad63405c52aec71c554990aaaa98b79">mdtAbstractPort::WriteQueueEmpty</a>;
-<a name="l00147"></a>00147    }
-<a name="l00148"></a>00148    <span class="comment">// Send read request</span>
-<a name="l00149"></a>00149    <span class="keywordflow">return</span> pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest</a>();
-<a name="l00150"></a>00150 }
+<a name="l00131"></a><a class="code" href="classmdt_device_u3606_a.html#a637c4b440e9c4905c11c16a056e2c7ad">00131</a> QByteArray <a class="code" href="classmdt_device_u3606_a.html#a637c4b440e9c4905c11c16a056e2c7ad" title="Send a query to device.">mdtDeviceU3606A::sendQuery</a>(<span class="keyword">const</span> QByteArray &amp;query, <span class="keywordtype">int</span> writeTimeout, <span class="keywordtype">int</span> readTimeout)
+<a name="l00132"></a>00132 {
+<a name="l00133"></a>00133   <span class="keywordtype">int</span> bTag;
+<a name="l00134"></a>00134   <span class="keywordtype">int</span> i = readTimeout / 50;
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136   <span class="comment">// Clear previous response</span>
+<a name="l00137"></a>00137   pvGenericData.clear();
+<a name="l00138"></a>00138   <span class="comment">// Wait until data can be sent</span>
+<a name="l00139"></a>00139   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(writeTimeout)){
+<a name="l00140"></a>00140     <span class="keywordflow">return</span> QByteArray();
+<a name="l00141"></a>00141   }
+<a name="l00142"></a>00142   <span class="comment">// Send query</span>
+<a name="l00143"></a>00143   bTag = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(query);
+<a name="l00144"></a>00144   <span class="keywordflow">if</span>(bTag &lt; 0){
+<a name="l00145"></a>00145     <span class="keywordflow">return</span> QByteArray();
+<a name="l00146"></a>00146   }
+<a name="l00147"></a>00147   <span class="comment">// Wait until more data can be sent</span>
+<a name="l00148"></a>00148   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(writeTimeout)){
+<a name="l00149"></a>00149     <span class="keywordflow">return</span> QByteArray();
+<a name="l00150"></a>00150   }
+<a name="l00151"></a>00151   <span class="comment">// Send read request</span>
+<a name="l00152"></a>00152   bTag = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest</a>();
+<a name="l00153"></a>00153   <span class="keywordflow">if</span>(bTag &lt; 0){
+<a name="l00154"></a>00154     <span class="keywordflow">return</span> QByteArray();
+<a name="l00155"></a>00155   }
+<a name="l00156"></a>00156   <span class="comment">// Remember query type.</span>
+<a name="l00158"></a>00158 <span class="comment"></span>  pvCodec-&gt;<a class="code" href="classmdt_frame_codec_scpi.html#a5287ff3f107ca10097cdb499e62f6906" title="Add a query/response transaction.">addTransaction</a>(0, MDT_FC_SCPI_UNKNOW);
+<a name="l00159"></a>00159   <span class="comment">// Wait on response</span>
+<a name="l00160"></a>00160   <span class="keywordflow">while</span>(pvGenericData.size() &lt; 1){
+<a name="l00161"></a>00161     <span class="comment">// Check timeout</span>
+<a name="l00162"></a>00162     <span class="keywordflow">if</span>(i &lt;= 0){
+<a name="l00163"></a>00163       <span class="keywordflow">return</span> QByteArray();
+<a name="l00164"></a>00164     }
+<a name="l00165"></a>00165     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c" title="Wait some time without break the GUI&#39;s event loop.">wait</a>(50, 50);
+<a name="l00166"></a>00166     i--;
+<a name="l00167"></a>00167   }
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169   <span class="keywordflow">return</span> pvGenericData;
+<a name="l00170"></a>00170 }
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a">00172</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_u3606_a.html#a94a6f8b3f64cd35b33204c66816f3f6a" title="Update (G)UI when device&#39;s state has changed.">mdtDeviceU3606A::onStateChanged</a>(<span class="keywordtype">int</span> state)
+<a name="l00173"></a>00173 {
+<a name="l00174"></a>00174   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceU3606A::onStateChanged() ...&quot;</span>;
+<a name="l00175"></a>00175 }
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177 <span class="keywordtype">void</span> mdtDeviceU3606A::decodeReadenFrame(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, QByteArray data)
+<a name="l00178"></a>00178 {
+<a name="l00179"></a>00179   <span class="keywordtype">int</span> responseType;
+<a name="l00180"></a>00180   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ai;
+<a name="l00181"></a>00181   <span class="keywordtype">bool</span> ok;
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDeviceU3606A::decodeReadenFrame() - ID: &quot;</span> &lt;&lt; <span class="keywordtype">id</span> &lt;&lt; <span class="stringliteral">&quot; , data: &quot;</span> &lt;&lt; data;
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   responseType = pvCodec-&gt;<a class="code" href="classmdt_frame_codec_scpi.html#aa6f92a37f19983c9a2ef4ba8e10a3581" title="Get transaction by ID.">pendingTransaction</a>(<span class="keywordtype">id</span>);
+<a name="l00186"></a>00186   <span class="keywordflow">switch</span>(responseType){
+<a name="l00187"></a>00187     <span class="keywordflow">case</span> MDT_FC_SCPI_UNKNOW:
+<a name="l00188"></a>00188       <span class="comment">// Used for sendQuery() - We decode nothing</span>
+<a name="l00189"></a>00189       pvGenericData = data;
+<a name="l00190"></a>00190       <span class="keywordflow">break</span>;
+<a name="l00191"></a>00191     <span class="keywordflow">case</span> MDT_FC_SCPI_VALUE:
+<a name="l00192"></a>00192       ai = <a class="code" href="classmdt_device.html#a3c363d61bf4019dbb40a15ac28fd51af" title="Get analog I/O in pending transactions list.">pendingAioTransaction</a>(<span class="keywordtype">id</span>);
+<a name="l00193"></a>00193       <span class="keywordflow">if</span>(ai == 0){
+<a name="l00194"></a>00194         <span class="keywordflow">break</span>;
+<a name="l00195"></a>00195       }
+<a name="l00196"></a>00196       ok = pvCodec-&gt;<a class="code" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3" title="Decode SCPI value(s)">decodeValues</a>(data);
+<a name="l00197"></a>00197       <span class="keywordflow">if</span>(ok &amp;&amp; (pvCodec-&gt;<a class="code" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values</a>().size() == 1)){
+<a name="l00198"></a>00198         ai-&gt;<a class="code" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a" title="Set the value to update display.">setValue</a>(pvCodec-&gt;<a class="code" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values</a>().at(0), <span class="keyword">false</span>);
+<a name="l00199"></a>00199       }<span class="keywordflow">else</span>{
+<a name="l00200"></a>00200         ai-&gt;<a class="code" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a" title="Set the value to update display.">setValue</a>(QVariant(), <span class="keyword">false</span>);
+<a name="l00201"></a>00201       }
+<a name="l00202"></a>00202       <span class="keywordflow">break</span>;
+<a name="l00203"></a>00203     <span class="keywordflow">default</span>:
+<a name="l00204"></a>00204       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: received unsupported response from device (type: &quot;</span> + QString::number(responseType) + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00205"></a>00205       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDeviceU3606A&quot;</span>);
+<a name="l00206"></a>00206       e.commit();
+<a name="l00207"></a>00207   }
+<a name="l00208"></a>00208 }
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210 <span class="keywordtype">int</span> mdtDeviceU3606A::readAnalogInput(<span class="keywordtype">int</span> address)
+<a name="l00211"></a>00211 {
+<a name="l00212"></a>00212   Q_ASSERT(pvIos != 0);
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214   <span class="keywordtype">int</span> bTag;
+<a name="l00215"></a>00215 
+<a name="l00218"></a>00218   <span class="comment">// Wait until data can be sent</span>
+<a name="l00219"></a>00219   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(500)){
+<a name="l00220"></a>00220     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">mdtAbstractPort::WritePoolEmpty</a>;
+<a name="l00221"></a>00221   }
+<a name="l00222"></a>00222   <span class="comment">// Send query</span>
+<a name="l00223"></a>00223   bTag = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(<span class="stringliteral">&quot;MEAS:VOLT:DC?\n&quot;</span>);
+<a name="l00224"></a>00224   <span class="keywordflow">if</span>(bTag &lt; 0){
+<a name="l00225"></a>00225     <span class="keywordflow">return</span> bTag;
+<a name="l00226"></a>00226   }
+<a name="l00227"></a>00227   <span class="comment">// Wait until more data can be sent</span>
+<a name="l00228"></a>00228   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">waitOnWriteReady</a>(500)){
+<a name="l00229"></a>00229     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea823db75227ad56b6aa74ea2f160c0693">mdtAbstractPort::WritePoolEmpty</a>;
+<a name="l00230"></a>00230   }
+<a name="l00231"></a>00231   <span class="comment">// Send read request</span>
+<a name="l00232"></a>00232   bTag = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a992d24020748e17d577b31e64a73b3e2" title="Send a read request to device.">sendReadRequest</a>();
+<a name="l00233"></a>00233   <span class="keywordflow">if</span>(bTag &lt; 0){
+<a name="l00234"></a>00234     <span class="keywordflow">return</span> bTag;
+<a name="l00235"></a>00235   }
+<a name="l00236"></a>00236   <span class="comment">// Remember query type.</span>
+<a name="l00238"></a>00238 <span class="comment"></span>  pvCodec-&gt;<a class="code" href="classmdt_frame_codec_scpi.html#a5287ff3f107ca10097cdb499e62f6906" title="Add a query/response transaction.">addTransaction</a>(0, MDT_FC_SCPI_VALUE);
+<a name="l00239"></a>00239 
+<a name="l00240"></a>00240   <span class="comment">//return bTag;</span>
+<a name="l00241"></a>00241   <span class="keywordflow">return</span> 0;
+<a name="l00242"></a>00242 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -223,7 +313,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Dec 3 2012 19:30:14 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

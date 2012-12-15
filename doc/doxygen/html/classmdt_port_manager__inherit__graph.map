@@ -1,5 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="5,83,192,112"/>
 <area shape="rect" id="node5" href="$classmdt_serial_port_manager.html" title="Serial port manager class." alt="" coords="216,83,365,112"/>
-<area shape="rect" id="node7" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="389,83,552,112"/>
+<area shape="rect" id="node7" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="389,83,531,112"/>
+<area shape="rect" id="node9" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="555,83,717,112"/>
 </map>

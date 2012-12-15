@@ -81,7 +81,7 @@ When using a event based approach, it's not possible to know what type of answer
 \end{DoxyParams}
 
 
-Definition at line 36 of file mdtFrameCodecScpi.cpp.
+Definition at line 45 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_aff616991e6223aa51f265cf7e464be12}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeError@{decodeError}}
@@ -102,7 +102,7 @@ When decode was done successfully, error is available with \hyperlink{classmdt_f
 \item Item 1 is the error message string 
 \end{DoxyItemize}
 
-Definition at line 117 of file mdtFrameCodecScpi.cpp.
+Definition at line 143 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a6ddd1b8e23252dc7f03c279a030cb36f}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIdn@{decodeIdn}}
@@ -119,7 +119,7 @@ Decode the IDN answer.
 
 When decode was done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} 
 
-Definition at line 90 of file mdtFrameCodecScpi.cpp.
+Definition at line 116 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a327afabbb6da25e31523ef4baa28cc87}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeIEEEblock@{decodeIEEEblock}}
@@ -136,7 +136,7 @@ Decode a IEEE block.
 
 NOTE: not implemented yet ! 
 
-Definition at line 156 of file mdtFrameCodecScpi.cpp.
+Definition at line 182 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_a37a1703b6daee6f6bf91c6afb46191b3}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!decodeValues@{decodeValues}}
@@ -162,17 +162,11 @@ After decode is done, values are available with \hyperlink{classmdt_frame_codec_
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-True if decode could be done. 
+True if decode could be done.
 \end{DoxyReturn}
+Errors are logged with the \hyperlink{classmdt_error}{mdtError} system. 
 
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000056}{Todo}]Check limits (-\/OL, OL) for type Double \end{Desc}
-
-
-
-
-Definition at line 59 of file mdtFrameCodecScpi.cpp.
+Definition at line 69 of file mdtFrameCodecScpi.cpp.
 
 \hypertarget{classmdt_frame_codec_scpi_aa6f92a37f19983c9a2ef4ba8e10a3581}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!pendingTransaction@{pendingTransaction}}
@@ -203,7 +197,7 @@ $<$ Initial or unknown query/response type
 
 
 
-Definition at line 49 of file mdtFrameCodecScpi.cpp.
+Definition at line 59 of file mdtFrameCodecScpi.cpp.
 
 
 
