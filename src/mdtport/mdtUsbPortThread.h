@@ -48,6 +48,16 @@ class mdtUsbPortThread : public mdtPortThread
    */
   bool isReader() const;
 
+ signals:
+
+  /*! \brief Emited when a new control response was readen
+   */
+  void controlResponseReaden();
+
+  /*! \brief Wmited when a message IN was readen (from additionnal interrupt IN endpoint)
+   */
+  void messageInReaden();
+
  private:
 
   /*! \brief Write data to port

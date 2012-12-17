@@ -26,7 +26,6 @@
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include <QString>
-///#include <QApplication>
 #include <libusb-1.0/libusb.h>
 
 #include <QDebug>
@@ -34,6 +33,8 @@
 mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
+  mdtUsbPortThread *portThread;
+
   // Port setup
   mdtPortConfig *config = new mdtPortConfig;
   mdtUsbPort *port = new mdtUsbPort;
@@ -41,7 +42,10 @@ mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
   setPort(port);
 
   // Threads setup
-  addThread(new mdtUsbPortThread);
+  portThread = new mdtUsbPortThread;
+  connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
+  connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
+  addThread(portThread);
 }
 
 mdtUsbPortManager::~mdtUsbPortManager()
@@ -156,12 +160,12 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
       // Build port name
       deviceInfo = portInfo->deviceInfoList().at(0);
       Q_ASSERT(deviceInfo != 0);
-      portName = "0x";
+      portName = "VID=0x";
       portName += QString::number((unsigned int)deviceInfo->vendorId(), 16);
-      portName += ":0x";
+      portName += ":PID=0x";
       portName += QString::number((unsigned int)deviceInfo->productId(), 16);
       if(!deviceDescriptor.serialNumber().isEmpty()){
-        portName += ":" + deviceDescriptor.serialNumber();
+        portName += ":SID=" + deviceDescriptor.serialNumber();
       }
       portInfo->setPortName(portName);
       // Add port info to list
@@ -175,7 +179,7 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
-int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request)
+int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, bool setwIndexAsbInterfaceNumber)
 {
   Q_ASSERT(pvPort != 0);
 
@@ -206,7 +210,7 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request)
   frame->setwIndex(request.wIndex());
   frame->setwLength(request.wLength());
   frame->encode();
-  port->addControlRequest(frame);
+  port->addControlRequest(frame, setwIndexAsbInterfaceNumber);
   port->unlockMutex();
 
   return 0;
@@ -214,9 +218,11 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request)
 
 void mdtUsbPortManager::fromThreadControlResponseReaden()
 {
+  qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): control resonse !!!!";
 }
 
 void mdtUsbPortManager::fromThreadMessageInReaden()
 {
+  qDebug() << " ** mdtUsbPortManager::fromThreadMessageInReaden(): messge IN !!!!";
 }
 

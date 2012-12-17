@@ -23,6 +23,7 @@
 #include "mdtUsbDeviceDescriptor.h"
 #include <QString>
 #include <QStringList>
+#include <QMap>
 
 // We need a sleep function
 #ifdef Q_OS_UNIX
@@ -43,6 +44,7 @@ mdtUsbPort::mdtUsbPort(QObject *parent)
   pvReadTimeout = 0;
   pvWriteTimeout = 0;
   pvHandle = 0;
+  pvbInterfaceNumber = 0;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
   pvReadEndpointAddress = 0;
@@ -134,10 +136,13 @@ void mdtUsbPort::setWriteTimeout(int timeout)
   }
 }
 
-void mdtUsbPort::addControlRequest(mdtFrameUsbControl *frame)
+void mdtUsbPort::addControlRequest(mdtFrameUsbControl *frame, bool setwIndexAsbInterfaceNumber)
 {
   Q_ASSERT(frame != 0);
 
+  if(setwIndexAsbInterfaceNumber){
+    frame->setwIndex(pvbInterfaceNumber);
+  }
   pvControlQueryFrames.enqueue(frame);
   pvCancelWrite = false;
   pvWriteFrameAvailable.wakeAll();
@@ -933,6 +938,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
   Q_ASSERT(!isOpen());
 
   QStringList lst;
+  QStringList item;
+  QMap<QString, QString> portNameAttributes;
   QString str;
   bool ok;
   quint16 vid = 0;
@@ -943,11 +950,70 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
   mdtUsbDeviceDescriptor deviceDescriptor;
   ssize_t i = 0;
   int err;
+  int j;
   error_t portError;
 
   // Extract items from port name
   lst = pvPortName.split(":");
+  for(j=0; j<lst.size(); j++){
+    item = lst.at(j).split("=");
+    if(item.size() != 2){
+      mdtError e(MDT_USB_IO_ERROR, "Portname has wrong format. Expected X=Y (port name: " + pvPortName + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      return SetupError;
+    }
+    portNameAttributes.insert(item.at(0), item.at(1));
+  }
+  qDebug() << "portNameAttributes: " << portNameAttributes;
+  
+  // Extract VID
+  str = portNameAttributes.value("VID", "");
+  if(str.left(2) == "0x"){
+    vid = str.toUInt(&ok, 16);
+  }else{
+    vid = str.toUInt(&ok, 10);
+  }
+  if(!ok){
+    mdtError e(MDT_USB_IO_ERROR, "Cannot extract vendor ID in " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return SetupError;
+  }
+  // Extract PID
+  str = portNameAttributes.value("PID", "");
+  if(str.left(2) == "0x"){
+    pid = str.toUInt(&ok, 16);
+  }else{
+    pid = str.toUInt(&ok, 10);
+  }
+  if(!ok){
+    mdtError e(MDT_USB_IO_ERROR, "Cannot extract product ID in " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+    e.commit();
+    return SetupError;
+  }
+  // Extract SID
+  sid = portNameAttributes.value("SID", "");
+  // Extract bInterfaceNumber
+  pvbInterfaceNumber = 0;
+  str = portNameAttributes.value("bInterfaceNumber", "");
+  if(!str.isEmpty()){
+    if(str.left(2) == "0x"){
+      pvbInterfaceNumber = str.toInt(&ok, 16);
+    }else{
+      pvbInterfaceNumber = str.toInt(&ok, 10);
+    }
+    if(!ok){
+      mdtError e(MDT_USB_IO_ERROR, "Cannot extract bInterfaceNumber in " + pvPortName + " , choosing 0", mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+      e.commit();
+      pvbInterfaceNumber = 0;
+    }
+  }
+
   // If we have 2 items, format is VID:PID
+  /**
   if(lst.size() == 2){
     // Extract VID
     str = lst.at(0);
@@ -1012,6 +1078,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
     e.commit();
     return SetupError;
   }
+  */
   // If no serial ID is given, use libusb open method
   if(sid.isEmpty()){
     pvHandle = libusb_open_device_with_vid_pid(pvLibusbContext, vid, pid);
@@ -1080,7 +1147,7 @@ void mdtUsbPort::pvClose()
   bool devicePresent = true;
 
   // Release port
-  err = libusb_release_interface(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  err = libusb_release_interface(pvHandle, pvbInterfaceNumber);
   switch(err){
     case 0:
       break;
@@ -1098,7 +1165,7 @@ void mdtUsbPort::pvClose()
   // Re-attach possibly detached driver in pvSetup()
 #ifdef Q_OS_LINUX
   if(devicePresent){
-    err = libusb_attach_kernel_driver(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+    err = libusb_attach_kernel_driver(pvHandle, pvbInterfaceNumber);
     switch(err){
       case 0:
         break;
@@ -1299,7 +1366,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   }
   // Unload possibly loaded driver that uses the device
 #ifdef Q_OS_LINUX
-  err = libusb_detach_kernel_driver(pvHandle, 0);  /// \todo interface number hardcoded, BAD
+  err = libusb_detach_kernel_driver(pvHandle, pvbInterfaceNumber);
   switch(err){
     case 0:
       break;
@@ -1337,7 +1404,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   }
 #endif
   // Claim the interface
-  err = libusb_claim_interface(pvHandle, 0);  /// \todo interface nunber hardcoded, BAD
+  err = libusb_claim_interface(pvHandle, pvbInterfaceNumber);
   switch(err){
     case 0:
       break;

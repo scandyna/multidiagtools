@@ -78,6 +78,7 @@ class mdtUsbPortManager : public mdtPortManager
    *  and don't wait until data was written.
    *
    * \param frame Frame containing request to send.
+   * \param setwIndexAsbInterfaceNumber If true, wIndex will be set with USB port's current bInterfaceNumber
    * \return 0 on success or value < 0 on error. In this implementation,
    *          the only possible error is mdtAbstractPort::WriteQueueEmpty .
    *          Some subclass can return a frame ID on success,
@@ -94,12 +95,16 @@ class mdtUsbPortManager : public mdtPortManager
    *  If protocol supports frame identification (like USBTMC's bTag),
    *   it should be returned here and incremented.
    */
-  virtual int sendControlRequest(const mdtFrameUsbControl &request);
+  virtual int sendControlRequest(const mdtFrameUsbControl &request, bool setwIndexAsbInterfaceNumber = false);
 
  public slots:
 
+  /*! \brief Called from USB thread when a control reply was received
+   */
   void fromThreadControlResponseReaden();
 
+  /*! \brief Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint).
+   */
   void fromThreadMessageInReaden();
 
  private:

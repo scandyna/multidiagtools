@@ -23,7 +23,7 @@
 
 #include "mdtUsbPort.h"
 #include "mdtUsbPortThread.h"
-#include "mdtPortManager.h"
+#include "mdtUsbPortManager.h"
 #include "mdtPortInfo.h"
 #include <QObject>
 #include <QStringList>
@@ -39,7 +39,7 @@
  *
  * Use start() to begin read/write and stop to end.
  */
-class mdtUsbtmcPortManager : public mdtPortManager
+class mdtUsbtmcPortManager : public mdtUsbPortManager
 {
  Q_OBJECT
 
@@ -88,6 +88,12 @@ class mdtUsbtmcPortManager : public mdtPortManager
    * \return bTag ID on success or value < 0 if write queue is full.
    */
   int sendReadRequest();
+
+  /*! \brief Send a READ_STATUS_BYTE request thru the control endpoint
+   *
+   * \return bTag on success or WriteQueueEmpty on error.
+   */
+  int sendReadStatusByteRequest();
 
  public slots:
 

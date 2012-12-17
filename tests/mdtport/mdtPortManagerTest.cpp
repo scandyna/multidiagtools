@@ -194,6 +194,8 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.start());
   qDebug() << "TEST, threads running...";
 
+  // Control request
+  QVERIFY(m.sendReadStatusByteRequest() >= 2);
   // Query without answer
   ///QVERIFY(m.writeData("*CLS\n", false));
   qDebug() << "TEST, sending request ...";
@@ -202,7 +204,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   ///QTest::qWait(500);
   qDebug() << "TEST, request read ...";
   ///m.readData();
-  QVERIFY(m.waitOnWriteReady(3000));
+  QVERIFY(m.waitOnWriteReady(1000));
   QVERIFY(m.sendReadRequest() > 0);
   QVERIFY(m.waitReadenFrame());
   qDebug() << "TEST, request read DONE";

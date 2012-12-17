@@ -217,11 +217,8 @@ void mdtUsbPortThread::run()
     // Write if something is to write (getNewFrameWrite() can return a null pointer 
     //  if it was woken after a control request or other).
     if(writeFrame != 0){
-      qDebug() << "USBTHD: have to write ... , waitAnAnswer: " << waitAnAnswer;
       waitAnAnswer = writeFrame->waitAnAnswer();
-      qDebug() << "Writing ...";
       portError = writeToPort(port, writeFrame);
-      qDebug() << "Writing DONE";
       if(portError != mdtAbstractPort::NoError){
         // Check about disconnection
         if(portError == mdtAbstractPort::Disconnected){
@@ -242,7 +239,6 @@ void mdtUsbPortThread::run()
         }
       }
     }else{
-      qDebug() << "USBTHD: just a control request ...";
       // We were woken up because of a control request
       waitAnAnswer = false;
       while(port->controlResponseFrames().size() < 1){
@@ -287,11 +283,13 @@ void mdtUsbPortThread::run()
     }
     // Check if a control response is available
     if(port->controlResponseFrames().size() > 0){
-      qDebug() << "USBTHD: ******** CTL RESP !";
+      ///qDebug() << "USBTHD: ******** CTL RESP !";
+      emit(controlResponseReaden());
     }
     // Check if a message IN is available
     if(port->messageInFrames().size() > 0){
-      qDebug() << "USBTHD: *=====* MSG IN !";
+      ///qDebug() << "USBTHD: *=====* MSG IN !";
+      emit(messageInReaden());
     }
     // Read process
     if(waitAnAnswer){
@@ -375,11 +373,13 @@ void mdtUsbPortThread::run()
         }
         // Check if a control response is available
         if(port->controlResponseFrames().size() > 0){
-          qDebug() << "USBTHD: ******** CTL RESP !!!!!";
+          emit(controlResponseReaden());
+          ///qDebug() << "USBTHD: ******** CTL RESP !!!!!";
         }
         // Check if a message IN is available
         if(port->messageInFrames().size() > 0){
-          qDebug() << "USBTHD: *=====* MSG IN !";
+          emit(messageInReaden());
+          ///qDebug() << "USBTHD: *=====* MSG IN !";
         }
         // Read thread state
         if(!pvRunning){

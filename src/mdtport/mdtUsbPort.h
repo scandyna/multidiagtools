@@ -33,8 +33,16 @@
  *  Because it can happen that multiple devices with same vendor ID and product ID
  *   can be attached to system, this class must provide a unique identifier when
  *   (re-)open the port.
- *  Because of this, the choosen format is: vendorID:productID:serialID  (serialID is also called serial number).
- *   It's possible to omit the serialID. In this case, the first port with given vendor ID and device ID is open.
+ *  Because of this, the choosen format is: VID=0x1234:PID=0x1234:SID=0x1234:bInterfaceNumber=0.
+ *   VID is the Vendor ID, PID the Product ID, SID the Serial ID (also called Serial Number) and bInterfaceNumber the interface number
+ *   (some devices have mor than one interface, f.ex. sound cards, keboard/mouse receiver, ...).
+ *   SID and bInterfaceNumber are optional. In this case, the first port with given vendor ID and device ID is open.
+ *   In brief, following names are allowed:
+ *   - VID=0x1234:PID=0x5678 (Open the first port with given Vendor ID and Product ID. bInterfaceNumber is 0)
+ *   - VID=0x1234:PID=0x5678:SID=ABC1234 (Open the first port with given Vendor ID, Product ID and Serial ID. bInterfaceNumber is 0)
+ *   - VID=0x1234:PID=0x5678:bInterfaceNumber=1 (Open the first port with given Vendor ID and Product ID. bInterfaceNumber is 1)
+ *   - VID=0x1234:PID=0x5678:SID=ABC1234:bInterfaceNumber=1 (Open the first port with given Vendor ID, Product ID and Serial ID. bInterfaceNumber is 1)
+ * The last example in the above list is the format returned by mdtUsbPortManager::scan().
  *
  * For read and write of data, the mdtAbstractPort's API is used.
  *
@@ -111,9 +119,12 @@ class mdtUsbPort : public mdtAbstractPort
    * The mutex must be locked before calling this method,
    *  and still locked inside.
    *
+   * \param frame Control frame
+   * \param setwIndexAsbInterfaceNumber If true, wIndex will be set with current bInterfaceNumber
+   * 
    * \pre frame must be a valid pointer.
    */
-  void addControlRequest(mdtFrameUsbControl *frame);
+  void addControlRequest(mdtFrameUsbControl *frame, bool setwIndexAsbInterfaceNumber = false);
 
   /*! \brief Check about pending control queries and init a new transfer if needed
    *
@@ -357,6 +368,7 @@ class mdtUsbPort : public mdtAbstractPort
   struct timeval pvWriteTimeoutTv;
   libusb_context *pvLibusbContext;
   libusb_device_handle *pvHandle;
+  int pvbInterfaceNumber;
   /*
    * Control endpoint members
    */
