@@ -113,6 +113,10 @@ class mdtFrameUsbControl : public mdtFrame
    */
   void setbmRequestType(quint8 requestType);
 
+  /*! \brief Get bmRequestType
+   */
+  quint8 bmRequestType() const;
+
   /*! \brief Set the bRequest
    */
   void setbRequest(quint8 request);

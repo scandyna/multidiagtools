@@ -80,6 +80,11 @@ void mdtFrameUsbControl::setbmRequestType(quint8 requestType)
   pvbmRequestType = requestType;
 }
 
+quint8 mdtFrameUsbControl::bmRequestType() const
+{
+  return pvbmRequestType;
+}
+
 void mdtFrameUsbControl::setbRequest(quint8 request)
 {
   pvbRequest = request;

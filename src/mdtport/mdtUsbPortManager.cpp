@@ -175,8 +175,41 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
-int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl & frame)
+int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request)
 {
+  Q_ASSERT(pvPort != 0);
+
+  mdtUsbPort *port;
+  mdtFrameUsbControl *frame;
+
+  // We need a mdtUsbPort object
+  port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+  // Get a frame in pool
+  port->lockMutex();
+  if(port->controlFramesPool().size() < 1){
+    port->unlockMutex();
+    mdtError e(MDT_PORT_IO_ERROR, "No frame available in control frames pool", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPortManager");
+    e.commit();
+    return mdtAbstractPort::WritePoolEmpty;
+  }
+  frame = dynamic_cast<mdtFrameUsbControl*> (port->controlFramesPool().dequeue());
+  Q_ASSERT(frame != 0);
+  frame->clear();
+  frame->clearSub();
+  // Store data, encode and add frame to queue
+  frame->setDirectionDeviceToHost(request.directionIsDeviceToHost());
+  frame->setbmRequestType(request.bmRequestType());
+  frame->setbRequest(request.bRequest());
+  frame->setwValue(request.wValue());
+  frame->setwIndex(request.wIndex());
+  frame->setwLength(request.wLength());
+  frame->encode();
+  port->addControlRequest(frame);
+  port->unlockMutex();
+
+  return 0;
 }
 
 void mdtUsbPortManager::fromThreadControlResponseReaden()

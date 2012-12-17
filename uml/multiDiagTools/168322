@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 19
+  revision 20
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -4052,14 +4052,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 346242 // <generalisation>
-	relation 345986 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 346242 // <generalisation>
-	  b parent class_ref 182018 // mdtPortManager
-      end
-
       attribute 381314 "pvWaitingFrame"
 	private explicit_type "bool"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -4138,6 +4130,14 @@ ${inlines}
 	
 	
 	
+      end
+
+      classrelation 678274 // <generalisation>
+	relation 669826 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 678274 // <generalisation>
+	  b parent class_ref 565762 // mdtUsbPortManager
       end
     end
   end

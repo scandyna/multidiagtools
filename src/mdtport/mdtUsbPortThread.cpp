@@ -214,12 +214,58 @@ void mdtUsbPortThread::run()
         break;
       }
     }
-    waitAnAnswer = writeFrame->waitAnAnswer();
     // Write if something is to write (getNewFrameWrite() can return a null pointer 
     //  if it was woken after a control request or other).
     if(writeFrame != 0){
+      qDebug() << "USBTHD: have to write ... , waitAnAnswer: " << waitAnAnswer;
+      waitAnAnswer = writeFrame->waitAnAnswer();
+      qDebug() << "Writing ...";
       portError = writeToPort(port, writeFrame);
+      qDebug() << "Writing DONE";
       if(portError != mdtAbstractPort::NoError){
+        // Check about disconnection
+        if(portError == mdtAbstractPort::Disconnected){
+          // Check about stoping
+          if(!pvRunning){
+            break;
+          }
+          // Try to reconnect
+          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            break;
+          }
+        }else{
+          // stop
+          notifyError(portError);
+          break;
+        }
+      }
+    }else{
+      qDebug() << "USBTHD: just a control request ...";
+      // We were woken up because of a control request
+      waitAnAnswer = false;
+      while(port->controlResponseFrames().size() < 1){
+        // Handle events
+        portError = port->handleUsbEvents(0);
+        // Check about disconnection
+        if(portError == mdtAbstractPort::Disconnected){
+          // Check about stoping
+          if(!pvRunning){
+            break;
+          }
+          // Try to reconnect
+          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            break;
+          }
+        }else{
+          // stop
+          notifyError(portError);
+          break;
+        }
+        portError = port->handleControlResponses();
         // Check about disconnection
         if(portError == mdtAbstractPort::Disconnected){
           // Check about stoping

@@ -291,7 +291,7 @@ class mdtUsbPort : public mdtAbstractPort
    * Notes: must be called only by I/O thread (typically mdtUsbPortThread).
    * This method unlocks the mutex during wait (must be locked by call, is locked again before return)
    *
-   * \pre timeout must be a valid pointer
+   * \param timeout Wait timeout. If null, the port's internal devined read timeout is used.
    */
   error_t handleUsbEvents(struct timeval *timeout);
 

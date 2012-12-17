@@ -904,13 +904,15 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
 
 mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents(struct timeval *timeout)
 {
-  Q_ASSERT(timeout != 0);
-
   int err;
   error_t portError;
 
   unlockMutex();
-  err = libusb_handle_events_timeout(pvLibusbContext, timeout);
+  if(timeout == 0){
+    err = libusb_handle_events_timeout(pvLibusbContext, &pvReadTimeoutTv);
+  }else{
+    err = libusb_handle_events_timeout(pvLibusbContext, timeout);
+  }
   lockMutex();
   if(err != 0){
     portError = mapUsbError(err, false);
@@ -1233,8 +1235,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     pvWriteBufferSize *= bulkEndpointDescriptor->maxPacketSize();
     pvWriteEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
-    qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
-    qDebug() << " Max packet size: " << pvWriteBufferSize;
+    ///qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
+    ///qDebug() << " Max packet size: " << pvWriteBufferSize;
   }
   if(interruptEndpointDescriptor != 0){
     pvWriteBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
@@ -1394,22 +1396,6 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     pvReadBuffer = new char[pvReadBufferSize];
   }
   
-  /// \note Sandbox !!!
-  mdtFrameUsbControl *f;
-  f = controlFramesPool().dequeue();
-  Q_ASSERT(f != 0);
-  f->clearSub();
-  f->setDirectionDeviceToHost(true);
-  f->setRequestType(mdtFrameUsbControl::RT_CLASS);
-  f->setRequestRecipient(mdtFrameUsbControl::RR_INTERFACE);
-  ///f->setbRequest(7); // GET_CAPABILITIES
-  f->setbRequest(128); // READ_STATUS_BYTE
-  f->setwValue(5);
-  f->setwIndex(0);  /// \todo interface nunber hardcoded, BAD
-  f->setwLength(0x3);
-  f->encode();
-  addControlRequest(f);
-  /// End Sandbox !
   
   // Alloc write transfer and buffer
   pvWriteTransfer = libusb_alloc_transfer(0);
@@ -1453,7 +1439,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   setWriteTimeout(config().writeTimeout());
 
   // Set some flags
-  ///pvControlTransferPending = false;
+  pvControlTransferPending = false;
   pvReadTransferPending = false;
   pvWriteTransferPending = false;
   pvMessageInTransferPending = false;

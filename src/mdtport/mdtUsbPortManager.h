@@ -38,7 +38,7 @@ class mdtUsbPortManager : public mdtPortManager
 
   /*! \brief Contruct a USB port manager
    *
-   * Will create mdtUsbPort and mdtUsbPortThred objects.
+   * Will create mdtUsbPort and mdtUsbPortThread objects.
    */
   mdtUsbPortManager(QObject *parent = 0);
 
@@ -71,7 +71,30 @@ class mdtUsbPortManager : public mdtPortManager
    */
   QList<mdtPortInfo*> scan(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol);
 
-  int sendControlRequest(const mdtFrameUsbControl &frame);
+  /*! \brief Send a control request by copy
+   *
+   * Request will be passed to the mdtPort's control request queue by copy.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * \param frame Frame containing request to send.
+   * \return 0 on success or value < 0 on error. In this implementation,
+   *          the only possible error is mdtAbstractPort::WriteQueueEmpty .
+   *          Some subclass can return a frame ID on success,
+   *          or a other error. See subclass documentation for details.
+   * \pre Port must be set with setPort() with a mdtUsbPort (or subclass) before use of this method.
+   *
+   *
+   * Subclass notes:<br>
+   *  This method can be reimplemented in subclass if needed.
+   *  Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC).
+   *  A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool()
+   *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
+   *  then added to port's request queue with mdtAbstractPort::addControlRequest() .
+   *  If protocol supports frame identification (like USBTMC's bTag),
+   *   it should be returned here and incremented.
+   */
+  virtual int sendControlRequest(const mdtFrameUsbControl &request);
 
  public slots:
 

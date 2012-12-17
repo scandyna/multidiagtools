@@ -24,6 +24,7 @@
 #include "mdtPortConfig.h"
 #include "mdtFrame.h"
 #include "mdtFrameCodecModbus.h"
+#include "mdtFrameUsbControl.h"
 #include "mdtPortReadThread.h"
 #include "mdtPortWriteThread.h"
 #include "mdtPortInfo.h"
@@ -117,7 +118,7 @@ void mdtPortManagerTest::usbPortTest()
   qDebug() << "* A USB device must be attached, else test will fail *";
 
   // Verify that scan() function works ..
-  portInfoList = m.scan();
+  portInfoList = m.scan(0xFE, -1, -1);
   if(portInfoList.size() < 1){
     QSKIP("No USBT device found, or other error", SkipAll);
   }
@@ -126,7 +127,39 @@ void mdtPortManagerTest::usbPortTest()
     qDebug() << "Device: " << portInfoList.at(i)->displayText();
     qDebug() << "Port: " << portInfoList.at(i)->portName();
   }
+  
+  // Init port manager
+  ///m.setEnqueueReadenFrames(true);
+  m.setPortInfo(*portInfoList.at(0));
+  QVERIFY(m.openPort());
+  // start threads
+  ///QTest::qWait(2000);
+  QVERIFY(m.start());
+
+  
+  ///QTest::qWait(2000);
+  // We not need the scan result anymore, free memory
   qDeleteAll(portInfoList);
+  portInfoList.clear();
+
+  /// \note Sandbox !!!
+  mdtFrameUsbControl f;
+  
+  
+  f.setDirectionDeviceToHost(true);
+  f.setRequestType(mdtFrameUsbControl::RT_CLASS);
+  f.setRequestRecipient(mdtFrameUsbControl::RR_INTERFACE);
+  ///f->setbRequest(7); // GET_CAPABILITIES
+  f.setbRequest(128); // READ_STATUS_BYTE
+  f.setwValue(5);
+  f.setwIndex(0);  /// \todo interface nunber hardcoded, BAD
+  f.setwLength(0x3);
+  f.encode();
+  m.sendControlRequest(f);
+  /// End Sandbox !
+
+  QTest::qWait(2000);
+
 }
 
 void mdtPortManagerTest::usbTmcPortTest()
@@ -169,7 +202,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   ///QTest::qWait(500);
   qDebug() << "TEST, request read ...";
   ///m.readData();
-  QVERIFY(m.waitOnWriteReady(1000));
+  QVERIFY(m.waitOnWriteReady(3000));
   QVERIFY(m.sendReadRequest() > 0);
   QVERIFY(m.waitReadenFrame());
   qDebug() << "TEST, request read DONE";
