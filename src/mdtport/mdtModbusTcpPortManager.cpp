@@ -162,6 +162,7 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
   Q_ASSERT(pvPort != 0);
 
   mdtFrameModbusTcp *frame;
+  mdtPortTransaction *transaction;
 
   // Get frames in readen queue
   pvPort->lockMutex();
@@ -171,11 +172,25 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
     // Check if frame is complete
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
+      // If we have a pending transaction, remove it
+      transaction = pendingTransaction(frame->transactionId());
+      if(transaction == 0){
+        mdtError e(MDT_TCP_IO_ERROR, "Received a frame with unexpected transaction ID", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+        e.commit();
+      }else{
+        transaction->setId(frame->transactionId());
+        transaction->setData(frame->getPdu());
+        pvTransactionsDone.insert(transaction->id(), transaction);
+      }
+      
       // Copy data
-      commitFrame(frame->transactionId(), frame->getPdu());
+      ///commitFrame(frame->transactionId(), frame->getPdu());
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
+  // Commit
+  commitFrames();
 }

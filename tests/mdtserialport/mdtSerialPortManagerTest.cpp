@@ -40,6 +40,7 @@ void mdtSerialPortManagerTest::simpleTest()
 {
   mdtSerialPortManager m;
   QList<mdtPortInfo*> portInfoList;
+  QList<QByteArray> frames;
 
   qDebug() << "* Be shure that the computer has at least one serial port, else test will fail *";
 
@@ -77,8 +78,9 @@ void mdtSerialPortManagerTest::simpleTest()
   QVERIFY(m.waitReadenFrame(500));
 
   // Verify received data
-  QVERIFY(m.readenFrames().size() == 1);
-  QVERIFY(m.readenFrames().at(0) == "Test");
+  frames = m.readenFrames();
+  QVERIFY(frames.size() == 1);
+  QVERIFY(frames.at(0) == "Test");
   m.clearReadenFrames();
 }
 
@@ -90,6 +92,7 @@ void mdtSerialPortManagerTest::transferTest()
   double dataTransferRate;
   int dataTransferTime;
   QString receivedData;
+  QList<QByteArray> frames;
 
   qDebug() << "* Be shure that the test dongle is plugged in first serial port, else test will fail *";
 
@@ -98,7 +101,7 @@ void mdtSerialPortManagerTest::transferTest()
    */
 
   // Init port manager
-  m.setEnqueueReadenFrames(true);
+  ///m.setEnqueueReadenFrames(true);
   portInfoList = m.scan();
   if(portInfoList.size() < 1){
     QSKIP("No serial port found, or other error", SkipAll);
@@ -134,10 +137,11 @@ void mdtSerialPortManagerTest::transferTest()
     // Wait on answer - Timout: 500 [ms]
     QVERIFY(m.waitReadenFrame(500));
     // Copy data
-    for(int i=0; i<m.readenFrames().size(); i++){
-      receivedData += m.readenFrames().at(i);
+    frames = m.readenFrames();
+    for(int i=0; i<frames.size(); i++){
+      receivedData += frames.at(i);
     }
-    m.clearReadenFrames();
+    ///m.clearReadenFrames();
   }
   // Verify received data
   QVERIFY(receivedData == data);

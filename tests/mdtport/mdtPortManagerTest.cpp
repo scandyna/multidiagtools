@@ -39,8 +39,52 @@
 #include "mdtUsbPortManager.h"
 #include "mdtUsbtmcPortManager.h"
 #include "mdtModbusTcpPortManager.h"
+#include "mdtPortTransaction.h"
 
 #include <QDebug>
+
+void mdtPortManagerTest::transactionIdTest()
+{
+  mdtPortTransaction t;
+
+  // Check initial values
+  QCOMPARE(t.id(), 0);
+  QCOMPARE(t.type(), 0);
+  QVERIFY(t.analogIo() == 0);
+  QVERIFY(t.digitalIo() == 0);
+  QCOMPARE(t.forMultipleIos(), false);
+  QCOMPARE(t.isInput(), false);
+  QCOMPARE(t.isOutput(), false);
+  QVERIFY(t.data().isEmpty());
+
+  // Input/Output flag
+  t.setIsInput(true);
+  QCOMPARE(t.isInput(), true);
+  QCOMPARE(t.isOutput(), false);
+  t.setIsInput(false);
+  QCOMPARE(t.isInput(), false);
+  QCOMPARE(t.isOutput(), true);
+
+  // Diverse flags
+  t.setId(1234);
+  QCOMPARE(t.id(), 1234);
+  t.setType(556);
+  QCOMPARE(t.type(), 556);
+  t.setData("Test");
+  QCOMPARE(t.data(), QByteArray("Test"));
+
+  // Clear
+  t.clear();
+  QCOMPARE(t.id(), 0);
+  QCOMPARE(t.type(), 0);
+  QVERIFY(t.analogIo() == 0);
+  QVERIFY(t.digitalIo() == 0);
+  QCOMPARE(t.forMultipleIos(), false);
+  QCOMPARE(t.isInput(), false);
+  QCOMPARE(t.isOutput(), false);
+  QVERIFY(t.data().isEmpty());
+
+}
 
 void mdtPortManagerTest::portTest()
 {
@@ -48,6 +92,7 @@ void mdtPortManagerTest::portTest()
   QTemporaryFile file;
   mdtPortConfig cfg, cfg2;
   mdtPort *port, *port2;
+  QList<QByteArray> frames;
 
   // Create a temporary file
   QVERIFY(file.open());
@@ -61,7 +106,7 @@ void mdtPortManagerTest::portTest()
 
   // Init port manager
   m.setPort(port);
-  m.setEnqueueReadenFrames(true);
+  ///m.setEnqueueReadenFrames(true);
   m.addThread(new mdtPortWriteThread);
   m.addThread(new mdtPortReadThread);
   m.setPortName(file.fileName());
@@ -75,7 +120,7 @@ void mdtPortManagerTest::portTest()
   QVERIFY(!m.waitReadenFrame());
 
   // Send some data
-  QVERIFY(m.writeData("Test\n") == 0);
+  QVERIFY(m.writeData("ABCD\nEFGH\n") == 0);
 
   // We must re-open the file, else nothing will be readen
   QTest::qWait(100);
@@ -84,13 +129,10 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.start());
   // Get readen data
   QVERIFY(m.waitReadenFrame());
-  // Check that multiple calls of readenFrames() does not alter frames queue
-  QVERIFY(m.readenFrames().size() == 1);
-  QVERIFY(m.readenFrames().size() == 1);
-  QVERIFY(m.readenFrames().at(0) == "Test");
-  QVERIFY(m.readenFrames().size() == 1);
-  m.clearReadenFrames();
-  QVERIFY(m.readenFrames().size() == 0);
+  frames = m.readenFrames();
+  QVERIFY(frames.size() == 2);
+  QCOMPARE(frames.at(0), QByteArray("ABCD"));
+  QCOMPARE(frames.at(1), QByteArray("EFGH"));
 
   // Setup a second port manager
   // Port setup
@@ -166,6 +208,7 @@ void mdtPortManagerTest::usbTmcPortTest()
 {
   mdtUsbtmcPortManager m;
   QList<mdtPortInfo*> portInfoList;
+  QList<QByteArray> frames;
 
   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
 
@@ -176,7 +219,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   }
 
   // Init port manager
-  m.setEnqueueReadenFrames(true);
+  ///m.setEnqueueReadenFrames(true);
   m.setPortName(portInfoList.at(0)->portName());
   QVERIFY(m.openPort());
 
@@ -200,6 +243,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   ///QVERIFY(m.writeData("*CLS\n", false));
   qDebug() << "TEST, sending request ...";
   QVERIFY(m.writeData("*IDN?\n") > 0);
+  m.addTransaction(0);
   qDebug() << "TEST, sending request DONE";
   ///QTest::qWait(500);
   qDebug() << "TEST, request read ...";
@@ -208,9 +252,10 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.sendReadRequest() > 0);
   QVERIFY(m.waitReadenFrame());
   qDebug() << "TEST, request read DONE";
-  QVERIFY(m.readenFrames().size() > 0);
-  qDebug() << "Data n: " << m.readenFrames().size() << ", Data[0]: " << m.readenFrames().at(0);
-  m.clearReadenFrames();
+  frames = m.readenFrames();
+  QVERIFY(frames.size() > 0);
+  qDebug() << "Data n: " << frames.size() << ", Data[0]: " << frames.at(0);
+  ///m.clearReadenFrames();
 
   ///QTest::qWait(500);
   
@@ -256,7 +301,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // Init port manager
   //m.setPortName(portInfoList.at(0)->portName());
-  m.setEnqueueReadenFrames(true);
+  ///m.setEnqueueReadenFrames(true);
   m.setPortInfo(*portInfoList.at(0));
   QVERIFY(m.openPort());
 
@@ -270,16 +315,18 @@ void mdtPortManagerTest::modbusTcpPortTest()
   // "Check" direct PDU write
   pdu = codec.encodeReadCoils(0, 3);
   tId1 = m.writeData(pdu);
+  m.addTransaction(tId1);
   QVERIFY(tId1 >= 0);
   tId2 = m.writeData(pdu);
   QVERIFY(tId2 >= 0);
+  m.addTransaction(tId2);
   tId3 = m.writeData(pdu);
   QVERIFY(tId3 >= 0);
+  m.addTransaction(tId3);
   QTest::qWait(500);
-  QVERIFY(!m.waitOnFrame(tId1, 500).isEmpty());
-  QVERIFY(!m.waitOnFrame(tId2, 500).isEmpty());
-  QVERIFY(!m.waitOnFrame(tId3, 500).isEmpty());
-  m.clearReadenFrames();
+  QVERIFY(m.waitOnFrame(tId1, 500));
+  QVERIFY(m.waitOnFrame(tId2, 500));
+  QVERIFY(m.waitOnFrame(tId3, 500));
 }
 
 int main(int argc, char **argv)

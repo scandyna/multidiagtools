@@ -29,6 +29,9 @@ class mdtPortManagerTest : public mdtTest
 
  private slots:
 
+  // Tranaction id test
+  void transactionIdTest();
+
   // Test manager for mdtPort
   void portTest();
 

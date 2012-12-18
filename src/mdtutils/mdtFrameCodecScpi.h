@@ -27,7 +27,7 @@
 #include <QVariant>
 #include <QString>
 
-/*! \brief Helper defines for some mdtDevice() subclasses
+/*! \brief Helper defines for some mdtDevice subclasses
  */
 #define MDT_FC_SCPI_UNKNOW 0        /*!< Initial or unknown query/response type */
 #define MDT_FC_SCPI_VALUE  1        /*!< Device returns a value (int, double, date or string) */

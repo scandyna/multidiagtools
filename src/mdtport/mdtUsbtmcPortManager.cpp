@@ -206,6 +206,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   Q_ASSERT(pvPort != 0);
 
   mdtFrameUsbTmc *frame;
+  mdtPortTransaction *transaction;
 
   // Get frames in readen queue
   pvPort->lockMutex();
@@ -215,16 +216,30 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
     // Check if frame is complete
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
+      // If we have a pending transaction, remove it
+      transaction = pendingTransaction(frame->bTag());
+      if(transaction == 0){
+        mdtError e(MDT_USB_IO_ERROR, "Received a frame with unexpected bTag", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+        e.commit();
+      }else{
+        transaction->setId(frame->bTag());
+        transaction->setData(frame->messageData());
+        pvTransactionsDone.insert(transaction->id(), transaction);
+      }
+
       // Copy data
-      QByteArray data;
-      data.append(frame->messageData().data(), frame->messageData().size());
+      ///QByteArray data;
+      ///data.append(frame->messageData().data(), frame->messageData().size());
       ///pvReadenFrames.insert(frame->bTag(), data);
-      commitFrame(frame->bTag(), data);
+      ///commitFrame(frame->bTag(), data);
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
+  // Commit
+  commitFrames();
   /**
   if(pvReadenFrames.size() > 0){
     emit(newReadenFrame());

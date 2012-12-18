@@ -14,6 +14,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortReadTh
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortWriteThread.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtTcpSocket.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtTcpSocketThread.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortTransaction.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortInfo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtDeviceInfo.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortInfoCbHandler.cpp

@@ -44,6 +44,7 @@ set (SOURCES_FILES
           mdtPortWriteThread.cpp
           mdtTcpSocket.cpp
           mdtTcpSocketThread.cpp
+          mdtPortTransaction.cpp
           # Port info
           mdtPortInfo.cpp
           mdtDeviceInfo.cpp

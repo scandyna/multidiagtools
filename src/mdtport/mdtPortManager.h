@@ -31,8 +31,10 @@
 #include "mdtPortThread.h"
 #include "mdtError.h"
 #include "mdtFrame.h"
+#include "mdtPortTransaction.h"
 #include <QByteArray>
 #include <QList>
+#include <QQueue>
 #include <QMap>
 
 class mdtPortThread;
@@ -315,9 +317,9 @@ class mdtPortManager : public QThread
    *
    * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \return Frame's data on success or empty QByteArray on timeout
+   * \return True if Ok, false on timeout
    */
-  QByteArray waitOnFrame(int id, int timeout = 500);
+  bool waitOnFrame(int id, int timeout = 500);
 
   /*! \brief Get data by frame ID
    *
@@ -372,7 +374,14 @@ class mdtPortManager : public QThread
    *
    * For more details you should read Qt's documentation about implicit-sharing.
    */
-  const QList<QByteArray> readenFrames() const;
+  ///const QList<QByteArray> readenFrames() const;
+
+  /*! \brief Get all readen data
+   *
+   * Note that calling this methode will clear the transactions done queue.
+   *  (A second call will return a empty list).
+   */
+  QList<QByteArray> readenFrames();
 
   /*! \brief Clear readen frames
    *
@@ -396,6 +405,42 @@ class mdtPortManager : public QThread
    * \pre granularity must be > 0.
    */
   static void wait(int msecs, int granularity = 50);
+
+  /*! \brief Get a new transaction
+   *
+   * If transactions pool is empty, a new transaction is created.
+   *  Note that each transaction should be put back in
+   *  pool with restoreTransaction().
+   *
+   * \return A empty transaction (mdtPortTransaction::clear() is called internally).
+   *
+   * \post Returned transaction is valid (never Null).
+   */
+  mdtPortTransaction *getNewTransaction();
+
+  /*! \brief Restore a transaction into pool
+   *
+   * \pre transaction must be a valid pointer (not Null)
+   */
+  void restoreTransaction(mdtPortTransaction *transaction);
+
+  /*! \brief Add a transaction to pending queue
+   *
+   * Will get a new transaction and add it to pending transactions queue.
+   */
+  void addTransaction(int id);
+
+  /*! \brief Get pending transaction matching id
+   *
+   * \return A valid transaction if exists, else a Null pointer.
+   */
+  mdtPortTransaction *pendingTransaction(int id);
+
+  /*! \brief Remove a transaction from DONE queue and restore it to pool
+   *
+   * If transaction not exists in DONE queue, this method simply makes nothing.
+   */
+  void removeTransactionDone(int id);
 
  public slots:
 
@@ -423,6 +468,8 @@ class mdtPortManager : public QThread
  signals:
 
   /*! \brief Emitted when new frame was readen
+   * 
+   * \note NOT forget removeTransactionDone()
    *
    * The id is the same than returned by writeData().
    *
@@ -445,8 +492,20 @@ class mdtPortManager : public QThread
 
  protected:
 
+  /*! \brief Emit signals for each done transactions
+  *
+  * The emited signals depend on setup ....
+  *
+  * Internally, transactions are restored to pool.
+  *
+  * \note Clarify + implement
+  */
+  void commitFrames();
+
   /*! \brief Store frame data in queue and/or emit newReadenFrame() signal
    *
+   * \note Obselete this !
+   * 
    * Dependeing on pvEnqueueReadenFrames and pvNotifyNewReadenFrame,
    *  frame will be enqueued and/or the newReadenFrame(int, QByteArray) signal will be emitted.
    *
@@ -457,10 +516,16 @@ class mdtPortManager : public QThread
 
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
+  QMap<int, mdtPortTransaction*> pvTransactionsDone;
 
  private:
 
   mdtPortInfo pvPortInfo;
+  QQueue<mdtPortTransaction*> pvTransactionsPool;
+  QMap<int, mdtPortTransaction*> pvTransactionsPending;
+
+  
+  /// \todo Obselete this
   quint16 pvLastReadenFrameId;    // Used if protocol does not contain a frame id.
   QMap<quint16, QByteArray> pvReadenFrames; // Hold a copy of each frame readen by port
   bool pvEnqueueReadenFrames;
