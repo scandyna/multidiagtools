@@ -51,6 +51,9 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
 
   // Some flags
   pvTransactionId = 0;
+
+  // Enable transactions support
+  setTransactionsEnabled();
 }
 
 mdtModbusTcpPortManager::~mdtModbusTcpPortManager()
@@ -125,7 +128,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   return portInfoList;
 }
 
-int mdtModbusTcpPortManager::writeData(QByteArray pdu)
+int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)
 {
   Q_ASSERT(pvPort != 0);
 
@@ -152,6 +155,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu)
   frame->setPdu(pdu);
   frame->encode();
   pvPort->addFrameToWrite(frame);
+  addTransaction(pvTransactionId, enqueueResponse);
   pvPort->unlockMutex();
 
   return pvTransactionId;
@@ -183,9 +187,6 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
         transaction->setData(frame->getPdu());
         pvTransactionsDone.insert(transaction->id(), transaction);
       }
-      
-      // Copy data
-      ///commitFrame(frame->transactionId(), frame->getPdu());
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);

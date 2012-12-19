@@ -119,8 +119,10 @@ class mdtPortManager : public QThread
 
   /*! \brief Set the enqueue readen frames flag
    *
-   * If true, all incomming frames will be added in internal queue,
-   *  and the readenFramesQueueSizeChanged() signal will be sent.
+   * If true, all incomming frames will be added in internal queue.
+   *
+   * This flag has no effect if transactions support is enabled
+   *  (see setTransactionsEnabled() ).
    *
    * By default this flag is false.
    */
@@ -128,6 +130,7 @@ class mdtPortManager : public QThread
 
   /*! \brief Set the incomming frame notification flag
    *
+   * \note Obselete
    * If true, the newReadenFrame(int, QByteArray) signal
    *  will be emitted for each incomming frame.
    *
@@ -328,66 +331,20 @@ class mdtPortManager : public QThread
    *  or bTag for USBTMC.
    *
    * If found, the frame is removed from received queue.
+   *  (A second call with same ID will return a empty QByteArray).
    *
    * If ID was not found, a empty QByteArray is returned.
+   *
+   * Note: if transactions support is diseabled, a empty QByteArray is allways returned.
    */
   QByteArray readenFrame(int id);
 
   /*! \brief Get all readen data
    *
-   * Get all currently available data.
-   *  Once data are readen, don't forget to clear incoming
-   *  frames list with clearReadenFrames().
-   *
-   * To prevent data loss, call clearReadenFrames() just after
-   *  data read. Do not use QApplication::processEvent() before,
-   *  because this could insert a new frame, wich will be cleared.
-   *  (see slot fromThreadNewFrameReaden() ).
-   *
-   * Yout can iterate over returned list, like:
-   * \code
-   * int i;
-   *
-   * // Get all frames
-   * for(i=0; i<manager.readenFrames().size(); i++){
-   *   qDebug() << "Data[" << i << "]: " << manager.readenFrames().at(i);
-   * }
-   * // Clear readen frames
-   * manager.clearReadenFrames();
-   * \endcode
-   * In this example, no deep copy of frames list should occur.
-   *
-   * A other way is to reference returned list to a temporary QList:
-   * \code
-   * QList<QByteArray> list;
-   *
-   * // Get all frames
-   * list = manager.readenFrames();
-   * for(i=0; i<list.size(); i++){
-   *   qDebug() << "Data[" << i << "]: " << list.at(i);
-   * }
-   * // Clear readen frames
-   * list.clear();
-   * // Here, a deep copy occured, we must clear manager's internal list
-   * manager.clearReadenFrames();
-   * \endcode
-   *
-   * For more details you should read Qt's documentation about implicit-sharing.
-   */
-  ///const QList<QByteArray> readenFrames() const;
-
-  /*! \brief Get all readen data
-   *
-   * Note that calling this methode will clear the transactions done queue.
+   * Note that calling this methode will clear the internal queue.
    *  (A second call will return a empty list).
    */
   QList<QByteArray> readenFrames();
-
-  /*! \brief Clear readen frames
-   *
-   * \sa readenFrames()
-   */
-  void clearReadenFrames();
 
   /*! \brief Wait some time without break the GUI's event loop
    *
@@ -427,8 +384,14 @@ class mdtPortManager : public QThread
   /*! \brief Add a transaction to pending queue
    *
    * Will get a new transaction and add it to pending transactions queue.
+   *
+   * \param id Frame ID (f.ex. transaction ID in MODBUS/TCP, bTag in USBTMC)
+   * \param queryReplyMode If true, transaction will be keeped in transactions done
+   *                        queue until readenFrame() or readenFrames() is called.
+   *                        If false, transaction will be removed from transactions done
+   *                        queue just after \todo sigName is emited.
    */
-  void addTransaction(int id);
+  void addTransaction(int id, bool queryReplyMode);
 
   /*! \brief Get pending transaction matching id
    *
@@ -492,27 +455,48 @@ class mdtPortManager : public QThread
 
  protected:
 
-  /*! \brief Emit signals for each done transactions
-  *
-  * The emited signals depend on setup ....
-  *
-  * Internally, transactions are restored to pool.
-  *
-  * \note Clarify + implement
-  */
-  void commitFrames();
-
-  /*! \brief Store frame data in queue and/or emit newReadenFrame() signal
+  /*! \brief Enable transactions support
    *
-   * \note Obselete this !
-   * 
-   * Dependeing on pvEnqueueReadenFrames and pvNotifyNewReadenFrame,
-   *  frame will be enqueued and/or the newReadenFrame(int, QByteArray) signal will be emitted.
+   * Transaction is usefull for protocols wich supports
+   *  frame identification (like transaction ID in MODBUS/TCP
+   *  or bTag in USBTMC).
    *
-   * Subclass notes:<br>
-   *  The subclass should use this method to handle new incomming frames.
+   * If transaction support is enabled, port manager can
+   *  work on both event (signal) and blocking mode "on the fly".
+   *  Each time a frame comes in, the \todo SigName is emited.
+   *  Optionnaly, it's possible to request that a frame
+   *  must be enqueued for a given transaction (regarding a specific ID),
+   *  witch is requierd for blocking mode (see waitOnFrame() ).
+   *
+   * \pre Port manager must not running when this method is called.
    */
-  void commitFrame(int id, QByteArray data);
+  void setTransactionsEnabled();
+
+  /*! \brief Diseable transactions support
+   *
+   * See setTransactionsEnabled() for details about transactions.
+   *
+   * If transactions are disabled, it's only possible to choose
+   *  once if blocking mode is supported.
+   *  Each time a frame comes in, the \todo SigName is emited.
+   *
+   * In this mode, waitOnFrame() will allways timeout.
+   *
+   * \param enqueueIncommingFrames If true, each incomming frame is enqueued (usefull for blocking mode)
+   *
+   * \pre Port manager must not running when this method is called.
+   */
+  void setTransactionsDisabled(bool enqueueIncommingFrames);
+
+  /*! \brief Emit signals for each done transactions
+   *
+   * The emited signals depend on setup ....
+   *
+   * Internally, transactions are restored to pool.
+   *
+   * \note Clarify + implement
+   */
+  void commitFrames();
 
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
@@ -523,13 +507,10 @@ class mdtPortManager : public QThread
   mdtPortInfo pvPortInfo;
   QQueue<mdtPortTransaction*> pvTransactionsPool;
   QMap<int, mdtPortTransaction*> pvTransactionsPending;
+  QQueue<QByteArray> pvReadenFrames; // Used if transactions are OFF
 
-  
-  /// \todo Obselete this
-  quint16 pvLastReadenFrameId;    // Used if protocol does not contain a frame id.
-  QMap<quint16, QByteArray> pvReadenFrames; // Hold a copy of each frame readen by port
-  bool pvEnqueueReadenFrames;
-  bool pvNotifyNewReadenFrame;
+  bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
+  bool pvTransactionsEnabled;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);

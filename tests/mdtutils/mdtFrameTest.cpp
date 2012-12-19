@@ -1414,6 +1414,27 @@ void mdtFrameTest::usbTmcEncodeTest()
   QVERIFY(f.at(12) == 'B');   // Message data
   QVERIFY(f.at(4683) == 'B');   // Message data
 
+  // Build a read request frame: DEV_DEP_MSG_IN
+  f.setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
+  f.setbTag(5);
+  f.setTransferSize(0x12345678);
+  f.encode();
+  // Check frame
+  QCOMPARE(f.size(), 12);
+  QVERIFY((quint8)f.at(0) == 2);      // MsgID
+  QVERIFY((quint8)f.at(1) == 5);      // bTag
+  QVERIFY((quint8)f.at(2) == 0xFA);   // bTagInverse
+  QVERIFY((quint8)f.at(3) == 0);      // Reserved
+  QVERIFY((quint8)f.at(4) == 0x78);   // TransferSize, LLSB
+  QVERIFY((quint8)f.at(5) == 0x56);   // TransferSize, LSB
+  QVERIFY((quint8)f.at(6) == 0x34);   // TransferSize, MSB
+  QVERIFY((quint8)f.at(7) == 0x12);   // TransferSize, MMSB
+  // We not support term char for now
+  QVERIFY((quint8)f.at(8) == 0x00);   // bmTransferAttributes
+  QVERIFY((quint8)f.at(9) == 0x00);   // TermChar
+  QVERIFY((quint8)f.at(10) == 0x00);  // Reserved
+  QVERIFY((quint8)f.at(11) == 0x00);  // Reserved
+
   /// \todo Add size tests (very big sizes :) )
 }
 

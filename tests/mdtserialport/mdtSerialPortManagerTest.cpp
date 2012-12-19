@@ -81,7 +81,7 @@ void mdtSerialPortManagerTest::simpleTest()
   frames = m.readenFrames();
   QVERIFY(frames.size() == 1);
   QVERIFY(frames.at(0) == "Test");
-  m.clearReadenFrames();
+  ///m.clearReadenFrames();
 }
 
 void mdtSerialPortManagerTest::transferTest()
@@ -101,7 +101,7 @@ void mdtSerialPortManagerTest::transferTest()
    */
 
   // Init port manager
-  ///m.setEnqueueReadenFrames(true);
+  m.setEnqueueReadenFrames(true);
   portInfoList = m.scan();
   if(portInfoList.size() < 1){
     QSKIP("No serial port found, or other error", SkipAll);

@@ -143,6 +143,11 @@ bool mdtFrameUsbTmc::isEOM() const
   return pvEOM;
 }
 
+void mdtFrameUsbTmc::setTransferSize(int size)
+{
+  pvTransferSize = size;
+}
+
 void mdtFrameUsbTmc::setMessageData(const QByteArray &data)
 {
   pvMessageData = data;
@@ -162,11 +167,13 @@ void mdtFrameUsbTmc::encode()
   }
   mdtFrame::clear();
   // Get message data size
-  // Transfer size
+  // Ajust command specific flags
   if(pvMsgID == DEV_DEP_MSG_OUT){
     pvTransferSize = pvMessageData.size();
   }else if(pvMsgID == DEV_DEP_MSG_IN){
-    pvTransferSize = remainCapacity() - 12 - 3; /// \todo Check > 0, ...
+    ///pvTransferSize = remainCapacity() - 12 - 3; /// \todo Check > 0, ...
+    pvEOM = false;
+    pvMessageData.clear();
   }else{
     qDebug() << "mdtFrameUsbTmc::encode(): Unknow pvMsgID, transfer size will be set to 0";
     pvTransferSize = 0;

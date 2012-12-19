@@ -84,15 +84,19 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * Internally, the transaction ID is incremented at each request and returned.
    *
    * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
+   * \param enqueueResponse When data comes in, \todo SigName is emited.
+   *                         In blocking mode, data must (additionally) be enqueued
+   *                         until there are readen. So, for blocking mode ("script"),
+   *                         set this parameter true.
    * \return Transaction ID on success.
    *          If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty (< 0) is returned.
    *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix maximum transactions, and
    *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
    * \pre Port must be set with setPort() before use of this method.
    * 
-   * \todo Should return transactionId , or < 0 on error
+   * \todo Delete default enqueueResponse !
    */
-  int writeData(QByteArray pdu);
+  int writeData(QByteArray pdu, bool enqueueResponse = false);
 
  public slots:
 

@@ -149,7 +149,7 @@ QByteArray mdtDeviceU3606A::sendQuery(const QByteArray &query, int writeTimeout,
     return QByteArray();
   }
   // Send read request
-  bTag = pvPortManager->sendReadRequest();
+  bTag = pvPortManager->sendReadRequest(true);
   if(bTag < 0){
     return QByteArray();
   }
@@ -229,7 +229,7 @@ int mdtDeviceU3606A::readAnalogInput(int address)
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Send read request
-  bTag = pvPortManager->sendReadRequest();
+  bTag = pvPortManager->sendReadRequest(false);
   if(bTag < 0){
     return bTag;
   }

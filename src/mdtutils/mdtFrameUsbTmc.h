@@ -111,6 +111,12 @@ class mdtFrameUsbTmc : public mdtFrame
    */
   bool isEOM() const;
 
+  /*! \brief Set transfer size
+   *
+   * To use with DEV_DEP_MSG_IN request.
+   */
+  void setTransferSize(int size);
+
   /*! \brief Set the message data
    *
    * To use to build a frame that will be sent to device.

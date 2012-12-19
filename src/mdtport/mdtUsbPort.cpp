@@ -965,8 +965,6 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
     }
     portNameAttributes.insert(item.at(0), item.at(1));
   }
-  qDebug() << "portNameAttributes: " << portNameAttributes;
-  
   // Extract VID
   str = portNameAttributes.value("VID", "");
   if(str.left(2) == "0x"){
@@ -1011,74 +1009,6 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
       pvbInterfaceNumber = 0;
     }
   }
-
-  // If we have 2 items, format is VID:PID
-  /**
-  if(lst.size() == 2){
-    // Extract VID
-    str = lst.at(0);
-    if(str.left(2) == "0x"){
-      vid = str.toUInt(&ok, 16);
-    }else{
-      vid = str.toUInt(&ok, 10);
-    }
-    if(!ok){
-      mdtError e(MDT_USB_IO_ERROR, "Cannot extract vendor ID in " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return SetupError;
-    }
-    // Extract PID
-    str = lst.at(1);
-    if(str.left(2) == "0x"){
-      pid = str.toUInt(&ok, 16);
-    }else{
-      pid = str.toUInt(&ok, 10);
-    }
-    if(!ok){
-      mdtError e(MDT_USB_IO_ERROR, "Cannot extract product ID in " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return SetupError;
-    }
-  }else if(lst.size() == 3){
-    // We have VID:PID:SID format
-    // Extract VID
-    str = lst.at(0);
-    if(str.left(2) == "0x"){
-      vid = str.toUInt(&ok, 16);
-    }else{
-      vid = str.toUInt(&ok, 10);
-    }
-    if(!ok){
-      mdtError e(MDT_USB_IO_ERROR, "Cannot extract vendor ID in " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return SetupError;
-    }
-    // Extract PID
-    str = lst.at(1);
-    if(str.left(2) == "0x"){
-      pid = str.toUInt(&ok, 16);
-    }else{
-      pid = str.toUInt(&ok, 10);
-    }
-    if(!ok){
-      mdtError e(MDT_USB_IO_ERROR, "Cannot extract product ID in " + pvPortName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-      e.commit();
-      return SetupError;
-    }
-    // Extract SID
-    sid = lst.at(2);
-  }else{
-    // Wrong format
-    mdtError e(MDT_USB_IO_ERROR, "Unknown format for port " + pvPortName, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-    e.commit();
-    return SetupError;
-  }
-  */
   // If no serial ID is given, use libusb open method
   if(sid.isEmpty()){
     pvHandle = libusb_open_device_with_vid_pid(pvLibusbContext, vid, pid);

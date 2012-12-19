@@ -46,6 +46,9 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
   // USBTMC specific
   pvCurrentWritebTag = 0;
+
+  // Enable transactions support
+  setTransactionsEnabled();
 }
 
 mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
@@ -109,6 +112,7 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
   qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData(data);
+  frame->setEOM(true);
   frame->encode();
   pvPort->addFrameToWrite(frame);
   pvPort->unlockMutex();
@@ -116,7 +120,7 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
   return pvCurrentWritebTag;
 }
 
-int mdtUsbtmcPortManager::sendReadRequest()
+int mdtUsbtmcPortManager::sendReadRequest(bool enqueueResponse)
 {
   Q_ASSERT(pvPort != 0);
 
@@ -146,8 +150,10 @@ int mdtUsbtmcPortManager::sendReadRequest()
   qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData("");
+  frame->setTransferSize(config().readFrameSize()-1);
   frame->encode();
   pvPort->addFrameToWrite(frame);
+  addTransaction(pvCurrentWritebTag, enqueueResponse);
   pvPort->unlockMutex();
 
   return pvCurrentWritebTag;
@@ -187,7 +193,6 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
     pvCurrentWritebTag++;
   }
   frame.setwValue(pvCurrentWritebTag);
-  ///frame.setwIndex(0);  /// \todo interface nunber hardcoded, BAD
   frame.setwLength(0x3);
   frame.encode();
   // In this query, wIndex is the interface number, let USB port fill it.
@@ -227,12 +232,6 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
         transaction->setData(frame->messageData());
         pvTransactionsDone.insert(transaction->id(), transaction);
       }
-
-      // Copy data
-      ///QByteArray data;
-      ///data.append(frame->messageData().data(), frame->messageData().size());
-      ///pvReadenFrames.insert(frame->bTag(), data);
-      ///commitFrame(frame->bTag(), data);
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
@@ -240,9 +239,4 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   pvPort->unlockMutex();
   // Commit
   commitFrames();
-  /**
-  if(pvReadenFrames.size() > 0){
-    emit(newReadenFrame());
-  }
-  */
 }

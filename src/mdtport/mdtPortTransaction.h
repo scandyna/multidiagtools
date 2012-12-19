@@ -61,6 +61,7 @@ class mdtPortTransaction
    *  - isInput: false
    *  - isOutput: false
    *  - data: empty
+   *  - isQueryReplyMode: false
    */
   void clear();
 
@@ -152,6 +153,23 @@ class mdtPortTransaction
    */
   QByteArray data() const;
 
+  /*! \brief Set query/reply mode
+   *
+   * In query/reply mode, port manager
+   *  will not remove frame from done
+   *  transactions queue just after signal was emited,
+   *  but keep it until a read was made.
+   *
+   * See mdtPortManager for details.
+   */
+  void setQueryReplyMode(bool mode);
+
+  /*! \brief Get the query/reply mode flag
+   *
+   * See setQueryReplyMode() for details.
+   */
+  bool isQueryReplyMode() const;
+
  private:
 
   int pvId;
@@ -162,6 +180,7 @@ class mdtPortTransaction
   bool pvIsInput;
   bool pvIsOutput;
   QByteArray pvData;
+  bool pvIsQueryReplyMode;
 };
 
 #endif  // #ifndef MDT_PORT_TRANSACTION_H

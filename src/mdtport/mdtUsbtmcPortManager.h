@@ -85,9 +85,13 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * USBTMC standard need that a read request is sent to device
    *  before we can read any data.
    *
+   * \param enqueueResponse When data comes in, \todo SigName is emited.
+   *                         In blocking mode, data must (additionally) be enqueued
+   *                         until there are readen. So, for blocking mode ("script"),
+   *                         set this parameter true.
    * \return bTag ID on success or value < 0 if write queue is full.
    */
-  int sendReadRequest();
+  int sendReadRequest(bool enqueueResponse);
 
   /*! \brief Send a READ_STATUS_BYTE request thru the control endpoint
    *

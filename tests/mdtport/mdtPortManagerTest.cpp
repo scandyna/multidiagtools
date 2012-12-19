@@ -56,6 +56,7 @@ void mdtPortManagerTest::transactionIdTest()
   QCOMPARE(t.isInput(), false);
   QCOMPARE(t.isOutput(), false);
   QVERIFY(t.data().isEmpty());
+  QVERIFY(!t.isQueryReplyMode());
 
   // Input/Output flag
   t.setIsInput(true);
@@ -83,6 +84,7 @@ void mdtPortManagerTest::transactionIdTest()
   QCOMPARE(t.isInput(), false);
   QCOMPARE(t.isOutput(), false);
   QVERIFY(t.data().isEmpty());
+  QVERIFY(!t.isQueryReplyMode());
 
 }
 
@@ -106,7 +108,7 @@ void mdtPortManagerTest::portTest()
 
   // Init port manager
   m.setPort(port);
-  ///m.setEnqueueReadenFrames(true);
+  m.setEnqueueReadenFrames(true);
   m.addThread(new mdtPortWriteThread);
   m.addThread(new mdtPortReadThread);
   m.setPortName(file.fileName());
@@ -129,6 +131,9 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.start());
   // Get readen data
   QVERIFY(m.waitReadenFrame());
+  // Try to get a frame by ID (will not work, but must not crash"
+  m.readenFrame(0);
+  // Check readen data
   frames = m.readenFrames();
   QVERIFY(frames.size() == 2);
   QCOMPARE(frames.at(0), QByteArray("ABCD"));
@@ -209,6 +214,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   mdtUsbtmcPortManager m;
   QList<mdtPortInfo*> portInfoList;
   QList<QByteArray> frames;
+  int bTag;
 
   qDebug() << "* A USBTMC compatible device must be attached, else test will fail *";
 
@@ -238,19 +244,21 @@ void mdtPortManagerTest::usbTmcPortTest()
   qDebug() << "TEST, threads running...";
 
   // Control request
-  QVERIFY(m.sendReadStatusByteRequest() >= 2);
+  QVERIFY(m.sendReadStatusByteRequest() >= 0);
   // Query without answer
-  ///QVERIFY(m.writeData("*CLS\n", false));
+  QVERIFY(m.writeData("*RST\n"));
+  QVERIFY(m.waitOnWriteReady(1000));
   qDebug() << "TEST, sending request ...";
-  QVERIFY(m.writeData("*IDN?\n") > 0);
-  m.addTransaction(0);
+  QVERIFY(m.writeData("*IDN?\n") >= 0);
+  ///m.addTransaction(0, true);
   qDebug() << "TEST, sending request DONE";
   ///QTest::qWait(500);
   qDebug() << "TEST, request read ...";
   ///m.readData();
   QVERIFY(m.waitOnWriteReady(1000));
-  QVERIFY(m.sendReadRequest() > 0);
-  QVERIFY(m.waitReadenFrame());
+  bTag = m.sendReadRequest(true);
+  QVERIFY(bTag > 0);
+  QVERIFY(m.waitOnFrame(bTag, 2000));
   qDebug() << "TEST, request read DONE";
   frames = m.readenFrames();
   QVERIFY(frames.size() > 0);
@@ -312,21 +320,32 @@ void mdtPortManagerTest::modbusTcpPortTest()
   // start threads
   QVERIFY(m.start());
 
-  // "Check" direct PDU write
+  // "Check" direct PDU write in query/reply mode
   pdu = codec.encodeReadCoils(0, 3);
-  tId1 = m.writeData(pdu);
-  m.addTransaction(tId1);
+  tId1 = m.writeData(pdu, true);
+  ///m.addTransaction(tId1, true);
   QVERIFY(tId1 >= 0);
-  tId2 = m.writeData(pdu);
+  tId2 = m.writeData(pdu, true);
   QVERIFY(tId2 >= 0);
-  m.addTransaction(tId2);
-  tId3 = m.writeData(pdu);
+  ///m.addTransaction(tId2, true);
+  tId3 = m.writeData(pdu, true);
   QVERIFY(tId3 >= 0);
-  m.addTransaction(tId3);
-  QTest::qWait(500);
+  ///m.addTransaction(tId3, true);
+  ///QTest::qWait(500);
   QVERIFY(m.waitOnFrame(tId1, 500));
+  QVERIFY(!m.readenFrame(tId1).isEmpty());
   QVERIFY(m.waitOnFrame(tId2, 500));
   QVERIFY(m.waitOnFrame(tId3, 500));
+  QCOMPARE(m.readenFrames().size(), 2);
+
+  // If query/reply mode is diseabled, waitOnFrame() will timeout
+  pdu = codec.encodeReadCoils(0, 3);
+  tId1 = m.writeData(pdu, false);
+  ///m.addTransaction(tId1, false);
+  QVERIFY(!m.waitOnFrame(tId1, 500));
+
+  // All frames must be consumed
+  QCOMPARE(m.readenFrames().size(), 0);
 }
 
 int main(int argc, char **argv)

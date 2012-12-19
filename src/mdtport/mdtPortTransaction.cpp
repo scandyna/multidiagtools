@@ -39,6 +39,7 @@ void mdtPortTransaction::clear()
   pvIsInput = false;
   pvIsOutput = false;
   pvData.clear();
+  pvIsQueryReplyMode = false;
 }
 
 void mdtPortTransaction::setId(int id)
@@ -122,4 +123,14 @@ void mdtPortTransaction::setData(const QByteArray &data)
 QByteArray mdtPortTransaction::data() const
 {
   return pvData;
+}
+
+void mdtPortTransaction::setQueryReplyMode(bool mode)
+{
+  pvIsQueryReplyMode = mode;
+}
+
+bool mdtPortTransaction::isQueryReplyMode() const
+{
+  return pvIsQueryReplyMode;
 }

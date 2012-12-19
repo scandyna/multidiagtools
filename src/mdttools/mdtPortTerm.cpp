@@ -139,7 +139,7 @@ void mdtPortTerm::sendCmd()
   pvCurrentPortManager->writeData(cmd.toAscii());
   if(pvCurrentPortManager == pvUsbtmcPortManager){
     if(cmdIsQuery){
-      pvUsbtmcPortManager->sendReadRequest();
+      pvUsbtmcPortManager->sendReadRequest(false);
     }
   }
   ///teCmd->clear();

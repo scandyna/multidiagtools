@@ -118,7 +118,7 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     cbInterface->setEnabled(true);
     return;
   }
-  if(pvPortManager->sendReadRequest() < 0){
+  if(pvPortManager->sendReadRequest(true) < 0){
     pvPortManager->closePort();
     setStateError(tr("Cannot send the *IDN? read request"));
     cbInterface->setEnabled(true);
@@ -130,6 +130,7 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     cbInterface->setEnabled(true);
     return;
   }
+  /// \bug here: adapt to new version of port manager
   if(pvPortManager->readenFrames().size() != 1){
     pvPortManager->closePort();
     setStateError(tr("Cannot send the *IDN? query (received wrong amount of data)"));
@@ -138,7 +139,7 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
   }
   // Split IDN replay infos
   idn = pvPortManager->readenFrames().at(0);
-  pvPortManager->clearReadenFrames();
+  ///pvPortManager->clearReadenFrames();
   idn = idn.trimmed();
   idnItems = idn.split(',');
   if(idnItems.size() != 4){
