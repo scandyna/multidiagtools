@@ -68,6 +68,37 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   QList<mdtPortInfo*> scan();
 
+  /*! \brief Send a command to device
+   *
+   * Wait until it's possible to write to device,
+   *  then send the command.
+   *
+   * Note that the wait will not break the GUI's event loop
+   *  (see mdtPortManager::waitOnWriteReady() for details).
+   *
+   * \param command Command to send.
+   * \param timeout Write timeout [ms]
+   * \return bTag on success, or a error < 0
+   *          (see mdtUsbtmcPortManager::writeData() for details).
+   */
+  int sendCommand(const QByteArray &command, int timeout = 1000);
+
+  /*! \brief Send a query to device
+   *
+   * Wait until it's possible to write to device,
+   *  send the query and wait until a response
+   *  is available or timeout.
+   *
+   * Note that the wait will not break the GUI's event loop.
+   *
+   * \param query Query to send.
+   * \param writeTimeout Write timeout [ms]
+   * \param readTimeout Response timeout [ms]
+   * \return Result as string (empty string on error)
+   *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
+   */
+  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
+
   /*! \brief Write data by copy
    *
    * Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy.
@@ -79,6 +110,19 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * \pre Port must be set with setPort() before use of this method.
    */
   int writeData(QByteArray data);
+
+  /*! \brief Send a read request to device
+   *
+   * USBTMC standard need that a read request is sent to device
+   *  before we can read any data.
+   *
+   * \param transaction A pointer to a valid transaction, with setQueryReplyMode set.
+   *                     (id will be set internally).
+   * \return bTag ID on success or value < 0 if write queue is full.
+   * \pre port must be set
+   * \pre transaction must be a valid pointer
+   */
+  int sendReadRequest(mdtPortTransaction *transaction);
 
   /*! \brief Send a read request to device
    *

@@ -30,6 +30,8 @@
 mdtPortManager::mdtPortManager(QObject *parent)
  : QThread(parent)
 {
+  qRegisterMetaType<mdtPortTransaction>("mdtPortTransaction");
+
   pvPort = 0;
   // At default, transactions support and blocking mode are OFF
   setTransactionsDisabled(false);
@@ -389,62 +391,6 @@ void mdtPortManager::abort()
   pvPort->flush();
 }
 
-mdtPortTransaction *mdtPortManager::getNewTransaction()
-{
-  mdtPortTransaction *transaction;
-
-  if(pvTransactionsPool.size() < 1){
-    transaction = new mdtPortTransaction;
-  }else{
-    transaction = pvTransactionsPool.dequeue();
-  }
-  Q_ASSERT(transaction != 0);
-  transaction->clear();
-
-  return transaction;
-}
-
-void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
-{
-  pvTransactionsPool.enqueue(transaction);
-}
-
-void mdtPortManager::addTransaction(int id, bool queryReplyMode)
-{
-  mdtPortTransaction *transaction;
-
-  // Get a transaction
-  transaction = getNewTransaction();
-  // Setup and enqueue transaction
-  transaction->setId(id);
-  transaction->setQueryReplyMode(queryReplyMode);
-  pvTransactionsPending.insert(id, transaction);
-  // Watch transactions size
-  if(pvTransactionsPending.size() > 20){
-    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has more than 20 items, will clear it (this is a bug)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
-    qDeleteAll(pvTransactionsPending);
-    pvTransactionsPending.clear();
-  }
-}
-
-mdtPortTransaction *mdtPortManager::pendingTransaction(int id)
-{
-  // QMap returns a default-constructed value if key not exists (i.e. 0 for pointer)
-  return pvTransactionsPending.take(id);
-}
-
-void mdtPortManager::removeTransactionDone(int id)
-{
-  mdtPortTransaction *transaction;
-
-  transaction = pvTransactionsDone.take(id);
-  if(transaction != 0){
-    pvTransactionsPool.enqueue(transaction);
-  }
-}
-
 void mdtPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
@@ -518,6 +464,76 @@ void mdtPortManager::setTransactionsDisabled(bool enqueueIncommingFrames)
   pvTransactionsEnabled = false;
 }
 
+mdtPortTransaction *mdtPortManager::getNewTransaction()
+{
+  mdtPortTransaction *transaction;
+
+  if(pvTransactionsPool.size() < 1){
+    transaction = new mdtPortTransaction;
+  }else{
+    transaction = pvTransactionsPool.dequeue();
+  }
+  Q_ASSERT(transaction != 0);
+  transaction->clear();
+
+  return transaction;
+}
+
+void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
+{
+  pvTransactionsPool.enqueue(transaction);
+}
+
+void mdtPortManager::addTransaction(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(transaction != 0);
+
+  pvTransactionsPending.insert(transaction->id(), transaction);
+  // Watch transactions size
+  if(pvTransactionsPending.size() > 20){
+    mdtError e(MDT_PORT_IO_ERROR, "Pending transactions queue has more than 20 items, will clear it (this is a bug)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtPortManager");
+    e.commit();
+    qDeleteAll(pvTransactionsPending);
+    pvTransactionsPending.clear();
+  }
+}
+
+void mdtPortManager::addTransaction(int id, bool queryReplyMode)
+{
+  mdtPortTransaction *transaction;
+
+  // Get a transaction
+  transaction = getNewTransaction();
+  // Setup and enqueue transaction
+  transaction->setId(id);
+  transaction->setQueryReplyMode(queryReplyMode);
+  addTransaction(transaction);
+}
+
+mdtPortTransaction *mdtPortManager::pendingTransaction(int id)
+{
+  // QMap returns a default-constructed value if key not exists (i.e. 0 for pointer)
+  return pvTransactionsPending.take(id);
+}
+
+void mdtPortManager::removeTransactionDone(int id)
+{
+  mdtPortTransaction *transaction;
+
+  transaction = pvTransactionsDone.take(id);
+  if(transaction != 0){
+    pvTransactionsPool.enqueue(transaction);
+  }
+}
+
+void mdtPortManager::enqueueTransactionDone(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(transaction != 0);
+
+  pvTransactionsDone.insert(transaction->id(), transaction);
+}
+
 void mdtPortManager::commitFrames()
 {
   if(pvTransactionsEnabled){
@@ -530,7 +546,8 @@ void mdtPortManager::commitFrames()
       Q_ASSERT(transaction != 0);
       Q_ASSERT(transaction->id() == it.key());
       qDebug() << "mdtPortManager::commitFrames(): id: " << transaction->id() << " , data: " << transaction->data();
-      emit(newReadenFrame(transaction->id(), transaction->data()));
+      ///emit(newReadenFrame(transaction->id(), transaction->data()));
+      emit(newReadenFrame(*transaction));
       if(!transaction->isQueryReplyMode()){
         pvTransactionsPool.enqueue(transaction);
         it.remove();

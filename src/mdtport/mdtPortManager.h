@@ -363,48 +363,6 @@ class mdtPortManager : public QThread
    */
   static void wait(int msecs, int granularity = 50);
 
-  /*! \brief Get a new transaction
-   *
-   * If transactions pool is empty, a new transaction is created.
-   *  Note that each transaction should be put back in
-   *  pool with restoreTransaction().
-   *
-   * \return A empty transaction (mdtPortTransaction::clear() is called internally).
-   *
-   * \post Returned transaction is valid (never Null).
-   */
-  mdtPortTransaction *getNewTransaction();
-
-  /*! \brief Restore a transaction into pool
-   *
-   * \pre transaction must be a valid pointer (not Null)
-   */
-  void restoreTransaction(mdtPortTransaction *transaction);
-
-  /*! \brief Add a transaction to pending queue
-   *
-   * Will get a new transaction and add it to pending transactions queue.
-   *
-   * \param id Frame ID (f.ex. transaction ID in MODBUS/TCP, bTag in USBTMC)
-   * \param queryReplyMode If true, transaction will be keeped in transactions done
-   *                        queue until readenFrame() or readenFrames() is called.
-   *                        If false, transaction will be removed from transactions done
-   *                        queue just after \todo sigName is emited.
-   */
-  void addTransaction(int id, bool queryReplyMode);
-
-  /*! \brief Get pending transaction matching id
-   *
-   * \return A valid transaction if exists, else a Null pointer.
-   */
-  mdtPortTransaction *pendingTransaction(int id);
-
-  /*! \brief Remove a transaction from DONE queue and restore it to pool
-   *
-   * If transaction not exists in DONE queue, this method simply makes nothing.
-   */
-  void removeTransactionDone(int id);
-
  public slots:
 
   /*! \brief Cancel read and write operations
@@ -436,11 +394,13 @@ class mdtPortManager : public QThread
    *
    * The id is the same than returned by writeData().
    *
+   * \note True ?
    * Emitted only if notifyNewReadenFrame flag is true.
    *
    * \sa setNotifyNewReadenFrame()
    */
   void newReadenFrame(int id, QByteArray data);
+  void newReadenFrame(mdtPortTransaction transaction);
 
   /*! \brief Emitted when internal queue of readen frames size has changed
    *
@@ -453,8 +413,9 @@ class mdtPortManager : public QThread
    */
   void errorStateChanged(int error);
 
- protected:
+ ///protected:
 
+public:
   /*! \brief Enable transactions support
    *
    * Transaction is usefull for protocols wich supports
@@ -488,6 +449,66 @@ class mdtPortManager : public QThread
    */
   void setTransactionsDisabled(bool enqueueIncommingFrames);
 
+  /*! \brief Get a new transaction
+   *
+   * If transactions pool is empty, a new transaction is created.
+   *  Note that each transaction should be put back in
+   *  pool with restoreTransaction().
+   *
+   * \return A empty transaction (mdtPortTransaction::clear() is called internally).
+   *
+   * \post Returned transaction is valid (never Null).
+   */
+  mdtPortTransaction *getNewTransaction();
+
+  /*! \brief Restore a transaction into pool
+   *
+   * \pre transaction must be a valid pointer (not Null)
+   */
+  void restoreTransaction(mdtPortTransaction *transaction);
+
+  /*! \brief Add a transaction to pending queue
+   *
+   * Add a existing transaction to the pending queue.
+   *  A transaction can be requested with getNewTransaction().
+   *
+   * If id and queryReplyMode are sufficient, see addTransaction(id, bool).
+   *
+   * \pre transaction must be a valid pointer.
+   */
+  void addTransaction(mdtPortTransaction *transaction);
+
+  /*! \brief Add a transaction to pending queue
+   *
+   * Will get a new transaction and add it to pending transactions queue.
+   *
+   * \param id Frame ID (f.ex. transaction ID in MODBUS/TCP, bTag in USBTMC)
+   * \param queryReplyMode If true, transaction will be keeped in transactions done
+   *                        queue until readenFrame() or readenFrames() is called.
+   *                        If false, transaction will be removed from transactions done
+   *                        queue just after \todo sigName is emited.
+   */
+  void addTransaction(int id, bool queryReplyMode);
+
+  /*! \brief Get pending transaction matching id
+   *
+   * \return A valid transaction if exists, else a Null pointer.
+   */
+  mdtPortTransaction *pendingTransaction(int id);
+
+  /*! \brief Remove a transaction from DONE queue and restore it to pool
+   *
+   * If transaction not exists in DONE queue, this method simply makes nothing.
+   */
+  void removeTransactionDone(int id);
+
+  /*! \brief Add a transaction to the DONE queue
+   *
+   * \pre transaction must be a valid pointer.
+   */
+  void enqueueTransactionDone(mdtPortTransaction *transaction);
+
+protected:
   /*! \brief Emit signals for each done transactions
    *
    * The emited signals depend on setup ....
@@ -500,13 +521,13 @@ class mdtPortManager : public QThread
 
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
-  QMap<int, mdtPortTransaction*> pvTransactionsDone;
 
  private:
 
   mdtPortInfo pvPortInfo;
   QQueue<mdtPortTransaction*> pvTransactionsPool;
   QMap<int, mdtPortTransaction*> pvTransactionsPending;
+  QMap<int, mdtPortTransaction*> pvTransactionsDone;
   QQueue<QByteArray> pvReadenFrames; // Used if transactions are OFF
 
   bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()

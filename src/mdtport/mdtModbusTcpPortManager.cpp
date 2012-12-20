@@ -185,7 +185,8 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
       }else{
         transaction->setId(frame->transactionId());
         transaction->setData(frame->getPdu());
-        pvTransactionsDone.insert(transaction->id(), transaction);
+        enqueueTransactionDone(transaction);
+        ///pvTransactionsDone.insert(transaction->id(), transaction);
       }
     }
     // Put frame back into pool

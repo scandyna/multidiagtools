@@ -100,6 +100,7 @@ class mdtDeviceU3606A : public mdtDevice
    *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
   void decodeReadenFrame(int id, QByteArray data);
+  void decodeReadenFrame(mdtPortTransaction transaction);
 
  private:
 
@@ -113,11 +114,14 @@ class mdtDeviceU3606A : public mdtDevice
    * \return bTag on success, value < 0 on error (see mdtUsbtmcPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    */
-  int readAnalogInput(int address);
+  int readAnalogInput(int address, mdtAnalogIo *ai, bool enqueueResponse);
+  
+  /// \todo comment!
+  bool waitTransactionDone(int id, int timeout, int granularity = 50);
 
   mdtUsbtmcPortManager *pvPortManager;
   mdtFrameCodecScpiU3606A *pvCodec;
-  QByteArray pvGenericData;   // Used by sendQuery()
+  ///QByteArray pvGenericData;   // Used by sendQuery()
 };
 
 #endif  // #ifndef MDT_DEVICE_U3606A_H

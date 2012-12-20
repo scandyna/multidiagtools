@@ -183,4 +183,6 @@ class mdtPortTransaction
   bool pvIsQueryReplyMode;
 };
 
+Q_DECLARE_METATYPE(mdtPortTransaction);
+
 #endif  // #ifndef MDT_PORT_TRANSACTION_H

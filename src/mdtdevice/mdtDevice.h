@@ -549,6 +549,8 @@ class mdtDevice : public QObject
    * \pre I/O's must be set with setIos().
    */
   virtual int readAnalogInput(int address);
+  /// \note adapt...
+  virtual int readAnalogInput(int address, mdtAnalogIo *ai, bool enqueueResponse);
 
   /*! \brief Read all analog inputs on physical device
    *
@@ -774,6 +776,8 @@ class mdtDevice : public QObject
 
   /*! \brief Wait until a transaction is done without break the GUI's event loop
    *
+   * \todo Adapt, comment
+   *
    * This is a helper method that provide a blocking wait.
    *  Internally, a couple of sleep and event processing
    *  is done, avoiding freesing the GUI.
@@ -788,7 +792,7 @@ class mdtDevice : public QObject
    *           a warning will be generated in mdtError system, and false will be returned.
    * \pre granularity must be > 0.
    */
-  bool waitTransactionDone(int id, int timeout, int granularity = 50);
+  virtual bool waitTransactionDone(int id, int timeout, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
   int pvDigitalOutputAddressOffset;

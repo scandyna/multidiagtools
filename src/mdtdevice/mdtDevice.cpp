@@ -134,8 +134,17 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
   if(pvIos == 0){
     return QVariant();
   }
+  // Get internal I/O object
+  ai = pvIos->analogInputAt(address);
+  if(ai == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return QVariant();
+  }
   // Check if only cached value is requested
   if(timeout < 0){
+    /**
     ai = pvIos->analogInputAt(address);
     if(ai == 0){
       mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
@@ -143,6 +152,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
       e.commit();
       return QVariant();
     }
+    */
     // Return value
     if(realValue){
       return QVariant(ai->value());
@@ -151,13 +161,22 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
     }
   }
   // Send query
-  transactionId = readAnalogInput(address);
-  if(transactionId < 0){
-    setStateFromPortError(transactionId);
-    return QVariant();
-  }
+  ///transactionId = readAnalogInput(address);
+  if(timeout == 0){
+    transactionId = readAnalogInput(address, ai, false);
+    if(transactionId < 0){
+      setStateFromPortError(transactionId);
+      return QVariant();
+    }
+  }else{
+    transactionId = readAnalogInput(address, ai, true);
+    if(transactionId < 0){
+      setStateFromPortError(transactionId);
+      return QVariant();
+    }
   // Wait on result if needed
-  if(timeout > 0){
+  ///if(timeout > 0){
+    /**
     ai = pvIos->analogInputAt(address);
     if(ai == 0){
       mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
@@ -165,7 +184,8 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
       e.commit();
       return QVariant();
     }
-    addTransaction(transactionId, ai);
+    */
+    ///addTransaction(transactionId, ai);
     if(!waitTransactionDone(transactionId, timeout)){
       return QVariant();
     }
@@ -682,6 +702,11 @@ void mdtDevice::decodeReadenFrame(int, QByteArray)
 }
 
 int mdtDevice::readAnalogInput(int address)
+{
+  return -1;
+}
+
+int mdtDevice::readAnalogInput(int address, mdtAnalogIo *ai, bool enqueueResponse)
 {
   return -1;
 }
