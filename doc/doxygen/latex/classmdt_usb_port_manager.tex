@@ -18,13 +18,12 @@ Inheritance diagram for mdtUsbPortManager:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=186pt]{classmdt_usb_port_manager__inherit__graph}
+\includegraphics[width=202pt]{classmdt_usb_port_manager__inherit__graph}
 \end{center}
 \end{figure}
 
 
-Collaboration diagram for mdtUsbPortManager:
-\nopagebreak
+Collaboration diagram for mdtUsbPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -35,15 +34,15 @@ Collaboration diagram for mdtUsbPortManager:
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}{
-void {\bfseries fromThreadControlResponseReaden} ()}
+void \hyperlink{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}{fromThreadControlResponseReaden} ()}
 \label{classmdt_usb_port_manager_af043c75c74665b23d13f3cb73150935c}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Called from USB thread when a control reply was received. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}{
-void {\bfseries fromThreadMessageInReaden} ()}
+void \hyperlink{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}{fromThreadMessageInReaden} ()}
 \label{classmdt_usb_port_manager_a9b7154590a4eb267aff4e11ba53dd7aa}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint). \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -55,11 +54,8 @@ virtual QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperli
 \begin{DoxyCompactList}\small\item\em Get a list of attached USB devices. \end{DoxyCompactList}\item 
 QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_usb_port_manager_ab28253c46c80bb12cbbd116b05c4bcd3}{scan} (int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)
 \begin{DoxyCompactList}\small\item\em Get a list of attached USB devices. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_usb_port_manager_a380e25af521b2ffeab1b983162046d48}{
-int {\bfseries sendControlRequest} (const \hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} \&frame)}
-\label{classmdt_usb_port_manager_a380e25af521b2ffeab1b983162046d48}
-
-\end{DoxyCompactItemize}
+virtual int \hyperlink{classmdt_usb_port_manager_aea4a67550effcba13acfc110d6d30c3e}{sendControlRequest} (const \hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} \&request, bool setwIndexAsbInterfaceNumber=false)
+\begin{DoxyCompactList}\small\item\em Send a control request by copy. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -85,11 +81,9 @@ Definition at line 33 of file mdtUsbPortManager.h.
 
 Contruct a USB port manager. 
 
-\#include $<$QApplication$>$
+Will create \hyperlink{classmdt_usb_port}{mdtUsbPort} and \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread} objects. 
 
-Will create \hyperlink{classmdt_usb_port}{mdtUsbPort} and mdtUsbPortThred objects. 
-
-Definition at line 34 of file mdtUsbPortManager.cpp.
+Definition at line 33 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_ac0da1cf62e664b78fe91b873da5835ce}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!$\sim$mdtUsbPortManager@{$\sim$mdtUsbPortManager}}
@@ -106,7 +100,7 @@ Destructor.
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-Definition at line 47 of file mdtUsbPortManager.cpp.
+Definition at line 51 of file mdtUsbPortManager.cpp.
 
 
 
@@ -142,7 +136,7 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Definition at line 60 of file mdtUsbPortManager.cpp.
+Definition at line 64 of file mdtUsbPortManager.cpp.
 
 \hypertarget{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}{
 \index{mdtUsbPortManager@{mdtUsbPortManager}!scan@{scan}}
@@ -168,7 +162,45 @@ Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca047675
 
 
 
-Definition at line 55 of file mdtUsbPortManager.cpp.
+Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{mdtUsbtmcPortManager}.
+
+
+
+Definition at line 59 of file mdtUsbPortManager.cpp.
+
+\hypertarget{classmdt_usb_port_manager_aea4a67550effcba13acfc110d6d30c3e}{
+\index{mdtUsbPortManager@{mdtUsbPortManager}!sendControlRequest@{sendControlRequest}}
+\index{sendControlRequest@{sendControlRequest}!mdtUsbPortManager@{mdtUsbPortManager}}
+\subsubsection[{sendControlRequest}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbPortManager::sendControlRequest (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtFrameUsbControl} \&}]{request, }
+\item[{bool}]{setwIndexAsbInterfaceNumber = {\ttfamily false}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_usb_port_manager_aea4a67550effcba13acfc110d6d30c3e}
+
+
+Send a control request by copy. 
+
+Request will be passed to the mdtPort's control request queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Frame containing request to send. \\
+\hline
+{\em setwIndexAsbInterfaceNumber} & If true, wIndex will be set with USB port's current bInterfaceNumber \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success or value $<$ 0 on error. In this implementation, the only possible error is mdtAbstractPort::WriteQueueEmpty . Some subclass can return a frame ID on success, or a other error. See subclass documentation for details. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} with a \hyperlink{classmdt_usb_port}{mdtUsbPort} (or subclass) before use of this method.
+\end{DoxyPrecond}
+Subclass notes:\par
+ This method can be reimplemented in subclass if needed. Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC). A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool() dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's request queue with mdtAbstractPort::addControlRequest() . If protocol supports frame identification (like USBTMC's bTag), it should be returned here and incremented. 
+
+Definition at line 182 of file mdtUsbPortManager.cpp.
 
 
 

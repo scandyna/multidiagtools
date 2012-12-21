@@ -77,7 +77,7 @@ Inheritance diagram for mdtUsbPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usb_port_manager__inherit__graph.png" border="0" usemap="#mdt_usb_port_manager_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_usb_port_manager_inherit__map" id="mdt_usb_port_manager_inherit__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="17,5,135,35"/></map>
+<area shape="rect" id="node5" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="5,160,168,189"/><area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="28,5,145,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtUsbPortManager:</div>
@@ -92,9 +92,11 @@ Collaboration diagram for mdtUsbPortManager:</div>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af043c75c74665b23d13f3cb73150935c"></a><!-- doxytag: member="mdtUsbPortManager::fromThreadControlResponseReaden" ref="af043c75c74665b23d13f3cb73150935c" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>fromThreadControlResponseReaden</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#af043c75c74665b23d13f3cb73150935c">fromThreadControlResponseReaden</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from USB thread when a control reply was received. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b7154590a4eb267aff4e11ba53dd7aa"></a><!-- doxytag: member="mdtUsbPortManager::fromThreadMessageInReaden" ref="a9b7154590a4eb267aff4e11ba53dd7aa" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>fromThreadMessageInReaden</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa">fromThreadMessageInReaden</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint). <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#a7f82574e84d0a99d1c8bef7fd79283e3">mdtUsbPortManager</a> (QObject *parent=0)</td></tr>
@@ -105,8 +107,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of attached USB devices.  <a href="#a3a2370c3a2d0353a880bf9b777728c3b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#ab28253c46c80bb12cbbd116b05c4bcd3">scan</a> (int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of attached USB devices.  <a href="#ab28253c46c80bb12cbbd116b05c4bcd3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a380e25af521b2ffeab1b983162046d48"></a><!-- doxytag: member="mdtUsbPortManager::sendControlRequest" ref="a380e25af521b2ffeab1b983162046d48" args="(const mdtFrameUsbControl &amp;frame)" -->
-int&#160;</td><td class="memItemRight" valign="bottom"><b>sendControlRequest</b> (const <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> &amp;frame)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e">sendControlRequest</a> (const <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> &amp;request, bool setwIndexAsbInterfaceNumber=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a control request by copy.  <a href="#aea4a67550effcba13acfc110d6d30c3e"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Helper class that simplify access to USB port API. </p>
@@ -130,10 +132,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sendControlRequest</b>
 <div class="memdoc">
 
 <p>Contruct a USB port manager. </p>
-<p>#include &lt;QApplication&gt;</p>
-<p>Will create <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> and mdtUsbPortThred objects. </p>
+<p>Will create <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> and <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> objects. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00034">34</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -154,7 +155,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sendControlRequest</b>
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00051">51</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -202,7 +203,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sendControlRequest</b>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00064">64</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -226,7 +227,52 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sendControlRequest</b>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6">mdtUsbtmcPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aea4a67550effcba13acfc110d6d30c3e"></a><!-- doxytag: member="mdtUsbPortManager::sendControlRequest" ref="aea4a67550effcba13acfc110d6d30c3e" args="(const mdtFrameUsbControl &amp;request, bool setwIndexAsbInterfaceNumber=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtUsbPortManager::sendControlRequest </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>setwIndexAsbInterfaceNumber</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Send a control request by copy. </p>
+<p>Request will be passed to the mdtPort's control request queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frame</td><td>Frame containing request to send. </td></tr>
+    <tr><td class="paramname">setwIndexAsbInterfaceNumber</td><td>If true, wIndex will be set with USB port's current bInterfaceNumber </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 on success or value &lt; 0 on error. In this implementation, the only possible error is mdtAbstractPort::WriteQueueEmpty . Some subclass can return a frame ID on success, or a other error. See subclass documentation for details. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> with a <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> (or subclass) before use of this method.</dd></dl>
+<p>Subclass notes:<br/>
+ This method can be reimplemented in subclass if needed. Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC). A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool() dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's request queue with mdtAbstractPort::addControlRequest() . If protocol supports frame identification (like USBTMC's bTag), it should be returned here and incremented. </p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -249,7 +295,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>sendControlRequest</b>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:47 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

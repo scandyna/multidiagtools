@@ -84,45 +84,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_FRAME_CODEC_SCPI_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtFrameCodecAscii.h&quot;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QMap&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QVariant&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00029"></a>00029 
-<a name="l00032"></a>00032 <span class="preprocessor">#define MDT_FC_SCPI_UNKNOW 0        </span>
-<a name="l00033"></a>00033 <span class="preprocessor">#define MDT_FC_SCPI_VALUE  1        </span>
-<a name="l00034"></a>00034 <span class="preprocessor">#define MDT_FC_SCPI_IDN    2        </span>
-<a name="l00035"></a>00035 <span class="preprocessor">#define MDT_FC_SCPI_ERR    3        </span>
-<a name="l00036"></a>00036 <span class="preprocessor">#define MDT_FC_SCPI_LAST_TYPE  127  </span>
-<a name="l00040"></a><a class="code" href="classmdt_frame_codec_scpi.html">00040</a> <span class="preprocessor">class mdtFrameCodecScpi : public mdtFrameCodecAscii</span>
-<a name="l00041"></a>00041 <span class="preprocessor"></span>{
-<a name="l00042"></a>00042  <span class="keyword">public</span>:
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
-<a name="l00045"></a>00045   <span class="keyword">virtual</span> ~<a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
-<a name="l00046"></a>00046 
-<a name="l00058"></a>00058   <span class="keywordtype">void</span> addTransaction(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> type);
-<a name="l00059"></a>00059 
-<a name="l00068"></a>00068   <span class="keywordtype">int</span> pendingTransaction(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
-<a name="l00069"></a>00069 
-<a name="l00082"></a>00082   <span class="keywordtype">bool</span> decodeValues(<span class="keyword">const</span> QByteArray &amp;data, QString sep = <span class="stringliteral">&quot;:&quot;</span>);
-<a name="l00083"></a>00083 
-<a name="l00089"></a>00089   <span class="keywordtype">bool</span> decodeIdn(<span class="keyword">const</span> QByteArray &amp;data);
-<a name="l00090"></a>00090 
-<a name="l00098"></a>00098   <span class="keywordtype">bool</span> decodeError(QByteArray &amp;data);
-<a name="l00099"></a>00099 
-<a name="l00104"></a>00104   <span class="keywordtype">bool</span> decodeIEEEblock(QString data);
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106  <span class="keyword">private</span>:
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   QMap&lt;int, int&gt; pvPendingTransactions;
-<a name="l00109"></a>00109   <span class="comment">// Invalid floating/limits values</span>
-<a name="l00110"></a>00110   <span class="keywordtype">double</span> pvInfinity;
-<a name="l00111"></a>00111   <span class="keywordtype">double</span> pvNinfinity;
-<a name="l00112"></a>00112   <span class="keywordtype">double</span> pvNan;
-<a name="l00113"></a>00113 };
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#endif  // #ifnef MDT_FRAME_CODEC_SCPI_H</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QVariant&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QString&gt;</span>
+<a name="l00027"></a>00027 
+<a name="l00030"></a>00030 <span class="preprocessor">#define MDT_FC_SCPI_UNKNOW 0        </span>
+<a name="l00031"></a>00031 <span class="preprocessor">#define MDT_FC_SCPI_VALUE  1        </span>
+<a name="l00032"></a>00032 <span class="preprocessor">#define MDT_FC_SCPI_IDN    2        </span>
+<a name="l00033"></a>00033 <span class="preprocessor">#define MDT_FC_SCPI_ERR    3        </span>
+<a name="l00034"></a>00034 <span class="preprocessor">#define MDT_FC_SCPI_LAST_TYPE  127  </span>
+<a name="l00038"></a><a class="code" href="classmdt_frame_codec_scpi.html">00038</a> <span class="preprocessor">class mdtFrameCodecScpi : public mdtFrameCodecAscii</span>
+<a name="l00039"></a>00039 <span class="preprocessor"></span>{
+<a name="l00040"></a>00040  <span class="keyword">public</span>:
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
+<a name="l00043"></a>00043   <span class="keyword">virtual</span> ~<a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>();
+<a name="l00044"></a>00044 
+<a name="l00057"></a>00057   <span class="keywordtype">bool</span> decodeValues(<span class="keyword">const</span> QByteArray &amp;data, QString sep = <span class="stringliteral">&quot;:&quot;</span>);
+<a name="l00058"></a>00058 
+<a name="l00064"></a>00064   <span class="keywordtype">bool</span> decodeIdn(<span class="keyword">const</span> QByteArray &amp;data);
+<a name="l00065"></a>00065 
+<a name="l00073"></a>00073   <span class="keywordtype">bool</span> decodeError(QByteArray &amp;data);
+<a name="l00074"></a>00074 
+<a name="l00079"></a>00079   <span class="keywordtype">bool</span> decodeIEEEblock(QString data);
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081  <span class="keyword">private</span>:
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   <span class="comment">// Invalid floating/limits values</span>
+<a name="l00084"></a>00084   <span class="keywordtype">double</span> pvInfinity;
+<a name="l00085"></a>00085   <span class="keywordtype">double</span> pvNinfinity;
+<a name="l00086"></a>00086   <span class="keywordtype">double</span> pvNan;
+<a name="l00087"></a>00087 };
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 <span class="preprocessor">#endif  // #ifnef MDT_FRAME_CODEC_SCPI_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -139,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

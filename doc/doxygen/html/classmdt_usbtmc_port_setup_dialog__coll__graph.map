@@ -1,9 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_config_widget.html" title="mdtPortConfigWidget" alt="" coords="5,293,152,323"/>
-<area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="253,293,416,323"/>
-<area shape="rect" id="node6" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="281,197,399,227"/>
-<area shape="rect" id="node8" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="175,101,265,131"/>
-<area shape="rect" id="node10" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="293,101,411,131"/>
-<area shape="rect" id="node12" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="299,5,405,35"/>
-<area shape="rect" id="node15" href="$classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox." alt="" coords="440,293,592,323"/>
+<area shape="rect" id="node2" href="$classmdt_port_config_widget.html" title="mdtPortConfigWidget" alt="" coords="5,357,152,387"/>
+<area shape="rect" id="node4" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="253,357,416,387"/>
+<area shape="rect" id="node6" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="344,277,485,307"/>
+<area shape="rect" id="node8" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="317,197,435,227"/>
+<area shape="rect" id="node10" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="187,101,277,131"/>
+<area shape="rect" id="node12" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="317,101,435,131"/>
+<area shape="rect" id="node14" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="323,5,429,35"/>
+<area shape="rect" id="node17" href="$classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox." alt="" coords="440,357,592,387"/>
 </map>

@@ -87,145 +87,146 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;libusb-1.0/libusb.h&gt;</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include &quot;mdtFrameUsbControl.h&quot;</span>
 <a name="l00027"></a>00027 
-<a name="l00062"></a><a class="code" href="classmdt_usb_port.html">00062</a> <span class="keyword">class </span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>
-<a name="l00063"></a>00063 {
-<a name="l00064"></a>00064  <span class="keyword">public</span>:
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>(QObject *parent = 0);
-<a name="l00067"></a>00067 
-<a name="l00070"></a>00070   <a class="code" href="classmdt_usb_port.html#afa9f1942ca4ae384887441e01b362c16" title="Destructor.">~mdtUsbPort</a>();
-<a name="l00071"></a>00071 
-<a name="l00083"></a>00083   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee" title="Reconnect device.">reconnect</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00084"></a>00084 
-<a name="l00089"></a>00089   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#a44ed5024a81a573b5196b8f64c42cd6a" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00090"></a>00090 
-<a name="l00095"></a>00095   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#a592af88bd7e7f45dd80df0ecab375ace" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00096"></a>00096 
-<a name="l00103"></a>00103   QQueue&lt;mdtFrameUsbControl*&gt; &amp;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>();
+<a name="l00070"></a><a class="code" href="classmdt_usb_port.html">00070</a> <span class="keyword">class </span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a>
+<a name="l00071"></a>00071 {
+<a name="l00072"></a>00072  <span class="keyword">public</span>:
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>(QObject *parent = 0);
+<a name="l00075"></a>00075 
+<a name="l00078"></a>00078   <a class="code" href="classmdt_usb_port.html#afa9f1942ca4ae384887441e01b362c16" title="Destructor.">~mdtUsbPort</a>();
+<a name="l00079"></a>00079 
+<a name="l00091"></a>00091   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee" title="Reconnect device.">reconnect</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00092"></a>00092 
+<a name="l00097"></a>00097   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#a44ed5024a81a573b5196b8f64c42cd6a" title="Set the read data timeout.">setReadTimeout</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00098"></a>00098 
+<a name="l00103"></a>00103   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#a592af88bd7e7f45dd80df0ecab375ace" title="Set the write data timeout.">setWriteTimeout</a>(<span class="keywordtype">int</span> timeout);
 <a name="l00104"></a>00104 
-<a name="l00116"></a>00116   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#add6074e097f415569d052c553c99d30b" title="Add a control request.">addControlRequest</a>(<a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> *frame);
-<a name="l00117"></a>00117 
-<a name="l00130"></a>00130   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#ae79bbc2a33a8cd8f055323d882804d36" title="Check about pending control queries and init a new transfer if needed.">handleControlQueries</a>();
-<a name="l00131"></a>00131 
-<a name="l00138"></a>00138   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a6566e654df8a1c3503941702593db3c5" title="Cancel current control transfer.">cancelControlTransfer</a>();
-<a name="l00139"></a>00139 
-<a name="l00154"></a>00154   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#ac91970d3fcb07b80200d0e549adbab3a" title="Check pending control transfer.">handleControlResponses</a>();
-<a name="l00155"></a>00155 
-<a name="l00162"></a>00162   QQueue&lt;mdtFrameUsbControl*&gt; &amp;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>();
-<a name="l00163"></a>00163 
-<a name="l00169"></a>00169   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f" title="Request a new bulk/interrupt input transfer.">initReadTransfer</a>(qint64 maxSize);
-<a name="l00170"></a>00170 
-<a name="l00177"></a>00177   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer</a>();
-<a name="l00178"></a>00178 
-<a name="l00184"></a>00184   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead</a>();
-<a name="l00185"></a>00185 
-<a name="l00194"></a>00194   qint64 <a class="code" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
-<a name="l00195"></a>00195 
-<a name="l00201"></a>00201   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a4e1b2c251dea880f699b6568f7fe7b6b" title="Request a new interrupt input transfer for additional message input.">initMessageInTransfer</a>(qint64 maxSize);
-<a name="l00202"></a>00202 
-<a name="l00209"></a>00209   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#afddcb02a1e2bd87609fd2b6305534560" title="Cancel current interrupt message input transfer.">cancelMessageInTransfer</a>();
-<a name="l00210"></a>00210 
+<a name="l00111"></a>00111   QQueue&lt;mdtFrameUsbControl*&gt; &amp;<a class="code" href="classmdt_usb_port.html#af146b08006ddbe18fb537ae1a75b622e" title="Get the control pool queue.">controlFramesPool</a>();
+<a name="l00112"></a>00112 
+<a name="l00127"></a>00127   <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#a4fbcd0fcc179335c55c6d7ccc40a7c31" title="Add a control request.">addControlRequest</a>(<a class="code" href="classmdt_frame_usb_control.html" title="USB Control frame.">mdtFrameUsbControl</a> *frame, <span class="keywordtype">bool</span> setwIndexAsbInterfaceNumber = <span class="keyword">false</span>);
+<a name="l00128"></a>00128 
+<a name="l00141"></a>00141   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#ae79bbc2a33a8cd8f055323d882804d36" title="Check about pending control queries and init a new transfer if needed.">handleControlQueries</a>();
+<a name="l00142"></a>00142 
+<a name="l00149"></a>00149   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a6566e654df8a1c3503941702593db3c5" title="Cancel current control transfer.">cancelControlTransfer</a>();
+<a name="l00150"></a>00150 
+<a name="l00165"></a>00165   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#ac91970d3fcb07b80200d0e549adbab3a" title="Check pending control transfer.">handleControlResponses</a>();
+<a name="l00166"></a>00166 
+<a name="l00173"></a>00173   QQueue&lt;mdtFrameUsbControl*&gt; &amp;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>();
+<a name="l00174"></a>00174 
+<a name="l00180"></a>00180   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f" title="Request a new bulk/interrupt input transfer.">initReadTransfer</a>(qint64 maxSize);
+<a name="l00181"></a>00181 
+<a name="l00188"></a>00188   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a3570b708f9f51408e4bbf2f61cc8c881" title="Cancel current bulk/interrupt input transfer.">cancelReadTransfer</a>();
+<a name="l00189"></a>00189 
+<a name="l00195"></a>00195   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead</a>();
+<a name="l00196"></a>00196 
+<a name="l00205"></a>00205   qint64 <a class="code" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d" title="Read data from port.">read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00206"></a>00206 
+<a name="l00212"></a>00212   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a4e1b2c251dea880f699b6568f7fe7b6b" title="Request a new interrupt input transfer for additional message input.">initMessageInTransfer</a>(qint64 maxSize);
+<a name="l00213"></a>00213 
+<a name="l00220"></a>00220   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#afddcb02a1e2bd87609fd2b6305534560" title="Cancel current interrupt message input transfer.">cancelMessageInTransfer</a>();
 <a name="l00221"></a>00221 
-<a name="l00222"></a>00222 
-<a name="l00229"></a>00229   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a4bce45f4e7b4cc238b2d68b9f5066f86" title="Read message inputs (additional interrupt IN)">handleMessageIn</a>();
-<a name="l00230"></a>00230 
-<a name="l00237"></a>00237   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_usb_port.html#a3ad4385983122fcaf6d2560b6bd43acf" title="Get the message IN frames pool.">messageInFramesPool</a>();
-<a name="l00238"></a>00238 
-<a name="l00245"></a>00245   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda" title="Get the message IN frames.">messageInFrames</a>();
-<a name="l00246"></a>00246 
-<a name="l00252"></a>00252   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a3340dc3f53e857e39053988e4925fc97" title="Request a new bulk/interrupt out transfer.">initWriteTransfer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
-<a name="l00253"></a>00253 
-<a name="l00260"></a>00260   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a7cbe1cd3649861aac5e6a14830f06cf9" title="Cancel current bulk/interrupt input transfer.">cancelWriteTransfer</a>();
-<a name="l00261"></a>00261 
-<a name="l00267"></a>00267   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady</a>();
-<a name="l00268"></a>00268 
-<a name="l00275"></a>00275   qint64 <a class="code" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
-<a name="l00276"></a>00276 
-<a name="l00279"></a>00279   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#ab1d37a64b7b4e471b4b9790e3c25d853" title="Transfert callback for asynch I/O.">transferCallback</a>(<span class="keyword">struct</span> libusb_transfer *transfer);
-<a name="l00280"></a>00280 
-<a name="l00287"></a>00287   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#afe5b473e1df8b828c17f83a45a3902fb" title="Cancel pending transfers.">cancelTransfers</a>();
-<a name="l00288"></a>00288 
-<a name="l00296"></a>00296   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a7f8bf2b599a0c83988153de3945e1d65" title="Calle libusb handle_event*() function.">handleUsbEvents</a>(<span class="keyword">struct</span> timeval *timeout);
-<a name="l00297"></a>00297 
-<a name="l00298"></a>00298  <span class="keyword">private</span>:
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233 
+<a name="l00240"></a>00240   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a4bce45f4e7b4cc238b2d68b9f5066f86" title="Read message inputs (additional interrupt IN)">handleMessageIn</a>();
+<a name="l00241"></a>00241 
+<a name="l00248"></a>00248   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_usb_port.html#a3ad4385983122fcaf6d2560b6bd43acf" title="Get the message IN frames pool.">messageInFramesPool</a>();
+<a name="l00249"></a>00249 
+<a name="l00256"></a>00256   QQueue&lt;mdtFrame*&gt; &amp;<a class="code" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda" title="Get the message IN frames.">messageInFrames</a>();
+<a name="l00257"></a>00257 
+<a name="l00263"></a>00263   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a3340dc3f53e857e39053988e4925fc97" title="Request a new bulk/interrupt out transfer.">initWriteTransfer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00264"></a>00264 
+<a name="l00271"></a>00271   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a7cbe1cd3649861aac5e6a14830f06cf9" title="Cancel current bulk/interrupt input transfer.">cancelWriteTransfer</a>();
+<a name="l00272"></a>00272 
+<a name="l00278"></a>00278   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady</a>();
+<a name="l00279"></a>00279 
+<a name="l00286"></a>00286   qint64 <a class="code" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16" title="Write data to port.">write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize);
+<a name="l00287"></a>00287 
+<a name="l00290"></a>00290   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port.html#ab1d37a64b7b4e471b4b9790e3c25d853" title="Transfert callback for asynch I/O.">transferCallback</a>(<span class="keyword">struct</span> libusb_transfer *transfer);
+<a name="l00291"></a>00291 
+<a name="l00298"></a>00298   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#afe5b473e1df8b828c17f83a45a3902fb" title="Cancel pending transfers.">cancelTransfers</a>();
 <a name="l00299"></a>00299 
-<a name="l00308"></a>00308   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvOpen();
-<a name="l00309"></a>00309 
-<a name="l00316"></a>00316   <span class="keywordtype">void</span> pvClose();
-<a name="l00317"></a>00317 
-<a name="l00325"></a>00325   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvSetup();
-<a name="l00326"></a>00326 
-<a name="l00333"></a>00333   <span class="keywordtype">void</span> pvFlushIn();
-<a name="l00334"></a>00334 
-<a name="l00341"></a>00341   <span class="keywordtype">void</span> pvFlushOut();
-<a name="l00342"></a>00342 
-<a name="l00343"></a>00343   <span class="comment">// Map a libusb error to mdtAbstractPort::error_t</span>
-<a name="l00344"></a>00344   <span class="comment">// If reading is true, timeout or so will be mapped</span>
-<a name="l00345"></a>00345   <span class="comment">//  to ReadTimeout, for exemple. Else, to WriteTimeout</span>
-<a name="l00346"></a>00346   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> mapUsbError(<span class="keywordtype">int</span> error, <span class="keywordtype">bool</span> byReading);
-<a name="l00347"></a>00347 
-<a name="l00348"></a>00348   <span class="comment">// Get a text for given libusb error code</span>
-<a name="l00349"></a>00349   QString errorText(<span class="keywordtype">int</span> errorCode) <span class="keyword">const</span>;
-<a name="l00350"></a>00350 
-<a name="l00351"></a>00351   <span class="comment">// Diseable copy</span>
-<a name="l00352"></a>00352   Q_DISABLE_COPY(<a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>);
+<a name="l00307"></a>00307   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> <a class="code" href="classmdt_usb_port.html#a7f8bf2b599a0c83988153de3945e1d65" title="Calle libusb handle_event*() function.">handleUsbEvents</a>(<span class="keyword">struct</span> timeval *timeout);
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309  <span class="keyword">private</span>:
+<a name="l00310"></a>00310 
+<a name="l00319"></a>00319   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvOpen();
+<a name="l00320"></a>00320 
+<a name="l00327"></a>00327   <span class="keywordtype">void</span> pvClose();
+<a name="l00328"></a>00328 
+<a name="l00336"></a>00336   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> pvSetup();
+<a name="l00337"></a>00337 
+<a name="l00344"></a>00344   <span class="keywordtype">void</span> pvFlushIn();
+<a name="l00345"></a>00345 
+<a name="l00352"></a>00352   <span class="keywordtype">void</span> pvFlushOut();
 <a name="l00353"></a>00353 
-<a name="l00354"></a>00354   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pvReadTimeout;
-<a name="l00355"></a>00355   <span class="keyword">struct </span>timeval pvReadTimeoutTv;
-<a name="l00356"></a>00356   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pvWriteTimeout;
-<a name="l00357"></a>00357   <span class="keyword">struct </span>timeval pvWriteTimeoutTv;
-<a name="l00358"></a>00358   libusb_context *pvLibusbContext;
-<a name="l00359"></a>00359   libusb_device_handle *pvHandle;
-<a name="l00360"></a>00360   <span class="comment">/*</span>
-<a name="l00361"></a>00361 <span class="comment">   * Control endpoint members</span>
-<a name="l00362"></a>00362 <span class="comment">   */</span>
-<a name="l00363"></a>00363   <span class="keywordtype">char</span> *pvControlBuffer;
-<a name="l00364"></a>00364   <span class="keywordtype">int</span> pvControlBufferSize;
-<a name="l00365"></a>00365   libusb_transfer *pvControlTransfer;
-<a name="l00366"></a>00366   <span class="keywordtype">bool</span> pvControlTransferPending;       <span class="comment">// Flag to see if a transfer is pending</span>
-<a name="l00367"></a>00367   <span class="keywordtype">int</span> pvControlTransferComplete;       <span class="comment">// Will be stored in transfer struct</span>
-<a name="l00368"></a>00368   <span class="comment">// Frames queues</span>
-<a name="l00369"></a>00369   QQueue&lt;mdtFrameUsbControl*&gt; pvControlFramesPool;
-<a name="l00370"></a>00370   QQueue&lt;mdtFrameUsbControl*&gt; pvControlQueryFrames;
-<a name="l00371"></a>00371   QQueue&lt;mdtFrameUsbControl*&gt; pvControlResponseFrames;
+<a name="l00354"></a>00354   <span class="comment">// Map a libusb error to mdtAbstractPort::error_t</span>
+<a name="l00355"></a>00355   <span class="comment">// If reading is true, timeout or so will be mapped</span>
+<a name="l00356"></a>00356   <span class="comment">//  to ReadTimeout, for exemple. Else, to WriteTimeout</span>
+<a name="l00357"></a>00357   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> mapUsbError(<span class="keywordtype">int</span> error, <span class="keywordtype">bool</span> byReading);
+<a name="l00358"></a>00358 
+<a name="l00359"></a>00359   <span class="comment">// Get a text for given libusb error code</span>
+<a name="l00360"></a>00360   QString errorText(<span class="keywordtype">int</span> errorCode) <span class="keyword">const</span>;
+<a name="l00361"></a>00361 
+<a name="l00362"></a>00362   <span class="comment">// Diseable copy</span>
+<a name="l00363"></a>00363   Q_DISABLE_COPY(<a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>);
+<a name="l00364"></a>00364 
+<a name="l00365"></a>00365   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pvReadTimeout;
+<a name="l00366"></a>00366   <span class="keyword">struct </span>timeval pvReadTimeoutTv;
+<a name="l00367"></a>00367   <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pvWriteTimeout;
+<a name="l00368"></a>00368   <span class="keyword">struct </span>timeval pvWriteTimeoutTv;
+<a name="l00369"></a>00369   libusb_context *pvLibusbContext;
+<a name="l00370"></a>00370   libusb_device_handle *pvHandle;
+<a name="l00371"></a>00371   <span class="keywordtype">int</span> pvbInterfaceNumber;
 <a name="l00372"></a>00372   <span class="comment">/*</span>
-<a name="l00373"></a>00373 <span class="comment">   * Data bulk/interrupt IN endpoint members</span>
+<a name="l00373"></a>00373 <span class="comment">   * Control endpoint members</span>
 <a name="l00374"></a>00374 <span class="comment">   */</span>
-<a name="l00375"></a>00375   <span class="keywordtype">char</span> *pvReadBuffer;
-<a name="l00376"></a>00376   <span class="keywordtype">int</span> pvReadBufferSize;
-<a name="l00377"></a>00377   quint8 pvReadEndpointAddress;
-<a name="l00378"></a>00378   libusb_transfer_type pvReadTransfertType;
-<a name="l00379"></a>00379   libusb_transfer *pvReadTransfer;
-<a name="l00380"></a>00380   <span class="keywordtype">bool</span> pvReadTransferPending;       <span class="comment">// Flag to see if a transfer is pending</span>
-<a name="l00381"></a>00381   <span class="keywordtype">int</span> pvReadTransferComplete;       <span class="comment">// Will be stored in transfer struct</span>
-<a name="l00382"></a>00382   <span class="comment">/*</span>
-<a name="l00383"></a>00383 <span class="comment">   * Data bulk/interrupt OUT endpoint members</span>
-<a name="l00384"></a>00384 <span class="comment">   */</span>
-<a name="l00385"></a>00385   <span class="keywordtype">char</span> *pvWriteBuffer;
-<a name="l00386"></a>00386   <span class="keywordtype">int</span> pvWriteBufferSize;
-<a name="l00387"></a>00387   quint8 pvWriteEndpointAddress;
-<a name="l00388"></a>00388   libusb_transfer_type pvWriteTransfertType;
-<a name="l00389"></a>00389   libusb_transfer *pvWriteTransfer;
-<a name="l00390"></a>00390   <span class="keywordtype">bool</span> pvWriteTransferPending;      <span class="comment">// Flag to see if a transfer is pending</span>
-<a name="l00391"></a>00391   <span class="keywordtype">int</span> pvWriteTransferComplete;      <span class="comment">// Will be stored in transfer struct</span>
-<a name="l00392"></a>00392   <span class="comment">/*</span>
-<a name="l00393"></a>00393 <span class="comment">   * Some devices have a additional interrupt IN endpoint</span>
-<a name="l00394"></a>00394 <span class="comment">   *  for urgent messages. Other use interrupt IN endpoint</span>
-<a name="l00395"></a>00395 <span class="comment">   *  for standard I/O. This is the reason to use another</span>
-<a name="l00396"></a>00396 <span class="comment">   *  name than ...interruptIn... for these members</span>
-<a name="l00397"></a>00397 <span class="comment">   */</span>
-<a name="l00398"></a>00398   <span class="keywordtype">char</span> *pvMessageInBuffer;
-<a name="l00399"></a>00399   <span class="keywordtype">int</span> pvMessageInBufferSize;
-<a name="l00400"></a>00400   quint8 pvMessageInEndpointAddress;
-<a name="l00401"></a>00401   libusb_transfer *pvMessageInTransfer;
-<a name="l00402"></a>00402   <span class="keywordtype">bool</span> pvMessageInTransferPending;  <span class="comment">// Flag to see if a transfer is pending</span>
-<a name="l00403"></a>00403   <span class="keywordtype">int</span> pvMessageInTransferComplete;  <span class="comment">// Will be stored in transfer struct</span>
-<a name="l00404"></a>00404   <span class="comment">// Frames queues</span>
-<a name="l00405"></a>00405   QQueue&lt;mdtFrame*&gt; pvMessageInFramesPool;  <span class="comment">// Frames pool</span>
-<a name="l00406"></a>00406   QQueue&lt;mdtFrame*&gt; pvMessageInFrames;      <span class="comment">// Incomming message frames</span>
-<a name="l00407"></a>00407 };
-<a name="l00408"></a>00408 
-<a name="l00409"></a>00409 <span class="preprocessor">#endif // #ifndef MDT_USB_PORT_H</span>
+<a name="l00375"></a>00375   <span class="keywordtype">char</span> *pvControlBuffer;
+<a name="l00376"></a>00376   <span class="keywordtype">int</span> pvControlBufferSize;
+<a name="l00377"></a>00377   libusb_transfer *pvControlTransfer;
+<a name="l00378"></a>00378   <span class="keywordtype">bool</span> pvControlTransferPending;       <span class="comment">// Flag to see if a transfer is pending</span>
+<a name="l00379"></a>00379   <span class="keywordtype">int</span> pvControlTransferComplete;       <span class="comment">// Will be stored in transfer struct</span>
+<a name="l00380"></a>00380   <span class="comment">// Frames queues</span>
+<a name="l00381"></a>00381   QQueue&lt;mdtFrameUsbControl*&gt; pvControlFramesPool;
+<a name="l00382"></a>00382   QQueue&lt;mdtFrameUsbControl*&gt; pvControlQueryFrames;
+<a name="l00383"></a>00383   QQueue&lt;mdtFrameUsbControl*&gt; pvControlResponseFrames;
+<a name="l00384"></a>00384   <span class="comment">/*</span>
+<a name="l00385"></a>00385 <span class="comment">   * Data bulk/interrupt IN endpoint members</span>
+<a name="l00386"></a>00386 <span class="comment">   */</span>
+<a name="l00387"></a>00387   <span class="keywordtype">char</span> *pvReadBuffer;
+<a name="l00388"></a>00388   <span class="keywordtype">int</span> pvReadBufferSize;
+<a name="l00389"></a>00389   quint8 pvReadEndpointAddress;
+<a name="l00390"></a>00390   libusb_transfer_type pvReadTransfertType;
+<a name="l00391"></a>00391   libusb_transfer *pvReadTransfer;
+<a name="l00392"></a>00392   <span class="keywordtype">bool</span> pvReadTransferPending;       <span class="comment">// Flag to see if a transfer is pending</span>
+<a name="l00393"></a>00393   <span class="keywordtype">int</span> pvReadTransferComplete;       <span class="comment">// Will be stored in transfer struct</span>
+<a name="l00394"></a>00394   <span class="comment">/*</span>
+<a name="l00395"></a>00395 <span class="comment">   * Data bulk/interrupt OUT endpoint members</span>
+<a name="l00396"></a>00396 <span class="comment">   */</span>
+<a name="l00397"></a>00397   <span class="keywordtype">char</span> *pvWriteBuffer;
+<a name="l00398"></a>00398   <span class="keywordtype">int</span> pvWriteBufferSize;
+<a name="l00399"></a>00399   quint8 pvWriteEndpointAddress;
+<a name="l00400"></a>00400   libusb_transfer_type pvWriteTransfertType;
+<a name="l00401"></a>00401   libusb_transfer *pvWriteTransfer;
+<a name="l00402"></a>00402   <span class="keywordtype">bool</span> pvWriteTransferPending;      <span class="comment">// Flag to see if a transfer is pending</span>
+<a name="l00403"></a>00403   <span class="keywordtype">int</span> pvWriteTransferComplete;      <span class="comment">// Will be stored in transfer struct</span>
+<a name="l00404"></a>00404   <span class="comment">/*</span>
+<a name="l00405"></a>00405 <span class="comment">   * Some devices have a additional interrupt IN endpoint</span>
+<a name="l00406"></a>00406 <span class="comment">   *  for urgent messages. Other use interrupt IN endpoint</span>
+<a name="l00407"></a>00407 <span class="comment">   *  for standard I/O. This is the reason to use another</span>
+<a name="l00408"></a>00408 <span class="comment">   *  name than ...interruptIn... for these members</span>
+<a name="l00409"></a>00409 <span class="comment">   */</span>
+<a name="l00410"></a>00410   <span class="keywordtype">char</span> *pvMessageInBuffer;
+<a name="l00411"></a>00411   <span class="keywordtype">int</span> pvMessageInBufferSize;
+<a name="l00412"></a>00412   quint8 pvMessageInEndpointAddress;
+<a name="l00413"></a>00413   libusb_transfer *pvMessageInTransfer;
+<a name="l00414"></a>00414   <span class="keywordtype">bool</span> pvMessageInTransferPending;  <span class="comment">// Flag to see if a transfer is pending</span>
+<a name="l00415"></a>00415   <span class="keywordtype">int</span> pvMessageInTransferComplete;  <span class="comment">// Will be stored in transfer struct</span>
+<a name="l00416"></a>00416   <span class="comment">// Frames queues</span>
+<a name="l00417"></a>00417   QQueue&lt;mdtFrame*&gt; pvMessageInFramesPool;  <span class="comment">// Frames pool</span>
+<a name="l00418"></a>00418   QQueue&lt;mdtFrame*&gt; pvMessageInFrames;      <span class="comment">// Incomming message frames</span>
+<a name="l00419"></a>00419 };
+<a name="l00420"></a>00420 
+<a name="l00421"></a>00421 <span class="preprocessor">#endif // #ifndef MDT_USB_PORT_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -242,7 +243,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

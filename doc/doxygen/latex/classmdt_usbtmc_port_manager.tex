@@ -13,7 +13,8 @@ USBTMC port manager.
 
 
 
-Inheritance diagram for mdtUsbtmcPortManager:\nopagebreak
+Inheritance diagram for mdtUsbtmcPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -22,7 +23,8 @@ Inheritance diagram for mdtUsbtmcPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtUsbtmcPortManager:\nopagebreak
+Collaboration diagram for mdtUsbtmcPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -43,10 +45,18 @@ void \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{scan} ()
 \begin{DoxyCompactList}\small\item\em Scan for available ports with a USBTMC compatible device attached. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_port_manager_a86615ff2226fce0ad71c597716711898}{sendCommand} (const QByteArray \&command, int timeout=1000)
+\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_usbtmc_port_manager_a20c2b18b59e64a25b75a0bad1221c3a2}{sendQuery} (const QByteArray \&query, int writeTimeout=1000, int readTimeout=30000)
+\begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{writeData} (QByteArray data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_usbtmc_port_manager_a992d24020748e17d577b31e64a73b3e2}{sendReadRequest} ()
-\begin{DoxyCompactList}\small\item\em Send a read request to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{sendReadRequest} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
+\begin{DoxyCompactList}\small\item\em Send a read request to device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{sendReadRequest} (bool enqueueResponse)
+\begin{DoxyCompactList}\small\item\em Send a read request to device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{sendReadStatusByteRequest} ()
+\begin{DoxyCompactList}\small\item\em Send a READ\_\-STATUS\_\-BYTE request thru the control endpoint. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -78,7 +88,7 @@ Construct a USBTMC port manager.
 
 Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_usb_port}{mdtUsbPort}, and thread object. 
 
-Definition at line 35 of file mdtUsbtmcPortManager.cpp.
+Definition at line 37 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!$\sim$mdtUsbtmcPortManager@{$\sim$mdtUsbtmcPortManager}}
@@ -114,16 +124,12 @@ Definition at line 55 of file mdtUsbtmcPortManager.cpp.
 Called by the thread whenn a complete frame was readen. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000048}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
+\item[\hyperlink{todo__todo000052}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000047}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000050}{Todo}]Error on incomplete frame \end{Desc}
 
-
-pvReadenFrames.insert(frame-\/$>$bTag(), data);
-
-if(pvReadenFrames.size() $>$ 0)\{ emit(\hyperlink{classmdt_port_manager_a65d5d2e9edde76796714f737a7eaf204}{newReadenFrame()}); \}
 
 
 
@@ -131,7 +137,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 278 of file mdtUsbtmcPortManager.cpp.
+Definition at line 269 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan@{scan}}
@@ -153,45 +159,169 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-qDebug() $<$$<$ \char`\"{}-\/$>$   iface\mbox{[}\char`\"{} $<$$<$ k $<$$<$ \char`\"{}\mbox{]}\char`\"{};
-
-str += \char`\"{} VID: 0x\char`\"{} + QString::number(deviceDescriptor.idProduct(), 16);
-
-str = deviceDescriptor.vendorName(); str = \char`\"{}VID:\char`\"{}; str += QString::number(deviceDescriptor.idVendor());
-
-str += \char`\"{} PID:\char`\"{}; str += QString::number(deviceDescriptor.idProduct()); str += \char`\"{} Interface: \char`\"{}; str += QString::number(ifaceDescriptor-\/$>$bInterfaceProtocol());
-
-portName = \char`\"{}0x\char`\"{} + QString::number((unsigned int)libusb\_\-get\_\-bus\_\-number(device), 16); portName += \char`\"{}:0x\char`\"{}; portName += QString::number((unsigned int)libusb\_\-get\_\-device\_\-address(device), 16); portName += \char`\"{}:0x\char`\"{};
+Reimplemented from \hyperlink{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b777728c3b}{mdtUsbPortManager}.
 
 
 
-Reimplemented from \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{mdtPortManager}.
+Definition at line 59 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_a86615ff2226fce0ad71c597716711898}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendCommand}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::sendCommand (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{command, }
+\item[{int}]{timeout = {\ttfamily 1000}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_a86615ff2226fce0ad71c597716711898}
 
 
+Send a command to device. 
 
-Definition at line 63 of file mdtUsbtmcPortManager.cpp.
+Wait until it's possible to write to device, then send the command.
 
-\hypertarget{classmdt_usbtmc_port_manager_a992d24020748e17d577b31e64a73b3e2}{
+Note that the wait will not break the GUI's event loop (see \hyperlink{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{mdtPortManager::waitOnWriteReady()} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Command to send. \\
+\hline
+{\em timeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{mdtUsbtmcPortManager::writeData()} for details). 
+\end{DoxyReturn}
+
+
+Definition at line 86 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_a20c2b18b59e64a25b75a0bad1221c3a2}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendQuery@{sendQuery}}
+\index{sendQuery@{sendQuery}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendQuery}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtUsbtmcPortManager::sendQuery (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{query, }
+\item[{int}]{writeTimeout = {\ttfamily 1000}, }
+\item[{int}]{readTimeout = {\ttfamily 30000}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_a20c2b18b59e64a25b75a0bad1221c3a2}
+
+
+Send a query to device. 
+
+Wait until it's possible to write to device, send the query and wait until a response is available or timeout.
+
+Note that the wait will not break the GUI's event loop.
+
+
+\begin{DoxyParams}{Parameters}
+{\em query} & Query to send. \\
+\hline
+{\em writeTimeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\hline
+{\em readTimeout} & Response timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result as string (empty string on error) Note that \hyperlink{classmdt_frame_codec_scpi}{mdtFrameCodecScpi} can be helpful to decode returned result. 
+\end{DoxyReturn}
+
+
+Definition at line 96 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
 \index{sendReadRequest@{sendReadRequest}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
 \subsubsection[{sendReadRequest}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::sendReadRequest (
 \begin{DoxyParamCaption}
-{}
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_usbtmc_port_manager_a992d24020748e17d577b31e64a73b3e2}
+\label{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}
 
 
 Send a read request to device. 
 
 USBTMC standard need that a read request is sent to device before we can read any data.
 
+
+\begin{DoxyParams}{Parameters}
+{\em transaction} & A pointer to a valid transaction, with setQueryReplyMode set. (id will be set internally). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bTag ID on success or value $<$ 0 if write queue is full. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+port must be set 
+
+transaction must be a valid pointer 
+\end{DoxyPrecond}
+
+
+qDebug() $<$$<$ \char`\"{}mdtUsbtmcPortManager::sendReadRequest() -\/ bTag: \char`\"{} $<$$<$ pvCurrentWritebTag; 
+
+
+
+Definition at line 169 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
+\index{sendReadRequest@{sendReadRequest}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendReadRequest}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::sendReadRequest (
+\begin{DoxyParamCaption}
+\item[{bool}]{enqueueResponse}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}
+
+
+Send a read request to device. 
+
+USBTMC standard need that a read request is sent to device before we can read any data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enqueueResponse} & When data comes in,\\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[\hyperlink{todo__todo000051}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
 \begin{DoxyReturn}{Returns}
 bTag ID on success or value $<$ 0 if write queue is full. 
 \end{DoxyReturn}
 
 
-Definition at line 227 of file mdtUsbtmcPortManager.cpp.
+Definition at line 211 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadStatusByteRequest@{sendReadStatusByteRequest}}
+\index{sendReadStatusByteRequest@{sendReadStatusByteRequest}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendReadStatusByteRequest}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::sendReadStatusByteRequest (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}
+
+
+Send a READ\_\-STATUS\_\-BYTE request thru the control endpoint. 
+
+\begin{DoxyReturn}{Returns}
+bTag on success or WriteQueueEmpty on error.
+\end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000049}{Todo}]finish ! \end{Desc}
+
+
+m.sendControlRequest(f); End Sandbox ! 
+
+
+
+Definition at line 237 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
@@ -221,11 +351,15 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
+qDebug() $<$$<$ \char`\"{}mdtUsbtmcPortManager::writeData() -\/ bTag: \char`\"{} $<$$<$ pvCurrentWritebTag; 
+
+
+
 Reimplemented from \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager}.
 
 
 
-Definition at line 190 of file mdtUsbtmcPortManager.cpp.
+Definition at line 131 of file mdtUsbtmcPortManager.cpp.
 
 
 

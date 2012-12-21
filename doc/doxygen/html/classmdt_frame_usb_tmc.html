@@ -120,6 +120,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the EOM flag.  <a href="#ab6e494c35eba34905987a75101fc48fe"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c">isEOM</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the EOM flag.  <a href="#a82e93db0fc709b951c0c1f7b70692b5c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0">setTransferSize</a> (int size)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set transfer size.  <a href="#a7ad2f8426ebeceaa6f84925d9a96b5c0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a7fa61faeaa5d1f5820794c5943b26e26">setMessageData</a> (const QByteArray &amp;data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the message data.  <a href="#a7fa61faeaa5d1f5820794c5943b26e26"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a03d9a1c16099ba7ea1e3a2b0c4e1493e">messageData</a> ()</td></tr>
@@ -130,7 +132,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USBTMC frame. </p>
 <p>Used by mdtport API to send en receive frames in USBTMC standard.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>Clarify what this class does: USBTMC message or transfer ?</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000064">Todo:</a></b></dt><dd>Clarify what this class does: USBTMC message or transfer ?</dd></dl>
 <p>References:</p>
 <ul>
 <li>USBTMC Revision 1.0 (2003)</li>
@@ -216,10 +218,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>To use to build a frame that will be sent to device.</p>
 <p>Note: <a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">clear()</a> is called internally. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>Check &gt; 0, ... </dd></dl>
+<p><p>pvTransferSize = <a class="el" href="classmdt_frame.html#aa1cd5c914c36efb3f441b7f6e782dc24" title="Returns the remain capacity.">remainCapacity()</a> - 12 - 3; ///</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000063">Todo:</a></b></dt><dd>Check &gt; 0, ... </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00157">157</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00162">162</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -261,7 +264,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the message data. </p>
 <p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00152">152</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00157">157</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -314,8 +317,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Put data into the frame. </p>
 <p>This method is called by the read thread, and should not be used directly. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000057">Todo:</a></b></dt><dd>Handle error </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>other bmTransferAttributes </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000061">Todo:</a></b></dt><dd>Handle error </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>other bmTransferAttributes </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8">mdtFrame</a>.</p>
@@ -389,7 +392,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set the message data. </p>
 <p>To use to build a frame that will be sent to device. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -415,6 +418,28 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="a7ad2f8426ebeceaa6f84925d9a96b5c0"></a><!-- doxytag: member="mdtFrameUsbTmc::setTransferSize" ref="a7ad2f8426ebeceaa6f84925d9a96b5c0" args="(int size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtFrameUsbTmc::setTransferSize </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set transfer size. </p>
+<p>To use with DEV_DEP_MSG_IN request. </p>
+
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00146">146</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtutils/<a class="el" href="mdt_frame_usb_tmc_8h_source.html">mdtFrameUsbTmc.h</a></li>
 <li>src/mdtutils/<a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a></li>
@@ -434,7 +459,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

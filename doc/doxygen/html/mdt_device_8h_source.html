@@ -92,119 +92,117 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QVariant&gt;</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include &lt;QString&gt;</span>
 <a name="l00032"></a>00032 <span class="preprocessor">#include &lt;QStringList&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;QMap&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;QList&gt;</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">class </span>QTimer;
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">class </span>QTimer;
-<a name="l00037"></a>00037 
-<a name="l00088"></a><a class="code" href="classmdt_device.html">00088</a> <span class="keyword">class </span><a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> : <span class="keyword">public</span> QObject
-<a name="l00089"></a>00089 {
-<a name="l00090"></a>00090  Q_OBJECT
+<a name="l00086"></a><a class="code" href="classmdt_device.html">00086</a> <span class="keyword">class </span><a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> : <span class="keyword">public</span> QObject
+<a name="l00087"></a>00087 {
+<a name="l00088"></a>00088  Q_OBJECT
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090  <span class="keyword">public</span>:
 <a name="l00091"></a>00091 
-<a name="l00092"></a>00092  <span class="keyword">public</span>:
-<a name="l00093"></a>00093 
-<a name="l00096"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e">00096</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">state_t</a> {
-<a name="l00097"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">00097</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a> = 0,              
-<a name="l00098"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">00098</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a>,           
-<a name="l00099"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">00099</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">Connecting</a>,             
-<a name="l00100"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">00100</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a>,                   
-<a name="l00101"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09">00101</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09">Unknown</a>                 
-<a name="l00102"></a>00102                };
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   <a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>(QObject *parent = 0);
-<a name="l00105"></a>00105   <span class="keyword">virtual</span> ~<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>();
-<a name="l00106"></a>00106 
-<a name="l00109"></a>00109   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518" title="Set the device name.">setName</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>);
-<a name="l00110"></a>00110 
-<a name="l00113"></a>00113   QString <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() <span class="keyword">const</span>;
-<a name="l00114"></a>00114 
-<a name="l00126"></a>00126   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0" title="Search and connect to physical device.">connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo);
-<a name="l00127"></a>00127 
-<a name="l00138"></a>00138   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos</a>(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *ios, <span class="keywordtype">bool</span> autoOutputUpdate = <span class="keyword">false</span>);
-<a name="l00139"></a>00139 
-<a name="l00156"></a>00156   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aa241c40514683254990e742cf1bbb155" title="Set back to ready state timeout.">setBackToReadyStateTimeout</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00157"></a>00157 
-<a name="l00163"></a>00163   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a3477278b4fa937f7667becb14333ef2f" title="Set analog output address offset.">setAnalogOutputAddressOffset</a>(<span class="keywordtype">int</span> offset);
-<a name="l00164"></a>00164 
-<a name="l00170"></a>00170   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#af5c2759221878a4d0306343f43e3cc45" title="Set digital output address offset.">setDigitalOutputAddressOffset</a>(<span class="keywordtype">int</span> offset);
-<a name="l00171"></a>00171 
-<a name="l00178"></a>00178   <span class="keyword">virtual</span> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> *<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>();
-<a name="l00179"></a>00179 
-<a name="l00186"></a>00186   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying.">start</a>(<span class="keywordtype">int</span> queryInterval);
-<a name="l00187"></a>00187 
-<a name="l00190"></a>00190   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407" title="Stop periodic device querying.">stop</a>();
-<a name="l00191"></a>00191 
-<a name="l00215"></a>00215   QVariant <a class="code" href="classmdt_device.html#a7ff556995f38d2098eda3cf80685b542" title="Read one analog input on physical device and update (G)UI representation.">getAnalogInputValue</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout, <span class="keywordtype">bool</span> realValue = <span class="keyword">true</span>);
-<a name="l00216"></a>00216 
-<a name="l00233"></a>00233   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51" title="Read all analog inputs on physical device and update (G)UI representation.">getAnalogInputs</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00234"></a>00234 
-<a name="l00257"></a>00257   QVariant <a class="code" href="classmdt_device.html#a4ec0255675f27a48f35edcfd0ba7d129" title="Read one analog output on physical device and update (G)UI representation.">getAnalogOutputValue</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout, <span class="keywordtype">bool</span> convert = <span class="keyword">true</span>);
-<a name="l00258"></a>00258 
-<a name="l00275"></a>00275   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a12f717202e9860d0c24b9dff8d672ef8" title="Read all analog outputs on physical device and update (G)UI representation.">getAnalogOutputs</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00276"></a>00276 
-<a name="l00299"></a>00299   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue</a>(<span class="keywordtype">int</span> address, QVariant value, <span class="keywordtype">int</span> timeout);
-<a name="l00300"></a>00300 
-<a name="l00321"></a>00321   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae45c39c2ef38b5952171fdc1c3284748" title="Write all analog outputs on physical device and update (G)UI representation.">setAnalogOutputs</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00322"></a>00322 
-<a name="l00344"></a>00344   QVariant <a class="code" href="classmdt_device.html#aad589d5c8c769299fdf0ea4e34d3bc0a" title="Read one digital input on physical device and update (G)UI representation.">getDigitalInputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout);
-<a name="l00345"></a>00345 
-<a name="l00362"></a>00362   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae482b28263b2ce61735f42f1245c1e99" title="Read all digital inputs on physical device and update (G)UI representation.">getDigitalInputs</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00363"></a>00363 
-<a name="l00385"></a>00385   QVariant <a class="code" href="classmdt_device.html#a719401fec13501047ffdf7f51583937c" title="Read one digital output on physical device and update (G)UI representation.">getDigitalOutputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout);
-<a name="l00386"></a>00386 
-<a name="l00403"></a>00403   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a6bd6ad4f8d07121dd8b988594927e9c8" title="Read all digital outputs on physical device and update (G)UI representation.">getDigitalOutputs</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00404"></a>00404 
-<a name="l00426"></a>00426   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>, <span class="keywordtype">int</span> timeout);
-<a name="l00427"></a>00427 
-<a name="l00448"></a>00448   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98" title="Write all digital outputs to physical device and update (G)UI representation.">setDigitalOutputs</a>(<span class="keywordtype">int</span> timeout);
-<a name="l00449"></a>00449 
-<a name="l00452"></a>00452   <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">state_t</a> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>() <span class="keyword">const</span>;
-<a name="l00453"></a>00453 
-<a name="l00454"></a>00454  signals:
-<a name="l00455"></a>00455 
-<a name="l00458"></a>00458   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emited when state has changed.">stateChanged</a>(<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>);
-<a name="l00459"></a>00459 
-<a name="l00460"></a>00460  <span class="keyword">public</span> slots:
-<a name="l00461"></a>00461 
-<a name="l00481"></a>00481   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue</a>(<span class="keywordtype">int</span> address);
-<a name="l00482"></a>00482 
-<a name="l00502"></a>00502   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(<span class="keywordtype">int</span> address);
-<a name="l00503"></a>00503 
-<a name="l00508"></a>00508   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05" title="Queries to send periodically.">runQueries</a>();
-<a name="l00509"></a>00509 
-<a name="l00514"></a>00514   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#ab77eb4c1bb50201e97a4dbd8b538659a" title="Update device state regarding port error.">setStateFromPortError</a>(<span class="keywordtype">int</span> error);
-<a name="l00515"></a>00515 
-<a name="l00520"></a>00520   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4eeda85bf0b10ddc9955a32199c00359" title="Set the ready state.">setStateReady</a>();
-<a name="l00521"></a>00521 
-<a name="l00522"></a>00522  <span class="keyword">protected</span> slots:
-<a name="l00523"></a>00523 
-<a name="l00534"></a>00534   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a96be3ca9235561c58c69190e9ed45ca9" title="Decode incoming frames.">decodeReadenFrame</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, QByteArray data);
-<a name="l00535"></a>00535 
-<a name="l00536"></a>00536  <span class="keyword">protected</span>:
-<a name="l00537"></a>00537 
-<a name="l00551"></a>00551   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae0948ed309354e4d8b231eb911196749" title="Read one analog input on physical device.">readAnalogInput</a>(<span class="keywordtype">int</span> address);
-<a name="l00552"></a>00552 
-<a name="l00563"></a>00563   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ac0023742214c29bdadd46383ae240972" title="Read all analog inputs on physical device.">readAnalogInputs</a>();
-<a name="l00564"></a>00564 
-<a name="l00578"></a>00578   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#abf222c1bd18ba300eeacd6037e5015df" title="Read one analog output on physical device.">readAnalogOutput</a>(<span class="keywordtype">int</span> address);
-<a name="l00579"></a>00579 
-<a name="l00593"></a>00593   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae0a0f03cb5267232d176896acc80872c" title="Read all analog outputs on physical device.">readAnalogOutputs</a>();
-<a name="l00594"></a>00594 
-<a name="l00609"></a>00609   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a3d11f48e7b605a54c884977b773615e2" title="Write value on a analog output to physical device.">writeAnalogOutput</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> value);
-<a name="l00610"></a>00610 
-<a name="l00621"></a>00621   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a797eeb704d5104b7a4411ebeecb018c6" title="Write all analog outputs to physical device.">writeAnalogOutputs</a>();
-<a name="l00622"></a>00622 
-<a name="l00636"></a>00636   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7e8f070a89d8f6f104f2cc5001f5c0d6" title="Read one digital input on physical device.">readDigitalInput</a>(<span class="keywordtype">int</span> address);
-<a name="l00637"></a>00637 
-<a name="l00648"></a>00648   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a4f4d18f217aa1cf483027c9b3c0ad09b" title="Read all digital inputs on physical device.">readDigitalInputs</a>();
-<a name="l00649"></a>00649 
-<a name="l00663"></a>00663   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a9d3f57d6022d2554f6f6a9f59a4984c1" title="Read one digital output on physical device.">readDigitalOutput</a>(<span class="keywordtype">int</span> address);
-<a name="l00664"></a>00664 
-<a name="l00675"></a>00675   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7cc2f2429776f26f45d42cf49a610958" title="Read all digital outputs on physical device.">readDigitalOutputs</a>();
-<a name="l00676"></a>00676 
-<a name="l00691"></a>00691   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a2a1354e80bd6f3bdca3b68cc0a9a4ea1" title="Write state on a digital output to physical device.">writeDigitalOutput</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>);
-<a name="l00692"></a>00692 
-<a name="l00703"></a>00703   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ad640c81dd966ed31c46d14961fd12830" title="Write all digital outputs to physical device.">writeDigitalOutputs</a>();
+<a name="l00094"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e">00094</a>   <span class="keyword">enum</span> <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">state_t</a> {
+<a name="l00095"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">00095</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a> = 0,              
+<a name="l00096"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">00096</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a>,           
+<a name="l00097"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">00097</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">Connecting</a>,             
+<a name="l00098"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">00098</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a>,                   
+<a name="l00099"></a><a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09">00099</a>                 <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09">Unknown</a>                 
+<a name="l00100"></a>00100                };
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102   <a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>(QObject *parent = 0);
+<a name="l00103"></a>00103   <span class="keyword">virtual</span> ~<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>();
+<a name="l00104"></a>00104 
+<a name="l00107"></a>00107   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a80186f1aa6fbdc13f1652de978c35518" title="Set the device name.">setName</a>(<span class="keyword">const</span> QString &amp;<a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>);
+<a name="l00108"></a>00108 
+<a name="l00111"></a>00111   QString <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() <span class="keyword">const</span>;
+<a name="l00112"></a>00112 
+<a name="l00124"></a>00124   <span class="keyword">virtual</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0" title="Search and connect to physical device.">connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo);
+<a name="l00125"></a>00125 
+<a name="l00136"></a>00136   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos</a>(<a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *ios, <span class="keywordtype">bool</span> autoOutputUpdate = <span class="keyword">false</span>);
+<a name="l00137"></a>00137 
+<a name="l00154"></a>00154   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aa241c40514683254990e742cf1bbb155" title="Set back to ready state timeout.">setBackToReadyStateTimeout</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00155"></a>00155 
+<a name="l00161"></a>00161   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a3477278b4fa937f7667becb14333ef2f" title="Set analog output address offset.">setAnalogOutputAddressOffset</a>(<span class="keywordtype">int</span> offset);
+<a name="l00162"></a>00162 
+<a name="l00168"></a>00168   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#af5c2759221878a4d0306343f43e3cc45" title="Set digital output address offset.">setDigitalOutputAddressOffset</a>(<span class="keywordtype">int</span> offset);
+<a name="l00169"></a>00169 
+<a name="l00176"></a>00176   <span class="keyword">virtual</span> <a class="code" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> *<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>();
+<a name="l00177"></a>00177 
+<a name="l00184"></a>00184   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying.">start</a>(<span class="keywordtype">int</span> queryInterval);
+<a name="l00185"></a>00185 
+<a name="l00188"></a>00188   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407" title="Stop periodic device querying.">stop</a>();
+<a name="l00189"></a>00189 
+<a name="l00213"></a>00213   QVariant <a class="code" href="classmdt_device.html#a7ff556995f38d2098eda3cf80685b542" title="Read one analog input on physical device and update (G)UI representation.">getAnalogInputValue</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout, <span class="keywordtype">bool</span> realValue = <span class="keyword">true</span>);
+<a name="l00214"></a>00214 
+<a name="l00231"></a>00231   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51" title="Read all analog inputs on physical device and update (G)UI representation.">getAnalogInputs</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00232"></a>00232 
+<a name="l00256"></a>00256   QVariant <a class="code" href="classmdt_device.html#a7085491cf2d96fd2afd3004de6caef0d" title="Read one analog output on physical device and update (G)UI representation.">getAnalogOutputValue</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout, <span class="keywordtype">bool</span> realValue = <span class="keyword">true</span>);
+<a name="l00257"></a>00257 
+<a name="l00274"></a>00274   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a12f717202e9860d0c24b9dff8d672ef8" title="Read all analog outputs on physical device and update (G)UI representation.">getAnalogOutputs</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00275"></a>00275 
+<a name="l00298"></a>00298   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue</a>(<span class="keywordtype">int</span> address, QVariant value, <span class="keywordtype">int</span> timeout);
+<a name="l00299"></a>00299 
+<a name="l00320"></a>00320   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae45c39c2ef38b5952171fdc1c3284748" title="Write all analog outputs on physical device and update (G)UI representation.">setAnalogOutputs</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00321"></a>00321 
+<a name="l00343"></a>00343   QVariant <a class="code" href="classmdt_device.html#aad589d5c8c769299fdf0ea4e34d3bc0a" title="Read one digital input on physical device and update (G)UI representation.">getDigitalInputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout);
+<a name="l00344"></a>00344 
+<a name="l00361"></a>00361   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae482b28263b2ce61735f42f1245c1e99" title="Read all digital inputs on physical device and update (G)UI representation.">getDigitalInputs</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00362"></a>00362 
+<a name="l00384"></a>00384   QVariant <a class="code" href="classmdt_device.html#a719401fec13501047ffdf7f51583937c" title="Read one digital output on physical device and update (G)UI representation.">getDigitalOutputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">int</span> timeout);
+<a name="l00385"></a>00385 
+<a name="l00402"></a>00402   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a6bd6ad4f8d07121dd8b988594927e9c8" title="Read all digital outputs on physical device and update (G)UI representation.">getDigitalOutputs</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00403"></a>00403 
+<a name="l00425"></a>00425   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>, <span class="keywordtype">int</span> timeout);
+<a name="l00426"></a>00426 
+<a name="l00447"></a>00447   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98" title="Write all digital outputs to physical device and update (G)UI representation.">setDigitalOutputs</a>(<span class="keywordtype">int</span> timeout);
+<a name="l00448"></a>00448 
+<a name="l00451"></a>00451   <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">state_t</a> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>() <span class="keyword">const</span>;
+<a name="l00452"></a>00452 
+<a name="l00453"></a>00453  signals:
+<a name="l00454"></a>00454 
+<a name="l00457"></a>00457   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emited when state has changed.">stateChanged</a>(<span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>);
+<a name="l00458"></a>00458 
+<a name="l00459"></a>00459  <span class="keyword">public</span> slots:
+<a name="l00460"></a>00460 
+<a name="l00480"></a>00480   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue</a>(<span class="keywordtype">int</span> address);
+<a name="l00481"></a>00481 
+<a name="l00501"></a>00501   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(<span class="keywordtype">int</span> address);
+<a name="l00502"></a>00502 
+<a name="l00507"></a>00507   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05" title="Queries to send periodically.">runQueries</a>();
+<a name="l00508"></a>00508 
+<a name="l00513"></a>00513   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#ab77eb4c1bb50201e97a4dbd8b538659a" title="Update device state regarding port error.">setStateFromPortError</a>(<span class="keywordtype">int</span> error);
+<a name="l00514"></a>00514 
+<a name="l00519"></a>00519   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4eeda85bf0b10ddc9955a32199c00359" title="Set the ready state.">setStateReady</a>();
+<a name="l00520"></a>00520 
+<a name="l00521"></a>00521  <span class="keyword">protected</span> slots:
+<a name="l00522"></a>00522 
+<a name="l00531"></a>00531   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> transaction);
+<a name="l00532"></a>00532 
+<a name="l00533"></a>00533  <span class="keyword">protected</span>:
+<a name="l00534"></a>00534 
+<a name="l00547"></a>00547   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">readAnalogInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00548"></a>00548 
+<a name="l00561"></a>00561   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e" title="Read all analog inputs on physical device.">readAnalogInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00562"></a>00562 
+<a name="l00575"></a>00575   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a" title="Read one analog output on physical device.">readAnalogOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00576"></a>00576 
+<a name="l00589"></a>00589   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291" title="Read all analog outputs on physical device.">readAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00590"></a>00590 
+<a name="l00604"></a>00604   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f" title="Write value on a analog output to physical device.">writeAnalogOutput</a>(<span class="keywordtype">int</span> value, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00605"></a>00605 
+<a name="l00618"></a>00618   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245" title="Write all analog outputs to physical device.">writeAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00619"></a>00619 
+<a name="l00632"></a>00632   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015" title="Read one digital input on physical device.">readDigitalInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00633"></a>00633 
+<a name="l00646"></a>00646   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14" title="Read all digital inputs on physical device.">readDigitalInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00647"></a>00647 
+<a name="l00660"></a>00660   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501" title="Read one digital output on physical device.">readDigitalOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00661"></a>00661 
+<a name="l00674"></a>00674   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02" title="Read all digital outputs on physical device.">readDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00675"></a>00675 
+<a name="l00689"></a>00689   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">writeDigitalOutput</a>(<span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00690"></a>00690 
+<a name="l00703"></a>00703   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
 <a name="l00704"></a>00704 
 <a name="l00715"></a>00715   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically.">queriesSequence</a>();
 <a name="l00716"></a>00716 
@@ -216,40 +214,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00737"></a>00737 
 <a name="l00743"></a>00743   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a312bf413dfc16765328843f3fe08a4b8" title="Set the unknown state.">setStateUnknown</a>();
 <a name="l00744"></a>00744 
-<a name="l00747"></a>00747   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a152a866615b291d0344f24948141f9dd" title="Add a query/reply transaction.">addTransaction</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *io);
-<a name="l00748"></a>00748 
-<a name="l00751"></a>00751   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a152a866615b291d0344f24948141f9dd" title="Add a query/reply transaction.">addTransaction</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *io);
-<a name="l00752"></a>00752 
-<a name="l00755"></a>00755   <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a152a866615b291d0344f24948141f9dd" title="Add a query/reply transaction.">addTransaction</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
-<a name="l00756"></a>00756 
-<a name="l00761"></a>00761   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *<a class="code" href="classmdt_device.html#a3c363d61bf4019dbb40a15ac28fd51af" title="Get analog I/O in pending transactions list.">pendingAioTransaction</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
-<a name="l00762"></a>00762 
-<a name="l00767"></a>00767   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *<a class="code" href="classmdt_device.html#aa7d3959fc291e3e2ae8d712656595dcc" title="Get digital I/O in pending transactions list.">pendingDioTransaction</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
-<a name="l00768"></a>00768 
-<a name="l00773"></a>00773   <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a789ded0f30663dde43ca5d4067273eb7" title="Get multiple I/O in pending transactions list.">pendingIoTransaction</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
-<a name="l00774"></a>00774 
-<a name="l00791"></a>00791   <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> granularity = 50);
-<a name="l00792"></a>00792 
-<a name="l00793"></a>00793   <a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *pvIos;    <span class="comment">// I/O&#39;s container</span>
-<a name="l00794"></a>00794   <span class="keywordtype">int</span> pvDigitalOutputAddressOffset;
-<a name="l00795"></a>00795   <span class="keywordtype">int</span> pvAnalogOutputAddressOffset;
-<a name="l00796"></a>00796 
-<a name="l00797"></a>00797  <span class="keyword">private</span>:
-<a name="l00798"></a>00798 
-<a name="l00799"></a>00799   Q_DISABLE_COPY(<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>);
-<a name="l00800"></a>00800 
-<a name="l00801"></a>00801   <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">state_t</a> pvCurrentState;
-<a name="l00802"></a>00802   QString pvName;
-<a name="l00803"></a>00803   QTimer *pvQueryTimer;
-<a name="l00804"></a>00804   <span class="keywordtype">bool</span> pvAutoQueryEnabled;  <span class="comment">// Flag used for state handling</span>
-<a name="l00805"></a>00805   QMap&lt;int, mdtAnalogIo*&gt; pvPendingAioTransactions;
-<a name="l00806"></a>00806   QMap&lt;int, mdtDigitalIo*&gt; pvPendingDioTransactions;
-<a name="l00807"></a>00807   QList&lt;int&gt; pvPendingIoTransactions;
-<a name="l00808"></a>00808   <span class="keywordtype">int</span> pvBackToReadyStateTimeout;
-<a name="l00809"></a>00809   QTimer *pvBackToReadyStateTimer;
-<a name="l00810"></a>00810 };
-<a name="l00811"></a>00811 
-<a name="l00812"></a>00812 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_H</span>
+<a name="l00749"></a>00749   <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *<a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">getNewTransaction</a>();
+<a name="l00750"></a>00750 
+<a name="l00771"></a>00771   <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> granularity = 50);
+<a name="l00772"></a>00772 
+<a name="l00773"></a>00773   <a class="code" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> *pvIos;    <span class="comment">// I/O&#39;s container</span>
+<a name="l00774"></a>00774   <span class="keywordtype">int</span> pvDigitalOutputAddressOffset;
+<a name="l00775"></a>00775   <span class="keywordtype">int</span> pvAnalogOutputAddressOffset;
+<a name="l00776"></a>00776 
+<a name="l00777"></a>00777  <span class="keyword">private</span>:
+<a name="l00778"></a>00778 
+<a name="l00779"></a>00779   Q_DISABLE_COPY(<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a>);
+<a name="l00780"></a>00780 
+<a name="l00781"></a>00781   <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">state_t</a> pvCurrentState;
+<a name="l00782"></a>00782   QString pvName;
+<a name="l00783"></a>00783   QTimer *pvQueryTimer;
+<a name="l00784"></a>00784   <span class="keywordtype">bool</span> pvAutoQueryEnabled;  <span class="comment">// Flag used for state handling</span>
+<a name="l00785"></a>00785   <span class="keywordtype">int</span> pvBackToReadyStateTimeout;
+<a name="l00786"></a>00786   QTimer *pvBackToReadyStateTimer;
+<a name="l00787"></a>00787 };
+<a name="l00788"></a>00788 
+<a name="l00789"></a>00789 <span class="preprocessor">#endif  // #ifndef MDT_DEVICE_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -266,7 +251,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

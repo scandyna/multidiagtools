@@ -82,6 +82,9 @@ Public Slots</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's value for a set of analog inputs.  <a href="#a82850ee99957ec5a787de71299ad785b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a2c40cf4749cff1ade292bdd81bc195e9">updateAnalogOutputValues</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's value for a set of analog outputs.  <a href="#a2c40cf4749cff1ade292bdd81bc195e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae266924a427fbc896e5f9774890ec91f"></a><!-- doxytag: member="mdtDeviceIos::setAnalogOutputsEnabled" ref="ae266924a427fbc896e5f9774890ec91f" args="(bool enabled)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ae266924a427fbc896e5f9774890ec91f">setAnalogOutputsEnabled</a> (bool enabled)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable (G)UI's analog outputs. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#a9a7582771eca2b54261ff00212c09146">updateDigitalInputStates</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update (G)UI's state for a set of digital inputs.  <a href="#a9a7582771eca2b54261ff00212c09146"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_ios.html#ae9542163fedce98b11e2d9fd0e2e7d78">updateDigitalOutputStates</a> (const QList&lt; QVariant &gt; &amp;values)</td></tr>
@@ -481,6 +484,9 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <li>If type value is of type integer, <a class="el" href="classmdt_analog_io.html#a011fba645b655bdb3f7f8740c327e624" title="Set the integer value.">mdtAnalogIo::setValueInt()</a> is used, else <a class="el" href="classmdt_analog_io.html#a3c8a10c66650728d1878415032543e8a" title="Set the value to update display.">mdtAnalogIo::setValue()</a> is used. </li>
 </ul>
 
+<p><p>ao-&gt;setEnabled(true); </p>
+</p>
+
 <p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00202">202</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
@@ -508,7 +514,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <li>If one value is invalid, concerned input will be set invalid. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00217">217</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00228">228</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -535,7 +541,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 <li>If one value is invalid, concerned input will be set invalid. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_ios_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_device_ios_8cpp_source.html">mdtDeviceIos.cpp</a>.</p>
 
 </div>
 </div>
@@ -558,7 +564,7 @@ const QList&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

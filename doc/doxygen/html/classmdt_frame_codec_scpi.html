@@ -90,10 +90,6 @@ Collaboration diagram for mdtFrameCodecScpi:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a5287ff3f107ca10097cdb499e62f6906">addTransaction</a> (int id, int type)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a query/response transaction.  <a href="#a5287ff3f107ca10097cdb499e62f6906"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aa6f92a37f19983c9a2ef4ba8e10a3581">pendingTransaction</a> (int id)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get transaction by ID.  <a href="#aa6f92a37f19983c9a2ef4ba8e10a3581"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3">decodeValues</a> (const QByteArray &amp;data, QString sep=&quot;:&quot;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode SCPI value(s)  <a href="#a37a1703b6daee6f6bf91c6afb46191b3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">decodeIdn</a> (const QByteArray &amp;data)</td></tr>
@@ -106,48 +102,8 @@ Public Member Functions</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Decode SCPI data. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00040">40</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00038">38</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a5287ff3f107ca10097cdb499e62f6906"></a><!-- doxytag: member="mdtFrameCodecScpi::addTransaction" ref="a5287ff3f107ca10097cdb499e62f6906" args="(int id, int type)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mdtFrameCodecScpi::addTransaction </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Add a query/response transaction. </p>
-<p>The SCPI defines no function code (like MODBUS, f.ex.). When coding a defined sequence, this is not a problem.</p>
-<p>When using a event based approach, it's not possible to know what type of answer the device will return.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>Frame ID (f.ex. bTag for USBTMC) </td></tr>
-    <tr><td class="paramname">type</td><td>Query/response type (f.ex. MDT_FC_SCPI_VALUE) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="aff616991e6223aa51f265cf7e464be12"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeError" ref="aff616991e6223aa51f265cf7e464be12" args="(QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
@@ -170,7 +126,7 @@ Public Member Functions</h2></td></tr>
 <li>Item 1 is the error message string </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00143">143</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -192,7 +148,7 @@ Public Member Functions</h2></td></tr>
 <p>Decode the IDN answer. </p>
 <p>When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00116">116</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -214,7 +170,7 @@ Public Member Functions</h2></td></tr>
 <p>Decode a IEEE block. </p>
 <p>NOTE: not implemented yet ! </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -255,39 +211,7 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if decode could be done.</dd></dl>
 <p>Errors are logged with the <a class="el" href="classmdt_error.html">mdtError</a> system. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00069">69</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa6f92a37f19983c9a2ef4ba8e10a3581"></a><!-- doxytag: member="mdtFrameCodecScpi::pendingTransaction" ref="aa6f92a37f19983c9a2ef4ba8e10a3581" args="(int id)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mdtFrameCodecScpi::pendingTransaction </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get transaction by ID. </p>
-<p>Used by some mdtDevice()'s subclasses. See <a class="el" href="classmdt_frame_codec_scpi.html#a5287ff3f107ca10097cdb499e62f6906" title="Add a query/response transaction.">addTransaction()</a> for details.</p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>Frame ID (f.ex. bTag for USBTMC) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Type of query/response transaction, or MDT_FC_SCPI_UNKNOW if not found. </dd></dl>
-
-<p><p>&lt; Initial or unknown query/response type </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -310,7 +234,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:46 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

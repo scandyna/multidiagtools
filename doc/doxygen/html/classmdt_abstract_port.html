@@ -252,7 +252,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <div class="memdoc">
 
 <p>Error. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
 <p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
 </dd></dl>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
@@ -422,7 +422,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>The mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
  Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated. Note that this method must be called from subclass destructor. See <a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort()</a> for details.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805">mdtAbstractSerialPort</a>.</p>
 
@@ -741,7 +741,7 @@ A valid configuration must be set before calling this method.</dd></dl>
  This method must be implemented in subclass.<br/>
 </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 (see error_t)</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#ad8a196bb21b6ca76dffb068a1692904a">mdtPort</a>, <a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">mdtSerialPort</a>.</p>
 
@@ -1035,7 +1035,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Update the read timeout state. </p>
 <p>This method must be called by system dependant waitEventRead() method. When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br/>
 </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd></dl>
 
 <p><p>if(state != pvReadTimeoutOccuredPrevious){ /emit readTimeoutStateChanged(state); } pvReadTimeoutOccuredPrevious = pvReadTimeoutOccured;</p>
@@ -1063,7 +1063,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Update the write timeout state. </p>
 <p>This method must be called by system dependant <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> method When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br/>
 </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd></dl>
 
 <p><p>if(state != pvWriteTimeoutOccured){ /emit writeTimeoutStateChanged(state); } pvWriteTimeoutOccuredPrevious = pvWriteTimeoutOccured;</p>
@@ -1201,7 +1201,7 @@ A valid configuration must be set before calling this method.</dd></dl>
  This method must be implemented in subclass.<br/>
 </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or error &lt; 0 (see error_t)</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#a62f4a6f2c547d40d3743ce893e0f64d6">mdtPort</a>, <a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">mdtSerialPort</a>.</p>
 
@@ -1291,7 +1291,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

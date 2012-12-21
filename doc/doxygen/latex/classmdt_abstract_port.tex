@@ -13,8 +13,7 @@ Base class for port I/O.
 
 
 
-Inheritance diagram for mdtAbstractPort:
-\nopagebreak
+Inheritance diagram for mdtAbstractPort:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -240,7 +239,7 @@ Definition at line 36 of file mdtAbstractPort.h.
 Error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000009}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
+\item[\hyperlink{todo__todo000010}{Todo}]add UnhandledError to complete UnknownError (+ adapt in threads) 
 
 add a DeviceDisconnected (+ adapt in threads) \end{Desc}
 \begin{Desc}
@@ -422,7 +421,7 @@ Subclass notes:\par
  Internally, this method calls \hyperlink{classmdt_abstract_port_add29e91ccc4be62ab5c0dcb2a68ae8f0}{pvClose()}. Once done, the flags are updated. Note that this method must be called from subclass destructor. See \hyperlink{classmdt_abstract_port_aa40baa0c593fef984f3796acafceee15}{$\sim$mdtAbstractPort()} for details.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000010}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
+\item[\hyperlink{todo__todo000011}{Todo}]Actuellement, les queues sont deletée ici, que faire ? \end{Desc}
 
 
 Reimplemented in \hyperlink{classmdt_abstract_serial_port_ae668910f98ad0e158dc6ebebf0c19805}{mdtAbstractSerialPort}.
@@ -730,7 +729,7 @@ Subclass notes:\par
 Number of bytes readen, or a error $<$ 0 (see error\_\-t)
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000011}{Todo}]adapt subclasses \end{Desc}
+\item[\hyperlink{todo__todo000012}{Todo}]adapt subclasses \end{Desc}
 
 
 Implemented in \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{mdtPort}, \hyperlink{classmdt_tcp_socket_a78842bc5ddcac2d96fb368ee575214cd}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a12274d7956b2af961ccdd36cfc2052cc}{mdtSerialPort}.
@@ -1009,7 +1008,7 @@ Update the read timeout state.
 
 This method must be called by system dependant waitEventRead() method. When the read timeout state chages, the signal readTimeoutStateChanged() is emited.\par
 \begin{Desc}
-\item[\hyperlink{todo__todo000013}{Todo}]Signal useable ? Note: this method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly\par
+\item[\hyperlink{todo__todo000014}{Todo}]Signal useable ? Note: this method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly\par
  Mutex is not handled by this method. \end{Desc}
 
 
@@ -1034,7 +1033,7 @@ Update the write timeout state.
 
 This method must be called by system dependant \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{waitEventWriteReady()} method When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.\par
 \begin{Desc}
-\item[\hyperlink{todo__todo000014}{Todo}]Signal useable ? Note: this method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly\par
+\item[\hyperlink{todo__todo000015}{Todo}]Signal useable ? Note: this method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly\par
  Mutex is not handled by this method. \end{Desc}
 
 
@@ -1169,7 +1168,7 @@ Subclass notes:\par
 Number of bytes written, or error $<$ 0 (see error\_\-t)
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000012}{Todo}]adapt subclasses \end{Desc}
+\item[\hyperlink{todo__todo000013}{Todo}]adapt subclasses \end{Desc}
 
 
 Implemented in \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{mdtPort}, \hyperlink{classmdt_tcp_socket_adbf2db44b291127a499d9f8720beb632}{mdtTcpSocket}, \hyperlink{classmdt_usb_port_af81c0fc2955ed2778ccdf6c7206f2b16}{mdtUsbPort}, and \hyperlink{classmdt_serial_port_a282f99035c032fbb6fa86ccd10deb597}{mdtSerialPort}.

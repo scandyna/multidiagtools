@@ -102,21 +102,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00064"></a>00064 
 <a name="l00076"></a>00076   QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece" title="Scan for available ports.">scan</a>(<span class="keyword">const</span> QStringList &amp;hosts, <span class="keywordtype">int</span> timeout = 500);
 <a name="l00077"></a>00077 
-<a name="l00095"></a>00095   <span class="keywordtype">int</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#a0c56b7d38cfb52d95e81de4ca6ac414f" title="Write PDU by copy.">writeData</a>(QByteArray pdu);
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097  <span class="keyword">public</span> slots:
-<a name="l00098"></a>00098 
-<a name="l00101"></a>00101   <span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9" title="Called by the thread whenn a complete frame was readen.">fromThreadNewFrameReaden</a>();
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103  <span class="keyword">private</span>:
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105   quint16 pvTransactionId;
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107   <span class="comment">// Diseable copy</span>
-<a name="l00108"></a>00108   Q_DISABLE_COPY(<a class="code" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager.">mdtModbusTcpPortManager</a>);
-<a name="l00109"></a>00109 };
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111 <span class="preprocessor">#endif  // #ifndef MDT_MODBUS_TCP_PORTMANAGER_H</span>
+<a name="l00102"></a>00102   <span class="keywordtype">int</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ac83ea9c640869a4bccb4a4787697c646" title="Write PDU by copy.">writeData</a>(QByteArray pdu, <span class="keywordtype">bool</span> enqueueResponse = <span class="keyword">false</span>);
+<a name="l00103"></a>00103 
+<a name="l00123"></a>00123   <span class="keywordtype">int</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ac83ea9c640869a4bccb4a4787697c646" title="Write PDU by copy.">writeData</a>(QByteArray pdu, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125  <span class="keyword">public</span> slots:
+<a name="l00126"></a>00126 
+<a name="l00129"></a>00129   <span class="keywordtype">void</span> <a class="code" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9" title="Called by the thread whenn a complete frame was readen.">fromThreadNewFrameReaden</a>();
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131  <span class="keyword">private</span>:
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133   quint16 pvTransactionId;
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135   <span class="comment">// Diseable copy</span>
+<a name="l00136"></a>00136   Q_DISABLE_COPY(<a class="code" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager.">mdtModbusTcpPortManager</a>);
+<a name="l00137"></a>00137 };
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139 <span class="preprocessor">#endif  // #ifndef MDT_MODBUS_TCP_PORTMANAGER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -133,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Dec 15 2012 16:54:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

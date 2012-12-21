@@ -43,7 +43,9 @@ void \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa6deb2866a539
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_modbus_tcp_port_manager_a216ee2495440be4eefb2faf9da3c9e47}{scan} (const QStringList \&hosts, int timeout=500)
 \begin{DoxyCompactList}\small\item\em Scan for available hosts with a MODBUS/TCP compatible device attached. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_modbus_tcp_port_manager_a0c56b7d38cfb52d95e81de4ca6ac414f}{writeData} (QByteArray pdu)
+int \hyperlink{classmdt_modbus_tcp_port_manager_ac83ea9c640869a4bccb4a4787697c646}{writeData} (QByteArray pdu, bool enqueueResponse=false)
+\begin{DoxyCompactList}\small\item\em Write PDU by copy. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_modbus_tcp_port_manager_a2a3ade6d3f9a6e7de47b9b089754288f}{writeData} (QByteArray pdu, \hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
 \begin{DoxyCompactList}\small\item\em Write PDU by copy. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -99,7 +101,7 @@ Destructor.
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-Definition at line 56 of file mdtModbusTcpPortManager.cpp.
+Definition at line 59 of file mdtModbusTcpPortManager.cpp.
 
 
 
@@ -120,7 +122,7 @@ Called by the thread whenn a complete frame was readen.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000018}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000020}{Todo}]Error on incomplete frame \end{Desc}
 
 
 
@@ -129,7 +131,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 160 of file mdtModbusTcpPortManager.cpp.
+Definition at line 200 of file mdtModbusTcpPortManager.cpp.
 
 \hypertarget{classmdt_modbus_tcp_port_manager_a216ee2495440be4eefb2faf9da3c9e47}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!scan@{scan}}
@@ -159,17 +161,18 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Definition at line 64 of file mdtModbusTcpPortManager.cpp.
+Definition at line 67 of file mdtModbusTcpPortManager.cpp.
 
-\hypertarget{classmdt_modbus_tcp_port_manager_a0c56b7d38cfb52d95e81de4ca6ac414f}{
+\hypertarget{classmdt_modbus_tcp_port_manager_a2a3ade6d3f9a6e7de47b9b089754288f}{
 \index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!writeData@{writeData}}
 \index{writeData@{writeData}!mdtModbusTcpPortManager@{mdtModbusTcpPortManager}}
 \subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtModbusTcpPortManager::writeData (
 \begin{DoxyParamCaption}
-\item[{QByteArray}]{pdu}
+\item[{QByteArray}]{pdu, }
+\item[{{\bf mdtPortTransaction} $\ast$}]{transaction}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_modbus_tcp_port_manager_a0c56b7d38cfb52d95e81de4ca6ac414f}
+)}}
+\label{classmdt_modbus_tcp_port_manager_a2a3ade6d3f9a6e7de47b9b089754288f}
 
 
 Write PDU by copy. 
@@ -182,7 +185,58 @@ Internally, the transaction ID is incremented at each request and returned.
 \begin{DoxyParams}{Parameters}
 {\em pdu} & MODBUS PDU (see the MODBUS Application Protocol Specification for details) \\
 \hline
+{\em transaction} & A valid pointer to a \hyperlink{classmdt_port_transaction}{mdtPortTransaction} object. The id is set internally. If isQueryReplyMode is set true, transaction will be keeped in done queue until \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame(int)} is called. For all cases, signal \hyperlink{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{newReadenFrame(mdtPortTransaction)} is emitted when data comes in. \\
+\hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Transaction ID on success. If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty ($<$ 0) is returned. Note: internally, the writeFramesPool size of \hyperlink{classmdt_abstract_port}{mdtAbstractPort} is used to fix maximum transactions, and this is configurable in \hyperlink{classmdt_port_config}{mdtPortConfig}. See \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager::config()} . 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
+\end{DoxyPrecond}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000019}{Todo}]Handle this ? \end{Desc}
+
+
+
+
+Definition at line 165 of file mdtModbusTcpPortManager.cpp.
+
+\hypertarget{classmdt_modbus_tcp_port_manager_ac83ea9c640869a4bccb4a4787697c646}{
+\index{mdtModbusTcpPortManager@{mdtModbusTcpPortManager}!writeData@{writeData}}
+\index{writeData@{writeData}!mdtModbusTcpPortManager@{mdtModbusTcpPortManager}}
+\subsubsection[{writeData}]{\setlength{\rightskip}{0pt plus 5cm}int mdtModbusTcpPortManager::writeData (
+\begin{DoxyParamCaption}
+\item[{QByteArray}]{pdu, }
+\item[{bool}]{enqueueResponse = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_modbus_tcp_port_manager_ac83ea9c640869a4bccb4a4787697c646}
+
+
+Write PDU by copy. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000021}{Todo}]Obelete this version ! 
+
+Obselete version with enqueueResponse \end{Desc}
+
+
+Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
+
+Internally, the transaction ID is incremented at each request and returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em pdu} & MODBUS PDU (see the MODBUS Application Protocol Specification for details) \\
+\hline
+{\em enqueueResponse} & When data comes in,\\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[\hyperlink{todo__todo000022}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
 \begin{DoxyReturn}{Returns}
 Transaction ID on success. If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty ($<$ 0) is returned. Note: internally, the writeFramesPool size of \hyperlink{classmdt_abstract_port}{mdtAbstractPort} is used to fix maximum transactions, and this is configurable in \hyperlink{classmdt_port_config}{mdtPortConfig}. See \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager::config()} . 
 \end{DoxyReturn}
@@ -190,22 +244,20 @@ Transaction ID on success. If the maximum of authorized transactions are reached
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method.
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000019}{Todo}]Should return transactionId , or $<$ 0 on error \end{Desc}
+\item[\hyperlink{todo__todo000023}{Todo}]Delete default enqueueResponse ! \end{Desc}
 
 
 frame-\/$>$setWaitAnAnswer(false);
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000017}{Todo}]Handle this ? \end{Desc}
+\item[\hyperlink{todo__todo000018}{Todo}]Handle this ? \end{Desc}
+
+
+addTransaction(transaction); 
 
 
 
-
-Reimplemented from \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager}.
-
-
-
-Definition at line 128 of file mdtModbusTcpPortManager.cpp.
+Definition at line 131 of file mdtModbusTcpPortManager.cpp.
 
 
 
