@@ -209,8 +209,19 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
     ao = analogOutputAt(i);
     if(ao != 0){
       ao->setValue(values.at(i), false);
-      ao->setEnabled(true);
+      ///ao->setEnabled(true);
     }
+  }
+}
+
+void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
+{
+  QMapIterator<int, mdtAnalogIo*> it(pvAnalogOutputs);
+
+  while(it.hasNext()){
+    it.next();
+    Q_ASSERT(it.value() != 0);
+    it.value()->setEnabled(enabled);
   }
 }
 

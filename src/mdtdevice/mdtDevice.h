@@ -250,11 +250,12 @@ class mdtDevice : public QObject
    *                 If < 0, no query is sent to device and cached value is returned.
    *                 Else it will wait until a reply comes in, or timeout.
    *                 (See waitTransactionDone() ).
-   * \param convert If true , the value is converted (see mdtAnalogIo::value() for details).
+   * \param realValue If true, the real value (as double) is returned, else the device's specific integer value
+   *                   (see mdtAnalogIo::value() for details).
    * \return A valid value if timeout is > 0 and on successfull query/reply process.
    *          (See the Qt's QVariant documentation to know how to check validity).
    */
-  QVariant getAnalogOutputValue(int address, int timeout, bool convert = true);
+  QVariant getAnalogOutputValue(int address, int timeout, bool realValue = true);
 
   /*! \brief Read all analog outputs on physical device and update (G)UI representation
    *
@@ -523,6 +524,8 @@ class mdtDevice : public QObject
 
   /*! \brief Decode incoming frames
    *
+   * \todo add decodeReadenFrame(mdtPortTransaction) + comment
+   * 
    * Subclass notes:<br>
    *  - This default implementation does nothing.
    *  - This slot should be connected with mdtPortManager::newReadenFrame(int, QByteArray) signal.
@@ -542,15 +545,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getAnalogInput().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
-   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details).
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readAnalogInput(int address);
-  /// \note adapt...
-  virtual int readAnalogInput(int address, mdtAnalogIo *ai, bool enqueueResponse);
+  virtual int readAnalogInput(mdtPortTransaction *transaction);
 
   /*! \brief Read all analog inputs on physical device
    *
@@ -559,10 +559,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getAnalogInputs().
    *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readAnalogInputs();
+  virtual int readAnalogInputs(mdtPortTransaction *transaction);
 
   /*! \brief Read one analog output on physical device
    *
@@ -571,13 +573,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getAnalogOutputValue().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readAnalogOutput(int address);
+  virtual int readAnalogOutput(mdtPortTransaction *transaction);
 
   /*! \brief Read all analog outputs on physical device
    *
@@ -586,13 +587,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getAnalogOutputValue().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readAnalogOutputs();
+  virtual int readAnalogOutputs(mdtPortTransaction *transaction);
 
   /*! \brief Write value on a analog output to physical device
    *
@@ -601,14 +601,13 @@ class mdtDevice : public QObject
    *
    * This method is called from setAnalogOutputValue().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
    * \param value Value encoded regarding device format.
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int writeAnalogOutput(int address, int value);
+  virtual int writeAnalogOutput(int value, mdtPortTransaction *transaction);
 
   /*! \brief Write all analog outputs to physical device
    *
@@ -617,10 +616,12 @@ class mdtDevice : public QObject
    *
    * This method is called from setAnalogOutputs().
    *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int writeAnalogOutputs();
+  virtual int writeAnalogOutputs(mdtPortTransaction *transaction);
 
   /*! \brief Read one digital input on physical device
    *
@@ -629,13 +630,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getDigitalInputState().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readDigitalInput(int address);
+  virtual int readDigitalInput(mdtPortTransaction *transaction);
 
   /*! \brief Read all digital inputs on physical device
    *
@@ -644,10 +644,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getDigitalInputs().
    *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readDigitalInputs();
+  virtual int readDigitalInputs(mdtPortTransaction *transaction);
 
   /*! \brief Read one digital output on physical device
    *
@@ -744,6 +746,12 @@ class mdtDevice : public QObject
    */
   void setStateUnknown();
 
+  /*! \brief Get a new transaction
+   *
+   * \pre portManager must be set before calling this method
+   */
+  mdtPortTransaction *getNewTransaction();
+
   /*! \brief Add a query/reply transaction
    */
   void addTransaction(int id, mdtAnalogIo *io);
@@ -782,6 +790,8 @@ class mdtDevice : public QObject
    *  Internally, a couple of sleep and event processing
    *  is done, avoiding freesing the GUI.
    *
+   * Internally, mdtPortManager::waitOnFrame() is called.
+   *
    * \param id Id returned by query method
    * \param timeout Timeout [ms]
    * \param granularity Sleep time between each call of event processing [ms]<br>
@@ -792,7 +802,7 @@ class mdtDevice : public QObject
    *           a warning will be generated in mdtError system, and false will be returned.
    * \pre granularity must be > 0.
    */
-  virtual bool waitTransactionDone(int id, int timeout, int granularity = 50);
+  bool waitTransactionDone(int id, int timeout, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
   int pvDigitalOutputAddressOffset;

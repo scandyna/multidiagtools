@@ -208,6 +208,10 @@ class mdtDeviceIos : public QObject
    */
   void updateAnalogOutputValues(const QList<QVariant> &values);
 
+  /*! \brief Enable/disable (G)UI's analog outputs
+   */
+  void setAnalogOutputsEnabled(bool enabled);
+
   /*! \brief Update (G)UI's state for a set of digital inputs
    *
    * Note:

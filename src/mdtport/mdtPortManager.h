@@ -319,10 +319,15 @@ class mdtPortManager : public QThread
    * Qt's event loop will not be broken.
    *
    * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   * \return True if Ok, false on timeout
+   * \param timeout Maximum wait time [ms]. Must be a multiple of granularity [ms]
+   * \param granularity Sleep time between each call of event processing [ms]<br>
+   *                     A little value needs more CPU and big value can freese the GUI.
+   *                     Should be between 50 and 100, and must be > 0.
+   *                     Note that timeout must be a multiple of granularity.
+   * \return True if Ok, false on timeout. If id was not found in transactions lists,
+   *           a warning will be generated in mdtError system, and false will be returned.
    */
-  bool waitOnFrame(int id, int timeout = 500);
+  bool waitOnFrame(int id, int timeout = 500, int granularity = 50);
 
   /*! \brief Get data by frame ID
    *
@@ -508,6 +513,12 @@ public:
    */
   void enqueueTransactionDone(mdtPortTransaction *transaction);
 
+  /*! \brief Add a transaction to the RX queue
+   *
+   * \pre transaction must be a valid pointer.
+   */
+  void enqueueTransactionRx(mdtPortTransaction *transaction);
+
 protected:
   /*! \brief Emit signals for each done transactions
    *
@@ -526,9 +537,10 @@ protected:
 
   mdtPortInfo pvPortInfo;
   QQueue<mdtPortTransaction*> pvTransactionsPool;
-  QMap<int, mdtPortTransaction*> pvTransactionsPending;
-  QMap<int, mdtPortTransaction*> pvTransactionsDone;
-  QQueue<QByteArray> pvReadenFrames; // Used if transactions are OFF
+  QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
+  QMap<int, mdtPortTransaction*> pvTransactionsRx;      // Used when transaction's response was received
+  QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used for query/reply mode transactions
+  QQueue<QByteArray> pvReadenFrames;                    // Used if transactions are OFF
 
   bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
   bool pvTransactionsEnabled;

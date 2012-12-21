@@ -310,7 +310,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
       }else{
         transaction->setId(frame->bTag());
         transaction->setData(frame->messageData());
-        enqueueTransactionDone(transaction);
+        enqueueTransactionRx(transaction);
         ///pvTransactionsDone.insert(transaction->id(), transaction);
       }
     }

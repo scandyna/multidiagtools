@@ -40,6 +40,7 @@ void mdtPortTransaction::clear()
   pvIsOutput = false;
   pvData.clear();
   pvIsQueryReplyMode = false;
+  pvAddress = 0;
 }
 
 void mdtPortTransaction::setId(int id)
@@ -133,4 +134,14 @@ void mdtPortTransaction::setQueryReplyMode(bool mode)
 bool mdtPortTransaction::isQueryReplyMode() const
 {
   return pvIsQueryReplyMode;
+}
+
+void mdtPortTransaction::setAddress(int address)
+{
+  pvAddress = address;
+}
+
+int mdtPortTransaction::address() const
+{
+  return pvAddress;
 }

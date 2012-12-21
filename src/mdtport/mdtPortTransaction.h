@@ -62,6 +62,7 @@ class mdtPortTransaction
    *  - isOutput: false
    *  - data: empty
    *  - isQueryReplyMode: false
+   *  - address: 0
    */
   void clear();
 
@@ -170,6 +171,14 @@ class mdtPortTransaction
    */
   bool isQueryReplyMode() const;
 
+  /*! \brief Set address
+   */
+  void setAddress(int address);
+
+  /*! \brief Get address
+   */
+  int address() const;
+
  private:
 
   int pvId;
@@ -181,6 +190,7 @@ class mdtPortTransaction
   bool pvIsOutput;
   QByteArray pvData;
   bool pvIsQueryReplyMode;
+  int pvAddress;
 };
 
 Q_DECLARE_METATYPE(mdtPortTransaction);

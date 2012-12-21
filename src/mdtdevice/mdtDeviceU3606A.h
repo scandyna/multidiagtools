@@ -36,6 +36,10 @@ class mdtDeviceU3606A : public mdtDevice
   mdtDeviceU3606A(QObject *parent = 0);
   ~mdtDeviceU3606A();
 
+  /*! \brief Get internal port manager instance
+   */
+  mdtPortManager *portManager();
+
   /*! \brief Search and connect to physical device.
    *
    * Will scan available ports and open the first port that
@@ -94,34 +98,27 @@ class mdtDeviceU3606A : public mdtDevice
   /*! \brief Decode incoming frames
    *
    * \pre I/O's container must be set with setIos()
-   *
-   * Subclass notes:<br>
-   *  - This slot should be connected with mdtPortManager::newReadenFrame() signal.
-   *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
-  void decodeReadenFrame(int id, QByteArray data);
   void decodeReadenFrame(mdtPortTransaction transaction);
 
  private:
 
   /*! \brief Read one analog input on physical device
    *
+   * This is the device specific implementation to send the query.
+   *  If device handled by subclass has analog inputs, this method should be implemented.
+   *
    * This method is called from getAnalogInput().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
-   * \return bTag on success, value < 0 on error (see mdtUsbtmcPortManager::writeData() for details)
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details).
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  int readAnalogInput(int address, mdtAnalogIo *ai, bool enqueueResponse);
-  
-  /// \todo comment!
-  bool waitTransactionDone(int id, int timeout, int granularity = 50);
+  int readAnalogInput(mdtPortTransaction *transaction);
 
   mdtUsbtmcPortManager *pvPortManager;
   mdtFrameCodecScpiU3606A *pvCodec;
-  ///QByteArray pvGenericData;   // Used by sendQuery()
 };
 
 #endif  // #ifndef MDT_DEVICE_U3606A_H

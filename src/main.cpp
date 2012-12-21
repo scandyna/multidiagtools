@@ -32,7 +32,7 @@
 #include "mdtErrorOut.h"
 #include "mdtError.h"
 
-#include "linux/mdtDeviceU3606AWidget.h"
+///#include "linux/mdtDeviceU3606AWidget.h"
 #include "mdtLed.h"
 #include "mdtBlinkLed.h"
 #include <QGridLayout>

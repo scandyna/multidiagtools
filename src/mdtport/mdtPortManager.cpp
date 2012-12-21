@@ -312,10 +312,20 @@ bool mdtPortManager::waitReadenFrame(int timeout)
   return true;
 }
 
-bool mdtPortManager::waitOnFrame(int id, int timeout)
+bool mdtPortManager::waitOnFrame(int id, int timeout, int granularity)
 {
-  int maxIter = timeout / 50;
+  Q_ASSERT(granularity > 0);
 
+  int maxIter = timeout / granularity;
+
+  // Check if transaction exists in pending queue
+  // Note: we check also done queue, because it's possible that transaction was done
+  if((!pvTransactionsPending.contains(id))&&(!pvTransactionsDone.contains(id))){
+    mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtPortManager");
+    e.commit();
+    return false;
+  }
   // Try until success or timeout
   while(!pvTransactionsDone.contains(id)){
     // Check about timeout
@@ -324,7 +334,7 @@ bool mdtPortManager::waitOnFrame(int id, int timeout)
     }
     // Wait
     qApp->processEvents();
-    msleep(50);
+    msleep(granularity);
     maxIter--;
   }
 
@@ -534,10 +544,18 @@ void mdtPortManager::enqueueTransactionDone(mdtPortTransaction *transaction)
   pvTransactionsDone.insert(transaction->id(), transaction);
 }
 
+void mdtPortManager::enqueueTransactionRx(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(transaction != 0);
+
+  pvTransactionsRx.insert(transaction->id(), transaction);
+}
+
+
 void mdtPortManager::commitFrames()
 {
   if(pvTransactionsEnabled){
-    QMutableMapIterator<int, mdtPortTransaction*> it(pvTransactionsDone);
+    QMutableMapIterator<int, mdtPortTransaction*> it(pvTransactionsRx);
     mdtPortTransaction *transaction;
 
     while(it.hasNext()){
@@ -548,10 +566,12 @@ void mdtPortManager::commitFrames()
       qDebug() << "mdtPortManager::commitFrames(): id: " << transaction->id() << " , data: " << transaction->data();
       ///emit(newReadenFrame(transaction->id(), transaction->data()));
       emit(newReadenFrame(*transaction));
-      if(!transaction->isQueryReplyMode()){
+      if(transaction->isQueryReplyMode()){
+        enqueueTransactionDone(transaction);
+      }else{
         pvTransactionsPool.enqueue(transaction);
-        it.remove();
       }
+      it.remove();
     }
     // Watch transactions done size
     if(pvTransactionsDone.size() > 200){
