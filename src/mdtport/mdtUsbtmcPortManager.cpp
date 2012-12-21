@@ -96,11 +96,8 @@ int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
 QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
 {
   int bTag;
-  ///int i = readTimeout / 50;
   mdtPortTransaction *transaction;
 
-  // Clear previous response
-  ///pvGenericData.clear();
   // Wait until data can be sent
   if(!waitOnWriteReady(writeTimeout)){
     return QByteArray();
@@ -129,22 +126,6 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   }
 
   return readenFrame(bTag);
-  // Remember query type.
-  /// \note It seems that U3606A does allways return a bTag 0 , bug in mdt lib ?
-  ///pvCodec->addTransaction(0, MDT_FC_SCPI_UNKNOW);
-  // Wait on response
-  /**
-  while(pvGenericData.size() < 1){
-    // Check timeout
-    if(i <= 0){
-      return QByteArray();
-    }
-    pvPortManager->wait(50, 50);
-    i--;
-  }
-  */
-
-  return QByteArray();
 }
 
 int mdtUsbtmcPortManager::writeData(QByteArray data)
@@ -174,7 +155,7 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
-  qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
+  ///qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData(data);
   frame->setEOM(true);
@@ -213,7 +194,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
-  qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
+  ///qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData("");
   frame->setTransferSize(config().readFrameSize()-1);
@@ -222,7 +203,6 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   // Add transaction
   transaction->setId(pvCurrentWritebTag);
   addTransaction(transaction);
-  ///addTransaction(pvCurrentWritebTag, enqueueResponse);
   pvPort->unlockMutex();
 
   return pvCurrentWritebTag;
@@ -311,7 +291,6 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
         transaction->setId(frame->bTag());
         transaction->setData(frame->messageData());
         enqueueTransactionRx(transaction);
-        ///pvTransactionsDone.insert(transaction->id(), transaction);
       }
     }
     // Put frame back into pool

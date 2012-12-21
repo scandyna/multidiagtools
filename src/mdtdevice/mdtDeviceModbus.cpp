@@ -34,7 +34,6 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
 
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
-  ///connect(pvTcpPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(decodeReadenFrame(int, QByteArray)));
   connect(pvTcpPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
   connect(pvTcpPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
   timeout = pvTcpPortManager->config().readTimeout();
@@ -42,7 +41,6 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
     timeout = pvTcpPortManager->config().writeTimeout();
   }
   setBackToReadyStateTimeout(2*timeout);
-  ///pvTcpPortManager->setNotifyNewReadenFrame(true);
   /// \note Provisoire !!
   pvTcpPortManager->setPortName("192.168.1.102:502");
   ///pvTcpPortManager->setPortName("192.168.1.103:502");
@@ -63,126 +61,6 @@ mdtPortManager *mdtDeviceModbus::portManager()
   return pvTcpPortManager;
 }
 
-void mdtDeviceModbus::decodeReadenFrame(int id, QByteArray pdu)
-{
-  Q_ASSERT(pvIos != 0);
-
-  int fc;
-  mdtAnalogIo *ai;
-  mdtAnalogIo *ao;
-  mdtDigitalIo *di;
-  mdtDigitalIo *dout;
-
-  // Decode readen frame and update I/O's
-  fc = pvCodec->decode(pdu);
-  qDebug() << "mdtDeviceModbus::decodeReadenFrames(id, data): RX frame TID " << id;
-  switch(fc){
-    case 0x01:  // Read coils
-      dout = pendingDioTransaction(id);
-      pendingIoTransaction(id);
-      // Check if we have just one or all outputs to update
-      if((dout != 0)&&(pvCodec->values().size() == 1)){
-        dout->setOn(pvCodec->values().at(0), false);
-      }else{
-        pvIos->updateDigitalOutputStates(pvCodec->values());
-      }
-      break;
-    case 0x02:  // Read discrete inputs
-      ///qDebug() << "mdtDeviceModbus::decodeReadenFrames(): RX 0x02, read discrete inputs frame TID " << id << "\n-> Values: " << pvCodec->values();
-      di = pendingDioTransaction(id);
-      pendingIoTransaction(id);
-      // Check if we have just one or all inputs to update
-      if((di != 0)&&(pvCodec->values().size() == 1)){
-        di->setOn(pvCodec->values().at(0), false);
-      }else{
-        pvIos->updateDigitalInputStates(pvCodec->values());
-      }
-      break;
-    case 0x03:  // Read holding registers
-      ao = pendingAioTransaction(id);
-      pendingIoTransaction(id);
-      // Check if we have just one or all outputs to update
-      if((ao != 0)&&(pvCodec->values().size() == 1)){
-        ao->setValue(pvCodec->values().at(0), false);
-      }else{
-        pvIos->updateAnalogOutputValues(pvCodec->values());
-      }
-      break;
-    case 0x04:  // Read input registers
-      ai = pendingAioTransaction(id);
-      pendingIoTransaction(id);
-      // Check if we have just one or all inputs to update
-      if((ai != 0)&&(pvCodec->values().size() == 1)){
-        ai->setValue(pvCodec->values().at(0), false);
-      }else{
-        pvIos->updateAnalogInputValues(pvCodec->values());
-      }
-      break;
-    case 0x05:  // Write single coil reply
-      dout = pendingDioTransaction(id);
-      if(dout != 0){
-        // Check validitiy
-        if(pvCodec->values().size() != 2){
-          mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of states from device", mdtError::Error);
-          MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
-          e.commit();
-          dout->setOn(QVariant(), false);
-          dout->setEnabled(true);
-          break;
-        }
-        dout->setOn(pvCodec->values().at(1), false);
-        dout->setEnabled(true);
-      }
-      break;
-    case 0x06:  // Write single register reply
-      // See if we have a pending analog output request
-      ao = pendingAioTransaction(id);
-      if(ao != 0){
-        // Check validitiy
-        if(pvCodec->values().size() != 2){
-          mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of values from device", mdtError::Error);
-          MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
-          e.commit();
-          ao->setValue(0.0, false, false);
-          ao->setEnabled(true);
-          break;
-        }
-        if(!pvCodec->values().at(1).isValid()){
-          mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received invalid value from device", mdtError::Error);
-          MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
-          e.commit();
-          ao->setValue(0.0, false, false);
-          ao->setEnabled(true);
-          break;
-        }
-        // Update (G)UI
-        ao->setValue(pvCodec->values().at(1), false);
-        ao->setEnabled(true);
-      }
-      break;
-    case 0x10:  // Write multiple registers reply
-      pendingIoTransaction(id);
-      // Check validitiy
-      if(pvCodec->values().size() != 2){
-        mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of values from device", mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
-        e.commit();
-        pvIos->setAnalogOutputsValue(QVariant());
-        break;
-      }
-      break;
-    default:
-      // Remove pending transactions
-      pendingIoTransaction(id);
-      pendingAioTransaction(id);
-      pendingDioTransaction(id);
-      /// \todo Handle errors !
-      mdtError e(MDT_DEVICE_ERROR, "Received frame with unhandled function code (0x" + QString::number(fc, 16) + ")", mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
-      e.commit();
-  }
-}
-
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
 {
   Q_ASSERT(pvIos != 0);
@@ -191,7 +69,6 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
 
   // Decode readen frame and update I/O's
   fc = pvCodec->decode(transaction.data());
-  qDebug() << "mdtDeviceModbus::decodeReadenFrames(): RX frame TID " << transaction.id();
   switch(fc){
     case 0x01:  // Read coils
       // Check if we have just one or all outputs to update

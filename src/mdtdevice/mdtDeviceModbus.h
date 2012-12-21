@@ -54,12 +54,7 @@ class mdtDeviceModbus : public mdtDevice
   /*! \brief Decode incoming frames
    *
    * \pre I/O's container must be set with setIos()
-   *
-   * Subclass notes:<br>
-   *  - This slot should be connected with mdtPortManager::newReadenFrame() signal.
-   *  - The incoming frames are available with mdtPortManager::readenFrames().
    */
-  void decodeReadenFrame(int id, QByteArray pdu);
   void decodeReadenFrame(mdtPortTransaction transaction);
 
   /*! \brief Update (G)UI when device's state has changed

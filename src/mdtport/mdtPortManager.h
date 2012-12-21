@@ -49,6 +49,7 @@ class mdtPortThread;
  * mdtPortManager m;
  * mdtPort *port;
  * mdtPortConfig *config;
+ * QList<QByteArray> responses;
  *
  * // Setup
  * config = new mdtPortConfig;
@@ -59,8 +60,8 @@ class mdtPortThread;
  * port = new mdtPort;
  * port->setConfig(config);
  *
- * // Init port manager
- * m.setEnqueueReadenFrames(true);
+ * // Init port manager - We wand blocking mode
+ * m.setTransactionsDisabled(true);
  * m.setPort(port);
  * m.addThread(mew mdtPortWriteThread);
  * m.addThread(mew mdtPortReadThread);
@@ -85,8 +86,9 @@ class mdtPortThread;
  * }
  *
  * // Do something with received data
- * for(int i=0; i<m.readenFrames().size(); i++){
- *  qDebug() << m.readenFrames().at(i);
+ * responses = m.readenFrames();
+ * for(int i=0; i<responses.size(); i++){
+ *  qDebug() << responses.at(i);
  * }
  *
  * // Cleanup - detachPort() will delete port and threads objects
@@ -95,11 +97,9 @@ class mdtPortThread;
  *
  * \endcode
  *
- * A alternative of using waitReadenFrame() is to connect the newReadenFrame()
- *  signal to a slot, and get data with readenFrames() from this slot.
- *
- * \sa mdtSerialPortManager
- * \sa mdtUsbtmcPortManager (Linux only)
+ * A (recommended) alternative is to disable frames enqueuing and use the newReadenFrame(QByteArray) signal.
+ *  - Disable enqueuing with setTransactionsDisabled(false)
+ *  - Connect newReadenFrame(QByteArray) to a slot
  */
 class mdtPortManager : public QThread
 {
@@ -116,27 +116,6 @@ class mdtPortManager : public QThread
    * Note that port set by setPort() and threads are not deleted.
    */
   virtual ~mdtPortManager();
-
-  /*! \brief Set the enqueue readen frames flag
-   *
-   * If true, all incomming frames will be added in internal queue.
-   *
-   * This flag has no effect if transactions support is enabled
-   *  (see setTransactionsEnabled() ).
-   *
-   * By default this flag is false.
-   */
-  void setEnqueueReadenFrames(bool enqueue);
-
-  /*! \brief Set the incomming frame notification flag
-   *
-   * \note Obselete
-   * If true, the newReadenFrame(int, QByteArray) signal
-   *  will be emitted for each incomming frame.
-   *
-   * By default this flag is false.
-   */
-  void setNotifyNewReadenFrame(bool notify);
 
   /*! \brief Scan for available ports
    *
@@ -254,6 +233,57 @@ class mdtPortManager : public QThread
    * If port was never set (with setPort() ), this method does nothing.
    */
   void closePort();
+
+  /*! \brief Enable transactions support
+   *
+   * Transaction is usefull for protocols wich supports
+   *  frame identification (like transaction ID in MODBUS/TCP
+   *  or bTag in USBTMC).
+   *
+   * If transaction support is enabled, port manager can
+   *  work on both event (signal) and blocking mode "on the fly".
+   *  Each time a frame comes in, the newReadenFrame(mdtPortTransaction) signal is emited.
+   *  Optionnaly, it's possible to request that a frame
+   *  must be enqueued for a given transaction (regarding a specific ID),
+   *  witch is requierd for blocking mode (see waitOnFrame() ).
+   *
+   * Note that not all port manager support transactions.
+   *  For example, this default implementation cannot work with transactions.
+   *  By default, they are disabled, and no frame is enqueued (see setTransactionsDisabled()).
+   *  See specific subclass for details.
+   *
+   * \pre Port manager must not running when this method is called.
+   */
+  void setTransactionsEnabled();
+
+  /*! \brief Diseable transactions support
+   *
+   * See setTransactionsEnabled() for details about transactions.
+   *
+   * If transactions are disabled, it's only possible to choose
+   *  once if blocking mode is supported.
+   *  Each time a frame comes in, the newReadenFrame(int, QByteArray) signal is emited.
+   *
+   * In this mode, waitOnFrame() will allways timeout.
+   *
+   * \param enqueueIncommingFrames If true, each incomming frame is enqueued (usefull for blocking mode).
+   *                                Note: if true, don't forget to take each frame with readenFrame() or readenFrames().
+   *
+   * \pre Port manager must not running when this method is called.
+   */
+  void setTransactionsDisabled(bool enqueueIncommingFrames);
+
+  /*! \brief Get a new transaction
+   *
+   * If transactions pool is empty, a new transaction is created.
+   *  Note that each transaction should be put back in
+   *  pool with restoreTransaction().
+   *
+   * \return A empty transaction (mdtPortTransaction::clear() is called internally).
+   *
+   * \post Returned transaction is valid (never Null).
+   */
+  mdtPortTransaction *getNewTransaction();
 
   /*! \brief Wait until data can be written
    *
@@ -394,77 +424,24 @@ class mdtPortManager : public QThread
  signals:
 
   /*! \brief Emitted when new frame was readen
-   * 
-   * \note NOT forget removeTransactionDone()
    *
-   * The id is the same than returned by writeData().
-   *
-   * \note True ?
-   * Emitted only if notifyNewReadenFrame flag is true.
-   *
-   * \sa setNotifyNewReadenFrame()
+   * This variant is sent when transactions support is OFF.
+   *  (See setTransactionsDisabled() for details).
    */
-  void newReadenFrame(int id, QByteArray data);
-  void newReadenFrame(mdtPortTransaction transaction);
+  void newReadenFrame(QByteArray data);
 
-  /*! \brief Emitted when internal queue of readen frames size has changed
+  /*! \brief Emitted when new frame was readen
    *
-   * \sa readenFrame()
-   * \sa readenFrames()
+   * This variant is sent when transactions support is ON.
+   *  (See setTransactionsDisabled() for details).
    */
-  void readenFramesQueueSizeChanged(int newSize);
+  void newReadenFrame(mdtPortTransaction transaction);
 
   /*! \brief Emitted when error number has changed
    */
   void errorStateChanged(int error);
 
- ///protected:
-
-public:
-  /*! \brief Enable transactions support
-   *
-   * Transaction is usefull for protocols wich supports
-   *  frame identification (like transaction ID in MODBUS/TCP
-   *  or bTag in USBTMC).
-   *
-   * If transaction support is enabled, port manager can
-   *  work on both event (signal) and blocking mode "on the fly".
-   *  Each time a frame comes in, the \todo SigName is emited.
-   *  Optionnaly, it's possible to request that a frame
-   *  must be enqueued for a given transaction (regarding a specific ID),
-   *  witch is requierd for blocking mode (see waitOnFrame() ).
-   *
-   * \pre Port manager must not running when this method is called.
-   */
-  void setTransactionsEnabled();
-
-  /*! \brief Diseable transactions support
-   *
-   * See setTransactionsEnabled() for details about transactions.
-   *
-   * If transactions are disabled, it's only possible to choose
-   *  once if blocking mode is supported.
-   *  Each time a frame comes in, the \todo SigName is emited.
-   *
-   * In this mode, waitOnFrame() will allways timeout.
-   *
-   * \param enqueueIncommingFrames If true, each incomming frame is enqueued (usefull for blocking mode)
-   *
-   * \pre Port manager must not running when this method is called.
-   */
-  void setTransactionsDisabled(bool enqueueIncommingFrames);
-
-  /*! \brief Get a new transaction
-   *
-   * If transactions pool is empty, a new transaction is created.
-   *  Note that each transaction should be put back in
-   *  pool with restoreTransaction().
-   *
-   * \return A empty transaction (mdtPortTransaction::clear() is called internally).
-   *
-   * \post Returned transaction is valid (never Null).
-   */
-  mdtPortTransaction *getNewTransaction();
+ protected:
 
   /*! \brief Restore a transaction into pool
    *
@@ -519,7 +496,6 @@ public:
    */
   void enqueueTransactionRx(mdtPortTransaction *transaction);
 
-protected:
   /*! \brief Emit signals for each done transactions
    *
    * The emited signals depend on setup ....

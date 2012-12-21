@@ -91,7 +91,7 @@ void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTran
   }
 }
 
-void mdtPortTerm::appendReadenData(int, QByteArray data)
+void mdtPortTerm::appendReadenData(QByteArray data)
 {
   teTerm->append(data);
 
@@ -187,7 +187,7 @@ void mdtPortTerm::attachToSerialPort()
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
   ///qDebug() << "Port Term: bottomHLayout items: " << bottomHLayout->count();
 
-  connect(pvSerialPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(appendReadenData(int, QByteArray)));
+  connect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
 
   // Try to open first port
   ports = pvSerialPortManager->scan();
@@ -200,7 +200,7 @@ void mdtPortTerm::attachToSerialPort()
       return;
     }
   }
-  pvSerialPortManager->setNotifyNewReadenFrame(true);
+  ///pvSerialPortManager->setNotifyNewReadenFrame(true);
   if(pvSerialPortManager->start()){
     setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
   }
@@ -210,7 +210,7 @@ void mdtPortTerm::attachToSerialPort()
 void mdtPortTerm::detachFromSerialPort()
 {
   if(pvSerialPortManager != 0){
-    disconnect(pvSerialPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(appendReadenData(int, QByteArray)));
+    disconnect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
     delete pvSerialPortManager;
     pvSerialPortManager = 0;
     // Ctl widget
@@ -234,13 +234,13 @@ void mdtPortTerm::portSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }else if(pvUsbtmcPortManager != 0){
-    pvUsbtmcPortManager->setNotifyNewReadenFrame(false);
-    pvUsbtmcPortManager->setEnqueueReadenFrames(true);
+    ///pvUsbtmcPortManager->setNotifyNewReadenFrame(false);
+    ///pvUsbtmcPortManager->setEnqueueReadenFrames(true);
     mdtUsbtmcPortSetupDialog d(this);
     d.setPortManager(pvUsbtmcPortManager);
     d.exec();
-    pvUsbtmcPortManager->setEnqueueReadenFrames(false);
-    pvUsbtmcPortManager->setNotifyNewReadenFrame(true);
+    ///pvUsbtmcPortManager->setEnqueueReadenFrames(false);
+    ///pvUsbtmcPortManager->setNotifyNewReadenFrame(true);
   }
   // If port is running, enable terminal
   if(pvCurrentPortManager->isRunning()){
@@ -273,7 +273,7 @@ void mdtPortTerm::attachToUsbtmcPort()
     qDeleteAll(ports);
     return;
   }
-  pvUsbtmcPortManager->setNotifyNewReadenFrame(true);
+  ///pvUsbtmcPortManager->setNotifyNewReadenFrame(true);
   if(pvUsbtmcPortManager->start()){
     ///pvPortDisplayText = tr("Attached to device: ") + ports.at(0)->displayText();
     ///setStateRunning(pvPortDisplayText);
@@ -281,13 +281,13 @@ void mdtPortTerm::attachToUsbtmcPort()
   }
   qDeleteAll(ports);
 
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(appendReadenData(int, QByteArray)));
+  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
 }
 
 void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
-    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(int, QByteArray)), this, SLOT(appendReadenData(int, QByteArray)));
+    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
   }

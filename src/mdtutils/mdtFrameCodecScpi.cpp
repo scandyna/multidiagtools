@@ -42,30 +42,6 @@ mdtFrameCodecScpi::~mdtFrameCodecScpi()
 {
 }
 
-void mdtFrameCodecScpi::addTransaction(int id, int type)
-{
-  // Check that queue has not to many queries
-  if(pvPendingTransactions.size() > 20){
-    mdtError e(MDT_DEVICE_ERROR, "Pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
-    e.commit();
-    pvPendingTransactions.clear();
-    return;
-  }
-  pvPendingTransactions.insert(id, type);
-  qDebug() << "CODEC, pt: " << pvPendingTransactions;
-}
-
-int mdtFrameCodecScpi::pendingTransaction(int id)
-{
-  int type;
-
-  type = pvPendingTransactions.value(id, MDT_FC_SCPI_UNKNOW);
-  pvPendingTransactions.remove(id);
-
-  return type;
-}
-
 bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
 {
   int i;

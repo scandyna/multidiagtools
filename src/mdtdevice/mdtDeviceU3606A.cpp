@@ -35,7 +35,7 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   pvCodec = new mdtFrameCodecScpiU3606A;
   // Setup port manager
   pvPortManager->config().setReadTimeout(10000);
-  pvPortManager->setNotifyNewReadenFrame(true);
+  ///pvPortManager->setNotifyNewReadenFrame(true);
   connect(pvPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
   connect(pvPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
   timeout = pvPortManager->config().readTimeout();

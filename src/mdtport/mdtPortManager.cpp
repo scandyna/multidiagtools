@@ -58,18 +58,6 @@ mdtPortManager::~mdtPortManager()
   pvTransactionsDone.clear();
 }
 
-
-void mdtPortManager::setEnqueueReadenFrames(bool enqueue)
-{
-  pvEnqueueAllReadenFrames = enqueue;
-}
-
-
-void mdtPortManager::setNotifyNewReadenFrame(bool notify)
-{
-  ///pvNotifyNewReadenFrame = notify;
-}
-
 QList<mdtPortInfo*> mdtPortManager::scan()
 {
   Q_ASSERT(!isRunning());
@@ -233,6 +221,37 @@ void mdtPortManager::closePort()
   // Remove pending transactions
   qDeleteAll(pvTransactionsPending);
   pvTransactionsPending.clear();
+}
+
+void mdtPortManager::setTransactionsEnabled()
+{
+  Q_ASSERT(!isRunning());
+
+  pvEnqueueAllReadenFrames = false;
+  pvTransactionsEnabled = true;
+}
+
+void mdtPortManager::setTransactionsDisabled(bool enqueueIncommingFrames)
+{
+  Q_ASSERT(!isRunning());
+
+  pvEnqueueAllReadenFrames = enqueueIncommingFrames;
+  pvTransactionsEnabled = false;
+}
+
+mdtPortTransaction *mdtPortManager::getNewTransaction()
+{
+  mdtPortTransaction *transaction;
+
+  if(pvTransactionsPool.size() < 1){
+    transaction = new mdtPortTransaction;
+  }else{
+    transaction = pvTransactionsPool.dequeue();
+  }
+  Q_ASSERT(transaction != 0);
+  transaction->clear();
+
+  return transaction;
 }
 
 bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
@@ -406,8 +425,6 @@ void mdtPortManager::fromThreadNewFrameReaden()
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame;
-  ///mdtPortTransaction *transaction;
-  ///int id = -1;
 
   // Get frames in readen queue
   pvPort->lockMutex();
@@ -417,21 +434,6 @@ void mdtPortManager::fromThreadNewFrameReaden()
     // Copy data
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
-      /**
-      // If we have a pending transaction, remove it
-      transaction = pendingTransaction(0);
-      if(transaction != 0){
-        id = 0;
-      }else{
-        transaction = getNewTransaction();
-        // We generate a artificial ID so that data are stored in ascending order
-        id++;
-      }
-      // Add to DONE queue
-      transaction->setId(id);
-      transaction->setData(*frame);
-      pvTransactionsDone.insert(id, transaction);
-      */
       QByteArray data;
       data.append(frame->data(), frame->size());
       pvReadenFrames.enqueue(data);
@@ -456,37 +458,6 @@ void mdtPortManager::onThreadsErrorOccured(int error)
   // Try to handle error
 
   // On IO error, we try to re-open the port
-}
-
-void mdtPortManager::setTransactionsEnabled()
-{
-  Q_ASSERT(!isRunning());
-
-  pvEnqueueAllReadenFrames = false;
-  pvTransactionsEnabled = true;
-}
-
-void mdtPortManager::setTransactionsDisabled(bool enqueueIncommingFrames)
-{
-  Q_ASSERT(!isRunning());
-
-  pvEnqueueAllReadenFrames = enqueueIncommingFrames;
-  pvTransactionsEnabled = false;
-}
-
-mdtPortTransaction *mdtPortManager::getNewTransaction()
-{
-  mdtPortTransaction *transaction;
-
-  if(pvTransactionsPool.size() < 1){
-    transaction = new mdtPortTransaction;
-  }else{
-    transaction = pvTransactionsPool.dequeue();
-  }
-  Q_ASSERT(transaction != 0);
-  transaction->clear();
-
-  return transaction;
 }
 
 void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
@@ -563,8 +534,6 @@ void mdtPortManager::commitFrames()
       transaction = it.value();
       Q_ASSERT(transaction != 0);
       Q_ASSERT(transaction->id() == it.key());
-      qDebug() << "mdtPortManager::commitFrames(): id: " << transaction->id() << " , data: " << transaction->data();
-      ///emit(newReadenFrame(transaction->id(), transaction->data()));
       emit(newReadenFrame(*transaction));
       if(transaction->isQueryReplyMode()){
         enqueueTransactionDone(transaction);
@@ -585,7 +554,7 @@ void mdtPortManager::commitFrames()
     int i;
 
     for(i=0; i<pvReadenFrames.size(); i++){
-      emit(newReadenFrame(0, pvReadenFrames.at(i)));
+      emit(newReadenFrame(pvReadenFrames.at(i)));
     }
     if(!pvEnqueueAllReadenFrames){
       pvReadenFrames.clear();

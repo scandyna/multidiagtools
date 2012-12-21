@@ -59,7 +59,7 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    *
    * Whenn called, data will be token from active port manager
    */
-  void appendReadenData(int, QByteArray data);
+  void appendReadenData(QByteArray data);
 
   /*! \brief Send command to port
    */

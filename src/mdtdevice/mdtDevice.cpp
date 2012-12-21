@@ -764,7 +764,7 @@ void mdtDevice::setStateReady()
   emit(stateChanged(pvCurrentState));
 }
 
-void mdtDevice::decodeReadenFrame(int, QByteArray)
+void mdtDevice::decodeReadenFrame(mdtPortTransaction transaction)
 {
 }
 
@@ -902,75 +902,6 @@ mdtPortTransaction *mdtDevice::getNewTransaction()
   return portManager()->getNewTransaction();
 }
 
-void mdtDevice::addTransaction(int id, mdtAnalogIo *io)
-{
-  // Check that queue has not to many queries
-  if(pvPendingAioTransactions.size() > 20){
-    setStateBusy(pvBackToReadyStateTimeout);
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    pvPendingAioTransactions.clear();
-    return;
-  }
-  pvPendingAioTransactions.insert(id, io);
-}
-
-void mdtDevice::addTransaction(int id, mdtDigitalIo *io)
-{
-  // Check that queue has not to many queries
-  if(pvPendingDioTransactions.size() > 20){
-    setStateBusy(pvBackToReadyStateTimeout);
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    pvPendingDioTransactions.clear();
-    return;
-  }
-  pvPendingDioTransactions.insert(id, io);
-}
-
-void mdtDevice::addTransaction(int id)
-{
-  // Check that queue has not to many queries
-  if(pvPendingIoTransactions.size() > 20){
-    setStateBusy(pvBackToReadyStateTimeout);
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": pending transactions queue has more than 20 items, will be cleared", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    pvPendingIoTransactions.clear();
-    return;
-  }
-  pvPendingIoTransactions.append(id);
-}
-
-mdtAnalogIo *mdtDevice::pendingAioTransaction(int id)
-{
-  if(!pvPendingAioTransactions.contains(id)){
-    return 0;
-  }
-  return pvPendingAioTransactions.take(id);
-}
-
-mdtDigitalIo *mdtDevice::pendingDioTransaction(int id)
-{
-  if(!pvPendingDioTransactions.contains(id)){
-    return 0;
-  }
-  return pvPendingDioTransactions.take(id);
-}
-
-int mdtDevice::pendingIoTransaction(int id)
-{
-  int index;
-
-  index = pvPendingIoTransactions.indexOf(id);
-  if(index < 0){
-    return -1;
-  }
-  return pvPendingIoTransactions.takeAt(index);
-}
-
 bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
 {
   Q_ASSERT(granularity > 0);
@@ -978,68 +909,9 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
 
   bool ok;
 
-  qDebug() << "mdtDevice::waitTransactionDone(), ID " << id;
   ok = portManager()->waitOnFrame(id, timeout, granularity);
   // We must remove frame from done queue
-  qDebug() << "mdtDevice::waitTransactionDone(), ID " << id << " done..";
   portManager()->readenFrame(id);
 
   return ok;
 }
-/**
-bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
-{
-  Q_ASSERT(granularity > 0);
-
-  int index;
-  int i = timeout / granularity;
-
-  // Select correct queue
-  if(pvPendingAioTransactions.contains(id)){
-    while(pvPendingAioTransactions.contains(id)){
-      // Check timeout
-      if(i <= 0){
-        pvPendingAioTransactions.remove(id);
-        qDebug() << "waitTransactionDone/AIO: timeout";
-        ///setStateBusy(pvBackToReadyStateTimeout);
-        return false;
-      }
-      mdtPortManager::wait(granularity, granularity);
-      i--;
-    }
-  }else if(pvPendingDioTransactions.contains(id)){
-    while(pvPendingDioTransactions.contains(id)){
-      // Check timeout
-      if(i <= 0){
-        pvPendingDioTransactions.remove(id);
-        qDebug() << "waitTransactionDone/DIO: timeout";
-        ///setStateBusy(pvBackToReadyStateTimeout);
-        return false;
-      }
-      mdtPortManager::wait(granularity, granularity);
-      i--;
-    }
-  }else if((index = pvPendingIoTransactions.indexOf(id)) >= 0){
-    while(index >= 0){
-      index = pvPendingIoTransactions.indexOf(id);
-      // Check timeout
-      if(i <= 0){
-        pvPendingIoTransactions.removeAt(index);
-        qDebug() << "waitTransactionDone/IO: timeout";
-        ///setStateBusy(pvBackToReadyStateTimeout);
-        return false;
-      }
-      mdtPortManager::wait(granularity, granularity);
-      i--;
-    }
-  }else{
-    // Add a error
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": transaction id " + QString::number(id) + " not found", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return false;
-  }
-
-  return true;
-}
-*/

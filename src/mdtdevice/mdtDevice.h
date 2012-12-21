@@ -30,8 +30,6 @@
 #include <QVariant>
 #include <QString>
 #include <QStringList>
-#include <QMap>
-#include <QList>
 
 class QTimer;
 
@@ -524,17 +522,13 @@ class mdtDevice : public QObject
 
   /*! \brief Decode incoming frames
    *
-   * \todo add decodeReadenFrame(mdtPortTransaction) + comment
-   * 
    * Subclass notes:<br>
    *  - This default implementation does nothing.
-   *  - This slot should be connected with mdtPortManager::newReadenFrame(int, QByteArray) signal.
+   *  - This slot should be connected with mdtPortManager::newReadenFrame(mdtPortTransaction) signal.
    *  - In this class, this connection is not made, it is the sublcass responsability to do this.
    *  - To update (G)UI, mdtDeviceIos::updateAnalogInputValues() should be used.
-   *  - Pending transactions must be removed from respective queue
-   *     (see pendingAioTransaction(), pendingDioTransaction() and pendingIoTransaction() ).
    */
-  virtual void decodeReadenFrame(int id, QByteArray data);
+  virtual void decodeReadenFrame(mdtPortTransaction transaction);
 
  protected:
 
@@ -754,36 +748,6 @@ class mdtDevice : public QObject
    */
   mdtPortTransaction *getNewTransaction();
 
-  /*! \brief Add a query/reply transaction
-   */
-  void addTransaction(int id, mdtAnalogIo *io);
-
-  /*! \brief Add a query/reply transaction
-   */
-  void addTransaction(int id, mdtDigitalIo *io);
-
-  /*! \brief Add a query/reply transaction
-   */
-  void addTransaction(int id);
-
-  /*! \brief Get analog I/O in pending transactions list
-   *
-   * If transaction id was not found, 0 is returned
-   */
-  mdtAnalogIo *pendingAioTransaction(int id);
-
-  /*! \brief Get digital I/O in pending transactions list
-   *
-   * If transaction id was not found, 0 is returned
-   */
-  mdtDigitalIo *pendingDioTransaction(int id);
-
-  /*! \brief Get multiple I/O in pending transactions list
-   *
-   * If transaction id was not found, value < 0 is returned
-   */
-  int pendingIoTransaction(int id);
-
   /*! \brief Wait until a transaction is done without break the GUI's event loop
    *
    * \todo Adapt, comment
@@ -818,9 +782,6 @@ class mdtDevice : public QObject
   QString pvName;
   QTimer *pvQueryTimer;
   bool pvAutoQueryEnabled;  // Flag used for state handling
-  QMap<int, mdtAnalogIo*> pvPendingAioTransactions;
-  QMap<int, mdtDigitalIo*> pvPendingDioTransactions;
-  QList<int> pvPendingIoTransactions;
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
 };

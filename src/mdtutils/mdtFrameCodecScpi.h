@@ -22,8 +22,6 @@
 #define MDT_FRAME_CODEC_SCPI_H
 
 #include "mdtFrameCodecAscii.h"
-#include <QList>
-#include <QMap>
 #include <QVariant>
 #include <QString>
 
@@ -43,29 +41,6 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
 
   mdtFrameCodecScpi();
   virtual ~mdtFrameCodecScpi();
-
-  /*! \brief Add a query/response transaction
-   *
-   * The SCPI defines no function code (like MODBUS, f.ex.).
-   *  When coding a defined sequence, this is not a problem.
-   *
-   * When using a event based approach, it's not 
-   *  possible to know what type of answer the device will return.
-   *
-   * \param id Frame ID (f.ex. bTag for USBTMC)
-   * \param type Query/response type (f.ex. MDT_FC_SCPI_VALUE)
-   */
-  void addTransaction(int id, int type);
-
-  /*! \brief Get transaction by ID
-   *
-   * Used by some mdtDevice()'s subclasses.
-   *  See addTransaction() for details.
-   *
-   * \param id Frame ID (f.ex. bTag for USBTMC)
-   * \return Type of query/response transaction, or MDT_FC_SCPI_UNKNOW if not found.
-   */
-  int pendingTransaction(int id);
 
   /*! \brief Decode SCPI value(s)
    *
@@ -105,7 +80,6 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
 
  private:
 
-  QMap<int, int> pvPendingTransactions;
   // Invalid floating/limits values
   double pvInfinity;
   double pvNinfinity;

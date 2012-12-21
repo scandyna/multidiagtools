@@ -51,7 +51,7 @@ void mdtSerialPortManagerTest::simpleTest()
   }
 
   // Init port manager
-  m.setEnqueueReadenFrames(true);
+  m.setTransactionsDisabled(true);
   m.port().config().setFrameType(mdtFrame::FT_ASCII);
   m.port().config().setEndOfFrameSeq("$");
   m.setPortName(portInfoList.at(0)->portName());
@@ -101,7 +101,7 @@ void mdtSerialPortManagerTest::transferTest()
    */
 
   // Init port manager
-  m.setEnqueueReadenFrames(true);
+  m.setTransactionsDisabled(true);
   portInfoList = m.scan();
   if(portInfoList.size() < 1){
     QSKIP("No serial port found, or other error", SkipAll);

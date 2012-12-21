@@ -147,7 +147,7 @@ void mdtPortManagerTest::portTest()
 
   // Init port manager
   m.setPort(port);
-  m.setEnqueueReadenFrames(true);
+  m.setTransactionsDisabled(true);
   m.addThread(new mdtPortWriteThread);
   m.addThread(new mdtPortReadThread);
   m.setPortName(file.fileName());
