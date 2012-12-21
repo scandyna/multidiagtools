@@ -658,13 +658,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getDigitalOutputState().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a output number, etc...
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readDigitalOutput(int address);
+  virtual int readDigitalOutput(mdtPortTransaction *transaction);
 
   /*! \brief Read all digital outputs on physical device
    *
@@ -673,10 +672,12 @@ class mdtDevice : public QObject
    *
    * This method is called from getDigitalOutputs().
    *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int readDigitalOutputs();
+  virtual int readDigitalOutputs(mdtPortTransaction *transaction);
 
   /*! \brief Write state on a digital output to physical device
    *
@@ -685,14 +686,13 @@ class mdtDevice : public QObject
    *
    * This method is called from setDigitalOutputState().
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a output number, etc...
    * \param state State (ON/OFF).
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int writeDigitalOutput(int address, bool state);
+  virtual int writeDigitalOutput(bool state, mdtPortTransaction *transaction);
 
   /*! \brief Write all digital outputs to physical device
    *
@@ -701,10 +701,12 @@ class mdtDevice : public QObject
    *
    * This method is called from setDigitalOutputs().
    *
+   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
+   * \pre transaction must be a valid pointer.
    */
-  virtual int writeDigitalOutputs();
+  virtual int writeDigitalOutputs(mdtPortTransaction *transaction);
 
   /*! \brief Sequence of queries to send periodically
    *

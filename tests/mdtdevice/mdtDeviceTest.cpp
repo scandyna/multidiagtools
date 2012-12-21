@@ -362,26 +362,13 @@ void mdtDeviceTest::modbusWagoTest()
   ///QTest::qWait(500);
   qDebug() << "State: " << d.getDigitalInputState(0, 500);
 
-  QTest::qWait(5000);
-  
-  return;
-  
-  ///QTest::qWait(500);
-  
-
-  // Analog outputs
-  ///QTest::qWait(500);
-
-
   // Digital outputs
   QVERIFY(!d.getDigitalOutputState(0, 0).isValid());
   QVERIFY(d.getDigitalOutputState(0, 500).isValid());
-  ///QTest::qWait(500);
   // Grouped query
   QVERIFY(d.setDigitalOutputState(0, true, -1) == 0);
   QVERIFY(d.setDigitalOutputState(8, true, -1) == 0);
   QVERIFY(d.setDigitalOutputs(500) >= 0);
-  ///QTest::qWait(500);
 
   ///QVERIFY(d.getDigitalInputs(500) >= 0);
   QVERIFY(d.getAnalogOutputs(500) >= 0);
