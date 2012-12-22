@@ -41,7 +41,8 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
   // Port setup
   pvPort->config().setFrameType(mdtFrame::FT_USBTMC);
-  pvPort->config().setReadFrameSize(512);
+  pvPort->config().setReadFrameSize(10000);
+  pvPort->config().setReadQueueSize(3);
   pvPort->config().setWriteFrameSize(512);
   pvPort->config().setWriteQueueSize(1);
 

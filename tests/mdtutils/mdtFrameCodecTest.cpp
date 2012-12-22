@@ -221,6 +221,9 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(codec.values().size() == 1);
   QVERIFY(!codec.values().at(0).isValid());
 
+  // Read IEEE block of data in ASCII format
+  data = "#8000000311.000e-001,8.000e-002,2.000e001";
+  QVERIFY(codec.decodeIEEEblock(data));
   
   /// \todo Configure? response !
   

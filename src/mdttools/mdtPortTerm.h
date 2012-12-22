@@ -56,10 +56,12 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
  public slots:
 
   /*! \brief Append incomming data to terminal
-   *
-   * Whenn called, data will be token from active port manager
    */
   void appendReadenData(QByteArray data);
+
+  /*! \brief Append incomming data to terminal
+   */
+  void appendReadenData(mdtPortTransaction transaction);
 
   /*! \brief Send command to port
    */

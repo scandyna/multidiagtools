@@ -76,7 +76,21 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *
    * NOTE: not implemented yet !
    */
-  bool decodeIEEEblock(QString data);
+  bool decodeIEEEblock(const QByteArray &data);
+
+ protected:
+
+  /*! \brief Decode a array of ASCII values
+   *
+   * \note Not implemented yet
+   */
+  bool decodeIEEEdataAscii(const QByteArray &data);
+
+  /*! \brief Decode a array of BYTE values
+   *
+   * \note Not implemented yet
+   */
+  bool decodeIEEEdataByte(const QByteArray &data);
 
  private:
 

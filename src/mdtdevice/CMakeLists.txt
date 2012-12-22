@@ -14,6 +14,7 @@ set (HEADER_FILES
           mdtDeviceWindow.h
           mdtDeviceStatusWidget.h
           mdtDeviceModbus.h
+          mdtDeviceScpi.h
           mdtDeviceU3606A.h
     )
 
@@ -27,6 +28,7 @@ set (SOURCES_FILES
           mdtDeviceWindow.cpp
           mdtDeviceStatusWidget.cpp
           mdtDeviceModbus.cpp
+          mdtDeviceScpi.cpp
           mdtDeviceU3606A.cpp
     )
 

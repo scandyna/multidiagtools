@@ -23,8 +23,12 @@
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
+#include "mdtDeviceScpi.h"
 #include "mdtDeviceU3606A.h"
 #include "mdtDeviceWindow.h"
+#include "mdtPortInfo.h"
+
+#include "mdtFrameCodecScpi.h"
 
 #include <QString>
 #include <QVariant>
@@ -461,7 +465,53 @@ void mdtDeviceTest::modbusBeckhoffTest()
   ///}
 }
 
-void mdtDeviceTest::usbtmcU3606ATest()
+void mdtDeviceTest::scpiTest()
+{
+  mdtDeviceScpi d;
+  QList<mdtPortInfo*> portInfoList;
+  mdtPortInfo *portInfo;
+  mdtDeviceInfo *devInfo;
+  mdtFrameCodecScpi codec;
+  QByteArray data;
+
+  // Try to find a device and connect if ok
+  portInfoList = d.portManager()->scan();
+  if(portInfoList.size() < 1){
+    QSKIP("No port found with SCPI device found, or other error", SkipAll);
+  }
+  portInfo = portInfoList.at(0);
+  if(portInfo->deviceInfoList().size() < 1){
+    QSKIP("No SCPI device found, or other error", SkipAll);
+  }
+  devInfo = portInfo->deviceInfoList().at(0);
+  if(d.connectToDevice(*devInfo) != mdtAbstractPort::NoError){
+    QSKIP("No SCPI device attached, or other error", SkipAll);
+  }
+
+  // Check commands
+  QVERIFY(d.sendCommand("*RST\n") >= 0);
+
+  // Check query
+  QVERIFY(!d.sendQuery("*IDN?\n").isEmpty());
+
+  QVERIFY(d.waitOperationComplete(5000, 100));
+
+  QVERIFY(d.sendCommand(":ACQuire:TYPE AVERage\n") >= 0);
+  QVERIFY(d.sendCommand(":ACQuire:AVERages 8\n") >= 0);
+  QVERIFY(d.sendCommand(":RUN\n") >= 0);
+  QVERIFY(d.sendCommand(":STOP\n") >= 0);
+  QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n") >= 0);
+  QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n") >= 0);
+  QVERIFY(d.waitOperationComplete(5000, 100));
+  data = d.sendQuery(":WAVeform:DATA?\n");
+  qDebug() << "Data len: " << data.size();
+  
+  QVERIFY(codec.decodeIEEEblock(data));
+  ///qDebug() << "Data: " << codec.values();
+
+}
+
+void mdtDeviceTest::U3606ATest()
 {
   mdtDeviceU3606A d;
   mdtDeviceInfo devInfo;

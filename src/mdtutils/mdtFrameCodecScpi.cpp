@@ -21,7 +21,7 @@
 #include "mdtFrameCodecScpi.h"
 #include "mdtError.h"
 #include <cfloat>
-#include <QChar>
+#include <QList>
 
 #include <QDebug>
 
@@ -155,49 +155,89 @@ bool mdtFrameCodecScpi::decodeError(QByteArray &data)
   return true;
 }
 
-bool mdtFrameCodecScpi::decodeIEEEblock(QString data)
+bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data)
 {
-  int i;
+  int headerSize;
+  int dataSize;
   bool ok = false;
-  QString dataLen;
 
+  // Clear previous results
+  pvValues.clear();
   // If string length is < 2: shure: not an IEEE block
   if(data.size() < 2){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is not a IEEE block" , mdtError::Warning);
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is not a IEEE block (length < 2)" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
-  // If first char is '#' , simply remove it
-  if(data.at(0) == QChar('#')){
-    data.remove(0, 1);
+  // If first char is not a #, we have not a IEEE block
+  if(data.at(0) != '#'){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is not a IEEE block (beginns not with #)" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
   }
-  // We must have a number that tells how many info digits that follows
-  i = QString(data.at(0)).toInt(&ok); // Note: we need a QString, not a QChar.
+  // Get the header length
+  headerSize = data.mid(1, 1).toInt(&ok);
   if(!ok){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no block header length" , mdtError::Warning);
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Cannot get header length in IEEE block" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
-  data.remove(0, 1);
-  // Check that we have enouth chars to decode data length
-  if(data.size() < i){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no block header with data length" , mdtError::Warning);
+  // Check that enough bytes are available
+  if(data.size() < (headerSize+2)){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
-  // Get the data length
-  dataLen = data.left(i);
-  data.remove(0, i);
-  i = dataLen.toInt(&ok);
+  // Get data length
+  dataSize = data.mid(2, headerSize).toInt(&ok);
   if(!ok){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Unable to decode data length in block header" , mdtError::Warning);
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Cannot get data length in IEEE block" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
-  // Ok, let's decode the data
-  return decodeIEEEdata(data.toAscii());
+  if(dataSize < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  ///qDebug() << "IEEEBlock, data size: " << dataSize;
+  ///return decodeIEEEdataAscii(data.mid(headerSize+2));
+  return decodeIEEEdataByte(data.mid(headerSize+2));
+}
+
+bool mdtFrameCodecScpi::decodeIEEEdataAscii(const QByteArray &data)
+{
+  QList<QByteArray> items;
+  int i;
+  bool ok;
+  QVariant value;
+
+  items = data.split(',');
+  ///qDebug() << "Data: " << items;
+  // Convert each item
+  for(i=0; i<items.size(); i++){
+    value = items.at(i).toDouble(&ok);
+    if(!ok){
+      value.clear();
+    }
+    pvValues.append(value);
+  }
+  ///qDebug() << "Values: " << pvValues;
+
+  return true;
+}
+
+bool mdtFrameCodecScpi::decodeIEEEdataByte(const QByteArray &data)
+{
+  int i;
+
+  for(i=0; i<data.size(); i++){
+    qDebug() << "data[: " << i << "]: " << data.at(i) << " , int8: " << (qint8)data.at(i);
+  }
 }

@@ -112,6 +112,13 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     return;
   }
   // Get identification
+  idn = pvPortManager->sendQuery("*IDN?\n");
+  if(idn.isEmpty()){
+    setStateError(tr("*IDN? query failed"));
+    cbInterface->setEnabled(true);
+    return;
+  }
+  /**
   if(pvPortManager->writeData("*IDN?\n") < 0){
     pvPortManager->closePort();
     setStateError(tr("Cannot send the *IDN? query"));
@@ -130,15 +137,15 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     cbInterface->setEnabled(true);
     return;
   }
-  /// \bug here: adapt to new version of port manager
   if(pvPortManager->readenFrames().size() != 1){
     pvPortManager->closePort();
     setStateError(tr("Cannot send the *IDN? query (received wrong amount of data)"));
     cbInterface->setEnabled(true);
     return;
   }
+  */
   // Split IDN replay infos
-  idn = pvPortManager->readenFrames().at(0);
+  ///idn = pvPortManager->readenFrames().at(0);
   ///pvPortManager->clearReadenFrames();
   idn = idn.trimmed();
   idnItems = idn.split(',');

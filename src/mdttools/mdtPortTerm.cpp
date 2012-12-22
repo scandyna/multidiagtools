@@ -94,19 +94,11 @@ void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTran
 void mdtPortTerm::appendReadenData(QByteArray data)
 {
   teTerm->append(data);
+}
 
-  /**
-  int i;
-
-  if(pvCurrentPortManager == 0){
-    qDebug() << "TERM: err, pvCurrentPortManager == 0";
-    return;
-  }
-  for(i=0; i<pvCurrentPortManager->readenFrames().size(); i++){
-    teTerm->append(pvCurrentPortManager->readenFrames().at(i));
-  }
-  */
-  
+void mdtPortTerm::appendReadenData(mdtPortTransaction transaction)
+{
+  teTerm->append(transaction.data());
 }
 
 void mdtPortTerm::sendCmd()
@@ -121,7 +113,6 @@ void mdtPortTerm::sendCmd()
     qDebug() << "TERM: err, pvCurrentPortManager == 0";
     return;
   }
-  ///if(teCmd->toPlainText().size() < 1){
   if(leCmd->text().size() < 1){
     return;
   }
@@ -136,13 +127,26 @@ void mdtPortTerm::sendCmd()
   cmd.append('\n');
   //cmd.append((char)0x04);
   /// \todo Error handling !
-  pvCurrentPortManager->writeData(cmd.toAscii());
-  if(pvCurrentPortManager == pvUsbtmcPortManager){
-    if(cmdIsQuery){
-      pvUsbtmcPortManager->sendReadRequest(false);
+  // Wait until write is possible and write
+  if(!pvCurrentPortManager->waitOnWriteReady(1000)){
+    qDebug() << "TERM: cannot write for the moment";
+    return;
+  }
+  if(pvCurrentPortManager->writeData(cmd.toAscii()) < 0){
+    qDebug() << "TERM: write error";
+    return;
+  }
+  // If we have a query for USBTMC port, send the read request
+  if((pvCurrentPortManager == pvUsbtmcPortManager)&&(cmdIsQuery)){
+    if(!pvCurrentPortManager->waitOnWriteReady(1000)){
+      qDebug() << "TERM: cannot write for the moment";
+      return;
+    }
+    if(pvUsbtmcPortManager->sendReadRequest(false) < 0){
+      qDebug() << "TERM: cannot send read request";
+      return;
     }
   }
-  ///teCmd->clear();
   leCmd->clear();
 }
 
@@ -185,7 +189,6 @@ void mdtPortTerm::attachToSerialPort()
   // Ctl widget
   bottomHLayout->insertWidget(0, pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
-  ///qDebug() << "Port Term: bottomHLayout items: " << bottomHLayout->count();
 
   connect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
 
@@ -234,13 +237,9 @@ void mdtPortTerm::portSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }else if(pvUsbtmcPortManager != 0){
-    ///pvUsbtmcPortManager->setNotifyNewReadenFrame(false);
-    ///pvUsbtmcPortManager->setEnqueueReadenFrames(true);
     mdtUsbtmcPortSetupDialog d(this);
     d.setPortManager(pvUsbtmcPortManager);
     d.exec();
-    ///pvUsbtmcPortManager->setEnqueueReadenFrames(false);
-    ///pvUsbtmcPortManager->setNotifyNewReadenFrame(true);
   }
   // If port is running, enable terminal
   if(pvCurrentPortManager->isRunning()){
@@ -281,13 +280,13 @@ void mdtPortTerm::attachToUsbtmcPort()
   }
   qDeleteAll(ports);
 
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
+  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
 }
 
 void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
-    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
+    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
   }

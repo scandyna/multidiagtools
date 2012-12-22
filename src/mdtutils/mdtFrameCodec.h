@@ -38,10 +38,6 @@ class mdtFrameCodec
 
  protected:
 
-  // Decode IEEE block of data
-  // NOTE: not implemented yet
-  bool decodeIEEEdata(QByteArray data);
-
   QList<QVariant> pvValues;
 };
 
