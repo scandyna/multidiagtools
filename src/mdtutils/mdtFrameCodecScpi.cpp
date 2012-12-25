@@ -116,7 +116,7 @@ bool mdtFrameCodecScpi::decodeIdn(const QByteArray &data)
   return true;
 }
 
-bool mdtFrameCodecScpi::decodeError(QByteArray &data)
+bool mdtFrameCodecScpi::decodeError(const QByteArray &data)
 {
   QVariant value;
   bool ok = false;
@@ -236,8 +236,18 @@ bool mdtFrameCodecScpi::decodeIEEEdataAscii(const QByteArray &data)
 bool mdtFrameCodecScpi::decodeIEEEdataByte(const QByteArray &data)
 {
   int i;
+  int len = data.size()-1;  // Last item is the term char
 
-  for(i=0; i<data.size(); i++){
-    qDebug() << "data[: " << i << "]: " << data.at(i) << " , int8: " << (qint8)data.at(i);
+  // Check data length
+  if(len < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
   }
+  for(i=0; i<len; i++){
+    qDebug() << "data[" << i << "]: " << (qint8)data.at(i) << " ,  0x" << hex << (qint8)data.at(i);
+  }
+  
+  return true;
 }

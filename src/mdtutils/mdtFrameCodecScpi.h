@@ -70,7 +70,7 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *  - Item 0 is the error number
    *  - Item 1 is the error message string
    */
-  bool decodeError(QByteArray &data);
+  bool decodeError(const QByteArray &data);
 
   /*! \brief Decode a IEEE block
    *

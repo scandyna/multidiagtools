@@ -146,6 +146,115 @@ void mdtAlgorithmsTest::hexStringByteArrayTest()
   QVERIFY(byteArrayToHexString(byteArray).toUpper() == "00 12 F2 FF 09");
 }
 
+void mdtAlgorithmsTest::splitStringTest()
+{
+  QStringList items;
+
+  // Empty data test (mus not crash)
+  items = splitString("", "", "");
+  QVERIFY(items.isEmpty());
+  items = splitString("", " ", "");
+  QVERIFY(items.isEmpty());
+  items = splitString("", ";", "");
+  QVERIFY(items.isEmpty());
+  items = splitString("", "", "\"");
+  QVERIFY(items.isEmpty());
+  items = splitString("", ";", "\"");
+  QVERIFY(items.isEmpty());
+
+  // Simple data (1 item)
+  items = splitString("A", "", "");
+  QCOMPARE(items.size(), 1);
+  QCOMPARE(items.at(0), QString("A"));
+  items = splitString("A", ";", "");
+  QCOMPARE(items.size(), 1);
+  QCOMPARE(items.at(0), QString("A"));
+  items = splitString("A", ";", "\"");
+  QCOMPARE(items.size(), 1);
+  QCOMPARE(items.at(0), QString("A"));
+  items = splitString("ABCD", ";", "\"");
+  QCOMPARE(items.size(), 1);
+  QCOMPARE(items.at(0), QString("ABCD"));
+
+  // Many items, without protection
+  items = splitString("A;B", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString("B"));
+  items = splitString("AB;C", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("AB"));
+  QCOMPARE(items.at(1), QString("C"));
+  items = splitString("A;BC", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString("BC"));
+  items = splitString("AB;CD", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("AB"));
+  QCOMPARE(items.at(1), QString("CD"));
+  items = splitString(";", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString(""));
+  QCOMPARE(items.at(1), QString(""));
+  items = splitString("A;", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString(""));
+  items = splitString(";A", ";", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString(""));
+  QCOMPARE(items.at(1), QString("A"));
+
+  items = splitString("B<sep>C", "<sep>", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("B"));
+  QCOMPARE(items.at(1), QString("C"));
+  items = splitString("AB<sep>CD", "<sep>", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("AB"));
+  QCOMPARE(items.at(1), QString("CD"));
+  items = splitString("<sep>CD", "<sep>", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString(""));
+  QCOMPARE(items.at(1), QString("CD"));
+  items = splitString("AB<sep>", "<sep>", "");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("AB"));
+  QCOMPARE(items.at(1), QString(""));
+
+  // Items with protection
+  items = splitString("'A'", ";", "'");
+  QCOMPARE(items.size(), 1);
+  QCOMPARE(items.at(0), QString("A"));
+  items = splitString("'A;B'", ";", "'");
+  QCOMPARE(items.size(), 1);
+  QCOMPARE(items.at(0), QString("A;B"));
+  items = splitString("A;B", ";", "'");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString("B"));
+  items = splitString("A;'B;C'", ";", "'");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString("B;C"));
+  items = splitString("A;'B;C';D", ";", "'");
+  QCOMPARE(items.size(), 3);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString("B;C"));
+  QCOMPARE(items.at(2), QString("D"));
+
+  // Some wrong formated strings
+  items = splitString("A;'B;C;D", ";", "'");
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("A"));
+  QCOMPARE(items.at(1), QString("B;C;D"));
+
+  items = splitString("''A''", ";", "'");
+  qDebug() << items;
+}
+
+
 int main(int argc, char **argv)
 {
   mdtApplication app(argc, argv);

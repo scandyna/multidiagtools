@@ -193,7 +193,7 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(codec.values().size() == 2);
   QVERIFY(codec.values().at(0).isValid());
   QVERIFY(codec.values().at(0) == -133);
-  QVERIFY(codec.values().at(1) == "\"Undefined header\"");
+  QVERIFY(codec.values().at(1) == "Undefined header");
 
   // Float OL (SCPI-99, chap. 7.2.1)
   data = "9.9e37";

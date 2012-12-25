@@ -110,6 +110,7 @@ class mdtDeviceScpi : public mdtDevice
  private:
 
   mdtUsbtmcPortManager *pvUsbtmcPortManager;
+  bool pvOperationComplete;
 };
 
 #endif  // #ifndef MDT_DEVICE_SCPI_H

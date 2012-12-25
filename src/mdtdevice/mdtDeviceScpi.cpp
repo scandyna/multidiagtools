@@ -40,6 +40,7 @@ mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
     timeout = pvUsbtmcPortManager->config().writeTimeout();
   }
   setBackToReadyStateTimeout(2*timeout);
+  pvOperationComplete = false;
 }
 
 mdtDeviceScpi::~mdtDeviceScpi()
@@ -135,10 +136,10 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
   Q_ASSERT(interval > 0);
 
   int maxIter = timeout / interval;
-  bool done = false;
+  pvOperationComplete = false;
   QByteArray response;
 
-  while(!done){
+  while(!pvOperationComplete){
     if(maxIter <= 0){
       return false;
     }
@@ -146,7 +147,7 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
     response = sendQuery("*OPC?\n");
     if(response.size() > 0){
       if(response.at(0) == '1'){
-        done = true;
+        pvOperationComplete = true;
         return true;
       }
     }

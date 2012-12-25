@@ -496,9 +496,14 @@ void mdtDeviceTest::scpiTest()
 
   QVERIFY(d.waitOperationComplete(5000, 100));
 
-  QVERIFY(d.sendCommand(":ACQuire:TYPE AVERage\n") >= 0);
-  QVERIFY(d.sendCommand(":ACQuire:AVERages 8\n") >= 0);
-  QVERIFY(d.sendCommand(":RUN\n") >= 0);
+  QVERIFY(d.sendCommand(":ACQuire:TYPE PEAKdetect\n") >= 0);
+  ///QVERIFY(d.sendCommand(":ACQuire:AVERages 8\n") >= 0);
+  QVERIFY(d.sendCommand(":TRIGger:MODE EDGE\n") >= 0);
+  QVERIFY(d.sendCommand(":TRIGger:EDGE:SOURce CHANnel1\n") >= 0);
+  QVERIFY(d.sendCommand(":TRIGger:EDGE:SWEep AUTO\n") >= 0);
+  QVERIFY(d.sendCommand(":TIMebase:MAIN:SCALe 50e-3\n") >= 0);
+  QVERIFY(d.sendCommand(":START\n") >= 0);
+  d.portManager()->wait(10000);
   QVERIFY(d.sendCommand(":STOP\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n") >= 0);

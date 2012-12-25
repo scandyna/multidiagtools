@@ -40,6 +40,9 @@ class mdtAlgorithmsTest : public mdtTest
 
   // Test hex string <-> byte array conversions
   void hexStringByteArrayTest();
+
+  // Split string test
+  void splitStringTest();
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_TEST_H

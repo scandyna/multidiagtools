@@ -31,6 +31,7 @@
 namespace mdtAlgorithms
 {
   /*! \brief Sort a string list, for witch each string ends with a number
+   *
    * Usefull for directory entry list. By default, QDir sorts the entris
    * at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 ,
    * the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ...
@@ -38,19 +39,23 @@ namespace mdtAlgorithms
    * Note that this function is not efficient. For 100 entries it ok, but for bigger
    * data set, it's recommanded to take a look at Qt's Model/View framework,
    * and the QSortFilterProxyModel
+   *
    * \param list The list that will be sorted (will be altered)
    * \return The sorted list
    */
   QStringList sortStringListWithNumericEnd(QStringList &list);
 
   /*! \brief Extract the numeric part at end of string
+   *
    * \param str The string in witch the numeric part must be extracted
    * \return The numeric part, or empty string on problem
    */
   QString extractNumericPartAtEnd(const QString &str);
 
   /*! \brief Compare the numeric end of 2 strings
-   * This is a helper function for sortStringListWithNumericEnd()
+   *
+   * This is a helper function for sortStringListWithNumericEnd().
+   *
    * \return True if str1 < str2
    */
   bool stringWithNumericEndLessThan(QString str1, QString str2);
@@ -71,6 +76,25 @@ namespace mdtAlgorithms
    *  will generate a string with "2C 12 5F".
    */
   QString byteArrayToHexString(const QByteArray &byteArray);
+
+  /*! \brief Split a string reagrding a separator and data protection
+   *
+   * QString has a totally functionnal split method, but it does not
+   *  support data proection.
+   * For example, if we have to split a string: "123";"AB;C" witch uses
+   *  ; char as separator and " as protection, we must have a list
+   *  with 2 items: 123 and AB;C.
+   *
+   * Some details:
+   *  - If str is empty, a empty list is returned
+   *  - Empty records (data around separator) are added to list
+   *
+   * \param str The input string to parse
+   * \param separator Separator to use (typical: ; )
+   * \param protection Data protection (typical: " )
+   * \return The list of found fields
+   */
+  QStringList splitString(const QString &str, const QString &separator, const QString &dataProtection);
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_H
