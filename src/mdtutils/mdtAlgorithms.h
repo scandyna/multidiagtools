@@ -22,6 +22,7 @@
 #define MDT_ALGORITHMS_H
 
 #include <QtAlgorithms>
+#include <QChar>
 #include <QString>
 #include <QByteArray>
 #include <QStringList>
@@ -77,6 +78,32 @@ namespace mdtAlgorithms
    */
   QString byteArrayToHexString(const QByteArray &byteArray);
 
+  /*! \brief Get unprotected string
+   *
+   * It can happen that a protected string, f.ex. "Hello", must
+   *  be extracted. Additionnally, escape chars can be inside.
+   * This is a helper function used by splitString().
+   * 
+   * For example, if data protection is " and escape char is \ ,
+   *  "A\"BC\"D" will return A"BC"D.
+   * If escape char is alone, nothing will happen:
+   *  "A\BCD" will return A\BCD.
+   * If data proection not exists, nothing will happen:
+   *  ABC will return ABC.
+   *
+   * \param str The input string to parse
+   * \param dataProtection Data protection (typical: " )
+   * \param escapeChar Escape char (typical: \ )
+   * \param strEndOffset If not Null, the offset (of first char) of closing dataProtection,
+   *                      before removing escape chars, is stored to this parameter.
+   *                      This is used by splitString(). Some examples with " as dataProtection and \ as escapeChar:
+   *                       - For "A\"BC\"D" : value will be 9
+   *                       - For "A\BCD" : value will be 6
+   *                       - For "A\BCD : value will be -1 (no closing " found)
+   *                       - For A : value will be -1 (no " found)
+   */
+  QString unprotectedString(const QString &str, const QString &dataProtection, const QChar &escapeChar, int *strEndOffset = 0);
+
   /*! \brief Split a string reagrding a separator and data protection
    *
    * QString has a totally functionnal split method, but it does not
@@ -94,7 +121,7 @@ namespace mdtAlgorithms
    * \param protection Data protection (typical: " )
    * \return The list of found fields
    */
-  QStringList splitString(const QString &str, const QString &separator, const QString &dataProtection);
+  QStringList splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar = QChar());
 };
 
 #endif  // #ifndef MDT_ALGORITHMS_H

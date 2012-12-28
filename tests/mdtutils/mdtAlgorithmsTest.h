@@ -41,6 +41,9 @@ class mdtAlgorithmsTest : public mdtTest
   // Test hex string <-> byte array conversions
   void hexStringByteArrayTest();
 
+  // Unprotected string test
+  void unprotectedStringTest();
+
   // Split string test
   void splitStringTest();
 };

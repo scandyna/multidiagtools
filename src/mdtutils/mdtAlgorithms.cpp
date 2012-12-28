@@ -176,7 +176,53 @@ QString mdtAlgorithms::byteArrayToHexString(const QByteArray &byteArray)
     return list;
     */
 
-QStringList mdtAlgorithms::splitString(const QString &str, const QString &separator, const QString &dataProtection)
+QString mdtAlgorithms::unprotectedString(const QString &str, const QString &dataProtection, const QChar &escapeChar, int *strEndOffset)
+{
+  QString result;
+  int dpCursor = -1;
+  int start = 0;
+  int end = 0;
+
+  while(end < str.size()){
+    // Get index of data protection
+    if(!dataProtection.isEmpty()){
+      dpCursor = str.indexOf(dataProtection, start);
+    }else{
+      dpCursor = -1;
+    }
+    if(dpCursor < 0){
+      // No data protection, copy until end
+      end = str.size();
+      qDebug() << "A str: " << str << " , start: " << start << " , dpCursor: " << dpCursor << " , end: " << end << " , cpy: " << str.mid(start, end-start);
+      result.append(str.mid(start, end-start));
+    }else if(dpCursor == 0){
+      // Just move start cursor after protection
+      start = dpCursor + dataProtection.size();
+    }else{
+      if(str.at(dpCursor-1) == escapeChar){
+        end = dpCursor-1;
+        qDebug() << "B str: " << str << " , start: " << start << " , dpCursor: " << dpCursor << " , end: " << end << " , cpy: " << str.mid(start, end-start);
+        result.append(str.mid(start, end-start));
+        // Add escape sequence
+        result.append(str.mid(dpCursor, dataProtection.size()));
+        start = dpCursor + dataProtection.size();
+      }else{
+        end = dpCursor;
+        qDebug() << "C str: " << str << " , start: " << start << " , dpCursor: " << dpCursor << " , end: " << end << " , cpy: " << str.mid(start, end-start);
+        result.append(str.mid(start, end-start));
+        start = dpCursor + dataProtection.size();
+      }
+    }
+    end += dataProtection.size();
+  }
+  if(strEndOffset != 0){
+    *strEndOffset = dpCursor;
+  }
+
+  return result;
+}
+
+QStringList mdtAlgorithms::splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar)
 {
   bool parserEnabled;   // Used for data protection ( "data";"other ; data";0123 )
   QString tmpStr;
@@ -191,6 +237,7 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
   int extra;
   int end = 0;
 
+  bool isEscaped;
   
   while(end < str.size()){
     // Get separator and data protection indexes
@@ -204,7 +251,7 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
     }else{
       dpCursor = -1;
     }
-    qDebug() << "str: " << str << " , start: " << start << " , end: " << end << " , str size: " << str.size() <<  " , sepCursor: " << sepCursor << " , dpCursor: " << dpCursor;
+    qDebug() << "str: " << str << " , start: " << start << " , end: " << end << " , str size: " << str.size() <<  " , sepCursor: " << sepCursor << " , dpCursor: " << dpCursor << " , escape: " << escapeChar;
     if((sepCursor < 0)&&(dpCursor < 0)){
       // No keyword found, copy remaining string
       end = str.size();
@@ -214,6 +261,7 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
       }
     }else if((sepCursor < 0)&&(dpCursor > -1)){
       // Only data protection was found, copy until next data protection (or until end if not found)
+      /**
       start += dataProtection.size();
       if(!dataProtection.isEmpty()){
         dpCursor =  str.indexOf(dataProtection, start);
@@ -225,20 +273,72 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
       }else{
         end = dpCursor;
       }
-      qDebug() << "B: Copy from " << start << " , n: " << end-start << "(" << str.mid(start, end-start) << ")";
-      fields.append(str.mid(start, end-start));
+      */
+      ///start += dataProtection.size();
+      ///dpCursor = start;
+      start = dpCursor + dataProtection.size();
+      field.clear();
+      isEscaped = true;
+      while(isEscaped){
+        ///start += dataProtection.size();
+        ///start = dpCursor + dataProtection.size();
+        if(!dataProtection.isEmpty()){
+          dpCursor =  str.indexOf(dataProtection, start);
+        }else{
+          dpCursor = -1;
+        }
+        if(dpCursor < 0){
+          end = str.size();
+          break;
+        }else{
+          if(dpCursor > 0){
+            if(str.at(dpCursor-1) == escapeChar){
+              end = dpCursor-1;
+              qDebug() << "B(0): str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
+              field.append(str.mid(start, end-start));
+              start = dpCursor;
+              isEscaped = true;
+            }else{
+              end = dpCursor;
+              qDebug() << "B(1): str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
+              field.append(str.mid(start, end-start));
+              start = dpCursor + dataProtection.size();
+              isEscaped = false;
+            }
+          }else{
+            end = dpCursor;
+            qDebug() << "B(1): str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
+            field.append(str.mid(start, end-start));
+            start = dpCursor + dataProtection.size();
+            isEscaped = false;
+          }
+          ///end = dpCursor;
+          ///start = end + dataProtection.size();
+          ///start = end;
+        }
+        ///qDebug() << "B: str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
+        ///field.append(str.mid(start, end-start));
+        ///end = dpCursor;
+        ///start = end;
+        ///start = end + dataProtection.size();
+      }
+      ///fields.append();
+      fields.append(field);
       end += dataProtection.size();
-      start = end + dataProtection.size();
+      ///start = end + dataProtection.size();  /// \note : ??
+      start = end + separator.size();
+      ///start = end;
     }else if((sepCursor > -1)&&(dpCursor < 0)){
       // Only separator was found, copy left part
       end = sepCursor;
-      qDebug() << "C: Copy from " << start << " , n: " << end-start << "(" << str.mid(start, end-start) << ")";
+      qDebug() << "C: start: " << start << " , end: " << end << " ,copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
       fields.append(str.mid(start, end-start));
       start = end + separator.size();
     }else{
       // Separator and data protection found
       if(dpCursor < sepCursor){
         // Data protection was first found, copy until next data protection (or until end if not found)
+        /**
         start += dataProtection.size();
         if(!dataProtection.isEmpty()){
           dpCursor =  str.indexOf(dataProtection, start);
@@ -250,14 +350,41 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
         }else{
           end = dpCursor;
         }
+        */
+        isEscaped = true;
+        while(isEscaped){
+          start += dataProtection.size();
+          if(!dataProtection.isEmpty()){
+            dpCursor =  str.indexOf(dataProtection, start);
+          }else{
+            dpCursor = -1;
+          }
+          if(dpCursor < 0){
+            end = str.size();
+            break;
+          }else{
+            if(dpCursor > 0){
+              if(str.at(dpCursor-1) == escapeChar){
+                isEscaped = true;
+              }else{
+                isEscaped = false;
+              }
+            }else{
+              isEscaped = false;
+            }
+            end = dpCursor;
+          }
+        }
         qDebug() << "D1: Copy from " << start << " , n: " << end-start << "(" << str.mid(start, end-start) << ")";
         fields.append(str.mid(start, end-start));
         end += dataProtection.size();
-        start = end + dataProtection.size();
+        ///start = end + dataProtection.size();  /// \note: ??
+        start = end + separator.size();
+        ///start = end;
       }else{
         // Separator was first found, copy left part
         end = sepCursor;
-        qDebug() << "D2: Copy from " << start << " , n: " << end-start << "(" << str.mid(start, end-start) << ")";
+        qDebug() << "D2: start: " << start << " , end: " << end << " ,copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
         fields.append(str.mid(start, end-start));
         start = end + separator.size();
       }
