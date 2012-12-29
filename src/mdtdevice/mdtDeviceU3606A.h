@@ -21,13 +21,14 @@
 #ifndef MDT_DEVICE_U3606A_H
 #define MDT_DEVICE_U3606A_H
 
-#include "mdtDevice.h"
+#include "mdtDeviceScpi.h"
 #include "mdtUsbtmcPortManager.h"
 #include "mdtFrameCodecScpiU3606A.h"
 
 /*! \brief Representation of a Agilent U3606A
  */
-class mdtDeviceU3606A : public mdtDevice
+///class mdtDeviceU3606A : public mdtDevice
+class mdtDeviceU3606A : public mdtDeviceScpi
 {
  Q_OBJECT
 
@@ -38,7 +39,7 @@ class mdtDeviceU3606A : public mdtDevice
 
   /*! \brief Get internal port manager instance
    */
-  mdtPortManager *portManager();
+  ///mdtPortManager *portManager();
 
   /*! \brief Search and connect to physical device.
    *
@@ -66,7 +67,7 @@ class mdtDeviceU3606A : public mdtDevice
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
-  int sendCommand(const QByteArray &command, int timeout = 1000);
+  ///int sendCommand(const QByteArray &command, int timeout = 1000);
 
   /*! \brief Send a query to device
    *
@@ -85,7 +86,7 @@ class mdtDeviceU3606A : public mdtDevice
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
+  ///QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
 
  public slots:
 
@@ -117,7 +118,7 @@ class mdtDeviceU3606A : public mdtDevice
    */
   int readAnalogInput(mdtPortTransaction *transaction);
 
-  mdtUsbtmcPortManager *pvPortManager;
+  ///mdtUsbtmcPortManager *pvPortManager;
   mdtFrameCodecScpiU3606A *pvCodec;
 };
 

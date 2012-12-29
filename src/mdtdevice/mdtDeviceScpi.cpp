@@ -151,7 +151,7 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
         return true;
       }
     }
-    portManager()->wait(interval, interval);
+    portManager()->wait(interval, 50);
     maxIter--;
   }
 

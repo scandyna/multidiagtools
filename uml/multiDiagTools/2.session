@@ -1,22 +1,15 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 314370 // mdtDeviceU3606A
-    776 642 100 4 0 0
-  active  classdiagram_ref 554882 // mdtDeviceDSO1000A
-    970 803 100 4 2 0
-  classdiagram_ref 555010 // mdtDeviceScpi
-    776 642 100 4 0 0
+  active  classdiagram_ref 314370 // mdtDeviceU3606A
+    970 803 100 4 0 0
 end
 show_stereotypes
-selected class_ref 283010 // mdtUsbtmcPortManager
 open
-  classview_ref 214402 // mdtFrameCodec
-  classview_ref 379010 // mdtUsbPortManager
-  classview_ref 220930 // mdtUsbtmcPort
   operation_ref 1110402 // setName
   operation_ref 1110530 // name
   operation_ref 1110018 // connectToDevice
   class_ref 572418 // mdtDeviceDSO1000A
+  class_ref 309378 // mdtDeviceU3606A
   class_ref 572546 // mdtDeviceScpi
 end
 end

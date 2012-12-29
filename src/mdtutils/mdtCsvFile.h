@@ -56,6 +56,8 @@ class mdtCsvFile : public QFile
    * \param separator Separator to use (typical: ; )
    * \param protection Data protection (typical: " )
    * \return The list of found fields
+   * 
+   * \todo Check new function in mdtAlgorithm
    */
   QStringList &parseLine(const QByteArray &line, const QByteArray &separator, const QByteArray &dataProtection);
 

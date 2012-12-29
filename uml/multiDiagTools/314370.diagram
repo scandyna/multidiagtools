@@ -2,15 +2,15 @@ format 76
 
 classcanvas 128002 class_ref 309378 // mdtDeviceU3606A
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 50 255 2000
+  xyz 50 310 2000
 end
 classcanvas 128130 class_ref 309250 // mdtDevice
-  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 105 113 2000
+  draw_all_relations default hide_attributes yes hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 229 79 2000
 end
 classcanvas 128386 class_ref 283010 // mdtUsbtmcPortManager
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 483 219 2000
+  xyz 523 310 2000
 end
 classcanvas 128898 class_ref 302722 // mdtFrameCodecScpiU3606A
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -18,7 +18,7 @@ classcanvas 128898 class_ref 302722 // mdtFrameCodecScpiU3606A
 end
 classcanvas 129154 class_ref 138626 // QObject
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 114 21 2006
+  xyz 154 3 2006
 end
 classcanvas 129410 class_ref 316034 // mdtDeviceU3606AWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -26,31 +26,20 @@ classcanvas 129410 class_ref 316034 // mdtDeviceU3606AWidget
 end
 classcanvas 129538 class_ref 316162 // QWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 3 448 2000
+  xyz -57 512 2000
 end
 classcanvas 129794 class_ref 316290 // Ui_mdtDeviceU3606AWidget
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 210 529 2000
+  xyz 421 774 2000
 end
-relationcanvas 128258 relation_ref 372226 // <generalisation>
-  from ref 128002 z 2001 to ref 128130
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 128642 relation_ref 372482 // <directional composition>
-  from ref 128002 z 2001 to ref 128386
-  role_a_pos 374 288 3000 no_role_b
-  multiplicity_a_pos 464 318 3000 no_multiplicity_b
-end
-relationcanvas 128770 relation_ref 372354 // <directional composition>
-  from ref 128002 z 2001 to ref 128386
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
+classcanvas 130178 class_ref 572546 // mdtDeviceScpi
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 32 152 3005
 end
 relationcanvas 129026 relation_ref 372610 // <directional composition>
   from ref 128002 z 2001 to ref 128898
-  role_a_pos 416 490 3000 no_role_b
-  multiplicity_a_pos 464 520 3000 no_multiplicity_b
+  role_a_pos 382 494 3000 no_role_b
+  multiplicity_a_pos 430 524 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 372098 // <generalisation>
   from ref 128130 z 2007 to ref 129154
@@ -69,7 +58,22 @@ relationcanvas 129922 relation_ref 379394 // <generalisation>
 end
 relationcanvas 130050 relation_ref 379522 // <directional composition>
   from ref 129410 z 2001 to ref 128002
-  role_a_pos 244 431 3000 no_role_b
-  multiplicity_a_pos 216 431 3000 no_multiplicity_b
+  role_a_pos 244 486 3000 no_role_b
+  multiplicity_a_pos 216 486 3000 no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 683266 // <generalisation>
+  from ref 130178 z 3006 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130434 relation_ref 690050 // <directional composition>
+  from ref 130178 z 3006 to ref 128386
+  role_a_pos 427 291 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 696578 // <generalisation>
+  from ref 128002 z 3006 to ref 130178
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 end

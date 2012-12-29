@@ -83,13 +83,14 @@ namespace mdtAlgorithms
    * It can happen that a protected string, f.ex. "Hello", must
    *  be extracted. Additionnally, escape chars can be inside.
    * This is a helper function used by splitString().
-   * 
+   *
    * For example, if data protection is " and escape char is \ ,
    *  "A\"BC\"D" will return A"BC"D.
    * If escape char is alone, nothing will happen:
    *  "A\BCD" will return A\BCD.
-   * If data proection not exists, nothing will happen:
-   *  ABC will return ABC.
+   * If data proection not exists, a empty string will be returned.
+   * Note that exactly one protected section will be parsed. For example,
+   *  "AB"CD"EF" will return AB, CD"EF" will simply be ignored.
    *
    * \param str The input string to parse
    * \param dataProtection Data protection (typical: " )
@@ -101,8 +102,9 @@ namespace mdtAlgorithms
    *                       - For "A\BCD" : value will be 6
    *                       - For "A\BCD : value will be -1 (no closing " found)
    *                       - For A : value will be -1 (no " found)
+   * \param strStartOffset If > -1, parsing will begin a this position in str
    */
-  QString unprotectedString(const QString &str, const QString &dataProtection, const QChar &escapeChar, int *strEndOffset = 0);
+  QString unprotectedString(const QString &str, const QString &dataProtection, const QChar &escapeChar, int *strEndOffset = 0, int strStartOffset = -1);
 
   /*! \brief Split a string reagrding a separator and data protection
    *

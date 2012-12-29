@@ -187,13 +187,20 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(codec.values().at(2) == "MY00000000");
   QVERIFY(codec.values().at(3) == "02.00-02.00-02.01");
 
-  // Decoding error
+  // Decoding error (SCPI-99, chap. 21.8)
   data = " -133,\"Undefined header\"";
   QVERIFY(codec.decodeError(data));
   QVERIFY(codec.values().size() == 2);
   QVERIFY(codec.values().at(0).isValid());
   QVERIFY(codec.values().at(0) == -133);
   QVERIFY(codec.values().at(1) == "Undefined header");
+  data = "-131,\"Invalid suffix;FREQuency:CENT 2.0E+5 dbuV\"";
+  QVERIFY(codec.decodeError(data));
+  QVERIFY(codec.values().size() == 3);
+  QVERIFY(codec.values().at(0).isValid());
+  QVERIFY(codec.values().at(0) == -131);
+  QVERIFY(codec.values().at(1) == "Invalid suffix");
+  QVERIFY(codec.values().at(2) == "FREQuency:CENT 2.0E+5 dbuV");
 
   // Float OL (SCPI-99, chap. 7.2.1)
   data = "9.9e37";
@@ -222,8 +229,12 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(!codec.values().at(0).isValid());
 
   // Read IEEE block of data in ASCII format
-  data = "#8000000311.000e-001,8.000e-002,2.000e001";
-  QVERIFY(codec.decodeIEEEblock(data));
+  data = "#8000000311.000e-001,8.000e-002,2.000e001\n";
+  QVERIFY(codec.decodeIEEEblock(data, mdtFrameCodecScpi::ASCII));
+  QCOMPARE(codec.values().size(), 3);
+  QCOMPARE(codec.values().at(0), QVariant(0.1));
+  QCOMPARE(codec.values().at(1), QVariant(8.0e-2));
+  QCOMPARE(codec.values().at(2), QVariant(20.0));
   
   /// \todo Configure? response !
   

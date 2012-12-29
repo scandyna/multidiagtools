@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtFrameCodecScpi.h"
 #include "mdtError.h"
+#include "mdtAlgorithms.h"
 #include <cfloat>
 #include <QList>
 
@@ -120,6 +121,7 @@ bool mdtFrameCodecScpi::decodeError(const QByteArray &data)
 {
   QVariant value;
   bool ok = false;
+  int i;
 
   // Clear previous results
   pvValues.clear();
@@ -134,10 +136,10 @@ bool mdtFrameCodecScpi::decodeError(const QByteArray &data)
   }
 
   // Build the values list
-  pvNodes = pvAsciiData.split(",");
+  pvNodes = mdtAlgorithms::splitString(pvAsciiData, ",", "\"");
   // Store result in data list
-  if(pvNodes.size() < 2){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains not an error" , mdtError::Warning);
+  if(pvNodes.size() != 2){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "data contains not an error" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
@@ -149,13 +151,16 @@ bool mdtFrameCodecScpi::decodeError(const QByteArray &data)
     value.clear();
   }
   pvValues << value;
-  // Error text
-  pvValues << pvNodes.at(1);
+  // Error texts
+  pvNodes = pvNodes.at(1).split(";");
+  for(i=0; i<pvNodes.size(); i++){
+    pvValues << pvNodes.at(i);
+  }
 
   return true;
 }
 
-bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data)
+bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data, mdtFrameCodecScpi::waveform_format format)
 {
   int headerSize;
   int dataSize;
@@ -163,8 +168,8 @@ bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data)
 
   // Clear previous results
   pvValues.clear();
-  // If string length is < 2: shure: not an IEEE block
-  if(data.size() < 2){
+  // If string length is < 3: shure: not an IEEE block
+  if(data.size() < 3){
     mdtError e(MDT_FRAME_DECODE_ERROR, "Frame is not a IEEE block (length < 2)" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
@@ -201,14 +206,34 @@ bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data)
     return false;
   }
   if(dataSize < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
+    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data (info from header)" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
-  ///qDebug() << "IEEEBlock, data size: " << dataSize;
-  ///return decodeIEEEdataAscii(data.mid(headerSize+2));
-  return decodeIEEEdataByte(data.mid(headerSize+2));
+  // Calculate real received data size
+  if(data.at(data.size()-1) == '\n'){
+    dataSize = data.size()-headerSize-3;
+  }else{
+    dataSize = data.size()-headerSize-2;
+  }
+  if(dataSize < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data (info from header)" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  // Decode data part
+  if(format == BYTE){
+    return decodeIEEEdataByte(data.mid(headerSize+2, dataSize));
+  }
+  if(format == ASCII){
+    return decodeIEEEdataAscii(data.mid(headerSize+2, dataSize));
+  }
+  mdtError e(MDT_FRAME_DECODE_ERROR, "Data format not implemented yet, sorry" , mdtError::Warning);
+  MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+  e.commit();
+  return false;
 }
 
 bool mdtFrameCodecScpi::decodeIEEEdataAscii(const QByteArray &data)
@@ -236,17 +261,20 @@ bool mdtFrameCodecScpi::decodeIEEEdataAscii(const QByteArray &data)
 bool mdtFrameCodecScpi::decodeIEEEdataByte(const QByteArray &data)
 {
   int i;
-  int len = data.size()-1;  // Last item is the term char
+  ///int len = data.size()-1;  // Last item is the term char
 
   // Check data length
+  /*
   if(len < 1){
     mdtError e(MDT_FRAME_DECODE_ERROR, "IEEE block contains no data" , mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
     e.commit();
     return false;
   }
-  for(i=0; i<len; i++){
-    qDebug() << "data[" << i << "]: " << (qint8)data.at(i) << " ,  0x" << hex << (qint8)data.at(i);
+  */
+  for(i=0; i<data.size(); i++){
+    pvValues.append((int)data.at(i));
+    ///qDebug() << "data[" << i << "]: " << (qint8)data.at(i) << " ,  0x" << hex << (qint8)data.at(i) << " , flt: " << (double)data.at(i)/127.0;
   }
   
   return true;

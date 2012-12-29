@@ -39,6 +39,14 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
 {
  public:
 
+  /*! \brief Format of waveform data
+   */
+  enum waveform_format {
+                        WORD, /*!< 16 bit data resolution */
+                        BYTE, /*!< 8 bit data resolution */
+                        ASCII /*!< ASCII float represented data */
+                        };
+
   mdtFrameCodecScpi();
   virtual ~mdtFrameCodecScpi();
 
@@ -69,6 +77,7 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *  error is available with values():
    *  - Item 0 is the error number
    *  - Item 1 is the error message string
+   *  - After item 1 are device's specific messages (if exists)
    */
   bool decodeError(const QByteArray &data);
 
@@ -76,19 +85,19 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *
    * NOTE: not implemented yet !
    */
-  bool decodeIEEEblock(const QByteArray &data);
+  bool decodeIEEEblock(const QByteArray &data, waveform_format format);
 
  protected:
 
   /*! \brief Decode a array of ASCII values
    *
-   * \note Not implemented yet
+   * \todo Not implemented yet
    */
   bool decodeIEEEdataAscii(const QByteArray &data);
 
   /*! \brief Decode a array of BYTE values
    *
-   * \note Not implemented yet
+   * \todo Not implemented yet
    */
   bool decodeIEEEdataByte(const QByteArray &data);
 

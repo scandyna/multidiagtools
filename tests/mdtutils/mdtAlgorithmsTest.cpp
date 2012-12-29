@@ -160,10 +160,10 @@ void mdtAlgorithmsTest::unprotectedStringTest()
   QCOMPARE(end, -1);
 
   // Data without escape char
-  QCOMPARE(unprotectedString("A", "'", '\0'), QString("A"));
-  QCOMPARE(unprotectedString("A", "'", '\0', &end), QString("A"));
+  QCOMPARE(unprotectedString("A", "'", '\0'), QString(""));
+  QCOMPARE(unprotectedString("A", "'", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("AB", "'", '\0', &end), QString("AB"));
+  QCOMPARE(unprotectedString("AB", "'", '\0', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("'A'", "'", '\0', &end), QString("A"));
   QCOMPARE(end, 2);
@@ -171,10 +171,10 @@ void mdtAlgorithmsTest::unprotectedStringTest()
   QCOMPARE(end, 3);
   QCOMPARE(unprotectedString("'ABC'", "'", '\0', &end), QString("ABC"));
   QCOMPARE(end, 4);
-  QCOMPARE(unprotectedString("A", "<>", '\0'), QString("A"));
-  QCOMPARE(unprotectedString("A", "<>", '\0', &end), QString("A"));
+  QCOMPARE(unprotectedString("A", "<>", '\0'), QString(""));
+  QCOMPARE(unprotectedString("A", "<>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("AB", "<>", '\0', &end), QString("AB"));
+  QCOMPARE(unprotectedString("AB", "<>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("<>A<>", "<>", '\0', &end), QString("A"));
   QCOMPARE(end, 3);
@@ -182,10 +182,10 @@ void mdtAlgorithmsTest::unprotectedStringTest()
   QCOMPARE(end, 4);
   QCOMPARE(unprotectedString("<>ABC<>", "<>", '\0', &end), QString("ABC"));
   QCOMPARE(end, 5);
-  QCOMPARE(unprotectedString("A", "<!>", '\0'), QString("A"));
-  QCOMPARE(unprotectedString("A", "<!>", '\0', &end), QString("A"));
+  QCOMPARE(unprotectedString("A", "<!>", '\0'), QString(""));
+  QCOMPARE(unprotectedString("A", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("AB", "<!>", '\0', &end), QString("AB"));
+  QCOMPARE(unprotectedString("AB", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("<!>A<!>", "<!>", '\0', &end), QString("A"));
   QCOMPARE(end, 4);
@@ -193,26 +193,26 @@ void mdtAlgorithmsTest::unprotectedStringTest()
   QCOMPARE(end, 5);
   QCOMPARE(unprotectedString("<!>ABC<!>", "<!>", '\0', &end), QString("ABC"));
   QCOMPARE(end, 6);
-  QCOMPARE(unprotectedString("A", "<!>", '\0'), QString("A"));
-  QCOMPARE(unprotectedString("A", "<!>", '\0', &end), QString("A"));
+  QCOMPARE(unprotectedString("A", "<!>", '\0'), QString(""));
+  QCOMPARE(unprotectedString("A", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("AB", "<!>", '\0', &end), QString("AB"));
+  QCOMPARE(unprotectedString("AB", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("<>A<>", "<!>", '\0', &end), QString("<>A<>"));
+  QCOMPARE(unprotectedString("<>A<>", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("<>AB<>", "<!>", '\0', &end), QString("<>AB<>"));
+  QCOMPARE(unprotectedString("<>AB<>", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("<>ABC<>", "<!>", '\0', &end), QString("<>ABC<>"));
+  QCOMPARE(unprotectedString("<>ABC<>", "<!>", '\0', &end), QString(""));
   QCOMPARE(end, -1);
 
    // Data with escape char
-  QCOMPARE(unprotectedString("A", "'", '\\'), QString("A"));
-  QCOMPARE(unprotectedString("A", "'", '\\', &end), QString("A"));
+  QCOMPARE(unprotectedString("A", "'", '\\'), QString(""));
+  QCOMPARE(unprotectedString("A", "'", '\\', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("\\", "'", '\\', &end), QString("\\"));
+  QCOMPARE(unprotectedString("\\", "'", '\\', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("\\'", "'", '\\'), QString("'"));
-  QCOMPARE(unprotectedString("AB", "'", '\\', &end), QString("AB"));
+  QCOMPARE(unprotectedString("AB", "'", '\\', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("'A'", "'", '\\', &end), QString("A"));
   QCOMPARE(end, 2);
@@ -222,13 +222,13 @@ void mdtAlgorithmsTest::unprotectedStringTest()
   QCOMPARE(end, 7);
   QCOMPARE(unprotectedString("'A\\'B\\'C'", "'", '\\', &end), QString("A'B'C"));
   QCOMPARE(end, 8);
-  QCOMPARE(unprotectedString("A", "<>", '\\'), QString("A"));
-  QCOMPARE(unprotectedString("A", "<>", '\\', &end), QString("A"));
+  QCOMPARE(unprotectedString("A", "<>", '\\'), QString(""));
+  QCOMPARE(unprotectedString("A", "<>", '\\', &end), QString(""));
   QCOMPARE(end, -1);
-  QCOMPARE(unprotectedString("\\", "<>", '\\', &end), QString("\\"));
+  QCOMPARE(unprotectedString("\\", "<>", '\\', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("\\<>", "<>", '\\'), QString("<>"));
-  QCOMPARE(unprotectedString("AB", "<>", '\\', &end), QString("AB"));
+  QCOMPARE(unprotectedString("AB", "<>", '\\', &end), QString(""));
   QCOMPARE(end, -1);
   QCOMPARE(unprotectedString("<>A<>", "<>", '\\', &end), QString("A"));
   QCOMPARE(end, 3);
@@ -239,14 +239,40 @@ void mdtAlgorithmsTest::unprotectedStringTest()
   QCOMPARE(unprotectedString("<>A\\<>B\\<>C<>", "<>", '\\', &end), QString("A<>B<>C"));
   QCOMPARE(end, 11);
 
-  qDebug() << unprotectedString("A'", "'", '\\');
-  qDebug() << unprotectedString("A\\'", "'", '\\');
-  qDebug() << unprotectedString("'A", "'", '\\');
-  qDebug() << unprotectedString("\\'A", "'", '\\');
-  
-  qDebug() << unprotectedString("\\", "'", '\\');
-  qDebug() << unprotectedString("A\\", "'", '\\');
-  qDebug() << unprotectedString("A\\'", "'", '\\');
+  // Data and identical protection and escape char (like CSV)
+  QCOMPARE(unprotectedString("A", "'", '\'', &end), QString(""));
+  QCOMPARE(end, -1);
+  QCOMPARE(unprotectedString("'A'", "'", '\'', &end), QString("A"));
+  QCOMPARE(end, 2);
+  QCOMPARE(unprotectedString("'ABCD'", "'", '\'', &end), QString("ABCD"));
+  QCOMPARE(end, 5);
+  QCOMPARE(unprotectedString("'A''BC''D'", "'", '\'', &end), QString("A'BC'D"));
+  QCOMPARE(end, 9);
+
+  // Start a given position
+  QCOMPARE(unprotectedString("", "'", '\\', &end, 0), QString(""));
+  QCOMPARE(end, -1);
+  QCOMPARE(unprotectedString("A'BC'", "'", '\\', &end, 1), QString("BC"));
+  QCOMPARE(end, 4);
+  QCOMPARE(unprotectedString("A'BC'D", "'", '\\', &end, 1), QString("BC"));
+  QCOMPARE(end, 4);
+  QCOMPARE(unprotectedString("A'BC'D'EF'G", "'", '\\', &end, 1), QString("BC"));
+  QCOMPARE(end, 4);
+  QCOMPARE(unprotectedString("A'BC\\'D\\'EF'G", "'", '\\', &end, 1), QString("BC'D'EF"));
+  QCOMPARE(end, 11);
+  QCOMPARE(unprotectedString("A<>BC<>D<>EF<>G", "<>", '\\', &end, 1), QString("BC"));
+  QCOMPARE(end, 5);
+  QCOMPARE(unprotectedString("A<>BC\\<>D\\<>EF<>G", "<>", '\\', &end, 1), QString("BC<>D<>EF"));
+  QCOMPARE(end, 14);
+
+  // Invalid data: must not crash ...
+  unprotectedString("A'", "'", '\\');
+  unprotectedString("A\\'", "'", '\\');
+  unprotectedString("'A", "'", '\\', &end);
+  unprotectedString("\\'A", "'", '\\');
+  unprotectedString("\\", "'", '\\');
+  unprotectedString("A\\", "'", '\\');
+  unprotectedString("A\\'", "'", '\\');
 }
 
 void mdtAlgorithmsTest::splitStringTest()
@@ -409,15 +435,33 @@ void mdtAlgorithmsTest::splitStringTest()
   QCOMPARE(items.size(), 1);
   QCOMPARE(items.at(0), QString("A\\BCD"));
 
+  // CSV format
+  items = splitString("abc,\"de,f\"", ",", "\"", '"');
+  QCOMPARE(items.size(), 2);
+  QCOMPARE(items.at(0), QString("abc"));
+  QCOMPARE(items.at(1), QString("de,f"));
+  items = splitString("abc,\"de,f\",\"123 \"\"test\",567", ",", "\"", '"');
+  QCOMPARE(items.size(), 4);
+  QCOMPARE(items.at(0), QString("abc"));
+  QCOMPARE(items.at(1), QString("de,f"));
+  QCOMPARE(items.at(2), QString("123 \"test"));
+  QCOMPARE(items.at(3), QString("567"));
+  items = splitString("abc,\"de,f\",\"123 \"\"test\"\"\",567", ",", "\"", '"');
+  QCOMPARE(items.size(), 4);
+  QCOMPARE(items.at(0), QString("abc"));
+  QCOMPARE(items.at(1), QString("de,f"));
+  QCOMPARE(items.at(2), QString("123 \"test\""));
+  QCOMPARE(items.at(3), QString("567"));
   
   // Some wrong formated strings
   items = splitString("A;'B;C;D", ";", "'");
-  QCOMPARE(items.size(), 2);
-  QCOMPARE(items.at(0), QString("A"));
-  QCOMPARE(items.at(1), QString("B;C;D"));
+  ///qDebug() << items;
+  ///QCOMPARE(items.size(), 2);
+  ///QCOMPARE(items.at(0), QString("A"));
+  ///QCOMPARE(items.at(1), QString("B;C;D"));
 
   items = splitString("''A''", ";", "'");
-  qDebug() << items;
+  ///qDebug() << items;
 }
 
 

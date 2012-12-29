@@ -496,6 +496,7 @@ void mdtDeviceTest::scpiTest()
 
   QVERIFY(d.waitOperationComplete(5000, 100));
 
+  QVERIFY(d.sendCommand(":CHANnel1:PROBe 20X\n") >= 0);
   QVERIFY(d.sendCommand(":ACQuire:TYPE PEAKdetect\n") >= 0);
   ///QVERIFY(d.sendCommand(":ACQuire:AVERages 8\n") >= 0);
   QVERIFY(d.sendCommand(":TRIGger:MODE EDGE\n") >= 0);
@@ -507,12 +508,33 @@ void mdtDeviceTest::scpiTest()
   QVERIFY(d.sendCommand(":STOP\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n") >= 0);
-  QVERIFY(d.waitOperationComplete(5000, 100));
+  QVERIFY(d.waitOperationComplete(5000, 1000));
+  
+  
+  double y_inc, y_val, y_ref, y_origin;
+  
+  data = d.sendQuery(":WAVeform:PREamble?\n");
+  qDebug() << codec.decodeValues(data, ",");
+  qDebug() << codec.values();
+  y_inc = codec.values().at(7).toDouble();
+  qDebug() << "Y inc: " << y_inc;
+  y_origin = codec.values().at(8).toDouble();
+  qDebug() << "Y O: " << y_origin;
+  y_ref = codec.values().at(9).toDouble();
+  qDebug() << "Y ref: " << y_ref;
+  
   data = d.sendQuery(":WAVeform:DATA?\n");
   qDebug() << "Data len: " << data.size();
   
-  QVERIFY(codec.decodeIEEEblock(data));
+  QVERIFY(codec.decodeIEEEblock(data, mdtFrameCodecScpi::BYTE));
+  for(int i=0; i<codec.values().size(); i++){
+    ///qDebug() << "data[" << i << "]: " << codec.values().at(i) << " , flt: " << codec.values().at(i).toDouble()*y_inc;
+    y_val = codec.values().at(i).toDouble();
+    qDebug() << "data[" << i << "]: " << ((y_ref - y_val) * y_inc) - y_origin;
+  }
   ///qDebug() << "Data: " << codec.values();
+  
+  
 
 }
 

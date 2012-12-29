@@ -27,13 +27,21 @@
 #include <QDebug>
 
 mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
- : mdtDevice(parent)
+ : mdtDeviceScpi(parent)
 {
   int timeout;
 
-  pvPortManager = new mdtUsbtmcPortManager;
+  ///pvPortManager = new mdtUsbtmcPortManager;
   pvCodec = new mdtFrameCodecScpiU3606A;
   // Setup port manager
+  portManager()->config().setReadFrameSize(512);
+  portManager()->config().setReadQueueSize(10);
+  portManager()->config().setWriteFrameSize(512);
+  portManager()->config().setWriteQueueSize(1);
+
+  /// \todo setup read frames sizes
+  
+  /**
   pvPortManager->config().setReadTimeout(10000);
   ///pvPortManager->setNotifyNewReadenFrame(true);
   connect(pvPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
@@ -43,34 +51,41 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
     timeout = pvPortManager->config().writeTimeout();
   }
   setBackToReadyStateTimeout(2*timeout);
-  
+  */
 
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()
 {
-  delete pvPortManager;
+  ///delete pvPortManager;
   delete pvCodec;
 }
 
+/**
 mdtPortManager *mdtDeviceU3606A::portManager()
 {
   return pvPortManager;
 }
+*/
 
 mdtAbstractPort::error_t mdtDeviceU3606A::connectToDevice(const mdtDeviceInfo &devInfo)
 {
-  mdtPortInfo *port;
-  QList<mdtPortInfo*> ports;
-  QList<mdtDeviceInfo*> devices;
   mdtDeviceInfo device;
-  int i, j;
-  mdtAbstractPort::error_t retVal;
 
   // Setup device info
   device = devInfo;
   device.setVendorId(0x0957);
   device.setProductId(0x4d18);
+
+  return mdtDeviceScpi::connectToDevice(device);
+  
+  /**
+  mdtPortInfo *port;
+  QList<mdtPortInfo*> ports;
+  QList<mdtDeviceInfo*> devices;
+  int i, j;
+  mdtAbstractPort::error_t retVal;
+
   // Scan for ports having a USBTMC device attached
   port = 0;
   ports = pvPortManager->scan();
@@ -121,8 +136,10 @@ mdtAbstractPort::error_t mdtDeviceU3606A::connectToDevice(const mdtDeviceInfo &d
   ports.clear();
 
   return retVal;
+  */
 }
 
+/**
 int mdtDeviceU3606A::sendCommand(const QByteArray &command, int timeout)
 {
   return pvPortManager->sendCommand(command, timeout);
@@ -132,6 +149,7 @@ QByteArray mdtDeviceU3606A::sendQuery(const QByteArray &query, int writeTimeout,
 {
   return pvPortManager->sendQuery(query, writeTimeout, readTimeout);
 }
+*/
 
 void mdtDeviceU3606A::onStateChanged(int state)
 {
@@ -176,22 +194,22 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
   /// \todo Add resolution and limits (min/max)
   /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
   // Wait until data can be sent
-  if(!pvPortManager->waitOnWriteReady(500)){
+  if(!pvUsbtmcPortManager->waitOnWriteReady(500)){
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Send query
-  bTag = pvPortManager->writeData("MEAS:VOLT:DC?\n");
+  bTag = pvUsbtmcPortManager->writeData("MEAS:VOLT:DC?\n");
   if(bTag < 0){
     return bTag;
   }
   // Wait until more data can be sent
-  if(!pvPortManager->waitOnWriteReady(500)){
+  if(!pvUsbtmcPortManager->waitOnWriteReady(500)){
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Remember query type.
   transaction->setType(MDT_FC_SCPI_VALUE);
   // Send read request
-  bTag = pvPortManager->sendReadRequest(transaction);
+  bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
 
   return bTag;
 }

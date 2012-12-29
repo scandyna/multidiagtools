@@ -107,9 +107,12 @@ class mdtDeviceScpi : public mdtDevice
    */
   bool waitOperationComplete(int timeout, int interval);
 
- private:
+ protected:
 
   mdtUsbtmcPortManager *pvUsbtmcPortManager;
+
+ private:
+
   bool pvOperationComplete;
 };
 

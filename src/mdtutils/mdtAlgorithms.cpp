@@ -21,7 +21,7 @@
 #include "mdtAlgorithms.h"
 #include <QChar>
 
-#include <QDebug>
+//#include <QDebug>
 
 QStringList mdtAlgorithms::sortStringListWithNumericEnd(QStringList &list)
 {
@@ -160,30 +160,23 @@ QString mdtAlgorithms::byteArrayToHexString(const QByteArray &byteArray)
   return hexString.trimmed();
 }
 
-/*
-    QStringList list;
-    int start = 0;
-    int extra = 0;
-    int end;
-    while ((end = indexOf(sep, start + extra, cs)) != -1) {
-        if (start != end || behavior == KeepEmptyParts)
-            list.append(mid(start, end - start));
-        start = end + sep.size();
-        extra = (sep.size() == 0 ? 1 : 0);
-    }
-    if (start != size() || behavior == KeepEmptyParts)
-        list.append(mid(start));
-    return list;
-    */
-
-QString mdtAlgorithms::unprotectedString(const QString &str, const QString &dataProtection, const QChar &escapeChar, int *strEndOffset)
+QString mdtAlgorithms::unprotectedString(const QString &str, const QString &dataProtection, const QChar &escapeChar, int *strEndOffset, int strStartOffset)
 {
   QString result;
   int dpCursor = -1;
-  int start = 0;
+  int dpCursorMem = -1;
+  int remainingDp = 2;
+  int start;
   int end = 0;
+  bool escapeEqualProtection = QString(escapeChar) == dataProtection;
 
-  while(end < str.size()){
+  if(strStartOffset > -1){
+    start = strStartOffset;
+  }else{
+    start = 0;
+  }
+
+  while((end < str.size())&&(remainingDp > 0)){
     // Get index of data protection
     if(!dataProtection.isEmpty()){
       dpCursor = str.indexOf(dataProtection, start);
@@ -191,28 +184,52 @@ QString mdtAlgorithms::unprotectedString(const QString &str, const QString &data
       dpCursor = -1;
     }
     if(dpCursor < 0){
-      // No data protection, copy until end
-      end = str.size();
-      qDebug() << "A str: " << str << " , start: " << start << " , dpCursor: " << dpCursor << " , end: " << end << " , cpy: " << str.mid(start, end-start);
-      result.append(str.mid(start, end-start));
-    }else if(dpCursor == 0){
-      // Just move start cursor after protection
-      start = dpCursor + dataProtection.size();
+      // Finish parsing
+      dpCursor = dpCursorMem;
+      break;
     }else{
-      if(str.at(dpCursor-1) == escapeChar){
-        end = dpCursor-1;
-        qDebug() << "B str: " << str << " , start: " << start << " , dpCursor: " << dpCursor << " , end: " << end << " , cpy: " << str.mid(start, end-start);
-        result.append(str.mid(start, end-start));
-        // Add escape sequence
-        result.append(str.mid(dpCursor, dataProtection.size()));
-        start = dpCursor + dataProtection.size();
+      if(escapeEqualProtection){
+        if(dpCursor < (str.size()-1)){
+          // check about escaped sequence
+          if(str.at(dpCursor+1) == escapeChar){
+            // Escaped sequence
+            end = dpCursor + 1;
+            result.append(str.mid(start, end-start));
+            start = dpCursor + dataProtection.size() + 1;
+          }else{
+            --remainingDp;
+            end = dpCursor;
+            result.append(str.mid(start, end-start));
+            start = dpCursor + dataProtection.size();
+          }
+        }else{
+          end = dpCursor;
+          result.append(str.mid(start, end-start));
+          break;
+        }
       }else{
-        end = dpCursor;
-        qDebug() << "C str: " << str << " , start: " << start << " , dpCursor: " << dpCursor << " , end: " << end << " , cpy: " << str.mid(start, end-start);
-        result.append(str.mid(start, end-start));
-        start = dpCursor + dataProtection.size();
+        if(dpCursor == 0){
+          // Just move start cursor after protection
+          start = dpCursor + dataProtection.size();
+          --remainingDp;
+        }else{
+          if(str.at(dpCursor-1) == escapeChar){
+            // Escaped sequence
+            end = dpCursor-1;
+            result.append(str.mid(start, end-start));
+            // Add escape sequence
+            result.append(str.mid(dpCursor, dataProtection.size()));
+            start = dpCursor + dataProtection.size();
+          }else{
+            --remainingDp;
+            end = dpCursor;
+            result.append(str.mid(start, end-start));
+            start = dpCursor + dataProtection.size();
+          }
+        }
       }
     }
+    dpCursorMem = dpCursor;
     end += dataProtection.size();
   }
   if(strEndOffset != 0){
@@ -224,21 +241,12 @@ QString mdtAlgorithms::unprotectedString(const QString &str, const QString &data
 
 QStringList mdtAlgorithms::splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar)
 {
-  bool parserEnabled;   // Used for data protection ( "data";"other ; data";0123 )
-  QString tmpStr;
   int sepCursor = 0;    // Cursor in str string for separator
   int dpCursor = 0;     // Cursor in str string for dataProtection
-  QString field;
   QStringList fields;
-
-  qDebug() << "Input: str: " << str << " , separator: " << separator << " , DP: " << dataProtection;
-  
   int start = 0;
-  int extra;
   int end = 0;
 
-  bool isEscaped;
-  
   while(end < str.size()){
     // Get separator and data protection indexes
     if(!separator.isEmpty()){
@@ -251,140 +259,40 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
     }else{
       dpCursor = -1;
     }
-    qDebug() << "str: " << str << " , start: " << start << " , end: " << end << " , str size: " << str.size() <<  " , sepCursor: " << sepCursor << " , dpCursor: " << dpCursor << " , escape: " << escapeChar;
     if((sepCursor < 0)&&(dpCursor < 0)){
       // No keyword found, copy remaining string
       end = str.size();
       if(start != end){
-        qDebug() << "A: Copy from " << start << " , n: " << end-start << "(" << str.mid(start, end-start) << ")";
         fields.append(str.mid(start, end-start));
       }
     }else if((sepCursor < 0)&&(dpCursor > -1)){
       // Only data protection was found, copy until next data protection (or until end if not found)
-      /**
-      start += dataProtection.size();
-      if(!dataProtection.isEmpty()){
-        dpCursor =  str.indexOf(dataProtection, start);
-      }else{
-        dpCursor = -1;
+      fields.append(unprotectedString(str, dataProtection, escapeChar, &end, start));
+      // Check about end of string
+      if(end < 0){
+        break;
       }
-      if(dpCursor < 0){
-        end = str.size();
-      }else{
-        end = dpCursor;
-      }
-      */
-      ///start += dataProtection.size();
-      ///dpCursor = start;
-      start = dpCursor + dataProtection.size();
-      field.clear();
-      isEscaped = true;
-      while(isEscaped){
-        ///start += dataProtection.size();
-        ///start = dpCursor + dataProtection.size();
-        if(!dataProtection.isEmpty()){
-          dpCursor =  str.indexOf(dataProtection, start);
-        }else{
-          dpCursor = -1;
-        }
-        if(dpCursor < 0){
-          end = str.size();
-          break;
-        }else{
-          if(dpCursor > 0){
-            if(str.at(dpCursor-1) == escapeChar){
-              end = dpCursor-1;
-              qDebug() << "B(0): str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
-              field.append(str.mid(start, end-start));
-              start = dpCursor;
-              isEscaped = true;
-            }else{
-              end = dpCursor;
-              qDebug() << "B(1): str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
-              field.append(str.mid(start, end-start));
-              start = dpCursor + dataProtection.size();
-              isEscaped = false;
-            }
-          }else{
-            end = dpCursor;
-            qDebug() << "B(1): str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
-            field.append(str.mid(start, end-start));
-            start = dpCursor + dataProtection.size();
-            isEscaped = false;
-          }
-          ///end = dpCursor;
-          ///start = end + dataProtection.size();
-          ///start = end;
-        }
-        ///qDebug() << "B: str: " << str << " , start: " << start << " , end: " << end << " , copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
-        ///field.append(str.mid(start, end-start));
-        ///end = dpCursor;
-        ///start = end;
-        ///start = end + dataProtection.size();
-      }
-      ///fields.append();
-      fields.append(field);
       end += dataProtection.size();
-      ///start = end + dataProtection.size();  /// \note : ??
-      start = end + separator.size();
-      ///start = end;
+      start = end;
     }else if((sepCursor > -1)&&(dpCursor < 0)){
       // Only separator was found, copy left part
       end = sepCursor;
-      qDebug() << "C: start: " << start << " , end: " << end << " ,copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
       fields.append(str.mid(start, end-start));
       start = end + separator.size();
     }else{
       // Separator and data protection found
       if(dpCursor < sepCursor){
         // Data protection was first found, copy until next data protection (or until end if not found)
-        /**
-        start += dataProtection.size();
-        if(!dataProtection.isEmpty()){
-          dpCursor =  str.indexOf(dataProtection, start);
-        }else{
-          dpCursor = -1;
+        fields.append(unprotectedString(str, dataProtection, escapeChar, &end, start));
+        // Check about end of string
+        if(end < 0){
+          break;
         }
-        if(dpCursor < 0){
-          end = str.size();
-        }else{
-          end = dpCursor;
-        }
-        */
-        isEscaped = true;
-        while(isEscaped){
-          start += dataProtection.size();
-          if(!dataProtection.isEmpty()){
-            dpCursor =  str.indexOf(dataProtection, start);
-          }else{
-            dpCursor = -1;
-          }
-          if(dpCursor < 0){
-            end = str.size();
-            break;
-          }else{
-            if(dpCursor > 0){
-              if(str.at(dpCursor-1) == escapeChar){
-                isEscaped = true;
-              }else{
-                isEscaped = false;
-              }
-            }else{
-              isEscaped = false;
-            }
-            end = dpCursor;
-          }
-        }
-        qDebug() << "D1: Copy from " << start << " , n: " << end-start << "(" << str.mid(start, end-start) << ")";
-        fields.append(str.mid(start, end-start));
         end += dataProtection.size();
-        ///start = end + dataProtection.size();  /// \note: ??
         start = end + separator.size();
-        ///start = end;
       }else{
         // Separator was first found, copy left part
         end = sepCursor;
-        qDebug() << "D2: start: " << start << " , end: " << end << " ,copy  n: " << end-start << "(" << str.mid(start, end-start) << ")";
         fields.append(str.mid(start, end-start));
         start = end + separator.size();
       }
@@ -392,182 +300,7 @@ QStringList mdtAlgorithms::splitString(const QString &str, const QString &separa
   }
   // Append a field if str terminates with a separator
   if((!separator.isEmpty())&&(str.indexOf(separator, end-separator.size())>-1)){
-    qDebug() << "Z: indexOf(" << separator << "," << end-1 << "): " << str.indexOf(separator, end-1);
     fields.append("");
   }
-  return fields;
-  
-  
-  if(separator.size() == 0){
-    extra = 1;
-  }else{
-    extra = 0;
-  }
-
-  // If separator is empty, nothing is to parse, simply return a 1 item list
-  if(separator.isEmpty()){
-    if(!str.isEmpty()){
-      fields << str;
-    }
-    return fields;
-  }
-
-  // As default, parser is enabled
-  parserEnabled = true;
-
-  while(end > -1){
-    if(parserEnabled){
-      // Find first occurence of data protection and separator
-      if(!dataProtection.isEmpty()){
-        dpCursor = str.indexOf(dataProtection, start + 0);
-      }else{
-        dpCursor = -1;
-      }
-      if(!separator.isEmpty()){
-        sepCursor = str.indexOf(separator, start + 0);
-      }else{
-        sepCursor = -1;
-      }
-      // Calculate end cursor
-      qDebug() << "Parser ON , dpCursor: " << dpCursor << " , sepCursor: " << sepCursor;
-      if(dpCursor == sepCursor){
-        end = dpCursor;
-      }else if(dpCursor < 0){
-        end = sepCursor;
-      }else if(sepCursor < 0){
-        end = dpCursor;
-      }else if(dpCursor < sepCursor){
-        // Fisrt occurence is a data protection, diseable parser
-        end = dpCursor;
-        parserEnabled = false;
-      }else{
-        end = sepCursor;
-      }
-      qDebug() << "Parser ON , end: " << end;
-      // Copy data
-      ///if(start < str.size()){
-        qDebug() << "Parser ON , Copy data from " << start << " , size " << end-start << " (" << str.mid(start, end - start) << ")";
-        fields.append(str.mid(start, end - start));
-      ///}
-    }else{
-      // Find first occurence on data protection
-      if(!dataProtection.isEmpty()){
-        dpCursor = str.indexOf(dataProtection, start + 0);
-      }else{
-        dpCursor = -1;
-      }
-      end = dpCursor;
-      // Copy data
-      if(start < str.size()){
-        qDebug() << "Parser OFF , Copy data from " << start << " , size " << end-start << " (" << str.mid(start, end - start) << ")";
-        fields.append(str.mid(start, end - start));
-      }
-      // Re-enable parser if we are at end of data protection section
-      if(dpCursor > -1){
-        parserEnabled = true;
-      }
-    }
-
-    // Calc the new start position
-      if(parserEnabled){
-        start = end + separator.size();
-      }else{
-        start = end + dataProtection.size();
-      }
-      qDebug() << "NEW start: " << start;
-  }
-  
-  return fields;
-  
-  
-  // If separator is empty, nothing is to parse, simply return a 1 item list
-  if(separator.isEmpty()){
-    if(!str.isEmpty()){
-      fields << str;
-    }
-    return fields;
-  }
-  // As default, parser is enabled
-  parserEnabled = true;
-
-  ///fields.clear();
-  tmpStr = str;
-  while(tmpStr.size() > 0){
-    qDebug() << "tmpStr: " << tmpStr;
-    field.clear();
-    // Find first occurence of dataProtection in line string
-    if(dataProtection.size() > 0){
-      dpCursor = tmpStr.indexOf(dataProtection);
-    }else{
-      dpCursor = -1;
-    }
-    // If parser is enabled, react to keys
-    if(parserEnabled){
-      // Find first occurence of separator in line string
-      sepCursor = tmpStr.indexOf(separator);
-      qDebug() << "sepCursor: " << sepCursor;
-      // See if we have a data protection
-      if(dpCursor >= 0){
-        // See if we have a separator
-        if(sepCursor >= 0){
-          // Have both, see if data protection is first occurence
-          if(dpCursor < sepCursor){
-            // Begin of data protection - Diseable parser and remove data protection
-            parserEnabled = false;
-            tmpStr.remove(0, dataProtection.size());
-          }else{
-            // Copy into field
-            field.append(tmpStr.left(sepCursor));
-            ///fields << pvCodec->toUnicode(field);
-            fields << field;
-            // Remove separator
-            tmpStr.remove(0, sepCursor+separator.size());
-          }
-        }else{
-          // Have only data protection - remove protection and put data into field
-          tmpStr.remove(0, dataProtection.size());
-          Q_ASSERT((tmpStr.size()-dataProtection.size()) >= 0);
-          field.append(tmpStr.left(tmpStr.size()-dataProtection.size()));
-          ///fields << pvCodec->toUnicode(field);
-          fields << field;
-          break;
-        }
-      }else{
-        // Data protection not found , see about separator
-        if(sepCursor >= 0){
-          // Copy into field
-          field.append(tmpStr.left(sepCursor));
-          ///fields << pvCodec->toUnicode(field);
-          qDebug() << "field: " << field;
-          fields << field;
-          // Remove separator
-          tmpStr.remove(0, sepCursor+separator.size());
-        }else{
-          // Nothing found - Just copy all data into field
-          field.append(tmpStr);
-          ///fields << pvCodec->toUnicode(field);
-          fields << field;
-          break;
-        }
-      }
-    }else{
-      // Parser diseabled, see if we must enable it
-      if(dpCursor >= 0){
-        parserEnabled = true;
-        // Store data -> cursor
-        field.append(tmpStr.left(dpCursor));
-        ///fields << pvCodec->toUnicode(field);
-        fields << field;
-        tmpStr.remove(0, dpCursor+dataProtection.size()+separator.size());
-      }else{
-        // Simply store the data into field
-        field.append(tmpStr);
-        ///fields << pvCodec->toUnicode(field);
-        fields << field;
-        break;
-      }
-    }
-  }
-
   return fields;
 }
