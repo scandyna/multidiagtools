@@ -30,7 +30,7 @@
 #include <cstring>
 #include <QString>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSerialPort::mdtSerialPort(QObject *parent)
  : mdtAbstractSerialPort(parent)
@@ -634,13 +634,14 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
   pvMutex.lock();
   if(n == 0){
     updateReadTimeoutState(true);
+    return ReadTimeout;
   }else{
     updateReadTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          ///return WaitingCanceled;
+          return ReadCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -669,7 +670,7 @@ qint64 mdtSerialPort::read(char *data, qint64 maxSize)
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
         updateReadTimeoutState(true);
-        return 0;
+        return ReadTimeout;
       default:
         mdtError e(MDT_SERIAL_PORT_IO_ERROR, "read() call failed", mdtError::Error);
         e.setSystemError(err, strerror(err));
@@ -728,23 +729,6 @@ bool mdtSerialPort::resumeTransmission()
   return true;
 }
 
-/**
-void mdtSerialPort::flushIn()
-{
-  int err;
-
-  lockMutex();
-  if(tcflush(pvFd, TCIFLUSH) < 0){
-    err = errno;
-    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-  }
-  mdtAbstractPort::flushIn();
-}
-*/
-
 mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
 {
   fd_set output;
@@ -764,13 +748,14 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
   pvMutex.lock();
   if(n == 0){
     updateWriteTimeoutState(true);
+    return WriteTimeout;
   }else{
     updateWriteTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          ///return WaitingCanceled;
+          return WriteCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -781,12 +766,6 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
       }
     }
   }
-  // Check about flushOut
-  /**
-  if(pvCancelWrite){
-    return WriteCanceled;
-  }
-  */
 
   return NoError;
 }
@@ -811,43 +790,23 @@ qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
         return n;
     }
   }
-  ///qDebug() << "wrote " << n << " bytes";
 
   return n;
 }
-
-/**
-void mdtSerialPort::flushOut()
-{
-  int err;
-
-  lockMutex();
-  if(tcflush(pvFd, TCOFLUSH) < 0){
-    err = errno;
-    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
-    e.setSystemError(err, strerror(err));
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-  }
-  mdtAbstractPort::flushOut();
-}
-*/
 
 mdtAbstractPort::error_t mdtSerialPort::waitEventCtl()
 {
   int retVal;
 
   // We wait until a line status change happens
-  ///qDebug() << "mdtSerialPort::waitEventCtl(), waiting...";
   pvMutex.unlock();
   retVal = ioctl(pvFd, TIOCMIWAIT, (TIOCM_CAR | TIOCM_DSR | TIOCM_CTS | TIOCM_RNG));
   pvMutex.lock();
-  qDebug() << "mdtSerialPort::waitEventCtl(), waiting DONE";
   if(retVal < 0){
     switch(errno){
       case EINTR:
         // Thread has send the stop signal
-        ///return WaitingCanceled;
+        return ControlCanceled;
       default:
         // Unhandled error
         mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
@@ -1112,9 +1071,8 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   // Set the read/write timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
-  // Init flags
-  ///pvCancelWrite = false;
 
+  /**
   qDebug() << "mdtSerialPort::pvSetup() setup:";
   qDebug() << "-> Baudrate: " << baudRate();
   qDebug() << "-> Data bits: " << dataBits();
@@ -1122,13 +1080,13 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   qDebug() << "-> parity: " << parity();
   qDebug() << "-> Xon/Xoff: " << flowCtlXonXoffOn();
   qDebug() << "-> CTS/RTS: " << flowCtlRtsCtsOn();
+  */
 
   return NoError;
 }
 
 void mdtSerialPort::pvFlushIn()
 {
-  qDebug() << "mdtSerialPort::pvFlushIn() ...";
   if(tcflush(pvFd, TCIFLUSH) < 0){
     mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
     e.setSystemError(errno, strerror(errno));
@@ -1139,8 +1097,6 @@ void mdtSerialPort::pvFlushIn()
 
 void mdtSerialPort::pvFlushOut()
 {
-  qDebug() << "mdtSerialPort::pvFlushOut() ...";
-  ///pvCancelWrite = true;
   if(tcflush(pvFd, TCOFLUSH) < 0){
     mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
     e.setSystemError(errno, strerror(errno));

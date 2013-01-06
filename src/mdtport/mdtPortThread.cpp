@@ -259,6 +259,7 @@ int mdtPortThread::readFromPort(mdtFrame **frame)
   // Store readen data
   toStore = readen;
   while(toStore > 0){
+    qDebug() << "mdtPortThread::readFromPort(), toStore: " << toStore;
     // Check for new frame if needed
     if((*frame) == 0){
       *frame = getNewFrameRead();
@@ -308,7 +309,7 @@ mdtFrame *mdtPortThread::getNewFrameWrite()
   return frame;
 }
 
-mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)
+mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(frame != 0);
@@ -335,6 +336,9 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
       if(portError == mdtAbstractPort::WriteCanceled){
         // Restore frame to pool and return
         pvPort->writeFramesPool().enqueue(frame);
+        if(pvRunning){
+          notifyError(mdtAbstractPort::WriteCanceled);
+        }
         return mdtAbstractPort::NoError;
       }else{
         return portError;
@@ -342,12 +346,23 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
     }
     // Event occured, send the data to port - Check timeout state first
     if(pvPort->writeTimeoutOccured()){
+      if(maxWriteTry <= 0){
+        // Notify error and restore frame into write pool
+        mdtError e(MDT_PORT_IO_ERROR, "Max write try reached after write timeout", mdtError::Error);
+        MDT_ERROR_SET_SRC(e, "mdtPortThread");
+        e.commit();
+        if(pvRunning){
+          notifyError(mdtAbstractPort::WriteTimeout);
+        }
+        pvPort->writeFramesPool().enqueue(frame);
+        // Thread has nothing else to do
+        return mdtAbstractPort::NoError;
+      }
       // Cannot write now, sleep some time and try later
-      /// \todo Should this not return a timeout error ?
-      notifyError(mdtAbstractPort::WriteTimeout);
       pvPort->unlockMutex();
       msleep(100);
       pvPort->lockMutex();
+      maxWriteTry--;
     }else{
       // Write data to port
       emit ioProcessBegin();
@@ -356,16 +371,28 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
         pvPort->unlockMutex();
         msleep(interByteTime);
         pvPort->lockMutex();
-        // Check about flush request
-        if(pvPort->flushOutRequestPending()){
-          // Restore frame to pool and return
-          pvPort->writeFramesPool().enqueue(frame);
-          return mdtAbstractPort::NoError;
-        }
       }else{
         written = pvPort->write(bufferCursor, toWrite);
       }
-      if(written < 0){
+      if(written == 0){
+        if(maxWriteTry <= 0){
+          // Notify error and restore frame into write pool
+          mdtError e(MDT_PORT_IO_ERROR, "Max write try reached after write busy", mdtError::Error);
+          MDT_ERROR_SET_SRC(e, "mdtPortThread");
+          e.commit();
+          if(pvRunning){
+            notifyError(mdtAbstractPort::WriteTimeout);
+          }
+          pvPort->writeFramesPool().enqueue(frame);
+          // Thread has nothing else to do
+          return mdtAbstractPort::NoError;
+        }
+        // Cannot write now, sleep some time and try later
+        pvPort->unlockMutex();
+        msleep(100);
+        pvPort->lockMutex();
+        maxWriteTry--;
+      }else if(written < 0){
         return mdtAbstractPort::UnhandledError;
       }
       frame->take(written);
@@ -426,7 +453,6 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
     mdtError e(MDT_PORT_IO_ERROR, "Connection failed after max try", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
     e.commit();
-    ///notifyError(mdtAbstractPort::UnhandledError);
     notifyError(mdtAbstractPort::Disconnected);
   }
 

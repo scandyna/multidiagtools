@@ -102,6 +102,7 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
     }
     // Calc total frame size, without alignment bytes
     frameSize = pvTransferSize + 12;
+    qDebug() << "Frame, bTag: " << pvbTag << " , size (waiting): " << frameSize;
     // Check if we have a complete frame
     if(size() >= frameSize){
       pvEOFcondition = true;
@@ -171,7 +172,6 @@ void mdtFrameUsbTmc::encode()
   if(pvMsgID == DEV_DEP_MSG_OUT){
     pvTransferSize = pvMessageData.size();
   }else if(pvMsgID == DEV_DEP_MSG_IN){
-    ///pvTransferSize = remainCapacity() - 12 - 3; /// \todo Check > 0, ...
     pvEOM = false;
     pvMessageData.clear();
   }else{

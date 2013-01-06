@@ -23,7 +23,7 @@
 #include "mdtFrame.h"
 #include <QApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPortWriteThread::mdtPortWriteThread(QObject *parent)
  : mdtPortThread(parent)
@@ -50,7 +50,6 @@ bool mdtPortWriteThread::isWriter() const
 
 void mdtPortWriteThread::run()
 {
-  qDebug() << "WRTHD: starting ...";
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame = 0;
@@ -62,7 +61,6 @@ void mdtPortWriteThread::run()
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
   pvNativePthreadObject = pthread_self();
-  qDebug() << "WRTHD: starting TID: " << pvNativePthreadObject;
   Q_ASSERT(pvNativePthreadObject != 0);
 #endif
   // Get setup
@@ -74,7 +72,6 @@ void mdtPortWriteThread::run()
 
   // Run...
   while(1){
-    qDebug() << "WRTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -92,19 +89,12 @@ void mdtPortWriteThread::run()
       break;
     }
     // Write
-    qDebug() << "WRTHD: writeToPort() ...";
     portError = writeToPort(frame, bytePerByteWrite, writeMinWaitTime);
     if(portError != mdtAbstractPort::NoError){
       // Stop
       break;
     }
-    ///qDebug() << "WRTHD: writeToPort() DONE";
   }
-
-  /// \todo Put curent frame back to pool ??
-  
-  qDebug() << "WRTHD: Cleanup ...";
-
   pvPort->unlockMutex();
-  qDebug() << "WRTHD: END";
+  notifyError(mdtAbstractPort::Disconnected);
 }

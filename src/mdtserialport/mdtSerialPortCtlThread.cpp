@@ -23,7 +23,7 @@
 #include "mdtAbstractPort.h"
 #include <QApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 #ifdef Q_OS_UNIX
  #include <pthread.h>
@@ -67,28 +67,12 @@ void mdtSerialPortCtlThread::run()
     // Wait on ctl signal event
     portError = port->waitEventCtl();
     if(portError != mdtAbstractPort::NoError){
-      
-      /**
-      if(portError == mdtAbstractPort::WaitingCanceled){
-        // Stopping
-        notifyError(mdtAbstractPort::Disconnected);
-        break;
-      }else{
-        // Unhandled error. Signal this and stop
-        notifyError(portError);
+      if(!pvRunning){
         break;
       }
-      */
-      
-      
-      /**
-      }else if(portError == mdtAbstractPort::UnhandledError){
-        // Unhandled error. Signal this and stop
-        ///emit(errorOccured(MDT_PORT_IO_ERROR));
-        notifyError(MDT_PORT_IO_ERROR);
-        break;
-      }
-      */
+      // Unhandled error. Signal this and stop
+      notifyError(portError);
+      break;
     }
     // We have a event here, update the flags
     if(!port->getCtlStates()){
@@ -97,4 +81,5 @@ void mdtSerialPortCtlThread::run()
   }
 
   port->unlockMutex();
+  notifyError(mdtAbstractPort::Disconnected);
 }

@@ -53,7 +53,7 @@ class mdtAbstractPort : public QObject
    *  Some errors must be handled in specific ways depending on port (serial, USB, TCP, ...).
    *  Each time a error occurs, thread should check the pvRunning flag, and stop if it is false
    *  (typical: after a stop request from main thread, mdtAbstractPort subclass will return
-   *    IoProcessCanceled. But it can happen that I/O process was canceled for another reason,
+   *    ReadCanceled, WriteCanceled or ControlCanceled. But it can happen that I/O process was canceled for another reason,
    *    this is port specific).
    *
    * \todo add UnhandledError to complete UnknownError (+ adapt in threads)
@@ -65,20 +65,20 @@ class mdtAbstractPort : public QObject
                 PortNotFound,           /*!< Port was not found */
                 PortAccess,             /*!< Port cannot be open with requierd access (read, write) */
                 SetupError,             /*!< Setup failed on a configuration option */
-                IoProcessCanceled,      /*!< Happens in most cases when a wait call was interrupted. */
                 /**WaitingCanceled,*/        /*!< When a thread (mdtPortThread or subclass) is stopping, it will
                                               cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
                                               At this case, this error is returned, and the thread knows that it can 
                                               cleanup and end. */
                 WriteCanceled,          /*!< Write process was cancelled. The thread should stop the write process, restore
-                                              the current frame into pool and continue working.
-                                              \todo Check if should obselete, possibly overlapping flushOut() */
+                                              the current frame into pool and continue working. */
                 ReadCanceled,           /*!< Read process was cancelled. The thread should stop the read process, restore
                                               the current frame into pool and continue working. */
+                ControlCanceled,        /*!< Control process canceled (serial port's modem line, USB control transfer) */
                 ReadTimeout,            /*!< Read process has timed out. Thread should notify this and continue working.
                                               If thread uses the read timeout protocol, no notification should be sent */
                 WriteTimeout,           /*!< Write process has timed out. Thread should notify this and continue working.
                                               If thread uses the write timeout protocol, no notification should be sent */
+                ControlTimeout,         /*!< Control process timed out (serial port's modem line, USB control transfer) */
                 Disconnected,           /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
                                               If this error happens, the thread will try to reconnect. If connection fails after
                                                maximum trys, a notification is sent with this Disconnected error. */
@@ -230,10 +230,8 @@ class mdtAbstractPort : public QObject
    * Notes about mutex handling:
    *  - Mutex must be released during wait, and relocked befor return.
    *
-   * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
-   *          and the thread knows that it must end (case of stopping thread).
+   * \return On success, NoError is returned. If waiting is canceled, ReadCanceled is returned.
    *          If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned.
-   *          
    *          On unhandled error, UnhandledError is returned. The thread also stop working, and emit
    *          a error signal (that can be handled in mdtPortManager, or in another place in application).
    *

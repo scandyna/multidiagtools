@@ -185,7 +185,7 @@ class mdtPortThread : public QThread
    *               and that it can be Null (in this case the mdtAbstractPort::UnhandledError is returned)
    *
    * \return The number of frames completed during the process.
-   *          This can be helpful query/reply protocols in witch the standard
+   *          This can be helpful for query/reply protocols in witch the standard
    *          reply should be one frame.
    *         On error, frame is put back into pool and one of the mdtAbstractPort::error_t is returned.
    *
@@ -234,13 +234,16 @@ class mdtPortThread : public QThread
    * \param frame Data stored in this frame will be written to port.
    * \param bytePerByteWrite If true, one byte will be written once.
    * \param interByteTime Time between each byte write [ms] (has only effect if bytePerByteWrite is true)
+   * \param maxWriteTry Some port can return 0 byte or a timeout error if busy. If this happens,
+   *                     this method will sleep some time an try a write call again until
+   *                     write call works successfull or maxWriteTry is reached.
    *
    * \return NoError on success or a mdtAbstractPort::error_t error.
    *
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  mdtAbstractPort::error_t writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime);
+  mdtAbstractPort::error_t writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry = 10);
 
   /*! \brief Try to reconnect to device/peer
    *

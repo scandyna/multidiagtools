@@ -72,6 +72,9 @@ class mdtUsbPortThread : public mdtPortThread
    *
    * \param port A valid instance of mdtUsbPort
    * \param frame Data stored in thos frame will be written to port.
+   * \param maxWriteTry Some port can return 0 byte or a timeout error if busy. If this happens,
+   *                     this method will sleep some time an try a write call again until
+   *                     write call works successfull or maxWriteTry is reached.
    *
    * \return True on successfull transfert, or false on error or by stop request.
    *          If this method returns false, the thread should be stopped.
@@ -79,7 +82,7 @@ class mdtUsbPortThread : public mdtPortThread
    * \pre port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame);
+  mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame, int maxWriteTry = 10);
 
   void run();
 };

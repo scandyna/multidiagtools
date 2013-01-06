@@ -92,7 +92,7 @@ mdtAbstractPort::error_t mdtPort::waitForReadyRead()
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          ///return WaitingCanceled;
+          return ReadCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -121,7 +121,7 @@ qint64 mdtPort::read(char *data, qint64 maxSize)
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
         updateReadTimeoutState(true);
-        return 0;
+        return ReadTimeout;
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
         e.setSystemError(err, strerror(err));
@@ -153,13 +153,14 @@ mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
   pvMutex.lock();
   if(n == 0){
     updateWriteTimeoutState(true);
+    return WriteTimeout;
   }else{
     updateWriteTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          ///return WaitingCanceled;
+          return WriteCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);

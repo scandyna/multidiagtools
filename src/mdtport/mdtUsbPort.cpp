@@ -90,7 +90,7 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
   error_t error;
 
   // Let libusb finish pending works
-  handleUsbEvents(&pvReadTimeoutTv);
+  handleUsbEvents(&pvReadTimeoutTv, 0);
   close();
 
   error = open();
@@ -189,7 +189,7 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlQueries()
   // Submit transfer
   err = libusb_submit_transfer(pvControlTransfer);
   if(err != 0){
-    portError = mapUsbError(err, false);
+    portError = mapUsbError(err, 0);
     if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed for control endpoint", mdtError::Error);
       e.setSystemError(err, errorText(err));
@@ -208,16 +208,16 @@ mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
   int err;
   error_t portError;
 
-  qDebug() << "cancelControlTransfer() ...";
   // If transfer is null, port was closed
   if(pvControlTransfer == 0){
     return UnhandledError;
   }
 
   if(pvControlTransferPending){
+    qDebug() << "cancelControlTransfer() ...";
     err = libusb_cancel_transfer(pvControlTransfer);
     if(err != 0){
-      portError = mapUsbError(err, false);
+      portError = mapUsbError(err, 0);
       if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed for control endpoint", mdtError::Error);
         e.setSystemError(err, errorText(err));
@@ -259,18 +259,20 @@ mdtAbstractPort::error_t mdtUsbPort::handleControlResponses()
     return NoError;
   }
   // Transfer complete, take the frame and check flags
-  pvControlTransferPending = false;
   frame = pvControlQueryFrames.dequeue();
   Q_ASSERT(frame != 0);
+  pvControlTransferPending = false;
   // Check if transfer has timed out
   if(pvControlTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     updateWriteTimeoutState(true);
+    pvControlFramesPool.enqueue(frame);
+    return ControlTimeout;
   }
   // Check if transfer was cancelled
   if(pvControlTransfer->status & LIBUSB_TRANSFER_CANCELLED){
-    qDebug() << "mdtUsbPort::handleControlResponses() return ReadCanceled";
+    qDebug() << "mdtUsbPort::handleControlResponses() return ControlCanceled";
     pvControlFramesPool.enqueue(frame);
-    return WriteCanceled;
+    return ControlCanceled;
   }
   // Check if device is disconnected (not valid if cancelled)
   if(pvControlTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
@@ -366,7 +368,7 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
   // Submit transfert
   err = libusb_submit_transfer(pvReadTransfer); /// \todo Handle retval
   if(err != 0){
-    portError = mapUsbError(err, true);
+    portError = mapUsbError(err, pvReadEndpointAddress);
     if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
@@ -385,7 +387,6 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
   int err;
   error_t portError;
 
-  qDebug() << "cancelReadTransfer() ...";
   // If transfer is null, port was closed
   if(pvReadTransfer == 0){
     // Stop thread
@@ -393,9 +394,10 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
   }
 
   if(pvReadTransferPending){
+    qDebug() << "cancelReadTransfer() ...";
     err = libusb_cancel_transfer(pvReadTransfer);
     if(err != 0){
-      portError = mapUsbError(err, true);
+      portError = mapUsbError(err, pvReadEndpointAddress);
       if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
@@ -422,7 +424,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
   }
 
   while(pvReadTransferComplete == 0){
-    portError = handleUsbEvents(&pvReadTimeoutTv);
+    portError = handleUsbEvents(&pvReadTimeoutTv, pvReadEndpointAddress);
     if(portError != NoError){
       return portError;
     }
@@ -443,6 +445,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitForReadyRead()
   // Check if transfer has timed out
   if(pvReadTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     updateReadTimeoutState(true);
+    return ReadTimeout;
   }else{
     updateReadTimeoutState(false);
   }
@@ -533,7 +536,7 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
   // Submit transfert
   err = libusb_submit_transfer(pvMessageInTransfer); /// \todo Handle retval
   if(err != 0){
-    portError = mapUsbError(err, true);
+    portError = mapUsbError(err, pvMessageInEndpointAddress);
     if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
@@ -556,12 +559,12 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
   if(pvMessageInTransfer == 0){
     return NoError;
   }
-  qDebug() << "mdtUsbPort::cancelMessageInTransfer() ...";
 
   if(pvMessageInTransferPending){
+    qDebug() << "mdtUsbPort::cancelMessageInTransfer() ...";
     err = libusb_cancel_transfer(pvMessageInTransfer);
     if(err != 0){
-      portError = mapUsbError(err, true);
+      portError = mapUsbError(err, pvMessageInEndpointAddress);
       if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
@@ -609,12 +612,15 @@ mdtAbstractPort::error_t mdtUsbPort::handleMessageIn()
   // Check if transfer has timed out
   if(pvMessageInTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     updateReadTimeoutState(true);
+    pvMessageInFramesPool.enqueue(frame);
+    /// \todo Check if ok
+    return ReadTimeout;
   }
   // Check if transfer was cancelled
   if(pvMessageInTransfer->status & LIBUSB_TRANSFER_CANCELLED){
     qDebug() << "mdtUsbPort::handleControlResponses() return ReadCanceled";
     pvMessageInFramesPool.enqueue(frame);
-    return WriteCanceled;
+    return ReadCanceled;
   }
   // Check if device is disconnected (not valid if cancelled)
   if(pvMessageInTransfer->status & LIBUSB_TRANSFER_NO_DEVICE){
@@ -710,7 +716,7 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   // Submit transfer
   err = libusb_submit_transfer(pvWriteTransfer);
   if(err != 0){
-    portError = mapUsbError(err, false);
+    portError = mapUsbError(err, pvWriteEndpointAddress);
     if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_submit_transfer() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
@@ -729,7 +735,6 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
   int err;
   error_t portError;
 
-  qDebug() << "cancelWriteTransfer() ...";
   // If transfer is null, port was closed
   if(pvWriteTransfer == 0){
     // Stop thread
@@ -737,9 +742,10 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
   }
 
   if(pvWriteTransferPending){
+    qDebug() << "cancelWriteTransfer() ...";
     err = libusb_cancel_transfer(pvWriteTransfer);
     if(err != 0){
-      portError = mapUsbError(err, false);
+      portError = mapUsbError(err, pvWriteEndpointAddress);
       if(portError == UnhandledError){
         mdtError e(MDT_USB_IO_ERROR, "libusb_cancel_transfer() failed", mdtError::Error);
         e.setSystemError(err, errorText(err));
@@ -766,7 +772,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
   }
 
   while(pvWriteTransferComplete == 0){
-    portError = handleUsbEvents(&pvWriteTimeoutTv);
+    portError = handleUsbEvents(&pvWriteTimeoutTv, pvWriteEndpointAddress);
     if(portError != NoError){
       return portError;
     }
@@ -787,6 +793,7 @@ mdtAbstractPort::error_t mdtUsbPort::waitEventWriteReady()
   // Check if transfer has timed out
   if(pvWriteTransfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     updateReadTimeoutState(true);
+    return WriteTimeout;
   }else{
     updateWriteTimeoutState(false);
   }
@@ -883,22 +890,22 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
 
   lockMutex();
   portError = cancelControlTransfer();
-  if(portError != NoError){
+  if((portError != NoError)&&(portError != ControlCanceled)){
     unlockMutex();
     return portError;
   }
   portError = cancelWriteTransfer();
-  if(portError != NoError){
+  if((portError != NoError)&&(portError != WriteCanceled)){
     unlockMutex();
     return portError;
   }
   portError = cancelReadTransfer();
-  if(portError != NoError){
+  if((portError != NoError)&&(portError != ReadCanceled)){
     unlockMutex();
     return portError;
   }
   portError = cancelMessageInTransfer();
-  if(portError != NoError){
+  if((portError != NoError)&&(portError != ReadCanceled)){
     unlockMutex();
     return portError;
   }
@@ -907,20 +914,24 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
   return NoError;
 }
 
-mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents(struct timeval *timeout)
+mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents(struct timeval *timeout, quint8 endpoint)
 {
   int err;
   error_t portError;
 
   unlockMutex();
   if(timeout == 0){
-    err = libusb_handle_events_timeout(pvLibusbContext, &pvReadTimeoutTv);
+    if(endpoint == pvWriteEndpointAddress){
+      err = libusb_handle_events_timeout(pvLibusbContext, &pvWriteTimeoutTv);
+    }else{
+      err = libusb_handle_events_timeout(pvLibusbContext, &pvReadTimeoutTv);
+    }
   }else{
     err = libusb_handle_events_timeout(pvLibusbContext, timeout);
   }
   lockMutex();
   if(err != 0){
-    portError = mapUsbError(err, false);
+    portError = mapUsbError(err, endpoint);
     if(portError == UnhandledError){
       mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events_timeout_completed() failed", mdtError::Error);
       e.setSystemError(err, errorText(err));
@@ -1028,7 +1039,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
     // Get devices list
     devicesCount = libusb_get_device_list(pvLibusbContext, &devicesList);
     if(devicesCount < 0){
-      mdtError e(MDT_PORT_IO_ERROR, "Cannot list devices", mdtError::Error);
+      mdtError e(MDT_USB_IO_ERROR, "Cannot list devices", mdtError::Error);
       e.setSystemError(devicesCount, errorText(devicesCount));
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
@@ -1038,7 +1049,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvOpen()
     for(i=0; i<devicesCount; i++){
       err = deviceDescriptor.fetchAttributes(devicesList[i], true);
       if(err != 0){
-        mdtError e(MDT_PORT_IO_ERROR, "Device attributes fetch failed for port " + pvPortName, mdtError::Error);
+        mdtError e(MDT_USB_IO_ERROR, "Device attributes fetch failed for port " + pvPortName, mdtError::Error);
         MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
         e.commit();
         continue;
@@ -1461,7 +1472,7 @@ void mdtUsbPort::pvFlushOut()
   cancelWriteTransfer();
 }
 
-mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, bool byReading)
+mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, quint8 endpoint)
 {
   switch(error){
     case LIBUSB_ERROR_IO:
@@ -1477,22 +1488,35 @@ mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, bool byReading)
     case LIBUSB_ERROR_BUSY:
       return Disconnected;
     case LIBUSB_ERROR_TIMEOUT:
-      if(byReading){
+      if(endpoint == 0){
+        return WriteTimeout;
+      }else if(endpoint == pvReadEndpointAddress){
         updateReadTimeoutState(true);
         return ReadTimeout;
-      }else{
+      }else if(endpoint == pvWriteEndpointAddress){
         updateWriteTimeoutState(true);
         return WriteTimeout;
+      }else{
+        mdtError e(MDT_USB_IO_ERROR, "Unable to define timeout type (unknown endpoint)", mdtError::Error);
+        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+        e.commit();
+        return UnhandledError;
       }
     case LIBUSB_ERROR_OVERFLOW:
       return UnhandledError;
     case LIBUSB_ERROR_PIPE:
       return UnhandledError;
     case LIBUSB_ERROR_INTERRUPTED:
-      if(byReading){
+      if(endpoint == 0){
+        return ControlCanceled;
+      }else if(endpoint == pvReadEndpointAddress){
         return ReadCanceled;
-      }else{
+      }else if(endpoint == pvWriteEndpointAddress){
         return WriteCanceled;
+      }else{
+        // Can be additionnal IN interrupt endpoint
+        /// \todo Is this ok ?
+        return ControlCanceled;
       }
     case LIBUSB_ERROR_NO_MEM:
       return UnhandledError;

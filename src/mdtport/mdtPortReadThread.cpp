@@ -73,17 +73,15 @@ void mdtPortReadThread::run()
     // Wait on Read event
     portError = pvPort->waitForReadyRead();
     if(portError != mdtAbstractPort::NoError){
-      /**
-      if(portError == mdtAbstractPort::WaitingCanceled){
-        // Stopping
-        notifyError(mdtAbstractPort::Disconnected);
+      // Read thread state
+      if(!pvRunning){
         break;
-      }else{
+      }
+      if(portError != mdtAbstractPort::ReadTimeout){
         // Unhandled error - notify and end
         notifyError(portError);
         break;
       }
-      */
     }
     // Check about flush request
     if(pvPort->flushInRequestPending()){
@@ -132,4 +130,5 @@ void mdtPortReadThread::run()
   }
 
   pvPort->unlockMutex();
+  notifyError(mdtAbstractPort::Disconnected);
 }

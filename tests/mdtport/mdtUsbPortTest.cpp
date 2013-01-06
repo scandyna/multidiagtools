@@ -47,7 +47,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   thd.setPort(&port);
 
   // Try to open
-  port.setPortName("0x0957:0x0588");
+  port.setPortName("VID=0x0957:PID=0x0588");
   if(port.open() != mdtAbstractPort::NoError){
     QSKIP("No Agilent DSO1000 attached, or other error", SkipAll);
   }
@@ -71,6 +71,38 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(thd.start());
 
   /*
+   * *CLS command
+   */
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(false);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  uf->setbTag(1);
+  uf->setMessageData("*CLS\n");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(100);
+
+  /*
+   * *RST command
+   */
+
+  // Send command
+  port.lockMutex();
+  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
+  QVERIFY(uf != 0);
+  uf->setWaitAnAnswer(false);
+  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
+  uf->setbTag(2);
+  uf->setMessageData("*RST\n");
+  uf->encode();
+  port.addFrameToWrite(uf);
+  port.unlockMutex();
+  QTest::qWait(100);
+
+  /*
    * *IDN? query
    */
 
@@ -80,8 +112,8 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(uf != 0);
   uf->setWaitAnAnswer(false);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(1);
-  uf->setMessageData("*IDN?");
+  uf->setbTag(3);
+  uf->setMessageData("*IDN?\n");
   uf->encode();
   port.addFrameToWrite(uf);
   port.unlockMutex();
@@ -92,8 +124,8 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(uf != 0);
   uf->setWaitAnAnswer(true);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
-  uf->setbTag(2);
-  uf->setMessageData("");
+  uf->setbTag(4);
+  uf->setTransferSize(cfg.readFrameSize()-12-1);
   uf->encode();
   port.addFrameToWrite(uf);
   port.unlockMutex();
@@ -109,23 +141,6 @@ void mdtUsbPortTest::agilentDso1000Test()
   QTest::qWait(500);
 
   /*
-   * *RST command
-   */
-
-  // Send command
-  port.lockMutex();
-  uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
-  QVERIFY(uf != 0);
-  uf->setWaitAnAnswer(false);
-  uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(3);
-  uf->setMessageData("*RST\n");
-  uf->encode();
-  port.addFrameToWrite(uf);
-  port.unlockMutex();
-  QTest::qWait(100);
-
-  /*
    * :AUToscale command
    */
 
@@ -135,7 +150,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(uf != 0);
   uf->setWaitAnAnswer(false);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(4);
+  uf->setbTag(5);
   uf->setMessageData(":AUToscale\n");
   uf->encode();
   port.addFrameToWrite(uf);
@@ -156,7 +171,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(uf != 0);
   uf->setWaitAnAnswer(true);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  uf->setbTag(3);
+  uf->setbTag(6);
   uf->setMessageData("*RST\n");
   uf->encode();
   port.addFrameToWrite(uf);

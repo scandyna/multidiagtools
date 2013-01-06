@@ -302,9 +302,10 @@ class mdtUsbPort : public mdtAbstractPort
    * Notes: must be called only by I/O thread (typically mdtUsbPortThread).
    * This method unlocks the mutex during wait (must be locked by call, is locked again before return)
    *
-   * \param timeout Wait timeout. If null, the port's internal devined read timeout is used.
+   * \param timeout Wait timeout. If null, the port's internal defined timeout is used regarding endpoint
+   * \param endpoint Concerned endpoint
    */
-  error_t handleUsbEvents(struct timeval *timeout);
+  error_t handleUsbEvents(struct timeval *timeout, quint8 endpoint);
 
   /*! \brief Get current read endpoint address
    *
@@ -358,9 +359,10 @@ class mdtUsbPort : public mdtAbstractPort
   void pvFlushOut();
 
   // Map a libusb error to mdtAbstractPort::error_t
-  // If reading is true, timeout or so will be mapped
-  //  to ReadTimeout, for exemple. Else, to WriteTimeout
-  error_t mapUsbError(int error, bool byReading);
+  //  The endpoint helps to know if a error is associated
+  //  to a read, write or control process.
+  //  F.ex. timeout error will be mapped to ReadTimeout if read endpoint is concerned.
+  error_t mapUsbError(int error, quint8 endpoint);
 
   // Get a text for given libusb error code
   QString errorText(int errorCode) const;
