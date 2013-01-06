@@ -181,6 +181,43 @@ void mdtTcpSocketTest::writeReadTest()
   }
   s.unlockMutex();
 
+  // Check that all works again after a flush
+  s.flush();
+
+  // Set TCP server data
+  tcpServer.setResponseData(responses);
+
+  // Send data to server
+  s.lockMutex();
+  QVERIFY(s.writeFramesPool().size() >= queries.size());
+  s.unlockMutex();
+  for(int i=0; i<queries.size(); i++){
+    s.lockMutex();
+    // Get a frame
+    frame = s.writeFramesPool().dequeue();
+    QVERIFY(frame != 0);
+    // Add some data to frame and commit
+    frame->clear();
+    frame->append(queries.at(i).toAscii());
+    s.addFrameToWrite(frame);
+    s.unlockMutex();
+  }
+  s.unlockMutex();
+
+  // Wait some time and verify that data was exchanged
+  QTest::qWait(100);
+
+  // Check received data
+  s.lockMutex();
+  QCOMPARE(s.readenFrames().size(), responses.size());
+  for(int i=0; i<responses.size(); i++){
+    // Get a frame
+    frame = s.readenFrames().dequeue();
+    QVERIFY(frame != 0);
+    QVERIFY(*frame == responsesRef.at(i));
+  }
+  s.unlockMutex();
+
   // End
   thd.stop();
 }

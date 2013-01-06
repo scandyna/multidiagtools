@@ -81,6 +81,7 @@ void mdtTcpSocketThread::run()
 
   // Run...
   while(1){
+    qDebug() << "TCPTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -105,8 +106,13 @@ void mdtTcpSocketThread::run()
       }
     }
     // Write
+    qDebug() << "TCPTHD: writing ...";
     portError = writeToPort(writeFrame, false, 0);
     if(portError != mdtAbstractPort::NoError){
+      // Check about stopping
+      if(!pvRunning){
+        break;
+      }
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
@@ -122,6 +128,8 @@ void mdtTcpSocketThread::run()
       }
     }
 
+    // Clear possibly old stored flush request
+    pvPort->flushInRequestPending();
     // Read until 1 frame is completed (should be ok for most query/answer protocols)
     completeFrames = 0;
     while(completeFrames < 1){
@@ -131,7 +139,21 @@ void mdtTcpSocketThread::run()
       }
       // Wait until data is available for read
       portError = pvPort->waitForReadyRead();
+      // Check about flush request
+      if(pvPort->flushInRequestPending()){
+        // Put current frame back to pool, get new one and return idle
+        pvPort->readFramesPool().enqueue(readFrame);
+        readFrame = getNewFrameRead();
+        if(readFrame == 0){
+          pvRunning = false;
+        }
+        break;
+      }
       if(portError != mdtAbstractPort::NoError){
+        // Check about stopping
+        if(!pvRunning){
+          break;
+        }
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect and go back idle
@@ -141,13 +163,7 @@ void mdtTcpSocketThread::run()
             pvRunning = false;
             break;
           }
-        }/**else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
-          // Stopping
-          pvRunning = false;
-          ///notifyError(portError);
-          notifyError(mdtAbstractPort::Disconnected);
-          break;
-        }*/else{
+        }else{
           // stop
           pvRunning = false;
           notifyError(portError);
@@ -170,6 +186,10 @@ void mdtTcpSocketThread::run()
       // Read ...
       completeFrames = readFromPort(&readFrame);
       if(completeFrames < 0){
+        // Check about stopping
+        if(!pvRunning){
+          break;
+        }
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect and go back idle
@@ -179,13 +199,7 @@ void mdtTcpSocketThread::run()
             pvRunning = false;
             break;
           }
-        }/**else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
-          // Stopping
-          pvRunning = false;
-          ///notifyError(portError);
-          notifyError(mdtAbstractPort::Disconnected);
-          break;
-        }*/else{
+        }else{
           // stop
           pvRunning = false;
           notifyError(portError);
@@ -196,9 +210,23 @@ void mdtTcpSocketThread::run()
     // In case of raw frames, loop until no more data comes with short timeouts
     if(port->unknownReadSize()){
       while(pvSocket->waitForReadyRead(50)){
+        // Check about flush request
+        if(pvPort->flushInRequestPending()){
+          // Put current frame back to pool, get new one and return idle
+          pvPort->readFramesPool().enqueue(readFrame);
+          readFrame = getNewFrameRead();
+          if(readFrame == 0){
+            pvRunning = false;
+          }
+          break;
+        }
         // Read ...
         completeFrames = readFromPort(&readFrame);
         if(completeFrames < 0){
+          // Check about stopping
+          if(!pvRunning){
+            break;
+          }
           // Check about connection
           if(portError == mdtAbstractPort::Disconnected){
             // Try to (Re-)connect and go back idle
@@ -208,13 +236,7 @@ void mdtTcpSocketThread::run()
               pvRunning = false;
               break;
             }
-          }/**else if(portError == mdtAbstractPort::WaitingCanceled){  /// \todo Not implementd in mdtTcpSocket now
-            // Stopping
-            pvRunning = false;
-            ///notifyError(portError);
-            notifyError(mdtAbstractPort::Disconnected);
-            break;
-          }*/else{
+          }else{
             // stop
             pvRunning = false;
             notifyError(portError);
@@ -224,6 +246,7 @@ void mdtTcpSocketThread::run()
       }
     }
   }
+  qDebug() << "TCPTHD: cleanup ...";
   // Put current frame into pool
   if(readFrame != 0){
     pvPort->readFramesPool().enqueue(readFrame);
@@ -242,5 +265,6 @@ void mdtTcpSocketThread::run()
     }
   }
   pvPort->unlockMutex();
+  notifyError(mdtAbstractPort::Disconnected);
 }
 

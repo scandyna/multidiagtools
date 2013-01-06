@@ -125,7 +125,7 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
   if(ok){
     updateReadTimeoutState(false);
   }else{
-    return mapSocketError(pvSocket->error());
+    return mapSocketError(pvSocket->error(), true);
   }
 
   return NoError;
@@ -139,7 +139,7 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
 
   n = pvSocket->read(data, maxSize);
   if(n < 0){
-    return mapSocketError(pvSocket->error());
+    return mapSocketError(pvSocket->error(), true);
   }
 
   return n;
@@ -168,7 +168,7 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   if(ok){
     updateReadTimeoutState(false);
   }else{
-    return mapSocketError(pvSocket->error());
+    return mapSocketError(pvSocket->error(), false);
   }
 
   return NoError;
@@ -182,7 +182,7 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
 
   n = pvSocket->write(data, maxSize);
   if(n < 0){
-    return mapSocketError(pvSocket->error());
+    return mapSocketError(pvSocket->error(), false);
   }
 
   return n;
@@ -247,7 +247,7 @@ void mdtTcpSocket::pvFlushOut()
   ///pvCancelWrite = true;
 }
 
-mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error)
+mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error, bool byRead)
 {
   if(error == QAbstractSocket::ConnectionRefusedError){
     return PortAccess;
@@ -258,8 +258,13 @@ mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketErr
   }else if(error == QAbstractSocket::SocketAccessError){
     return PortAccess;
   }else if(error == QAbstractSocket::SocketTimeoutError){
-    updateReadTimeoutState(true);
-    return NoError;
+    if(byRead){
+      updateReadTimeoutState(true);
+      return ReadTimeout;
+    }else{
+      updateWriteTimeoutState(true);
+      return WriteTimeout;
+    }
   }else if(error == QAbstractSocket::NetworkError){
     return Disconnected;
   }else{

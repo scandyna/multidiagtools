@@ -327,7 +327,6 @@ void mdtUsbPortThread::run()
       toRead = readFrame->bytesToStore();
       while(toRead > 0){
         if(readFrame == 0){
-          /// \todo Notify error ? Can simply happen during stop ??
           pvRunning = false;
           break;
         }
@@ -336,7 +335,6 @@ void mdtUsbPortThread::run()
           break;
         }
         // Init a read request
-        qDebug() << "USBTHD: init read transfer ...";
         portError = port->initReadTransfer(toRead);
         if(portError != mdtAbstractPort::NoError){
           // Check about stoping

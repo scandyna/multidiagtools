@@ -117,7 +117,8 @@ class mdtTcpSocket : public mdtAbstractPort
 
   /*! \brief Wait until data is available on port.
    *
-   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * This method is called from mdtPortReadThread , and should not be used directly.
+   *
    * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
   error_t waitForReadyRead();
@@ -214,8 +215,11 @@ class mdtTcpSocket : public mdtAbstractPort
    *
    * If SocketTimeoutError occurs, timeout state will be set with updateReadTimeoutState(true),
    *  but it's caller's responsability to unset it later.
+   *
+   * \param error Error returned by QTcpSocket
+   * \param byRead Error occured during waitForReadyRead or read, else during waitEventWriteReady or write
    */
-  error_t mapSocketError(QAbstractSocket::SocketError error);
+  error_t mapSocketError(QAbstractSocket::SocketError error, bool byRead);
 
   int pvReadTimeout;
   int pvWriteTimeout;

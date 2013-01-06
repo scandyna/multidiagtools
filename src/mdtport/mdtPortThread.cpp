@@ -222,6 +222,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
   return frame;
 }
 
+/// \todo Handle timeout error ?
 int mdtPortThread::readFromPort(mdtFrame **frame)
 {
   Q_ASSERT(pvPort != 0);
@@ -259,7 +260,6 @@ int mdtPortThread::readFromPort(mdtFrame **frame)
   // Store readen data
   toStore = readen;
   while(toStore > 0){
-    qDebug() << "mdtPortThread::readFromPort(), toStore: " << toStore;
     // Check for new frame if needed
     if((*frame) == 0){
       *frame = getNewFrameRead();
@@ -324,6 +324,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
   toWrite = frame->size();
   while(toWrite > 0){
     // Wait on write ready event
+    qDebug() << "PTHD: wait write ready: " << written;
     portError = pvPort->waitEventWriteReady();
     // Check about flush request
     if(pvPort->flushOutRequestPending()){
@@ -374,6 +375,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
       }else{
         written = pvPort->write(bufferCursor, toWrite);
       }
+      qDebug() << "PTHD: written: " << written;
       if(written == 0){
         if(maxWriteTry <= 0){
           // Notify error and restore frame into write pool
