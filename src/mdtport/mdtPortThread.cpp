@@ -144,7 +144,10 @@ void mdtPortThread::stop()
 
 bool mdtPortThread::isRunning() const
 {
-  Q_ASSERT(pvPort != 0);
+  ///Q_ASSERT(pvPort != 0);
+  if(pvPort == 0){
+    return QThread::isRunning();
+  }
 
   if(!QThread::isRunning()){
     return false;
@@ -160,7 +163,10 @@ bool mdtPortThread::isRunning() const
 
 bool mdtPortThread::isFinished() const
 {
-  Q_ASSERT(pvPort != 0);
+  ///Q_ASSERT(pvPort != 0);
+  if(pvPort == 0){
+    return QThread::isFinished();
+  }
 
   pvPort->lockMutex();
   if(pvRunning){
@@ -220,6 +226,7 @@ int mdtPortThread::readFromPort(mdtFrame **frame)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(frame != 0);
+  Q_ASSERT(*frame != 0);
 
   char *bufferCursor = 0;
   qint64 readen = 0;
@@ -252,10 +259,6 @@ int mdtPortThread::readFromPort(mdtFrame **frame)
   // Store readen data
   toStore = readen;
   while(toStore > 0){
-    // Check end of thread flag
-    if(!pvRunning){
-      return mdtAbstractPort::ReadCanceled;
-    }
     // Check for new frame if needed
     if((*frame) == 0){
       *frame = getNewFrameRead();
@@ -292,7 +295,17 @@ mdtFrame *mdtPortThread::getNewFrameWrite()
 {
   Q_ASSERT(pvPort != 0);
 
-  return pvPort->getFrameToWrite();
+  mdtFrame *frame;
+
+  // Wait until a frame is available, or stopping
+  do{
+    if(!pvRunning){
+      return 0;
+    }
+    frame = pvPort->getFrameToWrite();
+  }while(frame == 0);
+
+  return frame;
 }
 
 mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)
@@ -311,6 +324,13 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
   while(toWrite > 0){
     // Wait on write ready event
     portError = pvPort->waitEventWriteReady();
+    // Check about flush request
+    if(pvPort->flushOutRequestPending()){
+      // Restore frame to pool and return
+      qDebug() << "PTHD write: flush out request";
+      pvPort->writeFramesPool().enqueue(frame);
+      return mdtAbstractPort::NoError;
+    }
     if(portError != mdtAbstractPort::NoError){
       if(portError == mdtAbstractPort::WriteCanceled){
         // Restore frame to pool and return
@@ -323,6 +343,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
     // Event occured, send the data to port - Check timeout state first
     if(pvPort->writeTimeoutOccured()){
       // Cannot write now, sleep some time and try later
+      /// \todo Should this not return a timeout error ?
       notifyError(mdtAbstractPort::WriteTimeout);
       pvPort->unlockMutex();
       msleep(100);
@@ -335,6 +356,12 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
         pvPort->unlockMutex();
         msleep(interByteTime);
         pvPort->lockMutex();
+        // Check about flush request
+        if(pvPort->flushOutRequestPending()){
+          // Restore frame to pool and return
+          pvPort->writeFramesPool().enqueue(frame);
+          return mdtAbstractPort::NoError;
+        }
       }else{
         written = pvPort->write(bufferCursor, toWrite);
       }

@@ -582,6 +582,7 @@ void mdtDeviceTest::U3606ATest()
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   // Check generic command
+  QVERIFY(d.sendCommand("*CLS\n") >= 0);
   QVERIFY(d.sendCommand("*RST\n") >= 0);
   
   // Enable bits in Status Byte Register
@@ -614,7 +615,7 @@ void mdtDeviceTest::U3606ATest()
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   // Get value
-  QVERIFY(d.getAnalogInputValue(0, 10000).isValid());
+  QVERIFY(d.getAnalogInputValue(0, 1000).isValid());
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   qDebug() << "*** OPC: " << d.sendQuery("*OPC?\n");
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");

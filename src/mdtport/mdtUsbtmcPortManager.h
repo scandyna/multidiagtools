@@ -143,6 +143,12 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   int sendReadStatusByteRequest();
 
+  /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
+   *
+   * \return bTag on success or WriteQueueEmpty on error.
+   */
+  int sendInitiateAbortBulkInRequest(quint8 bTag);
+
  public slots:
 
   /// \todo Essais ...

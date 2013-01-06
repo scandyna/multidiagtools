@@ -842,6 +842,148 @@ void mdtSerialPortTest::mdtSerialPortTxRxAsciiTest_data()
   QTest::newRow("Multi frame long data") << "ABCDEFGHIJKLMNOPQRSTUVWXYZ*0123456789*abcdefghijklmnopqrstuvwxyz*" << lst;
 }
 
+void mdtSerialPortTest::flushTest()
+{
+  mdtSerialPort sp;
+  mdtSerialPortConfig cfg;
+  mdtPortReadThread rxThd;
+  mdtPortWriteThread txThd;
+  mdtFrame *frame;
+  QByteArray portName;
+  QByteArray rxData;
+
+  // Set port name
+#ifdef Q_OS_UNIX
+  portName = "/dev/ttyS0";
+#elif defined Q_OS_WIN
+  portName = "COM1";
+#endif
+
+  qDebug() << "* make shure that test terminal is plugged on port (" << portName << ") *";
+
+  /*
+   * Tests in ASCII tranmission mode
+   */
+
+  // Setup
+  cfg.setFrameType(mdtFrame::FT_ASCII);
+  cfg.setEndOfFrameSeq("*");
+  cfg.setReadQueueSize(10);
+  cfg.setReadTimeout(-1);
+  sp.setPortName(portName);
+  QVERIFY(sp.open() == mdtAbstractPort::NoError);
+  QVERIFY(sp.uartType() != mdtAbstractSerialPort::UT_UNKNOW);
+  sp.setConfig(&cfg);
+  QVERIFY(sp.setup() == mdtAbstractPort::NoError);
+
+  // Assign sp to the RX thread and start
+  rxThd.setPort(&sp);
+  QVERIFY(rxThd.start());
+  QVERIFY(rxThd.isRunning());
+  // Assign sp to the TX thread and start
+  txThd.setPort(&sp);
+  QVERIFY(txThd.start());
+  QVERIFY(txThd.isRunning());
+
+  /*
+   * flushOut() and flushIn() calls
+   */
+
+  // Write a frame
+  sp.lockMutex();
+  QVERIFY(sp.writeFramesPool().size() > 0);
+  frame = sp.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  frame->clear();
+  frame->append("frame 01*");
+  sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+
+  // Wait some time
+  QTest::qWait(200);
+
+  // Flush
+  sp.flushOut();
+  sp.flushIn();
+
+  // Check that we have no incomming frame
+  sp.lockMutex();
+  QVERIFY(sp.readenFrames().size() < 1);
+  sp.unlockMutex();
+
+  // Write a new frame
+  sp.lockMutex();
+  QVERIFY(sp.writeFramesPool().size() > 0);
+  frame = sp.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  frame->clear();
+  frame->append("frame 02*");
+  sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+
+  // Wait some time
+  QTest::qWait(200);
+
+  // Check that exaclty one frame is available
+  sp.lockMutex();
+  qDebug() << sp.readenFrames().size();
+  QVERIFY(sp.readenFrames().size() == 1);
+  frame = sp.readenFrames().at(0);
+  QCOMPARE(QByteArray(frame->data()), QByteArray("frame 02"));
+  sp.unlockMutex();
+
+  /*
+   * flush() call
+   */
+
+  // Write a frame
+  sp.lockMutex();
+  QVERIFY(sp.writeFramesPool().size() > 0);
+  frame = sp.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  frame->clear();
+  frame->append("frame 03*");
+  sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+
+  // Wait some time
+  QTest::qWait(200);
+
+  // Flush
+  sp.flush();
+
+  // Check that we have no incomming frame
+  sp.lockMutex();
+  QVERIFY(sp.readenFrames().size() < 1);
+  sp.unlockMutex();
+
+  // Write a new frame
+  sp.lockMutex();
+  QVERIFY(sp.writeFramesPool().size() > 0);
+  frame = sp.writeFramesPool().dequeue();
+  QVERIFY(frame != 0);
+  frame->clear();
+  frame->append("frame 04*");
+  sp.addFrameToWrite(frame);
+  sp.unlockMutex();
+
+  // Wait some time
+  QTest::qWait(200);
+
+  // Check that exaclty one frame is available
+  sp.lockMutex();
+  qDebug() << sp.readenFrames().size();
+  QVERIFY(sp.readenFrames().size() == 1);
+  frame = sp.readenFrames().at(0);
+  QCOMPARE(QByteArray(frame->data()), QByteArray("frame 04"));
+  sp.unlockMutex();
+
+  // Stop threads and close port
+  rxThd.stop();
+  txThd.stop();
+  sp.close();
+}
+
 int main(int argc, char **argv)
 {
   mdtApplication app(argc, argv);

@@ -32,6 +32,11 @@
 #include <QWaitCondition>
 
 /*! \brief Base class for port I/O
+ * 
+ * \todo WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined.
+ *        The only object that knows when it must stop is the thread itself !
+ *        To be a little more clean, thread should check it's running flag
+ *         each time a function returns a error, and stop if requierd !
  */
 class mdtAbstractPort : public QObject
 {
@@ -40,7 +45,17 @@ class mdtAbstractPort : public QObject
  public:
 
   /*! \brief Error
-   * 
+   *
+   * Each system's I/O API can return several error.
+   *  Goal is here to map them to common error codes.
+   *
+   * Note for thread implementation:<br>
+   *  Some errors must be handled in specific ways depending on port (serial, USB, TCP, ...).
+   *  Each time a error occurs, thread should check the pvRunning flag, and stop if it is false
+   *  (typical: after a stop request from main thread, mdtAbstractPort subclass will return
+   *    IoProcessCanceled. But it can happen that I/O process was canceled for another reason,
+   *    this is port specific).
+   *
    * \todo add UnhandledError to complete UnknownError (+ adapt in threads)
    * \todo add a DeviceDisconnected (+ adapt in threads)
    */
@@ -50,12 +65,14 @@ class mdtAbstractPort : public QObject
                 PortNotFound,           /*!< Port was not found */
                 PortAccess,             /*!< Port cannot be open with requierd access (read, write) */
                 SetupError,             /*!< Setup failed on a configuration option */
-                WaitingCanceled,        /*!< When a thread (mdtPortThread or subclass) is stopping, it will
+                IoProcessCanceled,      /*!< Happens in most cases when a wait call was interrupted. */
+                /**WaitingCanceled,*/        /*!< When a thread (mdtPortThread or subclass) is stopping, it will
                                               cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
                                               At this case, this error is returned, and the thread knows that it can 
                                               cleanup and end. */
                 WriteCanceled,          /*!< Write process was cancelled. The thread should stop the write process, restore
-                                              the current frame into pool and continue working. */
+                                              the current frame into pool and continue working.
+                                              \todo Check if should obselete, possibly overlapping flushOut() */
                 ReadCanceled,           /*!< Read process was cancelled. The thread should stop the read process, restore
                                               the current frame into pool and continue working. */
                 ReadTimeout,            /*!< Read process has timed out. Thread should notify this and continue working.
@@ -216,6 +233,7 @@ class mdtAbstractPort : public QObject
    * \return On success, NoError is returned. If waiting is canceled, WaitingCanceled is returned
    *          and the thread knows that it must end (case of stopping thread).
    *          If a port lost connection (f.ex. USB port or TCP socket), Disconnected is returned.
+   *          
    *          On unhandled error, UnhandledError is returned. The thread also stop working, and emit
    *          a error signal (that can be handled in mdtPortManager, or in another place in application).
    *
@@ -287,9 +305,28 @@ class mdtAbstractPort : public QObject
    * Will move all readen frames to pool,
    *  and call pvFlushIn() to flush system's buffers.
    *
+   * After this call, flushInRequestPending() will return true.
+   *
    * Mutex is locked in this method.
    */
   void flushIn();
+
+  /*! \brief Check if a flush in request is pending
+   *
+   * Returns true after flushIn() was called.
+   *
+   * This method is used by thread, and should not be used directly.
+   *  If a request is pending, thread will put his
+   *  current read frame back to pool.
+   *
+   * A call of this method will clear the internall flag.
+   *  (a second call will then return false).
+   *
+   * Mutex is not handled by this method.
+   *
+   * \todo Thread are to adapt.
+   */
+  bool flushInRequestPending();
 
   /*! \brief Wait until data can be written to port.
    *
@@ -337,6 +374,23 @@ class mdtAbstractPort : public QObject
    * Mutex is locked in this method.
    */
   void flushOut();
+
+  /*! \brief Check if a flush out request is pending
+   *
+   * Returns true after flushOut() was called.
+   *
+   * This method is used by thread, and should not be used directly.
+   *  If a request is pending, thread will put his
+   *  current write frame back to pool.
+   *
+   * A call of this method will clear the internall flag.
+   *  (a second call will then return false).
+   *
+   * Mutex is not handled by this method.
+   *
+   * \todo Thread are to adapt.
+   */
+  bool flushOutRequestPending();
 
   /*! \brief Update the read timeout state
    *
@@ -554,6 +608,7 @@ class mdtAbstractPort : public QObject
    *  and is usefull if subsystem needs to be flushed.
    *  (For ex. serial port).
    *
+   * \todo Obselete this ?
    * This method must be implemented in subclass.
    *  The pvCancelWrite flag must be set to true
    *  if no other system is used to handle the
@@ -568,7 +623,7 @@ class mdtAbstractPort : public QObject
   ///bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
   ///bool pvWriteTimeoutOccuredPrevious;
-  bool pvCancelWrite;               // Updated by pvFlushOut() and addFrameToWrite()
+  ///bool pvCancelWrite;               // Updated by pvFlushOut() and addFrameToWrite()
   // Frames queues
   QQueue<mdtFrame*> pvReadenFrames;
   QQueue<mdtFrame*> pvReadFramesPool;
@@ -590,6 +645,8 @@ class mdtAbstractPort : public QObject
 
   // Some flags
   bool pvIsOpen;
+  bool pvFlushInRequestPending;   // See flushInRequestPending()
+  bool pvFlushOutRequestPending;  // See flushOutRequestPending()
 };
 
 #endif  // #ifndef MDT_ABSTRACT_PORT_H

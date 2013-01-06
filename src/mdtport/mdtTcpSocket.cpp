@@ -156,9 +156,11 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
     return NoError;
   }
   // Check about flushOut
+  /**
   if(pvCancelWrite){
     return WriteCanceled;
   }
+  */
   // Wait
   unlockMutex();
   ok = pvSocket->waitForBytesWritten(pvWriteTimeout);
@@ -231,7 +233,7 @@ mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
   // Init flags
-  pvCancelWrite = false;
+  ///pvCancelWrite = false;
 
   return NoError;
 }
@@ -242,7 +244,7 @@ void mdtTcpSocket::pvFlushIn()
 
 void mdtTcpSocket::pvFlushOut()
 {
-  pvCancelWrite = true;
+  ///pvCancelWrite = true;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error)

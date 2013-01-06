@@ -306,6 +306,12 @@ class mdtUsbPort : public mdtAbstractPort
    */
   error_t handleUsbEvents(struct timeval *timeout);
 
+  /*! \brief Get current read endpoint address
+   *
+   * Note: mutex is not handled by this method
+   */
+  quint8 currentReadEndpointAddress() const;
+
  private:
 
   /*! \brief Open the port given by setPortName()

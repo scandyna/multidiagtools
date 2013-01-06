@@ -495,6 +495,7 @@ void mdtPortManager::addTransaction(int id, bool queryReplyMode)
 mdtPortTransaction *mdtPortManager::pendingTransaction(int id)
 {
   // QMap returns a default-constructed value if key not exists (i.e. 0 for pointer)
+  qDebug() << "mdtPortManager::pendingTransaction(), queue state: " << pvTransactionsPending;
   return pvTransactionsPending.take(id);
 }
 

@@ -23,7 +23,7 @@
 #include "mdtAbstractPort.h"
 #include <QApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
@@ -59,6 +59,7 @@ void mdtPortReadThread::run()
   }
   // Set the running flag and get a read frame
   pvRunning = true;
+  // Get frame
   frame = getNewFrameRead();
   if(frame == 0){
     return;
@@ -72,6 +73,7 @@ void mdtPortReadThread::run()
     // Wait on Read event
     portError = pvPort->waitForReadyRead();
     if(portError != mdtAbstractPort::NoError){
+      /**
       if(portError == mdtAbstractPort::WaitingCanceled){
         // Stopping
         notifyError(mdtAbstractPort::Disconnected);
@@ -81,6 +83,17 @@ void mdtPortReadThread::run()
         notifyError(portError);
         break;
       }
+      */
+    }
+    // Check about flush request
+    if(pvPort->flushInRequestPending()){
+      // Put current frame back to pool, get new one and return idle
+      pvPort->readFramesPool().enqueue(frame);
+      frame = getNewFrameRead();
+      if(frame == 0){
+        break;
+      }
+      continue;
     }
     // Event occured, get the data from port - Check timeout state first
     if(pvPort->readTimeoutOccured()){
@@ -93,6 +106,9 @@ void mdtPortReadThread::run()
             // emit a Readen frame signal
             emit newFrameReaden();
             frame = getNewFrameRead();
+            if(frame == 0){
+              break;
+            }
           }
         }
       }else{

@@ -67,6 +67,8 @@ void mdtSerialPortCtlThread::run()
     // Wait on ctl signal event
     portError = port->waitEventCtl();
     if(portError != mdtAbstractPort::NoError){
+      
+      /**
       if(portError == mdtAbstractPort::WaitingCanceled){
         // Stopping
         notifyError(mdtAbstractPort::Disconnected);
@@ -76,6 +78,9 @@ void mdtSerialPortCtlThread::run()
         notifyError(portError);
         break;
       }
+      */
+      
+      
       /**
       }else if(portError == mdtAbstractPort::UnhandledError){
         // Unhandled error. Signal this and stop

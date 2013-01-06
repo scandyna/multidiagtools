@@ -32,7 +32,9 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   ///pvWriteTimeoutOccuredPrevious = false;
   pvIsOpen = false;
   pvConfig = 0;
-  pvCancelWrite = false;
+  ///pvCancelWrite = false;
+  pvFlushInRequestPending = false;
+  pvFlushOutRequestPending = false;
 
   // Emit signals with initial states
   ///emit readTimeoutStateChanged(pvReadTimeoutOccured);
@@ -167,7 +169,17 @@ void mdtAbstractPort::flushIn()
     pvReadFramesPool.enqueue(pvReadenFrames.dequeue());
   }
   pvFlushIn();
+  pvFlushInRequestPending = true;
   unlockMutex();
+}
+
+bool mdtAbstractPort::flushInRequestPending()
+{
+  if(pvFlushInRequestPending){
+    pvFlushInRequestPending = false;
+    return true;
+  }
+  return false;
 }
 
 void mdtAbstractPort::flushOut()
@@ -177,7 +189,17 @@ void mdtAbstractPort::flushOut()
     pvWriteFramesPool.enqueue(pvWriteFrames.dequeue());
   }
   pvFlushOut();
+  pvFlushOutRequestPending = true;
   unlockMutex();
+}
+
+bool mdtAbstractPort::flushOutRequestPending()
+{
+  if(pvFlushOutRequestPending){
+    pvFlushOutRequestPending = false;
+    return true;
+  }
+  return false;
 }
 
 void mdtAbstractPort::updateReadTimeoutState(bool state)
@@ -219,10 +241,12 @@ void mdtAbstractPort::flush()
     pvReadFramesPool.enqueue(pvReadenFrames.dequeue());
   }
   pvFlushIn();
+  pvFlushInRequestPending = true;
   while(pvWriteFrames.size() > 0){
     pvWriteFramesPool.enqueue(pvWriteFrames.dequeue());
   }
   pvFlushOut();
+  pvFlushOutRequestPending = true;
   unlockMutex();
 }
 
@@ -313,7 +337,7 @@ void mdtAbstractPort::addFrameToWrite(mdtFrame *frame)
   Q_ASSERT(frame != 0);
 
   pvWriteFrames.enqueue(frame);
-  pvCancelWrite = false;
+  ///pvCancelWrite = false;
   pvWriteFrameAvailable.wakeAll();
 }
 
@@ -321,8 +345,14 @@ mdtFrame *mdtAbstractPort::getFrameToWrite()
 {
   mdtFrame *frame;
 
+  // If queue is empty, wait
   if(pvWriteFrames.size() < 1){
     pvWriteFrameAvailable.wait(&pvMutex);
+    // During wait it can happen that a flush was requested,
+    //  witch clears the write queue. If this happens,
+    //  we must clear the pvFlushOutRequestPending flag,
+    //  else thread will not write new frame that must be sent.
+    pvFlushOutRequestPending = false;
   }
   // If abortFrameToWriteWait() was called, it can happen that queue is empty
   if(pvWriteFrames.size() < 1){

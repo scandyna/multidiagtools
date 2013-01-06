@@ -300,6 +300,7 @@ void mdtUsbPortThread::run()
       toRead = readFrame->bytesToStore();
       while(toRead > 0){
         if(readFrame == 0){
+          /// \todo Notify error ? Can simply happen during stop ??
           pvRunning = false;
           break;
         }

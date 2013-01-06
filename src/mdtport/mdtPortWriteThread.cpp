@@ -74,7 +74,7 @@ void mdtPortWriteThread::run()
 
   // Run...
   while(1){
-    ///qDebug() << "WRTHD: running ...";
+    qDebug() << "WRTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -86,21 +86,13 @@ void mdtPortWriteThread::run()
       pvPort->lockMutex();
     }
     // Get a frame - will block if nothing is to write
-    ///qDebug() << "WRTHD: getNewFrameWrite() ...";
     frame = getNewFrameWrite();
-    ///qDebug() << "WRTHD: getNewFrameWrite() DONE";
     // If thread is stopping, it can happen that a Null pointer is returned
     if(frame == 0){
       break;
     }
     // Write
-    /**
-    if(!writeToPort(frame, bytePerByteWrite, writeMinWaitTime)){
-      // Stop request or fatal error
-      break;
-    }
-    */
-    ///qDebug() << "WRTHD: writeToPort() ...";
+    qDebug() << "WRTHD: writeToPort() ...";
     portError = writeToPort(frame, bytePerByteWrite, writeMinWaitTime);
     if(portError != mdtAbstractPort::NoError){
       // Stop

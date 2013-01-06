@@ -223,6 +223,6 @@ void mdtUsbPortManager::fromThreadControlResponseReaden()
 
 void mdtUsbPortManager::fromThreadMessageInReaden()
 {
-  qDebug() << " ** mdtUsbPortManager::fromThreadMessageInReaden(): messge IN !!!!";
+  qDebug() << " ** mdtUsbPortManager::fromThreadMessageInReaden(): message IN !!!!";
 }
 

@@ -144,7 +144,7 @@ void mdtUsbPort::addControlRequest(mdtFrameUsbControl *frame, bool setwIndexAsbI
     frame->setwIndex(pvbInterfaceNumber);
   }
   pvControlQueryFrames.enqueue(frame);
-  pvCancelWrite = false;
+  ///pvCancelWrite = false;
   pvWriteFrameAvailable.wakeAll();
 }
 
@@ -931,6 +931,11 @@ mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents(struct timeval *timeout)
   }
 
   return NoError;
+}
+
+quint8 mdtUsbPort::currentReadEndpointAddress() const
+{
+  return pvReadEndpointAddress;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvOpen()

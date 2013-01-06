@@ -42,10 +42,10 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   // Port setup
   pvPort->config().setFrameType(mdtFrame::FT_USBTMC);
   /// \todo Taille provisoire !
-  pvPort->config().setReadFrameSize(10000);
-  pvPort->config().setReadQueueSize(3);
-  pvPort->config().setWriteFrameSize(512);
-  pvPort->config().setWriteQueueSize(1);
+  ///pvPort->config().setReadFrameSize(10000);
+  ///pvPort->config().setReadQueueSize(3);
+  ///pvPort->config().setWriteFrameSize(512);
+  ///pvPort->config().setWriteQueueSize(1);
 
   // USBTMC specific
   pvCurrentWritebTag = 0;
@@ -122,6 +122,7 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   if(bTag < 0){
     return QByteArray();
   }
+  qDebug() << "mdtUsbtmcPortManager::sendQuery() , bTag: " << bTag << " , query: " << query;
   // Wait on response
   if(!waitOnFrame(bTag, readTimeout)){
     return QByteArray();
@@ -157,7 +158,7 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
-  ///qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
+  qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData(data);
   frame->setEOM(true);
@@ -196,7 +197,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
-  ///qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
+  qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData("");
   frame->setTransferSize(config().readFrameSize()-1);
@@ -268,18 +269,52 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
 
 }
 
+int mdtUsbtmcPortManager::sendInitiateAbortBulkInRequest(quint8 bTag)
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtFrameUsbControl frame;
+  mdtUsbPort *port;
+  int retVal;
+
+  // We need a mdtUsbPort object
+  port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+
+  // Setup frame
+  frame.setDirectionDeviceToHost(true);
+  frame.setRequestType(mdtFrameUsbControl::RT_CLASS);
+  frame.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
+  frame.setbRequest(3);   // INITIATE_ABORT_BULK_IN
+  frame.setwValue(bTag); // D7..D0: bTag
+  port->lockMutex();
+  frame.setwIndex(port->currentReadEndpointAddress());   // Endpoint IN 2
+  port->unlockMutex();
+  frame.setwLength(0x02);
+  frame.encode();
+  retVal = sendControlRequest(frame);
+  if(retVal < 0){
+    return retVal;
+  }
+
+  return bTag;
+}
+
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
 
   mdtFrameUsbTmc *frame;
   mdtPortTransaction *transaction;
+  /// Essais
+  int bTagToAbort = -1;
 
   // Get frames in readen queue
   pvPort->lockMutex();
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
+    qDebug() << "mdtUsbtmcPortManager::fromThreadNewFrameReaden() , bTag: " << frame->bTag();
     // Check if frame is complete
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
@@ -289,16 +324,26 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
         mdtError e(MDT_USB_IO_ERROR, "Received a frame with unexpected bTag", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
         e.commit();
+        /// Essais
+        bTagToAbort = frame->bTag();
       }else{
         transaction->setId(frame->bTag());
         transaction->setData(frame->messageData());
         enqueueTransactionRx(transaction);
       }
+    }else{
+      mdtError e(MDT_USB_IO_ERROR, "Received a uncomplete frame", mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   };
   pvPort->unlockMutex();
+  if(bTagToAbort > 0){
+    qDebug() << "Aborting bTag " << bTagToAbort;
+    sendInitiateAbortBulkInRequest(bTagToAbort);
+  }
   // Commit
   commitFrames();
 }

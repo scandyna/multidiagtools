@@ -59,10 +59,6 @@ class mdtPort : public mdtAbstractPort
    */
   qint64 read(char *data, qint64 maxSize);
 
-  /*! \brief Flush read buffers
-   */
-  ///void flushIn();
-
   /*! \brief Wait until data can be written to port.
    *
    * This method is called from mdtPortWriteThread , and should not be used directly.<br>
@@ -76,10 +72,6 @@ class mdtPort : public mdtAbstractPort
    * Mutex is not handled by this method.
    */
   qint64 write(const char *data, qint64 maxSize);
-
-  /*! \brief Flush write buffers
-   */
-  void flushOut();
 
  private:
 

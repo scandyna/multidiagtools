@@ -2383,6 +2383,29 @@ void mdtFrameTest::usbControlEncodeTest()
   QVERIFY(f.wLength() == 0);
   QVERIFY(f.size() == 0);
 
+  /*
+   * Build a USBTMC INITIATE_ABORT_BULK_IN request
+   */
+  f.clearSub();
+  f.setDirectionDeviceToHost(true);
+  f.setRequestType(mdtFrameUsbControl::RT_CLASS);
+  f.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
+  f.setbRequest(3); // INITIATE_ABORT_BULK_IN
+  f.setwValue(213); // D7..D0: bTag
+  f.setwIndex(0x82);   // Endpoint IN 2
+  f.setwLength(0x02);
+  f.encode();
+  // Check frame
+  QVERIFY(f.size() == 8);
+  QVERIFY((quint8)f.at(0) == 0xA2);
+  QVERIFY((quint8)f.at(1) == 3);    // bRequest
+  QVERIFY((quint8)f.at(2) == 213);  // wValue, LSB
+  QVERIFY((quint8)f.at(3) == 0);    // wValue, MSB
+  QVERIFY((quint8)f.at(4) == 0x82); // wIndex, LSB
+  QVERIFY((quint8)f.at(5) == 0);    // wIndex, MSB
+  QVERIFY((quint8)f.at(6) == 0x02); // wLength, LSB
+  QVERIFY((quint8)f.at(7) == 0x00); // wLength, MSB
+
 }
 
 int main(int argc, char **argv)

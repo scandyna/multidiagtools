@@ -640,7 +640,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          return WaitingCanceled;
+          ///return WaitingCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -770,7 +770,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          return WaitingCanceled;
+          ///return WaitingCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -782,9 +782,11 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
     }
   }
   // Check about flushOut
+  /**
   if(pvCancelWrite){
     return WriteCanceled;
   }
+  */
 
   return NoError;
 }
@@ -845,7 +847,7 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventCtl()
     switch(errno){
       case EINTR:
         // Thread has send the stop signal
-        return WaitingCanceled;
+        ///return WaitingCanceled;
       default:
         // Unhandled error
         mdtError e(MDT_UNDEFINED_ERROR, "ioctl() call failed with command TIOCMIWAIT", mdtError::Error);
@@ -1111,7 +1113,7 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
   // Init flags
-  pvCancelWrite = false;
+  ///pvCancelWrite = false;
 
   qDebug() << "mdtSerialPort::pvSetup() setup:";
   qDebug() << "-> Baudrate: " << baudRate();
@@ -1138,7 +1140,7 @@ void mdtSerialPort::pvFlushIn()
 void mdtSerialPort::pvFlushOut()
 {
   qDebug() << "mdtSerialPort::pvFlushOut() ...";
-  pvCancelWrite = true;
+  ///pvCancelWrite = true;
   if(tcflush(pvFd, TCOFLUSH) < 0){
     mdtError e(MDT_SERIAL_PORT_IO_ERROR, "tcflush() call failed", mdtError::Error);
     e.setSystemError(errno, strerror(errno));

@@ -29,7 +29,7 @@
 #include <pthread.h>
 #include <signal.h>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPort::mdtPort(QObject *parent)
  : mdtAbstractPort(parent)
@@ -41,10 +41,8 @@ mdtPort::mdtPort(QObject *parent)
 
 mdtPort::~mdtPort()
 {
-  qDebug() << "mdtPort::~mdtPort() ...";
   close();
   delete pvPortLock;
-  qDebug() << "mdtPort::~mdtPort() END";
 }
 
 void mdtPort::setReadTimeout(int timeout)
@@ -69,7 +67,6 @@ void mdtPort::setWriteTimeout(int timeout)
   }
 }
 
-/// \todo Infinite timeout: NULL pointer Ok ???
 mdtAbstractPort::error_t mdtPort::waitForReadyRead()
 {
   fd_set input;
@@ -95,7 +92,7 @@ mdtAbstractPort::error_t mdtPort::waitForReadyRead()
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          return WaitingCanceled;
+          ///return WaitingCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -137,14 +134,6 @@ qint64 mdtPort::read(char *data, qint64 maxSize)
   return n;
 }
 
-/**
-void mdtPort::flushIn()
-{
-  lockMutex();
-  mdtAbstractPort::flushIn();
-}
-*/
-
 mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
 {
   fd_set output;
@@ -170,7 +159,7 @@ mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
       switch(errno){
         case EINTR:
           // Thread has send the stop signal
-          return WaitingCanceled;
+          ///return WaitingCanceled;
         default:
           // Unhandled error
           mdtError e(MDT_UNDEFINED_ERROR, "select() call failed", mdtError::Error);
@@ -207,12 +196,6 @@ qint64 mdtPort::write(const char *data, qint64 maxSize)
   }
 
   return n;
-}
-
-void mdtPort::flushOut()
-{
-  lockMutex();
-  mdtAbstractPort::flushOut();
 }
 
 mdtAbstractPort::error_t mdtPort::pvOpen()
@@ -253,7 +236,6 @@ mdtAbstractPort::error_t mdtPort::pvOpen()
 
 void mdtPort::pvClose()
 {
-  qDebug() << "mdtPort::pvClose() ...";
   Q_ASSERT(isOpen());
 
   pvPortLock->unlock();

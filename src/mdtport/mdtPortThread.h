@@ -63,11 +63,13 @@ class mdtPortThread : public QThread
   bool start();
 
   /*! \brief Stop the running thread
-   *  \pre Serial port instance must be defined. \see setSerialPort()
+   *
+   * \pre Port instance must be defined with setPort().
    */
   virtual void stop();
 
   /*! \brief Returns true if the thread is running
+   *
    *  This function overloads the QThread::isRunning() function.
    *  Note for subclass: when the thread is started and ready, the private member pvRunning
    *  must be set to true.
@@ -220,6 +222,9 @@ class mdtPortThread : public QThread
    *  Internally, it will call mdtAbstractPort::waitEventWriteReady()
    *   before writing.
    *
+   * Note that frame will be put back to write pool after complete write, cancel or flush.
+   *  That says that frame will not be valid after call of this method.
+   *
    * Note about port mutex handling:<br>
    *  The port mutex must be locked before calling this method.
    *  Internally, it will be unlocked during wait, and will be
@@ -270,7 +275,6 @@ class mdtPortThread : public QThread
   pthread_t pvNativePthreadObject;
   struct sigaction pvSigaction;
 #endif
-  // 
 
  private:
 

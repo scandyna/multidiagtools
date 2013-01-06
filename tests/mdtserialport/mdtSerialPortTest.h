@@ -52,7 +52,12 @@ class mdtSerialPortTest : public mdtTest
   void mdtSerialPortTxRxAsciiTest();
   void mdtSerialPortTxRxAsciiTest_data();
 
+  // Check flush (note: this test is not 100% reliable, but has allready detected some bugs)
+  void flushTest();
+
 signals:
+
+  /// \todo Used ??
   void testSignal(bool on);
 };
 
