@@ -71,6 +71,14 @@ class mdtUsbPortManager : public mdtPortManager
    */
   QList<mdtPortInfo*> scan(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol);
 
+  /*! \brief Request port to process one read transfer
+   *
+   * This is, for example, used by USBTMC bulk in abort process.
+   *  If such request is pending, thread will do a single
+   *  read transfer.
+   */
+  void sendSingleReadTransferRequest();
+
   /*! \brief Send a control request by copy
    *
    * Request will be passed to the mdtPort's control request queue by copy.
@@ -97,9 +105,31 @@ class mdtUsbPortManager : public mdtPortManager
    */
   virtual int sendControlRequest(const mdtFrameUsbControl &request, bool setwIndexAsbInterfaceNumber = false);
 
+  /*! \brief Wait until a control response is readen
+   *
+   * This method will return when a control response was readen.
+   *
+   * Internally, a couple of sleep and process event are called, so 
+   * Qt's event loop will not be broken.
+   *
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return True if Ok, false on timeout
+   */
+  bool waitReadenControlResponse(int timeout = 500);
+
+  /*! \brief Get all readen control responses
+   *
+   * Note that calling this methode will clear the internal queue.
+   *  (A second call will return a empty list).
+   */
+  QList<mdtFrameUsbControl> readenControlResponses();
+
  public slots:
 
   /*! \brief Called from USB thread when a control reply was received
+   *
+   * Will add a copy of received control responses to internal queue
+   *  and restore frame back to port's pool.
    */
   void fromThreadControlResponseReaden();
 
@@ -110,6 +140,8 @@ class mdtUsbPortManager : public mdtPortManager
  private:
 
   Q_DISABLE_COPY(mdtUsbPortManager);
+
+  QQueue<mdtFrameUsbControl> pvReadenControlResponses;  // Copy of received control responses
 };
 
 #endif  // #ifndef MDT_USB_PORT_MANAGER_H

@@ -447,6 +447,7 @@ void mdtPortManager::fromThreadNewFrameReaden()
 }
 
 /// \todo Error handling (in general ...)
+/// \todo On disconnect, should flush I/O ?
 void mdtPortManager::onThreadsErrorOccured(int error)
 {
   bool ok;

@@ -271,9 +271,11 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.start());
 
   // Control request
-  QVERIFY(m.sendReadStatusByteRequest() >= 0);
+  ///QVERIFY(m.sendReadStatusByteRequest() >= 0);
   // Query without answer
+  QVERIFY(m.waitOnWriteReady(1000));
   QVERIFY(m.writeData("*RST\n"));
+  // Query with answer
   QVERIFY(m.waitOnWriteReady(1000));
   QVERIFY(m.writeData("*IDN?\n") >= 0);
   QVERIFY(m.waitOnWriteReady(1000));
@@ -286,6 +288,9 @@ void mdtPortManagerTest::usbTmcPortTest()
   // Try to query device
   QVERIFY(m.sendCommand("*CLS\n") > 0);
   QVERIFY(!m.sendQuery("*IDN?\n").isEmpty());
+  
+  // Abort test
+  qDebug() << "abortBulkIn() returned: " << m.abortBulkIn(5);
 }
 
 /// \todo No real check possible withous MODBUS Server available on loopback (127.0.0)

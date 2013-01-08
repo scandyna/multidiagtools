@@ -26,6 +26,7 @@
 #include "mdtUsbConfigDescriptor.h"
 #include "mdtUsbInterfaceDescriptor.h"
 #include <QString>
+#include <QApplication>
 #include <libusb-1.0/libusb.h>
 
 #include <QDebug>
@@ -179,6 +180,21 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
+void mdtUsbPortManager::sendSingleReadTransferRequest()
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtUsbPort *port;
+
+  // We need a mdtUsbPort object
+  port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+
+  port->lockMutex();
+  port->setSingleReadTransferRequest();
+  port->unlockMutex();
+}
+
 int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, bool setwIndexAsbInterfaceNumber)
 {
   Q_ASSERT(pvPort != 0);
@@ -198,7 +214,8 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
     e.commit();
     return mdtAbstractPort::WritePoolEmpty;
   }
-  frame = dynamic_cast<mdtFrameUsbControl*> (port->controlFramesPool().dequeue());
+  ///frame = dynamic_cast<mdtFrameUsbControl*> (port->controlFramesPool().dequeue());
+  frame = port->controlFramesPool().dequeue();
   Q_ASSERT(frame != 0);
   frame->clear();
   frame->clearSub();
@@ -216,9 +233,64 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
   return 0;
 }
 
+bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
+{
+  int maxIter = timeout / 50;
+
+  while(pvReadenControlResponses.size() < 1){
+    if(maxIter <= 0){
+      return false;
+    }
+    qApp->processEvents();
+    msleep(50);
+    maxIter--;
+  }
+
+  return true;
+}
+
+QList<mdtFrameUsbControl> mdtUsbPortManager::readenControlResponses()
+{
+  QList<mdtFrameUsbControl> frames;
+
+  frames = pvReadenControlResponses;
+  pvReadenControlResponses.clear();
+
+  return frames;
+}
+
 void mdtUsbPortManager::fromThreadControlResponseReaden()
 {
-  qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): control resonse !!!!";
+  qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): control response !!!!";
+  Q_ASSERT(pvPort != 0);
+
+  mdtUsbPort *port;
+  mdtFrameUsbControl *frame;
+
+  // We need a mdtUsbPort object
+  port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+
+  // Get frames in readen queue
+  port->lockMutex();
+  while(port->controlResponseFrames().size() > 0){
+    frame = port->controlResponseFrames().dequeue();
+    Q_ASSERT(frame != 0);
+    // Copy data
+    qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): add data ...";
+    pvReadenControlResponses.enqueue(*frame);
+    // Restore frame back into pool
+    port->controlFramesPool().enqueue(frame);
+  };
+  pvPort->unlockMutex();
+  // Watch queue size
+  qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): queue size: " << pvReadenControlResponses.size();
+  if(pvReadenControlResponses.size() > 20){
+    mdtError e(MDT_USB_IO_ERROR, "Readen control resonses queue is largen than 20 items, will be leared (this is a bug)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtUsbPortManager");
+    e.commit();
+    pvReadenControlResponses.clear();
+  }
 }
 
 void mdtUsbPortManager::fromThreadMessageInReaden()

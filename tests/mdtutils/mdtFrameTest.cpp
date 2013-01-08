@@ -2382,6 +2382,87 @@ void mdtFrameTest::usbControlEncodeTest()
   QVERIFY(f.wIndex() == 0);
   QVERIFY(f.wLength() == 0);
   QVERIFY(f.size() == 0);
+  /*
+   * Copy with = operator
+   */
+  f2.clear();
+  f2.clearSub();
+  QVERIFY(!f2.directionIsDeviceToHost());
+  QVERIFY(f2.requestType() == mdtFrameUsbControl::RT_STANDARD);
+  QVERIFY(f2.requestRecipient() == mdtFrameUsbControl::RR_DEVICE);
+  QVERIFY(f2.bRequest() == 0);
+  QVERIFY(f2.wValue() == 0);
+  QVERIFY(f2.wIndex() == 0);
+  QVERIFY(f2.wLength() == 0);
+  /*
+   * Re-build a USBTMC GET_CAPABILITIES request
+   */
+  f.clearSub();
+  f.setDirectionDeviceToHost(true);
+  f.setRequestType(mdtFrameUsbControl::RT_CLASS);
+  f.setRequestRecipient(mdtFrameUsbControl::RR_INTERFACE);
+  f.setbRequest(7); // GET_CAPABILITIES
+  f.setwValue(0);
+  f.setwIndex(0);   // Choose interface 0
+  f.setwLength(0x18);
+  f.encode();
+  // Check frame
+  QVERIFY(f.size() == 8);
+  QVERIFY((quint8)f.at(0) == 0xA1);
+  QVERIFY((quint8)f.at(1) == 7);    // bRequest
+  QVERIFY((quint8)f.at(2) == 0);    // wValue, LSB
+  QVERIFY((quint8)f.at(3) == 0);    // wValue, MSB
+  QVERIFY((quint8)f.at(4) == 0);    // wIndex, LSB
+  QVERIFY((quint8)f.at(5) == 0);    // wIndex, MSB
+  QVERIFY((quint8)f.at(6) == 0x18); // wLength, LSB
+  QVERIFY((quint8)f.at(7) == 0x00); // wLength, MSB
+  // Copy
+  f2 = f;
+  // Check copy flags
+  QVERIFY(f2.directionIsDeviceToHost());
+  QVERIFY(f2.requestType() == mdtFrameUsbControl::RT_CLASS);
+  QVERIFY(f2.requestRecipient() == mdtFrameUsbControl::RR_INTERFACE);
+  QVERIFY(f2.bRequest() == 7);
+  QVERIFY(f2.wValue() == 0);
+  QVERIFY(f2.wIndex() == 0);
+  QVERIFY(f2.wLength() == 0x18);
+  // Check copy
+  QVERIFY(f2.size() == 8);
+  QVERIFY((quint8)f2.at(0) == 0xA1);
+  QVERIFY((quint8)f2.at(1) == 7);    // bRequest
+  QVERIFY((quint8)f2.at(2) == 0);    // wValue, LSB
+  QVERIFY((quint8)f2.at(3) == 0);    // wValue, MSB
+  QVERIFY((quint8)f2.at(4) == 0);    // wIndex, LSB
+  QVERIFY((quint8)f2.at(5) == 0);    // wIndex, MSB
+  QVERIFY((quint8)f2.at(6) == 0x18); // wLength, LSB
+  QVERIFY((quint8)f2.at(7) == 0x00); // wLength, MSB
+  // Clear f and check
+  f.clear();
+  f.clearSub();
+  QVERIFY(f2.directionIsDeviceToHost());
+  QVERIFY(f2.requestType() == mdtFrameUsbControl::RT_CLASS);
+  QVERIFY(f2.requestRecipient() == mdtFrameUsbControl::RR_INTERFACE);
+  QVERIFY(f2.bRequest() == 7);
+  QVERIFY(f2.wValue() == 0);
+  QVERIFY(f2.wIndex() == 0);
+  QVERIFY(f2.wLength() == 0x18);
+  QVERIFY(f2.size() == 8);
+  QVERIFY((quint8)f2.at(0) == 0xA1);
+  QVERIFY((quint8)f2.at(1) == 7);    // bRequest
+  QVERIFY((quint8)f2.at(2) == 0);    // wValue, LSB
+  QVERIFY((quint8)f2.at(3) == 0);    // wValue, MSB
+  QVERIFY((quint8)f2.at(4) == 0);    // wIndex, LSB
+  QVERIFY((quint8)f2.at(5) == 0);    // wIndex, MSB
+  QVERIFY((quint8)f2.at(6) == 0x18); // wLength, LSB
+  QVERIFY((quint8)f2.at(7) == 0x00); // wLength, MSB
+  QVERIFY(!f.directionIsDeviceToHost());
+  QVERIFY(f.requestType() == mdtFrameUsbControl::RT_STANDARD);
+  QVERIFY(f.requestRecipient() == mdtFrameUsbControl::RR_DEVICE);
+  QVERIFY(f.bRequest() == 0);
+  QVERIFY(f.wValue() == 0);
+  QVERIFY(f.wIndex() == 0);
+  QVERIFY(f.wLength() == 0);
+  QVERIFY(f.size() == 0);
 
   /*
    * Build a USBTMC INITIATE_ABORT_BULK_IN request

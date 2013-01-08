@@ -103,6 +103,7 @@ void mdtPortThread::stop()
   int err;
 
   // Unset the running flag
+  qDebug() << "mdtPortThread::stop() ...";
   pvPort->lockMutex();
   if(!pvRunning){
     pvPort->unlockMutex();
@@ -140,6 +141,7 @@ void mdtPortThread::stop()
   delete[] pvReadBuffer;
   pvReadBuffer = 0;
   pvReadBufferSize = 0;
+  qDebug() << "mdtPortThread::stop() DONE";
 }
 
 bool mdtPortThread::isRunning() const

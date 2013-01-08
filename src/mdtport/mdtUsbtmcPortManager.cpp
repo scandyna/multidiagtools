@@ -269,6 +269,65 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
 
 }
 
+/// \todo Should we flushIn() first ?
+int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
+{
+  Q_ASSERT(pvPort != 0);
+
+  int retVal;
+  QList<mdtFrameUsbControl> frames;
+  mdtFrameUsbControl frame;
+  quint8 status;
+
+  // Send the INITIATE_ABORT_BULK_IN request and wait on response
+  status = 0x81;  // STATUS_TRANSFER_NO_IN_PROGRESS
+  while(status == 0x81){
+    retVal = sendInitiateAbortBulkInRequest(bTag);
+    if(retVal < 0){
+      // Error logged by USB port mnanager
+      return retVal;
+    }
+    if(!waitReadenControlResponse(5000)){
+      mdtError e(MDT_USB_IO_ERROR, "Timeout by INITIATE_ABORT_BULK_IN request", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::ControlTimeout;
+    }
+    frames = readenControlResponses();
+    if(frames.size() != 1){
+      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected amount of responses", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::UnhandledError;
+    }
+    frame = frames.at(0);
+    if(frame.size() != 2){
+      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected response size", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::UnhandledError;
+    }
+    // Check status
+    status = frame.at(0);
+    if(status == 0x81){ // STATUS_TRANSFER_NO_IN_PROGRESS
+      wait(100);
+    }
+  }
+  if(status != 0x01){ // 0x01: STATUS_SUCCESS
+    // No transfer in progress (device FIFO empty)
+    return 0;
+  }
+  //Send a read request and wait on frame
+  sendSingleReadTransferRequest();
+  ///waitOnFrame(bTag, 5000);
+  waitReadenFrame(5000);
+
+  qDebug() << "offset 0: 0x" << hex << (quint8)frame.at(0);
+  qDebug() << "offset 1: 0x" << hex << (quint8)frame.at(1);
+
+  return 0;
+}
+
 int mdtUsbtmcPortManager::sendInitiateAbortBulkInRequest(quint8 bTag)
 {
   Q_ASSERT(pvPort != 0);
@@ -286,7 +345,7 @@ int mdtUsbtmcPortManager::sendInitiateAbortBulkInRequest(quint8 bTag)
   frame.setRequestType(mdtFrameUsbControl::RT_CLASS);
   frame.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
   frame.setbRequest(3);   // INITIATE_ABORT_BULK_IN
-  frame.setwValue(bTag); // D7..D0: bTag
+  frame.setwValue(bTag);  // D7..D0: bTag
   port->lockMutex();
   frame.setwIndex(port->currentReadEndpointAddress());   // Endpoint IN 2
   port->unlockMutex();

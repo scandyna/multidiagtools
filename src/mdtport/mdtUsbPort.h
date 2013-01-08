@@ -172,6 +172,40 @@ class mdtUsbPort : public mdtAbstractPort
    */
   QQueue<mdtFrameUsbControl*> &controlResponseFrames();
 
+  /*! \brief Request thread to process one read transfer
+   *
+   * This is, for example, used by USBTMC bulk in abort process.
+   *  If such request is pending, thread will do a single
+   *  read transfer.
+   *
+   * Mutex is not handled by this method
+   */
+  void setSingleReadTransferRequest();
+
+  /*! \brief Check if a single read request is pending
+   *
+   * This method is used by USB thread, and should
+   *  not be used else.
+   *
+   * Mutex is not handled by this method.
+   */
+  bool singleReadTransferRequestPending() const;
+
+  /*! \brief Reset single read transfer request flag
+   */
+  void resetSingleReadTransferRequest();
+
+  /*! \brief Get read buffer size
+   *
+   * This is the same as wMaxPacketSize of read endpoint.
+   *
+   * This method is used by USB thread, and should
+   *  not be used else.
+   *
+   * Mutex is not handled by this method.
+   */
+  int readBufferSize() const;
+
   /*! \brief Request a new bulk/interrupt input transfer
    *
    * Will fill and init a new bulk/interrupt (depending setup) transfer
@@ -218,18 +252,6 @@ class mdtUsbPort : public mdtAbstractPort
    * Mutex is not handled by this method.
    */
   error_t cancelMessageInTransfer();
-
-  /*! \brief Read message inputs (additional interrupt IN)
-   *
-   * This method is called from mdtUsbPortThread , and should not be used directly.
-   *
-   * This method differs from read() and write().
-   *  It will automatically init a message IN transfer if
-   *  additional interrupt IN is used, and no transfer is pending.
-   * There is no wait method associated to additional interrupt IN,
-   *  it will be complete during waitEventWriteReady() or waitForReadyRead().
-   */
-  ///qint64 readMessageIn(char *data, qint64 maxSize);
 
   /*! \brief Handle message IN
    *
@@ -399,6 +421,7 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer *pvReadTransfer;
   bool pvReadTransferPending;       // Flag to see if a transfer is pending
   int pvReadTransferComplete;       // Will be stored in transfer struct
+  bool pvSingleReadTransferRequestPending;  // See singleReadTransferRequestPending() and addSingleReadTransferRequest()
   /*
    * Data bulk/interrupt OUT endpoint members
    */

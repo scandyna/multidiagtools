@@ -512,6 +512,27 @@ qint64 mdtUsbPort::read(char *data, qint64 maxSize)
   return retLen;
 }
 
+void mdtUsbPort::setSingleReadTransferRequest()
+{
+  pvSingleReadTransferRequestPending = true;
+  pvWriteFrameAvailable.wakeAll();
+}
+
+bool mdtUsbPort::singleReadTransferRequestPending() const
+{
+  return pvSingleReadTransferRequestPending;
+}
+
+void mdtUsbPort::resetSingleReadTransferRequest()
+{
+  pvSingleReadTransferRequestPending = false;
+}
+
+int mdtUsbPort::readBufferSize() const
+{
+  return pvReadBufferSize;
+}
+
 mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer(qint64 maxSize)
 {
   Q_ASSERT(maxSize >= 0);
@@ -574,6 +595,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
       return portError;
     }
     pvMessageInTransferPending = false;
+    qDebug() << "mdtUsbPort::cancelMessageInTransfer() DONE";
   }
 
   return NoError;
@@ -888,6 +910,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
 {
   error_t portError;
 
+  qDebug() << "mdtUsbPort::cancelTransfers() ...";
   lockMutex();
   portError = cancelControlTransfer();
   if((portError != NoError)&&(portError != ControlCanceled)){
@@ -910,6 +933,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
     return portError;
   }
   unlockMutex();
+  qDebug() << "mdtUsbPort::cancelTransfers() DONE";
 
   return NoError;
 }
@@ -1454,6 +1478,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   // Set some flags
   pvControlTransferPending = false;
   pvReadTransferPending = false;
+  pvSingleReadTransferRequestPending = false;
   pvWriteTransferPending = false;
   pvMessageInTransferPending = false;
 

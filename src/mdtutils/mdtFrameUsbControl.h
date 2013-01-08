@@ -31,7 +31,7 @@
  *  libusb. libusb handles the most needed
  *  part of control transfers.
  * The goal of this class is to send application
- *  specific requests, for ex. USBTMC 488.
+ *  specific requests, for ex. USBTMC and USBTMC 488.
  *
  * See the USB 2.0 specifications, section 9.3 for details.
  * See the USB488 specifications for USBTMC details.

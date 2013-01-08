@@ -48,6 +48,13 @@ bool mdtUsbPortThread::isReader() const
   return true;
 }
 
+mdtFrame *mdtUsbPortThread::getNewFrameWrite()
+{
+  Q_ASSERT(pvPort != 0);
+
+  return pvPort->getFrameToWrite();
+}
+
 mdtAbstractPort::error_t mdtUsbPortThread::writeToPort(mdtUsbPort *port, mdtFrame *frame, int maxWriteTry)
 {
   Q_ASSERT(port != 0);
@@ -201,6 +208,7 @@ void mdtUsbPortThread::run()
         writeFrame = 0;
       }
     }else{
+      qDebug() << "USBPTHD: waiting ...";
       writeFrame = getNewFrameWrite();
     }
     // Read thread state
@@ -208,7 +216,9 @@ void mdtUsbPortThread::run()
       break;
     }
     // Check about control transfer
+    qDebug() << "USBPTHD: handleControlQueries ...";
     portError = port->handleControlQueries();
+    qDebug() << "USBPTHD: handleControlQueries DONE , retval: " << portError;
     if(portError != mdtAbstractPort::NoError){
       // Check about stoping
       if(!pvRunning){
@@ -242,6 +252,7 @@ void mdtUsbPortThread::run()
     // Write if something is to write (getNewFrameWrite() can return a null pointer 
     //  if it was woken after a control request or other).
     if(writeFrame != 0){
+      qDebug() << "USBPTHD: writing ...";
       waitAnAnswer = writeFrame->waitAnAnswer();
       portError = writeToPort(port, writeFrame);
       if(portError != mdtAbstractPort::NoError){
@@ -267,8 +278,14 @@ void mdtUsbPortThread::run()
       // We were woken up because of a control request
       waitAnAnswer = false;
       while(port->controlResponseFrames().size() < 1){
+        // It can happen that timeout is not detected (by stoping)
+        if(!pvRunning){
+          break;
+        }
         // Handle events
+        qDebug() << "USBPTHD: handleUsbEvents ...";
         portError = port->handleUsbEvents(0, 0);
+        qDebug() << "USBPTHD: handleUsbEvents DONE, retval: " << portError;
         if(portError != mdtAbstractPort::NoError){
           // Check about stoping
           if(!pvRunning){
@@ -288,6 +305,7 @@ void mdtUsbPortThread::run()
             break;
           }
         }
+        qDebug() << "USBPTHD: handleControlResponses ...";
         portError = port->handleControlResponses();
         if(portError != mdtAbstractPort::NoError){
           // Check about stoping
@@ -319,13 +337,18 @@ void mdtUsbPortThread::run()
       emit(messageInReaden());
     }
     // Read process
-    if(waitAnAnswer){
+    if(waitAnAnswer || port->singleReadTransferRequestPending()){
       if(readFrame == 0){
         break;
       }
       // See what we have to read
-      toRead = readFrame->bytesToStore();
+      if(port->singleReadTransferRequestPending()){
+        toRead = port->readBufferSize();
+      }else{
+        toRead = readFrame->bytesToStore();
+      }
       while(toRead > 0){
+        qDebug() << "USBPTHD: reading ... (toRead: " << toRead << ")";
         if(readFrame == 0){
           pvRunning = false;
           break;
@@ -381,7 +404,7 @@ void mdtUsbPortThread::run()
             // We submit the uncomplete frame
             pvPort->readenFrames().enqueue(readFrame);
             emit newFrameReaden();
-            qDebug() << "mdtUsbPortThread::run(): read cancel";
+            qDebug() << "USBPTHD: read cancel";
             readFrame = getNewFrameRead();
             break;
           }else if(portError == mdtAbstractPort::Disconnected){
@@ -425,13 +448,22 @@ void mdtUsbPortThread::run()
           Q_ASSERT(readFrame != 0);
           // If no frame was complete, it's possible that more data is needed
           if(n == 0){
-            toRead = readFrame->bytesToStore();
+            if(port->singleReadTransferRequestPending()){
+              toRead = 0;
+              // We submit the uncomplete frame
+              pvPort->readenFrames().enqueue(readFrame);
+              emit newFrameReaden();
+              readFrame = getNewFrameRead();
+            }else{
+              toRead = readFrame->bytesToStore();
+            }
           }else{
             toRead = 0;
           }
         }else{
           notifyError(mdtAbstractPort::ReadTimeout);
         }
+        port->resetSingleReadTransferRequest();
       }
     }
   }

@@ -60,6 +60,24 @@ class mdtUsbPortThread : public mdtPortThread
 
  private:
 
+  /*! \brief Get a new frame for writing data to port
+   *
+   * If no frame is available for write, this method
+   *  will block the caller thread until one is avaliable,
+   *  or another request happens (typical: control query).
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutext must be locked before calling this method.
+   *  Internally, it will be unlocked during wait, and will be
+   *  locked again. So, the port mutex is allways locked when this
+   *  method returns.
+   *
+   * \return A pointer to a new frame, or Null on another request.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   */
+  mdtFrame *getNewFrameWrite();
+
   /*! \brief Write data to port
    *
    * This is a helper method to write a frame to the USB port.
