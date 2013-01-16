@@ -173,6 +173,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(config().readFrameSize() > 13);
 
   mdtFrameUsbTmc *frame;
 
@@ -199,8 +200,8 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   }
   qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
-  frame->setMessageData("");
-  frame->setTransferSize(config().readFrameSize()-1);
+  ///frame->setMessageData("");
+  frame->setTransferSize(config().readFrameSize()-13);
   frame->encode();
   pvPort->addFrameToWrite(frame);
   // Add transaction

@@ -311,22 +311,43 @@ mdtFrame *mdtPortThread::getNewFrameWrite()
   return frame;
 }
 
+qint64 mdtPortThread::writeDataToPort(mdtFrame *frame, int maxSize)
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(frame != 0);
+
+  qint64 written = 0;
+
+  // Write data to port
+  emit ioProcessBegin();
+  if(maxSize > -1){
+    // Check max possible
+    if(maxSize > frame->size()){
+      maxSize = frame->size();
+    }
+    written = pvPort->write(frame->data(), maxSize);
+  }else{
+    written = pvPort->write(frame->data(), frame->size());
+  }
+  if(written < 0){
+    return written;
+  }
+  frame->take(written);
+
+  return written;
+}
+
 mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(frame != 0);
 
-  char *bufferCursor = 0;
-  qint64 toWrite = 0;
   qint64 written = 0;
   mdtAbstractPort::error_t portError;
 
   // Write the frame to port
-  bufferCursor = frame->data();
-  toWrite = frame->size();
-  while(toWrite > 0){
+  while(!frame->isEmpty()){
     // Wait on write ready event
-    qDebug() << "PTHD: wait write ready: " << written;
     portError = pvPort->waitEventWriteReady();
     // Check about flush request
     if(pvPort->flushOutRequestPending()){
@@ -367,18 +388,15 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
       pvPort->lockMutex();
       maxWriteTry--;
     }else{
-      // Write data to port
-      emit ioProcessBegin();
       if(bytePerByteWrite){
-        written = pvPort->write(bufferCursor, 1);
+        written = writeDataToPort(frame, 1);
         pvPort->unlockMutex();
         msleep(interByteTime);
         pvPort->lockMutex();
       }else{
-        written = pvPort->write(bufferCursor, toWrite);
+        written = writeDataToPort(frame);
       }
-      qDebug() << "PTHD: written: " << written;
-      if(written == 0){
+      if((written == 0)&&(!frame->isEmpty())){
         if(maxWriteTry <= 0){
           // Notify error and restore frame into write pool
           mdtError e(MDT_PORT_IO_ERROR, "Max write try reached after write busy", mdtError::Error);
@@ -398,16 +416,6 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
         maxWriteTry--;
       }else if(written < 0){
         return mdtAbstractPort::UnhandledError;
-      }
-      frame->take(written);
-      // Update cursor and toWrite
-      if(frame->isEmpty()){
-        toWrite = 0;
-      }else{
-        bufferCursor = frame->data();
-        Q_ASSERT(bufferCursor < (frame->data() + frame->size()));
-        toWrite -= written;
-        Q_ASSERT(toWrite >= 0);
       }
     }
   }

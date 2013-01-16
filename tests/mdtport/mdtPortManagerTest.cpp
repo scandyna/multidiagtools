@@ -261,6 +261,7 @@ void mdtPortManagerTest::usbTmcPortTest()
 
   // Init port manager
   m.setPortName(portInfoList.at(0)->portName());
+  m.config().setWriteQueueSize(1);
   QVERIFY(m.openPort());
 
   // We not need the scan result anymore, free memory
@@ -271,8 +272,10 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.start());
 
   // Control request
-  ///QVERIFY(m.sendReadStatusByteRequest() >= 0);
+  QVERIFY(m.sendReadStatusByteRequest() >= 0);
   // Query without answer
+  QVERIFY(m.waitOnWriteReady(1000));
+  QVERIFY(m.writeData("*CLS\n"));
   QVERIFY(m.waitOnWriteReady(1000));
   QVERIFY(m.writeData("*RST\n"));
   // Query with answer
@@ -281,7 +284,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.waitOnWriteReady(1000));
   bTag = m.sendReadRequest(true);
   QVERIFY(bTag > 0);
-  QVERIFY(m.waitOnFrame(bTag, 2000));
+  QVERIFY(m.waitOnFrame(bTag, 20000));
   frames = m.readenFrames();
   QVERIFY(frames.size() > 0);
 

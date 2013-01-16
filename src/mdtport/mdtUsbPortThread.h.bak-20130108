@@ -39,7 +39,7 @@ class mdtUsbPortThread : public mdtPortThread
   mdtUsbPortThread(QObject *parent = 0);
 
   // Overload of mdtPortThread
-  ///void stop();
+  void stop();
 
   /*! \brief Returns true if this thread reads data and send the newFrameReaden() signal
    *
@@ -76,7 +76,7 @@ class mdtUsbPortThread : public mdtPortThread
    *
    * \pre Port must be set with setPort() before using this method.
    */
-  ///mdtFrame *getNewFrameWrite();
+  mdtFrame *getNewFrameWrite();
 
   /*! \brief Write data to port
    *
@@ -100,7 +100,7 @@ class mdtUsbPortThread : public mdtPortThread
    * \pre port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  ///mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame, int maxWriteTry = 10);
+  mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame, int maxWriteTry = 10);
 
   void run();
 };

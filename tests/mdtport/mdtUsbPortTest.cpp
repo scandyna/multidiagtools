@@ -122,6 +122,8 @@ void mdtUsbPortTest::agilentDso1000Test()
   port.lockMutex();
   uf = dynamic_cast<mdtFrameUsbTmc*> (port.writeFramesPool().dequeue());
   QVERIFY(uf != 0);
+  uf->clear();
+  uf->clearSub();
   uf->setWaitAnAnswer(true);
   uf->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
   uf->setbTag(4);
@@ -135,7 +137,8 @@ void mdtUsbPortTest::agilentDso1000Test()
   QVERIFY(port.readenFrames().size() > 0);
   uf = dynamic_cast<mdtFrameUsbTmc*> (port.readenFrames().dequeue());
   QVERIFY(uf != 0);
-  qDebug() << "Message data: " << uf->messageData().left(26);
+  qDebug() << "Message data[Complete]: " << uf->messageData();
+  qDebug() << "Message data[0-25]: " << uf->messageData().left(26);
   QVERIFY(uf->messageData().left(26) == "Agilent Technologies,DSO10");
   port.unlockMutex();
   QTest::qWait(500);

@@ -37,15 +37,19 @@ class mdtTcpSocketThread : public mdtPortThread
 
   mdtTcpSocketThread(QObject *parent = 0);
 
-  // Overload of mdtPortThread
-  void stop();
-
   /*! \brief Returns true if this thread reads data and send the newFrameReaden() signal
    *
    * mdtPortManager can handle many threads. It needs to know wich one will send the
    *  newFrameReaden() signal, so it can connect it to his slot.
    */
   bool isReader() const;
+
+  /*! \brief Returns true if this thread writes date
+   *
+   * Is used by mdtPortThread::stop() 
+   *  to know if mdtAbstractPort::abortFrameToWriteWait() must be called.
+   */
+  bool isWriter() const;
 
  private:
 

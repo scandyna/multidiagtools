@@ -29,15 +29,12 @@ mdtTcpSocketThread::mdtTcpSocketThread(QObject *parent)
   pvSocket = 0;
 }
 
-void mdtTcpSocketThread::stop()
+bool mdtTcpSocketThread::isReader() const
 {
-  Q_ASSERT(pvPort != 0);
-
-  pvPort->abortFrameToWriteWait();
-  mdtPortThread::stop();
+  return true;
 }
 
-bool mdtTcpSocketThread::isReader() const
+bool mdtTcpSocketThread::isWriter() const
 {
   return true;
 }

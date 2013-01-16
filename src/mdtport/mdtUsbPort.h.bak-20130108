@@ -110,67 +110,59 @@ class mdtUsbPort : public mdtAbstractPort
    */
   QQueue<mdtFrameUsbControl*> &controlFramesPool();
 
-  /*! \brief Get the control query queue
-   *
-   * This queue contains control query frames (control requests).
-   *
-   * Mutex is not handled by this method.
-   */
-  QQueue<mdtFrameUsbControl*> &controlQueryFrames();
-
   /*! \brief Add a control request
    *
-   * Add a control frame to the queries queue.
-   *  Frame will be sent as soon as possible.
+   * Once the frame is added to the control queries queue,
+   *  waiting thread will be woken up (if waiting)
+   *  and will send the frame.
    *
    * The mutex must be locked before calling this method,
    *  and still locked inside.
    *
    * \param frame Control frame
    * \param setwIndexAsbInterfaceNumber If true, wIndex will be set with current bInterfaceNumber
+   * 
    * \pre frame must be a valid pointer.
    */
   void addControlRequest(mdtFrameUsbControl *frame, bool setwIndexAsbInterfaceNumber = false);
 
-  /*! \brief Submit a control query
+  /*! \brief Check about pending control queries and init a new transfer if needed
    *
-   * If frames are available in queries queue
-   *  and no control transfer is pending,
-   *  a transfer will be submitted.
+   * If a frame is available in control query queue,
+   *  a transfer will be initialized and submitted
+   *  to libusb.
    *
-   * This method is called by addControlRequest() and completeControlResponse()
-   *  and should not be used directly.
+   * The thread can call this method periodically.
+   *  If nothing is to do, it will simply return NoError.
    *
    * The mutex must be locked before calling this method,
    *  and still locked inside.
    */
-  void submitControlQuery();
-
-  /*! \brief Transfer callback for control endpoint
-   *
-   * Check completion and error flags
-   *  and add control frame in responses queue if ok,
-   *  or in pool else.
-   *  On error, addError() is called, so thread can
-   *  notify it.
-   *
-   * Once done, submitControlQuery() is called.
-   *
-   * This method is called from libusb
-   *  and should not be used directly.
-   *
-   * Mutex is locked during process and unlocked befor return.
-   *
-   * \pre transfer must be valid
-   * \pre transfer->user_data must be valid
-   */
-  static void controlTransferCallback(struct libusb_transfer *transfer);
+  error_t handleControlQueries();
 
   /*! \brief Cancel current control transfer
    *
-   * Used by mdtUsbPortThread, should not be used else.
+   * If a control transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
    */
   error_t cancelControlTransfer();
+
+  /*! \brief Check pending control transfer
+   *
+   * If a control transfer is pending,
+   *  complete flag will be checked.
+   *  If transfer is complete,
+   *  some flags are checked, and
+   *  frame is enqueued in response queue if Ok.
+   *
+   * This method is called by waitEventWriteReady()
+   *  and waitForReadyRead(), witch are called from port
+   *  thread.
+   *
+   * Mutex is not handled by this method.
+   */
+  error_t handleControlResponses();
 
   /*! \brief Get the control responses queue
    *
@@ -180,8 +172,6 @@ class mdtUsbPort : public mdtAbstractPort
    */
   QQueue<mdtFrameUsbControl*> &controlResponseFrames();
 
-  
-  
   /*! \brief Request thread to process one read transfer
    *
    * This is, for example, used by USBTMC bulk in abort process.
@@ -216,44 +206,25 @@ class mdtUsbPort : public mdtAbstractPort
    */
   int readBufferSize() const;
 
-  /*! \brief Submit a read transfer
+  /*! \brief Request a new bulk/interrupt input transfer
    *
-   * If a transfer is pending, this method simply returns.
-   *
-   * This method is called by USB port thread
-   *  and should not be used else.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \return NoError or a error from mdtAbstractPort::error_t
+   * Will fill and init a new bulk/interrupt (depending setup) transfer
+   *  and submit it to libusb.
    */
   error_t initReadTransfer(qint64 maxSize);
 
-  /*! \brief Transfer callback for read endpoint
-   *
-   * Check completion and error flags.
-   *  On error, addError() is called, so thread can
-   *  notify it.
-   *
-   * This method is called from libusb
-   *  and should not be used directly.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \pre transfer must be valid
-   * \pre transfer->user_data must be valid
-   */
-  static void readTransferCallback(struct libusb_transfer *transfer);
-
   /*! \brief Cancel current bulk/interrupt input transfer
    *
-   * Used by mdtUsbPortThread, should not be used else.
+   * If a input transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
    */
   error_t cancelReadTransfer();
 
   /*! \brief Wait until data is available on port.
    *
-   * Not implemented, will allways return a UnhandledError
+   * This method is called from mdtPortReadThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
   error_t waitForReadyRead();
 
@@ -263,9 +234,7 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * Mutex is not handled by this method.
    *
-   * \return Amount of readen data (can be 0 if transfer is pending or no more data are available), 
-   *          mdtAbstractPort::error_t code on error.
-   * \pre data must be valid
+   * \pre A transfert must be initialized with initReadTransfer() before using this method.
    */
   qint64 read(char *data, qint64 maxSize);
 
@@ -273,40 +242,24 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * Will fill and init a new interrupt transfer
    *  and submit it to libusb.
-   *
-   * If a transfer is pending, this method simply returns.
-   *
-   * This method is called by USB port thread
-   *  and should not be used else.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \return NoError or a error from mdtAbstractPort::error_t
    */
-  ///error_t initMessageInTransfer(qint64 maxSize);
-  error_t initMessageInTransfer();
-
-  /*! \brief Transfer callback for message in (additional interrupt) endpoint
-   *
-   * Check completion and error flags.
-   *  On error, addError() is called, so thread can
-   *  notify it.
-   *
-   * This method is called from libusb
-   *  and should not be used directly.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \pre transfer must be valid
-   * \pre transfer->user_data must be valid
-   */
-  static void messageInTransferCallback(struct libusb_transfer *transfer);
+  error_t initMessageInTransfer(qint64 maxSize);
 
   /*! \brief Cancel current interrupt message input transfer
    *
-   * Used by mdtUsbPortThread, should not be used else.
+   * If a input message transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
    */
   error_t cancelMessageInTransfer();
+
+  /*! \brief Handle message IN
+   *
+   * Will init a new message IN transfer if needed.
+   *  If one is pending, it will check about its completion,
+   *  and enqueue the data to message IN frames queue if complete.
+   */
+  error_t handleMessageIn();
 
   /*! \brief Get the message IN frames pool
    *
@@ -324,61 +277,25 @@ class mdtUsbPort : public mdtAbstractPort
    */
   QQueue<mdtFrame*> &messageInFrames();
 
-  /*! \brief Add a frame to write
-   *
-   * Once the frame is added to the write queue,
-   *  waiting thread will be woken up (if waiting)
-   *  and will send the frame.
-   *
-   * The mutex must be locked before calling this method,
-   *  and still locked inside.
-   *
-   * \pre frame must be a valid pointer.
-   */
-  void addFrameToWrite(mdtFrame *frame);
-
-  /// \todo ioPresses signal ?
   /*! \brief Request a new bulk/interrupt out transfer
    *
    * Will fill and init a new bulk/interrupt (depending setup) transfer
    *  and submit it to libusb.
-   *
-   * If a transfer is pending, this method simply returns.
-   *
-   * This method is called by USB port thread
-   *  and should not be used else.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \return NoError or a error from mdtAbstractPort::error_t
    */
   error_t initWriteTransfer(const char *data, qint64 maxSize);
 
-  /*! \brief Transfer callback for write endpoint
-   *
-   * Check completion and error flags.
-   *  On error, addError() is called, so thread can
-   *  notify it.
-   *
-   * This method is called from libusb
-   *  and should not be used directly.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \pre transfer must be valid
-   * \pre transfer->user_data must be valid
-   */
-  static void writeTransferCallback(struct libusb_transfer *transfer);
-
   /*! \brief Cancel current bulk/interrupt input transfer
    *
-   * Used by mdtUsbPortThread, should not be used else.
+   * If a input transfer is pending it will be cancelled.
+   *
+   * Mutex is not handled by this method.
    */
   error_t cancelWriteTransfer();
 
   /*! \brief Wait until data can be written to port.
    *
-   * This method is not implemented here and will allways return a UnhandledError.
+   * This method is called from mdtPortWriteThread , and should not be used directly.<br>
+   * Mutex must be locked before calling this method with lockMutex(). The mutex is locked when method returns.
    */
   error_t waitEventWriteReady();
 
@@ -388,33 +305,32 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * Mutex is not handled by this method.
    */
-  qint64 write(const char* /*data*/, qint64 /*maxSize*/);
+  qint64 write(const char *data, qint64 maxSize);
 
-  /*! \brief Set error
-   *
-   * Used by transfer callbacks
-   *
-   * Mutex is not handled by this method.
+  /*! \brief Transfert callback for asynch I/O
    */
-  void addError(mdtAbstractPort::error_t error);
+  static void transferCallback(struct libusb_transfer *transfer);
 
-  /*! \brief Get the lis of current errors
+  
+  
+  /*! \brief Transfer callback for control endpoint
    *
-   * Will clear internal list (a second call will return a empty list)
-   *
-   * Used by mdtUsbPortThread, should not be used else.
+   * \pre transfer must be valid
+   * \pre transfer->user_data must be valid
    */
-  QList<error_t> lastErrors();
+  static void controlTransferCallback(struct libusb_transfer *transfer);
+  
+  
 
   /*! \brief Cancel pending transfers
    *
-   * Will cancel all pending transfers.
+   * Will call cancelReadTransfer() , cancelReadTransfer().
    *
-   * Used by mdtUsbPortThread, should not be used else.
+   * This method locks the mutex.
    */
   error_t cancelTransfers();
 
-  /*! \brief Call libusb handle_event() function
+  /*! \brief Calle libusb handle_event*() function
    *
    * Notes: must be called only by I/O thread (typically mdtUsbPortThread).
    * This method unlocks the mutex during wait (must be locked by call, is locked again before return)
@@ -423,15 +339,6 @@ class mdtUsbPort : public mdtAbstractPort
    * \param endpoint Concerned endpoint
    */
   error_t handleUsbEvents(struct timeval *timeout, quint8 endpoint);
-
-  /*! \brief Call libusb handle_event() function
-   *
-   * Notes: must be called only by I/O thread (typically mdtUsbPortThread).
-   * This method unlocks the mutex during wait (must be locked by call, is locked again before return)
-   *
-   * \return NoError or mdtAbstractPort::error_t error (Note: timeout is ignored here)
-   */
-  error_t handleUsbEvents();
 
   /*! \brief Get current read endpoint address
    *
@@ -472,6 +379,7 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * This method is called from flushIn(),
    *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
    */
   void pvFlushIn();
 
@@ -479,6 +387,7 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * This method is called from flushout(),
    *  and is usefull if subsystem needs to be flushed.
+   *  (For ex. serial port).
    */
   void pvFlushOut();
 
@@ -508,7 +417,7 @@ class mdtUsbPort : public mdtAbstractPort
   int pvControlBufferSize;
   libusb_transfer *pvControlTransfer;
   bool pvControlTransferPending;       // Flag to see if a transfer is pending
-  ///int pvControlTransferComplete;       // Will be stored in transfer struct
+  int pvControlTransferComplete;       // Will be stored in transfer struct
   // Frames queues
   QQueue<mdtFrameUsbControl*> pvControlFramesPool;
   QQueue<mdtFrameUsbControl*> pvControlQueryFrames;
@@ -522,7 +431,7 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer_type pvReadTransfertType;
   libusb_transfer *pvReadTransfer;
   bool pvReadTransferPending;       // Flag to see if a transfer is pending
-  ///int pvReadTransferComplete;       // Will be stored in transfer struct
+  int pvReadTransferComplete;       // Will be stored in transfer struct
   bool pvSingleReadTransferRequestPending;  // See singleReadTransferRequestPending() and addSingleReadTransferRequest()
   /*
    * Data bulk/interrupt OUT endpoint members
@@ -533,7 +442,7 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer_type pvWriteTransfertType;
   libusb_transfer *pvWriteTransfer;
   bool pvWriteTransferPending;      // Flag to see if a transfer is pending
-  ///int pvWriteTransferComplete;      // Will be stored in transfer struct
+  int pvWriteTransferComplete;      // Will be stored in transfer struct
   /*
    * Some devices have a additional interrupt IN endpoint
    *  for urgent messages. Other use interrupt IN endpoint
@@ -545,13 +454,10 @@ class mdtUsbPort : public mdtAbstractPort
   quint8 pvMessageInEndpointAddress;
   libusb_transfer *pvMessageInTransfer;
   bool pvMessageInTransferPending;  // Flag to see if a transfer is pending
-  ///int pvMessageInTransferComplete;  // Will be stored in transfer struct
+  int pvMessageInTransferComplete;  // Will be stored in transfer struct
   // Frames queues
   QQueue<mdtFrame*> pvMessageInFramesPool;  // Frames pool
   QQueue<mdtFrame*> pvMessageInFrames;      // Incomming message frames
-  
-  
-  QQueue<error_t> pvErrors;  // Set by transfer callbacks and used by thread for notifications
 };
 
 #endif // #ifndef MDT_USB_PORT_H

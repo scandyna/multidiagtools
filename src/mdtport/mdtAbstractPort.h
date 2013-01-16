@@ -463,7 +463,7 @@ class mdtAbstractPort : public QObject
    *
    * \pre frame must be a valid pointer.
    */
-  void addFrameToWrite(mdtFrame *frame);
+  virtual void addFrameToWrite(mdtFrame *frame);
 
   /*! \brief Wait until a frame to write is available and get it
    *

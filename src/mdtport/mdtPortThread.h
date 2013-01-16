@@ -217,6 +217,23 @@ class mdtPortThread : public QThread
 
   /*! \brief Write data to port
    *
+   *
+   * This is a helper method for subclass
+   *  to write some data from a frame to the port.
+   *
+   * Signal ioProcessBegin() is emitted.
+   *
+   * \param frame Data stored in this frame will be written to port.
+   * \param maxSize If >= 0, maxSize will be written, else the frame size will be considered.
+   * \return Amount of bytes written or a mdtAbstractPort::error_t error.
+   *
+   * \pre Port must be set with setPort() before using this method.
+   * \pre frame must be a valid pointer (not Null).
+   */
+  qint64 writeDataToPort(mdtFrame *frame, int maxSize = -1);
+
+  /*! \brief Write a complete frame to port
+   *
    * This is a helper method for subclass
    *  to write a frame to the port.
    *  Internally, it will call mdtAbstractPort::waitEventWriteReady()
