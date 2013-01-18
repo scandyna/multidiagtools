@@ -71,13 +71,18 @@ class mdtUsbPortManager : public mdtPortManager
    */
   QList<mdtPortInfo*> scan(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol);
 
-  /*! \brief Request port to process one read transfer
+  /*! \brief Request port to read until a short frame is received
    *
    * This is, for example, used by USBTMC bulk in abort process.
-   *  If such request is pending, thread will do a single
-   *  read transfer.
+   *  If such request is pending, thread will read
+   *  until a short frame is received.
+   *
+   * Will send the request and wait until it is finished
+   *  (will not break GUI event loop).
+   *
+   * \pre Port must be set with setPort() with a mdtUsbPort (or subclass) before use of this method.
    */
-  void sendSingleReadTransferRequest();
+  void readUntilShortPacketReceived();
 
   /*! \brief Send a control request by copy
    *
@@ -137,11 +142,16 @@ class mdtUsbPortManager : public mdtPortManager
    */
   void fromThreadMessageInReaden();
 
+  /*! \brief Called by thread when the read until a short packet process is finished
+   */
+  void fromThreadReadUntilShortPacketReceivedFinished();
+
  private:
 
   Q_DISABLE_COPY(mdtUsbPortManager);
 
   QQueue<mdtFrameUsbControl> pvReadenControlResponses;  // Copy of received control responses
+  bool pvReadUntilShortPacketReceivedFinished;
 };
 
 #endif  // #ifndef MDT_USB_PORT_MANAGER_H

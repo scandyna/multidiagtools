@@ -41,11 +41,13 @@ mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
   mdtUsbPort *port = new mdtUsbPort;
   port->setConfig(config);
   setPort(port);
+  ///pvReadUntilShortPacketReceivedFinished = false;
 
   // Threads setup
   portThread = new mdtUsbPortThread;
   connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
   connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
+  connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
   addThread(portThread);
 }
 
@@ -180,7 +182,7 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
-void mdtUsbPortManager::sendSingleReadTransferRequest()
+void mdtUsbPortManager::readUntilShortPacketReceived()
 {
   Q_ASSERT(pvPort != 0);
 
@@ -190,10 +192,15 @@ void mdtUsbPortManager::sendSingleReadTransferRequest()
   port = dynamic_cast<mdtUsbPort*>(pvPort);
   Q_ASSERT(port != 0);
 
+  pvReadUntilShortPacketReceivedFinished = false;
+  // Send request
   port->lockMutex();
-  ///port->setSingleReadTransferRequest();
   port->requestReadUntilShortPacketReceived();
   port->unlockMutex();
+  while(!pvReadUntilShortPacketReceivedFinished){
+    msleep(50);
+    qApp->processEvents();
+  }
 }
 
 int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, bool setwIndexAsbInterfaceNumber)
@@ -298,3 +305,7 @@ void mdtUsbPortManager::fromThreadMessageInReaden()
   qDebug() << " ** mdtUsbPortManager::fromThreadMessageInReaden(): message IN !!!!";
 }
 
+void mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()
+{
+  pvReadUntilShortPacketReceivedFinished = true;
+}

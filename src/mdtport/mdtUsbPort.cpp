@@ -1559,12 +1559,21 @@ void mdtUsbPort::pvFlushIn()
 {
   qDebug() << "mdtUsbPort::pvFlushIn() ...";
   ///cancelReadTransfer();
+  while(pvMessageInFrames.size() > 0){
+    pvMessageInFramesPool.enqueue(pvMessageInFrames.dequeue());
+  }
+  while(pvControlResponseFrames.size() > 0){
+    pvControlFramesPool.enqueue(pvControlResponseFrames.dequeue());
+  }
 }
 
 void mdtUsbPort::pvFlushOut()
 {
   qDebug() << "mdtUsbPort::pvFlushOut() ...";
   ///cancelWriteTransfer();
+  while(pvControlQueryFrames.size() > 0){
+    pvControlFramesPool.enqueue(pvControlQueryFrames.dequeue());
+  }
 }
 
 mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, quint8 endpoint)

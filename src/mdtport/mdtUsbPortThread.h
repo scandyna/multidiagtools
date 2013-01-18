@@ -53,9 +53,13 @@ class mdtUsbPortThread : public mdtPortThread
    */
   void controlResponseReaden();
 
-  /*! \brief Wmited when a message IN was readen (from additionnal interrupt IN endpoint)
+  /*! \brief Emited when a message IN was readen (from additionnal interrupt IN endpoint)
    */
   void messageInReaden();
+
+  /*! \brief Emitted when the read until a short packet process is finished
+   */
+  void readUntilShortPacketReceivedFinished();
 
  private:
 

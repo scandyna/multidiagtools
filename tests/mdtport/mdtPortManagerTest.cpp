@@ -272,7 +272,7 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.start());
 
   // Control request
-  ///QVERIFY(m.sendReadStatusByteRequest() >= 0);
+  QVERIFY(m.sendReadStatusByteRequest() >= 0);
   // Query without answer
   QVERIFY(m.waitOnWriteReady(1000));
   QVERIFY(m.writeData("*CLS\n"));

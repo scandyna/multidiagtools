@@ -453,14 +453,14 @@ class mdtUsbPort : public mdtAbstractPort
    */
   error_t pvSetup();
 
-  /*! \brief Flush read port
+  /*! \brief Flush read port, message IN and control response frames queues
    *
    * This method is called from flushIn(),
    *  and is usefull if subsystem needs to be flushed.
    */
   void pvFlushIn();
 
-  /*! \brief Flush write port
+  /*! \brief Flush write port and control query frames queues
    *
    * This method is called from flushout(),
    *  and is usefull if subsystem needs to be flushed.

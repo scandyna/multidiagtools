@@ -157,13 +157,19 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   int sendInitiateAbortBulkInRequest(quint8 bTag);
 
+  /*! \brief Send a CHECK_ABORT_BULK_IN_STATUS request thru the control endpoint
+   *
+   * \see abortBulkIn()
+   * \return bTag on success or WriteQueueEmpty on error.
+   */
+  int sendCheckAbortBulkInStatusRequest(quint8 bTag);
+
  public slots:
 
   /// \todo Essais ...
   ///void abort();
 
-  /*! \brief Called by the thread whenn a complete frame was readen
-   *
+  /*! \brief Called by the thread whenn a frame was readen
    */
   void fromThreadNewFrameReaden();
 
