@@ -173,132 +173,113 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00112"></a>00112     <span class="keywordflow">return</span>;
 <a name="l00113"></a>00113   }
 <a name="l00114"></a>00114   <span class="comment">// Get identification</span>
-<a name="l00115"></a>00115   <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(<span class="stringliteral">&quot;*IDN?\n&quot;</span>) &lt; 0){
-<a name="l00116"></a>00116     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00117"></a>00117     setStateError(tr(<span class="stringliteral">&quot;Cannot send the *IDN? query&quot;</span>));
+<a name="l00115"></a>00115   idn = pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a20c2b18b59e64a25b75a0bad1221c3a2" title="Send a query to device.">sendQuery</a>(<span class="stringliteral">&quot;*IDN?\n&quot;</span>);
+<a name="l00116"></a>00116   <span class="keywordflow">if</span>(idn.isEmpty()){
+<a name="l00117"></a>00117     setStateError(tr(<span class="stringliteral">&quot;*IDN? query failed&quot;</span>));
 <a name="l00118"></a>00118     cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
 <a name="l00119"></a>00119     <span class="keywordflow">return</span>;
 <a name="l00120"></a>00120   }
-<a name="l00121"></a>00121   <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest</a>(<span class="keyword">true</span>) &lt; 0){
-<a name="l00122"></a>00122     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00123"></a>00123     setStateError(tr(<span class="stringliteral">&quot;Cannot send the *IDN? read request&quot;</span>));
-<a name="l00124"></a>00124     cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00125"></a>00125     <span class="keywordflow">return</span>;
-<a name="l00126"></a>00126   }
-<a name="l00127"></a>00127   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">waitReadenFrame</a>()){
-<a name="l00128"></a>00128     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00129"></a>00129     setStateError(tr(<span class="stringliteral">&quot;Cannot send the *IDN? query (received no data)&quot;</span>));
-<a name="l00130"></a>00130     cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00131"></a>00131     <span class="keywordflow">return</span>;
-<a name="l00132"></a>00132   }
-<a name="l00134"></a>00134   <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796" title="Get all readen data.">readenFrames</a>().size() != 1){
-<a name="l00135"></a>00135     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00136"></a>00136     setStateError(tr(<span class="stringliteral">&quot;Cannot send the *IDN? query (received wrong amount of data)&quot;</span>));
-<a name="l00137"></a>00137     cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00138"></a>00138     <span class="keywordflow">return</span>;
-<a name="l00139"></a>00139   }
-<a name="l00140"></a>00140   <span class="comment">// Split IDN replay infos</span>
-<a name="l00141"></a>00141   idn = pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796" title="Get all readen data.">readenFrames</a>().at(0);
-<a name="l00143"></a>00143   idn = idn.trimmed();
-<a name="l00144"></a>00144   idnItems = idn.split(<span class="charliteral">&#39;,&#39;</span>);
-<a name="l00145"></a>00145   <span class="keywordflow">if</span>(idnItems.size() != 4){
-<a name="l00146"></a>00146     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00147"></a>00147     setStateError(tr(<span class="stringliteral">&quot;Cannot send the *IDN? query (received wrong amount of data)&quot;</span>));
-<a name="l00148"></a>00148     cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00149"></a>00149     <span class="keywordflow">return</span>;
-<a name="l00150"></a>00150   }
-<a name="l00151"></a>00151   <span class="comment">// Display infos</span>
-<a name="l00152"></a>00152   lbManufacturer-&gt;setText(idnItems.at(0));
-<a name="l00153"></a>00153   lbModel-&gt;setText(idnItems.at(1));
-<a name="l00154"></a>00154   lbSerial-&gt;setText(idnItems.at(2));
-<a name="l00155"></a>00155   lbFirmware-&gt;setText(idnItems.at(3));
-<a name="l00156"></a>00156   <span class="comment">// Display configuration</span>
-<a name="l00157"></a>00157   displayConfig();
-<a name="l00158"></a>00158   setStateRunning();
-<a name="l00159"></a>00159   cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00160"></a>00160 }
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
-<a name="l00163"></a>00163 {
-<a name="l00164"></a>00164   Q_ASSERT(pvPortManager != 0);
-<a name="l00165"></a>00165   Q_ASSERT(button != 0);
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167   QDialogButtonBox::StandardButton type;
+<a name="l00147"></a>00147   <span class="comment">// Split IDN replay infos</span>
+<a name="l00150"></a>00150 <span class="comment"></span>  idn = idn.trimmed();
+<a name="l00151"></a>00151   idnItems = idn.split(<span class="charliteral">&#39;,&#39;</span>);
+<a name="l00152"></a>00152   <span class="keywordflow">if</span>(idnItems.size() != 4){
+<a name="l00153"></a>00153     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
+<a name="l00154"></a>00154     setStateError(tr(<span class="stringliteral">&quot;Cannot send the *IDN? query (received wrong amount of data)&quot;</span>));
+<a name="l00155"></a>00155     cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00156"></a>00156     <span class="keywordflow">return</span>;
+<a name="l00157"></a>00157   }
+<a name="l00158"></a>00158   <span class="comment">// Display infos</span>
+<a name="l00159"></a>00159   lbManufacturer-&gt;setText(idnItems.at(0));
+<a name="l00160"></a>00160   lbModel-&gt;setText(idnItems.at(1));
+<a name="l00161"></a>00161   lbSerial-&gt;setText(idnItems.at(2));
+<a name="l00162"></a>00162   lbFirmware-&gt;setText(idnItems.at(3));
+<a name="l00163"></a>00163   <span class="comment">// Display configuration</span>
+<a name="l00164"></a>00164   displayConfig();
+<a name="l00165"></a>00165   setStateRunning();
+<a name="l00166"></a>00166   cbInterface-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00167"></a>00167 }
 <a name="l00168"></a>00168 
-<a name="l00169"></a>00169   type = buttonBox-&gt;standardButton(button);
-<a name="l00170"></a>00170   <span class="keywordflow">if</span>((type == QDialogButtonBox::Apply)||(type == QDialogButtonBox::Ok)){
-<a name="l00171"></a>00171     <span class="comment">// Update current port info</span>
-<a name="l00172"></a>00172     pvCurrentPortInfo = pvPortInfoCbHandler.<a class="code" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351" title="Get the selected port info object.">currentPortInfo</a>();
-<a name="l00173"></a>00173   }
-<a name="l00174"></a>00174   <span class="comment">// Check if something is to do</span>
-<a name="l00175"></a>00175   <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>() != pvCurrentPortInfo){
-<a name="l00176"></a>00176     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00177"></a>00177     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(pvCurrentPortInfo);
-<a name="l00178"></a>00178     setStateStopped();
-<a name="l00179"></a>00179   }
-<a name="l00180"></a>00180   <span class="comment">// Open and start port if needed</span>
-<a name="l00181"></a>00181   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>()){
-<a name="l00182"></a>00182     <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
-<a name="l00183"></a>00183       setStateError(tr(<span class="stringliteral">&quot;Cannot open port&quot;</span>));
-<a name="l00184"></a>00184       <span class="keywordflow">return</span>;
-<a name="l00185"></a>00185     }
-<a name="l00186"></a>00186     <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
-<a name="l00187"></a>00187       pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
-<a name="l00188"></a>00188       setStateError(tr(<span class="stringliteral">&quot;Cannot start port&quot;</span>));
-<a name="l00189"></a>00189       <span class="keywordflow">return</span>;
-<a name="l00190"></a>00190     }
-<a name="l00191"></a>00191   }
-<a name="l00192"></a>00192   setStateRunning();
-<a name="l00193"></a>00193 }
-<a name="l00194"></a>00194 
-<a name="l00195"></a>00195 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::setStateRunning()
-<a name="l00196"></a>00196 {
-<a name="l00197"></a>00197   <span class="comment">// Update state label</span>
-<a name="l00198"></a>00198   lbState-&gt;setText(tr(<span class="stringliteral">&quot;Running&quot;</span>));
-<a name="l00199"></a>00199   lbState-&gt;setStyleSheet(<span class="stringliteral">&quot;QLabel { background-color : green; color : black; }&quot;</span>);
+<a name="l00169"></a>00169 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
+<a name="l00170"></a>00170 {
+<a name="l00171"></a>00171   Q_ASSERT(pvPortManager != 0);
+<a name="l00172"></a>00172   Q_ASSERT(button != 0);
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174   QDialogButtonBox::StandardButton type;
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176   type = buttonBox-&gt;standardButton(button);
+<a name="l00177"></a>00177   <span class="keywordflow">if</span>((type == QDialogButtonBox::Apply)||(type == QDialogButtonBox::Ok)){
+<a name="l00178"></a>00178     <span class="comment">// Update current port info</span>
+<a name="l00179"></a>00179     pvCurrentPortInfo = pvPortInfoCbHandler.<a class="code" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351" title="Get the selected port info object.">currentPortInfo</a>();
+<a name="l00180"></a>00180   }
+<a name="l00181"></a>00181   <span class="comment">// Check if something is to do</span>
+<a name="l00182"></a>00182   <span class="keywordflow">if</span>(pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>() != pvCurrentPortInfo){
+<a name="l00183"></a>00183     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
+<a name="l00184"></a>00184     pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c" title="Set port info.">setPortInfo</a>(pvCurrentPortInfo);
+<a name="l00185"></a>00185     setStateStopped();
+<a name="l00186"></a>00186   }
+<a name="l00187"></a>00187   <span class="comment">// Open and start port if needed</span>
+<a name="l00188"></a>00188   <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af460167e604b8b6e2e933a98b2b6b5a2" title="Get the running state.">isRunning</a>()){
+<a name="l00189"></a>00189     <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">openPort</a>()){
+<a name="l00190"></a>00190       setStateError(tr(<span class="stringliteral">&quot;Cannot open port&quot;</span>));
+<a name="l00191"></a>00191       <span class="keywordflow">return</span>;
+<a name="l00192"></a>00192     }
+<a name="l00193"></a>00193     <span class="keywordflow">if</span>(!pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start</a>()){
+<a name="l00194"></a>00194       pvPortManager-&gt;<a class="code" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d" title="Close the port.">closePort</a>();
+<a name="l00195"></a>00195       setStateError(tr(<span class="stringliteral">&quot;Cannot start port&quot;</span>));
+<a name="l00196"></a>00196       <span class="keywordflow">return</span>;
+<a name="l00197"></a>00197     }
+<a name="l00198"></a>00198   }
+<a name="l00199"></a>00199   setStateRunning();
 <a name="l00200"></a>00200 }
 <a name="l00201"></a>00201 
-<a name="l00202"></a>00202 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::setStateStopped()
+<a name="l00202"></a>00202 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::setStateRunning()
 <a name="l00203"></a>00203 {
 <a name="l00204"></a>00204   <span class="comment">// Update state label</span>
-<a name="l00205"></a>00205   lbState-&gt;setText(tr(<span class="stringliteral">&quot;Stopped&quot;</span>));
-<a name="l00206"></a>00206   lbState-&gt;setStyleSheet(<span class="stringliteral">&quot;QLabel { background-color : orange; color : black; }&quot;</span>);
+<a name="l00205"></a>00205   lbState-&gt;setText(tr(<span class="stringliteral">&quot;Running&quot;</span>));
+<a name="l00206"></a>00206   lbState-&gt;setStyleSheet(<span class="stringliteral">&quot;QLabel { background-color : green; color : black; }&quot;</span>);
 <a name="l00207"></a>00207 }
 <a name="l00208"></a>00208 
-<a name="l00209"></a>00209 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::setStateError(QString msg)
+<a name="l00209"></a>00209 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::setStateStopped()
 <a name="l00210"></a>00210 {
 <a name="l00211"></a>00211   <span class="comment">// Update state label</span>
-<a name="l00212"></a>00212   lbState-&gt;setText(msg);
-<a name="l00213"></a>00213   lbState-&gt;setStyleSheet(<span class="stringliteral">&quot;QLabel { background-color : red; color : black; }&quot;</span>);
+<a name="l00212"></a>00212   lbState-&gt;setText(tr(<span class="stringliteral">&quot;Stopped&quot;</span>));
+<a name="l00213"></a>00213   lbState-&gt;setStyleSheet(<span class="stringliteral">&quot;QLabel { background-color : orange; color : black; }&quot;</span>);
 <a name="l00214"></a>00214 }
 <a name="l00215"></a>00215 
-<a name="l00216"></a>00216 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::diseableApplyButtons()
+<a name="l00216"></a>00216 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::setStateError(QString msg)
 <a name="l00217"></a>00217 {
-<a name="l00218"></a>00218   QPushButton *b;
-<a name="l00219"></a>00219 
-<a name="l00220"></a>00220   b = buttonBox-&gt;button(QDialogButtonBox::Ok);
-<a name="l00221"></a>00221   <span class="keywordflow">if</span>(b != 0){
-<a name="l00222"></a>00222     b-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00223"></a>00223   }
-<a name="l00224"></a>00224   b = buttonBox-&gt;button(QDialogButtonBox::Apply);
-<a name="l00225"></a>00225   <span class="keywordflow">if</span>(b != 0){
-<a name="l00226"></a>00226     b-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00227"></a>00227   }
-<a name="l00228"></a>00228 }
-<a name="l00229"></a>00229 
-<a name="l00230"></a>00230 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::enableApplyButtons()
-<a name="l00231"></a>00231 {
-<a name="l00232"></a>00232   QPushButton *b;
-<a name="l00233"></a>00233 
-<a name="l00234"></a>00234   b = buttonBox-&gt;button(QDialogButtonBox::Ok);
-<a name="l00235"></a>00235   <span class="keywordflow">if</span>(b != 0){
-<a name="l00236"></a>00236     b-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00237"></a>00237   }
-<a name="l00238"></a>00238   b = buttonBox-&gt;button(QDialogButtonBox::Apply);
-<a name="l00239"></a>00239   <span class="keywordflow">if</span>(b != 0){
-<a name="l00240"></a>00240     b-&gt;setEnabled(<span class="keyword">true</span>);
-<a name="l00241"></a>00241   }
-<a name="l00242"></a>00242 }
+<a name="l00218"></a>00218   <span class="comment">// Update state label</span>
+<a name="l00219"></a>00219   lbState-&gt;setText(msg);
+<a name="l00220"></a>00220   lbState-&gt;setStyleSheet(<span class="stringliteral">&quot;QLabel { background-color : red; color : black; }&quot;</span>);
+<a name="l00221"></a>00221 }
+<a name="l00222"></a>00222 
+<a name="l00223"></a>00223 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::diseableApplyButtons()
+<a name="l00224"></a>00224 {
+<a name="l00225"></a>00225   QPushButton *b;
+<a name="l00226"></a>00226 
+<a name="l00227"></a>00227   b = buttonBox-&gt;button(QDialogButtonBox::Ok);
+<a name="l00228"></a>00228   <span class="keywordflow">if</span>(b != 0){
+<a name="l00229"></a>00229     b-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00230"></a>00230   }
+<a name="l00231"></a>00231   b = buttonBox-&gt;button(QDialogButtonBox::Apply);
+<a name="l00232"></a>00232   <span class="keywordflow">if</span>(b != 0){
+<a name="l00233"></a>00233     b-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00234"></a>00234   }
+<a name="l00235"></a>00235 }
+<a name="l00236"></a>00236 
+<a name="l00237"></a>00237 <span class="keywordtype">void</span> mdtUsbtmcPortSetupDialog::enableApplyButtons()
+<a name="l00238"></a>00238 {
+<a name="l00239"></a>00239   QPushButton *b;
+<a name="l00240"></a>00240 
+<a name="l00241"></a>00241   b = buttonBox-&gt;button(QDialogButtonBox::Ok);
+<a name="l00242"></a>00242   <span class="keywordflow">if</span>(b != 0){
+<a name="l00243"></a>00243     b-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00244"></a>00244   }
+<a name="l00245"></a>00245   b = buttonBox-&gt;button(QDialogButtonBox::Apply);
+<a name="l00246"></a>00246   <span class="keywordflow">if</span>(b != 0){
+<a name="l00247"></a>00247     b-&gt;setEnabled(<span class="keyword">true</span>);
+<a name="l00248"></a>00248   }
+<a name="l00249"></a>00249 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -315,7 +296,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:39 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -82,7 +82,7 @@ Inheritance diagram for mdtDevice:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device__inherit__graph.png" border="0" usemap="#mdt_device_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_device_inherit__map" id="mdt_device_inherit__map">
-<area shape="rect" id="node3" href="classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="5,83,136,112"/><area shape="rect" id="node5" href="classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A." alt="" coords="160,83,291,112"/></map>
+<area shape="rect" id="node3" href="classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="5,83,136,112"/><area shape="rect" id="node5" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments." alt="" coords="160,83,269,112"/><area shape="rect" id="node7" href="classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A." alt="" coords="149,160,280,189"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtDevice:</div>
@@ -312,7 +312,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <dl class="return"><dt><b>Returns:</b></dt><dd>A error listed in <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> (NoError on success)</dd></dl>
 <p>Note: default implementation does nothing and returns allways a UnhandledError. See subclass documentation for more details. </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi</a>, and <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
@@ -691,7 +691,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>Get internal port manager instance. </p>
 <p>Note that port manager is set by subclass, and that a Null pointer can be returned. (See subclass documentation for details) </p>
 
-<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">mdtDeviceModbus</a>, and <a class="el" href="classmdt_device_u3606_a.html#a48a23abc92df9064c2d21411745160e5">mdtDeviceU3606A</a>.</p>
+<p>Reimplemented in <a class="el" href="classmdt_device_modbus.html#aed892b501f8cbd372ccfda1a4fafa536">mdtDeviceModbus</a>, and <a class="el" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca">mdtDeviceScpi</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00111">111</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
@@ -1742,7 +1742,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:40 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

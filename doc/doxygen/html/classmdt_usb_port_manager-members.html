@@ -91,6 +91,7 @@ This is the complete list of members for <a class="el" href="classmdt_usb_port_m
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e">portInfo</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvPort</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvThreads</b> (defined in <a class="el" href="classmdt_port_manager.html">mdtPortManager</a>)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_port_manager.html#a84c26fee7dfb26290659aa002e0842c6">readenControlResponses</a>()</td><td><a class="el" href="classmdt_usb_port_manager.html">mdtUsbPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac">readenFrame</a>(int id)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796">readenFrames</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#aaa0a474183bcae0fff4fb9ef43023c25">removeThreads</a>(bool releaseMemory)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
@@ -99,6 +100,7 @@ This is the complete list of members for <a class="el" href="classmdt_usb_port_m
   <tr class="memlist"><td><a class="el" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b">scan</a>()</td><td><a class="el" href="classmdt_usb_port_manager.html">mdtUsbPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usb_port_manager.html#ab28253c46c80bb12cbbd116b05c4bcd3">scan</a>(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)</td><td><a class="el" href="classmdt_usb_port_manager.html">mdtUsbPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e">sendControlRequest</a>(const mdtFrameUsbControl &amp;request, bool setwIndexAsbInterfaceNumber=false)</td><td><a class="el" href="classmdt_usb_port_manager.html">mdtUsbPortManager</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_port_manager.html#a9bdfe328351a532f193f3f0a25caeaa9">sendSingleReadTransferRequest</a>()</td><td><a class="el" href="classmdt_usb_port_manager.html">mdtUsbPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6">setPort</a>(mdtAbstractPort *port)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a7e2ef93ec2731e66aa2b2d5f7ce9bc1c">setPortInfo</a>(mdtPortInfo info)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a">setPortName</a>(const QString &amp;portName)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
@@ -109,6 +111,7 @@ This is the complete list of members for <a class="el" href="classmdt_usb_port_m
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c">wait</a>(int msecs, int granularity=50)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a5afae1537acf351f3f4a1d30c3997476">waitOnFrame</a>(int id, int timeout=500, int granularity=50)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48">waitOnWriteReady</a>(int timeout, int granularity=50)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_usb_port_manager.html#ac82266ba23d2a01729df927906d76556">waitReadenControlResponse</a>(int timeout=500)</td><td><a class="el" href="classmdt_usb_port_manager.html">mdtUsbPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">waitReadenFrame</a>(int timeout=500)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b">writeData</a>(QByteArray data)</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a>()</td><td><a class="el" href="classmdt_port_manager.html">mdtPortManager</a></td><td><code> [virtual]</code></td></tr>
@@ -128,7 +131,7 @@ This is the complete list of members for <a class="el" href="classmdt_usb_port_m
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

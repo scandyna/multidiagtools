@@ -13,7 +13,8 @@ Representation of a Agilent U3606A.
 
 
 
-Inheritance diagram for mdtDeviceU3606A:\nopagebreak
+Inheritance diagram for mdtDeviceU3606A:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -33,53 +34,26 @@ Collaboration diagram for mdtDeviceU3606A:
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{
-void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onStateChanged} (int state)}
-\label{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}
-
-\begin{DoxyCompactList}\small\item\em Update (G)UI when device's state has changed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{onStateChanged} (int state)
+\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}{mdtDeviceU3606A} (QObject $\ast$parent=0)
-\item 
-\hypertarget{classmdt_device_u3606_a_a48a23abc92df9064c2d21411745160e5}{
-\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$ \hyperlink{classmdt_device_u3606_a_a48a23abc92df9064c2d21411745160e5}{portManager} ()}
-\label{classmdt_device_u3606_a_a48a23abc92df9064c2d21411745160e5}
+\hypertarget{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}{
+{\bfseries mdtDeviceU3606A} (QObject $\ast$parent=0)}
+\label{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}
 
-\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
+\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
-\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_device_u3606_a_aa9045c25f6be6797b21ea98b4958e8f1}{sendCommand} (const QByteArray \&command, int timeout=1000)
-\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
-QByteArray \hyperlink{classmdt_device_u3606_a_a637c4b440e9c4905c11c16a056e2c7ad}{sendQuery} (const QByteArray \&query, int writeTimeout=1000, int readTimeout=30000)
-\begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Representation of a Agilent U3606A. 
 
-Definition at line 30 of file mdtDeviceU3606A.h.
+class \hyperlink{classmdt_device_u3606_a}{mdtDeviceU3606A} : public \hyperlink{classmdt_device}{mdtDevice} 
 
-
-
-\subsection{Constructor \& Destructor Documentation}
-\hypertarget{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{mdtDeviceU3606A}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceU3606A::mdtDeviceU3606A (
-\begin{DoxyParamCaption}
-\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_device_u3606_a_a91201ae14df7b553a947b5857eaa1c65}
-
-
-pvPortManager-\/$>$setNotifyNewReadenFrame(true); 
-
-
-
-Definition at line 29 of file mdtDeviceU3606A.cpp.
+Definition at line 31 of file mdtDeviceU3606A.h.
 
 
 
@@ -95,7 +69,11 @@ Definition at line 29 of file mdtDeviceU3606A.cpp.
 \label{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}
 
 
-Search and connect to physical device. 
+Get internal port manager instance. 
+
+\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$portManager();
+
+Search and connect to physical device.
 
 Will scan available ports and open the first port that has device attached maching request.
 
@@ -109,28 +87,21 @@ A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa06
 \end{DoxyReturn}
 
 
-\begin{Desc}
-\item[\hyperlink{todo__todo000005}{Todo}]Add DeviceNotFound error ? \end{Desc}
+Reimplemented from \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{mdtDeviceScpi}.
 
 
 
+Definition at line 45 of file mdtDeviceU3606A.cpp.
 
-Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{mdtDevice}.
-
-
-
-Definition at line 61 of file mdtDeviceU3606A.cpp.
-
-\hypertarget{classmdt_device_u3606_a_aa9045c25f6be6797b21ea98b4958e8f1}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!sendCommand@{sendCommand}}
-\index{sendCommand@{sendCommand}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{sendCommand}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceU3606A::sendCommand (
+\hypertarget{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}{
+\index{mdtDeviceU3606A@{mdtDeviceU3606A}!onStateChanged@{onStateChanged}}
+\index{onStateChanged@{onStateChanged}!mdtDeviceU3606A@{mdtDeviceU3606A}}
+\subsubsection[{onStateChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceU3606A::onStateChanged (
 \begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{command, }
-\item[{int}]{timeout = {\ttfamily 1000}}
+\item[{int}]{state}
 \end{DoxyParamCaption}
-)}}
-\label{classmdt_device_u3606_a_aa9045c25f6be6797b21ea98b4958e8f1}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_device_u3606_a_a94a6f8b3f64cd35b33204c66816f3f6a}
 
 
 Send a command to device. 
@@ -147,26 +118,9 @@ Note that the wait will not break the GUI's event loop (see \hyperlink{classmdt_
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{mdtUsbtmcPortManager::writeData()} for details). 
+bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{mdtUsbtmcPortManager::writeData()} for details).int sendCommand(const QByteArray \&command, int timeout = 1000);
 \end{DoxyReturn}
-
-
-Definition at line 126 of file mdtDeviceU3606A.cpp.
-
-\hypertarget{classmdt_device_u3606_a_a637c4b440e9c4905c11c16a056e2c7ad}{
-\index{mdtDeviceU3606A@{mdtDeviceU3606A}!sendQuery@{sendQuery}}
-\index{sendQuery@{sendQuery}!mdtDeviceU3606A@{mdtDeviceU3606A}}
-\subsubsection[{sendQuery}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtDeviceU3606A::sendQuery (
-\begin{DoxyParamCaption}
-\item[{const QByteArray \&}]{query, }
-\item[{int}]{writeTimeout = {\ttfamily 1000}, }
-\item[{int}]{readTimeout = {\ttfamily 30000}}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_device_u3606_a_a637c4b440e9c4905c11c16a056e2c7ad}
-
-
-Send a query to device. 
+Send a query to device
 
 Wait until it's possible to write to device, send the query and wait until a response is available or timeout.
 
@@ -184,11 +138,11 @@ This method will not update internal I/O states. It's recommended to use \hyperl
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-Result as string (empty string on error) Note that \hyperlink{classmdt_frame_codec_scpi}{mdtFrameCodecScpi} can be helpful to decode returned result. 
+Result as string (empty string on error) Note that \hyperlink{classmdt_frame_codec_scpi}{mdtFrameCodecScpi} can be helpful to decode returned result.QByteArray sendQuery(const QByteArray \&query, int writeTimeout = 1000, int readTimeout = 30000);
 \end{DoxyReturn}
+Update (G)UI when device's state has changed 
 
-
-Definition at line 131 of file mdtDeviceU3606A.cpp.
+Definition at line 57 of file mdtDeviceU3606A.cpp.
 
 
 

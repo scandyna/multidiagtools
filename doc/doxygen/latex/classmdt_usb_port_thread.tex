@@ -37,12 +37,10 @@ void \hyperlink{classmdt_usb_port_thread_a850204a909f0bbe41c5e995ebe3670d8}{mess
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}{
-{\bfseries mdtUsbPortThread} (QObject $\ast$parent=0)}
+\hyperlink{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}{mdtUsbPortThread} (QObject $\ast$parent=0)}
 \label{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}
 
-\item 
-void \hyperlink{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{stop} ()
-\begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{isReader} () const 
 \begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -71,33 +69,6 @@ Returns true if this thread reads data and send the \hyperlink{classmdt_port_thr
 \hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
 
 Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{mdtPortThread}.
-
-
-
-Definition at line 46 of file mdtUsbPortThread.cpp.
-
-\hypertarget{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}{
-\index{mdtUsbPortThread@{mdtUsbPortThread}!stop@{stop}}
-\index{stop@{stop}!mdtUsbPortThread@{mdtUsbPortThread}}
-\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbPortThread::stop (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_usb_port_thread_a0be9bce0248ada81087282deea70505b}
-
-
-Stop the running thread. 
-
-\begin{DoxyPrecond}{Precondition}
-Serial port instance must be defined. 
-\end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-setSerialPort() 
-\end{DoxySeeAlso}
-
-
-Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread}.
 
 
 

@@ -11,15 +11,19 @@ Some usefull little (unefficient) algoritms.
 \begin{DoxyCompactItemize}
 \item 
 QStringList \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd} (QStringList \&list)
-\begin{DoxyCompactList}\small\item\em Sort a string list, for witch each string ends with a number Usefull for directory entry list. By default, QDir sorts the entris at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ... Note that this function is not efficient. For 100 entries it ok, but for bigger data set, it's recommanded to take a look at Qt's Model/View framework, and the QSortFilterProxyModel. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Sort a string list, for witch each string ends with a number. \end{DoxyCompactList}\item 
 QString \hyperlink{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{extractNumericPartAtEnd} (const QString \&str)
 \begin{DoxyCompactList}\small\item\em Extract the numeric part at end of string. \end{DoxyCompactList}\item 
 bool \hyperlink{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}{stringWithNumericEndLessThan} (QString str1, QString str2)
-\begin{DoxyCompactList}\small\item\em Compare the numeric end of 2 strings This is a helper function for \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd()} \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Compare the numeric end of 2 strings. \end{DoxyCompactList}\item 
 QByteArray \hyperlink{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{hexStringToByteArray} (const QString \&hexStr)
 \begin{DoxyCompactList}\small\item\em Convert a hexadecimal formated string to numerical bytes array. \end{DoxyCompactList}\item 
 QString \hyperlink{namespacemdt_algorithms_a29977b36180db7518a7ee2317265d26b}{byteArrayToHexString} (const QByteArray \&byteArray)
-\begin{DoxyCompactList}\small\item\em Convert a byte array to a hexadecimal string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Convert a byte array to a hexadecimal string. \end{DoxyCompactList}\item 
+QString \hyperlink{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{unprotectedString} (const QString \&str, const QString \&dataProtection, const QChar \&escapeChar, int $\ast$strEndOffset=0, int strStartOffset=-\/1)
+\begin{DoxyCompactList}\small\item\em Get unprotected string. \end{DoxyCompactList}\item 
+QStringList \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{splitString} (const QString \&str, const QString \&separator, const QString \&dataProtection, const QChar \&escapeChar=QChar())
+\begin{DoxyCompactList}\small\item\em Split a string reagrding a separator and data protection. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -41,7 +45,7 @@ Convert a byte array to a hexadecimal string.
 
 For example, byte array with 44,18,95 numerical values will generate a string with \char`\"{}2C 12 5F\char`\"{}. 
 
-Definition at line 121 of file mdtAlgorithms.cpp.
+Definition at line 141 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_adfeb44a0a2a440a6b200ad19db73ac45}{
 \index{mdtAlgorithms@{mdtAlgorithms}!extractNumericPartAtEnd@{extractNumericPartAtEnd}}
@@ -66,7 +70,7 @@ The numeric part, or empty string on problem
 \end{DoxyReturn}
 
 
-Definition at line 13 of file mdtAlgorithms.cpp.
+Definition at line 33 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_a5094251abb1557b9b4717b3a0f1a8535}{
 \index{mdtAlgorithms@{mdtAlgorithms}!hexStringToByteArray@{hexStringToByteArray}}
@@ -90,7 +94,7 @@ hexStr must contain valid chars (0-\/9 , a-\/f, A-\/F). F.ex: 2Z is not valid.
 \end{DoxyPrecond}
 
 
-Definition at line 96 of file mdtAlgorithms.cpp.
+Definition at line 116 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{
 \index{mdtAlgorithms@{mdtAlgorithms}!sortStringListWithNumericEnd@{sortStringListWithNumericEnd}}
@@ -103,7 +107,9 @@ Definition at line 96 of file mdtAlgorithms.cpp.
 \label{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}
 
 
-Sort a string list, for witch each string ends with a number Usefull for directory entry list. By default, QDir sorts the entris at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ... Note that this function is not efficient. For 100 entries it ok, but for bigger data set, it's recommanded to take a look at Qt's Model/View framework, and the QSortFilterProxyModel. 
+Sort a string list, for witch each string ends with a number. 
+
+Usefull for directory entry list. By default, QDir sorts the entris at alphabetic order. For exemple, if we have ttyS0, ttyS1, ttyS2, ... , ttyS10 , the entries will be sorted: ttyS0, ttyS1, ttyS10 , ttyS2, ... With this function, the result will be: ttyS0, ttyS1, ttyS2, ..., ttyS10, ... Note that this function is not efficient. For 100 entries it ok, but for bigger data set, it's recommanded to take a look at Qt's Model/View framework, and the QSortFilterProxyModel
 
 
 \begin{DoxyParams}{Parameters}
@@ -115,7 +121,47 @@ The sorted list
 \end{DoxyReturn}
 
 
-Definition at line 6 of file mdtAlgorithms.cpp.
+Definition at line 26 of file mdtAlgorithms.cpp.
+
+\hypertarget{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{
+\index{mdtAlgorithms@{mdtAlgorithms}!splitString@{splitString}}
+\index{splitString@{splitString}!mdtAlgorithms@{mdtAlgorithms}}
+\subsubsection[{splitString}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtAlgorithms::splitString (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{str, }
+\item[{const QString \&}]{separator, }
+\item[{const QString \&}]{dataProtection, }
+\item[{const QChar \&}]{escapeChar = {\ttfamily QChar()}}
+\end{DoxyParamCaption}
+)}}
+\label{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}
+
+
+Split a string reagrding a separator and data protection. 
+
+QString has a totally functionnal split method, but it does not support data proection. For example, if we have to split a string: \char`\"{}123\char`\"{};\char`\"{}AB;C\char`\"{} witch uses ; char as separator and " as protection, we must have a list with 2 items: 123 and AB;C.
+
+Some details:
+\begin{DoxyItemize}
+\item If str is empty, a empty list is returned
+\item Empty records (data around separator) are added to list
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The input string to parse \\
+\hline
+{\em separator} & Separator to use (typical: ; ) \\
+\hline
+{\em protection} & Data protection (typical: " ) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The list of found fields 
+\end{DoxyReturn}
+
+
+Definition at line 242 of file mdtAlgorithms.cpp.
 
 \hypertarget{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}{
 \index{mdtAlgorithms@{mdtAlgorithms}!stringWithNumericEndLessThan@{stringWithNumericEndLessThan}}
@@ -129,12 +175,57 @@ Definition at line 6 of file mdtAlgorithms.cpp.
 \label{namespacemdt_algorithms_a11d5a1ebe9a68710e6e78f768ac9203c}
 
 
-Compare the numeric end of 2 strings This is a helper function for \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd()} 
+Compare the numeric end of 2 strings. 
+
+This is a helper function for \hyperlink{namespacemdt_algorithms_a1a3e54a0c5c508c2ea531c7c6200588e}{sortStringListWithNumericEnd()}.
 
 \begin{DoxyReturn}{Returns}
 True if str1 $<$ str2 
 \end{DoxyReturn}
 
 
-Definition at line 33 of file mdtAlgorithms.cpp.
+Definition at line 53 of file mdtAlgorithms.cpp.
+
+\hypertarget{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}{
+\index{mdtAlgorithms@{mdtAlgorithms}!unprotectedString@{unprotectedString}}
+\index{unprotectedString@{unprotectedString}!mdtAlgorithms@{mdtAlgorithms}}
+\subsubsection[{unprotectedString}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtAlgorithms::unprotectedString (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{str, }
+\item[{const QString \&}]{dataProtection, }
+\item[{const QChar \&}]{escapeChar, }
+\item[{int $\ast$}]{strEndOffset = {\ttfamily 0}, }
+\item[{int}]{strStartOffset = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}
+\label{namespacemdt_algorithms_a4f1b12dbe1f3c93dc5138f144d84de93}
+
+
+Get unprotected string. 
+
+It can happen that a protected string, f.ex. \char`\"{}Hello\char`\"{}, must be extracted. Additionnally, escape chars can be inside. This is a helper function used by \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{splitString()}.
+
+For example, if data protection is \char`\"{} and escape char is $\backslash$ ,
+  \char`\"{}A"BC"D\char`\"{} will return A\char`\"{}BC"D. If escape char is alone, nothing will happen: \char`\"{}A$\backslash$BCD\char`\"{} will return A. If data proection not exists, a empty string will be returned. Note that exactly one protected section will be parsed. For example, \char`\"{}AB\char`\"{}CD\char`\"{}EF\char`\"{} will return AB, CD\char`\"{}EF\char`\"{} will simply be ignored.
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & The input string to parse \\
+\hline
+{\em dataProtection} & Data protection (typical: " ) \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ) \\
+\hline
+{\em strEndOffset} & If not Null, the offset (of first char) of closing dataProtection, before removing escape chars, is stored to this parameter. This is used by \hyperlink{namespacemdt_algorithms_a28d7d5eb9578936c950039fa2f86a1bf}{splitString()}. Some examples with \char`\"{} as dataProtection and $\backslash$ as escapeChar:
+                       -\/ For \char`\"{}A"BC"D\char`\"{} : value will be 9
+                       -\/ For \char`\"{}A\char`\"{} : value will be 6
+                       -\/ For \char`\"{}A : value will be -\/1 (no closing \char`\"{} found)
+                       -\/ For A : value will be -\/1 (no \char`\"{} found) \\
+\hline
+{\em strStartOffset} & If $>$ -\/1, parsing will begin a this position in str \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 163 of file mdtAlgorithms.cpp.
 

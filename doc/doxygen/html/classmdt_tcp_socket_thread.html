@@ -87,10 +87,10 @@ Collaboration diagram for mdtTcpSocketThread:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab379d78b2d32a9361dbe46a009c687d4"></a><!-- doxytag: member="mdtTcpSocketThread::mdtTcpSocketThread" ref="ab379d78b2d32a9361dbe46a009c687d4" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>mdtTcpSocketThread</b> (QObject *parent=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">stop</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the running thread.  <a href="#a0fd2b3f8b497427d84ae358c6f72122e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">isReader</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal.  <a href="#a3224f12c8ff8d695975030f3f6215010"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_tcp_socket_thread.html#a014ad2b3a5fbe7031eeb1d42d8f0767d">isWriter</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread writes date.  <a href="#a014ad2b3a5fbe7031eeb1d42d8f0767d"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
@@ -115,31 +115,30 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_thread.html#acdb3d96287c571cc08ef39860dc324b1">mdtPortThread</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html">mdtTcpSocketThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html">mdtTcpSocketThread.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0fd2b3f8b497427d84ae358c6f72122e"></a><!-- doxytag: member="mdtTcpSocketThread::stop" ref="a0fd2b3f8b497427d84ae358c6f72122e" args="()" -->
+<a class="anchor" id="a014ad2b3a5fbe7031eeb1d42d8f0767d"></a><!-- doxytag: member="mdtTcpSocketThread::isWriter" ref="a014ad2b3a5fbe7031eeb1d42d8f0767d" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mdtTcpSocketThread::stop </td>
+          <td class="memname">bool mdtTcpSocketThread::isWriter </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td> const<code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Stop the running thread. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>Serial port instance must be defined. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd>setSerialPort() </dd></dl>
+<p>Returns true if this thread writes date. </p>
+<p>Is used by <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a> to know if <a class="el" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting.">mdtAbstractPort::abortFrameToWriteWait()</a> must be called. </p>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">mdtPortThread</a>.</p>
+<p>Reimplemented from <a class="el" href="classmdt_port_thread.html#a0122a12262052cf3643241a3eaa31c58">mdtPortThread</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html">mdtTcpSocketThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_tcp_socket_thread_8cpp_source.html">mdtTcpSocketThread.cpp</a>.</p>
 
 </div>
 </div>
@@ -162,7 +161,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

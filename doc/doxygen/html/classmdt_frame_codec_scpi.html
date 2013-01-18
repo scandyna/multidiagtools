@@ -61,7 +61,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtFrameCodecScpi Class Reference</div>  </div>
 </div>
@@ -88,30 +90,74 @@ Collaboration diagram for mdtFrameCodecScpi:</div>
 
 <p><a href="classmdt_frame_codec_scpi-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">waveform_format</a> { <a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17da7f4b47afe74504dea43bb04c8c6fbe58">WORD</a>, 
+<a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17daad91226f87cea7fab38f5cc7618f424c">BYTE</a>, 
+<a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17da957445cd510a5c4e6964e9b79e73af4d">ASCII</a>
+ }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Format of waveform data.  <a href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3">decodeValues</a> (const QByteArray &amp;data, QString sep=&quot;:&quot;)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode SCPI value(s)  <a href="#a37a1703b6daee6f6bf91c6afb46191b3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">decodeIdn</a> (const QByteArray &amp;data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the IDN answer.  <a href="#a6ddd1b8e23252dc7f03c279a030cb36f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aff616991e6223aa51f265cf7e464be12">decodeError</a> (QByteArray &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode error answer.  <a href="#aff616991e6223aa51f265cf7e464be12"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a327afabbb6da25e31523ef4baa28cc87">decodeIEEEblock</a> (QString data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a IEEE block.  <a href="#a327afabbb6da25e31523ef4baa28cc87"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899">decodeError</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode error answer.  <a href="#a9e38d8afadc7ff37821620feea6b0899"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a0123b42b9e351b0ef3c13d34a5c4d45e">decodeIEEEblock</a> (const QByteArray &amp;data, <a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">waveform_format</a> format)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a IEEE block.  <a href="#a0123b42b9e351b0ef3c13d34a5c4d45e"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">decodeIEEEdataAscii</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a array of ASCII values.  <a href="#aa6596dc898438be704191ad282d02100"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">decodeIEEEdataByte</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a array of BYTE values.  <a href="#ab70c6c3d2d91ddff065952b6c2db8345"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Decode SCPI data. </p>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00038">38</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
-</div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aff616991e6223aa51f265cf7e464be12"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeError" ref="aff616991e6223aa51f265cf7e464be12" args="(QByteArray &amp;data)" -->
+</div><hr/><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="a1aafb008a4207cc922f46fe905b3f17d"></a><!-- doxytag: member="mdtFrameCodecScpi::waveform_format" ref="a1aafb008a4207cc922f46fe905b3f17d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">mdtFrameCodecScpi::waveform_format</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Format of waveform data. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a1aafb008a4207cc922f46fe905b3f17da7f4b47afe74504dea43bb04c8c6fbe58"></a><!-- doxytag: member="WORD" ref="a1aafb008a4207cc922f46fe905b3f17da7f4b47afe74504dea43bb04c8c6fbe58" args="" -->WORD</em>&nbsp;</td><td>
+<p>16 bit data resolution </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a1aafb008a4207cc922f46fe905b3f17daad91226f87cea7fab38f5cc7618f424c"></a><!-- doxytag: member="BYTE" ref="a1aafb008a4207cc922f46fe905b3f17daad91226f87cea7fab38f5cc7618f424c" args="" -->BYTE</em>&nbsp;</td><td>
+<p>8 bit data resolution </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a1aafb008a4207cc922f46fe905b3f17da957445cd510a5c4e6964e9b79e73af4d"></a><!-- doxytag: member="ASCII" ref="a1aafb008a4207cc922f46fe905b3f17da957445cd510a5c4e6964e9b79e73af4d" args="" -->ASCII</em>&nbsp;</td><td>
+<p>ASCII float represented data </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a9e38d8afadc7ff37821620feea6b0899"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeError" ref="a9e38d8afadc7ff37821620feea6b0899" args="(const QByteArray &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtFrameCodecScpi::decodeError </td>
           <td>(</td>
-          <td class="paramtype">QByteArray &amp;&#160;</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -123,10 +169,11 @@ Public Member Functions</h2></td></tr>
 <p>When decode was done successfully, error is available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a>:</p>
 <ul>
 <li>Item 0 is the error number</li>
-<li>Item 1 is the error message string </li>
+<li>Item 1 is the error message string</li>
+<li>After item 1 are device's specific messages (if exists) </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00119">119</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00120">120</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -148,20 +195,30 @@ Public Member Functions</h2></td></tr>
 <p>Decode the IDN answer. </p>
 <p>When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a327afabbb6da25e31523ef4baa28cc87"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeIEEEblock" ref="a327afabbb6da25e31523ef4baa28cc87" args="(QString data)" -->
+<a class="anchor" id="a0123b42b9e351b0ef3c13d34a5c4d45e"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeIEEEblock" ref="a0123b42b9e351b0ef3c13d34a5c4d45e" args="(const QByteArray &amp;data, waveform_format format)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtFrameCodecScpi::decodeIEEEblock </td>
           <td>(</td>
-          <td class="paramtype">QString&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">mdtFrameCodecScpi::waveform_format</a>&#160;</td>
+          <td class="paramname"><em>format</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -170,7 +227,59 @@ Public Member Functions</h2></td></tr>
 <p>Decode a IEEE block. </p>
 <p>NOTE: not implemented yet ! </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00158">158</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00163">163</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa6596dc898438be704191ad282d02100"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeIEEEdataAscii" ref="aa6596dc898438be704191ad282d02100" args="(const QByteArray &amp;data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtFrameCodecScpi::decodeIEEEdataAscii </td>
+          <td>(</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Decode a array of ASCII values. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000067">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+
+<p><p>qDebug() &lt;&lt; "Data: " &lt;&lt; items;</p>
+<p>qDebug() &lt;&lt; "Values: " &lt;&lt; pvValues; </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00239">239</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab70c6c3d2d91ddff065952b6c2db8345"></a><!-- doxytag: member="mdtFrameCodecScpi::decodeIEEEdataByte" ref="ab70c6c3d2d91ddff065952b6c2db8345" args="(const QByteArray &amp;data)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtFrameCodecScpi::decodeIEEEdataByte </td>
+          <td>(</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Decode a array of BYTE values. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000068">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+
+<p><p>int len = data.size()-1; // Last item is the term char</p>
+<p>qDebug() &lt;&lt; "data[" &lt;&lt; i &lt;&lt; "]: " &lt;&lt; (qint8)data.at(i) &lt;&lt; " ,  0x" &lt;&lt; hex &lt;&lt; (qint8)data.at(i) &lt;&lt; " , flt: " &lt;&lt; (double)data.at(i)/127.0; </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00261">261</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -211,7 +320,7 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if decode could be done.</dd></dl>
 <p>Errors are logged with the <a class="el" href="classmdt_error.html">mdtError</a> system. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html#l00046">46</a> of file <a class="el" href="mdt_frame_codec_scpi_8cpp_source.html">mdtFrameCodecScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -234,7 +343,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

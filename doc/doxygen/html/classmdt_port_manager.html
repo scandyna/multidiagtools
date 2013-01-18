@@ -366,7 +366,7 @@ thread must be a valid pointer </dd></dl>
 <p>If id and queryReplyMode are sufficient, see addTransaction(id, bool).</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00468">468</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00469">469</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,9 +404,9 @@ thread must be a valid pointer </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>sigName is emited. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000031">Todo:</a></b></dt><dd>sigName is emited. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00483">483</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00484">484</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -451,7 +451,7 @@ thread must be a valid pointer </dd></dl>
 <p>Internally, transactions are restored to pool.</p>
 <dl class="note"><dt><b>Note:</b></dt><dd>Clarify + implement </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00526">526</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00528">528</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -536,7 +536,7 @@ thread must be a valid pointer </dd></dl>
 <p>Add a transaction to the DONE queue. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00511">511</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00513">513</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -558,7 +558,7 @@ thread must be a valid pointer </dd></dl>
 <p>Add a transaction to the RX queue. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00518">518</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00520">520</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -580,7 +580,7 @@ thread must be a valid pointer </dd></dl>
 <p>Called by the read thread whenn a complete frame was readen</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 </p>
 
 <p>Reimplemented in <a class="el" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">mdtModbusTcpPortManager</a>, and <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager</a>.</p>
@@ -690,9 +690,11 @@ thread must be a valid pointer </dd></dl>
 <div class="memdoc">
 
 <p>Manage errors comming from port threads. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>Error handling (in general ...) </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000029">Todo:</a></b></dt><dd><p class="startdd">Error handling (in general ...) </p>
+<p class="enddd">On disconnect, should flush I/O ? </p>
+</dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00450">450</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00451">451</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -714,7 +716,7 @@ thread must be a valid pointer </dd></dl>
 <p>Will try to open port defined with <a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName()</a>.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000027">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000030">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00201">201</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
@@ -738,7 +740,7 @@ thread must be a valid pointer </dd></dl>
 <p>Get pending transaction matching id. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A valid transaction if exists, else a Null pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00495">495</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00496">496</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -834,7 +836,7 @@ thread must be a valid pointer </dd></dl>
 <p>Remove a transaction from DONE queue and restore it to pool. </p>
 <p>If transaction not exists in DONE queue, this method simply makes nothing. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00501">501</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00503">503</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -856,7 +858,7 @@ thread must be a valid pointer </dd></dl>
 <p>Restore a transaction into pool. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer (not Null) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00463">463</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00464">464</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1272,7 +1274,7 @@ Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

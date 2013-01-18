@@ -13,8 +13,7 @@ Mini port treminal.
 
 
 
-Collaboration diagram for mdtPortTerm:
-\nopagebreak
+Collaboration diagram for mdtPortTerm:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -24,7 +23,15 @@ Collaboration diagram for mdtPortTerm:
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}{appendReadenData} (QByteArray data)
+\hypertarget{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}{
+void \hyperlink{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}{appendReadenData} (QByteArray data)}
+\label{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}
+
+\begin{DoxyCompactList}\small\item\em Append incomming data to terminal. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_term_a70ab65c029f82063a79734bb91e1fd32}{
+void \hyperlink{classmdt_port_term_a70ab65c029f82063a79734bb91e1fd32}{appendReadenData} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} transaction)}
+\label{classmdt_port_term_a70ab65c029f82063a79734bb91e1fd32}
+
 \begin{DoxyCompactList}\small\item\em Append incomming data to terminal. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{sendCmd} ()
 \begin{DoxyCompactList}\small\item\em Send command to port. \end{DoxyCompactList}\item 
@@ -80,29 +87,6 @@ Definition at line 32 of file mdtPortTerm.cpp.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}{
-\index{mdtPortTerm@{mdtPortTerm}!appendReadenData@{appendReadenData}}
-\index{appendReadenData@{appendReadenData}!mdtPortTerm@{mdtPortTerm}}
-\subsubsection[{appendReadenData}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortTerm::appendReadenData (
-\begin{DoxyParamCaption}
-\item[{QByteArray}]{data}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_port_term_a2372dc6e8f2926f2201b659ddbe3ec8e}
-
-
-Append incomming data to terminal. 
-
-Whenn called, data will be token from active port manager 
-
-int i;
-
-if(pvCurrentPortManager == 0)\{ qDebug() $<$$<$ \char`\"{}TERM: err, pvCurrentPortManager == 0\char`\"{}; return; \} for(i=0; i$<$pvCurrentPortManager-\/$>$readenFrames().size(); i++)\{ teTerm-\/$>$append(pvCurrentPortManager-\/$>$readenFrames().at(i)); \}
-
-
-
-Definition at line 94 of file mdtPortTerm.cpp.
-
 \hypertarget{classmdt_port_term_a1b232e686b401d7103eb1c682be330a9}{
 \index{mdtPortTerm@{mdtPortTerm}!on\_\-pbSendCmdAbort\_\-clicked@{on\_\-pbSendCmdAbort\_\-clicked}}
 \index{on\_\-pbSendCmdAbort\_\-clicked@{on\_\-pbSendCmdAbort\_\-clicked}!mdtPortTerm@{mdtPortTerm}}
@@ -124,7 +108,7 @@ teCmd-\/$>$clear();
 
 
 
-Definition at line 149 of file mdtPortTerm.cpp.
+Definition at line 153 of file mdtPortTerm.cpp.
 
 \hypertarget{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{
 \index{mdtPortTerm@{mdtPortTerm}!sendCmd@{sendCmd}}
@@ -141,21 +125,17 @@ Send command to port.
 
 
 
-if(teCmd-\/$>$toPlainText().size() $<$ 1)\{
-
 NOTE: essais cmd = teCmd-\/$>$toPlainText();
 
 cmd.append((char)0x0D);
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000057}{Todo}]Error handling ! \end{Desc}
-
-
-teCmd-\/$>$clear(); 
+\item[\hyperlink{todo__todo000062}{Todo}]Error handling ! \end{Desc}
 
 
 
-Definition at line 112 of file mdtPortTerm.cpp.
+
+Definition at line 104 of file mdtPortTerm.cpp.
 
 
 

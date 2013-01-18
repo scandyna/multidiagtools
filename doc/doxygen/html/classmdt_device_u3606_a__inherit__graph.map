@@ -1,3 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="28,5,113,35"/>
+<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments." alt="" coords="16,83,125,112"/>
+<area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="28,5,113,35"/>
 </map>

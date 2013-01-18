@@ -352,6 +352,9 @@ thread must be a valid pointer </dd></dl>
 <p>This method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly.<br/>
  Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
+<p><p>if(pvCancelWrite){ return WriteCanceled; }</p>
+</p>
+
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92">mdtAbstractPort</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00148">148</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
@@ -373,8 +376,8 @@ thread must be a valid pointer </dd></dl>
 <div class="memdoc">
 
 <p>Wait until data is available on port. </p>
-<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.<br/>
- Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
+<p>This method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly.</p>
+<p>Mutex must be locked before calling this method with <a class="el" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex()</a>. The mutex is locked when method returns. </p>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49">mdtAbstractPort</a>.</p>
 
@@ -414,7 +417,7 @@ thread must be a valid pointer </dd></dl>
 
 <p>Implements <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_tcp_socket_8cpp_source.html#l00177">177</a> of file <a class="el" href="mdt_tcp_socket_8cpp_source.html">mdtTcpSocket.cpp</a>.</p>
 
 </div>
 </div>
@@ -437,7 +440,7 @@ thread must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

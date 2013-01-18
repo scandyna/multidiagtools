@@ -110,58 +110,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00058"></a>00058 
 <a name="l00063"></a>00063   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510" title="Start the thread.">start</a>();
 <a name="l00064"></a>00064 
-<a name="l00068"></a>00068   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">stop</a>();
-<a name="l00069"></a>00069 
-<a name="l00075"></a>00075   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72" title="Returns true if the thread is running This function overloads the QThread::isRunning() function...">isRunning</a>() <span class="keyword">const</span>;
-<a name="l00076"></a>00076 
-<a name="l00080"></a>00080   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4" title="Returns false if the thread is running.">isFinished</a>() <span class="keyword">const</span>;
-<a name="l00081"></a>00081 
-<a name="l00091"></a>00091   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#acdb3d96287c571cc08ef39860dc324b1" title="Returns true if this thread reads data and send the newFrameReaden() signal.">isReader</a>() <span class="keyword">const</span>;
-<a name="l00092"></a>00092 
-<a name="l00100"></a>00100   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#a0122a12262052cf3643241a3eaa31c58" title="Returns true if this thread writes date.">isWriter</a>() <span class="keyword">const</span>;
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102  signals:
+<a name="l00069"></a>00069   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">stop</a>();
+<a name="l00070"></a>00070 
+<a name="l00077"></a>00077   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72" title="Returns true if the thread is running.">isRunning</a>() <span class="keyword">const</span>;
+<a name="l00078"></a>00078 
+<a name="l00082"></a>00082   <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4" title="Returns false if the thread is running.">isFinished</a>() <span class="keyword">const</span>;
+<a name="l00083"></a>00083 
+<a name="l00093"></a>00093   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#acdb3d96287c571cc08ef39860dc324b1" title="Returns true if this thread reads data and send the newFrameReaden() signal.">isReader</a>() <span class="keyword">const</span>;
+<a name="l00094"></a>00094 
+<a name="l00102"></a>00102   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classmdt_port_thread.html#a0122a12262052cf3643241a3eaa31c58" title="Returns true if this thread writes date.">isWriter</a>() <span class="keyword">const</span>;
 <a name="l00103"></a>00103 
-<a name="l00113"></a>00113   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>();
-<a name="l00114"></a>00114 
-<a name="l00127"></a>00127   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
-<a name="l00128"></a>00128 
-<a name="l00139"></a>00139   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured</a>(<span class="keywordtype">int</span> error);
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141  <span class="keyword">protected</span>:
+<a name="l00104"></a>00104  signals:
+<a name="l00105"></a>00105 
+<a name="l00115"></a>00115   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>();
+<a name="l00116"></a>00116 
+<a name="l00129"></a>00129   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
+<a name="l00130"></a>00130 
+<a name="l00141"></a>00141   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326" title="Emitted on error.">errorOccured</a>(<span class="keywordtype">int</span> error);
 <a name="l00142"></a>00142 
-<a name="l00168"></a>00168   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *<a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
-<a name="l00169"></a>00169 
-<a name="l00193"></a>00193   <span class="keywordtype">int</span> <a class="code" href="classmdt_port_thread.html#a2e0c384ae6c909cb40fc0ca1a0189ca6" title="Read data from port.">readFromPort</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> **frame);
-<a name="l00194"></a>00194 
-<a name="l00214"></a>00214   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *<a class="code" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105" title="Get a new frame for writing data to port.">getNewFrameWrite</a>();
-<a name="l00215"></a>00215 
-<a name="l00238"></a>00238   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_port_thread.html#a9372a53561362b0c86f499b8a36805e1" title="Write data to port.">writeToPort</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame, <span class="keywordtype">bool</span> bytePerByteWrite, <span class="keywordtype">int</span> interByteTime);
-<a name="l00239"></a>00239 
-<a name="l00256"></a>00256   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(<span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> maxTry, <span class="keywordtype">bool</span> notify = <span class="keyword">true</span>);
-<a name="l00257"></a>00257 
-<a name="l00262"></a>00262   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<span class="keywordtype">int</span> error);
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264   <span class="keyword">volatile</span> <span class="keywordtype">bool</span> pvRunning;
-<a name="l00265"></a>00265   <a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> *pvPort;
-<a name="l00266"></a>00266 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
-<a name="l00267"></a>00267 <span class="preprocessor"></span>  <span class="comment">// Members needed to abort blocking</span>
-<a name="l00268"></a>00268   <span class="comment">//  functions with pthread_kill()</span>
-<a name="l00269"></a>00269   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a01d2362e0dfcece4cba242cb586d8d1c">sigactionHandle</a>(<span class="keywordtype">int</span> signum);
-<a name="l00270"></a>00270   pthread_t pvNativePthreadObject;
-<a name="l00271"></a>00271   <span class="keyword">struct </span>sigaction pvSigaction;
-<a name="l00272"></a>00272 <span class="preprocessor">#endif</span>
-<a name="l00273"></a>00273 <span class="preprocessor"></span>  <span class="comment">// </span>
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275  <span class="keyword">private</span>:
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277   <span class="comment">// Members used by readFromPort()</span>
-<a name="l00278"></a>00278   <span class="keywordtype">char</span> *pvReadBuffer;
-<a name="l00279"></a>00279   qint64 pvReadBufferSize;
-<a name="l00280"></a>00280   <span class="keywordtype">int</span> pvCurrentError;
-<a name="l00281"></a>00281 };
+<a name="l00143"></a>00143  <span class="keyword">protected</span>:
+<a name="l00144"></a>00144 
+<a name="l00170"></a>00170   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *<a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
+<a name="l00171"></a>00171 
+<a name="l00195"></a>00195   <span class="keywordtype">int</span> <a class="code" href="classmdt_port_thread.html#a2e0c384ae6c909cb40fc0ca1a0189ca6" title="Read data from port.">readFromPort</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> **frame);
+<a name="l00196"></a>00196 
+<a name="l00216"></a>00216   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *<a class="code" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105" title="Get a new frame for writing data to port.">getNewFrameWrite</a>();
+<a name="l00217"></a>00217 
+<a name="l00233"></a>00233   qint64 <a class="code" href="classmdt_port_thread.html#aa18ebea6a8791d228ab9575d1c68067c" title="Write data to port.">writeDataToPort</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame, <span class="keywordtype">int</span> maxSize = -1);
+<a name="l00234"></a>00234 
+<a name="l00263"></a>00263   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_port_thread.html#a2658d7f1a04ef10eb09d575d8d7eda43" title="Write a complete frame to port.">writeToPort</a>(<a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame, <span class="keywordtype">bool</span> bytePerByteWrite, <span class="keywordtype">int</span> interByteTime, <span class="keywordtype">int</span> maxWriteTry = 10);
+<a name="l00264"></a>00264 
+<a name="l00281"></a>00281   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(<span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> maxTry, <span class="keywordtype">bool</span> notify = <span class="keyword">true</span>);
 <a name="l00282"></a>00282 
-<a name="l00283"></a>00283 <span class="preprocessor">#endif  // #ifndef MDT_PORT_THREAD_H</span>
+<a name="l00287"></a>00287   <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<span class="keywordtype">int</span> error);
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289   <span class="keyword">volatile</span> <span class="keywordtype">bool</span> pvRunning;
+<a name="l00290"></a>00290   <a class="code" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> *pvPort;
+<a name="l00291"></a>00291 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
+<a name="l00292"></a>00292 <span class="preprocessor"></span>  <span class="comment">// Members needed to abort blocking</span>
+<a name="l00293"></a>00293   <span class="comment">//  functions with pthread_kill()</span>
+<a name="l00294"></a>00294   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_thread.html#a01d2362e0dfcece4cba242cb586d8d1c">sigactionHandle</a>(<span class="keywordtype">int</span> signum);
+<a name="l00295"></a>00295   pthread_t pvNativePthreadObject;
+<a name="l00296"></a>00296   <span class="keyword">struct </span>sigaction pvSigaction;
+<a name="l00297"></a>00297 <span class="preprocessor">#endif</span>
+<a name="l00298"></a>00298 <span class="preprocessor"></span>
+<a name="l00299"></a>00299  <span class="keyword">private</span>:
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301   <span class="comment">// Members used by readFromPort()</span>
+<a name="l00302"></a>00302   <span class="keywordtype">char</span> *pvReadBuffer;
+<a name="l00303"></a>00303   qint64 pvReadBufferSize;
+<a name="l00304"></a>00304   <span class="keywordtype">int</span> pvCurrentError;
+<a name="l00305"></a>00305 };
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307 <span class="preprocessor">#endif  // #ifndef MDT_PORT_THREAD_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -178,7 +179,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:39 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

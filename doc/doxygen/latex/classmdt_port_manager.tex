@@ -13,8 +13,7 @@ Port manager base class.
 
 
 
-Inheritance diagram for mdtPortManager:
-\nopagebreak
+Inheritance diagram for mdtPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -321,7 +320,7 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 468 of file mdtPortManager.cpp.
+Definition at line 469 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a4b5300fbf05c2c267ca3a247ac3ab77f}{
 \index{mdtPortManager@{mdtPortManager}!addTransaction@{addTransaction}}
@@ -347,10 +346,10 @@ Will get a new transaction and add it to pending transactions queue.
 \hline
 \end{DoxyParams}
 \begin{Desc}
-\item[\hyperlink{todo__todo000028}{Todo}]sigName is emited. \end{Desc}
+\item[\hyperlink{todo__todo000031}{Todo}]sigName is emited. \end{Desc}
 
 
-Definition at line 483 of file mdtPortManager.cpp.
+Definition at line 484 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{
 \index{mdtPortManager@{mdtPortManager}!closePort@{closePort}}
@@ -393,7 +392,7 @@ Clarify + implement
 \end{DoxyNote}
 
 
-Definition at line 526 of file mdtPortManager.cpp.
+Definition at line 528 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
 \index{mdtPortManager@{mdtPortManager}!config@{config}}
@@ -466,7 +465,7 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 511 of file mdtPortManager.cpp.
+Definition at line 513 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ab30fc99951b2b6a566422c7525106ddf}{
 \index{mdtPortManager@{mdtPortManager}!enqueueTransactionRx@{enqueueTransactionRx}}
@@ -486,7 +485,7 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 518 of file mdtPortManager.cpp.
+Definition at line 520 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{
 \index{mdtPortManager@{mdtPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
@@ -509,7 +508,7 @@ Called by the read thread whenn a complete frame was readen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000025}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000028}{Todo}]Error on incomplete frame \end{Desc}
 
 
 
@@ -604,10 +603,12 @@ This variant is sent when transactions support is ON. (See \hyperlink{classmdt_p
 Manage errors comming from port threads. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000026}{Todo}]Error handling (in general ...) \end{Desc}
+\item[\hyperlink{todo__todo000029}{Todo}]Error handling (in general ...) 
+
+On disconnect, should flush I/O ? \end{Desc}
 
 
-Definition at line 450 of file mdtPortManager.cpp.
+Definition at line 451 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{
 \index{mdtPortManager@{mdtPortManager}!openPort@{openPort}}
@@ -631,7 +632,7 @@ True on success, false else.
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000027}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
+\item[\hyperlink{todo__todo000030}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
 
 
 Definition at line 201 of file mdtPortManager.cpp.
@@ -654,7 +655,7 @@ A valid transaction if exists, else a Null pointer.
 \end{DoxyReturn}
 
 
-Definition at line 495 of file mdtPortManager.cpp.
+Definition at line 496 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{
 \index{mdtPortManager@{mdtPortManager}!readenFrame@{readenFrame}}
@@ -736,7 +737,7 @@ Remove a transaction from DONE queue and restore it to pool.
 
 If transaction not exists in DONE queue, this method simply makes nothing. 
 
-Definition at line 501 of file mdtPortManager.cpp.
+Definition at line 503 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a5fea4a9b8e94d38e8ec699dba05c7ca8}{
 \index{mdtPortManager@{mdtPortManager}!restoreTransaction@{restoreTransaction}}
@@ -756,7 +757,7 @@ transaction must be a valid pointer (not Null)
 \end{DoxyPrecond}
 
 
-Definition at line 463 of file mdtPortManager.cpp.
+Definition at line 464 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{
 \index{mdtPortManager@{mdtPortManager}!scan@{scan}}

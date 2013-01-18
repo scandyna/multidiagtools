@@ -13,8 +13,7 @@ USBTMC port manager.
 
 
 
-Inheritance diagram for mdtUsbtmcPortManager:
-\nopagebreak
+Inheritance diagram for mdtUsbtmcPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtUsbtmcPortManager:
 \end{figure}
 
 
-Collaboration diagram for mdtUsbtmcPortManager:
-\nopagebreak
+Collaboration diagram for mdtUsbtmcPortManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -56,7 +54,11 @@ int \hyperlink{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{s
 int \hyperlink{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{sendReadRequest} (bool enqueueResponse)
 \begin{DoxyCompactList}\small\item\em Send a read request to device. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{sendReadStatusByteRequest} ()
-\begin{DoxyCompactList}\small\item\em Send a READ\_\-STATUS\_\-BYTE request thru the control endpoint. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Send a READ\_\-STATUS\_\-BYTE request thru the control endpoint. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_port_manager_ae845b25c292e83ef9fe01640867c7116}{abortBulkIn} (quint8 bTag)
+\begin{DoxyCompactList}\small\item\em Abort bulk IN. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usbtmc_port_manager_ad52e35820d576a9dba9dc33feacb0202}{sendInitiateAbortBulkInRequest} (quint8 bTag)
+\begin{DoxyCompactList}\small\item\em Send a INITIATE\_\-ABORT\_\-BULK\_\-IN request thru the control endpoint. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -88,6 +90,12 @@ Construct a USBTMC port manager.
 
 Creates a \hyperlink{classmdt_port_config}{mdtPortConfig}, a \hyperlink{classmdt_usb_port}{mdtUsbPort}, and thread object. 
 
+\begin{Desc}
+\item[\hyperlink{todo__todo000052}{Todo}]Taille provisoire ! pvPort-\/$>$\hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setReadFrameSize(10000); pvPort-\/$>$\hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setReadQueueSize(3); pvPort-\/$>$\hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setWriteFrameSize(512); pvPort-\/$>$\hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config()}.setWriteQueueSize(1); \end{Desc}
+
+
+
+
 Definition at line 37 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_aad6b2eef9b5cfb5c324affb6962a463b}{
@@ -105,11 +113,40 @@ Destructor.
 
 Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. 
 
-Definition at line 55 of file mdtUsbtmcPortManager.cpp.
+Definition at line 57 of file mdtUsbtmcPortManager.cpp.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_usbtmc_port_manager_ae845b25c292e83ef9fe01640867c7116}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!abortBulkIn@{abortBulkIn}}
+\index{abortBulkIn@{abortBulkIn}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{abortBulkIn}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::abortBulkIn (
+\begin{DoxyParamCaption}
+\item[{quint8}]{bTag}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_ae845b25c292e83ef9fe01640867c7116}
+
+
+Abort bulk IN. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+port must be set before call of this method
+\end{DoxyPrecond}
+\begin{Desc}
+\item[\hyperlink{todo__todo000054}{Todo}]Should we flushIn() first ? \end{Desc}
+
+
+waitOnFrame(bTag, 5000); 
+
+
+
+Definition at line 274 of file mdtUsbtmcPortManager.cpp.
+
 \hypertarget{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
 \index{fromThreadNewFrameReaden@{fromThreadNewFrameReaden}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
@@ -124,12 +161,16 @@ Definition at line 55 of file mdtUsbtmcPortManager.cpp.
 Called by the thread whenn a complete frame was readen. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000052}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
+\item[\hyperlink{todo__todo000057}{Todo}]Essais ... void \hyperlink{classmdt_port_manager_a1d185e9bb610aee16ccd9499ae7bff0d}{abort()}; \end{Desc}
 
+
+Essais
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000050}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000055}{Todo}]Error on incomplete frame \end{Desc}
 
+
+Essais 
 
 
 
@@ -137,7 +178,7 @@ Reimplemented from \hyperlink{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6
 
 
 
-Definition at line 269 of file mdtUsbtmcPortManager.cpp.
+Definition at line 366 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a992d1227810186d3c7dc166452e2e3b6}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!scan@{scan}}
@@ -163,7 +204,7 @@ Reimplemented from \hyperlink{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b
 
 
 
-Definition at line 59 of file mdtUsbtmcPortManager.cpp.
+Definition at line 61 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a86615ff2226fce0ad71c597716711898}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendCommand@{sendCommand}}
@@ -195,7 +236,30 @@ bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_a
 \end{DoxyReturn}
 
 
-Definition at line 86 of file mdtUsbtmcPortManager.cpp.
+Definition at line 88 of file mdtUsbtmcPortManager.cpp.
+
+\hypertarget{classmdt_usbtmc_port_manager_ad52e35820d576a9dba9dc33feacb0202}{
+\index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendInitiateAbortBulkInRequest@{sendInitiateAbortBulkInRequest}}
+\index{sendInitiateAbortBulkInRequest@{sendInitiateAbortBulkInRequest}!mdtUsbtmcPortManager@{mdtUsbtmcPortManager}}
+\subsubsection[{sendInitiateAbortBulkInRequest}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbtmcPortManager::sendInitiateAbortBulkInRequest (
+\begin{DoxyParamCaption}
+\item[{quint8}]{bTag}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usbtmc_port_manager_ad52e35820d576a9dba9dc33feacb0202}
+
+
+Send a INITIATE\_\-ABORT\_\-BULK\_\-IN request thru the control endpoint. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_usbtmc_port_manager_ae845b25c292e83ef9fe01640867c7116}{abortBulkIn()} 
+\end{DoxySeeAlso}
+\begin{DoxyReturn}{Returns}
+bTag on success or WriteQueueEmpty on error. 
+\end{DoxyReturn}
+
+
+Definition at line 335 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a20c2b18b59e64a25b75a0bad1221c3a2}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendQuery@{sendQuery}}
@@ -230,7 +294,7 @@ Result as string (empty string on error) Note that \hyperlink{classmdt_frame_cod
 \end{DoxyReturn}
 
 
-Definition at line 96 of file mdtUsbtmcPortManager.cpp.
+Definition at line 98 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a2920bdd6b189f198f132de9e5555a78b}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
@@ -262,11 +326,11 @@ transaction must be a valid pointer
 \end{DoxyPrecond}
 
 
-qDebug() $<$$<$ \char`\"{}mdtUsbtmcPortManager::sendReadRequest() -\/ bTag: \char`\"{} $<$$<$ pvCurrentWritebTag; 
+frame-\/$>$setMessageData(\char`\"{}\char`\"{}); 
 
 
 
-Definition at line 169 of file mdtUsbtmcPortManager.cpp.
+Definition at line 172 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadRequest@{sendReadRequest}}
@@ -289,13 +353,13 @@ USBTMC standard need that a read request is sent to device before we can read an
 \hline
 \end{DoxyParams}
 \begin{Desc}
-\item[\hyperlink{todo__todo000051}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
+\item[\hyperlink{todo__todo000056}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
 \begin{DoxyReturn}{Returns}
 bTag ID on success or value $<$ 0 if write queue is full. 
 \end{DoxyReturn}
 
 
-Definition at line 211 of file mdtUsbtmcPortManager.cpp.
+Definition at line 215 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!sendReadStatusByteRequest@{sendReadStatusByteRequest}}
@@ -314,14 +378,14 @@ Send a READ\_\-STATUS\_\-BYTE request thru the control endpoint.
 bTag on success or WriteQueueEmpty on error.
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000049}{Todo}]finish ! \end{Desc}
+\item[\hyperlink{todo__todo000053}{Todo}]finish ! \end{Desc}
 
 
 m.sendControlRequest(f); End Sandbox ! 
 
 
 
-Definition at line 237 of file mdtUsbtmcPortManager.cpp.
+Definition at line 241 of file mdtUsbtmcPortManager.cpp.
 
 \hypertarget{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{
 \index{mdtUsbtmcPortManager@{mdtUsbtmcPortManager}!writeData@{writeData}}
@@ -351,15 +415,11 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-qDebug() $<$$<$ \char`\"{}mdtUsbtmcPortManager::writeData() -\/ bTag: \char`\"{} $<$$<$ pvCurrentWritebTag; 
-
-
-
 Reimplemented from \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager}.
 
 
 
-Definition at line 131 of file mdtUsbtmcPortManager.cpp.
+Definition at line 134 of file mdtUsbtmcPortManager.cpp.
 
 
 

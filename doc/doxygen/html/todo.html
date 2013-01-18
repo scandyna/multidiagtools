@@ -56,7 +56,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Todo List </div>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="_todo000011"></a> </p>
+<div class="textblock"><p><a class="anchor" id="_todo000009"></a> </p>
+<dl>
+<dt>Class <a class="el" href="classmdt_abstract_port.html">mdtAbstractPort</a>  </dt>
+<dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd>
+</dl>
+<p><a class="anchor" id="_todo000011"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800">mdtAbstractPort::close</a> () </dt>
 <dd>Actuellement, les queues sont deletée ici, que faire ? </dd>
@@ -68,56 +73,76 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
 </dd>
 </dl>
+<p><a class="anchor" id="_todo000013"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#a54b7bfb725c91b2c292a39275b877207">mdtAbstractPort::flushInRequestPending</a> () </dt>
+<dd>Thread are to adapt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000015"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#a2cc79d9288bebafaa183753dcf0807f3">mdtAbstractPort::flushOutRequestPending</a> () </dt>
+<dd>Thread are to adapt. </dd>
+</dl>
+<p><a class="anchor" id="_todo000018"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369">mdtAbstractPort::pvFlushOut</a> ()=0 </dt>
+<dd>Obselete this ? This method must be implemented in subclass. The pvCancelWrite flag must be set to true if no other system is used to handle the cancel flag (see waitEventWriteReady() )</dd>
+</dl>
 <p><a class="anchor" id="_todo000012"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a9d9c45220d5328c9856a2445557fe970">mdtAbstractPort::read</a> (char *data, qint64 maxSize)=0 </dt>
 <dd>adapt subclasses </dd>
 </dl>
-<p><a class="anchor" id="_todo000014"></a> </p>
+<p><a class="anchor" id="_todo000016"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9">mdtAbstractPort::updateReadTimeoutState</a> (bool state) </dt>
 <dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd>
 </dl>
-<p><a class="anchor" id="_todo000015"></a> </p>
+<p><a class="anchor" id="_todo000017"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc">mdtAbstractPort::updateWriteTimeoutState</a> (bool state) </dt>
 <dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd>
 </dl>
-<p><a class="anchor" id="_todo000013"></a> </p>
+<p><a class="anchor" id="_todo000014"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_port.html#a64d4802975a76474b9196c91f57a6d90">mdtAbstractPort::write</a> (const char *data, qint64 maxSize)=0 </dt>
 <dd>adapt subclasses </dd>
 </dl>
-<p><a class="anchor" id="_todo000053"></a> </p>
+<p><a class="anchor" id="_todo000058"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000054"></a> </p>
+<p><a class="anchor" id="_todo000059"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
+</dl>
+<p><a class="anchor" id="_todo000064"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc">mdtCsvFile::parseLine</a> (const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection) </dt>
+<dd>Check new function in mdtAlgorithm </dd>
 </dl>
 <p><a class="anchor" id="_todo000003"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621">mdtDevice::waitTransactionDone</a> (int id, int timeout, int granularity=50) </dt>
 <dd>Adapt, comment</dd>
 </dl>
-<p><a class="anchor" id="_todo000017"></a> </p>
+<p><a class="anchor" id="_todo000020"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_info.html#afe4bbdc87acff59999905a0eeb812fe1">mdtDeviceInfo::productName</a> () const  </dt>
 <dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd>
 </dl>
-<p><a class="anchor" id="_todo000016"></a> </p>
+<p><a class="anchor" id="_todo000019"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_device_info.html#a207d7b6b49fd65726232e95cd9e0568c">mdtDeviceInfo::vendorName</a> () const  </dt>
 <dd>Conficting with <a class="el" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> </dd>
 </dl>
 <p><a class="anchor" id="_todo000005"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A::connectToDevice</a> (const <a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo) </dt>
+<dt>Member <a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">mdtDeviceScpi::connectToDevice</a> (const <a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo) </dt>
 <dd>Add DeviceNotFound error ? </dd>
 </dl>
 <p><a class="anchor" id="_todo000002"></a> </p>
@@ -130,39 +155,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_device_u3606_a_widget.html#a653d85749d67555d8c3a43a779b6d2a2">mdtDeviceU3606AWidget::mdtDeviceU3606AWidget</a> (QWidget *parent=0) </dt>
 <dd>A supprimer !(?)! </dd>
 </dl>
-<p><a class="anchor" id="_todo000059"></a> </p>
+<p><a class="anchor" id="_todo000065"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_k8055.html#a9dfe60529b0e80d5bbd3852fdea51b18">mdtFrameCodecK8055::decode</a> (QByteArray &amp;data) </dt>
 <dd>check statu field ?? </dd>
 </dl>
-<p><a class="anchor" id="_todo000060"></a> </p>
+<p><a class="anchor" id="_todo000066"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_modbus.html#a426f465363a49d70890a462b40677787">mdtFrameCodecModbus::decode</a> (const QByteArray &amp;pdu) </dt>
 <dd>Base 16 ?? </dd>
 </dl>
-<p><a class="anchor" id="_todo000064"></a> </p>
+<p><a class="anchor" id="_todo000067"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">mdtFrameCodecScpi::decodeIEEEdataAscii</a> (const QByteArray &amp;data) </dt>
+<dd>Not implemented yet </dd>
+</dl>
+<p><a class="anchor" id="_todo000068"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">mdtFrameCodecScpi::decodeIEEEdataByte</a> (const QByteArray &amp;data) </dt>
+<dd>Not implemented yet </dd>
+</dl>
+<p><a class="anchor" id="_todo000071"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_frame_usb_tmc.html">mdtFrameUsbTmc</a>  </dt>
 <dd>Clarify what this class does: USBTMC message or transfer ?</dd>
 </dl>
-<p><a class="anchor" id="_todo000063"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">mdtFrameUsbTmc::encode</a> () </dt>
-<dd>Check &gt; 0, ... </dd>
-</dl>
-<p><a class="anchor" id="_todo000061"></a> </p>
+<p><a class="anchor" id="_todo000069"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_usb_tmc.html#a06d2743a113bd2b4cf2ee44014ecd710">mdtFrameUsbTmc::putData</a> (const char *data, int maxLen) </dt>
 <dd><p class="startdd">Handle error </p>
 <p class="enddd">other bmTransferAttributes </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000020"></a> </p>
+<p><a class="anchor" id="_todo000023"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">mdtModbusTcpPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd>Error on incomplete frame </dd>
 </dl>
-<p><a class="anchor" id="_todo000021"></a> </p>
+<p><a class="anchor" id="_todo000024"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#ac83ea9c640869a4bccb4a4787697c646">mdtModbusTcpPortManager::writeData</a> (QByteArray pdu, bool enqueueResponse=false) </dt>
 <dd><p class="startdd">Obelete this version ! </p>
@@ -172,72 +202,74 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p class="enddd">Handle this ? </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000019"></a> </p>
+<p><a class="anchor" id="_todo000022"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_modbus_tcp_port_manager.html#a2a3ade6d3f9a6e7de47b9b089754288f">mdtModbusTcpPortManager::writeData</a> (QByteArray pdu, <a class="el" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction) </dt>
 <dd>Handle this ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000008"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_port.html#a84594fdb56cd455a366c69b0a9228020">mdtPort::waitForReadyRead</a> () </dt>
-<dd>Infinite timeout: NULL pointer Ok ??? </dd>
-</dl>
-<p><a class="anchor" id="_todo000024"></a> </p>
+<p><a class="anchor" id="_todo000027"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_config.html#a639c71f90cfeb7e2160ad90e9775054b">mdtPortConfig::operator==</a> (const <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;other) </dt>
 <dd>Rollback: voir callback libusb, si data, ... </dd>
 </dl>
-<p><a class="anchor" id="_todo000009"></a> </p>
+<p><a class="anchor" id="_todo000008"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_lock.html">mdtPortLock</a>  </dt>
 <dd>Implement UUCP format in LCK.. files </dd>
 </dl>
-<p><a class="anchor" id="_todo000028"></a> </p>
+<p><a class="anchor" id="_todo000031"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#a4b5300fbf05c2c267ca3a247ac3ab77f">mdtPortManager::addTransaction</a> (int id, bool queryReplyMode) </dt>
 <dd>sigName is emited. </dd>
 </dl>
-<p><a class="anchor" id="_todo000025"></a> </p>
+<p><a class="anchor" id="_todo000028"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd>Error on incomplete frame </dd>
 </dl>
-<p><a class="anchor" id="_todo000026"></a> </p>
+<p><a class="anchor" id="_todo000029"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#a7e45b8e3475e5182ed12218616664d07">mdtPortManager::onThreadsErrorOccured</a> (int error) </dt>
-<dd>Error handling (in general ...) </dd>
+<dd><p class="startdd">Error handling (in general ...) </p>
+<p class="enddd">On disconnect, should flush I/O ? </p>
+</dd>
 </dl>
-<p><a class="anchor" id="_todo000027"></a> </p>
+<p><a class="anchor" id="_todo000030"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">mdtPortManager::openPort</a> () </dt>
 <dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd>
 </dl>
-<p><a class="anchor" id="_todo000029"></a> </p>
+<p><a class="anchor" id="_todo000032"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a>  </dt>
 <dd>suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. </dd>
 </dl>
-<p><a class="anchor" id="_todo000057"></a> </p>
+<p><a class="anchor" id="_todo000062"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_term.html#a7ec568c44f862fe7aee83f1a271ac6bb">mdtPortTerm::sendCmd</a> () </dt>
 <dd>Error handling ! </dd>
 </dl>
-<p><a class="anchor" id="_todo000030"></a> </p>
+<p><a class="anchor" id="_todo000034"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">mdtPortThread::errorOccured</a> (int error) </dt>
 <dd>Adapt threads + port managers</dd>
 </dl>
-<p><a class="anchor" id="_todo000031"></a> </p>
+<p><a class="anchor" id="_todo000035"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc">mdtPortThread::getNewFrameRead</a> () </dt>
 <dd>Currently implemented in polling, should be done with a wait condition.</dd>
 </dl>
-<p><a class="anchor" id="_todo000032"></a> </p>
+<p><a class="anchor" id="_todo000036"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9">mdtPortThread::notifyError</a> (int error) </dt>
 <dd>Adapt in threads subclasses </dd>
 </dl>
-<p><a class="anchor" id="_todo000055"></a> </p>
+<p><a class="anchor" id="_todo000033"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_port_thread.html#a2e0c384ae6c909cb40fc0ca1a0189ca6">mdtPortThread::readFromPort</a> (<a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> **frame) </dt>
+<dd>Handle timeout error ? </dd>
+</dl>
+<p><a class="anchor" id="_todo000060"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_serial_port_ctl_widget.html#a9dce60a846cbf24d7ceab099ff147c18">mdtSerialPortCtlWidget::makeConnections</a> (<a class="el" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *manager) </dt>
 <dd>Create threads somwere here, and connect signals/slots </dd>
@@ -252,16 +284,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">mdtUsbDeviceDescriptor::vendorName</a> () const  </dt>
 <dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
 </dl>
-<p><a class="anchor" id="_todo000045"></a> </p>
+<p><a class="anchor" id="_todo000049"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_usb_port.html">mdtUsbPort</a>  </dt>
-<dd><p class="startdd">signalName if a control response is available.</p>
-<p class="enddd">signalName if a message IN is available. </p>
+<dd>Not really true... For read and write of data, the mdtAbstractPort's API is used.</dd>
+</dl>
+<p><a class="anchor" id="_todo000042"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a551748422808cbb071930e1134bfaad5">mdtUsbPort::handleUsbEvents</a> (struct timeval *timeout, quint8 endpoint) </dt>
+<dd><p class="startdd">Check about pvLastError that was set by transfer callbacks ? </p>
+<p class="enddd">Think that timeout has no sense here, should be filtered </p>
 </dd>
+</dl>
+<p><a class="anchor" id="_todo000044"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#abb66e85fc1366112eeb0a6e86f6e7e32">mdtUsbPort::handleUsbEvents</a> () </dt>
+<dd>Cancel will allways return ControlCanceled , this is not good </dd>
 </dl>
 <p><a class="anchor" id="_todo000041"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_usb_port.html#a4e1b2c251dea880f699b6568f7fe7b6b">mdtUsbPort::initMessageInTransfer</a> (qint64 maxSize) </dt>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a897234cc2c7561da323cb124f57bcc28">mdtUsbPort::initMessageInTransfer</a> () </dt>
 <dd>Handle retval </dd>
 </dl>
 <p><a class="anchor" id="_todo000040"></a> </p>
@@ -269,19 +311,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f">mdtUsbPort::initReadTransfer</a> (qint64 maxSize) </dt>
 <dd>Handle retval </dd>
 </dl>
-<p><a class="anchor" id="_todo000052"></a> </p>
+<p><a class="anchor" id="_todo000054"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#ae845b25c292e83ef9fe01640867c7116">mdtUsbtmcPortManager::abortBulkIn</a> (quint8 bTag) </dt>
+<dd>Should we flushIn() first ? </dd>
+</dl>
+<p><a class="anchor" id="_todo000057"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd><p class="startdd">Essais ... void abort(); </p>
 <p class="enddd">Error on incomplete frame </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000051"></a> </p>
+<p><a class="anchor" id="_todo000052"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7">mdtUsbtmcPortManager::mdtUsbtmcPortManager</a> (QObject *parent=0) </dt>
+<dd>Taille provisoire ! pvPort-&gt;config().setReadFrameSize(10000); pvPort-&gt;config().setReadQueueSize(3); pvPort-&gt;config().setWriteFrameSize(512); pvPort-&gt;config().setWriteQueueSize(1); </dd>
+</dl>
+<p><a class="anchor" id="_todo000056"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#ab1604a1c8f2e9192714d039dbf9a5158">mdtUsbtmcPortManager::sendReadRequest</a> (bool enqueueResponse) </dt>
 <dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd>
 </dl>
-<p><a class="anchor" id="_todo000049"></a> </p>
+<p><a class="anchor" id="_todo000053"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#a7bcc280bd4a26ed523832550b1e61553">mdtUsbtmcPortManager::sendReadStatusByteRequest</a> () </dt>
 <dd>finish ! </dd>
@@ -301,7 +353,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:40 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

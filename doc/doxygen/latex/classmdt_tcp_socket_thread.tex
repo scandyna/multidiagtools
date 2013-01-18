@@ -28,10 +28,10 @@ Collaboration diagram for mdtTcpSocketThread:\nopagebreak
 \label{classmdt_tcp_socket_thread_ab379d78b2d32a9361dbe46a009c687d4}
 
 \item 
-void \hyperlink{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{stop} ()
-\begin{DoxyCompactList}\small\item\em Stop the running thread. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_tcp_socket_thread_a3224f12c8ff8d695975030f3f6215010}{isReader} () const 
-\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_tcp_socket_thread_a014ad2b3a5fbe7031eeb1d42d8f0767d}{isWriter} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if this thread writes date. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -61,34 +61,28 @@ Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc3
 
 
 
-Definition at line 40 of file mdtTcpSocketThread.cpp.
+Definition at line 32 of file mdtTcpSocketThread.cpp.
 
-\hypertarget{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}{
-\index{mdtTcpSocketThread@{mdtTcpSocketThread}!stop@{stop}}
-\index{stop@{stop}!mdtTcpSocketThread@{mdtTcpSocketThread}}
-\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void mdtTcpSocketThread::stop (
+\hypertarget{classmdt_tcp_socket_thread_a014ad2b3a5fbe7031eeb1d42d8f0767d}{
+\index{mdtTcpSocketThread@{mdtTcpSocketThread}!isWriter@{isWriter}}
+\index{isWriter@{isWriter}!mdtTcpSocketThread@{mdtTcpSocketThread}}
+\subsubsection[{isWriter}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtTcpSocketThread::isWriter (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_tcp_socket_thread_a0fd2b3f8b497427d84ae358c6f72122e}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_tcp_socket_thread_a014ad2b3a5fbe7031eeb1d42d8f0767d}
 
 
-Stop the running thread. 
+Returns true if this thread writes date. 
 
-\begin{DoxyPrecond}{Precondition}
-Serial port instance must be defined. 
-\end{DoxyPrecond}
-\begin{DoxySeeAlso}{See also}
-setSerialPort() 
-\end{DoxySeeAlso}
+Is used by \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread::stop()} to know if \hyperlink{classmdt_abstract_port_ae67c815f68317c70e398eaa86622af6b}{mdtAbstractPort::abortFrameToWriteWait()} must be called. 
 
-
-Reimplemented from \hyperlink{classmdt_port_thread_a5746ea96689ed80179751ad1353f0b39}{mdtPortThread}.
+Reimplemented from \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{mdtPortThread}.
 
 
 
-Definition at line 32 of file mdtTcpSocketThread.cpp.
+Definition at line 37 of file mdtTcpSocketThread.cpp.
 
 
 

@@ -162,75 +162,76 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00102"></a>00102     }
 <a name="l00103"></a>00103     <span class="comment">// Calc total frame size, without alignment bytes</span>
 <a name="l00104"></a>00104     frameSize = pvTransferSize + 12;
-<a name="l00105"></a>00105     <span class="comment">// Check if we have a complete frame</span>
-<a name="l00106"></a>00106     <span class="keywordflow">if</span>(size() &gt;= frameSize){
-<a name="l00107"></a>00107       pvEOFcondition = <span class="keyword">true</span>;
-<a name="l00108"></a>00108       pvMessageData += right(size()-12).left(pvTransferSize);
-<a name="l00109"></a>00109     }
-<a name="l00110"></a>00110   }
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112   <span class="keywordflow">return</span> stored;
-<a name="l00113"></a>00113 }
-<a name="l00114"></a>00114 
-<a name="l00115"></a><a class="code" href="classmdt_frame_usb_tmc.html#a19121b03cbb4c1bb420dc3cdb132f703">00115</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a19121b03cbb4c1bb420dc3cdb132f703" title="Set the MsgID.">mdtFrameUsbTmc::setMsgID</a>(<a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b" title="USBTMC MsgID.">mdtFrameUsbTmc::msg_id_t</a> MsgID)
-<a name="l00116"></a>00116 {
-<a name="l00117"></a>00117   pvMsgID = <a class="code" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a" title="Get the MsgID.">MsgID</a>;
-<a name="l00118"></a>00118 }
-<a name="l00119"></a>00119 
-<a name="l00120"></a><a class="code" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a">00120</a> <a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b" title="USBTMC MsgID.">mdtFrameUsbTmc::msg_id_t</a> <a class="code" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a" title="Get the MsgID.">mdtFrameUsbTmc::MsgID</a>()<span class="keyword"> const</span>
-<a name="l00121"></a>00121 <span class="keyword"></span>{
-<a name="l00122"></a>00122   <span class="keywordflow">return</span> (<a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b" title="USBTMC MsgID.">msg_id_t</a>)pvMsgID;
-<a name="l00123"></a>00123 }
-<a name="l00124"></a>00124 
-<a name="l00125"></a><a class="code" href="classmdt_frame_usb_tmc.html#aff7b19ad83013402dd115089d31b8642">00125</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#aff7b19ad83013402dd115089d31b8642" title="Set the bTag.">mdtFrameUsbTmc::setbTag</a>(quint8 bTag)
-<a name="l00126"></a>00126 {
-<a name="l00127"></a>00127   pvbTag = <a class="code" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6" title="Get the bTag.">bTag</a>;
-<a name="l00128"></a>00128   pvbTagInverse = ~pvbTag;
-<a name="l00129"></a>00129 }
-<a name="l00130"></a>00130 
-<a name="l00131"></a><a class="code" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6">00131</a> quint8 <a class="code" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6" title="Get the bTag.">mdtFrameUsbTmc::bTag</a>()<span class="keyword"> const</span>
-<a name="l00132"></a>00132 <span class="keyword"></span>{
-<a name="l00133"></a>00133   <span class="keywordflow">return</span> pvbTag;
-<a name="l00134"></a>00134 }
-<a name="l00135"></a>00135 
-<a name="l00136"></a><a class="code" href="classmdt_frame_usb_tmc.html#ab6e494c35eba34905987a75101fc48fe">00136</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#ab6e494c35eba34905987a75101fc48fe" title="Set the EOM flag.">mdtFrameUsbTmc::setEOM</a>(<span class="keywordtype">bool</span> EOM)
-<a name="l00137"></a>00137 {
-<a name="l00138"></a>00138   pvEOM = EOM;
-<a name="l00139"></a>00139 }
-<a name="l00140"></a>00140 
-<a name="l00141"></a><a class="code" href="classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c">00141</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c" title="Get the EOM flag.">mdtFrameUsbTmc::isEOM</a>()<span class="keyword"> const</span>
-<a name="l00142"></a>00142 <span class="keyword"></span>{
-<a name="l00143"></a>00143   <span class="keywordflow">return</span> pvEOM;
-<a name="l00144"></a>00144 }
-<a name="l00145"></a>00145 
-<a name="l00146"></a><a class="code" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0">00146</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0" title="Set transfer size.">mdtFrameUsbTmc::setTransferSize</a>(<span class="keywordtype">int</span> size)
-<a name="l00147"></a>00147 {
-<a name="l00148"></a>00148   pvTransferSize = size;
-<a name="l00149"></a>00149 }
-<a name="l00150"></a>00150 
-<a name="l00151"></a><a class="code" href="classmdt_frame_usb_tmc.html#a7fa61faeaa5d1f5820794c5943b26e26">00151</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a7fa61faeaa5d1f5820794c5943b26e26" title="Set the message data.">mdtFrameUsbTmc::setMessageData</a>(<span class="keyword">const</span> QByteArray &amp;data)
-<a name="l00152"></a>00152 {
-<a name="l00153"></a>00153   pvMessageData = data;
-<a name="l00154"></a>00154   pvTransferSize = pvMessageData.size();
-<a name="l00155"></a>00155 }
-<a name="l00156"></a>00156 
-<a name="l00157"></a><a class="code" href="classmdt_frame_usb_tmc.html#a03d9a1c16099ba7ea1e3a2b0c4e1493e">00157</a> QByteArray &amp;<a class="code" href="classmdt_frame_usb_tmc.html#a03d9a1c16099ba7ea1e3a2b0c4e1493e" title="Get the message data.">mdtFrameUsbTmc::messageData</a>()
-<a name="l00158"></a>00158 {
-<a name="l00159"></a>00159   <span class="keywordflow">return</span> pvMessageData;
-<a name="l00160"></a>00160 }
-<a name="l00161"></a>00161 
-<a name="l00162"></a><a class="code" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">00162</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77" title="Encode the USBTMC frame.">mdtFrameUsbTmc::encode</a>()
-<a name="l00163"></a>00163 {
-<a name="l00164"></a>00164   <span class="comment">// Check minimal needed capacity</span>
-<a name="l00165"></a>00165   <span class="keywordflow">if</span>(capacity() &lt; 16){
-<a name="l00166"></a>00166     reserve(16);
-<a name="l00167"></a>00167   }
-<a name="l00168"></a>00168   <a class="code" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">mdtFrame::clear</a>();
-<a name="l00169"></a>00169   <span class="comment">// Get message data size</span>
-<a name="l00170"></a>00170   <span class="comment">// Ajust command specific flags</span>
-<a name="l00171"></a>00171   <span class="keywordflow">if</span>(pvMsgID == <a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253bac179e40351460bf53a74d5654ae6a79e">DEV_DEP_MSG_OUT</a>){
-<a name="l00172"></a>00172     pvTransferSize = pvMessageData.size();
-<a name="l00173"></a>00173   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(pvMsgID == <a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253ba89fd5ab2298285f5a91e3b2f3822a7aa">DEV_DEP_MSG_IN</a>){
+<a name="l00105"></a>00105     qDebug() &lt;&lt; <span class="stringliteral">&quot;Frame, bTag: &quot;</span> &lt;&lt; pvbTag &lt;&lt; <span class="stringliteral">&quot; , size (waiting): &quot;</span> &lt;&lt; frameSize;
+<a name="l00106"></a>00106     <span class="comment">// Check if we have a complete frame</span>
+<a name="l00107"></a>00107     <span class="keywordflow">if</span>(size() &gt;= frameSize){
+<a name="l00108"></a>00108       pvEOFcondition = <span class="keyword">true</span>;
+<a name="l00109"></a>00109       pvMessageData += right(size()-12).left(pvTransferSize);
+<a name="l00110"></a>00110     }
+<a name="l00111"></a>00111   }
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113   <span class="keywordflow">return</span> stored;
+<a name="l00114"></a>00114 }
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="classmdt_frame_usb_tmc.html#a19121b03cbb4c1bb420dc3cdb132f703">00116</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a19121b03cbb4c1bb420dc3cdb132f703" title="Set the MsgID.">mdtFrameUsbTmc::setMsgID</a>(<a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b" title="USBTMC MsgID.">mdtFrameUsbTmc::msg_id_t</a> MsgID)
+<a name="l00117"></a>00117 {
+<a name="l00118"></a>00118   pvMsgID = <a class="code" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a" title="Get the MsgID.">MsgID</a>;
+<a name="l00119"></a>00119 }
+<a name="l00120"></a>00120 
+<a name="l00121"></a><a class="code" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a">00121</a> <a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b" title="USBTMC MsgID.">mdtFrameUsbTmc::msg_id_t</a> <a class="code" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a" title="Get the MsgID.">mdtFrameUsbTmc::MsgID</a>()<span class="keyword"> const</span>
+<a name="l00122"></a>00122 <span class="keyword"></span>{
+<a name="l00123"></a>00123   <span class="keywordflow">return</span> (<a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b" title="USBTMC MsgID.">msg_id_t</a>)pvMsgID;
+<a name="l00124"></a>00124 }
+<a name="l00125"></a>00125 
+<a name="l00126"></a><a class="code" href="classmdt_frame_usb_tmc.html#aff7b19ad83013402dd115089d31b8642">00126</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#aff7b19ad83013402dd115089d31b8642" title="Set the bTag.">mdtFrameUsbTmc::setbTag</a>(quint8 bTag)
+<a name="l00127"></a>00127 {
+<a name="l00128"></a>00128   pvbTag = <a class="code" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6" title="Get the bTag.">bTag</a>;
+<a name="l00129"></a>00129   pvbTagInverse = ~pvbTag;
+<a name="l00130"></a>00130 }
+<a name="l00131"></a>00131 
+<a name="l00132"></a><a class="code" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6">00132</a> quint8 <a class="code" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6" title="Get the bTag.">mdtFrameUsbTmc::bTag</a>()<span class="keyword"> const</span>
+<a name="l00133"></a>00133 <span class="keyword"></span>{
+<a name="l00134"></a>00134   <span class="keywordflow">return</span> pvbTag;
+<a name="l00135"></a>00135 }
+<a name="l00136"></a>00136 
+<a name="l00137"></a><a class="code" href="classmdt_frame_usb_tmc.html#ab6e494c35eba34905987a75101fc48fe">00137</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#ab6e494c35eba34905987a75101fc48fe" title="Set the EOM flag.">mdtFrameUsbTmc::setEOM</a>(<span class="keywordtype">bool</span> EOM)
+<a name="l00138"></a>00138 {
+<a name="l00139"></a>00139   pvEOM = EOM;
+<a name="l00140"></a>00140 }
+<a name="l00141"></a>00141 
+<a name="l00142"></a><a class="code" href="classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c">00142</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c" title="Get the EOM flag.">mdtFrameUsbTmc::isEOM</a>()<span class="keyword"> const</span>
+<a name="l00143"></a>00143 <span class="keyword"></span>{
+<a name="l00144"></a>00144   <span class="keywordflow">return</span> pvEOM;
+<a name="l00145"></a>00145 }
+<a name="l00146"></a>00146 
+<a name="l00147"></a><a class="code" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0">00147</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a7ad2f8426ebeceaa6f84925d9a96b5c0" title="Set transfer size.">mdtFrameUsbTmc::setTransferSize</a>(<span class="keywordtype">int</span> size)
+<a name="l00148"></a>00148 {
+<a name="l00149"></a>00149   pvTransferSize = size;
+<a name="l00150"></a>00150 }
+<a name="l00151"></a>00151 
+<a name="l00152"></a><a class="code" href="classmdt_frame_usb_tmc.html#a7fa61faeaa5d1f5820794c5943b26e26">00152</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a7fa61faeaa5d1f5820794c5943b26e26" title="Set the message data.">mdtFrameUsbTmc::setMessageData</a>(<span class="keyword">const</span> QByteArray &amp;data)
+<a name="l00153"></a>00153 {
+<a name="l00154"></a>00154   pvMessageData = data;
+<a name="l00155"></a>00155   pvTransferSize = pvMessageData.size();
+<a name="l00156"></a>00156 }
+<a name="l00157"></a>00157 
+<a name="l00158"></a><a class="code" href="classmdt_frame_usb_tmc.html#a03d9a1c16099ba7ea1e3a2b0c4e1493e">00158</a> QByteArray &amp;<a class="code" href="classmdt_frame_usb_tmc.html#a03d9a1c16099ba7ea1e3a2b0c4e1493e" title="Get the message data.">mdtFrameUsbTmc::messageData</a>()
+<a name="l00159"></a>00159 {
+<a name="l00160"></a>00160   <span class="keywordflow">return</span> pvMessageData;
+<a name="l00161"></a>00161 }
+<a name="l00162"></a>00162 
+<a name="l00163"></a><a class="code" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77">00163</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_frame_usb_tmc.html#a9406dddfdd70f5dac729b2dbd728de77" title="Encode the USBTMC frame.">mdtFrameUsbTmc::encode</a>()
+<a name="l00164"></a>00164 {
+<a name="l00165"></a>00165   <span class="comment">// Check minimal needed capacity</span>
+<a name="l00166"></a>00166   <span class="keywordflow">if</span>(capacity() &lt; 16){
+<a name="l00167"></a>00167     reserve(16);
+<a name="l00168"></a>00168   }
+<a name="l00169"></a>00169   <a class="code" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">mdtFrame::clear</a>();
+<a name="l00170"></a>00170   <span class="comment">// Get message data size</span>
+<a name="l00171"></a>00171   <span class="comment">// Ajust command specific flags</span>
+<a name="l00172"></a>00172   <span class="keywordflow">if</span>(pvMsgID == <a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253bac179e40351460bf53a74d5654ae6a79e">DEV_DEP_MSG_OUT</a>){
+<a name="l00173"></a>00173     pvTransferSize = pvMessageData.size();
+<a name="l00174"></a>00174   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(pvMsgID == <a class="code" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253ba89fd5ab2298285f5a91e3b2f3822a7aa">DEV_DEP_MSG_IN</a>){
 <a name="l00175"></a>00175     pvEOM = <span class="keyword">false</span>;
 <a name="l00176"></a>00176     pvMessageData.clear();
 <a name="l00177"></a>00177   }<span class="keywordflow">else</span>{
@@ -277,7 +278,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:39 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

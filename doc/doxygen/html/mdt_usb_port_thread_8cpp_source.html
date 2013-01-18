@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -87,403 +87,327 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QDebug&gt;</span>
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 mdtUsbPortThread::mdtUsbPortThread(QObject *parent)
+<a name="l00028"></a><a class="code" href="classmdt_usb_port_thread.html#aaf4e5883224f05d80132b31a921ac899">00028</a> <a class="code" href="classmdt_usb_port_thread.html#aaf4e5883224f05d80132b31a921ac899" title="Constructor.">mdtUsbPortThread::mdtUsbPortThread</a>(QObject *parent)
 <a name="l00029"></a>00029  : <a class="code" href="classmdt_port_thread.html">mdtPortThread</a>(parent)
 <a name="l00030"></a>00030 {
 <a name="l00031"></a>00031 }
 <a name="l00032"></a>00032 
-<a name="l00033"></a><a class="code" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b">00033</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b" title="Stop the running thread.">mdtUsbPortThread::stop</a>()
-<a name="l00034"></a>00034 {
-<a name="l00035"></a>00035   Q_ASSERT(pvPort != 0);
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037   <span class="comment">// We need a pointer to mdtUsbPort</span>
-<a name="l00038"></a>00038   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span> (pvPort);
-<a name="l00039"></a>00039   Q_ASSERT(port != 0);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   port-&gt;<a class="code" href="classmdt_abstract_port.html#ae67c815f68317c70e398eaa86622af6b" title="Abort the frame tp write waiting.">abortFrameToWriteWait</a>();
-<a name="l00042"></a>00042   port-&gt;<a class="code" href="classmdt_usb_port.html#afe5b473e1df8b828c17f83a45a3902fb" title="Cancel pending transfers.">cancelTransfers</a>();
-<a name="l00043"></a>00043   <a class="code" href="classmdt_usb_port_thread.html#a0be9bce0248ada81087282deea70505b" title="Stop the running thread.">mdtPortThread::stop</a>();
-<a name="l00044"></a>00044 }
-<a name="l00045"></a>00045 
-<a name="l00046"></a><a class="code" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">00046</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022" title="Returns true if this thread reads data and send the newFrameReaden() signal.">mdtUsbPortThread::isReader</a>()<span class="keyword"> const</span>
-<a name="l00047"></a>00047 <span class="keyword"></span>{
-<a name="l00048"></a>00048   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtUsbPortThread::writeToPort(<a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port, <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame)
-<a name="l00052"></a>00052 {
-<a name="l00053"></a>00053   Q_ASSERT(port != 0);
-<a name="l00054"></a>00054   Q_ASSERT(frame != 0);
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keywordtype">char</span> *bufferCursor = 0;
-<a name="l00057"></a>00057   qint64 toWrite = 0;
-<a name="l00058"></a>00058   qint64 written = 0;
-<a name="l00059"></a>00059   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061   <span class="comment">// Write the frame to port</span>
-<a name="l00062"></a>00062   bufferCursor = frame-&gt;data();
-<a name="l00063"></a>00063   toWrite = frame-&gt;size();
-<a name="l00064"></a>00064   <span class="keywordflow">while</span>(toWrite &gt; 0){
-<a name="l00065"></a>00065     <span class="comment">// Init transfert</span>
-<a name="l00066"></a>00066     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a3340dc3f53e857e39053988e4925fc97" title="Request a new bulk/interrupt out transfer.">initWriteTransfer</a>(bufferCursor, toWrite);
-<a name="l00067"></a>00067     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00068"></a>00068       <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>){
-<a name="l00069"></a>00069         <span class="comment">// Restore frame to pool and return</span>
-<a name="l00070"></a>00070         pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().enqueue(frame);
-<a name="l00071"></a>00071         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00072"></a>00072       }<span class="keywordflow">else</span>{
-<a name="l00073"></a>00073         <span class="keywordflow">return</span> portError;
-<a name="l00074"></a>00074       }
-<a name="l00075"></a>00075     }
-<a name="l00076"></a>00076     <span class="comment">// Wait on write ready event</span>
-<a name="l00077"></a>00077     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a3be875f6f10ae94fd3a94f925bb935e7" title="Wait until data can be written to port.">waitEventWriteReady</a>();
-<a name="l00078"></a>00078     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00079"></a>00079       <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">mdtAbstractPort::WriteCanceled</a>){
-<a name="l00080"></a>00080         <span class="comment">// Restore frame to pool and return</span>
-<a name="l00081"></a>00081         pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().enqueue(frame);
-<a name="l00082"></a>00082         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00083"></a>00083       }<span class="keywordflow">else</span>{
-<a name="l00084"></a>00084         <span class="keywordflow">return</span> portError;
-<a name="l00085"></a>00085       }
-<a name="l00086"></a>00086     }
-<a name="l00087"></a>00087     <span class="comment">// Transfer complete, check timeout state first, then see what was readen</span>
-<a name="l00088"></a>00088     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_abstract_port.html#a7c05a1abe77f0c3c334016c6ad866f67" title="Returns write timeout state.">writeTimeoutOccured</a>()){
-<a name="l00089"></a>00089       <span class="comment">// Cannot write now, sleep some time and try later</span>
-<a name="l00090"></a>00090       <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a">mdtAbstractPort::WriteTimeout</a>);
-<a name="l00091"></a>00091       port-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00092"></a>00092       msleep(100);
-<a name="l00093"></a>00093       port-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00094"></a>00094     }<span class="keywordflow">else</span>{
-<a name="l00095"></a>00095       <span class="comment">// Write data to port</span>
-<a name="l00096"></a>00096       emit <a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>();
-<a name="l00097"></a>00097       written = port-&gt;<a class="code" href="classmdt_usb_port.html#af81c0fc2955ed2778ccdf6c7206f2b16" title="Write data to port.">write</a>(bufferCursor, toWrite);
-<a name="l00098"></a>00098       <span class="keywordflow">if</span>(written &lt; 0){
-<a name="l00099"></a>00099         <span class="keywordflow">return</span> (<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>)written;
-<a name="l00100"></a>00100       }
-<a name="l00101"></a>00101       frame-&gt;<a class="code" href="classmdt_frame.html#a36e4b85a3c671902ac3c8cc318ca726c" title="Take some data.">take</a>(written);
-<a name="l00102"></a>00102       <span class="comment">// Update cursor and toWrite</span>
-<a name="l00103"></a>00103       <span class="keywordflow">if</span>(frame-&gt;isEmpty()){
-<a name="l00104"></a>00104         toWrite = 0;
-<a name="l00105"></a>00105       }<span class="keywordflow">else</span>{
-<a name="l00106"></a>00106         bufferCursor = frame-&gt;data();
-<a name="l00107"></a>00107         Q_ASSERT(bufferCursor &lt; (frame-&gt;data() + frame-&gt;size()));
-<a name="l00108"></a>00108         toWrite -= written;
-<a name="l00109"></a>00109         Q_ASSERT(toWrite &gt;= 0);
-<a name="l00110"></a>00110       }
-<a name="l00111"></a>00111     }
-<a name="l00112"></a>00112   }
-<a name="l00113"></a>00113   <span class="comment">// Here, frame is completly sent</span>
-<a name="l00114"></a>00114   Q_ASSERT(frame-&gt;isEmpty());
-<a name="l00115"></a>00115   port-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().enqueue(frame);
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
-<a name="l00118"></a>00118 }
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120 <span class="keywordtype">void</span> mdtUsbPortThread::run()
-<a name="l00121"></a>00121 {
-<a name="l00122"></a>00122   Q_ASSERT(pvPort != 0);
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124   <span class="keywordtype">int</span> pollIntervall;
-<a name="l00125"></a>00125   <span class="keywordtype">bool</span> readPollMode;
-<a name="l00126"></a>00126   <span class="keywordtype">int</span> interframeTime = 0;
-<a name="l00127"></a>00127   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *writeFrame = 0;
-<a name="l00128"></a>00128   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *readFrame = 0;
-<a name="l00129"></a>00129   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
-<a name="l00130"></a>00130   <span class="keywordtype">int</span> n;
-<a name="l00131"></a>00131   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
-<a name="l00132"></a>00132   <span class="keywordtype">bool</span> waitAnAnswer = <span class="keyword">true</span>;
-<a name="l00133"></a>00133   <span class="keywordtype">int</span> toRead = 0;
-<a name="l00134"></a>00134   <span class="keywordtype">int</span> reconnectTimeout;
-<a name="l00135"></a>00135   <span class="keywordtype">int</span> reconnectMaxRetry;
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00138"></a>00138 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
-<a name="l00139"></a>00139 <span class="preprocessor"></span>  pvNativePthreadObject = pthread_self();
-<a name="l00140"></a>00140   Q_ASSERT(pvNativePthreadObject != 0);
-<a name="l00141"></a>00141 <span class="preprocessor">#endif</span>
-<a name="l00142"></a>00142 <span class="preprocessor"></span>  <span class="comment">// We need a mdtUsbPort object here</span>
-<a name="l00143"></a>00143   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span> (pvPort);
-<a name="l00144"></a>00144   Q_ASSERT(port != 0);
-<a name="l00145"></a>00145   <span class="comment">// Set the running flag</span>
-<a name="l00146"></a>00146   pvRunning = <span class="keyword">true</span>;
-<a name="l00148"></a>00148   pollIntervall = 50;
-<a name="l00149"></a>00149   readPollMode = <span class="keyword">false</span>;
-<a name="l00150"></a>00150   interframeTime = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_port_config.html#a745f5111436fc143b75440bf90a1a4e6" title="Get the write interframe time [ms].">writeInterframeTime</a>();
-<a name="l00151"></a>00151   reconnectTimeout = 5000;
-<a name="l00152"></a>00152   reconnectMaxRetry = 5;
-<a name="l00153"></a>00153   <span class="comment">// Get a frame for read</span>
-<a name="l00154"></a>00154   readFrame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
-<a name="l00155"></a>00155   <span class="keywordflow">if</span>(readFrame == 0){
-<a name="l00156"></a>00156     <span class="keywordflow">return</span>;
-<a name="l00157"></a>00157   }
-<a name="l00158"></a>00158   <span class="comment">// Notify that we are ready</span>
-<a name="l00159"></a>00159   <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>);
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161   <span class="comment">// Run...</span>
-<a name="l00162"></a>00162   <span class="keywordflow">while</span>(1){
-<a name="l00163"></a>00163     <span class="comment">// Read thread state</span>
-<a name="l00164"></a>00164     <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00165"></a>00165       <span class="keywordflow">break</span>;
-<a name="l00166"></a>00166     }
-<a name="l00168"></a>00168     <span class="keywordflow">if</span>(readPollMode){
-<a name="l00169"></a>00169       port-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00170"></a>00170       msleep(pollIntervall);
-<a name="l00171"></a>00171       port-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00172"></a>00172       qDebug() &lt;&lt; <span class="stringliteral">&quot;USBTHD: write frames size: &quot;</span> &lt;&lt; port-&gt;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>().size();
-<a name="l00173"></a>00173       <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>().size() &gt; 0){
-<a name="l00174"></a>00174         writeFrame = <a class="code" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105" title="Get a new frame for writing data to port.">getNewFrameWrite</a>();
-<a name="l00175"></a>00175       }<span class="keywordflow">else</span>{
-<a name="l00176"></a>00176         writeFrame = 0;
+<a name="l00033"></a><a class="code" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">00033</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022" title="Returns true if this thread reads data and send the newFrameReaden() signal.">mdtUsbPortThread::isReader</a>()<span class="keyword"> const</span>
+<a name="l00034"></a>00034 <span class="keyword"></span>{
+<a name="l00035"></a>00035   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00036"></a>00036 }
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtUsbPortThread::readUntilShortPacketReceived(<span class="keywordtype">int</span> maxReadTransfers)
+<a name="l00039"></a>00039 {
+<a name="l00040"></a>00040   Q_ASSERT(pvPort != 0);
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
+<a name="l00043"></a>00043   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span>(pvPort);
+<a name="l00044"></a>00044   Q_ASSERT(port != 0);
+<a name="l00045"></a>00045   <span class="keywordtype">char</span> *buffer = <span class="keyword">new</span> <span class="keywordtype">char</span>[port-&gt;<a class="code" href="classmdt_usb_port.html#af546a031ed8621fee1d5e9498cbcd174" title="Get read buffer size.">readBufferSize</a>()];
+<a name="l00046"></a>00046   <span class="keywordtype">int</span> readen;
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048   <span class="keywordflow">while</span>(maxReadTransfers &gt; 0){
+<a name="l00049"></a>00049     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f" title="Submit a read transfer.">initReadTransfer</a>(port-&gt;<a class="code" href="classmdt_usb_port.html#af546a031ed8621fee1d5e9498cbcd174" title="Get read buffer size.">readBufferSize</a>());
+<a name="l00050"></a>00050     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00051"></a>00051       <span class="keyword">delete</span>[] buffer;
+<a name="l00052"></a>00052       <span class="keywordflow">return</span> portError;
+<a name="l00053"></a>00053     }
+<a name="l00054"></a>00054     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a551748422808cbb071930e1134bfaad5" title="Call libusb handle_event() function.">handleUsbEvents</a>();
+<a name="l00055"></a>00055     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00056"></a>00056       <span class="keyword">delete</span>[] buffer;
+<a name="l00057"></a>00057       <span class="keywordflow">return</span> portError;
+<a name="l00058"></a>00058     }
+<a name="l00059"></a>00059     readen = port-&gt;<a class="code" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d" title="Read data from port.">read</a>(buffer, port-&gt;<a class="code" href="classmdt_usb_port.html#af546a031ed8621fee1d5e9498cbcd174" title="Get read buffer size.">readBufferSize</a>());
+<a name="l00060"></a>00060     qDebug() &lt;&lt; <span class="stringliteral">&quot;-*-* mdtUsbPortThread::readUntilShortPacketReceived() , readen: &quot;</span> &lt;&lt; readen;
+<a name="l00061"></a>00061     <span class="keywordflow">if</span>(readen &lt; 0){
+<a name="l00062"></a>00062       <span class="keyword">delete</span>[] buffer;
+<a name="l00063"></a>00063       <span class="keywordflow">return</span> (<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>)readen;
+<a name="l00064"></a>00064     }
+<a name="l00065"></a>00065     <span class="keywordflow">if</span>(readen &lt; port-&gt;readBufferSize()){
+<a name="l00066"></a>00066       <span class="keyword">delete</span>[] buffer;
+<a name="l00067"></a>00067       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069     maxReadTransfers--;
+<a name="l00070"></a>00070   }
+<a name="l00071"></a>00071   <span class="keyword">delete</span>[] buffer;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">mdtAbstractPort::ReadTimeout</a>;
+<a name="l00074"></a>00074 }
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="keywordtype">void</span> mdtUsbPortThread::run()
+<a name="l00077"></a>00077 {
+<a name="l00078"></a>00078   Q_ASSERT(pvPort != 0);
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *writeFrame = 0;
+<a name="l00081"></a>00081   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *readFrame = 0;
+<a name="l00082"></a>00082   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
+<a name="l00083"></a>00083   <span class="keywordtype">int</span> n;
+<a name="l00084"></a>00084   <span class="keywordtype">int</span> i;
+<a name="l00085"></a>00085   <a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> *port;
+<a name="l00086"></a>00086   <span class="keywordtype">bool</span> waitAnAnswer = <span class="keyword">false</span>;
+<a name="l00087"></a>00087   <span class="keywordtype">int</span> reconnectTimeout;
+<a name="l00088"></a>00088   <span class="keywordtype">int</span> reconnectMaxRetry;
+<a name="l00089"></a>00089   qint64 written;
+<a name="l00090"></a>00090   QList&lt;mdtAbstractPort::error_t&gt; errors;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00093"></a>00093 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
+<a name="l00094"></a>00094 <span class="preprocessor"></span>  pvNativePthreadObject = pthread_self();
+<a name="l00095"></a>00095   Q_ASSERT(pvNativePthreadObject != 0);
+<a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
+<a name="l00097"></a>00097 <span class="preprocessor"></span>  <span class="comment">// We need a mdtUsbPort object here</span>
+<a name="l00098"></a>00098   port = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a>*<span class="keyword">&gt;</span> (pvPort);
+<a name="l00099"></a>00099   Q_ASSERT(port != 0);
+<a name="l00100"></a>00100   <span class="comment">// Set the running flag</span>
+<a name="l00101"></a>00101   pvRunning = <span class="keyword">true</span>;
+<a name="l00103"></a>00103   reconnectTimeout = 5000;
+<a name="l00104"></a>00104   reconnectMaxRetry = 5;
+<a name="l00105"></a>00105   <span class="comment">// Get a frame for read</span>
+<a name="l00106"></a>00106   readFrame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
+<a name="l00107"></a>00107   <span class="keywordflow">if</span>(readFrame == 0){
+<a name="l00108"></a>00108     <span class="keywordflow">return</span>;
+<a name="l00109"></a>00109   }
+<a name="l00110"></a>00110   <span class="comment">// Notify that we are ready</span>
+<a name="l00111"></a>00111   <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>);
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113   <span class="comment">// Run...</span>
+<a name="l00114"></a>00114   <span class="keywordflow">while</span>(1){
+<a name="l00115"></a>00115     <span class="comment">// Read thread state</span>
+<a name="l00116"></a>00116     <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00117"></a>00117       <span class="keywordflow">break</span>;
+<a name="l00118"></a>00118     }
+<a name="l00119"></a>00119     qDebug() &lt;&lt; <span class="stringliteral">&quot;USBPTHD: going idle ...&quot;</span>;
+<a name="l00120"></a>00120     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a551748422808cbb071930e1134bfaad5" title="Call libusb handle_event() function.">handleUsbEvents</a>();
+<a name="l00121"></a>00121     qDebug() &lt;&lt; <span class="stringliteral">&quot;USBPTHD: event !&quot;</span>;
+<a name="l00122"></a>00122     <span class="comment">// Check about event handling errors</span>
+<a name="l00123"></a>00123     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00124"></a>00124       <span class="comment">// Check about stoping</span>
+<a name="l00125"></a>00125       <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00126"></a>00126         <span class="keywordflow">break</span>;
+<a name="l00127"></a>00127       }
+<a name="l00128"></a>00128       <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00129"></a>00129         <span class="comment">// Try to reconnect</span>
+<a name="l00130"></a>00130         portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
+<a name="l00131"></a>00131         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00132"></a>00132           <span class="comment">// Stop</span>
+<a name="l00133"></a>00133           pvRunning = <span class="keyword">false</span>;
+<a name="l00134"></a>00134           <span class="keywordflow">break</span>;
+<a name="l00135"></a>00135         }
+<a name="l00136"></a>00136       }<span class="keywordflow">else</span>{
+<a name="l00137"></a>00137         <span class="comment">// Errors that must be signaled + stop the thread</span>
+<a name="l00138"></a>00138         <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
+<a name="l00139"></a>00139         pvRunning = <span class="keyword">false</span>;
+<a name="l00140"></a>00140         <span class="keywordflow">break</span>;
+<a name="l00141"></a>00141       }
+<a name="l00142"></a>00142     }
+<a name="l00143"></a>00143     <span class="comment">// Check about port errors</span>
+<a name="l00144"></a>00144     errors = port-&gt;<a class="code" href="classmdt_usb_port.html#a81855cebd9b672a74d836955236c19bf" title="Get the lis of current errors.">lastErrors</a>();
+<a name="l00145"></a>00145     <span class="keywordflow">for</span>(i=0; i&lt;errors.size(); i++){
+<a name="l00147"></a>00147       qDebug() &lt;&lt; <span class="stringliteral">&quot;USBPTHD: error Nb &quot;</span> &lt;&lt; errors.at(i);
+<a name="l00148"></a>00148     }
+<a name="l00149"></a>00149     <span class="comment">// Check if a control response is available</span>
+<a name="l00150"></a>00150     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() &gt; 0){
+<a name="l00151"></a>00151       emit(<a class="code" href="classmdt_usb_port_thread.html#ab8ac3a6e1b571215be86f9dfd8c48b2b" title="Emited when a new control response was readen.">controlResponseReaden</a>());
+<a name="l00152"></a>00152     }
+<a name="l00153"></a>00153     <span class="comment">// Check if a message IN is available</span>
+<a name="l00154"></a>00154     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda" title="Get the message IN frames.">messageInFrames</a>().size() &gt; 0){
+<a name="l00155"></a>00155       emit(<a class="code" href="classmdt_usb_port_thread.html#a850204a909f0bbe41c5e995ebe3670d8" title="Wmited when a message IN was readen (from additionnal interrupt IN endpoint)">messageInReaden</a>());
+<a name="l00156"></a>00156     }
+<a name="l00157"></a>00157     <span class="comment">// Init a new message IN transfert (will only init if needed)</span>
+<a name="l00158"></a>00158     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a897234cc2c7561da323cb124f57bcc28" title="Request a new interrupt input transfer for additional message input.">initMessageInTransfer</a>();
+<a name="l00159"></a>00159     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00160"></a>00160       <span class="comment">// Check about stoping</span>
+<a name="l00161"></a>00161       <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00162"></a>00162         <span class="keywordflow">break</span>;
+<a name="l00163"></a>00163       }
+<a name="l00164"></a>00164       <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00165"></a>00165         <span class="comment">// Try to reconnect</span>
+<a name="l00166"></a>00166         portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
+<a name="l00167"></a>00167         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00168"></a>00168           <span class="comment">// Stop</span>
+<a name="l00169"></a>00169           pvRunning = <span class="keyword">false</span>;
+<a name="l00170"></a>00170           <span class="keywordflow">break</span>;
+<a name="l00171"></a>00171         }
+<a name="l00172"></a>00172       }<span class="keywordflow">else</span>{
+<a name="l00173"></a>00173         <span class="comment">// Errors that must be signaled + stop the thread</span>
+<a name="l00174"></a>00174         <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
+<a name="l00175"></a>00175         pvRunning = <span class="keyword">false</span>;
+<a name="l00176"></a>00176         <span class="keywordflow">break</span>;
 <a name="l00177"></a>00177       }
-<a name="l00178"></a>00178     }<span class="keywordflow">else</span>{
-<a name="l00179"></a>00179       writeFrame = <a class="code" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105" title="Get a new frame for writing data to port.">getNewFrameWrite</a>();
-<a name="l00180"></a>00180     }
-<a name="l00181"></a>00181     <span class="comment">// Read thread state</span>
-<a name="l00182"></a>00182     <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00183"></a>00183       <span class="keywordflow">break</span>;
-<a name="l00184"></a>00184     }
-<a name="l00185"></a>00185     <span class="comment">// Check about control transfer</span>
-<a name="l00186"></a>00186     portError = port-&gt;<a class="code" href="classmdt_usb_port.html#ae79bbc2a33a8cd8f055323d882804d36" title="Check about pending control queries and init a new transfer if needed.">handleControlQueries</a>();
-<a name="l00187"></a>00187     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00188"></a>00188       <span class="comment">// Check about disconnection</span>
-<a name="l00189"></a>00189       <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
-<a name="l00190"></a>00190         <span class="comment">// Check about stoping</span>
-<a name="l00191"></a>00191         <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00192"></a>00192           <span class="keywordflow">break</span>;
-<a name="l00193"></a>00193         }
-<a name="l00194"></a>00194         <span class="comment">// Try to reconnect</span>
-<a name="l00195"></a>00195         portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
-<a name="l00196"></a>00196         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00197"></a>00197           <span class="comment">// Stop</span>
-<a name="l00198"></a>00198           <span class="keywordflow">break</span>;
-<a name="l00199"></a>00199         }
-<a name="l00200"></a>00200       }<span class="keywordflow">else</span>{
-<a name="l00201"></a>00201         <span class="comment">// stop</span>
-<a name="l00202"></a>00202         <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00203"></a>00203         <span class="keywordflow">break</span>;
-<a name="l00204"></a>00204       }
-<a name="l00205"></a>00205     }
-<a name="l00206"></a>00206     <span class="comment">// Wait for interframe time if needed</span>
-<a name="l00208"></a>00208 <span class="comment"></span>    <span class="keywordflow">if</span>(interframeTime &gt; 0){
-<a name="l00209"></a>00209       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00210"></a>00210       msleep(interframeTime);
-<a name="l00211"></a>00211       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00212"></a>00212       <span class="comment">// Read thread state</span>
-<a name="l00213"></a>00213       <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00214"></a>00214         <span class="keywordflow">break</span>;
-<a name="l00215"></a>00215       }
-<a name="l00216"></a>00216     }
-<a name="l00217"></a>00217     <span class="comment">// Write if something is to write (getNewFrameWrite() can return a null pointer </span>
-<a name="l00218"></a>00218     <span class="comment">//  if it was woken after a control request or other).</span>
-<a name="l00219"></a>00219     <span class="keywordflow">if</span>(writeFrame != 0){
-<a name="l00220"></a>00220       waitAnAnswer = writeFrame-&gt;<a class="code" href="classmdt_frame.html#ab27455f2fa3415a96482786c0ec27e55" title="Know if an answer is needed after a write frame.">waitAnAnswer</a>();
-<a name="l00221"></a>00221       portError = writeToPort(port, writeFrame);
-<a name="l00222"></a>00222       <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00223"></a>00223         <span class="comment">// Check about disconnection</span>
-<a name="l00224"></a>00224         <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
-<a name="l00225"></a>00225           <span class="comment">// Check about stoping</span>
-<a name="l00226"></a>00226           <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00227"></a>00227             <span class="keywordflow">break</span>;
-<a name="l00228"></a>00228           }
-<a name="l00229"></a>00229           <span class="comment">// Try to reconnect</span>
-<a name="l00230"></a>00230           portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
-<a name="l00231"></a>00231           <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00232"></a>00232             <span class="comment">// Stop</span>
+<a name="l00178"></a>00178     }
+<a name="l00179"></a>00179     <span class="comment">// Check if we have something to write</span>
+<a name="l00180"></a>00180     <span class="keywordflow">if</span>(writeFrame == 0){
+<a name="l00181"></a>00181       <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>().size() &gt; 0){
+<a name="l00182"></a>00182         writeFrame = port-&gt;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>().dequeue();
+<a name="l00183"></a>00183         Q_ASSERT(writeFrame != 0);
+<a name="l00184"></a>00184         emit(<a class="code" href="classmdt_port_thread.html#a8f3d8f3d70839e5ae7b108a3a199e94d" title="Emitted when a I/O process begins.">ioProcessBegin</a>());
+<a name="l00185"></a>00185       }
+<a name="l00186"></a>00186     }
+<a name="l00187"></a>00187     <span class="comment">// Write ...</span>
+<a name="l00188"></a>00188     <span class="keywordflow">if</span>(writeFrame != 0){
+<a name="l00189"></a>00189       qDebug() &lt;&lt; <span class="stringliteral">&quot;USBPTHD: to write: &quot;</span> &lt;&lt; writeFrame-&gt;size();
+<a name="l00190"></a>00190       <span class="comment">// Write (will simply do nothing and return 0 if transfer is pending)</span>
+<a name="l00191"></a>00191       written = <a class="code" href="classmdt_port_thread.html#aa18ebea6a8791d228ab9575d1c68067c" title="Write data to port.">writeDataToPort</a>(writeFrame);
+<a name="l00192"></a>00192       <span class="keywordflow">if</span>(written &lt; 0){
+<a name="l00193"></a>00193         <span class="comment">// Check about stoping</span>
+<a name="l00194"></a>00194         <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00195"></a>00195           <span class="keywordflow">break</span>;
+<a name="l00196"></a>00196         }
+<a name="l00197"></a>00197         portError = (<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>)written;
+<a name="l00198"></a>00198         <span class="comment">// Check about disconnection</span>
+<a name="l00199"></a>00199         <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00200"></a>00200           <span class="comment">// Try to reconnect</span>
+<a name="l00201"></a>00201           portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
+<a name="l00202"></a>00202           <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00203"></a>00203             <span class="comment">// Stop</span>
+<a name="l00204"></a>00204             <span class="keywordflow">break</span>;
+<a name="l00205"></a>00205           }
+<a name="l00206"></a>00206         }<span class="keywordflow">else</span>{
+<a name="l00207"></a>00207           <span class="comment">// stop</span>
+<a name="l00208"></a>00208           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
+<a name="l00209"></a>00209           <span class="keywordflow">break</span>;
+<a name="l00210"></a>00210         }
+<a name="l00211"></a>00211       }
+<a name="l00212"></a>00212       <span class="comment">// Check if frame was completly written</span>
+<a name="l00213"></a>00213       <span class="keywordflow">if</span>(writeFrame-&gt;isEmpty()){
+<a name="l00214"></a>00214         <span class="comment">// Update waitAnAnswer flag</span>
+<a name="l00215"></a>00215         waitAnAnswer = writeFrame-&gt;<a class="code" href="classmdt_frame.html#ab27455f2fa3415a96482786c0ec27e55" title="Know if an answer is needed after a write frame.">waitAnAnswer</a>();
+<a name="l00216"></a>00216         <span class="comment">// Restore frame to pool</span>
+<a name="l00217"></a>00217         port-&gt;<a class="code" href="classmdt_abstract_port.html#abf093b67fddebffa4f3c52277b9a8cf7" title="Get the write frames Queue pool.">writeFramesPool</a>().enqueue(writeFrame);
+<a name="l00218"></a>00218         <span class="comment">// Check if a new frame is to write</span>
+<a name="l00219"></a>00219         <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>().size() &gt; 0){
+<a name="l00220"></a>00220           writeFrame = port-&gt;<a class="code" href="classmdt_abstract_port.html#a4fed10be147dfce6ca315467ff3fb968" title="Get the write frames Queue.">writeFrames</a>().dequeue();
+<a name="l00221"></a>00221           Q_ASSERT(writeFrame != 0);
+<a name="l00222"></a>00222         }<span class="keywordflow">else</span>{
+<a name="l00223"></a>00223           writeFrame = 0;
+<a name="l00224"></a>00224         }
+<a name="l00225"></a>00225       }
+<a name="l00226"></a>00226       <span class="comment">// Here, if frame is not Null, we have to init a new transfer</span>
+<a name="l00227"></a>00227       <span class="keywordflow">if</span>(writeFrame != 0){
+<a name="l00228"></a>00228         <span class="comment">// Init a new write transfer (will only init if not pending)</span>
+<a name="l00229"></a>00229         portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a3340dc3f53e857e39053988e4925fc97" title="Request a new bulk/interrupt out transfer.">initWriteTransfer</a>(writeFrame-&gt;data(), writeFrame-&gt;size());
+<a name="l00230"></a>00230         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00231"></a>00231           <span class="comment">// Check about stoping</span>
+<a name="l00232"></a>00232           <span class="keywordflow">if</span>(!pvRunning){
 <a name="l00233"></a>00233             <span class="keywordflow">break</span>;
 <a name="l00234"></a>00234           }
-<a name="l00235"></a>00235         }<span class="keywordflow">else</span>{
-<a name="l00236"></a>00236           <span class="comment">// stop</span>
-<a name="l00237"></a>00237           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00238"></a>00238           <span class="keywordflow">break</span>;
-<a name="l00239"></a>00239         }
-<a name="l00240"></a>00240       }
-<a name="l00241"></a>00241     }<span class="keywordflow">else</span>{
-<a name="l00242"></a>00242       <span class="comment">// We were woken up because of a control request</span>
-<a name="l00243"></a>00243       waitAnAnswer = <span class="keyword">false</span>;
-<a name="l00244"></a>00244       <span class="keywordflow">while</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() &lt; 1){
-<a name="l00245"></a>00245         <span class="comment">// Handle events</span>
-<a name="l00246"></a>00246         portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a7f8bf2b599a0c83988153de3945e1d65" title="Calle libusb handle_event*() function.">handleUsbEvents</a>(0);
-<a name="l00247"></a>00247         <span class="comment">// Check about disconnection</span>
-<a name="l00248"></a>00248         <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
-<a name="l00249"></a>00249           <span class="comment">// Check about stoping</span>
-<a name="l00250"></a>00250           <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00251"></a>00251             <span class="keywordflow">break</span>;
-<a name="l00252"></a>00252           }
-<a name="l00253"></a>00253           <span class="comment">// Try to reconnect</span>
-<a name="l00254"></a>00254           portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
-<a name="l00255"></a>00255           <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00256"></a>00256             <span class="comment">// Stop</span>
-<a name="l00257"></a>00257             <span class="keywordflow">break</span>;
-<a name="l00258"></a>00258           }
-<a name="l00259"></a>00259         }<span class="keywordflow">else</span>{
-<a name="l00260"></a>00260           <span class="comment">// stop</span>
-<a name="l00261"></a>00261           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00262"></a>00262           <span class="keywordflow">break</span>;
-<a name="l00263"></a>00263         }
-<a name="l00264"></a>00264         portError = port-&gt;<a class="code" href="classmdt_usb_port.html#ac91970d3fcb07b80200d0e549adbab3a" title="Check pending control transfer.">handleControlResponses</a>();
-<a name="l00265"></a>00265         <span class="comment">// Check about disconnection</span>
-<a name="l00266"></a>00266         <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
-<a name="l00267"></a>00267           <span class="comment">// Check about stoping</span>
-<a name="l00268"></a>00268           <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00269"></a>00269             <span class="keywordflow">break</span>;
-<a name="l00270"></a>00270           }
-<a name="l00271"></a>00271           <span class="comment">// Try to reconnect</span>
-<a name="l00272"></a>00272           portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
-<a name="l00273"></a>00273           <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00274"></a>00274             <span class="comment">// Stop</span>
-<a name="l00275"></a>00275             <span class="keywordflow">break</span>;
-<a name="l00276"></a>00276           }
-<a name="l00277"></a>00277         }<span class="keywordflow">else</span>{
-<a name="l00278"></a>00278           <span class="comment">// stop</span>
-<a name="l00279"></a>00279           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00280"></a>00280           <span class="keywordflow">break</span>;
-<a name="l00281"></a>00281         }
-<a name="l00282"></a>00282       }
+<a name="l00235"></a>00235           <span class="comment">// Check about disconnection</span>
+<a name="l00236"></a>00236           <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00237"></a>00237             <span class="comment">// Try to reconnect</span>
+<a name="l00238"></a>00238             portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
+<a name="l00239"></a>00239             <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00240"></a>00240               <span class="comment">// Stop</span>
+<a name="l00241"></a>00241               <span class="keywordflow">break</span>;
+<a name="l00242"></a>00242             }
+<a name="l00243"></a>00243           }<span class="keywordflow">else</span>{
+<a name="l00244"></a>00244             <span class="comment">// stop</span>
+<a name="l00245"></a>00245             <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
+<a name="l00246"></a>00246             <span class="keywordflow">break</span>;
+<a name="l00247"></a>00247           }
+<a name="l00248"></a>00248         }
+<a name="l00249"></a>00249       }
+<a name="l00250"></a>00250     }
+<a name="l00251"></a>00251     <span class="comment">// Check about device flush</span>
+<a name="l00252"></a>00252     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a3c0685d67fe608abe24c140c2858779c" title="Check if a request to read until a short packet is received is pending.">readUntilShortPacketReceivedRequestPending</a>()){
+<a name="l00253"></a>00253       portError = readUntilShortPacketReceived(100);
+<a name="l00254"></a>00254       <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00255"></a>00255         <span class="comment">// Check about stoping</span>
+<a name="l00256"></a>00256         <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00257"></a>00257           <span class="keywordflow">break</span>;
+<a name="l00258"></a>00258         }
+<a name="l00259"></a>00259         <span class="comment">// Check about disconnection</span>
+<a name="l00260"></a>00260         <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00261"></a>00261           <span class="comment">// Try to reconnect</span>
+<a name="l00262"></a>00262           portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
+<a name="l00263"></a>00263           <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00264"></a>00264             <span class="comment">// Stop</span>
+<a name="l00265"></a>00265             <span class="keywordflow">break</span>;
+<a name="l00266"></a>00266           }
+<a name="l00267"></a>00267         }<span class="keywordflow">else</span>{
+<a name="l00268"></a>00268           <span class="comment">// stop</span>
+<a name="l00269"></a>00269           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
+<a name="l00270"></a>00270           <span class="keywordflow">break</span>;
+<a name="l00271"></a>00271         }
+<a name="l00272"></a>00272       }
+<a name="l00273"></a>00273     }
+<a name="l00274"></a>00274     <span class="comment">// read/store available data</span>
+<a name="l00275"></a>00275     <span class="keywordflow">if</span>(readFrame == 0){
+<a name="l00276"></a>00276       <span class="keywordflow">if</span>(pvRunning){
+<a name="l00277"></a>00277         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_USB_IO_ERROR, <span class="stringliteral">&quot;readFrame is Null, aborting. This is a bug&quot;</span>, mdtError::Error);
+<a name="l00278"></a>00278         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtUsbPortThread&quot;</span>);
+<a name="l00279"></a>00279         e.commit();
+<a name="l00280"></a>00280         <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">mdtAbstractPort::UnhandledError</a>);
+<a name="l00281"></a>00281       }
+<a name="l00282"></a>00282       <span class="keywordflow">break</span>;
 <a name="l00283"></a>00283     }
-<a name="l00284"></a>00284     <span class="comment">// Check if a control response is available</span>
-<a name="l00285"></a>00285     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() &gt; 0){
-<a name="l00287"></a>00287       emit(<a class="code" href="classmdt_usb_port_thread.html#ab8ac3a6e1b571215be86f9dfd8c48b2b" title="Emited when a new control response was readen.">controlResponseReaden</a>());
-<a name="l00288"></a>00288     }
-<a name="l00289"></a>00289     <span class="comment">// Check if a message IN is available</span>
-<a name="l00290"></a>00290     <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda" title="Get the message IN frames.">messageInFrames</a>().size() &gt; 0){
-<a name="l00292"></a>00292       emit(<a class="code" href="classmdt_usb_port_thread.html#a850204a909f0bbe41c5e995ebe3670d8" title="Wmited when a message IN was readen (from additionnal interrupt IN endpoint)">messageInReaden</a>());
-<a name="l00293"></a>00293     }
-<a name="l00294"></a>00294     <span class="comment">// Read process</span>
-<a name="l00295"></a>00295     <span class="keywordflow">if</span>(waitAnAnswer){
-<a name="l00296"></a>00296       <span class="keywordflow">if</span>(readFrame == 0){
-<a name="l00297"></a>00297         <span class="keywordflow">break</span>;
-<a name="l00298"></a>00298       }
-<a name="l00299"></a>00299       <span class="comment">// See what we have to read</span>
-<a name="l00300"></a>00300       toRead = readFrame-&gt;<a class="code" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore</a>();
-<a name="l00301"></a>00301       <span class="keywordflow">while</span>(toRead &gt; 0){
-<a name="l00302"></a>00302         <span class="keywordflow">if</span>(readFrame == 0){
-<a name="l00303"></a>00303           pvRunning = <span class="keyword">false</span>;
-<a name="l00304"></a>00304           <span class="keywordflow">break</span>;
-<a name="l00305"></a>00305         }
-<a name="l00306"></a>00306         <span class="comment">// Read thread state</span>
-<a name="l00307"></a>00307         <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00308"></a>00308           <span class="keywordflow">break</span>;
-<a name="l00309"></a>00309         }
-<a name="l00310"></a>00310         <span class="comment">// Init a read request</span>
-<a name="l00311"></a>00311         portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f" title="Request a new bulk/interrupt input transfer.">initReadTransfer</a>(toRead);
-<a name="l00312"></a>00312         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00313"></a>00313           <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">mdtAbstractPort::ReadCanceled</a>){
-<a name="l00314"></a>00314             <span class="comment">// We submit the uncomplete frame</span>
-<a name="l00315"></a>00315             pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().enqueue(readFrame);
-<a name="l00316"></a>00316             emit <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
-<a name="l00317"></a>00317             qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtUsbPortThread::run(): read cancel&quot;</span>;
-<a name="l00318"></a>00318             readFrame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
-<a name="l00319"></a>00319             <span class="keywordflow">break</span>;
-<a name="l00320"></a>00320           }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
-<a name="l00321"></a>00321             <span class="comment">// Check about stoping</span>
-<a name="l00322"></a>00322             <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00323"></a>00323               <span class="keywordflow">break</span>;
-<a name="l00324"></a>00324             }
-<a name="l00325"></a>00325             <span class="comment">// Try to reconnect</span>
-<a name="l00326"></a>00326             portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
-<a name="l00327"></a>00327             <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00328"></a>00328               <span class="comment">// Errors that must be signaled + stop the thread</span>
-<a name="l00329"></a>00329               <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00330"></a>00330               pvRunning = <span class="keyword">false</span>;
-<a name="l00331"></a>00331               <span class="keywordflow">break</span>;
-<a name="l00332"></a>00332             }
-<a name="l00333"></a>00333           }<span class="keywordflow">else</span>{
-<a name="l00334"></a>00334             <span class="comment">// Errors that must be signaled + stop the thread</span>
-<a name="l00335"></a>00335             <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00336"></a>00336             pvRunning = <span class="keyword">false</span>;
-<a name="l00337"></a>00337             <span class="keywordflow">break</span>;
-<a name="l00338"></a>00338           }
-<a name="l00339"></a>00339         }
-<a name="l00340"></a>00340         <span class="comment">// Read thread state</span>
-<a name="l00341"></a>00341         <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00342"></a>00342           <span class="keywordflow">break</span>;
-<a name="l00343"></a>00343         }
-<a name="l00344"></a>00344         <span class="comment">// Wait until read transfer completed</span>
-<a name="l00345"></a>00345         portError = port-&gt;<a class="code" href="classmdt_usb_port.html#ab8ddd4ebee603ac381e8da0383a61e36" title="Wait until data is available on port.">waitForReadyRead</a>();
-<a name="l00346"></a>00346         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00347"></a>00347           <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">mdtAbstractPort::ReadCanceled</a>){
-<a name="l00348"></a>00348             <span class="comment">// We submit the uncomplete frame</span>
-<a name="l00349"></a>00349             pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().enqueue(readFrame);
-<a name="l00350"></a>00350             emit <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
-<a name="l00351"></a>00351             qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtUsbPortThread::run(): read cancel&quot;</span>;
-<a name="l00352"></a>00352             readFrame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
-<a name="l00353"></a>00353             <span class="keywordflow">break</span>;
-<a name="l00354"></a>00354           }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
-<a name="l00355"></a>00355             <span class="comment">// Check about stoping</span>
-<a name="l00356"></a>00356             <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00357"></a>00357               <span class="keywordflow">break</span>;
-<a name="l00358"></a>00358             }
-<a name="l00359"></a>00359             <span class="comment">// Try to reconnect</span>
-<a name="l00360"></a>00360             portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
-<a name="l00361"></a>00361             <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00362"></a>00362               <span class="comment">// Errors that must be signaled + stop the thread</span>
-<a name="l00363"></a>00363               <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00364"></a>00364               pvRunning = <span class="keyword">false</span>;
-<a name="l00365"></a>00365               <span class="keywordflow">break</span>;
-<a name="l00366"></a>00366             }
-<a name="l00367"></a>00367           }<span class="keywordflow">else</span>{
-<a name="l00368"></a>00368             <span class="comment">// Errors that must be signaled + stop the thread</span>
-<a name="l00369"></a>00369             <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00370"></a>00370             pvRunning = <span class="keyword">false</span>;
-<a name="l00371"></a>00371             <span class="keywordflow">break</span>;
-<a name="l00372"></a>00372           }
-<a name="l00373"></a>00373         }
-<a name="l00374"></a>00374         <span class="comment">// Check if a control response is available</span>
-<a name="l00375"></a>00375         <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a304825c7d9173a3dcb5e26a412f1038b" title="Get the control responses queue.">controlResponseFrames</a>().size() &gt; 0){
-<a name="l00376"></a>00376           emit(<a class="code" href="classmdt_usb_port_thread.html#ab8ac3a6e1b571215be86f9dfd8c48b2b" title="Emited when a new control response was readen.">controlResponseReaden</a>());
-<a name="l00378"></a>00378         }
-<a name="l00379"></a>00379         <span class="comment">// Check if a message IN is available</span>
-<a name="l00380"></a>00380         <span class="keywordflow">if</span>(port-&gt;<a class="code" href="classmdt_usb_port.html#a3365431076a3197540cbc99278658bda" title="Get the message IN frames.">messageInFrames</a>().size() &gt; 0){
-<a name="l00381"></a>00381           emit(<a class="code" href="classmdt_usb_port_thread.html#a850204a909f0bbe41c5e995ebe3670d8" title="Wmited when a message IN was readen (from additionnal interrupt IN endpoint)">messageInReaden</a>());
-<a name="l00383"></a>00383         }
-<a name="l00384"></a>00384         <span class="comment">// Read thread state</span>
-<a name="l00385"></a>00385         <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00386"></a>00386           <span class="keywordflow">break</span>;
-<a name="l00387"></a>00387         }
-<a name="l00388"></a>00388         <span class="comment">// read/store</span>
-<a name="l00389"></a>00389         <span class="keywordflow">if</span>(!port-&gt;<a class="code" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e" title="Returns read timeout state.">readTimeoutOccured</a>()){
-<a name="l00390"></a>00390           n = <a class="code" href="classmdt_port_thread.html#a2e0c384ae6c909cb40fc0ca1a0189ca6" title="Read data from port.">readFromPort</a>(&amp;readFrame);
-<a name="l00391"></a>00391           <span class="keywordflow">if</span>(n &lt; 0){
-<a name="l00392"></a>00392             <span class="comment">// Unhandled error: notify and stop</span>
-<a name="l00393"></a>00393             <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(n);
-<a name="l00394"></a>00394             pvRunning = <span class="keyword">false</span>;
-<a name="l00395"></a>00395             <span class="keywordflow">break</span>;
-<a name="l00396"></a>00396           }
-<a name="l00397"></a>00397           Q_ASSERT(readFrame != 0);
-<a name="l00398"></a>00398           <span class="comment">// If no frame was complete, it&#39;s possible that more data is needed</span>
-<a name="l00399"></a>00399           <span class="keywordflow">if</span>(n == 0){
-<a name="l00400"></a>00400             toRead = readFrame-&gt;<a class="code" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore</a>();
-<a name="l00401"></a>00401           }<span class="keywordflow">else</span>{
-<a name="l00402"></a>00402             toRead = 0;
-<a name="l00403"></a>00403           }
-<a name="l00404"></a>00404         }<span class="keywordflow">else</span>{
-<a name="l00405"></a>00405           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">mdtAbstractPort::ReadTimeout</a>);
-<a name="l00406"></a>00406         }
-<a name="l00407"></a>00407       }
-<a name="l00408"></a>00408     }
-<a name="l00409"></a>00409   }
-<a name="l00410"></a>00410 
-<a name="l00411"></a>00411   qDebug() &lt;&lt; <span class="stringliteral">&quot;USBTHD: cleanup ...&quot;</span>;
-<a name="l00412"></a>00412 
-<a name="l00413"></a>00413   <span class="comment">// Finish event handling</span>
-<a name="l00414"></a>00414   <span class="keyword">struct </span>timeval finalTimeout;
-<a name="l00415"></a>00415   finalTimeout.tv_sec = 5;
-<a name="l00416"></a>00416   finalTimeout.tv_usec = 0;
-<a name="l00417"></a>00417   portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a7f8bf2b599a0c83988153de3945e1d65" title="Calle libusb handle_event*() function.">handleUsbEvents</a>(&amp;finalTimeout);
-<a name="l00418"></a>00418   <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00419"></a>00419     <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00420"></a>00420   }
-<a name="l00421"></a>00421 
-<a name="l00422"></a>00422   <span class="comment">// Put current frame into pool</span>
-<a name="l00423"></a>00423   <span class="keywordflow">if</span>(readFrame != 0){
-<a name="l00424"></a>00424     port-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(readFrame);
-<a name="l00425"></a>00425   }
-<a name="l00426"></a>00426 
-<a name="l00427"></a>00427   qDebug() &lt;&lt; <span class="stringliteral">&quot;USBTHD: END&quot;</span>;
-<a name="l00428"></a>00428 
-<a name="l00429"></a>00429   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00430"></a>00430 }
-<a name="l00431"></a>00431 
+<a name="l00284"></a>00284     n = -1;
+<a name="l00285"></a>00285     <span class="keywordflow">if</span>(!port-&gt;<a class="code" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e" title="Returns read timeout state.">readTimeoutOccured</a>()){
+<a name="l00286"></a>00286       n = <a class="code" href="classmdt_port_thread.html#a2e0c384ae6c909cb40fc0ca1a0189ca6" title="Read data from port.">readFromPort</a>(&amp;readFrame);
+<a name="l00287"></a>00287       <span class="keywordflow">if</span>(n &lt; 0){
+<a name="l00288"></a>00288         <span class="comment">// Unhandled error: notify and stop</span>
+<a name="l00289"></a>00289         <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(n);
+<a name="l00290"></a>00290         <span class="keywordflow">break</span>;
+<a name="l00291"></a>00291       }
+<a name="l00292"></a>00292       <span class="comment">// Reset waitAnAnswer flag if a frame was received</span>
+<a name="l00293"></a>00293       <span class="keywordflow">if</span>(n &gt; 0){
+<a name="l00294"></a>00294         waitAnAnswer = <span class="keyword">false</span>;
+<a name="l00295"></a>00295       }
+<a name="l00296"></a>00296     }<span class="keywordflow">else</span>{
+<a name="l00297"></a>00297       <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">mdtAbstractPort::ReadTimeout</a>);
+<a name="l00298"></a>00298     }
+<a name="l00299"></a>00299     qDebug() &lt;&lt; <span class="stringliteral">&quot;USBPTHD: waitAnAnswer: &quot;</span> &lt;&lt; waitAnAnswer &lt;&lt; <span class="stringliteral">&quot; , n: &quot;</span> &lt;&lt; n;
+<a name="l00300"></a>00300     <span class="comment">// Two conditions to init a read transfer:</span>
+<a name="l00301"></a>00301     <span class="comment">// - A query/reply is pending (waitAnAnswer)</span>
+<a name="l00302"></a>00302     <span class="comment">// - Current read frame is not complete</span>
+<a name="l00303"></a>00303     <span class="keywordflow">if</span>((waitAnAnswer)&amp;&amp;(n == 0)){
+<a name="l00304"></a>00304       <span class="comment">// Init a new read transfer (will only init if not pending)</span>
+<a name="l00305"></a>00305       qDebug() &lt;&lt; <span class="stringliteral">&quot;USBPTHD: to read: &quot;</span> &lt;&lt; readFrame-&gt;<a class="code" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore</a>();
+<a name="l00306"></a>00306       portError = port-&gt;<a class="code" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f" title="Submit a read transfer.">initReadTransfer</a>(readFrame-&gt;<a class="code" href="classmdt_frame.html#a8526b227a56562fddf8445060e8095d4" title="Returns the bytes to store into the frame.">bytesToStore</a>());
+<a name="l00307"></a>00307       <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00308"></a>00308         <span class="comment">// Check about stoping</span>
+<a name="l00309"></a>00309         <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00310"></a>00310           <span class="keywordflow">break</span>;
+<a name="l00311"></a>00311         }
+<a name="l00312"></a>00312         <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">mdtAbstractPort::ReadCanceled</a>){
+<a name="l00313"></a>00313           <span class="comment">// We submit the uncomplete frame</span>
+<a name="l00314"></a>00314           pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().enqueue(readFrame);
+<a name="l00315"></a>00315           emit <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
+<a name="l00316"></a>00316           qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtUsbPortThread::run(): read cancel&quot;</span>;
+<a name="l00317"></a>00317           readFrame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
+<a name="l00318"></a>00318           <span class="keywordflow">break</span>;
+<a name="l00319"></a>00319         }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>){
+<a name="l00320"></a>00320           <span class="comment">// Try to reconnect</span>
+<a name="l00321"></a>00321           portError = <a class="code" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">reconnect</a>(reconnectTimeout, reconnectMaxRetry, <span class="keyword">true</span>);
+<a name="l00322"></a>00322           <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00323"></a>00323             <span class="comment">// Stop</span>
+<a name="l00324"></a>00324             pvRunning = <span class="keyword">false</span>;
+<a name="l00325"></a>00325             <span class="keywordflow">break</span>;
+<a name="l00326"></a>00326           }
+<a name="l00327"></a>00327         }<span class="keywordflow">else</span>{
+<a name="l00328"></a>00328           <span class="comment">// Errors that must be signaled + stop the thread</span>
+<a name="l00329"></a>00329           <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
+<a name="l00330"></a>00330           pvRunning = <span class="keyword">false</span>;
+<a name="l00331"></a>00331           <span class="keywordflow">break</span>;
+<a name="l00332"></a>00332         }
+<a name="l00333"></a>00333       }
+<a name="l00334"></a>00334     }
+<a name="l00335"></a>00335   }
+<a name="l00336"></a>00336 
+<a name="l00337"></a>00337   qDebug() &lt;&lt; <span class="stringliteral">&quot;USBTHD: cleanup ...&quot;</span>;
+<a name="l00338"></a>00338   port-&gt;<a class="code" href="classmdt_usb_port.html#afe5b473e1df8b828c17f83a45a3902fb" title="Cancel pending transfers.">cancelTransfers</a>();
+<a name="l00339"></a>00339 
+<a name="l00340"></a>00340   <span class="comment">// Put current frame into pool</span>
+<a name="l00341"></a>00341   <span class="keywordflow">if</span>(readFrame != 0){
+<a name="l00342"></a>00342     port-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(readFrame);
+<a name="l00343"></a>00343   }
+<a name="l00344"></a>00344 
+<a name="l00345"></a>00345   qDebug() &lt;&lt; <span class="stringliteral">&quot;USBTHD: END&quot;</span>;
+<a name="l00346"></a>00346 
+<a name="l00347"></a>00347   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00348"></a>00348   <a class="code" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>);
+<a name="l00349"></a>00349 }
+<a name="l00350"></a>00350 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -500,7 +424,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:45 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:39 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

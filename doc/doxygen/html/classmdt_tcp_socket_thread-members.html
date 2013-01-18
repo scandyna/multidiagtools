@@ -73,7 +73,7 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4">isFinished</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">isReader</a>() const </td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72">isRunning</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a0122a12262052cf3643241a3eaa31c58">isWriter</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket_thread.html#a014ad2b3a5fbe7031eeb1d42d8f0767d">isWriter</a>() const </td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtPortThread</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtTcpSocketThread</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a>)</td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461">newFrameReaden</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
@@ -87,8 +87,9 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2">setPort</a>(mdtAbstractPort *port)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a01d2362e0dfcece4cba242cb586d8d1c">sigactionHandle</a>(int signum)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected, static]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a9c45f260b8d58b7475151df79b3d8510">start</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket_thread.html#a0fd2b3f8b497427d84ae358c6f72122e">stop</a>()</td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td><code> [virtual]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a9372a53561362b0c86f499b8a36805e1">writeToPort</a>(mdtFrame *frame, bool bytePerByteWrite, int interByteTime)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39">stop</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#aa18ebea6a8791d228ab9575d1c68067c">writeDataToPort</a>(mdtFrame *frame, int maxSize=-1)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a2658d7f1a04ef10eb09d575d8d7eda43">writeToPort</a>(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry=10)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtPortThread</b>() (defined in <a class="el" href="classmdt_port_thread.html">mdtPortThread</a>)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [virtual]</code></td></tr>
 </table></div>
 <!-- window showing the filter options -->
@@ -105,7 +106,7 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

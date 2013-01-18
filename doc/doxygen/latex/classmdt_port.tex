@@ -43,14 +43,9 @@ void \hyperlink{classmdt_port_a2acb6e7bedacdadf78ee735dc611abfa}{setWriteTimeout
 qint64 \hyperlink{classmdt_port_ad8a196bb21b6ca76dffb068a1692904a}{read} (char $\ast$data, qint64 maxSize)
 \begin{DoxyCompactList}\small\item\em Read data from port. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{waitEventWriteReady} ()
-\begin{DoxyCompactList}\small\item\em Flush read buffers. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Wait until data can be written to port. \end{DoxyCompactList}\item 
 qint64 \hyperlink{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{write} (const char $\ast$data, qint64 maxSize)
-\begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_port_a42022f9fe08166418711b956c6aabb49}{
-void \hyperlink{classmdt_port_a42022f9fe08166418711b956c6aabb49}{flushOut} ()}
-\label{classmdt_port_a42022f9fe08166418711b956c6aabb49}
-
-\begin{DoxyCompactList}\small\item\em Flush write buffers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Write data to port. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -81,7 +76,7 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 
 
-Definition at line 113 of file mdtPort.cpp.
+Definition at line 110 of file mdtPort.cpp.
 
 \hypertarget{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}{
 \index{mdtPort@{mdtPort}!waitEventWriteReady@{waitEventWriteReady}}
@@ -94,22 +89,16 @@ Definition at line 113 of file mdtPort.cpp.
 \label{classmdt_port_a85e77a391f6f5782428beb2e6aee52f8}
 
 
-Flush read buffers. 
-
-void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushIn()};
-
-Wait until data can be written to port.
+Wait until data can be written to port. 
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtPort::flushIn()} \{ \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn()}; \} 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 
 
-Definition at line 148 of file mdtPort.cpp.
+Definition at line 137 of file mdtPort.cpp.
 
 \hypertarget{classmdt_port_a84594fdb56cd455a366c69b0a9228020}{
 \index{mdtPort@{mdtPort}!waitForReadyRead@{waitForReadyRead}}
@@ -125,17 +114,13 @@ Definition at line 148 of file mdtPort.cpp.
 Wait until data is available on port. 
 
 This method is called from \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-\begin{Desc}
-\item[\hyperlink{todo__todo000008}{Todo}]Infinite timeout: NULL pointer Ok ??? \end{Desc}
-
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{mdtAbstractPort}.
 
 
 
-Definition at line 73 of file mdtPort.cpp.
+Definition at line 70 of file mdtPort.cpp.
 
 \hypertarget{classmdt_port_a62f4a6f2c547d40d3743ce893e0f64d6}{
 \index{mdtPort@{mdtPort}!write@{write}}
@@ -157,7 +142,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 188 of file mdtPort.cpp.
+Definition at line 178 of file mdtPort.cpp.
 
 
 

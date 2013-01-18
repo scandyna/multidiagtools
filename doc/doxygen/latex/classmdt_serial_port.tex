@@ -204,7 +204,7 @@ Definition at line 582 of file mdtSerialPort.cpp.
 NOTE: 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000054}{Todo}]Update name to : updateCtlStates ? \end{Desc}
+\item[\hyperlink{todo__todo000059}{Todo}]Update name to : updateCtlStates ? \end{Desc}
 
 
 Get the control (modem line) signal states and update member flags
@@ -218,7 +218,7 @@ Implements \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74ed
 
 
 
-Definition at line 862 of file mdtSerialPort.cpp.
+Definition at line 823 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a98938e2c51d1888236b920903f99050a}{
 \index{mdtSerialPort@{mdtSerialPort}!parity@{parity}}
@@ -268,7 +268,7 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 
 
-Definition at line 658 of file mdtSerialPort.cpp.
+Definition at line 659 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a02fd5ee74a7f52c3bce0545ec8a659bf}{
 \index{mdtSerialPort@{mdtSerialPort}!resumeTransmission@{resumeTransmission}}
@@ -302,7 +302,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_ad4a04c995df881593db0a30900
 
 
 
-Definition at line 708 of file mdtSerialPort.cpp.
+Definition at line 709 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_ad77b6a5fd819fae6db0db888b3113351}{
 \index{mdtSerialPort@{mdtSerialPort}!setBaudRate@{setBaudRate}}
@@ -385,7 +385,7 @@ Implements \hyperlink{classmdt_abstract_serial_port_aa86a8bc0bb03ac2b07bf43968df
 
 
 
-Definition at line 937 of file mdtSerialPort.cpp.
+Definition at line 898 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a175785be0dfe124254484822b7b8832e}{
 \index{mdtSerialPort@{mdtSerialPort}!setFlowCtlRtsCts@{setFlowCtlRtsCts}}
@@ -517,7 +517,7 @@ Implements \hyperlink{classmdt_abstract_serial_port_a0ef2426fbd1afbcb0701f327cc1
 
 
 
-Definition at line 923 of file mdtSerialPort.cpp.
+Definition at line 884 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a9471ebff90de41decee977566dd1571f}{
 \index{mdtSerialPort@{mdtSerialPort}!setStopBits@{setStopBits}}
@@ -624,7 +624,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_aff3d79248baf96e670eba6d2fe
 
 
 
-Definition at line 685 of file mdtSerialPort.cpp.
+Definition at line 686 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a9d1402c229401343a3bf66eeda4fe9da}{
 \index{mdtSerialPort@{mdtSerialPort}!waitEventCtl@{waitEventCtl}}
@@ -642,21 +642,13 @@ void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{flushO
 Wait until a control (modem line) signal state changes
 
 This method is called from \hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-void \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtSerialPort::flushOut()} \{ int err;
-
-\hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(tcflush(pvFd, TCOFLUSH) $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-SERIAL\_\-PORT\_\-IO\_\-ERROR, \char`\"{}tcflush() call failed\char`\"{}, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPort\char`\"{}); e.commit(); \} \hyperlink{classmdt_abstract_port_ad199c6310801893f1f7de2a2391606fc}{mdtAbstractPort::flushOut()}; \} 
-
-qDebug() $<$$<$ \char`\"{}mdtSerialPort::waitEventCtl(), waiting...\char`\"{}; 
-
-
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_serial_port_a146bf17f4f11c173e9b123bace0f2ddf}{mdtAbstractSerialPort}.
 
 
 
-Definition at line 834 of file mdtSerialPort.cpp.
+Definition at line 797 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_a988825b3ff2ef93a1b43e2df316055bd}{
 \index{mdtSerialPort@{mdtSerialPort}!waitEventWriteReady@{waitEventWriteReady}}
@@ -674,17 +666,13 @@ void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{flushI
 Wait until data can be written to port.
 
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
- Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns.
-
-void \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtSerialPort::flushIn()} \{ int err;
-
-\hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}; if(tcflush(pvFd, TCIFLUSH) $<$ 0)\{ err = errno; \hyperlink{classmdt_error}{mdtError} e(MDT\_\-SERIAL\_\-PORT\_\-IO\_\-ERROR, \char`\"{}tcflush() call failed\char`\"{}, mdtError::Error); e.setSystemError(err, strerror(err)); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtSerialPort\char`\"{}); e.commit(); \} \hyperlink{classmdt_abstract_port_a32329b4188db796401e4f454755acb44}{mdtAbstractPort::flushIn()}; \} 
+ Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 
 
-Definition at line 748 of file mdtSerialPort.cpp.
+Definition at line 732 of file mdtSerialPort.cpp.
 
 \hypertarget{classmdt_serial_port_ad150a45c68d98a501bea2f102aeadb50}{
 \index{mdtSerialPort@{mdtSerialPort}!waitForReadyRead@{waitForReadyRead}}
@@ -734,18 +722,14 @@ Subclass notes:\par
 Number of bytes written, or error $<$ 0 (see error\_\-t)
 \end{DoxyReturn}
 \begin{Desc}
-\item[\hyperlink{todo__todo000013}{Todo}]adapt subclasses \end{Desc}
-
-
-qDebug() $<$$<$ \char`\"{}wrote \char`\"{} $<$$<$ n $<$$<$ \char`\"{} bytes\char`\"{}; 
-
+\item[\hyperlink{todo__todo000014}{Todo}]adapt subclasses \end{Desc}
 
 
 Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{mdtAbstractPort}.
 
 
 
-Definition at line 792 of file mdtSerialPort.cpp.
+Definition at line 773 of file mdtSerialPort.cpp.
 
 
 

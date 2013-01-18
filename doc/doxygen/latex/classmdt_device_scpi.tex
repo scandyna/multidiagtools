@@ -1,0 +1,249 @@
+\hypertarget{classmdt_device_scpi}{
+\section{mdtDeviceScpi Class Reference}
+\label{classmdt_device_scpi}\index{mdtDeviceScpi@{mdtDeviceScpi}}
+}
+
+
+Base class for SCPI based instruments.  
+
+
+
+
+{\ttfamily \#include $<$mdtDeviceScpi.h$>$}
+
+
+
+Inheritance diagram for mdtDeviceScpi:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=178pt]{classmdt_device_scpi__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtDeviceScpi:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=328pt]{classmdt_device_scpi__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_device_scpi_a44c03151a6796e5c1efd64ef55f2d14d}{mdtDeviceScpi} (QObject $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Construct a SCPI device. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{
+\hyperlink{classmdt_port_manager}{mdtPortManager} $\ast$ \hyperlink{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}{portManager} ()}
+\label{classmdt_device_scpi_a7dc5ab8856a766a45bcc7e9cba0f54ca}
+
+\begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
+\begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_device_scpi_afd90eebcd990f1c259911523e5901a0f}{sendCommand} (const QByteArray \&command, int timeout=1000)
+\begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
+QByteArray \hyperlink{classmdt_device_scpi_afdb27e3a2a828a0bb0d40534b573c7c0}{sendQuery} (const QByteArray \&query, int writeTimeout=1000, int readTimeout=30000)
+\begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{waitOperationComplete} (int timeout, int interval)
+\begin{DoxyCompactList}\small\item\em Wait until operation is complete (Using $\ast$OPC? query) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_device_scpi_a6f7bd859a14eddbaab64f492777c1337}{
+\hyperlink{classmdt_usbtmc_port_manager}{mdtUsbtmcPortManager} $\ast$ {\bfseries pvUsbtmcPortManager}}
+\label{classmdt_device_scpi_a6f7bd859a14eddbaab64f492777c1337}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for SCPI based instruments. 
+
+Most of current instruments (Agilent, NI, ...) support SCPI command format.
+
+This class give some common functions requierd to handle such devices.
+
+Currently, only USBTMC port is supported. 
+
+Definition at line 37 of file mdtDeviceScpi.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_scpi_a44c03151a6796e5c1efd64ef55f2d14d}{
+\index{mdtDeviceScpi@{mdtDeviceScpi}!mdtDeviceScpi@{mdtDeviceScpi}}
+\index{mdtDeviceScpi@{mdtDeviceScpi}!mdtDeviceScpi@{mdtDeviceScpi}}
+\subsubsection[{mdtDeviceScpi}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceScpi::mdtDeviceScpi (
+\begin{DoxyParamCaption}
+\item[{QObject $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_scpi_a44c03151a6796e5c1efd64ef55f2d14d}
+
+
+Construct a SCPI device. 
+
+Will create and configure a USBTMC port manager. 
+
+connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(\hyperlink{classmdt_device_a5556423c2e2b3a3adcca5d4efb5af04e}{decodeReadenFrame(mdtPortTransaction)})); connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(\hyperlink{classmdt_device_ab77eb4c1bb50201e97a4dbd8b538659a}{setStateFromPortError(int)})); 
+
+
+
+Definition at line 28 of file mdtDeviceScpi.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{
+\index{mdtDeviceScpi@{mdtDeviceScpi}!connectToDevice@{connectToDevice}}
+\index{connectToDevice@{connectToDevice}!mdtDeviceScpi@{mdtDeviceScpi}}
+\subsubsection[{connectToDevice}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtDeviceScpi::connectToDevice (
+\begin{DoxyParamCaption}
+\item[{const {\bf mdtDeviceInfo} \&}]{devInfo}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}
+
+
+Search and connect to physical device. 
+
+Will scan available ports and open the first port that has device attached maching request.
+
+
+\begin{DoxyParams}{Parameters}
+{\em devInfo} & Requested device's informations. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A error listed in \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} (NoError on success) 
+\end{DoxyReturn}
+
+
+\hyperlink{classmdt_device_info}{mdtDeviceInfo} device;
+
+device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000005}{Todo}]Add DeviceNotFound error ? \end{Desc}
+
+
+
+
+Reimplemented from \hyperlink{classmdt_device_abab1b6e45af527880ce469ae318474c0}{mdtDevice}.
+
+
+
+Reimplemented in \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7d607a}{mdtDeviceU3606A}.
+
+
+
+Definition at line 59 of file mdtDeviceScpi.cpp.
+
+\hypertarget{classmdt_device_scpi_afd90eebcd990f1c259911523e5901a0f}{
+\index{mdtDeviceScpi@{mdtDeviceScpi}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!mdtDeviceScpi@{mdtDeviceScpi}}
+\subsubsection[{sendCommand}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceScpi::sendCommand (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{command, }
+\item[{int}]{timeout = {\ttfamily 1000}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_scpi_afd90eebcd990f1c259911523e5901a0f}
+
+
+Send a command to device. 
+
+Wait until it's possible to write to device, then send the command.
+
+Note that the wait will not break the GUI's event loop (see \hyperlink{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{mdtPortManager::waitOnWriteReady()} for details).
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & Command to send. \\
+\hline
+{\em timeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec90dc9239b3}{mdtUsbtmcPortManager::writeData()} for details). 
+\end{DoxyReturn}
+
+
+Definition at line 124 of file mdtDeviceScpi.cpp.
+
+\hypertarget{classmdt_device_scpi_afdb27e3a2a828a0bb0d40534b573c7c0}{
+\index{mdtDeviceScpi@{mdtDeviceScpi}!sendQuery@{sendQuery}}
+\index{sendQuery@{sendQuery}!mdtDeviceScpi@{mdtDeviceScpi}}
+\subsubsection[{sendQuery}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtDeviceScpi::sendQuery (
+\begin{DoxyParamCaption}
+\item[{const QByteArray \&}]{query, }
+\item[{int}]{writeTimeout = {\ttfamily 1000}, }
+\item[{int}]{readTimeout = {\ttfamily 30000}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_scpi_afdb27e3a2a828a0bb0d40534b573c7c0}
+
+
+Send a query to device. 
+
+Wait until it's possible to write to device, send the query and wait until a response is available or timeout.
+
+Note that the wait will not break the GUI's event loop.
+
+This method will not update internal I/O states. It's recommended to use \hyperlink{classmdt_device}{mdtDevice} functions if available.
+
+
+\begin{DoxyParams}{Parameters}
+{\em query} & Query to send. \\
+\hline
+{\em writeTimeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\hline
+{\em readTimeout} & Response timeout \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result as string (empty string on error) Note that \hyperlink{classmdt_frame_codec_scpi}{mdtFrameCodecScpi} can be helpful to decode returned result. 
+\end{DoxyReturn}
+
+
+Definition at line 129 of file mdtDeviceScpi.cpp.
+
+\hypertarget{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{
+\index{mdtDeviceScpi@{mdtDeviceScpi}!waitOperationComplete@{waitOperationComplete}}
+\index{waitOperationComplete@{waitOperationComplete}!mdtDeviceScpi@{mdtDeviceScpi}}
+\subsubsection[{waitOperationComplete}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDeviceScpi::waitOperationComplete (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout, }
+\item[{int}]{interval}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}
+
+
+Wait until operation is complete (Using $\ast$OPC? query) 
+
+Currently, this method queries device with $\ast$OPC?.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} Note that timeout must be a multiple of internal. \\
+\hline
+{\em internal} & Interval between 2 $\ast$OPC? query \mbox{[}ms\mbox{]} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+internal $>$ 0 
+\end{DoxyPrecond}
+
+
+Definition at line 134 of file mdtDeviceScpi.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtdevice/mdtDeviceScpi.h\item 
+src/mdtdevice/mdtDeviceScpi.cpp\end{DoxyCompactItemize}

@@ -65,12 +65,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a>, including all inherited members.<table>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17da957445cd510a5c4e6964e9b79e73af4d">ASCII</a> enum value</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17daad91226f87cea7fab38f5cc7618f424c">BYTE</a> enum value</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_ascii.html#a1dc1b7eda5e034c41b27c431227881e1">clean</a>()</td><td><a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_ascii.html#aca3ccdf0bc617747e99ed1672344b880">convertData</a>(const QString &amp;data) const </td><td><a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#aff616991e6223aa51f265cf7e464be12">decodeError</a>(QByteArray &amp;data)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899">decodeError</a>(const QByteArray &amp;data)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a6ddd1b8e23252dc7f03c279a030cb36f">decodeIdn</a>(const QByteArray &amp;data)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a327afabbb6da25e31523ef4baa28cc87">decodeIEEEblock</a>(QString data)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>decodeIEEEdata</b>(QByteArray data) (defined in <a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a>)</td><td><a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a0123b42b9e351b0ef3c13d34a5c4d45e">decodeIEEEblock</a>(const QByteArray &amp;data, waveform_format format)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">decodeIEEEdataAscii</a>(const QByteArray &amp;data)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">decodeIEEEdataByte</a>(const QByteArray &amp;data)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a37a1703b6daee6f6bf91c6afb46191b3">decodeValues</a>(const QByteArray &amp;data, QString sep=&quot;:&quot;)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtFrameCodec</b>() (defined in <a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a>)</td><td><a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtFrameCodecAscii</b>() (defined in <a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a>)</td><td><a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a></td><td></td></tr>
@@ -84,6 +87,8 @@ This is the complete list of members for <a class="el" href="classmdt_frame_code
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_ascii.html#a771d983498fb298595afbb97ee7a40f1">setEofSeq</a>(QByteArray &amp;eofSeq)</td><td><a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_ascii.html#a0e8b9664e1451400e1b955c5180c0de8">trim</a>()</td><td><a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7">values</a>()</td><td><a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">waveform_format</a> enum name</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17da7f4b47afe74504dea43bb04c8c6fbe58">WORD</a> enum value</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtFrameCodec</b>() (defined in <a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a>)</td><td><a class="el" href="classmdt_frame_codec.html">mdtFrameCodec</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtFrameCodecAscii</b>() (defined in <a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a>)</td><td><a class="el" href="classmdt_frame_codec_ascii.html">mdtFrameCodecAscii</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtFrameCodecScpi</b>() (defined in <a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a>)</td><td><a class="el" href="classmdt_frame_codec_scpi.html">mdtFrameCodecScpi</a></td><td><code> [virtual]</code></td></tr>
@@ -102,7 +107,7 @@ This is the complete list of members for <a class="el" href="classmdt_frame_code
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Dec 21 2012 18:52:46 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
