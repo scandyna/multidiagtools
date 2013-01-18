@@ -283,6 +283,7 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
   // Send the INITIATE_ABORT_BULK_IN request and wait on response
   status = 0x81;  // STATUS_TRANSFER_NO_IN_PROGRESS
   while(status == 0x81){
+    qDebug() << "*-* send INITIATE_ABORT_BULK_IN ...";
     retVal = sendInitiateAbortBulkInRequest(bTag);
     if(retVal < 0){
       // Error logged by USB port mnanager
@@ -303,7 +304,7 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
     }
     frame = frames.at(0);
     if(frame.size() != 2){
-      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected response size", mdtError::Error);
+      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received " + QString::number(frame.size()) + ")", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
       e.commit();
       return mdtAbstractPort::UnhandledError;
@@ -316,9 +317,11 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
   }
   if(status != 0x01){ // 0x01: STATUS_SUCCESS
     // No transfer in progress (device FIFO empty)
+    qDebug() << "*-* Device FIFO empty";
     return 0;
   }
   //Send a read request and wait on frame
+  qDebug() << "*-* Flushing device ...";
   sendSingleReadTransferRequest();
   ///waitOnFrame(bTag, 5000);
   waitReadenFrame(5000);

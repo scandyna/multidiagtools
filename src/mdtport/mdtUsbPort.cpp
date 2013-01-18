@@ -144,13 +144,14 @@ void mdtUsbPort::addControlRequest(mdtFrameUsbControl *frame, bool setwIndexAsbI
     frame->setwIndex(pvbInterfaceNumber);
   }
   pvControlQueryFrames.enqueue(frame);
+  submitControlQuery();
 }
 
 void mdtUsbPort::submitControlQuery()
 {
   int err;
   error_t portError;
-  mdtFrameUsbControl *frame;
+  ///mdtFrameUsbControl *frame;
 
   // If transfer is null, port was closed
   if(pvControlTransfer == 0){
@@ -164,10 +165,10 @@ void mdtUsbPort::submitControlQuery()
   if(pvControlQueryFrames.size() < 1){
     return;
   }
-  frame = pvControlQueryFrames.dequeue();
-  Q_ASSERT(frame != 0);
+  pvCurrentControlFrame = pvControlQueryFrames.dequeue();
+  Q_ASSERT(pvCurrentControlFrame != 0);
   // Check that we have a large enough buffer
-  if(pvControlBufferSize < frame->size()){
+  if(pvControlBufferSize < pvCurrentControlFrame->size()){
     mdtError e(MDT_USB_IO_ERROR, "Unable to init control transfert, internal buffer is to small", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
@@ -175,7 +176,7 @@ void mdtUsbPort::submitControlQuery()
     return;
   }
   // Copy data to write
-  memcpy(pvControlBuffer, frame->data(), frame->size());
+  memcpy(pvControlBuffer, pvCurrentControlFrame->data(), pvCurrentControlFrame->size());
   // Fill the transfer
   libusb_fill_control_transfer(pvControlTransfer, pvHandle, (unsigned char*)pvControlBuffer, controlTransferCallback, (void*)this, pvWriteTimeout);
   // Submit transfer
@@ -200,7 +201,7 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   Q_ASSERT(transfer != 0);
   Q_ASSERT(transfer->user_data != 0);
 
-  mdtFrameUsbControl *frame;
+  ///mdtFrameUsbControl *frame;
   libusb_control_setup *controlSetup;
   char *controlData;
 
@@ -209,9 +210,9 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   // Update flag here (else it will stay true on error)
   port->pvControlTransferPending = false;
   // Take current pending frame
-  Q_ASSERT(port->controlQueryFrames().size() > 0);
-  frame = port->controlQueryFrames().dequeue();
-  Q_ASSERT(frame != 0);
+  ///Q_ASSERT(port->controlQueryFrames().size() > 0);
+  ///frame = port->controlQueryFrames().dequeue();
+  Q_ASSERT(port->pvCurrentControlFrame != 0);
   /*
    * Check if some error occured.
    * On most error, we put frame back to pool.
@@ -220,21 +221,24 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     qDebug() << "mdtUsbPort::controlTransferCallback(): timeout";
     port->updateReadTimeoutState(true);
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(ControlTimeout);
     return;
   }
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
     qDebug() << "mdtUsbPort::controlTransferCallback(): cancelled";
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(ControlCanceled);
     return;
   }
   // Check if device is disconnected (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_NO_DEVICE){
     qDebug() << "mdtUsbPort::controlTransferCallback(): disconnected";
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(Disconnected);
     return;
   }
@@ -243,7 +247,8 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
     mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_STALL during a control transfer", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(UnhandledError);
     return;
   }
@@ -252,7 +257,8 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
     mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_ERROR during a control transfer", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(UnhandledError);
     return;
   }
@@ -261,7 +267,8 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
     mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_OVERFLOW during a control transfer", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(UnhandledError);
     return;
   }
@@ -270,24 +277,27 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
     mdtError e(MDT_USB_IO_ERROR, "Transfer status LIBUSB_TRANSFER_SHORT_NOT_OK during a control transfer", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtUsbPort");
     e.commit();
-    port->controlFramesPool().enqueue(frame);
+    port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
+    port->pvCurrentControlFrame = 0;
     port->addError(UnhandledError);
     return;
   }
   // All is Ok, copy data and enqueue to responses queue
-  frame->clear();
-  frame->clearSub();
+  port->pvCurrentControlFrame->clear();
+  port->pvCurrentControlFrame->clearSub();
   controlSetup =  libusb_control_transfer_get_setup(transfer);
   Q_ASSERT(controlSetup != 0);
-  frame->setbmRequestType(controlSetup->bmRequestType);
-  frame->setbRequest(controlSetup->bRequest);
-  frame->setwValue(controlSetup->wValue);
-  frame->setwIndex(controlSetup->wIndex);
-  frame->setwLength(controlSetup->wLength);
+  port->pvCurrentControlFrame->setbmRequestType(controlSetup->bmRequestType);
+  port->pvCurrentControlFrame->setbRequest(controlSetup->bRequest);
+  port->pvCurrentControlFrame->setwValue(controlSetup->wValue);
+  port->pvCurrentControlFrame->setwIndex(controlSetup->wIndex);
+  port->pvCurrentControlFrame->setwLength(controlSetup->wLength);
   controlData = (char*)libusb_control_transfer_get_data(transfer);
-  frame->append(controlData, transfer->actual_length);
-  port->controlResponseFrames().enqueue(frame);
+  port->pvCurrentControlFrame->append(controlData, transfer->actual_length);
   port->lockMutex();
+  port->controlResponseFrames().enqueue(port->pvCurrentControlFrame);
+  port->pvCurrentControlFrame = 0;
+  ///port->lockMutex();
   port->submitControlQuery();
   port->unlockMutex();
 }
@@ -347,6 +357,27 @@ mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
 QQueue<mdtFrameUsbControl*> &mdtUsbPort::controlResponseFrames()
 {
   return pvControlResponseFrames;
+}
+
+void mdtUsbPort::requestReadUntilShortPacketReceived()
+{
+  error_t portError;
+
+  pvReadUntilShortPacketReceivedRequestPending = true;
+  // Init the first transfer to wake up thread
+  portError = initReadTransfer(pvReadBufferSize);
+  if(portError != NoError){
+    addError(portError);
+  }
+}
+
+bool mdtUsbPort::readUntilShortPacketReceivedRequestPending()
+{
+  if(pvReadUntilShortPacketReceivedRequestPending){
+    pvReadUntilShortPacketReceivedRequestPending = false;
+    return true;
+  }
+  return false;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
@@ -539,21 +570,25 @@ qint64 mdtUsbPort::read(char *data, qint64 maxSize)
   return retLen;
 }
 
+/**
 void mdtUsbPort::setSingleReadTransferRequest()
 {
   pvSingleReadTransferRequestPending = true;
   pvWriteFrameAvailable.wakeAll();
 }
-
+*/
+/**
 bool mdtUsbPort::singleReadTransferRequestPending() const
 {
   return pvSingleReadTransferRequestPending;
 }
-
+*/
+/**
 void mdtUsbPort::resetSingleReadTransferRequest()
 {
   pvSingleReadTransferRequestPending = false;
 }
+*/
 
 int mdtUsbPort::readBufferSize() const
 {
@@ -1511,6 +1546,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   pvControlBuffer = new char[pvControlBufferSize];
   /// \todo How many frames in control pool ??
   pvControlFramesPool.enqueue(new mdtFrameUsbControl);
+  pvCurrentControlFrame = 0;
   // Alloc read transfer and buffer
   pvReadTransfer = libusb_alloc_transfer(0);
   if(pvReadTransfer == 0){
@@ -1568,7 +1604,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
   // Set some flags
   pvControlTransferPending = false;
   pvReadTransferPending = false;
-  pvSingleReadTransferRequestPending = false;
+  ///pvSingleReadTransferRequestPending = false;
+  pvReadUntilShortPacketReceivedRequestPending = false;
   pvWriteTransferPending = false;
   pvMessageInTransferPending = false;
 

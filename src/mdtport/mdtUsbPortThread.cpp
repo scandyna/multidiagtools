@@ -50,6 +50,44 @@ bool mdtUsbPortThread::isReader() const
   return true;
 }
 
+mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxReadTransfers)
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtAbstractPort::error_t portError;
+  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+  char *buffer = new char[port->readBufferSize()];
+  int readen;
+
+  while(maxReadTransfers > 0){
+    portError = port->initReadTransfer(port->readBufferSize());
+    if(portError != mdtAbstractPort::NoError){
+      delete[] buffer;
+      return portError;
+    }
+    portError = port->handleUsbEvents();
+    if(portError != mdtAbstractPort::NoError){
+      delete[] buffer;
+      return portError;
+    }
+    readen = port->read(buffer, port->readBufferSize());
+    qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
+    if(readen < 0){
+      delete[] buffer;
+      return (mdtAbstractPort::error_t)readen;
+    }
+    if(readen < port->readBufferSize()){
+      delete[] buffer;
+      return mdtAbstractPort::NoError;
+    }
+    maxReadTransfers--;
+  }
+  delete[] buffer;
+
+  return mdtAbstractPort::ReadTimeout;
+}
+
 /**
 mdtFrame *mdtUsbPortThread::getNewFrameWrite()
 {
@@ -159,9 +197,9 @@ void mdtUsbPortThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  int pollIntervall;
-  bool readPollMode;
-  int interframeTime = 0;
+  ///int pollIntervall;
+  ///bool readPollMode;
+  ///int interframeTime = 0;
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
   mdtAbstractPort::error_t portError;
@@ -169,7 +207,7 @@ void mdtUsbPortThread::run()
   int i;
   mdtUsbPort *port;
   bool waitAnAnswer = false;
-  int toRead = 0;
+  ///int toRead = 0;
   int reconnectTimeout;
   int reconnectMaxRetry;
   qint64 written;
@@ -186,9 +224,9 @@ void mdtUsbPortThread::run()
   // Set the running flag
   pvRunning = true;
   /// Get setup \todo Take from config, or something
-  pollIntervall = 50;
-  readPollMode = false;
-  interframeTime = pvPort->config().writeInterframeTime();
+  ///pollIntervall = 50;
+  ///readPollMode = false;
+  ///interframeTime = pvPort->config().writeInterframeTime();
   reconnectTimeout = 5000;
   reconnectMaxRetry = 5;
   // Get a frame for read
@@ -347,6 +385,29 @@ void mdtUsbPortThread::run()
             notifyError(portError);
             break;
           }
+        }
+      }
+    }
+    // Check about device flush
+    if(port->readUntilShortPacketReceivedRequestPending()){
+      portError = readUntilShortPacketReceived(100);
+      if(portError != mdtAbstractPort::NoError){
+        // Check about stoping
+        if(!pvRunning){
+          break;
+        }
+        // Check about disconnection
+        if(portError == mdtAbstractPort::Disconnected){
+          // Try to reconnect
+          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            break;
+          }
+        }else{
+          // stop
+          notifyError(portError);
+          break;
         }
       }
     }

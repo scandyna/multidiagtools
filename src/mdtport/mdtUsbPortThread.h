@@ -60,6 +60,17 @@ class mdtUsbPortThread : public mdtPortThread
 
  private:
 
+  /*! \brief Read until a short frame is received
+   *
+   * \param maxReadTransfers Maximum of read transfers before return
+   *                          (If device returns never a short frame,
+   *                          this method will return after maxReadTransfers).
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   *          If maxReadTransfers is reached, ReadTimeout is returned.
+   * \pre Port must be set with setPort() before using this method.
+   */
+  mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
+
   /*! \brief Get a new frame for writing data to port
    *
    * If no frame is available for write, this method

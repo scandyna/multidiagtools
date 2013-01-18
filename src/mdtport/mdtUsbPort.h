@@ -138,7 +138,7 @@ class mdtUsbPort : public mdtAbstractPort
    *  and no control transfer is pending,
    *  a transfer will be submitted.
    *
-   * This method is called by addControlRequest() and completeControlResponse()
+   * This method is called by addControlRequest() and controlTransferCallback()
    *  and should not be used directly.
    *
    * The mutex must be locked before calling this method,
@@ -190,7 +190,7 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * Mutex is not handled by this method
    */
-  void setSingleReadTransferRequest();
+  ///void setSingleReadTransferRequest();
 
   /*! \brief Check if a single read request is pending
    *
@@ -199,11 +199,31 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * Mutex is not handled by this method.
    */
-  bool singleReadTransferRequestPending() const;
+  ///bool singleReadTransferRequestPending() const;
 
   /*! \brief Reset single read transfer request flag
    */
-  void resetSingleReadTransferRequest();
+  ///void resetSingleReadTransferRequest();
+
+  
+  
+  /*! \brief Request to read until a short packet is received
+   *
+   * The mutex must be locked before calling this method,
+   *  and still locked inside.
+   */
+  void requestReadUntilShortPacketReceived();
+
+  /*! \brief Check if a request to read until a short packet is received is pending
+   *
+   * Flag will be cleared after a call of this method.
+   *
+   * This method is used by USB thread, and should
+   *  not be used else.
+   *
+   * Mutex is not handled by this method.
+   */
+  bool readUntilShortPacketReceivedRequestPending();
 
   /*! \brief Get read buffer size
    *
@@ -509,6 +529,7 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer *pvControlTransfer;
   bool pvControlTransferPending;       // Flag to see if a transfer is pending
   ///int pvControlTransferComplete;       // Will be stored in transfer struct
+  mdtFrameUsbControl *pvCurrentControlFrame;
   // Frames queues
   QQueue<mdtFrameUsbControl*> pvControlFramesPool;
   QQueue<mdtFrameUsbControl*> pvControlQueryFrames;
@@ -523,7 +544,8 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer *pvReadTransfer;
   bool pvReadTransferPending;       // Flag to see if a transfer is pending
   ///int pvReadTransferComplete;       // Will be stored in transfer struct
-  bool pvSingleReadTransferRequestPending;  // See singleReadTransferRequestPending() and addSingleReadTransferRequest()
+  ///bool pvSingleReadTransferRequestPending;  /// See singleReadTransferRequestPending() and addSingleReadTransferRequest()
+  bool pvReadUntilShortPacketReceivedRequestPending;
   /*
    * Data bulk/interrupt OUT endpoint members
    */

@@ -191,7 +191,8 @@ void mdtUsbPortManager::sendSingleReadTransferRequest()
   Q_ASSERT(port != 0);
 
   port->lockMutex();
-  port->setSingleReadTransferRequest();
+  ///port->setSingleReadTransferRequest();
+  port->requestReadUntilShortPacketReceived();
   port->unlockMutex();
 }
 
@@ -214,7 +215,6 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
     e.commit();
     return mdtAbstractPort::WritePoolEmpty;
   }
-  ///frame = dynamic_cast<mdtFrameUsbControl*> (port->controlFramesPool().dequeue());
   frame = port->controlFramesPool().dequeue();
   Q_ASSERT(frame != 0);
   frame->clear();
