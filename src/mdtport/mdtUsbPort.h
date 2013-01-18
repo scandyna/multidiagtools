@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -44,6 +44,7 @@
  *   - VID=0x1234:PID=0x5678:SID=ABC1234:bInterfaceNumber=1 (Open the first port with given Vendor ID, Product ID and Serial ID. bInterfaceNumber is 1)
  * The last example in the above list is the format returned by mdtUsbPortManager::scan().
  *
+ * \todo Not really true...
  * For read and write of data, the mdtAbstractPort's API is used.
  *
  * The control transfer is a little bit different:
@@ -51,21 +52,14 @@
  *     it locks the mutex using lockMutex(), then it takes a frame
  *     in pool with controlFramesPool().
  *     Finaly, query is submitted using addControlRequest(), witch will
- *     wake the write wait condition, and main thread unlocks the mutex with unlockMutex().
- *  - The thread calls handleControlQueries() periodically, witch will init
- *     a new control transfer if a query is available in queries queue.
- *  - Each time waitEventWriteReady() and waitForReadyRead() are called,
- *     handleControlResponses() is called to check if a control response
- *     is available. If true, it will be enqueued in control responses queue.
+ *     submit the frame, and main thread unlocks the mutex with unlockMutex().
  *  - The thread periodically checks if a response is available using controlResponseFrames()
- *     queue's size, and emit \todo signalName if a control response is available.
+ *     queue's size, and emit controlResponseReaden() if a control response is available.
  *
  * If a additional (to read and write) interrupt IN endpoint exists, it is handled as message IN as follow:
- *  - Each time waitEventWriteReady() or waitForReadyRead() is called,
- *     handleMessageIn() is called, witch will initiate a new transfer if needed.
- *     If a transfer is complete, frame will be enqueued in message IN queue.
  *  - The thread periodically checks if a message IN is available using messageInFrames()
- *     queue's size, and emit \todo signalName if a message IN is available.
+ *     queue's size, and emit messageInReaden() if a message IN is available.
+ *  - A new transfer is reinitialized by thread.
  */
 class mdtUsbPort : public mdtAbstractPort
 {
@@ -180,33 +174,6 @@ class mdtUsbPort : public mdtAbstractPort
    */
   QQueue<mdtFrameUsbControl*> &controlResponseFrames();
 
-  
-  
-  /*! \brief Request thread to process one read transfer
-   *
-   * This is, for example, used by USBTMC bulk in abort process.
-   *  If such request is pending, thread will do a single
-   *  read transfer.
-   *
-   * Mutex is not handled by this method
-   */
-  ///void setSingleReadTransferRequest();
-
-  /*! \brief Check if a single read request is pending
-   *
-   * This method is used by USB thread, and should
-   *  not be used else.
-   *
-   * Mutex is not handled by this method.
-   */
-  ///bool singleReadTransferRequestPending() const;
-
-  /*! \brief Reset single read transfer request flag
-   */
-  ///void resetSingleReadTransferRequest();
-
-  
-  
   /*! \brief Request to read until a short packet is received
    *
    * The mutex must be locked before calling this method,
@@ -303,7 +270,6 @@ class mdtUsbPort : public mdtAbstractPort
    *
    * \return NoError or a error from mdtAbstractPort::error_t
    */
-  ///error_t initMessageInTransfer(qint64 maxSize);
   error_t initMessageInTransfer();
 
   /*! \brief Transfer callback for message in (additional interrupt) endpoint
@@ -357,7 +323,6 @@ class mdtUsbPort : public mdtAbstractPort
    */
   void addFrameToWrite(mdtFrame *frame);
 
-  /// \todo ioPresses signal ?
   /*! \brief Request a new bulk/interrupt out transfer
    *
    * Will fill and init a new bulk/interrupt (depending setup) transfer
@@ -528,7 +493,6 @@ class mdtUsbPort : public mdtAbstractPort
   int pvControlBufferSize;
   libusb_transfer *pvControlTransfer;
   bool pvControlTransferPending;       // Flag to see if a transfer is pending
-  ///int pvControlTransferComplete;       // Will be stored in transfer struct
   mdtFrameUsbControl *pvCurrentControlFrame;
   // Frames queues
   QQueue<mdtFrameUsbControl*> pvControlFramesPool;
@@ -543,8 +507,6 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer_type pvReadTransfertType;
   libusb_transfer *pvReadTransfer;
   bool pvReadTransferPending;       // Flag to see if a transfer is pending
-  ///int pvReadTransferComplete;       // Will be stored in transfer struct
-  ///bool pvSingleReadTransferRequestPending;  /// See singleReadTransferRequestPending() and addSingleReadTransferRequest()
   bool pvReadUntilShortPacketReceivedRequestPending;
   /*
    * Data bulk/interrupt OUT endpoint members
@@ -555,7 +517,6 @@ class mdtUsbPort : public mdtAbstractPort
   libusb_transfer_type pvWriteTransfertType;
   libusb_transfer *pvWriteTransfer;
   bool pvWriteTransferPending;      // Flag to see if a transfer is pending
-  ///int pvWriteTransferComplete;      // Will be stored in transfer struct
   /*
    * Some devices have a additional interrupt IN endpoint
    *  for urgent messages. Other use interrupt IN endpoint
@@ -567,12 +528,10 @@ class mdtUsbPort : public mdtAbstractPort
   quint8 pvMessageInEndpointAddress;
   libusb_transfer *pvMessageInTransfer;
   bool pvMessageInTransferPending;  // Flag to see if a transfer is pending
-  ///int pvMessageInTransferComplete;  // Will be stored in transfer struct
   // Frames queues
   QQueue<mdtFrame*> pvMessageInFramesPool;  // Frames pool
   QQueue<mdtFrame*> pvMessageInFrames;      // Incomming message frames
-  
-  
+
   QQueue<error_t> pvErrors;  // Set by transfer callbacks and used by thread for notifications
 };
 

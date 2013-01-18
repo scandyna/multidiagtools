@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -36,10 +36,9 @@ class mdtUsbPortThread : public mdtPortThread
 
  public:
 
+  /*! \brief Constructor
+   */
   mdtUsbPortThread(QObject *parent = 0);
-
-  // Overload of mdtPortThread
-  ///void stop();
 
   /*! \brief Returns true if this thread reads data and send the newFrameReaden() signal
    *
@@ -70,48 +69,6 @@ class mdtUsbPortThread : public mdtPortThread
    * \pre Port must be set with setPort() before using this method.
    */
   mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
-
-  /*! \brief Get a new frame for writing data to port
-   *
-   * If no frame is available for write, this method
-   *  will block the caller thread until one is avaliable,
-   *  or another request happens (typical: control query).
-   *
-   * Note about port mutex handling:<br>
-   *  The port mutext must be locked before calling this method.
-   *  Internally, it will be unlocked during wait, and will be
-   *  locked again. So, the port mutex is allways locked when this
-   *  method returns.
-   *
-   * \return A pointer to a new frame, or Null on another request.
-   *
-   * \pre Port must be set with setPort() before using this method.
-   */
-  ///mdtFrame *getNewFrameWrite();
-
-  /*! \brief Write data to port
-   *
-   * This is a helper method to write a frame to the USB port.
-   *
-   * Note about port mutex handling:<br>
-   *  The port mutext must be locked before calling this method.
-   *  Internally, it will be unlocked during wait, and will be
-   *  locked again. So, the port mutex is allways locked when this
-   *  method returns.
-   *
-   * \param port A valid instance of mdtUsbPort
-   * \param frame Data stored in thos frame will be written to port.
-   * \param maxWriteTry Some port can return 0 byte or a timeout error if busy. If this happens,
-   *                     this method will sleep some time an try a write call again until
-   *                     write call works successfull or maxWriteTry is reached.
-   *
-   * \return True on successfull transfert, or false on error or by stop request.
-   *          If this method returns false, the thread should be stopped.
-   *
-   * \pre port must be set with setPort() before using this method.
-   * \pre frame must be a valid pointer (not Null).
-   */
-  ///mdtAbstractPort::error_t writeToPort(mdtUsbPort *port, mdtFrame *frame, int maxWriteTry = 10);
 
   void run();
 };
