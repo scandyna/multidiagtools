@@ -46,16 +46,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
   int readen;
 
   while(maxReadTransfers > 0){
-    portError = port->initReadTransfer(port->readBufferSize());
-    if(portError != mdtAbstractPort::NoError){
-      delete[] buffer;
-      return portError;
-    }
-    portError = port->handleUsbEvents();
-    if(portError != mdtAbstractPort::NoError){
-      delete[] buffer;
-      return portError;
-    }
     readen = port->read(buffer, port->readBufferSize());
     qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
     if(readen < 0){
@@ -65,6 +55,18 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
     if(readen < port->readBufferSize()){
       delete[] buffer;
       return mdtAbstractPort::NoError;
+    }
+    qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , init transfer ...";
+    portError = port->initReadTransfer(port->readBufferSize());
+    if(portError != mdtAbstractPort::NoError){
+      delete[] buffer;
+      return portError;
+    }
+    portError = port->handleUsbEvents();
+    if(portError != mdtAbstractPort::NoError){
+      qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , error " << portError;
+      delete[] buffer;
+      return portError;
     }
     maxReadTransfers--;
   }
@@ -178,6 +180,7 @@ void mdtUsbPortThread::run()
     }
     // Check about write endpoint flush
     if((writeFrame != 0)&&(port->flushOutRequestPending())){
+      qDebug() << "USBTHD: flushOut";
       port->writeFramesPool().enqueue(writeFrame);
       writeFrame = 0;
     }else{
@@ -254,11 +257,6 @@ void mdtUsbPortThread::run()
         }
       }
     }
-    // Check about read endpoint flush
-    if((readFrame != 0)&&(port->flushInRequestPending())){
-      port->readFramesPool().enqueue(readFrame);
-      readFrame = 0;
-    }
     // Check about device flush
     if(port->readUntilShortPacketReceivedRequestPending()){
       portError = readUntilShortPacketReceived(100);
@@ -283,19 +281,18 @@ void mdtUsbPortThread::run()
       }
       emit(readUntilShortPacketReceivedFinished());
     }
-    // read/store available data
-    /**
-    if(readFrame == 0){
-      if(pvRunning){
-        mdtError e(MDT_USB_IO_ERROR, "readFrame is Null, aborting. This is a bug", mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtUsbPortThread");
-        e.commit();
-        notifyError(mdtAbstractPort::UnhandledError);
-      }
-      break;
+    Q_ASSERT(readFrame != 0);
+    // Check about read endpoint flush
+    ///if((readFrame != 0)&&(port->flushInRequestPending())){
+    if(port->flushInRequestPending()){
+      qDebug() << "USBTHD: flushIn";
+      port->readFramesPool().enqueue(readFrame);
+      readFrame = getNewFrameRead();
+      // We do nothing else, return idle
+      continue;
     }
-    */
-    if(readFrame != 0){
+    // read/store available data
+    ///if(readFrame != 0){
       n = -1;
       if(!port->readTimeoutOccured()){
         n = readFromPort(&readFrame);
@@ -347,7 +344,7 @@ void mdtUsbPortThread::run()
           }
         }
       }
-    }
+    ///}
   }
 
   qDebug() << "USBTHD: cleanup ...";

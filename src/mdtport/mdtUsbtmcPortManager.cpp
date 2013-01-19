@@ -85,6 +85,7 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
   return portInfoList;
 }
 
+/// \todo adjoust timeout
 int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
 {
   // Wait until data can be sent
@@ -95,6 +96,7 @@ int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
   return writeData(command);
 }
 
+/// \todo adjoust timeouts
 QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
 {
   int bTag;
@@ -110,6 +112,7 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
     return QByteArray();
   }
   // Wait until more data can be sent
+  /// \todo adjoust timeout
   if(!waitOnWriteReady(writeTimeout)){
     return QByteArray();
   }
@@ -270,7 +273,6 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
 
 }
 
-/// \todo Should we flushIn() first ?
 int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
 {
   Q_ASSERT(pvPort != 0);
@@ -282,7 +284,6 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
 
   // Flush all endpoints + internal buffers
   flush();
-  /// \todo Implement flushIn, flushOut, flush in portmanager, witch calls port's flush + clear internal queues
   // Send the INITIATE_ABORT_BULK_IN request and wait on response
   status = 0x81;  // STATUS_TRANSFER_NO_IN_PROGRESS
   while(status == 0x81){
@@ -292,7 +293,7 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
       // Error logged by USB port manager
       return retVal;
     }
-    if(!waitReadenControlResponse(5000)){
+    if(!waitReadenControlResponse()){
       mdtError e(MDT_USB_IO_ERROR, "Timeout by INITIATE_ABORT_BULK_IN request", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
       e.commit();
@@ -338,7 +339,7 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
       // Error logged by USB port manager
       return retVal;
     }
-    if(!waitReadenControlResponse(5000)){
+    if(!waitReadenControlResponse()){
       mdtError e(MDT_USB_IO_ERROR, "Timeout by CHECK_ABORT_BULK_IN_STATUS request", mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
       e.commit();
@@ -369,7 +370,10 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
       wait(100);
     }
   }
+  // We are finished here, cancel portmanager wait methods
+  cancelReadWait();
 
+  qDebug() << "*-* Abort bulk in END";
   return 0;
 }
 
@@ -435,6 +439,168 @@ int mdtUsbtmcPortManager::sendCheckAbortBulkInStatusRequest(quint8 bTag)
   return bTag;
 }
 
+/// \todo Finish and test
+int mdtUsbtmcPortManager::abortBulkOut(quint8 bTag)
+{
+  Q_ASSERT(pvPort != 0);
+
+  int retVal;
+  QList<mdtFrameUsbControl> frames;
+  mdtFrameUsbControl frame;
+  quint8 status;
+
+  // Flush all endpoints + internal buffers
+  flush();
+  // Send the INITIATE_ABORT_BULK_OUT request and wait on response
+  status = 0x81;  // STATUS_TRANSFER_NO_IN_PROGRESS
+  while(status == 0x81){
+    qDebug() << "*-* send INITIATE_ABORT_BULK_OUT ...";
+    retVal = sendInitiateAbortBulkOutRequest(bTag);
+    if(retVal < 0){
+      // Error logged by USB port manager
+      return retVal;
+    }
+    if(!waitReadenControlResponse()){
+      mdtError e(MDT_USB_IO_ERROR, "Timeout by INITIATE_ABORT_BULK_OUT request", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::ControlTimeout;
+    }
+    frames = readenControlResponses();
+    if(frames.size() != 1){
+      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_OUT returned unexpected amount of responses", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::UnhandledError;
+    }
+    frame = frames.at(0);
+    if(frame.size() != 2){
+      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_OUT returned unexpected response size (expected 2, received " + QString::number(frame.size()) + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::UnhandledError;
+    }
+    // Check status
+    status = frame.at(0);
+    if(status == 0x81){ // STATUS_TRANSFER_NO_IN_PROGRESS
+      wait(100);
+    }
+  }
+  qDebug() << "offset 0: 0x" << hex << (quint8)frame.at(0);
+  qDebug() << "offset 1: 0x" << hex << (quint8)frame.at(1);
+  
+  if(status != 0x01){ // 0x01: STATUS_SUCCESS
+    // No transfer in progress
+    qDebug() << "*-* Device FIFO empty";
+    return 0;
+  }
+  // Send the CHECK_ABORT_BULK_OUT_STATUS request and wait on response
+  status = 0x02;  // STATUS_PENDING
+  while(status == 0x02){
+    qDebug() << "*-* send CHECK_ABORT_BULK_OUT_STATUS ...";
+    retVal = sendCheckAbortBulkOutStatusRequest(bTag);
+    if(retVal < 0){
+      // Error logged by USB port manager
+      return retVal;
+    }
+    if(!waitReadenControlResponse()){
+      mdtError e(MDT_USB_IO_ERROR, "Timeout by CHECK_ABORT_BULK_OUT_STATUS request", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::ControlTimeout;
+    }
+    frames = readenControlResponses();
+    if(frames.size() != 1){
+      mdtError e(MDT_USB_IO_ERROR, "CHECK_ABORT_BULK_OUT_STATUS returned unexpected amount of responses", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::UnhandledError;
+    }
+    frame = frames.at(0);
+    if(frame.size() != 5){
+      mdtError e(MDT_USB_IO_ERROR, "CHECK_ABORT_BULK_OUT_STATUS returned unexpected response size (expected 5, received " + QString::number(frame.size()) + ")", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+      e.commit();
+      return mdtAbstractPort::UnhandledError;
+    }
+    // Check bmAbortBulkIn.D0
+    if((quint8)frame.at(1) & 0x01){
+      qDebug() << "*-* Flushing device ...";
+      readUntilShortPacketReceived();
+    }
+    // Check status
+    status = frame.at(0);
+    if(status == 0x02){ // STATUS_PENDING
+      wait(100);
+    }
+  }
+  // Clear halt
+  /// \todo Implement clear halt
+
+}
+
+int mdtUsbtmcPortManager::sendInitiateAbortBulkOutRequest(quint8 bTag)
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtFrameUsbControl frame;
+  mdtUsbPort *port;
+  int retVal;
+
+  // We need a mdtUsbPort object
+  port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+
+  // Setup frame
+  frame.setDirectionDeviceToHost(true);
+  frame.setRequestType(mdtFrameUsbControl::RT_CLASS);
+  frame.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
+  frame.setbRequest(1);   // INITIATE_ABORT_BULK_OUT
+  frame.setwValue(bTag);  // D7..D0: bTag
+  port->lockMutex();
+  frame.setwIndex(port->currentWriteEndpointAddress());   // Endpoint OUT
+  port->unlockMutex();
+  frame.setwLength(0x02);
+  frame.encode();
+  retVal = sendControlRequest(frame);
+  if(retVal < 0){
+    return retVal;
+  }
+
+  return bTag;
+}
+
+int mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest(quint8 bTag)
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtFrameUsbControl frame;
+  mdtUsbPort *port;
+  int retVal;
+
+  // We need a mdtUsbPort object
+  port = dynamic_cast<mdtUsbPort*>(pvPort);
+  Q_ASSERT(port != 0);
+
+  // Setup frame
+  frame.setDirectionDeviceToHost(true);
+  frame.setRequestType(mdtFrameUsbControl::RT_CLASS);
+  frame.setRequestRecipient(mdtFrameUsbControl::RR_ENDPOINT);
+  frame.setbRequest(2);   // CHECK_ABORT_BULK_OUT_STATUS
+  frame.setwValue(0);
+  port->lockMutex();
+  frame.setwIndex(port->currentWriteEndpointAddress());   // Endpoint OUT
+  port->unlockMutex();
+  frame.setwLength(0x05);
+  frame.encode();
+  retVal = sendControlRequest(frame);
+  if(retVal < 0){
+    return retVal;
+  }
+
+  return bTag;
+}
+
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
@@ -460,7 +626,9 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
         MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
         e.commit();
         // Try to abort the transaction
+        pvPort->unlockMutex();
         abortBulkIn(frame->bTag());
+        return;
       }else{
         transaction->setId(frame->bTag());
         transaction->setData(frame->messageData());
@@ -471,7 +639,9 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
       e.commit();
       // Try to abort the transaction
+      pvPort->unlockMutex();
       abortBulkIn(frame->bTag());
+      return;
     }
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);

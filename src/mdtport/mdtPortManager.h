@@ -220,6 +220,14 @@ class mdtPortManager : public QThread
    */
   virtual mdtPortConfig &config();
 
+  /*! \brief Get the port's config object
+   * 
+   * Usefull to read internal port configuration
+   *
+   * \pre Port must be set with setPort() before use of this method.
+   */
+  mdtPortConfig &config() const;
+
   /*! \brief Open the port
    *
    * Will try to open port defined with setPortName().
@@ -306,6 +314,7 @@ class mdtPortManager : public QThread
    */
   bool waitOnWriteReady(int timeout, int granularity = 50);
 
+  /// \todo adjust write timeout
   /*! \brief Write data by copy
    *
    * Data will be passed to the mdtPort's write queue by copy.
@@ -339,11 +348,15 @@ class mdtPortManager : public QThread
    * Internally, a couple of sleep and process event are called, so 
    * Qt's event loop will not be broken.
    *
+   * This method can return if timeout occurs, or for other
+   *  reason depending on specific port (port timeout, read cancelled, ...).
+   *
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   *                 If 0, the minimal timeout will be used (see adjustedReadTimeout() ).
    * \return True if Ok, false on timeout
    * \sa newReadenFrame()
    */
-  bool waitReadenFrame(int timeout = 500);
+  bool waitReadenFrame(int timeout = 0);
 
   /*! \brief Wait on readen frame with defined ID
    *
@@ -352,8 +365,12 @@ class mdtPortManager : public QThread
    * Internally, a couple of sleep and process event are called, so 
    * Qt's event loop will not be broken.
    *
+   * This method can return if timeout occurs, or for other
+   *  reason depending on specific port (port timeout, read cancelled, ...).
+   *
    * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
    * \param timeout Maximum wait time [ms]. Must be a multiple of granularity [ms]
+   *                 If 0, the minimal timeout will be used (see adjustedReadTimeout() ).
    * \param granularity Sleep time between each call of event processing [ms]<br>
    *                     A little value needs more CPU and big value can freese the GUI.
    *                     Should be between 50 and 100, and must be > 0.
@@ -361,7 +378,7 @@ class mdtPortManager : public QThread
    * \return True if Ok, false on timeout. If id was not found in transactions lists,
    *           a warning will be generated in mdtError system, and false will be returned.
    */
-  bool waitOnFrame(int id, int timeout = 500, int granularity = 50);
+  bool waitOnFrame(int id, int timeout = 0, int granularity = 50);
 
   /*! \brief Get data by frame ID
    *
@@ -384,6 +401,36 @@ class mdtPortManager : public QThread
    *  (A second call will return a empty list).
    */
   QList<QByteArray> readenFrames();
+
+  /*! \brief Adjust a requested timeout to minimal timeout
+   *
+   * We have 2 different timeouts:
+   *  - Port timeout: If data are expected on the port, and nothing comes in,
+   *     a port timeout occurs.
+   *  - Response (or complete frame) timeout: Timeout to receive a complete frame
+   *
+   * For example, we expect a complete frame of, say, 200 Bytes.
+   *  The device will send , f.ex. , 20 x 10 Bytes.
+   *  During the read process, a port timeout can occur (device busy, or something else).
+   *  If read process works fine, all data can be readen in a time less than port timeout.
+   *
+   * \param requestedTimeout Requested timeout [ms]
+   * \param warn If true, a warning will be logged if requested timeout is to small.
+   * \return Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 [ms])
+   * \pre Port must be set with setPort() and contain a valid configuration.
+   */
+  int adjustedReadTimeout(int requestedTimeout, bool warn = true) const;
+
+  /*! \brief Adjust a requested timeout to minimal timeout
+   *
+   * See adjustedReadTimeout() for details.
+   *
+   * \param requestedTimeout Requested timeout [ms]
+   * \param warn If true, a warning will be logged if requested timeout is to small.
+   * \return Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 [ms])
+   * \pre Port must be set with setPort() and contain a valid configuration.
+   */
+  int adjustedWriteTimeout(int requestedTimeout, bool warn = true) const;
 
   /*! \brief Wait some time without break the GUI's event loop
    *
@@ -558,6 +605,20 @@ class mdtPortManager : public QThread
    */
   void commitFrames();
 
+  /*! \brief Set the wait cancel flag
+   *
+   * If flag is set, waitOnFrame(), waitReadenFrame() will return.
+   *
+   * Note: this will not cancel anything in port or port threads.
+   */
+  void cancelReadWait();
+
+  /*! \brief Get the wait cancel flag
+   *
+   * After a call, the flag will be reset.
+   */
+  bool readWaitCanceled();
+
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
 
@@ -572,6 +633,8 @@ class mdtPortManager : public QThread
 
   bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
   bool pvTransactionsEnabled;
+
+  bool pvCancelReadWait;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);

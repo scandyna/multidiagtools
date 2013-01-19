@@ -1013,35 +1013,48 @@ mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents(struct timeval *timeout, qu
   return NoError;
 }
 
-/// \todo Cancel will allways return ControlCanceled , this is not good
 mdtAbstractPort::error_t mdtUsbPort::handleUsbEvents()
 {
   int err;
-  error_t portError;
 
   unlockMutex();
   err = libusb_handle_events(pvLibusbContext);
   lockMutex();
-  if(err != 0){
-    // Ignore timeout
-    if(err != LIBUSB_ERROR_TIMEOUT){
-      portError = mapUsbError(err, 0);
-      if(portError == UnhandledError){
-        mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed with a unhandled error", mdtError::Error);
-        e.setSystemError(err, errorText(err));
-        MDT_ERROR_SET_SRC(e, "mdtUsbPort");
-        e.commit();
-      }
-      return portError;
-    }
+  switch(err){
+    case 0:
+      return NoError;
+    case LIBUSB_ERROR_ACCESS:
+      return PortAccess;
+    case LIBUSB_ERROR_NO_DEVICE:
+      return Disconnected;
+    case LIBUSB_ERROR_NOT_FOUND:
+      return Disconnected;
+    case LIBUSB_ERROR_BUSY:
+      return Disconnected;
+    case LIBUSB_ERROR_TIMEOUT:
+      // We ignore timeout here, they are detected by callbacks
+      return NoError;
+    case LIBUSB_ERROR_INTERRUPTED:
+      // We ignore interrupted error here, they are detected by callbacks
+      return NoError;
   }
+  // Here, we have a unhandled error
+  mdtError e(MDT_USB_IO_ERROR, "libusb_handle_events() failed with a unhandled error", mdtError::Error);
+  e.setSystemError(err, errorText(err));
+  MDT_ERROR_SET_SRC(e, "mdtUsbPort");
+  e.commit();
 
-  return NoError;
+  return UnhandledError;
 }
 
 quint8 mdtUsbPort::currentReadEndpointAddress() const
 {
   return pvReadEndpointAddress;
+}
+
+quint8 mdtUsbPort::currentWriteEndpointAddress() const
+{
+  return pvWriteEndpointAddress;
 }
 
 mdtAbstractPort::error_t mdtUsbPort::pvOpen()

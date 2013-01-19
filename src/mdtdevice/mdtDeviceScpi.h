@@ -90,18 +90,20 @@ class mdtDeviceScpi : public mdtDevice
    *  It's recommended to use mdtDevice functions if available.
    *
    * \param query Query to send.
+   *      \todo adjust write timeout
    * \param writeTimeout Write timeout [ms]
    * \param readTimeout Response timeout [ms]
+   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
+  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 0);
 
   /*! \brief Wait until operation is complete (Using *OPC? query)
    *
    * Currently, this method queries device with *OPC?.
    *
-   * \param timeout Timeout [ms] Note that timeout must be a multiple of internal.
+   * \param timeout Timeout [ms]
    * \param internal Interval between 2 *OPC? query [ms]
    * \pre internal > 0
    */

@@ -117,10 +117,14 @@ class mdtUsbPortManager : public mdtPortManager
    * Internally, a couple of sleep and process event are called, so 
    * Qt's event loop will not be broken.
    *
+   * This method can return if timeout occurs, or for other
+   *  reason depending on specific port (port timeout, read canceled, ...).
+   *
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   *                 If 0, the minimal timeout will be used (see adjustedReadTimeout() ).
    * \return True if Ok, false on timeout
    */
-  bool waitReadenControlResponse(int timeout = 500);
+  bool waitReadenControlResponse(int timeout = 0);
 
   /*! \brief Get all readen control responses
    *

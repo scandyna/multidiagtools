@@ -78,10 +78,11 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    *
    * \param command Command to send.
    * \param timeout Write timeout [ms]
+   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
-  int sendCommand(const QByteArray &command, int timeout = 1000);
+  int sendCommand(const QByteArray &command, int timeout = 0);
 
   /*! \brief Send a query to device
    *
@@ -93,11 +94,13 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    *
    * \param query Query to send.
    * \param writeTimeout Write timeout [ms]
+   *          \todo Adjuts write timeout.
    * \param readTimeout Response timeout [ms]
+   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
+  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 0);
 
   /*! \brief Write data by copy
    *
@@ -145,7 +148,7 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Abort bulk IN
    *
-   * \return
+   * \return 0 on success.
    * \pre port must be set before call of this method
    */
   int abortBulkIn(quint8 bTag);
@@ -163,6 +166,27 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * \return bTag on success or WriteQueueEmpty on error.
    */
   int sendCheckAbortBulkInStatusRequest(quint8 bTag);
+
+  /*! \brief Abort bulk OUT
+   *
+   * \return 0 on success.
+   * \pre port must be set before call of this method
+   */
+  int abortBulkOut(quint8 bTag);
+
+  /*! \brief Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint
+   *
+   * \see abortBulkOut()
+   * \return bTag on success or WriteQueueEmpty on error.
+   */
+  int sendInitiateAbortBulkOutRequest(quint8 bTag);
+
+  /*! \brief Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint
+   *
+   * \see abortBulkOut()
+   * \return bTag on success or WriteQueueEmpty on error.
+   */
+  int sendCheckAbortBulkOutStatusRequest(quint8 bTag);
 
  public slots:
 

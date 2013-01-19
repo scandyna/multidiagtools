@@ -242,9 +242,19 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
 
 bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
 {
-  int maxIter = timeout / 50;
+  int maxIter;
+
+  if(timeout == 0){
+    timeout = adjustedReadTimeout(timeout, false);
+  }else{
+    timeout = adjustedReadTimeout(timeout);
+  }
+  maxIter = timeout / 50;
 
   while(pvReadenControlResponses.size() < 1){
+    if(readWaitCanceled()){
+      return false;
+    }
     if(maxIter <= 0){
       return false;
     }

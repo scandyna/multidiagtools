@@ -33,6 +33,7 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   // Setup port manager
   portManager()->config().setReadFrameSize(512);
   portManager()->config().setReadQueueSize(10);
+  portManager()->config().setReadTimeout(30000);
   portManager()->config().setWriteFrameSize(512);
   portManager()->config().setWriteQueueSize(1);
 }

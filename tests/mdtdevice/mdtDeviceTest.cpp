@@ -615,11 +615,11 @@ void mdtDeviceTest::U3606ATest()
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   // Get value
-  QVERIFY(d.getAnalogInputValue(0, 1000).isValid());
+  QVERIFY(d.getAnalogInputValue(0, 32000).isValid());
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   qDebug() << "*** OPC: " << d.sendQuery("*OPC?\n");
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  QVERIFY(d.getAnalogInputValue(0, 10000).type() == QVariant::Double);
+  QVERIFY(d.getAnalogInputValue(0, 32000).type() == QVariant::Double);
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   
   

@@ -154,6 +154,8 @@ class mdtAbstractPort : public QObject
   void setConfig(mdtPortConfig *cfg);
 
   /*! \brief Get the stored configuration
+   *
+   * \pre Configuration must be set with setConfig() before using this method.
    */
   mdtPortConfig &config();
 

@@ -424,6 +424,12 @@ class mdtUsbPort : public mdtAbstractPort
    */
   quint8 currentReadEndpointAddress() const;
 
+  /*! \brief Get current write endpoint address
+   *
+   * Note: mutex is not handled by this method
+   */
+  quint8 currentWriteEndpointAddress() const;
+
  private:
 
   /*! \brief Open the port given by setPortName()

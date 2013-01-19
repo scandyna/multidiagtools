@@ -135,10 +135,11 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
 {
   Q_ASSERT(interval > 0);
 
-  int maxIter = timeout / interval;
+  int maxIter;
   pvOperationComplete = false;
   QByteArray response;
 
+  maxIter = timeout / interval;
   while(!pvOperationComplete){
     if(maxIter <= 0){
       return false;
