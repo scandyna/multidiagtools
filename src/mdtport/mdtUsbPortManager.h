@@ -129,6 +129,23 @@ class mdtUsbPortManager : public mdtPortManager
    */
   QList<mdtFrameUsbControl> readenControlResponses();
 
+  /*! \brief Flush input buffers
+   *
+   * \param flushPortManagerBuffers If true, port manager buffers will be cleared.
+   * \param flushPortBuffers If true, port's buffers will be cleared.
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  void flushIn(bool flushPortManagerBuffers, bool flushPortBuffers);
+
+  /*! \brief Flush output buffers
+   *
+   * \param flushPortManagerBuffers If true, port manager buffers will be cleared.
+   *                                 (Has no effect in this implementation, but some subclass can have output buffers).
+   * \param flushPortBuffers If true, port's buffers will be cleared.
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  void flushOut(bool flushPortManagerBuffers, bool flushPortBuffers);
+
  public slots:
 
   /*! \brief Called from USB thread when a control reply was received

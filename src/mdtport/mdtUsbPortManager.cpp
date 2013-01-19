@@ -266,6 +266,26 @@ QList<mdtFrameUsbControl> mdtUsbPortManager::readenControlResponses()
   return frames;
 }
 
+  QQueue<mdtFrameUsbControl> pvReadenControlResponses;  // Copy of received control responses
+
+void mdtUsbPortManager::flushIn(bool flushPortManagerBuffers, bool flushPortBuffers)
+{
+  Q_ASSERT(pvPort != 0);
+
+  if(flushPortManagerBuffers){
+    pvReadenControlResponses.clear();
+    qDebug() << "*1*2* Control responses cleared";
+  }
+  mdtPortManager::flushIn(flushPortManagerBuffers, flushPortBuffers);
+}
+
+void mdtUsbPortManager::flushOut(bool flushPortManagerBuffers, bool flushPortBuffers)
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtPortManager::flushOut(flushPortManagerBuffers, flushPortBuffers);
+}
+
 void mdtUsbPortManager::fromThreadControlResponseReaden()
 {
   qDebug() << " *= mdtUsbPortManager::fromThreadControlResponseReaden(): control response !!!!";

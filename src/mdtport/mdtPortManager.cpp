@@ -411,6 +411,77 @@ void mdtPortManager::wait(int msecs, int granularity)
   }
 }
 
+void mdtPortManager::flushIn(bool flushPortManagerBuffers, bool flushPortBuffers)
+{
+  Q_ASSERT(pvPort != 0);
+
+  // Flush port manager buffers
+  if(flushPortManagerBuffers){
+    if(pvTransactionsEnabled){
+      QMutableMapIterator<int, mdtPortTransaction*> itPending(pvTransactionsPending);
+      QMutableMapIterator<int, mdtPortTransaction*> itRx(pvTransactionsRx);
+      QMutableMapIterator<int, mdtPortTransaction*> itDone(pvTransactionsDone);
+
+      // Clear pending transactions
+      while(itPending.hasNext()){
+        itPending.next();
+        pvTransactionsPool.enqueue(itPending.value());
+        itPending.remove();
+      }
+      // Clear Rx transactions
+      while(itRx.hasNext()){
+        itRx.next();
+        pvTransactionsPool.enqueue(itRx.value());
+        itRx.remove();
+      }
+      // Clear Done transactions
+      while(itDone.hasNext()){
+        itDone.next();
+        pvTransactionsPool.enqueue(itDone.value());
+        itDone.remove();
+      }
+    }
+    pvReadenFrames.clear();
+  }
+  // Flush port's buffers
+  if(flushPortBuffers){
+    pvPort->flushIn();
+  }
+}
+
+void mdtPortManager::flushIn()
+{
+  flushIn(true, true);
+}
+
+void mdtPortManager::flushOut(bool flushPortManagerBuffers, bool flushPortBuffers)
+{
+  if(flushPortBuffers){
+    pvPort->flushOut();
+  }
+}
+
+void mdtPortManager::flushOut()
+{
+  flushOut(true, true);
+}
+
+void mdtPortManager::flush(bool flushPortManagerBuffers, bool flushPortBuffers)
+{
+  Q_ASSERT(pvPort != 0);
+
+  flushIn(flushPortManagerBuffers, false);
+  flushOut(flushPortManagerBuffers, false);
+  if(flushPortBuffers){
+    pvPort->flush();
+  }
+}
+
+void mdtPortManager::flush()
+{
+  flush(true, true);
+}
+
 void mdtPortManager::abort()
 {
   Q_ASSERT(pvPort != 0);

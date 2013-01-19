@@ -107,6 +107,10 @@ class mdtPortManager : public QThread
 
  public:
 
+  /*! \brief Contruct a port manager
+   *
+   * Transaction will be set disabled.
+   */
   mdtPortManager(QObject *parent = 0);
 
   /*! \brief Destructor
@@ -397,6 +401,54 @@ class mdtPortManager : public QThread
    * \pre granularity must be > 0.
    */
   static void wait(int msecs, int granularity = 50);
+
+  /*! \brief Flush input buffers
+   *
+   * \param flushPortManagerBuffers If true, port manager buffers will be cleared.
+   * \param flushPortBuffers If true, port's buffers will be cleared.
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  virtual void flushIn(bool flushPortManagerBuffers, bool flushPortBuffers);
+
+  /*! \brief Flush input buffers
+   *
+   * Will flush portmanger and port's buffers.
+   *
+   * Internally, flushIn(bool, bool) is called.
+   */
+  void flushIn();
+
+  /*! \brief Flush output buffers
+   *
+   * \param flushPortManagerBuffers If true, port manager buffers will be cleared.
+   *                                 (Has no effect in this implementation, but some subclass can have output buffers).
+   * \param flushPortBuffers If true, port's buffers will be cleared.
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  virtual void flushOut(bool flushPortManagerBuffers, bool flushPortBuffers);
+
+  /*! \brief Flush output buffers
+   *
+   * Will flush portmanger and port's buffers.
+   *
+   * Internally, flushOut(bool, bool) is called.
+   */
+  void flushOut();
+
+  /*! \brief Flush I/O buffers
+   *
+   * \param flushPortManagerBuffers If true, port manager buffers will be cleared.
+   *                                 (Has no effect in this implementation, but some subclass can have output buffers).
+   * \param flushPortBuffers If true, port's buffers will be cleared.
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  void flush(bool flushPortManagerBuffers, bool flushPortBuffers);
+
+  /*! \brief Flush I/O buffers
+   *
+   * \pre Port must be set with setPort() before calling this method.
+   */
+  void flush();
 
  public slots:
 

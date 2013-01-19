@@ -280,8 +280,8 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
   mdtFrameUsbControl frame;
   quint8 status;
 
-  // Flush all endpoints
-  pvPort->flush();
+  // Flush all endpoints + internal buffers
+  flush();
   /// \todo Implement flushIn, flushOut, flush in portmanager, witch calls port's flush + clear internal queues
   // Send the INITIATE_ABORT_BULK_IN request and wait on response
   status = 0x81;  // STATUS_TRANSFER_NO_IN_PROGRESS
