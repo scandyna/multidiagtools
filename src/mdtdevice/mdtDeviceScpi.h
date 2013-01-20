@@ -73,10 +73,11 @@ class mdtDeviceScpi : public mdtDevice
    *
    * \param command Command to send.
    * \param timeout Write timeout [ms]
+   *           If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
    * \return bTag on success, or a error < 0
    *          (see mdtUsbtmcPortManager::writeData() for details).
    */
-  int sendCommand(const QByteArray &command, int timeout = 1000);
+  int sendCommand(const QByteArray &command, int timeout = 0);
 
   /*! \brief Send a query to device
    *
@@ -92,12 +93,13 @@ class mdtDeviceScpi : public mdtDevice
    * \param query Query to send.
    *      \todo adjust write timeout
    * \param writeTimeout Write timeout [ms]
+   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
    * \param readTimeout Response timeout [ms]
    *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 0);
+  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 0, int readTimeout = 0);
 
   /*! \brief Wait until operation is complete (Using *OPC? query)
    *

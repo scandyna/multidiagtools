@@ -304,6 +304,7 @@ class mdtPortManager : public QThread
    *  can be called from GUI Thread. (See wait() for details).
    *
    * \param timeout Timeout [ms]
+   *              If 0, the minimal timeout will be used (see adjustedWriteTimeout() ).
    * \param granularity Sleep time between each call of event processing [ms]<br>
    *                     A little value needs more CPU and big value can freese the GUI.
    *                     Should be between 50 and 100, and must be > 0.
@@ -312,7 +313,7 @@ class mdtPortManager : public QThread
    * \pre Granularity must be > 0.
    * \pre Port must be set with setPort() before calling this method.
    */
-  bool waitOnWriteReady(int timeout, int granularity = 50);
+  bool waitOnWriteReady(int timeout = 0, int granularity = 50);
 
   /// \todo adjust write timeout
   /*! \brief Write data by copy

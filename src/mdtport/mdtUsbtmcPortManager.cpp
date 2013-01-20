@@ -85,7 +85,6 @@ QList<mdtPortInfo*> mdtUsbtmcPortManager::scan()
   return portInfoList;
 }
 
-/// \todo adjoust timeout
 int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
 {
   // Wait until data can be sent
@@ -96,7 +95,6 @@ int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
   return writeData(command);
 }
 
-/// \todo adjoust timeouts
 QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
 {
   int bTag;
@@ -112,7 +110,6 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
     return QByteArray();
   }
   // Wait until more data can be sent
-  /// \todo adjoust timeout
   if(!waitOnWriteReady(writeTimeout)){
     return QByteArray();
   }
@@ -281,12 +278,14 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
   QList<mdtFrameUsbControl> frames;
   mdtFrameUsbControl frame;
   quint8 status;
+  int maxTry;
 
   // Flush all endpoints + internal buffers
   flush();
   // Send the INITIATE_ABORT_BULK_IN request and wait on response
-  status = 0x81;  // STATUS_TRANSFER_NO_IN_PROGRESS
-  while(status == 0x81){
+  status = 0x81;  // STATUS_TRANSFER_NOT_IN_PROGRESS
+  maxTry = 10;
+  while((status == 0x81)&&(maxTry > 0)){
     qDebug() << "*-* send INITIATE_ABORT_BULK_IN ...";
     retVal = sendInitiateAbortBulkInRequest(bTag);
     if(retVal < 0){
@@ -315,9 +314,18 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
     }
     // Check status
     status = frame.at(0);
-    if(status == 0x81){ // STATUS_TRANSFER_NO_IN_PROGRESS
-      wait(100);
+    qDebug() << "*-* status: 0x" << hex << status;
+    if(status == 0x81){ // STATUS_TRANSFER_NOT_IN_PROGRESS
+      wait(1000);
     }
+    maxTry--;
+  }
+  if(maxTry < 1){
+    mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN still pending after 10 try", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+    e.commit();
+    // Continue working (possibly, nothing was to abort)
+    return 0;
   }
   
   qDebug() << "offset 0: 0x" << hex << (quint8)frame.at(0);
@@ -367,7 +375,7 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
     // Check status
     status = frame.at(0);
     if(status == 0x02){ // STATUS_PENDING
-      wait(100);
+      wait(1000);
     }
   }
   // We are finished here, cancel portmanager wait methods

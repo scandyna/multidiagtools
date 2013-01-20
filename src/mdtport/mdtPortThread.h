@@ -280,6 +280,18 @@ class mdtPortThread : public QThread
    */
   mdtAbstractPort::error_t reconnect(int timeout, int maxTry, bool notify = true);
 
+  /*! \brief Get the reconnect timeout [ms]
+   *
+   * \todo Currently hardcoded !
+   */
+  int reconnectTimeout() const;
+
+  /*! \brief Get the reconnect max try
+   *
+   * \todo Currently hardcoded !
+   */
+  int reconnectMaxTry() const;
+
   /*! \brief Emit the errorOccured() signal if new error is different from current
    *
    * \todo Adapt in threads subclasses
@@ -302,6 +314,8 @@ class mdtPortThread : public QThread
   char *pvReadBuffer;
   qint64 pvReadBufferSize;
   int pvCurrentError;
+  int pvReconnectTimeout;
+  int pvReconnectMaxTry;
 };
 
 #endif  // #ifndef MDT_PORT_THREAD_H

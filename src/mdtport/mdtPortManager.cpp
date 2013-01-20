@@ -269,18 +269,39 @@ bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
   Q_ASSERT(pvPort != 0);
 
   int i;
-  int maxIter = timeout / granularity;
+  int maxIter;
 
-  for(i=0; i<maxIter; i++){
-    // Check if a frame is available
-    pvPort->lockMutex();
-    if(pvPort->writeFramesPool().size() > 0){
+  if(timeout == 0){
+    timeout = adjustedWriteTimeout(timeout, false);
+  }else{
+    timeout = adjustedWriteTimeout(timeout);
+  }
+
+  if(timeout < 0){  // Case of infinite timeout
+    while(1){
+      // Check if a frame is available
+      pvPort->lockMutex();
+      if(pvPort->writeFramesPool().size() > 0){
+        pvPort->unlockMutex();
+        return true;
+      }
       pvPort->unlockMutex();
-      return true;
+      msleep(granularity);
+      qApp->processEvents();
     }
-    pvPort->unlockMutex();
-    msleep(granularity);
-    qApp->processEvents();
+  }else{
+    maxIter = timeout / granularity;
+    for(i=0; i<maxIter; i++){
+      // Check if a frame is available
+      pvPort->lockMutex();
+      if(pvPort->writeFramesPool().size() > 0){
+        pvPort->unlockMutex();
+        return true;
+      }
+      pvPort->unlockMutex();
+      msleep(granularity);
+      qApp->processEvents();
+    }
   }
 
   return false;
@@ -322,31 +343,52 @@ bool mdtPortManager::waitReadenFrame(int timeout)
   }else{
     timeout = adjustedReadTimeout(timeout);
   }
-  maxIter = timeout / 50;
 
   if(pvTransactionsEnabled){
-    while(pvTransactionsDone.size() < 1){
-      if(readWaitCanceled()){
-        return false;
+    if(timeout < 0){  // Case of infinite timeout
+      while(pvTransactionsDone.size() < 1){
+        if(readWaitCanceled()){
+          return false;
+        }
+        qApp->processEvents();
+        msleep(50);
       }
-      if(maxIter <= 0){
-        return false;
+    }else{
+      maxIter = timeout / 50;
+      while(pvTransactionsDone.size() < 1){
+        if(readWaitCanceled()){
+          return false;
+        }
+        if(maxIter <= 0){
+          return false;
+        }
+        qApp->processEvents();
+        msleep(50);
+        maxIter--;
       }
-      qApp->processEvents();
-      msleep(50);
-      maxIter--;
     }
   }else{
-    while(pvReadenFrames.size() < 1){
-      if(readWaitCanceled()){
-        return false;
+    if(timeout < 0){  // Case of infinite timeout
+      while(pvReadenFrames.size() < 1){
+        if(readWaitCanceled()){
+          return false;
+        }
+        qApp->processEvents();
+        msleep(50);
       }
-      if(maxIter <= 0){
-        return false;
+    }else{
+      maxIter = timeout / 50;
+      while(pvReadenFrames.size() < 1){
+        if(readWaitCanceled()){
+          return false;
+        }
+        if(maxIter <= 0){
+          return false;
+        }
+        qApp->processEvents();
+        msleep(50);
+        maxIter--;
       }
-      qApp->processEvents();
-      msleep(50);
-      maxIter--;
     }
   }
 
@@ -364,7 +406,6 @@ bool mdtPortManager::waitOnFrame(int id, int timeout, int granularity)
   }else{
     timeout = adjustedReadTimeout(timeout);
   }
-  maxIter = timeout / granularity;
 
   // Check if transaction exists in pending queue
   // Note: we check also done queue, because it's possible that transaction was done
@@ -375,18 +416,30 @@ bool mdtPortManager::waitOnFrame(int id, int timeout, int granularity)
     return false;
   }
   // Try until success or timeout
-  while(!pvTransactionsDone.contains(id)){
-    if(readWaitCanceled()){
-      return false;
+  if(timeout < 0){  // Case of infinite timeout
+    while(!pvTransactionsDone.contains(id)){
+      if(readWaitCanceled()){
+        return false;
+      }
+      // Wait
+      qApp->processEvents();
+      msleep(granularity);
     }
-    // Check about timeout
-    if(maxIter <= 0){
-      return false;
+  }else{
+    maxIter = timeout / granularity;
+    while(!pvTransactionsDone.contains(id)){
+      if(readWaitCanceled()){
+        return false;
+      }
+      // Check about timeout
+      if(maxIter <= 0){
+        return false;
+      }
+      // Wait
+      qApp->processEvents();
+      msleep(granularity);
+      maxIter--;
     }
-    // Wait
-    qApp->processEvents();
-    msleep(granularity);
-    maxIter--;
   }
 
   return true;
@@ -432,32 +485,58 @@ QList<QByteArray> mdtPortManager::readenFrames()
 
 int mdtPortManager::adjustedReadTimeout(int requestedTimeout, bool warn) const
 {
-  int minTimeout = config().readTimeout() + 1000;
+  int minTimeout = config().readTimeout();
 
-  if(requestedTimeout < minTimeout){
-    if(warn){
-      mdtError e(MDT_PORT_IO_ERROR, "Requested read timeout is to small: " + \
-                  QString::number(requestedTimeout) + " , adjusted to " + QString::number(minTimeout) + " [ms]", mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtPortManager");
-      e.commit();
+  if(minTimeout == -1){ // Case of infinite timeout
+    if(requestedTimeout != -1){
+      if(warn){
+        mdtError e(MDT_PORT_IO_ERROR, "Requested read timeout is to small: " + \
+                    QString::number(requestedTimeout) + " , adjusted to infinite", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtPortManager");
+        e.commit();
+      }
+      return minTimeout;
     }
-    return minTimeout;
+  }else{
+    minTimeout += 1000;
+    if(requestedTimeout < minTimeout){
+      if(warn){
+        mdtError e(MDT_PORT_IO_ERROR, "Requested read timeout is to small: " + \
+                    QString::number(requestedTimeout) + " , adjusted to " + QString::number(minTimeout) + " [ms]", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtPortManager");
+        e.commit();
+      }
+      return minTimeout;
+    }
   }
   return requestedTimeout;
 }
 
 int mdtPortManager::adjustedWriteTimeout(int requestedTimeout, bool warn) const
 {
-  int minTimeout = config().writeTimeout() + 1000;
+  int minTimeout = config().writeTimeout();
 
-  if(requestedTimeout < minTimeout){
-    if(warn){
-      mdtError e(MDT_PORT_IO_ERROR, "Requested write timeout is to small: " + \
-                  QString::number(requestedTimeout) + " , adjusted to " + QString::number(minTimeout) + " [ms]", mdtError::Warning);
-      MDT_ERROR_SET_SRC(e, "mdtPortManager");
-      e.commit();
+  if(minTimeout == -1){ // Case of infinite timeout
+    if(requestedTimeout != -1){
+      if(warn){
+        mdtError e(MDT_PORT_IO_ERROR, "Requested write timeout is to small: " + \
+                    QString::number(requestedTimeout) + " , adjusted to infinite", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtPortManager");
+        e.commit();
+      }
+      return minTimeout;
     }
-    return minTimeout;
+  }else{
+    minTimeout += 1000;
+    if(requestedTimeout < minTimeout){
+      if(warn){
+        mdtError e(MDT_PORT_IO_ERROR, "Requested write timeout is to small: " + \
+                    QString::number(requestedTimeout) + " , adjusted to " + QString::number(minTimeout) + " [ms]", mdtError::Warning);
+        MDT_ERROR_SET_SRC(e, "mdtPortManager");
+        e.commit();
+      }
+      return minTimeout;
+    }
   }
   return requestedTimeout;
 }

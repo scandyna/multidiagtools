@@ -65,15 +65,12 @@ class mdtAbstractPort : public QObject
                 PortNotFound,           /*!< Port was not found */
                 PortAccess,             /*!< Port cannot be open with requierd access (read, write) */
                 SetupError,             /*!< Setup failed on a configuration option */
-                /**WaitingCanceled,*/        /*!< When a thread (mdtPortThread or subclass) is stopping, it will
-                                              cancel blocking calls (like waitForReadyRead() or waitEventWriteReady() ).
-                                              At this case, this error is returned, and the thread knows that it can 
-                                              cleanup and end. */
                 WriteCanceled,          /*!< Write process was cancelled. The thread should stop the write process, restore
-                                              the current frame into pool and continue working. */
+                                              the current frame into pool, notify the error and continue working. */
                 ReadCanceled,           /*!< Read process was cancelled. The thread should stop the read process, restore
-                                              the current frame into pool and continue working. */
-                ControlCanceled,        /*!< Control process canceled (serial port's modem line, USB control transfer) */
+                                              the current frame into pool, notify the error and continue working. */
+                ControlCanceled,        /*!< Control process canceled (serial port's modem line, USB control transfer)
+                                            */
                 ReadTimeout,            /*!< Read process has timed out. Thread should notify this and continue working.
                                               If thread uses the read timeout protocol, no notification should be sent */
                 WriteTimeout,           /*!< Write process has timed out. Thread should notify this and continue working.

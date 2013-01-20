@@ -186,6 +186,8 @@ void mdtUsbPort::submitControlQuery()
       MDT_ERROR_SET_SRC(e, "mdtUsbPort");
       e.commit();
     }
+    controlFramesPool().enqueue(pvCurrentControlFrame);
+    pvCurrentControlFrame = 0;
     addError(portError);
     return;
   }
@@ -205,7 +207,11 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   mdtUsbPort *port = static_cast<mdtUsbPort*>(transfer->user_data);
   // Update flag here (else it will stay true on error)
   port->pvControlTransferPending = false;
-  Q_ASSERT(port->pvCurrentControlFrame != 0);
+  // It can happen that submitControlQuery() fails,
+  //  in this case current frame will be null.
+  if(port->pvCurrentControlFrame == 0){
+    return;
+  }
   /*
    * Check if some error occured.
    * On most error, we put frame back to pool.

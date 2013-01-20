@@ -42,6 +42,8 @@ mdtPortThread::mdtPortThread(QObject *parent)
   pvSigaction.sa_handler = sigactionHandle;
   sigaction(SIGALRM, &pvSigaction, NULL);
 #endif
+  pvReconnectTimeout = 5000;
+  pvReconnectMaxTry = 100;
 }
 
 mdtPortThread::~mdtPortThread()
@@ -469,6 +471,16 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
   }
 
   return mdtAbstractPort::UnhandledError;
+}
+
+int mdtPortThread::reconnectTimeout() const
+{
+  return pvReconnectTimeout;
+}
+
+int mdtPortThread::reconnectMaxTry() const
+{
+  return pvReconnectMaxTry;
 }
 
 void mdtPortThread::notifyError(int error)

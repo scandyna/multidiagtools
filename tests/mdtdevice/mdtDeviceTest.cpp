@@ -623,7 +623,6 @@ void mdtDeviceTest::U3606ATest()
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   
   
-  
   while(dw.isVisible()){
     QTest::qWait(500);
     qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");

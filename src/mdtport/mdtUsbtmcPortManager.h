@@ -94,13 +94,13 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    *
    * \param query Query to send.
    * \param writeTimeout Write timeout [ms]
-   *          \todo Adjuts write timeout.
+   *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
    * \param readTimeout Response timeout [ms]
    *                 If 0, internal defined timeout is used (see mdtPortManager::adjustedReadTimeout() for details).
    * \return Result as string (empty string on error)
    *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
    */
-  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 0);
+  QByteArray sendQuery(const QByteArray &query, int writeTimeout = 0, int readTimeout = 0);
 
   /*! \brief Write data by copy
    *

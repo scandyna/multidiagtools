@@ -25,6 +25,7 @@
 #include <QQueue>
 #include <QWaitCondition>
 #include <QMutex>
+#include <QString>
 #include "mdtPortThread.h"
 #include "mdtFrame.h"
 
@@ -74,6 +75,18 @@ class mdtUsbPortThread : public mdtPortThread
    */
   mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
 
+  /*! \brief Handle common errors
+   *
+   * Common errors are:
+   *  - mdtAbstractPort::Disconnected : will try to reconnect
+   *
+   * \param portError Error to handle
+   * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
+   */
+  mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
+
+  /*! \brief Working thread method
+   */
   void run();
 };
 

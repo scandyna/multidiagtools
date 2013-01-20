@@ -98,7 +98,7 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
   /// \todo Add resolution and limits (min/max)
   /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
   // Wait until data can be sent
-  if(!pvUsbtmcPortManager->waitOnWriteReady(500)){
+  if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Send query
@@ -107,7 +107,7 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
     return bTag;
   }
   // Wait until more data can be sent
-  if(!pvUsbtmcPortManager->waitOnWriteReady(500)){
+  if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Remember query type.
