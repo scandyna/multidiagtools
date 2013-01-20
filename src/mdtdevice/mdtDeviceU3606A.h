@@ -27,7 +27,6 @@
 
 /*! \brief Representation of a Agilent U3606A
  */
-///class mdtDeviceU3606A : public mdtDevice
 class mdtDeviceU3606A : public mdtDeviceScpi
 {
  Q_OBJECT
@@ -36,10 +35,6 @@ class mdtDeviceU3606A : public mdtDeviceScpi
 
   mdtDeviceU3606A(QObject *parent = 0);
   ~mdtDeviceU3606A();
-
-  /*! \brief Get internal port manager instance
-   */
-  ///mdtPortManager *portManager();
 
   /*! \brief Search and connect to physical device.
    *
@@ -53,40 +48,6 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
-
-  /*! \brief Send a command to device
-   *
-   * Wait until it's possible to write to device,
-   *  then send the command.
-   *
-   * Note that the wait will not break the GUI's event loop
-   *  (see mdtPortManager::waitOnWriteReady() for details).
-   *
-   * \param command Command to send.
-   * \param timeout Write timeout [ms]
-   * \return bTag on success, or a error < 0
-   *          (see mdtUsbtmcPortManager::writeData() for details).
-   */
-  ///int sendCommand(const QByteArray &command, int timeout = 1000);
-
-  /*! \brief Send a query to device
-   *
-   * Wait until it's possible to write to device,
-   *  send the query and wait until a response
-   *  is available or timeout.
-   *
-   * Note that the wait will not break the GUI's event loop.
-   *
-   * This method will not update internal I/O states.
-   *  It's recommended to use mdtDevice functions if available.
-   *
-   * \param query Query to send.
-   * \param writeTimeout Write timeout [ms]
-   * \param readTimeout Response timeout [ms]
-   * \return Result as string (empty string on error)
-   *          Note that mdtFrameCodecScpi can be helpful to decode returned result.
-   */
-  ///QByteArray sendQuery(const QByteArray &query, int writeTimeout = 1000, int readTimeout = 30000);
 
  public slots:
 
@@ -118,7 +79,18 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    */
   int readAnalogInput(mdtPortTransaction *transaction);
 
-  ///mdtUsbtmcPortManager *pvPortManager;
+  /*! \brief Sequence of queries to send periodically
+   *
+   * This method is called from runQueries().
+   *
+   * \return true if all queries are sent successfully.
+   *
+   * Subclass notes:<br>
+   *  - This default implementation does nothing and allways returns false.
+   *  - This method can be reimplemented periodic queries must be sent to device.
+   */
+  bool queriesSequence();
+
   mdtFrameCodecScpiU3606A *pvCodec;
 };
 

@@ -36,6 +36,8 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   portManager()->config().setReadTimeout(30000);
   portManager()->config().setWriteFrameSize(512);
   portManager()->config().setWriteQueueSize(1);
+  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
+  connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()
@@ -116,4 +118,11 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
   bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
 
   return bTag;
+}
+
+bool mdtDeviceU3606A::queriesSequence()
+{
+  getAnalogInputValue(0, 1);
+
+  return true;
 }

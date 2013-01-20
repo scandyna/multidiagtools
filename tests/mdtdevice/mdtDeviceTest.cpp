@@ -622,10 +622,10 @@ void mdtDeviceTest::U3606ATest()
   QVERIFY(d.getAnalogInputValue(0, 32000).type() == QVariant::Double);
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   
-  
+  d.start(500);
   while(dw.isVisible()){
     QTest::qWait(500);
-    qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+    ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   }
 }
 
