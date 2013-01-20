@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtFrameUsbTmc.h"
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtFrameUsbTmc::mdtFrameUsbTmc()
  : mdtFrame()
@@ -80,8 +80,11 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
       pvbTagInverse = at(2);
       // Check bTag
       if(pvbTagInverse != (quint8)(~pvbTag)){
+        // Error: abort
+        pvEOFcondition = true;
+        return stored;
         /// \todo Handle error
-        qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
+        ///qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
       }
       pvTransferSize = at(4);
       pvTransferSize += (at(5) << 8);
@@ -97,12 +100,14 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
         }
         /// \todo other bmTransferAttributes
       }else{
-        qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
+        // Unhadled message type: abort
+        pvEOFcondition = true;
+        return stored;
+        ///qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
       }
     }
     // Calc total frame size, without alignment bytes
     frameSize = pvTransferSize + 12;
-    qDebug() << "Frame, bTag: " << pvbTag << " , size (waiting): " << frameSize;
     // Check if we have a complete frame
     if(size() >= frameSize){
       pvEOFcondition = true;
@@ -175,7 +180,6 @@ void mdtFrameUsbTmc::encode()
     pvEOM = false;
     pvMessageData.clear();
   }else{
-    qDebug() << "mdtFrameUsbTmc::encode(): Unknow pvMsgID, transfer size will be set to 0";
     pvTransferSize = 0;
   }
   // Build USBTMC header

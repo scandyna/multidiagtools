@@ -30,8 +30,102 @@
 #include "mdtFrame.h"
 #include "mdtFrameCodecK8055.h"
 #include "mdtFrameUsbTmc.h"
+#include <QByteArray>
 
 #include <QDebug>
+
+void mdtUsbPortTest::vellemanK8055Test()
+{
+  mdtFrame *f;
+  QByteArray data;
+  mdtUsbPort port;
+  mdtUsbPortThread thd;
+  mdtPortConfig cfg;
+  mdtFrameCodecK8055 codec;
+
+  // Setup
+  cfg.setWriteFrameSize(8);
+  cfg.setWriteQueueSize(3);
+  cfg.setReadFrameSize(8);
+  cfg.setReadQueueSize(10);
+  cfg.setFrameType(mdtFrame::FT_RAW);
+  port.setConfig(&cfg);
+  thd.setPort(&port);
+
+  // Try to open
+  port.setPortName("VID=0x10cf:PID=0x5500");
+  if(port.open() != mdtAbstractPort::NoError){
+    port.setPortName("VID=0x10cf:PID=0x5501");
+    if(port.open() != mdtAbstractPort::NoError){
+      port.setPortName("VID=0x10cf:PID=0x5502");
+      if(port.open() != mdtAbstractPort::NoError){
+        port.setPortName("VID=0x10cf:PID=0x5503");
+        if(port.open() != mdtAbstractPort::NoError){
+          QSKIP("No Velleman k8055 attached, or other error", SkipAll);
+        }
+      }
+    }
+  }
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+
+  // Start thread
+  QVERIFY(thd.start());
+
+  // Open/close test
+  thd.stop();
+  port.close();
+  randomValueInit();
+  for(int i=0; i<10; i++){
+    QVERIFY(port.open() == mdtAbstractPort::NoError);
+    QVERIFY(port.setup() == mdtAbstractPort::NoError);
+    QTest::qWait(randomValue(0, 100));
+    port.close();
+  }
+  QVERIFY(port.open() == mdtAbstractPort::NoError);
+  QVERIFY(port.setup() == mdtAbstractPort::NoError);
+  QVERIFY(thd.start());
+
+  // Write test
+  codec.setDigitalOut(1, true);
+  codec.setDigitalOut(2, false);
+  codec.setDigitalOut(3, true);
+  codec.setDigitalOut(4, false);
+  codec.setDigitalOut(5, true);
+  codec.setDigitalOut(6, false);
+  codec.setDigitalOut(7, true);
+  codec.setDigitalOut(8, false);
+  codec.setAnalogOut(1, 255);
+  codec.setAnalogOut(2, 0);
+  data = codec.encodeSetOutputs();
+  port.lockMutex();
+  QVERIFY(port.writeFramesPool().size() > 0);
+  f = port.writeFramesPool().dequeue();
+  QVERIFY(f != 0);
+  f->clear();
+  f->clearSub();
+  f->append(data);
+  f->setWaitAnAnswer(true);
+  QCOMPARE(f->size(), 8);
+  port.addFrameToWrite(f);
+  port.unlockMutex();
+  QTest::qWait(100);
+  QCOMPARE(port.lastErrors().size(), 0);
+  // Read
+  port.lockMutex();
+  QVERIFY(port.readenFrames().size() > 0);
+  f = port.readenFrames().dequeue();
+  data.clear();
+  data.append(f->data(), f->size());
+  port.readFramesPool().enqueue(f);
+  port.unlockMutex();
+  QCOMPARE(data.size(), 8);
+  QVERIFY(codec.decode(data));
+  QCOMPARE(codec.values().size(), 9);
+
+  qDebug() << "Values: " << codec.values();
+  // End
+  thd.stop();
+}
 
 void mdtUsbPortTest::agilentDso1000Test()
 {
@@ -41,7 +135,7 @@ void mdtUsbPortTest::agilentDso1000Test()
   mdtPortConfig cfg;
 
   // Setup
-  cfg.setReadQueueSize(500);
+  cfg.setReadQueueSize(500);  /// ???? NOTE: re-enqueue readen frames to pool !!
   cfg.setFrameType(mdtFrame::FT_USBTMC);
   port.setConfig(&cfg);
   thd.setPort(&port);

@@ -33,6 +33,9 @@ class mdtUsbPortTest : public mdtTest
 
  private slots:
 
+  // Make some tests with Velleman k8055 board
+  void vellemanK8055Test();
+
   // Some data exchange test with Agilent DSO1000
   void agilentDso1000Test();
 

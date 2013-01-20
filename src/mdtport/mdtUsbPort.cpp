@@ -196,7 +196,7 @@ void mdtUsbPort::submitControlQuery()
 
 void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
 {
-  qDebug() << "mdtUsbPort::controlTransferCallback() ...";
+  ///qDebug() << "mdtUsbPort::controlTransferCallback() ...";
   Q_ASSERT(transfer != 0);
   Q_ASSERT(transfer->user_data != 0);
 
@@ -218,7 +218,7 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
    */
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-    qDebug() << "mdtUsbPort::controlTransferCallback(): timeout";
+    ///qDebug() << "mdtUsbPort::controlTransferCallback(): timeout";
     port->updateReadTimeoutState(true);
     port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
     port->pvCurrentControlFrame = 0;
@@ -227,7 +227,7 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
-    qDebug() << "mdtUsbPort::controlTransferCallback(): cancelled";
+    ///qDebug() << "mdtUsbPort::controlTransferCallback(): cancelled";
     port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
     port->pvCurrentControlFrame = 0;
     port->addError(ControlCanceled);
@@ -235,7 +235,7 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if device is disconnected (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_NO_DEVICE){
-    qDebug() << "mdtUsbPort::controlTransferCallback(): disconnected";
+    ///qDebug() << "mdtUsbPort::controlTransferCallback(): disconnected";
     port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
     port->pvCurrentControlFrame = 0;
     port->addError(Disconnected);
@@ -321,7 +321,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelControlTransfer()
   }
 
   if(pvControlTransferPending){
-    qDebug() << "cancelControlTransfer() ...";
+    ///qDebug() << "cancelControlTransfer() ...";
     err = libusb_cancel_transfer(pvControlTransfer);
     if(err != 0){
       portError = mapUsbError(err, 0);
@@ -378,7 +378,7 @@ bool mdtUsbPort::readUntilShortPacketReceivedRequestPending()
 
 mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
 {
-  qDebug() << "mdtUsbPort::initReadTransfer() called, maxSize: " << maxSize;
+  ///qDebug() << "mdtUsbPort::initReadTransfer() called, maxSize: " << maxSize;
   int err;
   error_t portError;
   int len;
@@ -402,7 +402,7 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
     len = maxSize;
   }
   // Fill the transfer
-  qDebug() << "mdtUsbPort::initReadTransfer() INIT";
+  ///qDebug() << "mdtUsbPort::initReadTransfer() INIT";
   if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
     libusb_fill_bulk_transfer(pvReadTransfer, pvHandle, pvReadEndpointAddress, (unsigned char*)pvReadBuffer, len, readTransferCallback, this, pvReadTimeout);
   }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
@@ -432,7 +432,7 @@ mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
 
 void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
 {
-  qDebug() << "mdtUsbPort::readTransferCallback() ...";
+  ///qDebug() << "mdtUsbPort::readTransferCallback() ...";
   Q_ASSERT(transfer != 0);
   Q_ASSERT(transfer->user_data != 0);
 
@@ -450,13 +450,13 @@ void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
-    qDebug() << "mdtUsbPort::readTransferCallback() return ReadCanceled";
+    ///qDebug() << "mdtUsbPort::readTransferCallback() return ReadCanceled";
     port->addError(ReadCanceled);
     return;
   }
   // Check if device is disconnected (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_NO_DEVICE){
-    qDebug() << "mdtUsbPort::readTransferCallback(): device disconnected";
+    ///qDebug() << "mdtUsbPort::readTransferCallback(): device disconnected";
     port->addError(Disconnected);
     return;
   }
@@ -506,7 +506,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelReadTransfer()
   }
 
   if(pvReadTransferPending){
-    qDebug() << "cancelReadTransfer() ...";
+    ///qDebug() << "cancelReadTransfer() ...";
     err = libusb_cancel_transfer(pvReadTransfer);
     if(err != 0){
       portError = mapUsbError(err, pvReadEndpointAddress);
@@ -603,7 +603,7 @@ mdtAbstractPort::error_t mdtUsbPort::initMessageInTransfer()
 
 void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
 {
-  qDebug() << "mdtUsbPort::messageInTransferCallback() ...";
+  ///qDebug() << "mdtUsbPort::messageInTransferCallback() ...";
   Q_ASSERT(transfer != 0);
   Q_ASSERT(transfer->user_data != 0);
 
@@ -634,14 +634,14 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
-    qDebug() << "mdtUsbPort::messageInTransferCallback() return ReadCanceled";
+    ///qDebug() << "mdtUsbPort::messageInTransferCallback() return ReadCanceled";
     port->pvMessageInFramesPool.enqueue(frame);
     port->addError(ReadCanceled);
     return;
   }
   // Check if device is disconnected (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_NO_DEVICE){
-    qDebug() << "mdtUsbPort::messageInTransferCallback(): device disconnected";
+    ///qDebug() << "mdtUsbPort::messageInTransferCallback(): device disconnected";
     port->pvMessageInFramesPool.enqueue(frame);
     port->addError(Disconnected);
     return;
@@ -700,7 +700,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
   }
 
   if(pvMessageInTransferPending){
-    qDebug() << "mdtUsbPort::cancelMessageInTransfer() ...";
+    ///qDebug() << "mdtUsbPort::cancelMessageInTransfer() ...";
     err = libusb_cancel_transfer(pvMessageInTransfer);
     if(err != 0){
       portError = mapUsbError(err, pvMessageInEndpointAddress);
@@ -724,7 +724,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelMessageInTransfer()
         return portError;
       }
     }
-    qDebug() << "mdtUsbPort::cancelMessageInTransfer() DONE";
+    ///qDebug() << "mdtUsbPort::cancelMessageInTransfer() DONE";
   }
 
   return NoError;
@@ -760,7 +760,7 @@ void mdtUsbPort::addFrameToWrite(mdtFrame *frame)
 
 mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 maxSize)
 {
-  qDebug() << "mdtUsbPort::initWriteTransfer() called ...";
+  ///qDebug() << "mdtUsbPort::initWriteTransfer() called ...";
   Q_ASSERT(data != 0);
   Q_ASSERT(maxSize >= 0);
 
@@ -786,7 +786,7 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
   // Copy data to write
   memcpy(pvWriteBuffer, data, len);
   // Fill the transfer
-  qDebug() << "mdtUsbPort::initWriteTransfer() , maxSize: " << maxSize << " , data: " << data;
+  ///qDebug() << "mdtUsbPort::initWriteTransfer() , maxSize: " << maxSize << " , data: " << data;
   if(pvWriteTransfertType == LIBUSB_TRANSFER_TYPE_BULK){
     libusb_fill_bulk_transfer(pvWriteTransfer, pvHandle, pvWriteEndpointAddress, (unsigned char*)pvWriteBuffer, len, writeTransferCallback, (void*)this, pvWriteTimeout);
   }else if(pvReadTransfertType == LIBUSB_TRANSFER_TYPE_INTERRUPT){
@@ -816,9 +816,10 @@ mdtAbstractPort::error_t mdtUsbPort::initWriteTransfer(const char *data, qint64 
 
 void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
 {
-  qDebug() << "mdtUsbPort::writeTransferCallback() ...";
   Q_ASSERT(transfer != 0);
   Q_ASSERT(transfer->user_data != 0);
+
+  qDebug() << "mdtUsbPort::writeTransferCallback() , actual_length: " << transfer->actual_length;
 
   // Get this instance
   mdtUsbPort *port = static_cast<mdtUsbPort*>(transfer->user_data);
@@ -834,13 +835,13 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
   }
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
-    qDebug() << "mdtUsbPort::writeTransferCallback() return WriteCanceled";
+    ///qDebug() << "mdtUsbPort::writeTransferCallback() return WriteCanceled";
     port->addError(WriteCanceled);
     return;
   }
   // Check if device is disconnected (not valid if cancelled)
   if(transfer->status & LIBUSB_TRANSFER_NO_DEVICE){
-    qDebug() << "mdtUsbPort::writeTransferCallback(): device disconnected";
+    ///qDebug() << "mdtUsbPort::writeTransferCallback(): device disconnected";
     port->addError(Disconnected);
     return;
   }
@@ -876,6 +877,9 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
     port->addError(UnhandledError);
     return;
   }
+  
+  qDebug() << "mdtUsbPort::writeTransferCallback() DONE";
+  
 }
 
 mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
@@ -890,7 +894,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelWriteTransfer()
   }
 
   if(pvWriteTransferPending){
-    qDebug() << "cancelWriteTransfer() ...";
+    ///qDebug() << "cancelWriteTransfer() ...";
     err = libusb_cancel_transfer(pvWriteTransfer);
     if(err != 0){
       portError = mapUsbError(err, pvWriteEndpointAddress);
@@ -965,7 +969,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
 {
   error_t portError;
 
-  qDebug() << "mdtUsbPort::cancelTransfers() ...";
+  ///qDebug() << "mdtUsbPort::cancelTransfers() ...";
   portError = cancelControlTransfer();
   if((portError != NoError)&&(portError != ControlCanceled)){
     return portError;
@@ -982,7 +986,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
   if((portError != NoError)&&(portError != ReadCanceled)){
     return portError;
   }
-  qDebug() << "mdtUsbPort::cancelTransfers() DONE";
+  ///qDebug() << "mdtUsbPort::cancelTransfers() DONE";
 
   return NoError;
 }
@@ -1362,8 +1366,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     pvWriteBufferSize *= bulkEndpointDescriptor->maxPacketSize();
     pvWriteEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
-    ///qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
-    ///qDebug() << " Max packet size: " << pvWriteBufferSize;
+    //////qDebug() << "Bulk OUT address: 0x" << hex << pvWriteEndpointAddress;
+    //////qDebug() << " Max packet size: " << pvWriteBufferSize;
   }
   if(interruptEndpointDescriptor != 0){
     pvWriteBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
@@ -1373,8 +1377,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     pvWriteBufferSize *= interruptEndpointDescriptor->maxPacketSize();
     pvWriteEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_OUT;
     pvWriteTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
-    ///qDebug() << "Interrupt OUT address: 0x" << hex << pvWriteEndpointAddress;
-    ///qDebug() << " Max packet size: " << pvWriteBufferSize;
+    //////qDebug() << "Interrupt OUT address: 0x" << hex << pvWriteEndpointAddress;
+    //////qDebug() << " Max packet size: " << pvWriteBufferSize;
   }
   // Find device's input endpoints
   bulkEndpointDescriptor = deviceDescriptor.firstBulkInEndpoint(0, 0, true);
@@ -1393,15 +1397,15 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
     pvReadBufferSize *= bulkEndpointDescriptor->maxPacketSize();
     pvReadEndpointAddress = bulkEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
     pvReadTransfertType = LIBUSB_TRANSFER_TYPE_BULK;
-    ///qDebug() << "Bulk IN address: 0x" << hex << pvReadEndpointAddress;
-    ///qDebug() << " Max packet size: " << pvReadBufferSize;
+    //////qDebug() << "Bulk IN address: 0x" << hex << pvReadEndpointAddress;
+    //////qDebug() << " Max packet size: " << pvReadBufferSize;
   }
   if(interruptEndpointDescriptor != 0){
-    ///qDebug() << "Interrupt IN address: " << interruptEndpointDescriptor->address();
-    ///qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
+    //////qDebug() << "Interrupt IN address: " << interruptEndpointDescriptor->address();
+    //////qDebug() << " Max packet size: " << interruptEndpointDescriptor->maxPacketSize();
     // Some device have a Bulk IN + Interrupt IN
     if(bulkEndpointDescriptor != 0){
-      ///qDebug() << "Additionnal interrupt IN , currently not supported..";
+      //////qDebug() << "Additionnal interrupt IN , currently not supported..";
       // Use this interrupt IN endpoint as message IN
       pvMessageInBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
       if(pvMessageInBufferSize < 1){
@@ -1409,8 +1413,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
       }
       pvMessageInBufferSize *= interruptEndpointDescriptor->maxPacketSize();
       pvMessageInEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
-      ///qDebug() << "Interrupt IN (for messages) address: 0x" << hex << pvMessageInEndpointAddress;
-      ///qDebug() << " Max packet size: " << pvMessageInBufferSize;
+      //////qDebug() << "Interrupt IN (for messages) address: 0x" << hex << pvMessageInEndpointAddress;
+      //////qDebug() << " Max packet size: " << pvMessageInBufferSize;
     }else{
       // Use this interrupt IN endpoint as read
       pvReadBufferSize = interruptEndpointDescriptor->transactionsCountPerMicroFrame();
@@ -1420,8 +1424,8 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
       pvReadBufferSize *= interruptEndpointDescriptor->maxPacketSize();
       pvReadEndpointAddress = interruptEndpointDescriptor->address() | LIBUSB_ENDPOINT_IN;
       pvReadTransfertType = LIBUSB_TRANSFER_TYPE_INTERRUPT;
-      ///qDebug() << "Interrupt IN address: 0x" << hex << pvReadEndpointAddress;
-      ///qDebug() << " Max packet size: " << pvReadBufferSize;
+      //////qDebug() << "Interrupt IN address: 0x" << hex << pvReadEndpointAddress;
+      //////qDebug() << " Max packet size: " << pvReadBufferSize;
     }
   }
   // Unload possibly loaded driver that uses the device
@@ -1576,7 +1580,7 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
 
 void mdtUsbPort::pvFlushIn()
 {
-  qDebug() << "mdtUsbPort::pvFlushIn() ...";
+  ///qDebug() << "mdtUsbPort::pvFlushIn() ...";
   ///cancelReadTransfer();
   while(pvMessageInFrames.size() > 0){
     pvMessageInFramesPool.enqueue(pvMessageInFrames.dequeue());
@@ -1588,7 +1592,7 @@ void mdtUsbPort::pvFlushIn()
 
 void mdtUsbPort::pvFlushOut()
 {
-  qDebug() << "mdtUsbPort::pvFlushOut() ...";
+  ///qDebug() << "mdtUsbPort::pvFlushOut() ...";
   ///cancelWriteTransfer();
   while(pvControlQueryFrames.size() > 0){
     pvControlFramesPool.enqueue(pvControlQueryFrames.dequeue());

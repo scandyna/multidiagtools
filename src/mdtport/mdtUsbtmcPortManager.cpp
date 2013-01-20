@@ -41,11 +41,6 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
   // Port setup
   pvPort->config().setFrameType(mdtFrame::FT_USBTMC);
-  /// \todo Taille provisoire !
-  ///pvPort->config().setReadFrameSize(10000);
-  ///pvPort->config().setReadQueueSize(3);
-  ///pvPort->config().setWriteFrameSize(512);
-  ///pvPort->config().setWriteQueueSize(1);
 
   // USBTMC specific
   pvCurrentWritebTag = 0;
@@ -122,7 +117,7 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   if(bTag < 0){
     return QByteArray();
   }
-  qDebug() << "mdtUsbtmcPortManager::sendQuery() , bTag: " << bTag << " , query: " << query;
+  ///qDebug() << "mdtUsbtmcPortManager::sendQuery() , bTag: " << bTag << " , query: " << query;
   // Wait on response
   if(!waitOnFrame(bTag, readTimeout)){
     return QByteArray();
@@ -158,7 +153,6 @@ int mdtUsbtmcPortManager::writeData(QByteArray data)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
-  qDebug() << "mdtUsbtmcPortManager::writeData() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
   frame->setMessageData(data);
   frame->setEOM(true);
@@ -198,9 +192,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   if(pvCurrentWritebTag == 0){
     pvCurrentWritebTag++;
   }
-  qDebug() << "mdtUsbtmcPortManager::sendReadRequest() - bTag: " << pvCurrentWritebTag;
   frame->setbTag(pvCurrentWritebTag);
-  ///frame->setMessageData("");
   frame->setTransferSize(config().readFrameSize()-13);
   frame->encode();
   pvPort->addFrameToWrite(frame);
@@ -222,20 +214,6 @@ int mdtUsbtmcPortManager::sendReadRequest(bool enqueueResponse)
 
   return sendReadRequest(transaction);
 }
-
-
-/*
-void mdtUsbtmcPortManager::abort()
-{
-  Q_ASSERT(pvPort != 0);
-
-  ///mdtUsbPort *port = dynamic_cast<mdtUsbPort*> (pvPort);
-  ///Q_ASSERT(port != 0);
-  qDebug() << "mdtUsbtmcPortManager::abort() ...";
-  pvPort->flushIn();
-  pvPort->flushOut();
-}
-*/
 
 /// \todo finish !
 int mdtUsbtmcPortManager::sendReadStatusByteRequest()
@@ -286,7 +264,7 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
   status = 0x81;  // STATUS_TRANSFER_NOT_IN_PROGRESS
   maxTry = 10;
   while((status == 0x81)&&(maxTry > 0)){
-    qDebug() << "*-* send INITIATE_ABORT_BULK_IN ...";
+    ///qDebug() << "*-* send INITIATE_ABORT_BULK_IN ...";
     retVal = sendInitiateAbortBulkInRequest(bTag);
     if(retVal < 0){
       // Error logged by USB port manager
@@ -314,7 +292,6 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
     }
     // Check status
     status = frame.at(0);
-    qDebug() << "*-* status: 0x" << hex << status;
     if(status == 0x81){ // STATUS_TRANSFER_NOT_IN_PROGRESS
       wait(1000);
     }
@@ -327,21 +304,17 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
     // Continue working (possibly, nothing was to abort)
     return 0;
   }
-  
-  qDebug() << "offset 0: 0x" << hex << (quint8)frame.at(0);
-  qDebug() << "offset 1: 0x" << hex << (quint8)frame.at(1);
-  
+  // Check returned status
   if(status != 0x01){ // 0x01: STATUS_SUCCESS
     // No transfer in progress (device FIFO empty)
-    qDebug() << "*-* Device FIFO empty";
     return 0;
   }
-  qDebug() << "*-* Flushing device ...";
+  // Flush device
   readUntilShortPacketReceived();
   // Send the CHECK_ABORT_BULK_IN_STATUS request and wait on response
   status = 0x02;  // STATUS_PENDING
   while(status == 0x02){
-    qDebug() << "*-* send CHECK_ABORT_BULK_IN_STATUS ...";
+    ///qDebug() << "*-* send CHECK_ABORT_BULK_IN_STATUS ...";
     retVal = sendCheckAbortBulkInStatusRequest(bTag);
     if(retVal < 0){
       // Error logged by USB port manager
@@ -381,7 +354,6 @@ int mdtUsbtmcPortManager::abortBulkIn(quint8 bTag)
   // We are finished here, cancel portmanager wait methods
   cancelReadWait();
 
-  qDebug() << "*-* Abort bulk in END";
   return 0;
 }
 
@@ -615,17 +587,13 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 
   mdtFrameUsbTmc *frame;
   mdtPortTransaction *transaction;
-  /// Essais
-  ///int bTagToAbort = -1;
 
   // Get frames in readen queue
   pvPort->lockMutex();
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
-    qDebug() << "mdtUsbtmcPortManager::fromThreadNewFrameReaden() , bTag: " << frame->bTag();
     // Check if frame is complete
-    /// \todo Error on incomplete frame
     if(frame->isComplete()){
       // If we have a pending transaction, remove it
       transaction = pendingTransaction(frame->bTag());

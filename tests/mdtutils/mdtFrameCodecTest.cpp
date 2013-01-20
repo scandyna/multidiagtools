@@ -699,9 +699,9 @@ void mdtFrameCodecTest::mdtFrameCodecK8055Test()
    * Decode test
    */
   frame.clear();
-  // Set input 0, 3, 5 to 1
-  frame.append((char)0x29);
-  // Set statu to 1
+  // Set input 1, 3, 5 to 1
+  frame.append((char)0x91);
+  // Set status to 1
   frame.append((char)0x01);
   // Set analog 1 to 89
   frame.append((char)0x59);
@@ -715,31 +715,35 @@ void mdtFrameCodecTest::mdtFrameCodecK8055Test()
   frame.append((char)0xA0);
   // Decode and check values
   QVERIFY(codec.decode(frame));
-  QVERIFY(codec.values().size() == 12);
+  QCOMPARE(codec.values().size() , 9);
   QVERIFY(codec.values().at(0).type() == QVariant::Bool);
   QVERIFY(codec.values().at(0) == true);
   QVERIFY(codec.values().at(1).type() == QVariant::Bool);
   QVERIFY(codec.values().at(1) == false);
   QVERIFY(codec.values().at(2).type() == QVariant::Bool);
-  QVERIFY(codec.values().at(2) == false);
+  QVERIFY(codec.values().at(2) == true);
   QVERIFY(codec.values().at(3).type() == QVariant::Bool);
-  QVERIFY(codec.values().at(3) == true);
+  QVERIFY(codec.values().at(3) == false);
   QVERIFY(codec.values().at(4).type() == QVariant::Bool);
-  QVERIFY(codec.values().at(4) == false);
+  QVERIFY(codec.values().at(4) == true);
+  /**
   QVERIFY(codec.values().at(5).type() == QVariant::Bool);
   QVERIFY(codec.values().at(5) == true);
   QVERIFY(codec.values().at(6).type() == QVariant::Bool);
-  QVERIFY(codec.values().at(6) == false);  QVERIFY(codec.values().at(5).type() == QVariant::Bool);
-  QVERIFY(codec.values().at(7) == false);  QVERIFY(codec.values().at(5).type() == QVariant::Bool);
+  QVERIFY(codec.values().at(6) == false);
+  QVERIFY(codec.values().at(7).type() == QVariant::Bool);
   QVERIFY(codec.values().at(7) == false);
   QVERIFY(codec.values().at(8).type() == QVariant::Int);
   QVERIFY(codec.values().at(8) == 89);
-  QVERIFY(codec.values().at(9).type() == QVariant::Int);
-  QVERIFY(codec.values().at(9) == 253);
-  QVERIFY(codec.values().at(10).type() == QVariant::Int);
-  QVERIFY(codec.values().at(10) == 260);
-  QVERIFY(codec.values().at(11).type() == QVariant::Int);
-  QVERIFY(codec.values().at(11) == 4512);
+  */
+  QVERIFY(codec.values().at(5).type() == QVariant::Int);
+  QVERIFY(codec.values().at(5) == 89);
+  QVERIFY(codec.values().at(6).type() == QVariant::Int);
+  QVERIFY(codec.values().at(6) == 253);
+  QVERIFY(codec.values().at(7).type() == QVariant::Int);
+  QVERIFY(codec.values().at(7) == 260);
+  QVERIFY(codec.values().at(8).type() == QVariant::Int);
+  QVERIFY(codec.values().at(8) == 4512);
 
   /*
    * Encode reset
@@ -805,14 +809,57 @@ void mdtFrameCodecTest::mdtFrameCodecK8055Test()
   codec.setAnalogOut(2, 254);
   frame = codec.encodeSetOutputs();
   QVERIFY(frame.size() == 8);
-  QVERIFY((quint8)frame.at(0) == 0x05);
-  QVERIFY((quint8)frame.at(1) == 0x43);
-  QVERIFY((quint8)frame.at(2) == 57);
-  QVERIFY((quint8)frame.at(3) == 254);
-  QVERIFY((quint8)frame.at(4) == 0x00);
-  QVERIFY((quint8)frame.at(5) == 0x00);
-  QVERIFY((quint8)frame.at(6) == 0x00);
-  QVERIFY((quint8)frame.at(7) == 0x00);
+  QVERIFY((quint8)frame.at(0) == 0x05); // Command 5: set Douts + Aouts
+  QVERIFY((quint8)frame.at(1) == 0x43); // Dout bitmask
+  QVERIFY((quint8)frame.at(2) == 57);   // Aout1 value
+  QVERIFY((quint8)frame.at(3) == 254);  // Aout2 value
+  QVERIFY((quint8)frame.at(4) == 0x00); // Reset counter 1
+  QVERIFY((quint8)frame.at(5) == 0x00); // Reset counter 2
+  QVERIFY((quint8)frame.at(6) == 0x00); // Debounce value for counter 1
+  QVERIFY((quint8)frame.at(7) == 0x00); // Debounce value for counter 2
+
+  codec.setDigitalOut(1, true);
+  codec.setDigitalOut(2, false);
+  codec.setDigitalOut(3, true);
+  codec.setDigitalOut(4, false);
+  codec.setDigitalOut(5, true);
+  codec.setDigitalOut(6, false);
+  codec.setDigitalOut(7, true);
+  codec.setDigitalOut(8, false);
+  codec.setAnalogOut(1, 255);
+  codec.setAnalogOut(2, 0);
+  frame = codec.encodeSetOutputs();
+  QCOMPARE(frame.size() , 8);
+  QCOMPARE((int)((quint8)frame.at(0)) , 0x05); // Command 5: set Douts + Aouts
+  QCOMPARE((int)((quint8)frame.at(1)) , 0x55); // Dout bitmask
+  QCOMPARE((int)((quint8)frame.at(2)) , 255);  // Aout1 value
+  QCOMPARE((int)((quint8)frame.at(3)) , 0);    // Aout2 value
+  QCOMPARE((int)((quint8)frame.at(4)) , 0x00); // Reset counter 1
+  QCOMPARE((int)((quint8)frame.at(5)) , 0x00); // Reset counter 2
+  QCOMPARE((int)((quint8)frame.at(6)) , 0x00); // Debounce value for counter 1
+  QCOMPARE((int)((quint8)frame.at(7)) , 0x00); // Debounce value for counter 2
+
+  codec.setDigitalOut(1, false);
+  codec.setDigitalOut(2, true);
+  codec.setDigitalOut(3, false);
+  codec.setDigitalOut(4, true);
+  codec.setDigitalOut(5, false);
+  codec.setDigitalOut(6, true);
+  codec.setDigitalOut(7, false);
+  codec.setDigitalOut(8, true);
+  codec.setAnalogOut(1, 255);
+  codec.setAnalogOut(2, 0);
+  frame = codec.encodeSetOutputs();
+  QCOMPARE(frame.size() , 8);
+  QCOMPARE((int)((quint8)frame.at(0)) , 0x05); // Command 5: set Douts + Aouts
+  QCOMPARE((int)((quint8)frame.at(1)) , 0xAA); // Dout bitmask
+  QCOMPARE((int)((quint8)frame.at(2)) , 255);  // Aout1 value
+  QCOMPARE((int)((quint8)frame.at(3)) , 0);    // Aout2 value
+  QCOMPARE((int)((quint8)frame.at(4)) , 0x00); // Reset counter 1
+  QCOMPARE((int)((quint8)frame.at(5)) , 0x00); // Reset counter 2
+  QCOMPARE((int)((quint8)frame.at(6)) , 0x00); // Debounce value for counter 1
+  QCOMPARE((int)((quint8)frame.at(7)) , 0x00); // Debounce value for counter 2
+
 }
 
 int main(int argc, char **argv)

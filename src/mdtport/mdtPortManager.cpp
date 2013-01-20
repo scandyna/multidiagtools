@@ -35,9 +35,6 @@ mdtPortManager::mdtPortManager(QObject *parent)
   pvPort = 0;
   // At default, transactions support and blocking mode are OFF
   setTransactionsDisabled(false);
-
-  ///pvEnqueueReadenFrames = false;
-  ///pvNotifyNewReadenFrame = false;
 }
 
 mdtPortManager::~mdtPortManager()
@@ -629,8 +626,6 @@ void mdtPortManager::abort()
 {
   Q_ASSERT(pvPort != 0);
 
-  ///pvPort->flushIn();
-  ///pvPort->flushOut();
   pvPort->flush();
 }
 
@@ -710,7 +705,6 @@ void mdtPortManager::addTransaction(int id, bool queryReplyMode)
 mdtPortTransaction *mdtPortManager::pendingTransaction(int id)
 {
   // QMap returns a default-constructed value if key not exists (i.e. 0 for pointer)
-  qDebug() << "mdtPortManager::pendingTransaction(), queue state: " << pvTransactionsPending;
   return pvTransactionsPending.take(id);
 }
 

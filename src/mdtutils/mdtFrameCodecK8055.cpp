@@ -36,7 +36,7 @@ mdtFrameCodecK8055::~mdtFrameCodecK8055()
 
 bool mdtFrameCodecK8055::decode(QByteArray &data)
 {
-  char byte;
+  quint8 byte;
   int word;
 
   pvValues.clear();
@@ -47,21 +47,15 @@ bool mdtFrameCodecK8055::decode(QByteArray &data)
     e.commit();
     return false;
   }
-  /// \todo check statu field ??
+  /// \todo check status field ??
   // Digital in
-  qDebug() << "Statu: " << (quint8)data.at(1);
+  qDebug() << "mdtFrameCodecK8055::decode() Status: " << (quint8)data.at(1);
   byte = data.at(0);
-  qDebug() << "Byte: " << (quint8)byte;
-  pvValues.append((bool)(byte & (1<<4)));
-  pvValues.append((bool)(byte & (1<<5)));
+  pvValues.append((bool)(byte & 0x10));
+  pvValues.append((bool)(byte & 0x20));
   pvValues.append((bool)(byte & 0x01));
-  pvValues.append((bool)(byte & (1<<6)));
-  pvValues.append((bool)(byte & (1<<7)));
-  /**
-  pvValues.append((bool)(byte & (1<<5)));
-  pvValues.append((bool)(byte & (1<<6)));
-  pvValues.append((bool)(byte & (1<<7)));
-  */
+  pvValues.append((bool)(byte & 0x40));
+  pvValues.append((bool)(byte & 0x80));
   // Analog in
   pvValues.append((int)((quint8)data.at(2)));
   pvValues.append((int)((quint8)data.at(3)));
@@ -137,6 +131,7 @@ QByteArray mdtFrameCodecK8055::encodeSetOutputs()
   // Analog out
   frame.append((char)pvAnalog1Value);
   frame.append((char)pvAnalog2Value);
+  // Counters (not used with command 5)
   frame.append((char)0x00);
   frame.append((char)0x00);
   frame.append((char)0x00);
@@ -152,7 +147,7 @@ void mdtFrameCodecK8055::setDigitalOut(int channel, bool state)
   if(state){
     pvDigitalChannels |= (1 << (channel-1));
   }else{
-    pvDigitalChannels &= !(1 << (channel-1));
+    pvDigitalChannels &= ~(1 << (channel-1));
   }
 }
 

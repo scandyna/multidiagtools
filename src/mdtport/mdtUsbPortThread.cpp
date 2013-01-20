@@ -47,7 +47,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
 
   while(maxReadTransfers > 0){
     readen = port->read(buffer, port->readBufferSize());
-    qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
+    ///qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
     if(readen < 0){
       delete[] buffer;
       return (mdtAbstractPort::error_t)readen;
@@ -56,7 +56,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
       delete[] buffer;
       return mdtAbstractPort::NoError;
     }
-    qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , init transfer ...";
+    ///qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , init transfer ...";
     portError = port->initReadTransfer(port->readBufferSize());
     if(portError != mdtAbstractPort::NoError){
       delete[] buffer;
@@ -64,7 +64,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
     }
     portError = port->handleUsbEvents();
     if(portError != mdtAbstractPort::NoError){
-      qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , error " << portError;
+      ///qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , error " << portError;
       delete[] buffer;
       return portError;
     }
@@ -100,8 +100,6 @@ void mdtUsbPortThread::run()
   int i;
   mdtUsbPort *port;
   bool waitAnAnswer = false;
-  int reconnectTimeout;
-  int reconnectMaxRetry;
   qint64 written;
   QList<mdtAbstractPort::error_t> errors;
 
@@ -115,9 +113,6 @@ void mdtUsbPortThread::run()
   Q_ASSERT(port != 0);
   // Set the running flag
   pvRunning = true;
-  /// Get setup \todo Take from config, or something
-  reconnectTimeout = 5000;
-  reconnectMaxRetry = 5;
   // Get a frame for read
   readFrame = getNewFrameRead();
   if(readFrame == 0){
@@ -132,9 +127,9 @@ void mdtUsbPortThread::run()
     if(!pvRunning){
       break;
     }
-    qDebug() << "USBPTHD: going idle ...";
+    ///qDebug() << "USBPTHD: going idle ...";
     portError = port->handleUsbEvents();
-    qDebug() << "USBPTHD: event !";
+    ///qDebug() << "USBPTHD: event !";
     // Check about event handling errors
     if(portError != mdtAbstractPort::NoError){
       // Check about stoping
@@ -147,22 +142,6 @@ void mdtUsbPortThread::run()
         notifyError(portError);
         break;
       }
-      /**
-      if(portError == mdtAbstractPort::Disconnected){
-        // Try to reconnect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-        if(portError != mdtAbstractPort::NoError){
-          // Stop
-          pvRunning = false;
-          break;
-        }
-      }else{
-        // Errors that must be signaled + stop the thread
-        notifyError(portError);
-        pvRunning = false;
-        break;
-      }
-      */
     }
     // Check about port errors
     errors = port->lastErrors();
@@ -184,7 +163,7 @@ void mdtUsbPortThread::run()
           // We submit the uncomplete frame
           pvPort->readenFrames().enqueue(readFrame);
           emit newFrameReaden();
-          qDebug() << "mdtUsbPortThread::run(): read cancel or timeout";
+          ///qDebug() << "mdtUsbPortThread::run(): read cancel or timeout";
           readFrame = getNewFrameRead();
         }else if(portError == mdtAbstractPort::ControlCanceled){
           // mdtUsbPort does the job, we just have to notify the error
@@ -222,26 +201,10 @@ void mdtUsbPortThread::run()
         notifyError(portError);
         break;
       }
-      /**
-      if(portError == mdtAbstractPort::Disconnected){
-        // Try to reconnect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-        if(portError != mdtAbstractPort::NoError){
-          // Stop
-          pvRunning = false;
-          break;
-        }
-      }else{
-        // Errors that must be signaled + stop the thread
-        notifyError(portError);
-        pvRunning = false;
-        break;
-      }
-      */
     }
     // Check about write endpoint flush
     if((writeFrame != 0)&&(port->flushOutRequestPending())){
-      qDebug() << "USBTHD: flushOut";
+      ///qDebug() << "USBTHD: flushOut";
       port->writeFramesPool().enqueue(writeFrame);
       writeFrame = 0;
     }else{
@@ -256,7 +219,7 @@ void mdtUsbPortThread::run()
     }
     // Write ...
     if(writeFrame != 0){
-      qDebug() << "USBPTHD: to write: " << writeFrame->size();
+      ///qDebug() << "USBPTHD: to write: " << writeFrame->size();
       // Write (will simply do nothing and return 0 if transfer is pending)
       written = writeDataToPort(writeFrame);
       if(written < 0){
@@ -270,24 +233,10 @@ void mdtUsbPortThread::run()
           notifyError(portError);
           break;
         }
-        /**
-        // Check about disconnection
-        if(portError == mdtAbstractPort::Disconnected){
-          // Try to reconnect
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            break;
-          }
-        }else{
-          // stop
-          notifyError(portError);
-          break;
-        }
-        */
       }
       // Check if frame was completly written
       if(writeFrame->isEmpty()){
+        qDebug() << "USBPTHD: frame written";
         // Update waitAnAnswer flag
         waitAnAnswer = writeFrame->waitAnAnswer();
         // Restore frame to pool
@@ -315,21 +264,6 @@ void mdtUsbPortThread::run()
             notifyError(portError);
             break;
           }
-          /**
-          // Check about disconnection
-          if(portError == mdtAbstractPort::Disconnected){
-            // Try to reconnect
-            portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-            if(portError != mdtAbstractPort::NoError){
-              // Stop
-              break;
-            }
-          }else{
-            // stop
-            notifyError(portError);
-            break;
-          }
-          */
         }
       }
     }
@@ -347,39 +281,23 @@ void mdtUsbPortThread::run()
           notifyError(portError);
           break;
         }
-        /**
-        // Check about disconnection
-        if(portError == mdtAbstractPort::Disconnected){
-          // Try to reconnect
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            break;
-          }
-        }else{
-          // stop
-          notifyError(portError);
-          break;
-        }
-        */
       }
       emit(readUntilShortPacketReceivedFinished());
     }
     Q_ASSERT(readFrame != 0);
     // Check about read endpoint flush
-    ///if((readFrame != 0)&&(port->flushInRequestPending())){
     if(port->flushInRequestPending()){
-      qDebug() << "USBTHD: flushIn";
+      ///qDebug() << "USBTHD: flushIn";
       port->readFramesPool().enqueue(readFrame);
       readFrame = getNewFrameRead();
       // We do nothing else, return idle
       continue;
     }
     // read/store available data
-    ///if(readFrame != 0){
     n = -1;
     if(!port->readTimeoutOccured()){
       n = readFromPort(&readFrame);
+      qDebug() << "USBPTHD: frames readen: " << n;
       if(n < 0){
         // Unhandled error: notify and stop
         notifyError(n);
@@ -393,17 +311,17 @@ void mdtUsbPortThread::run()
       // We submit the uncomplete frame
       pvPort->readenFrames().enqueue(readFrame);
       emit newFrameReaden();
-      qDebug() << "mdtUsbPortThread::run(): read timeout";
+      ///qDebug() << "mdtUsbPortThread::run(): read timeout";
       readFrame = getNewFrameRead();
       notifyError(mdtAbstractPort::ReadTimeout);
     }
-    qDebug() << "USBPTHD: waitAnAnswer: " << waitAnAnswer << " , n: " << n;
+    ///qDebug() << "USBPTHD: waitAnAnswer: " << waitAnAnswer << " , n: " << n;
     // Two conditions to init a read transfer:
     // - A query/reply is pending (waitAnAnswer)
     // - Current read frame is not complete
     if((waitAnAnswer)&&(n == 0)){
       // Init a new read transfer (will only init if not pending)
-      qDebug() << "USBPTHD: to read: " << readFrame->bytesToStore();
+      ///qDebug() << "USBPTHD: to read: " << readFrame->bytesToStore();
       portError = port->initReadTransfer(readFrame->bytesToStore());
       if(portError != mdtAbstractPort::NoError){
         // Check about stoping
@@ -416,37 +334,19 @@ void mdtUsbPortThread::run()
             // We submit the uncomplete frame
             pvPort->readenFrames().enqueue(readFrame);
             emit newFrameReaden();
-            qDebug() << "mdtUsbPortThread::run(): read cancel";
+            ///qDebug() << "mdtUsbPortThread::run(): read cancel";
             readFrame = getNewFrameRead();
-            ///break;
           }else{
             // Errors that must be signaled + stop the thread
             notifyError(portError);
             break;
           }
         }
-        /**
-        }else if(portError == mdtAbstractPort::Disconnected){
-          // Try to reconnect
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            pvRunning = false;
-            break;
-          }
-        }else{
-          // Errors that must be signaled + stop the thread
-          notifyError(portError);
-          pvRunning = false;
-          break;
-        }
-        */
       }
     }
-    ///}
   }
 
-  qDebug() << "USBTHD: cleanup ...";
+  ///qDebug() << "USBTHD: cleanup ...";
   port->cancelTransfers();
 
   // Put current frame into pool
@@ -454,7 +354,7 @@ void mdtUsbPortThread::run()
     port->readFramesPool().enqueue(readFrame);
   }
 
-  qDebug() << "USBTHD: END";
+  ///qDebug() << "USBTHD: END";
 
   pvRunning = false;
   pvPort->unlockMutex();

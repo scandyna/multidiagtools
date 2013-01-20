@@ -190,9 +190,6 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
  public slots:
 
-  /// \todo Essais ...
-  ///void abort();
-
   /*! \brief Called by the thread whenn a frame was readen
    */
   void fromThreadNewFrameReaden();
