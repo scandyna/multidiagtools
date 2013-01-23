@@ -69,8 +69,19 @@ void \hyperlink{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{setByteP
 \begin{DoxyCompactList}\small\item\em Set the byte per byte write On/Off. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_config_a9b5041ba740a5918e5e1323e61d3bbdc}{bytePerByteWrite} () const 
 \begin{DoxyCompactList}\small\item\em Get byte per byte write flag (On/Off) \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{operator==} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)
-\begin{DoxyCompactList}\small\item\em Use the Query/Answer protocol. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_a64b8978cc32b97ffe64768fad6f2b0e8}{setConnectTimeout} (int timeout)
+\begin{DoxyCompactList}\small\item\em Set the connection timeout. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_config_a1e47b397318c6b4911d40dbbc5c317e7}{connectTimeout} () const 
+\begin{DoxyCompactList}\small\item\em Get the connection timeout. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_config_a1fed4cc77cc33193886e7562369eac88}{setConnectMaxTry} (int maxTry)
+\begin{DoxyCompactList}\small\item\em Set the maximum connection try. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_config_a98aa42afacba9bfe28d3f02a6b849f60}{connectMaxTry} () const 
+\begin{DoxyCompactList}\small\item\em Get the maximum connection try. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{
+bool {\bfseries operator==} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)}
+\label{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}
+
+\item 
 \hypertarget{classmdt_port_config_a5a539c86934d41306a3ed18a8292457d}{
 bool {\bfseries operator!=} (const \hyperlink{classmdt_port_config}{mdtPortConfig} \&other)}
 \label{classmdt_port_config_a5a539c86934d41306a3ed18a8292457d}
@@ -146,6 +157,16 @@ QByteArray {\bfseries pvEndOfFrameSeq}}
 bool {\bfseries pvBytePerByteWrite}}
 \label{classmdt_port_config_a56fb67591803bc972772073a6f2b996d}
 
+\item 
+\hypertarget{classmdt_port_config_a46b87d1b9c2dbe30688497c34807d93c}{
+int {\bfseries pvConnectMaxTry}}
+\label{classmdt_port_config_a46b87d1b9c2dbe30688497c34807d93c}
+
+\item 
+\hypertarget{classmdt_port_config_a3e6aa49486e716f834e174b5ce0a3909}{
+int {\bfseries pvConnectTimeout}}
+\label{classmdt_port_config_a3e6aa49486e716f834e174b5ce0a3909}
+
 \end{DoxyCompactItemize}
 
 
@@ -175,7 +196,41 @@ Get byte per byte write flag (On/Off)
 \end{DoxySeeAlso}
 
 
-Definition at line 178 of file mdtPortConfig.cpp.
+Definition at line 180 of file mdtPortConfig.cpp.
+
+\hypertarget{classmdt_port_config_a98aa42afacba9bfe28d3f02a6b849f60}{
+\index{mdtPortConfig@{mdtPortConfig}!connectMaxTry@{connectMaxTry}}
+\index{connectMaxTry@{connectMaxTry}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{connectMaxTry}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortConfig::connectMaxTry (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_config_a98aa42afacba9bfe28d3f02a6b849f60}
+
+
+Get the maximum connection try. 
+
+See \hyperlink{classmdt_port_config_a1fed4cc77cc33193886e7562369eac88}{setConnectMaxTry()}. 
+
+Definition at line 201 of file mdtPortConfig.cpp.
+
+\hypertarget{classmdt_port_config_a1e47b397318c6b4911d40dbbc5c317e7}{
+\index{mdtPortConfig@{mdtPortConfig}!connectTimeout@{connectTimeout}}
+\index{connectTimeout@{connectTimeout}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{connectTimeout}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortConfig::connectTimeout (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_config_a1e47b397318c6b4911d40dbbc5c317e7}
+
+
+Get the connection timeout. 
+
+See \hyperlink{classmdt_port_config_a64b8978cc32b97ffe64768fad6f2b0e8}{setConnectTimeout()}. 
+
+Definition at line 191 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a9ac77f89ee4a0baadc4814a9a95701b6}{
 \index{mdtPortConfig@{mdtPortConfig}!endOfFrameSeq@{endOfFrameSeq}}
@@ -195,7 +250,7 @@ Get the end of frame sequence.
 \end{DoxySeeAlso}
 
 
-Definition at line 167 of file mdtPortConfig.cpp.
+Definition at line 169 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_af9c95090820c449412298832582a0fab}{
 \index{mdtPortConfig@{mdtPortConfig}!frameType@{frameType}}
@@ -215,29 +270,7 @@ Get frame type.
 \end{DoxySeeAlso}
 
 
-Definition at line 151 of file mdtPortConfig.cpp.
-
-\hypertarget{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}{
-\index{mdtPortConfig@{mdtPortConfig}!operator==@{operator==}}
-\index{operator==@{operator==}!mdtPortConfig@{mdtPortConfig}}
-\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortConfig::operator== (
-\begin{DoxyParamCaption}
-\item[{const {\bf mdtPortConfig} \&}]{other}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_port_config_a639c71f90cfeb7e2160ad90e9775054b}
-
-
-Use the Query/Answer protocol. 
-
-Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that mdpAbstractPort::waitForReadyRead() returns allways immediatly. For example, this is true with \hyperlink{classmdt_usb_port}{mdtUsbPort} when dealing with the Velleman K8055. In this situation, the purely event driven approach is not sufficient, causing heavily usage of CPU. Another remark, is that such situation is true on transfer based port.
-
-Question: What is a important difference between a full duplex serial port and a USB port ?\par
- The answer could be: On serial port, we neven know when data are available, and we must still ready to read them a each time. On USB port, NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000027}{Todo}]Rollback: voir callback libusb, si data, ... \end{Desc}
-
-
-Definition at line 183 of file mdtPortConfig.cpp.
+Definition at line 153 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_ad315f8f97723abe161792c9d9a1375ec}{
 \index{mdtPortConfig@{mdtPortConfig}!readFrameSize@{readFrameSize}}
@@ -257,7 +290,7 @@ Get the read frame size.
 \end{DoxySeeAlso}
 
 
-Definition at line 55 of file mdtPortConfig.cpp.
+Definition at line 57 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_aff0260f72ca05715efe3f70850e7a151}{
 \index{mdtPortConfig@{mdtPortConfig}!readQueueSize@{readQueueSize}}
@@ -277,7 +310,7 @@ Get the read Queue size.
 \end{DoxySeeAlso}
 
 
-Definition at line 67 of file mdtPortConfig.cpp.
+Definition at line 69 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_ab18c2ec1628cb480a70033387e7c3333}{
 \index{mdtPortConfig@{mdtPortConfig}!readTimeout@{readTimeout}}
@@ -297,7 +330,7 @@ Read timout \mbox{[}ms\mbox{]}
 \end{DoxyReturn}
 
 
-Definition at line 87 of file mdtPortConfig.cpp.
+Definition at line 89 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_ac6cb3d8fbefad9a832335c3f2023832c}{
 \index{mdtPortConfig@{mdtPortConfig}!setBytePerByteWrite@{setBytePerByteWrite}}
@@ -329,7 +362,46 @@ Enable this function in this situation.
 \end{DoxySeeAlso}
 
 
-Definition at line 172 of file mdtPortConfig.cpp.
+Definition at line 174 of file mdtPortConfig.cpp.
+
+\hypertarget{classmdt_port_config_a1fed4cc77cc33193886e7562369eac88}{
+\index{mdtPortConfig@{mdtPortConfig}!setConnectMaxTry@{setConnectMaxTry}}
+\index{setConnectMaxTry@{setConnectMaxTry}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setConnectMaxTry}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setConnectMaxTry (
+\begin{DoxyParamCaption}
+\item[{int}]{maxTry}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a1fed4cc77cc33193886e7562369eac88}
+
+
+Set the maximum connection try. 
+
+This is used by port witch support disconnection (USB, TCP socket) 
+
+Definition at line 196 of file mdtPortConfig.cpp.
+
+\hypertarget{classmdt_port_config_a64b8978cc32b97ffe64768fad6f2b0e8}{
+\index{mdtPortConfig@{mdtPortConfig}!setConnectTimeout@{setConnectTimeout}}
+\index{setConnectTimeout@{setConnectTimeout}!mdtPortConfig@{mdtPortConfig}}
+\subsubsection[{setConnectTimeout}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortConfig::setConnectTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{timeout}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_config_a64b8978cc32b97ffe64768fad6f2b0e8}
+
+
+Set the connection timeout. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timeout} & \mbox{[}ms\mbox{]}\\
+\hline
+\end{DoxyParams}
+This is used by port witch support disconnection (USB, TCP socket) 
+
+Definition at line 186 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a1cad2f21252411977fe328f89b68fbfb}{
 \index{mdtPortConfig@{mdtPortConfig}!setDefault@{setDefault}}
@@ -354,7 +426,9 @@ Default configuration is:
 \item Frame type: RAW
 \item En of frame sequence: LF (ASCII 0x0A)
 \item Byte per byte write: Off
-\item Write interframe time: 0 \mbox{[}ms\mbox{]} 
+\item Write interframe time: 0 \mbox{[}ms\mbox{]}
+\item Connect timeout: 5000 \mbox{[}ms\mbox{]}
+\item Connect max try: 10 
 \end{DoxyItemize}
 
 Reimplemented in \hyperlink{classmdt_serial_port_config_acabcdbda285314992582e5ffd413b555}{mdtSerialPortConfig}.
@@ -383,7 +457,7 @@ This is an overloaded method
 \end{DoxySeeAlso}
 
 
-Definition at line 161 of file mdtPortConfig.cpp.
+Definition at line 163 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a627adcb87d26757238f844db19fc248d}{
 \index{mdtPortConfig@{mdtPortConfig}!setFrameType@{setFrameType}}
@@ -405,7 +479,7 @@ Frame type can be an ASCII frame, binary frame, ...
 \end{DoxySeeAlso}
 
 
-Definition at line 146 of file mdtPortConfig.cpp.
+Definition at line 148 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a02f3c9744b0d7a61853ab58467278bbc}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadFrameSize@{setReadFrameSize}}
@@ -428,7 +502,7 @@ size must be a positive value
 \end{DoxyPrecond}
 
 
-Definition at line 48 of file mdtPortConfig.cpp.
+Definition at line 50 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a04d8e81844deaff20a890ea24e2f9634}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadQueueSize@{setReadQueueSize}}
@@ -448,7 +522,7 @@ size must be a positive value
 \end{DoxyPrecond}
 
 
-Definition at line 60 of file mdtPortConfig.cpp.
+Definition at line 62 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a1028f6c9d7073a6591fa59fc907f0585}{
 \index{mdtPortConfig@{mdtPortConfig}!setReadTimeout@{setReadTimeout}}
@@ -470,7 +544,7 @@ Set the read timeout.
 \end{DoxyParams}
 
 
-Definition at line 82 of file mdtPortConfig.cpp.
+Definition at line 84 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a5e7857a56ab2baff4bd0a77290b3c742}{
 \index{mdtPortConfig@{mdtPortConfig}!setUseReadTimeoutProtocol@{setUseReadTimeoutProtocol}}
@@ -492,7 +566,7 @@ An example of read timeout protocol is MODBUS (over serial lines) RTU mode The \
 \end{DoxyParams}
 
 
-Definition at line 72 of file mdtPortConfig.cpp.
+Definition at line 74 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a9539cef9e33d564c7c70902a6380be04}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteFrameSize@{setWriteFrameSize}}
@@ -517,7 +591,7 @@ size must be a positive value
 \end{DoxyPrecond}
 
 
-Definition at line 122 of file mdtPortConfig.cpp.
+Definition at line 124 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a7113f6d96e93978cc3915589c14b16b6}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteInterframeTime@{setWriteInterframeTime}}
@@ -541,7 +615,7 @@ If this time is $>$ 0 , the \hyperlink{classmdt_port_write_thread}{mdtPortWriteT
 \end{DoxyParams}
 
 
-Definition at line 102 of file mdtPortConfig.cpp.
+Definition at line 104 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a1d7515af56919b95f060cad4f83c6ef3}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteMinWaitTime@{setWriteMinWaitTime}}
@@ -572,7 +646,7 @@ used ??
 \end{DoxyNote}
 
 
-Definition at line 92 of file mdtPortConfig.cpp.
+Definition at line 94 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a8a99771f7acfeb546d1d89d3671407e5}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteQueueSize@{setWriteQueueSize}}
@@ -592,7 +666,7 @@ size must be a positive value
 \end{DoxyPrecond}
 
 
-Definition at line 134 of file mdtPortConfig.cpp.
+Definition at line 136 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_ac117f7cd1f23de163a7fe84f69c2164c}{
 \index{mdtPortConfig@{mdtPortConfig}!setWriteTimeout@{setWriteTimeout}}
@@ -614,7 +688,7 @@ Set the write timeout.
 \end{DoxyParams}
 
 
-Definition at line 112 of file mdtPortConfig.cpp.
+Definition at line 114 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_ad90a88b06f0efebd1ee9f6d4370dec33}{
 \index{mdtPortConfig@{mdtPortConfig}!useReadTimeoutProtocol@{useReadTimeoutProtocol}}
@@ -634,7 +708,7 @@ Know if read timeout protocol must be used.
 \end{DoxySeeAlso}
 
 
-Definition at line 77 of file mdtPortConfig.cpp.
+Definition at line 79 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a19bda9f9ce29657179994e02c6da11b9}{
 \index{mdtPortConfig@{mdtPortConfig}!writeFrameSize@{writeFrameSize}}
@@ -654,7 +728,7 @@ Get the read frame size.
 \end{DoxySeeAlso}
 
 
-Definition at line 129 of file mdtPortConfig.cpp.
+Definition at line 131 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a745f5111436fc143b75440bf90a1a4e6}{
 \index{mdtPortConfig@{mdtPortConfig}!writeInterframeTime@{writeInterframeTime}}
@@ -674,7 +748,7 @@ Get the write interframe time \mbox{[}ms\mbox{]}.
 \end{DoxySeeAlso}
 
 
-Definition at line 107 of file mdtPortConfig.cpp.
+Definition at line 109 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a38d6957cc1103ecf348a76fd3eb97d53}{
 \index{mdtPortConfig@{mdtPortConfig}!writeMinWaitTime@{writeMinWaitTime}}
@@ -697,7 +771,7 @@ used ??
 \end{DoxyNote}
 
 
-Definition at line 97 of file mdtPortConfig.cpp.
+Definition at line 99 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a93d72b1ea53f188d7a35bc044394b959}{
 \index{mdtPortConfig@{mdtPortConfig}!writeQueueSize@{writeQueueSize}}
@@ -717,7 +791,7 @@ Get the write Queue size.
 \end{DoxySeeAlso}
 
 
-Definition at line 141 of file mdtPortConfig.cpp.
+Definition at line 143 of file mdtPortConfig.cpp.
 
 \hypertarget{classmdt_port_config_a3009e07cd66f4c4bfc1c7fdabbc9f93c}{
 \index{mdtPortConfig@{mdtPortConfig}!writeTimeout@{writeTimeout}}
@@ -737,7 +811,7 @@ Write timout \mbox{[}ms\mbox{]}
 \end{DoxyReturn}
 
 
-Definition at line 117 of file mdtPortConfig.cpp.
+Definition at line 119 of file mdtPortConfig.cpp.
 
 
 

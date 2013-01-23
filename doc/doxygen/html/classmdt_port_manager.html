@@ -113,6 +113,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a5ec36523089b7528d973e29cdbc64d01">mdtPortManager</a> (QObject *parent=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contruct a port manager.  <a href="#a5ec36523089b7528d973e29cdbc64d01"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#adf797f8fd7a3ffdc000890a224e4c1b6">~mdtPortManager</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#adf797f8fd7a3ffdc000890a224e4c1b6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ad56afb411ab5468005fca04767557ece">scan</a> ()</td></tr>
@@ -140,6 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get port info. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">config</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the port's config object.  <a href="#a9cf3ea2da38f81682695b37448712ffd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a735b7dc766fc2f45fb2cf9772c4201b0">config</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the port's config object.  <a href="#a735b7dc766fc2f45fb2cf9772c4201b0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">openPort</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#aab594613e8985590c835194efbc27b5e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ace8065f1f5083041ee7f65c2892bc77d">closePort</a> ()</td></tr>
@@ -150,18 +153,34 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Diseable transactions support.  <a href="#a40f6d2a420d1ce103af207237c45901a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4">getNewTransaction</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a new transaction.  <a href="#a75ebd3d1859e3ed38b9558981e53aac4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48">waitOnWriteReady</a> (int timeout, int granularity=50)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written.  <a href="#ae1cc1010067bcbf104fb3d1b19f2fa48"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a1ca92c5ac120d87e5b10bff54ed1aa5c">waitOnWriteReady</a> (int timeout=0, int granularity=50)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until data can be written.  <a href="#a1ca92c5ac120d87e5b10bff54ed1aa5c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b">writeData</a> (QByteArray data)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write data by copy.  <a href="#a8b60d53d6e553f15dedec916f9c1614b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88">waitReadenFrame</a> (int timeout=500)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a complete frame is available.  <a href="#a44ca338c8c56893612301e09d2ee6e88"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a5afae1537acf351f3f4a1d30c3997476">waitOnFrame</a> (int id, int timeout=500, int granularity=50)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait on readen frame with defined ID.  <a href="#a5afae1537acf351f3f4a1d30c3997476"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ad87eff1f2dd54a165a78b34e30592901">waitReadenFrame</a> (int timeout=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a complete frame is available.  <a href="#ad87eff1f2dd54a165a78b34e30592901"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6">waitOnFrame</a> (int id, int timeout=0, int granularity=50)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait on readen frame with defined ID.  <a href="#a680546498a0cd486c4fc16d28f44e4c6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac">readenFrame</a> (int id)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get data by frame ID.  <a href="#a830ae182d06dd6a52c43a7f45b9240ac"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; QByteArray &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796">readenFrames</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all readen data.  <a href="#addd5dcae9644cea42a9871205af41796"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d">adjustedReadTimeout</a> (int requestedTimeout, bool warn=true) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust a requested timeout to minimal timeout.  <a href="#a7cb3155940e23db0122d14f21fca858d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df">adjustedWriteTimeout</a> (int requestedTimeout, bool warn=true) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust a requested timeout to minimal timeout.  <a href="#a9d6782be514745a1b1392216d17d41df"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ac0844a5cd4043a95a479d458ac7ce590">flushIn</a> (bool flushPortManagerBuffers, bool flushPortBuffers)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush input buffers.  <a href="#ac0844a5cd4043a95a479d458ac7ce590"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a4c44ce6ec40c4afc6be441c10d7ee827">flushIn</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush input buffers.  <a href="#a4c44ce6ec40c4afc6be441c10d7ee827"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a3f0c2722a41c49de2bea9013bccd049c">flushOut</a> (bool flushPortManagerBuffers, bool flushPortBuffers)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush output buffers.  <a href="#a3f0c2722a41c49de2bea9013bccd049c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#ab34018a9653a5af784fa7da06a9e50d3">flushOut</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush output buffers.  <a href="#ab34018a9653a5af784fa7da06a9e50d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a97b91e7c1641836eb6afb47fd244a18e">flush</a> (bool flushPortManagerBuffers, bool flushPortBuffers)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush I/O buffers.  <a href="#a97b91e7c1641836eb6afb47fd244a18e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a3eab774008d7530ae341ce9c38265d65">flush</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush I/O buffers.  <a href="#a3eab774008d7530ae341ce9c38265d65"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c">wait</a> (int msecs, int granularity=50)</td></tr>
@@ -184,6 +203,10 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a transaction to the RX queue.  <a href="#ab30fc99951b2b6a566422c7525106ddf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a84d37b380080eb26e56c68424dedd958">commitFrames</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Emit signals for each done transactions.  <a href="#a84d37b380080eb26e56c68424dedd958"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a016996e823cc729eb1f595307f3dd1cf">cancelReadWait</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the wait cancel flag.  <a href="#a016996e823cc729eb1f595307f3dd1cf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_port_manager.html#a83ade128d6e70f7216355e9df840c2a6">readWaitCanceled</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the wait cancel flag.  <a href="#a83ade128d6e70f7216355e9df840c2a6"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af856162aab4f1c5202c1dfb330fae538"></a><!-- doxytag: member="mdtPortManager::pvPort" ref="af856162aab4f1c5202c1dfb330fae538" args="" -->
@@ -230,7 +253,7 @@ QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt
  }
 
  <span class="comment">// Wait on answer - Timout: 1500 [ms]</span>
- <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#a44ca338c8c56893612301e09d2ee6e88" title="Wait until a complete frame is available.">waitReadenFrame</a>(1500)){
+ <span class="keywordflow">if</span>(!m.<a class="code" href="classmdt_port_manager.html#ad87eff1f2dd54a165a78b34e30592901" title="Wait until a complete frame is available.">waitReadenFrame</a>(1500)){
   <span class="comment">// Timout , handle error</span>
  }
 
@@ -266,8 +289,8 @@ QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt
 </div>
 <div class="memdoc">
 
-<p><p>pvEnqueueReadenFrames = false; pvNotifyNewReadenFrame = false; </p>
-</p>
+<p>Contruct a port manager. </p>
+<p>Transaction will be set disabled. </p>
 
 <p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
@@ -291,7 +314,7 @@ QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt
 <p>If a port was set, the manager will stop (if running), and port will be closed (if open).</p>
 <p>Note that port set by <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> and threads are not deleted. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00043">43</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -313,10 +336,7 @@ QList&lt; <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> * &gt
 <p>Cancel read and write operations. </p>
 <p>Default implementation calls <a class="el" href="classmdt_abstract_port.html#abde440c49b95833f821e1333c40a7398" title="Flush read/write buffers.">mdtAbstractPort::flush()</a>. </p>
 
-<p><p>pvPort-&gt;flushIn(); pvPort-&gt;flushOut(); </p>
-</p>
-
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00414">414</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00625">625</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +362,7 @@ Manager must no running </dd>
 <dd>
 thread must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -366,7 +386,7 @@ thread must be a valid pointer </dd></dl>
 <p>If id and queryReplyMode are sufficient, see addTransaction(id, bool).</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00469">469</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00678">678</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -400,13 +420,121 @@ thread must be a valid pointer </dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Frame ID (f.ex. transaction ID in MODBUS/TCP, bTag in USBTMC) </td></tr>
-    <tr><td class="paramname">queryReplyMode</td><td>If true, transaction will be keeped in transactions done queue until <a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID.">readenFrame()</a> or <a class="el" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796" title="Get all readen data.">readenFrames()</a> is called. If false, transaction will be removed from transactions done queue just after</td></tr>
+    <tr><td class="paramname">queryReplyMode</td><td>If true, transaction will be keeped in transactions done queue until <a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID.">readenFrame()</a> or <a class="el" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796" title="Get all readen data.">readenFrames()</a> is called. If false, transaction will be removed from transactions done queue just after <a class="el" href="classmdt_port_manager.html#a915ff3372cccd5f412b828cc81a3381f" title="Emitted when new frame was readen.">newReadenFrame(mdtPortTransaction)</a> is emited. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000031">Todo:</a></b></dt><dd>sigName is emited. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00484">484</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00693">693</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7cb3155940e23db0122d14f21fca858d"></a><!-- doxytag: member="mdtPortManager::adjustedReadTimeout" ref="a7cb3155940e23db0122d14f21fca858d" args="(int requestedTimeout, bool warn=true) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtPortManager::adjustedReadTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>requestedTimeout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>warn</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Adjust a requested timeout to minimal timeout. </p>
+<p>We have 2 different timeouts:</p>
+<ul>
+<li>Port timeout: If data are expected on the port, and nothing comes in, a port timeout occurs.</li>
+<li>Response (or complete frame) timeout: Timeout to receive a complete frame</li>
+</ul>
+<p>For example, we expect a complete frame of, say, 200 Bytes. The device will send , f.ex. , 20 x 10 Bytes. During the read process, a port timeout can occur (device busy, or something else). If read process works fine, all data can be readen in a time less than port timeout.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">requestedTimeout</td><td>Requested timeout [ms] </td></tr>
+    <tr><td class="paramname">warn</td><td>If true, a warning will be logged if requested timeout is to small. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 [ms]) </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> and contain a valid configuration. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00483">483</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9d6782be514745a1b1392216d17d41df"></a><!-- doxytag: member="mdtPortManager::adjustedWriteTimeout" ref="a9d6782be514745a1b1392216d17d41df" args="(int requestedTimeout, bool warn=true) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtPortManager::adjustedWriteTimeout </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>requestedTimeout</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>warn</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Adjust a requested timeout to minimal timeout. </p>
+<p>See <a class="el" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">adjustedReadTimeout()</a> for details.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">requestedTimeout</td><td>Requested timeout [ms] </td></tr>
+    <tr><td class="paramname">warn</td><td>If true, a warning will be logged if requested timeout is to small. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 [ms]) </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> and contain a valid configuration. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00512">512</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a016996e823cc729eb1f595307f3dd1cf"></a><!-- doxytag: member="mdtPortManager::cancelReadWait" ref="a016996e823cc729eb1f595307f3dd1cf" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::cancelReadWait </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the wait cancel flag. </p>
+<p>If flag is set, <a class="el" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">waitOnFrame()</a>, <a class="el" href="classmdt_port_manager.html#ad87eff1f2dd54a165a78b34e30592901" title="Wait until a complete frame is available.">waitReadenFrame()</a> will return.</p>
+<p>Note: this will not cancel anything in port or port threads. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00782">782</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -428,7 +556,7 @@ thread must be a valid pointer </dd></dl>
 <p>This stops the threads (if exists) and close the port.</p>
 <p>If port was never set (with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> ), this method does nothing. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00212">212</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00218">218</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -451,7 +579,29 @@ thread must be a valid pointer </dd></dl>
 <p>Internally, transactions are restored to pool.</p>
 <dl class="note"><dt><b>Note:</b></dt><dd>Clarify + implement </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00528">528</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00736">736</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a735b7dc766fc2f45fb2cf9772c4201b0"></a><!-- doxytag: member="mdtPortManager::config" ref="a735b7dc766fc2f45fb2cf9772c4201b0" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp; mdtPortManager::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the port's config object. </p>
+<p>Usefull to read internal port configuration</p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00198">198</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -475,7 +625,7 @@ thread must be a valid pointer </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port_manager.html#a4b8ab7b9d53966a1887d9ce8557b8416">mdtSerialPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00194">194</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00191">191</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -514,7 +664,7 @@ thread must be a valid pointer </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00076">76</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00073">73</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -536,7 +686,7 @@ thread must be a valid pointer </dd></dl>
 <p>Add a transaction to the DONE queue. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00513">513</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00721">721</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -558,7 +708,193 @@ thread must be a valid pointer </dd></dl>
 <p>Add a transaction to the RX queue. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00520">520</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00728">728</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a97b91e7c1641836eb6afb47fd244a18e"></a><!-- doxytag: member="mdtPortManager::flush" ref="a97b91e7c1641836eb6afb47fd244a18e" args="(bool flushPortManagerBuffers, bool flushPortBuffers)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::flush </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushPortManagerBuffers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushPortBuffers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush I/O buffers. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flushPortManagerBuffers</td><td>If true, port manager buffers will be cleared. (Has no effect in this implementation, but some subclass can have output buffers). </td></tr>
+    <tr><td class="paramname">flushPortBuffers</td><td>If true, port's buffers will be cleared. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before calling this method. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00609">609</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3eab774008d7530ae341ce9c38265d65"></a><!-- doxytag: member="mdtPortManager::flush" ref="a3eab774008d7530ae341ce9c38265d65" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::flush </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush I/O buffers. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before calling this method. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00620">620</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac0844a5cd4043a95a479d458ac7ce590"></a><!-- doxytag: member="mdtPortManager::flushIn" ref="ac0844a5cd4043a95a479d458ac7ce590" args="(bool flushPortManagerBuffers, bool flushPortBuffers)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::flushIn </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushPortManagerBuffers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushPortBuffers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush input buffers. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flushPortManagerBuffers</td><td>If true, port manager buffers will be cleared. </td></tr>
+    <tr><td class="paramname">flushPortBuffers</td><td>If true, port's buffers will be cleared. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before calling this method. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_usb_port_manager.html#a982256ed17db155e1c95d544683a6dba">mdtUsbPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00554">554</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c44ce6ec40c4afc6be441c10d7ee827"></a><!-- doxytag: member="mdtPortManager::flushIn" ref="a4c44ce6ec40c4afc6be441c10d7ee827" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::flushIn </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush input buffers. </p>
+<p>Will flush portmanger and port's buffers.</p>
+<p>Internally, <a class="el" href="classmdt_port_manager.html#ac0844a5cd4043a95a479d458ac7ce590" title="Flush input buffers.">flushIn(bool, bool)</a> is called. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00592">592</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3f0c2722a41c49de2bea9013bccd049c"></a><!-- doxytag: member="mdtPortManager::flushOut" ref="a3f0c2722a41c49de2bea9013bccd049c" args="(bool flushPortManagerBuffers, bool flushPortBuffers)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::flushOut </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushPortManagerBuffers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushPortBuffers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush output buffers. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flushPortManagerBuffers</td><td>If true, port manager buffers will be cleared. (Has no effect in this implementation, but some subclass can have output buffers). </td></tr>
+    <tr><td class="paramname">flushPortBuffers</td><td>If true, port's buffers will be cleared. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before calling this method. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_usb_port_manager.html#ab723086376175c40635df44adf358985">mdtUsbPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00597">597</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab34018a9653a5af784fa7da06a9e50d3"></a><!-- doxytag: member="mdtPortManager::flushOut" ref="ab34018a9653a5af784fa7da06a9e50d3" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtPortManager::flushOut </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Flush output buffers. </p>
+<p>Will flush portmanger and port's buffers.</p>
+<p>Internally, <a class="el" href="classmdt_port_manager.html#a3f0c2722a41c49de2bea9013bccd049c" title="Flush output buffers.">flushOut(bool, bool)</a> is called. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00604">604</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -580,12 +916,12 @@ thread must be a valid pointer </dd></dl>
 <p>Called by the read thread whenn a complete frame was readen</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000028">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000023">Todo:</a></b></dt><dd>Error on incomplete frame </dd></dl>
 </p>
 
 <p>Reimplemented in <a class="el" href="classmdt_modbus_tcp_port_manager.html#ad941ea607f00db54aa6deb2866a539e9">mdtModbusTcpPortManager</a>, and <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00423">423</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00632">632</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -608,7 +944,7 @@ thread must be a valid pointer </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A empty transaction (<a class="el" href="classmdt_port_transaction.html#a5f7b04df58291d52e61c5bd1b7f7bb7f" title="Clear transaction.">mdtPortTransaction::clear()</a> is called internally).</dd></dl>
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>Returned transaction is valid (never Null). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00242">242</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00248">248</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -630,7 +966,7 @@ thread must be a valid pointer </dd></dl>
 <p>If one of the threads is running, true is returned.</p>
 <p>If port was not set, it returns false. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00148">148</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -690,11 +1026,11 @@ thread must be a valid pointer </dd></dl>
 <div class="memdoc">
 
 <p>Manage errors comming from port threads. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000029">Todo:</a></b></dt><dd><p class="startdd">Error handling (in general ...) </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000024">Todo:</a></b></dt><dd><p class="startdd">Error handling (in general ...) </p>
 <p class="enddd">On disconnect, should flush I/O ? </p>
 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00451">451</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00660">660</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -716,9 +1052,9 @@ thread must be a valid pointer </dd></dl>
 <p>Will try to open port defined with <a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName()</a>.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000030">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000025">Todo:</a></b></dt><dd>Should return <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00201">201</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00205">205</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -740,7 +1076,7 @@ thread must be a valid pointer </dd></dl>
 <p>Get pending transaction matching id. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A valid transaction if exists, else a Null pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00496">496</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00705">705</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -765,7 +1101,7 @@ thread must be a valid pointer </dd></dl>
 <p>If ID was not found, a empty QByteArray is returned.</p>
 <p>Note: if transactions support is diseabled, a empty QByteArray is allways returned. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00363">363</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00445">445</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -786,7 +1122,28 @@ thread must be a valid pointer </dd></dl>
 <p>Get all readen data. </p>
 <p>Note that calling this methode will clear the internal queue. (A second call will return a empty list). </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00376">376</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00458">458</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a83ade128d6e70f7216355e9df840c2a6"></a><!-- doxytag: member="mdtPortManager::readWaitCanceled" ref="a83ade128d6e70f7216355e9df840c2a6" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtPortManager::readWaitCanceled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the wait cancel flag. </p>
+<p>After a call, the flag will be reset. </p>
+
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00787">787</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -814,7 +1171,7 @@ thread must be a valid pointer </dd></dl>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must not running. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00110">110</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -836,7 +1193,7 @@ thread must be a valid pointer </dd></dl>
 <p>Remove a transaction from DONE queue and restore it to pool. </p>
 <p>If transaction not exists in DONE queue, this method simply makes nothing. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00503">503</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00711">711</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -858,7 +1215,7 @@ thread must be a valid pointer </dd></dl>
 <p>Restore a transaction into pool. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>transaction must be a valid pointer (not Null) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00464">464</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00673">673</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -883,7 +1240,7 @@ thread must be a valid pointer </dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b">mdtUsbPortManager</a>, <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6">mdtUsbtmcPortManager</a>, and <a class="el" href="classmdt_serial_port_manager.html#a791572f869d1d605d0c4658ca4187260">mdtSerialPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00058">58</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -907,7 +1264,7 @@ thread must be a valid pointer </dd></dl>
 <dd>
 Manager must no running </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -930,7 +1287,7 @@ Manager must no running </dd></dl>
 <p>Store given port info, and call <a class="el" href="classmdt_port_manager.html#a2b2ed690cbba9f544c6ac1b46684e59a" title="Set port name.">setPortName()</a> with port info's stored port name (see <a class="el" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">mdtPortInfo::portName()</a> ).</p>
 <p>Setting a port info can be usefull if other informations are needed later in application (f.ex. <a class="el" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">mdtPortInfo::displayText()</a> ). You can get port informations later with <a class="el" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00180">180</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -954,7 +1311,7 @@ Manager must no running </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set before with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00176">176</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00173">173</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -976,7 +1333,7 @@ Manager must no running </dd></dl>
 <p>Diseable transactions support. </p>
 <p>See <a class="el" href="classmdt_port_manager.html#a7f0bc97ad55160ea09b9079dd6d816d4" title="Enable transactions support.">setTransactionsEnabled()</a> for details about transactions.</p>
 <p>If transactions are disabled, it's only possible to choose once if blocking mode is supported. Each time a frame comes in, the newReadenFrame(int, QByteArray) signal is emited.</p>
-<p>In this mode, <a class="el" href="classmdt_port_manager.html#a5afae1537acf351f3f4a1d30c3997476" title="Wait on readen frame with defined ID.">waitOnFrame()</a> will allways timeout.</p>
+<p>In this mode, <a class="el" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">waitOnFrame()</a> will allways timeout.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">enqueueIncommingFrames</td><td>If true, each incomming frame is enqueued (usefull for blocking mode). Note: if true, don't forget to take each frame with <a class="el" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID.">readenFrame()</a> or <a class="el" href="classmdt_port_manager.html#addd5dcae9644cea42a9871205af41796" title="Get all readen data.">readenFrames()</a>.</td></tr>
@@ -985,7 +1342,7 @@ Manager must no running </dd></dl>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must not running when this method is called. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00234">234</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00240">240</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1005,11 +1362,11 @@ Manager must no running </dd></dl>
 
 <p>Enable transactions support. </p>
 <p>Transaction is usefull for protocols wich supports frame identification (like transaction ID in MODBUS/TCP or bTag in USBTMC).</p>
-<p>If transaction support is enabled, port manager can work on both event (signal) and blocking mode "on the fly". Each time a frame comes in, the <a class="el" href="classmdt_port_manager.html#a915ff3372cccd5f412b828cc81a3381f" title="Emitted when new frame was readen.">newReadenFrame(mdtPortTransaction)</a> signal is emited. Optionnaly, it's possible to request that a frame must be enqueued for a given transaction (regarding a specific ID), witch is requierd for blocking mode (see <a class="el" href="classmdt_port_manager.html#a5afae1537acf351f3f4a1d30c3997476" title="Wait on readen frame with defined ID.">waitOnFrame()</a> ).</p>
+<p>If transaction support is enabled, port manager can work on both event (signal) and blocking mode "on the fly". Each time a frame comes in, the <a class="el" href="classmdt_port_manager.html#a915ff3372cccd5f412b828cc81a3381f" title="Emitted when new frame was readen.">newReadenFrame(mdtPortTransaction)</a> signal is emited. Optionnaly, it's possible to request that a frame must be enqueued for a given transaction (regarding a specific ID), witch is requierd for blocking mode (see <a class="el" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">waitOnFrame()</a> ).</p>
 <p>Note that not all port manager support transactions. For example, this default implementation cannot work with transactions. By default, they are disabled, and no frame is enqueued (see <a class="el" href="classmdt_port_manager.html#a40f6d2a420d1ce103af207237c45901a" title="Diseable transactions support.">setTransactionsDisabled()</a>). See specific subclass for details.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port manager must not running when this method is called. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00226">226</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1030,7 +1387,7 @@ Manager must no running </dd></dl>
 <p>Start threads. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1051,7 +1408,7 @@ Manager must no running </dd></dl>
 <p>Stop threads. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before use of this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00162">162</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1093,11 +1450,11 @@ Manager must no running </dd></dl>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>granularity must be &gt; 0. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00401">401</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00541">541</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5afae1537acf351f3f4a1d30c3997476"></a><!-- doxytag: member="mdtPortManager::waitOnFrame" ref="a5afae1537acf351f3f4a1d30c3997476" args="(int id, int timeout=500, int granularity=50)" -->
+<a class="anchor" id="a680546498a0cd486c4fc16d28f44e4c6"></a><!-- doxytag: member="mdtPortManager::waitOnFrame" ref="a680546498a0cd486c4fc16d28f44e4c6" args="(int id, int timeout=0, int granularity=50)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1111,7 +1468,7 @@ Manager must no running </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code>500</code>, </td>
+          <td class="paramname"><em>timeout</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1131,10 +1488,11 @@ Manager must no running </dd></dl>
 <p>Wait on readen frame with defined ID. </p>
 <p>Will return when frame with given ID was read or after timeout.</p>
 <p>Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.</p>
+<p>This method can return if timeout occurs, or for other reason depending on specific port (port timeout, read cancelled, ...).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Frame ID. Depending on protocol, this can be a transaction ID or what else. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of granularity [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of granularity [ms] If 0, the minimal timeout will be used (see <a class="el" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">adjustedReadTimeout()</a> ). </td></tr>
     <tr><td class="paramname">granularity</td><td>Sleep time between each call of event processing [ms]<br/>
  A little value needs more CPU and big value can freese the GUI. Should be between 50 and 100, and must be &gt; 0. Note that timeout must be a multiple of granularity. </td></tr>
   </table>
@@ -1142,11 +1500,11 @@ Manager must no running </dd></dl>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if Ok, false on timeout. If id was not found in transactions lists, a warning will be generated in <a class="el" href="classmdt_error.html">mdtError</a> system, and false will be returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00395">395</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae1cc1010067bcbf104fb3d1b19f2fa48"></a><!-- doxytag: member="mdtPortManager::waitOnWriteReady" ref="ae1cc1010067bcbf104fb3d1b19f2fa48" args="(int timeout, int granularity=50)" -->
+<a class="anchor" id="a1ca92c5ac120d87e5b10bff54ed1aa5c"></a><!-- doxytag: member="mdtPortManager::waitOnWriteReady" ref="a1ca92c5ac120d87e5b10bff54ed1aa5c" args="(int timeout=0, int granularity=50)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1154,7 +1512,7 @@ Manager must no running </dd></dl>
           <td class="memname">bool mdtPortManager::waitOnWriteReady </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em>, </td>
+          <td class="paramname"><em>timeout</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1175,7 +1533,7 @@ Manager must no running </dd></dl>
 <p>Wait until a frame is available in write frames pool. The wait will not breack Qt's event loop, so this method can be called from GUI Thread. (See <a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c" title="Wait some time without break the GUI&#39;s event loop.">wait()</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] If 0, the minimal timeout will be used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">adjustedWriteTimeout()</a> ). </td></tr>
     <tr><td class="paramname">granularity</td><td>Sleep time between each call of event processing [ms]<br/>
  A little value needs more CPU and big value can freese the GUI. Should be between 50 and 100, and must be &gt; 0. Note that timeout must be a multiple of granularity. </td></tr>
   </table>
@@ -1186,11 +1544,11 @@ Manager must no running </dd></dl>
 <dd>
 Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> before calling this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00257">257</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00263">263</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a44ca338c8c56893612301e09d2ee6e88"></a><!-- doxytag: member="mdtPortManager::waitReadenFrame" ref="a44ca338c8c56893612301e09d2ee6e88" args="(int timeout=500)" -->
+<a class="anchor" id="ad87eff1f2dd54a165a78b34e30592901"></a><!-- doxytag: member="mdtPortManager::waitReadenFrame" ref="ad87eff1f2dd54a165a78b34e30592901" args="(int timeout=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1198,7 +1556,7 @@ Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0
           <td class="memname">bool mdtPortManager::waitReadenFrame </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code>500</code></td><td>)</td>
+          <td class="paramname"><em>timeout</em> = <code>0</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1208,16 +1566,17 @@ Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0
 <p>Wait until a complete frame is available. </p>
 <p>This method will return when a complete frame was readen. This is usefull for query/answer protocols.</p>
 <p>Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.</p>
+<p>This method can return if timeout occurs, or for other reason depending on specific port (port timeout, read cancelled, ...).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Maximum wait time [ms]. Must be a multiple of 50 [ms] If 0, the minimal timeout will be used (see <a class="el" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">adjustedReadTimeout()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if Ok, false on timeout </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_port_manager.html#a77ef4a432306638f5b0f91df7863ac62" title="Emitted when new frame was readen.">newReadenFrame()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00307">307</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1237,6 +1596,7 @@ Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0
 <div class="memdoc">
 
 <p>Write data by copy. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000026">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
 <p>Data will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -1251,7 +1611,7 @@ Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0
 
 <p>Reimplemented in <a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3">mdtUsbtmcPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00280">280</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_manager_8cpp_source.html#l00307">307</a> of file <a class="el" href="mdt_port_manager_8cpp_source.html">mdtPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -1274,7 +1634,7 @@ Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:19 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

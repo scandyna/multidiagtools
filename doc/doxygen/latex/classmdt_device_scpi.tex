@@ -13,8 +13,7 @@ Base class for SCPI based instruments.
 
 
 
-Inheritance diagram for mdtDeviceScpi:
-\nopagebreak
+Inheritance diagram for mdtDeviceScpi:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -23,8 +22,7 @@ Inheritance diagram for mdtDeviceScpi:
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceScpi:
-\nopagebreak
+Collaboration diagram for mdtDeviceScpi:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -43,9 +41,9 @@ Collaboration diagram for mdtDeviceScpi:
 \begin{DoxyCompactList}\small\item\em Get internal port manager instance. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_device_scpi_ae8e886b362cbf9d1bf7064b48348b8e8}{connectToDevice} (const \hyperlink{classmdt_device_info}{mdtDeviceInfo} \&devInfo)
 \begin{DoxyCompactList}\small\item\em Search and connect to physical device. \end{DoxyCompactList}\item 
-int \hyperlink{classmdt_device_scpi_afd90eebcd990f1c259911523e5901a0f}{sendCommand} (const QByteArray \&command, int timeout=1000)
+int \hyperlink{classmdt_device_scpi_ad104bd5814390c914e0a527d3e652fd2}{sendCommand} (const QByteArray \&command, int timeout=0)
 \begin{DoxyCompactList}\small\item\em Send a command to device. \end{DoxyCompactList}\item 
-QByteArray \hyperlink{classmdt_device_scpi_afdb27e3a2a828a0bb0d40534b573c7c0}{sendQuery} (const QByteArray \&query, int writeTimeout=1000, int readTimeout=30000)
+QByteArray \hyperlink{classmdt_device_scpi_a9c15bed2ae92993f0378b59f15644bb2}{sendQuery} (const QByteArray \&query, int writeTimeout=0, int readTimeout=0)
 \begin{DoxyCompactList}\small\item\em Send a query to device. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_device_scpi_aefd45e58d01aed9a165bb2c2dd98198c}{waitOperationComplete} (int timeout, int interval)
 \begin{DoxyCompactList}\small\item\em Wait until operation is complete (Using $\ast$OPC? query) \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -142,29 +140,29 @@ Reimplemented in \hyperlink{classmdt_device_u3606_a_acf3b48b13bc179ad4f94b3011b7
 
 Definition at line 59 of file mdtDeviceScpi.cpp.
 
-\hypertarget{classmdt_device_scpi_afd90eebcd990f1c259911523e5901a0f}{
+\hypertarget{classmdt_device_scpi_ad104bd5814390c914e0a527d3e652fd2}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!sendCommand@{sendCommand}}
 \index{sendCommand@{sendCommand}!mdtDeviceScpi@{mdtDeviceScpi}}
 \subsubsection[{sendCommand}]{\setlength{\rightskip}{0pt plus 5cm}int mdtDeviceScpi::sendCommand (
 \begin{DoxyParamCaption}
 \item[{const QByteArray \&}]{command, }
-\item[{int}]{timeout = {\ttfamily 1000}}
+\item[{int}]{timeout = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_scpi_afd90eebcd990f1c259911523e5901a0f}
+\label{classmdt_device_scpi_ad104bd5814390c914e0a527d3e652fd2}
 
 
 Send a command to device. 
 
 Wait until it's possible to write to device, then send the command.
 
-Note that the wait will not break the GUI's event loop (see \hyperlink{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{mdtPortManager::waitOnWriteReady()} for details).
+Note that the wait will not break the GUI's event loop (see \hyperlink{classmdt_port_manager_a1ca92c5ac120d87e5b10bff54ed1aa5c}{mdtPortManager::waitOnWriteReady()} for details).
 
 
 \begin{DoxyParams}{Parameters}
 {\em command} & Command to send. \\
 \hline
-{\em timeout} & Write timeout \mbox{[}ms\mbox{]} \\
+{\em timeout} & Write timeout \mbox{[}ms\mbox{]} If 0, internal defined timeout is used (see \hyperlink{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}{mdtPortManager::adjustedWriteTimeout()} for details). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -174,17 +172,17 @@ bTag on success, or a error $<$ 0 (see \hyperlink{classmdt_usbtmc_port_manager_a
 
 Definition at line 124 of file mdtDeviceScpi.cpp.
 
-\hypertarget{classmdt_device_scpi_afdb27e3a2a828a0bb0d40534b573c7c0}{
+\hypertarget{classmdt_device_scpi_a9c15bed2ae92993f0378b59f15644bb2}{
 \index{mdtDeviceScpi@{mdtDeviceScpi}!sendQuery@{sendQuery}}
 \index{sendQuery@{sendQuery}!mdtDeviceScpi@{mdtDeviceScpi}}
 \subsubsection[{sendQuery}]{\setlength{\rightskip}{0pt plus 5cm}QByteArray mdtDeviceScpi::sendQuery (
 \begin{DoxyParamCaption}
 \item[{const QByteArray \&}]{query, }
-\item[{int}]{writeTimeout = {\ttfamily 1000}, }
-\item[{int}]{readTimeout = {\ttfamily 30000}}
+\item[{int}]{writeTimeout = {\ttfamily 0}, }
+\item[{int}]{readTimeout = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_scpi_afdb27e3a2a828a0bb0d40534b573c7c0}
+\label{classmdt_device_scpi_a9c15bed2ae92993f0378b59f15644bb2}
 
 
 Send a query to device. 
@@ -199,9 +197,14 @@ This method will not update internal I/O states. It's recommended to use \hyperl
 \begin{DoxyParams}{Parameters}
 {\em query} & Query to send. \\
 \hline
-{\em writeTimeout} & Write timeout \mbox{[}ms\mbox{]} \\
+\end{DoxyParams}
+\begin{Desc}
+\item[\hyperlink{todo__todo000006}{Todo}]adjust write timeout \end{Desc}
+
+\begin{DoxyParams}{Parameters}
+{\em writeTimeout} & Write timeout \mbox{[}ms\mbox{]} If 0, internal defined timeout is used (see \hyperlink{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}{mdtPortManager::adjustedWriteTimeout()} for details). \\
 \hline
-{\em readTimeout} & Response timeout \mbox{[}ms\mbox{]} \\
+{\em readTimeout} & Response timeout \mbox{[}ms\mbox{]} If 0, internal defined timeout is used (see \hyperlink{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}{mdtPortManager::adjustedReadTimeout()} for details). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -229,7 +232,7 @@ Currently, this method queries device with $\ast$OPC?.
 
 
 \begin{DoxyParams}{Parameters}
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} Note that timeout must be a multiple of internal. \\
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
 \hline
 {\em internal} & Interval between 2 $\ast$OPC? query \mbox{[}ms\mbox{]} \\
 \hline

@@ -208,13 +208,7 @@ Decoded function code, MODBUS error code or value $<$ 0 on other error.
 \end{DoxyReturn}
 
 
-NOTE:\begin{Desc}
-\item[\hyperlink{todo__todo000066}{Todo}]Base 16 ?? \end{Desc}
-
-
-
-
-Definition at line 258 of file mdtFrameCodecModbus.cpp.
+Definition at line 257 of file mdtFrameCodecModbus.cpp.
 
 \hypertarget{classmdt_frame_codec_modbus_adf0a4d583aeff7b818dda94514c594f0}{
 \index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeReadCoils@{encodeReadCoils}}
@@ -345,8 +339,6 @@ Definition at line 169 of file mdtFrameCodecModbus.cpp.
 
 Encode a PDU according the WriteMultipleRegisters function (FC 16, 0x10) 
 
-QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList$<$quint16$>$ \&values)
-
 Please take a look at MODBUS specifications for more details.
 
 \begin{DoxyReturn}{Returns}
@@ -354,7 +346,7 @@ A QByteArray containing the PDU, or a empty QByteArray on error.QByteArray encod
 \end{DoxyReturn}
 
 
-Definition at line 224 of file mdtFrameCodecModbus.cpp.
+Definition at line 223 of file mdtFrameCodecModbus.cpp.
 
 \hypertarget{classmdt_frame_codec_modbus_a123f63422bb34fcb10ac653c0e89e79e}{
 \index{mdtFrameCodecModbus@{mdtFrameCodecModbus}!encodeWriteSingleCoil@{encodeWriteSingleCoil}}
@@ -424,7 +416,7 @@ Returns the error code according to the specification, part function/error codes
 \end{DoxySeeAlso}
 
 
-Definition at line 351 of file mdtFrameCodecModbus.cpp.
+Definition at line 349 of file mdtFrameCodecModbus.cpp.
 
 
 

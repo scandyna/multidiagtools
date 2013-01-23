@@ -88,7 +88,6 @@ This is the complete list of members for <a class="el" href="classmdt_device_u36
   <tr bgcolor="#f0f0f0"><td><b>pvDigitalOutputAddressOffset</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvIos</b> (defined in <a class="el" href="classmdt_device.html">mdtDevice</a>)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>pvUsbtmcPortManager</b> (defined in <a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a>)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td><code> [protected]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">queriesSequence</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e">readAnalogInputs</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a">readAnalogOutput</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291">readAnalogOutputs</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
@@ -98,8 +97,8 @@ This is the complete list of members for <a class="el" href="classmdt_device_u36
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02">readDigitalOutputs</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05">runQueries</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [slot]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#afd90eebcd990f1c259911523e5901a0f">sendCommand</a>(const QByteArray &amp;command, int timeout=1000)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#afdb27e3a2a828a0bb0d40534b573c7c0">sendQuery</a>(const QByteArray &amp;query, int writeTimeout=1000, int readTimeout=30000)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#ad104bd5814390c914e0a527d3e652fd2">sendCommand</a>(const QByteArray &amp;command, int timeout=0)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device_scpi.html#a9c15bed2ae92993f0378b59f15644bb2">sendQuery</a>(const QByteArray &amp;query, int writeTimeout=0, int readTimeout=0)</td><td><a class="el" href="classmdt_device_scpi.html">mdtDeviceScpi</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a3477278b4fa937f7667becb14333ef2f">setAnalogOutputAddressOffset</a>(int offset)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae45c39c2ef38b5952171fdc1c3284748">setAnalogOutputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a">setAnalogOutputValue</a>(int address, QVariant value, int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -147,7 +146,7 @@ This is the complete list of members for <a class="el" href="classmdt_device_u36
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:40 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

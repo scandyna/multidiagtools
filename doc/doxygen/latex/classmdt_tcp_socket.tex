@@ -274,10 +274,6 @@ Wait until data can be written to port.
 This method is called from \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} , and should not be used directly.\par
  Mutex must be locked before calling this method with \hyperlink{classmdt_abstract_port_a6bf2ecdcf894da3929a22eb8793a9fe3}{lockMutex()}. The mutex is locked when method returns. 
 
-if(pvCancelWrite)\{ return WriteCanceled; \}
-
-
-
 Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort}.
 
 
@@ -334,7 +330,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 177 of file mdtTcpSocket.cpp.
+Definition at line 171 of file mdtTcpSocket.cpp.
 
 
 

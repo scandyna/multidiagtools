@@ -98,10 +98,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get internal port manager instance. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#ae8e886b362cbf9d1bf7064b48348b8e8">connectToDevice</a> (const <a class="el" href="classmdt_device_info.html">mdtDeviceInfo</a> &amp;devInfo)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search and connect to physical device.  <a href="#ae8e886b362cbf9d1bf7064b48348b8e8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#afd90eebcd990f1c259911523e5901a0f">sendCommand</a> (const QByteArray &amp;command, int timeout=1000)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#afd90eebcd990f1c259911523e5901a0f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#afdb27e3a2a828a0bb0d40534b573c7c0">sendQuery</a> (const QByteArray &amp;query, int writeTimeout=1000, int readTimeout=30000)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#afdb27e3a2a828a0bb0d40534b573c7c0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#ad104bd5814390c914e0a527d3e652fd2">sendCommand</a> (const QByteArray &amp;command, int timeout=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a command to device.  <a href="#ad104bd5814390c914e0a527d3e652fd2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a9c15bed2ae92993f0378b59f15644bb2">sendQuery</a> (const QByteArray &amp;query, int writeTimeout=0, int readTimeout=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#a9c15bed2ae92993f0378b59f15644bb2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#aefd45e58d01aed9a165bb2c2dd98198c">waitOperationComplete</a> (int timeout, int interval)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until operation is complete (Using *OPC? query)  <a href="#aefd45e58d01aed9a165bb2c2dd98198c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
@@ -181,7 +181,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afd90eebcd990f1c259911523e5901a0f"></a><!-- doxytag: member="mdtDeviceScpi::sendCommand" ref="afd90eebcd990f1c259911523e5901a0f" args="(const QByteArray &amp;command, int timeout=1000)" -->
+<a class="anchor" id="ad104bd5814390c914e0a527d3e652fd2"></a><!-- doxytag: member="mdtDeviceScpi::sendCommand" ref="ad104bd5814390c914e0a527d3e652fd2" args="(const QByteArray &amp;command, int timeout=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -195,7 +195,7 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code>1000</code>&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -208,11 +208,11 @@ Protected Attributes</h2></td></tr>
 
 <p>Send a command to device. </p>
 <p>Wait until it's possible to write to device, then send the command.</p>
-<p>Note that the wait will not break the GUI's event loop (see <a class="el" href="classmdt_port_manager.html#ae1cc1010067bcbf104fb3d1b19f2fa48" title="Wait until data can be written.">mdtPortManager::waitOnWriteReady()</a> for details).</p>
+<p>Note that the wait will not break the GUI's event loop (see <a class="el" href="classmdt_port_manager.html#a1ca92c5ac120d87e5b10bff54ed1aa5c" title="Wait until data can be written.">mdtPortManager::waitOnWriteReady()</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">command</td><td>Command to send. </td></tr>
-    <tr><td class="paramname">timeout</td><td>Write timeout [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
@@ -222,7 +222,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afdb27e3a2a828a0bb0d40534b573c7c0"></a><!-- doxytag: member="mdtDeviceScpi::sendQuery" ref="afdb27e3a2a828a0bb0d40534b573c7c0" args="(const QByteArray &amp;query, int writeTimeout=1000, int readTimeout=30000)" -->
+<a class="anchor" id="a9c15bed2ae92993f0378b59f15644bb2"></a><!-- doxytag: member="mdtDeviceScpi::sendQuery" ref="a9c15bed2ae92993f0378b59f15644bb2" args="(const QByteArray &amp;query, int writeTimeout=0, int readTimeout=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -236,13 +236,13 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>writeTimeout</em> = <code>1000</code>, </td>
+          <td class="paramname"><em>writeTimeout</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>readTimeout</em> = <code>30000</code>&#160;</td>
+          <td class="paramname"><em>readTimeout</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -260,8 +260,14 @@ Protected Attributes</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">query</td><td>Query to send. </td></tr>
-    <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] </td></tr>
-    <tr><td class="paramname">readTimeout</td><td>Response timeout [ms] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
+    <tr><td class="paramname">readTimeout</td><td>Response timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a7cb3155940e23db0122d14f21fca858d" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedReadTimeout()</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
@@ -300,7 +306,7 @@ Protected Attributes</h2></td></tr>
 <p>Currently, this method queries device with *OPC?.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>Timeout [ms] Note that timeout must be a multiple of internal. </td></tr>
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
     <tr><td class="paramname">internal</td><td>Interval between 2 *OPC? query [ms] </td></tr>
   </table>
   </dd>
@@ -330,7 +336,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:40 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

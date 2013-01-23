@@ -122,7 +122,7 @@ Called by the thread whenn a complete frame was readen.
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000023}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000019}{Todo}]Error on incomplete frame \end{Desc}
 
 
 
@@ -197,7 +197,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000022}{Todo}]Handle this ? \end{Desc}
+\item[\hyperlink{todo__todo000018}{Todo}]Handle this ? \end{Desc}
 
 
 
@@ -219,7 +219,7 @@ Definition at line 165 of file mdtModbusTcpPortManager.cpp.
 Write PDU by copy. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000024}{Todo}]Obelete this version ! 
+\item[\hyperlink{todo__todo000020}{Todo}]Obelete this version ! 
 
 Obselete version with enqueueResponse \end{Desc}
 
@@ -236,7 +236,7 @@ Internally, the transaction ID is incremented at each request and returned.
 \hline
 \end{DoxyParams}
 \begin{Desc}
-\item[\hyperlink{todo__todo000025}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
+\item[\hyperlink{todo__todo000021}{Todo}]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. \end{Desc}
 \begin{DoxyReturn}{Returns}
 Transaction ID on success. If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty ($<$ 0) is returned. Note: internally, the writeFramesPool size of \hyperlink{classmdt_abstract_port}{mdtAbstractPort} is used to fix maximum transactions, and this is configurable in \hyperlink{classmdt_port_config}{mdtPortConfig}. See \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{mdtPortManager::config()} . 
 \end{DoxyReturn}
@@ -244,13 +244,13 @@ Transaction ID on success. If the maximum of authorized transactions are reached
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method.
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000026}{Todo}]Delete default enqueueResponse ! \end{Desc}
+\item[\hyperlink{todo__todo000022}{Todo}]Delete default enqueueResponse ! \end{Desc}
 
 
 frame-\/$>$setWaitAnAnswer(false);
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000021}{Todo}]Handle this ? \end{Desc}
+\item[\hyperlink{todo__todo000017}{Todo}]Handle this ? \end{Desc}
 
 
 addTransaction(transaction); 

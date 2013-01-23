@@ -136,9 +136,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48bdc0a8057c3b119763643098cf798f"></a><!-- doxytag: member="mdtAbstractPort::setConfig" ref="a48bdc0a8057c3b119763643098cf798f" args="(mdtPortConfig *cfg)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f">setConfig</a> (<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> *cfg)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set configuration. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d105c90696f7c40f29c24fe9b6e4481"></a><!-- doxytag: member="mdtAbstractPort::config" ref="a3d105c90696f7c40f29c24fe9b6e4481" args="()" -->
-<a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481">config</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the stored configuration. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481">config</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the stored configuration.  <a href="#a3d105c90696f7c40f29c24fe9b6e4481"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#abc9f1154ac71c4e31ac3e7a3ff4c5182">setup</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup port with given configurations.  <a href="#abc9f1154ac71c4e31ac3e7a3ff4c5182"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#aec74b2db1a629d98a95d8f042ea96653">reconnect</a> (int timeout)</td></tr>
@@ -220,7 +219,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadTimeoutOccured<
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5a003d280237700c8aa3cb6184e2d1b"></a><!-- doxytag: member="mdtAbstractPort::pvWriteTimeoutOccured" ref="ae5a003d280237700c8aa3cb6184e2d1b" args="" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#ae5a003d280237700c8aa3cb6184e2d1b">pvWriteTimeoutOccured</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">bool pvReadTimeoutOccuredPrevious; <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a412c3e4903bf7d90914cfeb273e82623">pvReadenFrames</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a412c3e4903bf7d90914cfeb273e82623"></a><!-- doxytag: member="mdtAbstractPort::pvReadenFrames" ref="a412c3e4903bf7d90914cfeb273e82623" args="" -->
+QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_abstract_port.html#a412c3e4903bf7d90914cfeb273e82623">pvReadenFrames</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">bool pvWriteTimeoutOccuredPrevious; <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d6bb9b420f64776d8fd077cf2b9b873"></a><!-- doxytag: member="mdtAbstractPort::pvReadFramesPool" ref="a3d6bb9b420f64776d8fd077cf2b9b873" args="" -->
 QQueue&lt; <a class="el" href="classmdt_frame.html">mdtFrame</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pvReadFramesPool</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12cd5c1ba100b018539ed909a481d6dc"></a><!-- doxytag: member="mdtAbstractPort::pvWriteFrames" ref="a12cd5c1ba100b018539ed909a481d6dc" args="" -->
@@ -238,7 +239,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for port I/O. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00041">41</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
@@ -256,10 +257,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Error. </p>
 <p>Each system's I/O API can return several error. Goal is here to map them to common error codes.</p>
 <p>Note for thread implementation:<br/>
- Some errors must be handled in specific ways depending on port (serial, USB, TCP, ...). Each time a error occurs, thread should check the pvRunning flag, and stop if it is false (typical: after a stop request from main thread, <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> subclass will return ReadCanceled, WriteCanceled or ControlCanceled. But it can happen that I/O process was canceled for another reason, this is port specific).</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd><p class="startdd">add UnhandledError to complete UnknownError (+ adapt in threads) </p>
-<p class="enddd">add a DeviceDisconnected (+ adapt in threads) </p>
-</dd></dl>
+ Some errors must be handled in specific ways depending on port (serial, USB, TCP, ...). Each time a error occurs, thread should check the pvRunning flag, and stop if it is false (typical: after a stop request from main thread, <a class="el" href="classmdt_abstract_port.html" title="Base class for port I/O.">mdtAbstractPort</a> subclass will return ReadCanceled, WriteCanceled or ControlCanceled. But it can happen that I/O process was canceled for another reason, this is port specific). </p>
 <dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad"></a><!-- doxytag: member="NoError" ref="ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad" args="" -->NoError</em>&nbsp;</td><td>
 <p>No error </p>
@@ -277,10 +275,10 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Setup failed on a configuration option </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f"></a><!-- doxytag: member="WriteCanceled" ref="ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f" args="" -->WriteCanceled</em>&nbsp;</td><td>
-<p>WaitingCanceled, When a thread (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> or subclass) is stopping, it will cancel blocking calls (like <a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> or <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> ). At this case, this error is returned, and the thread knows that it can cleanup and end. Write process was cancelled. The thread should stop the write process, restore the current frame into pool and continue working. </p>
+<p>Write process was cancelled. The thread should stop the write process, restore the current frame into pool, notify the error and continue working. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc"></a><!-- doxytag: member="ReadCanceled" ref="ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc" args="" -->ReadCanceled</em>&nbsp;</td><td>
-<p>Read process was cancelled. The thread should stop the read process, restore the current frame into pool and continue working. </p>
+<p>Read process was cancelled. The thread should stop the read process, restore the current frame into pool, notify the error and continue working. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079"></a><!-- doxytag: member="ControlCanceled" ref="ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079" args="" -->ControlCanceled</em>&nbsp;</td><td>
 <p>Control process canceled (serial port's modem line, USB control transfer) </p>
@@ -298,7 +296,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>For USB port: the device is disconnected. For TCP socket: peer has closed the connection. If this error happens, the thread will try to reconnect. If connection fails after maximum trys, a notification is sent with this Disconnected error. </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93"></a><!-- doxytag: member="Connecting" ref="ad4121bb930c95887e77f8bafa065a85ea0edfb7a2f0daf9501874543ecaae8e93" args="" -->Connecting</em>&nbsp;</td><td>
-<p>Used to notify portmanager that connection is in progress (see <a class="el" href="classmdt_port_thread.html#a72f5469a7b11ed6c8b4d07af165c4164" title="Try to reconnect to device/peer.">mdtPortThread::reconnect()</a> ) </p>
+<p>Used to notify portmanager that connection is in progress (see <a class="el" href="classmdt_port_thread.html#abee1d2f9b67ca37cfd13e108ca978b36" title="Try to reconnect to device/peer.">mdtPortThread::reconnect()</a> ) </p>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712"></a><!-- doxytag: member="UnhandledError" ref="ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712" args="" -->UnhandledError</em>&nbsp;</td><td>
 <p>Unhandled error happen. In this case, thread will stop working and error is reported with <a class="el" href="classmdt_error.html">mdtError</a> system. Logfile could give more information, see <a class="el" href="classmdt_error.html">mdtError</a> and <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> </p>
@@ -313,7 +311,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00062">62</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00059">59</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
 
 </div>
 </div>
@@ -335,7 +333,6 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 
 <p><p>pvReadTimeoutOccuredPrevious = false;</p>
 <p>pvWriteTimeoutOccuredPrevious = false;</p>
-<p>pvCancelWrite = false;</p>
 <p>emit readTimeoutStateChanged(pvReadTimeoutOccured); emit writeTimeoutStateChanged(pvWriteTimeoutOccured); </p>
 </p>
 
@@ -361,7 +358,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Subclass notes:<br/>
  This destructor cannot call the <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> method, because this will call the <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a> from destructed inherited object. So, the subclass must call <a class="el" href="classmdt_abstract_port.html#a1ace1a2bd1a04f16952980e247b04800" title="Close the port.">close()</a> in its own destructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00044">44</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00043">43</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -384,7 +381,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Will wake thread(s) waiting on a frame to write with <a class="el" href="classmdt_abstract_port.html#a6c5ebd4451aec959efc4e71ab1b13941" title="Wait until a frame to write is available and get it.">getFrameToWrite()</a> . This method is called from <a class="el" href="classmdt_port_thread.html#a5746ea96689ed80179751ad1353f0b39" title="Stop the running thread.">mdtPortThread::stop()</a> , and should not be called directly.</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00367">367</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00365">365</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -408,12 +405,9 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>The mutex must be locked before calling this method, and still locked inside.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>frame must be a valid pointer. </dd></dl>
 
-<p><p>pvCancelWrite = false; </p>
-</p>
-
 <p>Reimplemented in <a class="el" href="classmdt_usb_port.html#a38200f806037e06988e73af246e8a494">mdtUsbPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00335">335</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -433,14 +427,37 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 
 <p>Close the port. </p>
 <p>Flush and close port if it is open.</p>
+<p>Internal queues are freed here. (If subclass handles additionnaly queues, it should delete is in his <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a> method).</p>
 <p>The mutex is not handled by this method.</p>
 <p>Subclass notes:<br/>
- Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated. Note that this method must be called from subclass destructor. See <a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort()</a> for details.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Actuellement, les queues sont deletée ici, que faire ? </dd></dl>
+ Internally, this method calls <a class="el" href="classmdt_abstract_port.html#add29e91ccc4be62ab5c0dcb2a68ae8f0" title="Close port.">pvClose()</a>. Once done, the flags are updated. Note that this method must be called from subclass destructor. See <a class="el" href="classmdt_abstract_port.html#aa40baa0c593fef984f3796acafceee15" title="Destructor.">~mdtAbstractPort()</a> for details. </p>
 
 <p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805">mdtAbstractSerialPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00080">80</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00079">79</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3d105c90696f7c40f29c24fe9b6e4481"></a><!-- doxytag: member="mdtAbstractPort::config" ref="a3d105c90696f7c40f29c24fe9b6e4481" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_port_config.html">mdtPortConfig</a> &amp; mdtAbstractPort::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the stored configuration. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Configuration must be set with <a class="el" href="classmdt_abstract_port.html#a48bdc0a8057c3b119763643098cf798f" title="Set configuration.">setConfig()</a> before using this method. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead">mdtAbstractSerialPort</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00106">106</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -462,7 +479,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Will do the same as calling <a class="el" href="classmdt_abstract_port.html#a32329b4188db796401e4f454755acb44" title="Flush read buffers.">flushIn()</a> and <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a>, but lock the mutex only once.</p>
 <p>Mutex is locked in this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00237">237</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00236">236</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -485,7 +502,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>After this call, <a class="el" href="classmdt_abstract_port.html#a54b7bfb725c91b2c292a39275b877207" title="Check if a flush in request is pending.">flushInRequestPending()</a> will return true.</p>
 <p>Mutex is locked in this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00164">164</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -508,9 +525,9 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current read frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00176">176</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -533,7 +550,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>Internally, all write frames are moved to pool. <a class="el" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut()</a> will be called to flush system's buffers and the next call of <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> will return the WriteCanceled error.</p>
 <p>Mutex is locked in this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00184">184</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -556,9 +573,9 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current write frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00196">196</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00195">195</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -582,7 +599,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>The mutex must be locked before calling this method. Internally, it will be unlocked during wait, and locked again before returning.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A pointer to a frame, or Null (Null happens after stop request) </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00344">344</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00342">342</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -606,7 +623,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p><p>qDebug() &lt;&lt; "mdtAbstractPort::initQueues() , n: " &lt;&lt; <a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config()</a>.readQueueSize() &lt;&lt; " , fsize: " &lt;&lt; <a class="el" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config()</a>.readFrameSize(); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00253">253</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -631,7 +648,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
  Internally, this method calls <a class="el" href="classmdt_abstract_port.html#ac1440ea9759cbbee9efc5ea22afcdb0a" title="signals:">pvOpen()</a>. Once done, the flags are updated.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -657,7 +674,8 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
  To handle the port correctly, the subclass method must:</p>
 <ul>
 <li>Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with <a class="el" href="classmdt_port_lock.html" title="NOTE:">mdtPortLock</a>.</li>
-<li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile. </li>
+<li>The <a class="el" href="classmdt_error.html">mdtError</a> system should be used (on error) to keep trace in logfile.</li>
+<li>If additionnal queues are handled, they should be freed here. </li>
 </ul>
 
 </div>
@@ -699,7 +717,6 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 
 <p>Flush write port. </p>
 <p>This method is called from <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a>, and is usefull if subsystem needs to be flushed. (For ex. serial port).</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Obselete this ? This method must be implemented in subclass. The pvCancelWrite flag must be set to true if no other system is used to handle the cancel flag (see <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> )</dd></dl>
 <p>The mutex is handled by <a class="el" href="classmdt_abstract_port.html#ad199c6310801893f1f7de2a2391606fc" title="Flush write buffers.">flushOut()</a> and should not be handled here. </p>
 
 </div>
@@ -803,8 +820,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Subclass notes:<br/>
  This method must be implemented in subclass.<br/>
 </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 (see error_t)</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes readen, or a error &lt; 0 (see error_t ) </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#ad8a196bb21b6ca76dffb068a1692904a">mdtPort</a>, <a class="el" href="classmdt_tcp_socket.html#a78842bc5ddcac2d96fb368ee575214cd">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#abce257345c8af47494215cd7ee75f82d">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">mdtSerialPort</a>.</p>
 
@@ -828,7 +844,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Readen frames queue contains frames that where received from device</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00325">325</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00324">324</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -850,7 +866,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Read frames queue pool contains frames that are ready to use for reception</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00330">330</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00329">329</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -871,7 +887,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Returns read timeout state. </p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00226">226</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -908,7 +924,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_tcp_socket.html#a6a9990696ea459601b17ddbffe5b0703">mdtTcpSocket</a>, and <a class="el" href="classmdt_usb_port.html#af2399348faf1abc20130eab20cfc36ee">mdtUsbPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00136">136</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -939,7 +955,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port.html#a02fd5ee74a7f52c3bce0545ec8a659bf">mdtSerialPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00159">159</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -961,7 +977,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Set the port name. </p>
 <p>Port name can be, f.ex. /dev/ttyS0 on Linux, or COM1 on Windows. This method just store given port name and does nothing else. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00048">48</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1015,7 +1031,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>A valid configuration must be set before calling this method.</dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">error_t</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00114">114</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00113">113</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1076,7 +1092,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 
 <p>Reimplemented in <a class="el" href="classmdt_serial_port.html#a9412faf413eca5ee3516139fdfaaf2fe">mdtSerialPort</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00155">155</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1098,13 +1114,13 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Update the read timeout state. </p>
 <p>This method must be called by system dependant waitEventRead() method. When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br/>
 </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd></dl>
 
 <p><p>if(state != pvReadTimeoutOccuredPrevious){ /emit readTimeoutStateChanged(state); } pvReadTimeoutOccuredPrevious = pvReadTimeoutOccured;</p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00205">205</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00204">204</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1126,13 +1142,13 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Update the write timeout state. </p>
 <p>This method must be called by system dependant <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> method When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br/>
 </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd></dl>
 
 <p><p>if(state != pvWriteTimeoutOccured){ /emit writeTimeoutStateChanged(state); } pvWriteTimeoutOccuredPrevious = pvWriteTimeoutOccured;</p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00216">216</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1228,7 +1244,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00142">142</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00141">141</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1263,8 +1279,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Subclass notes:<br/>
  This method must be implemented in subclass.<br/>
 </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or error &lt; 0 (see error_t)</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>adapt subclasses </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Number of bytes written, or error &lt; 0 (see error_t) </dd></dl>
 
 <p>Implemented in <a class="el" href="classmdt_port.html#a62f4a6f2c547d40d3743ce893e0f64d6">mdtPort</a>, <a class="el" href="classmdt_tcp_socket.html#adbf2db44b291127a499d9f8720beb632">mdtTcpSocket</a>, <a class="el" href="classmdt_usb_port.html#ae777e33325ff2adef326dd7f81b00838">mdtUsbPort</a>, and <a class="el" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">mdtSerialPort</a>.</p>
 
@@ -1288,7 +1303,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Write frames queue contains frames that must be sent</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00372">372</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00370">370</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1325,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Write frames queue pool contains frames that are ready to use for transmission</p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00377">377</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00375">375</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1331,24 +1346,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Returns write timeout state. </p>
 <p>Mutex is not handled by this method. </p>
 
-<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00232">232</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a412c3e4903bf7d90914cfeb273e82623"></a><!-- doxytag: member="mdtAbstractPort::pvReadenFrames" ref="a412c3e4903bf7d90914cfeb273e82623" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QQueue&lt;<a class="el" href="classmdt_frame.html">mdtFrame</a>*&gt; <a class="el" href="classmdt_abstract_port.html#a412c3e4903bf7d90914cfeb273e82623">mdtAbstractPort::pvReadenFrames</a><code> [protected]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>bool pvWriteTimeoutOccuredPrevious; bool pvCancelWrite; // Updated by <a class="el" href="classmdt_abstract_port.html#a1667fa938d3a7578b73f54c32015c369" title="Flush write port.">pvFlushOut()</a> and <a class="el" href="classmdt_abstract_port.html#a9a69eb2fc07d551ab37c011487fa319d" title="Add a frame to write.">addFrameToWrite()</a> </p>
-
-<p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00626">626</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00231">231</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
 </div>
 </div>
@@ -1371,7 +1369,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:40 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -54,7 +54,7 @@ void \hyperlink{classmdt_port_manager_a053ba62f090eced0cf635c9be5c6b052}{errorSt
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}{mdtPortManager} (QObject $\ast$parent=0)
-\item 
+\begin{DoxyCompactList}\small\item\em Contruct a port manager. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_port_manager_adf797f8fd7a3ffdc000890a224e4c1b6}{$\sim$mdtPortManager} ()
 \begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
 virtual QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{scan} ()
@@ -84,6 +84,8 @@ void \hyperlink{classmdt_port_manager_a7e2ef93ec2731e66aa2b2d5f7ce9bc1c}{setPort
 \begin{DoxyCompactList}\small\item\em Get port info. \end{DoxyCompactList}\item 
 virtual \hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{config} ()
 \begin{DoxyCompactList}\small\item\em Get the port's config object. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_port_config}{mdtPortConfig} \& \hyperlink{classmdt_port_manager_a735b7dc766fc2f45fb2cf9772c4201b0}{config} () const 
+\begin{DoxyCompactList}\small\item\em Get the port's config object. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{openPort} ()
 \begin{DoxyCompactList}\small\item\em Open the port. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{closePort} ()
@@ -94,18 +96,34 @@ void \hyperlink{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{setTran
 \begin{DoxyCompactList}\small\item\em Diseable transactions support. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$ \hyperlink{classmdt_port_manager_a75ebd3d1859e3ed38b9558981e53aac4}{getNewTransaction} ()
 \begin{DoxyCompactList}\small\item\em Get a new transaction. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{waitOnWriteReady} (int timeout, int granularity=50)
+bool \hyperlink{classmdt_port_manager_a1ca92c5ac120d87e5b10bff54ed1aa5c}{waitOnWriteReady} (int timeout=0, int granularity=50)
 \begin{DoxyCompactList}\small\item\em Wait until data can be written. \end{DoxyCompactList}\item 
 virtual int \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{writeData} (QByteArray data)
 \begin{DoxyCompactList}\small\item\em Write data by copy. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{waitReadenFrame} (int timeout=500)
+bool \hyperlink{classmdt_port_manager_ad87eff1f2dd54a165a78b34e30592901}{waitReadenFrame} (int timeout=0)
 \begin{DoxyCompactList}\small\item\em Wait until a complete frame is available. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_port_manager_a5afae1537acf351f3f4a1d30c3997476}{waitOnFrame} (int id, int timeout=500, int granularity=50)
+bool \hyperlink{classmdt_port_manager_a680546498a0cd486c4fc16d28f44e4c6}{waitOnFrame} (int id, int timeout=0, int granularity=50)
 \begin{DoxyCompactList}\small\item\em Wait on readen frame with defined ID. \end{DoxyCompactList}\item 
 QByteArray \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame} (int id)
 \begin{DoxyCompactList}\small\item\em Get data by frame ID. \end{DoxyCompactList}\item 
 QList$<$ QByteArray $>$ \hyperlink{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{readenFrames} ()
-\begin{DoxyCompactList}\small\item\em Get all readen data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get all readen data. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}{adjustedReadTimeout} (int requestedTimeout, bool warn=true) const 
+\begin{DoxyCompactList}\small\item\em Adjust a requested timeout to minimal timeout. \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}{adjustedWriteTimeout} (int requestedTimeout, bool warn=true) const 
+\begin{DoxyCompactList}\small\item\em Adjust a requested timeout to minimal timeout. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7ce590}{flushIn} (bool flushPortManagerBuffers, bool flushPortBuffers)
+\begin{DoxyCompactList}\small\item\em Flush input buffers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a4c44ce6ec40c4afc6be441c10d7ee827}{flushIn} ()
+\begin{DoxyCompactList}\small\item\em Flush input buffers. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classmdt_port_manager_a3f0c2722a41c49de2bea9013bccd049c}{flushOut} (bool flushPortManagerBuffers, bool flushPortBuffers)
+\begin{DoxyCompactList}\small\item\em Flush output buffers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_ab34018a9653a5af784fa7da06a9e50d3}{flushOut} ()
+\begin{DoxyCompactList}\small\item\em Flush output buffers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a97b91e7c1641836eb6afb47fd244a18e}{flush} (bool flushPortManagerBuffers, bool flushPortBuffers)
+\begin{DoxyCompactList}\small\item\em Flush I/O buffers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a3eab774008d7530ae341ce9c38265d65}{flush} ()
+\begin{DoxyCompactList}\small\item\em Flush I/O buffers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -129,7 +147,11 @@ void \hyperlink{classmdt_port_manager_ad024a2db17ae2e6459da0adad3d7c3c8}{enqueue
 void \hyperlink{classmdt_port_manager_ab30fc99951b2b6a566422c7525106ddf}{enqueueTransactionRx} (\hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction)
 \begin{DoxyCompactList}\small\item\em Add a transaction to the RX queue. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_port_manager_a84d37b380080eb26e56c68424dedd958}{commitFrames} ()
-\begin{DoxyCompactList}\small\item\em Emit signals for each done transactions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Emit signals for each done transactions. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_port_manager_a016996e823cc729eb1f595307f3dd1cf}{cancelReadWait} ()
+\begin{DoxyCompactList}\small\item\em Set the wait cancel flag. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_port_manager_a83ade128d6e70f7216355e9df840c2a6}{readWaitCanceled} ()
+\begin{DoxyCompactList}\small\item\em Get the wait cancel flag. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -225,9 +247,9 @@ Definition at line 104 of file mdtPortManager.h.
 \label{classmdt_port_manager_a5ec36523089b7528d973e29cdbc64d01}
 
 
-pvEnqueueReadenFrames = false; pvNotifyNewReadenFrame = false; 
+Contruct a port manager. 
 
-
+Transaction will be set disabled. 
 
 Definition at line 30 of file mdtPortManager.cpp.
 
@@ -248,7 +270,7 @@ If a port was set, the manager will stop (if running), and port will be closed (
 
 Note that port set by \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} and threads are not deleted. 
 
-Definition at line 43 of file mdtPortManager.cpp.
+Definition at line 40 of file mdtPortManager.cpp.
 
 
 
@@ -268,11 +290,7 @@ Cancel read and write operations.
 
 Default implementation calls \hyperlink{classmdt_abstract_port_abde440c49b95833f821e1333c40a7398}{mdtAbstractPort::flush()}. 
 
-pvPort-\/$>$flushIn(); pvPort-\/$>$flushOut(); 
-
-
-
-Definition at line 414 of file mdtPortManager.cpp.
+Definition at line 625 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ab62591409d019a4a2576b4310c411b8f}{
 \index{mdtPortManager@{mdtPortManager}!addThread@{addThread}}
@@ -296,7 +314,7 @@ thread must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 97 of file mdtPortManager.cpp.
+Definition at line 94 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ae5357262f1a0d6b95cc3fc7b975cdd38}{
 \index{mdtPortManager@{mdtPortManager}!addTransaction@{addTransaction}}
@@ -320,7 +338,7 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 469 of file mdtPortManager.cpp.
+Definition at line 678 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a4b5300fbf05c2c267ca3a247ac3ab77f}{
 \index{mdtPortManager@{mdtPortManager}!addTransaction@{addTransaction}}
@@ -342,14 +360,103 @@ Will get a new transaction and add it to pending transactions queue.
 \begin{DoxyParams}{Parameters}
 {\em id} & Frame ID (f.ex. transaction ID in MODBUS/TCP, bTag in USBTMC) \\
 \hline
-{\em queryReplyMode} & If true, transaction will be keeped in transactions done queue until \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame()} or \hyperlink{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{readenFrames()} is called. If false, transaction will be removed from transactions done queue just after\\
+{\em queryReplyMode} & If true, transaction will be keeped in transactions done queue until \hyperlink{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{readenFrame()} or \hyperlink{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{readenFrames()} is called. If false, transaction will be removed from transactions done queue just after \hyperlink{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{newReadenFrame(mdtPortTransaction)} is emited. \\
 \hline
 \end{DoxyParams}
-\begin{Desc}
-\item[\hyperlink{todo__todo000031}{Todo}]sigName is emited. \end{Desc}
 
 
-Definition at line 484 of file mdtPortManager.cpp.
+Definition at line 693 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}{
+\index{mdtPortManager@{mdtPortManager}!adjustedReadTimeout@{adjustedReadTimeout}}
+\index{adjustedReadTimeout@{adjustedReadTimeout}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{adjustedReadTimeout}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortManager::adjustedReadTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{requestedTimeout, }
+\item[{bool}]{warn = {\ttfamily true}}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}
+
+
+Adjust a requested timeout to minimal timeout. 
+
+We have 2 different timeouts:
+\begin{DoxyItemize}
+\item Port timeout: If data are expected on the port, and nothing comes in, a port timeout occurs.
+\item Response (or complete frame) timeout: Timeout to receive a complete frame
+\end{DoxyItemize}
+
+For example, we expect a complete frame of, say, 200 Bytes. The device will send , f.ex. , 20 x 10 Bytes. During the read process, a port timeout can occur (device busy, or something else). If read process works fine, all data can be readen in a time less than port timeout.
+
+
+\begin{DoxyParams}{Parameters}
+{\em requestedTimeout} & Requested timeout \mbox{[}ms\mbox{]} \\
+\hline
+{\em warn} & If true, a warning will be logged if requested timeout is to small. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 \mbox{[}ms\mbox{]}) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} and contain a valid configuration. 
+\end{DoxyPrecond}
+
+
+Definition at line 483 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}{
+\index{mdtPortManager@{mdtPortManager}!adjustedWriteTimeout@{adjustedWriteTimeout}}
+\index{adjustedWriteTimeout@{adjustedWriteTimeout}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{adjustedWriteTimeout}]{\setlength{\rightskip}{0pt plus 5cm}int mdtPortManager::adjustedWriteTimeout (
+\begin{DoxyParamCaption}
+\item[{int}]{requestedTimeout, }
+\item[{bool}]{warn = {\ttfamily true}}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}
+
+
+Adjust a requested timeout to minimal timeout. 
+
+See \hyperlink{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}{adjustedReadTimeout()} for details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em requestedTimeout} & Requested timeout \mbox{[}ms\mbox{]} \\
+\hline
+{\em warn} & If true, a warning will be logged if requested timeout is to small. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Requested timeout or port's timeout + offset (offset is currently hardcoded: 1000 \mbox{[}ms\mbox{]}) 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} and contain a valid configuration. 
+\end{DoxyPrecond}
+
+
+Definition at line 512 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a016996e823cc729eb1f595307f3dd1cf}{
+\index{mdtPortManager@{mdtPortManager}!cancelReadWait@{cancelReadWait}}
+\index{cancelReadWait@{cancelReadWait}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{cancelReadWait}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::cancelReadWait (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_manager_a016996e823cc729eb1f595307f3dd1cf}
+
+
+Set the wait cancel flag. 
+
+If flag is set, \hyperlink{classmdt_port_manager_a680546498a0cd486c4fc16d28f44e4c6}{waitOnFrame()}, \hyperlink{classmdt_port_manager_ad87eff1f2dd54a165a78b34e30592901}{waitReadenFrame()} will return.
+
+Note: this will not cancel anything in port or port threads. 
+
+Definition at line 782 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ace8065f1f5083041ee7f65c2892bc77d}{
 \index{mdtPortManager@{mdtPortManager}!closePort@{closePort}}
@@ -368,7 +475,7 @@ This stops the threads (if exists) and close the port.
 
 If port was never set (with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} ), this method does nothing. 
 
-Definition at line 212 of file mdtPortManager.cpp.
+Definition at line 218 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a84d37b380080eb26e56c68424dedd958}{
 \index{mdtPortManager@{mdtPortManager}!commitFrames@{commitFrames}}
@@ -392,7 +499,29 @@ Clarify + implement
 \end{DoxyNote}
 
 
-Definition at line 528 of file mdtPortManager.cpp.
+Definition at line 736 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a735b7dc766fc2f45fb2cf9772c4201b0}{
+\index{mdtPortManager@{mdtPortManager}!config@{config}}
+\index{config@{config}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{config}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortConfig} \& mdtPortManager::config (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_port_manager_a735b7dc766fc2f45fb2cf9772c4201b0}
+
+
+Get the port's config object. 
+
+Usefull to read internal port configuration
+
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 198 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a9cf3ea2da38f81682695b37448712ffd}{
 \index{mdtPortManager@{mdtPortManager}!config@{config}}
@@ -418,7 +547,7 @@ Reimplemented in \hyperlink{classmdt_serial_port_manager_a4b8ab7b9d53966a1887d9c
 
 
 
-Definition at line 194 of file mdtPortManager.cpp.
+Definition at line 191 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a39cb4af4aedc0b6b7c4d4f53002c3fd1}{
 \index{mdtPortManager@{mdtPortManager}!detachPort@{detachPort}}
@@ -445,7 +574,7 @@ Will detach port from each thread and from port manager. If port was not set, th
 \end{DoxyParams}
 
 
-Definition at line 76 of file mdtPortManager.cpp.
+Definition at line 73 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ad024a2db17ae2e6459da0adad3d7c3c8}{
 \index{mdtPortManager@{mdtPortManager}!enqueueTransactionDone@{enqueueTransactionDone}}
@@ -465,7 +594,7 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 513 of file mdtPortManager.cpp.
+Definition at line 721 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ab30fc99951b2b6a566422c7525106ddf}{
 \index{mdtPortManager@{mdtPortManager}!enqueueTransactionRx@{enqueueTransactionRx}}
@@ -485,7 +614,157 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 520 of file mdtPortManager.cpp.
+Definition at line 728 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a97b91e7c1641836eb6afb47fd244a18e}{
+\index{mdtPortManager@{mdtPortManager}!flush@{flush}}
+\index{flush@{flush}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::flush (
+\begin{DoxyParamCaption}
+\item[{bool}]{flushPortManagerBuffers, }
+\item[{bool}]{flushPortBuffers}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a97b91e7c1641836eb6afb47fd244a18e}
+
+
+Flush I/O buffers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em flushPortManagerBuffers} & If true, port manager buffers will be cleared. (Has no effect in this implementation, but some subclass can have output buffers). \\
+\hline
+{\em flushPortBuffers} & If true, port's buffers will be cleared. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 609 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a3eab774008d7530ae341ce9c38265d65}{
+\index{mdtPortManager@{mdtPortManager}!flush@{flush}}
+\index{flush@{flush}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::flush (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a3eab774008d7530ae341ce9c38265d65}
+
+
+Flush I/O buffers. 
+
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before calling this method. 
+\end{DoxyPrecond}
+
+
+Definition at line 620 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7ce590}{
+\index{mdtPortManager@{mdtPortManager}!flushIn@{flushIn}}
+\index{flushIn@{flushIn}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{flushIn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::flushIn (
+\begin{DoxyParamCaption}
+\item[{bool}]{flushPortManagerBuffers, }
+\item[{bool}]{flushPortBuffers}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7ce590}
+
+
+Flush input buffers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em flushPortManagerBuffers} & If true, port manager buffers will be cleared. \\
+\hline
+{\em flushPortBuffers} & If true, port's buffers will be cleared. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before calling this method. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_usb_port_manager_a982256ed17db155e1c95d544683a6dba}{mdtUsbPortManager}.
+
+
+
+Definition at line 554 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a4c44ce6ec40c4afc6be441c10d7ee827}{
+\index{mdtPortManager@{mdtPortManager}!flushIn@{flushIn}}
+\index{flushIn@{flushIn}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{flushIn}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::flushIn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_a4c44ce6ec40c4afc6be441c10d7ee827}
+
+
+Flush input buffers. 
+
+Will flush portmanger and port's buffers.
+
+Internally, \hyperlink{classmdt_port_manager_ac0844a5cd4043a95a479d458ac7ce590}{flushIn(bool, bool)} is called. 
+
+Definition at line 592 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a3f0c2722a41c49de2bea9013bccd049c}{
+\index{mdtPortManager@{mdtPortManager}!flushOut@{flushOut}}
+\index{flushOut@{flushOut}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{flushOut}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::flushOut (
+\begin{DoxyParamCaption}
+\item[{bool}]{flushPortManagerBuffers, }
+\item[{bool}]{flushPortBuffers}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classmdt_port_manager_a3f0c2722a41c49de2bea9013bccd049c}
+
+
+Flush output buffers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em flushPortManagerBuffers} & If true, port manager buffers will be cleared. (Has no effect in this implementation, but some subclass can have output buffers). \\
+\hline
+{\em flushPortBuffers} & If true, port's buffers will be cleared. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before calling this method. 
+\end{DoxyPrecond}
+
+
+Reimplemented in \hyperlink{classmdt_usb_port_manager_ab723086376175c40635df44adf358985}{mdtUsbPortManager}.
+
+
+
+Definition at line 597 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_ab34018a9653a5af784fa7da06a9e50d3}{
+\index{mdtPortManager@{mdtPortManager}!flushOut@{flushOut}}
+\index{flushOut@{flushOut}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{flushOut}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::flushOut (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_port_manager_ab34018a9653a5af784fa7da06a9e50d3}
+
+
+Flush output buffers. 
+
+Will flush portmanger and port's buffers.
+
+Internally, \hyperlink{classmdt_port_manager_a3f0c2722a41c49de2bea9013bccd049c}{flushOut(bool, bool)} is called. 
+
+Definition at line 604 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a4fcc8f0699b655156e661bb3de6056cc}{
 \index{mdtPortManager@{mdtPortManager}!fromThreadNewFrameReaden@{fromThreadNewFrameReaden}}
@@ -508,7 +787,7 @@ Called by the read thread whenn a complete frame was readen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000028}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000023}{Todo}]Error on incomplete frame \end{Desc}
 
 
 
@@ -517,7 +796,7 @@ Reimplemented in \hyperlink{classmdt_modbus_tcp_port_manager_ad941ea607f00db54aa
 
 
 
-Definition at line 423 of file mdtPortManager.cpp.
+Definition at line 632 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a75ebd3d1859e3ed38b9558981e53aac4}{
 \index{mdtPortManager@{mdtPortManager}!getNewTransaction@{getNewTransaction}}
@@ -542,7 +821,7 @@ Returned transaction is valid (never Null).
 \end{DoxyPostcond}
 
 
-Definition at line 242 of file mdtPortManager.cpp.
+Definition at line 248 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af460167e604b8b6e2e933a98b2b6b5a2}{
 \index{mdtPortManager@{mdtPortManager}!isRunning@{isRunning}}
@@ -561,7 +840,7 @@ If one of the threads is running, true is returned.
 
 If port was not set, it returns false. 
 
-Definition at line 148 of file mdtPortManager.cpp.
+Definition at line 145 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a77ef4a432306638f5b0f91df7863ac62}{
 \index{mdtPortManager@{mdtPortManager}!newReadenFrame@{newReadenFrame}}
@@ -603,12 +882,12 @@ This variant is sent when transactions support is ON. (See \hyperlink{classmdt_p
 Manage errors comming from port threads. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000029}{Todo}]Error handling (in general ...) 
+\item[\hyperlink{todo__todo000024}{Todo}]Error handling (in general ...) 
 
 On disconnect, should flush I/O ? \end{Desc}
 
 
-Definition at line 451 of file mdtPortManager.cpp.
+Definition at line 660 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aab594613e8985590c835194efbc27b5e}{
 \index{mdtPortManager@{mdtPortManager}!openPort@{openPort}}
@@ -632,10 +911,10 @@ True on success, false else.
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000030}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
 
 
-Definition at line 201 of file mdtPortManager.cpp.
+Definition at line 205 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a117486e5720465e1295d337063d536c2}{
 \index{mdtPortManager@{mdtPortManager}!pendingTransaction@{pendingTransaction}}
@@ -655,7 +934,7 @@ A valid transaction if exists, else a Null pointer.
 \end{DoxyReturn}
 
 
-Definition at line 496 of file mdtPortManager.cpp.
+Definition at line 705 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a830ae182d06dd6a52c43a7f45b9240ac}{
 \index{mdtPortManager@{mdtPortManager}!readenFrame@{readenFrame}}
@@ -678,7 +957,7 @@ If ID was not found, a empty QByteArray is returned.
 
 Note: if transactions support is diseabled, a empty QByteArray is allways returned. 
 
-Definition at line 363 of file mdtPortManager.cpp.
+Definition at line 445 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_addd5dcae9644cea42a9871205af41796}{
 \index{mdtPortManager@{mdtPortManager}!readenFrames@{readenFrames}}
@@ -695,7 +974,24 @@ Get all readen data.
 
 Note that calling this methode will clear the internal queue. (A second call will return a empty list). 
 
-Definition at line 376 of file mdtPortManager.cpp.
+Definition at line 458 of file mdtPortManager.cpp.
+
+\hypertarget{classmdt_port_manager_a83ade128d6e70f7216355e9df840c2a6}{
+\index{mdtPortManager@{mdtPortManager}!readWaitCanceled@{readWaitCanceled}}
+\index{readWaitCanceled@{readWaitCanceled}!mdtPortManager@{mdtPortManager}}
+\subsubsection[{readWaitCanceled}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::readWaitCanceled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_manager_a83ade128d6e70f7216355e9df840c2a6}
+
+
+Get the wait cancel flag. 
+
+After a call, the flag will be reset. 
+
+Definition at line 787 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aaa0a474183bcae0fff4fb9ef43023c25}{
 \index{mdtPortManager@{mdtPortManager}!removeThreads@{removeThreads}}
@@ -720,7 +1016,7 @@ Port manager must not running.
 \end{DoxyPrecond}
 
 
-Definition at line 113 of file mdtPortManager.cpp.
+Definition at line 110 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ada4b906ade973dfd45200dacbfe63f73}{
 \index{mdtPortManager@{mdtPortManager}!removeTransactionDone@{removeTransactionDone}}
@@ -737,7 +1033,7 @@ Remove a transaction from DONE queue and restore it to pool.
 
 If transaction not exists in DONE queue, this method simply makes nothing. 
 
-Definition at line 503 of file mdtPortManager.cpp.
+Definition at line 711 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a5fea4a9b8e94d38e8ec699dba05c7ca8}{
 \index{mdtPortManager@{mdtPortManager}!restoreTransaction@{restoreTransaction}}
@@ -757,7 +1053,7 @@ transaction must be a valid pointer (not Null)
 \end{DoxyPrecond}
 
 
-Definition at line 464 of file mdtPortManager.cpp.
+Definition at line 673 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_ad56afb411ab5468005fca04767557ece}{
 \index{mdtPortManager@{mdtPortManager}!scan@{scan}}
@@ -785,7 +1081,7 @@ Reimplemented in \hyperlink{classmdt_usb_port_manager_a3a2370c3a2d0353a880bf9b77
 
 
 
-Definition at line 61 of file mdtPortManager.cpp.
+Definition at line 58 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{
 \index{mdtPortManager@{mdtPortManager}!setPort@{setPort}}
@@ -807,7 +1103,7 @@ Manager must no running
 \end{DoxyPrecond}
 
 
-Definition at line 68 of file mdtPortManager.cpp.
+Definition at line 65 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a7e2ef93ec2731e66aa2b2d5f7ce9bc1c}{
 \index{mdtPortManager@{mdtPortManager}!setPortInfo@{setPortInfo}}
@@ -826,7 +1122,7 @@ Store given port info, and call \hyperlink{classmdt_port_manager_a2b2ed690cbba9f
 
 Setting a port info can be usefull if other informations are needed later in application (f.ex. \hyperlink{classmdt_port_info_a38bcac67372782228a91d8e7dbf49211}{mdtPortInfo::displayText()} ). You can get port informations later with \hyperlink{classmdt_port_manager_a88109b455fc5a5f5adf0636f7450143e}{portInfo()}. 
 
-Definition at line 183 of file mdtPortManager.cpp.
+Definition at line 180 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a2b2ed690cbba9f544c6ac1b46684e59a}{
 \index{mdtPortManager@{mdtPortManager}!setPortName@{setPortName}}
@@ -851,7 +1147,7 @@ Port must be set before with \hyperlink{classmdt_port_manager_afcd156b2d0c9d3409
 \end{DoxySeeAlso}
 
 
-Definition at line 176 of file mdtPortManager.cpp.
+Definition at line 173 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{
 \index{mdtPortManager@{mdtPortManager}!setTransactionsDisabled@{setTransactionsDisabled}}
@@ -870,7 +1166,7 @@ See \hyperlink{classmdt_port_manager_a7f0bc97ad55160ea09b9079dd6d816d4}{setTrans
 
 If transactions are disabled, it's only possible to choose once if blocking mode is supported. Each time a frame comes in, the newReadenFrame(int, QByteArray) signal is emited.
 
-In this mode, \hyperlink{classmdt_port_manager_a5afae1537acf351f3f4a1d30c3997476}{waitOnFrame()} will allways timeout.
+In this mode, \hyperlink{classmdt_port_manager_a680546498a0cd486c4fc16d28f44e4c6}{waitOnFrame()} will allways timeout.
 
 
 \begin{DoxyParams}{Parameters}
@@ -882,7 +1178,7 @@ Port manager must not running when this method is called.
 \end{DoxyPrecond}
 
 
-Definition at line 234 of file mdtPortManager.cpp.
+Definition at line 240 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a7f0bc97ad55160ea09b9079dd6d816d4}{
 \index{mdtPortManager@{mdtPortManager}!setTransactionsEnabled@{setTransactionsEnabled}}
@@ -899,7 +1195,7 @@ Enable transactions support.
 
 Transaction is usefull for protocols wich supports frame identification (like transaction ID in MODBUS/TCP or bTag in USBTMC).
 
-If transaction support is enabled, port manager can work on both event (signal) and blocking mode \char`\"{}on the fly\char`\"{}. Each time a frame comes in, the \hyperlink{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{newReadenFrame(mdtPortTransaction)} signal is emited. Optionnaly, it's possible to request that a frame must be enqueued for a given transaction (regarding a specific ID), witch is requierd for blocking mode (see \hyperlink{classmdt_port_manager_a5afae1537acf351f3f4a1d30c3997476}{waitOnFrame()} ).
+If transaction support is enabled, port manager can work on both event (signal) and blocking mode \char`\"{}on the fly\char`\"{}. Each time a frame comes in, the \hyperlink{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{newReadenFrame(mdtPortTransaction)} signal is emited. Optionnaly, it's possible to request that a frame must be enqueued for a given transaction (regarding a specific ID), witch is requierd for blocking mode (see \hyperlink{classmdt_port_manager_a680546498a0cd486c4fc16d28f44e4c6}{waitOnFrame()} ).
 
 Note that not all port manager support transactions. For example, this default implementation cannot work with transactions. By default, they are disabled, and no frame is enqueued (see \hyperlink{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{setTransactionsDisabled()}). See specific subclass for details.
 
@@ -908,7 +1204,7 @@ Port manager must not running when this method is called.
 \end{DoxyPrecond}
 
 
-Definition at line 226 of file mdtPortManager.cpp.
+Definition at line 232 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_af1fb103ffafc227337a59c7e82f44fbc}{
 \index{mdtPortManager@{mdtPortManager}!start@{start}}
@@ -928,7 +1224,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 133 of file mdtPortManager.cpp.
+Definition at line 130 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_aacbf87cc3d9c37c87e21696f8a6514bd}{
 \index{mdtPortManager@{mdtPortManager}!stop@{stop}}
@@ -948,7 +1244,7 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 165 of file mdtPortManager.cpp.
+Definition at line 162 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_acc5c63ad33fdd3cc153fc23e00c6e69c}{
 \index{mdtPortManager@{mdtPortManager}!wait@{wait}}
@@ -981,19 +1277,19 @@ granularity must be $>$ 0.
 \end{DoxyPrecond}
 
 
-Definition at line 401 of file mdtPortManager.cpp.
+Definition at line 541 of file mdtPortManager.cpp.
 
-\hypertarget{classmdt_port_manager_a5afae1537acf351f3f4a1d30c3997476}{
+\hypertarget{classmdt_port_manager_a680546498a0cd486c4fc16d28f44e4c6}{
 \index{mdtPortManager@{mdtPortManager}!waitOnFrame@{waitOnFrame}}
 \index{waitOnFrame@{waitOnFrame}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{waitOnFrame}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::waitOnFrame (
 \begin{DoxyParamCaption}
 \item[{int}]{id, }
-\item[{int}]{timeout = {\ttfamily 500}, }
+\item[{int}]{timeout = {\ttfamily 0}, }
 \item[{int}]{granularity = {\ttfamily 50}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_port_manager_a5afae1537acf351f3f4a1d30c3997476}
+\label{classmdt_port_manager_a680546498a0cd486c4fc16d28f44e4c6}
 
 
 Wait on readen frame with defined ID. 
@@ -1002,11 +1298,13 @@ Will return when frame with given ID was read or after timeout.
 
 Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.
 
+This method can return if timeout occurs, or for other reason depending on specific port (port timeout, read cancelled, ...).
+
 
 \begin{DoxyParams}{Parameters}
 {\em id} & Frame ID. Depending on protocol, this can be a transaction ID or what else. \\
 \hline
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of granularity \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of granularity \mbox{[}ms\mbox{]} If 0, the minimal timeout will be used (see \hyperlink{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}{adjustedReadTimeout()} ). \\
 \hline
 {\em granularity} & Sleep time between each call of event processing \mbox{[}ms\mbox{]}\par
  A little value needs more CPU and big value can freese the GUI. Should be between 50 and 100, and must be $>$ 0. Note that timeout must be a multiple of granularity. \\
@@ -1017,18 +1315,18 @@ True if Ok, false on timeout. If id was not found in transactions lists, a warni
 \end{DoxyReturn}
 
 
-Definition at line 334 of file mdtPortManager.cpp.
+Definition at line 395 of file mdtPortManager.cpp.
 
-\hypertarget{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}{
+\hypertarget{classmdt_port_manager_a1ca92c5ac120d87e5b10bff54ed1aa5c}{
 \index{mdtPortManager@{mdtPortManager}!waitOnWriteReady@{waitOnWriteReady}}
 \index{waitOnWriteReady@{waitOnWriteReady}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{waitOnWriteReady}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::waitOnWriteReady (
 \begin{DoxyParamCaption}
-\item[{int}]{timeout, }
+\item[{int}]{timeout = {\ttfamily 0}, }
 \item[{int}]{granularity = {\ttfamily 50}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_port_manager_ae1cc1010067bcbf104fb3d1b19f2fa48}
+\label{classmdt_port_manager_a1ca92c5ac120d87e5b10bff54ed1aa5c}
 
 
 Wait until data can be written. 
@@ -1037,7 +1335,7 @@ Wait until a frame is available in write frames pool. The wait will not breack Q
 
 
 \begin{DoxyParams}{Parameters}
-{\em timeout} & Timeout \mbox{[}ms\mbox{]} \\
+{\em timeout} & Timeout \mbox{[}ms\mbox{]} If 0, the minimal timeout will be used (see \hyperlink{classmdt_port_manager_a9d6782be514745a1b1392216d17d41df}{adjustedWriteTimeout()} ). \\
 \hline
 {\em granularity} & Sleep time between each call of event processing \mbox{[}ms\mbox{]}\par
  A little value needs more CPU and big value can freese the GUI. Should be between 50 and 100, and must be $>$ 0. Note that timeout must be a multiple of granularity. \\
@@ -1053,17 +1351,17 @@ Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935ef
 \end{DoxyPrecond}
 
 
-Definition at line 257 of file mdtPortManager.cpp.
+Definition at line 263 of file mdtPortManager.cpp.
 
-\hypertarget{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}{
+\hypertarget{classmdt_port_manager_ad87eff1f2dd54a165a78b34e30592901}{
 \index{mdtPortManager@{mdtPortManager}!waitReadenFrame@{waitReadenFrame}}
 \index{waitReadenFrame@{waitReadenFrame}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{waitReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortManager::waitReadenFrame (
 \begin{DoxyParamCaption}
-\item[{int}]{timeout = {\ttfamily 500}}
+\item[{int}]{timeout = {\ttfamily 0}}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_port_manager_a44ca338c8c56893612301e09d2ee6e88}
+\label{classmdt_port_manager_ad87eff1f2dd54a165a78b34e30592901}
 
 
 Wait until a complete frame is available. 
@@ -1072,9 +1370,11 @@ This method will return when a complete frame was readen. This is usefull for qu
 
 Internally, a couple of sleep and process event are called, so Qt's event loop will not be broken.
 
+This method can return if timeout occurs, or for other reason depending on specific port (port timeout, read cancelled, ...).
+
 
 \begin{DoxyParams}{Parameters}
-{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} \\
+{\em timeout} & Maximum wait time \mbox{[}ms\mbox{]}. Must be a multiple of 50 \mbox{[}ms\mbox{]} If 0, the minimal timeout will be used (see \hyperlink{classmdt_port_manager_a7cb3155940e23db0122d14f21fca858d}{adjustedReadTimeout()} ). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -1085,7 +1385,7 @@ True if Ok, false on timeout
 \end{DoxySeeAlso}
 
 
-Definition at line 307 of file mdtPortManager.cpp.
+Definition at line 334 of file mdtPortManager.cpp.
 
 \hypertarget{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{
 \index{mdtPortManager@{mdtPortManager}!writeData@{writeData}}
@@ -1099,6 +1399,10 @@ Definition at line 307 of file mdtPortManager.cpp.
 
 
 Write data by copy. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000026}{Todo}]adjust write timeout \end{Desc}
+
 
 Data will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
 
@@ -1120,7 +1424,7 @@ Reimplemented in \hyperlink{classmdt_usbtmc_port_manager_ab7229e9d519e80a6509bec
 
 
 
-Definition at line 280 of file mdtPortManager.cpp.
+Definition at line 307 of file mdtPortManager.cpp.
 
 
 

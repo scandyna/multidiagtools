@@ -176,43 +176,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00121"></a>00121   <span class="keywordflow">return</span> retVal;
 <a name="l00122"></a>00122 }
 <a name="l00123"></a>00123 
-<a name="l00124"></a><a class="code" href="classmdt_device_scpi.html#afd90eebcd990f1c259911523e5901a0f">00124</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_scpi.html#afd90eebcd990f1c259911523e5901a0f" title="Send a command to device.">mdtDeviceScpi::sendCommand</a>(<span class="keyword">const</span> QByteArray &amp;command, <span class="keywordtype">int</span> timeout)
+<a name="l00124"></a><a class="code" href="classmdt_device_scpi.html#ad104bd5814390c914e0a527d3e652fd2">00124</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device_scpi.html#ad104bd5814390c914e0a527d3e652fd2" title="Send a command to device.">mdtDeviceScpi::sendCommand</a>(<span class="keyword">const</span> QByteArray &amp;command, <span class="keywordtype">int</span> timeout)
 <a name="l00125"></a>00125 {
-<a name="l00126"></a>00126   <span class="keywordflow">return</span> pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a86615ff2226fce0ad71c597716711898" title="Send a command to device.">sendCommand</a>(command, timeout);
+<a name="l00126"></a>00126   <span class="keywordflow">return</span> pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#aaab645cfcafbac7a83a69f2084900246" title="Send a command to device.">sendCommand</a>(command, timeout);
 <a name="l00127"></a>00127 }
 <a name="l00128"></a>00128 
-<a name="l00129"></a><a class="code" href="classmdt_device_scpi.html#afdb27e3a2a828a0bb0d40534b573c7c0">00129</a> QByteArray <a class="code" href="classmdt_device_scpi.html#afdb27e3a2a828a0bb0d40534b573c7c0" title="Send a query to device.">mdtDeviceScpi::sendQuery</a>(<span class="keyword">const</span> QByteArray &amp;query, <span class="keywordtype">int</span> writeTimeout, <span class="keywordtype">int</span> readTimeout)
+<a name="l00129"></a><a class="code" href="classmdt_device_scpi.html#a9c15bed2ae92993f0378b59f15644bb2">00129</a> QByteArray <a class="code" href="classmdt_device_scpi.html#a9c15bed2ae92993f0378b59f15644bb2" title="Send a query to device.">mdtDeviceScpi::sendQuery</a>(<span class="keyword">const</span> QByteArray &amp;query, <span class="keywordtype">int</span> writeTimeout, <span class="keywordtype">int</span> readTimeout)
 <a name="l00130"></a>00130 {
-<a name="l00131"></a>00131   <span class="keywordflow">return</span> pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a20c2b18b59e64a25b75a0bad1221c3a2" title="Send a query to device.">sendQuery</a>(query, writeTimeout, readTimeout);
+<a name="l00131"></a>00131   <span class="keywordflow">return</span> pvUsbtmcPortManager-&gt;<a class="code" href="classmdt_usbtmc_port_manager.html#a858590909ce63319a3390140c4d0a6ca" title="Send a query to device.">sendQuery</a>(query, writeTimeout, readTimeout);
 <a name="l00132"></a>00132 }
 <a name="l00133"></a>00133 
 <a name="l00134"></a><a class="code" href="classmdt_device_scpi.html#aefd45e58d01aed9a165bb2c2dd98198c">00134</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device_scpi.html#aefd45e58d01aed9a165bb2c2dd98198c" title="Wait until operation is complete (Using *OPC? query)">mdtDeviceScpi::waitOperationComplete</a>(<span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> interval)
 <a name="l00135"></a>00135 {
 <a name="l00136"></a>00136   Q_ASSERT(interval &gt; 0);
 <a name="l00137"></a>00137 
-<a name="l00138"></a>00138   <span class="keywordtype">int</span> maxIter = timeout / interval;
+<a name="l00138"></a>00138   <span class="keywordtype">int</span> maxIter;
 <a name="l00139"></a>00139   pvOperationComplete = <span class="keyword">false</span>;
 <a name="l00140"></a>00140   QByteArray response;
 <a name="l00141"></a>00141 
-<a name="l00142"></a>00142   <span class="keywordflow">while</span>(!pvOperationComplete){
-<a name="l00143"></a>00143     <span class="keywordflow">if</span>(maxIter &lt;= 0){
-<a name="l00144"></a>00144       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00145"></a>00145     }
-<a name="l00146"></a>00146     <span class="comment">// Query device</span>
-<a name="l00147"></a>00147     response = <a class="code" href="classmdt_device_scpi.html#afdb27e3a2a828a0bb0d40534b573c7c0" title="Send a query to device.">sendQuery</a>(<span class="stringliteral">&quot;*OPC?\n&quot;</span>);
-<a name="l00148"></a>00148     <span class="keywordflow">if</span>(response.size() &gt; 0){
-<a name="l00149"></a>00149       <span class="keywordflow">if</span>(response.at(0) == <span class="charliteral">&#39;1&#39;</span>){
-<a name="l00150"></a>00150         pvOperationComplete = <span class="keyword">true</span>;
-<a name="l00151"></a>00151         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00152"></a>00152       }
-<a name="l00153"></a>00153     }
-<a name="l00154"></a>00154     <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c" title="Wait some time without break the GUI&#39;s event loop.">wait</a>(interval, 50);
-<a name="l00155"></a>00155     maxIter--;
-<a name="l00156"></a>00156   }
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00159"></a>00159 }
-<a name="l00160"></a>00160 
+<a name="l00142"></a>00142   maxIter = timeout / interval;
+<a name="l00143"></a>00143   <span class="keywordflow">while</span>(!pvOperationComplete){
+<a name="l00144"></a>00144     <span class="keywordflow">if</span>(maxIter &lt;= 0){
+<a name="l00145"></a>00145       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00146"></a>00146     }
+<a name="l00147"></a>00147     <span class="comment">// Query device</span>
+<a name="l00148"></a>00148     response = <a class="code" href="classmdt_device_scpi.html#a9c15bed2ae92993f0378b59f15644bb2" title="Send a query to device.">sendQuery</a>(<span class="stringliteral">&quot;*OPC?\n&quot;</span>);
+<a name="l00149"></a>00149     <span class="keywordflow">if</span>(response.size() &gt; 0){
+<a name="l00150"></a>00150       <span class="keywordflow">if</span>(response.at(0) == <span class="charliteral">&#39;1&#39;</span>){
+<a name="l00151"></a>00151         pvOperationComplete = <span class="keyword">true</span>;
+<a name="l00152"></a>00152         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00153"></a>00153       }
+<a name="l00154"></a>00154     }
+<a name="l00155"></a>00155     <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c" title="Wait some time without break the GUI&#39;s event loop.">wait</a>(interval, 50);
+<a name="l00156"></a>00156     maxIter--;
+<a name="l00157"></a>00157   }
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00160"></a>00160 }
+<a name="l00161"></a>00161 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -229,7 +230,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Fri Jan 18 2013 05:13:39 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:17 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
