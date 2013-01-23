@@ -24,10 +24,12 @@
 #include <QWidget>
 #include <QString>
 #include "mdtDevice.h"
+#include "mdtBlinkLed.h"
 
-class mdtBlinkLed;
 class QLabel;
 class QPushButton;
+
+/// \todo Add color per state (same as texts)
 
 /*! \brief
  */
@@ -37,14 +39,43 @@ class mdtDeviceStatusWidget : public QWidget
 
  public:
 
+  /*! \brief Build a status widget with default texts
+   */
   mdtDeviceStatusWidget(QWidget *parent = 0);
+
   ~mdtDeviceStatusWidget();
 
   /*! \brief Set device
    *
    * Will make some connections
+   *
+   * \pre device must be valid.
    */
   void setDevice(mdtDevice *device);
+
+  /*! \brief Set default state texts
+   */
+  void setDefaultStateTexts();
+
+  /*! \brief Set text for ready state
+   */
+  void setStateReadyText(const QString &text);
+
+  /*! \brief Set text for disconnected state
+   */
+  void setStateDisconnectedText(const QString &text);
+
+  /*! \brief Set text for connecting state
+   */
+  void setStateConnectingText(const QString &text);
+
+  /*! \brief Set text for busy state
+   */
+  void setStateBusyText(const QString &text);
+
+  /*! \brief Set default state colors
+   */
+  void setDefaultStateColors();
 
  public slots:
 
@@ -67,5 +98,14 @@ class mdtDeviceStatusWidget : public QWidget
   QLabel *lbRx;
   mdtBlinkLed *ldTx;
   mdtBlinkLed *ldRx;
+  // Status texts
+  QString pvReadyText;
+  QString pvDisconnectedText;
+  QString pvConnectingText;
+  QString pvBusyText;
+  // Status colors
+  mdtLed::color_t pvReadyColor;
+  mdtLed::color_t pvConnectingColor;
+  mdtLed::color_t pvBusyColor;
 };
 #endif

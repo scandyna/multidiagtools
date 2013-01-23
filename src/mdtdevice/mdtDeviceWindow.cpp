@@ -49,5 +49,6 @@ void mdtDeviceWindow::setDevice(mdtDevice *device)
 
 void mdtDeviceWindow::setIosWidget(QWidget *widget)
 {
+  // Add I/Os widget to the scroll area
   saIos->setWidget(widget);
 }

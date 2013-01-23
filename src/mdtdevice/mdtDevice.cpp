@@ -126,7 +126,7 @@ void mdtDevice::stop()
   pvQueryTimer->stop();
 }
 
-QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue)
+QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryDevice, bool waitOnReply)
 {
   int transactionId;
   mdtAnalogIo *ai;
@@ -148,7 +148,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
   transaction->setIo(ai, true);
   transaction->setAddress(address);
   // Check if only cached value is requested
-  if(timeout < 0){
+  if(!queryDevice){
     // Return value
     if(realValue){
       return QVariant(ai->value());
@@ -157,22 +157,15 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
     }
   }
   // Send query
-  if(timeout == 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = readAnalogInput(transaction);
-    if(transactionId < 0){
-      setStateFromPortError(transactionId);
-      return QVariant();
-    }
-  }else{
+  if(waitOnReply){
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogInput(transaction);
     if(transactionId < 0){
       setStateFromPortError(transactionId);
       return QVariant();
     }
-    // Wait on result
-    if(!waitTransactionDone(transactionId, timeout)){
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
       return QVariant();
     }
     // Return value
@@ -181,10 +174,20 @@ QVariant mdtDevice::getAnalogInputValue(int address, int timeout, bool realValue
     }else{
       return QVariant(ai->valueInt());
     }
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = readAnalogInput(transaction);
+    if(transactionId < 0){
+      setStateFromPortError(transactionId);
+      return QVariant();
+    }
   }
 
   return QVariant();
 }
+
+
+
 
 int mdtDevice::getAnalogInputs(int timeout)
 {

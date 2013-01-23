@@ -19,7 +19,6 @@
  **
  ****************************************************************************/
 #include "mdtDeviceStatusWidget.h"
-#include "mdtBlinkLed.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QGridLayout>
@@ -54,7 +53,9 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   ldRx->setGreen();
   layout->addWidget(ldRx, 0, 6);
   setLayout(layout);
-
+  // Set some default attributes
+  setDefaultStateTexts();
+  setDefaultStateColors();
 }
 
 mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
@@ -69,24 +70,59 @@ void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
   setState(device->state());
 }
 
+void mdtDeviceStatusWidget::setDefaultStateTexts()
+{
+  pvReadyText = tr("Ready");
+  pvDisconnectedText = tr("Disconnected");
+  pvConnectingText = tr("Connecting ...");
+  pvBusyText = tr("Busy");
+}
+
+void mdtDeviceStatusWidget::setStateReadyText(const QString &text)
+{
+  pvReadyText = text;
+}
+
+void mdtDeviceStatusWidget::setStateDisconnectedText(const QString &text)
+{
+  pvDisconnectedText = text;
+}
+
+void mdtDeviceStatusWidget::setStateConnectingText(const QString &text)
+{
+  pvConnectingText = text;
+}
+
+void mdtDeviceStatusWidget::setStateBusyText(const QString &text)
+{
+  pvBusyText = text;
+}
+
+void mdtDeviceStatusWidget::setDefaultStateColors()
+{
+  pvReadyColor = mdtLed::LED_COLOR_GREEN;
+  pvConnectingColor = mdtLed::LED_COLOR_ORANGE;
+  pvBusyColor = mdtLed::LED_COLOR_ORANGE;
+}
+
 void mdtDeviceStatusWidget::setState(int state)
 {
   if(state == mdtDevice::Ready){
-    ldState->setGreen();
+    ldState->setColor(pvReadyColor);
     ldState->setOn();
-    lbMessage->setText(tr("Ready"));
+    lbMessage->setText(pvReadyText);
   }else if(state == mdtDevice::Disconnected){
     ldState->setGreen();
     ldState->setOff();
-    lbMessage->setText(tr("Disconnected"));
+    lbMessage->setText(pvDisconnectedText);
   }else if(state == mdtDevice::Connecting){
-    ldState->setOrange();
+    ldState->setColor(pvConnectingColor);
     ldState->setOn();
-    lbMessage->setText(tr("Connecting ..."));
+    lbMessage->setText(pvConnectingText);
   }else if(state == mdtDevice::Busy){
-    ldState->setOrange();
+    ldState->setColor(pvBusyColor);
     ldState->setOn();
-    lbMessage->setText(tr("Busy"));
+    lbMessage->setText(pvBusyText);
   }else{
     ldState->setRed();
     ldState->setOn();

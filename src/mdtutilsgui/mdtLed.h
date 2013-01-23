@@ -38,6 +38,14 @@ class mdtLed : public QWidget
 
  public:
 
+  /*! \brief LED predefined colors
+   */
+  enum color_t {
+                LED_COLOR_GREEN = 0,  /*!< Green LED */
+                LED_COLOR_ORANGE,     /*!< Orange LED */
+                LED_COLOR_RED         /*!< Red LED */
+               };
+
   /*! \brief Contruct a new mdtLED
    *
    */
@@ -65,6 +73,10 @@ class mdtLed : public QWidget
    *
    */
   void setRed();
+
+  /*! \brief Set the LED color
+   */
+  void setColor(color_t color);
 
   /*! \brief Set a simple flat LED
    *

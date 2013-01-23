@@ -339,10 +339,14 @@ void mdtDeviceTest::modbusWagoTest()
    */
 
   // Analog inputs
-  QVERIFY(d.getAnalogInputValue(0, 500, true).isValid());
-  QVERIFY(!d.getAnalogInputValue(0, 0, true).isValid());
-  QVERIFY(d.getAnalogInputValue(1, 500, true).isValid());
-  QVERIFY(!d.getAnalogInputValue(1, 0, true).isValid());
+  ///QVERIFY(d.getAnalogInputValue(0, 500, true).isValid());
+  QVERIFY(d.getAnalogInputValue(0, true, true, true).isValid());
+  ///QVERIFY(!d.getAnalogInputValue(0, 0, true).isValid());
+  QVERIFY(!d.getAnalogInputValue(0, true, true, false).isValid());
+  ///QVERIFY(d.getAnalogInputValue(1, 500, true).isValid());
+  QVERIFY(d.getAnalogInputValue(1, true, true, true).isValid());
+  ///QVERIFY(!d.getAnalogInputValue(1, 0, true).isValid());
+  QVERIFY(d.getAnalogInputValue(1, true, false, false).isValid());
   QVERIFY(d.getAnalogInputs(500) >= 0);
 
   // Analog outputs
@@ -615,11 +619,13 @@ void mdtDeviceTest::U3606ATest()
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
 
   // Get value
-  QVERIFY(d.getAnalogInputValue(0, 32000).isValid());
+  ///QVERIFY(d.getAnalogInputValue(0, 32000).isValid());
+  QVERIFY(d.getAnalogInputValue(0, true, true, true).isValid());
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   qDebug() << "*** OPC: " << d.sendQuery("*OPC?\n");
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
-  QVERIFY(d.getAnalogInputValue(0, 32000).type() == QVariant::Double);
+  ///QVERIFY(d.getAnalogInputValue(0, 32000).type() == QVariant::Double);
+  QVERIFY(d.getAnalogInputValue(0, true, true, true).isValid());
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   
   d.start(500);

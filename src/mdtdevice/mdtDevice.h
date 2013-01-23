@@ -33,6 +33,7 @@
 
 class QTimer;
 
+/// \todo Adapt get...() methods like getAnalogInputValue() 
 /*! \brief Base class for a device connected to a port
  *
  * Querying a device can be done several ways.
@@ -201,16 +202,16 @@ class mdtDevice : public QObject
    * \param address Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a input number, etc...
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 If < 0, no query is sent to device and cached value is returned.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
    * \param realValue If true, the real value (as double) is returned, else the device's specific integer value
    *                   (see mdtAnalogIo::value() for details).
+   * \param queryDevice If true, value is readen from device, else cached value is returned.
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
+   * 
    * \return A valid value if timeout is > 0 and on successfull query/reply process.
    *          (See the Qt's QVariant documentation to know how to check validity).
    */
-  QVariant getAnalogInputValue(int address, int timeout, bool realValue = true);
+  QVariant getAnalogInputValue(int address, bool realValue, bool queryDevice, bool waitOnReply);
 
   /*! \brief Read all analog inputs on physical device and update (G)UI representation
    *
@@ -760,6 +761,7 @@ class mdtDevice : public QObject
    *
    * \param id Id returned by query method
    * \param timeout Timeout [ms]
+   *                 If 0, device's defined read timeout is used (see mdtPortManager::waitOnFrame(int, int, int) for details).
    * \param granularity Sleep time between each call of event processing [ms]<br>
    *                     A little value needs more CPU and big value can freese the GUI.
    *                     Should be between 50 and 100, and must be > 0.
@@ -768,7 +770,7 @@ class mdtDevice : public QObject
    *           a warning will be generated in mdtError system, and false will be returned.
    * \pre granularity must be > 0.
    */
-  bool waitTransactionDone(int id, int timeout, int granularity = 50);
+  bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
   int pvDigitalOutputAddressOffset;
