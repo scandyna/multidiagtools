@@ -77,6 +77,9 @@ bool mdtPortThread::start()
 
   int i = 0;
 
+  // Get thread's common setup
+  pvReconnectTimeout = pvPort->config().connectTimeout();
+  pvReconnectMaxTry = pvPort->config().connectMaxTry();
   // Start..
   QThread::start();
 
@@ -428,11 +431,11 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
   return mdtAbstractPort::NoError;
 }
 
-mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool notify)
+mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
 {
   Q_ASSERT(pvPort != 0);
 
-  int count = maxTry;
+  int count = pvReconnectMaxTry;
   mdtAbstractPort::error_t error;
 
   // Check about buggy caller
@@ -447,7 +450,7 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
   }
   while(count > 0){
     qDebug() << "mdtPortThread::reconnect(): trying ...";
-    error = pvPort->reconnect(timeout);
+    error = pvPort->reconnect(pvReconnectTimeout);
     if(error == mdtAbstractPort::NoError){
       if(notify){
         notifyError(mdtAbstractPort::NoError);
@@ -471,16 +474,6 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(int timeout, int maxTry, bool 
   }
 
   return mdtAbstractPort::UnhandledError;
-}
-
-int mdtPortThread::reconnectTimeout() const
-{
-  return pvReconnectTimeout;
-}
-
-int mdtPortThread::reconnectMaxTry() const
-{
-  return pvReconnectMaxTry;
 }
 
 void mdtPortThread::notifyError(int error)

@@ -47,7 +47,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
 
   while(maxReadTransfers > 0){
     readen = port->read(buffer, port->readBufferSize());
-    ///qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
     if(readen < 0){
       delete[] buffer;
       return (mdtAbstractPort::error_t)readen;
@@ -56,7 +55,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
       delete[] buffer;
       return mdtAbstractPort::NoError;
     }
-    ///qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , init transfer ...";
     portError = port->initReadTransfer(port->readBufferSize());
     if(portError != mdtAbstractPort::NoError){
       delete[] buffer;
@@ -64,7 +62,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
     }
     portError = port->handleUsbEvents();
     if(portError != mdtAbstractPort::NoError){
-      ///qDebug() << "-*-* mdtUsbPortThread::readUntilShortPacketReceived() , error " << portError;
       delete[] buffer;
       return portError;
     }
@@ -79,7 +76,8 @@ mdtAbstractPort::error_t mdtUsbPortThread::handleCommonErrors(mdtAbstractPort::e
 {
   if(portError == mdtAbstractPort::Disconnected){
     // Try to reconnect
-    portError = reconnect(reconnectTimeout(), reconnectMaxTry(), true);
+    ///portError = reconnect(reconnectTimeout(), reconnectMaxTry(), true);
+    portError = reconnect(true);
     if(portError != mdtAbstractPort::NoError){
       return mdtAbstractPort::UnhandledError;
     }

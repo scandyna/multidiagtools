@@ -20,7 +20,7 @@
  ****************************************************************************/
 #include "mdtFrameUsbTmc.h"
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtFrameUsbTmc::mdtFrameUsbTmc()
  : mdtFrame()
@@ -80,11 +80,12 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
       pvbTagInverse = at(2);
       // Check bTag
       if(pvbTagInverse != (quint8)(~pvbTag)){
-        // Error: abort
+        // Sync lost with device (or other error).
+        // We simply abort here, because transfer size will be wrong.
+        // Port manager will check bTag coherence and handle the error.
         pvEOFcondition = true;
+        qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
         return stored;
-        /// \todo Handle error
-        ///qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
       }
       pvTransferSize = at(4);
       pvTransferSize += (at(5) << 8);
@@ -99,12 +100,13 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
           pvEOM = false;
         }
         /// \todo other bmTransferAttributes
-      }else{
-        // Unhadled message type: abort
-        pvEOFcondition = true;
-        return stored;
-        ///qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
+      // Port manager will check received MsgID, and warn if unhadled one was received
+      }/**else{
+        // Unhadled message type: continue, port manager will generate a warn
+        qDebug() << "mdtFrameUsbTmc::putData(): MsgID " << pvMsgID << " not supported";
+        pvMsgID = MSG_UNHANDLED;
       }
+      */
     }
     // Calc total frame size, without alignment bytes
     frameSize = pvTransferSize + 12;

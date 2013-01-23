@@ -1580,8 +1580,6 @@ mdtAbstractPort::error_t mdtUsbPort::pvSetup()
 
 void mdtUsbPort::pvFlushIn()
 {
-  ///qDebug() << "mdtUsbPort::pvFlushIn() ...";
-  ///cancelReadTransfer();
   while(pvMessageInFrames.size() > 0){
     pvMessageInFramesPool.enqueue(pvMessageInFrames.dequeue());
   }
@@ -1592,8 +1590,6 @@ void mdtUsbPort::pvFlushIn()
 
 void mdtUsbPort::pvFlushOut()
 {
-  ///qDebug() << "mdtUsbPort::pvFlushOut() ...";
-  ///cancelWriteTransfer();
   while(pvControlQueryFrames.size() > 0){
     pvControlFramesPool.enqueue(pvControlQueryFrames.dequeue());
   }

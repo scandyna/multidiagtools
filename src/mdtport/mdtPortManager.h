@@ -568,7 +568,7 @@ class mdtPortManager : public QThread
    * \param queryReplyMode If true, transaction will be keeped in transactions done
    *                        queue until readenFrame() or readenFrames() is called.
    *                        If false, transaction will be removed from transactions done
-   *                        queue just after \todo sigName is emited.
+   *                        queue just after newReadenFrame(mdtPortTransaction) is emited.
    */
   void addTransaction(int id, bool queryReplyMode);
 

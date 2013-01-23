@@ -155,12 +155,6 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   if(pvSocket->bytesToWrite() < 1){
     return NoError;
   }
-  // Check about flushOut
-  /**
-  if(pvCancelWrite){
-    return WriteCanceled;
-  }
-  */
   // Wait
   unlockMutex();
   ok = pvSocket->waitForBytesWritten(pvWriteTimeout);

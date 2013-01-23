@@ -220,7 +220,6 @@ QByteArray mdtFrameCodecModbus::encodeWriteMultipleCoils(quint16 startAddress, c
   return pvPdu;
 }
 
-///QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values)
 QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddress, const QList<int> &values)
 {
   quint16 n = values.size();
@@ -337,9 +336,8 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
     // Unknow code
     default:
       QByteArray num;
-      /// NOTE: \todo Base 16 ??
-      num.setNum(functionCode);
-      mdtError e(MDT_FRAME_DECODE_ERROR, "Unknow function code: " + num, mdtError::Error);
+      num.setNum(functionCode, 16);
+      mdtError e(MDT_FRAME_DECODE_ERROR, "Unknow function code: 0x" + num, mdtError::Error);
       MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
       e.commit();
       return -1;

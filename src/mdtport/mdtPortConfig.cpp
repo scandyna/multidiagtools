@@ -43,6 +43,8 @@ void mdtPortConfig::setDefault()
   pvEndOfFrameSeq.clear();
   pvEndOfFrameSeq.append('\n');
   pvBytePerByteWrite = false;
+  pvConnectTimeout = 5000;
+  pvConnectMaxTry = 10;
 }
 
 void mdtPortConfig::setReadFrameSize(int size)
@@ -180,6 +182,27 @@ bool mdtPortConfig::bytePerByteWrite() const
   return pvBytePerByteWrite;
 }
 
+
+void mdtPortConfig::setConnectTimeout(int timeout)
+{
+  pvConnectTimeout = timeout;
+}
+
+int mdtPortConfig::connectTimeout() const
+{
+  return pvConnectTimeout;
+}
+
+void mdtPortConfig::setConnectMaxTry(int maxTry)
+{
+  pvConnectMaxTry = maxTry;
+}
+
+int mdtPortConfig::connectMaxTry() const
+{
+  return pvConnectMaxTry;
+}
+
 bool mdtPortConfig::operator==(const mdtPortConfig &other)
 {
   return matches(other);
@@ -214,6 +237,12 @@ bool mdtPortConfig::matches(const mdtPortConfig &other)
     return false;
   }
   if(pvWriteTimeout != other.pvWriteTimeout){
+    return false;
+  }
+  if(pvConnectTimeout != other.pvConnectTimeout){
+    return false;
+  }
+  if(pvConnectMaxTry != other.pvConnectMaxTry){
     return false;
   }
 

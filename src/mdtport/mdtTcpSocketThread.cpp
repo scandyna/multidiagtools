@@ -47,8 +47,8 @@ void mdtTcpSocketThread::run()
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
   mdtAbstractPort::error_t portError;
-  int reconnectTimeout;
-  int reconnectMaxRetry;
+  int reconnectTimeout();
+  int reconnectMaxTry();
   int completeFrames;
 
   pvPort->lockMutex();
@@ -68,8 +68,8 @@ void mdtTcpSocketThread::run()
   // Set the running flag
   pvRunning = true;
   /// Get setup \todo Take from config, or something
-  reconnectTimeout = 5000;
-  reconnectMaxRetry = 5;
+  ///reconnectTimeout = 5000;
+  ///reconnectMaxTry() = 5;
   // Get frames
   readFrame = getNewFrameRead();
   if(readFrame == 0){
@@ -96,7 +96,7 @@ void mdtTcpSocketThread::run()
     // Check connection state
     if(pvSocket->state() != QAbstractSocket::ConnectedState){
       // Try to (Re-)connect
-      portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+      portError = reconnect(true);
       if(portError != mdtAbstractPort::NoError){
         // Stop
         break;
@@ -113,7 +113,7 @@ void mdtTcpSocketThread::run()
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+        portError = reconnect(true);
         if(portError != mdtAbstractPort::NoError){
           // Stop
           break;
@@ -154,7 +154,7 @@ void mdtTcpSocketThread::run()
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect and go back idle
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+          portError = reconnect(true);
           if(portError != mdtAbstractPort::NoError){
             // Stop
             pvRunning = false;
@@ -171,7 +171,7 @@ void mdtTcpSocketThread::run()
       if(pvPort->readTimeoutOccured()){
         // Probably disconnected. Abort and Go back idle
         pvSocket->abort();
-        portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+        portError = reconnect(true);
         if(portError != mdtAbstractPort::NoError){
           // Stop
           pvRunning = false;
@@ -190,7 +190,7 @@ void mdtTcpSocketThread::run()
         // Check about connection
         if(portError == mdtAbstractPort::Disconnected){
           // Try to (Re-)connect and go back idle
-          portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+          portError = reconnect(true);
           if(portError != mdtAbstractPort::NoError){
             // Stop
             pvRunning = false;
@@ -227,7 +227,7 @@ void mdtTcpSocketThread::run()
           // Check about connection
           if(portError == mdtAbstractPort::Disconnected){
             // Try to (Re-)connect and go back idle
-            portError = reconnect(reconnectTimeout, reconnectMaxRetry, true);
+            portError = reconnect(true);
             if(portError != mdtAbstractPort::NoError){
               // Stop
               pvRunning = false;

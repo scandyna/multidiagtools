@@ -32,7 +32,6 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
   ///pvWriteTimeoutOccuredPrevious = false;
   pvIsOpen = false;
   pvConfig = 0;
-  ///pvCancelWrite = false;
   pvFlushInRequestPending = false;
   pvFlushOutRequestPending = false;
 
@@ -337,7 +336,6 @@ void mdtAbstractPort::addFrameToWrite(mdtFrame *frame)
   Q_ASSERT(frame != 0);
 
   pvWriteFrames.enqueue(frame);
-  ///pvCancelWrite = false;
   pvWriteFrameAvailable.wakeAll();
 }
 

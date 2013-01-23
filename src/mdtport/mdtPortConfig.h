@@ -44,6 +44,8 @@ class mdtPortConfig
    *  - En of frame sequence: LF (ASCII 0x0A)
    *  - Byte per byte write: Off
    *  - Write interframe time: 0 [ms]
+   *  - Connect timeout: 5000 [ms]
+   *  - Connect max try: 10
    */
   virtual void setDefault();
 
@@ -233,21 +235,33 @@ class mdtPortConfig
    */
   bool bytePerByteWrite() const;
 
-  /*! \brief Use the Query/Answer protocol
+  /*! \brief Set the connection timeout
    *
-   * Dependong on type of port used (Serial, USB, ...), and device attached, it can happen that
-   *  mdpAbstractPort::waitForReadyRead() returns allways immediatly.
-   * For example, this is true with mdtUsbPort when dealing with the
-   *  Velleman K8055.
-   * In this situation, the purely event driven approach is not sufficient, causing heavily
-   *  usage of CPU.
-   * Another remark, is that such situation is true on transfer based port.
+   * \param timeout [ms]
    *
-   * Question: What is a important difference between a full duplex serial port and a USB port ?<br>
-   *  The answer could be: On serial port, we neven know when data are available, and we must still
-   *   ready to read them a each time. On USB port, 
-   * NOTE: \todo Rollback: voir callback libusb, si data, ...
+   * This is used by port witch support disconnection
+   *  (USB, TCP socket)
    */
+  void setConnectTimeout(int timeout);
+
+  /*! \brief Get the connection timeout
+   *
+   * See setConnectTimeout().
+   */
+  int connectTimeout() const;
+
+  /*! \brief Set the maximum connection try
+   *
+   * This is used by port witch support disconnection
+   *  (USB, TCP socket)
+   */
+  void setConnectMaxTry(int maxTry);
+
+  /*! \brief Get the maximum connection try
+   *
+   * See setConnectMaxTry().
+   */
+  int connectMaxTry() const;
 
   bool operator==(const mdtPortConfig &other);
   bool operator!=(const mdtPortConfig &other);
@@ -267,6 +281,8 @@ class mdtPortConfig
   mdtFrame::type_t pvFrameType;
   QByteArray pvEndOfFrameSeq;     // End of frame sequence (valid for ASCII frames)
   bool pvBytePerByteWrite;        // For some (very) slow devices that need time between each transmitted byte
+  int pvConnectMaxTry;
+  int pvConnectTimeout;
 
   bool matches(const mdtPortConfig &other);
 };

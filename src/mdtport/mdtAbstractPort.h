@@ -55,9 +55,6 @@ class mdtAbstractPort : public QObject
    *  (typical: after a stop request from main thread, mdtAbstractPort subclass will return
    *    ReadCanceled, WriteCanceled or ControlCanceled. But it can happen that I/O process was canceled for another reason,
    *    this is port specific).
-   *
-   * \todo add UnhandledError to complete UnknownError (+ adapt in threads)
-   * \todo add a DeviceDisconnected (+ adapt in threads)
    */
   enum error_t {
                 NoError = 0,            /*!< No error */
@@ -134,6 +131,10 @@ class mdtAbstractPort : public QObject
    *
    * Flush and close port if it is open.
    *
+   * Internal queues are freed here.
+   *  (If subclass handles additionnaly queues,
+   *   it should delete is in his pvClose() method).
+   *
    * The mutex is not handled by this method.
    *
    * Subclass notes:<br>
@@ -141,8 +142,6 @@ class mdtAbstractPort : public QObject
    *  the flags are updated.
    * Note that this method must be called from subclass destructor.
    *  See ~mdtAbstractPort() for details.
-   *
-   * \todo Actuellement, les queues sont deletée ici, que faire ?
    */
   virtual void close();
 
@@ -263,7 +262,7 @@ class mdtAbstractPort : public QObject
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
    *
-   * \return Number of bytes readen, or a error < 0 (see error_t) \todo adapt subclasses
+   * \return Number of bytes readen, or a error < 0 (see error_t )
    */
   virtual qint64 read(char *data, qint64 maxSize) = 0;
 
@@ -353,7 +352,7 @@ class mdtAbstractPort : public QObject
    * Subclass notes:<br>
    * This method must be implemented in subclass.<br>
    *
-   * \return Number of bytes written, or error < 0 (see error_t) \todo adapt subclasses
+   * \return Number of bytes written, or error < 0 (see error_t)
    */
   virtual qint64 write(const char *data, qint64 maxSize) = 0;
 
@@ -562,6 +561,7 @@ class mdtAbstractPort : public QObject
    * To handle the port correctly, the subclass method must:
    *  - Do the specific work. Note that port was open in exclusive mode. On Linux, don't forget to unlock the port with mdtPortLock.
    *  - The mdtError system should be used (on error) to keep trace in logfile.
+   *  - If additionnal queues are handled, they should be freed here.
    */
   virtual void pvClose() = 0;
 
@@ -605,12 +605,6 @@ class mdtAbstractPort : public QObject
    *  and is usefull if subsystem needs to be flushed.
    *  (For ex. serial port).
    *
-   * \todo Obselete this ?
-   * This method must be implemented in subclass.
-   *  The pvCancelWrite flag must be set to true
-   *  if no other system is used to handle the
-   *  cancel flag (see waitEventWriteReady() )
-   *
    * The mutex is handled by flushOut() and should not
    *  be handled here.
    */
@@ -620,7 +614,6 @@ class mdtAbstractPort : public QObject
   ///bool pvReadTimeoutOccuredPrevious;
   bool pvWriteTimeoutOccured;
   ///bool pvWriteTimeoutOccuredPrevious;
-  ///bool pvCancelWrite;               // Updated by pvFlushOut() and addFrameToWrite()
   // Frames queues
   QQueue<mdtFrame*> pvReadenFrames;
   QQueue<mdtFrame*> pvReadFramesPool;

@@ -57,8 +57,11 @@ class mdtPortThread : public QThread
   void detachPort(bool releaseMemory);
 
   /*! \brief Start the thread
-   *  \return True on sucsessfull start, or flase on start timeout
-   *  \pre Serial port instance must be defined. \see setSerialPort()
+   *
+   * \return True on sucsessfull start, or flase on start timeout
+   *
+   * \pre Port instance must be defined.
+   * \pre Port must have a valid configuration.
    */
   bool start();
 
@@ -270,27 +273,15 @@ class mdtPortThread : public QThread
    *  to reconnect (using mdtAbstractPort::reconnect() )
    *  until max retry was reached.
    *
-   * \param timeout Timeout per try [ms]
-   * \param maxTry Maximum try
+   * Reconnect timeout and max try are readen from port config, in start() method.
+   *
    * \param notify If true, error will be notified (with errorOccured() ),
    *                and failure after maxTry will be reported with mdtError.
    * \return NoError if reconnection worked or UnhandledError else.
    *
    * \pre Port must be set with setPort() before using this method.
    */
-  mdtAbstractPort::error_t reconnect(int timeout, int maxTry, bool notify = true);
-
-  /*! \brief Get the reconnect timeout [ms]
-   *
-   * \todo Currently hardcoded !
-   */
-  int reconnectTimeout() const;
-
-  /*! \brief Get the reconnect max try
-   *
-   * \todo Currently hardcoded !
-   */
-  int reconnectMaxTry() const;
+  mdtAbstractPort::error_t reconnect(bool notify = true);
 
   /*! \brief Emit the errorOccured() signal if new error is different from current
    *

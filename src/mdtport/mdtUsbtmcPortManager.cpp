@@ -581,6 +581,7 @@ int mdtUsbtmcPortManager::sendCheckAbortBulkOutStatusRequest(quint8 bTag)
   return bTag;
 }
 
+/// \todo On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error.
 void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
@@ -601,19 +602,33 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
         mdtError e(MDT_USB_IO_ERROR, "Received a frame with unexpected bTag", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
         e.commit();
+        // Put frame back into pool
+        pvPort->readFramesPool().enqueue(frame);
         // Try to abort the transaction
         pvPort->unlockMutex();
         abortBulkIn(frame->bTag());
         return;
       }else{
-        transaction->setId(frame->bTag());
-        transaction->setData(frame->messageData());
-        enqueueTransactionRx(transaction);
+        // Check about MsgID
+        if(frame->MsgID() != mdtFrameUsbTmc::DEV_DEP_MSG_IN){
+          mdtError e(MDT_USB_IO_ERROR, \
+                     "Received a frame with unhandled MsgID number " + QString::number(frame->MsgID()) + " , will be ignored", \
+                     mdtError::Warning);
+          MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
+          e.commit();
+        }else{
+          // Here we should have a valid frame
+          transaction->setId(frame->bTag());
+          transaction->setData(frame->messageData());
+          enqueueTransactionRx(transaction);
+        }
       }
     }else{
       mdtError e(MDT_USB_IO_ERROR, "Received a uncomplete frame", mdtError::Warning);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
       e.commit();
+      // Put frame back into pool
+      pvPort->readFramesPool().enqueue(frame);
       // Try to abort the transaction
       pvPort->unlockMutex();
       abortBulkIn(frame->bTag());

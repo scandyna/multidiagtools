@@ -29,8 +29,6 @@
  * Used by mdtport API to send en receive frames
  *  in USBTMC standard.
  *
- * \todo Clarify what this class does: USBTMC message or transfer ?
- *
  * References:
  *  - USBTMC Revision 1.0 (2003)
  *  - http://www.usb.org/developers/devclass_docs#approved
@@ -43,9 +41,9 @@ class mdtFrameUsbTmc : public mdtFrame
   /*! \brief USBTMC MsgID
    */
   enum msg_id_t{
-                MSG_ZERO = 0,               /*!< Reserved */
+                MSG_ZERO = 0,               /*!< Reserved. */
                 DEV_DEP_MSG_OUT = 1,        /*!< USBTMC device dependent command message */
-                DEV_DEP_MSG_IN = 2,         /*!< USBTMC response message on the Bulk-IN endpoint.
+                DEV_DEP_MSG_IN = 2,         /*!< USBTMC response message.
                                                   Represent the REQUEST_DEV_DEP_MSG_IN if frame is sent from host (OUT) */
                 VENDOR_SPECIFIC_OUT = 126,  /*!< USBTMC vendor specific command message */
                 VENDOR_SPECIFIC_IN = 127    /*!< USBTMC vendor specific response message on the Bulk-IN endpoint.

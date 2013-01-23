@@ -676,7 +676,7 @@ qint64 mdtSerialPort::read(char *data, qint64 maxSize)
         e.setSystemError(err, strerror(err));
         MDT_ERROR_SET_SRC(e, "mdtSerialPort");
         e.commit();
-        return n;
+        return UnhandledError;
     }
   }
 
@@ -787,7 +787,7 @@ qint64 mdtSerialPort::write(const char *data, qint64 maxSize)
         e.setSystemError(err, strerror(err));
         MDT_ERROR_SET_SRC(e, "mdtSerialPort");
         e.commit();
-        return n;
+        return UnhandledError;
     }
   }
 

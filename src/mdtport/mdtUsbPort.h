@@ -44,8 +44,8 @@
  *   - VID=0x1234:PID=0x5678:SID=ABC1234:bInterfaceNumber=1 (Open the first port with given Vendor ID, Product ID and Serial ID. bInterfaceNumber is 1)
  * The last example in the above list is the format returned by mdtUsbPortManager::scan().
  *
- * \todo Not really true...
- * For read and write of data, the mdtAbstractPort's API is used.
+ * For read and write of data, the mdtAbstractPort's API is used,
+ *  expected that waitForReadyRead() and waitEventWriteReady() are not used.
  *
  * The control transfer is a little bit different:
  *  - If the main thread (f.ex. GUI thread) wants to send a request,
