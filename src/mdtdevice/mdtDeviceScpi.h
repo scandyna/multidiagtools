@@ -23,6 +23,8 @@
 
 #include "mdtDevice.h"
 #include "mdtUsbtmcPortManager.h"
+#include <QList>
+#include <QVariant>
 
 /*! \brief Base class for SCPI based instruments
  *
@@ -71,6 +73,9 @@ class mdtDeviceScpi : public mdtDevice
    * Note that the wait will not break the GUI's event loop
    *  (see mdtPortManager::waitOnWriteReady() for details).
    *
+   * This method will not update internal device state.
+   *  It's recommended to use mdtDevice functions if available.
+   *
    * \param command Command to send.
    * \param timeout Write timeout [ms]
    *           If 0, internal defined timeout is used (see mdtPortManager::adjustedWriteTimeout() for details).
@@ -87,7 +92,7 @@ class mdtDeviceScpi : public mdtDevice
    *
    * Note that the wait will not break the GUI's event loop.
    *
-   * This method will not update internal I/O states.
+   * This method will not update internal device and I/O states.
    *  It's recommended to use mdtDevice functions if available.
    *
    * \param query Query to send.
@@ -106,12 +111,65 @@ class mdtDeviceScpi : public mdtDevice
    * Currently, this method queries device with *OPC?.
    *
    * \param timeout Timeout [ms]
-   * \param internal Interval between 2 *OPC? query [ms]
-   * \pre internal > 0
+   * \param interval Interval between 2 *OPC? query [ms]
+   * \pre interval > 0
    */
   bool waitOperationComplete(int timeout, int interval);
 
+  /*! \brief Query device about error
+   *
+   * Will send the SYST:ERR? and return.
+   *
+   * Subclass notes:<br>
+   * The SYST:ERR? query is sent to device.
+   *  A new transaction is initalized, with type
+   *  MDT_FC_SCPI_ERR.
+   *  When subclass receives such transaction type,
+   *  it should call handleDeviceError() without decoding frame.
+   *
+   * \return 0 if query could be sent or a error of type mdtAbstractPort::error_t else.
+   *          Note: returned error is not device's error.
+   */
+  int checkDeviceError();
+
  protected:
+
+  /*! \brief Handle device error
+   *
+   * This method is called from subclass's
+   *  decodeReadenFrame(mdtPortTransaction) method
+   *  when a frame of type MDT_FC_SCPI_ERR was received.
+   *
+   * Errors <= 0 are handled directly.
+   *  If error is > 0, handleDeviceSpecificError() is called.
+   *
+   * See the SCPI99 standard for more details.
+   *
+   * \param decodedValues See mdtFrameCodecScpi::decodeError().
+   * \post If internal codec has < 2 values, handleDeviceSpecificError() is not called.
+   */
+  void handleDeviceError(QList<QVariant> &decodedValues);
+
+  /*! \brief Handle device's specific error
+   *
+   * This method is called from handleDeviceError().
+   *
+   * This default implementation simply
+   *  log the error (with mdtError system).
+   *
+   * \param errNum Error number
+   * \param errText Error message
+   * \param deviceSpecificTexts Device's specific informations
+   * \pre Internal codec has at least 2 values.
+   */
+  virtual void handleDeviceSpecificError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts);
+
+  /*! \brief Log a device error with mdtError system
+   * \param errNum Error number
+   * \param errText Error message
+   * \param deviceSpecificTexts Device's specific informations
+   */
+  void logDeviceError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts, mdtError::level_t level);
 
   mdtUsbtmcPortManager *pvUsbtmcPortManager;
 

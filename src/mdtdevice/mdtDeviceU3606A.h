@@ -91,6 +91,12 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    */
   bool queriesSequence();
 
+  /*! \brief Handle device's specific error
+   *
+   * This method is called from handleDeviceError().
+   */
+  ///void handleDeviceSpecificError();
+
   mdtFrameCodecScpiU3606A *pvCodec;
 };
 

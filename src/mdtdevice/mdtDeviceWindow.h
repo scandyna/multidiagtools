@@ -25,8 +25,7 @@
 #include <QWidget>
 #include "mdtDevice.h"
 #include "ui_mdtDeviceWindow.h"
-
-class mdtDeviceStatusWidget;
+#include "mdtDeviceStatusWidget.h"
 
 /*! \brief
  */
@@ -49,6 +48,12 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
   /*! \brief Set the I/O's widget
    */
   void setIosWidget(QWidget *widget);
+
+  /*! \brief Get status widget
+   *
+   * Usefull for setup
+   */
+  mdtDeviceStatusWidget *statusWidget();
 
  private:
 

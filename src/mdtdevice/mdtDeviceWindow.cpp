@@ -20,7 +20,6 @@
  ****************************************************************************/
 #include "mdtDeviceWindow.h"
 #include "mdtDeviceIosWidget.h"
-#include "mdtDeviceStatusWidget.h"
 
 #include <QPushButton>
 
@@ -51,4 +50,11 @@ void mdtDeviceWindow::setIosWidget(QWidget *widget)
 {
   // Add I/Os widget to the scroll area
   saIos->setWidget(widget);
+}
+
+mdtDeviceStatusWidget *mdtDeviceWindow::statusWidget()
+{
+  Q_ASSERT(pvStatusWidget != 0);
+
+  return pvStatusWidget;
 }

@@ -105,6 +105,21 @@ void mdtDeviceStatusWidget::setDefaultStateColors()
   pvBusyColor = mdtLed::LED_COLOR_ORANGE;
 }
 
+void mdtDeviceStatusWidget::setStateReadyColor(mdtLed::color_t color)
+{
+  pvReadyColor = color;
+}
+
+void mdtDeviceStatusWidget::setStateConnectingColor(mdtLed::color_t color)
+{
+  pvConnectingColor = color;
+}
+
+void mdtDeviceStatusWidget::setStateBusyColor(mdtLed::color_t color)
+{
+  pvBusyColor = color;
+}
+
 void mdtDeviceStatusWidget::setState(int state)
 {
   if(state == mdtDevice::Ready){

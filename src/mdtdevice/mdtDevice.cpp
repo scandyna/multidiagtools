@@ -871,7 +871,7 @@ void mdtDevice::setStateBusy(int retryTimeout)
     pvQueryTimer->stop();
   }
   pvCurrentState = Busy;
-  qDebug() << "mdtDevice: new state is Busy";
+  qDebug() << "**** mdtDevice: new state is Busy";
   emit(stateChanged(pvCurrentState));
   // Set state ready if requested
   if(retryTimeout >= 0){

@@ -20,7 +20,9 @@
  ****************************************************************************/
 #include "mdtDeviceScpi.h"
 #include "mdtError.h"
+#include "mdtFrameCodecScpi.h"
 #include <QByteArray>
+#include <QString>
 #include <QList>
 
 #include <QDebug>
@@ -159,3 +161,116 @@ bool mdtDeviceScpi::waitOperationComplete(int timeout, int interval)
   return true;
 }
 
+int mdtDeviceScpi::checkDeviceError()
+{
+  int bTag;
+  mdtPortTransaction *transaction;
+
+  // Get a new transaction
+  transaction = getNewTransaction();
+  transaction->setQueryReplyMode(false);
+  // Wait until data can be sent
+  if(!pvUsbtmcPortManager->waitOnWriteReady()){
+    return mdtAbstractPort::WritePoolEmpty;
+  }
+  // Send query
+  bTag = pvUsbtmcPortManager->writeData("SYST:ERR?\n");
+  if(bTag < 0){
+    return bTag;
+  }
+  // Wait until more data can be sent
+  if(!pvUsbtmcPortManager->waitOnWriteReady()){
+    return mdtAbstractPort::WritePoolEmpty;
+  }
+  // Remember query type.
+  transaction->setType(MDT_FC_SCPI_ERR);
+  // Send read request
+  bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
+  if(bTag < 0){
+    return bTag;
+  }
+
+  return 0;
+}
+
+void mdtDeviceScpi::handleDeviceError(QList<QVariant> &decodedValues)
+{
+  int errNum;
+  QString errText;
+  QList<QString> deviceSpecificTexts;
+  int i;
+
+  // Check decoded values
+  if(decodedValues.size() < 2){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": unexpected size of values (excpected min. 2)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
+    e.commit();
+    return;
+  }
+  // Get error number
+  if(decodedValues.at(0).type() != QVariant::Int){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": values contains not a error (First value must be type int)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
+    e.commit();
+    return;
+  }
+  errNum = decodedValues.at(0).toInt();
+  if(errNum == 0){
+    return;
+  }
+  // Get error message
+  if(decodedValues.at(1).type() != QVariant::String){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": values contains not a error (Second value must be type string)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
+    e.commit();
+    return;
+  }
+  errText = decodedValues.at(1).toString();
+  // Get device's specific messages
+  for(i=1; i<decodedValues.size(); i++){
+    deviceSpecificTexts.append(decodedValues.at(i).toString());
+  }
+  // Handling
+  if(errNum > 0){
+    handleDeviceSpecificError(errNum, errText, deviceSpecificTexts);
+  }else{
+    // Standard SCPI errors
+    switch(errNum){
+      default:
+        logDeviceError(errNum, errText, deviceSpecificTexts, mdtError::Error);
+    }
+  }
+
+}
+
+void mdtDeviceScpi::handleDeviceSpecificError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts)
+{
+  // In this implementation, we only log error as warning.
+  // The specific subclass should re-implement this method, and handle error.
+  logDeviceError(errNum, errText, deviceSpecificTexts, mdtError::Warning);
+}
+
+void mdtDeviceScpi::logDeviceError(int errNum, const QString &errText, const QList<QString> &deviceSpecificTexts, mdtError::level_t level)
+{
+  QString specificTexts;
+  QString message;
+  int i;
+
+  // Cat specific texts
+  for(i=0; i<deviceSpecificTexts.size(); i++){
+    if(i>0){
+      specificTexts += ";";
+    }
+    specificTexts += deviceSpecificTexts.at(i);
+  }
+  // Build message
+  message = "Device " + name() + " returned error number ";
+  message += QString::number(errNum);
+  message += " , message: " + errText;
+  if(specificTexts.size() > 0){
+    message += " , details: " + specificTexts;
+  }
+  mdtError e(MDT_DEVICE_ERROR, message, level);
+  MDT_ERROR_SET_SRC(e, "mdtDeviceScpi");
+  e.commit();
+}

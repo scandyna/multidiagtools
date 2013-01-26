@@ -499,7 +499,10 @@ void mdtDeviceTest::scpiTest()
   QVERIFY(!d.sendQuery("*IDN?\n").isEmpty());
 
   QVERIFY(d.waitOperationComplete(5000, 100));
+  d.checkDeviceError();
 
+  qDebug() << "TEST: Setup device ...";
+  
   QVERIFY(d.sendCommand(":CHANnel1:PROBe 20X\n") >= 0);
   QVERIFY(d.sendCommand(":ACQuire:TYPE PEAKdetect\n") >= 0);
   ///QVERIFY(d.sendCommand(":ACQuire:AVERages 8\n") >= 0);
@@ -512,10 +515,16 @@ void mdtDeviceTest::scpiTest()
   QVERIFY(d.sendCommand(":STOP\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:SOURce CHANnel1\n") >= 0);
   QVERIFY(d.sendCommand(":WAVeform:FORMat BYTE\n") >= 0);
+  
+  qDebug() << "TEST: getting data ...";
+  
   QVERIFY(d.waitOperationComplete(5000, 1000));
+  d.checkDeviceError();
   
   
   double y_inc, y_val, y_ref, y_origin;
+  
+  qDebug() << "TEST: getting preamble ...";
   
   data = d.sendQuery(":WAVeform:PREamble?\n");
   qDebug() << codec.decodeValues(data, ",");
@@ -526,6 +535,7 @@ void mdtDeviceTest::scpiTest()
   qDebug() << "Y O: " << y_origin;
   y_ref = codec.values().at(9).toDouble();
   qDebug() << "Y ref: " << y_ref;
+  
   
   data = d.sendQuery(":WAVeform:DATA?\n");
   qDebug() << "Data len: " << data.size();
@@ -581,6 +591,8 @@ void mdtDeviceTest::U3606ATest()
   d.setIos(&ios, true);
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
+  dw.statusWidget()->setStateBusyText("Query running ...");
+  dw.statusWidget()->setStateBusyColor(mdtLed::LED_COLOR_GREEN);
   dw.show();
 
   ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
@@ -626,7 +638,8 @@ void mdtDeviceTest::U3606ATest()
   qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
   ///QVERIFY(d.getAnalogInputValue(0, 32000).type() == QVariant::Double);
   QVERIFY(d.getAnalogInputValue(0, true, true, true).isValid());
-  qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  ///qDebug() << "*** Err: " << d.sendQuery("SYST:ERR?\n");
+  d.checkDeviceError();
   
   d.start(500);
   while(dw.isVisible()){

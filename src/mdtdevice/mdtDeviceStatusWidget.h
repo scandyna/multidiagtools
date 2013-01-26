@@ -77,6 +77,18 @@ class mdtDeviceStatusWidget : public QWidget
    */
   void setDefaultStateColors();
 
+  /*! \brief Set color for ready state
+   */
+  void setStateReadyColor(mdtLed::color_t color);
+
+  /*! \brief Set color for connecting state
+   */
+  void setStateConnectingColor(mdtLed::color_t color);
+
+  /*! \brief Set color for busy state
+   */
+  void setStateBusyColor(mdtLed::color_t color);
+
  public slots:
 
   /*! \brief
