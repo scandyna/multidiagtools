@@ -147,14 +147,18 @@ Definition at line 64 of file mdtPortThread.cpp.
 Emitted on error. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000029}{Todo}]Adapt threads + port managers\end{Desc}
+\item[\hyperlink{todo__todo000031}{Todo}]Adapt threads + port managers\end{Desc}
 
 
 When a error occurs, this signal is emited.
 
 The error is one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}.
 
-\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. \hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
+\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. 
+
+Definition at line 98 of file moc\_\-mdtPortThread.cxx.
+
+\hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameRead@{getNewFrameRead}}
 \index{getNewFrameRead@{getNewFrameRead}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{getNewFrameRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrame} $\ast$ mdtPortThread::getNewFrameRead (
@@ -172,7 +176,7 @@ This is a helper method for subclass to get a new frame in port's read frames po
 It can hapen that the read frames pool is empty. In this case, a error will be generated in the \hyperlink{classmdt_error}{mdtError} log system, the signal \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} will be emited with MDT\_\-PORT\_\-QUEUE\_\-EMPTY\_\-ERROR value, and method will go sleep until a new frame is available in pool.
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000030}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
+\item[\hyperlink{todo__todo000032}{Todo}]Currently implemented in polling, should be done with a wait condition.\end{Desc}
 
 
 Note about port mutex handling:\par
@@ -234,7 +238,11 @@ Definition at line 302 of file mdtPortThread.cpp.
 
 Emitted when a I/O process begins. 
 
-This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
+This can be used to display read/write state. Please consider that this signal is emitted each time the I/O process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) 
+
+Definition at line 86 of file moc\_\-mdtPortThread.cxx.
+
+\hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
 \index{isFinished@{isFinished}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{isFinished}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtPortThread::isFinished (
@@ -351,6 +359,10 @@ It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution 
 
 \hyperlink{classmdt_port}{mdtPort} 
 \end{DoxySeeAlso}
+
+
+Definition at line 92 of file moc\_\-mdtPortThread.cxx.
+
 \hypertarget{classmdt_port_thread_ad2c618a032c0aeed0f0cb3b30bc0aba9}{
 \index{mdtPortThread@{mdtPortThread}!notifyError@{notifyError}}
 \index{notifyError@{notifyError}!mdtPortThread@{mdtPortThread}}
@@ -365,7 +377,7 @@ It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution 
 Emit the \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{errorOccured()} signal if new error is different from current. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000031}{Todo}]Adapt in threads subclasses \end{Desc}
+\item[\hyperlink{todo__todo000033}{Todo}]Adapt in threads subclasses \end{Desc}
 
 
 Definition at line 479 of file mdtPortThread.cpp.
@@ -402,7 +414,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000028}{Todo}]Handle timeout error ? \end{Desc}
+\item[\hyperlink{todo__todo000030}{Todo}]Handle timeout error ? \end{Desc}
 
 
 Definition at line 233 of file mdtPortThread.cpp.
@@ -615,4 +627,5 @@ Definition at line 345 of file mdtPortThread.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\item 
+src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}

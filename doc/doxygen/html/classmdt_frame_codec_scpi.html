@@ -92,6 +92,16 @@ Collaboration diagram for mdtFrameCodecScpi:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9a">query_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897">QT_UNKNOW</a> =  0, 
+<a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082">QT_VALUE</a>, 
+<a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9">QT_IDN</a>, 
+<a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5">QT_ERR</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d">QT_CONF</a>
+<br/>
+ }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query type.  <a href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9a">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17d">waveform_format</a> { <a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17da7f4b47afe74504dea43bb04c8c6fbe58">WORD</a>, 
 <a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17daad91226f87cea7fab38f5cc7618f424c">BYTE</a>, 
 <a class="el" href="classmdt_frame_codec_scpi.html#a1aafb008a4207cc922f46fe905b3f17da957445cd510a5c4e6964e9b79e73af4d">ASCII</a>
@@ -116,9 +126,46 @@ Protected Member Functions</h2></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Decode SCPI data. </p>
+<p>#define MDT_FC_SCPI_UNKNOW 0 #define MDT_FC_SCPI_VALUE 1 #define MDT_FC_SCPI_IDN 2 #define MDT_FC_SCPI_ERR 3 #define MDT_FC_SCPI_LAST_TYPE 127 </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00038">38</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00058">58</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9a"></a><!-- doxytag: member="mdtFrameCodecScpi::query_type_t" ref="a2dbce7589140e915f3e253c3523b3b9a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmdt_frame_codec_scpi.html#a2dbce7589140e915f3e253c3523b3b9a">mdtFrameCodecScpi::query_type_t</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Query type. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897"></a><!-- doxytag: member="QT_UNKNOW" ref="a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897" args="" -->QT_UNKNOW</em>&nbsp;</td><td>
+<p>Initial or unknown query/response type </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082"></a><!-- doxytag: member="QT_VALUE" ref="a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082" args="" -->QT_VALUE</em>&nbsp;</td><td>
+<p>Device returns a value (int, double, date or string) </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9"></a><!-- doxytag: member="QT_IDN" ref="a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9" args="" -->QT_IDN</em>&nbsp;</td><td>
+<p>IDN query or response </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5"></a><!-- doxytag: member="QT_ERR" ref="a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5" args="" -->QT_ERR</em>&nbsp;</td><td>
+<p>ERRor query or response </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d"></a><!-- doxytag: member="QT_CONF" ref="a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d" args="" -->QT_CONF</em>&nbsp;</td><td>
+<p>CONFigure query or response type </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00064">64</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a1aafb008a4207cc922f46fe905b3f17d"></a><!-- doxytag: member="mdtFrameCodecScpi::waveform_format" ref="a1aafb008a4207cc922f46fe905b3f17d" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -145,7 +192,7 @@ Protected Member Functions</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_8h_source.html#l00074">74</a> of file <a class="el" href="mdt_frame_codec_scpi_8h_source.html">mdtFrameCodecScpi.h</a>.</p>
 
 </div>
 </div>
@@ -247,7 +294,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a array of ASCII values. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000056">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
 
 <p><p>qDebug() &lt;&lt; "Data: " &lt;&lt; items;</p>
 <p>qDebug() &lt;&lt; "Values: " &lt;&lt; pvValues; </p>
@@ -273,7 +320,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Decode a array of BYTE values. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000057">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000059">Todo:</a></b></dt><dd>Not implemented yet </dd></dl>
 
 <p><p>int len = data.size()-1; // Last item is the term char</p>
 <p>qDebug() &lt;&lt; "data[" &lt;&lt; i &lt;&lt; "]: " &lt;&lt; (qint8)data.at(i) &lt;&lt; " ,  0x" &lt;&lt; hex &lt;&lt; (qint8)data.at(i) &lt;&lt; " , flt: " &lt;&lt; (double)data.at(i)/127.0; </p>
@@ -343,7 +390,7 @@ Protected Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

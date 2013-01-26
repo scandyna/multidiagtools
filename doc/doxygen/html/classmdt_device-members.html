@@ -71,7 +71,7 @@ This is the complete list of members for <a class="el" href="classmdt_device.htm
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e">decodeReadenFrame</a>(mdtPortTransaction transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual, slot]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51">getAnalogInputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7ff556995f38d2098eda3cf80685b542">getAnalogInputValue</a>(int address, int timeout, bool realValue=true)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab28a8276ce07524c351b8e9ebdc6ce1e">getAnalogInputValue</a>(int address, bool realValue, bool queryDevice, bool waitOnReply)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a12f717202e9860d0c24b9dff8d672ef8">getAnalogOutputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a7085491cf2d96fd2afd3004de6caef0d">getAnalogOutputValue</a>(int address, int timeout, bool realValue=true)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae482b28263b2ce61735f42f1245c1e99">getDigitalInputs</a>(int timeout)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
@@ -119,7 +119,7 @@ This is the complete list of members for <a class="el" href="classmdt_device.htm
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d">stateChanged</a>(int state)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a>()</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea9e9410b52d18a2c4da60748530709f09">Unknown</a> enum value</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621">waitTransactionDone</a>(int id, int timeout, int granularity=50)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4">waitTransactionDone</a>(int id, int timeout=0, int granularity=50)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">writeAnalogOutput</a>(int value, mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">writeAnalogOutputs</a>(mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">writeDigitalOutput</a>(bool state, mdtPortTransaction *transaction)</td><td><a class="el" href="classmdt_device.html">mdtDevice</a></td><td><code> [protected, virtual]</code></td></tr>
@@ -140,7 +140,7 @@ This is the complete list of members for <a class="el" href="classmdt_device.htm
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

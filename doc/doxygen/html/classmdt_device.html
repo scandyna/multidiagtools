@@ -150,8 +150,8 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc7ff8f01d68506283a3d0cc6bc25407"></a><!-- doxytag: member="mdtDevice::stop" ref="adc7ff8f01d68506283a3d0cc6bc25407" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop periodic device querying. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7ff556995f38d2098eda3cf80685b542">getAnalogInputValue</a> (int address, int timeout, bool realValue=true)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one analog input on physical device and update (G)UI representation.  <a href="#a7ff556995f38d2098eda3cf80685b542"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ab28a8276ce07524c351b8e9ebdc6ce1e">getAnalogInputValue</a> (int address, bool realValue, bool queryDevice, bool waitOnReply)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one analog input on physical device and update (G)UI representation.  <a href="#ab28a8276ce07524c351b8e9ebdc6ce1e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51">getAnalogInputs</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog inputs on physical device and update (G)UI representation.  <a href="#a585cc32f6aac4d5788928ecf1fdacf51"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7085491cf2d96fd2afd3004de6caef0d">getAnalogOutputValue</a> (int address, int timeout, bool realValue=true)</td></tr>
@@ -219,8 +219,8 @@ Protected Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the unknown state.  <a href="#a312bf413dfc16765328843f3fe08a4b8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_transaction.html">mdtPortTransaction</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e">getNewTransaction</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a new transaction.  <a href="#a0e57cc8b749581cff447d514b9a1ff8e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621">waitTransactionDone</a> (int id, int timeout, int granularity=50)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a transaction is done without break the GUI's event loop.  <a href="#a1df875803a3a0eb7324047d33c139621"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4">waitTransactionDone</a> (int id, int timeout=0, int granularity=50)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until a transaction is done without break the GUI's event loop.  <a href="#ab67f2da4f294482dd39ce6294ada8bc4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa84e01b13f98fc35476a2654f1c8d2b3"></a><!-- doxytag: member="mdtDevice::pvIos" ref="aa84e01b13f98fc35476a2654f1c8d2b3" args="" -->
@@ -232,10 +232,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for a device connected to a port. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Adapt get...() methods like <a class="el" href="classmdt_device.html#ab28a8276ce07524c351b8e9ebdc6ce1e" title="Read one analog input on physical device and update (G)UI representation.">getAnalogInputValue()</a> </dd></dl>
 <p>Querying a device can be done several ways. Some devices sends a confirmation after each query.</p>
 <p>Some queries (f.ex. read a input value or state) give a result after query. In some applications, we need to display the reult priodically. In other application, we need to send the query and wait on result before we can continue. This base class gives a interface for these two cases.</p>
 <p>At basis, all query methods are not blocking by default. The normal way is to connect <a class="el" href="classmdt_port_manager.html#a77ef4a432306638f5b0f91df7863ac62" title="Emitted when new frame was readen.">mdtPortManager::newReadenFrame()</a> to <a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame()</a> slot (must be done in subclass). This way, a query will be sent to device and method returns. When device returns a result, <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> will send the newReadenFrame() signal, and decoding will be processed in <a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame()</a> and I/O's are updated.</p>
-<p>Because the blocking behaviour is sometimes needed, the concept of transaction is implemented. At first, we tell the query method that we will wait on a reply by passing a timeout &gt; 0. Then, the query is sent to device and a transaction ID is added to a list with addTransaction(). At next, <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> is called, and finally result is returned. Note that <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> will not breack the Qt's event loop because it uses the <a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c" title="Wait some time without break the GUI&#39;s event loop.">mdtPortManager::wait()</a> method (see documentation of <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> for details).</p>
+<p>Because the blocking behaviour is sometimes needed, the concept of transaction is implemented. At first, we tell the query method that we will wait on a reply by passing a timeout &gt; 0. Then, the query is sent to device and a transaction ID is added to a list with addTransaction(). At next, <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> is called, and finally result is returned. Note that <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> will not breack the Qt's event loop because it uses the <a class="el" href="classmdt_port_manager.html#acc5c63ad33fdd3cc153fc23e00c6e69c" title="Wait some time without break the GUI&#39;s event loop.">mdtPortManager::wait()</a> method (see documentation of <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> for details).</p>
 <p>Give some helper methods for event handling, ....</p>
 <p>If it is needed to continiusly update the representation of device's inputs (digital/analog I/O, voltage, temperature, ...), two things can happen:</p>
 <ul>
@@ -247,7 +248,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application).</p>
 <p>A device can have several states (ready, busy, disconnected, ...). To help the application programmer to keep coherence, this states are updated in this class. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00086">86</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00087">87</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="a39c301b1fda803dba0c9ab98164a9d1e"></a><!-- doxytag: member="mdtDevice::state_t" ref="a39c301b1fda803dba0c9ab98164a9d1e" args="" -->
 <div class="memitem">
@@ -281,7 +282,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00094">94</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8h_source.html#l00095">95</a> of file <a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a>.</p>
 
 </div>
 </div>
@@ -343,7 +344,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <li>To update (G)UI, <a class="el" href="classmdt_device_ios.html#a82850ee99957ec5a787de71299ad785b" title="Update (G)UI&#39;s value for a set of analog inputs.">mdtDeviceIos::updateAnalogInputValues()</a> should be used. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00767">767</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00770">770</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -368,17 +369,17 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>Once results are available, the internal analog inputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00189">189</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00192">192</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7ff556995f38d2098eda3cf80685b542"></a><!-- doxytag: member="mdtDevice::getAnalogInputValue" ref="a7ff556995f38d2098eda3cf80685b542" args="(int address, int timeout, bool realValue=true)" -->
+<a class="anchor" id="ab28a8276ce07524c351b8e9ebdc6ce1e"></a><!-- doxytag: member="mdtDevice::getAnalogInputValue" ref="ab28a8276ce07524c351b8e9ebdc6ce1e" args="(int address, bool realValue, bool queryDevice, bool waitOnReply)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -391,14 +392,20 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em>, </td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>realValue</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>realValue</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>queryDevice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>waitOnReply</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -416,8 +423,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... </td></tr>
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query is sent to device and cached value is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
     <tr><td class="paramname">realValue</td><td>If true, the real value (as double) is returned, else the device's specific integer value (see <a class="el" href="classmdt_analog_io.html#a55d3e346dd13a580dc4ac77e8e946b01" title="Get value (set with setValue() )">mdtAnalogIo::value()</a> for details). </td></tr>
+    <tr><td class="paramname">queryDevice</td><td>If true, value is readen from device, else cached value is returned. </td></tr>
+    <tr><td class="paramname">waitOnReply</td><td>If true, this method will wait until reply comes in, or timeout (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ), else it will return immediately after the query was sent.</td></tr>
   </table>
   </dd>
 </dl>
@@ -448,13 +456,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>Once results are available, the internal analog outputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00282">282</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00285">285</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -496,14 +504,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... </td></tr>
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query is sent to device and cached value is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query is sent to device and cached value is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
     <tr><td class="paramname">realValue</td><td>If true, the real value (as double) is returned, else the device's specific integer value (see <a class="el" href="classmdt_analog_io.html#a55d3e346dd13a580dc4ac77e8e946b01" title="Get value (set with setValue() )">mdtAnalogIo::value()</a> for details). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A valid value if timeout is &gt; 0 and on successfull query/reply process. (See the Qt's QVariant documentation to know how to check validity). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00223">223</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00226">226</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -528,13 +536,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>Once results are available, the internal digital inputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00463">463</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00466">466</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -570,13 +578,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... </td></tr>
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query will be sent to device and the cached state is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query will be sent to device and the cached state is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A valid state if timeout is &gt; 0 and on successfull query/reply process. (See the Qt's QVariant documentation to know how to check validity). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00413">413</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00416">416</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -601,13 +609,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>Once results are available, the internal digital outputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00547">547</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00550">550</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -643,13 +651,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... </td></tr>
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query will be sent to device and the cached state is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, no query will be sent to device and the cached state is returned. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>A valid state if timeout is &gt; 0 and on successfull query/reply process. (See the Qt's QVariant documentation to know how to check validity). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00497">497</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00500">500</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -670,7 +678,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <p>Get a new transaction. </p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>portManager must be set before calling this method </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00898">898</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00901">901</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -721,7 +729,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <li>This method can be reimplemented periodic queries must be sent to device. </li>
 </ul>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00728">728</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00731">731</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -754,7 +762,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00771">771</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00774">774</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -787,7 +795,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00776">776</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00779">779</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -820,7 +828,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00781">781</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00784">784</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -853,7 +861,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00786">786</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00789">789</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -886,7 +894,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00801">801</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00804">804</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -919,7 +927,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00806">806</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00809">809</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -952,7 +960,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00811">811</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00814">814</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -985,7 +993,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00816">816</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00819">819</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1006,7 +1014,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Queries to send periodically. </p>
 <p>This slot is periodically called after a call of <a class="el" href="classmdt_device.html#a721c5bf2cfa0eef5304333f08da182f7" title="Start periodic device querying.">start()</a>. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00719">719</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00722">722</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1054,13 +1062,13 @@ transaction must be a valid pointer. </dd></dl>
 <p>Once results are available, the internal analog outputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00377">377</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00380">380</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1092,7 +1100,7 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00673">673</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00676">676</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1133,7 +1141,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Once result is available, the internal analog output is updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, the analog output is updated, but no query is sent to device. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, the analog output is updated, but no query is sent to device. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
     <tr><td class="paramname">value</td><td>The value to set. If type is a integer, value will be passed as is. If type is bool, it will be converted by <a class="el" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a>. </td></tr>
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc... </td></tr>
   </table>
@@ -1141,7 +1149,7 @@ transaction must be a valid pointer. </dd></dl>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00317">317</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00320">320</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1219,13 +1227,13 @@ transaction must be a valid pointer. </dd></dl>
 <p>Once results are available, the internal digital outputs are updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success. If no I/O's are set, on timeout ar other error, a value &lt; 0 is returned. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00634">634</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00637">637</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1268,7 +1276,7 @@ transaction must be a valid pointer. </dd></dl>
   <table class="params">
     <tr><td class="paramname">state</td><td>The state (ON/OFF) to set. </td></tr>
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a output number, etc... </td></tr>
-    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, the digital output is updated, but no query is sent to device. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#a1df875803a3a0eb7324047d33c139621" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
+    <tr><td class="paramname">timeout</td><td>If 0, the request is sent and this method returns immediately. If &lt; 0, the digital output is updated, but no query is sent to device. Else it will wait until a reply comes in, or timeout. (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ). </td></tr>
   </table>
   </dd>
 </dl>
@@ -1278,7 +1286,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>qDebug() &lt;&lt; "mdtDevice::setDigitalOutputState(): Out " &lt;&lt; address &lt;&lt; " : " &lt;&lt; dout-&gt;isOn(); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00581">581</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00584">584</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1318,7 @@ transaction must be a valid pointer. </dd></dl>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00696">696</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00699">699</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1380,7 +1388,7 @@ transaction must be a valid pointer. </dd></dl>
 <p><p>QTimer::singleShot(retryTimeout, this, SLOT(<a class="el" href="classmdt_device.html#a4eeda85bf0b10ddc9955a32199c00359" title="Set the ready state.">setStateReady()</a>)); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00861">861</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00864">864</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1401,7 +1409,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Set the connecting state. </p>
 <p>Emit <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emited when state has changed.">stateChanged()</a> if current state was not Connecting. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00845">845</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00848">848</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1422,7 +1430,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Set the disconnected state. </p>
 <p>Emit <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emited when state has changed.">stateChanged()</a> if current state was not Disconnected. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00831">831</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00834">834</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1444,7 +1452,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Update device state regarding port error. </p>
 <p>If error is unknown, the state is changed to Unknown. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00733">733</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00736">736</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1465,7 +1473,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Set the ready state. </p>
 <p>Emit <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emited when state has changed.">stateChanged()</a> if current state was not Ready. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00753">753</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00756">756</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1486,7 +1494,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Set the unknown state. </p>
 <p>Will add a error to <a class="el" href="classmdt_error.html">mdtError</a> system. Emit <a class="el" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emited when state has changed.">stateChanged()</a> if current state was not Unknown. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00880">880</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00883">883</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1518,7 +1526,7 @@ transaction must be a valid pointer. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a1df875803a3a0eb7324047d33c139621"></a><!-- doxytag: member="mdtDevice::waitTransactionDone" ref="a1df875803a3a0eb7324047d33c139621" args="(int id, int timeout, int granularity=50)" -->
+<a class="anchor" id="ab67f2da4f294482dd39ce6294ada8bc4"></a><!-- doxytag: member="mdtDevice::waitTransactionDone" ref="ab67f2da4f294482dd39ce6294ada8bc4" args="(int id, int timeout=0, int granularity=50)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1532,7 +1540,7 @@ transaction must be a valid pointer. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>timeout</em>, </td>
+          <td class="paramname"><em>timeout</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1550,13 +1558,13 @@ transaction must be a valid pointer. </dd></dl>
 <div class="memdoc">
 
 <p>Wait until a transaction is done without break the GUI's event loop. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Adapt, comment</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Adapt, comment</dd></dl>
 <p>This is a helper method that provide a blocking wait. Internally, a couple of sleep and event processing is done, avoiding freesing the GUI.</p>
 <p>Internally, <a class="el" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">mdtPortManager::waitOnFrame()</a> is called.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Id returned by query method </td></tr>
-    <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
+    <tr><td class="paramname">timeout</td><td>Timeout [ms] If 0, device's defined read timeout is used (see <a class="el" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">mdtPortManager::waitOnFrame(int, int, int)</a> for details). </td></tr>
     <tr><td class="paramname">granularity</td><td>Sleep time between each call of event processing [ms]<br/>
  A little value needs more CPU and big value can freese the GUI. Should be between 50 and 100, and must be &gt; 0. Note that msecs must be a multiple of granularity. </td></tr>
   </table>
@@ -1565,7 +1573,7 @@ transaction must be a valid pointer. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false on timeout. If id was not found in transactions list, a warning will be generated in <a class="el" href="classmdt_error.html">mdtError</a> system, and false will be returned. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>granularity must be &gt; 0. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00905">905</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00908">908</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1609,7 +1617,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00791">791</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00794">794</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1642,7 +1650,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00796">796</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00799">799</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1686,7 +1694,7 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00821">821</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00824">824</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
@@ -1719,13 +1727,14 @@ transaction must be a valid pointer. </dd></dl>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00826">826</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00829">829</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtdevice/<a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a></li>
 <li>src/mdtdevice/<a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a></li>
+<li>src/mdtdevice/<a class="el" href="moc__mdt_device_8cxx_source.html">moc_mdtDevice.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -1742,7 +1751,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

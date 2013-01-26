@@ -81,85 +81,136 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00019"></a>00019 <span class="comment"> **</span>
 <a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtDeviceStatusWidget.h&quot;</span>
-<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtBlinkLed.h&quot;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QLabel&gt;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QGridLayout&gt;</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QDebug&gt;</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
-<a name="l00030"></a>00030  : QWidget(parent)
-<a name="l00031"></a>00031 {
-<a name="l00032"></a>00032   QGridLayout *layout = <span class="keyword">new</span> QGridLayout;
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <span class="comment">// Add GUI elements</span>
-<a name="l00035"></a>00035   pbDetails = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;...&quot;</span>);
-<a name="l00036"></a>00036   pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
-<a name="l00037"></a>00037   layout-&gt;addWidget(pbDetails, 0, 0);
-<a name="l00038"></a>00038   ldState = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
-<a name="l00039"></a>00039   ldState-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(15, 15);
-<a name="l00040"></a>00040   layout-&gt;addWidget(ldState, 0, 1);
-<a name="l00041"></a>00041   lbMessage = <span class="keyword">new</span> QLabel;
-<a name="l00042"></a>00042   lbMessage-&gt;setMinimumWidth(150);
-<a name="l00043"></a>00043   layout-&gt;addWidget(lbMessage, 0, 2);
-<a name="l00044"></a>00044   lbTx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Tx&quot;</span>);
-<a name="l00045"></a>00045   layout-&gt;addWidget(lbTx, 0, 3);
-<a name="l00046"></a>00046   ldTx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
-<a name="l00047"></a>00047   ldTx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
-<a name="l00048"></a>00048   ldTx-&gt;setGreen();
-<a name="l00049"></a>00049   layout-&gt;addWidget(ldTx, 0, 4);
-<a name="l00050"></a>00050   lbRx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Rx&quot;</span>);
-<a name="l00051"></a>00051   layout-&gt;addWidget(lbRx, 0, 5);
-<a name="l00052"></a>00052   ldRx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
-<a name="l00053"></a>00053   ldRx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
-<a name="l00054"></a>00054   ldRx-&gt;setGreen();
-<a name="l00055"></a>00055   layout-&gt;addWidget(ldRx, 0, 6);
-<a name="l00056"></a>00056   setLayout(layout);
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058 }
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
-<a name="l00061"></a>00061 {
-<a name="l00062"></a>00062 }
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="classmdt_device_status_widget.html#ac7b010932ee6c83ffc9efe006ee13f22">00064</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#ac7b010932ee6c83ffc9efe006ee13f22" title="Set device.">mdtDeviceStatusWidget::setDevice</a>(<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> *device)
-<a name="l00065"></a>00065 {
-<a name="l00066"></a>00066   Q_ASSERT(device != 0);
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   connect(device, SIGNAL(stateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setState(<span class="keywordtype">int</span>)));
-<a name="l00069"></a>00069   setState(device-&gt;<a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>());
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 <span class="keywordtype">void</span> mdtDeviceStatusWidget::setState(<span class="keywordtype">int</span> state)
-<a name="l00073"></a>00073 {
-<a name="l00074"></a>00074   <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">mdtDevice::Ready</a>){
-<a name="l00075"></a>00075     ldState-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
-<a name="l00076"></a>00076     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00077"></a>00077     lbMessage-&gt;setText(tr(<span class="stringliteral">&quot;Ready&quot;</span>));
-<a name="l00078"></a>00078   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">mdtDevice::Disconnected</a>){
-<a name="l00079"></a>00079     ldState-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
-<a name="l00080"></a>00080     ldState-&gt;<a class="code" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f" title="Set the LED OFF.">setOff</a>();
-<a name="l00081"></a>00081     lbMessage-&gt;setText(tr(<span class="stringliteral">&quot;Disconnected&quot;</span>));
-<a name="l00082"></a>00082   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">mdtDevice::Connecting</a>){
-<a name="l00083"></a>00083     ldState-&gt;<a class="code" href="classmdt_led.html#a5cdd40d1e3baefab72d9cda866353797" title="Set the LED color to orange.">setOrange</a>();
-<a name="l00084"></a>00084     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00085"></a>00085     lbMessage-&gt;setText(tr(<span class="stringliteral">&quot;Connecting ...&quot;</span>));
-<a name="l00086"></a>00086   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">mdtDevice::Busy</a>){
-<a name="l00087"></a>00087     ldState-&gt;<a class="code" href="classmdt_led.html#a5cdd40d1e3baefab72d9cda866353797" title="Set the LED color to orange.">setOrange</a>();
-<a name="l00088"></a>00088     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00089"></a>00089     lbMessage-&gt;setText(tr(<span class="stringliteral">&quot;Busy&quot;</span>));
-<a name="l00090"></a>00090   }<span class="keywordflow">else</span>{
-<a name="l00091"></a>00091     ldState-&gt;<a class="code" href="classmdt_led.html#a28e208fb105c99b21d81d4c82ed50a98" title="Set the LED color to red.">setRed</a>();
-<a name="l00092"></a>00092     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
-<a name="l00093"></a>00093     lbMessage-&gt;setText(tr(<span class="stringliteral">&quot;Unknown state&quot;</span>));
-<a name="l00094"></a>00094   }
-<a name="l00095"></a>00095 }
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097 <span class="keywordtype">void</span> mdtDeviceStatusWidget::setState(<span class="keywordtype">int</span> state, <span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details)
-<a name="l00098"></a>00098 {
+<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;QLabel&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QGridLayout&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QDebug&gt;</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="classmdt_device_status_widget.html#ad1dd6b00c3ef394b4dc2bea36bcd4462">00028</a> <a class="code" href="classmdt_device_status_widget.html#ad1dd6b00c3ef394b4dc2bea36bcd4462" title="Build a status widget with default texts.">mdtDeviceStatusWidget::mdtDeviceStatusWidget</a>(QWidget *parent)
+<a name="l00029"></a>00029  : QWidget(parent)
+<a name="l00030"></a>00030 {
+<a name="l00031"></a>00031   QGridLayout *layout = <span class="keyword">new</span> QGridLayout;
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033   <span class="comment">// Add GUI elements</span>
+<a name="l00034"></a>00034   pbDetails = <span class="keyword">new</span> QPushButton(<span class="stringliteral">&quot;...&quot;</span>);
+<a name="l00035"></a>00035   pbDetails-&gt;setEnabled(<span class="keyword">false</span>);
+<a name="l00036"></a>00036   layout-&gt;addWidget(pbDetails, 0, 0);
+<a name="l00037"></a>00037   ldState = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
+<a name="l00038"></a>00038   ldState-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(15, 15);
+<a name="l00039"></a>00039   layout-&gt;addWidget(ldState, 0, 1);
+<a name="l00040"></a>00040   lbMessage = <span class="keyword">new</span> QLabel;
+<a name="l00041"></a>00041   lbMessage-&gt;setMinimumWidth(150);
+<a name="l00042"></a>00042   layout-&gt;addWidget(lbMessage, 0, 2);
+<a name="l00043"></a>00043   lbTx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Tx&quot;</span>);
+<a name="l00044"></a>00044   layout-&gt;addWidget(lbTx, 0, 3);
+<a name="l00045"></a>00045   ldTx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
+<a name="l00046"></a>00046   ldTx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
+<a name="l00047"></a>00047   ldTx-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
+<a name="l00048"></a>00048   layout-&gt;addWidget(ldTx, 0, 4);
+<a name="l00049"></a>00049   lbRx = <span class="keyword">new</span> QLabel(<span class="stringliteral">&quot;Rx&quot;</span>);
+<a name="l00050"></a>00050   layout-&gt;addWidget(lbRx, 0, 5);
+<a name="l00051"></a>00051   ldRx = <span class="keyword">new</span> <a class="code" href="classmdt_blink_led.html" title="Blinking LED.">mdtBlinkLed</a>;
+<a name="l00052"></a>00052   ldRx-&gt;<a class="code" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize</a>(12, 12);
+<a name="l00053"></a>00053   ldRx-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
+<a name="l00054"></a>00054   layout-&gt;addWidget(ldRx, 0, 6);
+<a name="l00055"></a>00055   setLayout(layout);
+<a name="l00056"></a>00056   <span class="comment">// Set some default attributes</span>
+<a name="l00057"></a>00057   <a class="code" href="classmdt_device_status_widget.html#aaaac01ef5272b66bc0a3daf19e20047c" title="Set default state texts.">setDefaultStateTexts</a>();
+<a name="l00058"></a>00058   <a class="code" href="classmdt_device_status_widget.html#a4e3b964a75b11b9a5b938698cd719ac7" title="Set default state colors.">setDefaultStateColors</a>();
+<a name="l00059"></a>00059 }
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
+<a name="l00062"></a>00062 {
+<a name="l00063"></a>00063 }
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="classmdt_device_status_widget.html#ac7b010932ee6c83ffc9efe006ee13f22">00065</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#ac7b010932ee6c83ffc9efe006ee13f22" title="Set device.">mdtDeviceStatusWidget::setDevice</a>(<a class="code" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> *device)
+<a name="l00066"></a>00066 {
+<a name="l00067"></a>00067   Q_ASSERT(device != 0);
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069   connect(device, SIGNAL(stateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setState(<span class="keywordtype">int</span>)));
+<a name="l00070"></a>00070   setState(device-&gt;<a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>());
+<a name="l00071"></a>00071 }
+<a name="l00072"></a>00072 
+<a name="l00073"></a><a class="code" href="classmdt_device_status_widget.html#aaaac01ef5272b66bc0a3daf19e20047c">00073</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#aaaac01ef5272b66bc0a3daf19e20047c" title="Set default state texts.">mdtDeviceStatusWidget::setDefaultStateTexts</a>()
+<a name="l00074"></a>00074 {
+<a name="l00075"></a>00075   pvReadyText = tr(<span class="stringliteral">&quot;Ready&quot;</span>);
+<a name="l00076"></a>00076   pvDisconnectedText = tr(<span class="stringliteral">&quot;Disconnected&quot;</span>);
+<a name="l00077"></a>00077   pvConnectingText = tr(<span class="stringliteral">&quot;Connecting ...&quot;</span>);
+<a name="l00078"></a>00078   pvBusyText = tr(<span class="stringliteral">&quot;Busy&quot;</span>);
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="classmdt_device_status_widget.html#abaf710ee64a06fa9d3d640e785c38dd5">00081</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#abaf710ee64a06fa9d3d640e785c38dd5" title="Set text for ready state.">mdtDeviceStatusWidget::setStateReadyText</a>(<span class="keyword">const</span> QString &amp;text)
+<a name="l00082"></a>00082 {
+<a name="l00083"></a>00083   pvReadyText = text;
+<a name="l00084"></a>00084 }
+<a name="l00085"></a>00085 
+<a name="l00086"></a><a class="code" href="classmdt_device_status_widget.html#a9c296a28b7de3cf9694a0630a64bee15">00086</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#a9c296a28b7de3cf9694a0630a64bee15" title="Set text for disconnected state.">mdtDeviceStatusWidget::setStateDisconnectedText</a>(<span class="keyword">const</span> QString &amp;text)
+<a name="l00087"></a>00087 {
+<a name="l00088"></a>00088   pvDisconnectedText = text;
+<a name="l00089"></a>00089 }
+<a name="l00090"></a>00090 
+<a name="l00091"></a><a class="code" href="classmdt_device_status_widget.html#a446ab6546eaaa87f97adceb1ae551554">00091</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#a446ab6546eaaa87f97adceb1ae551554" title="Set text for connecting state.">mdtDeviceStatusWidget::setStateConnectingText</a>(<span class="keyword">const</span> QString &amp;text)
+<a name="l00092"></a>00092 {
+<a name="l00093"></a>00093   pvConnectingText = text;
+<a name="l00094"></a>00094 }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="classmdt_device_status_widget.html#aa4c289bdfe1f5a0062bc8f6a9dc58fff">00096</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#aa4c289bdfe1f5a0062bc8f6a9dc58fff" title="Set text for busy state.">mdtDeviceStatusWidget::setStateBusyText</a>(<span class="keyword">const</span> QString &amp;text)
+<a name="l00097"></a>00097 {
+<a name="l00098"></a>00098   pvBusyText = text;
 <a name="l00099"></a>00099 }
 <a name="l00100"></a>00100 
+<a name="l00101"></a><a class="code" href="classmdt_device_status_widget.html#a4e3b964a75b11b9a5b938698cd719ac7">00101</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#a4e3b964a75b11b9a5b938698cd719ac7" title="Set default state colors.">mdtDeviceStatusWidget::setDefaultStateColors</a>()
+<a name="l00102"></a>00102 {
+<a name="l00103"></a>00103   pvReadyColor = <a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefaee73db242171b49a26ca3285edc877e7">mdtLed::LED_COLOR_GREEN</a>;
+<a name="l00104"></a>00104   pvConnectingColor = <a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2">mdtLed::LED_COLOR_ORANGE</a>;
+<a name="l00105"></a>00105   pvBusyColor = <a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2">mdtLed::LED_COLOR_ORANGE</a>;
+<a name="l00106"></a>00106 }
+<a name="l00107"></a>00107 
+<a name="l00108"></a><a class="code" href="classmdt_device_status_widget.html#a0e8d845302a6c73a045e1392b5a549dd">00108</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#a0e8d845302a6c73a045e1392b5a549dd" title="Set color for ready state.">mdtDeviceStatusWidget::setStateReadyColor</a>(<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a> color)
+<a name="l00109"></a>00109 {
+<a name="l00110"></a>00110   pvReadyColor = color;
+<a name="l00111"></a>00111 }
+<a name="l00112"></a>00112 
+<a name="l00113"></a><a class="code" href="classmdt_device_status_widget.html#ad240144a1c2da47a3f826c1987343ab7">00113</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#ad240144a1c2da47a3f826c1987343ab7" title="Set color for connecting state.">mdtDeviceStatusWidget::setStateConnectingColor</a>(<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a> color)
+<a name="l00114"></a>00114 {
+<a name="l00115"></a>00115   pvConnectingColor = color;
+<a name="l00116"></a>00116 }
+<a name="l00117"></a>00117 
+<a name="l00118"></a><a class="code" href="classmdt_device_status_widget.html#ae9f7ab642d15591f0207835f2d3de9e3">00118</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device_status_widget.html#ae9f7ab642d15591f0207835f2d3de9e3" title="Set color for busy state.">mdtDeviceStatusWidget::setStateBusyColor</a>(<a class="code" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef" title="LED predefined colors.">mdtLed::color_t</a> color)
+<a name="l00119"></a>00119 {
+<a name="l00120"></a>00120   pvBusyColor = color;
+<a name="l00121"></a>00121 }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 <span class="keywordtype">void</span> mdtDeviceStatusWidget::setState(<span class="keywordtype">int</span> state)
+<a name="l00124"></a>00124 {
+<a name="l00125"></a>00125   <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">mdtDevice::Ready</a>){
+<a name="l00126"></a>00126     ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>(pvReadyColor);
+<a name="l00127"></a>00127     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
+<a name="l00128"></a>00128     lbMessage-&gt;setText(pvReadyText);
+<a name="l00129"></a>00129   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">mdtDevice::Disconnected</a>){
+<a name="l00130"></a>00130     ldState-&gt;<a class="code" href="classmdt_led.html#a5f3b4975c423ac35442ec2b9c546b0e4" title="Set the LED color to green.">setGreen</a>();
+<a name="l00131"></a>00131     ldState-&gt;<a class="code" href="classmdt_blink_led.html#a951465e8a9ae5167e7eb05a7107ab13f" title="Set the LED OFF.">setOff</a>();
+<a name="l00132"></a>00132     lbMessage-&gt;setText(pvDisconnectedText);
+<a name="l00133"></a>00133   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">mdtDevice::Connecting</a>){
+<a name="l00134"></a>00134     ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>(pvConnectingColor);
+<a name="l00135"></a>00135     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
+<a name="l00136"></a>00136     lbMessage-&gt;setText(pvConnectingText);
+<a name="l00137"></a>00137   }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(state == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">mdtDevice::Busy</a>){
+<a name="l00138"></a>00138     ldState-&gt;<a class="code" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986" title="Set the LED color.">setColor</a>(pvBusyColor);
+<a name="l00139"></a>00139     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
+<a name="l00140"></a>00140     lbMessage-&gt;setText(pvBusyText);
+<a name="l00141"></a>00141   }<span class="keywordflow">else</span>{
+<a name="l00142"></a>00142     ldState-&gt;<a class="code" href="classmdt_led.html#a28e208fb105c99b21d81d4c82ed50a98" title="Set the LED color to red.">setRed</a>();
+<a name="l00143"></a>00143     ldState-&gt;<a class="code" href="classmdt_blink_led.html#ae51c54f31a11dbaebe69ab2c0b814d0f" title="Set the LED ON.">setOn</a>();
+<a name="l00144"></a>00144     lbMessage-&gt;setText(tr(<span class="stringliteral">&quot;Unknown state&quot;</span>));
+<a name="l00145"></a>00145   }
+<a name="l00146"></a>00146 }
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148 <span class="keywordtype">void</span> mdtDeviceStatusWidget::setState(<span class="keywordtype">int</span> state, <span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details)
+<a name="l00149"></a>00149 {
+<a name="l00150"></a>00150 }
+<a name="l00151"></a>00151 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -176,7 +227,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:17 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:54 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

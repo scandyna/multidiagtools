@@ -4,6 +4,10 @@
 }
 
 
+{\ttfamily \#include $<$mdtDeviceStatusWidget.h$>$}
+
+
+
 Collaboration diagram for mdtDeviceStatusWidget:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -28,18 +32,65 @@ void {\bfseries setState} (int state, const QString \&message, const QString \&d
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classmdt_device_status_widget_ad1dd6b00c3ef394b4dc2bea36bcd4462}{
-{\bfseries mdtDeviceStatusWidget} (QWidget $\ast$parent=0)}
+\hyperlink{classmdt_device_status_widget_ad1dd6b00c3ef394b4dc2bea36bcd4462}{mdtDeviceStatusWidget} (QWidget $\ast$parent=0)}
 \label{classmdt_device_status_widget_ad1dd6b00c3ef394b4dc2bea36bcd4462}
 
-\item 
+\begin{DoxyCompactList}\small\item\em Build a status widget with default texts. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_status_widget_ac7b010932ee6c83ffc9efe006ee13f22}{setDevice} (\hyperlink{classmdt_device}{mdtDevice} $\ast$device)
-\begin{DoxyCompactList}\small\item\em Set device. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set device. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_aaaac01ef5272b66bc0a3daf19e20047c}{
+void \hyperlink{classmdt_device_status_widget_aaaac01ef5272b66bc0a3daf19e20047c}{setDefaultStateTexts} ()}
+\label{classmdt_device_status_widget_aaaac01ef5272b66bc0a3daf19e20047c}
+
+\begin{DoxyCompactList}\small\item\em Set default state texts. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_abaf710ee64a06fa9d3d640e785c38dd5}{
+void \hyperlink{classmdt_device_status_widget_abaf710ee64a06fa9d3d640e785c38dd5}{setStateReadyText} (const QString \&text)}
+\label{classmdt_device_status_widget_abaf710ee64a06fa9d3d640e785c38dd5}
+
+\begin{DoxyCompactList}\small\item\em Set text for ready state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_a9c296a28b7de3cf9694a0630a64bee15}{
+void \hyperlink{classmdt_device_status_widget_a9c296a28b7de3cf9694a0630a64bee15}{setStateDisconnectedText} (const QString \&text)}
+\label{classmdt_device_status_widget_a9c296a28b7de3cf9694a0630a64bee15}
+
+\begin{DoxyCompactList}\small\item\em Set text for disconnected state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_a446ab6546eaaa87f97adceb1ae551554}{
+void \hyperlink{classmdt_device_status_widget_a446ab6546eaaa87f97adceb1ae551554}{setStateConnectingText} (const QString \&text)}
+\label{classmdt_device_status_widget_a446ab6546eaaa87f97adceb1ae551554}
+
+\begin{DoxyCompactList}\small\item\em Set text for connecting state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_aa4c289bdfe1f5a0062bc8f6a9dc58fff}{
+void \hyperlink{classmdt_device_status_widget_aa4c289bdfe1f5a0062bc8f6a9dc58fff}{setStateBusyText} (const QString \&text)}
+\label{classmdt_device_status_widget_aa4c289bdfe1f5a0062bc8f6a9dc58fff}
+
+\begin{DoxyCompactList}\small\item\em Set text for busy state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_a4e3b964a75b11b9a5b938698cd719ac7}{
+void \hyperlink{classmdt_device_status_widget_a4e3b964a75b11b9a5b938698cd719ac7}{setDefaultStateColors} ()}
+\label{classmdt_device_status_widget_a4e3b964a75b11b9a5b938698cd719ac7}
+
+\begin{DoxyCompactList}\small\item\em Set default state colors. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_a0e8d845302a6c73a045e1392b5a549dd}{
+void \hyperlink{classmdt_device_status_widget_a0e8d845302a6c73a045e1392b5a549dd}{setStateReadyColor} (\hyperlink{classmdt_led_a2d57d9ef04d2105d2fad93b57fc7cfef}{mdtLed::color\_\-t} color)}
+\label{classmdt_device_status_widget_a0e8d845302a6c73a045e1392b5a549dd}
+
+\begin{DoxyCompactList}\small\item\em Set color for ready state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_ad240144a1c2da47a3f826c1987343ab7}{
+void \hyperlink{classmdt_device_status_widget_ad240144a1c2da47a3f826c1987343ab7}{setStateConnectingColor} (\hyperlink{classmdt_led_a2d57d9ef04d2105d2fad93b57fc7cfef}{mdtLed::color\_\-t} color)}
+\label{classmdt_device_status_widget_ad240144a1c2da47a3f826c1987343ab7}
+
+\begin{DoxyCompactList}\small\item\em Set color for connecting state. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_ae9f7ab642d15591f0207835f2d3de9e3}{
+void \hyperlink{classmdt_device_status_widget_ae9f7ab642d15591f0207835f2d3de9e3}{setStateBusyColor} (\hyperlink{classmdt_led_a2d57d9ef04d2105d2fad93b57fc7cfef}{mdtLed::color\_\-t} color)}
+\label{classmdt_device_status_widget_ae9f7ab642d15591f0207835f2d3de9e3}
+
+\begin{DoxyCompactList}\small\item\em Set color for busy state. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
+\begin{Desc}
+\item[\hyperlink{todo__todo000008}{Todo}]Add color per state (same as texts) \end{Desc}
 
 
-Definition at line 34 of file mdtDeviceStatusWidget.h.
+Definition at line 36 of file mdtDeviceStatusWidget.h.
 
 
 
@@ -57,9 +108,14 @@ Definition at line 34 of file mdtDeviceStatusWidget.h.
 
 Set device. 
 
-Will make some connections 
+Will make some connections
 
-Definition at line 64 of file mdtDeviceStatusWidget.cpp.
+\begin{DoxyPrecond}{Precondition}
+device must be valid. 
+\end{DoxyPrecond}
+
+
+Definition at line 65 of file mdtDeviceStatusWidget.cpp.
 
 
 

@@ -32,6 +32,15 @@ Collaboration diagram for mdtFrameCodecScpi:\nopagebreak
 \subsection*{Public Types}
 \begin{DoxyCompactItemize}
 \item 
+enum \hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}{query\_\-type\_\-t} \{ \par
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}{QT\_\-UNKNOW} =  0, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}{QT\_\-VALUE}, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}{QT\_\-IDN}, 
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}{QT\_\-ERR}, 
+\par
+\hyperlink{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}{QT\_\-CONF}
+ \}
+\begin{DoxyCompactList}\small\item\em Query type. \end{DoxyCompactList}\item 
 enum \hyperlink{classmdt_frame_codec_scpi_a1aafb008a4207cc922f46fe905b3f17d}{waveform\_\-format} \{ \hyperlink{classmdt_frame_codec_scpi_a1aafb008a4207cc922f46fe905b3f17da7f4b47afe74504dea43bb04c8c6fbe58}{WORD}, 
 \hyperlink{classmdt_frame_codec_scpi_a1aafb008a4207cc922f46fe905b3f17daad91226f87cea7fab38f5cc7618f424c}{BYTE}, 
 \hyperlink{classmdt_frame_codec_scpi_a1aafb008a4207cc922f46fe905b3f17da957445cd510a5c4e6964e9b79e73af4d}{ASCII}
@@ -60,11 +69,52 @@ bool \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{dec
 \subsection{Detailed Description}
 Decode SCPI data. 
 
-Definition at line 38 of file mdtFrameCodecScpi.h.
+\#define MDT\_\-FC\_\-SCPI\_\-UNKNOW 0 \#define MDT\_\-FC\_\-SCPI\_\-VALUE 1 \#define MDT\_\-FC\_\-SCPI\_\-IDN 2 \#define MDT\_\-FC\_\-SCPI\_\-ERR 3 \#define MDT\_\-FC\_\-SCPI\_\-LAST\_\-TYPE 127 
+
+Definition at line 58 of file mdtFrameCodecScpi.h.
 
 
 
 \subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}{
+\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!query\_\-type\_\-t@{query\_\-type\_\-t}}
+\index{query\_\-type\_\-t@{query\_\-type\_\-t}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
+\subsubsection[{query\_\-type\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtFrameCodecScpi::query\_\-type\_\-t}}}
+\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9a}
+
+
+Query type. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{QT\_\-UNKNOW@{QT\_\-UNKNOW}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-UNKNOW@{QT\_\-UNKNOW}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}{
+QT\_\-UNKNOW}
+\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa80aaf6e25ad52710c5f61c6d734a0897}
+}]Initial or unknown query/response type \index{QT\_\-VALUE@{QT\_\-VALUE}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-VALUE@{QT\_\-VALUE}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}{
+QT\_\-VALUE}
+\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aae429676cb0129c2cb9179baf00d7e082}
+}]Device returns a value (int, double, date or string) \index{QT\_\-IDN@{QT\_\-IDN}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-IDN@{QT\_\-IDN}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}{
+QT\_\-IDN}
+\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa889641e5713b59c1d91a9cc607745bc9}
+}]IDN query or response \index{QT\_\-ERR@{QT\_\-ERR}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-ERR@{QT\_\-ERR}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}{
+QT\_\-ERR}
+\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa6e1b9ed9dff72df39e3b3fc88611e4a5}
+}]ERRor query or response \index{QT\_\-CONF@{QT\_\-CONF}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}\index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!QT\_\-CONF@{QT\_\-CONF}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}{
+QT\_\-CONF}
+\label{classmdt_frame_codec_scpi_a2dbce7589140e915f3e253c3523b3b9aa3df0e44b2eeacfad6f93ac9201db101d}
+}]CONFigure query or response type \end{description}
+\end{Desc}
+
+
+
+Definition at line 64 of file mdtFrameCodecScpi.h.
+
 \hypertarget{classmdt_frame_codec_scpi_a1aafb008a4207cc922f46fe905b3f17d}{
 \index{mdtFrameCodecScpi@{mdtFrameCodecScpi}!waveform\_\-format@{waveform\_\-format}}
 \index{waveform\_\-format@{waveform\_\-format}!mdtFrameCodecScpi@{mdtFrameCodecScpi}}
@@ -94,7 +144,7 @@ ASCII}
 
 
 
-Definition at line 44 of file mdtFrameCodecScpi.h.
+Definition at line 74 of file mdtFrameCodecScpi.h.
 
 
 
@@ -170,7 +220,7 @@ Definition at line 163 of file mdtFrameCodecScpi.cpp.
 Decode a array of ASCII values. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000056}{Todo}]Not implemented yet \end{Desc}
+\item[\hyperlink{todo__todo000058}{Todo}]Not implemented yet \end{Desc}
 
 
 qDebug() $<$$<$ \char`\"{}Data: \char`\"{} $<$$<$ items;
@@ -195,7 +245,7 @@ Definition at line 239 of file mdtFrameCodecScpi.cpp.
 Decode a array of BYTE values. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000057}{Todo}]Not implemented yet \end{Desc}
+\item[\hyperlink{todo__todo000059}{Todo}]Not implemented yet \end{Desc}
 
 
 int len = data.size()-\/1; // Last item is the term char

@@ -61,6 +61,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
@@ -83,6 +84,13 @@ Inheritance diagram for mdtLed:</div>
 
 <p><a href="classmdt_led-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">color_t</a> { <a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefaee73db242171b49a26ca3285edc877e7">LED_COLOR_GREEN</a> =  0, 
+<a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2">LED_COLOR_ORANGE</a>, 
+<a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfefa6fc68c065d1344f2bdb985460d34d494">LED_COLOR_RED</a>
+ }</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">LED predefined colors.  <a href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a389ee3e0082ce8fa38cb258944a04892"></a><!-- doxytag: member="mdtLed::setOn" ref="a389ee3e0082ce8fa38cb258944a04892" args="()" -->
@@ -107,6 +115,9 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED color to orange.  <a href="#a5cdd40d1e3baefab72d9cda866353797"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_led.html#a28e208fb105c99b21d81d4c82ed50a98">setRed</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED color to red.  <a href="#a28e208fb105c99b21d81d4c82ed50a98"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16e89edb08321c7abec736b2ebf28986"></a><!-- doxytag: member="mdtLed::setColor" ref="a16e89edb08321c7abec736b2ebf28986" args="(color_t color)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_led.html#a16e89edb08321c7abec736b2ebf28986">setColor</a> (<a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">color_t</a> color)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LED color. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_led.html#a664ca4c83ec0faaa86bd3f932fb06d5b">setFlat</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a simple flat LED.  <a href="#a664ca4c83ec0faaa86bd3f932fb06d5b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_led.html#a8ec814fdc4910476e7479649ba3f6204">setGlint</a> ()</td></tr>
@@ -135,7 +146,38 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 <div class="textblock"><p>mdtLED is a widget witch displays a LED </p>
 
 <p>Definition at line <a class="el" href="mdt_led_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_led_8h_source.html">mdtLed.h</a>.</p>
-</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+</div><hr/><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="a2d57d9ef04d2105d2fad93b57fc7cfef"></a><!-- doxytag: member="mdtLed::color_t" ref="a2d57d9ef04d2105d2fad93b57fc7cfef" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classmdt_led.html#a2d57d9ef04d2105d2fad93b57fc7cfef">mdtLed::color_t</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>LED predefined colors. </p>
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="a2d57d9ef04d2105d2fad93b57fc7cfefaee73db242171b49a26ca3285edc877e7"></a><!-- doxytag: member="LED_COLOR_GREEN" ref="a2d57d9ef04d2105d2fad93b57fc7cfefaee73db242171b49a26ca3285edc877e7" args="" -->LED_COLOR_GREEN</em>&nbsp;</td><td>
+<p>Green LED </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2"></a><!-- doxytag: member="LED_COLOR_ORANGE" ref="a2d57d9ef04d2105d2fad93b57fc7cfefa350264f3c85b168b7068033fbf1c0cd2" args="" -->LED_COLOR_ORANGE</em>&nbsp;</td><td>
+<p>Orange LED </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a2d57d9ef04d2105d2fad93b57fc7cfefa6fc68c065d1344f2bdb985460d34d494"></a><!-- doxytag: member="LED_COLOR_RED" ref="a2d57d9ef04d2105d2fad93b57fc7cfefa6fc68c065d1344f2bdb985460d34d494" args="" -->LED_COLOR_RED</em>&nbsp;</td><td>
+<p>Red LED </p>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_led_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_led_8h_source.html">mdtLed.h</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a64d5de3a8c2e4937d9ca9328b5ae4f9c"></a><!-- doxytag: member="mdtLed::mdtLed" ref="a64d5de3a8c2e4937d9ca9328b5ae4f9c" args="(QWidget *parent=0)" -->
 <div class="memitem">
 <div class="memproto">
@@ -181,7 +223,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00099">99</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00110">110</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -202,7 +244,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 <p>Use Qt QSizePolicy to resize the LED. </p>
 <p>Use the Qt default QSizePolicy (see the QLayout and QWidget references for details) This is the default behaviour if <a class="el" href="classmdt_led.html#abd0fde0ce1eca75fe7c832557829089b" title="Force the LED to have a fixed size.">setFixedSize()</a> was never called. </p>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00121">121</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -280,7 +322,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00104">104</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00115">115</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -301,7 +343,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 <p>Set a simple flat LED. </p>
 <p>The color will be uniform on the LED surface </p>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00083">83</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -322,7 +364,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 <p>Set a glint LED. </p>
 <p>This will use the Qt::RadialGradientPattern brush style This can slow down the application with many LED's. For better performance, use <a class="el" href="classmdt_led.html#a664ca4c83ec0faaa86bd3f932fb06d5b" title="Set a simple flat LED.">setFlat()</a> . </p>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00089">89</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00100">100</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -369,7 +411,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00163">163</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00174">174</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -430,7 +472,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 <p>Set the LED as text. </p>
 <p>The LED will display a ON/OFF text instead a color </p>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -450,7 +492,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 
 <p>Toggle On/Off. </p>
 
-<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00172">172</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_led_8cpp_source.html#l00183">183</a> of file <a class="el" href="mdt_led_8cpp_source.html">mdtLed.cpp</a>.</p>
 
 </div>
 </div>
@@ -473,7 +515,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>paintEvent</b> (QPain
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:19 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

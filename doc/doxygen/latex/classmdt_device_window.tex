@@ -4,11 +4,21 @@
 }
 
 
-Collaboration diagram for mdtDeviceWindow:\nopagebreak
+Inheritance diagram for mdtDeviceWindow:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=290pt]{classmdt_device_window__coll__graph}
+\includegraphics[width=194pt]{classmdt_device_window__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtDeviceWindow:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=400pt]{classmdt_device_window__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -25,13 +35,15 @@ void \hyperlink{classmdt_device_window_ac3bed35b2eeb88b2483c18e3b9bb918d}{setDev
 void \hyperlink{classmdt_device_window_a63df49a9f0cafc2f72e097aa0cf26baa}{setIosWidget} (QWidget $\ast$widget)}
 \label{classmdt_device_window_a63df49a9f0cafc2f72e097aa0cf26baa}
 
-\begin{DoxyCompactList}\small\item\em Set the I/O's widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set the I/O's widget. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} $\ast$ \hyperlink{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}{statusWidget} ()
+\begin{DoxyCompactList}\small\item\em Get status widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 33 of file mdtDeviceWindow.h.
+Definition at line 32 of file mdtDeviceWindow.h.
 
 
 
@@ -54,7 +66,24 @@ device must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 41 of file mdtDeviceWindow.cpp.
+Definition at line 40 of file mdtDeviceWindow.cpp.
+
+\hypertarget{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}{
+\index{mdtDeviceWindow@{mdtDeviceWindow}!statusWidget@{statusWidget}}
+\index{statusWidget@{statusWidget}!mdtDeviceWindow@{mdtDeviceWindow}}
+\subsubsection[{statusWidget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDeviceStatusWidget} $\ast$ mdtDeviceWindow::statusWidget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}
+
+
+Get status widget. 
+
+Usefull for setup 
+
+Definition at line 55 of file mdtDeviceWindow.cpp.
 
 
 

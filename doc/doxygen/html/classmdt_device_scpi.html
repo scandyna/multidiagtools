@@ -62,6 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">mdtDeviceScpi Class Reference</div>  </div>
@@ -104,6 +105,16 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a query to device.  <a href="#a9c15bed2ae92993f0378b59f15644bb2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#aefd45e58d01aed9a165bb2c2dd98198c">waitOperationComplete</a> (int timeout, int interval)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait until operation is complete (Using *OPC? query)  <a href="#aefd45e58d01aed9a165bb2c2dd98198c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a65c6f747ac6c6fe727a7359f78139168">checkDeviceError</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query device about error.  <a href="#a65c6f747ac6c6fe727a7359f78139168"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a480697b6b78665bfc59fd2bffcf4b566">handleDeviceError</a> (QList&lt; QVariant &gt; &amp;decodedValues)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle device error.  <a href="#a480697b6b78665bfc59fd2bffcf4b566"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637">handleDeviceSpecificError</a> (int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle device's specific error.  <a href="#af1cc7d9c99832fa3a7b3c5764588c637"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa">logDeviceError</a> (int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts, mdtError::level_t level)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a device error with <a class="el" href="classmdt_error.html">mdtError</a> system.  <a href="#a00d25c16acb20c909210bc5278f713fa"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f7bd859a14eddbaab64f492777c1337"></a><!-- doxytag: member="mdtDeviceScpi::pvUsbtmcPortManager" ref="a6f7bd859a14eddbaab64f492777c1337" args="" -->
@@ -115,7 +126,7 @@ Protected Attributes</h2></td></tr>
 <p>This class give some common functions requierd to handle such devices.</p>
 <p>Currently, only USBTMC port is supported. </p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8h_source.html#l00037">37</a> of file <a class="el" href="mdt_device_scpi_8h_source.html">mdtDeviceScpi.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8h_source.html#l00039">39</a> of file <a class="el" href="mdt_device_scpi_8h_source.html">mdtDeviceScpi.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a44c03151a6796e5c1efd64ef55f2d14d"></a><!-- doxytag: member="mdtDeviceScpi::mdtDeviceScpi" ref="a44c03151a6796e5c1efd64ef55f2d14d" args="(QObject *parent=0)" -->
 <div class="memitem">
@@ -138,11 +149,38 @@ Protected Attributes</h2></td></tr>
 <p><p>connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(<a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame(mdtPortTransaction)</a>)); connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(<a class="el" href="classmdt_device.html#ab77eb4c1bb50201e97a4dbd8b538659a" title="Update device state regarding port error.">setStateFromPortError(int)</a>)); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00028">28</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a65c6f747ac6c6fe727a7359f78139168"></a><!-- doxytag: member="mdtDeviceScpi::checkDeviceError" ref="a65c6f747ac6c6fe727a7359f78139168" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int mdtDeviceScpi::checkDeviceError </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Query device about error. </p>
+<p>Will send the SYST:ERR? and return.</p>
+<p>Subclass notes:<br/>
+ The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT_FC_SCPI_ERR. When subclass receives such transaction type, it should call <a class="el" href="classmdt_device_scpi.html#a480697b6b78665bfc59fd2bffcf4b566" title="Handle device error.">handleDeviceError()</a> without decoding frame.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 if query could be sent or a error of type <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> else. Note: returned error is not device's error. </dd></dl>
+
+<p><p>transaction-&gt;setType(MDT_FC_SCPI_ERR); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00164">164</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ae8e886b362cbf9d1bf7064b48348b8e8"></a><!-- doxytag: member="mdtDeviceScpi::connectToDevice" ref="ae8e886b362cbf9d1bf7064b48348b8e8" args="(const mdtDeviceInfo &amp;devInfo)" -->
 <div class="memitem">
 <div class="memproto">
@@ -170,14 +208,144 @@ Protected Attributes</h2></td></tr>
 
 <p><p><a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;</p>
 <p>device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a480697b6b78665bfc59fd2bffcf4b566"></a><!-- doxytag: member="mdtDeviceScpi::handleDeviceError" ref="a480697b6b78665bfc59fd2bffcf4b566" args="(QList&lt; QVariant &gt; &amp;decodedValues)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceScpi::handleDeviceError </td>
+          <td>(</td>
+          <td class="paramtype">QList&lt; QVariant &gt; &amp;&#160;</td>
+          <td class="paramname"><em>decodedValues</em></td><td>)</td>
+          <td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Handle device error. </p>
+<p>This method is called from subclass's <a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame(mdtPortTransaction)</a> method when a frame of type MDT_FC_SCPI_ERR was received.</p>
+<p>Errors &lt;= 0 are handled directly. If error is &gt; 0, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is called.</p>
+<p>See the SCPI99 standard for more details.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">decodedValues</td><td>See <a class="el" href="classmdt_frame_codec_scpi.html#a9e38d8afadc7ff37821620feea6b0899" title="Decode error answer.">mdtFrameCodecScpi::decodeError()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="post"><dt><b>Postcondition:</b></dt><dd>If internal codec has &lt; 2 values, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is not called. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af1cc7d9c99832fa3a7b3c5764588c637"></a><!-- doxytag: member="mdtDeviceScpi::handleDeviceSpecificError" ref="af1cc7d9c99832fa3a7b3c5764588c637" args="(int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceScpi::handleDeviceSpecificError </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>errNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>errText</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QList&lt; QString &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deviceSpecificTexts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Handle device's specific error. </p>
+<p>This method is called from <a class="el" href="classmdt_device_scpi.html#a480697b6b78665bfc59fd2bffcf4b566" title="Handle device error.">handleDeviceError()</a>.</p>
+<p>This default implementation simply log the error (with <a class="el" href="classmdt_error.html">mdtError</a> system).</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">errNum</td><td>Error number </td></tr>
+    <tr><td class="paramname">errText</td><td>Error message </td></tr>
+    <tr><td class="paramname">deviceSpecificTexts</td><td>Device's specific informations </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Internal codec has at least 2 values. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00247">247</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a00d25c16acb20c909210bc5278f713fa"></a><!-- doxytag: member="mdtDeviceScpi::logDeviceError" ref="a00d25c16acb20c909210bc5278f713fa" args="(int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts, mdtError::level_t level)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceScpi::logDeviceError </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>errNum</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>errText</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QList&lt; QString &gt; &amp;&#160;</td>
+          <td class="paramname"><em>deviceSpecificTexts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">mdtError::level_t&#160;</td>
+          <td class="paramname"><em>level</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Log a device error with <a class="el" href="classmdt_error.html">mdtError</a> system. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">errNum</td><td>Error number </td></tr>
+    <tr><td class="paramname">errText</td><td>Error message </td></tr>
+    <tr><td class="paramname">deviceSpecificTexts</td><td>Device's specific informations </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00254">254</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -209,6 +377,7 @@ Protected Attributes</h2></td></tr>
 <p>Send a command to device. </p>
 <p>Wait until it's possible to write to device, then send the command.</p>
 <p>Note that the wait will not break the GUI's event loop (see <a class="el" href="classmdt_port_manager.html#a1ca92c5ac120d87e5b10bff54ed1aa5c" title="Wait until data can be written.">mdtPortManager::waitOnWriteReady()</a> for details).</p>
+<p>This method will not update internal device state. It's recommended to use <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> functions if available.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">command</td><td>Command to send. </td></tr>
@@ -218,7 +387,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00124">124</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00126">126</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -256,14 +425,14 @@ Protected Attributes</h2></td></tr>
 <p>Send a query to device. </p>
 <p>Wait until it's possible to write to device, send the query and wait until a response is available or timeout.</p>
 <p>Note that the wait will not break the GUI's event loop.</p>
-<p>This method will not update internal I/O states. It's recommended to use <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> functions if available.</p>
+<p>This method will not update internal device and I/O states. It's recommended to use <a class="el" href="classmdt_device.html" title="Base class for a device connected to a port.">mdtDevice</a> functions if available.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">query</td><td>Query to send. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
@@ -273,7 +442,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00129">129</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00131">131</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,13 +476,13 @@ Protected Attributes</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">timeout</td><td>Timeout [ms] </td></tr>
-    <tr><td class="paramname">internal</td><td>Interval between 2 *OPC? query [ms] </td></tr>
+    <tr><td class="paramname">interval</td><td>Interval between 2 *OPC? query [ms] </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>internal &gt; 0 </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>interval &gt; 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00134">134</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00136">136</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -336,7 +505,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

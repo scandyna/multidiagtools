@@ -239,7 +239,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for port I/O. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000010">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>WaitingCanceled, WriteCanceled, ReadCanceled are not clean defined. The only object that knows when it must stop is the thread itself ! To be a little more clean, thread should check it's running flag each time a function returns a error, and stop if requierd ! </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8h_source.html#l00041">41</a> of file <a class="el" href="mdt_abstract_port_8h_source.html">mdtAbstractPort.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
@@ -525,7 +525,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current read frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000011">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00175">175</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -573,7 +573,7 @@ QWaitCondition&#160;</td><td class="memItemRight" valign="bottom"><b>pvWriteFram
 <p>This method is used by thread, and should not be used directly. If a request is pending, thread will put his current write frame back to pool.</p>
 <p>A call of this method will clear the internall flag. (a second call will then return false).</p>
 <p>Mutex is not handled by this method.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000012">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Thread are to adapt. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_abstract_port_8cpp_source.html#l00195">195</a> of file <a class="el" href="mdt_abstract_port_8cpp_source.html">mdtAbstractPort.cpp</a>.</p>
 
@@ -1114,7 +1114,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Update the read timeout state. </p>
 <p>This method must be called by system dependant waitEventRead() method. When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br/>
 </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000013">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000015">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd></dl>
 
 <p><p>if(state != pvReadTimeoutOccuredPrevious){ /emit readTimeoutStateChanged(state); } pvReadTimeoutOccuredPrevious = pvReadTimeoutOccured;</p>
@@ -1142,7 +1142,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 <p>Update the write timeout state. </p>
 <p>This method must be called by system dependant <a class="el" href="classmdt_abstract_port.html#a35e4686f50e2c53c7e3618cf2c485d92" title="Wait until data can be written to port.">waitEventWriteReady()</a> method When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br/>
 </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000014">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000016">Todo:</a></b></dt><dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd></dl>
 
 <p><p>if(state != pvWriteTimeoutOccured){ /emit writeTimeoutStateChanged(state); } pvWriteTimeoutOccuredPrevious = pvWriteTimeoutOccured;</p>
@@ -1369,7 +1369,7 @@ A valid configuration must be set before calling this method.</dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jan 23 2013 08:51:18 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:55 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

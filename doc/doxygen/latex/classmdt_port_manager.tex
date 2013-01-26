@@ -787,7 +787,7 @@ Called by the read thread whenn a complete frame was readen
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000023}{Todo}]Error on incomplete frame \end{Desc}
+\item[\hyperlink{todo__todo000025}{Todo}]Error on incomplete frame \end{Desc}
 
 
 
@@ -855,7 +855,11 @@ Definition at line 145 of file mdtPortManager.cpp.
 
 Emitted when new frame was readen. 
 
-This variant is sent when transactions support is OFF. (See \hyperlink{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{setTransactionsDisabled()} for details). \hypertarget{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{
+This variant is sent when transactions support is OFF. (See \hyperlink{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{setTransactionsDisabled()} for details). 
+
+Definition at line 97 of file moc\_\-mdtPortManager.cxx.
+
+\hypertarget{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{
 \index{mdtPortManager@{mdtPortManager}!newReadenFrame@{newReadenFrame}}
 \index{newReadenFrame@{newReadenFrame}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{newReadenFrame}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::newReadenFrame (
@@ -868,7 +872,11 @@ This variant is sent when transactions support is OFF. (See \hyperlink{classmdt_
 
 Emitted when new frame was readen. 
 
-This variant is sent when transactions support is ON. (See \hyperlink{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{setTransactionsDisabled()} for details). \hypertarget{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{
+This variant is sent when transactions support is ON. (See \hyperlink{classmdt_port_manager_a40f6d2a420d1ce103af207237c45901a}{setTransactionsDisabled()} for details). 
+
+Definition at line 104 of file moc\_\-mdtPortManager.cxx.
+
+\hypertarget{classmdt_port_manager_a7e45b8e3475e5182ed12218616664d07}{
 \index{mdtPortManager@{mdtPortManager}!onThreadsErrorOccured@{onThreadsErrorOccured}}
 \index{onThreadsErrorOccured@{onThreadsErrorOccured}!mdtPortManager@{mdtPortManager}}
 \subsubsection[{onThreadsErrorOccured}]{\setlength{\rightskip}{0pt plus 5cm}void mdtPortManager::onThreadsErrorOccured (
@@ -882,7 +890,7 @@ This variant is sent when transactions support is ON. (See \hyperlink{classmdt_p
 Manage errors comming from port threads. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000024}{Todo}]Error handling (in general ...) 
+\item[\hyperlink{todo__todo000026}{Todo}]Error handling (in general ...) 
 
 On disconnect, should flush I/O ? \end{Desc}
 
@@ -911,7 +919,7 @@ True on success, false else.
 Port must be set with \hyperlink{classmdt_port_manager_afcd156b2d0c9d340999935efb6cd8cb6}{setPort()} before use of this method. 
 \end{DoxyPrecond}
 \begin{Desc}
-\item[\hyperlink{todo__todo000025}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
+\item[\hyperlink{todo__todo000027}{Todo}]Should return \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \end{Desc}
 
 
 Definition at line 205 of file mdtPortManager.cpp.
@@ -1401,7 +1409,7 @@ Definition at line 334 of file mdtPortManager.cpp.
 Write data by copy. 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000026}{Todo}]adjust write timeout \end{Desc}
+\item[\hyperlink{todo__todo000028}{Todo}]adjust write timeout \end{Desc}
 
 
 Data will be passed to the mdtPort's write queue by copy. This method returns immediatly after enqueue, and don't wait until data was written.
@@ -1431,4 +1439,5 @@ Definition at line 307 of file mdtPortManager.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortManager.h\item 
-src/mdtport/mdtPortManager.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortManager.cpp\item 
+src/mdtport/moc\_\-mdtPortManager.cxx\end{DoxyCompactItemize}
