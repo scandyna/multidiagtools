@@ -44,7 +44,7 @@ class mdtDeviceU3606A : public mdtDeviceScpi
    * \param devInfo Requested device's informations.
    *                 Note: Vendor ID and/or product ID are automatically set.
    *                       (in other words, a empty mdtDeviceInfo can be passed).
-   *                       Optionnaly, a serial device can be set (usefull if many U3606A devices are connected)
+   *                       Optionnaly, a serial ID can be set (usefull if many U3606A devices are connected)
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
