@@ -80,6 +80,7 @@ void mdtFrameCodecTest::scpiDecodeTest()
 {
   mdtFrameCodecScpi codec;
   QByteArray data;
+  QVariant value;
   QByteArray eofSeq = "\n";
 
   codec.setEofSeq(eofSeq);
@@ -141,6 +142,13 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QCOMPARE(codec.values().at(0).toDouble(),  1.007850E+01);
 
   data = "-1.000000E+01";
+  QVERIFY(codec.decodeValues(data));
+  QVERIFY(codec.values().size() == 1);
+  QVERIFY(codec.values().at(0).isValid());
+  QVERIFY(codec.values().at(0).type() == QVariant::Double);
+  QCOMPARE(codec.values().at(0).toDouble(),  -1.000000E+01);
+
+  data = "-1.000000E+01\n";
   QVERIFY(codec.decodeValues(data));
   QVERIFY(codec.values().size() == 1);
   QVERIFY(codec.values().at(0).isValid());
@@ -228,6 +236,30 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QVERIFY(codec.values().size() == 1);
   QVERIFY(!codec.values().at(0).isValid());
 
+  // Decode single value
+  data = "+3.197000E-06\n";
+  value = codec.decodeSingleValueDouble(data);
+  QVERIFY(value.isValid());
+  QCOMPARE(value.toDouble(), 3.197000E-06);
+
+  // Decode single value: OL
+  data = "+9.900000E+37\n";
+  value = codec.decodeSingleValueDouble(data);
+  QVERIFY(!value.isValid());
+  QCOMPARE(value.toDouble(), 0.0);
+
+  // Decode single value: -OL
+  data = "-9.900000E+37\n";
+  value = codec.decodeSingleValueDouble(data);
+  QVERIFY(!value.isValid());
+  QCOMPARE(value.toDouble(), 0.0);
+
+  // Decode single value: invalid format
+  data = "1.90000A0E+6\n";
+  value = codec.decodeSingleValueDouble(data);
+  QVERIFY(!value.isValid());
+  QCOMPARE(value.toDouble(), 0.0);
+
   // Read IEEE block of data in ASCII format
   data = "#8000000311.000e-001,8.000e-002,2.000e001\n";
   QVERIFY(codec.decodeIEEEblock(data, mdtFrameCodecScpi::ASCII));
@@ -235,14 +267,56 @@ void mdtFrameCodecTest::scpiDecodeTest()
   QCOMPARE(codec.values().at(0), QVariant(0.1));
   QCOMPARE(codec.values().at(1), QVariant(8.0e-2));
   QCOMPARE(codec.values().at(2), QVariant(20.0));
-  
-  /// \todo Configure? response !
-  
-  /// \todo FUNC? response
-  
-  /// \todo SYST:VERS? response
-  
-  
+
+  // CONFigure? response
+  data = "VOLT +1.000000E+01,+1.000000E-06\n";
+  QVERIFY(codec.decodeFunctionParameters(data));
+  QCOMPARE(codec.values().size(), 3);
+  QVERIFY(codec.values().at(0).type() == QVariant::String);
+  QCOMPARE(codec.values().at(0), QVariant("VOLT"));
+  QCOMPARE(codec.values().at(1), QVariant(1.0e1));
+  QCOMPARE(codec.values().at(2), QVariant(1.0e-6));
+  data = " VOLT +1.100000E+03,-1.200000E-05\n";
+  QVERIFY(codec.decodeFunctionParameters(data));
+  QCOMPARE(codec.values().size(), 3);
+  QVERIFY(codec.values().at(0).type() == QVariant::String);
+  QCOMPARE(codec.values().at(0), QVariant("VOLT"));
+  QCOMPARE(codec.values().at(1), QVariant(1.1e3));
+  QCOMPARE(codec.values().at(2), QVariant(-1.2e-5));
+  data = " CURR:AC +1.000000E-01,+1.000000E-05\n ";
+  QVERIFY(codec.decodeFunctionParameters(data));
+  QCOMPARE(codec.values().size(), 3);
+  QVERIFY(codec.values().at(0).type() == QVariant::String);
+  QCOMPARE(codec.values().at(0), QVariant("CURR:AC"));
+  QCOMPARE(codec.values().at(1), QVariant(1e-1));
+  QCOMPARE(codec.values().at(2), QVariant(1e-5));
+
+  // FUNC? response
+  data = "VOLT:AC\n";
+  QVERIFY(codec.decodeFunctionParameters(data));
+  QCOMPARE(codec.values().size(), 1);
+  QVERIFY(codec.values().at(0).type() == QVariant::String);
+  QCOMPARE(codec.values().at(0), QVariant("VOLT:AC"));
+  data = " VOLT:DC ";
+  QVERIFY(codec.decodeFunctionParameters(data));
+  QCOMPARE(codec.values().size(), 1);
+  QVERIFY(codec.values().at(0).type() == QVariant::String);
+  QCOMPARE(codec.values().at(0), QVariant("VOLT:DC"));
+
+  // SYST:VERS? response
+  data = "1999.0";
+  QVERIFY(codec.decodeScpiVersion(data));
+  QCOMPARE(codec.values().size(), 2);
+  QVERIFY(codec.values().at(0).type() == QVariant::Int);
+  QCOMPARE(codec.values().at(0), QVariant(1999));
+  QCOMPARE(codec.values().at(1), QVariant(0));
+  data = "1990.1\n";
+  QVERIFY(codec.decodeScpiVersion(data));
+  QCOMPARE(codec.values().size(), 2);
+  QVERIFY(codec.values().at(0).type() == QVariant::Int);
+  QCOMPARE(codec.values().at(0), QVariant(1990));
+  QCOMPARE(codec.values().at(1), QVariant(1));
+
   
 
 }
@@ -259,34 +333,9 @@ void mdtFrameCodecTest::scpiU3606ATest()
   QVERIFY(!f.range().isValid());
   QVERIFY(!f.resolution().isValid());
 
-  // Decode single value
-  data = "+3.197000E-06\n";
-  value = f.decodeSingleValueDouble(data);
-  QVERIFY(value.isValid());
-  QCOMPARE(value.toDouble(), 3.197000E-06);
-  QVERIFY(f.values().size() == 1);
-  QCOMPARE(f.values().at(0).toDouble(), 3.197000E-06);
+  ///QVERIFY(f.values().size() == 1);
+  ///QCOMPARE(f.values().at(0).toDouble(), 3.197000E-06);
 
-  // Decode single value: OL
-  data = "+9.900000E+37\n";
-  value = f.decodeSingleValueDouble(data);
-  QVERIFY(!value.isValid());
-  QCOMPARE(value.toDouble(), 0.0);
-  QVERIFY(f.values().size() == 0);
-
-  // Decode single value: -OL
-  data = "-9.900000E+37\n";
-  value = f.decodeSingleValueDouble(data);
-  QVERIFY(!value.isValid());
-  QCOMPARE(value.toDouble(), 0.0);
-  QVERIFY(f.values().size() == 0);
-
-  // Decode single value: invalid format
-  data = "1.90000A0E+6\n";
-  value = f.decodeSingleValueDouble(data);
-  QVERIFY(!value.isValid());
-  QCOMPARE(value.toDouble(), 0.0);
-  QVERIFY(f.values().size() == 0);
 
   // Decoding CONF? query answer
   data = "VOLT +1.000000E+01,+1.000000E-06\n";

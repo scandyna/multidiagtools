@@ -47,7 +47,7 @@ bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
 {
   int i;
   QVariant value;
-  double fltValue;
+  ///double fltValue;
 
   // Clear previous results
   pvValues.clear();
@@ -72,6 +72,7 @@ bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
     value = convertData(pvNodes.at(i));
     // Check limits if type is double
     if(value.type() == QVariant::Double){
+      /**
       fltValue = value.toDouble();
       // Check about Nan
       if(qAbs(fltValue - pvNan) <= FLT_EPSILON){
@@ -82,9 +83,118 @@ bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
           value.clear();
         }
       }
+      */
+      value = checkFloatingValueValidity(value.toDouble());
     }
     // Add converted value
     pvValues.append(value);
+  }
+
+  return true;
+}
+
+QVariant mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &data)
+{
+  QVariant value;
+
+  // Store raw data in local QString constainer
+  pvAsciiData = data;
+  // Remove white spaces at begin and end
+  trim();
+  // remove EofSeq
+  if(!removeEofSeq()){
+    return value;
+  }
+  // Case of no data
+  if(pvAsciiData.size() < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return value;
+  }
+  // Convert and check
+  value = pvAsciiData;
+  if(value.canConvert(QVariant::Double)){
+    if(value.convert(QVariant::Double)){
+      return checkFloatingValueValidity(value.toDouble());
+    }
+  }
+
+  return QVariant();
+}
+
+QVariant mdtFrameCodecScpi::checkFloatingValueValidity(double x) const
+{
+  // Check about NaN
+  if(qAbs(x - pvNan) <= FLT_EPSILON){
+    return QVariant();
+  }
+  // Check about -OL and OL
+  if((x <= (pvNinfinity+FLT_EPSILON))||(x >= (pvInfinity-FLT_EPSILON))){
+    return QVariant();
+  }
+
+  return x;
+}
+
+bool mdtFrameCodecScpi::decodeFunctionParameters(const QByteArray &data)
+{
+  int i;
+  QVariant value;
+
+  // Clear previous results
+  pvValues.clear();
+  pvNodes.clear();
+  // Store raw data in local QString constainer
+  pvAsciiData = data;
+  // Remove white spaces at begin and end
+  trim();
+  // remove EofSeq
+  if(!removeEofSeq()){
+    return false;
+  }
+  // Case of no data
+  if(pvAsciiData.size() < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  // Separate <function> <parameters>
+  pvNodes = pvAsciiData.split(' ', QString::SkipEmptyParts);
+  if(pvNodes.size() < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Unexpected amount of space separated elements (expected min. 1)" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  // Ad function to result
+  pvValues.append(pvNodes.at(0));
+  if(pvValues.at(0).type() != QVariant::String){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Function is not a string" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  // Separate parameters
+  if(pvNodes.size() > 1){
+    if(pvNodes.size() != 2){
+      mdtError e(MDT_FRAME_DECODE_ERROR, "Unexpected amount of space separated elements (expected 2)" , mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+      e.commit();
+      return false;
+    }
+    pvNodes = pvNodes.at(1).split(',', QString::SkipEmptyParts);
+    for(i=0; i<pvNodes.size(); i++){
+      // Convert node
+      value = convertData(pvNodes.at(i));
+      // Check limits if type is double
+      if(value.type() == QVariant::Double){
+        value = checkFloatingValueValidity(value.toDouble());
+      }
+      // Add converted value
+      pvValues.append(value);
+    }
   }
 
   return true;
@@ -98,21 +208,60 @@ bool mdtFrameCodecScpi::decodeIdn(const QByteArray &data)
   // Clear previous results
   pvValues.clear();
   pvNodes.clear();
-
   // Store raw data in local QString constainer
   pvAsciiData = data;
-
   // Remove begin/end spaces and EOF
   if(!clean()){
     return false;
   }
-
   // Build the values list
   pvNodes = pvAsciiData.split(",");
   // Store result in data list
   for(i=0; i<pvNodes.size(); i++){
     pvValues << pvNodes.at(i);
   }
+
+  return true;
+}
+
+bool mdtFrameCodecScpi::decodeScpiVersion(const QByteArray &data)
+{
+  QVariant value;
+
+  // Clear previous results
+  pvValues.clear();
+  pvNodes.clear();
+  // Store raw data in local QString constainer
+  pvAsciiData = data;
+  // Remove begin/end spaces and EOF
+  if(!clean()){
+    return false;
+  }
+  // Separate YYYY and V
+  pvNodes = pvAsciiData.split('.', QString::SkipEmptyParts);
+  if(pvNodes.size() != 2){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Unexpected amount of space separated elements (expected 2)" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  // Convert and store version
+  value = pvNodes.at(0);
+  if(!value.convert(QVariant::Int)){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Version has wrong format (expected YYYY.V)" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  pvValues.append(value);
+  value = pvNodes.at(1);
+  if(!value.convert(QVariant::Int)){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Version has wrong format (expected YYYY.V)" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return false;
+  }
+  pvValues.append(value);
 
   return true;
 }
@@ -160,7 +309,7 @@ bool mdtFrameCodecScpi::decodeError(const QByteArray &data)
   return true;
 }
 
-bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data, mdtFrameCodecScpi::waveform_format format)
+bool mdtFrameCodecScpi::decodeIEEEblock(const QByteArray &data, mdtFrameCodecScpi::waveform_format_t format)
 {
   int headerSize;
   int dataSize;

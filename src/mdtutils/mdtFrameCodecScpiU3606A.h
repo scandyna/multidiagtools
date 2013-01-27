@@ -23,25 +23,11 @@
 
 #include "mdtFrameCodecScpi.h"
 
-/*! \brief Helper defines for some mdtDevice() subclasses
- */
-#define MDT_FC_SCPI_CONF  (MDT_FC_SCPI_LAST_TYPE + 1)   /*!< CONFigure query or response type */
-
 /*! \brief Decode Agilent U3606A SCPI data
  */
 class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
 {
  public:
-
-  /*! \brief Measure type
-   */
-  enum measure_type_t {
-    MT_UNKNOW,          /*!< Unknow measure type */
-    MT_VOLTAGE_DC,      /*!< Measure type DC voltage */
-    MT_VOLTAGE_AC,      /*!< Measure type AC voltage */
-    MT_CURRENT_DC,      /*!< Measure type DC current */
-    MT_CURRENT_AC       /*!< Measure type AC current */
-  };
 
   mdtFrameCodecScpiU3606A();
 
@@ -59,7 +45,7 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
    * When decode was done, the values
    * are available with values()
    */
-  QVariant decodeSingleValueDouble(QByteArray &frame);
+  ///QVariant decodeSingleValueDouble(QByteArray &frame);
 
   /*! \brief Get the measure type
    */
@@ -80,7 +66,7 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
   bool decodeNodeValues(QString data);
 
   // Convert value to double with U3606A limits check (OL, -OL)
-  QVariant convertToDouble(QVariant value);
+  ///QVariant convertToDouble(QVariant value);
 
   measure_type_t pvMeasureType;
   QVariant pvRange;

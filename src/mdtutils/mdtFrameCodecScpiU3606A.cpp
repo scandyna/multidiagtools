@@ -76,6 +76,7 @@ bool mdtFrameCodecScpiU3606A::decodeConfFunc(QByteArray &frame)
   return true;
 }
 
+/**
 QVariant mdtFrameCodecScpiU3606A::decodeSingleValueDouble(QByteArray &frame)
 {
   QVariant value;
@@ -110,6 +111,7 @@ QVariant mdtFrameCodecScpiU3606A::decodeSingleValueDouble(QByteArray &frame)
 
   return value;
 }
+*/
 
 mdtFrameCodecScpiU3606A::measure_type_t mdtFrameCodecScpiU3606A::measureType()
 {
@@ -181,12 +183,16 @@ bool mdtFrameCodecScpiU3606A::decodeNodeValues(QString data)
     e.commit();
     return false;
   }
-  pvRange = convertToDouble(nodeValues.at(0));
-  pvResolution = convertToDouble(nodeValues.at(1));
+  ///pvRange = convertToDouble(nodeValues.at(0));
+  pvRange = decodeSingleValueDouble(nodeValues.at(0).toAscii()).toDouble();
+  ///pvResolution = convertToDouble(nodeValues.at(1));
+  pvResolution = decodeSingleValueDouble(nodeValues.at(1).toAscii()).toDouble();
 
   return true;
 }
 
+/// \todo Implement NaN (see SCPI99, 7.2.1.5)
+/**
 QVariant mdtFrameCodecScpiU3606A::convertToDouble(QVariant value)
 {
   bool ok = false;
@@ -211,4 +217,4 @@ QVariant mdtFrameCodecScpiU3606A::convertToDouble(QVariant value)
 
   return value;
 }
-
+*/

@@ -377,7 +377,7 @@ bool mdtFrameCodecModbus::decodeReadCoils()
     appendValuesBitsFromByte(pvPdu.at(i));
   }
 
-  qDebug() << "mdtFrameCodecModbus::decodeReadCoils(): values: " << pvValues;
+  ///qDebug() << "mdtFrameCodecModbus::decodeReadCoils(): values: " << pvValues;
   
   return true;
 }

@@ -110,7 +110,8 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   }
   // Setup transaction
   transaction = getNewTransaction();
-  transaction->setType(MDT_FC_SCPI_UNKNOW);
+  ///transaction->setType(MDT_FC_SCPI_UNKNOW);
+  transaction->setType(mdtFrameCodecScpi::QT_UNKNOW);
   transaction->setQueryReplyMode(true);
   // Send read request
   bTag = sendReadRequest(transaction);

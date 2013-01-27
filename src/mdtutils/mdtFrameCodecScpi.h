@@ -25,13 +25,33 @@
 #include <QVariant>
 #include <QString>
 
-/*! \brief Helper defines for some mdtDevice subclasses
+/*
+ * Helper defines for some mdtDevice subclasses
  */
-#define MDT_FC_SCPI_UNKNOW 0        /*!< Initial or unknown query/response type */
-#define MDT_FC_SCPI_VALUE  1        /*!< Device returns a value (int, double, date or string) */
-#define MDT_FC_SCPI_IDN    2        /*!< IDN query or response */
-#define MDT_FC_SCPI_ERR    3        /*!< ERRor query or response */
-#define MDT_FC_SCPI_LAST_TYPE  127  /*!< Offset used by subclasses (f.ex. see mdtFrameCodecScpiU3606A) */
+/* \brief Some helper macros ...
+ * \relates mdtFrameCodecScpi
+ *
+ * Some details .........
+ *
+ * - MDT_FC_SCPI_UNKNOW 
+ * 
+ * 
+ * 
+ */
+
+/*! \enum MYenum Description...
+ * \relates mdtFrameCodecScpi
+ *
+ * - jdalkjkasjdlkj
+ * - njshjhjshd
+ */
+/**
+#define MDT_FC_SCPI_UNKNOW 0
+#define MDT_FC_SCPI_VALUE  1
+#define MDT_FC_SCPI_IDN    2
+#define MDT_FC_SCPI_ERR    3
+#define MDT_FC_SCPI_LAST_TYPE  127
+*/
 
 /*! \brief Decode SCPI data
  */
@@ -39,13 +59,36 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
 {
  public:
 
+  /*! \brief Query type
+   */
+  enum query_type_t {
+                      QT_UNKNOW = 0,        /*!< Initial or unknown query/response type */
+                      QT_VALUE,             /*!< Device returns one or more value(s) (int, double, date or string) */
+                      QT_SINGLE_VALUE_FLT,  /*!< Device returns a floating value */
+                      QT_IDN,               /*!< IDN query or response */
+                      QT_ERR,               /*!< ERRor query or response */
+                      QT_CONF               /*!< CONFigure query or response type */
+                    };
+
   /*! \brief Format of waveform data
    */
-  enum waveform_format {
+  enum waveform_format_t {
                         WORD, /*!< 16 bit data resolution */
                         BYTE, /*!< 8 bit data resolution */
                         ASCII /*!< ASCII float represented data */
                         };
+
+  /*! \brief Measure type
+   * 
+   * \todo Obselete here, should go to specific device class.
+   */
+  enum measure_type_t {
+    MT_UNKNOW,          /*!< Unknow measure type */
+    MT_VOLTAGE_DC,      /*!< Measure type DC voltage */
+    MT_VOLTAGE_AC,      /*!< Measure type AC voltage */
+    MT_CURRENT_DC,      /*!< Measure type DC current */
+    MT_CURRENT_AC       /*!< Measure type AC current */
+  };
 
   mdtFrameCodecScpi();
   virtual ~mdtFrameCodecScpi();
@@ -54,6 +97,10 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *
    * After decode is done, values are available
    *  with values().
+   *
+   * Internally, mdtFrameCodecAscii::convertData() is used for conversion.
+   *  Additionnaly, if decoded type is double, the validity is checked
+   *  with checkFloatingValueValidity().
    *
    * \param data String that contains one value, or many separated by sep.
    * \param sep Values separator.
@@ -64,12 +111,52 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    */
   bool decodeValues(const QByteArray &data, QString sep = ":");
 
+  /*! \brief Decode a signle value in double floating format
+   *
+   * This method returns a QVariant.
+   *  QVariant's internal data is converted to double.
+   *  If value is not valid, the QVariant is cleared,
+   *  so it is possible to check this with QVariant::isValid().
+   *
+   * \return A Qvariant of type Double if decode and conversion to double could be done,
+   *          else a invalid QVariant.
+   */
+  QVariant decodeSingleValueDouble(const QByteArray &data);
+
+  /*! \brief Check the validity of a floating value
+   *
+   * Check validity regarding SCPI-99, sections 7.2.1.4 (-infinity, +infinity) and 7.2.1.5 (NaN).
+   *
+   * \return A valid QVariant of type double if Ok, else a invalid QVariant.
+   */
+  QVariant checkFloatingValueValidity(double x) const;
+
+  /*! \brief Decode reply of type function/parameter
+   *
+   * Typical query that returns \<function\> \<parameters\> form is CONFigure?.
+   *  See SCPI-99 , chap. 3.
+   *
+   * After successfull decode, values() contains:
+   *  - Index 0: Function as string
+   *  - Index >1 (if available): parameters in converted form (double, int, ...).
+   *               Note: if a parameter is a floating value, it's possible that it is invalid (+/-inf, Nan).
+   */
+  bool decodeFunctionParameters(const QByteArray &data);
+
   /*! \brief Decode the IDN answer
    *
    * When decode was done, the values
    * are available with values()
    */
   bool decodeIdn(const QByteArray &data);
+
+  /*! \brief Decode the SCPI version returned by SYSTem:VERSion? query
+   *
+   * After successfull decode, values will be stored as follow:
+   *  - Index 0: SCPI year as integer
+   *  - Index 1: SCPI revision
+   */
+  bool decodeScpiVersion(const QByteArray &data);
 
   /*! \brief Decode error answer
    *
@@ -85,7 +172,7 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *
    * NOTE: not implemented yet !
    */
-  bool decodeIEEEblock(const QByteArray &data, waveform_format format);
+  bool decodeIEEEblock(const QByteArray &data, waveform_format_t format);
 
  protected:
 

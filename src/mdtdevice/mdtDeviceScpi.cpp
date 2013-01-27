@@ -183,7 +183,8 @@ int mdtDeviceScpi::checkDeviceError()
     return mdtAbstractPort::WritePoolEmpty;
   }
   // Remember query type.
-  transaction->setType(MDT_FC_SCPI_ERR);
+  ///transaction->setType(MDT_FC_SCPI_ERR);
+  transaction->setType(mdtFrameCodecScpi::QT_ERR);
   // Send read request
   bTag = pvUsbtmcPortManager->sendReadRequest(transaction);
   if(bTag < 0){
