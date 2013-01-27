@@ -27,6 +27,7 @@ mdtFrameCodecScpiU3606A::mdtFrameCodecScpiU3606A()
   pvMeasureType = MT_UNKNOW;
 }
 
+/**
 bool mdtFrameCodecScpiU3606A::decodeConfFunc(QByteArray &frame)
 {
   QVariant value;
@@ -75,59 +76,107 @@ bool mdtFrameCodecScpiU3606A::decodeConfFunc(QByteArray &frame)
 
   return true;
 }
+*/
 
-/**
-QVariant mdtFrameCodecScpiU3606A::decodeSingleValueDouble(QByteArray &frame)
+bool mdtFrameCodecScpiU3606A::decodeConfigure(const QByteArray &data)
 {
+  QString str;
   QVariant value;
 
   // Clear previous results
   pvValues.clear();
+  pvMeasureType = MT_UNKNOW;
+  pvRange.clear();
+  pvResolution.clear();
 
-  // Store raw data in local QString constainer
-  pvAsciiData = frame;
-
-  // Remove white spaces at begin and end
-  trim();
-  // remove EofSeq
-  if(!removeEofSeq()){
-    return value;
+  // Extract <function> and <parameters>
+  if(!decodeFunctionParameters(data)){
+    return false;
   }
-
-  // Case of no data
-  if(pvAsciiData.size() < 1){
-    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
+  Q_ASSERT(pvValues.size() > 0);
+  Q_ASSERT(pvValues.at(0).type() == QVariant::String);
+  // Decode <function>
+  pvNodes = pvValues.at(0).toString().split(':', QString::SkipEmptyParts);
+  if(pvNodes.size() < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Function part contains no data", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpiU3606A");
     e.commit();
-    return value;
+    return false;
+  }
+  // Get "first level" type (voltage, current, resistance, ...) and set default sub type (DC, AC, ...)
+  str = pvNodes.at(0);
+  if(str.left(4) == "VOLT"){
+    pvMeasureType = MT_VOLTAGE_DC;
+  }else if(str.left(4) == "CURR"){
+    pvMeasureType = MT_CURRENT_DC;
+  }else if(str.left(3) == "RES"){
+    pvMeasureType = MT_RESISTANCE;
+  }else if(str.left(4) == "CONT"){
+    pvMeasureType = MT_CONTINUITY;
+  }else if(str.left(4) == "LRES"){
+    pvMeasureType = MT_LRESISTANCE;
+  }else if(str.left(3) == "CAP"){
+    pvMeasureType = MT_CAPACITANCE;
+  }else if(str.left(4) == "DIOD"){
+    pvMeasureType = MT_DIODE;
+  }else if(str.left(4) == "FREQ"){
+    pvMeasureType = MT_FREQUENCY;
+  }else if(str.left(4) == "PWID"){
+    pvMeasureType = MT_PWIDTH;
+  }else if(str.left(4) == "DCYC"){
+    pvMeasureType = MT_DCYCLE;
+  }else{
+    pvMeasureType = MT_UNKNOW;
+  }
+  // Get optional sub types (AC)
+  if(pvNodes.size() > 1){
+    str = pvNodes.at(1);
+    switch(pvMeasureType){
+      case MT_VOLTAGE_DC:
+        if(str.left(2) == "AC"){
+          pvMeasureType = MT_VOLTAGE_AC;
+        }
+        break;
+      case MT_CURRENT_DC:
+        if(str.left(2) == "AC"){
+          pvMeasureType = MT_CURRENT_AC;
+        }
+      default:
+        // No other case to check
+        break;
+    }
+  }
+  // Get <parameters>
+  if(pvValues.size() == 3){
+    value = pvValues.at(1);
+    if(value.convert(QVariant::Double)){
+      pvRange = checkFloatingValueValidity(value.toDouble());
+    }
+    value = pvValues.at(2);
+    if(value.convert(QVariant::Double)){
+      pvResolution = checkFloatingValueValidity(value.toDouble());
+    }
   }
 
-  // Convert value
-  value = pvAsciiData;
-  value = convertToDouble(value);
-  if(value.isValid()){
-    pvValues << value;
-  }
-
-  return value;
+  return true;
 }
-*/
 
-mdtFrameCodecScpiU3606A::measure_type_t mdtFrameCodecScpiU3606A::measureType()
+mdtFrameCodecScpiU3606A::measure_type_t mdtFrameCodecScpiU3606A::measureType() const
 {
   return pvMeasureType;
 }
 
-QVariant mdtFrameCodecScpiU3606A::range()
+QVariant mdtFrameCodecScpiU3606A::range() const
 {
   return pvRange;
 }
 
-QVariant mdtFrameCodecScpiU3606A::resolution()
+QVariant mdtFrameCodecScpiU3606A::resolution() const
 {
   return pvResolution;
 }
 
+/**
 bool mdtFrameCodecScpiU3606A::decodeNodeValues(QString data)
 {
   QStringList nodeValues;
@@ -189,32 +238,5 @@ bool mdtFrameCodecScpiU3606A::decodeNodeValues(QString data)
   pvResolution = decodeSingleValueDouble(nodeValues.at(1).toAscii()).toDouble();
 
   return true;
-}
-
-/// \todo Implement NaN (see SCPI99, 7.2.1.5)
-/**
-QVariant mdtFrameCodecScpiU3606A::convertToDouble(QVariant value)
-{
-  bool ok = false;
-  double x;
-
-  x = value.toDouble(&ok);
-  if(!ok){
-    value.clear();
-    return value;
-  }
-  // Check limit
-  if(x <= (-9.9e37 + DBL_EPSILON)){
-    value.clear();
-    return value;
-  }
-  if(x >= (9.9e37 - DBL_EPSILON)){
-    value.clear();
-    return value;
-  }
-  // Store value and return
-  value = x;
-
-  return value;
 }
 */

@@ -1,4 +1,4 @@
-window_sizes 1024 718 304 714 520 120
+window_sizes 1272 993 304 962 795 120
 diagrams
   classdiagram_ref 314370 // mdtDeviceU3606A
     970 803 100 4 60 0
@@ -7,22 +7,23 @@ diagrams
   classdiagram_ref 281602 // mdtFrameCodec
     776 642 100 4 120 0
   active  classdiagram_ref 561538 // mdtFrameCodecScpi
-    714 520 100 4 468 34
+    962 795 100 4 212 0
 end
 show_stereotypes
-selected operation_ref 562946 // measureType
+selected classrelation_ref 711554 // <generalisation>
 open
   attribute_ref 388354 // pvNodes
   attribute_ref 388482 // pvEofSeq
   operation_ref 1117954 // convertData
   operation_ref 1118082 // clean
   operation_ref 1118210 // decodeValues
-  operation_ref 1118338 // decodeError
+  operation_ref 549762 // decodeSingleValueInt
   operation_ref 542850 // decodeSingleValueDouble
-  operation_ref 542978 // decodeError
+  operation_ref 1125122 // checkFloatingValueValidity
+  operation_ref 1125250 // decodeFunctionParameters
+  operation_ref 1125378 // decodeScpiVersion
+  operation_ref 1118338 // decodeError
   operation_ref 542594 // decodeIEEEblock
-  operation_ref 549634 // convertToDouble
-  class_ref 302722 // mdtFrameCodecScpiU3606A
   attribute_ref 395266 // pvResolution
   attribute_ref 395010 // pvMeasureType
   attribute_ref 395138 // pvRange
@@ -30,6 +31,7 @@ open
   operation_ref 562946 // measureType
   operation_ref 563074 // range
   operation_ref 563202 // resolution
+  classrelation_ref 711554 // <generalisation>
   operation_ref 556418 // decodeNodeValues
   class_ref 572418 // mdtDeviceDSO1000A
   classrelation_ref 705026 // <generalisation>

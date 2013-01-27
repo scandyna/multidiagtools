@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 114
+  revision 116
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2009,36 +2009,6 @@ ${inlines}
 	
       end
 
-      operation 542722 "decodeIdn"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "frame" type class_ref 236162 // QByteArray
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1118338 "decodeError"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "data" type class_ref 236162 // QByteArray
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
       operation 549762 "decodeSingleValueInt"
 	public return_type class_ref 161154 // QVariant
 	nparams 1
@@ -2069,10 +2039,70 @@ ${inlines}
 	
       end
 
-      operation 542978 "decodeError"
+      operation 1125122 "checkFloatingValueValidity"
+	public return_type class_ref 161154 // QVariant
+	nparams 1
+	  param in name "x" explicit_type "double"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1125250 "decodeFunctionParameters"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 542722 "decodeIdn"
 	public explicit_return_type "bool"
 	nparams 1
 	  param in name "frame" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1125378 "decodeScpiVersion"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1118338 "decodeError"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "data" type class_ref 236162 // QByteArray
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
@@ -2098,21 +2128,6 @@ ${inlines}
 	
 	
       end
-
-      operation 549634 "convertToDouble"
-	private return_type class_ref 161154 // QVariant
-	nparams 1
-	  param in name "value" type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
     end
 
     class 302722 "mdtFrameCodecScpiU3606A"
@@ -2127,6 +2142,36 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+      attribute 395266 "pvResolution"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 395010 "pvMeasureType"
+	private explicit_type "measure_type_t"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 395138 "pvRange"
+	private type class_ref 161154 // QVariant
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       operation 563330 "mdtFrameCodecScpiU3606A"
 	public explicit_return_type ""
 	nparams 0
@@ -2139,6 +2184,71 @@ ${inlines}
 	
 	
 	
+      end
+
+      operation 556290 "decodeConfigure"
+	public explicit_return_type "bool"
+	nparams 1
+	  param in name "frame" type class_ref 236162 // QByteArray
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 562946 "measureType"
+	public explicit_return_type "measure_type_t"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 563074 "range"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 563202 "resolution"
+	public return_type class_ref 161154 // QVariant
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 718082 // <generalisation>
+	relation 709634 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 718082 // <generalisation>
+	  b parent class_ref 269570 // mdtFrameCodecScpi
       end
     end
 
@@ -2429,36 +2539,6 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 395266 "pvResolution"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 395010 "pvMeasureType"
-	private explicit_type "measure_type_t"
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 395138 "pvRange"
-	private type class_ref 161154 // QVariant
-	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
-"
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
       operation 1118466 "mdtFrameCodecScpiDigitalMeter"
 	public explicit_return_type ""
 	nparams 0
@@ -2493,63 +2573,6 @@ ${inlines}
 	    cpp default "${type}"
 	    classrelation_ref 711554 // <generalisation>
 	  b parent class_ref 269570 // mdtFrameCodecScpi
-      end
-
-      operation 556290 "decodeConfigure"
-	public explicit_return_type "bool"
-	nparams 1
-	  param in name "frame" type class_ref 236162 // QByteArray
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 562946 "measureType"
-	public explicit_return_type "measure_type_t"
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 563074 "range"
-	public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 563202 "resolution"
-	public return_type class_ref 161154 // QVariant
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
       end
 
       operation 556418 "decodeNodeValues"

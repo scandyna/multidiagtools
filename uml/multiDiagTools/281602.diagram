@@ -71,4 +71,9 @@ relationcanvas 130434 relation_ref 571010 // <generalisation>
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
+relationcanvas 130562 relation_ref 709634 // <generalisation>
+  from ref 130050 z 2001 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
 end

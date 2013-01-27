@@ -29,44 +29,52 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
 {
  public:
 
+  /*! \brief Measure type
+   */
+  enum measure_type_t {
+    MT_UNKNOW,          /*!< Unknow measure type */
+    MT_VOLTAGE_DC,      /*!< Measure type DC voltage */
+    MT_VOLTAGE_AC,      /*!< Measure type AC voltage */
+    MT_CURRENT_DC,      /*!< Measure type DC current */
+    MT_CURRENT_AC,      /*!< Measure type AC current */
+    MT_RESISTANCE,      /*!< Measure type resistance */
+    MT_CONTINUITY,      /*!< Measure type continuity */
+    MT_LRESISTANCE,     /*!< Measure type low value reistance */
+    MT_CAPACITANCE,     /*!< Measure type capacitance */
+    MT_DIODE,           /*!< Measure type diode */
+    MT_FREQUENCY,       /*!< Measure type frequency */
+    MT_PWIDTH,          /*!< Measure type pulse width */
+    MT_DCYCLE           /*!< Measure type duty cycle */
+  };
+
   mdtFrameCodecScpiU3606A();
 
   /*! \brief Decode the CONFigure and FUNCtion answer
    *
    */
-  bool decodeConfFunc(QByteArray &frame);
+  ///bool decodeConfFunc(QByteArray &frame);
 
-  /*! \brief Decode a signle value in double floating format
-   *
-   * This method returns a QVariant.
-   * QVariant's internal data is converted to double.
-   * If value is not valid, the QVariant is cleared,
-   * so it is possible to check this with QVariant::isValid().
-   * When decode was done, the values
-   * are available with values()
+  /*! \brief Decode CONFigure? reply
    */
-  ///QVariant decodeSingleValueDouble(QByteArray &frame);
+  bool decodeConfigure(const QByteArray &data);
 
   /*! \brief Get the measure type
    */
-  measure_type_t measureType();
+  measure_type_t measureType() const;
 
   /*! \brief Get the measure range
    */
-  QVariant range();
+  QVariant range() const;
 
   /*! \brief Get the measure resolution
    */
-  QVariant resolution();
+  QVariant resolution() const;
 
  private:
 
   // Decode values for a node
   // Each value will be stored in pvValues
-  bool decodeNodeValues(QString data);
-
-  // Convert value to double with U3606A limits check (OL, -OL)
-  ///QVariant convertToDouble(QVariant value);
+  ///bool decodeNodeValues(QString data);
 
   measure_type_t pvMeasureType;
   QVariant pvRange;

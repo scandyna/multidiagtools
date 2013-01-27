@@ -38,8 +38,8 @@ classcanvas 130178 class_ref 572546 // mdtDeviceScpi
 end
 relationcanvas 129026 relation_ref 372610 // <directional composition>
   from ref 128002 z 2001 to ref 128898
-  role_a_pos 435 488 3000 no_role_b
-  multiplicity_a_pos 483 518 3000 no_multiplicity_b
+  role_a_pos 383 489 3000 no_role_b
+  multiplicity_a_pos 431 519 3000 no_multiplicity_b
 end
 relationcanvas 129282 relation_ref 372098 // <generalisation>
   from ref 128130 z 2007 to ref 129154

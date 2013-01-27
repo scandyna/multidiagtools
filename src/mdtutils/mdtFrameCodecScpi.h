@@ -78,18 +78,6 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
                         ASCII /*!< ASCII float represented data */
                         };
 
-  /*! \brief Measure type
-   * 
-   * \todo Obselete here, should go to specific device class.
-   */
-  enum measure_type_t {
-    MT_UNKNOW,          /*!< Unknow measure type */
-    MT_VOLTAGE_DC,      /*!< Measure type DC voltage */
-    MT_VOLTAGE_AC,      /*!< Measure type AC voltage */
-    MT_CURRENT_DC,      /*!< Measure type DC current */
-    MT_CURRENT_AC       /*!< Measure type AC current */
-  };
-
   mdtFrameCodecScpi();
   virtual ~mdtFrameCodecScpi();
 
