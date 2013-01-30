@@ -34,8 +34,6 @@
 mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
  : mdtPortManager(parent)
 {
-  mdtUsbPortThread *portThread;
-
   // Port setup
   mdtPortConfig *config = new mdtPortConfig;
   mdtUsbPort *port = new mdtUsbPort;
@@ -43,12 +41,7 @@ mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
   setPort(port);
   ///pvReadUntilShortPacketReceivedFinished = false;
 
-  // Threads setup
-  portThread = new mdtUsbPortThread;
-  connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
-  connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
-  connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
-  addThread(portThread);
+  // Threads setup is done in openPort()
 }
 
 mdtUsbPortManager::~mdtUsbPortManager()
@@ -182,6 +175,21 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
+bool mdtUsbPortManager::openPort()
+{
+  mdtUsbPortThread *portThread;
+
+  if(pvThreads.size() < 0){
+    portThread = new mdtUsbPortThread;
+    connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
+    ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
+    ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
+    addThread(portThread);
+  }
+
+  return mdtPortManager::openPort();
+}
+
 void mdtUsbPortManager::readUntilShortPacketReceived()
 {
   Q_ASSERT(pvPort != 0);
@@ -199,6 +207,7 @@ void mdtUsbPortManager::readUntilShortPacketReceived()
   port->unlockMutex();
   while(!pvReadUntilShortPacketReceivedFinished){
     msleep(50);
+    Q_ASSERT(pvPort != 0);
     qApp->processEvents();
   }
 }
@@ -258,6 +267,7 @@ bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
     if(maxIter <= 0){
       return false;
     }
+    Q_ASSERT(pvPort != 0);
     qApp->processEvents();
     msleep(50);
     maxIter--;

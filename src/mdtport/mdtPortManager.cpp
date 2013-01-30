@@ -33,6 +33,8 @@ mdtPortManager::mdtPortManager(QObject *parent)
   qRegisterMetaType<mdtPortTransaction>("mdtPortTransaction");
 
   pvPort = 0;
+  pvReadThread = 0;
+  pvWriteThread = 0;
   // At default, transactions support and blocking mode are OFF
   setTransactionsDisabled(false);
 }
@@ -72,6 +74,7 @@ void mdtPortManager::setPort(mdtAbstractPort *port)
 
 void mdtPortManager::detachPort(bool deletePort, bool deleteThreads)
 {
+  qDebug() << "mdtPortManager::detachPort() ...";
   if(pvPort == 0){
     return;
   }
@@ -89,6 +92,7 @@ void mdtPortManager::detachPort(bool deletePort, bool deleteThreads)
     delete pvPort;
   }
   pvPort = 0;
+  qDebug() << "mdtPortManager::detachPort() DONE";
 }
 
 void mdtPortManager::addThread(mdtPortThread *thread)
@@ -101,10 +105,24 @@ void mdtPortManager::addThread(mdtPortThread *thread)
   thread->setPort(pvPort);
   if(thread->isReader()){
     connect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
+    pvReadThread = thread;
+  }
+  if(thread->isWriter()){
+    pvWriteThread = thread;
   }
   connect(thread, SIGNAL(errorOccured(int)), this, SLOT(onThreadsErrorOccured(int)));
   // Add thread to list
   pvThreads.append(thread);
+}
+
+mdtPortThread *mdtPortManager::readThread()
+{
+  return pvReadThread;
+}
+
+mdtPortThread *mdtPortManager::writeThread()
+{
+  return pvWriteThread;
 }
 
 void mdtPortManager::removeThreads(bool releaseMemory)
@@ -125,6 +143,8 @@ void mdtPortManager::removeThreads(bool releaseMemory)
     }
   }
   pvThreads.clear();
+  pvReadThread = 0;
+  pvWriteThread = 0;
 }
 
 bool mdtPortManager::start()
@@ -163,11 +183,13 @@ void mdtPortManager::stop()
 {
   int i;
 
+  qDebug() << "mdtPortManager::stop() ...";
   for(i=0; i<pvThreads.size(); i++){
     if(pvThreads.at(i)->isRunning()){
       pvThreads.at(i)->stop();
     }
   }
+  qDebug() << "mdtPortManager::stop() DONE";
 }
 
 void mdtPortManager::setPortName(const QString &portName)

@@ -376,6 +376,19 @@ bool mdtUsbPort::readUntilShortPacketReceivedRequestPending()
   return false;
 }
 
+void mdtUsbPort::addbTagToAbort(quint8 bTag)
+{
+  pvbTagsToAbort.enqueue(bTag);
+}
+
+int mdtUsbPort::takebTagToAbort()
+{
+  if(pvbTagsToAbort.isEmpty()){
+    return -1;
+  }
+  return pvbTagsToAbort.dequeue();
+}
+
 mdtAbstractPort::error_t mdtUsbPort::initReadTransfer(qint64 maxSize)
 {
   ///qDebug() << "mdtUsbPort::initReadTransfer() called, maxSize: " << maxSize;

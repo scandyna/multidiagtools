@@ -115,7 +115,29 @@ class mdtPortThread : public QThread
    * if we update state before/after I/O call.
    * To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms])
    */
-  void ioProcessBegin();
+  ///void ioProcessBegin();
+
+  /*! \brief Emitted when a read process begins
+   * 
+   * This can be used to display read state.
+   * Please consider that this signal is emitted each time the read process begins,
+   * and not when it ends.
+   * This is because asynch I/O calls are fast, and nothing will be seen from user
+   * if we update state before/after I/O call.
+   * To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms])
+   */
+  void readProcessBegin();
+
+  /*! \brief Emitted when a write process begins
+   * 
+   * This can be used to display write state.
+   * Please consider that this signal is emitted each time the write process begins,
+   * and not when it ends.
+   * This is because asynch I/O calls are fast, and nothing will be seen from user
+   * if we update state before/after I/O call.
+   * To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms])
+   */
+  void writeProcessBegin();
 
   /*! \brief Emited when a new frame is available
    *
@@ -186,6 +208,9 @@ class mdtPortThread : public QThread
    * \param frame Data readen from port will be stored in this frame.
    *               Note that pointer is updated when a frame was completed
    *               and that it can be Null (in this case the mdtAbstractPort::UnhandledError is returned)
+   * \param emitNewFrameReaden If true, newFrameReaden() will be emitted each time a complete frame was generated.
+   *                            If false, complete frames are enqueued (as ever), but signal is not emitted.
+   *                            (This flag is used by mdtUsbtmcPortThread).
    *
    * \return The number of frames completed during the process.
    *          This can be helpful for query/reply protocols in witch the standard
@@ -195,7 +220,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  int readFromPort(mdtFrame **frame);
+  int readFromPort(mdtFrame **frame, bool emitNewFrameReaden = true);
 
   /*! \brief Get a new frame for writing data to port
    *

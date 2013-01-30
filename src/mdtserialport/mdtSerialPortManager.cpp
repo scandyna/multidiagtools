@@ -39,11 +39,11 @@ mdtSerialPortManager::mdtSerialPortManager(QObject *parent)
   setPort(port);
 
   // Threads setup
-  pvWriteThread = new mdtPortWriteThread;
-  pvReadThread = new mdtPortReadThread;
+  ///pvWriteThread = new mdtPortWriteThread;
+  ///pvReadThread = new mdtPortReadThread;
   pvCtlThread = new mdtSerialPortCtlThread;
-  addThread(pvWriteThread);
-  addThread(pvReadThread);
+  addThread(new mdtPortWriteThread);
+  addThread(new mdtPortReadThread);
   addThread(pvCtlThread);
 }
 
@@ -155,19 +155,25 @@ mdtAbstractSerialPort &mdtSerialPortManager::port()
   return *sp;
 }
 
-mdtPortWriteThread *mdtSerialPortManager::writeThread()
+///mdtPortWriteThread *mdtSerialPortManager::writeThread()
+/**
+mdtPortThread *mdtSerialPortManager::writeThread()
 {
   Q_ASSERT(pvWriteThread != 0);
 
   return pvWriteThread;
 }
+*/
 
-mdtPortReadThread *mdtSerialPortManager::readThread()
+///mdtPortReadThread *mdtSerialPortManager::readThread()
+/**
+mdtPortThread *mdtSerialPortManager::readThread()
 {
   Q_ASSERT(pvReadThread != 0);
 
   return pvReadThread;
 }
+*/
 
 mdtSerialPortCtlThread *mdtSerialPortManager::ctlThread()
 {

@@ -22,12 +22,15 @@
 #define MDT_USBTMC_PORT_MANAGER_H
 
 #include "mdtUsbPort.h"
-#include "mdtUsbPortThread.h"
+#include "mdtUsbtmcPortThread.h"
 #include "mdtUsbPortManager.h"
 #include "mdtPortInfo.h"
 #include <QObject>
 #include <QStringList>
 #include <QList>
+
+/// \bug abortBulkIn() does not work properly
+/// \todo Write a USBTMC port thread
 
 /*! \brief USBTMC port manager
  *
@@ -47,8 +50,7 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Construct a USBTMC port manager
    *
-   * Creates a mdtPortConfig, a mdtUsbPort,
-   *  and thread object.
+   * Create a thread and setup port.
    */
   mdtUsbtmcPortManager(QObject *parent = 0);
 
@@ -151,21 +153,22 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    * \return 0 on success.
    * \pre port must be set before call of this method
    */
-  int abortBulkIn(quint8 bTag);
+  ///int abortBulkIn(quint8 bTag);
+  ///void abortBulkIn(quint8 bTag);
 
   /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
    *
    * \see abortBulkIn()
    * \return bTag on success or WriteQueueEmpty on error.
    */
-  int sendInitiateAbortBulkInRequest(quint8 bTag);
+  ///int sendInitiateAbortBulkInRequest(quint8 bTag);
 
   /*! \brief Send a CHECK_ABORT_BULK_IN_STATUS request thru the control endpoint
    *
    * \see abortBulkIn()
    * \return bTag on success or WriteQueueEmpty on error.
    */
-  int sendCheckAbortBulkInStatusRequest(quint8 bTag);
+  ///int sendCheckAbortBulkInStatusRequest(quint8 bTag);
 
   /*! \brief Abort bulk OUT
    *
@@ -193,6 +196,10 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
   /*! \brief Called by the thread whenn a frame was readen
    */
   void fromThreadNewFrameReaden();
+
+  /*! \brief Manage errors comming from port threads
+   */
+  void onThreadsErrorOccured(int error);
 
  private:
 

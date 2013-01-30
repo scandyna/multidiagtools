@@ -38,7 +38,8 @@ class mdtUsbPortManager : public mdtPortManager
 
   /*! \brief Contruct a USB port manager
    *
-   * Will create mdtUsbPort and mdtUsbPortThread objects.
+   * Will create mdtUsbPort and setup.
+   *  Thread will be created at first call of openPort().
    */
   mdtUsbPortManager(QObject *parent = 0);
 
@@ -70,6 +71,18 @@ class mdtUsbPortManager : public mdtPortManager
    * \pre Manager must no running
    */
   QList<mdtPortInfo*> scan(int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol);
+
+  /*! \brief Open the port
+   *
+   * Overloads mdtPortManager::openPort().
+   *
+   * Will construct the thread if not allready exists.
+   *  This is because mdtUsbtmcPortManager uses a different thread,
+   *  so this task can not be done in constructor.
+   *
+   * Internally, mdtPortManager::openPort() is called.
+   */
+  bool openPort();
 
   /*! \brief Request port to read until a short frame is received
    *

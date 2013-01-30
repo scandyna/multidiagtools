@@ -16,6 +16,7 @@ set (HEADER_FILES
           mdtTcpSocket.h
           mdtTcpSocketThread.h
           mdtUsbPortThread.h
+          mdtUsbtmcPortThread.h
           # Port info
           mdtPortInfoCbHandler.h
           # Port manager
@@ -35,6 +36,7 @@ set (SOURCES_FILES
           mdtAbstractPort.cpp
           mdtUsbPort.cpp
           mdtUsbPortThread.cpp
+          mdtUsbtmcPortThread.cpp
           mdtUsbDeviceDescriptor.cpp
           mdtUsbConfigDescriptor.cpp
           mdtUsbInterfaceDescriptor.cpp

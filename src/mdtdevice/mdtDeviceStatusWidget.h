@@ -25,6 +25,7 @@
 #include <QString>
 #include "mdtDevice.h"
 #include "mdtBlinkLed.h"
+#include "mdtPortThread.h"
 
 class QLabel;
 class QPushButton;
@@ -52,6 +53,16 @@ class mdtDeviceStatusWidget : public QWidget
    * \pre device must be valid.
    */
   void setDevice(mdtDevice *device);
+
+  /*! \brief Enable the TX/RX LEDs
+   *
+   * \pre txThread and rxThread must be valid.
+   */
+  void enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread);
+
+  /*! \brief Disable the TX/RX LED's
+   */
+  void disableTxRxLeds();
 
   /*! \brief Set default state texts
    */
@@ -99,6 +110,20 @@ class mdtDeviceStatusWidget : public QWidget
    */
   void setState(int state, const QString &message, const QString &details);
 
+ private slots:
+
+  /*! \brief Trig the TX led for 100 ms
+   *
+   * \pre TX led must be set (see enableTxRxLeds)
+   */
+  void trigTxLed();
+
+  /*! \brief Trig the RX led for 100 ms
+   *
+   * \pre RX led must be set (see enableTxRxLeds)
+   */
+  void trigRxLed();
+
  private:
 
   Q_DISABLE_COPY(mdtDeviceStatusWidget);
@@ -119,5 +144,8 @@ class mdtDeviceStatusWidget : public QWidget
   mdtLed::color_t pvReadyColor;
   mdtLed::color_t pvConnectingColor;
   mdtLed::color_t pvBusyColor;
+  // Used by disableTxRxLeds()
+  mdtPortThread *pvTxThread;
+  mdtPortThread *pvRxThread;
 };
 #endif

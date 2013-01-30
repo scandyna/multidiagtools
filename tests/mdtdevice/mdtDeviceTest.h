@@ -48,6 +48,9 @@ class mdtDeviceTest : public mdtTest
   // Agilent U3606A test (will be skipped if devic is not connected)
   void U3606ATest();
 
+  // Agilent DSO1000 test (will be skipped if devic is not connected)
+  void DSO1000ATest();
+
 /**
 #ifdef Q_OS_UNIX
   // Check U3606A device

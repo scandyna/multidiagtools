@@ -35,6 +35,11 @@ bool mdtUsbPortThread::isReader() const
   return true;
 }
 
+bool mdtUsbPortThread::isWriter() const
+{
+  return true;
+}
+
 mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxReadTransfers)
 {
   Q_ASSERT(pvPort != 0);
@@ -76,7 +81,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::handleCommonErrors(mdtAbstractPort::e
 {
   if(portError == mdtAbstractPort::Disconnected){
     // Try to reconnect
-    ///portError = reconnect(reconnectTimeout(), reconnectMaxTry(), true);
     portError = reconnect(true);
     if(portError != mdtAbstractPort::NoError){
       return mdtAbstractPort::UnhandledError;
@@ -211,7 +215,7 @@ void mdtUsbPortThread::run()
         if(port->writeFrames().size() > 0){
           writeFrame = port->writeFrames().dequeue();
           Q_ASSERT(writeFrame != 0);
-          emit(ioProcessBegin());
+          emit(writeProcessBegin());
         }
       }
     }

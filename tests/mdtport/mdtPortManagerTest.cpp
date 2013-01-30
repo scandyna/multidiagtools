@@ -134,6 +134,7 @@ void mdtPortManagerTest::portTest()
   QTemporaryFile file;
   mdtPortConfig cfg, cfg2;
   mdtPort *port, *port2;
+  mdtPortThread *thread;
   QList<QByteArray> frames;
 
   // Create a temporary file
@@ -146,10 +147,16 @@ void mdtPortManagerTest::portTest()
   port->setConfig(&cfg);
 
   // Init port manager
+  QVERIFY(m.readThread() == 0);
+  QVERIFY(m.writeThread() == 0);
   m.setPort(port);
   m.setTransactionsDisabled(true);
-  m.addThread(new mdtPortWriteThread);
-  m.addThread(new mdtPortReadThread);
+  thread = new mdtPortWriteThread;
+  m.addThread(thread);
+  QVERIFY(m.writeThread() == thread);
+  thread = new mdtPortReadThread;
+  m.addThread(thread);
+  QVERIFY(m.readThread() == thread);
   m.setPortName(file.fileName());
   QVERIFY(m.openPort());
 
@@ -194,6 +201,8 @@ void mdtPortManagerTest::portTest()
   // Cleanup
   m2.detachPort(true, true);
   m.detachPort(true, true);
+  QVERIFY(m.readThread() == 0);
+  QVERIFY(m.writeThread() == 0);
 }
 
 void mdtPortManagerTest::usbPortTest()
@@ -291,9 +300,6 @@ void mdtPortManagerTest::usbTmcPortTest()
   // Try to query device
   QVERIFY(m.sendCommand("*CLS\n") > 0);
   QVERIFY(!m.sendQuery("*IDN?\n").isEmpty());
-  
-  // Abort test
-  qDebug() << "abortBulkIn() returned: " << m.abortBulkIn(5);
 }
 
 /// \todo No real check possible withous MODBUS Server available on loopback (127.0.0)

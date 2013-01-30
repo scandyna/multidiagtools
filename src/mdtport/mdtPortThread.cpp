@@ -230,7 +230,7 @@ mdtFrame *mdtPortThread::getNewFrameRead()
 }
 
 /// \todo Handle timeout error ?
-int mdtPortThread::readFromPort(mdtFrame **frame)
+int mdtPortThread::readFromPort(mdtFrame **frame, bool emitNewFrameReaden)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(frame != 0);
@@ -258,7 +258,7 @@ int mdtPortThread::readFromPort(mdtFrame **frame)
   // Reset bufferCursor
   bufferCursor = pvReadBuffer;
   // Read data from port
-  emit ioProcessBegin();
+  emit readProcessBegin();
   readen = pvPort->read(pvReadBuffer, pvReadBufferSize);
   if(readen < 0){
     pvPort->readFramesPool().enqueue(*frame);
@@ -281,7 +281,9 @@ int mdtPortThread::readFromPort(mdtFrame **frame)
       stored += (*frame)->eofSeqLen();
       pvPort->readenFrames().enqueue(*frame);
       // emit a Readen frame signal
-      emit newFrameReaden();
+      if(emitNewFrameReaden){
+        emit newFrameReaden();
+      }
       *frame = getNewFrameRead();
       completeFrames++;
     }
@@ -324,7 +326,7 @@ qint64 mdtPortThread::writeDataToPort(mdtFrame *frame, int maxSize)
   qint64 written = 0;
 
   // Write data to port
-  emit ioProcessBegin();
+  emit writeProcessBegin();
   if(maxSize > -1){
     // Check max possible
     if(maxSize > frame->size()){

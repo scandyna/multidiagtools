@@ -49,11 +49,6 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
 
   mdtFrameCodecScpiU3606A();
 
-  /*! \brief Decode the CONFigure and FUNCtion answer
-   *
-   */
-  ///bool decodeConfFunc(QByteArray &frame);
-
   /*! \brief Decode CONFigure? reply
    */
   bool decodeConfigure(const QByteArray &data);
@@ -71,10 +66,6 @@ class mdtFrameCodecScpiU3606A : public mdtFrameCodecScpi
   QVariant resolution() const;
 
  private:
-
-  // Decode values for a node
-  // Each value will be stored in pvValues
-  ///bool decodeNodeValues(QString data);
 
   measure_type_t pvMeasureType;
   QVariant pvRange;

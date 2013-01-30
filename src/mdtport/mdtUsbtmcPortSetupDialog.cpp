@@ -114,6 +114,7 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
   // Get identification
   idn = pvPortManager->sendQuery("*IDN?\n");
   if(idn.isEmpty()){
+    pvPortManager->closePort();
     setStateError(tr("*IDN? query failed"));
     cbInterface->setEnabled(true);
     return;

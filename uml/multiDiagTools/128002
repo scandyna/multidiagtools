@@ -1,6 +1,6 @@
 format 76
 "mdtutils" // mdtutils
-  revision 116
+  revision 117
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2527,69 +2527,6 @@ ${inlines}
       size A4
     end
 
-    class 579074 "mdtFrameCodecScpiDigitalMeter"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      operation 1118466 "mdtFrameCodecScpiDigitalMeter"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${inline}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 1118594 "~mdtFrameCodecScpiDigitalMeter"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 711554 // <generalisation>
-	relation 703106 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 711554 // <generalisation>
-	  b parent class_ref 269570 // mdtFrameCodecScpi
-      end
-
-      operation 556418 "decodeNodeValues"
-	private explicit_return_type "bool"
-	nparams 1
-	  param in name "data" type class_ref 161026 // QString
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
   end
 
   classview 141826 "mdtTime"

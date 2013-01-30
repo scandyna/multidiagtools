@@ -16,6 +16,7 @@ set (HEADER_FILES
           mdtDeviceModbus.h
           mdtDeviceScpi.h
           mdtDeviceU3606A.h
+          mdtDeviceDSO1000A.h
     )
 
 
@@ -30,6 +31,7 @@ set (SOURCES_FILES
           mdtDeviceModbus.cpp
           mdtDeviceScpi.cpp
           mdtDeviceU3606A.cpp
+          mdtDeviceDSO1000A.cpp
     )
 
 # Liste des fichiers ui

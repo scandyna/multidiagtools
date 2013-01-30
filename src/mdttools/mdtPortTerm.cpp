@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -194,14 +194,16 @@ void mdtPortTerm::attachToSerialPort()
 
   // Try to open first port
   ports = pvSerialPortManager->scan();
-  if(ports.size() > 0){
-    pvSerialPortManager->setPortInfo(*ports.at(0));
-    if(!pvSerialPortManager->openPort()){
-      setStateError(tr("Cannot open port ") + ports.at(0)->portName());
-      ///qDebug() << "mdtPortTerm::attachToSerialPort(): cannot open port";
-      qDeleteAll(ports);
-      return;
-    }
+  if(ports.size() < 1){
+    setStateError("No free serial port found");
+    return;
+  }
+  pvSerialPortManager->setPortInfo(*ports.at(0));
+  if(!pvSerialPortManager->openPort()){
+    setStateError(tr("Cannot open port ") + ports.at(0)->portName());
+    ///qDebug() << "mdtPortTerm::attachToSerialPort(): cannot open port";
+    qDeleteAll(ports);
+    return;
   }
   ///pvSerialPortManager->setNotifyNewReadenFrame(true);
   if(pvSerialPortManager->start()){
@@ -287,6 +289,7 @@ void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+    pvUsbtmcPortManager->closePort();
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
   }

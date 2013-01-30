@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_USB_PORT_THREAD_H
-#define MDT_USB_PORT_THREAD_H
+#ifndef MDT_USBTMC_PORT_THREAD_H
+#define MDT_USBTMC_PORT_THREAD_H
 
 #include <QObject>
 #include <QQueue>
@@ -28,10 +28,11 @@
 #include <QString>
 #include "mdtPortThread.h"
 #include "mdtFrame.h"
+#include "mdtFrameUsbControl.h"
 
 class mdtUsbPort;
 
-class mdtUsbPortThread : public mdtPortThread
+class mdtUsbtmcPortThread : public mdtPortThread
 {
  Q_OBJECT
 
@@ -39,7 +40,7 @@ class mdtUsbPortThread : public mdtPortThread
 
   /*! \brief Constructor
    */
-  mdtUsbPortThread(QObject *parent = 0);
+  mdtUsbtmcPortThread(QObject *parent = 0);
 
   /*! \brief Returns true
    */
@@ -60,10 +61,24 @@ class mdtUsbPortThread : public mdtPortThread
   void messageInReaden();
 
   /*! \brief Emitted when the read until a short packet process is finished
+   * 
+   * \todo See if used..
    */
   void readUntilShortPacketReceivedFinished();
 
  private:
+
+  /*! \brief USBTMC write process
+   *
+   * \param writeFrame Pointer that points to frame (if null, this method will check if a new frame is to write).
+   *                    Note: when this method returns, it's possible that
+   *                          pointed frame pointer is null (no more data to write).
+   * \param waitAnAnswer If a frame is completly written, and an answer is expected (ex. read request), this flag
+   *                      will be updated.
+   * \param expectedBulkInbTags If a answer is expected, the bTag will be appended to this list.
+   * \return NoError or a fatal error (handled erros are handled internally and notifications are done).
+   */
+  mdtAbstractPort::error_t usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
 
   /*! \brief Read until a short frame is received
    *
@@ -75,6 +90,36 @@ class mdtUsbPortThread : public mdtPortThread
    * \pre Port must be set with setPort() before using this method.
    */
   mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
+
+  /*! \brief Abort bulk IN
+   *
+   * Mutext must be locked when calling this method.
+   *  It will be unlocked during wait.
+   *
+   * Note that pending control transfers will be cancelled.
+   *
+   * Once the abort process is done, port manager will be notified
+   *  with a mdtAbstractPort::ReadCanceled (only if thread has running flag true).
+   *  Port manager then knows that it can continue working.
+   *
+   * \return 0 on success.
+   * \pre port must be set before call of this method
+   */
+  mdtAbstractPort::error_t abortBulkIn(quint8 bTag);
+
+  /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
+   *
+   * \see abortBulkIn()
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   */
+  mdtAbstractPort::error_t sendInitiateAbortBulkInRequest(quint8 bTag, mdtFrameUsbControl *ctlFrame);
+
+  /*! \brief Send a CHECK_ABORT_BULK_IN_STATUS request thru the control endpoint
+   *
+   * \see abortBulkIn()
+   * \return NoError or a error of type mdtAbstractPort::error_t.
+   */
+  mdtAbstractPort::error_t sendCheckAbortBulkInStatusRequest(quint8 bTag, mdtFrameUsbControl *ctlFrame);
 
   /*! \brief Handle common errors
    *
@@ -90,7 +135,7 @@ class mdtUsbPortThread : public mdtPortThread
    */
   void run();
 
-  Q_DISABLE_COPY(mdtUsbPortThread);
+  Q_DISABLE_COPY(mdtUsbtmcPortThread);
 };
 
-#endif  // #ifndef MDT_USB_PORT_THREAD_H
+#endif  // #ifndef MDT_USBTMC_PORT_THREAD_H

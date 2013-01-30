@@ -37,7 +37,6 @@ mdtDeviceU3606A::mdtDeviceU3606A(QObject *parent)
   portManager()->config().setWriteFrameSize(512);
   portManager()->config().setWriteQueueSize(1);
   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
-  connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
 }
 
 mdtDeviceU3606A::~mdtDeviceU3606A()

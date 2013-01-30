@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 24
+  revision 25
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3960,6 +3960,48 @@ ${inlines}
 	
       end
     end
+
+    class 579074 "mdtUsbPortThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 731138 // <generalisation>
+	relation 722690 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 731138 // <generalisation>
+	  b parent class_ref 222594 // mdtPortThread
+      end
+    end
+
+    class 579202 "mdtUsbtmcPortThread"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 731266 // <generalisation>
+	relation 722818 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 731266 // <generalisation>
+	  b parent class_ref 579074 // mdtUsbPortThread
+      end
+    end
   end
 
   package_ref 155010 // linux
@@ -5090,6 +5132,7 @@ ${inlines}
 	
       end
     end
+
   end
 
   classview 346242 "mdtUsbtmcPortSetupDialog"

@@ -37,8 +37,6 @@
 #include <QQueue>
 #include <QMap>
 
-class mdtPortThread;
-
 /*! \brief Port manager base class
  *
  * Manages a port based on mdtAbstractPort an several threads based on mdtPortThread.
@@ -160,6 +158,18 @@ class mdtPortManager : public QThread
    */
   void addThread(mdtPortThread *thread);
 
+  /*! \brief Returns instance of reader thread.
+   *
+   * Note that a Null pointer can be returned
+   */
+  mdtPortThread *readThread();
+
+  /*! \brief Returns instance of writer thread.
+   *
+   * Note that a Null pointer can be returned
+   */
+  mdtPortThread *writeThread();
+
   /*! \brief Detach threads from port and remove threads
    *
    * \param releaseMemory If true, all threads are deleted
@@ -236,7 +246,7 @@ class mdtPortManager : public QThread
    * \pre Port must be set with setPort() before use of this method.
    * \todo Should return mdtAbstractPort::error_t
    */
-  bool openPort();
+  virtual bool openPort();
 
   /*! \brief Close the port
    * 
@@ -519,7 +529,7 @@ class mdtPortManager : public QThread
 
   /*! \brief Manage errors comming from port threads
    */
-  void onThreadsErrorOccured(int error);
+  virtual void onThreadsErrorOccured(int error);
 
  signals:
 
@@ -634,8 +644,10 @@ class mdtPortManager : public QThread
 
   bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
   bool pvTransactionsEnabled;
-
   bool pvCancelReadWait;
+  // Instance of reader and writer thread
+  mdtPortThread *pvReadThread;
+  mdtPortThread *pvWriteThread;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);

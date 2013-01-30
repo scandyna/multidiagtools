@@ -85,11 +85,13 @@ class mdtSerialPortManager : public mdtPortManager
 
   /*! \brief Get the write thread object
    */
-  mdtPortWriteThread *writeThread();
+  ///mdtPortWriteThread *writeThread();
+  ///mdtPortThread *writeThread();
 
   /*! \brief Get the read thread object
    */
-  mdtPortReadThread *readThread();
+  ///mdtPortReadThread *readThread();
+  ///mdtPortThread *readThread();
 
   /*! \brief Get the modem lines thread object
    */
@@ -101,8 +103,8 @@ class mdtSerialPortManager : public mdtPortManager
   Q_DISABLE_COPY(mdtSerialPortManager);
 
   // Threads
-  mdtPortWriteThread *pvWriteThread;
-  mdtPortReadThread *pvReadThread;
+  ///mdtPortWriteThread *pvWriteThread;
+  ///mdtPortReadThread *pvReadThread;
   mdtSerialPortCtlThread *pvCtlThread;
 };
 
