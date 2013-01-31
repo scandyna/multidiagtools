@@ -77,6 +77,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
   return mdtAbstractPort::ReadTimeout;
 }
 
+/**
 mdtAbstractPort::error_t mdtUsbPortThread::handleCommonErrors(mdtAbstractPort::error_t portError)
 {
   if(portError == mdtAbstractPort::Disconnected){
@@ -90,6 +91,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::handleCommonErrors(mdtAbstractPort::e
 
   return portError;
 }
+*/
 
 void mdtUsbPortThread::run()
 {

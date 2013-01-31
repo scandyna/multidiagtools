@@ -1461,6 +1461,8 @@ void mdtFrameTest::usbTmcDecodeTest()
   QVERIFY(f->bytesToStore() == 16);
   QVERIFY(!f->isComplete());
   QVERIFY(uf->messageData() == "");
+  QVERIFY(!uf->bTagOk());
+  QVERIFY(!uf->MsgIDsupported());
   // Build the frame
   srcData.clear();
   srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
@@ -1612,6 +1614,8 @@ void mdtFrameTest::usbTmcDecodeTest()
   QVERIFY(uf->MsgID() == 2);            // MsgID: DEV_DEP_MSG_IN
   QVERIFY(uf->isEOM());
   QVERIFY(uf->bTag() == 0xF7);
+  QVERIFY(uf->bTagOk());
+  QVERIFY(uf->MsgIDsupported());
 
   /*
    * Simple frame: With alignement bytes
@@ -1630,6 +1634,8 @@ void mdtFrameTest::usbTmcDecodeTest()
   QVERIFY(f->bytesToStore() == 20);
   QVERIFY(!f->isComplete());
   QVERIFY(uf->messageData() == "");
+  QVERIFY(!uf->bTagOk());
+  QVERIFY(!uf->MsgIDsupported());
   // Build the frame
   srcData.clear();
   srcData.append((char)mdtFrameUsbTmc::DEV_DEP_MSG_IN); // MsgID
@@ -1670,6 +1676,7 @@ void mdtFrameTest::usbTmcDecodeTest()
   QVERIFY(f->bytesToStore() == 18);
   QVERIFY(!f->isEmpty());
   QVERIFY(!f->isComplete());
+  QVERIFY(!uf->bTagOk());
   // bTagInverse
   c = srcData.at(2);
   QVERIFY(f->putData(&c, 1) == 1);
@@ -1783,6 +1790,8 @@ void mdtFrameTest::usbTmcDecodeTest()
   QVERIFY(uf->MsgID() == 2);            // MsgID: DEV_DEP_MSG_IN
   QVERIFY(uf->isEOM());
   QVERIFY(uf->bTag() == 0xF8);
+  QVERIFY(uf->bTagOk());
+  QVERIFY(uf->MsgIDsupported());
 
   /*
    * Capacity < frame size (header + data + alignement bytes)

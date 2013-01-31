@@ -595,11 +595,11 @@ void mdtDeviceTest::U3606ATest()
   
   d.start(500);
   QTest::qWait(5000);
-  /**
+  
   while(dw.isVisible()){
     QTest::qWait(500);
   }
-  */
+  
 }
 
 void mdtDeviceTest::DSO1000ATest()

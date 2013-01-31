@@ -768,6 +768,7 @@ void mdtPortManager::commitFrames()
       Q_ASSERT(transaction->id() == it.key());
       emit(newReadenFrame(*transaction));
       if(transaction->isQueryReplyMode()){
+        qDebug() << "mdtPortManager::commitFrames(): frame is Q/R mode";
         enqueueTransactionDone(transaction);
       }else{
         pvTransactionsPool.enqueue(transaction);

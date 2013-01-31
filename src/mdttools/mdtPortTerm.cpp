@@ -128,7 +128,7 @@ void mdtPortTerm::sendCmd()
   //cmd.append((char)0x04);
   /// \todo Error handling !
   // Wait until write is possible and write
-  if(!pvCurrentPortManager->waitOnWriteReady(1000)){
+  if(!pvCurrentPortManager->waitOnWriteReady()){
     qDebug() << "TERM: cannot write for the moment";
     return;
   }
@@ -138,7 +138,7 @@ void mdtPortTerm::sendCmd()
   }
   // If we have a query for USBTMC port, send the read request
   if((pvCurrentPortManager == pvUsbtmcPortManager)&&(cmdIsQuery)){
-    if(!pvCurrentPortManager->waitOnWriteReady(1000)){
+    if(!pvCurrentPortManager->waitOnWriteReady()){
       qDebug() << "TERM: cannot write for the moment";
       return;
     }

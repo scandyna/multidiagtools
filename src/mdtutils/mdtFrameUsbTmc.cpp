@@ -32,6 +32,8 @@ mdtFrameUsbTmc::mdtFrameUsbTmc()
   pvbmTransferAttributes = 0;
   pvTermChar = '\0';
   pvEOM = true;
+  pvbTagOk = false;
+  pvMsgIDsupported = false;
 }
 
 mdtFrameUsbTmc::~mdtFrameUsbTmc()
@@ -48,6 +50,8 @@ void mdtFrameUsbTmc::clearSub()
   pvTermChar = '\0';
   pvEOM = true;
   pvMessageData.clear();
+  pvbTagOk = false;
+  pvMsgIDsupported = false;
 }
 
 int mdtFrameUsbTmc::putData(const char *data, int maxLen)
@@ -86,6 +90,8 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
         pvEOFcondition = true;
         qDebug() << "mdtFrameUsbTmc::putData(): bTag/bTagInverse incoherent, bTag: " << pvbTag << " , expected inverse: " << (quint8)~pvbTag << " , rx inverse: " << pvbTagInverse;
         return stored;
+      }else{
+        pvbTagOk = true;
       }
       pvTransferSize = at(4);
       pvTransferSize += (at(5) << 8);
@@ -93,6 +99,7 @@ int mdtFrameUsbTmc::putData(const char *data, int maxLen)
       pvTransferSize += (at(7) << 24);
       // MsgID specific part
       if(pvMsgID == DEV_DEP_MSG_IN){
+        pvMsgIDsupported = true;
         // EOM
         if(at(8) & 0x01){
           pvEOM = true;
@@ -130,6 +137,11 @@ mdtFrameUsbTmc::msg_id_t mdtFrameUsbTmc::MsgID() const
   return (msg_id_t)pvMsgID;
 }
 
+bool mdtFrameUsbTmc::MsgIDsupported() const
+{
+  return pvMsgIDsupported;
+}
+
 void mdtFrameUsbTmc::setbTag(quint8 bTag)
 {
   pvbTag = bTag;
@@ -139,6 +151,11 @@ void mdtFrameUsbTmc::setbTag(quint8 bTag)
 quint8 mdtFrameUsbTmc::bTag() const
 {
   return pvbTag;
+}
+
+bool mdtFrameUsbTmc::bTagOk() const
+{
+  return pvbTagOk;
 }
 
 void mdtFrameUsbTmc::setEOM(bool EOM)

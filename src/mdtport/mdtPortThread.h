@@ -167,6 +167,16 @@ class mdtPortThread : public QThread
 
  protected:
 
+   /*! \brief Handle common errors
+   *
+   * Common errors are:
+   *  - mdtAbstractPort::Disconnected : will try to reconnect
+   *
+   * \param portError Error to handle
+   * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
+   */
+  mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
+
   /*! \brief Get a new frame for reading data from port
    *
    * This is a helper method for subclass to get a new frame
@@ -310,9 +320,10 @@ class mdtPortThread : public QThread
 
   /*! \brief Emit the errorOccured() signal if new error is different from current
    *
-   * \todo Adapt in threads subclasses
+   * \param renotifySameError For some cases, the same error must be notified each time it happens.
+   *                           If this flag is true, signal is emitted without checking previous error.
    */
-  void notifyError(int error);
+  void notifyError(int error, bool renotifySameError = false);
 
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;

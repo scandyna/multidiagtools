@@ -84,7 +84,7 @@ class mdtUsbPortThread : public mdtPortThread
    * \param portError Error to handle
    * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
    */
-  mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
+  ///mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
 
   /*! \brief Working thread method
    */

@@ -195,6 +195,20 @@ bool mdtPortThread::isWriter() const
   return false;
 }
 
+mdtAbstractPort::error_t mdtPortThread::handleCommonErrors(mdtAbstractPort::error_t portError)
+{
+  if(portError == mdtAbstractPort::Disconnected){
+    // Try to reconnect
+    portError = reconnect(true);
+    if(portError != mdtAbstractPort::NoError){
+      return mdtAbstractPort::UnhandledError;
+    }
+    return mdtAbstractPort::NoError;
+  }
+
+  return portError;
+}
+
 mdtFrame *mdtPortThread::getNewFrameRead()
 {
   Q_ASSERT(pvPort != 0);
@@ -478,9 +492,9 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
   return mdtAbstractPort::UnhandledError;
 }
 
-void mdtPortThread::notifyError(int error)
+void mdtPortThread::notifyError(int error, bool renotifySameError)
 {
-  if(error != pvCurrentError){
+  if((error != pvCurrentError)||(renotifySameError)){
     qDebug() << "mdtPortThread::notifyError(): error " << error << " occured";
     pvCurrentError = error;
     emit(errorOccured(error));

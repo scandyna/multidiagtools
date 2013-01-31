@@ -102,7 +102,7 @@ class mdtUsbtmcPortThread : public mdtPortThread
    *  with a mdtAbstractPort::ReadCanceled (only if thread has running flag true).
    *  Port manager then knows that it can continue working.
    *
-   * \return 0 on success.
+   * \return NoError or a error of type mdtAbstractPort::error_t.
    * \pre port must be set before call of this method
    */
   mdtAbstractPort::error_t abortBulkIn(quint8 bTag);
@@ -129,7 +129,7 @@ class mdtUsbtmcPortThread : public mdtPortThread
    * \param portError Error to handle
    * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
    */
-  mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
+  ///mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
 
   /*! \brief Working thread method
    */

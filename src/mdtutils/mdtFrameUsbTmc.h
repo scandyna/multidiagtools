@@ -76,6 +76,14 @@ class mdtFrameUsbTmc : public mdtFrame
    */
   msg_id_t MsgID() const;
 
+  /*! \brief Check if received MsgID is supported
+   *
+   * Usefull for frames received from device.
+   *
+   * \return true if header was decoded and MsgID is supported.
+   */
+  bool MsgIDsupported() const;
+
   /*! \brief Set the bTag
    *
    * The bTag should be incremented each time a new USBTMC message is sent,
@@ -93,6 +101,14 @@ class mdtFrameUsbTmc : public mdtFrame
    *  Is only valid when the frame is complete.
    */
   quint8 bTag() const;
+
+  /*! \brief Check bTag/bTagInverse coherence
+   *
+   * Usefull for frames received from device.
+   *
+   * \return true if header was decoded and bTag/bTagInverse are coherent.
+   */
+  bool bTagOk() const;
 
   /*! \brief Set the EOM flag
    *
@@ -146,6 +162,8 @@ class mdtFrameUsbTmc : public mdtFrame
   char pvTermChar;
   bool pvEOM;
   QByteArray pvMessageData;
+  bool pvbTagOk;
+  bool pvMsgIDsupported;
 };
 
 #endif  // #ifndef MDT_FRAME_USB_TMC_H
