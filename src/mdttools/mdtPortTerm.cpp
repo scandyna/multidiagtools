@@ -200,6 +200,7 @@ void mdtPortTerm::attachToSerialPort()
   }
   if(pvSerialPortManager->start()){
     setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
+    QTimer::singleShot(5000, this, SLOT(setStateRunning()));
   }
   qDeleteAll(ports);
 }
@@ -240,6 +241,7 @@ void mdtPortTerm::portSetup()
   // If port is running, enable terminal
   if(pvCurrentPortManager->isRunning()){
     setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
+    QTimer::singleShot(5000, this, SLOT(setStateRunning()));
   }else{
     setStateStopped();
   }
@@ -253,7 +255,9 @@ void mdtPortTerm::attachToUsbtmcPort()
   // Create objects
   pvUsbtmcPortManager = new mdtUsbtmcPortManager;
   pvCurrentPortManager = pvUsbtmcPortManager;
-
+  // Make connections
+  connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
   // Try to open first port
   ports = pvUsbtmcPortManager->scan();
   if(ports.size() < 1){
@@ -268,10 +272,9 @@ void mdtPortTerm::attachToUsbtmcPort()
   }
   if(pvUsbtmcPortManager->start()){
     setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
+    QTimer::singleShot(5000, this, SLOT(setStateRunning()));
   }
   qDeleteAll(ports);
-
-  connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
 }
 
 void mdtPortTerm::detachFromUsbtmcPort()
@@ -310,12 +313,20 @@ void mdtPortTerm::setStateFromPortError(int error)
   Q_ASSERT(pvCurrentPortManager != 0);
 
   switch(error){
+    case mdtAbstractPort::NoError:
+      setStateRunning();
+      break;
     case mdtAbstractPort::ReadTimeout:
       pvStatusWidget->setState(mdtDevice::Busy, tr("Read timeout occured"), "");
       QTimer::singleShot(5000, this, SLOT(setStateRunning()));
       break;
+    case mdtAbstractPort::ReadCanceled:
+      pvStatusWidget->setState(mdtDevice::Busy, tr("Read error occured"), "");
+      QTimer::singleShot(5000, this, SLOT(setStateRunning()));
+      break;
     case mdtAbstractPort::Disconnected:
       setStateStopped();
+      QTimer::singleShot(5000, this, SLOT(setStateStopped()));  /// \todo bricolage ...
       break;
     default:
       pvStatusWidget->setState(mdtDevice::Unknown, "Received unknown error, number " + QString::number(error), "");

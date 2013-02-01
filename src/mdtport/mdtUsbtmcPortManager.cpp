@@ -490,6 +490,8 @@ void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
       // Thread has finish aborting a bulk IN, we can continue
       qDebug() << "USBTMC port manager: cancel wait ...";
       cancelReadWait();
+      emit(errorStateChanged(error));
+      break;
     default:
       emit(errorStateChanged(error));
   }

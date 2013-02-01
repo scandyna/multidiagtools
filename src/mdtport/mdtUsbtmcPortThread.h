@@ -78,7 +78,7 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \return NoError or a error of type mdtAbstractPort::error_t.
    * \pre port must be set before call of this method
    */
-  mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtFrame **writeFrame, mdtFrame **readFrame);
+  mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtFrame **writeFrame/**, mdtFrame **readFrame*/);
 
   /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
    *

@@ -45,22 +45,14 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
   Q_ASSERT(pvPort != 0);
 
   mdtAbstractPort::error_t portError;
+  QList<mdtAbstractPort::error_t> errors;
   mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
   Q_ASSERT(port != 0);
   char *buffer = new char[port->readBufferSize()];
   int readen;
+  int i;
 
   while(maxReadTransfers > 0){
-    readen = port->read(buffer, port->readBufferSize());
-    qDebug() << "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
-    if(readen < 0){
-      delete[] buffer;
-      return (mdtAbstractPort::error_t)readen;
-    }
-    if(readen < port->readBufferSize()){
-      delete[] buffer;
-      return mdtAbstractPort::NoError;
-    }
     portError = port->initReadTransfer(port->readBufferSize());
     if(portError != mdtAbstractPort::NoError){
       delete[] buffer;
@@ -70,6 +62,23 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
     if(portError != mdtAbstractPort::NoError){
       delete[] buffer;
       return portError;
+    }
+    errors = port->lastErrors();
+    for(i=0; i<errors.size(); i++){
+      if(errors.at(i) != mdtAbstractPort::NoError){
+        delete[] buffer;
+        return portError;
+      }
+    }
+    readen = port->read(buffer, port->readBufferSize());
+    qDebug() << "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
+    if(readen < 0){
+      delete[] buffer;
+      return (mdtAbstractPort::error_t)readen;
+    }
+    if(readen < port->readBufferSize()){
+      delete[] buffer;
+      return mdtAbstractPort::NoError;
     }
     maxReadTransfers--;
   }

@@ -982,7 +982,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
 {
   error_t portError;
 
-  ///qDebug() << "mdtUsbPort::cancelTransfers() ...";
+  qDebug() << "mdtUsbPort::cancelTransfers() ...";
   portError = cancelControlTransfer();
   if((portError != NoError)&&(portError != ControlCanceled)){
     return portError;
@@ -999,7 +999,7 @@ mdtAbstractPort::error_t mdtUsbPort::cancelTransfers()
   if((portError != NoError)&&(portError != ReadCanceled)){
     return portError;
   }
-  ///qDebug() << "mdtUsbPort::cancelTransfers() DONE";
+  qDebug() << "mdtUsbPort::cancelTransfers() DONE";
 
   return NoError;
 }
@@ -1284,35 +1284,53 @@ void mdtUsbPort::pvClose()
   libusb_close(pvHandle);
   pvHandle = 0;
   // Free memory
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlBuffer ...";
   delete[] pvControlBuffer;
   pvControlBuffer = 0;
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlBuffer DONE";
   pvControlBufferSize = 0;
   if(pvControlTransfer != 0){
+    qDebug() << "mdtUsbPort::pvClose(): free pvControlTransfer ...";
     libusb_free_transfer(pvControlTransfer);
     pvControlTransfer = 0;
+    qDebug() << "mdtUsbPort::pvClose(): free pvControlTransfer DONE";
   }
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlFramesPool ...";
   qDeleteAll(pvControlFramesPool);
   pvControlFramesPool.clear();
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlFramesPool DONE";
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlQueryFrames ...";
   qDeleteAll(pvControlQueryFrames);
   pvControlQueryFrames.clear();
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlQueryFrames DONE";
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlResponseFrames ...";
   qDeleteAll(pvControlResponseFrames);
   pvControlResponseFrames.clear();
+  qDebug() << "mdtUsbPort::pvClose(): delete pvControlResponseFrames DONE";
+  qDebug() << "mdtUsbPort::pvClose(): delete pvReadBuffer ...";
   delete[] pvReadBuffer;
   pvReadBuffer = 0;
+  qDebug() << "mdtUsbPort::pvClose(): delete pvReadBuffer DONE";
   pvReadBufferSize = 0;
   if(pvReadTransfer != 0){
+    qDebug() << "mdtUsbPort::pvClose(): free pvReadTransfer ...";
     libusb_free_transfer(pvReadTransfer);
     pvReadTransfer = 0;
+    qDebug() << "mdtUsbPort::pvClose(): free pvReadTransfer DONE";
   }
+  qDebug() << "mdtUsbPort::pvClose(): delete pvWriteBuffer ...";
   delete[] pvWriteBuffer;
   pvWriteBuffer = 0;
+  qDebug() << "mdtUsbPort::pvClose(): delete pvWriteBuffer DONE";
   pvWriteBufferSize = 0;
   if(pvWriteTransfer != 0){
     libusb_free_transfer(pvWriteTransfer);
     pvWriteTransfer = 0;
   }
+  qDebug() << "mdtUsbPort::pvClose(): delete pvMessageInBuffer ...";
   delete[] pvMessageInBuffer;
   pvMessageInBuffer = 0;
+  qDebug() << "mdtUsbPort::pvClose(): delete pvMessageInBuffer DONE";
   pvMessageInBufferSize = 0;
   if(pvMessageInTransfer != 0){
     libusb_free_transfer(pvMessageInTransfer);
