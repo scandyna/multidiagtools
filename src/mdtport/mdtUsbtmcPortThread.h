@@ -26,14 +26,12 @@
 #include <QWaitCondition>
 #include <QMutex>
 #include <QString>
-///#include "mdtPortThread.h"
 #include "mdtUsbPortThread.h"
 #include "mdtFrame.h"
 #include "mdtFrameUsbControl.h"
 
 class mdtUsbPort;
 
-///class mdtUsbtmcPortThread : public mdtPortThread
 class mdtUsbtmcPortThread : public mdtUsbPortThread
 {
  Q_OBJECT
@@ -52,22 +50,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    */
   bool isWriter() const;
 
- ///signals:
-
-  /*! \brief Emited when a new control response was readen
-   */
-  ///void controlResponseReaden();
-
-  /*! \brief Emited when a message IN was readen (from additionnal interrupt IN endpoint)
-   */
-  ///void messageInReaden();
-
-  /*! \brief Emitted when the read until a short packet process is finished
-   * 
-   * \todo See if used..
-   */
-  ///void readUntilShortPacketReceivedFinished();
-
  private:
 
   /*! \brief USBTMC write process
@@ -81,17 +63,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \return NoError or a fatal error (handled erros are handled internally and notifications are done).
    */
   mdtAbstractPort::error_t usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
-
-  /*! \brief Read until a short frame is received
-   *
-   * \param maxReadTransfers Maximum of read transfers before return
-   *                          (If device returns never a short frame,
-   *                          this method will return after maxReadTransfers).
-   * \return NoError or a error of type mdtAbstractPort::error_t.
-   *          If maxReadTransfers is reached, ReadTimeout is returned.
-   * \pre Port must be set with setPort() before using this method.
-   */
-  ///mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
 
   /*! \brief Abort bulk IN
    *
@@ -107,7 +78,7 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \return NoError or a error of type mdtAbstractPort::error_t.
    * \pre port must be set before call of this method
    */
-  mdtAbstractPort::error_t abortBulkIn(quint8 bTag);
+  mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtFrame **writeFrame, mdtFrame **readFrame);
 
   /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
    *
@@ -122,16 +93,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \return NoError or a error of type mdtAbstractPort::error_t.
    */
   mdtAbstractPort::error_t sendCheckAbortBulkInStatusRequest(quint8 bTag, mdtFrameUsbControl *ctlFrame);
-
-  /*! \brief Handle common errors
-   *
-   * Common errors are:
-   *  - mdtAbstractPort::Disconnected : will try to reconnect
-   *
-   * \param portError Error to handle
-   * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
-   */
-  ///mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
 
   /*! \brief Working thread method
    */

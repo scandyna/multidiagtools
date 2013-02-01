@@ -78,22 +78,6 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
   return mdtAbstractPort::ReadTimeout;
 }
 
-/**
-mdtAbstractPort::error_t mdtUsbPortThread::handleCommonErrors(mdtAbstractPort::error_t portError)
-{
-  if(portError == mdtAbstractPort::Disconnected){
-    // Try to reconnect
-    portError = reconnect(true);
-    if(portError != mdtAbstractPort::NoError){
-      return mdtAbstractPort::UnhandledError;
-    }
-    return mdtAbstractPort::NoError;
-  }
-
-  return portError;
-}
-*/
-
 void mdtUsbPortThread::run()
 {
   Q_ASSERT(pvPort != 0);
