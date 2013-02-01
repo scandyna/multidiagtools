@@ -18,19 +18,18 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef _MDTDEVICESTATUSWIDGET_H
-#define _MDTDEVICESTATUSWIDGET_H
+#ifndef MDT_DEVICE_STATUS_WIDGET_H
+#define MDT_DEVICE_STATUS_WIDGET_H
 
 #include <QWidget>
 #include <QString>
+#include <QGridLayout>
 #include "mdtDevice.h"
 #include "mdtBlinkLed.h"
 #include "mdtPortThread.h"
 
 class QLabel;
 class QPushButton;
-
-/// \todo Add color per state (same as texts)
 
 /*! \brief
  */
@@ -63,6 +62,18 @@ class mdtDeviceStatusWidget : public QWidget
   /*! \brief Disable the TX/RX LED's
    */
   void disableTxRxLeds();
+
+  /*! \brief Add a custom widget
+   *
+   * One custom widget can be added.
+   */
+  void addCustomWidget(QWidget *widget);
+
+  /*! \brief Remove the custom widget
+   *
+   * \see addCustomWidget().
+   */
+  void removeCustomWidget();
 
   /*! \brief Set default state texts
    */
@@ -102,11 +113,15 @@ class mdtDeviceStatusWidget : public QWidget
 
  public slots:
 
-  /*! \brief
+  /*! \brief Set state
+   *
+   * \param state A state as define in mdeDevice
    */
   void setState(int state);
 
   /*! \brief
+   *
+   * \param state A state as define in mdeDevice
    */
   void setState(int state, const QString &message, const QString &details);
 
@@ -128,6 +143,8 @@ class mdtDeviceStatusWidget : public QWidget
 
   Q_DISABLE_COPY(mdtDeviceStatusWidget);
 
+  QGridLayout *pvLayout;
+  QWidget *pvCustomWidget;
   mdtBlinkLed *ldState;
   QPushButton *pbDetails;
   QLabel *lbMessage;
@@ -148,4 +165,5 @@ class mdtDeviceStatusWidget : public QWidget
   mdtPortThread *pvTxThread;
   mdtPortThread *pvRxThread;
 };
-#endif
+
+#endif  // #ifndef MDT_DEVICE_STATUS_WIDGET_H

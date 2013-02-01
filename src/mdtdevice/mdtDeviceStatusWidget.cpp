@@ -21,15 +21,15 @@
 #include "mdtDeviceStatusWidget.h"
 #include <QPushButton>
 #include <QLabel>
-#include <QGridLayout>
 
 #include <QDebug>
 
 mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
  : QWidget(parent)
 {
-  QGridLayout *layout = new QGridLayout;
+  pvLayout = new QGridLayout;
 
+  pvCustomWidget = 0;
   pvTxThread = 0;
   pvRxThread = 0;
   lbTx = 0;
@@ -39,14 +39,14 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   // Add GUI elements
   pbDetails = new QPushButton("...");
   pbDetails->setEnabled(false);
-  layout->addWidget(pbDetails, 0, 0);
+  pvLayout->addWidget(pbDetails, 0, 0);
   ldState = new mdtBlinkLed;
   ldState->setFixedSize(15, 15);
-  layout->addWidget(ldState, 0, 1);
+  pvLayout->addWidget(ldState, 0, 1);
   lbMessage = new QLabel;
   lbMessage->setMinimumWidth(150);
-  layout->addWidget(lbMessage, 0, 2);
-  setLayout(layout);
+  pvLayout->addWidget(lbMessage, 0, 2);
+  setLayout(pvLayout);
   // Set some default attributes
   setDefaultStateTexts();
   setDefaultStateColors();
@@ -67,14 +67,9 @@ void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
 
 void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
 {
-  Q_ASSERT(layout() != 0);
+  Q_ASSERT(pvLayout != 0);
   Q_ASSERT(txThread != 0);
   Q_ASSERT(rxThread != 0);
-
-  QGridLayout *gridLayout;
-
-  gridLayout = dynamic_cast<QGridLayout*>(layout());
-  Q_ASSERT(gridLayout != 0);
 
   // Remove LEDs (if exists)
   disableTxRxLeds();
@@ -89,10 +84,10 @@ void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThrea
   lbTx = new QLabel("Tx");
   lbRx = new QLabel("Rx");
   // Layout
-  gridLayout->addWidget(lbTx, 0, 3);
-  gridLayout->addWidget(ldTx, 0, 4);
-  gridLayout->addWidget(lbRx, 0, 5);
-  gridLayout->addWidget(ldRx, 0, 6);
+  pvLayout->addWidget(lbTx, 0, 3);
+  pvLayout->addWidget(ldTx, 0, 4);
+  pvLayout->addWidget(lbRx, 0, 5);
+  pvLayout->addWidget(ldRx, 0, 6);
   // Make connections
   pvTxThread = txThread;
   pvRxThread = rxThread;
@@ -102,6 +97,8 @@ void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThrea
 
 void mdtDeviceStatusWidget::disableTxRxLeds()
 {
+  Q_ASSERT(layout() != 0);
+
   if(ldTx != 0){
     Q_ASSERT(pvTxThread != 0);
     disconnect(pvTxThread, SIGNAL(writeProcessBegin()), this, SLOT(trigTxLed()));
@@ -125,6 +122,26 @@ void mdtDeviceStatusWidget::disableTxRxLeds()
     layout()->removeWidget(lbRx);
     delete lbRx;
     lbRx = 0;
+  }
+}
+
+void mdtDeviceStatusWidget::addCustomWidget(QWidget *widget)
+{
+  Q_ASSERT(pvLayout != 0);
+  Q_ASSERT(widget != 0);
+
+  removeCustomWidget();
+  pvCustomWidget = widget;
+  pvLayout->addWidget(pvCustomWidget, 0, pvLayout->columnCount());
+}
+
+void mdtDeviceStatusWidget::removeCustomWidget()
+{
+  Q_ASSERT(pvLayout != 0);
+
+  if(pvCustomWidget != 0){
+    pvLayout->removeWidget(pvCustomWidget);
+    pvCustomWidget = 0;
   }
 }
 
@@ -205,6 +222,26 @@ void mdtDeviceStatusWidget::setState(int state)
 
 void mdtDeviceStatusWidget::setState(int state, const QString &message, const QString &details)
 {
+  // Set LED color
+  if(state == mdtDevice::Ready){
+    ldState->setColor(pvReadyColor);
+    ldState->setOn();
+  }else if(state == mdtDevice::Disconnected){
+    ldState->setGreen();
+    ldState->setOff();
+  }else if(state == mdtDevice::Connecting){
+    ldState->setColor(pvConnectingColor);
+    ldState->setOn();
+  }else if(state == mdtDevice::Busy){
+    ldState->setColor(pvBusyColor);
+    ldState->setOn();
+  }else{
+    ldState->setRed();
+    ldState->setOn();
+  }
+  // Set texts
+  lbMessage->setText(message);
+  /// \todo Implement details
 }
 
 void mdtDeviceStatusWidget::trigTxLed()

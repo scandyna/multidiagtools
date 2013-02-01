@@ -42,7 +42,7 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   }
   setBackToReadyStateTimeout(2*timeout);
   /// \note Provisoire !!
-  pvTcpPortManager->setPortName("192.168.1.102:502");
+  pvTcpPortManager->setPortName("192.168.1.110:502");
   ///pvTcpPortManager->setPortName("192.168.1.103:502");
   connect(this, SIGNAL(stateChanged(int)), this, SLOT(onStateChanged(int)));
   pvTcpPortManager->openPort();

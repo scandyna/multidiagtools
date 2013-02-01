@@ -129,6 +129,9 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
   }
   // Init queues
   initQueues();
+  // Set some initial states
+  updateReadTimeoutState(false);
+  updateWriteTimeoutState(false);
 
   return NoError;
 }

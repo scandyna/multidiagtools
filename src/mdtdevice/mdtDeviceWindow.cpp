@@ -20,8 +20,9 @@
  ****************************************************************************/
 #include "mdtDeviceWindow.h"
 #include "mdtDeviceIosWidget.h"
-
+#include "mdtApplication.h"
 #include <QPushButton>
+#include <QActionGroup>
 
 mdtDeviceWindow::mdtDeviceWindow(QWidget *parent)
  : QMainWindow(parent)
@@ -57,4 +58,40 @@ mdtDeviceStatusWidget *mdtDeviceWindow::statusWidget()
   Q_ASSERT(pvStatusWidget != 0);
 
   return pvStatusWidget;
+}
+
+void mdtDeviceWindow::enableTranslations()
+{
+  Q_ASSERT(mdtApp != 0);
+
+  connect(mdtApp, SIGNAL(languageChanged()), this, SLOT(retranslate()));
+  setAvailableTranslations(mdtApp->availableTranslations(), mdtApp->currentTranslationKey());
+}
+
+void mdtDeviceWindow::setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey)
+{
+  QMap<QString, QString>::const_iterator it = avaliableTranslations.constBegin();
+
+  // Create a action group
+  if(pvLanguageActionGroup == 0){
+    pvLanguageActionGroup = new QActionGroup(this);
+    connect(pvLanguageActionGroup, SIGNAL(triggered(QAction*)), mdtApp, SLOT(changeLanguage(QAction*)));
+  }
+  // Travel available translation and add actions to menu + group
+  while(it != avaliableTranslations.constEnd()){
+    QAction *action = new QAction(it.value(), this);
+    action->setCheckable(true);
+    action->setData(it.key());
+    if(it.key() == currentTranslationKey){
+      action->setChecked(true);
+    }
+    menu_Language->addAction(action);
+    pvLanguageActionGroup->addAction(action);
+    it++;
+  }
+}
+
+void mdtDeviceWindow::retranslate()
+{
+  retranslateUi(this);
 }

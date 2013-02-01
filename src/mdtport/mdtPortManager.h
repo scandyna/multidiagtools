@@ -548,6 +548,8 @@ class mdtPortManager : public QThread
   void newReadenFrame(mdtPortTransaction transaction);
 
   /*! \brief Emitted when error number has changed
+   *
+   * The error is one of the mdtAbstractPort::error_t.
    */
   void errorStateChanged(int error);
 

@@ -46,27 +46,27 @@ class mdtSerialPortCtlWidget : public QWidget
 
   /*! \brief Change TX LED's color
    */
-  void trigTxState();
+  ///void trigTxState();
 
   /*! \brief Change TX LED's color
    */
-  void trigTxErrorState();
+  ///void trigTxErrorState();
 
   /*! \brief Change TX LED's color depending state
    */
-  void updateTxTimeoutState(bool state);
+  ///void updateTxTimeoutState(bool state);
 
   /*! \brief Change TX LED's color
    */
-  void trigRxState();
+  ///void trigRxState();
 
   /*! \brief Change TX LED's color
    */
-  void trigRxErrorState();
+  ///void trigRxErrorState();
 
   /*! \brief Change RX LED's color depending state
    */
-  void updateRxTimeoutState(bool state);
+  ///void updateRxTimeoutState(bool state);
 
  private slots:
 
@@ -82,14 +82,14 @@ class mdtSerialPortCtlWidget : public QWidget
   QLabel *lbCts;
   QLabel *lbDtr;
   QLabel *lbRts;
-  QLabel *lbTx;
-  QLabel *lbRx;
+  ///QLabel *lbTx;
+  ///QLabel *lbRx;
   mdtLed *ldCar;
   mdtLed *ldRng;
   mdtLed *ldDsr;
   mdtLed *ldCts;
-  mdtBlinkLed *ldTx;
-  mdtBlinkLed *ldRx;
+  ///mdtBlinkLed *ldTx;
+  ///mdtBlinkLed *ldRx;
   QPushButton *pbDtr;
   QPushButton *pbRts;
 };

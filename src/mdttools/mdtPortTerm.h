@@ -38,6 +38,9 @@
 
 class QLabel;
 
+
+class mdtDeviceStatusWidget;
+
 /*! \brief Mini port treminal
  */
 class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
@@ -75,6 +78,11 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    */
   void on_pbClearTerm_clicked();
 
+  /*! \brief Retranslate
+   *
+   * This slot is called by mdtApplication
+   *  when language has changed
+   */
   void retranslate();
 
  private slots:
@@ -95,7 +103,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Detach all ports
   void detachFromPorts();
 
- private:
+  // Update state on port manager notifications
+  void setStateFromPortError(int error);
 
   // Set the running state
   void setStateRunning(const QString &msg = tr("Ready"));
@@ -105,6 +114,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   // Set the Error state
   void setStateError(const QString &msg = tr("Error"));
+
+ private:
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortTerm);
@@ -123,7 +134,8 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Running flag (if true, command can be sent, ...)
   bool pvRunning;
   // Status bar
-  QLabel *lbStatusMessage;
+  ///QLabel *lbStatusMessage;
+  mdtDeviceStatusWidget *pvStatusWidget;
 };
 
 #endif  // #ifndef MDT_PORT_TERM_H

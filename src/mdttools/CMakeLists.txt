@@ -35,24 +35,14 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 # Fichiers à traiter par le compilateur rcc
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
-# Librairie du projet
+# Librairies to link
 add_library (mdttools SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdttools ${QT_LIBRARIES})
 target_link_libraries(mdttools "mdtutils")
 target_link_libraries(mdttools "mdtutilsgui")
 target_link_libraries(mdttools "mdtport")
 target_link_libraries(mdttools "mdtserialport")
-
-# Version statique
-if(MDT_BUILD_STATIC_LIBS)
-  add_library (mdttools_static STATIC ${SOURCES_FILES} )
-  target_link_libraries(mdttools_static ${QT_LIBRARIES})
-  target_link_libraries(mdttools_static "mdtutils")
-  target_link_libraries(mdttools_static "mdtutilsgui")
-  target_link_libraries(mdttools_static "mdtport")
-  target_link_libraries(mdttools_static "mdtserialport")
-  set_target_properties("mdttools_static" PROPERTIES OUTPUT_NAME "mdttools")
-endif(MDT_BUILD_STATIC_LIBS)
+target_link_libraries(mdttools "mdtdevice")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdttools.pro" "# Translations project file for lupdate/lrelease\n")

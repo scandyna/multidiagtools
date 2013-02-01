@@ -27,6 +27,8 @@
 #include "ui_mdtDeviceWindow.h"
 #include "mdtDeviceStatusWidget.h"
 
+class QActionGroup;
+
 /*! \brief
  */
 class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
@@ -35,6 +37,11 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
 
  public:
 
+  /*! \brief Construct a device window
+   *
+   * Will create a new mdtDeviceStatusWidget and
+   *  add it as status bar.
+   */
   mdtDeviceWindow(QWidget *parent = 0);
 
   ~mdtDeviceWindow();
@@ -55,12 +62,38 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
    */
   mdtDeviceStatusWidget *statusWidget();
 
+  /*! \brief Enable translations
+   *
+   * Will use mdtApplication to get the list
+   *  of available translations and connect
+   *  to retranslate slot.
+   *
+   * \pre The loop must be started with a
+   *       mdtApplication instance (mdtApp must be valid).
+   */
+  void enableTranslations();
+
+  /*! \brief Build the translations menu
+   */
+  void setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
+
+ protected slots:
+
+  /*! \brief Retranslate
+   *
+   * This slot is called by mdtApplication
+   *  when language has changed
+   */
+  void retranslate();
+
  private:
 
   Q_DISABLE_COPY(mdtDeviceWindow);
 
   mdtDeviceStatusWidget *pvStatusWidget;
   mdtDevice *pvDevice;
+  // Translations menu
+  QActionGroup *pvLanguageActionGroup;
 };
 
 #endif  // #ifndef MDT_DEVICE_WINDOW_H

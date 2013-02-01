@@ -22,10 +22,16 @@
 #include "mdtApplication.h"
 #include "mdtPortInfo.h"
 #include "mdtUsbtmcPortSetupDialog.h"
+
+#include "mdtDevice.h"
+#include "mdtDeviceStatusWidget.h"
+#include "mdtAbstractPort.h"
+
 #include <QHBoxLayout>
 #include <QAction>
 #include <QList>
 #include <QLabel>
+#include <QTimer>
 
 #include <QDebug>
 
@@ -34,8 +40,12 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
 {
   setupUi(this);
   // Status bar
+  /**
   lbStatusMessage = new QLabel;
   statusBar()->addPermanentWidget(lbStatusMessage);
+  */
+  pvStatusWidget = new mdtDeviceStatusWidget;
+  statusBar()->addWidget(pvStatusWidget);
   // Serial port members
   pvSerialPortManager = 0;
   pvSerialPortCtlWidget = 0;
@@ -186,9 +196,13 @@ void mdtPortTerm::attachToSerialPort()
   pvSerialPortManager = new mdtSerialPortManager;
   pvSerialPortCtlWidget = new mdtSerialPortCtlWidget;
   pvCurrentPortManager = pvSerialPortManager;
-  // Ctl widget
-  bottomHLayout->insertWidget(0, pvSerialPortCtlWidget);
+  // Status widget
+  pvStatusWidget->enableTxRxLeds(pvSerialPortManager->writeThread(), pvSerialPortManager->readThread());
+  // Control widget
+  ///bottomHLayout->insertWidget(0, pvSerialPortCtlWidget);
+  pvStatusWidget->addCustomWidget(pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
+  connect(pvSerialPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
 
   connect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
 
@@ -216,16 +230,23 @@ void mdtPortTerm::detachFromSerialPort()
 {
   if(pvSerialPortManager != 0){
     disconnect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
-    delete pvSerialPortManager;
-    pvSerialPortManager = 0;
+    disconnect(pvSerialPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
     // Ctl widget
-    bottomHLayout->removeWidget(pvSerialPortCtlWidget);
+    ///bottomHLayout->removeWidget(pvSerialPortCtlWidget);
+    pvStatusWidget->removeCustomWidget();
     delete pvSerialPortCtlWidget;
     pvSerialPortCtlWidget = 0;
+    // Status widget
+    pvStatusWidget->disableTxRxLeds();
+    // Free ..
+    delete pvSerialPortManager;
+    pvSerialPortManager = 0;
+
     /// \todo disconnect ?
 
   }
   pvCurrentPortManager = 0;
+  setStateStopped();
   /// NOTE: à compléter
 }
 
@@ -316,23 +337,43 @@ void mdtPortTerm::detachFromPorts()
   setStateStopped();
 }
 
+void mdtPortTerm::setStateFromPortError(int error)
+{
+  Q_ASSERT(pvCurrentPortManager != 0);
+
+  switch(error){
+    case mdtAbstractPort::ReadTimeout:
+      pvStatusWidget->setState(mdtDevice::Busy, tr("Read timeout occured"), "");
+      QTimer::singleShot(5000, this, SLOT(setStateRunning()));
+      break;
+    case mdtAbstractPort::Disconnected:
+      setStateStopped();
+      break;
+    default:
+      pvStatusWidget->setState(mdtDevice::Unknown, "Received unknown error, number " + QString::number(error), "");
+  }
+}
+
 void mdtPortTerm::setStateRunning(const QString &msg)
 {
   pvRunning = true;
   pbSendCmd->setEnabled(true);
-  statusBar()->showMessage(msg);
+  ///statusBar()->showMessage(msg);
+  pvStatusWidget->setState(mdtDevice::Ready, msg, "");
 }
 
 void mdtPortTerm::setStateStopped(const QString &msg)
 {
   pvRunning = false;
   pbSendCmd->setEnabled(false);
-  statusBar()->showMessage(msg);
+  ///statusBar()->showMessage(msg);
+  pvStatusWidget->setState(mdtDevice::Disconnected, msg, "");
 }
 
 void mdtPortTerm::setStateError(const QString &msg)
 {
   pvRunning = false;
   pbSendCmd->setEnabled(false);
-  statusBar()->showMessage(msg);
+  ///statusBar()->showMessage(msg);
+  pvStatusWidget->setState(mdtDevice::Unknown, msg, "");
 }

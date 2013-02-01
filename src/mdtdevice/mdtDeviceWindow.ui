@@ -49,7 +49,13 @@
     </property>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menu_Language">
+    <property name="title">
+     <string>Language</string>
+    </property>
+   </widget>
    <addaction name="menu_File"/>
+   <addaction name="menu_Language"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_Quit">

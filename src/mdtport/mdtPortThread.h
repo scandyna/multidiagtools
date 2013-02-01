@@ -106,17 +106,6 @@ class mdtPortThread : public QThread
 
  signals:
 
-  /*! \brief Emitted when a I/O process begins
-   * 
-   * This can be used to display read/write state.
-   * Please consider that this signal is emitted each time the I/O process begins,
-   * and not when it ends.
-   * This is because asynch I/O calls are fast, and nothing will be seen from user
-   * if we update state before/after I/O call.
-   * To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms])
-   */
-  ///void ioProcessBegin();
-
   /*! \brief Emitted when a read process begins
    * 
    * This can be used to display read state.

@@ -36,8 +36,8 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   lbCts = new QLabel;
   lbDtr = new QLabel;
   lbRts = new QLabel;
-  lbTx = new QLabel;
-  lbRx = new QLabel;
+  ///lbTx = new QLabel;
+  ///lbRx = new QLabel;
   // Set alignement center
   lbCar->setAlignment(Qt::AlignHCenter);
   lbRng->setAlignment(Qt::AlignHCenter);
@@ -45,8 +45,8 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   lbCts->setAlignment(Qt::AlignHCenter);
   lbDtr->setAlignment(Qt::AlignHCenter);
   lbRts->setAlignment(Qt::AlignHCenter);
-  lbTx->setAlignment(Qt::AlignHCenter);
-  lbRx->setAlignment(Qt::AlignHCenter);
+  ///lbTx->setAlignment(Qt::AlignHCenter);
+  ///lbRx->setAlignment(Qt::AlignHCenter);
   // Set text
   lbCar->setText("CAR");
   lbRng->setText("RNG");
@@ -54,8 +54,8 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   lbDsr->setText("DSR");
   lbRts->setText("RTS");
   lbCts->setText("CTS");
-  lbTx->setText("TX");
-  lbRx->setText("RX");
+  ///lbTx->setText("TX");
+  ///lbRx->setText("RX");
   // Create buttons
   pbDtr = new QPushButton;
   pbRts = new QPushButton;
@@ -66,15 +66,15 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   ldRng = new mdtLed;
   ldDsr = new mdtLed;
   ldCts = new mdtLed;
-  ldTx = new mdtBlinkLed;
-  ldRx = new mdtBlinkLed;
+  ///ldTx = new mdtBlinkLed;
+  ///ldRx = new mdtBlinkLed;
   // Fix LEDs size
-  ldCar->setFixedSize(15, 15);
-  ldRng->setFixedSize(15, 15);
-  ldDsr->setFixedSize(15, 15);
-  ldCts->setFixedSize(15, 15);
-  ldTx->setFixedSize(15, 15);
-  ldRx->setFixedSize(15, 15);
+  ldCar->setFixedSize(12, 12);
+  ldRng->setFixedSize(12, 12);
+  ldDsr->setFixedSize(12, 12);
+  ldCts->setFixedSize(12, 12);
+  ///ldTx->setFixedSize(15, 15);
+  ///ldRx->setFixedSize(15, 15);
   // Layout
   l = new QGridLayout;
   // Add labels
@@ -84,15 +84,15 @@ mdtSerialPortCtlWidget::mdtSerialPortCtlWidget(QWidget *parent)
   l->addWidget(lbDsr, 0, 3);
   l->addWidget(lbRts, 0, 4);
   l->addWidget(lbCts, 0, 5);
-  l->addWidget(lbTx, 0, 6);
-  l->addWidget(lbRx, 0, 7);
+  ///l->addWidget(lbTx, 0, 6);
+  ///l->addWidget(lbRx, 0, 7);
   // Add LEDs
   l->addWidget(ldCar, 1, 0);
   l->addWidget(ldRng, 1, 1);
   l->addWidget(ldDsr, 1, 3);
   l->addWidget(ldCts, 1, 5);
-  l->addWidget(ldTx, 1, 6);
-  l->addWidget(ldRx, 1, 7);
+  ///l->addWidget(ldTx, 1, 6);
+  ///l->addWidget(ldRx, 1, 7);
   // Add buttons
   l->addWidget(pbDtr, 1, 2);
   l->addWidget(pbRts, 1, 4);
@@ -123,15 +123,16 @@ void mdtSerialPortCtlWidget::makeConnections(mdtSerialPortManager *manager)
   connect(pbRts, SIGNAL(toggled(bool)), port, SLOT(setRts(bool)));
   // TX/RX
   /// \todo Create threads somwere here, and connect signals/slots
-  connect(manager->writeThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigTxState()));
+  ///connect(manager->writeThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigTxState()));
   ///connect(port, SIGNAL(writeTimeoutStateChanged(bool)), this, SLOT(updateTxTimeoutState(bool)));
-  connect(manager->readThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigRxState()));
+  ///connect(manager->readThread(), SIGNAL(ioProcessBegin()), this, SLOT(trigRxState()));
   ///connect(port, SIGNAL(readTimeoutStateChanged(bool)), this, SLOT(updateRxTimeoutState(bool)));
   // IO error
   ///connect(manager->writeThread(), SIGNAL(errorOccured(int)), this, SLOT(trigTxErrorState()));
   ///connect(manager->readThread(), SIGNAL(errorOccured(int)), this, SLOT(trigRxErrorState()));
 }
 
+/**
 void mdtSerialPortCtlWidget::trigTxState()
 {
   // Good TX state is not priority
@@ -141,13 +142,17 @@ void mdtSerialPortCtlWidget::trigTxState()
   ldTx->setGreen();
   ldTx->setOn(100);
 }
+*/
 
+/**
 void mdtSerialPortCtlWidget::trigTxErrorState()
 {
   ldTx->setRed();
   ldTx->setOn(1000, true);
 }
+*/
 
+/**
 void mdtSerialPortCtlWidget::updateTxTimeoutState(bool state)
 {
   if(state){
@@ -158,7 +163,9 @@ void mdtSerialPortCtlWidget::updateTxTimeoutState(bool state)
     ldTx->setOff();
   }
 }
+*/
 
+/**
 void mdtSerialPortCtlWidget::trigRxState()
 {
   // Good RX state is not priority
@@ -168,13 +175,17 @@ void mdtSerialPortCtlWidget::trigRxState()
   ldRx->setGreen();
   ldRx->setOn(100);
 }
+*/
 
+/**
 void mdtSerialPortCtlWidget::trigRxErrorState()
 {
   ldRx->setRed();
   ldRx->setOn(1000, true);
 }
+*/
 
+/**
 void mdtSerialPortCtlWidget::updateRxTimeoutState(bool state)
 {
   if(state){
@@ -185,6 +196,7 @@ void mdtSerialPortCtlWidget::updateRxTimeoutState(bool state)
     ldRx->setOff();
   }
 }
+*/
 
 void mdtSerialPortCtlWidget::setDtrText(bool on)
 {
