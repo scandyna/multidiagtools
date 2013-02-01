@@ -52,6 +52,7 @@ mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxR
 
   while(maxReadTransfers > 0){
     readen = port->read(buffer, port->readBufferSize());
+    qDebug() << "mdtUsbPortThread::readUntilShortPacketReceived() , readen: " << readen;
     if(readen < 0){
       delete[] buffer;
       return (mdtAbstractPort::error_t)readen;

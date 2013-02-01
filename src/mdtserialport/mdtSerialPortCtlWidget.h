@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,7 +25,6 @@
 #include <QPushButton>
 #include <QLabel>
 #include "mdtLed.h"
-#include "mdtBlinkLed.h"
 #include "mdtSerialPortManager.h"
 
 class mdtSerialPortCtlWidget : public QWidget
@@ -42,32 +41,6 @@ class mdtSerialPortCtlWidget : public QWidget
    */
   void makeConnections(mdtSerialPortManager *manager);
 
- public slots:
-
-  /*! \brief Change TX LED's color
-   */
-  ///void trigTxState();
-
-  /*! \brief Change TX LED's color
-   */
-  ///void trigTxErrorState();
-
-  /*! \brief Change TX LED's color depending state
-   */
-  ///void updateTxTimeoutState(bool state);
-
-  /*! \brief Change TX LED's color
-   */
-  ///void trigRxState();
-
-  /*! \brief Change TX LED's color
-   */
-  ///void trigRxErrorState();
-
-  /*! \brief Change RX LED's color depending state
-   */
-  ///void updateRxTimeoutState(bool state);
-
  private slots:
 
   // Update buttons text
@@ -82,14 +55,10 @@ class mdtSerialPortCtlWidget : public QWidget
   QLabel *lbCts;
   QLabel *lbDtr;
   QLabel *lbRts;
-  ///QLabel *lbTx;
-  ///QLabel *lbRx;
   mdtLed *ldCar;
   mdtLed *ldRng;
   mdtLed *ldDsr;
   mdtLed *ldCts;
-  ///mdtBlinkLed *ldTx;
-  ///mdtBlinkLed *ldRx;
   QPushButton *pbDtr;
   QPushButton *pbRts;
 };

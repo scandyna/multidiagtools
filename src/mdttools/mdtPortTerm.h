@@ -134,7 +134,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Running flag (if true, command can be sent, ...)
   bool pvRunning;
   // Status bar
-  ///QLabel *lbStatusMessage;
   mdtDeviceStatusWidget *pvStatusWidget;
 };
 

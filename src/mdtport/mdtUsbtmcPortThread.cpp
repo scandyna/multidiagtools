@@ -27,7 +27,8 @@
 #include <QDebug>
 
 mdtUsbtmcPortThread::mdtUsbtmcPortThread(QObject *parent)
- : mdtPortThread(parent)
+/// : mdtPortThread(parent)
+ : mdtUsbPortThread(parent)
 {
 }
 
@@ -122,6 +123,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtFrame **writeFrame,
   return mdtAbstractPort::NoError;
 }
 
+/**
 mdtAbstractPort::error_t mdtUsbtmcPortThread::readUntilShortPacketReceived(int maxReadTransfers)
 {
   Q_ASSERT(pvPort != 0);
@@ -158,6 +160,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::readUntilShortPacketReceived(int m
 
   return mdtAbstractPort::ReadTimeout;
 }
+*/
 
 mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag)
 {

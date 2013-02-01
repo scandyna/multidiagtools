@@ -26,13 +26,15 @@
 #include <QWaitCondition>
 #include <QMutex>
 #include <QString>
-#include "mdtPortThread.h"
+///#include "mdtPortThread.h"
+#include "mdtUsbPortThread.h"
 #include "mdtFrame.h"
 #include "mdtFrameUsbControl.h"
 
 class mdtUsbPort;
 
-class mdtUsbtmcPortThread : public mdtPortThread
+///class mdtUsbtmcPortThread : public mdtPortThread
+class mdtUsbtmcPortThread : public mdtUsbPortThread
 {
  Q_OBJECT
 
@@ -50,21 +52,21 @@ class mdtUsbtmcPortThread : public mdtPortThread
    */
   bool isWriter() const;
 
- signals:
+ ///signals:
 
   /*! \brief Emited when a new control response was readen
    */
-  void controlResponseReaden();
+  ///void controlResponseReaden();
 
   /*! \brief Emited when a message IN was readen (from additionnal interrupt IN endpoint)
    */
-  void messageInReaden();
+  ///void messageInReaden();
 
   /*! \brief Emitted when the read until a short packet process is finished
    * 
    * \todo See if used..
    */
-  void readUntilShortPacketReceivedFinished();
+  ///void readUntilShortPacketReceivedFinished();
 
  private:
 
@@ -89,7 +91,7 @@ class mdtUsbtmcPortThread : public mdtPortThread
    *          If maxReadTransfers is reached, ReadTimeout is returned.
    * \pre Port must be set with setPort() before using this method.
    */
-  mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
+  ///mdtAbstractPort::error_t readUntilShortPacketReceived(int maxReadTransfers);
 
   /*! \brief Abort bulk IN
    *

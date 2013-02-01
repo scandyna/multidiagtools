@@ -63,7 +63,7 @@ class mdtUsbPortThread : public mdtPortThread
    */
   void readUntilShortPacketReceivedFinished();
 
- private:
+ protected:
 
   /*! \brief Read until a short frame is received
    *
@@ -85,6 +85,8 @@ class mdtUsbPortThread : public mdtPortThread
    * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
    */
   ///mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
+
+ private:
 
   /*! \brief Working thread method
    */
