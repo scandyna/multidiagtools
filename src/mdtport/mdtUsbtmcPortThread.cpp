@@ -604,7 +604,8 @@ void mdtUsbtmcPortThread::run()
       // We must abort bulk IN
       qDebug() << "USBTMCTHD: Abort bulk IN after read timeout occured ...";
       Q_ASSERT(readFrame != 0);
-      portError = abortBulkIn((static_cast<mdtFrameUsbTmc*>(readFrame))->bTag(), &writeFrame);
+      quint8 bTag = (static_cast<mdtFrameUsbTmc*>(readFrame))->bTag();
+      portError = abortBulkIn(bTag, &writeFrame);
       if(portError != mdtAbstractPort::NoError){
         if(!pvRunning){
           break;
@@ -614,6 +615,7 @@ void mdtUsbtmcPortThread::run()
           break;
         }
       }
+      expectedBulkInbTags.removeOne(bTag);
       port->readFramesPool().enqueue(readFrame);
       readFrame = getNewFrameRead();
       Q_ASSERT(readFrame != 0);
@@ -638,7 +640,8 @@ void mdtUsbtmcPortThread::run()
             // We must abort bulk IN
             qDebug() << "USBTMCTHD: Abort bulk IN after read ReadCanceled ...";
             Q_ASSERT(readFrame != 0);
-            portError = abortBulkIn((static_cast<mdtFrameUsbTmc*>(readFrame))->bTag(), &writeFrame);
+            quint8 bTag = (static_cast<mdtFrameUsbTmc*>(readFrame))->bTag();
+            portError = abortBulkIn(bTag, &writeFrame);
             if(portError != mdtAbstractPort::NoError){
               if(!pvRunning){
                 break;
@@ -648,6 +651,7 @@ void mdtUsbtmcPortThread::run()
                 break;
               }
             }
+            expectedBulkInbTags.removeOne(bTag);
             port->readFramesPool().enqueue(readFrame);
             readFrame = getNewFrameRead();
             Q_ASSERT(readFrame != 0);
@@ -749,7 +753,6 @@ void mdtUsbtmcPortThread::run()
 
   // Put current frame into pool
   if(readFrame != 0){
-    ///abortBulkIn((static_cast<mdtFrameUsbTmc*>(readFrame))->bTag(), &writeFrame, &readFrame);
     port->readFramesPool().enqueue(readFrame);
   }
 

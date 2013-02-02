@@ -326,7 +326,10 @@ void mdtPortTerm::setStateFromPortError(int error)
       break;
     case mdtAbstractPort::Disconnected:
       setStateStopped();
-      QTimer::singleShot(5000, this, SLOT(setStateStopped()));  /// \todo bricolage ...
+      ///QTimer::singleShot(5000, this, SLOT(setStateStopped()));  /// \todo bricolage ...
+      break;
+    case mdtAbstractPort::Connecting:
+      setStateStopped(tr("Connecting ..."));
       break;
     default:
       pvStatusWidget->setState(mdtDevice::Unknown, "Received unknown error, number " + QString::number(error), "");
