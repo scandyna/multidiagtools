@@ -29,6 +29,8 @@
 #include <QApplication>
 #include <QTcpSocket>
 #include <QHashIterator>
+#include <QNetworkAddressEntry>
+#include <QHostAddress>
 
 #include <QDebug>
 
@@ -126,6 +128,128 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   }
 
   return portInfoList;
+}
+
+QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface, quint16 port, int timeout)
+{
+  Q_ASSERT(!isRunning());
+
+  quint32 subNet;
+  quint32 bCast;
+  QHostAddress firstIp;
+  quint32 firstIpV4;
+  QHostAddress lastIp;
+  quint32 lastIpV4;
+  QHostAddress currentIp;
+  QNetworkAddressEntry entry;
+  QList<QNetworkAddressEntry> entries;
+  QList<mdtPortInfo*> portInfoList;
+  mdtPortInfo *portInfo;
+  int i;
+  quint32 j;
+
+  // Get address entries of interface
+  entries = iface.addressEntries();
+  if(entries.size() < 1){
+    mdtError e(MDT_TCP_IO_ERROR, "Interface " + iface.name() + " has no IP address", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+    e.commit();
+    return portInfoList;
+  }
+  // Build the list of IPs
+  for(i=0; i<entries.size(); i++){
+    entry = entries.at(i);
+    // Check protocol
+    if(entry.broadcast().protocol() != QAbstractSocket::IPv4Protocol){
+      continue;
+    }
+    bCast = entry.broadcast().toIPv4Address();
+    subNet = bCast & entry.netmask().toIPv4Address();
+    // We need min. place for 2 machines in subnet
+    if((bCast-subNet-4) < 0){
+      mdtError e(MDT_TCP_IO_ERROR, "Interface " + iface.name() + " has a subnet for less than 2 machines", mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+      e.commit();
+      continue;
+    }
+    // Extract first and last IPs
+    firstIp.setAddress(subNet+1);
+    lastIp.setAddress(bCast-1);
+    firstIpV4 = firstIp.toIPv4Address();
+    lastIpV4 = lastIp.toIPv4Address();
+    // Scan this range and add to list
+    qDebug() << "Iface " << iface.name() << " , IP " << firstIp << " to " << lastIp;
+    for(j=firstIpV4; j<=lastIpV4; j++){
+      currentIp.setAddress(j);
+      qDebug() << "Trying " << currentIp.toString();
+      if(tryToConnect(currentIp.toString(), port, timeout)){
+        qDebug() << "Found device at " << currentIp.toString() << ":" << QString::number(port);
+        portInfo = new mdtPortInfo;
+        portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
+        portInfoList.append(portInfo);
+      }
+    }
+  }
+  // If no entry was found, we warn that possible error is due to no IPv4 configuration
+  if(entries.size() < 1){
+    mdtError e(MDT_TCP_IO_ERROR, "Interface " + iface.name() + " has no IPv4 addresse (possibly it's configured with IPv6 only)", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+    e.commit();
+  }
+
+  return portInfoList;
+}
+
+QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface> &ifaces, quint16 port, int timeout, bool ignoreLoopback)
+{
+  Q_ASSERT(!isRunning());
+
+  QList<mdtPortInfo*> portInfoList;
+  int i;
+
+  for(i=0; i<ifaces.size(); i++){
+    // Check about loopback
+    if(ignoreLoopback){
+      if(ifaces.at(i).flags() & QNetworkInterface::IsLoopBack){
+        continue;
+      }
+    }
+    portInfoList.append(scan(ifaces.at(i), port, timeout));
+  }
+
+  return portInfoList;
+}
+
+bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port, int timeout)
+{
+  QTcpSocket socket;
+  int maxIter;
+  bool ok = false;
+
+  socket.connectToHost(hostName, port);
+  maxIter = timeout / 50;
+  while(socket.state() != QAbstractSocket::ConnectedState){
+    if(maxIter <= 0){
+      break;
+    }
+    qApp->processEvents();
+    msleep(50);
+    maxIter--;
+  }
+  if(socket.state() != QAbstractSocket::UnconnectedState){
+    // Check if connection was successfull
+    if(socket.state() == QAbstractSocket::ConnectedState){
+      ok = true;
+    }
+    // Disconnect
+    socket.abort();
+    while((socket.state() != QAbstractSocket::ClosingState)&&(socket.state() != QAbstractSocket::UnconnectedState)){
+      qApp->processEvents();
+      msleep(50);
+    }
+  }
+
+  return ok;
 }
 
 int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)

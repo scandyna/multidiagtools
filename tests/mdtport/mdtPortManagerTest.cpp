@@ -45,6 +45,10 @@
 
 #include <QDebug>
 
+/// Sandbox
+#include <QNetworkInterface>
+#include <QNetworkAddressEntry>
+
 void mdtPortManagerTest::transactionIdTest()
 {
   mdtPortTransaction t;
@@ -307,15 +311,73 @@ void mdtPortManagerTest::modbusTcpPortTest()
 {
   mdtModbusTcpPortManager m;
   QList<mdtPortInfo*> portInfoList;
+  QList<mdtPortInfo*> portInfoList2;
   QStringList hosts;
   mdtFrameCodecModbus codec;
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
   int tId1, tId2, tId3;
+  quint32 bCast;
+  quint32 netMask;
+  quint32 subNet;
+
+  
+  
+  // Check scan with some invalid network setup
+  QVERIFY(m.scan(QNetworkInterface()).size() < 1);
+  
+  // Scan network
+  
+  // Rescan with found results (check if other scan method works)
+  
+  /// Sandbox
+  QList<QNetworkInterface> ifaces;
+  QList<QNetworkAddressEntry> entries;
+  
+  ifaces = QNetworkInterface::allInterfaces();
+  for(int i=0; i<ifaces.size(); i++){
+    qDebug() << "Ifaces[" << i << "]: " << ifaces.at(i).humanReadableName();
+    ///m.scan(ifaces.at(i), 502, 100);
+    /**
+    entries = ifaces.at(i).addressEntries();
+    for(int j=0; j<entries.size(); j++){
+      if(entries.at(j).ip().protocol() == QAbstractSocket::IPv4Protocol){
+        netMask = entries.at(j).netmask().toIPv4Address();
+        bCast = entries.at(j).broadcast().toIPv4Address();
+        subNet = bCast & netMask;
+        qDebug() << "-> Entry[" << j << "]:";
+        qDebug() << "--> IP:       " << entries.at(j).ip();
+        qDebug() << "--> Subnet:   " << QHostAddress(subNet);
+        qDebug() << "--> Net mask: " << entries.at(j).netmask();
+        qDebug() << "--> First IP: " << QHostAddress(subNet+1);
+        qDebug() << "--> Last IP:  " << QHostAddress(bCast-1);
+        ///qDebug() << "-> Entry[" << j << "]: IP: " <<  << " , BCAST: " << entries.at(j).broadcast() << " , netmask: " << ;
+      }
+    }
+    */
+  }
+  ///qDebug() << "allAddresses: " << QNetworkInterface::allAddresses();
 
   qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
 
+  // Try to scan all network interfaces (except the loopback)
+  portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
+  if(portInfoList.size() < 1){
+    QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
+  }
+
+  // Check that other scan method works
+  for(int i=0; i<portInfoList.size(); i++){
+    QVERIFY(portInfoList.at(i) != 0);
+    hosts << portInfoList.at(i)->portName();
+  }
+  qDebug() << "Hosts: " << hosts;
+  QCOMPARE(hosts.size(), portInfoList.size());
+  portInfoList2 = m.scan(hosts);
+  QCOMPARE(portInfoList2.size(), portInfoList.size());
+
   // Verify that scan() function works ..
+  /**
   hosts << "127.0.0.1:502";
   hosts << "192.168.1.100:502";
   hosts << "192.168.1.101:502";
@@ -325,6 +387,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   if(portInfoList.size() < 1){
     QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
   }
+  */
 
   // Init port manager
   m.setPortInfo(*portInfoList.at(0));
@@ -345,16 +408,16 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QVERIFY(tId2 >= 0);
   tId3 = m.writeData(pdu, true);
   QVERIFY(tId3 >= 0);
-  QVERIFY(m.waitOnFrame(tId1, 500));
+  QVERIFY(m.waitOnFrame(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
-  QVERIFY(m.waitOnFrame(tId2, 500));
-  QVERIFY(m.waitOnFrame(tId3, 500));
+  QVERIFY(m.waitOnFrame(tId2));
+  QVERIFY(m.waitOnFrame(tId3));
   QCOMPARE(m.readenFrames().size(), 2);
 
   // If query/reply mode is diseabled, waitOnFrame() will timeout
   pdu = codec.encodeReadCoils(0, 3);
   tId1 = m.writeData(pdu, false);
-  QVERIFY(!m.waitOnFrame(tId1, 500));
+  QVERIFY(!m.waitOnFrame(tId1));
 
   // All frames must be consumed
   QCOMPARE(m.readenFrames().size(), 0);

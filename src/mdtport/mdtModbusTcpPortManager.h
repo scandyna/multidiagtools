@@ -27,6 +27,7 @@
 #include <QStringList>
 #include <QList>
 #include <QHash>
+#include <QNetworkInterface>
 
 /*! \brief MODBUS/TCP port manager
  *
@@ -74,6 +75,44 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \pre Manager must no running
    */
   QList<mdtPortInfo*> scan(const QStringList &hosts, int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * \param iface Scan will be done for all IP addresses available for given intarface.
+   *               Note that only IPv4 is implemented.
+   * \param port Port. Note that MODBUS/TCP default port is 502.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   *
+   * Note that returned list must be freed by user
+   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
+   *
+   * \pre Manager must no running
+   */
+  QList<mdtPortInfo*> scan(const QNetworkInterface &iface, quint16 port = 502, int timeout = 500);
+
+  /*! \brief Scan for available hosts with a MODBUS/TCP compatible device attached
+   *
+   * \param ifaces Scan will be done for all IP addresses available for all given intarfaces.
+   *               Note that only IPv4 is implemented.
+   * \param port Port. Note that MODBUS/TCP default port is 502.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \param ignoreLoopback If true, loopback interface will be ignored.
+   *
+   * Note that returned list must be freed by user
+   *  after usage. (for.ex. with qDeletAll() and QList::clear() ).
+   *
+   * \pre Manager must no running
+   */
+  QList<mdtPortInfo*> scan(const QList<QNetworkInterface> &ifaces, quint16 port = 502, int timeout = 500, bool ignoreLoopback = true);
+
+  /*! \brief Try to connect to a host
+   *
+   * \param hostName Host name or a IP address
+   * \param port Port. Note that MODBUS/TCP default port is 502.
+   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
+   * \return True on successfull connection.
+   */
+  bool tryToConnect(const QString &hostName, quint16 port, int timeout);
 
   /*! \brief Write PDU by copy
    *

@@ -270,6 +270,21 @@ void mdtDeviceTest::modbusWagoTest()
   di->setLabelShort("DI1");
   di->setDetails("Module type: 750-428");
   ios.addDigitalInput(di);
+  di = new mdtDigitalIo;
+  di->setAddress(1);
+  di->setLabelShort("DI2");
+  di->setDetails("Module type: 750-428");
+  ios.addDigitalInput(di);
+  di = new mdtDigitalIo;
+  di->setAddress(2);
+  di->setLabelShort("DI3");
+  di->setDetails("Module type: 750-428");
+  ios.addDigitalInput(di);
+  di = new mdtDigitalIo;
+  di->setAddress(3);
+  di->setLabelShort("DI4");
+  di->setDetails("Module type: 750-428");
+  ios.addDigitalInput(di);
 
   // Digital outputs
   dout = new mdtDigitalIo;
@@ -383,9 +398,9 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(d.getAnalogOutputs(500) >= 0);
   QVERIFY(d.getDigitalOutputs(500) >= 0);
   d.start(100);
-  ///while(dw.isVisible()){
+  while(dw.isVisible()){
     QTest::qWait(1000);
-  ///}
+  }
 }
 
 void mdtDeviceTest::modbusBeckhoffTest()
