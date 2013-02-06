@@ -1,4 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="65,5,129,35"/>
-<area shape="rect" id="node4" href="$classmdt_blink_led.html" title="Blinking LED." alt="" coords="121,105,215,135"/>
+<area shape="rect" id="node2" href="$classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="52,5,116,35"/>
 </map>

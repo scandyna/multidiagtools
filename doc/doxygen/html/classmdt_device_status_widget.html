@@ -67,24 +67,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">mdtDeviceStatusWidget Class Reference</div>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="mdtDeviceStatusWidget" -->
-<p><code>#include &lt;<a class="el" href="mdt_device_status_widget_8h_source.html">mdtDeviceStatusWidget.h</a>&gt;</code></p>
-<div class="dynheader">
+<!-- doxytag: class="mdtDeviceStatusWidget" --><div class="dynheader">
 Collaboration diagram for mdtDeviceStatusWidget:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device_status_widget__coll__graph.png" border="0" usemap="#mdt_device_status_widget_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_device_status_widget_coll__map" id="mdt_device_status_widget_coll__map">
-<area shape="rect" id="node2" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="40,85,133,115"/><area shape="rect" id="node4" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="55,5,119,35"/></map>
+<area shape="rect" id="node2" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="5,197,99,227"/><area shape="rect" id="node4" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="20,101,84,131"/><area shape="rect" id="node6" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="123,197,229,227"/><area shape="rect" id="node8" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="117,101,235,131"/><area shape="rect" id="node10" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="123,5,229,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_device_status_widget-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff26f53555fcaf57d79d70c712e24928"></a><!-- doxytag: member="mdtDeviceStatusWidget::setState" ref="aff26f53555fcaf57d79d70c712e24928" args="(int state)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setState</b> (int state)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9d0bf5fb74e55bcdab7c8bd86ddfa33"></a><!-- doxytag: member="mdtDeviceStatusWidget::setState" ref="af9d0bf5fb74e55bcdab7c8bd86ddfa33" args="(int state, const QString &amp;message, const QString &amp;details)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setState</b> (int state, const QString &amp;message, const QString &amp;details)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#aff26f53555fcaf57d79d70c712e24928">setState</a> (int state)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set state.  <a href="#aff26f53555fcaf57d79d70c712e24928"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#af9d0bf5fb74e55bcdab7c8bd86ddfa33">setState</a> (int state, const QString &amp;message, const QString &amp;details)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1dd6b00c3ef394b4dc2bea36bcd4462"></a><!-- doxytag: member="mdtDeviceStatusWidget::mdtDeviceStatusWidget" ref="ad1dd6b00c3ef394b4dc2bea36bcd4462" args="(QWidget *parent=0)" -->
@@ -92,6 +89,15 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a status widget with default texts. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#ac7b010932ee6c83ffc9efe006ee13f22">setDevice</a> (<a class="el" href="classmdt_device.html">mdtDevice</a> *device)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set device.  <a href="#ac7b010932ee6c83ffc9efe006ee13f22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#a056af69761b82cd24ab653158beafa22">enableTxRxLeds</a> (<a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *txThread, <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *rxThread)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the TX/RX LEDs.  <a href="#a056af69761b82cd24ab653158beafa22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a042461c9fd28d3f4f29ffad730ec7073"></a><!-- doxytag: member="mdtDeviceStatusWidget::disableTxRxLeds" ref="a042461c9fd28d3f4f29ffad730ec7073" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#a042461c9fd28d3f4f29ffad730ec7073">disableTxRxLeds</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the TX/RX LED's. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#ae3df9a41c4bff87b81101a5ad4b9dd0a">addCustomWidget</a> (QWidget *widget)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a custom widget.  <a href="#ae3df9a41c4bff87b81101a5ad4b9dd0a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#a30015d4d648425da6a8cef72e18afd8a">removeCustomWidget</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the custom widget.  <a href="#a30015d4d648425da6a8cef72e18afd8a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaaac01ef5272b66bc0a3daf19e20047c"></a><!-- doxytag: member="mdtDeviceStatusWidget::setDefaultStateTexts" ref="aaaac01ef5272b66bc0a3daf19e20047c" args="()" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_status_widget.html#aaaac01ef5272b66bc0a3daf19e20047c">setDefaultStateTexts</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set default state texts. <br/></td></tr>
@@ -121,10 +127,84 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set color for busy state. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
-<div class="textblock"><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>Add color per state (same as texts) </dd></dl>
-
+<div class="textblock">
 <p>Definition at line <a class="el" href="mdt_device_status_widget_8h_source.html#l00036">36</a> of file <a class="el" href="mdt_device_status_widget_8h_source.html">mdtDeviceStatusWidget.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ae3df9a41c4bff87b81101a5ad4b9dd0a"></a><!-- doxytag: member="mdtDeviceStatusWidget::addCustomWidget" ref="ae3df9a41c4bff87b81101a5ad4b9dd0a" args="(QWidget *widget)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceStatusWidget::addCustomWidget </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>widget</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Add a custom widget. </p>
+<p>One custom widget can be added. </p>
+
+<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a056af69761b82cd24ab653158beafa22"></a><!-- doxytag: member="mdtDeviceStatusWidget::enableTxRxLeds" ref="a056af69761b82cd24ab653158beafa22" args="(mdtPortThread *txThread, mdtPortThread *rxThread)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceStatusWidget::enableTxRxLeds </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *&#160;</td>
+          <td class="paramname"><em>txThread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *&#160;</td>
+          <td class="paramname"><em>rxThread</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Enable the TX/RX LEDs. </p>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>txThread and rxThread must be valid. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00068">68</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a30015d4d648425da6a8cef72e18afd8a"></a><!-- doxytag: member="mdtDeviceStatusWidget::removeCustomWidget" ref="a30015d4d648425da6a8cef72e18afd8a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceStatusWidget::removeCustomWidget </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Remove the custom widget. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_device_status_widget.html#ae3df9a41c4bff87b81101a5ad4b9dd0a" title="Add a custom widget.">addCustomWidget()</a>. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00138">138</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ac7b010932ee6c83ffc9efe006ee13f22"></a><!-- doxytag: member="mdtDeviceStatusWidget::setDevice" ref="ac7b010932ee6c83ffc9efe006ee13f22" args="(mdtDevice *device)" -->
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +224,78 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Will make some connections</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>device must be valid. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af9d0bf5fb74e55bcdab7c8bd86ddfa33"></a><!-- doxytag: member="mdtDeviceStatusWidget::setState" ref="af9d0bf5fb74e55bcdab7c8bd86ddfa33" args="(int state, const QString &amp;message, const QString &amp;details)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceStatusWidget::setState </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>details</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>A state as define in mdeDevice </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>Implement details </dd></dl>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00223">223</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff26f53555fcaf57d79d70c712e24928"></a><!-- doxytag: member="mdtDeviceStatusWidget::setState" ref="aff26f53555fcaf57d79d70c712e24928" args="(int state)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtDeviceStatusWidget::setState </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td><code> [slot]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set state. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>A state as define in mdeDevice </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mdt_device_status_widget_8cpp_source.html#l00198">198</a> of file <a class="el" href="mdt_device_status_widget_8cpp_source.html">mdtDeviceStatusWidget.cpp</a>.</p>
 
 </div>
 </div>
@@ -167,7 +318,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:55 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

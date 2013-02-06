@@ -108,7 +108,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047 mdtSerialPort::~mdtSerialPort()
 <a name="l00048"></a>00048 {
-<a name="l00049"></a>00049   close();
+<a name="l00049"></a>00049   <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
 <a name="l00050"></a>00050   <span class="keyword">delete</span> pvPortLock;
 <a name="l00051"></a>00051 }
 <a name="l00052"></a>00052 
@@ -262,7 +262,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00200"></a>00200     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00201"></a>00201   }
 <a name="l00202"></a>00202   <span class="comment">// Check if baud rate could be applied</span>
-<a name="l00203"></a>00203   <span class="keywordflow">if</span>(baudRate() != rate){
+<a name="l00203"></a>00203   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>() != rate){
 <a name="l00204"></a>00204     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00205"></a>00205   }
 <a name="l00206"></a>00206 
@@ -452,7 +452,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00390"></a>00390     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00391"></a>00391   }
 <a name="l00392"></a>00392   <span class="comment">// Check if data bits count could be applied</span>
-<a name="l00393"></a>00393   <span class="keywordflow">if</span>(dataBits() != n){
+<a name="l00393"></a>00393   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a65c92bdb5543c1fe0034169ffc88d09f" title="Get number of data bits.">dataBits</a>() != n){
 <a name="l00394"></a>00394     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00395"></a>00395   }
 <a name="l00396"></a>00396 
@@ -504,7 +504,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00442"></a>00442     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00443"></a>00443   }
 <a name="l00444"></a>00444   <span class="comment">// Check</span>
-<a name="l00445"></a>00445   <span class="keywordflow">if</span>(stopBits() != n){
+<a name="l00445"></a>00445   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a163a83bdcac2c81a5c6b097c4afde41f" title="Get number of stop bits.">stopBits</a>() != n){
 <a name="l00446"></a>00446     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00447"></a>00447   }
 <a name="l00448"></a>00448 
@@ -552,7 +552,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00490"></a>00490     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00491"></a>00491   }
 <a name="l00492"></a>00492   <span class="comment">// Check</span>
-<a name="l00493"></a>00493   <span class="keywordflow">if</span>(parity() != p){
+<a name="l00493"></a>00493   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a98938e2c51d1888236b920903f99050a" title="Get configured parity.">parity</a>() != p){
 <a name="l00494"></a>00494     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00495"></a>00495   }
 <a name="l00496"></a>00496 
@@ -595,7 +595,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00533"></a>00533     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00534"></a>00534   }
 <a name="l00535"></a>00535   <span class="comment">// Check</span>
-<a name="l00536"></a>00536   <span class="keywordflow">if</span>(flowCtlRtsCtsOn() != on){
+<a name="l00536"></a>00536   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>() != on){
 <a name="l00537"></a>00537     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00538"></a>00538   }
 <a name="l00539"></a>00539 
@@ -634,7 +634,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00572"></a>00572     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00573"></a>00573   }
 <a name="l00574"></a>00574   <span class="comment">// Check</span>
-<a name="l00575"></a>00575   <span class="keywordflow">if</span>(flowCtlXonXoffOn() != on){
+<a name="l00575"></a>00575   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>() != on){
 <a name="l00576"></a>00576     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00577"></a>00577   }
 <a name="l00578"></a>00578 
@@ -695,27 +695,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00633"></a>00633   }
 <a name="l00634"></a>00634   pvMutex.lock();
 <a name="l00635"></a>00635   <span class="keywordflow">if</span>(n == 0){
-<a name="l00636"></a>00636     updateReadTimeoutState(<span class="keyword">true</span>);
-<a name="l00637"></a>00637     <span class="keywordflow">return</span> ReadTimeout;
+<a name="l00636"></a>00636     <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keyword">true</span>);
+<a name="l00637"></a>00637     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a>;
 <a name="l00638"></a>00638   }<span class="keywordflow">else</span>{
-<a name="l00639"></a>00639     updateReadTimeoutState(<span class="keyword">false</span>);
+<a name="l00639"></a>00639     <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keyword">false</span>);
 <a name="l00640"></a>00640     <span class="keywordflow">if</span>(n &lt; 0){
 <a name="l00641"></a>00641       <span class="keywordflow">switch</span>(errno){
 <a name="l00642"></a>00642         <span class="keywordflow">case</span> EINTR:
 <a name="l00643"></a>00643           <span class="comment">// Thread has send the stop signal</span>
-<a name="l00644"></a>00644           <span class="keywordflow">return</span> ReadCanceled;
+<a name="l00644"></a>00644           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc">ReadCanceled</a>;
 <a name="l00645"></a>00645         <span class="keywordflow">default</span>:
 <a name="l00646"></a>00646           <span class="comment">// Unhandled error</span>
 <a name="l00647"></a>00647           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;select() call failed&quot;</span>, mdtError::Error);
 <a name="l00648"></a>00648           e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
 <a name="l00649"></a>00649           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00650"></a>00650           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00651"></a>00651           <span class="keywordflow">return</span> UnhandledError;
+<a name="l00651"></a>00651           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
 <a name="l00652"></a>00652       }
 <a name="l00653"></a>00653     }
 <a name="l00654"></a>00654   }
 <a name="l00655"></a>00655 
-<a name="l00656"></a>00656   <span class="keywordflow">return</span> NoError;
+<a name="l00656"></a>00656   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l00657"></a>00657 }
 <a name="l00658"></a>00658 
 <a name="l00659"></a><a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc">00659</a> qint64 <a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc" title="Read data from port.">mdtSerialPort::read</a>(<span class="keywordtype">char</span> *data, qint64 maxSize)
@@ -723,7 +723,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00661"></a>00661   <span class="keywordtype">int</span> n;
 <a name="l00662"></a>00662   <span class="keywordtype">int</span> err;
 <a name="l00663"></a>00663 
-<a name="l00664"></a>00664   n = ::read(pvFd, data, maxSize);
+<a name="l00664"></a>00664   n =<a class="code" href="classmdt_serial_port.html#a12274d7956b2af961ccdd36cfc2052cc" title="Read data from port."> ::read</a>(pvFd, data, maxSize);
 <a name="l00665"></a>00665   <span class="keywordflow">if</span>(n &lt; 0){
 <a name="l00666"></a>00666     <span class="comment">// Store errno</span>
 <a name="l00667"></a>00667     err = errno;
@@ -731,14 +731,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00669"></a>00669       <span class="keywordflow">case</span> EAGAIN:      <span class="comment">// No data available</span>
 <a name="l00670"></a>00670         <span class="keywordflow">return</span> 0;
 <a name="l00671"></a>00671       <span class="keywordflow">case</span> ETIMEDOUT:   <span class="comment">// Read timeout (happens with USBTMC)</span>
-<a name="l00672"></a>00672         updateReadTimeoutState(<span class="keyword">true</span>);
-<a name="l00673"></a>00673         <span class="keywordflow">return</span> ReadTimeout;
+<a name="l00672"></a>00672         <a class="code" href="classmdt_abstract_port.html#a0fc7317e988d5dea53a999cd1bf4faa9" title="Update the read timeout state.">updateReadTimeoutState</a>(<span class="keyword">true</span>);
+<a name="l00673"></a>00673         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">ReadTimeout</a>;
 <a name="l00674"></a>00674       <span class="keywordflow">default</span>:
 <a name="l00675"></a>00675         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;read() call failed&quot;</span>, mdtError::Error);
 <a name="l00676"></a>00676         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
 <a name="l00677"></a>00677         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00678"></a>00678         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00679"></a>00679         <span class="keywordflow">return</span> UnhandledError;
+<a name="l00679"></a>00679         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
 <a name="l00680"></a>00680     }
 <a name="l00681"></a>00681   }
 <a name="l00682"></a>00682 
@@ -749,12 +749,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00687"></a>00687 {
 <a name="l00688"></a>00688   <span class="keywordtype">int</span> err;
 <a name="l00689"></a>00689 
-<a name="l00690"></a>00690   <span class="keywordflow">if</span>(flowCtlRtsCtsOn()){
+<a name="l00690"></a>00690   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>()){
 <a name="l00691"></a>00691     <span class="keywordflow">if</span>(!setRtsOff()){
 <a name="l00692"></a>00692       <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00693"></a>00693     }
 <a name="l00694"></a>00694   }
-<a name="l00695"></a>00695   <span class="keywordflow">if</span>(flowCtlXonXoffOn()){
+<a name="l00695"></a>00695   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>()){
 <a name="l00696"></a>00696     <span class="keywordflow">if</span>(tcflow(pvFd, TCIOFF) &lt; 0){
 <a name="l00697"></a>00697       err = errno;
 <a name="l00698"></a>00698       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflow() call failed&quot;</span>, mdtError::Error);
@@ -772,12 +772,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00710"></a>00710 {
 <a name="l00711"></a>00711   <span class="keywordtype">int</span> err;
 <a name="l00712"></a>00712 
-<a name="l00713"></a>00713   <span class="keywordflow">if</span>(flowCtlRtsCtsOn()){
+<a name="l00713"></a>00713   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a9315ed0c7854a09716a4585efb0094c7" title="Get configured state of RTS/CTS flow control.">flowCtlRtsCtsOn</a>()){
 <a name="l00714"></a>00714     <span class="keywordflow">if</span>(!setRtsOn()){
 <a name="l00715"></a>00715       <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00716"></a>00716     }
 <a name="l00717"></a>00717   }
-<a name="l00718"></a>00718   <span class="keywordflow">if</span>(flowCtlXonXoffOn()){
+<a name="l00718"></a>00718   <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#a8d3e3eb1d2272129b8b97377dff1d5d4" title="Get configured state of Xon/Xoff flow control.">flowCtlXonXoffOn</a>()){
 <a name="l00719"></a>00719     <span class="keywordflow">if</span>(tcflow(pvFd, TCION) &lt; 0){
 <a name="l00720"></a>00720       err = errno;
 <a name="l00721"></a>00721       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;tcflow() call failed&quot;</span>, mdtError::Error);
@@ -809,27 +809,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00747"></a>00747   }
 <a name="l00748"></a>00748   pvMutex.lock();
 <a name="l00749"></a>00749   <span class="keywordflow">if</span>(n == 0){
-<a name="l00750"></a>00750     updateWriteTimeoutState(<span class="keyword">true</span>);
-<a name="l00751"></a>00751     <span class="keywordflow">return</span> WriteTimeout;
+<a name="l00750"></a>00750     <a class="code" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState</a>(<span class="keyword">true</span>);
+<a name="l00751"></a>00751     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a">WriteTimeout</a>;
 <a name="l00752"></a>00752   }<span class="keywordflow">else</span>{
-<a name="l00753"></a>00753     updateWriteTimeoutState(<span class="keyword">false</span>);
+<a name="l00753"></a>00753     <a class="code" href="classmdt_abstract_port.html#ab51135de1f7bbc4707c3284f924c98dc" title="Update the write timeout state.">updateWriteTimeoutState</a>(<span class="keyword">false</span>);
 <a name="l00754"></a>00754     <span class="keywordflow">if</span>(n &lt; 0){
 <a name="l00755"></a>00755       <span class="keywordflow">switch</span>(errno){
 <a name="l00756"></a>00756         <span class="keywordflow">case</span> EINTR:
 <a name="l00757"></a>00757           <span class="comment">// Thread has send the stop signal</span>
-<a name="l00758"></a>00758           <span class="keywordflow">return</span> WriteCanceled;
+<a name="l00758"></a>00758           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f">WriteCanceled</a>;
 <a name="l00759"></a>00759         <span class="keywordflow">default</span>:
 <a name="l00760"></a>00760           <span class="comment">// Unhandled error</span>
 <a name="l00761"></a>00761           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;select() call failed&quot;</span>, mdtError::Error);
 <a name="l00762"></a>00762           e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
 <a name="l00763"></a>00763           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00764"></a>00764           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00765"></a>00765           <span class="keywordflow">return</span> UnhandledError;
+<a name="l00765"></a>00765           <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
 <a name="l00766"></a>00766       }
 <a name="l00767"></a>00767     }
 <a name="l00768"></a>00768   }
 <a name="l00769"></a>00769 
-<a name="l00770"></a>00770   <span class="keywordflow">return</span> NoError;
+<a name="l00770"></a>00770   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l00771"></a>00771 }
 <a name="l00772"></a>00772 
 <a name="l00773"></a><a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597">00773</a> qint64 <a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597" title="Write data to port.">mdtSerialPort::write</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, qint64 maxSize)
@@ -837,7 +837,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00775"></a>00775   <span class="keywordtype">int</span> n;
 <a name="l00776"></a>00776   <span class="keywordtype">int</span> err;
 <a name="l00777"></a>00777 
-<a name="l00778"></a>00778   n = ::write(pvFd, data, maxSize);
+<a name="l00778"></a>00778   n =<a class="code" href="classmdt_serial_port.html#a282f99035c032fbb6fa86ccd10deb597" title="Write data to port."> ::write</a>(pvFd, data, maxSize);
 <a name="l00779"></a>00779   <span class="keywordflow">if</span>(n &lt; 0){
 <a name="l00780"></a>00780     <span class="comment">// Store error (errno will be reset when readen)</span>
 <a name="l00781"></a>00781     err = errno;
@@ -849,7 +849,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00787"></a>00787         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(err, strerror(err));
 <a name="l00788"></a>00788         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00789"></a>00789         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00790"></a>00790         <span class="keywordflow">return</span> UnhandledError;
+<a name="l00790"></a>00790         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
 <a name="l00791"></a>00791     }
 <a name="l00792"></a>00792   }
 <a name="l00793"></a>00793 
@@ -868,18 +868,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00806"></a>00806     <span class="keywordflow">switch</span>(errno){
 <a name="l00807"></a>00807       <span class="keywordflow">case</span> EINTR:
 <a name="l00808"></a>00808         <span class="comment">// Thread has send the stop signal</span>
-<a name="l00809"></a>00809         <span class="keywordflow">return</span> ControlCanceled;
+<a name="l00809"></a>00809         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea44eaa84d8f888f4f9d5c814291e54079">ControlCanceled</a>;
 <a name="l00810"></a>00810       <span class="keywordflow">default</span>:
 <a name="l00811"></a>00811         <span class="comment">// Unhandled error</span>
 <a name="l00812"></a>00812         <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;ioctl() call failed with command TIOCMIWAIT&quot;</span>, mdtError::Error);
 <a name="l00813"></a>00813         e.<a class="code" href="classmdt_error.html#a49254fdb566fee1a4adafe6a3694befc" title="Add system returned error (for example, errno)">setSystemError</a>(errno, strerror(errno));
 <a name="l00814"></a>00814         MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00815"></a>00815         e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00816"></a>00816         <span class="keywordflow">return</span> UnhandledError;
+<a name="l00816"></a>00816         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
 <a name="l00817"></a>00817     }
 <a name="l00818"></a>00818   }
 <a name="l00819"></a>00819 
-<a name="l00820"></a>00820   <span class="keywordflow">return</span> NoError;
+<a name="l00820"></a>00820   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l00821"></a>00821 }
 <a name="l00822"></a>00822 
 <a name="l00823"></a><a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7">00823</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_serial_port.html#a7893e1817fe5fc59c77ee6f3b9f13ae7" title="NOTE:">mdtSerialPort::getCtlStates</a>()
@@ -904,7 +904,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00842"></a>00842     }<span class="keywordflow">else</span>{
 <a name="l00843"></a>00843       pvCarIsOn = <span class="keyword">false</span>;
 <a name="l00844"></a>00844     }
-<a name="l00845"></a>00845     emit carChanged(pvCarIsOn);
+<a name="l00845"></a>00845     emit <a class="code" href="classmdt_abstract_serial_port.html#a63ddcadf5d8a63c479b0b6a24f89c837" title="Emited whenn CAR (CD) status changed.">carChanged</a>(pvCarIsOn);
 <a name="l00846"></a>00846   }
 <a name="l00847"></a>00847   <span class="keywordflow">if</span>((states &amp; TIOCM_DSR) != pvPreviousDsrState){
 <a name="l00848"></a>00848     <span class="comment">// Store new state</span>
@@ -915,7 +915,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00853"></a>00853     }<span class="keywordflow">else</span>{
 <a name="l00854"></a>00854       pvDsrIsOn = <span class="keyword">false</span>;
 <a name="l00855"></a>00855     }
-<a name="l00856"></a>00856     emit dsrChanged(pvDsrIsOn);
+<a name="l00856"></a>00856     emit <a class="code" href="classmdt_abstract_serial_port.html#a077d8c39ed12713742f1f2ffa0dca11d" title="Emited whenn DSR status changed.">dsrChanged</a>(pvDsrIsOn);
 <a name="l00857"></a>00857   }
 <a name="l00858"></a>00858   <span class="keywordflow">if</span>((states &amp; TIOCM_CTS) != pvPreviousCtsState){
 <a name="l00859"></a>00859     <span class="comment">// Store new state</span>
@@ -926,7 +926,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00864"></a>00864     }<span class="keywordflow">else</span>{
 <a name="l00865"></a>00865       pvCtsIsOn = <span class="keyword">false</span>;
 <a name="l00866"></a>00866     }
-<a name="l00867"></a>00867     emit ctsChanged(pvCtsIsOn);
+<a name="l00867"></a>00867     emit <a class="code" href="classmdt_abstract_serial_port.html#adf45a5006218ef5660721ecdf8454b5d" title="Emited whenn CTS status changed.">ctsChanged</a>(pvCtsIsOn);
 <a name="l00868"></a>00868   }
 <a name="l00869"></a>00869   <span class="keywordflow">if</span>((states &amp; TIOCM_RNG) != pvPreviousRngState){
 <a name="l00870"></a>00870     <span class="comment">// Store new state</span>
@@ -937,7 +937,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00875"></a>00875     }<span class="keywordflow">else</span>{
 <a name="l00876"></a>00876       pvRngIsOn = <span class="keyword">false</span>;
 <a name="l00877"></a>00877     }
-<a name="l00878"></a>00878     emit rngChanged(pvRngIsOn);
+<a name="l00878"></a>00878     emit <a class="code" href="classmdt_abstract_serial_port.html#a47c08ccb99dc6de76ae58ebeefc26857" title="Emited whenn RNG (RI) status changed.">rngChanged</a>(pvRngIsOn);
 <a name="l00879"></a>00879   }
 <a name="l00880"></a>00880 
 <a name="l00881"></a>00881   <span class="keywordflow">return</span> <span class="keyword">true</span>;
@@ -945,7 +945,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00883"></a>00883 
 <a name="l00884"></a><a class="code" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb">00884</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_serial_port.html#af0534e9f2e25b44a1a127d2a34b409fb" title="Enable/diseable the RTS (Request To Send) signal.">mdtSerialPort::setRts</a>(<span class="keywordtype">bool</span> on)
 <a name="l00885"></a>00885 {
-<a name="l00886"></a>00886   <span class="keywordflow">if</span>(!isOpen()){
+<a name="l00886"></a>00886   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>()){
 <a name="l00887"></a>00887     <span class="keywordflow">return</span>;
 <a name="l00888"></a>00888   }
 <a name="l00889"></a>00889   pvMutex.lock();
@@ -961,7 +961,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00899"></a>00899 {
 <a name="l00900"></a>00900   <span class="keywordtype">int</span> states;
 <a name="l00901"></a>00901 
-<a name="l00902"></a>00902   <span class="keywordflow">if</span>(!isOpen()){
+<a name="l00902"></a>00902   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>()){
 <a name="l00903"></a>00903     <span class="keywordflow">return</span>;
 <a name="l00904"></a>00904   }
 <a name="l00905"></a>00905   pvMutex.lock();
@@ -992,7 +992,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00930"></a>00930 
 <a name="l00931"></a>00931 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtSerialPort::pvOpen()
 <a name="l00932"></a>00932 {
-<a name="l00933"></a>00933   Q_ASSERT(!isOpen());
+<a name="l00933"></a>00933   Q_ASSERT(!<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
 <a name="l00934"></a>00934 
 <a name="l00935"></a>00935   <span class="keywordtype">int</span> err;
 <a name="l00936"></a>00936 
@@ -1000,59 +1000,59 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00938"></a>00938   <span class="comment">//  O_RDWR : Read/write access</span>
 <a name="l00939"></a>00939   <span class="comment">//  O_NOCTTY: not a terminal</span>
 <a name="l00940"></a>00940   <span class="comment">//  O_NDELAY: ignore DCD signal</span>
-<a name="l00941"></a>00941   pvFd = pvPortLock-&gt;openLocked(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
+<a name="l00941"></a>00941   pvFd = pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a25e9a2cb8a10069fae75c76b6809c27f" title="Open a port locked.">openLocked</a>(pvPortName, O_RDWR | O_NOCTTY | O_NONBLOCK);
 <a name="l00942"></a>00942   <span class="keywordflow">if</span>(pvFd &lt; 0){
 <a name="l00943"></a>00943     err = errno;
 <a name="l00944"></a>00944     <span class="comment">// Check if port was locked by another</span>
-<a name="l00945"></a>00945     <span class="keywordflow">if</span>(pvPortLock-&gt;isLockedByAnother()){
+<a name="l00945"></a>00945     <span class="keywordflow">if</span>(pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a739a8cedebb1a32e122c7e451f0cfe98" title="Returns true if port is locked by another instance.">isLockedByAnother</a>()){
 <a name="l00946"></a>00946       <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;Port &quot;</span> + pvPortName + <span class="stringliteral">&quot; allready locked, cannot open it&quot;</span>, mdtError::Error);
 <a name="l00947"></a>00947       MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00948"></a>00948       e.commit();
-<a name="l00949"></a>00949       <span class="keywordflow">return</span> PortLocked;
+<a name="l00949"></a>00949       <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaedd63daf0db75794bb8e8e467da9575c">PortLocked</a>;
 <a name="l00950"></a>00950     }
 <a name="l00951"></a>00951     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_SERIAL_PORT_IO_ERROR, <span class="stringliteral">&quot;Unable to open port: &quot;</span> + pvPortName, mdtError::Error);
 <a name="l00952"></a>00952     e.setSystemError(err, strerror(err));
 <a name="l00953"></a>00953     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l00954"></a>00954     e.commit();
 <a name="l00955"></a>00955     <span class="comment">// Here me must explicitly unlock the port because we return a error</span>
-<a name="l00956"></a>00956     pvPortLock-&gt;unlock();
+<a name="l00956"></a>00956     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();
 <a name="l00957"></a>00957     <span class="comment">// Check error and return a possibly correct code</span>
 <a name="l00958"></a>00958     <span class="keywordflow">switch</span>(err){
 <a name="l00959"></a>00959       <span class="keywordflow">case</span> EACCES:
-<a name="l00960"></a>00960         <span class="keywordflow">return</span> PortAccess;
+<a name="l00960"></a>00960         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eaee5a84e59e9dc5fcf27cac57068bb1f4">PortAccess</a>;
 <a name="l00961"></a>00961       <span class="keywordflow">case</span> ENOENT:
-<a name="l00962"></a>00962         <span class="keywordflow">return</span> PortNotFound;
+<a name="l00962"></a>00962         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
 <a name="l00963"></a>00963       <span class="keywordflow">default</span>:
-<a name="l00964"></a>00964         <span class="keywordflow">return</span> UnhandledError;
+<a name="l00964"></a>00964         <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea6e24e272af4da51c84eef5825c5cd712">UnhandledError</a>;
 <a name="l00965"></a>00965     }
 <a name="l00966"></a>00966   }
 <a name="l00967"></a>00967   <span class="comment">// Get current config and save it to pvOriginalTermios</span>
 <a name="l00968"></a>00968   <span class="keywordflow">if</span>(tcgetattr(pvFd, &amp;pvOriginalTermios) &lt; 0){
-<a name="l00969"></a>00969     close();
+<a name="l00969"></a>00969     <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
 <a name="l00970"></a>00970     <span class="comment">// Here me must explicitly do close because we return a error</span>
-<a name="l00971"></a>00971     pvPortLock-&gt;unlock();
-<a name="l00972"></a>00972     ::close(pvFd);
+<a name="l00971"></a>00971     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
+<a name="l00972"></a>00972 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">    ::close</a>(pvFd);
 <a name="l00973"></a>00973     pvFd = -1;
 <a name="l00974"></a>00974     <span class="comment">// Most of cases, this function fails because the physical port is not attached</span>
-<a name="l00975"></a>00975     <span class="keywordflow">return</span> PortNotFound;
+<a name="l00975"></a>00975     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
 <a name="l00976"></a>00976   }
 <a name="l00977"></a>00977   <span class="comment">// Get current system config on &quot;work copy&quot;</span>
 <a name="l00978"></a>00978   <span class="keywordflow">if</span>(tcgetattr(pvFd, &amp;pvTermios) &lt; 0){
-<a name="l00979"></a>00979     close();
+<a name="l00979"></a>00979     <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">close</a>();
 <a name="l00980"></a>00980     <span class="comment">// Here me must explicitly do close because we return a error</span>
-<a name="l00981"></a>00981     pvPortLock-&gt;unlock();
-<a name="l00982"></a>00982     ::close(pvFd);
+<a name="l00981"></a>00981     pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
+<a name="l00982"></a>00982 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">    ::close</a>(pvFd);
 <a name="l00983"></a>00983     pvFd = -1;
 <a name="l00984"></a>00984     <span class="comment">// Most of cases, this function fails because the physical port is not attached</span>
-<a name="l00985"></a>00985     <span class="keywordflow">return</span> PortNotFound;
+<a name="l00985"></a>00985     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea54a896ba3ff98896390e87bfe1f29eb0">PortNotFound</a>;
 <a name="l00986"></a>00986   }
 <a name="l00987"></a>00987 
-<a name="l00988"></a>00988   <span class="keywordflow">return</span> NoError;
+<a name="l00988"></a>00988   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l00989"></a>00989 }
 <a name="l00990"></a>00990 
 <a name="l00991"></a>00991 <span class="keywordtype">void</span> mdtSerialPort::pvClose()
 <a name="l00992"></a>00992 {
-<a name="l00993"></a>00993   Q_ASSERT(isOpen());
+<a name="l00993"></a>00993   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
 <a name="l00994"></a>00994 
 <a name="l00995"></a>00995   <span class="comment">// Restore original termios struct</span>
 <a name="l00996"></a>00996   <span class="keywordflow">if</span>(tcsetattr(pvFd, TCSANOW, &amp;pvOriginalTermios) &lt; 0){
@@ -1062,63 +1062,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01000"></a>01000     e.commit();
 <a name="l01001"></a>01001   }
 <a name="l01002"></a>01002   <span class="comment">// Close the port</span>
-<a name="l01003"></a>01003   pvPortLock-&gt;unlock();
-<a name="l01004"></a>01004   ::close(pvFd);
+<a name="l01003"></a>01003   pvPortLock-&gt;<a class="code" href="classmdt_port_lock.html#a60b65f02d57568dc36c5e918aa5357a6" title="Unlock the port.">unlock</a>();<a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port."></a>
+<a name="l01004"></a>01004 <a class="code" href="classmdt_abstract_serial_port.html#ae668910f98ad0e158dc6ebebf0c19805" title="Close the serial port.">  ::close</a>(pvFd);
 <a name="l01005"></a>01005   pvFd = -1;
 <a name="l01006"></a>01006 }
 <a name="l01007"></a>01007 
 <a name="l01008"></a>01008 <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> mdtSerialPort::pvSetup()
 <a name="l01009"></a>01009 {
-<a name="l01010"></a>01010   Q_ASSERT(isOpen());
+<a name="l01010"></a>01010   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
 <a name="l01011"></a>01011 
 <a name="l01012"></a>01012   QString strNum;
 <a name="l01013"></a>01013 
 <a name="l01014"></a>01014   <span class="comment">// Set baud rate</span>
-<a name="l01015"></a>01015   <span class="keywordflow">if</span>(!setBaudRate(config().baudRate())){
-<a name="l01016"></a>01016     strNum.setNum(config().baudRate());
+<a name="l01015"></a>01015   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351" title="Set the baud rate.">setBaudRate</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>())){
+<a name="l01016"></a>01016     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#ab7d9433433f4ec5d5e584721e5bb1195" title="Get the baud rate.">baudRate</a>());
 <a name="l01017"></a>01017     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported baud rate &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
 <a name="l01018"></a>01018     e.setSystemError(errno, strerror(errno));
 <a name="l01019"></a>01019     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01020"></a>01020     e.commit();
-<a name="l01021"></a>01021     <span class="keywordflow">return</span> SetupError;
+<a name="l01021"></a>01021     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01022"></a>01022   }
 <a name="l01023"></a>01023   <span class="comment">// Set local mode and enable the receiver</span>
 <a name="l01024"></a>01024   pvTermios.c_cflag |= (CLOCAL | CREAD);
 <a name="l01025"></a>01025   <span class="comment">// Set data bits</span>
-<a name="l01026"></a>01026   <span class="keywordflow">if</span>(!setDataBits(config().dataBitsCount())){
-<a name="l01027"></a>01027     strNum.setNum(config().dataBitsCount());
+<a name="l01026"></a>01026   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#af39774b2d3c4121623253740660a0389" title="Set number of data bits.">setDataBits</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().dataBitsCount())){
+<a name="l01027"></a>01027     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().dataBitsCount());
 <a name="l01028"></a>01028     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported data bits count &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
 <a name="l01029"></a>01029     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01030"></a>01030     e.commit();
-<a name="l01031"></a>01031     <span class="keywordflow">return</span> SetupError;
+<a name="l01031"></a>01031     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01032"></a>01032   }
 <a name="l01033"></a>01033   <span class="comment">// Set stop bits</span>
-<a name="l01034"></a>01034   <span class="keywordflow">if</span>(!setStopBits(config().stopBitsCount())){
-<a name="l01035"></a>01035     strNum.setNum(config().stopBitsCount());
+<a name="l01034"></a>01034   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a9471ebff90de41decee977566dd1571f" title="Set number of stop bits.">setStopBits</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().stopBitsCount())){
+<a name="l01035"></a>01035     strNum.setNum(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().stopBitsCount());
 <a name="l01036"></a>01036     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported stop bits count &#39;&quot;</span> + strNum + <span class="stringliteral">&quot;&#39; for port &quot;</span> + pvPortName, mdtError::Error);
 <a name="l01037"></a>01037     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01038"></a>01038     e.commit();
-<a name="l01039"></a>01039     <span class="keywordflow">return</span> SetupError;
+<a name="l01039"></a>01039     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01040"></a>01040   }
 <a name="l01041"></a>01041   <span class="comment">// Set parity</span>
-<a name="l01042"></a>01042   <span class="keywordflow">if</span>(!setParity(config().parity())){
+<a name="l01042"></a>01042   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#ae435f052a87dcd0b1829f1577bb5e58d" title="Set parity check.">setParity</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_serial_port.html#a98938e2c51d1888236b920903f99050a" title="Get configured parity.">parity</a>())){
 <a name="l01043"></a>01043     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported parity requested for port &quot;</span> + pvPortName, mdtError::Error);
 <a name="l01044"></a>01044     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01045"></a>01045     e.commit();
-<a name="l01046"></a>01046     <span class="keywordflow">return</span> SetupError;
+<a name="l01046"></a>01046     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01047"></a>01047   }
 <a name="l01048"></a>01048   <span class="comment">// Set flow control</span>
-<a name="l01049"></a>01049   <span class="keywordflow">if</span>(!setFlowCtlRtsCts(config().flowCtlRtsCtsEnabled())){
+<a name="l01049"></a>01049   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a175785be0dfe124254484822b7b8832e" title="Enable/diseable RTS/CTS flow control.">setFlowCtlRtsCts</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().flowCtlRtsCtsEnabled())){
 <a name="l01050"></a>01050     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported flow control for port &quot;</span> + pvPortName, mdtError::Error);
 <a name="l01051"></a>01051     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01052"></a>01052     e.commit();
-<a name="l01053"></a>01053     <span class="keywordflow">return</span> SetupError;
+<a name="l01053"></a>01053     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01054"></a>01054   }
-<a name="l01055"></a>01055   <span class="keywordflow">if</span>(!setFlowCtlXonXoff(config().flowCtlXonXoffEnabled(), config().xonChar(), config().xoffChar())){
+<a name="l01055"></a>01055   <span class="keywordflow">if</span>(!<a class="code" href="classmdt_serial_port.html#a34e2ac7b0d3cb7a6fb65756cbca2ce48" title="Enable/diseable Xon/Xoff flow control.">setFlowCtlXonXoff</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().flowCtlXonXoffEnabled(), <a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().xonChar(), <a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().xoffChar())){
 <a name="l01056"></a>01056     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_UNDEFINED_ERROR, <span class="stringliteral">&quot;unsupported flow control for port &quot;</span> + pvPortName, mdtError::Error);
 <a name="l01057"></a>01057     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01058"></a>01058     e.commit();
-<a name="l01059"></a>01059     <span class="keywordflow">return</span> SetupError;
+<a name="l01059"></a>01059     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01060"></a>01060   }
 <a name="l01061"></a>01061   <span class="comment">// Set raw data mode</span>
 <a name="l01062"></a>01062   pvTermios.c_lflag &amp;= ~(ICANON | ECHO | ECHOE | ISIG);
@@ -1128,13 +1128,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01066"></a>01066     e.setSystemError(errno, strerror(errno));
 <a name="l01067"></a>01067     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtSerialPort&quot;</span>);
 <a name="l01068"></a>01068     e.commit();
-<a name="l01069"></a>01069     <span class="keywordflow">return</span> SetupError;
+<a name="l01069"></a>01069     <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea3d692317af7125319f60204df3101307">SetupError</a>;
 <a name="l01070"></a>01070   }
 <a name="l01071"></a>01071   <span class="comment">// Set the read/write timeouts</span>
-<a name="l01072"></a>01072   setReadTimeout(config().readTimeout());
-<a name="l01073"></a>01073   setWriteTimeout(config().writeTimeout());
+<a name="l01072"></a>01072   <a class="code" href="classmdt_serial_port.html#a9105e5a3a640b56097c1156000ace933" title="Set the read data timeout.">setReadTimeout</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().readTimeout());
+<a name="l01073"></a>01073   <a class="code" href="classmdt_serial_port.html#a036f49d743838013c9a8cbf6a1dd40d1" title="Set the write data timeout.">setWriteTimeout</a>(<a class="code" href="classmdt_abstract_serial_port.html#ae053b73fee897769641813df658c9ead" title="Get the stored configuration.">config</a>().writeTimeout());
 <a name="l01074"></a>01074 
-<a name="l01085"></a>01085   <span class="keywordflow">return</span> NoError;
+<a name="l01085"></a>01085   <span class="keywordflow">return</span> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">NoError</a>;
 <a name="l01086"></a>01086 }
 <a name="l01087"></a>01087 
 <a name="l01088"></a>01088 <span class="keywordtype">void</span> mdtSerialPort::pvFlushIn()
@@ -1159,7 +1159,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01107"></a>01107 
 <a name="l01108"></a>01108 <span class="keywordtype">void</span> mdtSerialPort::mapUartType()
 <a name="l01109"></a>01109 {
-<a name="l01110"></a>01110   Q_ASSERT(isOpen());
+<a name="l01110"></a>01110   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
 <a name="l01111"></a>01111 
 <a name="l01112"></a>01112   <span class="keyword">struct </span>serial_struct serinfo;
 <a name="l01113"></a>01113 
@@ -1218,7 +1218,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01166"></a>01166 
 <a name="l01167"></a>01167 <span class="keywordtype">void</span> mdtSerialPort::buildAvailableBaudRates()
 <a name="l01168"></a>01168 {
-<a name="l01169"></a>01169   Q_ASSERT(isOpen());
+<a name="l01169"></a>01169   Q_ASSERT(<a class="code" href="classmdt_abstract_port.html#a2122ae3141342ff38c8388e62b244e3b" title="Get port&#39;s open state.">isOpen</a>());
 <a name="l01170"></a>01170 
 <a name="l01171"></a>01171   QList&lt;int&gt; tmpAvailableBaudRates;
 <a name="l01172"></a>01172   <span class="keywordtype">int</span> i;
@@ -1291,7 +1291,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l01239"></a>01239   <span class="comment">// Check each defined baud rate, try to apply, and store to container if Ok</span>
 <a name="l01240"></a>01240   pvAvailableBaudRates.clear();
 <a name="l01241"></a>01241   <span class="keywordflow">for</span>(i=0; i&lt;tmpAvailableBaudRates.size(); ++i){
-<a name="l01242"></a>01242     <span class="keywordflow">if</span>(setBaudRate(tmpAvailableBaudRates.at(i))){
+<a name="l01242"></a>01242     <span class="keywordflow">if</span>(<a class="code" href="classmdt_serial_port.html#ad77b6a5fd819fae6db0db888b3113351" title="Set the baud rate.">setBaudRate</a>(tmpAvailableBaudRates.at(i))){
 <a name="l01243"></a>01243       pvAvailableBaudRates &lt;&lt; tmpAvailableBaudRates.at(i);
 <a name="l01244"></a>01244     }
 <a name="l01245"></a>01245   }
@@ -1364,7 +1364,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

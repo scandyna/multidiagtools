@@ -1,5 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="5,101,96,131"/>
-<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="120,101,237,131"/>
-<area shape="rect" id="node6" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="125,5,232,35"/>
+<area shape="rect" id="node2" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="87,197,193,227"/>
+<area shape="rect" id="node4" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/>
+<area shape="rect" id="node6" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/>
+<area shape="rect" id="node8" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="217,197,308,227"/>
 </map>

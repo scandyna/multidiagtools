@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A." alt="" coords="5,160,136,189"/>
-<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="28,5,113,35"/>
+<area shape="rect" id="node5" href="$classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="5,160,155,189"/>
+<area shape="rect" id="node7" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A." alt="" coords="179,160,309,189"/>
+<area shape="rect" id="node2" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="119,5,204,35"/>
 </map>

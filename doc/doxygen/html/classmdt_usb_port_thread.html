@@ -62,7 +62,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mdtUsbPortThread Class Reference</div>  </div>
 </div>
@@ -72,7 +73,7 @@ Inheritance diagram for mdtUsbPortThread:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usb_port_thread__inherit__graph.png" border="0" usemap="#mdt_usb_port_thread_inherit__map" alt="Inheritance graph"/></div>
 <map name="mdt_usb_port_thread_inherit__map" id="mdt_usb_port_thread_inherit__map">
-<area shape="rect" id="node2" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="17,5,124,35"/></map>
+<area shape="rect" id="node5" href="classmdt_usbtmc_port_thread.html" title="mdtUsbtmcPortThread" alt="" coords="5,160,160,189"/><area shape="rect" id="node2" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="29,5,136,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for mdtUsbPortThread:</div>
@@ -100,40 +101,53 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf4e5883224f05d80132b31a921ac899"></a><!-- doxytag: member="mdtUsbPortThread::mdtUsbPortThread" ref="aaf4e5883224f05d80132b31a921ac899" args="(QObject *parent=0)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aaf4e5883224f05d80132b31a921ac899">mdtUsbPortThread</a> (QObject *parent=0)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">isReader</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal.  <a href="#aed82b57c84745f1e2391750697db1022"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed82b57c84745f1e2391750697db1022"></a><!-- doxytag: member="mdtUsbPortThread::isReader" ref="aed82b57c84745f1e2391750697db1022" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#aed82b57c84745f1e2391750697db1022">isReader</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74258f300967b5dea1fbfa9a0ccab38a"></a><!-- doxytag: member="mdtUsbPortThread::isWriter" ref="a74258f300967b5dea1fbfa9a0ccab38a" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#a74258f300967b5dea1fbfa9a0ccab38a">isWriter</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true. <br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_thread.html#acca2af9704cc6894ec5b2058ca102af1">readUntilShortPacketReceived</a> (int maxReadTransfers)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read until a short frame is received.  <a href="#acca2af9704cc6894ec5b2058ca102af1"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="mdt_usb_port_thread_8h_source.html#l00034">34</a> of file <a class="el" href="mdt_usb_port_thread_8h_source.html">mdtUsbPortThread.h</a>.</p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aed82b57c84745f1e2391750697db1022"></a><!-- doxytag: member="mdtUsbPortThread::isReader" ref="aed82b57c84745f1e2391750697db1022" args="() const " -->
+<a class="anchor" id="acca2af9704cc6894ec5b2058ca102af1"></a><!-- doxytag: member="mdtUsbPortThread::readUntilShortPacketReceived" ref="acca2af9704cc6894ec5b2058ca102af1" args="(int maxReadTransfers)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mdtUsbPortThread::isReader </td>
+          <td class="memname"><a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e">mdtAbstractPort::error_t</a> mdtUsbPortThread::readUntilShortPacketReceived </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [virtual]</code></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxReadTransfers</em></td><td>)</td>
+          <td><code> [protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Returns true if this thread reads data and send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal. </p>
-<p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> can handle many threads. It needs to know wich one will send the <a class="el" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden()</a> signal, so it can connect it to his slot. </p>
+<p>Read until a short frame is received. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">maxReadTransfers</td><td>Maximum of read transfers before return (If device returns never a short frame, this method will return after maxReadTransfers). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>NoError or a error of type <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>. If maxReadTransfers is reached, ReadTimeout is returned. </dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2683676423317bc9cb31b2" title="Set the port instance.">setPort()</a> before using this method. </dd></dl>
 
-<p>Reimplemented from <a class="el" href="classmdt_port_thread.html#acdb3d96287c571cc08ef39860dc324b1">mdtPortThread</a>.</p>
-
-<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00033">33</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_thread_8cpp_source.html#l00043">43</a> of file <a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_usb_port_thread_8h_source.html">mdtUsbPortThread.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_usb_port_thread_8cpp_source.html">mdtUsbPortThread.cpp</a></li>
-<li>src/mdtport/<a class="el" href="moc__mdt_usb_port_thread_8cxx_source.html">moc_mdtUsbPortThread.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -150,7 +164,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

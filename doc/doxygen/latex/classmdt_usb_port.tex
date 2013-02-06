@@ -64,6 +64,10 @@ void \hyperlink{classmdt_usb_port_a719fc7b43461a3e2d9a4926d3e3961c2}{requestRead
 \begin{DoxyCompactList}\small\item\em Request to read until a short packet is received. \end{DoxyCompactList}\item 
 bool \hyperlink{classmdt_usb_port_a3c0685d67fe608abe24c140c2858779c}{readUntilShortPacketReceivedRequestPending} ()
 \begin{DoxyCompactList}\small\item\em Check if a request to read until a short packet is received is pending. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_usb_port_a9f4f09dac3f09b1766072cd9c1292ab1}{addbTagToAbort} (quint8 bTag)
+\begin{DoxyCompactList}\small\item\em add a bulk IN bTag to abort \end{DoxyCompactList}\item 
+int \hyperlink{classmdt_usb_port_a43e3102b004f213ecc01b17f31607957}{takebTagToAbort} ()
+\begin{DoxyCompactList}\small\item\em Get a bTag to abort in pending queue. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_usb_port_af546a031ed8621fee1d5e9498cbcd174}{readBufferSize} () const 
 \begin{DoxyCompactList}\small\item\em Get read buffer size. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{error\_\-t} \hyperlink{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{initReadTransfer} (qint64 maxSize)
@@ -152,6 +156,27 @@ Definition at line 64 of file mdtUsbPort.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_usb_port_a9f4f09dac3f09b1766072cd9c1292ab1}{
+\index{mdtUsbPort@{mdtUsbPort}!addbTagToAbort@{addbTagToAbort}}
+\index{addbTagToAbort@{addbTagToAbort}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{addbTagToAbort}]{\setlength{\rightskip}{0pt plus 5cm}void mdtUsbPort::addbTagToAbort (
+\begin{DoxyParamCaption}
+\item[{quint8}]{bTag}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a9f4f09dac3f09b1766072cd9c1292ab1}
+
+
+add a bulk IN bTag to abort 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000043}{Todo}]Obselete All pending bTags queued will be aborted regarding USBTMC standard (INITIATE/CHECK ABORT\_\-BULK\_\-IN)\end{Desc}
+
+
+The mutex must be locked before calling this method, and still locked inside. 
+
+Definition at line 379 of file mdtUsbPort.cpp.
+
 \hypertarget{classmdt_usb_port_a4fbcd0fcc179335c55c6d7ccc40a7c31}{
 \index{mdtUsbPort@{mdtUsbPort}!addControlRequest@{addControlRequest}}
 \index{addControlRequest@{addControlRequest}!mdtUsbPort@{mdtUsbPort}}
@@ -201,7 +226,7 @@ Used by transfer callbacks
 
 Mutex is not handled by this method. 
 
-Definition at line 953 of file mdtUsbPort.cpp.
+Definition at line 966 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a38200f806037e06988e73af246e8a494}{
 \index{mdtUsbPort@{mdtUsbPort}!addFrameToWrite@{addFrameToWrite}}
@@ -229,7 +254,7 @@ Reimplemented from \hyperlink{classmdt_abstract_port_a9a69eb2fc07d551ab37c011487
 
 
 
-Definition at line 743 of file mdtUsbPort.cpp.
+Definition at line 756 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a6566e654df8a1c3503941702593db3c5}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelControlTransfer@{cancelControlTransfer}}
@@ -273,7 +298,7 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::cancelMessageInTransfer() DONE\char`\"{};
 
 
 
-Definition at line 692 of file mdtUsbPort.cpp.
+Definition at line 705 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3570b708f9f51408e4bbf2f61cc8c881}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelReadTransfer@{cancelReadTransfer}}
@@ -294,7 +319,7 @@ qDebug() $<$$<$ \char`\"{}cancelReadTransfer() ...\char`\"{};
 
 
 
-Definition at line 497 of file mdtUsbPort.cpp.
+Definition at line 510 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_afe5b473e1df8b828c17f83a45a3902fb}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelTransfers@{cancelTransfers}}
@@ -319,7 +344,7 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::cancelTransfers() DONE\char`\"{};
 
 
 
-Definition at line 968 of file mdtUsbPort.cpp.
+Definition at line 981 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a7cbe1cd3649861aac5e6a14830f06cf9}{
 \index{mdtUsbPort@{mdtUsbPort}!cancelWriteTransfer@{cancelWriteTransfer}}
@@ -340,7 +365,7 @@ qDebug() $<$$<$ \char`\"{}cancelWriteTransfer() ...\char`\"{};
 
 
 
-Definition at line 885 of file mdtUsbPort.cpp.
+Definition at line 898 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_af146b08006ddbe18fb537ae1a75b622e}{
 \index{mdtUsbPort@{mdtUsbPort}!controlFramesPool@{controlFramesPool}}
@@ -454,7 +479,7 @@ Get current read endpoint address.
 
 Note: mutex is not handled by this method 
 
-Definition at line 1060 of file mdtUsbPort.cpp.
+Definition at line 1072 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ae2319ee6ff5a2f4399410175fbac6a44}{
 \index{mdtUsbPort@{mdtUsbPort}!currentWriteEndpointAddress@{currentWriteEndpointAddress}}
@@ -471,7 +496,7 @@ Get current write endpoint address.
 
 Note: mutex is not handled by this method 
 
-Definition at line 1065 of file mdtUsbPort.cpp.
+Definition at line 1077 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a551748422808cbb071930e1134bfaad5}{
 \index{mdtUsbPort@{mdtUsbPort}!handleUsbEvents@{handleUsbEvents}}
@@ -493,20 +518,18 @@ Notes: must be called only by I/O thread (typically \hyperlink{classmdt_usb_port
 \begin{DoxyParams}{Parameters}
 {\em timeout} & Wait timeout. If null, the port's internal defined timeout is used regarding endpoint \\
 \hline
-{\em endpoint} & Concerned endpoint\\
+{\em endpoint} & Concerned endpoint \\
 \hline
 \end{DoxyParams}
-\begin{Desc}
-\item[\hyperlink{todo__todo000039}{Todo}]Check about pvLastError that was set by transfer callbacks ? \end{Desc}
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000040}{Todo}]Think that timeout has no sense here, should be filtered \end{Desc}
+\item[\hyperlink{todo__todo000038}{Todo}]Think that timeout has no sense here, should be filtered \end{Desc}
 
 
 
 
-Definition at line 995 of file mdtUsbPort.cpp.
+Definition at line 1007 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_abb66e85fc1366112eeb0a6e86f6e7e32}{
 \index{mdtUsbPort@{mdtUsbPort}!handleUsbEvents@{handleUsbEvents}}
@@ -528,7 +551,7 @@ NoError or \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{
 \end{DoxyReturn}
 
 
-Definition at line 1026 of file mdtUsbPort.cpp.
+Definition at line 1038 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a897234cc2c7561da323cb124f57bcc28}{
 \index{mdtUsbPort@{mdtUsbPort}!initMessageInTransfer@{initMessageInTransfer}}
@@ -557,12 +580,12 @@ NoError or a error from \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8
 
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000038}{Todo}]Handle retval \end{Desc}
+\item[\hyperlink{todo__todo000037}{Todo}]Handle retval \end{Desc}
 
 
 
 
-Definition at line 572 of file mdtUsbPort.cpp.
+Definition at line 585 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{
 \index{mdtUsbPort@{mdtUsbPort}!initReadTransfer@{initReadTransfer}}
@@ -593,12 +616,12 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::initReadTransfer() called, maxSize: \char`
 qDebug() $<$$<$ \char`\"{}mdtUsbPort::initReadTransfer() INIT\char`\"{};
 
 \begin{Desc}
-\item[\hyperlink{todo__todo000037}{Todo}]Handle retval \end{Desc}
+\item[\hyperlink{todo__todo000036}{Todo}]Handle retval \end{Desc}
 
 
 
 
-Definition at line 379 of file mdtUsbPort.cpp.
+Definition at line 392 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3340dc3f53e857e39053988e4925fc97}{
 \index{mdtUsbPort@{mdtUsbPort}!initWriteTransfer@{initWriteTransfer}}
@@ -633,7 +656,7 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::initWriteTransfer() , maxSize: \char`\"{} 
 
 
 
-Definition at line 761 of file mdtUsbPort.cpp.
+Definition at line 774 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a81855cebd9b672a74d836955236c19bf}{
 \index{mdtUsbPort@{mdtUsbPort}!lastErrors@{lastErrors}}
@@ -652,7 +675,7 @@ Will clear internal list (a second call will return a empty list)
 
 Used by \hyperlink{classmdt_usb_port_thread}{mdtUsbPortThread}, should not be used else. 
 
-Definition at line 958 of file mdtUsbPort.cpp.
+Definition at line 971 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3365431076a3197540cbc99278658bda}{
 \index{mdtUsbPort@{mdtUsbPort}!messageInFrames@{messageInFrames}}
@@ -671,7 +694,7 @@ This queue contains the message IN frames.
 
 Mutex is not handled by this method. 
 
-Definition at line 738 of file mdtUsbPort.cpp.
+Definition at line 751 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3ad4385983122fcaf6d2560b6bd43acf}{
 \index{mdtUsbPort@{mdtUsbPort}!messageInFramesPool@{messageInFramesPool}}
@@ -690,7 +713,7 @@ This queue contains the pool of message IN frames.
 
 Mutex is not handled by this method. 
 
-Definition at line 733 of file mdtUsbPort.cpp.
+Definition at line 746 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ae8932368e2777356695ab69f6ed08f41}{
 \index{mdtUsbPort@{mdtUsbPort}!messageInTransferCallback@{messageInTransferCallback}}
@@ -726,7 +749,7 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::messageInTransferCallback(): device discon
 
 
 
-Definition at line 604 of file mdtUsbPort.cpp.
+Definition at line 617 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_abce257345c8af47494215cd7ee75f82d}{
 \index{mdtUsbPort@{mdtUsbPort}!read@{read}}
@@ -758,7 +781,7 @@ Implements \hyperlink{classmdt_abstract_port_a9d9c45220d5328c9856a2445557fe970}{
 
 
 
-Definition at line 543 of file mdtUsbPort.cpp.
+Definition at line 556 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_af546a031ed8621fee1d5e9498cbcd174}{
 \index{mdtUsbPort@{mdtUsbPort}!readBufferSize@{readBufferSize}}
@@ -779,7 +802,7 @@ This method is used by USB thread, and should not be used else.
 
 Mutex is not handled by this method. 
 
-Definition at line 567 of file mdtUsbPort.cpp.
+Definition at line 580 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ab4f1f0456c84f954604b192f6085c3f2}{
 \index{mdtUsbPort@{mdtUsbPort}!readTransferCallback@{readTransferCallback}}
@@ -815,7 +838,7 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::readTransferCallback(): device disconnecte
 
 
 
-Definition at line 433 of file mdtUsbPort.cpp.
+Definition at line 446 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_a3c0685d67fe608abe24c140c2858779c}{
 \index{mdtUsbPort@{mdtUsbPort}!readUntilShortPacketReceivedRequestPending@{readUntilShortPacketReceivedRequestPending}}
@@ -949,6 +972,32 @@ The mutex must be locked before calling this method, and still locked inside.
 
 Definition at line 148 of file mdtUsbPort.cpp.
 
+\hypertarget{classmdt_usb_port_a43e3102b004f213ecc01b17f31607957}{
+\index{mdtUsbPort@{mdtUsbPort}!takebTagToAbort@{takebTagToAbort}}
+\index{takebTagToAbort@{takebTagToAbort}!mdtUsbPort@{mdtUsbPort}}
+\subsubsection[{takebTagToAbort}]{\setlength{\rightskip}{0pt plus 5cm}int mdtUsbPort::takebTagToAbort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_usb_port_a43e3102b004f213ecc01b17f31607957}
+
+
+Get a bTag to abort in pending queue. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000044}{Todo}]Obselete This method is used by USB thread, and should not be used else.\end{Desc}
+
+
+Mutex is not handled by this method.
+
+\begin{DoxyReturn}{Returns}
+Value $>$= 0 (=bTag) or -\/1 if queue is empty. 
+\end{DoxyReturn}
+
+
+Definition at line 384 of file mdtUsbPort.cpp.
+
 \hypertarget{classmdt_usb_port_a3be875f6f10ae94fd3a94f925bb935e7}{
 \index{mdtUsbPort@{mdtUsbPort}!waitEventWriteReady@{waitEventWriteReady}}
 \index{waitEventWriteReady@{waitEventWriteReady}!mdtUsbPort@{mdtUsbPort}}
@@ -968,7 +1017,7 @@ Implements \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{
 
 
 
-Definition at line 927 of file mdtUsbPort.cpp.
+Definition at line 940 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ab8ddd4ebee603ac381e8da0383a61e36}{
 \index{mdtUsbPort@{mdtUsbPort}!waitForReadyRead@{waitForReadyRead}}
@@ -989,7 +1038,7 @@ Implements \hyperlink{classmdt_abstract_port_aeda364cb191da1038a22dd1fc06a1d49}{
 
 
 
-Definition at line 538 of file mdtUsbPort.cpp.
+Definition at line 551 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_ae777e33325ff2adef326dd7f81b00838}{
 \index{mdtUsbPort@{mdtUsbPort}!write@{write}}
@@ -1013,7 +1062,7 @@ Implements \hyperlink{classmdt_abstract_port_a64d4802975a76474b9196c91f57a6d90}{
 
 
 
-Definition at line 932 of file mdtUsbPort.cpp.
+Definition at line 945 of file mdtUsbPort.cpp.
 
 \hypertarget{classmdt_usb_port_af910071a5a5c401cd20cee3519120cc2}{
 \index{mdtUsbPort@{mdtUsbPort}!writeTransferCallback@{writeTransferCallback}}
@@ -1047,7 +1096,7 @@ qDebug() $<$$<$ \char`\"{}mdtUsbPort::writeTransferCallback(): device disconnect
 
 
 
-Definition at line 817 of file mdtUsbPort.cpp.
+Definition at line 830 of file mdtUsbPort.cpp.
 
 
 

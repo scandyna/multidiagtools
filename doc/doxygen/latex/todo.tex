@@ -35,22 +35,22 @@
  Mutex is not handled by this method. 
 \end{DoxyDescription}
 
-\label{todo__todo000050}
-\hypertarget{todo__todo000050}{}
+\label{todo__todo000053}
+\hypertarget{todo__todo000053}{}
  
 \begin{DoxyDescription}
 \item[Class \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} ]Comment this class 
 \end{DoxyDescription}
 
-\label{todo__todo000051}
-\hypertarget{todo__todo000051}{}
+\label{todo__todo000054}
+\hypertarget{todo__todo000054}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_abstract_serial_port_aaeacd26b220ab0f8c521cef74edfafdd}{mdtAbstractSerialPort::getCtlStates}()=0 ]Update name to : updateCtlStates ? 
 \end{DoxyDescription}
 
-\label{todo__todo000056}
-\hypertarget{todo__todo000056}{}
+\label{todo__todo000058}
+\hypertarget{todo__todo000058}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_csv_file_af44de864675351a6f22b176e64a4cecc}{mdtCsvFile::parseLine}(const QByteArray \&line, const QByteArray \&separator, const QByteArray \&dataProtection) ]Check new function in mdtAlgorithm 
@@ -102,7 +102,7 @@
 \hypertarget{todo__todo000008}{}
  
 \begin{DoxyDescription}
-\item[Class \hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} ]Add color per state (same as texts) 
+\item[Member \hyperlink{classmdt_device_status_widget_af9d0bf5fb74e55bcdab7c8bd86ddfa33}{mdtDeviceStatusWidget::setState}(int state, const QString \&message, const QString \&details) ]Implement details 
 \end{DoxyDescription}
 
 \label{todo__todo000002}
@@ -119,29 +119,29 @@
 \item[Member \hyperlink{classmdt_device_u3606_a_widget_a653d85749d67555d8c3a43a779b6d2a2}{mdtDeviceU3606AWidget::mdtDeviceU3606AWidget}(QWidget $\ast$parent=0) ]A supprimer !(?)! 
 \end{DoxyDescription}
 
-\label{todo__todo000057}
-\hypertarget{todo__todo000057}{}
+\label{todo__todo000059}
+\hypertarget{todo__todo000059}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_frame_codec_k8055_a9dfe60529b0e80d5bbd3852fdea51b18}{mdtFrameCodecK8055::decode}(QByteArray \&data) ]check status field ?? 
 \end{DoxyDescription}
 
-\label{todo__todo000058}
-\hypertarget{todo__todo000058}{}
+\label{todo__todo000060}
+\hypertarget{todo__todo000060}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_frame_codec_scpi_aa6596dc898438be704191ad282d02100}{mdtFrameCodecScpi::decodeIEEEdataAscii}(const QByteArray \&data) ]Not implemented yet 
 \end{DoxyDescription}
 
-\label{todo__todo000059}
-\hypertarget{todo__todo000059}{}
+\label{todo__todo000061}
+\hypertarget{todo__todo000061}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_frame_codec_scpi_ab70c6c3d2d91ddff065952b6c2db8345}{mdtFrameCodecScpi::decodeIEEEdataByte}(const QByteArray \&data) ]Not implemented yet 
 \end{DoxyDescription}
 
-\label{todo__todo000060}
-\hypertarget{todo__todo000060}{}
+\label{todo__todo000062}
+\hypertarget{todo__todo000062}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_frame_usb_tmc_a06d2743a113bd2b4cf2ee44014ecd710}{mdtFrameUsbTmc::putData}(const char $\ast$data, int maxLen) ]other bmTransferAttributes 
@@ -220,8 +220,8 @@ On disconnect, should flush I/O ?
 \item[Class \hyperlink{classmdt_port_read_thread}{mdtPortReadThread} ]suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. 
 \end{DoxyDescription}
 
-\label{todo__todo000054}
-\hypertarget{todo__todo000054}{}
+\label{todo__todo000056}
+\hypertarget{todo__todo000056}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_port_term_a7ec568c44f862fe7aee83f1a271ac6bb}{mdtPortTerm::sendCmd}() ]Error handling ! 
@@ -241,66 +241,71 @@ On disconnect, should flush I/O ?
 \item[Member \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{mdtPortThread::getNewFrameRead}() ]Currently implemented in polling, should be done with a wait condition.
 \end{DoxyDescription}
 
-\label{todo__todo000033}
-\hypertarget{todo__todo000033}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_thread_ad2c618a032c0aeed0f0cb3b30bc0aba9}{mdtPortThread::notifyError}(int error) ]Adapt in threads subclasses 
-\end{DoxyDescription}
-
 \label{todo__todo000030}
 \hypertarget{todo__todo000030}{}
  
 \begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_port_thread_a2e0c384ae6c909cb40fc0ca1a0189ca6}{mdtPortThread::readFromPort}(\hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$frame) ]Handle timeout error ? 
-\end{DoxyDescription}
-
-\label{todo__todo000052}
-\hypertarget{todo__todo000052}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_serial_port_ctl_widget_a9dce60a846cbf24d7ceab099ff147c18}{mdtSerialPortCtlWidget::makeConnections}(\hyperlink{classmdt_serial_port_manager}{mdtSerialPortManager} $\ast$manager) ]Create threads somwere here, and connect signals/slots 
-\end{DoxyDescription}
-
-\label{todo__todo000036}
-\hypertarget{todo__todo000036}{}
- 
-\begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}{mdtUsbDeviceDescriptor::productName}() const  ]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) 
+\item[Member \hyperlink{classmdt_port_thread_a8756fe2a26bf267376b4003a2896ff48}{mdtPortThread::readFromPort}(\hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$frame, bool emitNewFrameReaden=true) ]Handle timeout error ? 
 \end{DoxyDescription}
 
 \label{todo__todo000035}
 \hypertarget{todo__todo000035}{}
  
 \begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_usb_device_descriptor_a626afc71d8e72600f12259ac6f5a5866}{mdtUsbDeviceDescriptor::productName}() const  ]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) 
+\end{DoxyDescription}
+
+\label{todo__todo000034}
+\hypertarget{todo__todo000034}{}
+ 
+\begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_usb_device_descriptor_ac2f746ebd5540b65bf00f82c991f5c3b}{mdtUsbDeviceDescriptor::vendorName}() const  ]Parsing the usb.ids (see \href{http://www.linux-usb.org}{\tt http://www.linux-\/usb.org}) 
 \end{DoxyDescription}
 
-\label{todo__todo000039}
-\hypertarget{todo__todo000039}{}
+\label{todo__todo000043}
+\hypertarget{todo__todo000043}{}
  
 \begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_port_a551748422808cbb071930e1134bfaad5}{mdtUsbPort::handleUsbEvents}(struct timeval $\ast$timeout, quint8 endpoint) ]Check about pvLastError that was set by transfer callbacks ? 
-
-Think that timeout has no sense here, should be filtered 
+\item[Member \hyperlink{classmdt_usb_port_a9f4f09dac3f09b1766072cd9c1292ab1}{mdtUsbPort::addbTagToAbort}(quint8 bTag) ]Obselete All pending bTags queued will be aborted regarding USBTMC standard (INITIATE/CHECK ABORT\_\-BULK\_\-IN)
 \end{DoxyDescription}
 
 \label{todo__todo000038}
 \hypertarget{todo__todo000038}{}
  
 \begin{DoxyDescription}
-\item[Member \hyperlink{classmdt_usb_port_a897234cc2c7561da323cb124f57bcc28}{mdtUsbPort::initMessageInTransfer}() ]Handle retval 
+\item[Member \hyperlink{classmdt_usb_port_a551748422808cbb071930e1134bfaad5}{mdtUsbPort::handleUsbEvents}(struct timeval $\ast$timeout, quint8 endpoint) ]Think that timeout has no sense here, should be filtered 
 \end{DoxyDescription}
 
 \label{todo__todo000037}
 \hypertarget{todo__todo000037}{}
  
 \begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_usb_port_a897234cc2c7561da323cb124f57bcc28}{mdtUsbPort::initMessageInTransfer}() ]Handle retval 
+\end{DoxyDescription}
+
+\label{todo__todo000036}
+\hypertarget{todo__todo000036}{}
+ 
+\begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_usb_port_a5e380852b8726f71e8558c86cba5bd1f}{mdtUsbPort::initReadTransfer}(qint64 maxSize) ]Handle retval 
 \end{DoxyDescription}
 
-\label{todo__todo000046}
-\hypertarget{todo__todo000046}{}
+\label{todo__todo000044}
+\hypertarget{todo__todo000044}{}
+ 
+\begin{DoxyDescription}
+\item[Member \hyperlink{classmdt_usb_port_a43e3102b004f213ecc01b17f31607957}{mdtUsbPort::takebTagToAbort}() ]Obselete This method is used by USB thread, and should not be used else.
+\end{DoxyDescription}
+
+\label{todo__todo000050}
+\hypertarget{todo__todo000050}{}
+ 
+\begin{DoxyDescription}
+\item[Class \hyperlink{classmdt_usbtmc_port_manager}{mdtUsbtmcPortManager} ]Write a USBTMC port thread 
+\end{DoxyDescription}
+
+\label{todo__todo000047}
+\hypertarget{todo__todo000047}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_usbtmc_port_manager_af412ba1b1e7e56ebecd2e59cb6bf607a}{mdtUsbtmcPortManager::abortBulkOut}(quint8 bTag) ]Finish and test 
@@ -308,22 +313,22 @@ Think that timeout has no sense here, should be filtered
 Implement clear halt 
 \end{DoxyDescription}
 
-\label{todo__todo000048}
-\hypertarget{todo__todo000048}{}
+\label{todo__todo000049}
+\hypertarget{todo__todo000049}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_usbtmc_port_manager_aca42b343ae1f6a324e6e45968f03bbea}{mdtUsbtmcPortManager::fromThreadNewFrameReaden}() ]On complete frame, check bTag/bTagInverse, and INITIATE\_\-CLEAR on error. 
 \end{DoxyDescription}
 
-\label{todo__todo000049}
-\hypertarget{todo__todo000049}{}
+\label{todo__todo000051}
+\hypertarget{todo__todo000051}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_usbtmc_port_manager_ab1604a1c8f2e9192714d039dbf9a5158}{mdtUsbtmcPortManager::sendReadRequest}(bool enqueueResponse) ]SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode (\char`\"{}script\char`\"{}), set this parameter true. 
 \end{DoxyDescription}
 
-\label{todo__todo000045}
-\hypertarget{todo__todo000045}{}
+\label{todo__todo000046}
+\hypertarget{todo__todo000046}{}
  
 \begin{DoxyDescription}
 \item[Member \hyperlink{classmdt_usbtmc_port_manager_a7bcc280bd4a26ed523832550b1e61553}{mdtUsbtmcPortManager::sendReadStatusByteRequest}() ]finish ! 

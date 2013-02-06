@@ -84,7 +84,7 @@ Collaboration diagram for mdtUsbPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_usb_port_manager__coll__graph.png" border="0" usemap="#mdt_usb_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_usb_port_manager_coll__map" id="mdt_usb_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="47,197,164,227"/><area shape="rect" id="node4" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="5,101,96,131"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="120,101,237,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="125,5,232,35"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="81,309,199,339"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="87,197,193,227"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="5,101,123,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="11,5,117,35"/><area shape="rect" id="node10" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="217,197,308,227"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_usb_port_manager-members.html">List of all members.</a></p>
@@ -109,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of attached USB devices.  <a href="#a3a2370c3a2d0353a880bf9b777728c3b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classmdt_port_info.html">mdtPortInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#ab28253c46c80bb12cbbd116b05c4bcd3">scan</a> (int bDeviceClass, int bDeviceSubClass, int bDeviceProtocol)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a list of attached USB devices.  <a href="#ab28253c46c80bb12cbbd116b05c4bcd3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#a7e7e6a29c2cf8d1d6bee23dd3f69d829">openPort</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the port.  <a href="#a7e7e6a29c2cf8d1d6bee23dd3f69d829"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#adff8a1f8ed2b0e68229e2016c75e04a6">readUntilShortPacketReceived</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Request port to read until a short frame is received.  <a href="#adff8a1f8ed2b0e68229e2016c75e04a6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usb_port_manager.html#aea4a67550effcba13acfc110d6d30c3e">sendControlRequest</a> (const <a class="el" href="classmdt_frame_usb_control.html">mdtFrameUsbControl</a> &amp;request, bool setwIndexAsbInterfaceNumber=false)</td></tr>
@@ -144,7 +146,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Contruct a USB port manager. </p>
-<p>Will create <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> and <a class="el" href="classmdt_usb_port_thread.html">mdtUsbPortThread</a> objects. </p>
+<p>Will create <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> and setup. Thread will be created at first call of <a class="el" href="classmdt_usb_port_manager.html#a7e7e6a29c2cf8d1d6bee23dd3f69d829" title="Open the port.">openPort()</a>. </p>
 
 <p><p>pvReadUntilShortPacketReceivedFinished = false; </p>
 </p>
@@ -170,7 +172,7 @@ Public Member Functions</h2></td></tr>
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00054">54</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -212,7 +214,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#ac0844a5cd4043a95a479d458ac7ce590">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00281">281</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00291">291</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -253,7 +255,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a3f0c2722a41c49de2bea9013bccd049c">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00292">292</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00302">302</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -274,7 +276,35 @@ Public Member Functions</h2></td></tr>
 <p>Called from USB thread when a control reply was received. </p>
 <p>Will add a copy of received control responses to internal queue and restore frame back to port's pool. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00299">299</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00309">309</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7e7e6a29c2cf8d1d6bee23dd3f69d829"></a><!-- doxytag: member="mdtUsbPortManager::openPort" ref="a7e7e6a29c2cf8d1d6bee23dd3f69d829" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtUsbPortManager::openPort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Open the port. </p>
+<p>Overloads <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">mdtPortManager::openPort()</a>.</p>
+<p>Will construct the thread if not allready exists. This is because <a class="el" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> uses a different thread, so this task can not be done in constructor.</p>
+<p>Internally, <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e" title="Open the port.">mdtPortManager::openPort()</a> is called. </p>
+
+<p><p>connect(portThread, SIGNAL(messageInReaden()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">fromThreadMessageInReaden()</a>)); connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d" title="Called by thread when the read until a short packet process is finished.">fromThreadReadUntilShortPacketReceivedFinished()</a>)); </p>
+</p>
+
+<p>Reimplemented from <a class="el" href="classmdt_port_manager.html#aab594613e8985590c835194efbc27b5e">mdtPortManager</a>.</p>
+
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00178">178</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -295,7 +325,7 @@ Public Member Functions</h2></td></tr>
 <p>Get all readen control responses. </p>
 <p>Note that calling this methode will clear the internal queue. (A second call will return a empty list). </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00269">269</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00279">279</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -318,7 +348,7 @@ Public Member Functions</h2></td></tr>
 <p>Will send the request and wait until it is finished (will not break GUI event loop).</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Port must be set with <a class="el" href="classmdt_port_manager.html#afcd156b2d0c9d340999935efb6cd8cb6" title="Set port object.">setPort()</a> with a <a class="el" href="classmdt_usb_port.html" title="USB port I/O port class.">mdtUsbPort</a> (or subclass) before use of this method. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00185">185</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00193">193</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,7 +395,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Manager must no running </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00067">67</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00060">60</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -391,7 +421,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6">mdtUsbtmcPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00055">55</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -434,7 +464,7 @@ Public Member Functions</h2></td></tr>
 <p>Subclass notes:<br/>
  This method can be reimplemented in subclass if needed. Typically usefull if a frame ID must be generated for each request (f.ex. bTag on USBTMC). A frame must be taken from port's request frames pool with mdtAbstractPort::controlFramesPool() dequeue() method (see Qt's QQueue documentation for more details on dequeue() ), then added to port's request queue with mdtAbstractPort::addControlRequest() . If protocol supports frame identification (like USBTMC's bTag), it should be returned here and incremented. </p>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00206">206</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00215">215</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -465,7 +495,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>True if Ok, false on timeout </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00243">243</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usb_port_manager_8cpp_source.html#l00252">252</a> of file <a class="el" href="mdt_usb_port_manager_8cpp_source.html">mdtUsbPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -488,7 +518,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

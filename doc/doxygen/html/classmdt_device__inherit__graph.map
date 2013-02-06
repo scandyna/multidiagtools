@@ -1,5 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="5,83,136,112"/>
 <area shape="rect" id="node5" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments." alt="" coords="160,83,269,112"/>
-<area shape="rect" id="node7" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A." alt="" coords="149,160,280,189"/>
+<area shape="rect" id="node7" href="$classmdt_device_d_s_o1000_a.html" title="mdtDeviceDSO1000A" alt="" coords="57,160,207,189"/>
+<area shape="rect" id="node9" href="$classmdt_device_u3606_a.html" title="Representation of a Agilent U3606A." alt="" coords="231,160,361,189"/>
 </map>

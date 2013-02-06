@@ -83,7 +83,7 @@ Collaboration diagram for mdtSerialPortManager:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_serial_port_manager__coll__graph.png" border="0" usemap="#mdt_serial_port_manager_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_serial_port_manager_coll__map" id="mdt_serial_port_manager_coll__map">
-<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="5,197,123,227"/><area shape="rect" id="node4" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="19,101,109,131"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="149,101,267,131"/><area shape="rect" id="node12" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="265,197,372,227"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="155,5,261,35"/><area shape="rect" id="node10" href="classmdt_port_write_thread.html" title="mdtPortWriteThread" alt="" coords="89,277,228,307"/><area shape="rect" id="node15" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="252,277,409,307"/><area shape="rect" id="node18" href="classmdt_port_read_thread.html" title="Reader thread for port I/O." alt="" coords="433,277,572,307"/></map>
+<area shape="rect" id="node2" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="56,309,174,339"/><area shape="rect" id="node4" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="175,197,282,227"/><area shape="rect" id="node13" href="classmdt_serial_port_ctl_thread.html" title="mdtSerialPortCtlThread" alt="" coords="215,309,372,339"/><area shape="rect" id="node6" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="7,101,124,131"/><area shape="rect" id="node8" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="12,5,119,35"/><area shape="rect" id="node10" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="60,197,151,227"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_serial_port_manager-members.html">List of all members.</a></p>
@@ -100,15 +100,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the config object.  <a href="#a4b8ab7b9d53966a1887d9ce8557b8416"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aa96937c2123fe4353b948b848d3e064d">port</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the serial port instance.  <a href="#aa96937c2123fe4353b948b848d3e064d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a19cbca4adb7583b11a14d59e61233d"></a><!-- doxytag: member="mdtSerialPortManager::writeThread" ref="a3a19cbca4adb7583b11a14d59e61233d" args="()" -->
-<a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a3a19cbca4adb7583b11a14d59e61233d">writeThread</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the write thread object. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec192819e19f4679c7bba4ea37154aaf"></a><!-- doxytag: member="mdtSerialPortManager::readThread" ref="aec192819e19f4679c7bba4ea37154aaf" args="()" -->
-<a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#aec192819e19f4679c7bba4ea37154aaf">readThread</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the read thread object. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dc223afc96ec7b1fce4660ac96a3fe7"></a><!-- doxytag: member="mdtSerialPortManager::ctlThread" ref="a9dc223afc96ec7b1fce4660ac96a3fe7" args="()" -->
-<a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a9dc223afc96ec7b1fce4660ac96a3fe7">ctlThread</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the modem lines thread object. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_serial_port_manager.html#a9dc223afc96ec7b1fce4660ac96a3fe7">ctlThread</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the write thread object.  <a href="#a9dc223afc96ec7b1fce4660ac96a3fe7"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Serial port manager class. </p>
@@ -135,6 +128,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Construct a serial port manager. </p>
 <p>Creates a <a class="el" href="classmdt_serial_port_config.html">mdtSerialPortConfig</a>, a <a class="el" href="classmdt_serial_port.html">mdtSerialPort</a>, and threads objects. </p>
+
+<p><p>pvWriteThread = new <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a>; pvReadThread = new <a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a>; </p>
+</p>
 
 <p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00032">32</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
@@ -182,6 +178,33 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd">mdtPortManager</a>.</p>
 
 <p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9dc223afc96ec7b1fce4660ac96a3fe7"></a><!-- doxytag: member="mdtSerialPortManager::ctlThread" ref="a9dc223afc96ec7b1fce4660ac96a3fe7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmdt_serial_port_ctl_thread.html">mdtSerialPortCtlThread</a> * mdtSerialPortManager::ctlThread </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get the write thread object. </p>
+<p><a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *mdtSerialPortManager::writeThread()</p>
+<p><a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> *writeThread(); <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *writeThread();</p>
+<p>Get the read thread objectmdtPortReadThread *readThread(); <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *readThread();</p>
+<p>Get the modem lines thread object</p>
+<p><a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *mdtSerialPortManager::writeThread() { Q_ASSERT(pvWriteThread != 0);</p>
+<p>return pvWriteThread; }<a class="el" href="classmdt_port_read_thread.html" title="Reader thread for port I/O.">mdtPortReadThread</a> *mdtSerialPortManager::readThread() <a class="el" href="classmdt_port_thread.html">mdtPortThread</a> *mdtSerialPortManager::readThread() { Q_ASSERT(pvReadThread != 0);</p>
+<p>return pvReadThread; } </p>
+
+<p>Definition at line <a class="el" href="mdt_serial_port_manager_8cpp_source.html#l00178">178</a> of file <a class="el" href="mdt_serial_port_manager_8cpp_source.html">mdtSerialPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,7 +273,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

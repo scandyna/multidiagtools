@@ -22,11 +22,12 @@ Inheritance diagram for mdtSerialPortManager:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtSerialPortManager:\nopagebreak
+Collaboration diagram for mdtSerialPortManager:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=400pt]{classmdt_serial_port_manager__coll__graph}
+\includegraphics[width=355pt]{classmdt_serial_port_manager__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -42,21 +43,8 @@ QList$<$ \hyperlink{classmdt_port_info}{mdtPortInfo} $\ast$ $>$ \hyperlink{class
 \begin{DoxyCompactList}\small\item\em Get the config object. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} \& \hyperlink{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{port} ()
 \begin{DoxyCompactList}\small\item\em Get the serial port instance. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_manager_a3a19cbca4adb7583b11a14d59e61233d}{
-\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$ \hyperlink{classmdt_serial_port_manager_a3a19cbca4adb7583b11a14d59e61233d}{writeThread} ()}
-\label{classmdt_serial_port_manager_a3a19cbca4adb7583b11a14d59e61233d}
-
-\begin{DoxyCompactList}\small\item\em Get the write thread object. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_manager_aec192819e19f4679c7bba4ea37154aaf}{
-\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$ \hyperlink{classmdt_serial_port_manager_aec192819e19f4679c7bba4ea37154aaf}{readThread} ()}
-\label{classmdt_serial_port_manager_aec192819e19f4679c7bba4ea37154aaf}
-
-\begin{DoxyCompactList}\small\item\em Get the read thread object. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{
-\hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} $\ast$ \hyperlink{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{ctlThread} ()}
-\label{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}
-
-\begin{DoxyCompactList}\small\item\em Get the modem lines thread object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classmdt_serial_port_ctl_thread}{mdtSerialPortCtlThread} $\ast$ \hyperlink{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{ctlThread} ()
+\begin{DoxyCompactList}\small\item\em Get the write thread object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -87,6 +75,10 @@ Definition at line 46 of file mdtSerialPortManager.h.
 Construct a serial port manager. 
 
 Creates a \hyperlink{classmdt_serial_port_config}{mdtSerialPortConfig}, a \hyperlink{classmdt_serial_port}{mdtSerialPort}, and threads objects. 
+
+pvWriteThread = new \hyperlink{classmdt_port_write_thread}{mdtPortWriteThread}; pvReadThread = new \hyperlink{classmdt_port_read_thread}{mdtPortReadThread}; 
+
+
 
 Definition at line 32 of file mdtSerialPortManager.cpp.
 
@@ -130,6 +122,35 @@ Reimplemented from \hyperlink{classmdt_port_manager_a9cf3ea2da38f81682695b374487
 
 
 Definition at line 137 of file mdtSerialPortManager.cpp.
+
+\hypertarget{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}{
+\index{mdtSerialPortManager@{mdtSerialPortManager}!ctlThread@{ctlThread}}
+\index{ctlThread@{ctlThread}!mdtSerialPortManager@{mdtSerialPortManager}}
+\subsubsection[{ctlThread}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtSerialPortCtlThread} $\ast$ mdtSerialPortManager::ctlThread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_serial_port_manager_a9dc223afc96ec7b1fce4660ac96a3fe7}
+
+
+Get the write thread object. 
+
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$mdtSerialPortManager::writeThread()
+
+\hyperlink{classmdt_port_write_thread}{mdtPortWriteThread} $\ast$writeThread(); \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$writeThread();
+
+Get the read thread objectmdtPortReadThread $\ast$readThread(); \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$readThread();
+
+Get the modem lines thread object
+
+\hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$mdtSerialPortManager::writeThread() \{ Q\_\-ASSERT(pvWriteThread != 0);
+
+return pvWriteThread; \}\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} $\ast$mdtSerialPortManager::readThread() \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$mdtSerialPortManager::readThread() \{ Q\_\-ASSERT(pvReadThread != 0);
+
+return pvReadThread; \} 
+
+Definition at line 178 of file mdtSerialPortManager.cpp.
 
 \hypertarget{classmdt_serial_port_manager_aa96937c2123fe4353b948b848d3e064d}{
 \index{mdtSerialPortManager@{mdtSerialPortManager}!port@{port}}

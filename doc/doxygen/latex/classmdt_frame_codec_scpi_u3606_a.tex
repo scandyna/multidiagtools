@@ -38,29 +38,40 @@ enum \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f
 \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a95fc88c0223637cf3fe3a101fb568f1d}{MT\_\-VOLTAGE\_\-AC}, 
 \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a4b6d05bccb61870ebae4f58c34b41e31}{MT\_\-CURRENT\_\-DC}, 
 \par
-\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3}{MT\_\-CURRENT\_\-AC}
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3}{MT\_\-CURRENT\_\-AC}, 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a9f886d13675400efc4d00779fd2ab078}{MT\_\-RESISTANCE}, 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004aa15b33c7ad4d6376e8ac717f089e6709}{MT\_\-CONTINUITY}, 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004afebd5198a9bae74385930f7643aff19e}{MT\_\-LRESISTANCE}, 
+\par
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ad9fe01b60c051fa7b14201245bad8601}{MT\_\-CAPACITANCE}, 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ab4a2afaa594cf44cbac880312d3e8c9f}{MT\_\-DIODE}, 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004af5887b3493507cf6c4fed5b140eddca4}{MT\_\-FREQUENCY}, 
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a37bfcf0b9e141ca60909e9b4a8c05997}{MT\_\-PWIDTH}, 
+\par
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ae20a6a2d18ef077b65d9060e98ae3b12}{MT\_\-DCYCLE}
  \}
 \begin{DoxyCompactList}\small\item\em Measure type. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{classmdt_frame_codec_scpi_u3606_a_adb24e0835c2407e15be1a5a2780f965c}{decodeConfFunc} (QByteArray \&frame)
-\begin{DoxyCompactList}\small\item\em Decode the CONFigure and FUNCtion answer. \end{DoxyCompactList}\item 
-QVariant \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3ca37c46462e24f9c26d4e352fe2db40}{decodeSingleValueDouble} (QByteArray \&frame)
-\begin{DoxyCompactList}\small\item\em Decode a signle value in double floating format. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a5d2c549ceee92ed152d79b643caab594}{
-\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{measure\_\-type\_\-t} \hyperlink{classmdt_frame_codec_scpi_u3606_a_a5d2c549ceee92ed152d79b643caab594}{measureType} ()}
-\label{classmdt_frame_codec_scpi_u3606_a_a5d2c549ceee92ed152d79b643caab594}
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{
+bool \hyperlink{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}{decodeConfigure} (const QByteArray \&data)}
+\label{classmdt_frame_codec_scpi_u3606_a_a178cc4f868b15b8c4591d8333afa84e4}
+
+\begin{DoxyCompactList}\small\item\em Decode CONFigure? reply. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}{
+\hyperlink{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004}{measure\_\-type\_\-t} \hyperlink{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}{measureType} () const }
+\label{classmdt_frame_codec_scpi_u3606_a_a590c72641f56e0f0db6547244b3643ef}
 
 \begin{DoxyCompactList}\small\item\em Get the measure type. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a2592942192dce715fb828612e2a7e1c9}{
-QVariant \hyperlink{classmdt_frame_codec_scpi_u3606_a_a2592942192dce715fb828612e2a7e1c9}{range} ()}
-\label{classmdt_frame_codec_scpi_u3606_a_a2592942192dce715fb828612e2a7e1c9}
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_ab850c07848d9311725d2632abbd2f04a}{
+QVariant \hyperlink{classmdt_frame_codec_scpi_u3606_a_ab850c07848d9311725d2632abbd2f04a}{range} () const }
+\label{classmdt_frame_codec_scpi_u3606_a_ab850c07848d9311725d2632abbd2f04a}
 
 \begin{DoxyCompactList}\small\item\em Get the measure range. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3657c8a712ba324b1d5b10a789a32501}{
-QVariant \hyperlink{classmdt_frame_codec_scpi_u3606_a_a3657c8a712ba324b1d5b10a789a32501}{resolution} ()}
-\label{classmdt_frame_codec_scpi_u3606_a_a3657c8a712ba324b1d5b10a789a32501}
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_acc4751a5bb5da24e83b8ae77009b2c92}{
+QVariant \hyperlink{classmdt_frame_codec_scpi_u3606_a_acc4751a5bb5da24e83b8ae77009b2c92}{resolution} () const }
+\label{classmdt_frame_codec_scpi_u3606_a_acc4751a5bb5da24e83b8ae77009b2c92}
 
 \begin{DoxyCompactList}\small\item\em Get the measure resolution. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -105,49 +116,44 @@ MT\_\-CURRENT\_\-DC}
 \hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3}{
 MT\_\-CURRENT\_\-AC}
 \label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3}
-}]Measure type AC current \end{description}
+}]Measure type AC current \index{MT\_\-RESISTANCE@{MT\_\-RESISTANCE}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-RESISTANCE@{MT\_\-RESISTANCE}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a9f886d13675400efc4d00779fd2ab078}{
+MT\_\-RESISTANCE}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a9f886d13675400efc4d00779fd2ab078}
+}]Measure type resistance \index{MT\_\-CONTINUITY@{MT\_\-CONTINUITY}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-CONTINUITY@{MT\_\-CONTINUITY}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004aa15b33c7ad4d6376e8ac717f089e6709}{
+MT\_\-CONTINUITY}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004aa15b33c7ad4d6376e8ac717f089e6709}
+}]Measure type continuity \index{MT\_\-LRESISTANCE@{MT\_\-LRESISTANCE}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-LRESISTANCE@{MT\_\-LRESISTANCE}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004afebd5198a9bae74385930f7643aff19e}{
+MT\_\-LRESISTANCE}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004afebd5198a9bae74385930f7643aff19e}
+}]Measure type low value reistance \index{MT\_\-CAPACITANCE@{MT\_\-CAPACITANCE}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-CAPACITANCE@{MT\_\-CAPACITANCE}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ad9fe01b60c051fa7b14201245bad8601}{
+MT\_\-CAPACITANCE}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ad9fe01b60c051fa7b14201245bad8601}
+}]Measure type capacitance \index{MT\_\-DIODE@{MT\_\-DIODE}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-DIODE@{MT\_\-DIODE}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ab4a2afaa594cf44cbac880312d3e8c9f}{
+MT\_\-DIODE}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ab4a2afaa594cf44cbac880312d3e8c9f}
+}]Measure type diode \index{MT\_\-FREQUENCY@{MT\_\-FREQUENCY}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-FREQUENCY@{MT\_\-FREQUENCY}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004af5887b3493507cf6c4fed5b140eddca4}{
+MT\_\-FREQUENCY}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004af5887b3493507cf6c4fed5b140eddca4}
+}]Measure type frequency \index{MT\_\-PWIDTH@{MT\_\-PWIDTH}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-PWIDTH@{MT\_\-PWIDTH}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a37bfcf0b9e141ca60909e9b4a8c05997}{
+MT\_\-PWIDTH}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004a37bfcf0b9e141ca60909e9b4a8c05997}
+}]Measure type pulse width \index{MT\_\-DCYCLE@{MT\_\-DCYCLE}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!MT\_\-DCYCLE@{MT\_\-DCYCLE}}\item[{\em 
+\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ae20a6a2d18ef077b65d9060e98ae3b12}{
+MT\_\-DCYCLE}
+\label{classmdt_frame_codec_scpi_u3606_a_a3d7a1de14d77797a08e3d2991fa9f004ae20a6a2d18ef077b65d9060e98ae3b12}
+}]Measure type duty cycle \end{description}
 \end{Desc}
 
 
 
 Definition at line 34 of file mdtFrameCodecScpiU3606A.h.
-
-
-
-\subsection{Member Function Documentation}
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_adb24e0835c2407e15be1a5a2780f965c}{
-\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!decodeConfFunc@{decodeConfFunc}}
-\index{decodeConfFunc@{decodeConfFunc}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}
-\subsubsection[{decodeConfFunc}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFrameCodecScpiU3606A::decodeConfFunc (
-\begin{DoxyParamCaption}
-\item[{QByteArray \&}]{frame}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_u3606_a_adb24e0835c2407e15be1a5a2780f965c}
-
-
-Decode the CONFigure and FUNCtion answer. 
-
-
-
-Definition at line 30 of file mdtFrameCodecScpiU3606A.cpp.
-
-\hypertarget{classmdt_frame_codec_scpi_u3606_a_a3ca37c46462e24f9c26d4e352fe2db40}{
-\index{mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}!decodeSingleValueDouble@{decodeSingleValueDouble}}
-\index{decodeSingleValueDouble@{decodeSingleValueDouble}!mdtFrameCodecScpiU3606A@{mdtFrameCodecScpiU3606A}}
-\subsubsection[{decodeSingleValueDouble}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFrameCodecScpiU3606A::decodeSingleValueDouble (
-\begin{DoxyParamCaption}
-\item[{QByteArray \&}]{frame}
-\end{DoxyParamCaption}
-)}}
-\label{classmdt_frame_codec_scpi_u3606_a_a3ca37c46462e24f9c26d4e352fe2db40}
-
-
-Decode a signle value in double floating format. 
-
-This method returns a QVariant. QVariant's internal data is converted to double. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid(). When decode was done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{values()} 
-
-Definition at line 79 of file mdtFrameCodecScpiU3606A.cpp.
 
 
 

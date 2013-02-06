@@ -112,10 +112,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the MsgID.  <a href="#a19121b03cbb4c1bb420dc3cdb132f703"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_frame_usb_tmc.html#a10c2216157b0616b69f6cabc5c8e253b">msg_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a384a13bd456e6827868a17810d628a4a">MsgID</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the MsgID.  <a href="#a384a13bd456e6827868a17810d628a4a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a80c01d9585674bed605ef4b8de4df74c">MsgIDsupported</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if received MsgID is supported.  <a href="#a80c01d9585674bed605ef4b8de4df74c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#aff7b19ad83013402dd115089d31b8642">setbTag</a> (quint8 bTag)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the bTag.  <a href="#aff7b19ad83013402dd115089d31b8642"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">quint8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a471c97b844331376ed1801cdb50f5cc6">bTag</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the bTag.  <a href="#a471c97b844331376ed1801cdb50f5cc6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#ae02dc125ea0e1b2fb0ae12ef43581703">bTagOk</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check bTag/bTagInverse coherence.  <a href="#ae02dc125ea0e1b2fb0ae12ef43581703"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#ab6e494c35eba34905987a75101fc48fe">setEOM</a> (bool EOM)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the EOM flag.  <a href="#ab6e494c35eba34905987a75101fc48fe"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_usb_tmc.html#a82e93db0fc709b951c0c1f7b70692b5c">isEOM</a> () const </td></tr>
@@ -195,7 +199,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the bTag. </p>
 <p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00139">139</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00151">151</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae02dc125ea0e1b2fb0ae12ef43581703"></a><!-- doxytag: member="mdtFrameUsbTmc::bTagOk" ref="ae02dc125ea0e1b2fb0ae12ef43581703" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtFrameUsbTmc::bTagOk </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check bTag/bTagInverse coherence. </p>
+<p>Usefull for frames received from device.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if header was decoded and bTag/bTagInverse are coherent. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,7 +243,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>To use to build a frame that will be sent to device.</p>
 <p>Note: <a class="el" href="classmdt_frame.html#acdf8a921a3f36ca91af88b55b90febdc" title="Overloaded function.">clear()</a> is called internally. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00170">170</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00187">187</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -238,7 +264,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the EOM flag. </p>
 <p>If true, this transfer is the last in current message. Is only valid when the frame is complete. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00149">149</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00166">166</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -259,7 +285,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the message data. </p>
 <p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -280,7 +306,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Get the MsgID. </p>
 <p>Usefull for frames received from device. Is only valid when the frame is complete. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00128">128</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00135">135</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a80c01d9585674bed605ef4b8de4df74c"></a><!-- doxytag: member="mdtFrameUsbTmc::MsgIDsupported" ref="a80c01d9585674bed605ef4b8de4df74c" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtFrameUsbTmc::MsgIDsupported </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Check if received MsgID is supported. </p>
+<p>Usefull for frames received from device.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>true if header was decoded and MsgID is supported. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00140">140</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -312,13 +360,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Put data into the frame. </p>
 <p>This method is called by the read thread, and should not be used directly. </p>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000060">Todo:</a></b></dt><dd>other bmTransferAttributes </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000062">Todo:</a></b></dt><dd>other bmTransferAttributes </dd></dl>
 <p>else{ Unhadled message type: continue, port manager will generate a warn qDebug() &lt;&lt; "mdtFrameUsbTmc::putData(): MsgID " &lt;&lt; pvMsgID &lt;&lt; " not supported"; pvMsgID = MSG_UNHANDLED; }</p>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_frame.html#ae63af784d2fc54430ea5db4dc80b7ec8">mdtFrame</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00053">53</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -342,7 +390,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>To use to build a frame that will be sent to device.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>bTag must be &lt;&gt; 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00133">133</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,7 +413,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>EOM: End Of (USBTMC) Message.</p>
 <p>If true, tells the device that this USBTMC transfer is the last in message. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00144">144</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00161">161</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -387,7 +435,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set the message data. </p>
 <p>To use to build a frame that will be sent to device. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00159">159</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00176">176</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -409,7 +457,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set the MsgID. </p>
 <p>To use to build a frame that will be sent to device. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00123">123</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00130">130</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -431,7 +479,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Set transfer size. </p>
 <p>To use with DEV_DEP_MSG_IN request. </p>
 
-<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00154">154</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html#l00171">171</a> of file <a class="el" href="mdt_frame_usb_tmc_8cpp_source.html">mdtFrameUsbTmc.cpp</a>.</p>
 
 </div>
 </div>
@@ -454,7 +502,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

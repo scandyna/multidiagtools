@@ -97,24 +97,33 @@ Public Types</h2></td></tr>
 <a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a95fc88c0223637cf3fe3a101fb568f1d">MT_VOLTAGE_AC</a>, 
 <a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a4b6d05bccb61870ebae4f58c34b41e31">MT_CURRENT_DC</a>, 
 <br/>
-&#160;&#160;<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3">MT_CURRENT_AC</a>
+&#160;&#160;<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3">MT_CURRENT_AC</a>, 
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a9f886d13675400efc4d00779fd2ab078">MT_RESISTANCE</a>, 
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004aa15b33c7ad4d6376e8ac717f089e6709">MT_CONTINUITY</a>, 
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004afebd5198a9bae74385930f7643aff19e">MT_LRESISTANCE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004ad9fe01b60c051fa7b14201245bad8601">MT_CAPACITANCE</a>, 
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004ab4a2afaa594cf44cbac880312d3e8c9f">MT_DIODE</a>, 
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004af5887b3493507cf6c4fed5b140eddca4">MT_FREQUENCY</a>, 
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004a37bfcf0b9e141ca60909e9b4a8c05997">MT_PWIDTH</a>, 
+<br/>
+&#160;&#160;<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004ae20a6a2d18ef077b65d9060e98ae3b12">MT_DCYCLE</a>
 <br/>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Measure type.  <a href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#adb24e0835c2407e15be1a5a2780f965c">decodeConfFunc</a> (QByteArray &amp;frame)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the CONFigure and FUNCtion answer.  <a href="#adb24e0835c2407e15be1a5a2780f965c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3ca37c46462e24f9c26d4e352fe2db40">decodeSingleValueDouble</a> (QByteArray &amp;frame)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a signle value in double floating format.  <a href="#a3ca37c46462e24f9c26d4e352fe2db40"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d2c549ceee92ed152d79b643caab594"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::measureType" ref="a5d2c549ceee92ed152d79b643caab594" args="()" -->
-<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">measure_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a5d2c549ceee92ed152d79b643caab594">measureType</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a178cc4f868b15b8c4591d8333afa84e4"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::decodeConfigure" ref="a178cc4f868b15b8c4591d8333afa84e4" args="(const QByteArray &amp;data)" -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a178cc4f868b15b8c4591d8333afa84e4">decodeConfigure</a> (const QByteArray &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode CONFigure? reply. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a590c72641f56e0f0db6547244b3643ef"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::measureType" ref="a590c72641f56e0f0db6547244b3643ef" args="() const " -->
+<a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3d7a1de14d77797a08e3d2991fa9f004">measure_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a590c72641f56e0f0db6547244b3643ef">measureType</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measure type. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2592942192dce715fb828612e2a7e1c9"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::range" ref="a2592942192dce715fb828612e2a7e1c9" args="()" -->
-QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a2592942192dce715fb828612e2a7e1c9">range</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab850c07848d9311725d2632abbd2f04a"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::range" ref="ab850c07848d9311725d2632abbd2f04a" args="() const " -->
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#ab850c07848d9311725d2632abbd2f04a">range</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measure range. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3657c8a712ba324b1d5b10a789a32501"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::resolution" ref="a3657c8a712ba324b1d5b10a789a32501" args="()" -->
-QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#a3657c8a712ba324b1d5b10a789a32501">resolution</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc4751a5bb5da24e83b8ae77009b2c92"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::resolution" ref="acc4751a5bb5da24e83b8ae77009b2c92" args="() const " -->
+QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_frame_codec_scpi_u3606_a.html#acc4751a5bb5da24e83b8ae77009b2c92">resolution</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the measure resolution. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
@@ -150,55 +159,35 @@ QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3"></a><!-- doxytag: member="MT_CURRENT_AC" ref="a3d7a1de14d77797a08e3d2991fa9f004acecbad4db2f3cb2b92099e2a0f57d3a3" args="" -->MT_CURRENT_AC</em>&nbsp;</td><td>
 <p>Measure type AC current </p>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004a9f886d13675400efc4d00779fd2ab078"></a><!-- doxytag: member="MT_RESISTANCE" ref="a3d7a1de14d77797a08e3d2991fa9f004a9f886d13675400efc4d00779fd2ab078" args="" -->MT_RESISTANCE</em>&nbsp;</td><td>
+<p>Measure type resistance </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004aa15b33c7ad4d6376e8ac717f089e6709"></a><!-- doxytag: member="MT_CONTINUITY" ref="a3d7a1de14d77797a08e3d2991fa9f004aa15b33c7ad4d6376e8ac717f089e6709" args="" -->MT_CONTINUITY</em>&nbsp;</td><td>
+<p>Measure type continuity </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004afebd5198a9bae74385930f7643aff19e"></a><!-- doxytag: member="MT_LRESISTANCE" ref="a3d7a1de14d77797a08e3d2991fa9f004afebd5198a9bae74385930f7643aff19e" args="" -->MT_LRESISTANCE</em>&nbsp;</td><td>
+<p>Measure type low value reistance </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004ad9fe01b60c051fa7b14201245bad8601"></a><!-- doxytag: member="MT_CAPACITANCE" ref="a3d7a1de14d77797a08e3d2991fa9f004ad9fe01b60c051fa7b14201245bad8601" args="" -->MT_CAPACITANCE</em>&nbsp;</td><td>
+<p>Measure type capacitance </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004ab4a2afaa594cf44cbac880312d3e8c9f"></a><!-- doxytag: member="MT_DIODE" ref="a3d7a1de14d77797a08e3d2991fa9f004ab4a2afaa594cf44cbac880312d3e8c9f" args="" -->MT_DIODE</em>&nbsp;</td><td>
+<p>Measure type diode </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004af5887b3493507cf6c4fed5b140eddca4"></a><!-- doxytag: member="MT_FREQUENCY" ref="a3d7a1de14d77797a08e3d2991fa9f004af5887b3493507cf6c4fed5b140eddca4" args="" -->MT_FREQUENCY</em>&nbsp;</td><td>
+<p>Measure type frequency </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004a37bfcf0b9e141ca60909e9b4a8c05997"></a><!-- doxytag: member="MT_PWIDTH" ref="a3d7a1de14d77797a08e3d2991fa9f004a37bfcf0b9e141ca60909e9b4a8c05997" args="" -->MT_PWIDTH</em>&nbsp;</td><td>
+<p>Measure type pulse width </p>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="a3d7a1de14d77797a08e3d2991fa9f004ae20a6a2d18ef077b65d9060e98ae3b12"></a><!-- doxytag: member="MT_DCYCLE" ref="a3d7a1de14d77797a08e3d2991fa9f004ae20a6a2d18ef077b65d9060e98ae3b12" args="" -->MT_DCYCLE</em>&nbsp;</td><td>
+<p>Measure type duty cycle </p>
+</td></tr>
 </table>
 </dd>
 </dl>
 
 <p>Definition at line <a class="el" href="mdt_frame_codec_scpi_u3606_a_8h_source.html#l00034">34</a> of file <a class="el" href="mdt_frame_codec_scpi_u3606_a_8h_source.html">mdtFrameCodecScpiU3606A.h</a>.</p>
-
-</div>
-</div>
-<hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="adb24e0835c2407e15be1a5a2780f965c"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::decodeConfFunc" ref="adb24e0835c2407e15be1a5a2780f965c" args="(QByteArray &amp;frame)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mdtFrameCodecScpiU3606A::decodeConfFunc </td>
-          <td>(</td>
-          <td class="paramtype">QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>frame</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Decode the CONFigure and FUNCtion answer. </p>
-
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html">mdtFrameCodecScpiU3606A.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3ca37c46462e24f9c26d4e352fe2db40"></a><!-- doxytag: member="mdtFrameCodecScpiU3606A::decodeSingleValueDouble" ref="a3ca37c46462e24f9c26d4e352fe2db40" args="(QByteArray &amp;frame)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">QVariant mdtFrameCodecScpiU3606A::decodeSingleValueDouble </td>
-          <td>(</td>
-          <td class="paramtype">QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>frame</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Decode a signle value in double floating format. </p>
-<p>This method returns a QVariant. QVariant's internal data is converted to double. If value is not valid, the QVariant is cleared, so it is possible to check this with QVariant::isValid(). When decode was done, the values are available with <a class="el" href="classmdt_frame_codec.html#a2c0cc0f9d9b72ef2295b7ec7eca72ea7" title="Get the decoded values.">values()</a> </p>
-
-<p>Definition at line <a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html#l00079">79</a> of file <a class="el" href="mdt_frame_codec_scpi_u3606_a_8cpp_source.html">mdtFrameCodecScpiU3606A.cpp</a>.</p>
 
 </div>
 </div>
@@ -221,7 +210,7 @@ QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

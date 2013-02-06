@@ -4,11 +4,12 @@
 }
 
 
-Inheritance diagram for mdtUsbPortThread:\nopagebreak
+Inheritance diagram for mdtUsbPortThread:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=178pt]{classmdt_usb_port_thread__inherit__graph}
+\includegraphics[width=196pt]{classmdt_usb_port_thread__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -46,8 +47,21 @@ void \hyperlink{classmdt_usb_port_thread_a54e65bed60200cd2150b5a7b063c723e}{read
 \label{classmdt_usb_port_thread_aaf4e5883224f05d80132b31a921ac899}
 
 \begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
-bool \hyperlink{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{isReader} () const 
-\begin{DoxyCompactList}\small\item\em Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hypertarget{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{
+bool \hyperlink{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{isReader} () const }
+\label{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}
+
+\begin{DoxyCompactList}\small\item\em Returns true. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_usb_port_thread_a74258f300967b5dea1fbfa9a0ccab38a}{
+bool \hyperlink{classmdt_usb_port_thread_a74258f300967b5dea1fbfa9a0ccab38a}{isWriter} () const }
+\label{classmdt_usb_port_thread_a74258f300967b5dea1fbfa9a0ccab38a}
+
+\begin{DoxyCompactList}\small\item\em Returns true. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_usb_port_thread_acca2af9704cc6894ec5b2058ca102af1}{readUntilShortPacketReceived} (int maxReadTransfers)
+\begin{DoxyCompactList}\small\item\em Read until a short frame is received. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -58,31 +72,37 @@ Definition at line 34 of file mdtUsbPortThread.h.
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}{
-\index{mdtUsbPortThread@{mdtUsbPortThread}!isReader@{isReader}}
-\index{isReader@{isReader}!mdtUsbPortThread@{mdtUsbPortThread}}
-\subsubsection[{isReader}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtUsbPortThread::isReader (
+\hypertarget{classmdt_usb_port_thread_acca2af9704cc6894ec5b2058ca102af1}{
+\index{mdtUsbPortThread@{mdtUsbPortThread}!readUntilShortPacketReceived@{readUntilShortPacketReceived}}
+\index{readUntilShortPacketReceived@{readUntilShortPacketReceived}!mdtUsbPortThread@{mdtUsbPortThread}}
+\subsubsection[{readUntilShortPacketReceived}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtUsbPortThread::readUntilShortPacketReceived (
 \begin{DoxyParamCaption}
-{}
+\item[{int}]{maxReadTransfers}
 \end{DoxyParamCaption}
-) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
-\label{classmdt_usb_port_thread_aed82b57c84745f1e2391750697db1022}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_usb_port_thread_acca2af9704cc6894ec5b2058ca102af1}
 
 
-Returns true if this thread reads data and send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal. 
-
-\hyperlink{classmdt_port_manager}{mdtPortManager} can handle many threads. It needs to know wich one will send the \hyperlink{classmdt_port_thread_a7fc2245c753fd65e1beffec211c41461}{newFrameReaden()} signal, so it can connect it to his slot. 
-
-Reimplemented from \hyperlink{classmdt_port_thread_acdb3d96287c571cc08ef39860dc324b1}{mdtPortThread}.
+Read until a short frame is received. 
 
 
+\begin{DoxyParams}{Parameters}
+{\em maxReadTransfers} & Maximum of read transfers before return (If device returns never a short frame, this method will return after maxReadTransfers). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NoError or a error of type \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}. If maxReadTransfers is reached, ReadTimeout is returned. 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
+\end{DoxyPrecond}
 
-Definition at line 33 of file mdtUsbPortThread.cpp.
+
+Definition at line 43 of file mdtUsbPortThread.cpp.
 
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtUsbPortThread.h\item 
-src/mdtport/mdtUsbPortThread.cpp\item 
-src/mdtport/moc\_\-mdtUsbPortThread.cxx\end{DoxyCompactItemize}
+src/mdtport/mdtUsbPortThread.cpp\end{DoxyCompactItemize}

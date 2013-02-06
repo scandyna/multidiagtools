@@ -4,31 +4,19 @@
 }
 
 
-Inheritance diagram for mdtDeviceWindow:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=194pt]{classmdt_device_window__inherit__graph}
-\end{center}
-\end{figure}
-
-
 Collaboration diagram for mdtDeviceWindow:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=400pt]{classmdt_device_window__coll__graph}
+\includegraphics[width=346pt]{classmdt_device_window__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_device_window_a92771aaaa091fa653e3c3776b7e115a0}{
-{\bfseries mdtDeviceWindow} (QWidget $\ast$parent=0)}
-\label{classmdt_device_window_a92771aaaa091fa653e3c3776b7e115a0}
-
-\item 
+\hyperlink{classmdt_device_window_a92771aaaa091fa653e3c3776b7e115a0}{mdtDeviceWindow} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Construct a device window. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_window_ac3bed35b2eeb88b2483c18e3b9bb918d}{setDevice} (\hyperlink{classmdt_device}{mdtDevice} $\ast$device)
 \begin{DoxyCompactList}\small\item\em Set the device. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_window_a63df49a9f0cafc2f72e097aa0cf26baa}{
@@ -37,17 +25,88 @@ void \hyperlink{classmdt_device_window_a63df49a9f0cafc2f72e097aa0cf26baa}{setIos
 
 \begin{DoxyCompactList}\small\item\em Set the I/O's widget. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} $\ast$ \hyperlink{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}{statusWidget} ()
-\begin{DoxyCompactList}\small\item\em Get status widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get status widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_window_a8b884e389fa27f85742642193d18b8f9}{enableTranslations} ()
+\begin{DoxyCompactList}\small\item\em Enable translations. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_window_a781a7511b7fbf586fcd39e2aa44e91fd}{
+void \hyperlink{classmdt_device_window_a781a7511b7fbf586fcd39e2aa44e91fd}{setAvailableTranslations} (QMap$<$ QString, QString $>$ \&avaliableTranslations, const QString \&currentTranslationKey)}
+\label{classmdt_device_window_a781a7511b7fbf586fcd39e2aa44e91fd}
+
+\begin{DoxyCompactList}\small\item\em Build the translations menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmdt_device_window_a708333e7fa347f5020d014c21a991e15}{retranslate} ()
+\begin{DoxyCompactList}\small\item\em Retranslate. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 
 
-Definition at line 32 of file mdtDeviceWindow.h.
+Definition at line 34 of file mdtDeviceWindow.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_device_window_a92771aaaa091fa653e3c3776b7e115a0}{
+\index{mdtDeviceWindow@{mdtDeviceWindow}!mdtDeviceWindow@{mdtDeviceWindow}}
+\index{mdtDeviceWindow@{mdtDeviceWindow}!mdtDeviceWindow@{mdtDeviceWindow}}
+\subsubsection[{mdtDeviceWindow}]{\setlength{\rightskip}{0pt plus 5cm}mdtDeviceWindow::mdtDeviceWindow (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_window_a92771aaaa091fa653e3c3776b7e115a0}
+
+
+Construct a device window. 
+
+Will create a new \hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} and add it as status bar. 
+
+Definition at line 27 of file mdtDeviceWindow.cpp.
 
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_device_window_a8b884e389fa27f85742642193d18b8f9}{
+\index{mdtDeviceWindow@{mdtDeviceWindow}!enableTranslations@{enableTranslations}}
+\index{enableTranslations@{enableTranslations}!mdtDeviceWindow@{mdtDeviceWindow}}
+\subsubsection[{enableTranslations}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceWindow::enableTranslations (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_window_a8b884e389fa27f85742642193d18b8f9}
+
+
+Enable translations. 
+
+Will use \hyperlink{classmdt_application}{mdtApplication} to get the list of available translations and connect to retranslate slot.
+
+\begin{DoxyPrecond}{Precondition}
+The loop must be started with a \hyperlink{classmdt_application}{mdtApplication} instance (mdtApp must be valid). 
+\end{DoxyPrecond}
+
+
+Definition at line 63 of file mdtDeviceWindow.cpp.
+
+\hypertarget{classmdt_device_window_a708333e7fa347f5020d014c21a991e15}{
+\index{mdtDeviceWindow@{mdtDeviceWindow}!retranslate@{retranslate}}
+\index{retranslate@{retranslate}!mdtDeviceWindow@{mdtDeviceWindow}}
+\subsubsection[{retranslate}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceWindow::retranslate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, slot\mbox{]}}}}
+\label{classmdt_device_window_a708333e7fa347f5020d014c21a991e15}
+
+
+Retranslate. 
+
+This slot is called by \hyperlink{classmdt_application}{mdtApplication} when language has changed 
+
+Definition at line 94 of file mdtDeviceWindow.cpp.
+
 \hypertarget{classmdt_device_window_ac3bed35b2eeb88b2483c18e3b9bb918d}{
 \index{mdtDeviceWindow@{mdtDeviceWindow}!setDevice@{setDevice}}
 \index{setDevice@{setDevice}!mdtDeviceWindow@{mdtDeviceWindow}}
@@ -66,7 +125,7 @@ device must be a valid pointer.
 \end{DoxyPrecond}
 
 
-Definition at line 40 of file mdtDeviceWindow.cpp.
+Definition at line 41 of file mdtDeviceWindow.cpp.
 
 \hypertarget{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}{
 \index{mdtDeviceWindow@{mdtDeviceWindow}!statusWidget@{statusWidget}}
@@ -83,7 +142,7 @@ Get status widget.
 
 Usefull for setup 
 
-Definition at line 55 of file mdtDeviceWindow.cpp.
+Definition at line 56 of file mdtDeviceWindow.cpp.
 
 
 

@@ -83,17 +83,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dd>Signal useable ? Note: this method is called from <a class="el" href="classmdt_port_write_thread.html">mdtPortWriteThread</a> , and should not be used directly<br/>
  Mutex is not handled by this method. </dd>
 </dl>
-<p><a class="anchor" id="_todo000050"></a> </p>
+<p><a class="anchor" id="_todo000053"></a> </p>
 <dl>
 <dt>Class <a class="el" href="classmdt_abstract_serial_port.html">mdtAbstractSerialPort</a>  </dt>
 <dd>Comment this class </dd>
 </dl>
-<p><a class="anchor" id="_todo000051"></a> </p>
+<p><a class="anchor" id="_todo000054"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_abstract_serial_port.html#aaeacd26b220ab0f8c521cef74edfafdd">mdtAbstractSerialPort::getCtlStates</a> ()=0 </dt>
 <dd>Update name to : updateCtlStates ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000056"></a> </p>
+<p><a class="anchor" id="_todo000058"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc">mdtCsvFile::parseLine</a> (const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection) </dt>
 <dd>Check new function in mdtAlgorithm </dd>
@@ -130,8 +130,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </dl>
 <p><a class="anchor" id="_todo000008"></a> </p>
 <dl>
-<dt>Class <a class="el" href="classmdt_device_status_widget.html">mdtDeviceStatusWidget</a>  </dt>
-<dd>Add color per state (same as texts) </dd>
+<dt>Member <a class="el" href="classmdt_device_status_widget.html#af9d0bf5fb74e55bcdab7c8bd86ddfa33">mdtDeviceStatusWidget::setState</a> (int state, const QString &amp;message, const QString &amp;details) </dt>
+<dd>Implement details </dd>
 </dl>
 <p><a class="anchor" id="_todo000002"></a> </p>
 <dl>
@@ -143,22 +143,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_device_u3606_a_widget.html#a653d85749d67555d8c3a43a779b6d2a2">mdtDeviceU3606AWidget::mdtDeviceU3606AWidget</a> (QWidget *parent=0) </dt>
 <dd>A supprimer !(?)! </dd>
 </dl>
-<p><a class="anchor" id="_todo000057"></a> </p>
+<p><a class="anchor" id="_todo000059"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_k8055.html#a9dfe60529b0e80d5bbd3852fdea51b18">mdtFrameCodecK8055::decode</a> (QByteArray &amp;data) </dt>
 <dd>check status field ?? </dd>
 </dl>
-<p><a class="anchor" id="_todo000058"></a> </p>
+<p><a class="anchor" id="_todo000060"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_scpi.html#aa6596dc898438be704191ad282d02100">mdtFrameCodecScpi::decodeIEEEdataAscii</a> (const QByteArray &amp;data) </dt>
 <dd>Not implemented yet </dd>
 </dl>
-<p><a class="anchor" id="_todo000059"></a> </p>
+<p><a class="anchor" id="_todo000061"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_codec_scpi.html#ab70c6c3d2d91ddff065952b6c2db8345">mdtFrameCodecScpi::decodeIEEEdataByte</a> (const QByteArray &amp;data) </dt>
 <dd>Not implemented yet </dd>
 </dl>
-<p><a class="anchor" id="_todo000060"></a> </p>
+<p><a class="anchor" id="_todo000062"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_frame_usb_tmc.html#a06d2743a113bd2b4cf2ee44014ecd710">mdtFrameUsbTmc::putData</a> (const char *data, int maxLen) </dt>
 <dd>other bmTransferAttributes </dd>
@@ -215,7 +215,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Class <a class="el" href="classmdt_port_read_thread.html">mdtPortReadThread</a>  </dt>
 <dd>suspendTransmission() call is no longer in getNewFrameRead(), must be handled in run() now. </dd>
 </dl>
-<p><a class="anchor" id="_todo000054"></a> </p>
+<p><a class="anchor" id="_todo000056"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_port_term.html#a7ec568c44f862fe7aee83f1a271ac6bb">mdtPortTerm::sendCmd</a> () </dt>
 <dd>Error handling ! </dd>
@@ -230,66 +230,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <dt>Member <a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc">mdtPortThread::getNewFrameRead</a> () </dt>
 <dd>Currently implemented in polling, should be done with a wait condition.</dd>
 </dl>
-<p><a class="anchor" id="_todo000033"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_port_thread.html#ad2c618a032c0aeed0f0cb3b30bc0aba9">mdtPortThread::notifyError</a> (int error) </dt>
-<dd>Adapt in threads subclasses </dd>
-</dl>
 <p><a class="anchor" id="_todo000030"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_port_thread.html#a2e0c384ae6c909cb40fc0ca1a0189ca6">mdtPortThread::readFromPort</a> (<a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> **frame) </dt>
+<dt>Member <a class="el" href="classmdt_port_thread.html#a8756fe2a26bf267376b4003a2896ff48">mdtPortThread::readFromPort</a> (<a class="el" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> **frame, bool emitNewFrameReaden=true) </dt>
 <dd>Handle timeout error ? </dd>
 </dl>
-<p><a class="anchor" id="_todo000052"></a> </p>
-<dl>
-<dt>Member <a class="el" href="classmdt_serial_port_ctl_widget.html#a9dce60a846cbf24d7ceab099ff147c18">mdtSerialPortCtlWidget::makeConnections</a> (<a class="el" href="classmdt_serial_port_manager.html" title="Serial port manager class.">mdtSerialPortManager</a> *manager) </dt>
-<dd>Create threads somwere here, and connect signals/slots </dd>
-</dl>
-<p><a class="anchor" id="_todo000036"></a> </p>
+<p><a class="anchor" id="_todo000035"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#a626afc71d8e72600f12259ac6f5a5866">mdtUsbDeviceDescriptor::productName</a> () const  </dt>
 <dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
 </dl>
-<p><a class="anchor" id="_todo000035"></a> </p>
+<p><a class="anchor" id="_todo000034"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_device_descriptor.html#ac2f746ebd5540b65bf00f82c991f5c3b">mdtUsbDeviceDescriptor::vendorName</a> () const  </dt>
 <dd>Parsing the usb.ids (see <a href="http://www.linux-usb.org">http://www.linux-usb.org</a>) </dd>
 </dl>
-<p><a class="anchor" id="_todo000039"></a> </p>
+<p><a class="anchor" id="_todo000043"></a> </p>
 <dl>
-<dt>Member <a class="el" href="classmdt_usb_port.html#a551748422808cbb071930e1134bfaad5">mdtUsbPort::handleUsbEvents</a> (struct timeval *timeout, quint8 endpoint) </dt>
-<dd><p class="startdd">Check about pvLastError that was set by transfer callbacks ? </p>
-<p class="enddd">Think that timeout has no sense here, should be filtered </p>
-</dd>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a9f4f09dac3f09b1766072cd9c1292ab1">mdtUsbPort::addbTagToAbort</a> (quint8 bTag) </dt>
+<dd>Obselete All pending bTags queued will be aborted regarding USBTMC standard (INITIATE/CHECK ABORT_BULK_IN)</dd>
 </dl>
 <p><a class="anchor" id="_todo000038"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a551748422808cbb071930e1134bfaad5">mdtUsbPort::handleUsbEvents</a> (struct timeval *timeout, quint8 endpoint) </dt>
+<dd>Think that timeout has no sense here, should be filtered </dd>
+</dl>
+<p><a class="anchor" id="_todo000037"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_port.html#a897234cc2c7561da323cb124f57bcc28">mdtUsbPort::initMessageInTransfer</a> () </dt>
 <dd>Handle retval </dd>
 </dl>
-<p><a class="anchor" id="_todo000037"></a> </p>
+<p><a class="anchor" id="_todo000036"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usb_port.html#a5e380852b8726f71e8558c86cba5bd1f">mdtUsbPort::initReadTransfer</a> (qint64 maxSize) </dt>
 <dd>Handle retval </dd>
 </dl>
-<p><a class="anchor" id="_todo000046"></a> </p>
+<p><a class="anchor" id="_todo000044"></a> </p>
+<dl>
+<dt>Member <a class="el" href="classmdt_usb_port.html#a43e3102b004f213ecc01b17f31607957">mdtUsbPort::takebTagToAbort</a> () </dt>
+<dd>Obselete This method is used by USB thread, and should not be used else.</dd>
+</dl>
+<p><a class="anchor" id="_todo000050"></a> </p>
+<dl>
+<dt>Class <a class="el" href="classmdt_usbtmc_port_manager.html">mdtUsbtmcPortManager</a>  </dt>
+<dd>Write a USBTMC port thread </dd>
+</dl>
+<p><a class="anchor" id="_todo000047"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a">mdtUsbtmcPortManager::abortBulkOut</a> (quint8 bTag) </dt>
 <dd><p class="startdd">Finish and test </p>
 <p class="enddd">Implement clear halt </p>
 </dd>
 </dl>
-<p><a class="anchor" id="_todo000048"></a> </p>
+<p><a class="anchor" id="_todo000049"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">mdtUsbtmcPortManager::fromThreadNewFrameReaden</a> () </dt>
 <dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. </dd>
 </dl>
-<p><a class="anchor" id="_todo000049"></a> </p>
+<p><a class="anchor" id="_todo000051"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#ab1604a1c8f2e9192714d039dbf9a5158">mdtUsbtmcPortManager::sendReadRequest</a> (bool enqueueResponse) </dt>
 <dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd>
 </dl>
-<p><a class="anchor" id="_todo000045"></a> </p>
+<p><a class="anchor" id="_todo000046"></a> </p>
 <dl>
 <dt>Member <a class="el" href="classmdt_usbtmc_port_manager.html#a7bcc280bd4a26ed523832550b1e61553">mdtUsbtmcPortManager::sendReadStatusByteRequest</a> () </dt>
 <dd>finish ! </dd>
@@ -309,7 +312,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Jan 26 2013 19:05:54 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

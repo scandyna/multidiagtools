@@ -4,29 +4,20 @@
 }
 
 
-{\ttfamily \#include $<$mdtDeviceStatusWidget.h$>$}
-
-
-
-Collaboration diagram for mdtDeviceStatusWidget:\nopagebreak
+Collaboration diagram for mdtDeviceStatusWidget:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=202pt]{classmdt_device_status_widget__coll__graph}
+\includegraphics[width=252pt]{classmdt_device_status_widget__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Slots}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classmdt_device_status_widget_aff26f53555fcaf57d79d70c712e24928}{
-void {\bfseries setState} (int state)}
-\label{classmdt_device_status_widget_aff26f53555fcaf57d79d70c712e24928}
-
-\item 
-\hypertarget{classmdt_device_status_widget_af9d0bf5fb74e55bcdab7c8bd86ddfa33}{
-void {\bfseries setState} (int state, const QString \&message, const QString \&details)}
-\label{classmdt_device_status_widget_af9d0bf5fb74e55bcdab7c8bd86ddfa33}
-
+void \hyperlink{classmdt_device_status_widget_aff26f53555fcaf57d79d70c712e24928}{setState} (int state)
+\begin{DoxyCompactList}\small\item\em Set state. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_status_widget_af9d0bf5fb74e55bcdab7c8bd86ddfa33}{setState} (int state, const QString \&message, const QString \&details)
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -38,6 +29,17 @@ void {\bfseries setState} (int state, const QString \&message, const QString \&d
 \begin{DoxyCompactList}\small\item\em Build a status widget with default texts. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_status_widget_ac7b010932ee6c83ffc9efe006ee13f22}{setDevice} (\hyperlink{classmdt_device}{mdtDevice} $\ast$device)
 \begin{DoxyCompactList}\small\item\em Set device. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_status_widget_a056af69761b82cd24ab653158beafa22}{enableTxRxLeds} (\hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$txThread, \hyperlink{classmdt_port_thread}{mdtPortThread} $\ast$rxThread)
+\begin{DoxyCompactList}\small\item\em Enable the TX/RX LEDs. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_device_status_widget_a042461c9fd28d3f4f29ffad730ec7073}{
+void \hyperlink{classmdt_device_status_widget_a042461c9fd28d3f4f29ffad730ec7073}{disableTxRxLeds} ()}
+\label{classmdt_device_status_widget_a042461c9fd28d3f4f29ffad730ec7073}
+
+\begin{DoxyCompactList}\small\item\em Disable the TX/RX LED's. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_status_widget_ae3df9a41c4bff87b81101a5ad4b9dd0a}{addCustomWidget} (QWidget $\ast$widget)
+\begin{DoxyCompactList}\small\item\em Add a custom widget. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_device_status_widget_a30015d4d648425da6a8cef72e18afd8a}{removeCustomWidget} ()
+\begin{DoxyCompactList}\small\item\em Remove the custom widget. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_status_widget_aaaac01ef5272b66bc0a3daf19e20047c}{
 void \hyperlink{classmdt_device_status_widget_aaaac01ef5272b66bc0a3daf19e20047c}{setDefaultStateTexts} ()}
 \label{classmdt_device_status_widget_aaaac01ef5272b66bc0a3daf19e20047c}
@@ -86,8 +88,6 @@ void \hyperlink{classmdt_device_status_widget_ae9f7ab642d15591f0207835f2d3de9e3}
 
 
 \subsection{Detailed Description}
-\begin{Desc}
-\item[\hyperlink{todo__todo000008}{Todo}]Add color per state (same as texts) \end{Desc}
 
 
 Definition at line 36 of file mdtDeviceStatusWidget.h.
@@ -95,6 +95,64 @@ Definition at line 36 of file mdtDeviceStatusWidget.h.
 
 
 \subsection{Member Function Documentation}
+\hypertarget{classmdt_device_status_widget_ae3df9a41c4bff87b81101a5ad4b9dd0a}{
+\index{mdtDeviceStatusWidget@{mdtDeviceStatusWidget}!addCustomWidget@{addCustomWidget}}
+\index{addCustomWidget@{addCustomWidget}!mdtDeviceStatusWidget@{mdtDeviceStatusWidget}}
+\subsubsection[{addCustomWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceStatusWidget::addCustomWidget (
+\begin{DoxyParamCaption}
+\item[{QWidget $\ast$}]{widget}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_status_widget_ae3df9a41c4bff87b81101a5ad4b9dd0a}
+
+
+Add a custom widget. 
+
+One custom widget can be added. 
+
+Definition at line 128 of file mdtDeviceStatusWidget.cpp.
+
+\hypertarget{classmdt_device_status_widget_a056af69761b82cd24ab653158beafa22}{
+\index{mdtDeviceStatusWidget@{mdtDeviceStatusWidget}!enableTxRxLeds@{enableTxRxLeds}}
+\index{enableTxRxLeds@{enableTxRxLeds}!mdtDeviceStatusWidget@{mdtDeviceStatusWidget}}
+\subsubsection[{enableTxRxLeds}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceStatusWidget::enableTxRxLeds (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtPortThread} $\ast$}]{txThread, }
+\item[{{\bf mdtPortThread} $\ast$}]{rxThread}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_status_widget_a056af69761b82cd24ab653158beafa22}
+
+
+Enable the TX/RX LEDs. 
+
+\begin{DoxyPrecond}{Precondition}
+txThread and rxThread must be valid. 
+\end{DoxyPrecond}
+
+
+Definition at line 68 of file mdtDeviceStatusWidget.cpp.
+
+\hypertarget{classmdt_device_status_widget_a30015d4d648425da6a8cef72e18afd8a}{
+\index{mdtDeviceStatusWidget@{mdtDeviceStatusWidget}!removeCustomWidget@{removeCustomWidget}}
+\index{removeCustomWidget@{removeCustomWidget}!mdtDeviceStatusWidget@{mdtDeviceStatusWidget}}
+\subsubsection[{removeCustomWidget}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceStatusWidget::removeCustomWidget (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_status_widget_a30015d4d648425da6a8cef72e18afd8a}
+
+
+Remove the custom widget. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_device_status_widget_ae3df9a41c4bff87b81101a5ad4b9dd0a}{addCustomWidget()}. 
+\end{DoxySeeAlso}
+
+
+Definition at line 138 of file mdtDeviceStatusWidget.cpp.
+
 \hypertarget{classmdt_device_status_widget_ac7b010932ee6c83ffc9efe006ee13f22}{
 \index{mdtDeviceStatusWidget@{mdtDeviceStatusWidget}!setDevice@{setDevice}}
 \index{setDevice@{setDevice}!mdtDeviceStatusWidget@{mdtDeviceStatusWidget}}
@@ -115,7 +173,55 @@ device must be valid.
 \end{DoxyPrecond}
 
 
-Definition at line 65 of file mdtDeviceStatusWidget.cpp.
+Definition at line 60 of file mdtDeviceStatusWidget.cpp.
+
+\hypertarget{classmdt_device_status_widget_af9d0bf5fb74e55bcdab7c8bd86ddfa33}{
+\index{mdtDeviceStatusWidget@{mdtDeviceStatusWidget}!setState@{setState}}
+\index{setState@{setState}!mdtDeviceStatusWidget@{mdtDeviceStatusWidget}}
+\subsubsection[{setState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceStatusWidget::setState (
+\begin{DoxyParamCaption}
+\item[{int}]{state, }
+\item[{const QString \&}]{message, }
+\item[{const QString \&}]{details}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_device_status_widget_af9d0bf5fb74e55bcdab7c8bd86ddfa33}
+
+\begin{DoxyParams}{Parameters}
+{\em state} & A state as define in mdeDevice \\
+\hline
+\end{DoxyParams}
+
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000008}{Todo}]Implement details \end{Desc}
+
+
+
+
+Definition at line 223 of file mdtDeviceStatusWidget.cpp.
+
+\hypertarget{classmdt_device_status_widget_aff26f53555fcaf57d79d70c712e24928}{
+\index{mdtDeviceStatusWidget@{mdtDeviceStatusWidget}!setState@{setState}}
+\index{setState@{setState}!mdtDeviceStatusWidget@{mdtDeviceStatusWidget}}
+\subsubsection[{setState}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDeviceStatusWidget::setState (
+\begin{DoxyParamCaption}
+\item[{int}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_device_status_widget_aff26f53555fcaf57d79d70c712e24928}
+
+
+Set state. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & A state as define in mdeDevice \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 198 of file mdtDeviceStatusWidget.cpp.
 
 
 
