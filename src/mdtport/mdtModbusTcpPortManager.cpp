@@ -77,11 +77,8 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   QString hostName;
   quint16 hostPort;
   bool ok;
-  QTcpSocket socket;
-  int maxIter;
 
   for(i=0; i<hosts.size(); i++){
-    qDebug() << "mdtModbusTcpPortManager::scan(): trying host " << hosts.at(i) << " ...";
     // Extract hostname/ip and port
     host = hosts.at(i).split(":");
     if(host.size() != 2){
@@ -99,31 +96,10 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
       continue;
     }
     // Try to connect
-    socket.connectToHost(hostName, hostPort);
-    maxIter = timeout / 50;
-    while(socket.state() != QAbstractSocket::ConnectedState){
-      if(maxIter <= 0){
-        break;
-      }
-      qApp->processEvents();
-      msleep(50);
-      maxIter--;
-    }
-    if(socket.state() != QAbstractSocket::UnconnectedState){
-      // Check if connection was successfull
-      if(socket.state() == QAbstractSocket::ConnectedState){
-        qDebug() << "Found device at " << host;
-        portInfo = new mdtPortInfo;
-        portInfo->setPortName(hosts.at(i));
-        portInfoList.append(portInfo);
-      }
-      // Disconnect
-      //socket.disconnectFromHost();
-      socket.abort();
-      while((socket.state() != QAbstractSocket::ClosingState)&&(socket.state() != QAbstractSocket::UnconnectedState)){
-        qApp->processEvents();
-        msleep(50);
-      }
+    if(tryToConnect(hostName, hostPort, timeout)){
+      portInfo = new mdtPortInfo;
+      portInfo->setPortName(hosts.at(i));
+      portInfoList.append(portInfo);
     }
   }
 
@@ -178,12 +154,9 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
     firstIpV4 = firstIp.toIPv4Address();
     lastIpV4 = lastIp.toIPv4Address();
     // Scan this range and add to list
-    qDebug() << "Iface " << iface.name() << " , IP " << firstIp << " to " << lastIp;
     for(j=firstIpV4; j<=lastIpV4; j++){
       currentIp.setAddress(j);
-      qDebug() << "Trying " << currentIp.toString();
       if(tryToConnect(currentIp.toString(), port, timeout)){
-        qDebug() << "Found device at " << currentIp.toString() << ":" << QString::number(port);
         portInfo = new mdtPortInfo;
         portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
         portInfoList.append(portInfo);

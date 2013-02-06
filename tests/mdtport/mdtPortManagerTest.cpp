@@ -306,7 +306,6 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(!m.sendQuery("*IDN?\n").isEmpty());
 }
 
-/// \todo No real check possible withous MODBUS Server available on loopback (127.0.0)
 void mdtPortManagerTest::modbusTcpPortTest()
 {
   mdtModbusTcpPortManager m;
@@ -317,50 +316,14 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
   int tId1, tId2, tId3;
-  quint32 bCast;
-  quint32 netMask;
-  quint32 subNet;
 
-  
-  
   // Check scan with some invalid network setup
   QVERIFY(m.scan(QNetworkInterface()).size() < 1);
-  
-  // Scan network
-  
-  // Rescan with found results (check if other scan method works)
-  
-  /// Sandbox
-  QList<QNetworkInterface> ifaces;
-  QList<QNetworkAddressEntry> entries;
-  
-  ifaces = QNetworkInterface::allInterfaces();
-  for(int i=0; i<ifaces.size(); i++){
-    qDebug() << "Ifaces[" << i << "]: " << ifaces.at(i).humanReadableName();
-    ///m.scan(ifaces.at(i), 502, 100);
-    /**
-    entries = ifaces.at(i).addressEntries();
-    for(int j=0; j<entries.size(); j++){
-      if(entries.at(j).ip().protocol() == QAbstractSocket::IPv4Protocol){
-        netMask = entries.at(j).netmask().toIPv4Address();
-        bCast = entries.at(j).broadcast().toIPv4Address();
-        subNet = bCast & netMask;
-        qDebug() << "-> Entry[" << j << "]:";
-        qDebug() << "--> IP:       " << entries.at(j).ip();
-        qDebug() << "--> Subnet:   " << QHostAddress(subNet);
-        qDebug() << "--> Net mask: " << entries.at(j).netmask();
-        qDebug() << "--> First IP: " << QHostAddress(subNet+1);
-        qDebug() << "--> Last IP:  " << QHostAddress(bCast-1);
-        ///qDebug() << "-> Entry[" << j << "]: IP: " <<  << " , BCAST: " << entries.at(j).broadcast() << " , netmask: " << ;
-      }
-    }
-    */
-  }
-  ///qDebug() << "allAddresses: " << QNetworkInterface::allAddresses();
 
   qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
 
   // Try to scan all network interfaces (except the loopback)
+  qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network ...";
   portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
   if(portInfoList.size() < 1){
     QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
@@ -371,23 +334,10 @@ void mdtPortManagerTest::modbusTcpPortTest()
     QVERIFY(portInfoList.at(i) != 0);
     hosts << portInfoList.at(i)->portName();
   }
-  qDebug() << "Hosts: " << hosts;
+  qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network (hosts: " << hosts << ")";
   QCOMPARE(hosts.size(), portInfoList.size());
   portInfoList2 = m.scan(hosts);
   QCOMPARE(portInfoList2.size(), portInfoList.size());
-
-  // Verify that scan() function works ..
-  /**
-  hosts << "127.0.0.1:502";
-  hosts << "192.168.1.100:502";
-  hosts << "192.168.1.101:502";
-  hosts << "192.168.1.102:502";
-  hosts << "192.168.1.103:502";
-  portInfoList = m.scan(hosts);
-  if(portInfoList.size() < 1){
-    QSKIP("No MODBUS/TCP device found, or other error", SkipAll);
-  }
-  */
 
   // Init port manager
   m.setPortInfo(*portInfoList.at(0));
@@ -396,6 +346,8 @@ void mdtPortManagerTest::modbusTcpPortTest()
   // We not need the scan result anymore, free memory
   qDeleteAll(portInfoList);
   portInfoList.clear();
+  qDeleteAll(portInfoList2);
+  portInfoList2.clear();
 
   // start threads
   QVERIFY(m.start());
