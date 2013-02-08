@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -66,8 +66,11 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
   if(!initHomeDir()){
     return false;
   }
-  qDebug() << "mdtApplication , data dir: " << pvSystemDataDirPath;
-  qDebug() << "mdtApplication , log dir: " << pvLogDirPath;
+  ///qDebug() << "mdtApplication , data dir: " << pvSystemDataDirPath;
+  qDebug() << "mdtApplication , data dir: " << pvSystemDataDir.absolutePath();
+  ///qDebug() << "mdtApplication , log dir: " << pvLogDirPath;
+  qDebug() << "mdtApplication , log dir: " << pvLogDir.absolutePath();
+  qDebug() << "mdtApplication , cache dir: " << pvCacheDir.absolutePath();
   qDebug() << "mdtApplication , lib version: " << mdtLibVersion();
 
   // Build log file name
@@ -88,13 +91,15 @@ bool mdtApplication::init(bool allowMultipleInstances, int dialogErrorLevelsMask
   logFileName += ".log";
   qDebug() << "mdtApplication::init(): log file: " << logFileName;
   // Init error system
-  if(!mdtErrorOut::init(pvLogDirPath + "/" + logFileName)){
+  ///if(!mdtErrorOut::init(pvLogDirPath + "/" + logFileName)){
+  if(!mdtErrorOut::init(pvLogDir.absolutePath() + "/" + logFileName)){
     std::cerr << "mdtApplication::init(): unable to init the error system" << std::endl;
     return false;
   }
   mdtErrorOut::setDialogLevelsMask(dialogErrorLevelsMask);
   // Load translations and set the default language
-  addTranslationsDirectory(pvSystemDataDirPath + "/i18n");
+  ///addTranslationsDirectory(pvSystemDataDirPath + "/i18n");
+  addTranslationsDirectory(pvSystemDataDir.absolutePath() + "/i18n");
 #ifdef Q_OS_UNIX
   addTranslationsDirectory("/usr/share/qt4/translations");
 #endif
@@ -127,7 +132,13 @@ mdtApplication *mdtApplication::instance()
 
 QString mdtApplication::systemDataDirPath()
 {
-  return instance()->pvSystemDataDirPath;
+  ///return instance()->pvSystemDataDirPath;
+  return instance()->pvSystemDataDir.absolutePath();
+}
+
+const QDir mdtApplication::cacheDir()
+{
+  return instance()->pvCacheDir;
 }
 
 QString mdtApplication::mdtLibVersion()
@@ -205,50 +216,51 @@ void mdtApplication::changeLanguage(QAction *action)
 
 bool mdtApplication::searchSystemDataDir()
 {
-  QDir dir;
+  ///QDir dir;
 
   // At first, we look in current directory
-  if(dir.cd("data")){
-    if(isSystemDataDir(dir)){
+  pvSystemDataDir = QDir::current();
+  if(pvSystemDataDir.cd("data")){
+    if(isSystemDataDir(pvSystemDataDir)){
       // Ok, found.
-      pvSystemDataDirPath = dir.absolutePath();
+      ///pvSystemDataDirPath = dir.absolutePath();
       return true;
     }
   }
   // Check in application directory
-  dir.setPath(applicationDirPath());
-  if(!dir.exists()){
+  pvSystemDataDir.setPath(applicationDirPath());
+  if(!pvSystemDataDir.exists()){
     std::cerr << "mdtApplication::searchSystemDataDir(): cannot find application directory" << std::endl;
     return false;
   }
-  if(dir.cd("data")){
-    if(isSystemDataDir(dir)){
+  if(pvSystemDataDir.cd("data")){
+    if(isSystemDataDir(pvSystemDataDir)){
       // Ok, found.
-      pvSystemDataDirPath = dir.absolutePath();
+      ///pvSystemDataDirPath = dir.absolutePath();
       return true;
     }
   }
   // Check in application's parent directory
-  if(dir.cd("../data")){
-    if(isSystemDataDir(dir)){
+  if(pvSystemDataDir.cd("../data")){
+    if(isSystemDataDir(pvSystemDataDir)){
       // Ok, found.
-      pvSystemDataDirPath = dir.absolutePath();
+      ///pvSystemDataDirPath = dir.absolutePath();
       return true;
     }
   }
   // On Linux/Unix, data is probably installed in /usr/share/mdt or /usr/local/share
 #ifdef Q_OS_UNIX
-  if(dir.cd("/usr/share/mdt/data")){
-    if(isSystemDataDir(dir)){
+  if(pvSystemDataDir.cd("/usr/share/mdt/data")){
+    if(isSystemDataDir(pvSystemDataDir)){
       // Ok, found.
-      pvSystemDataDirPath = dir.absolutePath();
+      ///pvSystemDataDirPath = dir.absolutePath();
       return true;
     }
   }
-  if(dir.cd("/usr/local/share/mdt/data")){
-    if(isSystemDataDir(dir)){
+  if(pvSystemDataDir.cd("/usr/local/share/mdt/data")){
+    if(isSystemDataDir(pvSystemDataDir)){
       // Ok, found.
-      pvSystemDataDirPath = dir.absolutePath();
+      ///pvSystemDataDirPath = dir.absolutePath();
       return true;
     }
   }
@@ -279,38 +291,57 @@ bool mdtApplication::isSystemDataDir(QDir &dir)
 
 bool mdtApplication::initHomeDir()
 {
-  QDir dir(QDir::home());
+  ///QDir dir(QDir::home());
+
+  pvLogDir = QDir::home();
 
   // Home directory must exists first..
-  if(!dir.exists()){
+  if(!pvLogDir.exists()){
     std::cerr << "mdtApplication::initHomeDir(): cannot find home directory" << std::endl;
     return false;
   }
   // Look about the .mdt directory
-  if(!dir.cd(".mdt")){
+  if(!pvLogDir.cd(".mdt")){
     // Not found, try to create it
-    if(!dir.mkdir(".mdt")){
+    if(!pvLogDir.mkdir(".mdt")){
       std::cerr << "mdtApplication::initHomeDir(): cannot create .mdt in home directory" << std::endl;
       return false;
     }
-    if(!dir.cd(".mdt")){
+    if(!pvLogDir.cd(".mdt")){
       std::cerr << "mdtApplication::initHomeDir(): cannot enter $home/.mdt directory" << std::endl;
       return false;
     }
   }
   // Log directory
-  if(!dir.cd("log")){
+  if(!pvLogDir.cd("log")){
     // Not found, try to create it
-    if(!dir.mkdir("log")){
+    if(!pvLogDir.mkdir("log")){
       std::cerr << "mdtApplication::initHomeDir(): cannot create log in home directory" << std::endl;
       return false;
     }
-    if(!dir.cd("log")){
+    if(!pvLogDir.cd("log")){
       std::cerr << "mdtApplication::initHomeDir(): cannot enter $home/.mdt/log directory" << std::endl;
       return false;
     }
   }
-  pvLogDirPath = dir.absolutePath();
+  // Cache directory
+  pvCacheDir = QDir::home();
+  if(!pvCacheDir.cd(".mdt")){
+    std::cerr << "mdtApplication::initHomeDir(): cannot enter $home/.mdt/ directory (should allready exists)" << std::endl;
+    return false;
+  }
+  if(!pvCacheDir.cd("cache")){
+    // Not found, try to create it
+    if(!pvCacheDir.mkdir("cache")){
+      std::cerr << "mdtApplication::initHomeDir(): cannot create cache directory in home directory" << std::endl;
+      return false;
+    }
+    if(!pvCacheDir.cd("cache")){
+      std::cerr << "mdtApplication::initHomeDir(): cannot enter $home/.mdt/cache directory" << std::endl;
+      return false;
+    }
+  }
+  ///pvLogDirPath = dir.absolutePath();
 
   return true;
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -25,12 +25,15 @@
 #include "mdtFrame.h"
 #include "mdtFrameModbusTcp.h"
 #include "mdtFrameCodecModbus.h"
+#include "mdtApplication.h"
 #include <QString>
 #include <QApplication>
 #include <QTcpSocket>
 #include <QHashIterator>
 #include <QNetworkAddressEntry>
 #include <QHostAddress>
+#include <QDir>
+#include <QFile>
 
 #include <QDebug>
 
@@ -53,6 +56,8 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
 
   // Some flags
   pvTransactionId = 0;
+  pvKnownHostsFileName = "modbus_tcp_konown_hosts";
+  pvAbortScan = false;
 
   // Enable transactions support
   setTransactionsEnabled();
@@ -79,6 +84,11 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
   bool ok;
 
   for(i=0; i<hosts.size(); i++){
+    if(pvAbortScan){
+      portInfoList.clear();
+      pvAbortScan = false;
+      return portInfoList;
+    }
     // Extract hostname/ip and port
     host = hosts.at(i).split(":");
     if(host.size() != 2){
@@ -155,6 +165,11 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
     lastIpV4 = lastIp.toIPv4Address();
     // Scan this range and add to list
     for(j=firstIpV4; j<=lastIpV4; j++){
+      if(pvAbortScan){
+        portInfoList.clear();
+        pvAbortScan = false;
+        return portInfoList;
+      }
       currentIp.setAddress(j);
       if(tryToConnect(currentIp.toString(), port, timeout)){
         portInfo = new mdtPortInfo;
@@ -181,6 +196,11 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface>
   int i;
 
   for(i=0; i<ifaces.size(); i++){
+    if(pvAbortScan){
+      portInfoList.clear();
+      pvAbortScan = false;
+      return portInfoList;
+    }
     // Check about loopback
     if(ignoreLoopback){
       if(ifaces.at(i).flags() & QNetworkInterface::IsLoopBack){
@@ -195,6 +215,8 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QList<QNetworkInterface>
 
 bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port, int timeout)
 {
+  Q_ASSERT(!isRunning());
+
   QTcpSocket socket;
   int maxIter;
   bool ok = false;
@@ -202,6 +224,9 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   socket.connectToHost(hostName, port);
   maxIter = timeout / 50;
   while(socket.state() != QAbstractSocket::ConnectedState){
+    if(pvAbortScan){
+      return false;
+    }
     if(maxIter <= 0){
       break;
     }
@@ -223,6 +248,61 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   }
 
   return ok;
+}
+
+bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResult)
+{
+  Q_ASSERT(!isRunning());
+
+  QFile file;
+  int i;
+  QByteArray line;
+
+  // Try to open file
+  file.setFileName(mdtApplication::cacheDir().absolutePath() + "/" + pvKnownHostsFileName);
+  if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)){
+    mdtError e(MDT_FILE_IO_ERROR, "Cannot write to " + file.fileName(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+    e.commit();
+    return false;
+  }
+  // Save items
+  for(i=0; i<scanResult.size(); i++){
+    Q_ASSERT(scanResult.at(i) != 0);
+    line = scanResult.at(i)->portName().toAscii();
+    line += "\n";
+    if(file.write(line) < 0){
+      mdtError e(MDT_FILE_IO_ERROR, "Write error occured during write to " + file.fileName(), mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+      e.commit();
+      file.close();
+      return false;
+    }
+  }
+  file.close();
+
+  return true;
+}
+
+QStringList mdtModbusTcpPortManager::readScanResult()
+{
+  Q_ASSERT(!isRunning());
+
+  QFile file;
+  QStringList scanResult;
+
+  // Try to open file
+  file.setFileName(mdtApplication::cacheDir().absolutePath() + "/" + pvKnownHostsFileName);
+  if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+    return scanResult;
+  }
+  // Read entries
+  while(!file.atEnd()){
+    scanResult.append(file.readLine());
+  }
+  file.close();
+
+  return scanResult;
 }
 
 int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)
@@ -293,6 +373,10 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu, mdtPortTransaction *trans
   return pvTransactionId;
 }
 
+void mdtModbusTcpPortManager::abortScan()
+{
+  pvAbortScan = true;
+}
 
 void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
 {

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -56,9 +56,10 @@ class mdtApplication : public QtSingleApplication
   /*! \brief Some initializations
    * 
    * Several things are done here:
-   *  - Search the system data directory
-   *  - Init the error system
    *  - Check if another instance is running (if allowMultipleInstances Instance is false)
+   *  - Search the system data directory
+   *  - Init the home directories structure
+   *  - Init the error system
    *  - Load translation files and set language according system settings.
    * \param allowMultipleInstances If true, multiple instance of application is allowed (but NOT multiple instance of mdtApplication in program !)
    * \param dialogErrorLevelsMask Set the mask of errors that are displayed as dialogs in GUI. By default, no error (geven by mdtErrorOut)
@@ -83,6 +84,10 @@ class mdtApplication : public QtSingleApplication
   /*! \brief Get data dir path
    */
   static QString systemDataDirPath();
+
+  /*! \brief Get cache directory
+   */
+  static const QDir cacheDir();
 
   /*! \brief Get the multi diag tools library version
    */
@@ -173,8 +178,11 @@ class mdtApplication : public QtSingleApplication
   // Load found translation files according given language
   bool loadTranslationFiles(const QString &languageSuffix);
 
-  QString pvSystemDataDirPath;
-  QString pvLogDirPath;
+  ///QString pvSystemDataDirPath;
+  QDir pvSystemDataDir;
+  ///QString pvLogDirPath;
+  QDir pvLogDir;
+  QDir pvCacheDir;
   QStringList pvTranslationsDirectories;  // Directories that contains .qm translations files
   static mdtApplication *pvInstance;
   QList<QTranslator*> pvTranslators;

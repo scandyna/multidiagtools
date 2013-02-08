@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -111,8 +111,29 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \param port Port. Note that MODBUS/TCP default port is 502.
    * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
    * \return True on successfull connection.
+   * \pre Manager must no running
    */
   bool tryToConnect(const QString &hostName, quint16 port, int timeout);
+
+  /*! \brief Save a scan result into the known hosts file
+   *
+   * The file will be written to the $HOME/.mdt/cache directory,
+   *  and contains lines with format host:port.
+   *
+   * \param scanResult List of port informations returned by a scan() method.
+   * \return True on successfull write.
+   * \pre Manager must no running
+   */
+  bool saveScanResult(const QList<mdtPortInfo*> scanResult);
+
+  /*! \brief Read scan result stored in cache file
+   *
+   * The file stored by saveScanResult() is readen (if exists)
+   *  and content returned.
+   *
+   * \return List of lines or empty list if file not exists or on error.
+   */
+  QStringList readScanResult();
 
   /*! \brief Write PDU by copy
    *
@@ -163,6 +184,10 @@ class mdtModbusTcpPortManager : public mdtPortManager
 
  public slots:
 
+  /*! \brief Abort the scan process
+   */
+  void abortScan();
+
   /*! \brief Called by the thread whenn a complete frame was readen
    */
   void fromThreadNewFrameReaden();
@@ -170,6 +195,8 @@ class mdtModbusTcpPortManager : public mdtPortManager
  private:
 
   quint16 pvTransactionId;
+  QString pvKnownHostsFileName;
+  bool pvAbortScan;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtModbusTcpPortManager);

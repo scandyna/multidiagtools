@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,6 +42,7 @@
 #include "mdtUsbtmcPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtPortTransaction.h"
+#include <QTimer>
 
 #include <QDebug>
 
@@ -322,7 +323,12 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   qDebug() << "* A MODBUS/TCP compatible device must be attached, else test will fail *";
 
-  // Try to scan all network interfaces (except the loopback)
+  // Try to scan all network interfaces (except the loopback) + check abort
+  QTimer::singleShot(100, &m, SLOT(abortScan()));
+  qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network ...";
+  portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
+  QCOMPARE(portInfoList.size(), 0);
+  // Scan again
   qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network ...";
   portInfoList = m.scan(QNetworkInterface::allInterfaces(), 502, 100);
   if(portInfoList.size() < 1){
@@ -337,6 +343,12 @@ void mdtPortManagerTest::modbusTcpPortTest()
   qDebug() << "mdtPortManagerTest::modbusTcpPortTest(): scanning network (hosts: " << hosts << ")";
   QCOMPARE(hosts.size(), portInfoList.size());
   portInfoList2 = m.scan(hosts);
+  QCOMPARE(portInfoList2.size(), portInfoList.size());
+
+  // Check tha we can save scan result
+  QVERIFY(m.saveScanResult(portInfoList));
+  // Rescan with cache file
+  portInfoList2 = m.scan(m.readScanResult());
   QCOMPARE(portInfoList2.size(), portInfoList.size());
 
   // Init port manager
