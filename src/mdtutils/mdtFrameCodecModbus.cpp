@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -131,7 +131,6 @@ QByteArray mdtFrameCodecModbus::encodeReadInputRegisters(quint16 startAddress, q
 
 QByteArray mdtFrameCodecModbus::encodeWriteSingleCoil(quint16 address, bool state)
 {
-  ///qDebug() << "mdtFrameCodecModbus::encodeWriteSingleCoil(): address " << address << " , state: " << state;
   pvPdu.clear();
 
   // Function code
@@ -254,6 +253,33 @@ QByteArray mdtFrameCodecModbus::encodeWriteMultipleRegisters(quint16 startAddres
   return pvPdu;
 }
 
+QByteArray mdtFrameCodecModbus::encodeReadDeviceIdentification(quint8 objectId, bool individualAccess)
+{
+  pvPdu.clear();
+
+  // Function code
+  pvPdu.append(0x2B);
+  // MEI Type
+  pvPdu.append(0x0E);
+  // Read Device ID code
+  if(individualAccess){
+    pvPdu.append(4);
+  }else{
+    // Stream access: depends of objectId
+    if(objectId < 0x03){
+      pvPdu.append(1);
+    }else if(objectId < 0x80){
+      pvPdu.append(2);
+    }else{
+      pvPdu.append(3);
+    }
+  }
+  // Object Id
+  pvPdu.append(objectId);
+
+  return pvPdu;
+}
+
 int mdtFrameCodecModbus::decode(const QByteArray &pdu)
 {
   pvPdu = pdu;
@@ -332,6 +358,12 @@ int mdtFrameCodecModbus::decode(const QByteArray &pdu)
         return -1;
       }
       return 0x10;
+      break;
+    case 0x2B:
+      if(!decodeReadDeviceIdentification()){
+        return -1;
+      }
+      return 0x2B;
       break;
     // Unknow code
     default:
@@ -581,6 +613,72 @@ bool mdtFrameCodecModbus::decodeWriteMultipleRegisters()
   value = (quint8)pvPdu.at(3) << 8;
   value |= (quint8)pvPdu.at(4);
   pvValues.append(value);
+
+  return true;
+}
+
+bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
+{
+  QByteArray value; // Object value
+  int objectLength;
+  int cursor;
+
+  // We need min. 8 bytes
+  if(pvPdu.size() < 8){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid (size < 8 Bytes)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Check FC
+  Q_ASSERT((int)pvPdu.at(0) == 0x2B);
+  // Check MEI Type
+  if((int)pvPdu.at(1) != 0x0E){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "MEI Type not valid", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+    e.commit();
+    return false;
+  }
+  // Store More Follows and Next Object Id
+  if((quint8)pvPdu.at(4) == 0xFF){
+    pvValues.append(true);
+  }else{
+    pvValues.append(false);
+  }
+  pvValues.append((int)pvPdu.at(5));
+  // Get objects
+  cursor = 7;
+  while(cursor < pvPdu.size()){
+    // Check that PDU contains enougth data to get object length
+    if(pvPdu.size() < (cursor+1)){
+      mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid in Objects part", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+      e.commit();
+      pvValues.clear();
+      return false;
+    }
+    // Get object length
+    objectLength = (quint8)pvPdu.at(cursor+1);
+    qDebug() << "DECODE, object length: " << objectLength;
+    // Check that PDU contains enougth data to get object
+    if(pvPdu.size() < (cursor+1+objectLength)){
+      mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid in Objects part", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtFrameCodecModbus");
+      e.commit();
+      pvValues.clear();
+      return false;
+    }
+    // Store Object Id
+    pvValues.append((int)pvPdu.at(cursor));
+    // Store Object value
+    cursor += 2;
+    pvValues.append(pvPdu.mid(cursor, objectLength));
+    qDebug() << "DECODE, cursor: " << cursor << " , value: " << pvPdu.mid(cursor, objectLength);
+    cursor += objectLength;
+
+  }
+
+  qDebug() << "DECODE, values: " << pvValues;
 
   return true;
 }

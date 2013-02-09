@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -124,8 +124,15 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *
    * \return A QByteArray containing the PDU, or a empty QByteArray on error.
    */
-  ///QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList<quint16> &values);
   QByteArray encodeWriteMultipleRegisters(quint16 startAddress, const QList<int> &values);
+
+  /*! \brief Encode a PDU according the ReadDeviceIdentification function (FC 43, 0x2B)
+   * 
+   * Please take a look at MODBUS specifications for more details.
+   *
+   * \return A QByteArray containing the PDU, or a empty QByteArray on error.
+   */
+  QByteArray encodeReadDeviceIdentification(quint8 objectId, bool individualAccess);
 
   /*! \brief Decode a MODBUS PDU
    * 
@@ -144,6 +151,8 @@ class mdtFrameCodecModbus : public mdtFrameCodec
    *  - FC 6 (0x06), WriteSingleRegister reply: analog output address and value, as quint16.
    *  - FC 15 (0x0F), WriteMultipleCoils reply: first value is starting address as quint16, second value is the number of output as quint16.
    *  - FC 16 (0x10), WriteMultipleRegisters reply: first value is starting address as quint16, second value is the number of output as quint16.
+   *  - FC 43 (0x2B), ReadDeviceIdentification reply: first: more follows (bool), second: next Object Id (int), then couples of Object ID followed by Object value 
+   *                   (f.ex: false, 0, 0, "Vendor Name", 1, "Product code", ...)
    *
    * If PDU contains a error code, the list of values will be empty, and this error code will be returned.
    *
@@ -189,6 +198,9 @@ class mdtFrameCodecModbus : public mdtFrameCodec
 
   // Decode WriteMultipleRegisters (FC 16 , 0x10)
   bool decodeWriteMultipleRegisters();
+
+  // Decode ReadDeviceIdentification (FC 43, 0x2B)
+  bool decodeReadDeviceIdentification();
 
   // Append exception code to mdtError , and store it to pvLastModbusError
   int decodeModbusError(quint8 error);

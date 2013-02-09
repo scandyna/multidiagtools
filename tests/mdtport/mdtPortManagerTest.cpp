@@ -385,6 +385,14 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // All frames must be consumed
   QCOMPARE(m.readenFrames().size(), 0);
+
+  // Check ReadDeviceIdentification
+  pdu = codec.encodeReadDeviceIdentification(0, false);
+  tId1 = m.writeData(pdu, true);
+  QVERIFY(tId1 >= 0);
+  QVERIFY(m.waitOnFrame(tId1));
+  QVERIFY(!m.readenFrame(tId1).isEmpty());
+  // Some devices not implement this FC, so we cannot check it..
 }
 
 int main(int argc, char **argv)

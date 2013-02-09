@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -416,7 +416,7 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
 
   // Initial states
   QVERIFY(c.values().size() == 0);
-  
+
   // Check encode of ReadCoils
   pdu = c.encodeReadCoils(0x0203, 0x0408);
   QVERIFY(pdu.size() == 5);
@@ -425,7 +425,7 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   QVERIFY(pdu.at(2) == 0x03); // Start address L
   QVERIFY(pdu.at(3) == 0x04); // Coils count H
   QVERIFY(pdu.at(4) == 0x08); // Coils count L
-  
+
   // Check decode of ReadCoils
   pdu.clear();
   pdu.append(0x01);   // Function code
@@ -680,6 +680,165 @@ void mdtFrameCodecTest::mdtFrameCodecModbusTest()
   QVERIFY(c.values().size() == 2);
   QVERIFY(c.values().at(0) == 0x0622);
   QVERIFY(c.values().at(1) == 0x0275);
+
+  // Check encode of ReadDeviceIdentification - Object ID 0x00 (VendorName) + stream access
+  pdu = c.encodeReadDeviceIdentification(0, false);
+  QCOMPARE(pdu.size(), 4);
+  QVERIFY((quint8)pdu.at(0) == 0x2B);
+  QVERIFY((quint8)pdu.at(1) == 0x0E);
+  QVERIFY((quint8)pdu.at(2) == 0x01);
+  QVERIFY((quint8)pdu.at(3) == 0x00);
+
+  // Check encode of ReadDeviceIdentification - Object ID 0x03 (VendorUrl) + stream access
+  pdu = c.encodeReadDeviceIdentification(0x03, false);
+  QCOMPARE(pdu.size(), 4);
+  QVERIFY((quint8)pdu.at(0) == 0x2B);
+  QVERIFY((quint8)pdu.at(1) == 0x0E);
+  QVERIFY((quint8)pdu.at(2) == 0x02);
+  QVERIFY((quint8)pdu.at(3) == 0x03);
+
+  // Check encode of ReadDeviceIdentification - Object ID 0x80 (Product dependent) + stream access
+  pdu = c.encodeReadDeviceIdentification(0x80, false);
+  QCOMPARE(pdu.size(), 4);
+  QVERIFY((quint8)pdu.at(0) == 0x2B);
+  QVERIFY((quint8)pdu.at(1) == 0x0E);
+  QVERIFY((quint8)pdu.at(2) == 0x03);
+  QVERIFY((quint8)pdu.at(3) == 0x80);
+
+  // Check encode of ReadDeviceIdentification - Object ID 0x01 (ProductCode) + individual access
+  pdu = c.encodeReadDeviceIdentification(1, true);
+  QCOMPARE(pdu.size(), 4);
+  QVERIFY((quint8)pdu.at(0) == 0x2B);
+  QVERIFY((quint8)pdu.at(1) == 0x0E);
+  QVERIFY((quint8)pdu.at(2) == 0x04);
+  QVERIFY((quint8)pdu.at(3) == 0x01);
+
+  // Check encode of ReadDeviceIdentification - Object ID 0x04 (ProductName) + individual access
+  pdu = c.encodeReadDeviceIdentification(4, true);
+  QCOMPARE(pdu.size(), 4);
+  QVERIFY((quint8)pdu.at(0) == 0x2B);
+  QVERIFY((quint8)pdu.at(1) == 0x0E);
+  QVERIFY((quint8)pdu.at(2) == 0x04);
+  QVERIFY((quint8)pdu.at(3) == 0x04);
+
+  // Check encode of ReadDeviceIdentification - Object ID 0x81 (Product dependent) + individual access
+  pdu = c.encodeReadDeviceIdentification(0x81, true);
+  QCOMPARE(pdu.size(), 4);
+  QVERIFY((quint8)pdu.at(0) == 0x2B);
+  QVERIFY((quint8)pdu.at(1) == 0x0E);
+  QVERIFY((quint8)pdu.at(2) == 0x04);
+  QVERIFY((quint8)pdu.at(3) == 0x81);
+
+  // Check decode of ReadDeviceIdentification - Stream, 1 transaction
+  pdu.clear();
+  pdu.append(0x2B);         // Function code
+  pdu.append(0x0E);         // MEI Type
+  pdu.append(0x01);         // Read Dev Id Code
+  pdu.append(0x01);         // Conformity level
+  pdu.append((char)0x00);   // More Follows
+  pdu.append((char)0x00);   // Next Object Id
+  pdu.append(0x03);         // Number of Objects
+  pdu.append((char)0x00);   // Object Id
+  pdu.append(0x08);         // Object Length
+  pdu.append("Fake Cpy");   // Object Value
+  pdu.append(0x01);         // Object Id
+  pdu.append(0x0A);         // Object Length
+  pdu.append("Product xy"); // Object Value
+  pdu.append(0x02);         // Object Id
+  pdu.append(0x05);         // Object Length
+  pdu.append("V2.11");      // Object Value
+  QVERIFY(c.decode(pdu) == 0x2B);
+  QVERIFY(c.values().size() == 8);
+  QVERIFY(c.values().at(0) == false);
+  QVERIFY(c.values().at(1) == 0x00);
+  QVERIFY(c.values().at(2) == 0x00);
+  QVERIFY(c.values().at(3) == "Fake Cpy");
+  QVERIFY(c.values().at(4) == 0x01);
+  QVERIFY(c.values().at(5) == "Product xy");
+  QVERIFY(c.values().at(6) == 0x02);
+  QVERIFY(c.values().at(7) == "V2.11");
+
+  // Check decode of ReadDeviceIdentification - Stream, 2 transactions
+  pdu.clear();
+  pdu.append(0x2B);         // Function code
+  pdu.append(0x0E);         // MEI Type
+  pdu.append(0x01);         // Read Dev Id Code
+  pdu.append(0x01);         // Conformity level
+  pdu.append(0xFF);         // More Follows
+  pdu.append(0x02);         // Next Object Id
+  pdu.append(0x03);         // Number of Objects
+  pdu.append((char)0x00);   // Object Id
+  pdu.append(0x05);         // Object Length
+  pdu.append("A Cpy");      // Object Value
+  pdu.append(0x01);         // Object Id
+  pdu.append(0x09);         // Object Length
+  pdu.append("Product z");  // Object Value
+  QVERIFY(c.decode(pdu) == 0x2B);
+  QVERIFY(c.values().size() == 6);
+  QVERIFY(c.values().at(0) == true);
+  QVERIFY(c.values().at(1) == 0x02);
+  QVERIFY(c.values().at(2) == 0x00);
+  QVERIFY(c.values().at(3) == "A Cpy");
+  QVERIFY(c.values().at(4) == 0x01);
+  QVERIFY(c.values().at(5) == "Product z");
+  pdu.clear();
+  pdu.append(0x2B);         // Function code
+  pdu.append(0x0E);         // MEI Type
+  pdu.append(0x01);         // Read Dev Id Code
+  pdu.append(0x01);         // Conformity level
+  pdu.append((char)0x00);   // More Follows
+  pdu.append((char)0x00);   // Next Object Id
+  pdu.append(0x03);         // Number of Objects
+  pdu.append(0x02);         // Object Id
+  pdu.append(0x07);         // Object Length
+  pdu.append("Version");    // Object Value
+  QVERIFY(c.decode(pdu) == 0x2B);
+  QVERIFY(c.values().size() == 4);
+  QVERIFY(c.values().at(0) == false);
+  QVERIFY(c.values().at(1) == 0x00);
+  QVERIFY(c.values().at(2) == 0x02);
+  QVERIFY(c.values().at(3) == "Version");
+
+  // Check decode of ReadDeviceIdentification - Stream, 1 transaction, no object
+  pdu.clear();
+  pdu.append(0x2B);         // Function code
+  pdu.append(0x0E);         // MEI Type
+  pdu.append(0x01);         // Read Dev Id Code
+  pdu.append(0x01);         // Conformity level
+  pdu.append((char)0x00);   // More Follows
+  pdu.append((char)0x00);   // Next Object Id
+  pdu.append((char)0x00);   // Number of Objects
+  QVERIFY(c.decode(pdu) < 0);
+  QVERIFY(c.values().size() == 0);
+  // Check decode of ReadDeviceIdentification - Stream, 1 transaction, Wrong object length
+  pdu.clear();
+  pdu.append(0x2B);         // Function code
+  pdu.append(0x0E);         // MEI Type
+  pdu.append(0x01);         // Read Dev Id Code
+  pdu.append(0x01);         // Conformity level
+  pdu.append((char)0x00);   // More Follows
+  pdu.append((char)0x00);   // Next Object Id
+  pdu.append(0x01);         // Number of Objects
+  pdu.append((char)0x00);   // Object Id
+  pdu.append((char)0x00);   // Object Length
+  pdu.append("Err Cpy");    // Object Value
+  QVERIFY(c.decode(pdu) < 0);
+  QVERIFY(c.values().size() == 0);
+  // Check decode of ReadDeviceIdentification - Stream, 1 transaction, Wrong object length
+  pdu.clear();
+  pdu.append(0x2B);         // Function code
+  pdu.append(0x0E);         // MEI Type
+  pdu.append(0x01);         // Read Dev Id Code
+  pdu.append(0x01);         // Conformity level
+  pdu.append((char)0x00);   // More Follows
+  pdu.append((char)0x00);   // Next Object Id
+  pdu.append(0x01);         // Number of Objects
+  pdu.append((char)0x00);   // Object Id
+  pdu.append((char)0xDF);   // Object Length
+  pdu.append("Err Cpy");    // Object Value
+  QVERIFY(c.decode(pdu) < 0);
+  QVERIFY(c.values().size() == 0);
+
 }
 
 /*
