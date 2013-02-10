@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -61,7 +61,7 @@ class mdtDeviceModbus : public mdtDevice
    */
   void onStateChanged(int state);
 
- private:
+ protected:
 
   /*! \brief Read one analog input on physical device
    *

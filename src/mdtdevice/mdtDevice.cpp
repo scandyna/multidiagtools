@@ -162,6 +162,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
     transactionId = readAnalogInput(transaction);
     if(transactionId < 0){
       setStateFromPortError(transactionId);
+      /// \todo Restore transaction ???
       return QVariant();
     }
     // Wait on result (use device's defined timeout)
@@ -733,7 +734,7 @@ bool mdtDevice::queriesSequence()
   return false;
 }
 
-void mdtDevice::setStateFromPortError(int error)
+void mdtDevice::setStateFromPortError(int error, const QString &message, const QString &details)
 {
   if(error == mdtAbstractPort::NoError){
     qDebug() << "mdtDevice::setStateFromPortError(): NoError";
@@ -742,8 +743,8 @@ void mdtDevice::setStateFromPortError(int error)
     qDebug() << "mdtDevice::setStateFromPortError(): Disconnected";
     setStateDisconnected();
   }else if(error == mdtAbstractPort::Connecting){
-    qDebug() << "mdtDevice::setStateFromPortError(): Connecting";
-    setStateConnecting();
+    qDebug() << "mdtDevice::setStateFromPortError(): Connecting, message: " << message;
+    setStateConnecting(message);
   }else if(error == mdtAbstractPort::WritePoolEmpty){
     qDebug() << "mdtDevice::setStateFromPortError(): WriteQueueEmpty";
     setStateBusy(pvBackToReadyStateTimeout);
@@ -845,8 +846,9 @@ void mdtDevice::setStateDisconnected()
   emit(stateChanged(pvCurrentState));
 }
 
-void mdtDevice::setStateConnecting()
+void mdtDevice::setStateConnecting(const QString &message)
 {
+  emit(stateChanged(pvCurrentState, message));
   if(pvCurrentState == Connecting){
     return;
   }
@@ -858,7 +860,7 @@ void mdtDevice::setStateConnecting()
   pvBackToReadyStateTimer->stop();
   pvCurrentState = Connecting;
   qDebug() << "mdtDevice: new state is Connecting";
-  emit(stateChanged(pvCurrentState));
+  ///emit(stateChanged(pvCurrentState, message));
 }
 
 void mdtDevice::setStateBusy(int retryTimeout)

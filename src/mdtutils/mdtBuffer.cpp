@@ -2,6 +2,7 @@
 #include "mdtBuffer.h"
 #include <cstring>
 #include <string>
+#include <QtGlobal>
 
 template <class T> mdtBuffer<T>::mdtBuffer()
 {
@@ -20,7 +21,11 @@ template <class T> mdtBuffer<T>::mdtBuffer(mdtBuffer<T> &src)
   pvRemainCapacity = 0;
   pvAvailable = 0;
   pvTokenReached = false;
-  assert(init(src.capacity()));
+#ifndef QT_NO_DEBUG
+    Q_ASSERT(init(src.capacity()));
+#else
+    init(src.capacity());
+#endif
   // Tampon de copie
   T *buffer = new T[src.available()];
   assert(buffer != 0);
@@ -35,7 +40,11 @@ template <class T> mdtBuffer<T> &mdtBuffer<T>::operator=(mdtBuffer<T> &src)
   // On effectue la copie uniquement si la source est une autre instance
   if(&src != this){
     // On initialise selon la source
-    assert(init(src.capacity()));
+#ifndef QT_NO_DEBUG
+    Q_ASSERT(init(src.capacity()));
+#else
+    init(src.capacity());
+#endif
     // Tampon de copie
     T *buffer = new T[src.available()];
     assert(buffer != 0);

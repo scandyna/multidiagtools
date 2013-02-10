@@ -455,7 +455,8 @@ class mdtDevice : public QObject
 
   /*! \brief Emited when state has changed
    */
-  void stateChanged(int state);
+  ///void stateChanged(int state);
+  void stateChanged(int state, const QString &message = QString(), const QString &details = QString());
 
  public slots:
 
@@ -511,7 +512,8 @@ class mdtDevice : public QObject
    *
    * If error is unknown, the state is changed to Unknown.
    */
-  void setStateFromPortError(int error);
+  ///void setStateFromPortError(int error);
+  void setStateFromPortError(int error, const QString &message = QString(), const QString &details = QString());
 
   /*! \brief Set the ready state
    *
@@ -725,7 +727,7 @@ class mdtDevice : public QObject
    *
    * Emit stateChanged() if current state was not Connecting.
    */
-  void setStateConnecting();
+  void setStateConnecting(const QString &message = QString());
 
   /*! \brief Set the busy state
    *

@@ -122,11 +122,11 @@ target_link_libraries(mdtutils ${QT_LIBRARIES})
 target_link_libraries(mdtutils "qtsingleapplication")
 
 # Static version of the library
-if(MDT_BUILD_STATIC_LIBS)
-  add_library (mdtutils_static STATIC ${SOURCES_FILES} )
-  target_link_libraries(mdtutils_static ${QT_LIBRARIES})
-  set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
-endif(MDT_BUILD_STATIC_LIBS)
+#if(MDT_BUILD_STATIC_LIBS)
+#  add_library (mdtutils_static STATIC ${SOURCES_FILES} )
+#  target_link_libraries(mdtutils_static ${QT_LIBRARIES})
+#  set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
+#endif(MDT_BUILD_STATIC_LIBS)
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdtutils.pro" "# Translations project file for lupdate/lrelease\n")
@@ -146,6 +146,20 @@ install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtutils" COMP
 
 # Install targets
 install(TARGETS "mdtutils" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-if(MDT_BUILD_STATIC_LIBS)
-  install(TARGETS "mdtutils_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-endif(MDT_BUILD_STATIC_LIBS)
+message("mdtutils SRC dir: ${PROJECT_SOURCE_DIR}")
+
+# Strip library and put debug symbols into separate file
+if(UNIX)
+  add_custom_command(TARGET "mdtutils"
+                    POST_BUILD
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutils.so" "${PROJECT_SOURCE_DIR}/libmdtutils.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutils.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtutils.dbg" "${PROJECT_SOURCE_DIR}/libmdtutils.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutils.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libmdtutils.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+endif(UNIX)
+
+
+#if(MDT_BUILD_STATIC_LIBS)
+#  install(TARGETS "mdtutils_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+#endif(MDT_BUILD_STATIC_LIBS)

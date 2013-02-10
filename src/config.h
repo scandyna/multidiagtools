@@ -10,11 +10,4 @@
 /* Version */
 #define MDTLIB_VERSION_MAJOR 0
 #define MDTLIB_VERSION_MINOR 2
-#define MDTLIB_VERSION_MICRO 6
-
-/* Utilisation des assertions avec assert() */
-#define USE_ASSERT 1
-
-/*
-  Constantes fixes
-*/
+#define MDTLIB_VERSION_MICRO 7

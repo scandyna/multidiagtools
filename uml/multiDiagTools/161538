@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 25
+  revision 26
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -613,6 +613,21 @@ ${inlines}
 	    classrelation_ref 626562 // <generalisation>
 	  b parent class_ref 518274 // mdtDeviceModbus
       end
+
+      operation 1147010 "connectToDevice"
+	public explicit_return_type "mdtAbstractPort::error_t"
+	nparams 1
+	  param in name "devInfo" type class_ref 498562 // mdtDeviceInfo
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
     end
   end
 
@@ -663,6 +678,29 @@ ${members}
 ${namespace_end}"
       associated_classes
 	class_ref 518274 // mdtDeviceModbus
+      end
+    end
+
+    artifact 348418 "mdtDeviceModbusWago"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 532226 // mdtDeviceModbusWago
       end
     end
   end

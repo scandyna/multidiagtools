@@ -61,7 +61,8 @@ void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
 {
   Q_ASSERT(device != 0);
 
-  connect(device, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+  ///connect(device, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+  connect(device, SIGNAL(stateChanged(int, const QString&, const QString&)), this, SLOT(setState(int, const QString&, const QString&)));
   setState(device->state());
 }
 
@@ -222,25 +223,29 @@ void mdtDeviceStatusWidget::setState(int state)
 
 void mdtDeviceStatusWidget::setState(int state, const QString &message, const QString &details)
 {
-  // Set LED color
-  if(state == mdtDevice::Ready){
-    ldState->setColor(pvReadyColor);
-    ldState->setOn();
-  }else if(state == mdtDevice::Disconnected){
-    ldState->setGreen();
-    ldState->setOff();
-  }else if(state == mdtDevice::Connecting){
-    ldState->setColor(pvConnectingColor);
-    ldState->setOn();
-  }else if(state == mdtDevice::Busy){
-    ldState->setColor(pvBusyColor);
-    ldState->setOn();
+  if(message.isEmpty()){
+    setState(state);
   }else{
-    ldState->setRed();
-    ldState->setOn();
+    // Set LED color
+    if(state == mdtDevice::Ready){
+      ldState->setColor(pvReadyColor);
+      ldState->setOn();
+    }else if(state == mdtDevice::Disconnected){
+      ldState->setGreen();
+      ldState->setOff();
+    }else if(state == mdtDevice::Connecting){
+      ldState->setColor(pvConnectingColor);
+      ldState->setOn();
+    }else if(state == mdtDevice::Busy){
+      ldState->setColor(pvBusyColor);
+      ldState->setOn();
+    }else{
+      ldState->setRed();
+      ldState->setOn();
+    }
+    // Set text
+    lbMessage->setText(message);
   }
-  // Set texts
-  lbMessage->setText(message);
   /// \todo Implement details
 }
 

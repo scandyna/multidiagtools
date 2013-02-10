@@ -1,23 +1,14 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  active  sequencediagram_ref 568066 // USBTMC_sendCommand
-    970 803 100 3 0 8
-  classdiagram_ref 294658 // mdtPortManager
-    776 642 100 4 0 0
-  classdiagram_ref 541698 // mdtUsbPortManager
-    776 642 100 4 40 0
-  classdiagram_ref 568194 // mdtUsbtmcPortManager
-    776 642 100 4 0 0
-  classdiagram_ref 255234 // mdtAbstractPort
-    776 642 100 4 300 0
-  classdiagram_ref 288130 // mdtUsbtmcPort
-    776 642 100 4 0 0
+  active  classdiagram_ref 508290 // mdtDeviceModbus
+    970 803 100 4 0 0
 end
 show_stereotypes
-selected sequencediagram_ref 568066 // USBTMC_sendCommand
+selected operation_ref 1147010 // connectToDevice
 open
   
   package_ref 174978 // mdtutilsgui
+  class_ref 532226 // mdtDeviceModbusWago
   classview_ref 372482 // mdtDeviceStatusWidget
   classview_ref 392194 // mdtDeviceScpi
   classview_ref 398722 // Protocols

@@ -23,6 +23,7 @@
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
+#include "mdtDeviceModbusWago.h"
 #include "mdtDeviceScpi.h"
 #include "mdtDeviceU3606A.h"
 #include "mdtDeviceDSO1000A.h"
@@ -205,7 +206,7 @@ void mdtDeviceTest::deviceIosWidgetTest()
 
 void mdtDeviceTest::modbusWagoTest()
 {
-  mdtDeviceModbus d;
+  mdtDeviceModbusWago d;
   mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
   mdtAnalogIo *ai;
@@ -350,6 +351,14 @@ void mdtDeviceTest::modbusWagoTest()
   dw.setIosWidget(iosw);
   dw.show();
 
+  if(d.connectToDevice(mdtDeviceInfo()) != mdtAbstractPort::NoError){;
+    QSKIP("No Wago 750 device found, or other error", SkipAll);
+  }
+  QVERIFY(d.portManager()->isRunning());
+  ///d.sandBox();
+  ///QTest::qWait(5000);
+  ///return;
+  
   /*
    * Tests
    */
@@ -405,6 +414,8 @@ void mdtDeviceTest::modbusWagoTest()
 
 void mdtDeviceTest::modbusBeckhoffTest()
 {
+  QSKIP("Beckhoff is not supported for the moment", SkipAll);
+
   mdtDeviceModbus d;
   mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;

@@ -221,6 +221,7 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   int maxIter;
   bool ok = false;
 
+  emit(errorStateChanged(mdtAbstractPort::Connecting, tr("Trying ") + hostName));
   socket.connectToHost(hostName, port);
   maxIter = timeout / 50;
   while(socket.state() != QAbstractSocket::ConnectedState){
@@ -252,7 +253,7 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
 
 bool mdtModbusTcpPortManager::saveScanResult(const QList<mdtPortInfo*> scanResult)
 {
-  Q_ASSERT(!isRunning());
+  ///Q_ASSERT(!isRunning());
 
   QFile file;
   int i;

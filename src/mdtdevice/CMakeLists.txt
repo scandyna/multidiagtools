@@ -14,6 +14,7 @@ set (HEADER_FILES
           mdtDeviceWindow.h
           mdtDeviceStatusWidget.h
           mdtDeviceModbus.h
+          mdtDeviceModbusWago.h
           mdtDeviceScpi.h
           mdtDeviceU3606A.h
           mdtDeviceDSO1000A.h
@@ -29,6 +30,7 @@ set (SOURCES_FILES
           mdtDeviceWindow.cpp
           mdtDeviceStatusWidget.cpp
           mdtDeviceModbus.cpp
+          mdtDeviceModbusWago.cpp
           mdtDeviceScpi.cpp
           mdtDeviceU3606A.cpp
           mdtDeviceDSO1000A.cpp
@@ -90,6 +92,19 @@ install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtdevice" COM
 
 # Destinations
 install(TARGETS "mdtdevice" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+
+# Strip library and put debug symbols into separate file
+if(UNIX)
+  add_custom_command(TARGET "mdtdevice"
+                    POST_BUILD
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtdevice.so" "${PROJECT_SOURCE_DIR}/libmdtdevice.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtdevice.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtdevice.dbg" "${PROJECT_SOURCE_DIR}/libmdtdevice.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtdevice.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libmdtdevice.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+endif(UNIX)
+
+
 #if(MDT_BUILD_STATIC_LIBS)
 #  install(TARGETS "mdtdevice_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 #endif(MDT_BUILD_STATIC_LIBS)

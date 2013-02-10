@@ -33,7 +33,7 @@ void mdtAlgorithmsTest::extractNumericPartAtEndTest()
 {
   QFETCH(QString, input);
   QFETCH(QString, refOutput);
-  
+
   QCOMPARE(extractNumericPartAtEnd(input), refOutput);
 }
 
@@ -41,7 +41,7 @@ void mdtAlgorithmsTest::extractNumericPartAtEndTest_data()
 {
   QTest::addColumn<QString>("input");
   QTest::addColumn<QString>("refOutput");
-  
+
   QTest::newRow("Empty string") << "" << "";
   QTest::newRow("Space") << " " << "";
   QTest::newRow("One char") << "a" << "";

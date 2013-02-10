@@ -551,7 +551,7 @@ class mdtPortManager : public QThread
    *
    * The error is one of the mdtAbstractPort::error_t.
    */
-  void errorStateChanged(int error);
+  void errorStateChanged(int error, const QString & message = QString(), const QString & details = QString());
 
  protected:
 

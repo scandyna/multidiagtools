@@ -13,22 +13,28 @@
 # * root project file *
 
 # CMake minimal requiered version
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 # Project
 project(multidiagtools)
 
 # Utilisation des assertions , positionner à 0 pour désactiver (obselète avec Q_ASSERT() ?)
-set(USE_ASSERT 1)
+#set(USE_ASSERT 1)
 
 #Debug or Release
-set(CMAKE_BUILD_TYPE Debug)
-#set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
+
+if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+  message("Building Release")
+else(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+  message("Building Debug")
+endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 2)
-set(MDTLIB_VERSION_MICRO 6)
+set(MDTLIB_VERSION_MICRO 7)
 
 # Config file
 configure_file (
@@ -37,7 +43,12 @@ configure_file (
 )
 
 # Some flags for compiler
-add_definitions("-Wall -ansi -O2 -lm")
+if(UNIX)
+  # We allways add symbols (will be stripped and put into separate  .dbg files)
+  add_definitions("-Wall -ansi -O2 -lm -g")
+else(UNIX)
+  add_definitions("-Wall -ansi -O2 -lm")
+endif(UNIX)
 
 # We want GUI executables on Windows (not console)
 if(WIN32)
@@ -67,10 +78,12 @@ include_directories("${PROJECT_SOURCE_DIR}/src/mdtserialport/linux")
 include_directories("${PROJECT_SOURCE_DIR}/src/mdttools")
 endif(UNIX)
 
+#################################################################################################################################################
 # *** Librairies section ***
+#################################################################################################################################################
 
 # Build the static variant of libraries
-set(MDT_BUILD_STATIC_LIBS 0)
+#set(MDT_BUILD_STATIC_LIBS 0)
 
 # Libraries and headers install directories
 if(WIN32)
@@ -126,7 +139,9 @@ target_link_libraries(essais ${QT_LIBRARIES})
 
 endif(UNIX)
 
+#################################################################################################################################################
 # *** Unit tests section ***
+#################################################################################################################################################
 
 # ** Unit tests compilation **
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
@@ -188,7 +203,9 @@ if(UNIX)
   add_test (mdtDeviceTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtdevice/mdtdevicetest)
 endif(UNIX)
 
+#################################################################################################################################################
 # * Translations section *
+#################################################################################################################################################
 
 # Create a target to generate qm files
 file(GLOB TSFILES "${PROJECT_SOURCE_DIR}/translations/*.ts")
@@ -201,7 +218,9 @@ foreach(TSFILE ${TSFILES})
 endforeach(TSFILE ${TSFILES})
 add_custom_target(qm ALL DEPENDS ${QMFILES})
 
+#################################################################################################################################################
 # *** Install section ***
+#################################################################################################################################################
 
 # Config file
 install(FILES "${PROJECT_SOURCE_DIR}/src/config.h" DESTINATION "${HEADERS_DEST_DIR}" COMPONENT dev)
@@ -263,7 +282,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   # On Linux, we build a Debian package
   if(UNIX)
     set(CPACK_INSTALL_PREFIX "/usr")
-    set(CPACK_GENERATOR "DEB")
+    #set(CPACK_GENERATOR "DEB")
   endif(UNIX)
 
   # Some common variables
@@ -279,18 +298,18 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   set(CPACK_COMPONENT_LIB_DISPLAY_NAME "Libraries (runtime)")
   set(CPACK_COMPONENT_DEV_DISPLAY_NAME "Headers (Only needed for devloppers)")
   set(CPACK_COMPONENT_TOOLS_DISPLAY_NAME "Some little tools")
-  # Dependances
+  # Dependancies
   set(CPACK_COMPONENT_DEV_DEPENDS lib)
   set(CPACK_COMPONENT_TOOLS_DEPENDS lib)
   # Some Debian package specific varaibles
-  if(UNIX)
-    set(CPACK_DEB_COMPONENT_INSTALL ON)
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.7.0), libqtgui4 (>= 4:4.7.0), libstdc++6 , libgcc1 , libc6, libusb (>=1.0)")
-    set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-    set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
-    set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+  #if(UNIX)
+    #set(CPACK_DEB_COMPONENT_INSTALL ON)
+    #set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqtcore4 (>= 4:4.7.0), libqtgui4 (>= 4:4.7.0), libstdc++6 , libgcc1 , libc6, libusb (>=1.0)")
+    #set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+    #set(CPACK_DEBIAN_PACKAGE_SECTION "libs")
+    #set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
     # set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS TRUE)
-  endif(UNIX)
+  #endif(UNIX)
 
   set(CPACK_COMPONENTS_ALL lib dev tools)
 
@@ -298,3 +317,115 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
   include(CPack)
 
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+
+###################################################################################################################################################
+#           Debian packages section
+###################################################################################################################################################
+
+#### lib package ####
+if(UNIX)
+  file(WRITE  package_debian_lib.cmake "SET(CPACK_CMAKE_GENERATOR \"Unix Makefiles\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_DEBIAN_PACKAGE_DEPENDS \"libqtcore4 (>= 4:4.7.0), libqtgui4 (>= 4:4.7.0), libstdc++6 , libgcc1 , libc6, libusb-1.0-0 (>=1.0)\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_DEBIAN_PACKAGE_PRIORITY \"optional\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_DEBIAN_PACKAGE_SECTION \"libs\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_GENERATOR \"DEB\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_INSTALL_CMAKE_PROJECTS \"${PROJECT_SOURCE_DIR};${CMAKE_PROJECT_NAME};lib;/\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_INSTALL_PREFIX \"/usr\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_CONTACT \"Philippe \")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_DEFAULT_LOCATION \"/\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_DESCRIPTION \"Multi Diag Tools library\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY \"Multi Diag Tools is a library that offers some connectivity to instruments\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_FILE_NAME \"${CMAKE_PROJECT_NAME}-lib_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}_${CMAKE_SYSTEM_PROCESSOR}\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_NAME \"${CMAKE_PROJECT_NAME}-lib\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_VENDOR \"Philippe\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_VERSION \"${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_VERSION_MAJOR \"${CPACK_PACKAGE_VERSION_MAJOR}\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_VERSION_MINOR \"${CPACK_PACKAGE_VERSION_MINOR}\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_PACKAGE_VERSION_PATCH \"${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_RESOURCE_FILE_LICENSE \"${PROJECT_SOURCE_DIR}/COPYING.LESSER\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_RESOURCE_FILE_README \"${PROJECT_SOURCE_DIR}/README\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_SET_DESTDIR \"OFF\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_SYSTEM_NAME \"Linux\")\n")
+  file(APPEND package_debian_lib.cmake "SET(CPACK_TOPLEVEL_TAG \"Linux\")\n")
+endif(UNIX)
+
+#### dev package ####
+if(UNIX)
+  file(WRITE  package_debian_dev.cmake "SET(CPACK_CMAKE_GENERATOR \"Unix Makefiles\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_DEPENDS \"libqt4-dev (>= 4:4.7.0), make, libusb-1.0-0-dev (>=1.0), ${CMAKE_PROJECT_NAME}-lib (>= ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_PRIORITY \"optional\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_DEBIAN_PACKAGE_SECTION \"libs\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_GENERATOR \"DEB\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_INSTALL_CMAKE_PROJECTS \"${PROJECT_SOURCE_DIR};${CMAKE_PROJECT_NAME};dev;/\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_INSTALL_PREFIX \"/usr\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_CONTACT \"Philippe \")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_DEFAULT_LOCATION \"/\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_DESCRIPTION \"Multi Diag Tools library\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY \"Multi Diag Tools is a library that offers some connectivity to instruments\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_FILE_NAME \"${CMAKE_PROJECT_NAME}-dev_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_NAME \"${CMAKE_PROJECT_NAME}-dev\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_VENDOR \"Philippe\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_VERSION \"${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_VERSION_MAJOR \"${CPACK_PACKAGE_VERSION_MAJOR}\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_VERSION_MINOR \"${CPACK_PACKAGE_VERSION_MINOR}\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_PACKAGE_VERSION_PATCH \"${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_RESOURCE_FILE_LICENSE \"${PROJECT_SOURCE_DIR}/COPYING.LESSER\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_RESOURCE_FILE_README \"${PROJECT_SOURCE_DIR}/README\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_SET_DESTDIR \"OFF\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_SYSTEM_NAME \"Linux\")\n")
+  file(APPEND package_debian_dev.cmake "SET(CPACK_TOPLEVEL_TAG \"Linux\")\n")
+endif(UNIX)
+
+#### tools package ####
+if(UNIX)
+  file(WRITE  package_debian_tools.cmake "SET(CPACK_CMAKE_GENERATOR \"Unix Makefiles\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_DEBIAN_PACKAGE_DEPENDS \"${CMAKE_PROJECT_NAME}-lib (>= ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_DEBIAN_PACKAGE_PRIORITY \"optional\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_DEBIAN_PACKAGE_SECTION \"libs\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_GENERATOR \"DEB\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_INSTALL_CMAKE_PROJECTS \"${PROJECT_SOURCE_DIR};${CMAKE_PROJECT_NAME};tools;/\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_INSTALL_PREFIX \"/usr\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_CONTACT \"Philippe \")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_DEFAULT_LOCATION \"/\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_DESCRIPTION \"Multi Diag Tools library\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY \"Multi Diag Tools is a library that offers some connectivity to instruments\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_FILE_NAME \"${CMAKE_PROJECT_NAME}-tools_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}_${CMAKE_SYSTEM_PROCESSOR}\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_NAME \"${CMAKE_PROJECT_NAME}-tools\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_VENDOR \"Philippe\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_VERSION \"${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_VERSION_MAJOR \"${CPACK_PACKAGE_VERSION_MAJOR}\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_VERSION_MINOR \"${CPACK_PACKAGE_VERSION_MINOR}\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_PACKAGE_VERSION_PATCH \"${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_RESOURCE_FILE_LICENSE \"${PROJECT_SOURCE_DIR}/COPYING.LESSER\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_RESOURCE_FILE_README \"${PROJECT_SOURCE_DIR}/README\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_SET_DESTDIR \"OFF\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_SYSTEM_NAME \"Linux\")\n")
+  file(APPEND package_debian_tools.cmake "SET(CPACK_TOPLEVEL_TAG \"Linux\")\n")
+endif(UNIX)
+
+#### dbg package ####
+if(UNIX)
+  file(WRITE  package_debian_dbg.cmake "SET(CPACK_CMAKE_GENERATOR \"Unix Makefiles\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_DEBIAN_PACKAGE_DEPENDS \"${CMAKE_PROJECT_NAME}-lib (>= ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH})\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_DEBIAN_PACKAGE_PRIORITY \"optional\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_DEBIAN_PACKAGE_SECTION \"libs\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_GENERATOR \"DEB\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_INSTALL_CMAKE_PROJECTS \"${PROJECT_SOURCE_DIR};${CMAKE_PROJECT_NAME};dbg;/\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_INSTALL_PREFIX \"/usr\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_CONTACT \"Philippe \")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_DEFAULT_LOCATION \"/\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_DESCRIPTION \"Multi Diag Tools library\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY \"Multi Diag Tools is a library that offers some connectivity to instruments\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_FILE_NAME \"${CMAKE_PROJECT_NAME}-dbg_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}_${CMAKE_SYSTEM_PROCESSOR}\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_NAME \"${CMAKE_PROJECT_NAME}-dbg\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_VENDOR \"Philippe\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_VERSION \"${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_VERSION_MAJOR \"${CPACK_PACKAGE_VERSION_MAJOR}\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_VERSION_MINOR \"${CPACK_PACKAGE_VERSION_MINOR}\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_PACKAGE_VERSION_PATCH \"${CPACK_PACKAGE_VERSION_PATCH}\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_RESOURCE_FILE_LICENSE \"${PROJECT_SOURCE_DIR}/COPYING.LESSER\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_RESOURCE_FILE_README \"${PROJECT_SOURCE_DIR}/README\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_SET_DESTDIR \"OFF\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_SYSTEM_NAME \"Linux\")\n")
+  file(APPEND package_debian_dbg.cmake "SET(CPACK_TOPLEVEL_TAG \"Linux\")\n")
+endif(UNIX)

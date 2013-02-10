@@ -659,7 +659,6 @@ bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
     }
     // Get object length
     objectLength = (quint8)pvPdu.at(cursor+1);
-    qDebug() << "DECODE, object length: " << objectLength;
     // Check that PDU contains enougth data to get object
     if(pvPdu.size() < (cursor+1+objectLength)){
       mdtError e(MDT_FRAME_DECODE_ERROR, "PDU size not valid in Objects part", mdtError::Error);
@@ -673,12 +672,9 @@ bool mdtFrameCodecModbus::decodeReadDeviceIdentification()
     // Store Object value
     cursor += 2;
     pvValues.append(pvPdu.mid(cursor, objectLength));
-    qDebug() << "DECODE, cursor: " << cursor << " , value: " << pvPdu.mid(cursor, objectLength);
     cursor += objectLength;
 
   }
-
-  qDebug() << "DECODE, values: " << pvValues;
 
   return true;
 }

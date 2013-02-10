@@ -21,11 +21,13 @@
 #include "config.h"
 
 // Utilisation d'assert selon config.h
+/**
 #if USE_ASSERT == 1
  #undef NDEBUG
 #else
  #define NDEBUG
 #endif
+*/
 #include <cassert>
 
 /*! \brief Stockage d'éléments basé sur le principe du tampon circulaire

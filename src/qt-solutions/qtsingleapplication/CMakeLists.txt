@@ -66,3 +66,14 @@ install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/qtsolutions" C
 
 # Install targets
 install(TARGETS "qtsingleapplication" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+
+# Strip library and put debug symbols into separate file
+if(UNIX)
+  add_custom_command(TARGET "qtsingleapplication"
+                    POST_BUILD
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libqtsingleapplication.so" "${PROJECT_SOURCE_DIR}/libqtsingleapplication.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libqtsingleapplication.so"
+                    COMMAND objcopy --add-gnu-debuglink="libqtsingleapplication.dbg" "${PROJECT_SOURCE_DIR}/libqtsingleapplication.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libqtsingleapplication.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libqtsingleapplication.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+endif(UNIX)
