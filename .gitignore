@@ -21,6 +21,7 @@ moc_*
 *.com
 *.class
 *.dll
+*.dbg
 
 # Packages #
 ############

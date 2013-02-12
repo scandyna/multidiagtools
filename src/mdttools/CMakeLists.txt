@@ -36,13 +36,13 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Librairies to link
-add_library (mdttools SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-target_link_libraries(mdttools ${QT_LIBRARIES})
-target_link_libraries(mdttools "mdtutils")
-target_link_libraries(mdttools "mdtutilsgui")
-target_link_libraries(mdttools "mdtport")
-target_link_libraries(mdttools "mdtserialport")
-target_link_libraries(mdttools "mdtdevice")
+add_library (mdttools${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
+target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtserialport${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdttools${MDTLIB_VERSION_SUFFIX} "mdtdevice${MDTLIB_VERSION_SUFFIX}")
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdttools.pro" "# Translations project file for lupdate/lrelease\n")
@@ -61,18 +61,18 @@ file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdttools" COMPONENT dev)
 
 # Destinations
-install(TARGETS "mdttools" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+install(TARGETS "mdttools${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 # if(MDT_BUILD_STATIC_LIBS)
 #   install(TARGETS "mdttools_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 # endif(MDT_BUILD_STATIC_LIBS)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
-  add_custom_command(TARGET "mdttools"
+  add_custom_command(TARGET "mdttools${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdttools.so" "${PROJECT_SOURCE_DIR}/libmdttools.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdttools.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdttools.dbg" "${PROJECT_SOURCE_DIR}/libmdttools.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdttools.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdttools.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libmdttools${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)

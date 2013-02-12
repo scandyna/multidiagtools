@@ -1,6 +1,6 @@
 # CMake project file for Multi Diag Tools
-# * Part: mdtserialport *
-# * Directory: mdtserialport *
+# * Part: mdtserialport${MDTLIB_VERSION_SUFFIX} *
+# * Directory: mdtserialport${MDTLIB_VERSION_SUFFIX} *
 
 # Project
 project (multidiagtools)
@@ -58,17 +58,17 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Librairie du projet
-add_library (mdtserialport SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-target_link_libraries(mdtserialport ${QT_LIBRARIES})
-target_link_libraries(mdtserialport "mdtport")
-target_link_libraries(mdtserialport "mdtutilsgui")
+add_library (mdtserialport${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
+target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdtport${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 
 # Version statique
 #if(MDT_BUILD_STATIC_LIBS)
-#  add_library (mdtserialport_static STATIC ${SOURCES_FILES} )
-#  target_link_libraries(mdtserialport_static ${QT_LIBRARIES})
-#  target_link_libraries(mdtserialport_static "mdtport")
-#  target_link_libraries(mdtserialport_static "mdtutilsgui")
+#  add_library (mdtserialport${MDTLIB_VERSION_SUFFIX}_static STATIC ${SOURCES_FILES} )
+#  target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX}_static ${QT_LIBRARIES})
+#  target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX}_static "mdtport")
+#  target_link_libraries(mdtserialport${MDTLIB_VERSION_SUFFIX}_static "mdtutilsgui")
   #set_target_properties("mdtutils_static" PROPERTIES OUTPUT_NAME "mdtutils")
 #endif(MDT_BUILD_STATIC_LIBS)
 
@@ -77,19 +77,19 @@ file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtserialport" COMPONENT dev)
 
 # Destinations
-install(TARGETS "mdtserialport" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+install(TARGETS "mdtserialport${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
-  add_custom_command(TARGET "mdtserialport"
+  add_custom_command(TARGET "mdtserialport${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtserialport.so" "${PROJECT_SOURCE_DIR}/libmdtserialport.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtserialport.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdtserialport.dbg" "${PROJECT_SOURCE_DIR}/libmdtserialport.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtserialport.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdtserialport.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libmdtserialport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
 
 #if(MDT_BUILD_STATIC_LIBS)
-#  install(TARGETS "mdtserialport_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+#  install(TARGETS "mdtserialport${MDTLIB_VERSION_SUFFIX}_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 #endif(MDT_BUILD_STATIC_LIBS)

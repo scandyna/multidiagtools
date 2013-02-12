@@ -1330,7 +1330,8 @@ template bool mdtBufferTest<char>::readWriteTestUntilTokenNullChars();
 template bool mdtBufferTest<char>::copyTest();
 template bool mdtBufferTest<char>::putOneTest();
 template bool mdtBufferTest<char>::takeOneTest();
-template bool mdtBufferTest<char>::timingTest(unsigned int, unsigned int);
+///template bool mdtBufferTest<char>::timingTest(unsigned int, unsigned int);
+template bool mdtBufferTest<char>::timingTest(size_t iterationCount, size_t dataLen);
 
 int main(int argc, char **argv)
 {

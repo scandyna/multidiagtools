@@ -88,7 +88,7 @@ install/strip/fast: install/strip
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"dbg\" \"dev\" \"lib\" \"tools\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"data\" \"dbg\" \"dev\" \"lib\" \"tools\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -167,25 +167,25 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-src/mdtutils/CMakeFiles/mdtutils.dir/rule:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 src/mdtutils/CMakeFiles/mdtutils.dir/rule
-.PHONY : src/mdtutils/CMakeFiles/mdtutils.dir/rule
+src/mdtutils/CMakeFiles/mdtutils-0.2.dir/rule:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f CMakeFiles/Makefile2 src/mdtutils/CMakeFiles/mdtutils-0.2.dir/rule
+.PHONY : src/mdtutils/CMakeFiles/mdtutils-0.2.dir/rule
 
 # Convenience name for target.
-mdtutils: src/mdtutils/CMakeFiles/mdtutils.dir/rule
-.PHONY : mdtutils
+mdtutils-0.2: src/mdtutils/CMakeFiles/mdtutils-0.2.dir/rule
+.PHONY : mdtutils-0.2
 
 # fast build rule for target.
-mdtutils/fast:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/build
-.PHONY : mdtutils/fast
+mdtutils-0.2/fast:
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build
+.PHONY : mdtutils-0.2/fast
 
 linux/mdtPartitionAttributesPosix.o: linux/mdtPartitionAttributesPosix.cpp.o
 .PHONY : linux/mdtPartitionAttributesPosix.o
 
 # target to build an object file
 linux/mdtPartitionAttributesPosix.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPartitionAttributesPosix.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/linux/mdtPartitionAttributesPosix.cpp.o
 .PHONY : linux/mdtPartitionAttributesPosix.cpp.o
 
 linux/mdtPartitionAttributesPosix.i: linux/mdtPartitionAttributesPosix.cpp.i
@@ -193,7 +193,7 @@ linux/mdtPartitionAttributesPosix.i: linux/mdtPartitionAttributesPosix.cpp.i
 
 # target to preprocess a source file
 linux/mdtPartitionAttributesPosix.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPartitionAttributesPosix.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/linux/mdtPartitionAttributesPosix.cpp.i
 .PHONY : linux/mdtPartitionAttributesPosix.cpp.i
 
 linux/mdtPartitionAttributesPosix.s: linux/mdtPartitionAttributesPosix.cpp.s
@@ -201,7 +201,7 @@ linux/mdtPartitionAttributesPosix.s: linux/mdtPartitionAttributesPosix.cpp.s
 
 # target to generate assembly for a file
 linux/mdtPartitionAttributesPosix.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/linux/mdtPartitionAttributesPosix.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/linux/mdtPartitionAttributesPosix.cpp.s
 .PHONY : linux/mdtPartitionAttributesPosix.cpp.s
 
 mdtAbstractIo.o: mdtAbstractIo.cpp.o
@@ -209,7 +209,7 @@ mdtAbstractIo.o: mdtAbstractIo.cpp.o
 
 # target to build an object file
 mdtAbstractIo.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractIo.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAbstractIo.cpp.o
 .PHONY : mdtAbstractIo.cpp.o
 
 mdtAbstractIo.i: mdtAbstractIo.cpp.i
@@ -217,7 +217,7 @@ mdtAbstractIo.i: mdtAbstractIo.cpp.i
 
 # target to preprocess a source file
 mdtAbstractIo.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractIo.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAbstractIo.cpp.i
 .PHONY : mdtAbstractIo.cpp.i
 
 mdtAbstractIo.s: mdtAbstractIo.cpp.s
@@ -225,7 +225,7 @@ mdtAbstractIo.s: mdtAbstractIo.cpp.s
 
 # target to generate assembly for a file
 mdtAbstractIo.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAbstractIo.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAbstractIo.cpp.s
 .PHONY : mdtAbstractIo.cpp.s
 
 mdtAlgorithms.o: mdtAlgorithms.cpp.o
@@ -233,7 +233,7 @@ mdtAlgorithms.o: mdtAlgorithms.cpp.o
 
 # target to build an object file
 mdtAlgorithms.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAlgorithms.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAlgorithms.cpp.o
 .PHONY : mdtAlgorithms.cpp.o
 
 mdtAlgorithms.i: mdtAlgorithms.cpp.i
@@ -241,7 +241,7 @@ mdtAlgorithms.i: mdtAlgorithms.cpp.i
 
 # target to preprocess a source file
 mdtAlgorithms.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAlgorithms.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAlgorithms.cpp.i
 .PHONY : mdtAlgorithms.cpp.i
 
 mdtAlgorithms.s: mdtAlgorithms.cpp.s
@@ -249,7 +249,7 @@ mdtAlgorithms.s: mdtAlgorithms.cpp.s
 
 # target to generate assembly for a file
 mdtAlgorithms.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAlgorithms.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAlgorithms.cpp.s
 .PHONY : mdtAlgorithms.cpp.s
 
 mdtAnalogIo.o: mdtAnalogIo.cpp.o
@@ -257,7 +257,7 @@ mdtAnalogIo.o: mdtAnalogIo.cpp.o
 
 # target to build an object file
 mdtAnalogIo.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAnalogIo.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAnalogIo.cpp.o
 .PHONY : mdtAnalogIo.cpp.o
 
 mdtAnalogIo.i: mdtAnalogIo.cpp.i
@@ -265,7 +265,7 @@ mdtAnalogIo.i: mdtAnalogIo.cpp.i
 
 # target to preprocess a source file
 mdtAnalogIo.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAnalogIo.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAnalogIo.cpp.i
 .PHONY : mdtAnalogIo.cpp.i
 
 mdtAnalogIo.s: mdtAnalogIo.cpp.s
@@ -273,7 +273,7 @@ mdtAnalogIo.s: mdtAnalogIo.cpp.s
 
 # target to generate assembly for a file
 mdtAnalogIo.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtAnalogIo.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtAnalogIo.cpp.s
 .PHONY : mdtAnalogIo.cpp.s
 
 mdtApplication.o: mdtApplication.cpp.o
@@ -281,7 +281,7 @@ mdtApplication.o: mdtApplication.cpp.o
 
 # target to build an object file
 mdtApplication.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtApplication.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtApplication.cpp.o
 .PHONY : mdtApplication.cpp.o
 
 mdtApplication.i: mdtApplication.cpp.i
@@ -289,7 +289,7 @@ mdtApplication.i: mdtApplication.cpp.i
 
 # target to preprocess a source file
 mdtApplication.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtApplication.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtApplication.cpp.i
 .PHONY : mdtApplication.cpp.i
 
 mdtApplication.s: mdtApplication.cpp.s
@@ -297,7 +297,7 @@ mdtApplication.s: mdtApplication.cpp.s
 
 # target to generate assembly for a file
 mdtApplication.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtApplication.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtApplication.cpp.s
 .PHONY : mdtApplication.cpp.s
 
 mdtBuffer.o: mdtBuffer.cpp.o
@@ -305,7 +305,7 @@ mdtBuffer.o: mdtBuffer.cpp.o
 
 # target to build an object file
 mdtBuffer.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtBuffer.cpp.o
 .PHONY : mdtBuffer.cpp.o
 
 mdtBuffer.i: mdtBuffer.cpp.i
@@ -313,7 +313,7 @@ mdtBuffer.i: mdtBuffer.cpp.i
 
 # target to preprocess a source file
 mdtBuffer.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtBuffer.cpp.i
 .PHONY : mdtBuffer.cpp.i
 
 mdtBuffer.s: mdtBuffer.cpp.s
@@ -321,7 +321,7 @@ mdtBuffer.s: mdtBuffer.cpp.s
 
 # target to generate assembly for a file
 mdtBuffer.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtBuffer.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtBuffer.cpp.s
 .PHONY : mdtBuffer.cpp.s
 
 mdtCsvFile.o: mdtCsvFile.cpp.o
@@ -329,7 +329,7 @@ mdtCsvFile.o: mdtCsvFile.cpp.o
 
 # target to build an object file
 mdtCsvFile.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtCsvFile.cpp.o
 .PHONY : mdtCsvFile.cpp.o
 
 mdtCsvFile.i: mdtCsvFile.cpp.i
@@ -337,7 +337,7 @@ mdtCsvFile.i: mdtCsvFile.cpp.i
 
 # target to preprocess a source file
 mdtCsvFile.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtCsvFile.cpp.i
 .PHONY : mdtCsvFile.cpp.i
 
 mdtCsvFile.s: mdtCsvFile.cpp.s
@@ -345,7 +345,7 @@ mdtCsvFile.s: mdtCsvFile.cpp.s
 
 # target to generate assembly for a file
 mdtCsvFile.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtCsvFile.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtCsvFile.cpp.s
 .PHONY : mdtCsvFile.cpp.s
 
 mdtDigitalIo.o: mdtDigitalIo.cpp.o
@@ -353,7 +353,7 @@ mdtDigitalIo.o: mdtDigitalIo.cpp.o
 
 # target to build an object file
 mdtDigitalIo.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDigitalIo.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtDigitalIo.cpp.o
 .PHONY : mdtDigitalIo.cpp.o
 
 mdtDigitalIo.i: mdtDigitalIo.cpp.i
@@ -361,7 +361,7 @@ mdtDigitalIo.i: mdtDigitalIo.cpp.i
 
 # target to preprocess a source file
 mdtDigitalIo.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDigitalIo.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtDigitalIo.cpp.i
 .PHONY : mdtDigitalIo.cpp.i
 
 mdtDigitalIo.s: mdtDigitalIo.cpp.s
@@ -369,7 +369,7 @@ mdtDigitalIo.s: mdtDigitalIo.cpp.s
 
 # target to generate assembly for a file
 mdtDigitalIo.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtDigitalIo.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtDigitalIo.cpp.s
 .PHONY : mdtDigitalIo.cpp.s
 
 mdtError.o: mdtError.cpp.o
@@ -377,7 +377,7 @@ mdtError.o: mdtError.cpp.o
 
 # target to build an object file
 mdtError.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtError.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtError.cpp.o
 .PHONY : mdtError.cpp.o
 
 mdtError.i: mdtError.cpp.i
@@ -385,7 +385,7 @@ mdtError.i: mdtError.cpp.i
 
 # target to preprocess a source file
 mdtError.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtError.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtError.cpp.i
 .PHONY : mdtError.cpp.i
 
 mdtError.s: mdtError.cpp.s
@@ -393,7 +393,7 @@ mdtError.s: mdtError.cpp.s
 
 # target to generate assembly for a file
 mdtError.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtError.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtError.cpp.s
 .PHONY : mdtError.cpp.s
 
 mdtErrorOut.o: mdtErrorOut.cpp.o
@@ -401,7 +401,7 @@ mdtErrorOut.o: mdtErrorOut.cpp.o
 
 # target to build an object file
 mdtErrorOut.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtErrorOut.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtErrorOut.cpp.o
 .PHONY : mdtErrorOut.cpp.o
 
 mdtErrorOut.i: mdtErrorOut.cpp.i
@@ -409,7 +409,7 @@ mdtErrorOut.i: mdtErrorOut.cpp.i
 
 # target to preprocess a source file
 mdtErrorOut.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtErrorOut.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtErrorOut.cpp.i
 .PHONY : mdtErrorOut.cpp.i
 
 mdtErrorOut.s: mdtErrorOut.cpp.s
@@ -417,7 +417,7 @@ mdtErrorOut.s: mdtErrorOut.cpp.s
 
 # target to generate assembly for a file
 mdtErrorOut.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtErrorOut.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtErrorOut.cpp.s
 .PHONY : mdtErrorOut.cpp.s
 
 mdtFileCopier.o: mdtFileCopier.cpp.o
@@ -425,7 +425,7 @@ mdtFileCopier.o: mdtFileCopier.cpp.o
 
 # target to build an object file
 mdtFileCopier.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFileCopier.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFileCopier.cpp.o
 .PHONY : mdtFileCopier.cpp.o
 
 mdtFileCopier.i: mdtFileCopier.cpp.i
@@ -433,7 +433,7 @@ mdtFileCopier.i: mdtFileCopier.cpp.i
 
 # target to preprocess a source file
 mdtFileCopier.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFileCopier.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFileCopier.cpp.i
 .PHONY : mdtFileCopier.cpp.i
 
 mdtFileCopier.s: mdtFileCopier.cpp.s
@@ -441,7 +441,7 @@ mdtFileCopier.s: mdtFileCopier.cpp.s
 
 # target to generate assembly for a file
 mdtFileCopier.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFileCopier.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFileCopier.cpp.s
 .PHONY : mdtFileCopier.cpp.s
 
 mdtFileCopierItem.o: mdtFileCopierItem.cpp.o
@@ -449,7 +449,7 @@ mdtFileCopierItem.o: mdtFileCopierItem.cpp.o
 
 # target to build an object file
 mdtFileCopierItem.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFileCopierItem.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFileCopierItem.cpp.o
 .PHONY : mdtFileCopierItem.cpp.o
 
 mdtFileCopierItem.i: mdtFileCopierItem.cpp.i
@@ -457,7 +457,7 @@ mdtFileCopierItem.i: mdtFileCopierItem.cpp.i
 
 # target to preprocess a source file
 mdtFileCopierItem.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFileCopierItem.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFileCopierItem.cpp.i
 .PHONY : mdtFileCopierItem.cpp.i
 
 mdtFileCopierItem.s: mdtFileCopierItem.cpp.s
@@ -465,7 +465,7 @@ mdtFileCopierItem.s: mdtFileCopierItem.cpp.s
 
 # target to generate assembly for a file
 mdtFileCopierItem.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFileCopierItem.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFileCopierItem.cpp.s
 .PHONY : mdtFileCopierItem.cpp.s
 
 mdtFrame.o: mdtFrame.cpp.o
@@ -473,7 +473,7 @@ mdtFrame.o: mdtFrame.cpp.o
 
 # target to build an object file
 mdtFrame.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrame.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrame.cpp.o
 .PHONY : mdtFrame.cpp.o
 
 mdtFrame.i: mdtFrame.cpp.i
@@ -481,7 +481,7 @@ mdtFrame.i: mdtFrame.cpp.i
 
 # target to preprocess a source file
 mdtFrame.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrame.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrame.cpp.i
 .PHONY : mdtFrame.cpp.i
 
 mdtFrame.s: mdtFrame.cpp.s
@@ -489,7 +489,7 @@ mdtFrame.s: mdtFrame.cpp.s
 
 # target to generate assembly for a file
 mdtFrame.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrame.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrame.cpp.s
 .PHONY : mdtFrame.cpp.s
 
 mdtFrameAscii.o: mdtFrameAscii.cpp.o
@@ -497,7 +497,7 @@ mdtFrameAscii.o: mdtFrameAscii.cpp.o
 
 # target to build an object file
 mdtFrameAscii.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameAscii.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameAscii.cpp.o
 .PHONY : mdtFrameAscii.cpp.o
 
 mdtFrameAscii.i: mdtFrameAscii.cpp.i
@@ -505,7 +505,7 @@ mdtFrameAscii.i: mdtFrameAscii.cpp.i
 
 # target to preprocess a source file
 mdtFrameAscii.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameAscii.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameAscii.cpp.i
 .PHONY : mdtFrameAscii.cpp.i
 
 mdtFrameAscii.s: mdtFrameAscii.cpp.s
@@ -513,7 +513,7 @@ mdtFrameAscii.s: mdtFrameAscii.cpp.s
 
 # target to generate assembly for a file
 mdtFrameAscii.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameAscii.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameAscii.cpp.s
 .PHONY : mdtFrameAscii.cpp.s
 
 mdtFrameCodec.o: mdtFrameCodec.cpp.o
@@ -521,7 +521,7 @@ mdtFrameCodec.o: mdtFrameCodec.cpp.o
 
 # target to build an object file
 mdtFrameCodec.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodec.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodec.cpp.o
 .PHONY : mdtFrameCodec.cpp.o
 
 mdtFrameCodec.i: mdtFrameCodec.cpp.i
@@ -529,7 +529,7 @@ mdtFrameCodec.i: mdtFrameCodec.cpp.i
 
 # target to preprocess a source file
 mdtFrameCodec.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodec.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodec.cpp.i
 .PHONY : mdtFrameCodec.cpp.i
 
 mdtFrameCodec.s: mdtFrameCodec.cpp.s
@@ -537,7 +537,7 @@ mdtFrameCodec.s: mdtFrameCodec.cpp.s
 
 # target to generate assembly for a file
 mdtFrameCodec.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodec.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodec.cpp.s
 .PHONY : mdtFrameCodec.cpp.s
 
 mdtFrameCodecAscii.o: mdtFrameCodecAscii.cpp.o
@@ -545,7 +545,7 @@ mdtFrameCodecAscii.o: mdtFrameCodecAscii.cpp.o
 
 # target to build an object file
 mdtFrameCodecAscii.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecAscii.cpp.o
 .PHONY : mdtFrameCodecAscii.cpp.o
 
 mdtFrameCodecAscii.i: mdtFrameCodecAscii.cpp.i
@@ -553,7 +553,7 @@ mdtFrameCodecAscii.i: mdtFrameCodecAscii.cpp.i
 
 # target to preprocess a source file
 mdtFrameCodecAscii.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecAscii.cpp.i
 .PHONY : mdtFrameCodecAscii.cpp.i
 
 mdtFrameCodecAscii.s: mdtFrameCodecAscii.cpp.s
@@ -561,7 +561,7 @@ mdtFrameCodecAscii.s: mdtFrameCodecAscii.cpp.s
 
 # target to generate assembly for a file
 mdtFrameCodecAscii.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecAscii.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecAscii.cpp.s
 .PHONY : mdtFrameCodecAscii.cpp.s
 
 mdtFrameCodecK8055.o: mdtFrameCodecK8055.cpp.o
@@ -569,7 +569,7 @@ mdtFrameCodecK8055.o: mdtFrameCodecK8055.cpp.o
 
 # target to build an object file
 mdtFrameCodecK8055.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecK8055.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecK8055.cpp.o
 .PHONY : mdtFrameCodecK8055.cpp.o
 
 mdtFrameCodecK8055.i: mdtFrameCodecK8055.cpp.i
@@ -577,7 +577,7 @@ mdtFrameCodecK8055.i: mdtFrameCodecK8055.cpp.i
 
 # target to preprocess a source file
 mdtFrameCodecK8055.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecK8055.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecK8055.cpp.i
 .PHONY : mdtFrameCodecK8055.cpp.i
 
 mdtFrameCodecK8055.s: mdtFrameCodecK8055.cpp.s
@@ -585,7 +585,7 @@ mdtFrameCodecK8055.s: mdtFrameCodecK8055.cpp.s
 
 # target to generate assembly for a file
 mdtFrameCodecK8055.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecK8055.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecK8055.cpp.s
 .PHONY : mdtFrameCodecK8055.cpp.s
 
 mdtFrameCodecModbus.o: mdtFrameCodecModbus.cpp.o
@@ -593,7 +593,7 @@ mdtFrameCodecModbus.o: mdtFrameCodecModbus.cpp.o
 
 # target to build an object file
 mdtFrameCodecModbus.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecModbus.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecModbus.cpp.o
 .PHONY : mdtFrameCodecModbus.cpp.o
 
 mdtFrameCodecModbus.i: mdtFrameCodecModbus.cpp.i
@@ -601,7 +601,7 @@ mdtFrameCodecModbus.i: mdtFrameCodecModbus.cpp.i
 
 # target to preprocess a source file
 mdtFrameCodecModbus.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecModbus.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecModbus.cpp.i
 .PHONY : mdtFrameCodecModbus.cpp.i
 
 mdtFrameCodecModbus.s: mdtFrameCodecModbus.cpp.s
@@ -609,7 +609,7 @@ mdtFrameCodecModbus.s: mdtFrameCodecModbus.cpp.s
 
 # target to generate assembly for a file
 mdtFrameCodecModbus.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecModbus.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecModbus.cpp.s
 .PHONY : mdtFrameCodecModbus.cpp.s
 
 mdtFrameCodecScpi.o: mdtFrameCodecScpi.cpp.o
@@ -617,7 +617,7 @@ mdtFrameCodecScpi.o: mdtFrameCodecScpi.cpp.o
 
 # target to build an object file
 mdtFrameCodecScpi.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpi.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecScpi.cpp.o
 .PHONY : mdtFrameCodecScpi.cpp.o
 
 mdtFrameCodecScpi.i: mdtFrameCodecScpi.cpp.i
@@ -625,7 +625,7 @@ mdtFrameCodecScpi.i: mdtFrameCodecScpi.cpp.i
 
 # target to preprocess a source file
 mdtFrameCodecScpi.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpi.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecScpi.cpp.i
 .PHONY : mdtFrameCodecScpi.cpp.i
 
 mdtFrameCodecScpi.s: mdtFrameCodecScpi.cpp.s
@@ -633,7 +633,7 @@ mdtFrameCodecScpi.s: mdtFrameCodecScpi.cpp.s
 
 # target to generate assembly for a file
 mdtFrameCodecScpi.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpi.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecScpi.cpp.s
 .PHONY : mdtFrameCodecScpi.cpp.s
 
 mdtFrameCodecScpiU3606A.o: mdtFrameCodecScpiU3606A.cpp.o
@@ -641,7 +641,7 @@ mdtFrameCodecScpiU3606A.o: mdtFrameCodecScpiU3606A.cpp.o
 
 # target to build an object file
 mdtFrameCodecScpiU3606A.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpiU3606A.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecScpiU3606A.cpp.o
 .PHONY : mdtFrameCodecScpiU3606A.cpp.o
 
 mdtFrameCodecScpiU3606A.i: mdtFrameCodecScpiU3606A.cpp.i
@@ -649,7 +649,7 @@ mdtFrameCodecScpiU3606A.i: mdtFrameCodecScpiU3606A.cpp.i
 
 # target to preprocess a source file
 mdtFrameCodecScpiU3606A.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpiU3606A.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecScpiU3606A.cpp.i
 .PHONY : mdtFrameCodecScpiU3606A.cpp.i
 
 mdtFrameCodecScpiU3606A.s: mdtFrameCodecScpiU3606A.cpp.s
@@ -657,7 +657,7 @@ mdtFrameCodecScpiU3606A.s: mdtFrameCodecScpiU3606A.cpp.s
 
 # target to generate assembly for a file
 mdtFrameCodecScpiU3606A.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameCodecScpiU3606A.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameCodecScpiU3606A.cpp.s
 .PHONY : mdtFrameCodecScpiU3606A.cpp.s
 
 mdtFrameModbusTcp.o: mdtFrameModbusTcp.cpp.o
@@ -665,7 +665,7 @@ mdtFrameModbusTcp.o: mdtFrameModbusTcp.cpp.o
 
 # target to build an object file
 mdtFrameModbusTcp.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameModbusTcp.cpp.o
 .PHONY : mdtFrameModbusTcp.cpp.o
 
 mdtFrameModbusTcp.i: mdtFrameModbusTcp.cpp.i
@@ -673,7 +673,7 @@ mdtFrameModbusTcp.i: mdtFrameModbusTcp.cpp.i
 
 # target to preprocess a source file
 mdtFrameModbusTcp.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameModbusTcp.cpp.i
 .PHONY : mdtFrameModbusTcp.cpp.i
 
 mdtFrameModbusTcp.s: mdtFrameModbusTcp.cpp.s
@@ -681,7 +681,7 @@ mdtFrameModbusTcp.s: mdtFrameModbusTcp.cpp.s
 
 # target to generate assembly for a file
 mdtFrameModbusTcp.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameModbusTcp.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameModbusTcp.cpp.s
 .PHONY : mdtFrameModbusTcp.cpp.s
 
 mdtFrameUsbControl.o: mdtFrameUsbControl.cpp.o
@@ -689,7 +689,7 @@ mdtFrameUsbControl.o: mdtFrameUsbControl.cpp.o
 
 # target to build an object file
 mdtFrameUsbControl.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbControl.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameUsbControl.cpp.o
 .PHONY : mdtFrameUsbControl.cpp.o
 
 mdtFrameUsbControl.i: mdtFrameUsbControl.cpp.i
@@ -697,7 +697,7 @@ mdtFrameUsbControl.i: mdtFrameUsbControl.cpp.i
 
 # target to preprocess a source file
 mdtFrameUsbControl.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbControl.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameUsbControl.cpp.i
 .PHONY : mdtFrameUsbControl.cpp.i
 
 mdtFrameUsbControl.s: mdtFrameUsbControl.cpp.s
@@ -705,7 +705,7 @@ mdtFrameUsbControl.s: mdtFrameUsbControl.cpp.s
 
 # target to generate assembly for a file
 mdtFrameUsbControl.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbControl.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameUsbControl.cpp.s
 .PHONY : mdtFrameUsbControl.cpp.s
 
 mdtFrameUsbTmc.o: mdtFrameUsbTmc.cpp.o
@@ -713,7 +713,7 @@ mdtFrameUsbTmc.o: mdtFrameUsbTmc.cpp.o
 
 # target to build an object file
 mdtFrameUsbTmc.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbTmc.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameUsbTmc.cpp.o
 .PHONY : mdtFrameUsbTmc.cpp.o
 
 mdtFrameUsbTmc.i: mdtFrameUsbTmc.cpp.i
@@ -721,7 +721,7 @@ mdtFrameUsbTmc.i: mdtFrameUsbTmc.cpp.i
 
 # target to preprocess a source file
 mdtFrameUsbTmc.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbTmc.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameUsbTmc.cpp.i
 .PHONY : mdtFrameUsbTmc.cpp.i
 
 mdtFrameUsbTmc.s: mdtFrameUsbTmc.cpp.s
@@ -729,7 +729,7 @@ mdtFrameUsbTmc.s: mdtFrameUsbTmc.cpp.s
 
 # target to generate assembly for a file
 mdtFrameUsbTmc.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtFrameUsbTmc.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtFrameUsbTmc.cpp.s
 .PHONY : mdtFrameUsbTmc.cpp.s
 
 mdtPartitionAttributes.o: mdtPartitionAttributes.cpp.o
@@ -737,7 +737,7 @@ mdtPartitionAttributes.o: mdtPartitionAttributes.cpp.o
 
 # target to build an object file
 mdtPartitionAttributes.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPartitionAttributes.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtPartitionAttributes.cpp.o
 .PHONY : mdtPartitionAttributes.cpp.o
 
 mdtPartitionAttributes.i: mdtPartitionAttributes.cpp.i
@@ -745,7 +745,7 @@ mdtPartitionAttributes.i: mdtPartitionAttributes.cpp.i
 
 # target to preprocess a source file
 mdtPartitionAttributes.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPartitionAttributes.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtPartitionAttributes.cpp.i
 .PHONY : mdtPartitionAttributes.cpp.i
 
 mdtPartitionAttributes.s: mdtPartitionAttributes.cpp.s
@@ -753,7 +753,7 @@ mdtPartitionAttributes.s: mdtPartitionAttributes.cpp.s
 
 # target to generate assembly for a file
 mdtPartitionAttributes.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtPartitionAttributes.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtPartitionAttributes.cpp.s
 .PHONY : mdtPartitionAttributes.cpp.s
 
 mdtTime.o: mdtTime.cpp.o
@@ -761,7 +761,7 @@ mdtTime.o: mdtTime.cpp.o
 
 # target to build an object file
 mdtTime.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtTime.cpp.o
 .PHONY : mdtTime.cpp.o
 
 mdtTime.i: mdtTime.cpp.i
@@ -769,7 +769,7 @@ mdtTime.i: mdtTime.cpp.i
 
 # target to preprocess a source file
 mdtTime.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtTime.cpp.i
 .PHONY : mdtTime.cpp.i
 
 mdtTime.s: mdtTime.cpp.s
@@ -777,7 +777,7 @@ mdtTime.s: mdtTime.cpp.s
 
 # target to generate assembly for a file
 mdtTime.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtTime.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtTime.cpp.s
 .PHONY : mdtTime.cpp.s
 
 mdtUicNumber.o: mdtUicNumber.cpp.o
@@ -785,7 +785,7 @@ mdtUicNumber.o: mdtUicNumber.cpp.o
 
 # target to build an object file
 mdtUicNumber.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumber.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumber.cpp.o
 .PHONY : mdtUicNumber.cpp.o
 
 mdtUicNumber.i: mdtUicNumber.cpp.i
@@ -793,7 +793,7 @@ mdtUicNumber.i: mdtUicNumber.cpp.i
 
 # target to preprocess a source file
 mdtUicNumber.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumber.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumber.cpp.i
 .PHONY : mdtUicNumber.cpp.i
 
 mdtUicNumber.s: mdtUicNumber.cpp.s
@@ -801,7 +801,7 @@ mdtUicNumber.s: mdtUicNumber.cpp.s
 
 # target to generate assembly for a file
 mdtUicNumber.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumber.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumber.cpp.s
 .PHONY : mdtUicNumber.cpp.s
 
 mdtUicNumberItem.o: mdtUicNumberItem.cpp.o
@@ -809,7 +809,7 @@ mdtUicNumberItem.o: mdtUicNumberItem.cpp.o
 
 # target to build an object file
 mdtUicNumberItem.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberItem.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberItem.cpp.o
 .PHONY : mdtUicNumberItem.cpp.o
 
 mdtUicNumberItem.i: mdtUicNumberItem.cpp.i
@@ -817,7 +817,7 @@ mdtUicNumberItem.i: mdtUicNumberItem.cpp.i
 
 # target to preprocess a source file
 mdtUicNumberItem.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberItem.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberItem.cpp.i
 .PHONY : mdtUicNumberItem.cpp.i
 
 mdtUicNumberItem.s: mdtUicNumberItem.cpp.s
@@ -825,7 +825,7 @@ mdtUicNumberItem.s: mdtUicNumberItem.cpp.s
 
 # target to generate assembly for a file
 mdtUicNumberItem.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberItem.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberItem.cpp.s
 .PHONY : mdtUicNumberItem.cpp.s
 
 mdtUicNumberValidator.o: mdtUicNumberValidator.cpp.o
@@ -833,7 +833,7 @@ mdtUicNumberValidator.o: mdtUicNumberValidator.cpp.o
 
 # target to build an object file
 mdtUicNumberValidator.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberValidator.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberValidator.cpp.o
 .PHONY : mdtUicNumberValidator.cpp.o
 
 mdtUicNumberValidator.i: mdtUicNumberValidator.cpp.i
@@ -841,7 +841,7 @@ mdtUicNumberValidator.i: mdtUicNumberValidator.cpp.i
 
 # target to preprocess a source file
 mdtUicNumberValidator.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberValidator.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberValidator.cpp.i
 .PHONY : mdtUicNumberValidator.cpp.i
 
 mdtUicNumberValidator.s: mdtUicNumberValidator.cpp.s
@@ -849,7 +849,7 @@ mdtUicNumberValidator.s: mdtUicNumberValidator.cpp.s
 
 # target to generate assembly for a file
 mdtUicNumberValidator.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberValidator.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberValidator.cpp.s
 .PHONY : mdtUicNumberValidator.cpp.s
 
 mdtUicNumberWidget.o: mdtUicNumberWidget.cpp.o
@@ -857,7 +857,7 @@ mdtUicNumberWidget.o: mdtUicNumberWidget.cpp.o
 
 # target to build an object file
 mdtUicNumberWidget.cpp.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberWidget.cpp.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberWidget.cpp.o
 .PHONY : mdtUicNumberWidget.cpp.o
 
 mdtUicNumberWidget.i: mdtUicNumberWidget.cpp.i
@@ -865,7 +865,7 @@ mdtUicNumberWidget.i: mdtUicNumberWidget.cpp.i
 
 # target to preprocess a source file
 mdtUicNumberWidget.cpp.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberWidget.cpp.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberWidget.cpp.i
 .PHONY : mdtUicNumberWidget.cpp.i
 
 mdtUicNumberWidget.s: mdtUicNumberWidget.cpp.s
@@ -873,7 +873,7 @@ mdtUicNumberWidget.s: mdtUicNumberWidget.cpp.s
 
 # target to generate assembly for a file
 mdtUicNumberWidget.cpp.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/mdtUicNumberWidget.cpp.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/mdtUicNumberWidget.cpp.s
 .PHONY : mdtUicNumberWidget.cpp.s
 
 moc_mdtAbstractIo.o: moc_mdtAbstractIo.cxx.o
@@ -881,7 +881,7 @@ moc_mdtAbstractIo.o: moc_mdtAbstractIo.cxx.o
 
 # target to build an object file
 moc_mdtAbstractIo.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractIo.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtAbstractIo.cxx.o
 .PHONY : moc_mdtAbstractIo.cxx.o
 
 moc_mdtAbstractIo.i: moc_mdtAbstractIo.cxx.i
@@ -889,7 +889,7 @@ moc_mdtAbstractIo.i: moc_mdtAbstractIo.cxx.i
 
 # target to preprocess a source file
 moc_mdtAbstractIo.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractIo.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtAbstractIo.cxx.i
 .PHONY : moc_mdtAbstractIo.cxx.i
 
 moc_mdtAbstractIo.s: moc_mdtAbstractIo.cxx.s
@@ -897,7 +897,7 @@ moc_mdtAbstractIo.s: moc_mdtAbstractIo.cxx.s
 
 # target to generate assembly for a file
 moc_mdtAbstractIo.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAbstractIo.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtAbstractIo.cxx.s
 .PHONY : moc_mdtAbstractIo.cxx.s
 
 moc_mdtAnalogIo.o: moc_mdtAnalogIo.cxx.o
@@ -905,7 +905,7 @@ moc_mdtAnalogIo.o: moc_mdtAnalogIo.cxx.o
 
 # target to build an object file
 moc_mdtAnalogIo.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAnalogIo.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtAnalogIo.cxx.o
 .PHONY : moc_mdtAnalogIo.cxx.o
 
 moc_mdtAnalogIo.i: moc_mdtAnalogIo.cxx.i
@@ -913,7 +913,7 @@ moc_mdtAnalogIo.i: moc_mdtAnalogIo.cxx.i
 
 # target to preprocess a source file
 moc_mdtAnalogIo.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAnalogIo.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtAnalogIo.cxx.i
 .PHONY : moc_mdtAnalogIo.cxx.i
 
 moc_mdtAnalogIo.s: moc_mdtAnalogIo.cxx.s
@@ -921,7 +921,7 @@ moc_mdtAnalogIo.s: moc_mdtAnalogIo.cxx.s
 
 # target to generate assembly for a file
 moc_mdtAnalogIo.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtAnalogIo.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtAnalogIo.cxx.s
 .PHONY : moc_mdtAnalogIo.cxx.s
 
 moc_mdtApplication.o: moc_mdtApplication.cxx.o
@@ -929,7 +929,7 @@ moc_mdtApplication.o: moc_mdtApplication.cxx.o
 
 # target to build an object file
 moc_mdtApplication.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtApplication.cxx.o
 .PHONY : moc_mdtApplication.cxx.o
 
 moc_mdtApplication.i: moc_mdtApplication.cxx.i
@@ -937,7 +937,7 @@ moc_mdtApplication.i: moc_mdtApplication.cxx.i
 
 # target to preprocess a source file
 moc_mdtApplication.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtApplication.cxx.i
 .PHONY : moc_mdtApplication.cxx.i
 
 moc_mdtApplication.s: moc_mdtApplication.cxx.s
@@ -945,7 +945,7 @@ moc_mdtApplication.s: moc_mdtApplication.cxx.s
 
 # target to generate assembly for a file
 moc_mdtApplication.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtApplication.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtApplication.cxx.s
 .PHONY : moc_mdtApplication.cxx.s
 
 moc_mdtDigitalIo.o: moc_mdtDigitalIo.cxx.o
@@ -953,7 +953,7 @@ moc_mdtDigitalIo.o: moc_mdtDigitalIo.cxx.o
 
 # target to build an object file
 moc_mdtDigitalIo.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDigitalIo.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtDigitalIo.cxx.o
 .PHONY : moc_mdtDigitalIo.cxx.o
 
 moc_mdtDigitalIo.i: moc_mdtDigitalIo.cxx.i
@@ -961,7 +961,7 @@ moc_mdtDigitalIo.i: moc_mdtDigitalIo.cxx.i
 
 # target to preprocess a source file
 moc_mdtDigitalIo.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDigitalIo.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtDigitalIo.cxx.i
 .PHONY : moc_mdtDigitalIo.cxx.i
 
 moc_mdtDigitalIo.s: moc_mdtDigitalIo.cxx.s
@@ -969,7 +969,7 @@ moc_mdtDigitalIo.s: moc_mdtDigitalIo.cxx.s
 
 # target to generate assembly for a file
 moc_mdtDigitalIo.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtDigitalIo.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtDigitalIo.cxx.s
 .PHONY : moc_mdtDigitalIo.cxx.s
 
 moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
@@ -977,7 +977,7 @@ moc_mdtErrorOut.o: moc_mdtErrorOut.cxx.o
 
 # target to build an object file
 moc_mdtErrorOut.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtErrorOut.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtErrorOut.cxx.o
 .PHONY : moc_mdtErrorOut.cxx.o
 
 moc_mdtErrorOut.i: moc_mdtErrorOut.cxx.i
@@ -985,7 +985,7 @@ moc_mdtErrorOut.i: moc_mdtErrorOut.cxx.i
 
 # target to preprocess a source file
 moc_mdtErrorOut.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtErrorOut.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtErrorOut.cxx.i
 .PHONY : moc_mdtErrorOut.cxx.i
 
 moc_mdtErrorOut.s: moc_mdtErrorOut.cxx.s
@@ -993,7 +993,7 @@ moc_mdtErrorOut.s: moc_mdtErrorOut.cxx.s
 
 # target to generate assembly for a file
 moc_mdtErrorOut.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtErrorOut.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtErrorOut.cxx.s
 .PHONY : moc_mdtErrorOut.cxx.s
 
 moc_mdtFileCopier.o: moc_mdtFileCopier.cxx.o
@@ -1001,7 +1001,7 @@ moc_mdtFileCopier.o: moc_mdtFileCopier.cxx.o
 
 # target to build an object file
 moc_mdtFileCopier.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtFileCopier.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtFileCopier.cxx.o
 .PHONY : moc_mdtFileCopier.cxx.o
 
 moc_mdtFileCopier.i: moc_mdtFileCopier.cxx.i
@@ -1009,7 +1009,7 @@ moc_mdtFileCopier.i: moc_mdtFileCopier.cxx.i
 
 # target to preprocess a source file
 moc_mdtFileCopier.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtFileCopier.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtFileCopier.cxx.i
 .PHONY : moc_mdtFileCopier.cxx.i
 
 moc_mdtFileCopier.s: moc_mdtFileCopier.cxx.s
@@ -1017,7 +1017,7 @@ moc_mdtFileCopier.s: moc_mdtFileCopier.cxx.s
 
 # target to generate assembly for a file
 moc_mdtFileCopier.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtFileCopier.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtFileCopier.cxx.s
 .PHONY : moc_mdtFileCopier.cxx.s
 
 moc_mdtUicNumberWidget.o: moc_mdtUicNumberWidget.cxx.o
@@ -1025,7 +1025,7 @@ moc_mdtUicNumberWidget.o: moc_mdtUicNumberWidget.cxx.o
 
 # target to build an object file
 moc_mdtUicNumberWidget.cxx.o:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtUicNumberWidget.cxx.o
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtUicNumberWidget.cxx.o
 .PHONY : moc_mdtUicNumberWidget.cxx.o
 
 moc_mdtUicNumberWidget.i: moc_mdtUicNumberWidget.cxx.i
@@ -1033,7 +1033,7 @@ moc_mdtUicNumberWidget.i: moc_mdtUicNumberWidget.cxx.i
 
 # target to preprocess a source file
 moc_mdtUicNumberWidget.cxx.i:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtUicNumberWidget.cxx.i
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtUicNumberWidget.cxx.i
 .PHONY : moc_mdtUicNumberWidget.cxx.i
 
 moc_mdtUicNumberWidget.s: moc_mdtUicNumberWidget.cxx.s
@@ -1041,7 +1041,7 @@ moc_mdtUicNumberWidget.s: moc_mdtUicNumberWidget.cxx.s
 
 # target to generate assembly for a file
 moc_mdtUicNumberWidget.cxx.s:
-	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils.dir/build.make src/mdtutils/CMakeFiles/mdtutils.dir/moc_mdtUicNumberWidget.cxx.s
+	cd /home/philippe/programmation/multiDiagTools && $(MAKE) -f src/mdtutils/CMakeFiles/mdtutils-0.2.dir/build.make src/mdtutils/CMakeFiles/mdtutils-0.2.dir/moc_mdtUicNumberWidget.cxx.s
 .PHONY : moc_mdtUicNumberWidget.cxx.s
 
 # Help Target
@@ -1055,7 +1055,7 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
-	@echo "... mdtutils"
+	@echo "... mdtutils-0.2"
 	@echo "... package"
 	@echo "... package_source"
 	@echo "... rebuild_cache"

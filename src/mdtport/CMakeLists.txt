@@ -98,16 +98,16 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Librairie du projet
-add_library (mdtport SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-target_link_libraries(mdtport ${QT_LIBRARIES})
-target_link_libraries(mdtport "usb-1.0")
+add_library (mdtport${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
+target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "usb-1.0")
 
 # Version statique
-if(MDT_BUILD_STATIC_LIBS)
-  add_library (mdtport_static STATIC ${SOURCES_FILES} )
-  target_link_libraries(mdtport_static ${QT_LIBRARIES})
-  set_target_properties("mdtport_static" PROPERTIES OUTPUT_NAME "mdtport")
-endif(MDT_BUILD_STATIC_LIBS)
+#if(MDT_BUILD_STATIC_LIBS)
+#  add_library (mdtport_static STATIC ${SOURCES_FILES} )
+#  target_link_libraries(mdtport_static ${QT_LIBRARIES})
+#  set_target_properties("mdtport_static" PROPERTIES OUTPUT_NAME "mdtport")
+#endif(MDT_BUILD_STATIC_LIBS)
 
 # Translations - We generate a .pro file, that simplify the usage of lupdate
 file(WRITE "${PROJECT_SOURCE_DIR}/../../translations/mdtport.pro" "# Translations project file for lupdate/lrelease\n")
@@ -126,18 +126,18 @@ file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtport" COMPONENT dev)
 
 # Destinations
-install(TARGETS "mdtport" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
+install(TARGETS "mdtport${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 #if(MDT_BUILD_STATIC_LIBS)
 #  install(TARGETS "mdtport_static" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 #endif(MDT_BUILD_STATIC_LIBS)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
-  add_custom_command(TARGET "mdtport"
+  add_custom_command(TARGET "mdtport${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtport.so" "${PROJECT_SOURCE_DIR}/libmdtport.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtport.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdtport.dbg" "${PROJECT_SOURCE_DIR}/libmdtport.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtport.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdtport.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libmdtport${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
