@@ -22,8 +22,8 @@ project(multidiagtools)
 #set(USE_ASSERT 1)
 
 #Debug or Release
-#set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE Release)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
   message("Building Release")
@@ -55,7 +55,7 @@ configure_file (
 
 # Some flags for compiler
 if(UNIX)
-  # We allways add symbols (will be stripped and put into separate  .dbg files)
+  # We allways add debug symbols (will be stripped and put into separate  .dbg files)
   add_definitions("-Wall -ansi -O2 -lm -g")
 else(UNIX)
   add_definitions("-Wall -ansi -O2 -lm")
@@ -99,10 +99,10 @@ endif(UNIX)
 # Libraries and headers install directories
 if(WIN32)
   set(LIB_DEST_DIR "bin")
-  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_SUFFIX}")
+  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
 else(WIN32)
   set(LIB_DEST_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}")
-  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_SUFFIX}")
+  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
 endif(WIN32)
 
 # * QtSolutions *
