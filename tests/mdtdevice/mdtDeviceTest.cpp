@@ -355,9 +355,16 @@ void mdtDeviceTest::modbusWagoTest()
     QSKIP("No Wago 750 device found, or other error", SkipAll);
   }
   QVERIFY(d.portManager()->isRunning());
+  qDebug() << "Analog outputs: " << d.analogOutputsCount();
+  qDebug() << "Analog inputs: " << d.analogInputsCount();
+  qDebug() << "Digital outputs: " << d.digitalOutputsCount();
+  qDebug() << "Digital inputs: " << d.digitalInputsCount();
+  d.detectIos(&ios);
+  iosw->setDeviceIos(&ios);
+
   ///d.sandBox();
-  ///QTest::qWait(5000);
-  ///return;
+  QTest::qWait(5000);
+  return;
   
   /*
    * Tests
