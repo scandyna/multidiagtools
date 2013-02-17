@@ -185,95 +185,19 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   ///int modulesCnt;
   int i;
   quint16 word;
+  QList<mdtAnalogIo*> analogInputs;
+  QList<mdtAnalogIo*> analogOutputs;
+  QList<mdtDigitalIo*> digitalInputs;
+  QList<mdtDigitalIo*> digitalOutputs;
   mdtAnalogIo *aio;
   ///mdtAnalogIo *ao;
-  mdtDigitalIo *di;
-  mdtDigitalIo *dout;
+  mdtDigitalIo *dio;
+  ///mdtDigitalIo *dout;
   QVariant var;
-  bool isInput;
+  ///bool isInput;
 
   // Clear current I/O setup
   ios->deleteIos();
-  // Get modules configuration
-  /// \bug If number of requested modules is > 62, this hangs up with 750-352 filedbus (possibly a bug in mdtLib..)
-  if(!getRegisterValues(0x2030, 62)){
-    qDebug() << "Cannot get I/O config";
-    return false;
-  }
-  qDebug() << "I/O config: " << pvRegisterValues;
-  // Setup the Fieldbus Coupler.
-  if(pvRegisterValues.size() < 1){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no field bus coupler found", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
-    return false;
-  }
-  word = pvRegisterValues.at(0);
-  if((word < 1)||(word > 999)){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": field bus coupler part number is wrong (expected: value from 0 to 999)", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
-    return false;
-  }
-  qDebug() << "Found filebus part number 750 -" << word;
-  // Setup I/O modules
-  if(pvRegisterValues.size() < 2){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no I/O modules found", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
-    return false;
-  }
-  for(i=1; i<pvRegisterValues.size(); i++){
-    word = pvRegisterValues.at(i);
-    if(word == 0){
-      // We have detected all connected I/Os
-      break;
-    }
-    // Check module type (analog or digital)
-    if(word & 0x8000){
-      qDebug() << "Module[" << i << "]: digital I/O";
-    }else{
-      qDebug() << "Module[" << i << "]: analog I/O";
-      // Check if it's a input or output module
-      var = analogIoModuleIsInput(word);
-      if(!var.isValid()){
-        mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": I/O detection failed for a analog I/O (cannot check if it is a input or a output)", mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-        e.commit();
-        return false;
-      }
-      isInput = var.toBool();
-      aio = getNewAnalogIo(word);
-      if(aio == 0){
-        mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": I/O detection failed for a analog I/O (cannot get encode/decode parameters)", mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-        e.commit();
-        return false;
-      }
-      if(isInput){
-        qDebug() << " -> Input";
-        ios->addAnalogInput(aio);
-      }else{
-        qDebug() << " -> Output";
-      }
-      
-    }
-    
-    
-    ///qDebug() << " -> " << hex << (pvRegisterValues.at(i) >> 8) << "," << (pvRegisterValues.at(i) & 0xFF);
-    /**
-    if(i > 0){
-      if(word & 0x8000){
-        qDebug() << " -> Digital I/O module";
-      }else{
-        qDebug() << " -> Analog I/O module, range: " << analogIoValueMin(word) << " to " << analogIoValueMax(word) << " , resolution: " << analogIoValueBitsCount(pvRegisterValues.at(i)) \
-          << " , signed: " << analogIoValueSigned(word) << " , is input: " << analogIoIsInput(word);
-      }
-    }
-    */
-  }
-  return true;
-  
   // Detect I/O's count
   analogInputsCnt = analogInputsCount();
   if(analogInputsCnt < 0){
@@ -303,15 +227,122 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     e.commit();
     return false;
   }
-  
-  
-  // Setup
-  ios->deleteIos();
-  for(i=0; i<analogInputsCnt; i++){
-    ///ai = new mdtAnalogIo;
-    ///ai->setAddress(i);
-    ///ai->setLabelShort("AI" + QString::number(i+1));
+  // Get modules configuration
+  /// \bug If number of requested modules is > 62, this hangs up with 750-352 filedbus (possibly a bug in mdtLib..)
+  if(!getRegisterValues(0x2030, 62)){
+    qDebug() << "Cannot get I/O config";
+    return false;
   }
+  qDebug() << "I/O config: " << pvRegisterValues;
+  // Setup the Fieldbus Coupler.
+  if(pvRegisterValues.size() < 1){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no field bus coupler found", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  word = pvRegisterValues.at(0);
+  if((word < 1)||(word > 999)){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": field bus coupler part number is wrong (expected: value from 1 to 999)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  qDebug() << "Found filedbus part number 750 -" << word;
+  // Get I/O modules setup
+  if(pvRegisterValues.size() < 2){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no I/O modules found", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  for(i=1; i<pvRegisterValues.size(); i++){
+    word = pvRegisterValues.at(i);
+    if(word == 0){
+      // We have detected all connected I/Os
+      break;
+    }
+    // Check module type (analog or digital)
+    if(word & 0x8000){
+      qDebug() << "Module[" << i << "]: digital I/O";
+      addDigitalIos(digitalInputs, digitalOutputs, word);
+    }else{
+      qDebug() << "Module[" << i << "]: analog I/O";
+      addAnalogIos(analogInputs, analogOutputs, word);
+    }
+  }
+  // Check coherence between detected setup and I/Os count
+  if(analogInputs.size() != analogInputsCnt){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": analog inputs count not coherent", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    qDeleteAll(analogInputs);
+    qDeleteAll(analogOutputs);
+    qDeleteAll(digitalInputs);
+    qDeleteAll(digitalOutputs);
+    return false;
+  }
+  if(analogOutputs.size() != analogOutputsCnt){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": analog outputs count not coherent", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    qDeleteAll(analogInputs);
+    qDeleteAll(analogOutputs);
+    qDeleteAll(digitalInputs);
+    qDeleteAll(digitalOutputs);
+    return false;
+  }
+  if(digitalInputs.size() != digitalInputsCnt){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": digital inputs count not coherent", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    qDeleteAll(analogInputs);
+    qDeleteAll(analogOutputs);
+    qDeleteAll(digitalInputs);
+    qDeleteAll(digitalOutputs);
+    return false;
+  }
+  if(digitalOutputs.size() != digitalOutputsCnt){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": digital outputs count not coherent", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    qDeleteAll(analogInputs);
+    qDeleteAll(analogOutputs);
+    qDeleteAll(digitalInputs);
+    qDeleteAll(digitalOutputs);
+    return false;
+  }
+  // Add I/Os to container
+  for(i=0; i<analogInputs.size(); i++){
+    aio = analogInputs.at(i);
+    Q_ASSERT(aio != 0);
+    aio->setAddress(i);
+    aio->setLabelShort("AI" + QString::number(i+1));
+    ios->addAnalogInput(aio);
+  }
+  for(i=0; i<analogOutputs.size(); i++){
+    aio = analogOutputs.at(i);
+    Q_ASSERT(aio != 0);
+    aio->setAddress(i);
+    aio->setLabelShort("AO" + QString::number(i+1));
+    ios->addAnalogOutput(aio);
+  }
+  for(i=0; i<digitalInputs.size(); i++){
+    dio = digitalInputs.at(i);
+    Q_ASSERT(dio != 0);
+    dio->setAddress(i);
+    dio->setLabelShort("DI" + QString::number(i+1));
+    ios->addDigitalInput(dio);
+  }
+  for(i=0; i<digitalOutputs.size(); i++){
+    dio = digitalOutputs.at(i);
+    Q_ASSERT(dio != 0);
+    dio->setAddress(i);
+    dio->setLabelShort("DO" + QString::number(i+1));
+    ios->addDigitalOutput(dio);
+  }
+
+  return true;
 }
 
 QVariant mdtDeviceModbusWago::analogIoModuleValueMin(int partNumber) const
@@ -398,6 +429,43 @@ int mdtDeviceModbusWago::analogIoModuleIosCount(int partNumber) const
   }
 }
 
+QString mdtDeviceModbusWago::analogIoModuleUnit(int partNumber) const
+{
+  switch(partNumber){
+    case 457:
+      return "V";
+    case 550:
+      return "V";
+    default:
+      return "";
+  }
+}
+
+QVariant mdtDeviceModbusWago::digitalIoModuleIsInput(quint16 word) const
+{
+  // Bit 0 is set for a input module
+  if(word & 0x0001){
+    // Should be a input, check bit 1
+    if(word & 0x002){
+      return QVariant();
+    }else{
+      return true;
+    }
+  }else{
+    // Should be a output module, check bit 1
+    if(word & 0x0002){
+      return false;
+    }else{
+      return QVariant();
+    }
+  }
+}
+
+int mdtDeviceModbusWago::digitalIoModuleIosCount(quint16 word) const
+{
+  return ((word & 0x0F00) >> 8);
+}
+
 mdtAnalogIo *mdtDeviceModbusWago::getNewAnalogIo(int partNumber) const
 {
   mdtAnalogIo *aio;
@@ -436,11 +504,13 @@ mdtAnalogIo *mdtDeviceModbusWago::getNewAnalogIo(int partNumber) const
     return 0;
   }
   aio->setRange(min, max, intValueBitsCount, intValueLsbIndex, intValueSigned);
+  aio->setUnit("[" + analogIoModuleUnit(partNumber) + "]");
+  aio->setLabel("Module: 750-" + QString::number(partNumber));
 
   return aio;
 }
 
-bool mdtDeviceModbusWago::addAnalogIos(QList<mdtAnalogIo*> analogInputs, QList<mdtAnalogIo*> analogOutputs, int partNumber) const
+bool mdtDeviceModbusWago::addAnalogIos(QList<mdtAnalogIo*> &analogInputs, QList<mdtAnalogIo*> &analogOutputs, int partNumber) const
 {
   int iosCount;
   int i;
@@ -478,6 +548,50 @@ bool mdtDeviceModbusWago::addAnalogIos(QList<mdtAnalogIo*> analogInputs, QList<m
       analogInputs.append(aio);
     }else{
       analogOutputs.append(aio);
+    }
+  }
+
+  return true;
+}
+
+bool mdtDeviceModbusWago::addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const
+{
+  int iosCount;
+  int i;
+  bool isInput;
+  QVariant var;
+  mdtDigitalIo *dio;
+
+  // Check if module is input or output
+  var = digitalIoModuleIsInput(word);
+  if(!var.isValid()){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": Cannot check if I/O module has inputs or a outputs", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  isInput = var.toBool();
+  // Get I/Os count
+  iosCount = digitalIoModuleIosCount(word);
+  if(iosCount < 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": Cannot get module's number of I/Os", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  // Add I/Os
+  for(i=0; i<iosCount; i++){
+    dio = new mdtDigitalIo;
+    if(dio == 0){
+      mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": unable to build a digital I/O (memory full ?)", mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+      e.commit();
+      return false;
+    }
+    if(isInput){
+      digitalInputs.append(dio);
+    }else{
+      digitalOutputs.append(dio);
     }
   }
 

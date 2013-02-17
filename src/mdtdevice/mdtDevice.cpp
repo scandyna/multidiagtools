@@ -78,6 +78,24 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
   QList<mdtAnalogIo*> analogOutputs;
   QList<mdtDigitalIo*> digitalOutputs;
 
+  // Clear prevous I/Os
+  if(pvIos != 0){
+    analogOutputs = pvIos->analogOutputs();
+    for(i=0; i<analogOutputs.size(); i++){
+      Q_ASSERT(analogOutputs.at(i) != 0);
+      disconnect(analogOutputs.at(i), SIGNAL(valueChanged(int)), this, SLOT(setAnalogOutputValue(int)));
+    }
+    digitalOutputs = pvIos->digitalOutputs();
+    for(i=0; i<digitalOutputs.size(); i++){
+      Q_ASSERT(digitalOutputs.at(i) != 0);
+      disconnect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
+    }
+    if(pvIos != ios){
+      pvIos->deleteIos();
+      delete pvIos;
+    }
+  }
+  // Set new I/Os
   pvIos = ios;
   if(autoOutputUpdate){
     analogOutputs = pvIos->analogOutputs();

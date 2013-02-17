@@ -344,7 +344,7 @@ void mdtDeviceTest::modbusWagoTest()
   iosw->setDeviceIos(&ios);
 
   // Setup device
-  d.setIos(&ios, true);
+  d.setIos(&ios, false);
   d.setAnalogOutputAddressOffset(0x0200);
   d.setDigitalOutputAddressOffset(0x0200);
   dw.setDevice(&d);
@@ -359,12 +359,14 @@ void mdtDeviceTest::modbusWagoTest()
   qDebug() << "Analog inputs: " << d.analogInputsCount();
   qDebug() << "Digital outputs: " << d.digitalOutputsCount();
   qDebug() << "Digital inputs: " << d.digitalInputsCount();
-  d.detectIos(&ios);
+  QVERIFY(d.detectIos(&ios));
+  d.setIos(&ios, true);
   iosw->setDeviceIos(&ios);
 
-  ///d.sandBox();
-  QTest::qWait(5000);
-  return;
+  ///while(dw.isVisible()){
+    ///QTest::qWait(500);
+  ///}
+  ///return;
   
   /*
    * Tests

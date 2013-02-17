@@ -154,6 +154,28 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    */
   int analogIoModuleIosCount(int partNumber) const;
 
+  /*! \brief Get unit of a analog I/O module (V, A, ...)
+   *
+   * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
+   * \return Unit of module, or a empty string for unknown module.
+   */
+  QString analogIoModuleUnit(int partNumber) const;
+
+  /*! \brief Check if a digital I/O module is a input
+   *
+   * \param word The identification word (see Wago doc, part of register 0x2030 for details).
+   * \return True if module is a input, false if module is a output.
+   *          For a unknown or uncoherent description, a invalid QVariant is returned.
+   */
+  QVariant digitalIoModuleIsInput(quint16 word) const;
+
+  /*! \brief Get number of I/Os for a digital I/O module
+   *
+   * \param word The identification word (see Wago doc, part of register 0x2030 for details).
+   * \return Number of I/O's or -1 for unknown description.
+   */
+  int digitalIoModuleIosCount(quint16 word) const;
+
  private:
 
   /*! \brief Build a new analog I/O
@@ -179,7 +201,21 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    * \param partNumber The right part of Wago part number (f.ex. 457 if module is a 750-457).
    * \return True on success, false else (probably due to a unknown part number).
    */
-  bool addAnalogIos(QList<mdtAnalogIo*> analogInputs, QList<mdtAnalogIo*> analogOutputs, int partNumber) const;
+  bool addAnalogIos(QList<mdtAnalogIo*> &analogInputs, QList<mdtAnalogIo*> &analogOutputs, int partNumber) const;
+
+  /*! \brief Add digital I/O(s) to I/O's container
+   *
+   * Will get number of digital I/Os that given module contains,
+   *  get it's parameters and add it to the correct container.
+   *
+   * \param digitalInputs Digital inputs container.
+   *                      (module's I/Os will be added to this container if it is a digital inputs module).
+   * \param digitalOutputs Digital outputs container.
+   *                      (module's I/Os will be added to this container if it is a digital outputs module).
+   * \param word The identification word (see Wago doc, part of register 0x2030 for details).
+   * \return True on success, false else (probably due to a unknown part number).
+   */
+  bool addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const;
 
   // Helper members for Register service
   bool getRegisterValues(int address, int n);
