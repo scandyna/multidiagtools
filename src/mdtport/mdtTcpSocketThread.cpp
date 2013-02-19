@@ -78,7 +78,7 @@ void mdtTcpSocketThread::run()
 
   // Run...
   while(1){
-    qDebug() << "TCPTHD: running ...";
+    ///qDebug() << "TCPTHD: running ...";
     // Read thread state
     if(!pvRunning){
       break;
@@ -103,7 +103,7 @@ void mdtTcpSocketThread::run()
       }
     }
     // Write
-    qDebug() << "TCPTHD: writing ...";
+    ///qDebug() << "TCPTHD: writing ...";
     portError = writeToPort(writeFrame, false, 0);
     if(portError != mdtAbstractPort::NoError){
       // Check about stopping

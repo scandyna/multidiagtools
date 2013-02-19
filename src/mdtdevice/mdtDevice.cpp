@@ -216,6 +216,9 @@ int mdtDevice::getAnalogInputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->analogInputsCount() < 1){
+    return 0;
+  }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
@@ -308,6 +311,9 @@ int mdtDevice::getAnalogOutputs(int timeout)
 
   if(pvIos == 0){
     return -1;
+  }
+  if(pvIos->analogOutputsCount() < 1){
+    return 0;
   }
   // Get a new transaction
   transaction = getNewTransaction();
@@ -490,6 +496,9 @@ int mdtDevice::getDigitalInputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->digitalInputsCount() < 1){
+    return 0;
+  }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
@@ -573,6 +582,9 @@ int mdtDevice::getDigitalOutputs(int timeout)
 
   if(pvIos == 0){
     return -1;
+  }
+  if(pvIos->digitalOutputsCount() < 1){
+    return 0;
   }
   // Get a new transaction
   transaction = getNewTransaction();

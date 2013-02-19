@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 26
+  revision 28
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -627,6 +627,108 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    state 128002 "mdtDeviceState"
+      stereotype "machine"
+      statediagram 574722 "mdtDeviceState"
+	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition yes draw_all_relations no shadow default
+	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	size A3
+      end
+
+      state 128130 "Ready"
+	  uml_on_entry "LED green"
+	transition 135938 "<transition>"
+	  on pseudostate_ref 134914 // choice
+	    uml_trigger "portErrorOccured"
+	  external 
+	end
+      end
+
+      state 128258 "Busy"
+	  uml_on_entry "LED orange"
+      end
+
+      state 128642 "Unhandled"
+      end
+
+      state 128770 "QueryRunning"
+      end
+
+      state 128898 "Error"
+      end
+
+      state 129026 "Connecting"
+	  uml_on_entry "LED orange"
+	transition 128514 "<transition>"
+	  on state_ref 128130 // Ready
+	  external 
+	end
+      end
+
+      state 129154 "Disconnected"
+	  uml_on_entry "LED off"
+	transition 128258 "<transition>"
+	  on pseudostate_ref 128386 // final
+	    uml_trigger "quit"
+	  external 
+	end
+
+	transition 128386 "<transition>"
+	  on state_ref 129026 // Connecting
+	    uml_trigger "connectToDevice"
+	  external 
+	end
+      end
+
+      pseudostate 128258 initial 
+	transition 128130 "<transition>"
+	  on state_ref 129154 // Disconnected
+	  external 
+	end
+      end
+
+      pseudostate 128386 final 
+      end
+
+      state 129282 "SequenceRunning"
+      end
+
+      pseudostate 134914 choice 
+	transition 136066 "<transition>"
+	  on state_ref 129154 // Disconnected
+	    uml_guard "error==Disconnected"
+	  external 
+	end
+
+	transition 136194 "<transition>"
+	  on state_ref 128258 // Busy
+	    uml_guard "error==ReadPoolEmpty
+or
+error==WritePoolEmpty
+or
+error==ReadTimeout
+or
+error==WriteTimeout
+or
+error==ControlTimeout"
+	  external 
+	end
+
+	transition 136322 "<transition>"
+	  on state_ref 129154 // Disconnected
+	    uml_guard "else"
+	    uml_expr "portManager->stop"
+	  external 
+	end
+
+	transition 136450 "<transition>"
+	  on state_ref 128130 // Ready
+	    uml_guard "error==NoError"
+	  external 
+	end
       end
     end
   end

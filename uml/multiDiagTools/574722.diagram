@@ -1,0 +1,103 @@
+format 76
+
+statecanvas 128002 state_ref 128130 // Ready
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 14.4 127.6 2000 167 73
+end
+statecanvas 128130 state_ref 128258 // Busy
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 731.6 127.4 2000 177 73
+end
+statecanvas 128898 state_ref 128642 // Unhandled
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 547.8 20.2 2000 99 39
+end
+statecanvas 129026 state_ref 128770 // QueryRunning
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 65 16.4 2000 123 39
+end
+statecanvas 129154 state_ref 128898 // Error
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 861.3 33.5 2000 57 39
+end
+statecanvas 129282 state_ref 129026 // Connecting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 8 377.8 2000 177 73
+end
+statecanvas 129410 state_ref 129154 // Disconnected
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 539.9 575.3 2000 147 73
+end
+pseudostatecanvas 129922 pseudostate_ref 128258 // initial
+   xyz 62.5 644.4 2000
+end
+pseudostatecanvas 130178 pseudostate_ref 128386 // final
+   xyz 917.2 579.6 2000
+end
+statecanvas 131330 state_ref 129282 // SequenceRunning
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 683.1 25.2 2000 151 39
+end
+pseudostatecanvas 132482 pseudostate_ref 134914 // choice
+   xyz 424.2 145.1 2000
+end
+transitioncanvas 130050 transition_ref 128130 // <transition>
+  
+  from ref 129922 z 2001 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130306 transition_ref 128258 // <transition>
+  
+  from ref 129410 z 2001 label "quit" xyz 789 591 3000 to ref 130178
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130434 transition_ref 128386 // <transition>
+  
+  from ref 129410 z 2001 label "connectToDevice" xyz 260.5 601.5 3000 to point 95.6 608
+  line 133762 z 2001 to ref 129282
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130562 transition_ref 128514 // <transition>
+  
+  from ref 129282 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132610 transition_ref 135938 // <transition>
+  
+  from ref 128002 z 2001 label "portErrorOccured" xyz 246 150 3000 to ref 132482
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132866 transition_ref 136066 // <transition>
+  decenter_end 264
+  
+  from ref 132482 z 2001 label "[error==Disconnected]" xyz 402.5 376.5 3000 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132994 transition_ref 136194 // <transition>
+  
+  from ref 132482 z 2001 label "[error==ReadPoolEmpty
+or
+error==WritePoolEmpty
+or
+error==ReadTimeout
+or
+error==WriteTimeout
+or
+error==ControlTimeout]" xyz 507.5 83 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133122 transition_ref 136322 // <transition>
+  decenter_end 938
+  
+  from ref 132482 z 2001 label "[else] / portManager->stop" xyz 519.5 439.5 3000 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 133378 transition_ref 136450 // <transition>
+  decenter_end 947
+  
+  from ref 132482 z 2001 label "[error==NoError]" xyz 339 114 3000 to point 364.8 90.6
+  line 133634 z 2001 to point 230.6 90.6
+  line 133506 z 2001 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+end

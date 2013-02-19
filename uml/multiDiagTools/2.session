@@ -1,15 +1,13 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 508290 // mdtDeviceModbus
-    970 803 100 4 0 0
-  active  classdiagram_ref 528258 // mdtDeviceWindow
-    970 803 100 4 0 0
+  classdiagram_ref 314242 // mdtDevice
+    571 416 100 4 48 0
+  active  statediagram_ref 574722 // mdtDeviceState
+    970 803 90 3 0 0
 end
 show_stereotypes
-selected classdiagram_ref 528258 // mdtDeviceWindow
 open
-  
-package_ref 174978 // mdtutilsgui
+  state_ref 128130 // Ready
   classview_ref 365954 // mdtDeviceWindow
   classview_ref 372482 // mdtDeviceStatusWidget
   classview_ref 392194 // mdtDeviceScpi
