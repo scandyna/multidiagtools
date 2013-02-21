@@ -221,7 +221,8 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   int maxIter;
   bool ok = false;
 
-  emit(errorStateChanged(mdtAbstractPort::Connecting, tr("Trying ") + hostName));
+  ///emit(errorStateChanged(mdtAbstractPort::Connecting, tr("Trying ") + hostName));
+  emit(statusMessageChanged(tr("Trying ") + hostName, 500));
   socket.connectToHost(hostName, port);
   maxIter = timeout / 50;
   while(socket.state() != QAbstractSocket::ConnectedState){

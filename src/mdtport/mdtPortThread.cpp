@@ -462,9 +462,14 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
     return mdtAbstractPort::UnhandledError;
   }
   if(notify){
+    // We must pass trough all states (see mdtDevice's state machine)
+    notifyError(mdtAbstractPort::Disconnected);
     notifyError(mdtAbstractPort::Connecting);
   }
   while(count > 0){
+    if(!pvRunning){
+      return mdtAbstractPort::Disconnected;
+    }
     qDebug() << "mdtPortThread::reconnect(): trying ...";
     error = pvPort->reconnect(pvReconnectTimeout);
     if(error == mdtAbstractPort::NoError){

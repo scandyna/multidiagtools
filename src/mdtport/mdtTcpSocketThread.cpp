@@ -160,6 +160,17 @@ void mdtTcpSocketThread::run()
             pvRunning = false;
             break;
           }
+        /**}else if(portError == mdtAbstractPort::ReadTimeout){
+          // Probably disconnected. Abort and Go back idle
+          pvSocket->abort();
+          portError = reconnect(true);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            pvRunning = false;
+            break;
+          }
+          // Go back idle
+          break;*/
         }else{
           // stop
           pvRunning = false;

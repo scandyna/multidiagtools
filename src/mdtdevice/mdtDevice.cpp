@@ -44,7 +44,8 @@ mdtDevice::mdtDevice(QObject *parent)
   pvQueryTimer = new QTimer(this);
   Q_ASSERT(pvQueryTimer != 0);
   setStateDisconnected();
-  connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady()));
+  ///connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady()));
+  connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SIGNAL(deviceReady()));
   connect(pvQueryTimer, SIGNAL(timeout()), this, SLOT(runQueries()));
   qDebug() << "mdtDevice::mdtDevice() DONE";
   // Setup state machine
@@ -819,33 +820,43 @@ void mdtDevice::setStateFromPortError(int error, const QString &message, const Q
       break;
     case mdtAbstractPort::ReadPoolEmpty:
       emit(deviceBusy());
+      qDebug() << " -> emit deviceBusy";
       break;
     case mdtAbstractPort::WritePoolEmpty:
       emit(deviceBusy());
+      qDebug() << " -> emit deviceBusy";
       break;
     case mdtAbstractPort::WriteCanceled:
       emit(handledError());
+      qDebug() << " -> emit handledError";
       break;
     case mdtAbstractPort::ReadCanceled:
       emit(handledError());
+      qDebug() << " -> emit handledError";
       break;
     case mdtAbstractPort::ControlCanceled:
       emit(handledError());
+      qDebug() << " -> emit handledError";
       break;
     case mdtAbstractPort::ReadTimeout:
-      emit(deviceReady());
+      emit(deviceBusy());
+      qDebug() << " -> emit deviceBusy";
       break;
     case mdtAbstractPort::WriteTimeout:
-      emit(deviceReady());
+      emit(deviceBusy());
+      qDebug() << " -> emit deviceBusy";
       break;
     case mdtAbstractPort::ControlTimeout:
-      emit(deviceReady());
+      emit(deviceBusy());
+      qDebug() << " -> emit deviceBusy";
       break;
     case mdtAbstractPort::UnhandledError:
       emit(unhandledError());
+      qDebug() << " -> emit unhandledError";
       break;
     default:
       emit(unhandledError());
+      qDebug() << " -> emit unhandledError";
   }
   /**
   if(error == mdtAbstractPort::NoError){

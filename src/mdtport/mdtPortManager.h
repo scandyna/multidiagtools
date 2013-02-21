@@ -553,6 +553,12 @@ class mdtPortManager : public QThread
    */
   void errorStateChanged(int error, const QString & message = QString(), const QString & details = QString());
 
+  /*! \brief Emitted when a new status message is to display
+   *
+   * Typically used with mdtDeviceStatusWidget
+   */
+  void statusMessageChanged(const QString &message, int timeout);
+
  protected:
 
   /*! \brief Restore a transaction into pool

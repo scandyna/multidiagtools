@@ -254,7 +254,8 @@ mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketErr
   }else if(error == QAbstractSocket::SocketTimeoutError){
     if(byRead){
       updateReadTimeoutState(true);
-      return ReadTimeout;
+      ///return ReadTimeout;
+      return Disconnected;
     }else{
       updateWriteTimeoutState(true);
       return WriteTimeout;
