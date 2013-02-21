@@ -1,11 +1,13 @@
-window_sizes 1280 1001 304 970 803 120
+window_sizes 1024 718 304 714 520 120
 diagrams
   classdiagram_ref 314242 // mdtDevice
     571 416 100 4 48 0
   active  statediagram_ref 574722 // mdtDeviceState
-    970 803 90 3 0 0
+    714 520 57 3 48 0
 end
 show_stereotypes
+selected 
+package_ref 129 // multiDiagTools
 open
   state_ref 128130 // Ready
   classview_ref 365954 // mdtDeviceWindow

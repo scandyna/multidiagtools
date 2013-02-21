@@ -21,6 +21,7 @@
 #include "mdtDeviceStatusWidget.h"
 #include <QPushButton>
 #include <QLabel>
+#include <QTimer>
 
 #include <QDebug>
 
@@ -36,6 +37,7 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   lbRx = 0;
   ldTx = 0;
   ldRx = 0;
+  pvShowingMessage = false;
   // Add GUI elements
   pbDetails = new QPushButton("...");
   pbDetails->setEnabled(false);
@@ -50,6 +52,10 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   // Set some default attributes
   setDefaultStateTexts();
   setDefaultStateColors();
+  // Setup back to state text timer
+  pvBackToStateTextTimer = new QTimer(this);
+  pvBackToStateTextTimer->setSingleShot(true);
+  connect(pvBackToStateTextTimer, SIGNAL(timeout()), this, SLOT(backToStateText()));
 }
 
 mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
@@ -61,8 +67,10 @@ void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
 {
   Q_ASSERT(device != 0);
 
+  pvShowingMessage = false;
   ///connect(device, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(device, SIGNAL(stateChanged(int, const QString&, const QString&)), this, SLOT(setState(int, const QString&, const QString&)));
+  connect(device, SIGNAL(statusMessageChanged(const QString&, int)), this, SLOT(showMessage(const QString&, int)));
   setState(device->state());
 }
 
@@ -201,23 +209,32 @@ void mdtDeviceStatusWidget::setState(int state)
   if(state == mdtDevice::Ready){
     ldState->setColor(pvReadyColor);
     ldState->setOn();
-    lbMessage->setText(pvReadyText);
+    ///lbMessage->setText(pvReadyText);
+    pvCurrentStateText = pvReadyText;
   }else if(state == mdtDevice::Disconnected){
     ldState->setGreen();
     ldState->setOff();
-    lbMessage->setText(pvDisconnectedText);
+    ///lbMessage->setText(pvDisconnectedText);
+    pvCurrentStateText = pvDisconnectedText;
   }else if(state == mdtDevice::Connecting){
     ldState->setColor(pvConnectingColor);
     ldState->setOn();
-    lbMessage->setText(pvConnectingText);
+    ///lbMessage->setText(pvConnectingText);
+    pvCurrentStateText = pvConnectingText;
   }else if(state == mdtDevice::Busy){
     ldState->setColor(pvBusyColor);
     ldState->setOn();
-    lbMessage->setText(pvBusyText);
+    ///lbMessage->setText(pvBusyText);
+    pvCurrentStateText = pvBusyText;
   }else{
     ldState->setRed();
     ldState->setOn();
-    lbMessage->setText(tr("Unknown state"));
+    ///lbMessage->setText(tr("Unknown state"));
+    pvCurrentStateText = tr("Unknown state");
+  }
+  // Set state text
+  if(!pvShowingMessage){
+    lbMessage->setText(pvCurrentStateText);
   }
 }
 
@@ -244,9 +261,21 @@ void mdtDeviceStatusWidget::setState(int state, const QString &message, const QS
       ldState->setOn();
     }
     // Set text
-    lbMessage->setText(message);
+    pvCurrentStateText = message;
+    if(!pvShowingMessage){
+      lbMessage->setText(pvCurrentStateText);
+    }
   }
   /// \todo Implement details
+}
+
+void mdtDeviceStatusWidget::showMessage(const QString &message, int timeout)
+{
+  pvShowingMessage = true;
+  lbMessage->setText(message);
+  if(timeout > 0){
+    pvBackToStateTextTimer->start(timeout);
+  }
 }
 
 void mdtDeviceStatusWidget::trigTxLed()
@@ -261,4 +290,10 @@ void mdtDeviceStatusWidget::trigRxLed()
   Q_ASSERT(ldRx != 0);
 
   ldRx->setOn(100);
+}
+
+void mdtDeviceStatusWidget::backToStateText()
+{
+  pvShowingMessage = false;
+  lbMessage->setText(pvCurrentStateText);
 }

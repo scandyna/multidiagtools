@@ -30,6 +30,8 @@
 #include <QVariant>
 #include <QString>
 #include <QStringList>
+#include <QState>
+#include <QStateMachine>
 
 class QTimer;
 
@@ -97,7 +99,9 @@ class mdtDevice : public QObject
                 Disconnected,           /*!< Device is not connected */
                 Connecting,             /*!< Trying to connect to device */
                 Busy,                   /*!< Device is connected but cannot accept requests for the moment */
-                Unknown                 /*!< Unknown (and unhandled) state */
+                ///Unknown                 /*!< Unknown (and unhandled) state */
+                Warning,                /*!< Device or port communication handled error occured */
+                Error                   /*!< Device or port communication unhandled error occured */
                };
 
   mdtDevice(QObject *parent = 0);
@@ -451,13 +455,6 @@ class mdtDevice : public QObject
    */
   state_t state() const;
 
- signals:
-
-  /*! \brief Emited when state has changed
-   */
-  ///void stateChanged(int state);
-  void stateChanged(int state, const QString &message = QString(), const QString &details = QString());
-
  public slots:
 
   /*! \brief Set value on a analog output on physical device
@@ -507,19 +504,6 @@ class mdtDevice : public QObject
    * This slot is periodically called after a call of start().
    */
   void runQueries();
-
-  /*! \brief Update device state regarding port error.
-   *
-   * If error is unknown, the state is changed to Unknown.
-   */
-  ///void setStateFromPortError(int error);
-  void setStateFromPortError(int error, const QString &message = QString(), const QString &details = QString());
-
-  /*! \brief Set the ready state
-   *
-   * Emit stateChanged() if current state was not Ready.
-   */
-  void setStateReady();
 
  protected slots:
 
@@ -717,34 +701,6 @@ class mdtDevice : public QObject
    */
   virtual bool queriesSequence();
 
-  /*! \brief Set the disconnected state
-   *
-   * Emit stateChanged() if current state was not Disconnected.
-   */
-  void setStateDisconnected();
-
-  /*! \brief Set the connecting state
-   *
-   * Emit stateChanged() if current state was not Connecting.
-   */
-  void setStateConnecting(const QString &message = QString());
-
-  /*! \brief Set the busy state
-   *
-   * Busy state can be used when physical device or computer (this software) cannot process more requests.
-   * Emit stateChanged() if current state was not Busy.
-   *
-   * \param retryTimeout If >= 0, device will automatically go back to ready state after this timeout [ms]
-   */
-  void setStateBusy(int retryTimeout = -1);
-
-  /*! \brief Set the unknown state
-   *
-   * Will add a error to mdtError system.
-   * Emit stateChanged() if current state was not Unknown.
-   */
-  void setStateUnknown();
-
   /*! \brief Get a new transaction
    *
    * \pre portManager must be set before calling this method
@@ -778,16 +734,155 @@ class mdtDevice : public QObject
   int pvDigitalOutputAddressOffset;
   int pvAnalogOutputAddressOffset;
 
+ protected slots:
+
+  /*! \brief Update device state regarding port error.
+   *
+   * If error is unknown, the state is changed to Unknown.
+   * 
+   * \todo must become private (adapt subclasses)
+   */
+  ///void setStateFromPortError(int error);
+  void setStateFromPortError(int error, const QString &message = QString(), const QString &details = QString());
+
+ public slots:
+
+  /*! \brief Used to show a message in status bar
+   *
+   * \param message Message to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showStatusMessage(const QString &message, int timeout = 0);
+
+ signals:
+
+  /*! \brief Emitted when state has changed
+   *
+   * Typically used with mdtDeviceStatusWidget
+   */
+  ///void stateChanged(int state);
+  void stateChanged(int state, const QString &message = QString(), const QString &details = QString());
+
+  /*! \brief Emitted when a new status message is to display
+   *
+   * Typically used with mdtDeviceStatusWidget
+   */
+  void statusMessageChanged(const QString &message, int timeout);
+
+  /*! \brief Connecting event
+   *
+   * Used by internal state machine
+   */
+  void connecting();
+
+  /*! \brief Disconnected event
+   *
+   * Used by internal state machine
+   */
+  void disconnected();
+
+  /*! \brief Device ready event event
+   *
+   * Used by internal state machine
+   */
+  void deviceReady();
+
+  /*! \brief Device busy event event
+   *
+   * Used by internal state machine
+   */
+  void deviceBusy();
+
+  /*! \brief Handled error event
+   *
+   * Used by internal state machine
+   */
+  void handledError();
+
+  /*! \brief Unhandled error event
+   *
+   * Used by internal state machine
+   */
+  void unhandledError();
+
+ private slots:
+
+  /*! \brief Set the disconnected state
+   *
+   * Used by internal state machine
+   */
+  void setStateDisconnected();
+
+  /*! \brief Set the connecting state
+   *
+   * Used by internal state machine
+   * Emit stateChanged() if current state was not Connecting.
+   * \todo Obselete args
+   */
+  void setStateConnecting(/*const QString &message = QString()*/);
+
+ ///protected slots:
+
+  /*! \brief Set the ready state
+   *
+   * Emit stateChanged() if current state was not Ready.
+   * 
+   * \todo must become private (adapt subclasses)
+   */
+  void setStateReady();
+
+  /*! \brief Set the busy state
+   *
+   * Busy state can be used when physical device or computer (this software) cannot process more requests.
+   * Emit stateChanged() if current state was not Busy.
+   *
+   * \param retryTimeout If >= 0, device will automatically go back to ready state after this timeout [ms]
+   * \todo Obselete args
+   * \todo must become private (adapt subclasses)
+   */
+  void setStateBusy(/*int retryTimeout = -1*/);
+
+ ///private slots:
+
+  /*! \brief Set the unknown state
+   *
+   * Will add a error to mdtError system.
+   * Emit stateChanged() if current state was not Unknown.
+   * \todo Obselete this method
+   */
+  ///void setStateUnknown();
+
+  /*! \brief Set the warning state
+   *
+   * Used by internal state machine
+   */
+  void setStateWarning();
+
+  /*! \brief Set the error state
+   *
+   * Used by internal state machine
+   */
+  void setStateError();
+
  private:
 
   Q_DISABLE_COPY(mdtDevice);
 
-  state_t pvCurrentState;
   QString pvName;
   QTimer *pvQueryTimer;
   bool pvAutoQueryEnabled;  // Flag used for state handling
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
+  // State flag
+  state_t pvCurrentState;
+  // State machine
+  QStateMachine *pvStateMachine;
+  QState *pvStateDisconnected;
+  QState *pvStateConnecting;
+  QState *pvStateReady;
+  QState *pvStateBusy;
+  QState *pvStateWarning;
+  QState *pvStateError;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

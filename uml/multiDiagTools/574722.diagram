@@ -2,44 +2,36 @@ format 76
 
 statecanvas 128002 state_ref 128130 // Ready
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 14.4 127.6 2000 167 73
+  xyzwh 925.1 743.9 2000 204 74
 end
 statecanvas 128130 state_ref 128258 // Busy
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 731.6 127.4 2000 177 73
-end
-statecanvas 128898 state_ref 128642 // Unhandled
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 547.8 20.2 2000 99 39
-end
-statecanvas 129026 state_ref 128770 // QueryRunning
-  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 65 16.4 2000 123 39
+  xyzwh 85 743.9 2000 310 74
 end
 statecanvas 129154 state_ref 128898 // Error
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 861.3 33.5 2000 57 39
+  xyzwh 434.2 399.6 2000 276 74
 end
 statecanvas 129282 state_ref 129026 // Connecting
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 8 377.8 2000 177 73
+  xyzwh 883.9 395.7 2000 286 74
 end
 statecanvas 129410 state_ref 129154 // Disconnected
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 539.9 575.3 2000 147 73
+  xyzwh 324.2 183.2 2000 377 73
 end
 pseudostatecanvas 129922 pseudostate_ref 128258 // initial
-   xyz 62.5 644.4 2000
+   xyz 38.3 211.9 2000
 end
 pseudostatecanvas 130178 pseudostate_ref 128386 // final
-   xyz 917.2 579.6 2000
+   xyz 1035 207.2 2000
 end
-statecanvas 131330 state_ref 129282 // SequenceRunning
+statecanvas 134146 state_ref 135810 // Warning
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 683.1 25.2 2000 151 39
+  xyzwh 12.9 400.2 2000 301 74
 end
-pseudostatecanvas 132482 pseudostate_ref 134914 // choice
-   xyz 424.2 145.1 2000
+pseudostatecanvas 135810 pseudostate_ref 141442 // final
+   xyz 560.2 547.4 2000
 end
 transitioncanvas 130050 transition_ref 128130 // <transition>
   
@@ -48,56 +40,100 @@ transitioncanvas 130050 transition_ref 128130 // <transition>
 end
 transitioncanvas 130306 transition_ref 128258 // <transition>
   
-  from ref 129410 z 2001 label "quit" xyz 789 591 3000 to ref 130178
+  from ref 129410 z 2001 label "quit" xyz 856.5 201 2001 to ref 130178
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130434 transition_ref 128386 // <transition>
+  decenter_begin 713
+  decenter_end 358
   
-  from ref 129410 z 2001 label "connectToDevice" xyz 260.5 601.5 3000 to point 95.6 608
-  line 133762 z 2001 to ref 129282
+  from ref 129410 z 2001 label "connecting" xyz 758.5 317 2001 to ref 129282
   write_horizontally default show_definition default drawing_language default
 end
 transitioncanvas 130562 transition_ref 128514 // <transition>
   
-  from ref 129282 z 2001 to ref 128002
+  from ref 129282 z 2001 label "deviceReady" xyz 1027 554.5 3000 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end
-transitioncanvas 132610 transition_ref 135938 // <transition>
+transitioncanvas 133890 transition_ref 142978 // <transition>
+  decenter_begin 880
+  decenter_end 880
   
-  from ref 128002 z 2001 label "portErrorOccured" xyz 246 150 3000 to ref 132482
+  from ref 128002 z 2001 label "deviceBusy" xyz 621 791.5 3000 to ref 128130
   write_horizontally default show_definition default drawing_language default
 end
-transitioncanvas 132866 transition_ref 136066 // <transition>
-  decenter_end 264
+transitioncanvas 134018 transition_ref 143106 // <transition>
+  decenter_begin 474
+  decenter_end 474
   
-  from ref 132482 z 2001 label "[error==Disconnected]" xyz 402.5 376.5 3000 to ref 129410
+  from ref 128130 z 2001 label "deviceReady" xyz 616 761.5 3000 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end
-transitioncanvas 132994 transition_ref 136194 // <transition>
+transitioncanvas 134274 transition_ref 143234 // <transition>
+  decenter_begin 171
+  decenter_end 970
   
-  from ref 132482 z 2001 label "[error==ReadPoolEmpty
-or
-error==WritePoolEmpty
-or
-error==ReadTimeout
-or
-error==WriteTimeout
-or
-error==ControlTimeout]" xyz 507.5 83 3000 to ref 128130
+  from ref 128002 z 2001 label "handledError" xyz 713 654 3000 to ref 134146
   write_horizontally default show_definition default drawing_language default
 end
-transitioncanvas 133122 transition_ref 136322 // <transition>
-  decenter_end 938
+transitioncanvas 134402 transition_ref 143362 // <transition>
   
-  from ref 132482 z 2001 label "[else] / portManager->stop" xyz 519.5 439.5 3000 to ref 129410
+  from ref 128130 z 2001 label "handledError" xyz 153 601 3000 to ref 134146
   write_horizontally default show_definition default drawing_language default
 end
-transitioncanvas 133378 transition_ref 136450 // <transition>
-  decenter_end 947
+transitioncanvas 134530 transition_ref 143490 // <transition>
+  decenter_begin 839
+  decenter_end 976
   
-  from ref 132482 z 2001 label "[error==NoError]" xyz 339 114 3000 to point 364.8 90.6
-  line 133634 z 2001 to point 230.6 90.6
-  line 133506 z 2001 to ref 128002
+  from ref 129282 z 2001 label "disconnected" xyz 862 318 3000 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134658 transition_ref 143618 // <transition>
+  
+  from ref 128002 z 2001 label "disconnected" xyz 793.5 543 3000 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 134786 transition_ref 143746 // <transition>
+  decenter_end 23
+  
+  from ref 134146 z 2001 label "disconnected" xyz 63 353.5 3000 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135042 transition_ref 143874 // <transition>
+  decenter_end 324
+  
+  from ref 128130 z 2001 label "disconnected" xyz 285 562.5 3000 to ref 129410
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135170 transition_ref 144002 // <transition>
+  
+  from ref 129282 z 2001 label "unhandledError" xyz 750.5 419.5 3000 to ref 129154
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135298 transition_ref 144130 // <transition>
+  
+  from ref 134146 z 2001 label "unhandledError" xyz 320.5 419.5 3000 to ref 129154
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135426 transition_ref 144258 // <transition>
+  
+  from ref 128002 z 2001 label "unhandledError" xyz 732.5 606.5 3000 to ref 129154
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135554 transition_ref 144386 // <transition>
+  
+  from ref 128130 z 2001 label "unhandledError" xyz 351.5 637 3000 to ref 129154
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 135938 transition_ref 144514 // <transition>
+  
+  from ref 129154 z 2001 label "quit" xyz 558 501 3000 to ref 135810
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 136066 transition_ref 144642 // <transition>
+  
+  from ref 134146 z 2001 label "deviceReady" xyz 587 647 3000 to point 788.2 730.6
+  line 136194 z 2001 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end
 end

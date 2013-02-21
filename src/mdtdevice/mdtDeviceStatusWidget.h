@@ -30,6 +30,7 @@
 
 class QLabel;
 class QPushButton;
+class QTimer;
 
 /*! \brief
  */
@@ -125,6 +126,13 @@ class mdtDeviceStatusWidget : public QWidget
    */
   void setState(int state, const QString &message, const QString &details);
 
+  /*! \brief Used to show a message
+   *
+   * \param message Message to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showMessage(const QString &message, int timeout = 0);
+
  private slots:
 
   /*! \brief Trig the TX led for 100 ms
@@ -138,6 +146,12 @@ class mdtDeviceStatusWidget : public QWidget
    * \pre RX led must be set (see enableTxRxLeds)
    */
   void trigRxLed();
+
+  /*! \brief Re-display state text after timeout
+   *
+   * Used by showMessage()
+   */
+  void backToStateText();
 
  private:
 
@@ -157,6 +171,9 @@ class mdtDeviceStatusWidget : public QWidget
   QString pvDisconnectedText;
   QString pvConnectingText;
   QString pvBusyText;
+  QString pvCurrentStateText;
+  QTimer *pvBackToStateTextTimer;
+  bool pvShowingMessage;  // Set by showMessage()
   // Status colors
   mdtLed::color_t pvReadyColor;
   mdtLed::color_t pvConnectingColor;

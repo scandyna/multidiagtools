@@ -67,7 +67,7 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction transaction)
 
   qDebug() << "mdtDeviceU3606A::decodeReadenFrame() , ID: " << transaction.id();
   
-  setStateReady();
+  ///setStateReady();
   switch(transaction.type()){
     ///case MDT_FC_SCPI_VALUE:
     case mdtFrameCodecScpi::QT_VALUE:
@@ -120,7 +120,7 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
 
   /// \todo Add resolution and limits (min/max)
   /// \todo Handle type (Ampere, Voltage, Resistance, AC/DC, ...)
-  setStateBusy();
+  ///setStateBusy();
   // Wait until data can be sent
   if(!pvUsbtmcPortManager->waitOnWriteReady()){
     return mdtAbstractPort::WritePoolEmpty;

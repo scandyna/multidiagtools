@@ -332,7 +332,8 @@ void mdtPortTerm::setStateFromPortError(int error)
       setStateStopped(tr("Connecting ..."));
       break;
     default:
-      pvStatusWidget->setState(mdtDevice::Unknown, "Received unknown error, number " + QString::number(error), "");
+      ///pvStatusWidget->setState(mdtDevice::Unknown, "Received unknown error, number " + QString::number(error), "");
+      pvStatusWidget->setState(mdtDevice::Error, "Received unknown error, number " + QString::number(error), "");
   }
 }
 
@@ -354,5 +355,6 @@ void mdtPortTerm::setStateError(const QString &msg)
 {
   pvRunning = false;
   pbSendCmd->setEnabled(false);
-  pvStatusWidget->setState(mdtDevice::Unknown, msg, "");
+  ///pvStatusWidget->setState(mdtDevice::Unknown, msg, "");
+  pvStatusWidget->setState(mdtDevice::Error, msg, "");
 }

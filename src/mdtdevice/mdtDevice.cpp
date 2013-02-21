@@ -38,7 +38,7 @@ mdtDevice::mdtDevice(QObject *parent)
   pvBackToReadyStateTimer = new QTimer(this);
   Q_ASSERT(pvBackToReadyStateTimer != 0);
   pvBackToReadyStateTimer->setSingleShot(true);
-  pvCurrentState = Unknown;
+  ///pvCurrentState = Unknown;
   setName(tr("Unknown"));
   pvAutoQueryEnabled = false;
   pvQueryTimer = new QTimer(this);
@@ -47,12 +47,49 @@ mdtDevice::mdtDevice(QObject *parent)
   connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady()));
   connect(pvQueryTimer, SIGNAL(timeout()), this, SLOT(runQueries()));
   qDebug() << "mdtDevice::mdtDevice() DONE";
+  // Setup state machine
+  pvStateMachine = new QStateMachine;
+  pvStateDisconnected = new QState;
+  pvStateConnecting = new QState;
+  pvStateReady = new QState;
+  pvStateBusy = new QState;
+  pvStateWarning = new QState;
+  pvStateError = new QState;
+  connect(pvStateDisconnected, SIGNAL(entered()), this, SLOT(setStateDisconnected()));
+  pvStateDisconnected->addTransition(this, SIGNAL(connecting()), pvStateConnecting);
+  connect(pvStateConnecting, SIGNAL(entered()), this, SLOT(setStateConnecting()));
+  pvStateConnecting->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateConnecting->addTransition(this, SIGNAL(unhandledError()), pvStateError);
+  pvStateConnecting->addTransition(this, SIGNAL(deviceReady()), pvStateReady);
+  connect(pvStateReady, SIGNAL(entered()), this, SLOT(setStateReady()));
+  pvStateReady->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateReady->addTransition(this, SIGNAL(unhandledError()), pvStateError);
+  pvStateReady->addTransition(this, SIGNAL(handledError()), pvStateWarning);
+  pvStateReady->addTransition(this, SIGNAL(deviceBusy()), pvStateBusy);
+  connect(pvStateBusy, SIGNAL(entered()), this, SLOT(setStateBusy()));
+  pvStateBusy->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateBusy->addTransition(this, SIGNAL(deviceReady()), pvStateReady);
+  pvStateBusy->addTransition(this, SIGNAL(unhandledError()), pvStateError);
+  pvStateBusy->addTransition(this, SIGNAL(handledError()), pvStateWarning);
+  connect(pvStateWarning, SIGNAL(entered()), this, SLOT(setStateWarning()));
+  pvStateWarning->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateWarning->addTransition(this, SIGNAL(deviceReady()), pvStateReady);
+  connect(pvStateError, SIGNAL(entered()), this, SLOT(setStateError()));
+  pvStateMachine->addState(pvStateDisconnected);
+  pvStateMachine->addState(pvStateConnecting);
+  pvStateMachine->addState(pvStateReady);
+  pvStateMachine->addState(pvStateBusy);
+  pvStateMachine->addState(pvStateWarning);
+  pvStateMachine->addState(pvStateError);
+  pvStateMachine->setInitialState(pvStateDisconnected);
+  pvStateMachine->start();
 }
 
 mdtDevice::~mdtDevice()
 {
   stop();
   delete pvQueryTimer;
+  delete pvStateMachine;
 }
 
 void mdtDevice::setName(const QString &name)
@@ -766,36 +803,73 @@ bool mdtDevice::queriesSequence()
 
 void mdtDevice::setStateFromPortError(int error, const QString &message, const QString &details)
 {
+  qDebug() << "mdtDevice::setStateFromPortError() , error: " << error;
+  switch(error){
+    case mdtAbstractPort::NoError:
+      qDebug() << " -> emit deviceReady";
+      emit(deviceReady());
+      break;
+    case mdtAbstractPort::Disconnected:
+      qDebug() << " -> emit disconnected";
+      emit(disconnected());
+      break;
+    case mdtAbstractPort::Connecting:
+      qDebug() << " -> emit connecting";
+      emit(connecting());
+      break;
+    case mdtAbstractPort::ReadPoolEmpty:
+      emit(deviceBusy());
+      break;
+    case mdtAbstractPort::WritePoolEmpty:
+      emit(deviceBusy());
+      break;
+    case mdtAbstractPort::WriteCanceled:
+      emit(handledError());
+      break;
+    case mdtAbstractPort::ReadCanceled:
+      emit(handledError());
+      break;
+    case mdtAbstractPort::ControlCanceled:
+      emit(handledError());
+      break;
+    case mdtAbstractPort::ReadTimeout:
+      emit(deviceReady());
+      break;
+    case mdtAbstractPort::WriteTimeout:
+      emit(deviceReady());
+      break;
+    case mdtAbstractPort::ControlTimeout:
+      emit(deviceReady());
+      break;
+    case mdtAbstractPort::UnhandledError:
+      emit(unhandledError());
+      break;
+    default:
+      emit(unhandledError());
+  }
+  /**
   if(error == mdtAbstractPort::NoError){
     qDebug() << "mdtDevice::setStateFromPortError(): NoError";
-    setStateReady();
+    ///setStateReady();
   }else if(error == mdtAbstractPort::Disconnected){
     qDebug() << "mdtDevice::setStateFromPortError(): Disconnected";
-    setStateDisconnected();
+    ///setStateDisconnected();
   }else if(error == mdtAbstractPort::Connecting){
     qDebug() << "mdtDevice::setStateFromPortError(): Connecting, message: " << message;
-    setStateConnecting(message);
+    ///setStateConnecting(message);
   }else if(error == mdtAbstractPort::WritePoolEmpty){
     qDebug() << "mdtDevice::setStateFromPortError(): WriteQueueEmpty";
-    setStateBusy(pvBackToReadyStateTimeout);
+    ///setStateBusy(pvBackToReadyStateTimeout);
   }else{
     qDebug() << "mdtDevice::setStateFromPortError(): ????";
-    setStateUnknown();
+    ///setStateUnknown();
   }
+  */
 }
 
-void mdtDevice::setStateReady()
+void mdtDevice::showStatusMessage(const QString &message, int timeout)
 {
-  if(pvCurrentState == Ready){
-    return;
-  }
-  // Check if we have to restart query timer
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->start();
-  }
-  pvCurrentState = Ready;
-  qDebug() << "mdtDevice: new state is Ready";
-  emit(stateChanged(pvCurrentState));
+  emit(statusMessageChanged(message, timeout));
 }
 
 void mdtDevice::decodeReadenFrame(mdtPortTransaction transaction)
@@ -862,73 +936,6 @@ int mdtDevice::writeDigitalOutputs(mdtPortTransaction *transaction)
   return -1;
 }
 
-void mdtDevice::setStateDisconnected()
-{
-  if(pvCurrentState == Disconnected){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  pvCurrentState = Disconnected;
-  qDebug() << "mdtDevice: new state is Disconnected";
-  emit(stateChanged(pvCurrentState));
-}
-
-void mdtDevice::setStateConnecting(const QString &message)
-{
-  emit(stateChanged(pvCurrentState, message));
-  if(pvCurrentState == Connecting){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  // Thread will notify the ready (or disconnected) state, cancel retry timer
-  pvBackToReadyStateTimer->stop();
-  pvCurrentState = Connecting;
-  qDebug() << "mdtDevice: new state is Connecting";
-  ///emit(stateChanged(pvCurrentState, message));
-}
-
-void mdtDevice::setStateBusy(int retryTimeout)
-{
-  if(pvCurrentState == Busy){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  pvCurrentState = Busy;
-  qDebug() << "**** mdtDevice: new state is Busy";
-  emit(stateChanged(pvCurrentState));
-  // Set state ready if requested
-  if(retryTimeout >= 0){
-    pvBackToReadyStateTimer->start(retryTimeout);
-    ///QTimer::singleShot(retryTimeout, this, SLOT(setStateReady()));
-  }
-}
-
-void mdtDevice::setStateUnknown()
-{
-  if(pvCurrentState == Unknown){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  pvCurrentState = Unknown;
-  // Add a error
-  mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to unknown state", mdtError::Error);
-  MDT_ERROR_SET_SRC(e, "mdtDevice");
-  e.commit();
-  qDebug() << "mdtDevice: new state is Unknown";
-  emit(stateChanged(pvCurrentState));
-}
 
 mdtPortTransaction *mdtDevice::getNewTransaction()
 {
@@ -949,4 +956,122 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
   portManager()->readenFrame(id);
 
   return ok;
+}
+
+void mdtDevice::setStateDisconnected()
+{
+  /**
+  if(pvCurrentState == Disconnected){
+    return;
+  }
+  */
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Disconnected;
+  qDebug() << "mdtDevice: new state is Disconnected";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateConnecting(/*const QString &message*/)
+{
+  ///emit(stateChanged(pvCurrentState, message));
+  /**
+  if(pvCurrentState == Connecting){
+    return;
+  }
+  */
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  // Thread will notify the ready (or disconnected) state, cancel retry timer
+  pvBackToReadyStateTimer->stop();
+  pvCurrentState = Connecting;
+  qDebug() << "mdtDevice: new state is Connecting";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateReady()
+{
+  /**
+  if(pvCurrentState == Ready){
+    return;
+  }
+  */
+  // Check if we have to restart query timer
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->start();
+  }
+  pvCurrentState = Ready;
+  qDebug() << "mdtDevice: new state is Ready";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateBusy(/*int retryTimeout*/)
+{
+  /**
+  if(pvCurrentState == Busy){
+    return;
+  }
+  */
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Busy;
+  qDebug() << "**** mdtDevice: new state is Busy";
+  emit(stateChanged(pvCurrentState));
+  // Set state ready if requested
+  if(pvBackToReadyStateTimeout >= 0){
+    pvBackToReadyStateTimer->start(pvBackToReadyStateTimeout);
+    ///QTimer::singleShot(retryTimeout, this, SLOT(setStateReady()));
+  }
+}
+
+/**
+void mdtDevice::setStateUnknown()
+{
+  if(pvCurrentState == Unknown){
+    return;
+  }
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Unknown;
+  // Add a error
+  mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to unknown state", mdtError::Error);
+  MDT_ERROR_SET_SRC(e, "mdtDevice");
+  e.commit();
+  qDebug() << "mdtDevice: new state is Unknown";
+  emit(stateChanged(pvCurrentState));
+}
+*/
+
+void mdtDevice::setStateWarning()
+{
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Warning;
+  qDebug() << "mdtDevice: new state is Warning";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateError()
+{
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Error;
+  // Add a error
+  mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to error state", mdtError::Error);
+  MDT_ERROR_SET_SRC(e, "mdtDevice");
+  e.commit();
+  qDebug() << "mdtDevice: new state is Error";
+  emit(stateChanged(pvCurrentState));
 }

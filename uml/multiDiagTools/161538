@@ -1,6 +1,6 @@
 format 76
 "mdtdevice" // mdtdevice
-  revision 28
+  revision 29
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -639,37 +639,91 @@ ${inlines}
       end
 
       state 128130 "Ready"
-	  uml_on_entry "LED green"
-	transition 135938 "<transition>"
-	  on pseudostate_ref 134914 // choice
-	    uml_trigger "portErrorOccured"
+	  uml_on_entry "setStateReady"
+	transition 142978 "<transition>"
+	  on state_ref 128258 // Busy
+	    uml_trigger "deviceBusy"
+	  external 
+	end
+
+	transition 143234 "<transition>"
+	  on state_ref 135810 // Warning
+	    uml_trigger "handledError"
+	  external 
+	end
+
+	transition 143618 "<transition>"
+	  on state_ref 129154 // Disconnected
+	    uml_trigger "disconnected"
+	  external 
+	end
+
+	transition 144258 "<transition>"
+	  on state_ref 128898 // Error
+	    uml_trigger "unhandledError"
 	  external 
 	end
       end
 
       state 128258 "Busy"
-	  uml_on_entry "LED orange"
-      end
+	  uml_on_entry "setStateBusy"
+	transition 143106 "<transition>"
+	  on state_ref 128130 // Ready
+	    uml_trigger "deviceReady"
+	  external 
+	end
 
-      state 128642 "Unhandled"
-      end
+	transition 143362 "<transition>"
+	  on state_ref 135810 // Warning
+	    uml_trigger "handledError"
+	  external 
+	end
 
-      state 128770 "QueryRunning"
+	transition 143874 "<transition>"
+	  on state_ref 129154 // Disconnected
+	    uml_trigger "disconnected"
+	  external 
+	end
+
+	transition 144386 "<transition>"
+	  on state_ref 128898 // Error
+	    uml_trigger "unhandledError"
+	  external 
+	end
       end
 
       state 128898 "Error"
+	  uml_on_entry "setStateError(message)"
+	transition 144514 "<transition>"
+	  on pseudostate_ref 141442 // final
+	    uml_trigger "quit"
+	  external 
+	end
       end
 
       state 129026 "Connecting"
-	  uml_on_entry "LED orange"
+	  uml_on_entry "setStateConnecting"
 	transition 128514 "<transition>"
 	  on state_ref 128130 // Ready
+	    uml_trigger "deviceReady"
+	  external 
+	end
+
+	transition 143490 "<transition>"
+	  on state_ref 129154 // Disconnected
+	    uml_trigger "disconnected"
+	  external 
+	end
+
+	transition 144002 "<transition>"
+	  on state_ref 128898 // Error
+	    uml_trigger "unhandledError"
 	  external 
 	end
       end
 
       state 129154 "Disconnected"
-	  uml_on_entry "LED off"
+	  uml_on_entry "setStateDisconnected"
 	transition 128258 "<transition>"
 	  on pseudostate_ref 128386 // final
 	    uml_trigger "quit"
@@ -678,7 +732,7 @@ ${inlines}
 
 	transition 128386 "<transition>"
 	  on state_ref 129026 // Connecting
-	    uml_trigger "connectToDevice"
+	    uml_trigger "connecting"
 	  external 
 	end
       end
@@ -693,42 +747,28 @@ ${inlines}
       pseudostate 128386 final 
       end
 
-      state 129282 "SequenceRunning"
+      state 135810 "Warning"
+	  uml_on_entry "setStateWarning(message)"
+	transition 143746 "<transition>"
+	  on state_ref 129154 // Disconnected
+	    uml_trigger "disconnected"
+	  external 
+	end
+
+	transition 144130 "<transition>"
+	  on state_ref 128898 // Error
+	    uml_trigger "unhandledError"
+	  external 
+	end
+
+	transition 144642 "<transition>"
+	  on state_ref 128130 // Ready
+	    uml_trigger "deviceReady"
+	  external 
+	end
       end
 
-      pseudostate 134914 choice 
-	transition 136066 "<transition>"
-	  on state_ref 129154 // Disconnected
-	    uml_guard "error==Disconnected"
-	  external 
-	end
-
-	transition 136194 "<transition>"
-	  on state_ref 128258 // Busy
-	    uml_guard "error==ReadPoolEmpty
-or
-error==WritePoolEmpty
-or
-error==ReadTimeout
-or
-error==WriteTimeout
-or
-error==ControlTimeout"
-	  external 
-	end
-
-	transition 136322 "<transition>"
-	  on state_ref 129154 // Disconnected
-	    uml_guard "else"
-	    uml_expr "portManager->stop"
-	  external 
-	end
-
-	transition 136450 "<transition>"
-	  on state_ref 128130 // Ready
-	    uml_guard "error==NoError"
-	  external 
-	end
+      pseudostate 141442 final 
       end
     end
   end
