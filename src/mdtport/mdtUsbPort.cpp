@@ -840,12 +840,12 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
   port->pvWriteTransferPending = false;
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-    port->updateWriteTimeoutState(true);
+    ///port->updateWriteTimeoutState(true);
     port->addError(WriteTimeout);
     return;
-  }else{
+  }/**else{
     port->updateWriteTimeoutState(false);
-  }
+  }*/
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
     ///qDebug() << "mdtUsbPort::writeTransferCallback() return WriteCanceled";
@@ -1647,7 +1647,7 @@ mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, quint8 endpoint)
         updateReadTimeoutState(true);
         return ReadTimeout;
       }else if(endpoint == pvWriteEndpointAddress){
-        updateWriteTimeoutState(true);
+        ///updateWriteTimeoutState(true);
         return WriteTimeout;
       }else{
         mdtError e(MDT_USB_IO_ERROR, "Unable to define timeout type (unknown endpoint)", mdtError::Error);

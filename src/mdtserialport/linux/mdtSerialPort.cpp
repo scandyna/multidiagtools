@@ -747,10 +747,10 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
   }
   pvMutex.lock();
   if(n == 0){
-    updateWriteTimeoutState(true);
+    ///updateWriteTimeoutState(true);
     return WriteTimeout;
   }else{
-    updateWriteTimeoutState(false);
+    ///updateWriteTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:

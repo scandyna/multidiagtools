@@ -41,7 +41,7 @@ bool mdtSerialPortCtlThread::isReader() const
 
 void mdtSerialPortCtlThread::run()
 {
-  mdtAbstractPort::error_t portError;
+  mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
 
   Q_ASSERT(pvPort != 0);
 
@@ -81,5 +81,7 @@ void mdtSerialPortCtlThread::run()
   }
 
   port->unlockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
+  if(portError == mdtAbstractPort::NoError){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
 }

@@ -447,7 +447,7 @@ void mdtUsbtmcPortThread::run()
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
   mdtFrameUsbTmc *usbtmcFrame;
-  mdtAbstractPort::error_t portError;
+  mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
   int i;
   mdtUsbPort *port;
@@ -737,6 +737,8 @@ void mdtUsbtmcPortThread::run()
 
   pvRunning = false;
   pvPort->unlockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
+  if(portError == mdtAbstractPort::NoError){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
 }
 

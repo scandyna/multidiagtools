@@ -46,7 +46,7 @@ void mdtTcpSocketThread::run()
   mdtTcpSocket *port;
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
-  mdtAbstractPort::error_t portError;
+  mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int reconnectTimeout();
   int reconnectMaxTry();
   int completeFrames;
@@ -110,6 +110,14 @@ void mdtTcpSocketThread::run()
       if(!pvRunning){
         break;
       }
+      // If a error was handled by writeToPort(), we go back IDLE
+      if(portError == mdtAbstractPort::ErrorHandled){
+        continue;
+      }else{
+        // Unhandled error - stop
+        break;
+      }
+      /**
       // Check about connection
       if(portError == mdtAbstractPort::Disconnected){
         // Try to (Re-)connect
@@ -123,6 +131,7 @@ void mdtTcpSocketThread::run()
         notifyError(portError);
         break;
       }
+      */
     }
 
     // Clear possibly old stored flush request
@@ -151,49 +160,17 @@ void mdtTcpSocketThread::run()
         if(!pvRunning){
           break;
         }
-        // Check about connection
-        if(portError == mdtAbstractPort::Disconnected){
-          // Try to (Re-)connect and go back idle
-          portError = reconnect(true);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            pvRunning = false;
-            break;
-          }
-        /**}else if(portError == mdtAbstractPort::ReadTimeout){
-          // Probably disconnected. Abort and Go back idle
-          pvSocket->abort();
-          portError = reconnect(true);
-          if(portError != mdtAbstractPort::NoError){
-            // Stop
-            pvRunning = false;
-            break;
-          }
-          // Go back idle
-          break;*/
-        }else{
-          // stop
-          pvRunning = false;
-          notifyError(portError);
-          break;
-        }
-      }
-      // Check about timeout
-      if(pvPort->readTimeoutOccured()){
-        // Probably disconnected. Abort and Go back idle
-        pvSocket->abort();
-        portError = reconnect(true);
-        if(portError != mdtAbstractPort::NoError){
-          // Stop
+        portError = handleCommonReadErrors(portError, readFrame);
+        if(portError != mdtAbstractPort::ErrorHandled){
+          // Unhandled error - stop
           pvRunning = false;
           break;
         }
-        // Go back idle
+        // Go back IDLE
         break;
       }
-      // Read ...
-      completeFrames = readFromPort(&readFrame);
-      if(completeFrames < 0){
+      /**
+      if(portError != mdtAbstractPort::NoError){
         // Check about stopping
         if(!pvRunning){
           break;
@@ -207,12 +184,72 @@ void mdtTcpSocketThread::run()
             pvRunning = false;
             break;
           }
+        }else if(portError == mdtAbstractPort::ReadTimeout){
+          // Probably disconnected. Abort and Go back idle
+          pvSocket->abort();
+          portError = reconnect(true);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            pvRunning = false;
+            break;
+          }
+          // Go back idle
+          break;
         }else{
           // stop
           pvRunning = false;
           notifyError(portError);
           break;
         }
+      }
+      */
+      /**
+      // Check about timeout
+      if(pvPort->readTimeoutOccured()){
+        // Probably disconnected. Abort and Go back idle
+        pvSocket->abort();
+        portError = reconnect(true);
+        if(portError != mdtAbstractPort::NoError){
+          // Stop
+          pvRunning = false;
+          break;
+        }
+        // Go back idle
+        break;
+      }
+      */
+      // Read ...
+      completeFrames = readFromPort(&readFrame);
+      if(completeFrames < 0){
+        // Check about stopping
+        if(!pvRunning){
+          break;
+        }
+        portError = handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames, readFrame);
+        if(portError != mdtAbstractPort::ErrorHandled){
+          // Unhandled error - stop
+          pvRunning = false;
+          break;
+        }
+        // Go back IDLE
+        break;
+        /**
+        // Check about connection
+        if(portError == mdtAbstractPort::Disconnected){
+          // Try to (Re-)connect and go back idle
+          portError = reconnect(true);
+          if(portError != mdtAbstractPort::NoError){
+            // Stop
+            pvRunning = false;
+            break;
+          }
+        }else{
+          // stop
+          pvRunning = false;
+          notifyError(portError);
+          break;
+        }
+        */
       }
     }
     // In case of raw frames, loop until no more data comes with short timeouts
@@ -235,6 +272,15 @@ void mdtTcpSocketThread::run()
           if(!pvRunning){
             break;
           }
+          portError = handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames, readFrame);
+          if(portError != mdtAbstractPort::ErrorHandled){
+            // Unhandled error - stop
+            pvRunning = false;
+            break;
+          }
+          // Go back IDLE
+          break;
+          /**
           // Check about connection
           if(portError == mdtAbstractPort::Disconnected){
             // Try to (Re-)connect and go back idle
@@ -250,6 +296,7 @@ void mdtTcpSocketThread::run()
             notifyError(portError);
             break;
           }
+          */
         }
       }
     }
@@ -273,6 +320,8 @@ void mdtTcpSocketThread::run()
     }
   }
   pvPort->unlockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
+  if(portError != mdtAbstractPort::NoError){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
 }
 

@@ -93,7 +93,7 @@ void mdtUsbPortThread::run()
 
   mdtFrame *writeFrame = 0;
   mdtFrame *readFrame = 0;
-  mdtAbstractPort::error_t portError;
+  mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
   int i;
   mdtUsbPort *port;
@@ -159,7 +159,7 @@ void mdtUsbPortThread::run()
           }
         }else if((portError == mdtAbstractPort::ReadCanceled)||(portError == mdtAbstractPort::ReadTimeout)){
           // We submit the uncomplete frame
-          pvPort->readenFrames().enqueue(readFrame);
+          port->readenFrames().enqueue(readFrame);
           emit newFrameReaden();
           ///qDebug() << "mdtUsbPortThread::run(): read cancel or timeout";
           readFrame = getNewFrameRead();
@@ -356,6 +356,8 @@ void mdtUsbPortThread::run()
 
   pvRunning = false;
   pvPort->unlockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
+  if(portError == mdtAbstractPort::NoError){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
 }
 

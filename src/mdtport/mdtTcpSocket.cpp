@@ -122,11 +122,21 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
   unlockMutex();
   ok = pvSocket->waitForReadyRead(pvReadTimeout);
   lockMutex();
+  if(!ok){
+    // Timeout error is probably due tu a connection loss
+    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
+      pvSocket->abort();
+      return Disconnected;
+    }
+    return mapSocketError(pvSocket->error(), true);
+  }
+  /**
   if(ok){
     updateReadTimeoutState(false);
   }else{
     return mapSocketError(pvSocket->error(), true);
   }
+  */
 
   return NoError;
 }
@@ -139,12 +149,18 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
 
   n = pvSocket->read(data, maxSize);
   if(n < 0){
+    // Timeout error is probably due tu a connection loss
+    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
+      pvSocket->abort();
+      return Disconnected;
+    }
     return mapSocketError(pvSocket->error(), true);
   }
 
   return n;
 }
 
+/// \todo Adapt
 mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
 {
   Q_ASSERT(pvSocket != 0);
@@ -160,7 +176,7 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   ok = pvSocket->waitForBytesWritten(pvWriteTimeout);
   lockMutex();
   if(ok){
-    updateReadTimeoutState(false);
+    updateReadTimeoutState(false);  /// ??????????????????'
   }else{
     return mapSocketError(pvSocket->error(), false);
   }
@@ -168,6 +184,7 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   return NoError;
 }
 
+/// \todo Adapt
 qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
 {
   Q_ASSERT(pvSocket != 0);
@@ -243,6 +260,33 @@ void mdtTcpSocket::pvFlushOut()
 
 mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error, bool byRead)
 {
+  Q_ASSERT(pvSocket != 0);
+
+  switch(error){
+    case QAbstractSocket::ConnectionRefusedError:
+      return PortAccess;
+    case QAbstractSocket::RemoteHostClosedError:
+      return Disconnected;
+    case QAbstractSocket::HostNotFoundError:
+      return PortNotFound;
+    case QAbstractSocket::SocketAccessError:
+      return PortAccess;
+    case QAbstractSocket::SocketTimeoutError:
+      if(byRead){
+        return ReadTimeout;
+      }else{
+        return WriteTimeout;
+      }
+    case QAbstractSocket::NetworkError:
+      return Disconnected;
+    default:
+      mdtError e(MDT_TCP_IO_ERROR, "Unhandled socket error occured.", mdtError::Error);
+      e.setSystemError(error, pvSocket->errorString());
+      MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+      e.commit();
+      return UnhandledError;
+  }
+  /**
   if(error == QAbstractSocket::ConnectionRefusedError){
     return PortAccess;
   }else if(error == QAbstractSocket::RemoteHostClosedError){
@@ -257,7 +301,7 @@ mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketErr
       ///return ReadTimeout;
       return Disconnected;
     }else{
-      updateWriteTimeoutState(true);
+      ///updateWriteTimeoutState(true);
       return WriteTimeout;
     }
   }else if(error == QAbstractSocket::NetworkError){
@@ -269,4 +313,5 @@ mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketErr
     e.commit();
     return UnhandledError;
   }
+  */
 }

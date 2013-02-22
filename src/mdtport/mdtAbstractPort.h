@@ -64,11 +64,11 @@ class mdtAbstractPort : public QObject
                 SetupError,             /*!< Setup failed on a configuration option */
                 WriteCanceled,          /*!< Write process was cancelled. The thread should stop the write process, restore
                                               the current frame into pool, notify the error and continue working. */
-                ReadCanceled,           /*!< Read process was cancelled. The thread should stop the read process, restore
-                                              the current frame into pool, notify the error and continue working. */
+                ReadCanceled,           /*!< Read process was cancelled. The thread should stop the read process,
+                                              clear the current , notify the error and continue working. */
                 ControlCanceled,        /*!< Control process canceled (serial port's modem line, USB control transfer)
                                             */
-                ReadTimeout,            /*!< Read process has timed out. Thread should notify this and continue working.
+                ReadTimeout,            /*!< Read process has timed out. Thread should clear current frame, notify this and continue working.
                                               If thread uses the read timeout protocol, no notification should be sent */
                 WriteTimeout,           /*!< Write process has timed out. Thread should notify this and continue working.
                                               If thread uses the write timeout protocol, no notification should be sent */
@@ -81,7 +81,9 @@ class mdtAbstractPort : public QObject
                                             In this case, thread will stop working and error is reported with mdtError system.
                                             Logfile could give more information, see mdtError and mdtApplication */
                 ReadPoolEmpty,          /*!< Read frames pool is empty. Says that no data can be received for the moment */
-                WritePoolEmpty          /*!< Write queue is empty. Says that no data can be sent for the moment */
+                WritePoolEmpty,         /*!< Write queue is empty. Says that no data can be sent for the moment */
+                ErrorHandled            /*!< Used by mdtPortThread's helper methods (handle[Read|Write]Error)
+                                              to tell the thread that error could be handled */
                };
 
   mdtAbstractPort(QObject *parent = 0);
@@ -404,7 +406,7 @@ class mdtAbstractPort : public QObject
    * Note: this method is called from mdtPortWriteThread , and should not be used directly<br>
    * Mutex is not handled by this method.
    */
-  void updateWriteTimeoutState(bool state);
+  ///void updateWriteTimeoutState(bool state);
 
   /*! \brief Returns read timeout state
    * 
@@ -416,7 +418,7 @@ class mdtAbstractPort : public QObject
    * 
    * Mutex is not handled by this method.
    */
-  bool writeTimeoutOccured();
+  ///bool writeTimeoutOccured();
 
   /*! \brief Flush read/write buffers
    *
@@ -612,7 +614,7 @@ class mdtAbstractPort : public QObject
 
   bool pvReadTimeoutOccured;
   ///bool pvReadTimeoutOccuredPrevious;
-  bool pvWriteTimeoutOccured;
+  ///bool pvWriteTimeoutOccured;
   ///bool pvWriteTimeoutOccuredPrevious;
   // Frames queues
   QQueue<mdtFrame*> pvReadenFrames;
