@@ -32,6 +32,7 @@
 #include <QList>
 #include <QLabel>
 #include <QTimer>
+#include <QApplication>
 
 #include <QDebug>
 
@@ -310,7 +311,10 @@ void mdtPortTerm::detachFromPorts()
 
 void mdtPortTerm::setStateFromPortError(int error)
 {
-  Q_ASSERT(pvCurrentPortManager != 0);
+  // It can happen that some errors are queued
+  if(pvCurrentPortManager == 0){
+    qApp->processEvents();
+  }
 
   switch(error){
     case mdtAbstractPort::NoError:
@@ -330,6 +334,9 @@ void mdtPortTerm::setStateFromPortError(int error)
       break;
     case mdtAbstractPort::Connecting:
       setStateStopped(tr("Connecting ..."));
+      break;
+    case mdtAbstractPort::MessageInTimeout:
+      qDebug() << "mdtPortTerm::setStateFromPortError(): message IN timeout , ignoring ...";
       break;
     default:
       ///pvStatusWidget->setState(mdtDevice::Unknown, "Received unknown error, number " + QString::number(error), "");

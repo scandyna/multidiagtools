@@ -192,29 +192,6 @@ class mdtUsbPort : public mdtAbstractPort
    */
   bool readUntilShortPacketReceivedRequestPending();
 
-  /*! \brief add a bulk IN bTag to abort
-   *
-   * \todo Obselete
-   * All pending bTags queued will be aborted
-   *  regarding USBTMC standard (INITIATE/CHECK ABORT_BULK_IN)
-   *
-   * The mutex must be locked before calling this method,
-   *  and still locked inside.
-   */
-  void addbTagToAbort(quint8 bTag);
-
-  /*! \brief Get a bTag to abort in pending queue
-   *
-   * \todo Obselete
-   * This method is used by USB thread, and should
-   *  not be used else.
-   *
-   * Mutex is not handled by this method.
-   *
-   * \return Value >= 0 (=bTag) or -1 if queue is empty.
-   */
-  int takebTagToAbort();
-
   /*! \brief Get read buffer size
    *
    * This is the same as wMaxPacketSize of read endpoint.
@@ -427,16 +404,6 @@ class mdtUsbPort : public mdtAbstractPort
    * Notes: must be called only by I/O thread (typically mdtUsbPortThread).
    * This method unlocks the mutex during wait (must be locked by call, is locked again before return)
    *
-   * \param timeout Wait timeout. If null, the port's internal defined timeout is used regarding endpoint
-   * \param endpoint Concerned endpoint
-   */
-  error_t handleUsbEvents(struct timeval *timeout, quint8 endpoint);
-
-  /*! \brief Call libusb handle_event() function
-   *
-   * Notes: must be called only by I/O thread (typically mdtUsbPortThread).
-   * This method unlocks the mutex during wait (must be locked by call, is locked again before return)
-   *
    * \return NoError or mdtAbstractPort::error_t error (Note: timeout is ignored here)
    */
   error_t handleUsbEvents();
@@ -562,9 +529,6 @@ class mdtUsbPort : public mdtAbstractPort
   QQueue<mdtFrame*> pvMessageInFrames;      // Incomming message frames
 
   QQueue<error_t> pvErrors;  // Set by transfer callbacks and used by thread for notifications
-  
-  /// \todo Obselete
-  QQueue<int> pvbTagsToAbort;
 };
 
 #endif // #ifndef MDT_USB_PORT_H

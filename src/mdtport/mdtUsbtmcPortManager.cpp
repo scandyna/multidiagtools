@@ -43,6 +43,7 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
   // Port setup
   pvPort->config().setFrameType(mdtFrame::FT_USBTMC);
+  pvPort->config().setReadTimeout(30000);
 
   // USBTMC specific
   pvCurrentWritebTag = 0;
@@ -53,9 +54,9 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   portThread = new mdtUsbtmcPortThread;
   connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
   ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
-  ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
   addThread(portThread);
   Q_ASSERT(pvThreads.size() == 1);
+  setObjectName("mdtUsbtmcPortManager");
 }
 
 mdtUsbtmcPortManager::~mdtUsbtmcPortManager()

@@ -80,8 +80,9 @@ void mdtSerialPortCtlThread::run()
     }
   }
 
-  port->unlockMutex();
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  pvRunning = false;
+  port->unlockMutex();
 }

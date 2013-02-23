@@ -156,16 +156,6 @@ class mdtPortThread : public QThread
 
  protected:
 
-  /*! \brief Handle common errors
-   *
-   * Common errors are:
-   *  - mdtAbstractPort::Disconnected : will try to reconnect
-   *
-   * \param portError Error to handle
-   * \return NoError if error could be handled, UnhandledError if a known error fails to be solved, given portError else.
-   */
-  mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
-
   /*! \brief Handle common read errors
    *
    * This is a helper class for port specific subclass.
@@ -179,11 +169,13 @@ class mdtPortThread : public QThread
    *
    * If this method is called by a non running thread, a warning will be logged.
    *
+   * \param frame Current read frame. Note that another frame can be pointed after a call ofthis method (f.ex. after disconnection)
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
    * \pre frame must be a valid pointer.
    * \pre port must be set with setPort().
+   * \post If frame is null, a UnhandledError is returned.
    */
-  mdtAbstractPort::error_t handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame *frame);
+  mdtAbstractPort::error_t handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
 
   /*! \brief Handle common write errors
    *
@@ -198,11 +190,12 @@ class mdtPortThread : public QThread
    *
    * If this method is called by a non running thread, a warning will be logged.
    *
+   * \param frame Current write frame. Note that frame will be null after a call of this method.
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
    * \pre frame must be a valid pointer.
    * \pre port must be set with setPort().
    */
-  mdtAbstractPort::error_t handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *frame);
+  mdtAbstractPort::error_t handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
 
   /*! \brief Handle common read and write errors
    *
@@ -211,9 +204,11 @@ class mdtPortThread : public QThread
    * If readFrame is not null, handleCommonReadErrors() is called first.
    *  If no error was handled, and writeFrame is not null, handleCommonWriteErrors() is called.
    *
+   * \param readframe Current read frame. Note that another frame can be pointed after a call ofthis method (f.ex. after disconnection).
+   * \param writeFrame Current write frame. Note that frame can be null after a call of this method (if a write error occured).
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
    */
-  mdtAbstractPort::error_t handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *readFrame, mdtFrame *writeFrame);
+  mdtAbstractPort::error_t handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
 
   /*! \brief Get a new frame for reading data from port
    *

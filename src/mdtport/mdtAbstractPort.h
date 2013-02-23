@@ -72,6 +72,8 @@ class mdtAbstractPort : public QObject
                                               If thread uses the read timeout protocol, no notification should be sent */
                 WriteTimeout,           /*!< Write process has timed out. Thread should notify this and continue working.
                                               If thread uses the write timeout protocol, no notification should be sent */
+                MessageInTimeout,       /*!< Used by USB/USBTMC for additionnal interrupt IN */
+                MessageInCanceled,      /*!< Used by USB/USBTMC for additionnal interrupt IN */
                 ControlTimeout,         /*!< Control process timed out (serial port's modem line, USB control transfer) */
                 Disconnected,           /*!< For USB port: the device is disconnected. For TCP socket: peer has closed the connection.
                                               If this error happens, the thread will try to reconnect. If connection fails after
@@ -390,36 +392,6 @@ class mdtAbstractPort : public QObject
    */
   bool flushOutRequestPending();
 
-  /*! \brief Update the read timeout state
-   *
-   * This method must be called by system dependant waitEventRead() method.
-   * When the read timeout state chages, the signal readTimeoutStateChanged() is emited.<br> \todo Signal useable ?
-   * Note: this method is called from mdtPortReadThread , and should not be used directly<br>
-   * Mutex is not handled by this method.
-   */
-  ///void updateReadTimeoutState(bool state);
-
-  /*! \brief Update the write timeout state
-   *
-   * This method must be called by system dependant waitEventWriteReady() method
-   * When the write timeout state chages, the signal writeTimeoutStateChanged() is emited.<br> \todo Signal useable ?
-   * Note: this method is called from mdtPortWriteThread , and should not be used directly<br>
-   * Mutex is not handled by this method.
-   */
-  ///void updateWriteTimeoutState(bool state);
-
-  /*! \brief Returns read timeout state
-   * 
-   * Mutex is not handled by this method.
-   */
-  ///bool readTimeoutOccured();
-
-  /*! \brief Returns write timeout state
-   * 
-   * Mutex is not handled by this method.
-   */
-  ///bool writeTimeoutOccured();
-
   /*! \brief Flush read/write buffers
    *
    * Will do the same as calling
@@ -517,16 +489,6 @@ class mdtAbstractPort : public QObject
    */
   void unlockMutex();
 
- ///signals:
-
-  /*!  \brief Emited when read timeout state changed
-   */
-  ///void readTimeoutStateChanged(bool state);
-
-  /*!  \brief Emited when write timeout state changed
-   */
-  ///void writeTimeoutStateChanged(bool state);
-
  protected:
 
   /*! \brief Open the port given by setPortName()
@@ -612,10 +574,6 @@ class mdtAbstractPort : public QObject
    */
   virtual void pvFlushOut() = 0;
 
-  ///bool pvReadTimeoutOccured;
-  ///bool pvReadTimeoutOccuredPrevious;
-  ///bool pvWriteTimeoutOccured;
-  ///bool pvWriteTimeoutOccuredPrevious;
   // Frames queues
   QQueue<mdtFrame*> pvReadenFrames;
   QQueue<mdtFrame*> pvReadFramesPool;

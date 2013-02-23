@@ -31,6 +31,7 @@
 #include "mdtFrameUsbControl.h"
 
 class mdtUsbPort;
+class mdtFrameUsbTmc;
 
 class mdtUsbtmcPortThread : public mdtUsbPortThread
 {
@@ -51,6 +52,63 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
   bool isWriter() const;
 
  private:
+
+   /*! \brief Handle USBTMC read errors
+   *
+   * Handled errors are:
+   *  - mdtAbstractPort::Disconnected: will put read frame back to pool, try to reconnect, get a new read frame
+   *  - mdtAbstractPort::ReadCanceled: will abort BULK IN and clear read frame
+   *  - mdtAbstractPort::ReadTimeout: will abort BULK IN and clear read frame
+   *  - mdtAbstractPort::MessageInTimeout: simply returns ErrorHandled (USB port handle this itself)
+   *  - mdtAbstractPort::MessageInCanceled simply returns ErrorHandled (USB port handle this itself)
+   *
+   * For all cases, notification is sent.
+   *
+   * If this method is called by a non running thread, a warning will be logged.
+   *
+   * \param readFrame Current read frame. Note that another frame can be pointed after a call of this method (f.ex. after disconnection).
+   * \param writeFrame Current write frame. Note that frame can be null after a call of this method.
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * \pre frame must be a valid pointer.
+   * \pre port must be set with setPort().
+   * \post If readFrame is null, a UnhandledError is returned.
+   */
+  mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
+
+  /*! \brief Handle USBTMC write errors
+   *
+   * \todo Not implemented (abort, ...)
+   * 
+   * This is a helper class for port specific subclass.
+   *
+   * Handled errors are:
+   *  - mdtAbstractPort::Disconnected: will try to reconnect
+   *  - mdtAbstractPort::WriteCanceled.
+   *  - mdtAbstractPort::WriteTimeout.
+   *
+   * The current frame is put back to write pool and the notification is sent.
+   *
+   * If this method is called by a non running thread, a warning will be logged.
+   *
+   * \param frame Current write frame. Note that frame can be null after a call of this method (if a write error occured).
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * \pre frame must be a valid pointer.
+   * \pre port must be set with setPort().
+   */
+  mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+
+  /*! \brief Handle USBTMC read and write errors
+   *
+   * This is a helper class for port specific subclass.
+   *
+   * If readFrame is not null, handleUsbtmcReadErrors() is called first.
+   *  If no error was handled, and writeFrame is not null, handleUsbtmcWriteErrors() is called.
+   *
+   * \param readFrame Current read frame. Note that another frame can be pointed after a call of this method (f.ex. after disconnection).
+   * \param writeFrame Current write frame. Note that frame can be null after a call of this method.
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   */
+  mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
 
   /*! \brief USBTMC write process
    *

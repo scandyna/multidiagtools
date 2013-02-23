@@ -96,8 +96,9 @@ void mdtPortWriteThread::run()
     }
   }
 
-  pvPort->unlockMutex();
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  pvRunning = false;
+  pvPort->unlockMutex();
 }

@@ -97,6 +97,7 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
     return;
   }
   cbInterface->setEnabled(false);
+  diseableApplyButtons();
   // Close port
   pvPortManager->closePort();
   setStateStopped();
@@ -167,6 +168,7 @@ void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
   displayConfig();
   setStateRunning();
   cbInterface->setEnabled(true);
+  enableApplyButtons();
 }
 
 void mdtUsbtmcPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)

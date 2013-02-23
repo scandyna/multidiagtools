@@ -151,6 +151,7 @@ bool mdtPortManager::start()
 {
   Q_ASSERT(pvPort != 0);
 
+  qDebug() << "mdtPortManager::start() ...";
   int i;
 
   for(i=0; i<pvThreads.size(); i++){
@@ -158,6 +159,7 @@ bool mdtPortManager::start()
       return false;
     }
   }
+  qDebug() << "mdtPortManager::start() DONE";
 
   return true;
 }
@@ -186,9 +188,14 @@ void mdtPortManager::stop()
   qDebug() << "mdtPortManager::stop() ...";
   for(i=0; i<pvThreads.size(); i++){
     if(pvThreads.at(i)->isRunning()){
+      qDebug() << "mdtPortManager::stop() stopping thread ...";
       pvThreads.at(i)->stop();
+      qDebug() << "mdtPortManager::stop() stopping thread DONE";
     }
   }
+  // Threads have emited the Disconnected error.
+  //  We process events to be shure to receive it now(and not later, after a restart..)
+  qApp->processEvents();
   qDebug() << "mdtPortManager::stop() DONE";
 }
 

@@ -160,7 +160,6 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
   return n;
 }
 
-/// \todo Adapt
 mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
 {
   Q_ASSERT(pvSocket != 0);
@@ -178,18 +177,10 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   if(!ok){
     return mapSocketError(pvSocket->error(), false);
   }
-  /**
-  if(ok){
-    updateReadTimeoutState(false);  /// ??????????????????'
-  }else{
-    return mapSocketError(pvSocket->error(), false);
-  }
-  */
 
   return NoError;
 }
 
-/// \todo Adapt
 qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
 {
   Q_ASSERT(pvSocket != 0);
@@ -248,8 +239,6 @@ mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
   // Set R/W timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
-  // Init flags
-  ///pvCancelWrite = false;
 
   return NoError;
 }
@@ -260,7 +249,6 @@ void mdtTcpSocket::pvFlushIn()
 
 void mdtTcpSocket::pvFlushOut()
 {
-  ///pvCancelWrite = true;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error, bool byRead)
@@ -291,32 +279,4 @@ mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketErr
       e.commit();
       return UnhandledError;
   }
-  /**
-  if(error == QAbstractSocket::ConnectionRefusedError){
-    return PortAccess;
-  }else if(error == QAbstractSocket::RemoteHostClosedError){
-    return Disconnected;
-  }else if(error == QAbstractSocket::HostNotFoundError){
-    return PortNotFound;
-  }else if(error == QAbstractSocket::SocketAccessError){
-    return PortAccess;
-  }else if(error == QAbstractSocket::SocketTimeoutError){
-    if(byRead){
-      updateReadTimeoutState(true);
-      ///return ReadTimeout;
-      return Disconnected;
-    }else{
-      ///updateWriteTimeoutState(true);
-      return WriteTimeout;
-    }
-  }else if(error == QAbstractSocket::NetworkError){
-    return Disconnected;
-  }else{
-    mdtError e(MDT_TCP_IO_ERROR, "Unhandled socket error occured.", mdtError::Error);
-    e.setSystemError(error, pvSocket->errorString());
-    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-    e.commit();
-    return UnhandledError;
-  }
-  */
 }

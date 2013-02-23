@@ -195,23 +195,10 @@ bool mdtPortThread::isWriter() const
   return false;
 }
 
-mdtAbstractPort::error_t mdtPortThread::handleCommonErrors(mdtAbstractPort::error_t portError)
-{
-  if(portError == mdtAbstractPort::Disconnected){
-    // Try to reconnect
-    portError = reconnect(true);
-    if(portError != mdtAbstractPort::NoError){
-      return mdtAbstractPort::UnhandledError;
-    }
-    return mdtAbstractPort::NoError;
-  }
-
-  return portError;
-}
-
-mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame *frame)
+mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
 {
   Q_ASSERT(frame != 0);
+  Q_ASSERT(*frame != 0);
   Q_ASSERT(pvPort != 0);
 
   if(!pvRunning){
@@ -219,8 +206,53 @@ mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
     e.commit();
   }
-  frame->clear();
-  frame->clearSub();
+  (*frame)->clear();
+  (*frame)->clearSub();
+  notifyError(portError);
+
+  switch(portError){
+    case mdtAbstractPort::Disconnected:
+      pvPort->readFramesPool().enqueue(*frame);
+      // Try to reconnect
+      portError = reconnect(true);
+      if(portError != mdtAbstractPort::NoError){
+        *frame = 0;
+        return mdtAbstractPort::UnhandledError;
+      }
+      *frame = getNewFrameRead();
+      if(*frame == 0){
+        return mdtAbstractPort::UnhandledError;
+      }
+      portError = mdtAbstractPort::ErrorHandled;
+      break;
+    case mdtAbstractPort::ReadCanceled:
+      portError = mdtAbstractPort::ErrorHandled;
+      break;
+    case mdtAbstractPort::ReadTimeout:
+      portError = mdtAbstractPort::ErrorHandled;
+      break;
+    default:
+      portError = mdtAbstractPort::UnhandledError;
+      break;
+  }
+
+  Q_ASSERT(*frame != 0);
+  return portError;
+}
+
+mdtAbstractPort::error_t mdtPortThread::handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
+{
+  Q_ASSERT(frame != 0);
+  Q_ASSERT(*frame != 0);
+  Q_ASSERT(pvPort != 0);
+
+  if(!pvRunning){
+    mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtPortThread");
+    e.commit();
+  }
+  pvPort->writeFramesPool().enqueue(*frame);
+  *frame = 0;
   notifyError(portError);
 
   switch(portError){
@@ -246,51 +278,18 @@ mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::
   return portError;
 }
 
-mdtAbstractPort::error_t mdtPortThread::handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *frame)
+mdtAbstractPort::error_t mdtPortThread::handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)
 {
-  Q_ASSERT(frame != 0);
-  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(readFrame != 0);
+  Q_ASSERT(writeFrame != 0);
 
-  if(!pvRunning){
-    mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
-  }
-  pvPort->writeFramesPool().enqueue(frame);
-  notifyError(portError);
-
-  switch(portError){
-    case mdtAbstractPort::Disconnected:
-      // Try to reconnect
-      portError = reconnect(true);
-      if(portError != mdtAbstractPort::NoError){
-        return mdtAbstractPort::UnhandledError;
-      }
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    case mdtAbstractPort::ReadCanceled:
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    case mdtAbstractPort::ReadTimeout:
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    default:
-      portError = mdtAbstractPort::UnhandledError;
-      break;
-  }
-
-  return portError;
-}
-
-mdtAbstractPort::error_t mdtPortThread::handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *readFrame, mdtFrame *writeFrame)
-{
-  if((readFrame != 0)&&(writeFrame != 0)){
+  if((*readFrame != 0)&&(*writeFrame != 0)){
     portError = handleCommonReadErrors(portError, readFrame);
     if(portError != mdtAbstractPort::ErrorHandled){
       portError = handleCommonWriteErrors(portError, writeFrame);
     }
     return portError;
-  }else if(readFrame != 0){
+  }else if(*readFrame != 0){
     return handleCommonReadErrors(portError, readFrame);
   }else{
     return handleCommonWriteErrors(portError, writeFrame);
@@ -468,37 +467,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
       if(!pvRunning){
         return mdtAbstractPort::ErrorHandled;
       }
-      return handleCommonWriteErrors(portError, frame);
-      /**
-      if(portError == mdtAbstractPort::WriteCanceled){
-        // Restore frame to pool and return
-        pvPort->writeFramesPool().enqueue(frame);
-        if(pvRunning){
-          notifyError(mdtAbstractPort::WriteCanceled);
-        }
-        return mdtAbstractPort::NoError;
-      }else if(portError == mdtAbstractPort::WriteTimeout){
-        if(maxWriteTry <= 0){
-          // Notify error and restore frame into write pool
-          mdtError e(MDT_PORT_IO_ERROR, "Max write try reached after write timeout", mdtError::Error);
-          MDT_ERROR_SET_SRC(e, "mdtPortThread");
-          e.commit();
-          if(pvRunning){
-            notifyError(mdtAbstractPort::WriteTimeout);
-          }
-          pvPort->writeFramesPool().enqueue(frame);
-          // Thread has nothing else to do
-          return mdtAbstractPort::NoError;
-        }
-        // Cannot write now, sleep some time and try later
-        pvPort->unlockMutex();
-        msleep(100);
-        pvPort->lockMutex();
-        maxWriteTry--;
-      }else{
-        return portError;
-      }
-      */
+      return handleCommonWriteErrors(portError, &frame);
     }
     // Event occured, send the data to port
     if(bytePerByteWrite){
@@ -531,8 +500,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
       if(!pvRunning){
         return mdtAbstractPort::ErrorHandled;
       }
-      return handleCommonWriteErrors(portError, frame);
-      ///return mdtAbstractPort::UnhandledError;
+      return handleCommonWriteErrors(portError, &frame);
     }
   }
   // Here, frame is completly sent

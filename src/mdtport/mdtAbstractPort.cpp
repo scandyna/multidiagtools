@@ -26,18 +26,10 @@
 mdtAbstractPort::mdtAbstractPort(QObject *parent)
  : QObject(parent)
 {
-  ///pvReadTimeoutOccured = false;
-  ///pvReadTimeoutOccuredPrevious = false;
-  ///pvWriteTimeoutOccured = false;
-  ///pvWriteTimeoutOccuredPrevious = false;
   pvIsOpen = false;
   pvConfig = 0;
   pvFlushInRequestPending = false;
   pvFlushOutRequestPending = false;
-
-  // Emit signals with initial states
-  ///emit readTimeoutStateChanged(pvReadTimeoutOccured);
-  ///emit writeTimeoutStateChanged(pvWriteTimeoutOccured);
 }
 
 mdtAbstractPort::~mdtAbstractPort()
@@ -129,9 +121,6 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
   }
   // Init queues
   initQueues();
-  // Set some initial states
-  ///updateReadTimeoutState(false);
-  ///updateWriteTimeoutState(false);
 
   return NoError;
 }
@@ -204,47 +193,6 @@ bool mdtAbstractPort::flushOutRequestPending()
   return false;
 }
 
-/**
-void mdtAbstractPort::updateReadTimeoutState(bool state)
-{
-  
-  if(state != pvReadTimeoutOccuredPrevious){
-    ///emit readTimeoutStateChanged(state);
-  }
-  pvReadTimeoutOccuredPrevious = pvReadTimeoutOccured;
-  
-  ///pvReadTimeoutOccured = state;
-}
-*/
-
-/**
-void mdtAbstractPort::updateWriteTimeoutState(bool state)
-{
-  
-  if(state != pvWriteTimeoutOccured){
-    ///emit writeTimeoutStateChanged(state);
-  }
-  pvWriteTimeoutOccuredPrevious = pvWriteTimeoutOccured;
-  
-  pvWriteTimeoutOccured = state;
-}
-*/
-
-/**
-bool mdtAbstractPort::readTimeoutOccured()
-{
-  return pvReadTimeoutOccured;
-}
-*/
-
-
-/**
-bool mdtAbstractPort::writeTimeoutOccured()
-{
-  return pvWriteTimeoutOccured;
-}
-*/
-
 void mdtAbstractPort::flush()
 {
   lockMutex();
@@ -266,7 +214,6 @@ void mdtAbstractPort::initQueues()
   mdtFrame *frame;
 
   // Create the read frames pools with requested type
-  ///qDebug() << "mdtAbstractPort::initQueues() , n: " << config().readQueueSize() << " , fsize: " << config().readFrameSize();
   for(int i=0; i<config().readQueueSize(); i++){
     switch(config().frameType()){
       // Raw (binary) frame

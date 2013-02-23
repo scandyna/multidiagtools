@@ -91,19 +91,12 @@ void mdtPortReadThread::run()
           }
         }
       }else{
-        portError = handleCommonReadErrors(portError, frame);
+        portError = handleCommonReadErrors(portError, &frame);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error, stop
           break;
         }
       }
-      /**
-      if(portError != mdtAbstractPort::ReadTimeout){
-        // Unhandled error - notify and end
-        notifyError(portError);
-        break;
-      }
-      */
     }
     // Check about flush request
     if(pvPort->flushInRequestPending()){
@@ -122,45 +115,12 @@ void mdtPortReadThread::run()
       if(!pvRunning){
         break;
       }
-      portError = handleCommonReadErrors((mdtAbstractPort::error_t)n, frame);
+      portError = handleCommonReadErrors((mdtAbstractPort::error_t)n, &frame);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error, stop
         break;
       }
     }
-    ///Q_ASSERT(frame != 0);
-
-    /**
-    // Event occured, get the data from port - Check timeout state first
-    if(pvPort->readTimeoutOccured()){
-      // In timeout protocol, the current frame is considered complete
-      if(useReadTimeoutProtocol){
-        if(frame != 0){
-          if(!frame->isEmpty()){
-            frame->setComplete();
-            pvPort->readenFrames().enqueue(frame);
-            // emit a Readen frame signal
-            emit newFrameReaden();
-            frame = getNewFrameRead();
-            if(frame == 0){
-              break;
-            }
-          }
-        }
-      }else{
-        notifyError(mdtAbstractPort::ReadTimeout);
-      }
-    }else{
-      // Read
-      n = readFromPort(&frame);
-      if(n < 0){
-        // Unhandled error -> notify and stop
-        notifyError(n);
-        break;
-      }
-      Q_ASSERT(frame != 0);
-    }
-    */
   }
 
   // Put current frame into pool
@@ -168,8 +128,9 @@ void mdtPortReadThread::run()
     pvPort->readFramesPool().enqueue(frame);
   }
 
-  pvPort->unlockMutex();
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);
   }
+  pvRunning = false;
+  pvPort->unlockMutex();
 }
