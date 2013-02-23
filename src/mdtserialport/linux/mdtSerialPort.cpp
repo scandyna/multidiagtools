@@ -633,10 +633,10 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
   }
   pvMutex.lock();
   if(n == 0){
-    updateReadTimeoutState(true);
+    ///updateReadTimeoutState(true);
     return ReadTimeout;
   }else{
-    updateReadTimeoutState(false);
+    ///updateReadTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
@@ -669,7 +669,7 @@ qint64 mdtSerialPort::read(char *data, qint64 maxSize)
       case EAGAIN:      // No data available
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
-        updateReadTimeoutState(true);
+        ///updateReadTimeoutState(true);
         return ReadTimeout;
       default:
         mdtError e(MDT_SERIAL_PORT_IO_ERROR, "read() call failed", mdtError::Error);

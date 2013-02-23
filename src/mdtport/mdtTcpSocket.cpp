@@ -175,11 +175,16 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   unlockMutex();
   ok = pvSocket->waitForBytesWritten(pvWriteTimeout);
   lockMutex();
+  if(!ok){
+    return mapSocketError(pvSocket->error(), false);
+  }
+  /**
   if(ok){
     updateReadTimeoutState(false);  /// ??????????????????'
   }else{
     return mapSocketError(pvSocket->error(), false);
   }
+  */
 
   return NoError;
 }

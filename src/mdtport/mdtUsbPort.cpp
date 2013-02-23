@@ -219,7 +219,7 @@ void mdtUsbPort::controlTransferCallback(struct libusb_transfer *transfer)
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     ///qDebug() << "mdtUsbPort::controlTransferCallback(): timeout";
-    port->updateReadTimeoutState(true);
+    ///port->updateReadTimeoutState(true);
     port->controlFramesPool().enqueue(port->pvCurrentControlFrame);
     port->pvCurrentControlFrame = 0;
     port->addError(ControlTimeout);
@@ -455,12 +455,12 @@ void mdtUsbPort::readTransferCallback(struct libusb_transfer *transfer)
   port->pvReadTransferPending = false;
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
-    port->updateReadTimeoutState(true);
+    ///port->updateReadTimeoutState(true);
     port->addError(ReadTimeout);
     return;
-  }else{
+  }/**else{
     port->updateReadTimeoutState(false);
-  }
+  }*/
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
     ///qDebug() << "mdtUsbPort::readTransferCallback() return ReadCanceled";
@@ -639,12 +639,12 @@ void mdtUsbPort::messageInTransferCallback(struct libusb_transfer *transfer)
   // Check if transfer has timed out
   if(transfer->status & LIBUSB_TRANSFER_TIMED_OUT){
     port->pvMessageInFramesPool.enqueue(frame);
-    port->updateReadTimeoutState(true);
+    ///port->updateReadTimeoutState(true);
     port->addError(ReadTimeout);
     return;
-  }else{
+  }/**else{
     port->updateReadTimeoutState(false);
-  }
+  }*/
   // Check if transfer was cancelled
   if(transfer->status & LIBUSB_TRANSFER_CANCELLED){
     ///qDebug() << "mdtUsbPort::messageInTransferCallback() return ReadCanceled";
@@ -832,7 +832,7 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
   Q_ASSERT(transfer != 0);
   Q_ASSERT(transfer->user_data != 0);
 
-  qDebug() << "mdtUsbPort::writeTransferCallback() , actual_length: " << transfer->actual_length;
+  ///qDebug() << "mdtUsbPort::writeTransferCallback() , actual_length: " << transfer->actual_length;
 
   // Get this instance
   mdtUsbPort *port = static_cast<mdtUsbPort*>(transfer->user_data);
@@ -891,7 +891,7 @@ void mdtUsbPort::writeTransferCallback(struct libusb_transfer *transfer)
     return;
   }
   
-  qDebug() << "mdtUsbPort::writeTransferCallback() DONE";
+  ///qDebug() << "mdtUsbPort::writeTransferCallback() DONE";
   
 }
 
@@ -1644,7 +1644,7 @@ mdtAbstractPort::error_t mdtUsbPort::mapUsbError(int error, quint8 endpoint)
       if(endpoint == 0){
         return WriteTimeout;
       }else if(endpoint == pvReadEndpointAddress){
-        updateReadTimeoutState(true);
+        ///updateReadTimeoutState(true);
         return ReadTimeout;
       }else if(endpoint == pvWriteEndpointAddress){
         ///updateWriteTimeoutState(true);

@@ -397,7 +397,7 @@ class mdtAbstractPort : public QObject
    * Note: this method is called from mdtPortReadThread , and should not be used directly<br>
    * Mutex is not handled by this method.
    */
-  void updateReadTimeoutState(bool state);
+  ///void updateReadTimeoutState(bool state);
 
   /*! \brief Update the write timeout state
    *
@@ -412,7 +412,7 @@ class mdtAbstractPort : public QObject
    * 
    * Mutex is not handled by this method.
    */
-  bool readTimeoutOccured();
+  ///bool readTimeoutOccured();
 
   /*! \brief Returns write timeout state
    * 
@@ -612,7 +612,7 @@ class mdtAbstractPort : public QObject
    */
   virtual void pvFlushOut() = 0;
 
-  bool pvReadTimeoutOccured;
+  ///bool pvReadTimeoutOccured;
   ///bool pvReadTimeoutOccuredPrevious;
   ///bool pvWriteTimeoutOccured;
   ///bool pvWriteTimeoutOccuredPrevious;

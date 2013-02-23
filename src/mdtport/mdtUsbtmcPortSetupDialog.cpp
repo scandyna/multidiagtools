@@ -27,6 +27,8 @@
 
 #include <QDebug>
 
+/// \todo Handle Ok/Apply/Stop buttons: f.ex.: when something fails, Ok button is enabled, not coherent
+
 mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget *parent)
  : QDialog(parent)
 {

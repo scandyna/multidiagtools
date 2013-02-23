@@ -26,7 +26,7 @@
 mdtAbstractPort::mdtAbstractPort(QObject *parent)
  : QObject(parent)
 {
-  pvReadTimeoutOccured = false;
+  ///pvReadTimeoutOccured = false;
   ///pvReadTimeoutOccuredPrevious = false;
   ///pvWriteTimeoutOccured = false;
   ///pvWriteTimeoutOccuredPrevious = false;
@@ -130,7 +130,7 @@ mdtAbstractPort::error_t mdtAbstractPort::setup()
   // Init queues
   initQueues();
   // Set some initial states
-  updateReadTimeoutState(false);
+  ///updateReadTimeoutState(false);
   ///updateWriteTimeoutState(false);
 
   return NoError;
@@ -204,16 +204,18 @@ bool mdtAbstractPort::flushOutRequestPending()
   return false;
 }
 
+/**
 void mdtAbstractPort::updateReadTimeoutState(bool state)
 {
-  /**
+  
   if(state != pvReadTimeoutOccuredPrevious){
     ///emit readTimeoutStateChanged(state);
   }
   pvReadTimeoutOccuredPrevious = pvReadTimeoutOccured;
-  */
-  pvReadTimeoutOccured = state;
+  
+  ///pvReadTimeoutOccured = state;
 }
+*/
 
 /**
 void mdtAbstractPort::updateWriteTimeoutState(bool state)
@@ -228,11 +230,12 @@ void mdtAbstractPort::updateWriteTimeoutState(bool state)
 }
 */
 
-
+/**
 bool mdtAbstractPort::readTimeoutOccured()
 {
   return pvReadTimeoutOccured;
 }
+*/
 
 
 /**

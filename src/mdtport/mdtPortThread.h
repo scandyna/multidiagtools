@@ -204,6 +204,17 @@ class mdtPortThread : public QThread
    */
   mdtAbstractPort::error_t handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *frame);
 
+  /*! \brief Handle common read and write errors
+   *
+   * This is a helper class for port specific subclass.
+   *
+   * If readFrame is not null, handleCommonReadErrors() is called first.
+   *  If no error was handled, and writeFrame is not null, handleCommonWriteErrors() is called.
+   *
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   */
+  mdtAbstractPort::error_t handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *readFrame, mdtFrame *writeFrame);
+
   /*! \brief Get a new frame for reading data from port
    *
    * This is a helper method for subclass to get a new frame

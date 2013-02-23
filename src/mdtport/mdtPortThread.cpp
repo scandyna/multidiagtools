@@ -282,6 +282,21 @@ mdtAbstractPort::error_t mdtPortThread::handleCommonWriteErrors(mdtAbstractPort:
   return portError;
 }
 
+mdtAbstractPort::error_t mdtPortThread::handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame *readFrame, mdtFrame *writeFrame)
+{
+  if((readFrame != 0)&&(writeFrame != 0)){
+    portError = handleCommonReadErrors(portError, readFrame);
+    if(portError != mdtAbstractPort::ErrorHandled){
+      portError = handleCommonWriteErrors(portError, writeFrame);
+    }
+    return portError;
+  }else if(readFrame != 0){
+    return handleCommonReadErrors(portError, readFrame);
+  }else{
+    return handleCommonWriteErrors(portError, writeFrame);
+  }
+}
+
 mdtFrame *mdtPortThread::getNewFrameRead()
 {
   Q_ASSERT(pvPort != 0);
