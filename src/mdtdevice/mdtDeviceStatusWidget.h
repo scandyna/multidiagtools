@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -31,6 +31,7 @@
 class QLabel;
 class QPushButton;
 class QTimer;
+class QMessageBox;
 
 /*! \brief
  */
@@ -45,14 +46,6 @@ class mdtDeviceStatusWidget : public QWidget
   mdtDeviceStatusWidget(QWidget *parent = 0);
 
   ~mdtDeviceStatusWidget();
-
-  /*! \brief Set device
-   *
-   * Will make some connections
-   *
-   * \pre device must be valid.
-   */
-  ///void setDevice(mdtDevice *device);
 
   /*! \brief Enable the TX/RX LEDs
    *
@@ -120,19 +113,6 @@ class mdtDeviceStatusWidget : public QWidget
    */
   void setState(int state);
 
-  /*! \brief
-   *
-   * \param state A state as define in mdeDevice
-   */
-  ///void setState(int state, const QString &message, const QString &details);
-
-  /*! \brief Used to show a message
-   *
-   * \param message Message to show
-   * \param timeout If > 0, message will be cleared after timeout [ms]
-   */
-  ///void showMessage(const QString &message, int timeout = 0);
-
   /*! \brief Used to show a message and details
    *
    * \param message Message to show
@@ -169,6 +149,7 @@ class mdtDeviceStatusWidget : public QWidget
   QWidget *pvCustomWidget;
   mdtBlinkLed *ldState;
   QPushButton *pbDetails;
+  QMessageBox *mbDetails;
   QLabel *lbMessage;
   QLabel *lbTx;
   QLabel *lbRx;

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QTimer>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -41,6 +42,9 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   // Add GUI elements
   pbDetails = new QPushButton("...");
   pbDetails->setEnabled(false);
+  mbDetails = new QMessageBox(this);
+  mbDetails->setStandardButtons(QMessageBox::Ok);
+  mbDetails->setIcon(QMessageBox::Warning);
   pvLayout->addWidget(pbDetails, 0, 0);
   ldState = new mdtBlinkLed;
   ldState->setFixedSize(15, 15);
@@ -56,25 +60,13 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   pvBackToStateTextTimer = new QTimer(this);
   pvBackToStateTextTimer->setSingleShot(true);
   connect(pvBackToStateTextTimer, SIGNAL(timeout()), this, SLOT(backToStateText()));
+  connect(pbDetails, SIGNAL(clicked()), mbDetails, SLOT(exec()));
 }
 
 mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
 {
   disableTxRxLeds();
 }
-
-/**
-void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
-{
-  Q_ASSERT(device != 0);
-
-  pvShowingMessage = false;
-  ///connect(device, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
-  connect(device, SIGNAL(stateChanged(int, const QString&, const QString&)), this, SLOT(setState(int, const QString&, const QString&)));
-  connect(device, SIGNAL(statusMessageChanged(const QString&, int)), this, SLOT(showMessage(const QString&, int)));
-  setState(device->state());
-}
-*/
 
 void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
 {
@@ -235,56 +227,19 @@ void mdtDeviceStatusWidget::setState(int state)
   }
 }
 
-/**
-void mdtDeviceStatusWidget::setState(int state, const QString &message, const QString &details)
-{
-  if(message.isEmpty()){
-    setState(state);
-  }else{
-    // Set LED color
-    if(state == mdtDevice::Ready){
-      ldState->setColor(pvReadyColor);
-      ldState->setOn();
-    }else if(state == mdtDevice::Disconnected){
-      ldState->setGreen();
-      ldState->setOff();
-    }else if(state == mdtDevice::Connecting){
-      ldState->setColor(pvConnectingColor);
-      ldState->setOn();
-    }else if(state == mdtDevice::Busy){
-      ldState->setColor(pvBusyColor);
-      ldState->setOn();
-    }else{
-      ldState->setRed();
-      ldState->setOn();
-    }
-    // Set text
-    pvCurrentStateText = message;
-    if(!pvShowingMessage){
-      lbMessage->setText(pvCurrentStateText);
-    }
-  }
-}
-*/
-
-/**
-void mdtDeviceStatusWidget::showMessage(const QString &message, int timeout)
-{
-  pvShowingMessage = true;
-  lbMessage->setText(message);
-  if(timeout > 0){
-    pvBackToStateTextTimer->start(timeout);
-  }
-}
-*/
-
 void mdtDeviceStatusWidget::showMessage(const QString &message, const QString &details, int timeout)
 {
   pvShowingMessage = true;
   lbMessage->setText(message);
   if(!details.isEmpty()){
+    mbDetails->setText(message);
+    mbDetails->setInformativeText(details);
     pbDetails->setEnabled(true);
     /// \todo Implement details !
+  }else{
+    mbDetails->setText("");
+    mbDetails->setInformativeText("");
+    pbDetails->setEnabled(false);
   }
   if(timeout > 0){
     pvBackToStateTextTimer->start(timeout);
