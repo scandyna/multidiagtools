@@ -30,7 +30,6 @@
 #include <QList>
 
 /// \bug abortBulkIn() does not work properly
-/// \todo Write a USBTMC port thread
 
 /*! \brief USBTMC port manager
  *
@@ -174,6 +173,8 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
   /*! \brief Called by the thread whenn a frame was readen
    */
   void fromThreadNewFrameReaden();
+
+ private slots:
 
   /*! \brief Manage errors comming from port threads
    */

@@ -64,6 +64,9 @@ void mdtPortReadThread::run()
   if(frame == 0){
     return;
   }
+  // Notify that we are ready
+  notifyError(mdtAbstractPort::NoError);
+
   // Run...
   while(1){
     // Read thread state

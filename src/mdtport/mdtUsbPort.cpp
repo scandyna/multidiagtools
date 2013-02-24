@@ -88,7 +88,7 @@ mdtAbstractPort::error_t mdtUsbPort::reconnect(int timeout)
   error_t error;
 
   // Let libusb finish pending works
-  handleUsbEvents();
+  cancelTransfers();
   close();
 
   error = open();

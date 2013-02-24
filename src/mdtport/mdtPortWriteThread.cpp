@@ -69,6 +69,8 @@ void mdtPortWriteThread::run()
   bytePerByteWrite = pvPort->config().bytePerByteWrite();
   // Set the running flag
   pvRunning = true;
+  // Notify that we are ready
+  notifyError(mdtAbstractPort::NoError);
 
   // Run...
   while(1){

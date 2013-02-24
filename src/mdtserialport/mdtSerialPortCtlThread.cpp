@@ -57,6 +57,8 @@ void mdtSerialPortCtlThread::run()
   // Set the running flag
   port->lockMutex();
   pvRunning = true;
+  // Notify that we are ready
+  notifyError(mdtAbstractPort::NoError);
 
   // Run...
   while(1){

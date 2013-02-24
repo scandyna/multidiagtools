@@ -358,11 +358,13 @@ int mdtPortThread::readFromPort(mdtFrame **frame, bool emitNewFrameReaden)
   // Reset bufferCursor
   bufferCursor = pvReadBuffer;
   // Read data from port
-  emit readProcessBegin();
   readen = pvPort->read(pvReadBuffer, pvReadBufferSize);
   if(readen < 0){
     ///pvPort->readFramesPool().enqueue(*frame);
     return readen;
+  }
+  if(readen > 0){
+    emit readProcessBegin();
   }
   // Store readen data
   toStore = readen;

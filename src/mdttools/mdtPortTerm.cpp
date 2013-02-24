@@ -51,7 +51,8 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   // Current port manager
   pvCurrentPortManager = 0;
   // Flags
-  pvRunning = false;
+  ///pvRunning = false;
+  pvReady = false;
 
   connect(pbSendCmd, SIGNAL(clicked()), this, SLOT(sendCmd()));
   connect(leCmd, SIGNAL(returnPressed()), this, SLOT(sendCmd()));
@@ -112,7 +113,7 @@ void mdtPortTerm::sendCmd()
   QString cmd;
   bool cmdIsQuery = false;
 
-  if(!pvRunning){
+  if(!pvReady){
     return;
   }
   if(pvCurrentPortManager == 0){
@@ -185,23 +186,27 @@ void mdtPortTerm::attachToSerialPort()
   pvStatusWidget->addCustomWidget(pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
   // Make connections
-  connect(pvSerialPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+  ///connect(pvSerialPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+  connect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
   // Try to open first port
   ports = pvSerialPortManager->scan();
   if(ports.size() < 1){
-    setStateError("No free serial port found");
+    ///setStateError("No free serial port found");
+    showStatusMessage(tr("No free serial port found"));
     return;
   }
   pvSerialPortManager->setPortInfo(*ports.at(0));
   if(!pvSerialPortManager->openPort()){
-    setStateError(tr("Cannot open port ") + ports.at(0)->portName());
+    ///setStateError(tr("Cannot open port ") + ports.at(0)->portName());
+    showStatusMessage(tr("Cannot open port ") + ports.at(0)->portName());
     qDeleteAll(ports);
     return;
   }
   if(pvSerialPortManager->start()){
-    setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
-    QTimer::singleShot(5000, this, SLOT(setStateRunning()));
+    showStatusMessage(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText(), 5000);
+    ///setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
+    ///QTimer::singleShot(5000, this, SLOT(setStateRunning()));
   }
   qDeleteAll(ports);
 }
@@ -210,7 +215,8 @@ void mdtPortTerm::detachFromSerialPort()
 {
   if(pvSerialPortManager != 0){
     disconnect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
-    disconnect(pvSerialPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+    ///disconnect(pvSerialPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+    disconnect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
     // Ctl widget
     pvStatusWidget->removeCustomWidget();
     delete pvSerialPortCtlWidget;
@@ -222,7 +228,7 @@ void mdtPortTerm::detachFromSerialPort()
     pvSerialPortManager = 0;
   }
   pvCurrentPortManager = 0;
-  setStateStopped();
+  ///setStateStopped();
 }
 
 void mdtPortTerm::portSetup()
@@ -241,11 +247,13 @@ void mdtPortTerm::portSetup()
   }
   // If port is running, enable terminal
   if(pvCurrentPortManager->isRunning()){
-    setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
-    QTimer::singleShot(5000, this, SLOT(setStateRunning()));
-  }else{
+    showStatusMessage(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText(), 5000);
+    ///setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
+    ///QTimer::singleShot(5000, this, SLOT(setStateRunning()));
+  }/**else{
     setStateStopped();
   }
+  */
 }
 
 void mdtPortTerm::attachToUsbtmcPort()
@@ -257,23 +265,27 @@ void mdtPortTerm::attachToUsbtmcPort()
   pvUsbtmcPortManager = new mdtUsbtmcPortManager;
   pvCurrentPortManager = pvUsbtmcPortManager;
   // Make connections
-  connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+  ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int)), this, SLOT(setStateFromPortError(int)));
+  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
   // Try to open first port
   ports = pvUsbtmcPortManager->scan();
   if(ports.size() < 1){
-    setStateError(tr("No USBTMC device found"));
+    ///setStateError(tr("No USBTMC device found"));
+    showStatusMessage(tr("No USBTMC device found"));
     return;
   }
   pvUsbtmcPortManager->setPortInfo(*ports.at(0));
   if(!pvUsbtmcPortManager->openPort()){
-    setStateError(tr("Cannot open port ") + ports.at(0)->portName());
+    ///setStateError(tr("Cannot open port ") + ports.at(0)->portName());
+    showStatusMessage(tr("Cannot open port ") + ports.at(0)->portName());
     qDeleteAll(ports);
     return;
   }
   if(pvUsbtmcPortManager->start()){
-    setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
-    QTimer::singleShot(5000, this, SLOT(setStateRunning()));
+    ///setStateRunning(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText());
+    showStatusMessage(tr("Port open: ") + pvCurrentPortManager->portInfo().displayText(), 5000);
+    ///QTimer::singleShot(5000, this, SLOT(setStateRunning()));
   }
   qDeleteAll(ports);
 }
@@ -282,6 +294,7 @@ void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+    disconnect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
     pvUsbtmcPortManager->closePort();
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
@@ -306,14 +319,16 @@ void mdtPortTerm::detachFromPorts()
 {
   detachFromSerialPort();
   detachFromUsbtmcPort();
-  setStateStopped();
+  ///setStateStopped();
 }
 
+/**
 void mdtPortTerm::setStateFromPortError(int error)
 {
   // It can happen that some errors are queued
   if(pvCurrentPortManager == 0){
     qApp->processEvents();
+    return;
   }
 
   switch(error){
@@ -343,25 +358,114 @@ void mdtPortTerm::setStateFromPortError(int error)
       pvStatusWidget->setState(mdtDevice::Error, "Received unknown error, number " + QString::number(error), "");
   }
 }
+*/
 
+/**
 void mdtPortTerm::setStateRunning(const QString &msg)
 {
   pvRunning = true;
   pbSendCmd->setEnabled(true);
   pvStatusWidget->setState(mdtDevice::Ready, msg, "");
 }
+*/
 
+/**
 void mdtPortTerm::setStateStopped(const QString &msg)
 {
   pvRunning = false;
   pbSendCmd->setEnabled(false);
   pvStatusWidget->setState(mdtDevice::Disconnected, msg, "");
 }
+*/
 
+/**
 void mdtPortTerm::setStateError(const QString &msg)
 {
   pvRunning = false;
   pbSendCmd->setEnabled(false);
-  ///pvStatusWidget->setState(mdtDevice::Unknown, msg, "");
   pvStatusWidget->setState(mdtDevice::Error, msg, "");
+}
+*/
+
+void mdtPortTerm::setState(int state)
+{
+  qDebug() << "mdtPortTerm::setState() , new state: " << state;
+  switch(state){
+    case mdtPortManager::Disconnected:
+      setStateDisconnected();
+      break;
+    case mdtPortManager::Connecting:
+      setStateConnecting();
+      break;
+    case mdtPortManager::Ready:
+      setStateReady();
+      break;
+    case mdtPortManager::Busy:
+      setStateBusy();
+      break;
+    case mdtPortManager::Warning:
+      setStateWarning();
+      break;
+    case mdtPortManager::Error:
+      setStateError();
+      break;
+    default:
+      setStateError();
+      showStatusMessage(tr("Received a unknown state"));
+  }
+}
+
+void mdtPortTerm::setStateDisconnected()
+{
+  pvReady = false;
+  pbSendCmd->setEnabled(false);
+  pbSendCmdAbort->setEnabled(false);
+  pvStatusWidget->setState(mdtDevice::Disconnected);
+}
+
+void mdtPortTerm::setStateConnecting()
+{
+  pvReady = false;
+  pbSendCmd->setEnabled(false);
+  pbSendCmdAbort->setEnabled(false);
+  pvStatusWidget->setState(mdtDevice::Connecting);
+}
+
+void mdtPortTerm::setStateReady()
+{
+  pvReady = true;
+  pbSendCmd->setEnabled(true);
+  pbSendCmdAbort->setEnabled(true);
+  pvStatusWidget->setState(mdtDevice::Ready);
+}
+
+void mdtPortTerm::setStateBusy()
+{
+  pvReady = false;
+  pbSendCmd->setEnabled(false);
+  pbSendCmdAbort->setEnabled(false);
+  pvStatusWidget->setState(mdtDevice::Busy);
+}
+
+void mdtPortTerm::setStateWarning()
+{
+  pvReady = false;
+  pbSendCmd->setEnabled(false);
+  pbSendCmdAbort->setEnabled(false);
+  pvStatusWidget->setState(mdtDevice::Warning);
+}
+
+void mdtPortTerm::setStateError()
+{
+  pvReady = false;
+  pbSendCmd->setEnabled(false);
+  pbSendCmdAbort->setEnabled(false);
+  pvStatusWidget->setState(mdtDevice::Error);
+}
+
+void mdtPortTerm::showStatusMessage(const QString &message, int timeout)
+{
+  Q_ASSERT(pvStatusWidget != 0);
+
+  pvStatusWidget->showMessage(message, timeout);
 }

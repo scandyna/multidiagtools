@@ -36,6 +36,8 @@
 #include <QList>
 #include <QQueue>
 #include <QMap>
+#include <QState>
+#include <QStateMachine>
 
 /*! \brief Port manager base class
  *
@@ -104,6 +106,18 @@ class mdtPortManager : public QThread
  Q_OBJECT
 
  public:
+
+  /*! \brief State of device
+   */
+  enum state_t {
+                Ready = 0,              /*!< Port is open, setup is done and threads are running.
+                                              Depending on port type, device is connected (USB, TCP). */
+                Disconnected,           /*!< Device is not connected or port is down */
+                Connecting,             /*!< Trying to connect to device */
+                Busy,                   /*!< Port is up and device is connected but cannot accept requests for the moment */
+                Warning,                /*!< Device or port communication handled error occured */
+                Error                   /*!< Device or port communication unhandled error occured */
+               };
 
   /*! \brief Contruct a port manager
    *
@@ -519,17 +533,6 @@ class mdtPortManager : public QThread
   /*! \brief Try to 
    * 
    */
-  
-
-  /*! \brief Called by the read thread whenn a complete frame was readen
-   *
-   * \sa mdtPortThread
-   */
-  virtual void fromThreadNewFrameReaden();
-
-  /*! \brief Manage errors comming from port threads
-   */
-  virtual void onThreadsErrorOccured(int error);
 
  signals:
 
@@ -558,6 +561,46 @@ class mdtPortManager : public QThread
    * Typically used with mdtDeviceStatusWidget
    */
   void statusMessageChanged(const QString &message, int timeout);
+
+  /*! \brief Emitted when state has changed
+   */
+  void stateChanged(int newState);
+
+  /*! \brief Connecting event
+   *
+   * Used by internal state machine
+   */
+  void connecting();
+
+  /*! \brief Disconnected event
+   *
+   * Used by internal state machine
+   */
+  void disconnected();
+
+  /*! \brief Device ready event event
+   *
+   * Used by internal state machine
+   */
+  void ready();
+
+  /*! \brief Device busy event event
+   *
+   * Used by internal state machine
+   */
+  void busy();
+
+  /*! \brief Handled error event
+   *
+   * Used by internal state machine
+   */
+  void handledError();
+
+  /*! \brief Unhandled error event
+   *
+   * Used by internal state machine
+   */
+  void unhandledError();
 
  protected:
 
@@ -620,7 +663,7 @@ class mdtPortManager : public QThread
    *
    * Internally, transactions are restored to pool.
    *
-   * \note Clarify + implement
+   * \todo Clarify + implement
    */
   void commitFrames();
 
@@ -638,10 +681,78 @@ class mdtPortManager : public QThread
    */
   bool readWaitCanceled();
 
+ protected slots:
+
+  /*! \brief Called by the read thread whenn a complete frame was readen
+   *
+   * \sa mdtPortThread
+   */
+  virtual void fromThreadNewFrameReaden();
+
+  /*! \brief Manage errors comming from port threads
+   *
+   * This implementation simply change the current state
+   *  emiting transistions signal.
+   *  Subclass can reimplement this method to handle
+   *  port specific error.
+   *  Dont forget to emit transistion signals.
+   */
+  virtual void onThreadsErrorOccured(int error);
+
+ private slots:
+
+  /*! \brief Set the disconnected state
+   *
+   * Used by internal state machine.
+   */
+  void setStateDisconnected();
+
+  /*! \brief Set the connecting state
+   *
+   * Used by internal state machine
+   * Emit stateChanged() if current state was not Connecting.
+   * Used by internal state machine.
+   */
+  void setStateConnecting();
+
+  /*! \brief Set the ready state
+   *
+   * Emit stateChanged() if current state was not Ready.
+   * Used by internal state machine.
+   */
+  void setStateReady();
+
+  /*! \brief Set the busy state
+   *
+   * Busy state can be used when physical device or computer (this software) cannot process more requests.
+   * Emit stateChanged() if current state was not Busy.
+   * Used by internal state machine.
+   */
+  void setStateBusy();
+
+  /*! \brief Set the warning state
+   *
+   * Emit stateChanged() if current state was not Warning.
+   * Used by internal state machine.
+   */
+  void setStateWarning();
+
+  /*! \brief Set the error state
+   *
+   * Emit stateChanged() if current state was not Error.
+   * Used by internal state machine.
+   */
+  void setStateError();
+
+ protected:
+
   mdtAbstractPort *pvPort;
   QList<mdtPortThread*> pvThreads;
 
  private:
+
+  // Setup state machine
+  void buildStateMachine();
 
   mdtPortInfo pvPortInfo;
   QQueue<mdtPortTransaction*> pvTransactionsPool;
@@ -656,7 +767,16 @@ class mdtPortManager : public QThread
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;
   mdtPortThread *pvWriteThread;
-
+  // State flag
+  state_t pvCurrentState;
+  // State machine
+  QStateMachine *pvStateMachine;
+  QState *pvStateDisconnected;
+  QState *pvStateConnecting;
+  QState *pvStateReady;
+  QState *pvStateBusy;
+  QState *pvStateWarning;
+  QState *pvStateError;
   // Diseable copy
   Q_DISABLE_COPY(mdtPortManager);
 };

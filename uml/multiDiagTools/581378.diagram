@@ -1,0 +1,145 @@
+format 76
+
+statecanvas 128002 state_ref 142466 // Ready
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 817.3 676.2 2000 202 73
+end
+statecanvas 128130 state_ref 142594 // Disconnected
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 354.4 114.6 2000 261 74
+end
+statecanvas 128258 state_ref 142722 // Connecting
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 750.5 294.9 2000 243 73
+end
+statecanvas 128386 state_ref 142850 // Error
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 413.5 424.7 2000 194 74
+end
+statecanvas 128514 state_ref 142978 // Warning
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 12.2 403.3 2000 221 74
+end
+statecanvas 128642 state_ref 143106 // Busy
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  xyzwh 34.1 681.2 2000 192 73
+end
+pseudostatecanvas 128770 pseudostate_ref 147970 // initial
+   xyz 62.1 143.2 2000
+end
+pseudostatecanvas 128898 pseudostate_ref 148098 // final
+   xyz 827.4 139.2 2000
+end
+pseudostatecanvas 131842 pseudostate_ref 148226 // final
+   xyz 495.6 330.6 2000
+end
+transitioncanvas 129026 transition_ref 151170 // <transition>
+  
+  from ref 128770 z 2001 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129154 transition_ref 151298 // connecting
+  decenter_begin 964
+  decenter_end 816
+  
+  from ref 128130 z 2001 label "connecting" xyz 740 232 3000 to ref 128258
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129410 transition_ref 151554 // disconnected
+  decenter_end 672
+  
+  from ref 128258 z 2001 label "disconnected" xyz 617 232 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129538 transition_ref 151682 // ready
+  decenter_end 907
+  
+  from ref 128258 z 2001 label "ready" xyz 918 512.5 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129666 transition_ref 151810 // busy
+  decenter_begin 189
+  decenter_end 173
+  
+  from ref 128002 z 2001 label "busy" xyz 503.5 684 3000 to ref 128642
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129794 transition_ref 151938 // ready
+  decenter_begin 873
+  decenter_end 873
+  
+  from ref 128642 z 2001 label "ready" xyz 500.5 733 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 129922 transition_ref 152066 // disconnected
+  decenter_begin 699
+  
+  from ref 128002 z 2001 label "disconnected" xyz 755.5 496.5 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130050 transition_ref 152194 // disconnected
+  
+  from ref 128642 z 2001 label "disconnected" xyz 210.5 528 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130178 transition_ref 152322 // disconnected
+  
+  from ref 128514 z 2001 label "disconnected" xyz 257.5 287 3000 to ref 128130
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130306 transition_ref 152450 // unhandledError
+  
+  from ref 128258 z 2001 label "unhandledError" xyz 690.5 372 3000 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130434 transition_ref 152578 // unhandledError
+  
+  from ref 128002 z 2001 label "unhandledError" xyz 680.5 578.5 3000 to point 912.8 674.2
+  line 131330 z 2001 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130562 transition_ref 152706 // unhandledError
+  
+  from ref 128642 z 2001 label "unhandledError" xyz 262.5 581.5 3000 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130690 transition_ref 152834 // unhandledError
+  decenter_begin 135
+  
+  from ref 128514 z 2001 label "unhandledError" xyz 230.5 399 3000 to ref 128386
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 130818 transition_ref 152962 // handledError
+  
+  from ref 128642 z 2001 label "handledError" xyz 82 569 3000 to ref 128514
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131074 transition_ref 153090 // handledError
+  decenter_begin 300
+  decenter_end 610
+  
+  from ref 128002 z 2001 label "handledError" xyz 547 562 3000 to ref 128514
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131458 transition_ref 153218 // ready
+  decenter_end 41
+  
+  from ref 128514 z 2001 label "ready" xyz 485.5 559 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131714 transition_ref 153346 // <transition>
+  
+  from ref 128130 z 2001 to ref 128898
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 131970 transition_ref 153474 // <transition>
+  
+  from ref 128386 z 2001 to ref 131842
+  write_horizontally default show_definition default drawing_language default
+end
+transitioncanvas 132098 transition_ref 153602 // ready
+  
+  from ref 128130 z 2001 label "ready" xyz 680 422 3000 to ref 128002
+  write_horizontally default show_definition default drawing_language default
+end
+end

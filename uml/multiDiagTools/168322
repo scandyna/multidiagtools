@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 26
+  revision 27
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -3276,6 +3276,136 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    state 142338 "mdtPortManagerStates"
+      stereotype "machine"
+      statediagram 581378 "mdtPortManagerStates"
+	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	size A3
+      end
+
+      state 142466 "Ready"
+	  uml_on_entry "setStateReady"
+	transition 151810 "busy"
+	  on state_ref 143106 // Busy
+	  external 
+	end
+
+	transition 152066 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 152578 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+
+	transition 153090 "handledError"
+	  on state_ref 142978 // Warning
+	  external 
+	end
+      end
+
+      state 142594 "Disconnected"
+	  uml_on_entry "setStateDisconnected"
+	transition 151298 "connecting"
+	  on state_ref 142722 // Connecting
+	  external 
+	end
+
+	transition 153346 "<transition>"
+	  on pseudostate_ref 148098 // final
+	  external 
+	end
+
+	transition 153602 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+      end
+
+      state 142722 "Connecting"
+	  uml_on_entry "setStateConnecting"
+	transition 151554 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 151682 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+
+	transition 152450 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+      end
+
+      state 142850 "Error"
+	  uml_on_entry "setStateError"
+	transition 153474 "<transition>"
+	  on pseudostate_ref 148226 // final
+	  external 
+	end
+      end
+
+      state 142978 "Warning"
+	  uml_on_entry "setStateWarning"
+	transition 152322 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 152834 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+
+	transition 153218 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+      end
+
+      state 143106 "Busy"
+	  uml_on_entry "setStateBusy"
+	transition 151938 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+
+	transition 152194 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 152706 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+
+	transition 152962 "handledError"
+	  on state_ref 142978 // Warning
+	  external 
+	end
+      end
+
+      pseudostate 147970 initial 
+	transition 151170 "<transition>"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+      end
+
+      pseudostate 148098 final 
+      end
+
+      pseudostate 148226 final 
       end
     end
   end

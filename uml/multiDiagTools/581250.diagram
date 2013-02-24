@@ -2,36 +2,36 @@ format 76
 
 statecanvas 128002 state_ref 128130 // Ready
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 925.36 743.7 2000 204 74
+  xyzwh 924.94 744.1 2000 204 74
 end
 statecanvas 128130 state_ref 128258 // Busy
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 85.39 743.7 2000 310 74
+  xyzwh 85.26 744.1 2000 310 74
 end
 statecanvas 129154 state_ref 128898 // Error
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 433.91 399.96 2000 276 74
+  xyzwh 434.34 399.84 2000 276 74
 end
 statecanvas 129282 state_ref 129026 // Connecting
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 884.16 396.02 2000 286 74
+  xyzwh 883.74 395.58 2000 286 74
 end
 statecanvas 129410 state_ref 129154 // Disconnected
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 324.32 183.39 2000 377 73
+  xyzwh 324.28 183.66 2000 377 73
 end
 pseudostatecanvas 129922 pseudostate_ref 128258 // initial
-   xyz 38.77 211.1 2000
+   xyz 38.28 211.7 2000
 end
 pseudostatecanvas 130178 pseudostate_ref 128386 // final
-   xyz 1035.47 207.39 2000
+   xyz 1035.98 207.66 2000
 end
 statecanvas 134146 state_ref 135810 // Warning
   show_activities default region_horizontally default drawing_language default show_stereotype_properties default
-  xyzwh 12.52 399.56 2000 301 74
+  xyzwh 12.98 400.44 2000 301 74
 end
 pseudostatecanvas 135810 pseudostate_ref 141442 // final
-   xyz 560.92 547.99 2000
+   xyz 560.68 547.46 2000
 end
 transitioncanvas 130050 transition_ref 128130 // <transition>
   
@@ -132,7 +132,7 @@ transitioncanvas 135938 transition_ref 144514 // <transition>
 end
 transitioncanvas 136066 transition_ref 144642 // <transition>
   
-  from ref 134146 z 2001 label "deviceReady" xyz 587 647 2001 to point 788.9 730.32
+  from ref 134146 z 2001 label "deviceReady" xyz 587 647 2001 to point 788.6 730.88
   line 136194 z 2001 to ref 128002
   write_horizontally default show_definition default drawing_language default
 end

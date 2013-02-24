@@ -1,15 +1,13 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 314242 // mdtDevice
-    571 416 100 4 48 0
-  active  statediagram_ref 574722 // mdtDeviceState
-    970 803 67 3 36 0
+  active  statediagram_ref 581378 // mdtPortManagerStates
+    970 803 80 3 0 0
 end
 show_stereotypes
-selected 
-package_ref 129 // multiDiagTools
 open
-  state_ref 128130 // Ready
+  state_ref 142594 // Disconnected
+  class_ref 525698 // mdtDeviceModbusWidget
+  state_ref 128002 // mdtDeviceState
   classview_ref 365954 // mdtDeviceWindow
   classview_ref 372482 // mdtDeviceStatusWidget
   classview_ref 392194 // mdtDeviceScpi
