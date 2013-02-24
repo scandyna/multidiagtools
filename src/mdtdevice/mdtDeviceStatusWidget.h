@@ -52,7 +52,7 @@ class mdtDeviceStatusWidget : public QWidget
    *
    * \pre device must be valid.
    */
-  void setDevice(mdtDevice *device);
+  ///void setDevice(mdtDevice *device);
 
   /*! \brief Enable the TX/RX LEDs
    *
@@ -124,14 +124,22 @@ class mdtDeviceStatusWidget : public QWidget
    *
    * \param state A state as define in mdeDevice
    */
-  void setState(int state, const QString &message, const QString &details);
+  ///void setState(int state, const QString &message, const QString &details);
 
   /*! \brief Used to show a message
    *
    * \param message Message to show
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
-  void showMessage(const QString &message, int timeout = 0);
+  ///void showMessage(const QString &message, int timeout = 0);
+
+  /*! \brief Used to show a message and details
+   *
+   * \param message Message to show
+   * \param details Details to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showMessage(const QString &message, const QString &details, int timeout = 0);
 
  private slots:
 

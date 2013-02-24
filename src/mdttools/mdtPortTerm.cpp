@@ -385,5 +385,5 @@ void mdtPortTerm::showStatusMessage(const QString &message, int timeout)
 {
   Q_ASSERT(pvStatusWidget != 0);
 
-  pvStatusWidget->showMessage(message, timeout);
+  pvStatusWidget->showMessage(message, "", timeout);
 }

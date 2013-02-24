@@ -30,8 +30,6 @@
 #include <QVariant>
 #include <QString>
 #include <QStringList>
-#include <QState>
-#include <QStateMachine>
 
 class QTimer;
 
@@ -99,7 +97,6 @@ class mdtDevice : public QObject
                 Disconnected,           /*!< Device is not connected */
                 Connecting,             /*!< Trying to connect to device */
                 Busy,                   /*!< Device is connected but cannot accept requests for the moment */
-                ///Unknown                 /*!< Unknown (and unhandled) state */
                 Warning,                /*!< Device or port communication handled error occured */
                 Error                   /*!< Device or port communication unhandled error occured */
                };
@@ -734,17 +731,6 @@ class mdtDevice : public QObject
   int pvDigitalOutputAddressOffset;
   int pvAnalogOutputAddressOffset;
 
- ///protected slots:
-
-  /*! \brief Update device state regarding port error.
-   *
-   * If error is unknown, the state is changed to Unknown.
-   * 
-   * \todo must become private (adapt subclasses)
-   */
-  ///void setStateFromPortError(int error);
-  ///void setStateFromPortError(int error, const QString &message = QString(), const QString &details = QString());
-
  public slots:
 
   /*! \brief Used to show a message in status bar
@@ -754,56 +740,27 @@ class mdtDevice : public QObject
    */
   void showStatusMessage(const QString &message, int timeout = 0);
 
+  /*! \brief Used to show a message and details in status bar
+   *
+   * \param message Message to show
+   * \param details Details to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
+
  signals:
 
   /*! \brief Emitted when state has changed
    *
    * Typically used with mdtDeviceStatusWidget
    */
-  ///void stateChanged(int state);
-  void stateChanged(int state, const QString &message = QString(), const QString &details = QString());
+  void stateChanged(int state);
 
   /*! \brief Emitted when a new status message is to display
    *
    * Typically used with mdtDeviceStatusWidget
    */
-  void statusMessageChanged(const QString &message, int timeout);
-
-  /*! \brief Connecting event
-   *
-   * Used by internal state machine
-   */
-  ///void connecting();
-
-  /*! \brief Disconnected event
-   *
-   * Used by internal state machine
-   */
-  ///void disconnected();
-
-  /*! \brief Device ready event event
-   *
-   * Used by internal state machine
-   */
-  ///void deviceReady();
-
-  /*! \brief Device busy event event
-   *
-   * Used by internal state machine
-   */
-  ///void deviceBusy();
-
-  /*! \brief Handled error event
-   *
-   * Used by internal state machine
-   */
-  ///void handledError();
-
-  /*! \brief Unhandled error event
-   *
-   * Used by internal state machine
-   */
-  ///void unhandledError();
+  void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
  private slots:
 
@@ -819,7 +776,6 @@ class mdtDevice : public QObject
 
   /*! \brief Set the connecting state
    *
-   * Used by internal state machine
    * Emit stateChanged() if current state was not Connecting.
    */
   void setStateConnecting();
@@ -860,16 +816,6 @@ class mdtDevice : public QObject
   QTimer *pvBackToReadyStateTimer;
   // State flag
   state_t pvCurrentState;
-  // State machine
-  /**
-  QStateMachine *pvStateMachine;
-  QState *pvStateDisconnected;
-  QState *pvStateConnecting;
-  QState *pvStateReady;
-  QState *pvStateBusy;
-  QState *pvStateWarning;
-  QState *pvStateError;
-  */
 };
 
 #endif  // #ifndef MDT_DEVICE_H

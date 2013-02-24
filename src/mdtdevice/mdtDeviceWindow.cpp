@@ -38,13 +38,18 @@ mdtDeviceWindow::~mdtDeviceWindow()
 {
 }
 
+  void stateChanged(int state);
+
+  void statusMessageChanged(const QString &message, const QString &details, int timeout);
+
 void mdtDeviceWindow::setDevice(mdtDevice *device)
 {
   Q_ASSERT(device != 0);
 
   pvDevice = device;
   // Status widget
-  pvStatusWidget->setDevice(pvDevice);
+  connect(device, SIGNAL(stateChanged(int)), pvStatusWidget, SLOT(setState(int)));
+  connect(device, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), pvStatusWidget, SLOT(showMessage(const QString&, const QString&, int)));
 }
 
 void mdtDeviceWindow::setIosWidget(QWidget *widget)

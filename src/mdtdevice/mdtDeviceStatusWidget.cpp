@@ -63,6 +63,7 @@ mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
   disableTxRxLeds();
 }
 
+/**
 void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
 {
   Q_ASSERT(device != 0);
@@ -73,6 +74,7 @@ void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
   connect(device, SIGNAL(statusMessageChanged(const QString&, int)), this, SLOT(showMessage(const QString&, int)));
   setState(device->state());
 }
+*/
 
 void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
 {
@@ -209,27 +211,22 @@ void mdtDeviceStatusWidget::setState(int state)
   if(state == mdtDevice::Ready){
     ldState->setColor(pvReadyColor);
     ldState->setOn();
-    ///lbMessage->setText(pvReadyText);
     pvCurrentStateText = pvReadyText;
   }else if(state == mdtDevice::Disconnected){
     ldState->setGreen();
     ldState->setOff();
-    ///lbMessage->setText(pvDisconnectedText);
     pvCurrentStateText = pvDisconnectedText;
   }else if(state == mdtDevice::Connecting){
     ldState->setColor(pvConnectingColor);
     ldState->setOn();
-    ///lbMessage->setText(pvConnectingText);
     pvCurrentStateText = pvConnectingText;
   }else if(state == mdtDevice::Busy){
     ldState->setColor(pvBusyColor);
     ldState->setOn();
-    ///lbMessage->setText(pvBusyText);
     pvCurrentStateText = pvBusyText;
   }else{
     ldState->setRed();
     ldState->setOn();
-    ///lbMessage->setText(tr("Unknown state"));
     pvCurrentStateText = tr("Unknown state");
   }
   // Set state text
@@ -238,6 +235,7 @@ void mdtDeviceStatusWidget::setState(int state)
   }
 }
 
+/**
 void mdtDeviceStatusWidget::setState(int state, const QString &message, const QString &details)
 {
   if(message.isEmpty()){
@@ -266,13 +264,28 @@ void mdtDeviceStatusWidget::setState(int state, const QString &message, const QS
       lbMessage->setText(pvCurrentStateText);
     }
   }
-  /// \todo Implement details
 }
+*/
 
+/**
 void mdtDeviceStatusWidget::showMessage(const QString &message, int timeout)
 {
   pvShowingMessage = true;
   lbMessage->setText(message);
+  if(timeout > 0){
+    pvBackToStateTextTimer->start(timeout);
+  }
+}
+*/
+
+void mdtDeviceStatusWidget::showMessage(const QString &message, const QString &details, int timeout)
+{
+  pvShowingMessage = true;
+  lbMessage->setText(message);
+  if(!details.isEmpty()){
+    pbDetails->setEnabled(true);
+    /// \todo Implement details !
+  }
   if(timeout > 0){
     pvBackToStateTextTimer->start(timeout);
   }
@@ -296,4 +309,5 @@ void mdtDeviceStatusWidget::backToStateText()
 {
   pvShowingMessage = false;
   lbMessage->setText(pvCurrentStateText);
+  pbDetails->setEnabled(false);
 }
