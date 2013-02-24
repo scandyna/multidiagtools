@@ -559,8 +559,10 @@ class mdtPortManager : public QThread
   /*! \brief Emitted when a new status message is to display
    *
    * Typically used with mdtDeviceStatusWidget
+   * \todo Use version with details
    */
   void statusMessageChanged(const QString &message, int timeout);
+  void statusMessageChanged(const QString &message, const QString &details, int timeout);
 
   /*! \brief Emitted when state has changed
    */

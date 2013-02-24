@@ -36,7 +36,8 @@ mdtDeviceScpi::mdtDeviceScpi(QObject *parent)
   // Setup port manager
   pvUsbtmcPortManager->config().setReadTimeout(10000);
   ///connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
-  connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+  ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
   timeout = pvUsbtmcPortManager->config().readTimeout();
   if(pvUsbtmcPortManager->config().writeTimeout() > timeout){
     timeout = pvUsbtmcPortManager->config().writeTimeout();

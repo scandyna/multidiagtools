@@ -333,6 +333,7 @@ bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
       qApp->processEvents();
     }
   }
+  emit(busy());
 
   return false;
 }
@@ -350,6 +351,7 @@ int mdtPortManager::writeData(QByteArray data)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
+    emit(busy());
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = pvPort->writeFramesPool().dequeue();
@@ -443,6 +445,7 @@ bool mdtPortManager::waitOnFrame(int id, int timeout, int granularity)
     mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
+    emit(unhandledError());
     return false;
   }
   // Try until success or timeout
@@ -752,6 +755,7 @@ void mdtPortManager::commitFrames()
       e.commit();
       qDeleteAll(pvTransactionsDone);
       pvTransactionsDone.clear();
+      emit(handledError());
     }
   }else{
     int i;
@@ -768,6 +772,7 @@ void mdtPortManager::commitFrames()
       MDT_ERROR_SET_SRC(e, "mdtPortManager");
       e.commit();
       pvReadenFrames.clear();
+      emit(handledError());
     }
   }
 }

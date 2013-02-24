@@ -734,7 +734,7 @@ class mdtDevice : public QObject
   int pvDigitalOutputAddressOffset;
   int pvAnalogOutputAddressOffset;
 
- protected slots:
+ ///protected slots:
 
   /*! \brief Update device state regarding port error.
    *
@@ -743,7 +743,7 @@ class mdtDevice : public QObject
    * \todo must become private (adapt subclasses)
    */
   ///void setStateFromPortError(int error);
-  void setStateFromPortError(int error, const QString &message = QString(), const QString &details = QString());
+  ///void setStateFromPortError(int error, const QString &message = QString(), const QString &details = QString());
 
  public slots:
 
@@ -773,43 +773,47 @@ class mdtDevice : public QObject
    *
    * Used by internal state machine
    */
-  void connecting();
+  ///void connecting();
 
   /*! \brief Disconnected event
    *
    * Used by internal state machine
    */
-  void disconnected();
+  ///void disconnected();
 
   /*! \brief Device ready event event
    *
    * Used by internal state machine
    */
-  void deviceReady();
+  ///void deviceReady();
 
   /*! \brief Device busy event event
    *
    * Used by internal state machine
    */
-  void deviceBusy();
+  ///void deviceBusy();
 
   /*! \brief Handled error event
    *
    * Used by internal state machine
    */
-  void handledError();
+  ///void handledError();
 
   /*! \brief Unhandled error event
    *
    * Used by internal state machine
    */
-  void unhandledError();
+  ///void unhandledError();
 
  private slots:
 
+  /*! \brief Set the device state from port manager state
+   */
+  void setStateFromPortManager(int portManagerState);
+
   /*! \brief Set the disconnected state
    *
-   * Used by internal state machine
+   * Emit stateChanged() if current state was not Disconnected.
    */
   void setStateDisconnected();
 
@@ -817,17 +821,12 @@ class mdtDevice : public QObject
    *
    * Used by internal state machine
    * Emit stateChanged() if current state was not Connecting.
-   * \todo Obselete args
    */
-  void setStateConnecting(/*const QString &message = QString()*/);
-
- ///protected slots:
+  void setStateConnecting();
 
   /*! \brief Set the ready state
    *
    * Emit stateChanged() if current state was not Ready.
-   * 
-   * \todo must become private (adapt subclasses)
    */
   void setStateReady();
 
@@ -835,32 +834,18 @@ class mdtDevice : public QObject
    *
    * Busy state can be used when physical device or computer (this software) cannot process more requests.
    * Emit stateChanged() if current state was not Busy.
-   *
-   * \param retryTimeout If >= 0, device will automatically go back to ready state after this timeout [ms]
-   * \todo Obselete args
-   * \todo must become private (adapt subclasses)
    */
-  void setStateBusy(/*int retryTimeout = -1*/);
-
- ///private slots:
-
-  /*! \brief Set the unknown state
-   *
-   * Will add a error to mdtError system.
-   * Emit stateChanged() if current state was not Unknown.
-   * \todo Obselete this method
-   */
-  ///void setStateUnknown();
+  void setStateBusy();
 
   /*! \brief Set the warning state
    *
-   * Used by internal state machine
+   * Emit stateChanged() if current state was not Warning.
    */
   void setStateWarning();
 
   /*! \brief Set the error state
    *
-   * Used by internal state machine
+   * Emit stateChanged() if current state was not Error.
    */
   void setStateError();
 
@@ -876,6 +861,7 @@ class mdtDevice : public QObject
   // State flag
   state_t pvCurrentState;
   // State machine
+  /**
   QStateMachine *pvStateMachine;
   QState *pvStateDisconnected;
   QState *pvStateConnecting;
@@ -883,6 +869,7 @@ class mdtDevice : public QObject
   QState *pvStateBusy;
   QState *pvStateWarning;
   QState *pvStateError;
+  */
 };
 
 #endif  // #ifndef MDT_DEVICE_H

@@ -35,7 +35,9 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
   connect(pvTcpPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
-  connect(pvTcpPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+  ///connect(pvTcpPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+  connect(pvTcpPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
+  
   connect(pvTcpPortManager, SIGNAL(statusMessageChanged(const QString&, int)), this, SIGNAL(statusMessageChanged(const QString&, int)));
   pvTcpPortManager->config().setReadTimeout(10000);
   timeout = pvTcpPortManager->config().readTimeout();

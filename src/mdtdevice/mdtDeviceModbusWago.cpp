@@ -621,7 +621,7 @@ bool mdtDeviceModbusWago::getRegisterValues(int address, int n)
   transaction->setQueryReplyMode(true);
   transactionId = pvTcpPortManager->writeData(pdu, transaction);
   if(transactionId < 0){
-    setStateFromPortError(transactionId);
+    ///setStateFromPortError(transactionId);
     /// \todo restore transaction ???
     return false;
   }

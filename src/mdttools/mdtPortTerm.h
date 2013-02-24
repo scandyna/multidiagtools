@@ -37,8 +37,6 @@
 #include <QActionGroup>
 
 class QLabel;
-
-
 class mdtDeviceStatusWidget;
 
 /*! \brief Mini port treminal
@@ -103,18 +101,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Detach all ports
   void detachFromPorts();
 
-  // Update state on port manager notifications
-  ///void setStateFromPortError(int error);
-
-  // Set the running state
-  ///void setStateRunning(const QString &msg = tr("Ready"));
-
-  // Set the stopped state
-  ///void setStateStopped(const QString &msg = tr("Stopped"));
-
-  // Set the Error state
-  ///void setStateError(const QString &msg = tr("Error"));
-
   /*! \brief Update current state
    */
   void setState(int state);
@@ -167,10 +153,11 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Port menu
   QActionGroup *pvPortSelectActionGroup;
   // Running flag (if true, command can be sent, ...)
-  ///bool pvRunning;
   bool pvReady;
   // Status bar
   mdtDeviceStatusWidget *pvStatusWidget;
+  // Term char or string
+  QByteArray pvCmdTermSequence;
 };
 
 #endif  // #ifndef MDT_PORT_TERM_H

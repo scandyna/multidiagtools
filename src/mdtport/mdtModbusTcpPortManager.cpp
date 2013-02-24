@@ -320,6 +320,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
     e.commit();
+    emit(busy());
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());
@@ -355,6 +356,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu, mdtPortTransaction *trans
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
     e.commit();
+    emit(busy());
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());

@@ -618,8 +618,6 @@ void mdtUsbtmcPortThread::run()
   // Notify that we are ready
   notifyError(mdtAbstractPort::NoError);
 
-  qDebug() << "USBTMCTHD starting... read timeout: " << pvPort->config().readTimeout();
-  
   // Run...
   while(1){
     // Read thread state
