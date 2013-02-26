@@ -18,13 +18,13 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEVICE_STATUS_WIDGET_H
-#define MDT_DEVICE_STATUS_WIDGET_H
+#ifndef MDT_PORT_STATUS_WIDGET_H
+#define MDT_PORT_STATUS_WIDGET_H
 
 #include <QWidget>
 #include <QString>
 #include <QGridLayout>
-#include "mdtDevice.h"
+///#include "mdtDevice.h"
 #include "mdtBlinkLed.h"
 #include "mdtPortThread.h"
 
@@ -35,7 +35,7 @@ class QMessageBox;
 
 /*! \brief
  */
-class mdtDeviceStatusWidget : public QWidget
+class mdtPortStatusWidget : public QWidget
 {
   Q_OBJECT
 
@@ -43,9 +43,9 @@ class mdtDeviceStatusWidget : public QWidget
 
   /*! \brief Build a status widget with default texts
    */
-  mdtDeviceStatusWidget(QWidget *parent = 0);
+  mdtPortStatusWidget(QWidget *parent = 0);
 
-  ~mdtDeviceStatusWidget();
+  ~mdtPortStatusWidget();
 
   /*! \brief Enable the TX/RX LEDs
    *
@@ -109,6 +109,8 @@ class mdtDeviceStatusWidget : public QWidget
 
   /*! \brief Set state
    *
+   * States are defined in mdtPortManager
+   *
    * \param state A state as define in mdeDevice
    */
   void setState(int state);
@@ -143,7 +145,7 @@ class mdtDeviceStatusWidget : public QWidget
 
  private:
 
-  Q_DISABLE_COPY(mdtDeviceStatusWidget);
+  Q_DISABLE_COPY(mdtPortStatusWidget);
 
   QGridLayout *pvLayout;
   QWidget *pvCustomWidget;
@@ -172,4 +174,4 @@ class mdtDeviceStatusWidget : public QWidget
   mdtPortThread *pvRxThread;
 };
 
-#endif  // #ifndef MDT_DEVICE_STATUS_WIDGET_H
+#endif  // #ifndef MDT_PORT_STATUS_WIDGET_H

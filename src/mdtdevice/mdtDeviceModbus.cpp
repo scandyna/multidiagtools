@@ -68,7 +68,10 @@ mdtPortManager *mdtDeviceModbus::portManager()
 
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
 {
-  Q_ASSERT(pvIos != 0);
+  ///Q_ASSERT(pvIos != 0);
+  if(pvIos == 0){
+    return;
+  }
 
   int fc;
 

@@ -225,8 +225,8 @@ void mdtDeviceTest::modbusWagoTest()
 
   // Setup device
   d.setIos(&ios, false);
-  d.setAnalogOutputAddressOffset(0x0200);
-  d.setDigitalOutputAddressOffset(0x0200);
+  ///d.setAnalogOutputAddressOffset(0x0200);
+  ///d.setDigitalOutputAddressOffset(0x0200);
   dw.setDevice(&d);
   dw.setIosWidget(iosw);
   dw.show();

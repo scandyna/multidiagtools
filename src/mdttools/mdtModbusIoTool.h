@@ -18,63 +18,41 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_PORT_TERM_H
-#define MDT_PORT_TERM_H
+#ifndef MDT_MODBUS_IO_TOOL_H
+#define MDT_MODBUS_IO_TOOL_H
 
-#include "ui_mdtPortTerm.h"
-#include "mdtPortManager.h"
-#include "mdtUsbtmcPortManager.h"
-#include "mdtSerialPortManager.h"
-#include "mdtSerialPortSetupDialog.h"
-#include "mdtSerialPortCtlWidget.h"
-#include <QWidget>
+#include "ui_mdtModbusIoTool.h"
 #include <QMainWindow>
-#include <QLocale>
-#include <QEvent>
 #include <QMap>
 #include <QString>
-#include <QByteArray>
 #include <QActionGroup>
 
-class QLabel;
+class mdtDeviceModbusWago;
+class mdtDeviceIos;
+class mdtDeviceIosWidget;
 class mdtPortStatusWidget;
 
-/*! \brief Mini port treminal
+/*! \brief Minimal tool for MODBUS I/O
  */
-class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
+class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
 {
  Q_OBJECT
 
  public:
 
-  mdtPortTerm(QWidget *parent = 0);
-  ~mdtPortTerm();
+  /*! \brief Construct a mdtModbusIoTool object
+   */
+  mdtModbusIoTool(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+
+  /*! \brief destruct a mdtModbusIoTool object
+   */
+  ~mdtModbusIoTool();
 
   /*! \brief Build the translations menu
    */
   void setAvailableTranslations(const QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
 
  public slots:
-
-  /*! \brief Append incomming data to terminal
-   */
-  void appendReadenData(QByteArray data);
-
-  /*! \brief Append incomming data to terminal
-   */
-  void appendReadenData(mdtPortTransaction transaction);
-
-  /*! \brief Send command to port
-   */
-  void sendCmd();
-
-  /*! \brief Abort command transmission
-   */
-  void on_pbSendCmdAbort_clicked();
-
-  /*! \brief Clear terminal
-   */
-  void on_pbClearTerm_clicked();
 
   /*! \brief Retranslate
    *
@@ -84,22 +62,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   void retranslate();
 
  private slots:
-
-  // Set/unset port type to serial port
-  void attachToSerialPort();
-  void detachFromSerialPort();
-  // Call port setup dialog
-  void portSetup();
-
-  // Set/unset port type to USBTMC port
-  void attachToUsbtmcPort();
-  void detachFromUsbtmcPort();
-
-  // Select a port type
-  void selectPortType(QAction*);
-
-  // Detach all ports
-  void detachFromPorts();
 
   /*! \brief Update current state
    */
@@ -138,26 +100,23 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
    */
   void showStatusMessage(const QString &message, int timeout = 0);
 
-  // Diseable copy
-  Q_DISABLE_COPY(mdtPortTerm);
+  /*! \brief Used to show a message in status bar
+   *
+   * \param message Message to show
+   * \param details Details to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
 
-  // Serial port
-  mdtSerialPortManager *pvSerialPortManager;
-  mdtSerialPortCtlWidget *pvSerialPortCtlWidget;
-  // USBTMC port
-  mdtUsbtmcPortManager *pvUsbtmcPortManager;
-  // Current port manager
-  mdtPortManager *pvCurrentPortManager;
+  bool pvReady;
+  mdtDeviceModbusWago *pvDeviceModbusWago;
+  mdtDeviceIos *pvDeviceIos;
+  mdtDeviceIosWidget *pvDeviceIosWidget;
+  mdtPortStatusWidget *pvStatusWidget;
   // Translations menu
   QActionGroup *pvLanguageActionGroup;
-  // Port menu
-  QActionGroup *pvPortSelectActionGroup;
-  // Running flag (if true, command can be sent, ...)
-  bool pvReady;
-  // Status bar
-  mdtPortStatusWidget *pvStatusWidget;
-  // Term char or string
-  QByteArray pvCmdTermSequence;
+  // Diseable copy
+  Q_DISABLE_COPY(mdtModbusIoTool);
 };
 
-#endif  // #ifndef MDT_PORT_TERM_H
+#endif  // #ifndef MDT_MODBUS_IO_TOOL_H

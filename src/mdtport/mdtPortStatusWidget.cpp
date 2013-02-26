@@ -18,7 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtDeviceStatusWidget.h"
+#include "mdtPortStatusWidget.h"
+#include "mdtPortManager.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QTimer>
@@ -26,7 +27,7 @@
 
 #include <QDebug>
 
-mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
+mdtPortStatusWidget::mdtPortStatusWidget(QWidget *parent)
  : QWidget(parent)
 {
   pvLayout = new QGridLayout;
@@ -63,12 +64,12 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   connect(pbDetails, SIGNAL(clicked()), mbDetails, SLOT(exec()));
 }
 
-mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
+mdtPortStatusWidget::~mdtPortStatusWidget()
 {
   disableTxRxLeds();
 }
 
-void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
+void mdtPortStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
 {
   Q_ASSERT(pvLayout != 0);
   Q_ASSERT(txThread != 0);
@@ -98,7 +99,7 @@ void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThrea
   connect(pvRxThread, SIGNAL(readProcessBegin()), this, SLOT(trigRxLed()));
 }
 
-void mdtDeviceStatusWidget::disableTxRxLeds()
+void mdtPortStatusWidget::disableTxRxLeds()
 {
   Q_ASSERT(layout() != 0);
 
@@ -128,7 +129,7 @@ void mdtDeviceStatusWidget::disableTxRxLeds()
   }
 }
 
-void mdtDeviceStatusWidget::addCustomWidget(QWidget *widget)
+void mdtPortStatusWidget::addCustomWidget(QWidget *widget)
 {
   Q_ASSERT(pvLayout != 0);
   Q_ASSERT(widget != 0);
@@ -138,7 +139,7 @@ void mdtDeviceStatusWidget::addCustomWidget(QWidget *widget)
   pvLayout->addWidget(pvCustomWidget, 0, pvLayout->columnCount());
 }
 
-void mdtDeviceStatusWidget::removeCustomWidget()
+void mdtPortStatusWidget::removeCustomWidget()
 {
   Q_ASSERT(pvLayout != 0);
 
@@ -148,7 +149,7 @@ void mdtDeviceStatusWidget::removeCustomWidget()
   }
 }
 
-void mdtDeviceStatusWidget::setDefaultStateTexts()
+void mdtPortStatusWidget::setDefaultStateTexts()
 {
   pvReadyText = tr("Ready");
   pvDisconnectedText = tr("Disconnected");
@@ -156,63 +157,63 @@ void mdtDeviceStatusWidget::setDefaultStateTexts()
   pvBusyText = tr("Busy");
 }
 
-void mdtDeviceStatusWidget::setStateReadyText(const QString &text)
+void mdtPortStatusWidget::setStateReadyText(const QString &text)
 {
   pvReadyText = text;
 }
 
-void mdtDeviceStatusWidget::setStateDisconnectedText(const QString &text)
+void mdtPortStatusWidget::setStateDisconnectedText(const QString &text)
 {
   pvDisconnectedText = text;
 }
 
-void mdtDeviceStatusWidget::setStateConnectingText(const QString &text)
+void mdtPortStatusWidget::setStateConnectingText(const QString &text)
 {
   pvConnectingText = text;
 }
 
-void mdtDeviceStatusWidget::setStateBusyText(const QString &text)
+void mdtPortStatusWidget::setStateBusyText(const QString &text)
 {
   pvBusyText = text;
 }
 
-void mdtDeviceStatusWidget::setDefaultStateColors()
+void mdtPortStatusWidget::setDefaultStateColors()
 {
   pvReadyColor = mdtLed::LED_COLOR_GREEN;
   pvConnectingColor = mdtLed::LED_COLOR_ORANGE;
   pvBusyColor = mdtLed::LED_COLOR_ORANGE;
 }
 
-void mdtDeviceStatusWidget::setStateReadyColor(mdtLed::color_t color)
+void mdtPortStatusWidget::setStateReadyColor(mdtLed::color_t color)
 {
   pvReadyColor = color;
 }
 
-void mdtDeviceStatusWidget::setStateConnectingColor(mdtLed::color_t color)
+void mdtPortStatusWidget::setStateConnectingColor(mdtLed::color_t color)
 {
   pvConnectingColor = color;
 }
 
-void mdtDeviceStatusWidget::setStateBusyColor(mdtLed::color_t color)
+void mdtPortStatusWidget::setStateBusyColor(mdtLed::color_t color)
 {
   pvBusyColor = color;
 }
 
-void mdtDeviceStatusWidget::setState(int state)
+void mdtPortStatusWidget::setState(int state)
 {
-  if(state == mdtDevice::Ready){
+  if(state == mdtPortManager::Ready){
     ldState->setColor(pvReadyColor);
     ldState->setOn();
     pvCurrentStateText = pvReadyText;
-  }else if(state == mdtDevice::Disconnected){
+  }else if(state == mdtPortManager::Disconnected){
     ldState->setGreen();
     ldState->setOff();
     pvCurrentStateText = pvDisconnectedText;
-  }else if(state == mdtDevice::Connecting){
+  }else if(state == mdtPortManager::Connecting){
     ldState->setColor(pvConnectingColor);
     ldState->setOn();
     pvCurrentStateText = pvConnectingText;
-  }else if(state == mdtDevice::Busy){
+  }else if(state == mdtPortManager::Busy){
     ldState->setColor(pvBusyColor);
     ldState->setOn();
     pvCurrentStateText = pvBusyText;
@@ -227,7 +228,7 @@ void mdtDeviceStatusWidget::setState(int state)
   }
 }
 
-void mdtDeviceStatusWidget::showMessage(const QString &message, const QString &details, int timeout)
+void mdtPortStatusWidget::showMessage(const QString &message, const QString &details, int timeout)
 {
   pvShowingMessage = true;
   lbMessage->setText(message);
@@ -246,21 +247,21 @@ void mdtDeviceStatusWidget::showMessage(const QString &message, const QString &d
   }
 }
 
-void mdtDeviceStatusWidget::trigTxLed()
+void mdtPortStatusWidget::trigTxLed()
 {
   Q_ASSERT(ldTx != 0);
 
   ldTx->setOn(100);
 }
 
-void mdtDeviceStatusWidget::trigRxLed()
+void mdtPortStatusWidget::trigRxLed()
 {
   Q_ASSERT(ldRx != 0);
 
   ldRx->setOn(100);
 }
 
-void mdtDeviceStatusWidget::backToStateText()
+void mdtPortStatusWidget::backToStateText()
 {
   pvShowingMessage = false;
   lbMessage->setText(pvCurrentStateText);

@@ -25,7 +25,8 @@
 #include <QWidget>
 #include "mdtDevice.h"
 #include "ui_mdtDeviceWindow.h"
-#include "mdtDeviceStatusWidget.h"
+///#include "mdtDeviceStatusWidget.h"
+#include "mdtPortStatusWidget.h"
 
 class QActionGroup;
 
@@ -39,7 +40,7 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
 
   /*! \brief Construct a device window
    *
-   * Will create a new mdtDeviceStatusWidget and
+   * Will create a new mdtPortStatusWidget and
    *  add it as status bar.
    */
   mdtDeviceWindow(QWidget *parent = 0);
@@ -47,6 +48,10 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
   ~mdtDeviceWindow();
 
   /*! \brief Set the device
+   *
+   * If device contains a port manager,
+   *  mdtPortManager::stateChanged() and mdtPortManager::statusMessageChanged()
+   *  signals are connected to status widget.
    *
    * \pre device must be a valid pointer.
    */
@@ -60,7 +65,7 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
    *
    * Usefull for setup
    */
-  mdtDeviceStatusWidget *statusWidget();
+  mdtPortStatusWidget *statusWidget();
 
   /*! \brief Enable translations
    *
@@ -90,7 +95,7 @@ class mdtDeviceWindow : public QMainWindow, public Ui::mdtDeviceWindow
 
   Q_DISABLE_COPY(mdtDeviceWindow);
 
-  mdtDeviceStatusWidget *pvStatusWidget;
+  mdtPortStatusWidget *pvStatusWidget;
   mdtDevice *pvDevice;
   // Translations menu
   QActionGroup *pvLanguageActionGroup;

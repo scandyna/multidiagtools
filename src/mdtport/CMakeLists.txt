@@ -26,6 +26,8 @@ set (HEADER_FILES
           mdtModbusTcpPortManager.h
           # Port config
           mdtPortConfigWidget.h
+          # Statud Widget
+          mdtPortStatusWidget.h
           # Setup dialogs
           mdtUsbtmcPortSetupDialog.h
     )
@@ -56,6 +58,8 @@ set (SOURCES_FILES
           mdtUsbPortManager.cpp
           mdtUsbtmcPortManager.cpp
           mdtModbusTcpPortManager.cpp
+          # Statud Widget
+          mdtPortStatusWidget.cpp
           # Port config
           mdtPortConfig.cpp
           mdtPortConfigWidget.cpp
@@ -101,6 +105,7 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 add_library (mdtport${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "usb-1.0")
+target_link_libraries(mdtport${MDTLIB_VERSION_SUFFIX} "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
 
 # Version statique
 #if(MDT_BUILD_STATIC_LIBS)

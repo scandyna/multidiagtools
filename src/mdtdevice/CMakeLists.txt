@@ -12,7 +12,7 @@ set (HEADER_FILES
           mdtDeviceIos.h
           mdtDeviceIosWidget.h
           mdtDeviceWindow.h
-          mdtDeviceStatusWidget.h
+          #mdtDeviceStatusWidget.h
           mdtDeviceModbus.h
           mdtDeviceModbusWago.h
           mdtDeviceScpi.h
@@ -28,7 +28,7 @@ set (SOURCES_FILES
           mdtDeviceIos.cpp
           mdtDeviceIosWidget.cpp
           mdtDeviceWindow.cpp
-          mdtDeviceStatusWidget.cpp
+          #mdtDeviceStatusWidget.cpp
           mdtDeviceModbus.cpp
           mdtDeviceModbusWago.cpp
           mdtDeviceScpi.cpp

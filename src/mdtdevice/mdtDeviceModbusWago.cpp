@@ -37,6 +37,8 @@
 mdtDeviceModbusWago::mdtDeviceModbusWago(QObject *parent)
  : mdtDeviceModbus(parent)
 {
+  setAnalogOutputAddressOffset(0x0200);
+  setDigitalOutputAddressOffset(0x0200);
 }
 
 mdtDeviceModbusWago::~mdtDeviceModbusWago()
@@ -131,7 +133,6 @@ bool mdtDeviceModbusWago::isWago750()
 
 int mdtDeviceModbusWago::analogOutputsCount()
 {
-
   if(!getRegisterValues(0x1022, 1)){
     return -1;
   }

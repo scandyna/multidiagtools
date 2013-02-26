@@ -24,7 +24,7 @@
 #include "mdtUsbtmcPortSetupDialog.h"
 
 #include "mdtDevice.h"
-#include "mdtDeviceStatusWidget.h"
+#include "mdtPortStatusWidget.h"
 #include "mdtAbstractPort.h"
 
 #include <QHBoxLayout>
@@ -39,7 +39,7 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
 {
   setupUi(this);
   // Status bar
-  pvStatusWidget = new mdtDeviceStatusWidget;
+  pvStatusWidget = new mdtPortStatusWidget;
   statusBar()->addWidget(pvStatusWidget);
   // Serial port members
   pvSerialPortManager = 0;
@@ -72,7 +72,7 @@ mdtPortTerm::~mdtPortTerm()
   detachFromPorts();
 }
 
-void mdtPortTerm::setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey)
+void mdtPortTerm::setAvailableTranslations(const QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey)
 {
   QMap<QString, QString>::const_iterator it = avaliableTranslations.constBegin();
 
@@ -182,7 +182,7 @@ void mdtPortTerm::attachToSerialPort()
   pvStatusWidget->addCustomWidget(pvSerialPortCtlWidget);
   pvSerialPortCtlWidget->makeConnections(pvSerialPortManager);
   // Make connections
-  connect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+  connect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
   connect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
   // Try to open first port
   ports = pvSerialPortManager->scan();
@@ -209,7 +209,7 @@ void mdtPortTerm::detachFromSerialPort()
 {
   if(pvSerialPortManager != 0){
     disconnect(pvSerialPortManager, SIGNAL(newReadenFrame(QByteArray)), this, SLOT(appendReadenData(QByteArray)));
-    disconnect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+    disconnect(pvSerialPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
     // Ctl widget
     pvStatusWidget->removeCustomWidget();
     delete pvSerialPortCtlWidget;
@@ -252,7 +252,7 @@ void mdtPortTerm::attachToUsbtmcPort()
   pvUsbtmcPortManager = new mdtUsbtmcPortManager;
   pvCurrentPortManager = pvUsbtmcPortManager;
   // Make connections
-  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
   // Try to open first port
   ports = pvUsbtmcPortManager->scan();
@@ -279,7 +279,7 @@ void mdtPortTerm::detachFromUsbtmcPort()
 {
   if(pvUsbtmcPortManager != 0){
     disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
-    disconnect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
+    disconnect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
     pvUsbtmcPortManager->closePort();
     delete pvUsbtmcPortManager;
     pvUsbtmcPortManager = 0;
@@ -306,8 +306,9 @@ void mdtPortTerm::detachFromPorts()
   detachFromUsbtmcPort();
 }
 
-void mdtPortTerm::setState(int state)
+void mdtPortTerm::setStateFromPortManager(int state)
 {
+  pvStatusWidget->setState(state);
   switch(state){
     case mdtPortManager::Disconnected:
       setStateDisconnected();
@@ -338,7 +339,6 @@ void mdtPortTerm::setStateDisconnected()
   pvReady = false;
   pbSendCmd->setEnabled(false);
   pbSendCmdAbort->setEnabled(false);
-  pvStatusWidget->setState(mdtDevice::Disconnected);
 }
 
 void mdtPortTerm::setStateConnecting()
@@ -346,7 +346,6 @@ void mdtPortTerm::setStateConnecting()
   pvReady = false;
   pbSendCmd->setEnabled(false);
   pbSendCmdAbort->setEnabled(false);
-  pvStatusWidget->setState(mdtDevice::Connecting);
 }
 
 void mdtPortTerm::setStateReady()
@@ -354,7 +353,6 @@ void mdtPortTerm::setStateReady()
   pvReady = true;
   pbSendCmd->setEnabled(true);
   pbSendCmdAbort->setEnabled(true);
-  pvStatusWidget->setState(mdtDevice::Ready);
 }
 
 void mdtPortTerm::setStateBusy()
@@ -362,7 +360,6 @@ void mdtPortTerm::setStateBusy()
   pvReady = false;
   pbSendCmd->setEnabled(false);
   pbSendCmdAbort->setEnabled(false);
-  pvStatusWidget->setState(mdtDevice::Busy);
 }
 
 void mdtPortTerm::setStateWarning()
@@ -370,7 +367,6 @@ void mdtPortTerm::setStateWarning()
   pvReady = false;
   pbSendCmd->setEnabled(false);
   pbSendCmdAbort->setEnabled(false);
-  pvStatusWidget->setState(mdtDevice::Warning);
 }
 
 void mdtPortTerm::setStateError()
@@ -378,7 +374,6 @@ void mdtPortTerm::setStateError()
   pvReady = false;
   pbSendCmd->setEnabled(false);
   pbSendCmdAbort->setEnabled(false);
-  pvStatusWidget->setState(mdtDevice::Error);
 }
 
 void mdtPortTerm::showStatusMessage(const QString &message, int timeout)

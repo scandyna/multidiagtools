@@ -8,16 +8,19 @@ project (multidiagtools)
 # Liste des fichiers d'entêtes Qt (entêtes contenant Q_OBJECT)
 set (HEADER_FILES 
           mdtPortTerm.h
+          mdtModbusIoTool.h
     )
 
 # Liste des fichiers sources
 set (SOURCES_FILES 
           mdtPortTerm.cpp
+          mdtModbusIoTool.cpp
     )
 
 # Liste des fichiers ui
 set (FORM_FILES
           mdtPortTerm.ui
+          mdtModbusIoTool.ui
     )
 
 # Liste des fichiers rcc (ressources)

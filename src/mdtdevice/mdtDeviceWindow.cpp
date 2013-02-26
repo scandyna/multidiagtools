@@ -29,7 +29,7 @@ mdtDeviceWindow::mdtDeviceWindow(QWidget *parent)
 {
   setupUi(this);
 
-  pvStatusWidget = new mdtDeviceStatusWidget;
+  pvStatusWidget = new mdtPortStatusWidget;
   statusBar()->addWidget(pvStatusWidget);
   pvDevice = 0;
 }
@@ -38,18 +38,16 @@ mdtDeviceWindow::~mdtDeviceWindow()
 {
 }
 
-  void stateChanged(int state);
-
-  void statusMessageChanged(const QString &message, const QString &details, int timeout);
-
 void mdtDeviceWindow::setDevice(mdtDevice *device)
 {
   Q_ASSERT(device != 0);
 
   pvDevice = device;
   // Status widget
-  connect(device, SIGNAL(stateChanged(int)), pvStatusWidget, SLOT(setState(int)));
-  connect(device, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), pvStatusWidget, SLOT(showMessage(const QString&, const QString&, int)));
+  if(device->portManager() != 0){
+    connect(device->portManager(), SIGNAL(stateChanged(int)), pvStatusWidget, SLOT(setState(int)));
+    connect(device->portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&, int)), pvStatusWidget, SLOT(showMessage(const QString&, const QString&, int)));
+  }
 }
 
 void mdtDeviceWindow::setIosWidget(QWidget *widget)
@@ -58,7 +56,7 @@ void mdtDeviceWindow::setIosWidget(QWidget *widget)
   saIos->setWidget(widget);
 }
 
-mdtDeviceStatusWidget *mdtDeviceWindow::statusWidget()
+mdtPortStatusWidget *mdtDeviceWindow::statusWidget()
 {
   Q_ASSERT(pvStatusWidget != 0);
 

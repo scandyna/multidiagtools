@@ -23,6 +23,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortManage
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbPortManager.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortManager.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtModbusTcpPortManager.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortStatusWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfig.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortConfigWidget.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortSetupDialog.cpp
