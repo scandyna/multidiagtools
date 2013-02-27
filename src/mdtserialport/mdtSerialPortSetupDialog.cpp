@@ -20,16 +20,14 @@
  ****************************************************************************/
 #include "mdtSerialPortSetupDialog.h"
 #include <QWidget>
-///#include <QDialogButtonBox>
 #include <QPushButton>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QVariant>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSerialPortSetupDialog::mdtSerialPortSetupDialog(QWidget *parent)
-/// : QDialog(parent)
  : mdtAbstractPortSetupDialog(parent)
 {
   pvSerialPortManager = 0;
@@ -50,28 +48,13 @@ mdtSerialPortSetupDialog::mdtSerialPortSetupDialog(QWidget *parent)
   layout->addStretch();
   wHeader->setLayout(layout);
   setHeaderWidget(wHeader);
-  
   connect(pbClose, SIGNAL(clicked()), this, SLOT(closePort()));
   connect(pbRescan, SIGNAL(clicked()), this, SLOT(rescan()));
   connect(pbOpen, SIGNAL(clicked()), this, SLOT(openPort()));
-  
-  ///setupUi(this);
   // Add serial port options widget
   addOptionsTabWidget(pvSerialPortConfigWidget, tr("Serial port options"));
-  /**
-  if(twOptions->count() >= 1){
-    twOptions->removeTab(0);
-  }
-  twOptions->insertTab(1, pvSerialPortConfigWidget, tr("Serial port options"));
-  */
   // Add port options widget
   addOptionsTabWidget(pvPortConfigWidget, tr("Advanced port options"));
-  /**
-  if(twOptions->count() >= 2){
-    twOptions->removeTab(1);
-  }
-  twOptions->insertTab(1, pvPortConfigWidget, tr("Advanced port options"));
-  */
   // Have a problem with widgets in TabWidget, so fix a minimum size
   setMinimumHeight(400);
   // Set a correct default size
@@ -88,17 +71,6 @@ void mdtSerialPortSetupDialog::setPortManager(mdtSerialPortManager *manager)
   mdtAbstractPortSetupDialog::setPortManager(manager);
   // Update GUI
   displayConfig();
-
-  /**
-  // Stop manager and close port
-  lbState->setText(tr("Stopping ..."));
-  pvSerialPortManager->closePort();
-  setStateStopped();
-  // List available ports
-  on_pbRescan_clicked();
-  // Update GUI
-  displayConfig();
-  */
 }
 
 void mdtSerialPortSetupDialog::displayConfig()
@@ -146,95 +118,6 @@ void mdtSerialPortSetupDialog::updateConfig()
   pvSerialPortConfigWidget->updateConfig(pvSerialPortManager->config());
 }
 
-/// \todo Is this method used ??
-/**
-void mdtSerialPortSetupDialog::applySetup()
-{
-  Q_ASSERT(pvSerialPortManager != 0);
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
-{
-  Q_ASSERT(pvSerialPortManager != 0);
-  Q_ASSERT(button != 0);
-
-  QDialogButtonBox::StandardButton type;
-
-  type = buttonBox->standardButton(button);
-  if((type == QDialogButtonBox::Apply)||(type == QDialogButtonBox::Ok)){
-    diseableApplyButtons();
-    // Close port
-    lbState->setText(tr("Stopping ..."));
-    pvSerialPortManager->closePort();
-    // Get current config
-    updateConfig();
-    // Open the port
-    /// \bug Should not use display text as port name !
-    pvSerialPortManager->setPortName(cbPort->currentText());
-    if(!pvSerialPortManager->openPort()){
-      setStateError(tr("Cannot open port"));
-      enableApplyButtons();
-      return;
-    }
-    // Start R/W
-    lbState->setText(tr("Starting ..."));
-    if(!pvSerialPortManager->start()){
-      setStateError(tr("Cannot start threads"));
-      enableApplyButtons();
-      return;
-    }
-    setStateRunning();
-    enableApplyButtons();
-  }
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::on_pbRescan_clicked()
-{
-  Q_ASSERT(pvSerialPortManager != 0);
-
-  ///pbRescan->setEnabled(false);
-  //cbPort->clear();
-  //cbPort->addItems(pvSerialPortManager->scan());
-  pvPortInfoCbHandler.fillComboBoxes(pvSerialPortManager->scan());
-  ///pbRescan->setEnabled(true);
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::on_cbPort_currentIndexChanged(int index)
-{
-  if(index < 0){
-    return;
-  }
-  if(pvSerialPortManager == 0){
-    return;
-  }
-  ///cbPort->setEnabled(false);
-  // Close port
-  pvSerialPortManager->closePort();
-  ///setStateStopped();
-  // Open the port
-  ///pvSerialPortManager->setPortName(pvPortInfoCbHandler.currentPortInfo().portName());
-  pvSerialPortManager->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
-  if(pvSerialPortManager->port().open() != mdtAbstractPort::NoError){
-    ///setStateError(tr("Cannot fetch port attributes"));
-    ///cbPort->setEnabled(true);
-    return;
-  }
-  // List available baud rates
-  pvSerialPortConfigWidget->setAvailableBaudRates(pvSerialPortManager->port().availableBaudRates());
-  // Close port
-  pvSerialPortManager->closePort();
-  // Display configuration
-  displayConfig();
-  ///cbPort->setEnabled(true);
-}
-*/
-
 void mdtSerialPortSetupDialog::closePort()
 {
   Q_ASSERT(pvSerialPortManager != 0);
@@ -255,9 +138,7 @@ void mdtSerialPortSetupDialog::rescan()
 
 void mdtSerialPortSetupDialog::openPort()
 {
-  if(!applySetup()){
-    
-  }
+  applySetup();
 }
 
 void mdtSerialPortSetupDialog::setStateDisconnected()
@@ -359,62 +240,3 @@ bool mdtSerialPortSetupDialog::applySetup()
 
   return true;
 }
-
-/**
-void mdtSerialPortSetupDialog::setStateRunning()
-{
-  // Update state label
-  lbState->setText(tr("Running"));
-  lbState->setStyleSheet("QLabel { background-color : green; color : black; }");
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::setStateStopped()
-{
-  // Update state label
-  lbState->setText(tr("Stopped"));
-  lbState->setStyleSheet("QLabel { background-color : orange; color : black; }");
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::setStateError(QString msg)
-{
-  // Update state label
-  lbState->setText(msg);
-  lbState->setStyleSheet("QLabel { background-color : red; color : black; }");
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::diseableApplyButtons()
-{
-  QPushButton *b;
-
-  b = buttonBox->button(QDialogButtonBox::Ok);
-  if(b != 0){
-    b->setEnabled(false);
-  }
-  b = buttonBox->button(QDialogButtonBox::Apply);
-  if(b != 0){
-    b->setEnabled(false);
-  }
-}
-*/
-
-/**
-void mdtSerialPortSetupDialog::enableApplyButtons()
-{
-  QPushButton *b;
-
-  b = buttonBox->button(QDialogButtonBox::Ok);
-  if(b != 0){
-    b->setEnabled(true);
-  }
-  b = buttonBox->button(QDialogButtonBox::Apply);
-  if(b != 0){
-    b->setEnabled(true);
-  }
-}
-*/

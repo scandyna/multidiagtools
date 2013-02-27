@@ -24,7 +24,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtAbstractPortSetupDialog::mdtAbstractPortSetupDialog(QWidget *parent)
  : QDialog(parent)

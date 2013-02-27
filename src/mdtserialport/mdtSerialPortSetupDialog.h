@@ -21,17 +21,13 @@
 #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H
 #define MDT_SERIAL_PORT_SETUP_DIALOG_H
 
-///#include "ui_mdtSerialPortSetupDialog.h"
 #include "mdtSerialPortManager.h"
 #include "mdtPortConfigWidget.h"
 #include "mdtSerialPortConfigWidget.h"
 #include "mdtPortInfoCbHandler.h"
-#include <QDialog>
-///#include <QAbstractButton>
-#include <QString>
-///#include <QCloseEvent>
-
 #include "mdtAbstractPortSetupDialog.h"
+#include <QDialog>
+#include <QString>
 
 class QPushButton;
 
@@ -42,7 +38,6 @@ class QPushButton;
  * 
  * \image html mdtSerialPortSetupDialog.png
  */
-///class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDialog
 class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
 {
  Q_OBJECT
@@ -63,18 +58,6 @@ class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
 
   // Read options from GUI and update configuration
   void updateConfig();
-
-  // Tell the manager to re-open with new configuration
-  ///void applySetup();
-
-  // Called when setup is accepted from user
-  ///void on_buttonBox_clicked(QAbstractButton *button);
-
-  // Rescan for available ports
-  ///void on_pbRescan_clicked();
-
-  // Open selected port (if manager was set)
-  ///void on_cbPort_currentIndexChanged(int index);
 
   // Close port
   void closePort();
@@ -114,19 +97,6 @@ class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
   /*! \brief Apply setup
    */
   bool applySetup();
-
-  // Set the running state
-  ///void setStateRunning();
-
-  // Set the stopped state
-  ///void setStateStopped();
-
-  // Set the Error state
-  ///void setStateError(QString msg = tr("Error"));
-
-  // Enable/diseable the apply buttons (Ok, Apply)
-  ///void diseableApplyButtons();
-  ///void enableApplyButtons();
 
   mdtSerialPortManager *pvSerialPortManager;
   mdtPortConfigWidget *pvPortConfigWidget;
