@@ -41,7 +41,8 @@ enum mdt_error_t{
   MDT_PARSE_ERROR,              /*!< Parsing error */
   MDT_DATABASE_ERROR,           /*!< Database error */
   MDT_QM_FILE_LOAD_ERROR,       /*!< A translation file (.qm) could not be loaded */
-  MDT_MEMORY_ALLOC_ERROR        /*!< A memory allocation failed */
+  MDT_MEMORY_ALLOC_ERROR,       /*!< A memory allocation failed */
+  MDT_GUI_ERROR                 /*!< GUI error (widget not found, ...) */
 };
 
 /*! \brief Add source information to error

@@ -29,6 +29,7 @@ set (HEADER_FILES
           # Statud Widget
           mdtPortStatusWidget.h
           # Setup dialogs
+          mdtAbstractPortSetupDialog.h
           mdtUsbtmcPortSetupDialog.h
     )
 
@@ -64,6 +65,7 @@ set (SOURCES_FILES
           mdtPortConfig.cpp
           mdtPortConfigWidget.cpp
           # Setup dialogs
+          mdtAbstractPortSetupDialog.cpp
           mdtUsbtmcPortSetupDialog.cpp
     )
 
@@ -71,6 +73,7 @@ set (SOURCES_FILES
 set (FORM_FILES
           mdtPortConfigWidget.ui
           # Setup dialogs
+          mdtAbstractPortSetupDialog.ui
           mdtUsbtmcPortSetupDialog.ui
     )
 

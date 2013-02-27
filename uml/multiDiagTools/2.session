@@ -1,18 +1,19 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  classdiagram_ref 587906 // mdtModbusIoTool
-    970 803 100 4 24 0
-  active  classdiagram_ref 534914 // mdtDeviceStatusWidget
+  active  classdiagram_ref 594434 // mdtAbstractPortSetupDialog
     970 803 100 4 0 0
 end
 show_stereotypes
-selected classview_ref 372482 // mdtPortStatusWidget
+selected operation_ref 1163650 // on_buttonBox_clicked
 open
+  classview_ref 201218 // mdtPort
   classview_ref 227458 // mdtPortManager
-  classview_ref 240514 // mdtDevice
-  deploymentview_ref 304642 // mdtDeviceWindow
-  classview_ref 267138 // mdtPortTerm
-  operation_ref 1155074 // setStateFromPortManager
-  classview_ref 339586 // QtGui
+  classdiagram_ref 374658 // mdtPortConfigWidget
+  class_ref 369922 // ui_mdtPortConfigWidget
+  operation_ref 1163010 // setPortManager
+  operation_ref 1163522 // portManager
+  classrelation_ref 758146 // <generalisation>
+  operation_ref 1163394 // applySetup
+  class_ref 598914 // Ui::mdtAbstractPortSetupDialog
 end
 end

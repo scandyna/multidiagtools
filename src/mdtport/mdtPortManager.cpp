@@ -221,6 +221,11 @@ mdtPortInfo mdtPortManager::portInfo()
   return pvPortInfo;
 }
 
+QString mdtPortManager::portName() const
+{
+  return pvPortInfo.portName();
+}
+
 mdtPortConfig &mdtPortManager::config()
 {
   Q_ASSERT(pvPort != 0);
@@ -656,6 +661,11 @@ void mdtPortManager::flush(bool flushPortManagerBuffers, bool flushPortBuffers)
 void mdtPortManager::flush()
 {
   flush(true, true);
+}
+
+mdtPortManager::state_t mdtPortManager::currentState() const
+{
+  return pvCurrentState;
 }
 
 void mdtPortManager::abort()

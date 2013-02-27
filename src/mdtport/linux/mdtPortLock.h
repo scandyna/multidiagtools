@@ -101,8 +101,8 @@ class mdtPortLock
   QFileInfoList pvLockfiles;              // Lockfiles in realtion to pvPort
   QFileInfoList pvCreatedLockFiles;       // Lockfiles that where created
   QStringList pvWritableLockDirectories;  // Directories for lockfiles
-  bool pvIsLocked;                        // Internall lock flag
-  bool pvIsLockedByAnother;               // Internall lock flag
+  volatile bool pvIsLocked;               // Internall lock flag
+  volatile bool pvIsLockedByAnother;      // Internall lock flag
   struct flock pvLock;                    // Internall flock struct
 };
 

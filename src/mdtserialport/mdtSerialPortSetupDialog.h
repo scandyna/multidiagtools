@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,15 +21,19 @@
 #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H
 #define MDT_SERIAL_PORT_SETUP_DIALOG_H
 
-#include "ui_mdtSerialPortSetupDialog.h"
+///#include "ui_mdtSerialPortSetupDialog.h"
 #include "mdtSerialPortManager.h"
 #include "mdtPortConfigWidget.h"
 #include "mdtSerialPortConfigWidget.h"
 #include "mdtPortInfoCbHandler.h"
 #include <QDialog>
-#include <QAbstractButton>
+///#include <QAbstractButton>
 #include <QString>
-#include <QCloseEvent>
+///#include <QCloseEvent>
+
+#include "mdtAbstractPortSetupDialog.h"
+
+class QPushButton;
 
 /*! \brief Setup dialog for serial port
  * 
@@ -38,7 +42,8 @@
  * 
  * \image html mdtSerialPortSetupDialog.png
  */
-class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDialog
+///class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDialog
+class mdtSerialPortSetupDialog : public mdtAbstractPortSetupDialog
 {
  Q_OBJECT
 
@@ -60,36 +65,77 @@ class mdtSerialPortSetupDialog : public QDialog, public Ui::mdtSerialPortSetupDi
   void updateConfig();
 
   // Tell the manager to re-open with new configuration
-  void applySetup();
+  ///void applySetup();
 
   // Called when setup is accepted from user
-  void on_buttonBox_clicked(QAbstractButton *button);
+  ///void on_buttonBox_clicked(QAbstractButton *button);
 
   // Rescan for available ports
-  void on_pbRescan_clicked();
+  ///void on_pbRescan_clicked();
 
   // Open selected port (if manager was set)
-  void on_cbPort_currentIndexChanged(int index);
+  ///void on_cbPort_currentIndexChanged(int index);
+
+  // Close port
+  void closePort();
+
+  // Rescan
+  void rescan();
+
+  // Open port
+  void openPort();
 
  private:
 
+  /*! \brief Set the Disconnected state
+   */
+  void setStateDisconnected();
+
+  /*! \brief Set the Connecting state
+   */
+  void setStateConnecting();
+
+  /*! \brief Set the Ready state
+   */
+  void setStateReady();
+
+  /*! \brief Set the Busy state
+   */
+  void setStateBusy();
+
+  /*! \brief Set the Warning state
+   */
+  void setStateWarning();
+
+  /*! \brief Set the Error state
+   */
+  void setStateError();
+
+  /*! \brief Apply setup
+   */
+  bool applySetup();
+
   // Set the running state
-  void setStateRunning();
+  ///void setStateRunning();
 
   // Set the stopped state
-  void setStateStopped();
+  ///void setStateStopped();
 
   // Set the Error state
-  void setStateError(QString msg = tr("Error"));
+  ///void setStateError(QString msg = tr("Error"));
 
   // Enable/diseable the apply buttons (Ok, Apply)
-  void diseableApplyButtons();
-  void enableApplyButtons();
+  ///void diseableApplyButtons();
+  ///void enableApplyButtons();
 
-  mdtSerialPortManager *pvPortManager;
+  mdtSerialPortManager *pvSerialPortManager;
   mdtPortConfigWidget *pvPortConfigWidget;
   mdtSerialPortConfigWidget *pvSerialPortConfigWidget;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
+  QPushButton *pbOpen;
+  QPushButton *pbClose;
+  QPushButton *pbRescan;
+  QComboBox *cbPort;
 };
 
 #endif  // #ifndef MDT_SERIAL_PORT_SETUP_DIALOG_H

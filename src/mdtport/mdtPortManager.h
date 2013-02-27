@@ -232,9 +232,13 @@ class mdtPortManager : public QThread
    */
   void setPortInfo(mdtPortInfo info);
 
-  /*! \brief Get port info
+  /*! \brief Get current port info
    */
   mdtPortInfo portInfo();
+
+  /*! \brief Get current port name
+   */
+  QString portName() const;
 
   /*! \brief Get the port's config object
    * 
@@ -521,6 +525,10 @@ class mdtPortManager : public QThread
    * \pre Port must be set with setPort() before calling this method.
    */
   void flush();
+
+  /*! \brief Get current state
+   */
+  state_t currentState() const;
 
  public slots:
 

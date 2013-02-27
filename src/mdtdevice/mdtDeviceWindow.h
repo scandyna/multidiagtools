@@ -25,7 +25,6 @@
 #include <QWidget>
 #include "mdtDevice.h"
 #include "ui_mdtDeviceWindow.h"
-///#include "mdtDeviceStatusWidget.h"
 #include "mdtPortStatusWidget.h"
 
 class QActionGroup;
