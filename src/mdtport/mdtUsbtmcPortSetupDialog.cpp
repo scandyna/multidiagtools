@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,26 +30,17 @@
 #include <QFormLayout>
 #include <QVariant>
 
-#include <QDebug>
-
-/// \todo Handle Ok/Apply/Stop buttons: f.ex.: when something fails, Ok button is enabled, not coherent
+//#include <QDebug>
 
 mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget *parent)
-/// : QDialog(parent)
  : mdtAbstractPortSetupDialog(parent)
 {
-  ///pvPortManager = 0;
-  ///pvPortConfigWidget = new mdtPortConfigWidget;
-  // Setup the dialog ui
-  ///setupUi(this);
-
   // Setup the dialog's header part
   pbOpen = new QPushButton(tr("&Open"));
   pbClose = new QPushButton(tr("&Close"));
   pbRescan = new QPushButton(tr("Rescan"));
   cbPort = new QComboBox;
   cbInterface = new QComboBox;
-  ///cbPort->setMinimumWidth(350);
   QWidget *wHeader = new QWidget;
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(pbOpen, 0, 0);
@@ -81,33 +72,11 @@ mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget *parent)
   deviceInfoLayout->addRow(tr("Firmware:"), lbFirmware);
   pvDeviceInfoWidget->setLayout(deviceInfoLayout);
   addOptionsTabWidget(pvDeviceInfoWidget, tr("&Device informations"));
-  // Update GUI
-  ///displayConfig();
 }
 
 mdtUsbtmcPortSetupDialog::~mdtUsbtmcPortSetupDialog()
 {
 }
-
-/**
-void mdtUsbtmcPortSetupDialog::setPortManager(mdtUsbtmcPortManager *manager)
-{
-  Q_ASSERT(manager != 0);
-
-  pvPortManager = manager;
-  pvCurrentPortInfo = pvPortManager->portInfo();
-  // Set state regarding manager's state
-  if(pvPortManager->isRunning()){
-    setStateRunning();
-  }else{
-    setStateStopped();
-  }
-  // List available ports
-  on_pbRescan_clicked();
-  // Update GUI
-  displayConfig();
-}
-*/
 
 void mdtUsbtmcPortSetupDialog::displayConfig()
 {
@@ -151,205 +120,6 @@ void mdtUsbtmcPortSetupDialog::openPort()
   applySetup();
 }
 
-/**
-void mdtUsbtmcPortSetupDialog::on_pbRescan_clicked()
-{
-  Q_ASSERT(pvPortManager != 0);
-
-  // Stop manager and close port
-  lbState->setText(tr("Stopping ..."));
-  pvPortManager->closePort();
-  setStateStopped();
-  pbRescan->setEnabled(false);
-  pvPortInfoCbHandler.fillComboBoxes(pvPortManager->scan());
-  pbRescan->setEnabled(true);
-}
-*/
-
-/**
-void mdtUsbtmcPortSetupDialog::on_cbInterface_currentIndexChanged(int index)
-{
-  QString idn;
-  QStringList idnItems;
-
-  if(index < 0){
-    return;
-  }
-  if(pvPortManager == 0){
-    return;
-  }
-  cbInterface->setEnabled(false);
-  diseableApplyButtons();
-  // Close port
-  pvPortManager->closePort();
-  setStateStopped();
-  // Open the port
-  pvPortManager->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
-  if(!pvPortManager->openPort()){
-    setStateError(tr("Cannot open port"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  if(!pvPortManager->start()){
-    pvPortManager->closePort();
-    setStateError(tr("Cannot start port"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  // Get identification
-  idn = pvPortManager->sendQuery("*IDN?\n");
-  if(idn.isEmpty()){
-    pvPortManager->closePort();
-    setStateError(tr("*IDN? query failed"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  */
-  /**
-  if(pvPortManager->writeData("*IDN?\n") < 0){
-    pvPortManager->closePort();
-    setStateError(tr("Cannot send the *IDN? query"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  if(pvPortManager->sendReadRequest(true) < 0){
-    pvPortManager->closePort();
-    setStateError(tr("Cannot send the *IDN? read request"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  if(!pvPortManager->waitReadenFrame()){
-    pvPortManager->closePort();
-    setStateError(tr("Cannot send the *IDN? query (received no data)"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  if(pvPortManager->readenFrames().size() != 1){
-    pvPortManager->closePort();
-    setStateError(tr("Cannot send the *IDN? query (received wrong amount of data)"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  */
-  // Split IDN replay infos
-  ///idn = pvPortManager->readenFrames().at(0);
-  ///pvPortManager->clearReadenFrames();
-  /**
-  idn = idn.trimmed();
-  idnItems = idn.split(',');
-  if(idnItems.size() != 4){
-    pvPortManager->closePort();
-    setStateError(tr("Cannot send the *IDN? query (received wrong amount of data)"));
-    cbInterface->setEnabled(true);
-    return;
-  }
-  // Display infos
-  lbManufacturer->setText(idnItems.at(0));
-  lbModel->setText(idnItems.at(1));
-  lbSerial->setText(idnItems.at(2));
-  lbFirmware->setText(idnItems.at(3));
-  // Display configuration
-  displayConfig();
-  setStateRunning();
-  cbInterface->setEnabled(true);
-  enableApplyButtons();
-}
-*/
-
-  /**
-void mdtUsbtmcPortSetupDialog::on_buttonBox_clicked(QAbstractButton *button)
-{
-  Q_ASSERT(pvPortManager != 0);
-  Q_ASSERT(button != 0);
-
-  QDialogButtonBox::StandardButton type;
-
-  type = buttonBox->standardButton(button);
-  if((type == QDialogButtonBox::Apply)||(type == QDialogButtonBox::Ok)){
-    // Update current port info
-    pvCurrentPortInfo = pvPortInfoCbHandler.currentPortInfo();
-  }
-  // Check if something is to do
-  if(pvPortManager->portInfo() != pvCurrentPortInfo){
-    pvPortManager->closePort();
-    pvPortManager->setPortInfo(pvCurrentPortInfo);
-    setStateStopped();
-  }
-  // Open and start port if needed
-  if(!pvPortManager->isRunning()){
-    if(!pvPortManager->openPort()){
-      setStateError(tr("Cannot open port"));
-      return;
-    }
-    if(!pvPortManager->start()){
-      pvPortManager->closePort();
-      setStateError(tr("Cannot start port"));
-      return;
-    }
-  }
-  setStateRunning();
-}
-*/
-
-  /**
-void mdtUsbtmcPortSetupDialog::setStateRunning()
-{
-  // Update state label
-  lbState->setText(tr("Running"));
-  lbState->setStyleSheet("QLabel { background-color : green; color : black; }");
-}
-*/
-
-/**
-void mdtUsbtmcPortSetupDialog::setStateStopped()
-{
-  // Update state label
-  lbState->setText(tr("Stopped"));
-  lbState->setStyleSheet("QLabel { background-color : orange; color : black; }");
-}
-*/
-
-/**
-void mdtUsbtmcPortSetupDialog::setStateError(QString msg)
-{
-  // Update state label
-  lbState->setText(msg);
-  lbState->setStyleSheet("QLabel { background-color : red; color : black; }");
-}
-*/
-
-/**
-void mdtUsbtmcPortSetupDialog::diseableApplyButtons()
-{
-  QPushButton *b;
-
-  b = buttonBox->button(QDialogButtonBox::Ok);
-  if(b != 0){
-    b->setEnabled(false);
-  }
-  b = buttonBox->button(QDialogButtonBox::Apply);
-  if(b != 0){
-    b->setEnabled(false);
-  }
-}
-*/
-
-/**
-void mdtUsbtmcPortSetupDialog::enableApplyButtons()
-{
-  QPushButton *b;
-
-  b = buttonBox->button(QDialogButtonBox::Ok);
-  if(b != 0){
-    b->setEnabled(true);
-  }
-  b = buttonBox->button(QDialogButtonBox::Apply);
-  if(b != 0){
-    b->setEnabled(true);
-  }
-}
-*/
-
 void mdtUsbtmcPortSetupDialog::portManagerSet()
 {
   displayConfig();
@@ -362,8 +132,6 @@ void mdtUsbtmcPortSetupDialog::setStateDisconnected()
   pbRescan->setEnabled(true);
   cbPort->setEnabled(true);
   cbInterface->setEnabled(true);
-  ///pvDeviceInfoWidget->setEnabled(true);
-  ///pvPortConfigWidget->setEnabled(true);
   setOkButtonEnabled(true);
   setApplyButtonEnabled(true);
   setCancelButtonEnabled(true);
@@ -376,8 +144,6 @@ void mdtUsbtmcPortSetupDialog::setStateConnecting()
   pbRescan->setEnabled(false);
   cbPort->setEnabled(false);
   cbInterface->setEnabled(false);
-  ///pvDeviceInfoWidget->setEnabled(false);
-  ///pvPortConfigWidget->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
@@ -390,8 +156,6 @@ void mdtUsbtmcPortSetupDialog::setStateReady()
   pbRescan->setEnabled(false);
   cbPort->setEnabled(false);
   cbInterface->setEnabled(false);
-  ///pvDeviceInfoWidget->setEnabled(false);
-  ///pvPortConfigWidget->setEnabled(false);
   setOkButtonEnabled(true);
   setApplyButtonEnabled(true);
   setCancelButtonEnabled(true);
@@ -404,8 +168,6 @@ void mdtUsbtmcPortSetupDialog::setStateBusy()
   pbRescan->setEnabled(false);
   cbPort->setEnabled(false);
   cbInterface->setEnabled(false);
-  ///pvDeviceInfoWidget->setEnabled(false);
-  ///pvPortConfigWidget->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
@@ -418,8 +180,6 @@ void mdtUsbtmcPortSetupDialog::setStateWarning()
   pbRescan->setEnabled(false);
   cbPort->setEnabled(false);
   cbInterface->setEnabled(false);
-  ///pvDeviceInfoWidget->setEnabled(false);
-  ///pvPortConfigWidget->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);
@@ -432,8 +192,6 @@ void mdtUsbtmcPortSetupDialog::setStateError()
   pbRescan->setEnabled(false);
   cbPort->setEnabled(false);
   cbInterface->setEnabled(false);
-  ///pvDeviceInfoWidget->setEnabled(false);
-  ///pvPortConfigWidget->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);

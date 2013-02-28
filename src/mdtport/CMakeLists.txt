@@ -74,7 +74,7 @@ set (FORM_FILES
           mdtPortConfigWidget.ui
           # Setup dialogs
           mdtAbstractPortSetupDialog.ui
-          mdtUsbtmcPortSetupDialog.ui
+          #mdtUsbtmcPortSetupDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

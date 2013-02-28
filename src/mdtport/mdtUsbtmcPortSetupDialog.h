@@ -21,7 +21,6 @@
 #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H
 #define MDT_USBTMC_PORT_SETUP_DIALOG_H
 
-///#include "ui_mdtUsbtmcPortSetupDialog.h"
 #include "mdtPortConfigWidget.h"
 #include "mdtPortInfoCbHandler.h"
 #include "mdtPortInfo.h"
@@ -36,7 +35,6 @@ class mdtUsbtmcPortManager;
 class QWidget;
 class QAbstractButton;
 
-///class mdtUsbtmcPortSetupDialog : public QDialog, Ui_mdtUsbtmcPortSetupDialog
 class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
 {
  Q_OBJECT
@@ -45,8 +43,6 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
 
   mdtUsbtmcPortSetupDialog(QWidget *parent = 0);
   ~mdtUsbtmcPortSetupDialog();
-
-  ///void setPortManager(mdtUsbtmcPortManager *manager);
 
  private slots:
 
@@ -65,29 +61,7 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
   // Open port
   void openPort();
 
-  // Rescan for available ports with attached USBTMC device
-  ///void on_pbRescan_clicked();
-
-  // Open selected port (if manager was set)
-  ///void on_cbInterface_currentIndexChanged(int index);
-
-  // Called when setup is accepted/canceled from user
-  ///void on_buttonBox_clicked(QAbstractButton *button);
-
  private:
-
-  // Set the running state
-  ///void setStateRunning();
-
-  // Set the stopped state
-  ///void setStateStopped();
-
-  // Set the Error state
-  ///void setStateError(QString msg = tr("Error"));
-
-  // Enable/diseable the apply buttons (Ok, Apply)
-  ///void diseableApplyButtons();
-  ///void enableApplyButtons();
 
   /*! \brief Called by setPortManager()
    */
@@ -121,8 +95,7 @@ class mdtUsbtmcPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   bool applySetup();
 
-  ///mdtUsbtmcPortManager *pvPortManager;
-  mdtPortConfigWidget *pvPortConfigWidget;
+  ///mdtPortConfigWidget *pvPortConfigWidget;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
   mdtPortInfo pvCurrentPortInfo;
   QPushButton *pbOpen;
