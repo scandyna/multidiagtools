@@ -66,6 +66,12 @@ class mdtAbstractPortSetupDialog : public QDialog, public Ui::mdtAbstractPortSet
 
  protected:
 
+  /*! \brief Called by setPortManager()
+   *
+   * Defaul implementation does nothing
+   */
+  virtual void portManagerSet();
+
   /*! \brief Set the Disconnected state
    *
    * This method must be implemented in subclass.

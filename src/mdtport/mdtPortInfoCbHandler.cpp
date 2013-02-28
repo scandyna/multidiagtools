@@ -56,6 +56,8 @@ void mdtPortInfoCbHandler::setDevicesComboBox(QComboBox *comboBox)
 
 void mdtPortInfoCbHandler::fillComboBoxes(const QList<mdtPortInfo*> &portInfoList)
 {
+  Q_ASSERT(cbPorts != 0);
+
   int i;
   mdtPortInfo *portInfo;
   QVariant var;

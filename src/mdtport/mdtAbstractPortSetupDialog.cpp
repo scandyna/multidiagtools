@@ -52,6 +52,7 @@ void mdtAbstractPortSetupDialog::setPortManager(mdtPortManager *portManager)
   pvPortManager = portManager;
   connect(pvPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
   setStateFromPortManager((int)pvPortManager->currentState());
+  portManagerSet();
 }
 
 mdtPortManager *mdtAbstractPortSetupDialog::portManager()
@@ -59,6 +60,10 @@ mdtPortManager *mdtAbstractPortSetupDialog::portManager()
   Q_ASSERT(pvPortManager != 0);
 
   return pvPortManager;
+}
+
+void mdtAbstractPortSetupDialog::portManagerSet()
+{
 }
 
 void mdtAbstractPortSetupDialog::setHeaderWidget(QWidget *w)

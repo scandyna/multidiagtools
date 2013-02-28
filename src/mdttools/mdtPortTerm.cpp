@@ -64,7 +64,8 @@ mdtPortTerm::mdtPortTerm(QWidget *parent)
   pvPortSelectActionGroup->addAction(action_UsbTmcPort);
   connect(pvPortSelectActionGroup, SIGNAL(triggered(QAction*)), this, SLOT(selectPortType(QAction*)));
   action_SerialPort->setChecked(true);
-  attachToSerialPort();
+  ///attachToSerialPort();
+  attachToUsbtmcPort();
 }
 
 mdtPortTerm::~mdtPortTerm()
@@ -233,9 +234,14 @@ void mdtPortTerm::portSetup()
     d.setPortManager(pvSerialPortManager);
     d.exec();
   }else if(pvUsbtmcPortManager != 0){
+    disconnect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
     mdtUsbtmcPortSetupDialog d(this);
     d.setPortManager(pvUsbtmcPortManager);
     d.exec();
+    connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(appendReadenData(mdtPortTransaction)));
+  }else{
+    showStatusMessage(tr("Cannot call setup dialog, no port manager defined"), 3000);
+    return;
   }
   // If port is running, enable terminal
   if(pvCurrentPortManager->isRunning()){
