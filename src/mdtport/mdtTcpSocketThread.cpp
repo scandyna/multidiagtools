@@ -23,6 +23,8 @@
 #include "mdtError.h"
 #include <QApplication>
 
+#include <QDebug>
+
 mdtTcpSocketThread::mdtTcpSocketThread(QObject *parent)
  : mdtPortThread(parent)
 {
@@ -70,12 +72,22 @@ void mdtTcpSocketThread::run()
   if(readFrame == 0){
     return;
   }
-
+  qDebug() << "TCPTHD: starting ...";
   // Run...
   while(1){
     // Read thread state
     if(!pvRunning){
       break;
+    }
+    // Check connection state
+    if(pvSocket->state() != QAbstractSocket::ConnectedState){
+      // Try to (Re-)connect
+      qDebug() << "TCPTHD: connecting ...";
+      portError = reconnect(true);
+      if(portError != mdtAbstractPort::NoError){
+        // Stop
+        break;
+      }
     }
     // Wait on next request
     writeFrame = getNewFrameWrite();
@@ -86,15 +98,6 @@ void mdtTcpSocketThread::run()
     // If thread is stopping, it can happen that a Null pointer is returned
     if(writeFrame == 0){
       break;
-    }
-    // Check connection state
-    if(pvSocket->state() != QAbstractSocket::ConnectedState){
-      // Try to (Re-)connect
-      portError = reconnect(true);
-      if(portError != mdtAbstractPort::NoError){
-        // Stop
-        break;
-      }
     }
     // Write
     portError = writeToPort(writeFrame, false, 0);
@@ -214,10 +217,13 @@ void mdtTcpSocketThread::run()
     }
   }
 
-  if(portError != mdtAbstractPort::NoError){
+  qDebug() << "TCPTHD: portError: " << portError;
+  if(portError == mdtAbstractPort::NoError){
+    qDebug() << "TCPTHD: notify Disconnected";
     notifyError(mdtAbstractPort::Disconnected);
   }
   pvRunning = false;
   pvPort->unlockMutex();
+  qDebug() << "TCPTHD: END";
 }
 

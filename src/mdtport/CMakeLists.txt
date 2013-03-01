@@ -31,6 +31,7 @@ set (HEADER_FILES
           # Setup dialogs
           mdtAbstractPortSetupDialog.h
           mdtUsbtmcPortSetupDialog.h
+          mdtModbusTcpPortSetupDialog.h
     )
 
 # Liste des fichiers sources
@@ -67,6 +68,7 @@ set (SOURCES_FILES
           # Setup dialogs
           mdtAbstractPortSetupDialog.cpp
           mdtUsbtmcPortSetupDialog.cpp
+          mdtModbusTcpPortSetupDialog.cpp
     )
 
 # Liste des fichiers ui
@@ -74,7 +76,6 @@ set (FORM_FILES
           mdtPortConfigWidget.ui
           # Setup dialogs
           mdtAbstractPortSetupDialog.ui
-          #mdtUsbtmcPortSetupDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)

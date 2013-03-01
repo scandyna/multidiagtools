@@ -49,6 +49,27 @@ class mdtDeviceModbus : public mdtDevice
    */
   mdtPortManager *portManager();
 
+  /*! \brief Helper method for register service
+   *
+   * Usefull to get resgister values (f.ex. configurations regsisters, ...).
+   *
+   * Note: to get analog I/O values, the mdtDevice API should be used.
+   *
+   * \return True on success. Values are the available with registerValues()
+   * \pre address and n must be > 0
+   * \sa mdtModbusTcpPortManager::getRegisterValues()
+   */
+  bool getRegisterValues(int address, int n);
+
+  /*! \brief Helper method for register service
+   *
+   * Return result set by getRegisterValues().
+   * Note that values are keeped until next call of getRegisterValues().
+   *
+   * \sa mdtModbusTcpPortManager::registerValues()
+   */
+  const QList<int> &registerValues() const;
+
  private slots:
 
   /*! \brief Decode incoming frames

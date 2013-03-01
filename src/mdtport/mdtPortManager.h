@@ -318,12 +318,21 @@ class mdtPortManager : public QThread
    * If transactions pool is empty, a new transaction is created.
    *  Note that each transaction should be put back in
    *  pool with restoreTransaction().
+   *  In most cases, if a method that uses transactions fails, the transaction
+   *  must be restored with restoreTransaction().
    *
    * \return A empty transaction (mdtPortTransaction::clear() is called internally).
    *
    * \post Returned transaction is valid (never Null).
    */
   mdtPortTransaction *getNewTransaction();
+
+  /*! \brief Restore a transaction into pool
+   *
+   * \pre transaction must be a valid pointer (not Null)
+   * \pre One transaction must be commited once (avoid corrupted double free)
+   */
+  void restoreTransaction(mdtPortTransaction *transaction);
 
   /*! \brief Wait until data can be written
    *
@@ -396,6 +405,8 @@ class mdtPortManager : public QThread
    *
    * This method can return if timeout occurs, or for other
    *  reason depending on specific port (port timeout, read cancelled, ...).
+   *
+   * Note: transactions are not handled here. The caller is responsible of transactions management.
    *
    * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
    * \param timeout Maximum wait time [ms]. Must be a multiple of granularity [ms]
@@ -612,12 +623,6 @@ class mdtPortManager : public QThread
 
  protected:
 
-  /*! \brief Restore a transaction into pool
-   *
-   * \pre transaction must be a valid pointer (not Null)
-   */
-  void restoreTransaction(mdtPortTransaction *transaction);
-
   /*! \brief Add a transaction to pending queue
    *
    * Add a existing transaction to the pending queue.
@@ -764,6 +769,7 @@ class mdtPortManager : public QThread
 
   mdtPortInfo pvPortInfo;
   QQueue<mdtPortTransaction*> pvTransactionsPool;
+  int pvTransactionsAllocatedCount;                     // Used to watch how many transactions are allocated (memory leack watcher)
   QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
   QMap<int, mdtPortTransaction*> pvTransactionsRx;      // Used when transaction's response was received
   QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used for query/reply mode transactions

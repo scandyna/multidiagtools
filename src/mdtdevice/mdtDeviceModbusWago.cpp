@@ -121,14 +121,14 @@ bool mdtDeviceModbusWago::isWago750()
   if(!getRegisterValues(0x2011, 1)){
     return false;
   }
-  if(pvRegisterValues.size() != 1){
+  if(registerValues().size() != 1){
     return false;
   }
   mdtError e2(MDT_DEVICE_ERROR, "Device " + name() + ": device is from Wago", mdtError::Info);
   MDT_ERROR_SET_SRC(e2, "mdtDeviceModbusWago");
   e2.commit();
 
-  return (pvRegisterValues.at(0) == 750);
+  return (registerValues().at(0) == 750);
 }
 
 int mdtDeviceModbusWago::analogOutputsCount()
@@ -136,10 +136,10 @@ int mdtDeviceModbusWago::analogOutputsCount()
   if(!getRegisterValues(0x1022, 1)){
     return -1;
   }
-  if(pvRegisterValues.size() != 1){
+  if(registerValues().size() != 1){
     return -1;
   }
-  return (pvRegisterValues.at(0) / 16);
+  return (registerValues().at(0) / 16);
 }
 
 int mdtDeviceModbusWago::analogInputsCount()
@@ -147,10 +147,10 @@ int mdtDeviceModbusWago::analogInputsCount()
   if(!getRegisterValues(0x1023, 1)){
     return -1;
   }
-  if(pvRegisterValues.size() != 1){
+  if(registerValues().size() != 1){
     return -1;
   }
-  return (pvRegisterValues.at(0) / 16);
+  return (registerValues().at(0) / 16);
 }
 
 int mdtDeviceModbusWago::digitalOutputsCount()
@@ -158,10 +158,10 @@ int mdtDeviceModbusWago::digitalOutputsCount()
   if(!getRegisterValues(0x1024, 1)){
     return -1;
   }
-  if(pvRegisterValues.size() != 1){
+  if(registerValues().size() != 1){
     return -1;
   }
-  return pvRegisterValues.at(0);
+  return registerValues().at(0);
 }
 
 int mdtDeviceModbusWago::digitalInputsCount()
@@ -169,10 +169,10 @@ int mdtDeviceModbusWago::digitalInputsCount()
   if(!getRegisterValues(0x1025, 1)){
     return -1;
   }
-  if(pvRegisterValues.size() != 1){
+  if(registerValues().size() != 1){
     return -1;
   }
-  return pvRegisterValues.at(0);
+  return registerValues().at(0);
 }
 
 bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
@@ -234,15 +234,15 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     qDebug() << "Cannot get I/O config";
     return false;
   }
-  qDebug() << "I/O config: " << pvRegisterValues;
+  qDebug() << "I/O config: " << registerValues();
   // Setup the Fieldbus Coupler.
-  if(pvRegisterValues.size() < 1){
+  if(registerValues().size() < 1){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no field bus coupler found", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
     e.commit();
     return false;
   }
-  word = pvRegisterValues.at(0);
+  word = registerValues().at(0);
   if((word < 1)||(word > 999)){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": field bus coupler part number is wrong (expected: value from 1 to 999)", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
@@ -251,14 +251,14 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   }
   qDebug() << "Found filedbus part number 750 -" << word;
   // Get I/O modules setup
-  if(pvRegisterValues.size() < 2){
+  if(registerValues().size() < 2){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no I/O modules found", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
     e.commit();
     return false;
   }
-  for(i=1; i<pvRegisterValues.size(); i++){
-    word = pvRegisterValues.at(i);
+  for(i=1; i<registerValues().size(); i++){
+    word = registerValues().at(i);
     if(word == 0){
       // We have detected all connected I/Os
       break;
@@ -599,6 +599,7 @@ bool mdtDeviceModbusWago::addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QLi
   return true;
 }
 
+/**
 bool mdtDeviceModbusWago::getRegisterValues(int address, int n)
 {
   Q_ASSERT(address >= 0);
@@ -610,7 +611,7 @@ bool mdtDeviceModbusWago::getRegisterValues(int address, int n)
   int i;
 
   // Clear previous results
-  pvRegisterValues.clear();
+  registerValues().clear();
   // Setup MODBUS PDU
   pdu = pvCodec->encodeReadInputRegisters(address, n);
   if(pdu.isEmpty()){
@@ -622,14 +623,15 @@ bool mdtDeviceModbusWago::getRegisterValues(int address, int n)
   transaction->setQueryReplyMode(true);
   transactionId = pvTcpPortManager->writeData(pdu, transaction);
   if(transactionId < 0){
-    ///setStateFromPortError(transactionId);
-    /// \todo restore transaction ???
+    restoreTransaction(transaction);
     return false;
   }
   // Wait on result (use device's defined timeout)
   if(!pvTcpPortManager->waitOnFrame(transactionId)){
+    restoreTransaction(transaction);
     return false;
   }
+  // At this state, transaction will be restored by readenFrame()
   if(pvCodec->decode(pvTcpPortManager->readenFrame(transactionId)) < 0){
     return false;
   }
@@ -641,8 +643,9 @@ bool mdtDeviceModbusWago::getRegisterValues(int address, int n)
     return false;
   }
   for(i=0; i<n; i++){
-    pvRegisterValues.append(pvCodec->values().at(i).toInt());
+    registerValues().append(pvCodec->values().at(i).toInt());
   }
 
   return true;
 }
+*/

@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtUsbtmcPortSetupDialog.h"
-#include "mdtUsbtmcPortManager.h"
+#include "mdtModbusTcpPortSetupDialog.h"
+#include "mdtModbusTcpPortManager.h"
 #include <QWidget>
 #include <QStringList>
 #include <QAbstractButton>
@@ -29,181 +29,177 @@
 #include <QGridLayout>
 #include <QFormLayout>
 #include <QVariant>
+#include <QNetworkInterface>
 
 //#include <QDebug>
 
-mdtUsbtmcPortSetupDialog::mdtUsbtmcPortSetupDialog(QWidget *parent)
+mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
  : mdtAbstractPortSetupDialog(parent)
 {
   // Setup the dialog's header part
   pbOpen = new QPushButton(tr("&Open"));
   pbClose = new QPushButton(tr("&Close"));
   pbRescan = new QPushButton(tr("Rescan"));
-  cbPort = new QComboBox;
-  cbInterface = new QComboBox;
+  ///cbPort = new QComboBox;
+  cbDevices = new QComboBox;
   QWidget *wHeader = new QWidget;
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(pbOpen, 0, 0);
   layout->addWidget(pbClose, 0, 1);
   layout->addWidget(pbRescan, 0, 2);
-  layout->addWidget(cbPort, 0, 3, 1, 8);
-  layout->addWidget(new QLabel(tr("Interface")), 1, 0);
-  layout->addWidget(cbInterface, 1, 1, 1, 5);
+  layout->addWidget(cbDevices, 0, 3, 1, 8);
+  ///layout->addWidget(new QLabel(tr("Interface")), 1, 0);
+  ///layout->addWidget(cbInterface, 1, 1, 1, 5);
   layout->setColumnStretch(5, 1);
-  layout->setColumnStretch(8, 2);
+  ///layout->setColumnStretch(8, 2);
   wHeader->setLayout(layout);
   setHeaderWidget(wHeader);
   connect(pbClose, SIGNAL(clicked()), this, SLOT(closePort()));
   connect(pbRescan, SIGNAL(clicked()), this, SLOT(rescan()));
   connect(pbOpen, SIGNAL(clicked()), this, SLOT(openPort()));
-  // Add bus/device list combobox to handler
-  pvPortInfoCbHandler.setPortsComboBox(cbPort);
-  pvPortInfoCbHandler.setDevicesComboBox(cbInterface);
+  // Add devices list combobox to handler
+  pvPortInfoCbHandler.setPortsComboBox(cbDevices);
+  ///pvPortInfoCbHandler.setDevicesComboBox(cbInterface);
   // Setup device informations tab
   pvDeviceInfoWidget = new QWidget;
   QFormLayout *deviceInfoLayout = new QFormLayout;
-  lbManufacturer = new QLabel;
-  lbModel = new QLabel;
-  lbSerial = new QLabel;
-  lbFirmware = new QLabel;
-  deviceInfoLayout->addRow(tr("Manufacturer:"), lbManufacturer);
-  deviceInfoLayout->addRow(tr("Model:"), lbModel);
-  deviceInfoLayout->addRow(tr("Serial:"), lbSerial);
-  deviceInfoLayout->addRow(tr("Firmware:"), lbFirmware);
-  pvDeviceInfoWidget->setLayout(deviceInfoLayout);
-  addOptionsTabWidget(pvDeviceInfoWidget, tr("&Device informations"));
+  ///lbManufacturer = new QLabel;
+  ///lbModel = new QLabel;
+  ///lbSerial = new QLabel;
+  ///lbFirmware = new QLabel;
+  ///deviceInfoLayout->addRow(tr("Manufacturer:"), lbManufacturer);
+  ///deviceInfoLayout->addRow(tr("Model:"), lbModel);
+  ///deviceInfoLayout->addRow(tr("Serial:"), lbSerial);
+  ///deviceInfoLayout->addRow(tr("Firmware:"), lbFirmware);
+  ///pvDeviceInfoWidget->setLayout(deviceInfoLayout);
+  ///addOptionsTabWidget(pvDeviceInfoWidget, tr("&Device informations"));
 }
 
-mdtUsbtmcPortSetupDialog::~mdtUsbtmcPortSetupDialog()
+mdtModbusTcpPortSetupDialog::~mdtModbusTcpPortSetupDialog()
 {
 }
 
-void mdtUsbtmcPortSetupDialog::displayConfig()
+void mdtModbusTcpPortSetupDialog::displayConfig()
 {
-  // Rescan
-  if(!portManager()->isRunning()){
-    rescan();
-  }
+
 }
 
-void mdtUsbtmcPortSetupDialog::updateConfig()
+void mdtModbusTcpPortSetupDialog::updateConfig()
 {
 }
 
-void mdtUsbtmcPortSetupDialog::closePort()
+void mdtModbusTcpPortSetupDialog::closePort()
 {
   portManager()->closePort();
 }
 
-void mdtUsbtmcPortSetupDialog::rescan()
+void mdtModbusTcpPortSetupDialog::rescan()
 {
+  mdtModbusTcpPortManager *modbusTcpPortManager;
   int index;
   QVariant var;
+
+  modbusTcpPortManager = dynamic_cast<mdtModbusTcpPortManager*>(portManager());
+  Q_ASSERT(modbusTcpPortManager != 0);
 
   if(portManager()->isRunning()){
     showStatusMessage(tr("Cannot rescan because port is open"), 3000);
     return;
   }
   pbRescan->setEnabled(false);
-  pvPortInfoCbHandler.fillComboBoxes(portManager()->scan());
+  pbOpen->setEnabled(false);
+  pvPortInfoCbHandler.fillComboBoxes(modbusTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100));
   // Display current port
-  var.setValue(portManager()->portInfo());
-  index = cbPort->findData(var);
-  if(index >= 0){
-    cbPort->setCurrentIndex(index);
-  }
+  ///var.setValue(portManager()->portInfo());
+  ///index = cbPort->findData(var);
+  ///if(index >= 0){
+    ///cbPort->setCurrentIndex(index);
+  ///}
   pbRescan->setEnabled(true);
+  pbOpen->setEnabled(true);
 }
 
-void mdtUsbtmcPortSetupDialog::openPort()
+void mdtModbusTcpPortSetupDialog::openPort()
 {
   applySetup();
 }
 
-void mdtUsbtmcPortSetupDialog::portManagerSet()
+void mdtModbusTcpPortSetupDialog::portManagerSet()
 {
   displayConfig();
+  connect(portManager(), SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
 }
 
-void mdtUsbtmcPortSetupDialog::setStateDisconnected()
+void mdtModbusTcpPortSetupDialog::setStateDisconnected()
 {
   pbOpen->setEnabled(true);
   pbClose->setEnabled(false);
   pbRescan->setEnabled(true);
-  cbPort->setEnabled(true);
-  cbInterface->setEnabled(true);
+  ///cbPort->setEnabled(true);
   setOkButtonEnabled(true);
   setApplyButtonEnabled(true);
   setCancelButtonEnabled(true);
 }
 
-void mdtUsbtmcPortSetupDialog::setStateConnecting()
+void mdtModbusTcpPortSetupDialog::setStateConnecting()
 {
   pbOpen->setEnabled(false);
   pbClose->setEnabled(false);
   pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  cbInterface->setEnabled(false);
+  ///cbPort->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
 }
 
-void mdtUsbtmcPortSetupDialog::setStateReady()
+void mdtModbusTcpPortSetupDialog::setStateReady()
 {
   pbOpen->setEnabled(false);
   pbClose->setEnabled(true);
   pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  cbInterface->setEnabled(false);
+  ///cbPort->setEnabled(false);
   setOkButtonEnabled(true);
   setApplyButtonEnabled(true);
   setCancelButtonEnabled(true);
 }
 
-void mdtUsbtmcPortSetupDialog::setStateBusy()
+void mdtModbusTcpPortSetupDialog::setStateBusy()
 {
   pbOpen->setEnabled(false);
   pbClose->setEnabled(false);
   pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  cbInterface->setEnabled(false);
+  ///cbPort->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
 }
 
-void mdtUsbtmcPortSetupDialog::setStateWarning()
+void mdtModbusTcpPortSetupDialog::setStateWarning()
 {
   pbOpen->setEnabled(false);
   pbClose->setEnabled(true);
   pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  cbInterface->setEnabled(false);
+  ///cbPort->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);
 }
 
-void mdtUsbtmcPortSetupDialog::setStateError()
+void mdtModbusTcpPortSetupDialog::setStateError()
 {
   pbOpen->setEnabled(false);
   pbClose->setEnabled(true);
   pbRescan->setEnabled(false);
-  cbPort->setEnabled(false);
-  cbInterface->setEnabled(false);
+  ///cbPort->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);
 }
 
-bool mdtUsbtmcPortSetupDialog::applySetup()
+bool mdtModbusTcpPortSetupDialog::applySetup()
 {
-  mdtUsbtmcPortManager *usbtmcPortManager;
-  QString idn;
-  QStringList idnItems;
+  ///mdtUsbtmcPortManager *usbtmcPortManager;
 
-  /// \todo Check if current port info is empty before
   // We must close the port
   portManager()->closePort();
   // Apply current configuration
@@ -216,29 +212,8 @@ bool mdtUsbtmcPortSetupDialog::applySetup()
   }
   if(!portManager()->start()){
     showStatusMessage(tr("Cannot start thread"), 3000);
+    portManager()->closePort();
     return false;
   }
-  // Get identification
-  usbtmcPortManager = dynamic_cast<mdtUsbtmcPortManager*>(portManager());
-  Q_ASSERT(usbtmcPortManager != 0);
-  idn = usbtmcPortManager->sendQuery("*IDN?\n");
-  if(idn.isEmpty()){
-    usbtmcPortManager->closePort();
-    showStatusMessage(tr("Cannot get device infos (*IDN? query failed)"), 3000);
-    return false;
-  }
-  idn = idn.trimmed();
-  idnItems = idn.split(',');
-  if(idnItems.size() != 4){
-    usbtmcPortManager->closePort();
-    showStatusMessage(tr("Cannot get device infos (*IDN? query returned unexpected data)"), 3000);
-    return false;
-  }
-  // Display infos
-  lbManufacturer->setText(idnItems.at(0));
-  lbModel->setText(idnItems.at(1));
-  lbSerial->setText(idnItems.at(2));
-  lbFirmware->setText(idnItems.at(3));
 
-  return true;
 }

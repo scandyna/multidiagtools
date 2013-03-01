@@ -35,6 +35,7 @@ mdtPortManager::mdtPortManager(QObject *parent)
   pvPort = 0;
   pvReadThread = 0;
   pvWriteThread = 0;
+  pvTransactionsAllocatedCount = 0;
   // At default, transactions support and blocking mode are OFF
   setTransactionsDisabled(false);
   // Setup state machine
@@ -289,6 +290,14 @@ mdtPortTransaction *mdtPortManager::getNewTransaction()
 
   if(pvTransactionsPool.size() < 1){
     transaction = new mdtPortTransaction;
+    pvTransactionsAllocatedCount++;
+    // Check about memory leaks
+    if((pvTransactionsAllocatedCount - pvTransactionsPool.size() - pvTransactionsPending.size() - pvTransactionsRx.size() - pvTransactionsDone.size()) > 10){
+      mdtError e(MDT_PORT_IO_ERROR, "Transactions management produces memory leakage", mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtPortManager");
+      e.commit();
+    }
+    qDebug() << "mdtPortManager::getNewTransaction(): create new transaction. DELTA: " << (pvTransactionsAllocatedCount - pvTransactionsPool.size() - pvTransactionsPending.size() - pvTransactionsRx.size() - pvTransactionsDone.size());
   }else{
     transaction = pvTransactionsPool.dequeue();
   }
@@ -296,6 +305,13 @@ mdtPortTransaction *mdtPortManager::getNewTransaction()
   transaction->clear();
 
   return transaction;
+}
+
+void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(!pvTransactionsPool.contains(transaction));
+
+  pvTransactionsPool.enqueue(transaction);
 }
 
 bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
@@ -673,11 +689,6 @@ void mdtPortManager::abort()
   Q_ASSERT(pvPort != 0);
 
   pvPort->flush();
-}
-
-void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
-{
-  pvTransactionsPool.enqueue(transaction);
 }
 
 void mdtPortManager::addTransaction(mdtPortTransaction *transaction)

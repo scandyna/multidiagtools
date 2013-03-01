@@ -86,16 +86,6 @@ void mdtAbstractPortSetupDialog::addOptionsTabWidget(QWidget *w, const QString &
   twOptions->addTab(w, label);
 }
 
-void mdtAbstractPortSetupDialog::showStatusMessage(const QString &message, int timeout)
-{
-  pvStatusWidget->showMessage(message, QString(), timeout);
-}
-
-void mdtAbstractPortSetupDialog::showStatusMessage(const QString &message, const QString &details, int timeout)
-{
-  pvStatusWidget->showMessage(message, details, timeout);
-}
-
 void mdtAbstractPortSetupDialog::setOkButtonEnabled(bool enabled)
 {
   QPushButton *button = buttonBox->button(QDialogButtonBox::Ok);
@@ -130,6 +120,16 @@ void mdtAbstractPortSetupDialog::setCancelButtonEnabled(bool enabled)
     return;
   }
   button->setEnabled(enabled);
+}
+
+void mdtAbstractPortSetupDialog::showStatusMessage(const QString &message, int timeout)
+{
+  pvStatusWidget->showMessage(message, QString(), timeout);
+}
+
+void mdtAbstractPortSetupDialog::showStatusMessage(const QString &message, const QString &details, int timeout)
+{
+  pvStatusWidget->showMessage(message, details, timeout);
 }
 
 void mdtAbstractPortSetupDialog::setStateFromPortManager(int state)

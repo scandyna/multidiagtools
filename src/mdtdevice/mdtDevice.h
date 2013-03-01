@@ -700,9 +700,19 @@ class mdtDevice : public QObject
 
   /*! \brief Get a new transaction
    *
+   * \sa mdtPortManager::getNewTransaction()
+   *
    * \pre portManager must be set before calling this method
    */
   mdtPortTransaction *getNewTransaction();
+
+  /*! \brief Restore a transaction into pool
+   *
+   * \sa mdtPortManager::restoreTransaction()
+   *
+   * \pre portManager must be set before calling this method
+   */
+  void restoreTransaction(mdtPortTransaction *transaction);
 
   /*! \brief Wait until a transaction is done without break the GUI's event loop
    *

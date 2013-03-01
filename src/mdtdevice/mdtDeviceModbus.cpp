@@ -66,6 +66,63 @@ mdtPortManager *mdtDeviceModbus::portManager()
   return pvTcpPortManager;
 }
 
+bool mdtDeviceModbus::getRegisterValues(int address, int n)
+{
+  return pvTcpPortManager->getRegisterValues(address, n);
+  /**
+  Q_ASSERT(address >= 0);
+  Q_ASSERT(n > 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+  QByteArray pdu;
+  int i;
+
+  // Clear previous results
+  pvRegisterValues.clear();
+  // Setup MODBUS PDU
+  pdu = pvCodec->encodeReadInputRegisters(address, n);
+  if(pdu.isEmpty()){
+    return false;
+  }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  // Send query
+  transaction->setQueryReplyMode(true);
+  transactionId = pvTcpPortManager->writeData(pdu, transaction);
+  if(transactionId < 0){
+    restoreTransaction(transaction);
+    return false;
+  }
+  // Wait on result (use device's defined timeout)
+  if(!pvTcpPortManager->waitOnFrame(transactionId)){
+    restoreTransaction(transaction);
+    return false;
+  }
+  // At this state, transaction will be restored by readenFrame()
+  if(pvCodec->decode(pvTcpPortManager->readenFrame(transactionId)) < 0){
+    return false;
+  }
+  // Store values
+  if(pvCodec->values().size() != n){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of values", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  for(i=0; i<n; i++){
+    pvRegisterValues.append(pvCodec->values().at(i).toInt());
+  }
+
+  return true;
+  */
+}
+
+const QList<int> &mdtDeviceModbus::registerValues() const
+{
+  return pvTcpPortManager->registerValues();
+}
+
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
 {
   ///Q_ASSERT(pvIos != 0);

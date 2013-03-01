@@ -846,6 +846,13 @@ mdtPortTransaction *mdtDevice::getNewTransaction()
   return portManager()->getNewTransaction();
 }
 
+void mdtDevice::restoreTransaction(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(portManager() != 0);
+
+  portManager()->restoreTransaction(transaction);
+}
+
 bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
 {
   Q_ASSERT(granularity > 0);

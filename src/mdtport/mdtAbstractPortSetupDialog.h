@@ -144,6 +144,20 @@ class mdtAbstractPortSetupDialog : public QDialog, public Ui::mdtAbstractPortSet
    */
   void addOptionsTabWidget(QWidget *w, const QString &label);
 
+  /*! \brief Enable/disable Ok button
+   */
+  void setOkButtonEnabled(bool enabled);
+
+  /*! \brief Enable/disable Apply button
+   */
+  void setApplyButtonEnabled(bool enabled);
+
+  /*! \brief Enable/disable Cancel button
+   */
+  void setCancelButtonEnabled(bool enabled);
+
+ protected slots:
+
   /*! \brief Used to show a message in status widget
    *
    * \param message Message to show
@@ -158,18 +172,6 @@ class mdtAbstractPortSetupDialog : public QDialog, public Ui::mdtAbstractPortSet
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
   void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
-
-  /*! \brief Enable/disable Ok button
-   */
-  void setOkButtonEnabled(bool enabled);
-
-  /*! \brief Enable/disable Apply button
-   */
-  void setApplyButtonEnabled(bool enabled);
-
-  /*! \brief Enable/disable Cancel button
-   */
-  void setCancelButtonEnabled(bool enabled);
 
  private slots:
 

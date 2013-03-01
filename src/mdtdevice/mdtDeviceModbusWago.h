@@ -218,8 +218,8 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
   bool addDigitalIos(QList<mdtDigitalIo*> &digitalInputs, QList<mdtDigitalIo*> &digitalOutputs, quint16 word) const;
 
   // Helper members for Register service
-  bool getRegisterValues(int address, int n);
-  QList<int> pvRegisterValues;
+  ///bool getRegisterValues(int address, int n);
+  ///QList<int> pvRegisterValues;
 };
 
 #endif  // #ifndef MDT_DEVICE_MODBUS_WAGO_H

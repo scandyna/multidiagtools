@@ -174,6 +174,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
       if(tryToConnect(currentIp.toString(), port, timeout)){
         portInfo = new mdtPortInfo;
         portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
+        portInfo->setDisplayText(currentIp.toString() + ":" + QString::number(port));
         portInfoList.append(portInfo);
       }
     }
@@ -305,6 +306,61 @@ QStringList mdtModbusTcpPortManager::readScanResult()
   file.close();
 
   return scanResult;
+}
+
+bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
+{
+  Q_ASSERT(address >= 0);
+  Q_ASSERT(n > 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+  QByteArray pdu;
+  mdtFrameCodecModbus codec;
+  int i;
+
+  // Clear previous results
+  pvRegisterValues.clear();
+  // Setup MODBUS PDU
+  pdu = codec.encodeReadInputRegisters(address, n);
+  if(pdu.isEmpty()){
+    return false;
+  }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  // Send query
+  transaction->setQueryReplyMode(true);
+  transactionId = writeData(pdu, transaction);
+  if(transactionId < 0){
+    restoreTransaction(transaction);
+    return false;
+  }
+  // Wait on result (use device's defined timeout)
+  if(!waitOnFrame(transactionId)){
+    restoreTransaction(transaction);
+    return false;
+  }
+  // At this state, transaction will be restored by readenFrame()
+  if(codec.decode(readenFrame(transactionId)) < 0){
+    return false;
+  }
+  // Store values
+  if(codec.values().size() != n){
+    mdtError e(MDT_DEVICE_ERROR, "Received unexptected count of values", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
+    e.commit();
+    return false;
+  }
+  for(i=0; i<n; i++){
+    pvRegisterValues.append(codec.values().at(i).toInt());
+  }
+
+  return true;
+}
+
+const QList<int> &mdtModbusTcpPortManager::registerValues() const
+{
+  return pvRegisterValues;
 }
 
 int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)

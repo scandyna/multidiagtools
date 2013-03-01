@@ -67,6 +67,10 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   void setStateFromPortManager(int state);
 
+  /*! \brief Call setup dialog
+   */
+  void setup();
+
  private:
 
   /*! \brief Set the disconnected state

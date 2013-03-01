@@ -24,6 +24,7 @@
 #include "mdtApplication.h"
 #include "mdtDeviceInfo.h"
 #include "mdtPortStatusWidget.h"
+#include "mdtModbusTcpPortSetupDialog.h"
 
 mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
@@ -50,6 +51,11 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   pvDeviceModbusWago->detectIos(pvDeviceIos);
   pvDeviceModbusWago->setIos(pvDeviceIos, true);
   pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
+
+    // Actions
+  connect(action_Setup, SIGNAL(triggered()), this, SLOT(setup()));
+  pvLanguageActionGroup = 0;
+
 }
 
 mdtModbusIoTool::~mdtModbusIoTool()
@@ -110,6 +116,13 @@ void mdtModbusIoTool::setStateFromPortManager(int state)
       setStateError();
       showStatusMessage(tr("Received a unknown state"));
   }
+}
+
+void mdtModbusIoTool::setup()
+{
+  mdtModbusTcpPortSetupDialog d(this);
+  d.setPortManager(pvDeviceModbusWago->portManager());
+  d.exec();
 }
 
 void mdtModbusIoTool::setStateDisconnected()

@@ -135,6 +135,24 @@ class mdtModbusTcpPortManager : public mdtPortManager
    */
   QStringList readScanResult();
 
+  /*! \brief Helper method for register service
+   *
+   * Usefull to get resgister values (f.ex. configurations regsisters, ...).
+   *
+   * Note: to get analog I/O values, the mdtDevice API should be used.
+   *
+   * \return True on success. Values are the available with registerValues()
+   * \pre address and n must be > 0
+   */
+  bool getRegisterValues(int address, int n);
+
+  /*! \brief Helper method for register service
+   *
+   * Return result set by getRegisterValues().
+   * Note that values are keeped until next call of getRegisterValues().
+   */
+  const QList<int> &registerValues() const;
+
   /*! \brief Write PDU by copy
    *
    * \todo Obelete this version !
@@ -197,6 +215,8 @@ class mdtModbusTcpPortManager : public mdtPortManager
   quint16 pvTransactionId;
   QString pvKnownHostsFileName;
   bool pvAbortScan;
+  // Helper members for Register service
+  QList<int> pvRegisterValues;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtModbusTcpPortManager);
