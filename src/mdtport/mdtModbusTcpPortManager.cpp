@@ -311,6 +311,60 @@ QStringList mdtModbusTcpPortManager::readScanResult()
   return scanResult;
 }
 
+int mdtModbusTcpPortManager::getHardwareNodeAddress(int bitsCount, int startFrom)
+{
+  Q_ASSERT(isRunning());
+  Q_ASSERT(bitsCount > 0);
+  Q_ASSERT(startFrom >= 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+  QByteArray pdu;
+  mdtFrameCodecModbus codec;
+  int i, id;
+
+  // Setup MODBUS PDU
+  pdu = codec.encodeReadDiscreteInputs(startFrom, bitsCount);
+  if(pdu.isEmpty()){
+    return 0;
+  }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  // Send query
+  transaction->setQueryReplyMode(true);
+  transactionId = writeData(pdu, transaction);
+  if(transactionId < 0){
+    restoreTransaction(transaction);
+    return 0;
+  }
+  // Wait on result (use device's defined timeout)
+  if(!waitOnFrame(transactionId)){
+    restoreTransaction(transaction);
+    return 0;
+  }
+  // At this state, transaction will be restored by readenFrame()
+  if(codec.decode(readenFrame(transactionId)) != 0x02){
+    return 0;
+  }
+  // Check that we have enough states (can be more, because digital inputs are returned as multiple of 8)
+  if(codec.values().size() < bitsCount){
+    mdtError e(MDT_TCP_IO_ERROR, "Have not received enough input states", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
+    e.commit();
+    return 0;
+  }
+  qDebug() << "NODE ID: " << codec.values();
+  // Ok, have the states, let's decode ID
+  id = 0;
+  for(i=0; i<bitsCount; i++){
+    if((codec.values().at(i).isValid())&&(codec.values().at(i).toBool() == true)){
+      id |= (1<<i);
+    }
+  }
+
+  return id;
+}
+
 bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
 {
   Q_ASSERT(address >= 0);
@@ -366,6 +420,7 @@ const QList<int> &mdtModbusTcpPortManager::registerValues() const
   return pvRegisterValues;
 }
 
+/**
 int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)
 {
   Q_ASSERT(pvPort != 0);
@@ -400,6 +455,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)
 
   return pvTransactionId;
 }
+*/
 
 int mdtModbusTcpPortManager::writeData(QByteArray pdu, mdtPortTransaction *transaction)
 {

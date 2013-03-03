@@ -87,12 +87,17 @@ mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
   lbModel = new QLabel;
   lbHwRevision = new QLabel;
   lbFwRevision = new QLabel;
+  lbIOs = new QLabel;
+  lbHwNodeAddress = new QLabel;
   deviceInfoLayout->addRow(tr("Manufacturer:"), lbManufacturer);
   deviceInfoLayout->addRow(tr("Model:"), lbModel);
   deviceInfoLayout->addRow(tr("Hardware revision:"), lbHwRevision);
   deviceInfoLayout->addRow(tr("Firmware revision:"), lbFwRevision);
+  deviceInfoLayout->addRow(tr("I/O count:"), lbIOs);
+  deviceInfoLayout->addRow(tr("HW node address:"), lbHwNodeAddress);
   pvDeviceInfoWidget->setLayout(deviceInfoLayout);
   addOptionsTabWidget(pvDeviceInfoWidget, tr("&Device informations"));
+  setWindowTitle(tr("MODBUS/TCP setup"));
   // Set a convenable size
   resize(700, 280);
 }
@@ -117,6 +122,7 @@ void mdtModbusTcpPortSetupDialog::displayConfig()
   // If port manager is running, we can try to get device informations
   if(portManager()->isRunning()){
     getDeviceInformations();
+    getHardwareNodeAddress();
   }
 }
 
@@ -195,6 +201,7 @@ void mdtModbusTcpPortSetupDialog::openPort()
     return;
   }
   getDeviceInformations();
+  getHardwareNodeAddress();
 }
 
 void mdtModbusTcpPortSetupDialog::portManagerSet()
@@ -294,6 +301,7 @@ bool mdtModbusTcpPortSetupDialog::applySetup()
     showStatusMessage(tr("Please enter a host name or IP address"), 3000);
     return false;
   }
+  setStateConnecting();
   // Set port name
   portInfo.setPortName(leHost->text().trimmed() + ":" + QString::number(sbPort->value()));
   portInfo.setDisplayText(tr("Host: ") + leHost->text().trimmed() + tr("   ,   Port: ") + QString::number(sbPort->value()));
@@ -306,12 +314,14 @@ bool mdtModbusTcpPortSetupDialog::applySetup()
   // Try to open port and start port manager
   showStatusMessage(tr("Trying to connect ..."));
   if(!portManager()->openPort()){
-    showStatusMessage(tr("Cannot connect to ") + portManager()->portName(), 3000);
+    setStateDisconnected();
+    showStatusMessage(tr("Cannot connect to ") + portManager()->portName());
     return false;
   }
   if(!portManager()->start()){
-    showStatusMessage(tr("Cannot start thread"), 3000);
+    showStatusMessage(tr("Cannot start thread"));
     portManager()->closePort();
+    setStateDisconnected();
     return false;
   }
   showStatusMessage(tr("Connected"), 3000);
@@ -337,6 +347,8 @@ void mdtModbusTcpPortSetupDialog::clearDeviceInformations()
   lbModel->clear();
   lbFwRevision->clear();
   lbHwRevision->clear();
+  lbIOs->clear();
+  lbHwNodeAddress->clear();
 }
 
 void mdtModbusTcpPortSetupDialog::getDeviceInformations()
@@ -348,12 +360,6 @@ void mdtModbusTcpPortSetupDialog::getDeviceInformations()
     showStatusMessage(tr("Cannot get device informations, please connect first"), 3000);
     return;
   }
-  /**
-  if(pvModbusTcpPortManager->currentState() != mdtPortManager::Ready){
-    showStatusMessage(tr("Cannot get device informations, please connect first"), 3000);
-    return;
-  }
-  */
   /*
    * MODBUS specifications provide a way to get device informations:
    *  FC 43 / 14 (0x2B / 0x0E) : Read Device Identification
@@ -382,6 +388,7 @@ bool mdtModbusTcpPortSetupDialog::getWago750Informations()
 
   QString model;
   QString fwRevision;
+  QString IOs;
 
   // Wago give the series number (f.ex. 750) at register address 0x2011
   if(!pvModbusTcpPortManager->getRegisterValues(0x2011, 1)){
@@ -426,11 +433,45 @@ bool mdtModbusTcpPortSetupDialog::getWago750Informations()
   }
   fwRevision += ".";
   fwRevision += QString::number(pvModbusTcpPortManager->registerValues().at(0));
+  // Get amount of analog inputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1023, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs = "Analog inputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0) / 16);
+  // Get amount of analog outputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1022, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs += " , analog outputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0) / 16);
+  // Get amount of digital inputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1025, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs += " , digital inputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0));
+  // Get amount of digital outputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1024, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs += " , digital outputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0));
+
   // We should be connected to a Wago fieldbus
   lbManufacturer->setText("Wago");
   lbModel->setText(model);
   lbHwRevision->setText("N/A");
   lbFwRevision->setText(fwRevision);
+  lbIOs->setText(IOs);
 
   return true;
 }
@@ -443,6 +484,7 @@ bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
   QString model;
   QString fwRevision;
   QString hwRevision;
+  QString IOs;
 
   if(!pvModbusTcpPortManager->getRegisterValues(0x1000, 6)){
     return false;
@@ -465,11 +507,60 @@ bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
   fwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(4) & 0xFF));
   hwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(5) & 0xFF));
   hwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(5) >> 8));
+  // Get amount of analog inputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1011, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  /// \todo Check if Ok (need more Analog I/Os to check this part..)
+  IOs = "Analog inputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0) / 64);
+  // Get amount of analog outputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1010, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs += " , analog outputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0) / 64);
+  // Get amount of digital inputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1013, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs += " , digital inputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0));
+  // Get amount of digital outputs
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1012, 1)){
+    return false;
+  }
+  if(pvModbusTcpPortManager->registerValues().size() != 1){
+    return false;
+  }
+  IOs += " , digital outputs: " + QString::number(pvModbusTcpPortManager->registerValues().at(0));
   // We should be connected to BC9000 or BK9000 from Beckhoff
   lbManufacturer->setText("Beckhoff");
   lbModel->setText(model);
   lbHwRevision->setText(hwRevision);
   lbFwRevision->setText(fwRevision);
+  lbIOs->setText(IOs);
 
   return true;
+}
+
+void mdtModbusTcpPortSetupDialog::getHardwareNodeAddress()
+{
+  Q_ASSERT(pvModbusTcpPortManager != 0);
+  Q_ASSERT(pvModbusTcpPortManager->isRunning());
+
+  int nodeId;
+
+  nodeId = pvModbusTcpPortManager->getHardwareNodeAddress(8);
+  if(nodeId < 1){
+    lbHwNodeAddress->setText("N/A");
+    return;
+  }
+  lbHwNodeAddress->setText(QString::number(nodeId));
 }

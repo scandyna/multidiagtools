@@ -118,6 +118,10 @@ class mdtModbusTcpPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   bool getBeckhoffBcInformations();
 
+  /*! \brief Get HW node address
+   */
+  void getHardwareNodeAddress();
+
   ///mdtPortConfigWidget *pvPortConfigWidget;
   mdtModbusTcpPortManager *pvModbusTcpPortManager;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
@@ -136,6 +140,8 @@ class mdtModbusTcpPortSetupDialog : public mdtAbstractPortSetupDialog
   QLabel *lbModel;
   QLabel *lbHwRevision;
   QLabel *lbFwRevision;
+  QLabel *lbIOs;
+  QLabel *lbHwNodeAddress;
 };
 
 #endif  // #ifndef MDT_MODBUS_TCP_PORT_SETUP_DIALOG_H

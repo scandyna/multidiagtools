@@ -324,6 +324,7 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QStringList ipParts;
   QString portName;
   bool found;
+  mdtPortTransaction *transaction;
 
   // Check scan with some invalid network setup
   QVERIFY(m.scan(QNetworkInterface()).size() < 1);
@@ -434,13 +435,30 @@ void mdtPortManagerTest::modbusTcpPortTest()
   QVERIFY(m.start());
   QVERIFY(m.isRunning());
 
-  // "Check" direct PDU write in query/reply mode
+  /*
+   * "Check" direct PDU write in query/reply mode
+   */
   pdu = codec.encodeReadCoils(0, 3);
-  tId1 = m.writeData(pdu, true);
+  // Transaction 1
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId1 = m.writeData(pdu, true);
+  tId1 = m.writeData(pdu, transaction);
   QVERIFY(tId1 >= 0);
-  tId2 = m.writeData(pdu, true);
+  // Transaction 2
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId2 = m.writeData(pdu, true);
+  tId2 = m.writeData(pdu, transaction);
   QVERIFY(tId2 >= 0);
-  tId3 = m.writeData(pdu, true);
+  // Transaction 3
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId3 = m.writeData(pdu, true);
+  tId3 = m.writeData(pdu, transaction);
   QVERIFY(tId3 >= 0);
   QVERIFY(m.waitOnFrame(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
@@ -450,7 +468,11 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // If query/reply mode is diseabled, waitOnFrame() will timeout
   pdu = codec.encodeReadCoils(0, 3);
-  tId1 = m.writeData(pdu, false);
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(false);
+  ///tId1 = m.writeData(pdu, false);
+  tId1 = m.writeData(pdu, transaction);
   QVERIFY(!m.waitOnFrame(tId1));
 
   // All frames must be consumed
@@ -458,11 +480,18 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // Check ReadDeviceIdentification
   pdu = codec.encodeReadDeviceIdentification(0, false);
-  tId1 = m.writeData(pdu, true);
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId1 = m.writeData(pdu, true);
+  tId1 = m.writeData(pdu, transaction);
   QVERIFY(tId1 >= 0);
   QVERIFY(m.waitOnFrame(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
   // Some devices not implement this FC, so we cannot check it..
+
+  // Try to get HW node address (we cannot check it, because we don't know witch hardware is used for tests..)
+  qDebug() << m.getHardwareNodeAddress(4);
 }
 
 int main(int argc, char **argv)
