@@ -22,6 +22,16 @@
 #include "mdtError.h"
 #include "mdtTcpSocketThread.h"
 #include <QStringList>
+#include <QApplication>
+
+// We need a sleep function
+#ifdef Q_OS_UNIX
+ #define msleep(t) usleep(1000*t)
+#endif
+#ifdef Q_OS_WIN
+ #include <windows.h>
+ #define msleep(t) Sleep(t)
+#endif
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
@@ -130,13 +140,6 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
     }
     return mapSocketError(pvSocket->error(), true);
   }
-  /**
-  if(ok){
-    updateReadTimeoutState(false);
-  }else{
-    return mapSocketError(pvSocket->error(), true);
-  }
-  */
 
   return NoError;
 }
@@ -201,6 +204,9 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
 
   QStringList items;
   bool ok;
+  QTcpSocket socket;
+  int timeout = 5000; /// \todo Get a valid connection timeout
+  int maxIter;
 
   // Extract host name and port number from port name
   items = pvPortName.split(":");
@@ -214,6 +220,36 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
   pvPeerPort = items.at(1).toUShort(&ok);
   if(!ok){
     mdtError e(MDT_TCP_IO_ERROR, "Cannot extract port in (format must be hostname:port) " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+    e.commit();
+    return SetupError;
+  }
+  // Try to connect
+  socket.connectToHost(pvPeerName, pvPeerPort);
+  maxIter = timeout / 50;
+  ok = false;
+  while(socket.state() != QAbstractSocket::ConnectedState){
+    if(maxIter <= 0){
+      break;
+    }
+    qApp->processEvents();
+    msleep(50);
+    maxIter--;
+  }
+  if(socket.state() != QAbstractSocket::UnconnectedState){
+    // Check if connection was successfull
+    if(socket.state() == QAbstractSocket::ConnectedState){
+      ok = true;
+    }
+    // Disconnect
+    socket.abort();
+    while((socket.state() != QAbstractSocket::ClosingState)&&(socket.state() != QAbstractSocket::UnconnectedState)){
+      qApp->processEvents();
+      msleep(50);
+    }
+  }
+  if(!ok){
+    mdtError e(MDT_TCP_IO_ERROR, "Cannot connect to " + pvPortName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
     e.commit();
     return SetupError;

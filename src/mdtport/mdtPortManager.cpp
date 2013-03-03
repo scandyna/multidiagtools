@@ -155,6 +155,7 @@ void mdtPortManager::removeThreads(bool releaseMemory)
 bool mdtPortManager::start()
 {
   Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvPort->isOpen());
 
   qDebug() << "mdtPortManager::start() ...";
   int i;
@@ -695,6 +696,7 @@ void mdtPortManager::abort()
 void mdtPortManager::addTransaction(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(!pvTransactionsPending.contains(transaction->id()));
 
   pvTransactionsPending.insert(transaction->id(), transaction);
   // Watch transactions size
@@ -738,6 +740,7 @@ void mdtPortManager::removeTransactionDone(int id)
 void mdtPortManager::enqueueTransactionDone(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(!pvTransactionsDone.contains(transaction->id()));
 
   pvTransactionsDone.insert(transaction->id(), transaction);
 }
@@ -745,6 +748,7 @@ void mdtPortManager::enqueueTransactionDone(mdtPortTransaction *transaction)
 void mdtPortManager::enqueueTransactionRx(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(!pvTransactionsRx.contains(transaction->id()));
 
   pvTransactionsRx.insert(transaction->id(), transaction);
 }

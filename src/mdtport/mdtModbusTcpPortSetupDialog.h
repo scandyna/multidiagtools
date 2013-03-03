@@ -32,6 +32,8 @@
 class mdtModbusTcpPortManager;
 class QWidget;
 class QAbstractButton;
+class QLineEdit;
+class QSpinBox;
 
 class mdtModbusTcpPortSetupDialog : public mdtAbstractPortSetupDialog
 {
@@ -46,6 +48,9 @@ class mdtModbusTcpPortSetupDialog : public mdtAbstractPortSetupDialog
 
   // Read the configuration and update GUI
   void displayConfig();
+
+  // Display host and port in lineEdit and spinBox
+  void displayHostPort(int cbDevicesIndex);
 
   // Read options from GUI and update configuration
   void updateConfig();
@@ -117,11 +122,15 @@ class mdtModbusTcpPortSetupDialog : public mdtAbstractPortSetupDialog
   mdtModbusTcpPortManager *pvModbusTcpPortManager;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
   mdtPortInfo pvCurrentPortInfo;
-  QPushButton *pbOpen;
-  QPushButton *pbClose;
+  QPushButton *pbConnect;
+  QPushButton *pbDisconnect;
   QPushButton *pbRescan;
   QPushButton *pbAbort;
   QComboBox *cbDevices;
+  QLabel *lbHost;
+  QLineEdit *leHost;
+  QLabel *lbPort;
+  QSpinBox *sbPort;
   QWidget *pvDeviceInfoWidget;
   QLabel *lbManufacturer;
   QLabel *lbModel;

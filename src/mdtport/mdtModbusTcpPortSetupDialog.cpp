@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtModbusTcpPortSetupDialog.h"
 #include "mdtModbusTcpPortManager.h"
+#include "mdtPortInfo.h"
 #include "mdtError.h"
 #include <QWidget>
 #include <QStringList>
@@ -31,8 +32,10 @@
 #include <QFormLayout>
 #include <QNetworkInterface>
 #include <QCloseEvent>
+#include <QLineEdit>
+#include <QSpinBox>
 
-#include <QVariant>
+///#include <QVariant>
 //#include <QDebug>
 
 mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
@@ -40,32 +43,43 @@ mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
 {
   pvModbusTcpPortManager = 0;
   // Setup the dialog's header part
-  pbOpen = new QPushButton(tr("&Open"));
-  pbClose = new QPushButton(tr("&Close"));
+  pbConnect = new QPushButton(tr("&Connect"));
+  pbDisconnect = new QPushButton(tr("&Disconnect"));
   pbRescan = new QPushButton(tr("Rescan"));
   pbAbort = new QPushButton(tr("&Abort"));
-  ///cbPort = new QComboBox;
   cbDevices = new QComboBox;
+  lbHost = new QLabel(tr("Host:"));
+  leHost = new QLineEdit;
+  lbPort = new QLabel(tr("Port:"));
+  sbPort = new QSpinBox;
+  sbPort->setMinimum(500);
+  sbPort->setMaximum(50000);
   QWidget *wHeader = new QWidget;
   QGridLayout *layout = new QGridLayout;
-  layout->addWidget(pbOpen, 0, 0);
-  layout->addWidget(pbClose, 0, 1);
-  layout->addWidget(pbRescan, 0, 2);
-  layout->addWidget(pbAbort, 0, 3);
-  layout->addWidget(cbDevices, 0, 4, 1, 8);
+  layout->addWidget(pbRescan, 0, 0);
+  layout->addWidget(pbAbort, 0, 1);
+  layout->addWidget(cbDevices, 0, 2, 1, 8);
+  layout->addWidget(pbConnect, 1, 0);
+  layout->addWidget(pbDisconnect, 1, 1);
+  layout->addWidget(lbHost, 1, 2);
+  layout->addWidget(leHost, 1, 3, 1, 2);
+  layout->addWidget(lbPort, 1, 5);
+  layout->addWidget(sbPort, 1, 6);
+  
   ///layout->addWidget(new QLabel(tr("Interface")), 1, 0);
   ///layout->addWidget(cbInterface, 1, 1, 1, 5);
-  layout->setColumnStretch(5, 1);
+  layout->setColumnStretch(3, 1);
   ///layout->setColumnStretch(8, 2);
   wHeader->setLayout(layout);
   setHeaderWidget(wHeader);
-  connect(pbClose, SIGNAL(clicked()), this, SLOT(closePort()));
+  connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(closePort()));
   connect(pbRescan, SIGNAL(clicked()), this, SLOT(rescan()));
-  connect(pbOpen, SIGNAL(clicked()), this, SLOT(openPort()));
+  ///connect(pbOpen, SIGNAL(clicked()), this, SLOT(openPort()));
+  connect(pbConnect, SIGNAL(clicked()), this, SLOT(openPort()));
+  connect(cbDevices, SIGNAL(currentIndexChanged(int)), this, SLOT(displayHostPort(int)));
   pbAbort->setEnabled(false);
   // Add devices list combobox to handler
   pvPortInfoCbHandler.setPortsComboBox(cbDevices);
-  ///pvPortInfoCbHandler.setDevicesComboBox(cbInterface);
   // Setup device informations tab
   pvDeviceInfoWidget = new QWidget;
   QFormLayout *deviceInfoLayout = new QFormLayout;
@@ -73,16 +87,14 @@ mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
   lbModel = new QLabel;
   lbHwRevision = new QLabel;
   lbFwRevision = new QLabel;
-  ///lbSerial = new QLabel;
-  ///lbFirmware = new QLabel;
   deviceInfoLayout->addRow(tr("Manufacturer:"), lbManufacturer);
   deviceInfoLayout->addRow(tr("Model:"), lbModel);
   deviceInfoLayout->addRow(tr("Hardware revision:"), lbHwRevision);
   deviceInfoLayout->addRow(tr("Firmware revision:"), lbFwRevision);
-  ///deviceInfoLayout->addRow(tr("Serial:"), lbSerial);
-  ///deviceInfoLayout->addRow(tr("Firmware:"), lbFirmware);
   pvDeviceInfoWidget->setLayout(deviceInfoLayout);
   addOptionsTabWidget(pvDeviceInfoWidget, tr("&Device informations"));
+  // Set a convenable size
+  resize(700, 280);
 }
 
 mdtModbusTcpPortSetupDialog::~mdtModbusTcpPortSetupDialog()
@@ -93,21 +105,43 @@ void mdtModbusTcpPortSetupDialog::displayConfig()
 {
   int index;
 
-  qDebug() << "mdtModbusTcpPortSetupDialog::displayConfig(): portName: " << portManager()->portName();
   // Set current port in devices list
   if(!portManager()->portName().isEmpty()){
     index = cbDevices->findData(portManager()->portName());
     if(index < 0){
-      qDebug() << "mdtModbusTcpPortSetupDialog::displayConfig(): add portName: " << portManager()->portName();
       cbDevices->addItem(portManager()->portInfo().displayText(), portManager()->portName());
       index = cbDevices->findData(portManager()->portName());
     }
-    qDebug() << "mdtModbusTcpPortSetupDialog::displayConfig(): index: " << index;
     cbDevices->setCurrentIndex(index);
   }
   // If port manager is running, we can try to get device informations
   if(portManager()->isRunning()){
     getDeviceInformations();
+  }
+}
+
+void mdtModbusTcpPortSetupDialog::displayHostPort(int cbDevicesIndex)
+{
+  QString portName;
+  QStringList portNameItems;
+  int port;
+  bool ok;
+
+  if(cbDevicesIndex < 0){
+    leHost->clear();
+    sbPort->setValue(502);
+    return;
+  }
+  portName = cbDevices->itemData(cbDevicesIndex).toString();
+  portNameItems = portName.split(":");
+  if(portNameItems.size() == 2){
+    leHost->setText(portNameItems.at(0));
+    port = portNameItems.at(1).toInt(&ok);
+    if(ok){
+      sbPort->setValue(port);
+    }else{
+      showStatusMessage(tr("Cannot extract port from port name"), 2000);
+    }
   }
 }
 
@@ -124,7 +158,6 @@ void mdtModbusTcpPortSetupDialog::closePort()
 void mdtModbusTcpPortSetupDialog::rescan()
 {
   int index;
-  ///QVariant var;
 
   Q_ASSERT(pvModbusTcpPortManager != 0);
 
@@ -134,23 +167,26 @@ void mdtModbusTcpPortSetupDialog::rescan()
   }
   pbRescan->setEnabled(false);
   pbAbort->setEnabled(true);
-  pbOpen->setEnabled(false);
+  pbConnect->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   cbDevices->setEnabled(false);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
   pvPortInfoCbHandler.fillComboBoxes(pvModbusTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100));
   // Display current port
-  ///var.setValue(portManager()->portInfo().portName());
   index = cbDevices->findData(portManager()->portInfo().portName());
   if(index >= 0){
     cbDevices->setCurrentIndex(index);
   }
   pbAbort->setEnabled(false);
   pbRescan->setEnabled(true);
-  pbOpen->setEnabled(true);
+  pbConnect->setEnabled(true);
   setOkButtonEnabled(true);
   setApplyButtonEnabled(true);
   cbDevices->setEnabled(true);
+  leHost->setEnabled(true);
+  sbPort->setEnabled(true);
 }
 
 void mdtModbusTcpPortSetupDialog::openPort()
@@ -173,87 +209,104 @@ void mdtModbusTcpPortSetupDialog::portManagerSet()
 
 void mdtModbusTcpPortSetupDialog::setStateDisconnected()
 {
-  pbOpen->setEnabled(true);
-  pbClose->setEnabled(false);
+  pbConnect->setEnabled(true);
+  pbDisconnect->setEnabled(false);
   pbRescan->setEnabled(true);
   cbDevices->setEnabled(true);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);
+  leHost->setEnabled(true);
+  sbPort->setEnabled(true);
 }
 
 void mdtModbusTcpPortSetupDialog::setStateConnecting()
 {
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(false);
+  pbConnect->setEnabled(false);
+  pbDisconnect->setEnabled(false);
   pbRescan->setEnabled(false);
   cbDevices->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
 }
 
 void mdtModbusTcpPortSetupDialog::setStateReady()
 {
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(true);
+  pbConnect->setEnabled(false);
+  pbDisconnect->setEnabled(true);
   pbRescan->setEnabled(false);
   cbDevices->setEnabled(false);
   setOkButtonEnabled(true);
   setApplyButtonEnabled(true);
   setCancelButtonEnabled(true);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
 }
 
 void mdtModbusTcpPortSetupDialog::setStateBusy()
 {
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(false);
+  pbConnect->setEnabled(false);
+  pbDisconnect->setEnabled(false);
   pbRescan->setEnabled(false);
   cbDevices->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(false);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
 }
 
 void mdtModbusTcpPortSetupDialog::setStateWarning()
 {
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(true);
+  pbConnect->setEnabled(false);
+  pbDisconnect->setEnabled(true);
   pbRescan->setEnabled(false);
   cbDevices->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
 }
 
 void mdtModbusTcpPortSetupDialog::setStateError()
 {
-  pbOpen->setEnabled(false);
-  pbClose->setEnabled(true);
+  pbConnect->setEnabled(false);
+  pbDisconnect->setEnabled(true);
   pbRescan->setEnabled(false);
   cbDevices->setEnabled(false);
   setOkButtonEnabled(false);
   setApplyButtonEnabled(false);
   setCancelButtonEnabled(true);
+  leHost->setEnabled(false);
+  sbPort->setEnabled(false);
 }
 
 bool mdtModbusTcpPortSetupDialog::applySetup()
 {
-  ///mdtUsbtmcPortManager *usbtmcPortManager;
+  mdtPortInfo portInfo;
 
-  // Check that a port was selected
-  if(cbDevices->currentText().isEmpty()){
-    showStatusMessage(tr("Please select a device in list"), 3000);
+  // Check that host is set
+  if(leHost->text().trimmed().isEmpty()){
+    showStatusMessage(tr("Please enter a host name or IP address"), 3000);
     return false;
   }
+  // Set port name
+  portInfo.setPortName(leHost->text().trimmed() + ":" + QString::number(sbPort->value()));
+  portInfo.setDisplayText(tr("Host: ") + leHost->text().trimmed() + tr("   ,   Port: ") + QString::number(sbPort->value()));
   // We must close the port
   portManager()->closePort();
   // Apply current configuration
   updateConfig();
-  portManager()->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
+  ///portManager()->setPortInfo(pvPortInfoCbHandler.currentPortInfo());
+  portManager()->setPortInfo(portInfo);
   // Try to open port and start port manager
+  showStatusMessage(tr("Trying to connect ..."));
   if(!portManager()->openPort()){
-    showStatusMessage(tr("Cannot open port ") + portManager()->portName(), 3000);
+    showStatusMessage(tr("Cannot connect to ") + portManager()->portName(), 3000);
     return false;
   }
   if(!portManager()->start()){
@@ -261,6 +314,7 @@ bool mdtModbusTcpPortSetupDialog::applySetup()
     portManager()->closePort();
     return false;
   }
+  showStatusMessage(tr("Connected"), 3000);
 
   return true;
 }
@@ -270,6 +324,10 @@ void mdtModbusTcpPortSetupDialog::closeEvent(QCloseEvent *event)
   Q_ASSERT(pvModbusTcpPortManager != 0);
 
   pvModbusTcpPortManager->abortScan();
+  // If portManager is connecting or somthing similar, we stop it
+  if((portManager()->currentState() != mdtPortManager::Ready)&&(portManager()->currentState() != mdtPortManager::Disconnected)){
+    portManager()->stop();
+  }
   event->accept();
 }
 
@@ -290,6 +348,12 @@ void mdtModbusTcpPortSetupDialog::getDeviceInformations()
     showStatusMessage(tr("Cannot get device informations, please connect first"), 3000);
     return;
   }
+  /**
+  if(pvModbusTcpPortManager->currentState() != mdtPortManager::Ready){
+    showStatusMessage(tr("Cannot get device informations, please connect first"), 3000);
+    return;
+  }
+  */
   /*
    * MODBUS specifications provide a way to get device informations:
    *  FC 43 / 14 (0x2B / 0x0E) : Read Device Identification
@@ -309,7 +373,6 @@ void mdtModbusTcpPortSetupDialog::getDeviceInformations()
   if(getBeckhoffBcInformations()){
     return;
   }
-
 }
 
 bool mdtModbusTcpPortSetupDialog::getWago750Informations()
@@ -345,7 +408,6 @@ bool mdtModbusTcpPortSetupDialog::getWago750Informations()
     return false;
   }
   fwRevision = QString::number(pvModbusTcpPortManager->registerValues().at(0));
-  ///qDebug() << "getWago750Informations() , FW major: " << pvModbusTcpPortManager->registerValues();
   // Firmware revision minor is available at register address 0x2014
   if(!pvModbusTcpPortManager->getRegisterValues(0x2014, 1)){
     return false;
@@ -355,7 +417,6 @@ bool mdtModbusTcpPortSetupDialog::getWago750Informations()
   }
   fwRevision += ".";
   fwRevision += QString::number(pvModbusTcpPortManager->registerValues().at(0));
-  ///qDebug() << "getWago750Informations() , FW minor: " << pvModbusTcpPortManager->registerValues();
   // Firmware revision index is available at register address 0x2010
   if(!pvModbusTcpPortManager->getRegisterValues(0x2010, 1)){
     return false;
@@ -365,8 +426,6 @@ bool mdtModbusTcpPortSetupDialog::getWago750Informations()
   }
   fwRevision += ".";
   fwRevision += QString::number(pvModbusTcpPortManager->registerValues().at(0));
-  ///qDebug() << "getWago750Informations() , FW index: " << pvModbusTcpPortManager->registerValues();
-  ///qDebug() << "getWago750Informations() , FW: " << fwRevision;
   // We should be connected to a Wago fieldbus
   lbManufacturer->setText("Wago");
   lbModel->setText(model);
@@ -385,13 +444,12 @@ bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
   QString fwRevision;
   QString hwRevision;
 
-  if(!pvModbusTcpPortManager->getRegisterValues(0x1000, 7)){
+  if(!pvModbusTcpPortManager->getRegisterValues(0x1000, 6)){
     return false;
   }
-  if(pvModbusTcpPortManager->registerValues().size() != 7){
+  if(pvModbusTcpPortManager->registerValues().size() != 6){
     return false;
   }
-  qDebug() << "getBeckhoffBcInformations(): registers: " << pvModbusTcpPortManager->registerValues();
   // In the 3 first registers, we find the series name (f.ex. BK9000)
   model.append((char)(pvModbusTcpPortManager->registerValues().at(0) & 0xFF));
   model.append((char)(pvModbusTcpPortManager->registerValues().at(0) >> 8));
@@ -399,30 +457,19 @@ bool mdtModbusTcpPortSetupDialog::getBeckhoffBcInformations()
   model.append((char)(pvModbusTcpPortManager->registerValues().at(1) >> 8));
   model.append((char)(pvModbusTcpPortManager->registerValues().at(2) & 0xFF));
   model.append((char)(pvModbusTcpPortManager->registerValues().at(2) >> 8));
-  if((model != "BK9000")&&(model != "BC9000")){
+  if((model != "BK9000")&&(model != "BC9000")&&(model != "BK9100")){
     return false;
   }
   // In 3 next registers, we find the firmware and hardware revision
-  ///fwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(3) & 0xFF));
   fwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(3) >> 8));
   fwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(4) & 0xFF));
   hwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(5) & 0xFF));
   hwRevision.append((char)(pvModbusTcpPortManager->registerValues().at(5) >> 8));
-  
-  qDebug() << "--> FW: " << fwRevision;
-  qDebug() << "--> HW: " << hwRevision;
-
-  for(int i=0; i<pvModbusTcpPortManager->registerValues().size(); i++){
-    qDebug() << " -> REG[" << i << "]: MSB: " << (char)(pvModbusTcpPortManager->registerValues().at(i) >> 8);
-    qDebug() << " -> REG[" << i << "]: LSB: " << (char)(pvModbusTcpPortManager->registerValues().at(i) & 0xFF);
-  }
-
   // We should be connected to BC9000 or BK9000 from Beckhoff
   lbManufacturer->setText("Beckhoff");
   lbModel->setText(model);
   lbHwRevision->setText(hwRevision);
   lbFwRevision->setText(fwRevision);
-
 
   return true;
 }

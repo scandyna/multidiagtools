@@ -373,8 +373,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   responses << "0123456789";
   QVERIFY(responses.at(0).size() == cfg.readFrameSize());
 
-  // Set TCP server data
-  tcpServer.setResponseData(responses);
   QVERIFY(tcpServer.listen());
 
   // Open and start port
@@ -384,6 +382,9 @@ void mdtTcpSocketTest::readInvalidDataTest()
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
   QVERIFY(thd.start());
   QVERIFY(thd.isRunning());
+
+  // Set TCP server data
+  tcpServer.setResponseData(responses);
 
   s.lockMutex();
   // Get a frame
@@ -427,8 +428,6 @@ void mdtTcpSocketTest::readInvalidDataTest()
   QVERIFY(responses.at(0).size() > cfg.readFrameSize());
   QVERIFY(responses.at(0).size() < 2*cfg.readFrameSize());
 
-  // Set TCP server data
-  tcpServer.setResponseData(responses);
   QVERIFY(tcpServer.listen());
 
   // Open and start port
@@ -438,6 +437,9 @@ void mdtTcpSocketTest::readInvalidDataTest()
   QVERIFY(s.setup() == mdtAbstractPort::NoError);
   QVERIFY(thd.start());
   QVERIFY(thd.isRunning());
+
+  // Set TCP server data
+  tcpServer.setResponseData(responses);
 
   s.lockMutex();
   // Get a frame

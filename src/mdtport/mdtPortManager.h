@@ -194,6 +194,7 @@ class mdtPortManager : public QThread
   /*! \brief Start threads
    *
    * \pre Port must be set with setPort() before use of this method.
+   * \pre Port must be open with openPort() before using this method
    */
   bool start();
 

@@ -312,11 +312,18 @@ void mdtPortManagerTest::modbusTcpPortTest()
   mdtModbusTcpPortManager m;
   QList<mdtPortInfo*> portInfoList;
   QList<mdtPortInfo*> portInfoList2;
+  mdtPortInfo validPortInfo;
+  mdtPortInfo invalidPortInfo;
   QStringList hosts;
   mdtFrameCodecModbus codec;
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
   int tId1, tId2, tId3;
+  QString ipLeftPart;
+  QString ipRightPart;
+  QStringList ipParts;
+  QString portName;
+  bool found;
 
   // Check scan with some invalid network setup
   QVERIFY(m.scan(QNetworkInterface()).size() < 1);
@@ -351,9 +358,29 @@ void mdtPortManagerTest::modbusTcpPortTest()
   portInfoList2 = m.scan(m.readScanResult());
   QCOMPARE(portInfoList2.size(), portInfoList.size());
 
-  // Init port manager
-  m.setPortInfo(*portInfoList.at(0));
-  QVERIFY(m.openPort());
+  // Set the valid port info
+  validPortInfo = *portInfoList.at(0);
+  // Set the invalid port info - Assume wa have 255.255.255.0 netmask..
+  ipParts = validPortInfo.portName().split(".");
+  QCOMPARE(ipParts.size(), 4);
+  ipLeftPart = ipParts.at(0) + "." + ipParts.at(1) + "." + ipParts.at(2) + ".";
+  for(int i=1; i<255; i++){
+    ipRightPart = QString::number(i);
+    portName = ipLeftPart + ipRightPart + ":502";
+    // See if this IP existe in scan result
+    found = false;
+    for(int j=0; j<portInfoList.size(); j++){
+      if(portInfoList.at(j)->portName() == portName){
+        found = true;
+        break;
+      }
+    }
+    if(!found){
+      invalidPortInfo.setPortName(portName);
+      break;
+    }
+  }
+  qDebug() << "Invalid port name: " << invalidPortInfo.portName();
 
   // We not need the scan result anymore, free memory
   qDeleteAll(portInfoList);
@@ -361,8 +388,51 @@ void mdtPortManagerTest::modbusTcpPortTest()
   qDeleteAll(portInfoList2);
   portInfoList2.clear();
 
-  // start threads
+  /*
+   * Open/close test with valid Host
+   */
+  m.setPortInfo(validPortInfo);
+  QVERIFY(m.openPort());
   QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+  m.stop();
+  QVERIFY(!m.isRunning());
+  QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+  m.closePort();
+  QVERIFY(!m.isRunning());
+
+  /*
+   * Open/close test with invalid Host
+   */
+  m.setPortInfo(invalidPortInfo);
+  QVERIFY(!m.openPort());
+  QVERIFY(!m.isRunning());
+  m.stop();
+  QVERIFY(!m.isRunning());
+  m.closePort();
+  QVERIFY(!m.isRunning());
+
+  /*
+   * Open/close test with invalid + valid Host
+   */
+  m.setPortInfo(invalidPortInfo);
+  QVERIFY(!m.openPort());
+  QVERIFY(!m.isRunning());
+  m.setPortInfo(validPortInfo);
+  QVERIFY(m.openPort());
+  QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+  m.stop();
+  QVERIFY(!m.isRunning());
+
+  /*
+   * Communication test
+   */
+  m.setPortInfo(validPortInfo);
+  QVERIFY(m.openPort());
+  QVERIFY(m.start());
+  QVERIFY(m.isRunning());
 
   // "Check" direct PDU write in query/reply mode
   pdu = codec.encodeReadCoils(0, 3);

@@ -221,6 +221,8 @@ void mdtTcpSocketThread::run()
   if(portError == mdtAbstractPort::NoError){
     qDebug() << "TCPTHD: notify Disconnected";
     notifyError(mdtAbstractPort::Disconnected);
+  }else{
+    notifyError(portError);
   }
   pvRunning = false;
   pvPort->unlockMutex();
