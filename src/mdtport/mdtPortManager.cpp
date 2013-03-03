@@ -214,6 +214,7 @@ void mdtPortManager::setPortName(const QString &portName)
 void mdtPortManager::setPortInfo(mdtPortInfo info)
 {
   pvPortInfo = info;
+  qDebug() << "mdtPortManager::setPortInfo() : port name: " << pvPortInfo.portName();
   setPortName(pvPortInfo.portName());
 }
 

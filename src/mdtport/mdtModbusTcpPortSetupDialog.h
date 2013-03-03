@@ -29,8 +29,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-
-///class mdtUsbtmcPortManager;
+class mdtModbusTcpPortManager;
 class QWidget;
 class QAbstractButton;
 
@@ -94,14 +93,40 @@ class mdtModbusTcpPortSetupDialog : public mdtAbstractPortSetupDialog
    */
   bool applySetup();
 
+  /*! \brief Abort scan on close event
+   */
+  void closeEvent(QCloseEvent *event);
+
+  /*! \brief Clear device informations
+   */
+  void clearDeviceInformations();
+
+  /*! \brief Get device informations
+   */
+  void getDeviceInformations();
+
+  /*! \brief Try to get Wago 750 informations
+   */
+  bool getWago750Informations();
+
+  /*! \brief Try to get Beckhoff BC/NK informations
+   */
+  bool getBeckhoffBcInformations();
+
   ///mdtPortConfigWidget *pvPortConfigWidget;
+  mdtModbusTcpPortManager *pvModbusTcpPortManager;
   mdtPortInfoCbHandler pvPortInfoCbHandler;
   mdtPortInfo pvCurrentPortInfo;
   QPushButton *pbOpen;
   QPushButton *pbClose;
   QPushButton *pbRescan;
+  QPushButton *pbAbort;
   QComboBox *cbDevices;
   QWidget *pvDeviceInfoWidget;
+  QLabel *lbManufacturer;
+  QLabel *lbModel;
+  QLabel *lbHwRevision;
+  QLabel *lbFwRevision;
 };
 
 #endif  // #ifndef MDT_MODBUS_TCP_PORT_SETUP_DIALOG_H

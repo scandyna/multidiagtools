@@ -109,6 +109,7 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QStringList &hosts, int 
     if(tryToConnect(hostName, hostPort, timeout)){
       portInfo = new mdtPortInfo;
       portInfo->setPortName(hosts.at(i));
+      portInfo->setDisplayText(tr("Host: ") + hostName + tr("  ,  port: ") + QString::number(hostPort));
       portInfoList.append(portInfo);
     }
   }
@@ -174,7 +175,9 @@ QList<mdtPortInfo*> mdtModbusTcpPortManager::scan(const QNetworkInterface &iface
       if(tryToConnect(currentIp.toString(), port, timeout)){
         portInfo = new mdtPortInfo;
         portInfo->setPortName(currentIp.toString() + ":" + QString::number(port));
-        portInfo->setDisplayText(currentIp.toString() + ":" + QString::number(port));
+        ///portInfo->setDisplayText(currentIp.toString() + ":" + QString::number(port));
+        portInfo->setDisplayText(tr("Host: ") + currentIp.toString() + tr("  ,  port: ") + QString::number(port));
+        ///qDebug() << "mdtModbusTcpPortManager::scan(): add port: " << portInfo->portName();
         portInfoList.append(portInfo);
       }
     }
@@ -223,7 +226,7 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   bool ok = false;
 
   ///emit(errorStateChanged(mdtAbstractPort::Connecting, tr("Trying ") + hostName));
-  emit(statusMessageChanged(tr("Trying ") + hostName, "", 500));
+  emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
   socket.connectToHost(hostName, port);
   maxIter = timeout / 50;
   while(socket.state() != QAbstractSocket::ConnectedState){
@@ -301,7 +304,7 @@ QStringList mdtModbusTcpPortManager::readScanResult()
   }
   // Read entries
   while(!file.atEnd()){
-    scanResult.append(file.readLine());
+    scanResult.append(file.readLine().trimmed());
   }
   file.close();
 
