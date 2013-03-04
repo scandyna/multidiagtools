@@ -160,7 +160,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *
    * \param bitsCount Number of digital inputs that represents the hardware node address.
    * \param startFrom First digital input that represents the hardware node address (is the LSB).
-   * \return Node address or 0 on error (0 is not a valid node address).
+   * \return Node address or value < 0 corresponding on mdtAbstractPort error_t.
    * \pre Port manager must be connected and thread running before calling this method.
    * \pre bitsCount must be > 0
    * \pre startFrom must be >= 0

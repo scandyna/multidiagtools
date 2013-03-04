@@ -326,7 +326,7 @@ int mdtModbusTcpPortManager::getHardwareNodeAddress(int bitsCount, int startFrom
   // Setup MODBUS PDU
   pdu = codec.encodeReadDiscreteInputs(startFrom, bitsCount);
   if(pdu.isEmpty()){
-    return 0;
+    return (int)mdtAbstractPort::UnhandledError;
   }
   // Get a new transaction
   transaction = getNewTransaction();
@@ -335,25 +335,25 @@ int mdtModbusTcpPortManager::getHardwareNodeAddress(int bitsCount, int startFrom
   transactionId = writeData(pdu, transaction);
   if(transactionId < 0){
     restoreTransaction(transaction);
-    return 0;
+    return transactionId;
   }
   // Wait on result (use device's defined timeout)
   if(!waitOnFrame(transactionId)){
     restoreTransaction(transaction);
-    return 0;
+    return (int)mdtAbstractPort::ReadTimeout;
   }
   // At this state, transaction will be restored by readenFrame()
   if(codec.decode(readenFrame(transactionId)) != 0x02){
-    return 0;
+    return (int)mdtAbstractPort::UnhandledError;
   }
   // Check that we have enough states (can be more, because digital inputs are returned as multiple of 8)
   if(codec.values().size() < bitsCount){
     mdtError e(MDT_TCP_IO_ERROR, "Have not received enough input states", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
     e.commit();
-    return 0;
+    return (int)mdtAbstractPort::UnhandledError;
   }
-  qDebug() << "NODE ID: " << codec.values();
+  ///qDebug() << "NODE ID: " << codec.values();
   // Ok, have the states, let's decode ID
   id = 0;
   for(i=0; i<bitsCount; i++){

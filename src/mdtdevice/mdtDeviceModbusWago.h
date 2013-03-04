@@ -51,6 +51,12 @@ class mdtDeviceModbusWago : public mdtDeviceModbus
    */
   mdtAbstractPort::error_t connectToDevice(const mdtDeviceInfo &devInfo);
 
+  /*! \brief Search and connect to physical device.
+   *
+   * Work as mdtDeviceModbus::connectToDevice() , but checks that device is a Wago 750 fieldbus coupler.
+   */
+  mdtAbstractPort::error_t connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom = 0);
+
   /*! \brief Check if device is a Wago 750 series
    */
   bool isWago750();

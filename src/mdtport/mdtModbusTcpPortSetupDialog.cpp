@@ -558,7 +558,7 @@ void mdtModbusTcpPortSetupDialog::getHardwareNodeAddress()
   int nodeId;
 
   nodeId = pvModbusTcpPortManager->getHardwareNodeAddress(8);
-  if(nodeId < 1){
+  if(nodeId < 0){
     lbHwNodeAddress->setText("N/A");
     return;
   }

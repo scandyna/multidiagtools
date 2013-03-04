@@ -66,6 +66,41 @@ mdtPortManager *mdtDeviceModbus::portManager()
   return pvTcpPortManager;
 }
 
+mdtModbusTcpPortManager *mdtDeviceModbus::modbusTcpPortManager()
+{
+  return pvTcpPortManager;
+}
+
+mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
+{
+  Q_ASSERT(!pvTcpPortManager->isRunning());
+
+  int i;
+
+  for(i=0; i<scanResult.size(); i++){
+    Q_ASSERT(scanResult.at(i) != 0);
+    // Try to connect
+    pvTcpPortManager->setPortInfo(*scanResult.at(i));
+    if(!pvTcpPortManager->openPort()){
+      continue;
+    }
+    if(!pvTcpPortManager->start()){
+      pvTcpPortManager->closePort();
+      continue;
+    }
+    // We are connected here, get the hardware node ID
+    if(pvTcpPortManager->getHardwareNodeAddress(bitsCount, startFrom) == hardwareNodeId){
+      return mdtAbstractPort::NoError;
+    }else{
+      pvTcpPortManager->stop();
+      pvTcpPortManager->closePort();
+      continue;
+    }
+  }
+
+  return mdtAbstractPort::PortNotFound;
+}
+
 bool mdtDeviceModbus::getRegisterValues(int address, int n)
 {
   return pvTcpPortManager->getRegisterValues(address, n);

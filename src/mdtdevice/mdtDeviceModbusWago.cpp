@@ -110,6 +110,25 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
   return mdtAbstractPort::PortNotFound;
 }
 
+mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
+{
+  Q_ASSERT(!pvTcpPortManager->isRunning());
+
+  mdtAbstractPort::error_t portError;
+
+  portError = mdtDeviceModbus::connectToDevice(scanResult, hardwareNodeId, bitsCount, startFrom);
+  if(portError != mdtAbstractPort::NoError){
+    return portError;
+  }
+  if(!isWago750()){
+    pvTcpPortManager->stop();
+    pvTcpPortManager->closePort();
+    return mdtAbstractPort::PortNotFound;
+  }
+
+  return mdtAbstractPort::NoError;
+}
+
 bool mdtDeviceModbusWago::isWago750()
 {
   // If device is not from Wago, server can return a error (Something like: invalid address range)

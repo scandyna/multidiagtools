@@ -23,6 +23,7 @@
 #include "mdtDeviceIos.h"
 #include "mdtDeviceIosWidget.h"
 #include "mdtDeviceModbus.h"
+#include "mdtModbusTcpPortManager.h"
 #include "mdtDeviceModbusWago.h"
 #include "mdtDeviceScpi.h"
 #include "mdtDeviceU3606A.h"
@@ -202,6 +203,70 @@ void mdtDeviceTest::deviceIosWidgetTest()
     QTest::qWait(1000);
   }
   */
+}
+
+void mdtDeviceTest::modbusTest()
+{
+  mdtDeviceModbus d;
+  mdtModbusTcpPortManager *m = d.modbusTcpPortManager();
+  QList<mdtPortInfo*> portInfoList;
+  int i;
+  int hwNodeId = 3;
+  mdtDeviceIos ios;
+  mdtDeviceIosWidget *iosw;
+  mdtDigitalIo *di;
+  mdtDeviceWindow dw;
+
+  QVERIFY(m != 0);
+
+  // Setup some digital inputs (they are not device dependent)
+  di = new mdtDigitalIo;
+  di->setAddress(0);
+  di->setLabelShort("DI1");
+  di->setDetails("Some details about digital input 1");
+  ios.addDigitalInput(di);  
+  di = new mdtDigitalIo;
+  di->setAddress(1);
+  di->setLabelShort("DI2");
+  di->setDetails("Some details about digital input 2");
+  ios.addDigitalInput(di);  
+
+  // Setup I/O's widget
+  iosw = new mdtDeviceIosWidget;
+  iosw->setDeviceIos(&ios);
+
+  // Setup device
+  d.setIos(&ios, true);
+  dw.setDevice(&d);
+  dw.setIosWidget(iosw);
+  dw.show();
+
+  // Scan looking in chache file first
+  portInfoList = m->scan(m->readScanResult());
+  // Try to connect ...
+  if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
+    // scan network an try again
+    qDeleteAll(portInfoList);
+    portInfoList.clear();
+    qDebug() << "Scanning network ...";
+    portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
+    if(d.connectToDevice(portInfoList, hwNodeId, 4) != mdtAbstractPort::NoError){
+      QSKIP("Modbus device with requested harware node ID not found", SkipAll);
+    }
+    // Ok found, save scan result
+    QVERIFY(m->saveScanResult(portInfoList));
+    // We no lobger need portInfoList
+    qDeleteAll(portInfoList);
+    portInfoList.clear();
+  }
+
+  // Make some queries
+  QVERIFY(!d.getDigitalInputState(0, 0).isValid());
+  QVERIFY(d.getDigitalOutputs(500) >= 0);
+  d.start(100);
+  while(dw.isVisible()){
+    QTest::qWait(1000);
+  }
 }
 
 void mdtDeviceTest::modbusWagoTest()
