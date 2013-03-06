@@ -24,7 +24,10 @@
 #include "mdtApplication.h"
 #include "mdtDeviceInfo.h"
 #include "mdtPortStatusWidget.h"
+#include "mdtModbusTcpPortManager.h"
 #include "mdtModbusTcpPortSetupDialog.h"
+#include "mdtPortInfo.h"
+#include <QList>
 
 mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
  : QMainWindow(parent, flags)
@@ -43,19 +46,27 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   pvDeviceModbusWago = new mdtDeviceModbusWago(this);
   pvDeviceModbusWago->setName("Wago I/O 750");
   connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
+  connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
 
   // Set some flags
   pvReady = false;
 
+  /**
   pvDeviceModbusWago->connectToDevice(mdtDeviceInfo());
   pvDeviceModbusWago->detectIos(pvDeviceIos);
   pvDeviceModbusWago->setIos(pvDeviceIos, true);
   pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
+  */
 
     // Actions
   connect(action_Setup, SIGNAL(triggered()), this, SLOT(setup()));
   pvLanguageActionGroup = 0;
 
+  connect(pbConnect, SIGNAL(clicked()), this, SLOT(connectToNode()));
+  connect(pbDisconnect, SIGNAL(clicked()), this, SLOT(disconnectFromNode()));
+  connect(pbAbortScan, SIGNAL(clicked()), pvDeviceModbusWago->modbusTcpPortManager(), SLOT(abortScan()));
+  setWindowTitle(tr("MODBUS I/O tool for Wago 750"));
+  setStateFromPortManager(pvDeviceModbusWago->modbusTcpPortManager()->currentState());
 }
 
 mdtModbusIoTool::~mdtModbusIoTool()
@@ -123,36 +134,82 @@ void mdtModbusIoTool::setup()
   mdtModbusTcpPortSetupDialog d(this);
   d.setPortManager(pvDeviceModbusWago->portManager());
   d.exec();
+  // If portManager is running, we can try to detect I/Os
+  if(pvDeviceModbusWago->portManager()->isRunning()){
+    if(!pvDeviceModbusWago->isWago750()){
+      showStatusMessage(tr("Device is not a Wago 750 Fieldbus"), tr("I/O detetcion currently only works with Wago 750 fielbus coupler"));
+      pvDeviceModbusWago->portManager()->closePort();
+      return;
+    }
+    showStatusMessage(tr("I/O detection ..."));
+    if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
+      showStatusMessage(tr("I/O detection failed"));
+      pvDeviceModbusWago->portManager()->closePort();
+      return;
+    }
+    pvDeviceModbusWago->setIos(pvDeviceIos, true);
+    pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
+    showStatusMessage(tr("I/O detection done"), 1000);
+  }
 }
 
-void mdtModbusIoTool::setStateDisconnected()
+void mdtModbusIoTool::connectToNode()
 {
+  QList<mdtPortInfo*> portInfoList;
+  mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
+  Q_ASSERT(m != 0);
 
+  if(m->isRunning()){
+    showStatusMessage(tr("Please disconnect before reconnect"), 3000);
+    return;
+  }
+  pbAbortScan->setEnabled(true);
+  pbConnect->setEnabled(false);
+  // Scan looking in chache file first
+  portInfoList = m->scan(m->readScanResult());
+  // Try to connect ...
+  if(pvDeviceModbusWago->connectToDevice(portInfoList, sbHwNodeId->value(), 8) != mdtAbstractPort::NoError){
+    // scan network an try again
+    pbConnect->setEnabled(false);
+    qDeleteAll(portInfoList);
+    portInfoList.clear();
+    portInfoList = m->scan(QNetworkInterface::allInterfaces(), 502, 100);
+    if(pvDeviceModbusWago->connectToDevice(portInfoList, sbHwNodeId->value(), 8) != mdtAbstractPort::NoError){
+      showStatusMessage(tr("Device with HW node ID ") + QString::number(sbHwNodeId->value()) + tr(" not found"));
+      pbAbortScan->setEnabled(false);
+      pbConnect->setEnabled(true);
+      return;
+    }
+    // Ok found, save scan result
+    if(!m->saveScanResult(portInfoList)){
+      showStatusMessage(tr("Cannot save scan result in cache file"), 3000);
+    }
+    // We no lobger need portInfoList
+    qDeleteAll(portInfoList);
+    portInfoList.clear();
+  }
+  showStatusMessage(tr("I/O detection ..."));
+  if(!pvDeviceModbusWago->detectIos(pvDeviceIos)){
+    showStatusMessage(tr("I/O detection failed"));
+    pvDeviceModbusWago->portManager()->closePort();
+    pbAbortScan->setEnabled(false);
+    ///pbConnect->setEnabled(true);
+    return;
+  }
+  pvDeviceModbusWago->setIos(pvDeviceIos, true);
+  pvDeviceIosWidget->setDeviceIos(pvDeviceIos);
+  showStatusMessage(tr("I/O detection done"), 1000);
+  pbAbortScan->setEnabled(false);
+  ///pbConnect->setEnabled(true);
 }
 
-void mdtModbusIoTool::setStateConnecting()
+void mdtModbusIoTool::disconnectFromNode()
 {
+  mdtModbusTcpPortManager *m = pvDeviceModbusWago->modbusTcpPortManager();
+  Q_ASSERT(m != 0);
 
-}
-
-void mdtModbusIoTool::setStateReady()
-{
-
-}
-
-void mdtModbusIoTool::setStateBusy()
-{
-
-}
-
-void mdtModbusIoTool::setStateWarning()
-{
-
-}
-
-void mdtModbusIoTool::setStateError()
-{
-
+  m->closePort();
+  pvDeviceIosWidget->clearIoWidgets();
 }
 
 void mdtModbusIoTool::showStatusMessage(const QString & message, int timeout)
@@ -163,4 +220,46 @@ void mdtModbusIoTool::showStatusMessage(const QString & message, int timeout)
 void mdtModbusIoTool::showStatusMessage(const QString & message, const QString & details, int timeout)
 {
   pvStatusWidget->showMessage(message, details, timeout);
+}
+
+void mdtModbusIoTool::setStateDisconnected()
+{
+  pbDisconnect->setEnabled(false);
+  pbConnect->setEnabled(true);
+  sbHwNodeId->setEnabled(true);
+}
+
+void mdtModbusIoTool::setStateConnecting()
+{
+  pbDisconnect->setEnabled(false);
+  pbConnect->setEnabled(false);
+  sbHwNodeId->setEnabled(false);
+}
+
+void mdtModbusIoTool::setStateReady()
+{
+  pbDisconnect->setEnabled(true);
+  pbConnect->setEnabled(false);
+  sbHwNodeId->setEnabled(false);
+}
+
+void mdtModbusIoTool::setStateBusy()
+{
+  pbDisconnect->setEnabled(true);
+  pbConnect->setEnabled(false);
+  sbHwNodeId->setEnabled(false);
+}
+
+void mdtModbusIoTool::setStateWarning()
+{
+  pbDisconnect->setEnabled(true);
+  pbConnect->setEnabled(false);
+  sbHwNodeId->setEnabled(false);
+}
+
+void mdtModbusIoTool::setStateError()
+{
+  pbDisconnect->setEnabled(true);
+  pbConnect->setEnabled(false);
+  sbHwNodeId->setEnabled(false);
 }

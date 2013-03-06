@@ -53,12 +53,16 @@ class mdtDeviceIosWidget : public QWidget
    *
    * Will display a I/O corresponding to the type
    *  set for each item avaliable in ios.
-   * If I/O's allready exists, they are remove first,
+   * If I/O's allready exists, they are removed first,
    *  so that this method can be called multiple times if needed.
    *
    * \pre ios must be a valid pointer
    */
   void setDeviceIos(mdtDeviceIos *ios);
+
+  /*! \brief Remove I/O's widgets
+   */
+  void clearIoWidgets();
 
  private:
 

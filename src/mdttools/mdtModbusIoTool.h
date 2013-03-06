@@ -71,6 +71,31 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
    */
   void setup();
 
+  /*! \brief Connect to a device with given hardware node ID
+   *
+   * Node ID will be readen from sbHwNodeId spin box.
+   */
+  void connectToNode();
+
+  /*! \brief Disconnect from device
+   */
+  void disconnectFromNode();
+
+  /*! \brief Used to show a message in status bar
+   *
+   * \param message Message to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showStatusMessage(const QString &message, int timeout = 0);
+
+  /*! \brief Used to show a message in status bar
+   *
+   * \param message Message to show
+   * \param details Details to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
+
  private:
 
   /*! \brief Set the disconnected state
@@ -96,21 +121,6 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
   /*! \brief Set the error state
    */
   void setStateError();
-
-  /*! \brief Used to show a message in status bar
-   *
-   * \param message Message to show
-   * \param timeout If > 0, message will be cleared after timeout [ms]
-   */
-  void showStatusMessage(const QString &message, int timeout = 0);
-
-  /*! \brief Used to show a message in status bar
-   *
-   * \param message Message to show
-   * \param details Details to show
-   * \param timeout If > 0, message will be cleared after timeout [ms]
-   */
-  void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
 
   bool pvReady;
   mdtDeviceModbusWago *pvDeviceModbusWago;

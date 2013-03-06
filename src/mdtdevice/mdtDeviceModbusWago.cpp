@@ -114,19 +114,36 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPor
 {
   Q_ASSERT(!pvTcpPortManager->isRunning());
 
-  mdtAbstractPort::error_t portError;
+  int i;
 
-  portError = mdtDeviceModbus::connectToDevice(scanResult, hardwareNodeId, bitsCount, startFrom);
-  if(portError != mdtAbstractPort::NoError){
-    return portError;
-  }
-  if(!isWago750()){
-    pvTcpPortManager->stop();
-    pvTcpPortManager->closePort();
-    return mdtAbstractPort::PortNotFound;
+  for(i=0; i<scanResult.size(); i++){
+    Q_ASSERT(scanResult.at(i) != 0);
+    // Try to connect
+    pvTcpPortManager->setPortInfo(*scanResult.at(i));
+    if(!pvTcpPortManager->openPort()){
+      continue;
+    }
+    if(!pvTcpPortManager->start()){
+      pvTcpPortManager->closePort();
+      continue;
+    }
+    // We are connected here, check if device is a Wago 750 fieldbus coupler
+    if(!isWago750()){
+      pvTcpPortManager->stop();
+      pvTcpPortManager->closePort();
+      continue;
+    }
+    // Get the hardware node ID
+    if(pvTcpPortManager->getHardwareNodeAddress(bitsCount, startFrom) == hardwareNodeId){
+      return mdtAbstractPort::NoError;
+    }else{
+      pvTcpPortManager->stop();
+      pvTcpPortManager->closePort();
+      continue;
+    }
   }
 
-  return mdtAbstractPort::NoError;
+  return mdtAbstractPort::PortNotFound;
 }
 
 bool mdtDeviceModbusWago::isWago750()
