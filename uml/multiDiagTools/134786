@@ -1,6 +1,6 @@
 format 76
 "Qt4" // Qt4
-  revision 42
+  revision 43
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -2142,6 +2142,20 @@ ${inlines}
 	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw};
 "
 	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1177858 "database"
+	public return_type class_ref 405122 // QSqlDatabase
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	

@@ -1,12 +1,16 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  active  classdiagram_ref 600962 // mdtDataTable
+  classdiagram_ref 600962 // mdtDataTableItemDelegate
+    970 803 100 4 0 0
+  active  classdiagram_ref 607618 // mdtDataTableModel
     970 803 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1171074 // sizeHint
+selected operation_ref 1185026 // importFromCsvFile
 open
-  class_ref 605442 // mdtDataTableItemDelegate
+  classview_ref 273666 // mdtCsvFile
+  class_ref 612098 // mdtDataTableModel
   class_ref 605570 // QStyledItemDelegate
+  class_ref 174210 // QSqlTableModel
 end
 end

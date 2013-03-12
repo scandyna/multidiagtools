@@ -30,6 +30,8 @@ class mdtDataTableTest : public mdtTest
  private slots:
 
   void sandbox();
+
+  void createDataSetTest();
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_TEST_H

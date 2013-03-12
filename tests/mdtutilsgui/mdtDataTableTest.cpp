@@ -19,11 +19,13 @@
  **
  ****************************************************************************/
 #include "mdtDataTableTest.h"
+#include "mdtDataTableModel.h"
 #include "mdtApplication.h"
 #include "mdtDataTableItemDelegate.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QString>
+#include <QStringList>
 #include <QSqlTableModel>
 #include <QTableView>
 #include <QModelIndex>
@@ -31,6 +33,8 @@
 #include <QTimer>
 #include <QScrollBar>
 #include <QPushButton>
+#include <QTemporaryFile>
+#include <QFileInfo>
 
 #include <QDebug>
 
@@ -44,12 +48,14 @@ void mdtDataTableTest::sandbox()
 
   db = QSqlDatabase::addDatabase("QSQLITE", "mdtDataTableTest");
   db.setDatabaseName("mdtdatatabletest.db");
+  ///db.setDatabaseName("/tmp/mdtdatatabletest-l.o.db");
   QVERIFY(db.open());
 
   QSqlQuery query(db);
 
   // Create data table
   sql = "CREATE TABLE IF NOT EXISTS data ( ";
+  ///sql = "CREATE TABLE data ( ";
   sql += "id_PK INTEGER PRIMARY KEY ";
   sql += ", ";
   sql += "name VARCHAR(250) ";
@@ -121,6 +127,53 @@ void mdtDataTableTest::sandbox()
     QTest::qWait(500);
   }
 }
+
+void mdtDataTableTest::createDataSetTest()
+{
+  ///mdtDataTableModel m;
+  QTemporaryFile dbFile;
+  QFileInfo fileInfo;
+  QList<QSqlField> fields;
+  QSqlField field;
+  QSqlIndex pk;
+  QSqlDatabase db;
+
+  field.setName("value");
+  field.setType(QVariant::Double);
+  field.setAutoValue(true);
+  fields.append(field);
+  field.setName("name");
+  field.setType(QVariant::String);
+  fields.append(field);
+
+  /**
+  QVERIFY(!m.setDataSetDirectory(QString("Ij98()'ç!?*%+")));
+  QVERIFY(m.setDataSetDirectory(fileInfo.dir()));
+  QVERIFY(m.setDataSetDirectory(fileInfo.dir().absolutePath()));
+  qDebug() << "DB: " << fileInfo.fileName() << " , dir: " << fileInfo.dir().absolutePath();
+  QVERIFY(m.dataSetDirectory() == fileInfo.dir());
+  */
+  // Check data set creation modes
+  QVERIFY(dbFile.open());
+  fileInfo.setFile(dbFile);
+  qDebug() << "TEST, trying with OverwriteExisting ...";
+  db = mdtDataTableModel::createDataSet(fileInfo.dir(), fileInfo.fileName(), fields, pk, mdtDataTableModel::OverwriteExisting);
+  QVERIFY(db.isOpen());
+  qDebug() << "TEST, trying with KeepExisting ...";
+  db = mdtDataTableModel::createDataSet(fileInfo.dir(), fileInfo.fileName(), fields, pk, mdtDataTableModel::KeepExisting);
+  QVERIFY(db.isOpen());
+  qDebug() << "TEST, trying with FailIfExists ...";
+  db = mdtDataTableModel::createDataSet(fileInfo.dir(), fileInfo.fileName(), fields, pk, mdtDataTableModel::FailIfExists);
+  QVERIFY(!db.isOpen());
+  // Check table creation
+  qDebug() << "TEST, trying with OverwriteExisting ...";
+  db = mdtDataTableModel::createDataSet(fileInfo.dir(), fileInfo.fileName(), fields, pk, mdtDataTableModel::OverwriteExisting);
+  QVERIFY(db.isOpen());
+  mdtDataTableModel m(0, db);
+
+
+}
+
 
 int main(int argc, char **argv)
 {
