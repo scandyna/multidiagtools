@@ -31,7 +31,11 @@ class mdtDataTableTest : public mdtTest
 
   void sandbox();
 
+  // Dataset creations test
   void createDataSetTest();
+
+  // Add/edit/remove data test
+  void editDataTest();
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_TEST_H

@@ -70,27 +70,33 @@ class mdtDataTableModel : public QSqlTableModel
    */
   QDir dataSetDirectory() const;
 
+  /*! \brief Remove unalowed chars and suffixe _tbl to name to give a table name
+   */
+  static QString getTableName(const QString &dataSetName);
+
   /*! \brief Create database and table
    *
    * Internally, Sqlite is used to store data.
    *
    * \param dir Path or QDir object to directory in witch to store data.
    * \param name Name of the database, connection name (see QSqlDatabase) and file.
+   * \param primaryKey Contains fields that are part of the primary key.
+   *                    If a name is set with QSqlIndex::setName(), it will be used,
+   *                    else a name (tableName_PK) is generated.
    * \param fields List of fields, excluding primary key, to create in table.
    *                Note that only a fiew parameters of QSqlField are supported:
-   *                 - isAutoValue: will enable auto increment
    *                 - type: map QVariant type to Sqlite type
    *                 - name: field's name
-   * \param primaryKey Contains fields ................................................................
    * \param mode Behaviour to adopt during database/file creation.
    * \return A valid and open database object on success. See QSqlDatabase::isOpen() for details.
    */
   ///bool createDataSet(const QString &name, const QStringList &fields, create_mode_t mode);
-  static QSqlDatabase createDataSet(const QDir &dir, const QString &name, const QList<QSqlField> &fields, const QSqlIndex &primaryKey, create_mode_t mode);
+  static QSqlDatabase createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, create_mode_t mode);
 
   /*! \brief Add a row of data in model
    *
    * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   * Note: submit() is done internally.
    *
    * \param data A map with field name as key and associate data to add.
    * \param role See QSqlTableModel.
@@ -101,6 +107,7 @@ class mdtDataTableModel : public QSqlTableModel
   /*! \brief Set data for a given index in model
    *
    * This is a helper method wich uses QSqlTableModel's setData methods.
+   * Note: submit() is done internally.
    *
    * \param row Row to update.
    * \param column Column to update.
@@ -114,6 +121,7 @@ class mdtDataTableModel : public QSqlTableModel
   /*! \brief Set data for a given index in model
    *
    * This is a helper method wich uses QSqlTableModel's setData methods.
+   * Note: submit() is done internally.
    *
    * \param row Row to update.
    * \param field Name of field to update.
@@ -136,16 +144,12 @@ class mdtDataTableModel : public QSqlTableModel
 
  private:
 
-  /*! \brief Remove unalowed chars and suffixe _tbl to name to give a table name
-   */
-  static QString getTableName(const QString &dataSetName);
-
   /*! \brief Create database table
    *
    * \see createDataSet()
    * \pre db must be valid and open
    */
-  static bool createDatabaseTable(const QString &tableName, const QList<QSqlField> &fields, const QSqlDatabase &db);
+  static bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, const QSqlDatabase &db);
 
   /*! \brief Drop database table
    *

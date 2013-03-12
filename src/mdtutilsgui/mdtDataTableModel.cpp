@@ -54,7 +54,18 @@ QDir mdtDataTableModel::dataSetDirectory() const
   return pvDataSetDirectory;
 }
 
-QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &name, const QList<QSqlField> &fields, const QSqlIndex &primaryKey, create_mode_t mode)
+QString mdtDataTableModel::getTableName(const QString &dataSetName)
+{
+  QString tableName;
+
+  tableName = dataSetName.trimmed();
+  tableName.replace(".", "_");
+  tableName += "_tbl";
+
+  return tableName;
+}
+
+QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, create_mode_t mode)
 {
   QFile file;
   QFileInfo fileInfo;
@@ -135,7 +146,7 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
     }
   }
   // Here, we must create database table
-  if(!createDatabaseTable(tableName, fields, db)){
+  if(!createDatabaseTable(tableName, primaryKey, fields, db)){
     mdtError e(MDT_DATABASE_ERROR, "Cannot create database table for data set " + name, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
     e.commit();
@@ -144,126 +155,39 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
   }
   // Finished
   return db;
-
-  
-  
-  // 1: tester si connection existe
-  
-  // 1: test si rép. existe
-  
-  // 2: test si fichier existe
-  
-  // 3: test si db existe. Considéerer connection déjà ouverte
-  
-  
-  // Check if connection to database allready exists
-  db = QSqlDatabase::database(name);
-  if(db.isOpen()){
-    // Check create mode
-    switch(mode){
-      case OverwriteExisting:
-        // If we cannot drop expected table, it's possibly a other file
-        if(!mdtDataTableModel::dropDatabaseTable(name, db)){
-          db.close();
-          QSqlDatabase::removeDatabase(name);
-          return db;
-        }
-        break;
-      case KeepExisting:
-        // Nothing to do
-        return db;
-      case FailIfExists:
-        db.close();
-        QSqlDatabase::removeDatabase(name);
-        return db;
-      case AskUserIfExists:
-        /// \todo Implement this !
-        break;
-    }
-    db.close();
-    QSqlDatabase::removeDatabase(name);
-  }else{
-    // Check if database file exists
-    fileInfo.setFile(dir, name);
-    qDebug() << "DB file path: " << fileInfo.absoluteFilePath();
-    if(fileInfo.exists()){
-      if(!fileInfo.isFile()){
-        mdtError e(MDT_FILE_IO_ERROR, "Given path is not a file: path " + fileInfo.absoluteFilePath(), mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
-        e.commit();
-        return db;
-      }
-      if(!fileInfo.isWritable()){
-        mdtError e(MDT_FILE_IO_ERROR, "Cannot write to database file: path " + fileInfo.absoluteFilePath(), mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
-        e.commit();
-        return db;
-      }
-      // Check create mode
-      switch(mode){
-        case OverwriteExisting:
-          // Clear existing file
-          file.setFileName(fileInfo.absoluteFilePath());
-          if(!file.open(QIODevice::Truncate | QIODevice::WriteOnly)){
-            {
-            mdtError e(MDT_FILE_IO_ERROR, "Cannot erase database file: path " + fileInfo.absoluteFilePath(), mdtError::Error);
-            MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
-            e.commit();
-            }
-            return db;
-          }
-          file.close();
-          break;
-        case KeepExisting:
-          // Nothing to do
-          break;
-        case FailIfExists:
-          return db;
-        case AskUserIfExists:
-          /// \todo Implement this !
-          break;
-      }
-    }
-    // Create database connection and object
-    db = QSqlDatabase::addDatabase("QSQLITE", name);
-    db.setDatabaseName(fileInfo.absoluteFilePath());
-    if(!db.open()){
-      {
-      mdtError e(MDT_DATABASE_ERROR, "Cannot create database: name " + db.databaseName(), mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
-      e.setSystemError(db.lastError().number(), db.lastError().text());
-      e.commit();
-      }
-      QSqlDatabase::removeDatabase(name);
-      return db;
-    }
-    // Create table
-    if(mode == OverwriteExisting){
-      if(!createDatabaseTable(name, fields, db)){
-        mdtError e(MDT_DATABASE_ERROR, "Cannot create database table: data set: " + fileInfo.absoluteFilePath(), mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
-        e.commit();
-        db.close();
-        QSqlDatabase::removeDatabase(name);
-        return db;
-      }
-    }
-  }
-
-
-
 }
 
 bool mdtDataTableModel::addRow(const QMap<QString,QVariant> &data, int role)
 {
+  QMap<QString,QVariant>::const_iterator it;
+
+  if(!insertRows(0, 1)){
+    return false;
+  }
+  for(it = data.constBegin(); it != data.constEnd(); it++){
+    qDebug() << "Field: " << it.key() << " , value: " << it.value();
+    if(!QSqlTableModel::setData(index(0, fieldIndex(it.key())) , it.value(), role)){
+      revertRow(0);
+      return false;
+    }
+  }
+
+  return submit();
 }
 
 bool mdtDataTableModel::setData(int row, int column, const QVariant &value, int role)
 {
+  if(!QSqlTableModel::setData(index(row, column), value, role)){
+    revertRow(row);
+    return false;
+  }
+
+  return submit();
 }
 
-bool mdtDataTableModel::setData(int row, const QString & field, const QVariant & value, int role)
+bool mdtDataTableModel::setData(int row, const QString &field, const QVariant & value, int role)
 {
+  return setData(row, fieldIndex(field), value, role);
 }
 
 bool mdtDataTableModel::exportToCsvFile(const QString & filePath)
@@ -276,18 +200,7 @@ bool mdtDataTableModel::importFromCsvFile(const QString & filePath)
   return false;
 }
 
-QString mdtDataTableModel::getTableName(const QString &dataSetName)
-{
-  QString tableName;
-
-  tableName = dataSetName.trimmed();
-  tableName.replace(".", "_");
-  tableName += "_tbl";
-
-  return tableName;
-}
-
-bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QList<QSqlField> &fields, const QSqlDatabase &db)
+bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, const QSqlDatabase &db)
 {
   Q_ASSERT(db.isValid());
   Q_ASSERT(db.isOpen());
@@ -296,7 +209,33 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QLis
   int i;
 
   // Build SQL query
-  sql = "CREATE TABLE " + tableName + "(\n";
+  sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (";
+  // Add primary key fields
+  for(i=0; i<primaryKey.count(); i++){
+    qDebug() << "PK field: " << primaryKey.field(i).name();
+    sql += primaryKey.field(i).name() + " ";
+    switch(primaryKey.field(i).type()){
+      case QVariant::Int:
+        sql += " INTEGER ";
+        break;
+      case QVariant::String:
+        sql += " TEXT ";
+        break;
+      default:
+        {
+        mdtError e(MDT_DATABASE_ERROR, "Unsupported field type for primary key, database " + db.databaseName(), mdtError::Error);
+        MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
+        e.commit();
+        }
+    }
+    if(i < (primaryKey.count()-1)){
+      sql += ", ";
+    }
+  }
+  // Add other fields
+  if(fields.size() > 0){
+    sql += ", ";
+  }
   for(i=0; i<fields.size(); i++){
     qDebug() << "Field: " << fields.at(i).name();
     sql += fields.at(i).name() + " ";
@@ -318,14 +257,29 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QLis
         }
     }
     if(i < (fields.size()-1)){
-      sql += ",";
+      sql += ", ";
     }
-    sql += "\n";
+  }
+  // Add primary key constraint
+  if(primaryKey.count() > 0){
+    sql += " , CONSTRAINT ";
+    if(primaryKey.name().isEmpty()){
+      sql += tableName + "_PK ";
+    }else{
+      sql += primaryKey.name() + " ";
+    }
+    sql += " PRIMARY KEY (";
+    for(i=0; i<primaryKey.count(); i++){
+      qDebug() << "PK field: " << primaryKey.field(i).name();
+      sql += primaryKey.field(i).name() + " ";
+      if(i < (primaryKey.count()-1)){
+        sql += ", ";
+      }
+    }
+    sql += ")";
   }
   sql += ")";
-  
-  ///sql = "CREATE TABLE IF NOT EXISTS data (id_PK INTEGER PRIMARY KEY)";
-  sql = "CREATE TABLE IF NOT EXISTS " + tableName +" (id_PK INTEGER PRIMARY KEY)";
+
   qDebug() << "SQL: " << sql;
   
   qDebug() << "CNN name: " << db.connectionName();
