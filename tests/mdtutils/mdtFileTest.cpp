@@ -70,6 +70,7 @@ void mdtFileTest::csvFileWriteTest()
   tmp.close();
 }
 
+/// \todo Add Binary mode test (check EOL problem)
 void mdtFileTest::csvFileReadTest()
 {
   QTemporaryFile tmp, tmpErr, tmpComment;
@@ -126,7 +127,8 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.readLines(separator.toAscii(), dataProtection.toAscii()));
   for(int i=0; i<refData.size(); i++){
     for(int j=0; j<refData.at(i).size(); j++){
-      QVERIFY(csv.valueAt(i, j) == refData.at(i).at(j));
+      ///QVERIFY(csv.valueAt(i, j) == refData.at(i).at(j));
+      QCOMPARE(csv.valueAt(i, j), refData.at(i).at(j));
     }
   }
   csv.close();
@@ -147,10 +149,17 @@ void mdtFileTest::csvFileReadTest()
 
   // Read file and verify data
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
+  ///QVERIFY(csv.open(QIODevice::ReadWrite));
   QVERIFY(csv.readLines(";", "'"));
+  /**
   QVERIFY(csv.valueAt(0, 0) == "Valid data");
   QVERIFY(csv.valueAt(0, 1) == "with data ; protection");
   QVERIFY(csv.valueAt(0, 2) == "and without");
+  */
+  QCOMPARE(csv.valueAt(0, 0) , QString("Valid data"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("with data ; protection"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("and without"));
+
   csv.close();
 
   /*
@@ -164,10 +173,16 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
   // Read file and verify data
   QVERIFY(csv.readLines(";", "'"));
+  /**
   QVERIFY(csv.valueAt(0, 0) == "Some invalid");
   QVERIFY(csv.valueAt(1, 0) == "And 2 seps");
   QVERIFY(csv.valueAt(1, 1) == "");
   QVERIFY(csv.valueAt(1, 2) == "With other data and no end of line at end");
+  */
+  QCOMPARE(csv.valueAt(0, 0) , QString("Some invalid"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("And 2 seps"));
+  QCOMPARE(csv.valueAt(1, 1) , QString(""));
+  QCOMPARE(csv.valueAt(1, 2) , QString("With other data and no end of line at end"));
 
   // Access invalid indexes - Must not crash, and value must be a empty string
   QVERIFY(csv.valueAt(-1, 0) == "");
@@ -197,6 +212,7 @@ void mdtFileTest::csvFileReadTest()
 
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
   // Read file and verify data
+  /**
   QVERIFY(csv.readLines(";", "'", "#"));
   QVERIFY(csv.valueAt(0, 0) == "Uncommented data");
   QVERIFY(csv.valueAt(0, 1) == "Field with protection");
@@ -204,6 +220,15 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.valueAt(1, 0) == "Uncommented data");
   QVERIFY(csv.valueAt(1, 1) == "Some data");
   QVERIFY(csv.valueAt(1, 2) == "987");
+  */
+  QVERIFY(csv.readLines(";", "'", "#"));
+  QCOMPARE(csv.valueAt(0, 0) , QString("Uncommented data"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("Field with protection"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("0123"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("Uncommented data"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("Some data"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("987"));
+
 }
 
 void mdtFileTest::csvFileReadTest_data()

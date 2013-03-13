@@ -163,19 +163,21 @@ void mdtDataTableTest::createDataSetTest()
   fileInfo.setFile(dbFile);
   dataSetName = fileInfo.fileName();
   dataSetTableName = mdtDataTableModel::getTableName(dataSetName);
-  qDebug() << "TEST, trying with OverwriteExisting ...";
   db = mdtDataTableModel::createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableModel::OverwriteExisting);
   QVERIFY(db.isOpen());
-  qDebug() << "TEST, trying with KeepExisting ...";
   db = mdtDataTableModel::createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableModel::KeepExisting);
   QVERIFY(db.isOpen());
-  qDebug() << "TEST, trying with FailIfExists ...";
   db = mdtDataTableModel::createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableModel::FailIfExists);
   QVERIFY(!db.isOpen());
   // Check table creation
-  qDebug() << "TEST, trying with OverwriteExisting ...";
   db = mdtDataTableModel::createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableModel::OverwriteExisting);
   QVERIFY(db.isOpen());
+  /**
+  db = mdtDataTableModel::createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableModel::AskUserIfExists);
+  QVERIFY(db.isOpen());
+  */
+
+  
   // Set model and check that columns exists
   mdtDataTableModel m(0, db);
   m.setTable(dataSetTableName);
@@ -225,12 +227,6 @@ void mdtDataTableTest::editDataTest()
   QCOMPARE(m.headerData(0, Qt::Horizontal), QVariant("id_PK"));
   QCOMPARE(m.headerData(1, Qt::Horizontal), QVariant("signal"));
   QCOMPARE(m.headerData(2, Qt::Horizontal), QVariant("value"));
-  
-  /// Provisoire
-  QTableView v;
-  v.setModel(&m);
-  v.show();
-  
   // Check that data set is empty
   QVERIFY(m.select());
   QCOMPARE(m.rowCount(), 0);
@@ -335,12 +331,6 @@ void mdtDataTableTest::editDataTest()
   QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
   QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
   QCOMPARE(m.data(m.index(2, 2)), QVariant(88.4));
-
-  
-  
-  while(v.isVisible()){
-    QTest::qWait(500);
-  }
 }
 
 
