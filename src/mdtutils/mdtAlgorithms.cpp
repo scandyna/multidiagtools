@@ -134,7 +134,7 @@ QByteArray mdtAlgorithms::hexStringToByteArray(const QString &hexStr)
     byteArray.append((char)hexNum.toInt(&ok, 16));
     Q_ASSERT(ok == true);
   }
-  
+
   return byteArray;
 }
 

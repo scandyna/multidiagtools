@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,23 +22,35 @@
 #define MDT_CSV_FILE_H
 
 #include <QString>
+#include <QChar>
 #include <QTextCodec>
 #include <QStringList>
 #include <QList>
 #include <QFile>
 
+// Set OS native End Of Line sequence
+#ifdef Q_OS_WIN
+ #define MDT_NATIVE_EOL "\r\n"
+#else
+ #define MDT_NATIVE_EOL "\n"
+#endif
+
 /*! \brief Read and write CSV file
  * 
  * The default file encoding format is assumed UTF-8.
  * If another format is to use, give it at constructor.
+ *
+ * \todo Create a write from CSV method, and considere EOL problem.
  */
 class mdtCsvFile : public QFile
 {
  public:
 
   /*! \brief Constructor.
+   *
+   * \param fileEncoding File encoding format. Note that this does not affect QFile's methods.
    */
-  mdtCsvFile(QObject *parent = 0, QByteArray fileEncoding = "UTF-8");
+  mdtCsvFile(QObject *parent = 0, const QByteArray &fileEncoding = "UTF-8");
   ~mdtCsvFile();
 
   /*! \brief Read the file and store data
@@ -49,7 +61,23 @@ class mdtCsvFile : public QFile
    * \return True on success, false else (see errorString() to know what happened in this case)
    * \pre separator, dataProtection and comment must not be the same
    */
-  bool readLines(QByteArray separator = ";", QByteArray dataProtection = "", QByteArray comment = "#");
+  ///bool readLines(QByteArray separator = ";", QByteArray dataProtection = "", QByteArray comment = "#");
+
+  /*! \brief Read the file and store data
+   *
+   * \param separator Separator to use (typical: ; )
+   * \param dataProtection Data protection (typical: " )
+   *                        Note: current version does not support protected EOL.
+   * \param escapeChar Escape char (typical: \ )
+   * \param comment Comment (typical: # )
+   * \param eol End of line sequence. Usefull if given file was not written from running platform.
+   *             Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details).
+   * \return True on success
+   * \pre separator, dataProtection and comment must not be the same
+   * \todo Check if precondition is needed (see mdtAlgorithm).
+   * \todo Fix problem with protected EOL (must also modify mdtAlgorithm)
+   */
+  bool readLines(const QString &separator = ";", const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
 
   /*! \brief Parse a string (considered as a line in a CSV file)
    * 
@@ -59,7 +87,7 @@ class mdtCsvFile : public QFile
    * 
    * \todo Check new function in mdtAlgorithm
    */
-  QStringList &parseLine(const QByteArray &line, const QByteArray &separator, const QByteArray &dataProtection);
+  ///QStringList &parseLine(const QByteArray &line, const QByteArray &separator, const QByteArray &dataProtection);
 
   /*! \brief Clear readen data
    */
@@ -80,7 +108,7 @@ class mdtCsvFile : public QFile
  private:
 
   QList<QStringList> pvLines;
-  QStringList pvFields;
+  ///QStringList pvFields;
   QTextCodec *pvCodec;
 };
 

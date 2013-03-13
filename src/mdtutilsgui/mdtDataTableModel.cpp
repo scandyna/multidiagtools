@@ -24,6 +24,7 @@
 #include <QFile>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QMessageBox>
 
 #include <QDebug>
 
@@ -73,7 +74,6 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
   QString cnnName;  // Connection name
   QString dbName;   // Database name
   QString tableName;
-  int i;
 
   // Set names
   cnnName = name;
@@ -114,7 +114,6 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
       e.setSystemError(db.lastError().number(), db.lastError().text());
       MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
       e.commit();
-      ///QSqlDatabase::removeDatabase(cnnName);
       return db;
     }
   }
@@ -122,14 +121,12 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
   Q_ASSERT(db.isValid());
   Q_ASSERT(db.isOpen());
   // Check if table exists
-  qDebug() << "TABLES: " << db.tables();
   if(db.tables().contains(tableName)){
     switch(mode){
       case OverwriteExisting:
         // If we cannot drop expected table, it's possibly a other file
         if(!mdtDataTableModel::dropDatabaseTable(tableName, db)){
           db.close();
-          ///QSqlDatabase::removeDatabase(cnnName);
           return db;
         }
         break;
@@ -138,9 +135,15 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
         return db;
       case FailIfExists:
         db.close();
-        ///QSqlDatabase::removeDatabase(cnnName);
         return db;
       case AskUserIfExists:
+        if(userChooseToOverwrite(dir, fileInfo.fileName() + ".db")){
+          // If we cannot drop expected table, it's possibly a other file
+          if(!mdtDataTableModel::dropDatabaseTable(tableName, db)){
+            db.close();
+            return db;
+          }
+        }
         /// \todo Implement this !
         break;
     }
@@ -151,7 +154,6 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
     MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
     e.commit();
     db.close();
-    ///QSqlDatabase::removeDatabase(cnnName);
   }
   // Finished
   return db;
@@ -165,7 +167,6 @@ bool mdtDataTableModel::addRow(const QMap<QString,QVariant> &data, int role)
     return false;
   }
   for(it = data.constBegin(); it != data.constEnd(); it++){
-    qDebug() << "Field: " << it.key() << " , value: " << it.value();
     if(!QSqlTableModel::setData(index(0, fieldIndex(it.key())) , it.value(), role)){
       revertRow(0);
       return false;
@@ -212,7 +213,6 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QSql
   sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (";
   // Add primary key fields
   for(i=0; i<primaryKey.count(); i++){
-    qDebug() << "PK field: " << primaryKey.field(i).name();
     sql += primaryKey.field(i).name() + " ";
     switch(primaryKey.field(i).type()){
       case QVariant::Int:
@@ -237,7 +237,6 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QSql
     sql += ", ";
   }
   for(i=0; i<fields.size(); i++){
-    qDebug() << "Field: " << fields.at(i).name();
     sql += fields.at(i).name() + " ";
     switch(fields.at(i).type()){
       case QVariant::Int:
@@ -270,7 +269,6 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QSql
     }
     sql += " PRIMARY KEY (";
     for(i=0; i<primaryKey.count(); i++){
-      qDebug() << "PK field: " << primaryKey.field(i).name();
       sql += primaryKey.field(i).name() + " ";
       if(i < (primaryKey.count()-1)){
         sql += ", ";
@@ -279,17 +277,6 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QSql
     sql += ")";
   }
   sql += ")";
-
-  qDebug() << "SQL: " << sql;
-  
-  qDebug() << "CNN name: " << db.connectionName();
-  qDebug() << "db valid ?: " << db.isValid();
-  qDebug() << "db open ?: " << db.isOpen();
-  qDebug() << "db name: " << db.databaseName();
-  qDebug() << "Current tables: " << db.tables();
-  
-  ///sql = "CREATE TABLE " + tableName + "(id_PK INTEGER PRIMARY KEY)";
-  
   // Run query
   QSqlQuery query(sql, db);
   if(!query.exec()){
@@ -302,8 +289,6 @@ bool mdtDataTableModel::createDatabaseTable(const QString &tableName, const QSql
     return false;
   }
 
-  qDebug() << "Current tables: " << db.tables();
-  
   return true;
 }
 
@@ -327,4 +312,26 @@ bool mdtDataTableModel::dropDatabaseTable(const QString &tableName, const QSqlDa
   }
 
   return true;
+}
+
+bool mdtDataTableModel::userChooseToOverwrite(const QDir &dir, const QString &fileName)
+{
+  QMessageBox msgBox;
+  QString info;
+  int retVal;
+
+  msgBox.setText(tr("A file allready exists in destination directory"));
+  info = tr("File: ") + fileName + "\n";
+  info += tr("Directory: ") + dir.absolutePath() + "\n";
+  info += tr("\nDo you want to overwrite this file ?");
+  msgBox.setInformativeText(info);
+  msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+  msgBox.setDefaultButton(QMessageBox::No);
+  msgBox.setIcon(QMessageBox::Question);
+  retVal = msgBox.exec();
+  if(retVal == QMessageBox::Yes){
+    return true;
+  }
+
+  return false;
 }

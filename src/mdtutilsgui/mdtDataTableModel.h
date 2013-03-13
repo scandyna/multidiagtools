@@ -157,8 +157,12 @@ class mdtDataTableModel : public QSqlTableModel
    */
   static bool dropDatabaseTable(const QString &tableName, const QSqlDatabase &db);
 
-  
-  
+  /*! \brief Open a dialog box that ask the user if he wants do overwrite a existing file
+   *
+   * \return True if user choosed to overwrite file
+   */
+  static bool userChooseToOverwrite(const QDir &dir, const QString &fileName);
+
   QString pvDataSetName;
   QDir pvDataSetDirectory;
 };
