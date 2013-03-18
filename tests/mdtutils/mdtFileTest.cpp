@@ -89,7 +89,7 @@ void mdtFileTest::csvFileReadTest()
 
   // Create a temporary file
   QVERIFY(tmp.open());
-  qDebug() << "TEST, tmp is text mode: " << tmp.isTextModeEnabled();
+  ///qDebug() << "TEST, tmp is text mode: " << tmp.isTextModeEnabled();
 
   // Create refData
   refData << refLine1;
@@ -310,6 +310,58 @@ void mdtFileTest::csvFileReadTest_data()
   line2 << "" << "1" << "data" << "JKLM";
   line3 << "JK" << "inni" << "Some data";
   QTest::newRow("Separator: <data> , dp: {REM} ") << line1 << line2 << line3 << "<data>" << "{REM}";
+}
+
+void mdtFileTest::csvFileReadEolTest()
+{
+  QTemporaryFile tmp, tmp2;
+  mdtCsvFile csv;
+
+  // Create a temporary file
+  QVERIFY(tmp.open());
+  QVERIFY(!tmp.isTextModeEnabled());
+
+  // Write a some data with \n EOL
+  QVERIFY(tmp.write("A;'B';C;'D'\n"));
+  QVERIFY(tmp.write("1;2;3;4\n"));
+  tmp.close();
+
+  // Read file and verify data
+  csv.setFileName(tmp.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "'", "#", '\0', "\n"));
+  QCOMPARE(csv.valueAt(0, 0) , QString("A"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("B"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("C"));
+  QCOMPARE(csv.valueAt(0, 3) , QString("D"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("1"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("2"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("3"));
+  QCOMPARE(csv.valueAt(1, 3) , QString("4"));
+  csv.close();
+
+  // Create a second temporary file
+  QVERIFY(tmp2.open());
+  QVERIFY(!tmp2.isTextModeEnabled());
+
+  // Write a some data with \r\n EOL
+  QVERIFY(tmp2.write("E;'F';G;'H'\r\n"));
+  QVERIFY(tmp2.write("5;6;7;8\r\n"));
+  tmp2.close();
+
+  // Read file and verify data
+  csv.setFileName(tmp2.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "'", "#", '\0', "\r\n"));
+  QCOMPARE(csv.valueAt(0, 0) , QString("E"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("F"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("G"));
+  QCOMPARE(csv.valueAt(0, 3) , QString("H"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("5"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("6"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("7"));
+  QCOMPARE(csv.valueAt(1, 3) , QString("8"));
+  csv.close();
 }
 
 void mdtFileTest::mdtPartitionAttributesTest()

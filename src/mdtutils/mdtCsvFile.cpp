@@ -95,10 +95,11 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
   // Clear previous results
   clear();
   // If file was open with Text flag, EOL is allready converted
-  if(openMode() & QIODevice::Text){
+  ///if(openMode() & QIODevice::Text){
+  if(isTextModeEnabled()){
     eol = "\n";
   }
-  qDebug() << "TEXT MODE: " << isTextModeEnabled();
+  ///qDebug() << "TEXT MODE: " << isTextModeEnabled();
   // Read the file and separate lines (not very efficient...)
   ///lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, dataProtection, escapeChar);
   lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, "", escapeChar);

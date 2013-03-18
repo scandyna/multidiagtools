@@ -107,7 +107,11 @@ QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 # Librairie du projet
 add_library (mdtutilsgui${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
-target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwt")
+if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+  target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwt")
+else(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+  target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "qwtd")
+endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 target_link_libraries(mdtutilsgui${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
 
 # Version statique

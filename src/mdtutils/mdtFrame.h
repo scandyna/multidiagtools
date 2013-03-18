@@ -50,7 +50,7 @@ class mdtFrame : public QByteArray
  public:
 
   mdtFrame();
-  ~mdtFrame();
+  virtual ~mdtFrame();
 
   /*! \brief Frame type
    */
