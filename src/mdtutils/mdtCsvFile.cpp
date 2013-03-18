@@ -98,6 +98,7 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
   if(openMode() & QIODevice::Text){
     eol = "\n";
   }
+  qDebug() << "TEXT MODE: " << isTextModeEnabled();
   // Read the file and separate lines (not very efficient...)
   ///lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, dataProtection, escapeChar);
   lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, "", escapeChar);

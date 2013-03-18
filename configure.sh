@@ -47,6 +47,7 @@ then
     remove_file "src/qt-solutions/$CMAKE_CACHE_FILE"
     remove_file "src/qt-solutions/qtsingleapplication/$CMAKE_CACHE_FILE"
     remove_file "tools/uicnumber/$CMAKE_CACHE_FILE"
+    remove_file "tools/mdtmodbusiotool/$CMAKE_CACHE_FILE"
     # Dossier de cache
     remove_dir "$CMAKE_CACHE_DIR"
     remove_dir "src/mdtdevice/$CMAKE_CACHE_DIR"
@@ -61,7 +62,9 @@ then
     remove_dir "tests/mdtserialport/$CMAKE_CACHE_DIR"
     remove_dir "tests/mdttest/$CMAKE_CACHE_DIR"
     remove_dir "tests/mdtutils/$CMAKE_CACHE_DIR"
+    remove_dir "tests/mdtutilsgui/$CMAKE_CACHE_DIR"
     remove_dir "tools/uicnumber/$CMAKE_CACHE_DIR"
+    remove_dir "tools/mdtmodbusiotool/$CMAKE_CACHE_DIR"
   fi
 fi
 

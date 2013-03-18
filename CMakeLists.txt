@@ -66,6 +66,9 @@ if(WIN32)
   set(GUI_TYPE WIN32)
 endif(WIN32)
 
+# Additionnal Cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 # Enable Qt4 support
 set(QT_USE_QTTEST TRUE)
 set(QT_USE_QTSQL TRUE)
@@ -73,6 +76,14 @@ set(QT_USE_QTNETWORK TRUE)
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
+
+# Get Qwt
+find_package(Qwt REQUIRED)
+include_directories(${QWT_INCLUDE_DIRS})
+get_filename_component(QWT_LIBRARY_DIR ${QWT_LIBRARIES} PATH)
+if(WIN32)
+  link_directories(${QWT_LIBRARY_DIR})
+endif(WIN32)
 
 # Headers directories
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/src")
@@ -127,10 +138,10 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdtserialport")
 
 # * mdttools *
 add_subdirectory("${PROJECT_SOURCE_DIR}/src/mdttools")
-endif(UNIX)
 
 # *** Tools section (executables) ***
 add_subdirectory("${PROJECT_SOURCE_DIR}/tools")
+endif(UNIX)
 
 # *** Mini test programm section ***
 
@@ -149,6 +160,68 @@ target_link_libraries(essais "mdttools${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(essais ${QT_LIBRARIES})
 
 endif(UNIX)
+
+#################################################################################################################################################
+# *** Windows env script part ***
+#################################################################################################################################################
+# EXPERIMENTAL - Windows env script
+
+message("PATH: $ENV{PATH}")
+
+if(WIN32)
+  set(WINDOWS_ENV_SCRIPT "windows-env.bat")
+
+  # Base of the file + CMake binary dir
+  file(WRITE "${WINDOWS_ENV_SCRIPT}" "@echo off\r\n")
+  get_filename_component(CMAKE_INSTALLED_BIN_DIR ${CMAKE_COMMAND} PATH)
+  string(REPLACE "/" "\\" CMAKE_INSTALLED_BIN_DIR_WIN ${CMAKE_INSTALLED_BIN_DIR})
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding ${CMAKE_INSTALLED_BIN_DIR_WIN}\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=${CMAKE_INSTALLED_BIN_DIR_WIN}\r\n")
+
+  # Add make bin directory
+  get_filename_component(CMAKE_MAKE_BIN_DIR ${CMAKE_MAKE_PROGRAM} PATH)
+  string(REPLACE "/" "\\" CMAKE_MAKE_BIN_DIR_WIN ${CMAKE_MAKE_BIN_DIR})
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding ${CMAKE_MAKE_BIN_DIR_WIN}\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;${CMAKE_MAKE_BIN_DIR_WIN}\r\n")
+
+  # Add Qt4 paths
+  string(REPLACE "/" "\\" QT_BINARY_DIR_WIN ${QT_BINARY_DIR})
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding ${QT_BINARY_DIR_WIN}\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;${QT_BINARY_DIR_WIN}\r\n")
+  string(REPLACE "/" "\\" QT_LIBRARY_DIR_WIN ${QT_LIBRARY_DIR})
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding ${QT_LIBRARY_DIR_WIN}\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;${QT_LIBRARY_DIR_WIN}\r\n")
+  string(REPLACE "/" "\\" QT_PLUGINS_DIR_WIN ${QT_PLUGINS_DIR})
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding ${QT_PLUGINS_DIR_WIN}\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;${QT_PLUGINS_DIR_WIN}\r\n")
+
+  # Add Qwt paths
+  #get_filename_component(QWT_LIBRARY_DIR ${QWT_LIBRARIES} PATH)
+  string(REPLACE "/" "\\" QWT_LIBRARY_DIR_WIN ${QWT_LIBRARY_DIR})
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;${QWT_LIBRARY_DIR_WIN}\r\n")
+
+  # Add Windows paths
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding %SystemRoot%\\System32\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;%SystemRoot%\\System32\r\n")
+  #file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo Adding %SystemRoot%\r\n")
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;%SystemRoot%\r\n")
+
+  # Multi diag tools path (for tests)
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "set PATH=%PATH%;src\\mdtutils;src\\mdtutilsgui;src\\qt-solutions\\qtsingleapplication\r\n")
+
+  # Run
+  file(APPEND "${WINDOWS_ENV_SCRIPT}" "echo %PATH%\r\n")
+  execute_process(COMMAND ${WINDOWS_ENV_SCRIPT} OUTPUT_VARIABLE TMP_PATH)
+  # Update PATH
+  set(ENV{PATH} "${TMP_PATH}")
+
+endif(WIN32)
+
+message("TMP_PATH: ${TMP_PATH}")
+message("PATH: $ENV{PATH}")
+
+# Add Qt4 paths
+#file()
 
 #################################################################################################################################################
 # *** Unit tests section ***
