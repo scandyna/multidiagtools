@@ -70,7 +70,6 @@ void mdtFileTest::csvFileWriteTest()
   tmp.close();
 }
 
-/// \todo Add Binary mode test (check EOL problem)
 void mdtFileTest::csvFileReadTest()
 {
   QTemporaryFile tmp, tmpErr, tmpComment;
@@ -89,7 +88,6 @@ void mdtFileTest::csvFileReadTest()
 
   // Create a temporary file
   QVERIFY(tmp.open());
-  ///qDebug() << "TEST, tmp is text mode: " << tmp.isTextModeEnabled();
 
   // Create refData
   refData << refLine1;
@@ -106,7 +104,6 @@ void mdtFileTest::csvFileReadTest()
       if((j>=0)&&(j<(refData.at(i).size()-1))){
         line << separator;
       }else{
-        ///line << "\n";
         line << MDT_NATIVE_EOL;
       }
     }
@@ -150,12 +147,10 @@ void mdtFileTest::csvFileReadTest()
 
   // Read file and verify data
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
-  ///QVERIFY(csv.open(QIODevice::ReadWrite));
   QVERIFY(csv.readLines(";", "'"));
   QCOMPARE(csv.valueAt(0, 0) , QString("Valid data"));
   QCOMPARE(csv.valueAt(0, 1) , QString("with data ; protection"));
   QCOMPARE(csv.valueAt(0, 2) , QString("and without"));
-
   csv.close();
 
   /*
@@ -209,7 +204,6 @@ void mdtFileTest::csvFileReadTest()
   QCOMPARE(csv.valueAt(1, 0) , QString("Uncommented data"));
   QCOMPARE(csv.valueAt(1, 1) , QString("Some data"));
   QCOMPARE(csv.valueAt(1, 2) , QString("987"));
-
 }
 
 void mdtFileTest::csvFileReadTest_data()

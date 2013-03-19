@@ -144,7 +144,6 @@ QSqlDatabase mdtDataTableModel::createDataSet(const QDir &dir, const QString &na
             return db;
           }
         }
-        /// \todo Implement this !
         break;
     }
   }
