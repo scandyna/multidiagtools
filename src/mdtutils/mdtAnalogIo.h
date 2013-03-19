@@ -59,6 +59,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *  a integer value in a 16 bits packet, but with
    *  some additional flags. (example: Wago 750-457).
    *  In such case, the value is, f.ex., encoded in 12 bits only.
+   *
    * Take example of Wago 750-457:
    *  - Value + flags are encoded in a 16 bits word
    *  - Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15

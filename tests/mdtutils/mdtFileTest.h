@@ -33,6 +33,8 @@ class mdtFileTest : public mdtTest
   void csvFileWriteTest();
   void csvFileReadTest();
   void csvFileReadTest_data();
+  // CSV file: check cross-platform read
+  void csvFileReadEolTest();
 
   // Partition attributes tests
   void mdtPartitionAttributesTest();

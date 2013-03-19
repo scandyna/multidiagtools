@@ -38,13 +38,13 @@ mdtDevice::mdtDevice(QObject *parent)
   pvBackToReadyStateTimer = new QTimer(this);
   Q_ASSERT(pvBackToReadyStateTimer != 0);
   pvBackToReadyStateTimer->setSingleShot(true);
-  pvCurrentState = Unknown;
   setName(tr("Unknown"));
   pvAutoQueryEnabled = false;
   pvQueryTimer = new QTimer(this);
   Q_ASSERT(pvQueryTimer != 0);
   setStateDisconnected();
-  connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady()));
+  ///connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SLOT(setStateReady()));
+  ///connect(pvBackToReadyStateTimer, SIGNAL(timeout()), this, SIGNAL(deviceReady()));
   connect(pvQueryTimer, SIGNAL(timeout()), this, SLOT(runQueries()));
   qDebug() << "mdtDevice::mdtDevice() DONE";
 }
@@ -78,6 +78,24 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
   QList<mdtAnalogIo*> analogOutputs;
   QList<mdtDigitalIo*> digitalOutputs;
 
+  // Clear prevous I/Os
+  if(pvIos != 0){
+    analogOutputs = pvIos->analogOutputs();
+    for(i=0; i<analogOutputs.size(); i++){
+      Q_ASSERT(analogOutputs.at(i) != 0);
+      disconnect(analogOutputs.at(i), SIGNAL(valueChanged(int)), this, SLOT(setAnalogOutputValue(int)));
+    }
+    digitalOutputs = pvIos->digitalOutputs();
+    for(i=0; i<digitalOutputs.size(); i++){
+      Q_ASSERT(digitalOutputs.at(i) != 0);
+      disconnect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
+    }
+    if(pvIos != ios){
+      pvIos->deleteIos();
+      delete pvIos;
+    }
+  }
+  // Set new I/Os
   pvIos = ios;
   if(autoOutputUpdate){
     analogOutputs = pvIos->analogOutputs();
@@ -161,7 +179,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogInput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       /// \todo Restore transaction ???
       return QVariant();
     }
@@ -179,7 +197,7 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
     transaction->setQueryReplyMode(false);
     transactionId = readAnalogInput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
   }
@@ -198,6 +216,9 @@ int mdtDevice::getAnalogInputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->analogInputsCount() < 1){
+    return 0;
+  }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
@@ -206,14 +227,14 @@ int mdtDevice::getAnalogInputs(int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = readAnalogInputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogInputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -259,14 +280,14 @@ QVariant mdtDevice::getAnalogOutputValue(int address, int timeout, bool realValu
     transaction->setQueryReplyMode(false);
     transactionId = readAnalogOutput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogOutput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -291,6 +312,9 @@ int mdtDevice::getAnalogOutputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->analogOutputsCount() < 1){
+    return 0;
+  }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
@@ -300,14 +324,14 @@ int mdtDevice::getAnalogOutputs(int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = readAnalogOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -360,14 +384,14 @@ int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = writeAnalogOutput(ao->valueInt(), transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return -1;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = writeAnalogOutput(ao->valueInt(), transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return -1;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -396,14 +420,14 @@ int mdtDevice::setAnalogOutputs(int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = writeAnalogOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = writeAnalogOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -444,14 +468,14 @@ QVariant mdtDevice::getDigitalInputState(int address, int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = readDigitalInput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readDigitalInput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -472,6 +496,9 @@ int mdtDevice::getDigitalInputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->digitalInputsCount() < 1){
+    return 0;
+  }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
@@ -480,14 +507,14 @@ int mdtDevice::getDigitalInputs(int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = readDigitalInputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readDigitalInputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -528,14 +555,14 @@ QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = readDigitalOutput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readDigitalOutput(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return QVariant();
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -556,6 +583,9 @@ int mdtDevice::getDigitalOutputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  if(pvIos->digitalOutputsCount() < 1){
+    return 0;
+  }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
@@ -564,14 +594,14 @@ int mdtDevice::getDigitalOutputs(int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = readDigitalOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = readDigitalOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -617,14 +647,14 @@ int mdtDevice::setDigitalOutputState(int address, bool state, int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = writeDigitalOutput(state, transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return -1;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = writeDigitalOutput(state, transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return -1;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -651,14 +681,14 @@ int mdtDevice::setDigitalOutputs(int timeout)
     transaction->setQueryReplyMode(false);
     transactionId = writeDigitalOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
   }else{
     transaction->setQueryReplyMode(true);
     transactionId = writeDigitalOutputs(transaction);
     if(transactionId < 0){
-      setStateFromPortError(transactionId);
+      ///setStateFromPortError(transactionId);
       return transactionId;
     }
     if(!waitTransactionDone(transactionId, timeout)){
@@ -734,38 +764,14 @@ bool mdtDevice::queriesSequence()
   return false;
 }
 
-void mdtDevice::setStateFromPortError(int error, const QString &message, const QString &details)
+void mdtDevice::showStatusMessage(const QString &message, int timeout)
 {
-  if(error == mdtAbstractPort::NoError){
-    qDebug() << "mdtDevice::setStateFromPortError(): NoError";
-    setStateReady();
-  }else if(error == mdtAbstractPort::Disconnected){
-    qDebug() << "mdtDevice::setStateFromPortError(): Disconnected";
-    setStateDisconnected();
-  }else if(error == mdtAbstractPort::Connecting){
-    qDebug() << "mdtDevice::setStateFromPortError(): Connecting, message: " << message;
-    setStateConnecting(message);
-  }else if(error == mdtAbstractPort::WritePoolEmpty){
-    qDebug() << "mdtDevice::setStateFromPortError(): WriteQueueEmpty";
-    setStateBusy(pvBackToReadyStateTimeout);
-  }else{
-    qDebug() << "mdtDevice::setStateFromPortError(): ????";
-    setStateUnknown();
-  }
+  emit(statusMessageChanged(message, QString(), timeout));
 }
 
-void mdtDevice::setStateReady()
+void mdtDevice::showStatusMessage(const QString &message, const QString &details, int timeout)
 {
-  if(pvCurrentState == Ready){
-    return;
-  }
-  // Check if we have to restart query timer
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->start();
-  }
-  pvCurrentState = Ready;
-  qDebug() << "mdtDevice: new state is Ready";
-  emit(stateChanged(pvCurrentState));
+  emit(statusMessageChanged(message, details, timeout));
 }
 
 void mdtDevice::decodeReadenFrame(mdtPortTransaction transaction)
@@ -832,79 +838,19 @@ int mdtDevice::writeDigitalOutputs(mdtPortTransaction *transaction)
   return -1;
 }
 
-void mdtDevice::setStateDisconnected()
-{
-  if(pvCurrentState == Disconnected){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  pvCurrentState = Disconnected;
-  qDebug() << "mdtDevice: new state is Disconnected";
-  emit(stateChanged(pvCurrentState));
-}
-
-void mdtDevice::setStateConnecting(const QString &message)
-{
-  emit(stateChanged(pvCurrentState, message));
-  if(pvCurrentState == Connecting){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  // Thread will notify the ready (or disconnected) state, cancel retry timer
-  pvBackToReadyStateTimer->stop();
-  pvCurrentState = Connecting;
-  qDebug() << "mdtDevice: new state is Connecting";
-  ///emit(stateChanged(pvCurrentState, message));
-}
-
-void mdtDevice::setStateBusy(int retryTimeout)
-{
-  if(pvCurrentState == Busy){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  pvCurrentState = Busy;
-  qDebug() << "**** mdtDevice: new state is Busy";
-  emit(stateChanged(pvCurrentState));
-  // Set state ready if requested
-  if(retryTimeout >= 0){
-    pvBackToReadyStateTimer->start(retryTimeout);
-    ///QTimer::singleShot(retryTimeout, this, SLOT(setStateReady()));
-  }
-}
-
-void mdtDevice::setStateUnknown()
-{
-  if(pvCurrentState == Unknown){
-    return;
-  }
-  // Stop auto queries if running
-  if(pvAutoQueryEnabled){
-    pvQueryTimer->stop();
-  }
-  pvCurrentState = Unknown;
-  // Add a error
-  mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to unknown state", mdtError::Error);
-  MDT_ERROR_SET_SRC(e, "mdtDevice");
-  e.commit();
-  qDebug() << "mdtDevice: new state is Unknown";
-  emit(stateChanged(pvCurrentState));
-}
 
 mdtPortTransaction *mdtDevice::getNewTransaction()
 {
   Q_ASSERT(portManager() != 0);
 
   return portManager()->getNewTransaction();
+}
+
+void mdtDevice::restoreTransaction(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(portManager() != 0);
+
+  portManager()->restoreTransaction(transaction);
 }
 
 bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
@@ -919,4 +865,126 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
   portManager()->readenFrame(id);
 
   return ok;
+}
+
+void mdtDevice::setStateFromPortManager(int portManagerState)
+{
+  switch(portManagerState){
+    case mdtPortManager::Disconnected:
+      setStateDisconnected();
+      break;
+    case mdtPortManager::Connecting:
+      setStateConnecting();
+      break;
+    case mdtPortManager::Ready:
+      setStateReady();
+      break;
+    case mdtPortManager::Busy:
+      setStateBusy();
+      break;
+    case mdtPortManager::Warning:
+      setStateWarning();
+      break;
+    case mdtPortManager::Error:
+      setStateError();
+      break;
+    default:
+      setStateError();
+      showStatusMessage(tr("Received a unknown state"));
+  }
+}
+
+void mdtDevice::setStateDisconnected()
+{
+  if(pvCurrentState == Disconnected){
+    return;
+  }
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Disconnected;
+  qDebug() << "mdtDevice: new state is Disconnected";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateConnecting(/*const QString &message*/)
+{
+  if(pvCurrentState == Connecting){
+    return;
+  }
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  // Thread will notify the ready (or disconnected) state, cancel retry timer
+  pvBackToReadyStateTimer->stop();
+  pvCurrentState = Connecting;
+  qDebug() << "mdtDevice: new state is Connecting";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateReady()
+{
+  if(pvCurrentState == Ready){
+    return;
+  }
+  // Check if we have to restart query timer
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->start();
+  }
+  pvCurrentState = Ready;
+  qDebug() << "mdtDevice: new state is Ready";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateBusy()
+{
+  if(pvCurrentState == Busy){
+    return;
+  }
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Busy;
+  qDebug() << "**** mdtDevice: new state is Busy";
+  emit(stateChanged(pvCurrentState));
+  // Set state ready if requested
+  if(pvBackToReadyStateTimeout >= 0){
+    pvBackToReadyStateTimer->start(pvBackToReadyStateTimeout);
+    ///QTimer::singleShot(retryTimeout, this, SLOT(setStateReady()));
+  }
+}
+
+void mdtDevice::setStateWarning()
+{
+  if(pvCurrentState == Warning){
+    return;
+  }
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Warning;
+  qDebug() << "mdtDevice: new state is Warning";
+  emit(stateChanged(pvCurrentState));
+}
+
+void mdtDevice::setStateError()
+{
+  if(pvCurrentState == Error){
+    return;
+  }
+  // Stop auto queries if running
+  if(pvAutoQueryEnabled){
+    pvQueryTimer->stop();
+  }
+  pvCurrentState = Error;
+  // Add a error
+  mdtError e(MDT_DEVICE_ERROR, "Device " + name() + " goes to error state", mdtError::Error);
+  MDT_ERROR_SET_SRC(e, "mdtDevice");
+  e.commit();
+  qDebug() << "mdtDevice: new state is Error";
+  emit(stateChanged(pvCurrentState));
 }

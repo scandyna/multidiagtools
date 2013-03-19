@@ -1,16 +1,16 @@
 window_sizes 1280 1001 304 970 803 120
 diagrams
-  active  classdiagram_ref 508290 // mdtDeviceModbus
+  classdiagram_ref 600962 // mdtDataTableItemDelegate
+    970 803 100 4 0 0
+  active  classdiagram_ref 607618 // mdtDataTableModel
     970 803 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1147010 // connectToDevice
+selected operation_ref 1185026 // importFromCsvFile
 open
-  
-  package_ref 174978 // mdtutilsgui
-  class_ref 532226 // mdtDeviceModbusWago
-  classview_ref 372482 // mdtDeviceStatusWidget
-  classview_ref 392194 // mdtDeviceScpi
-  classview_ref 398722 // Protocols
+  classview_ref 273666 // mdtCsvFile
+  class_ref 612098 // mdtDataTableModel
+  class_ref 605570 // QStyledItemDelegate
+  class_ref 174210 // QSqlTableModel
 end
 end

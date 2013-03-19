@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,22 +18,24 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_DEVICE_STATUS_WIDGET_H
-#define MDT_DEVICE_STATUS_WIDGET_H
+#ifndef MDT_PORT_STATUS_WIDGET_H
+#define MDT_PORT_STATUS_WIDGET_H
 
 #include <QWidget>
 #include <QString>
 #include <QGridLayout>
-#include "mdtDevice.h"
+///#include "mdtDevice.h"
 #include "mdtBlinkLed.h"
 #include "mdtPortThread.h"
 
 class QLabel;
 class QPushButton;
+class QTimer;
+class QMessageBox;
 
 /*! \brief
  */
-class mdtDeviceStatusWidget : public QWidget
+class mdtPortStatusWidget : public QWidget
 {
   Q_OBJECT
 
@@ -41,17 +43,9 @@ class mdtDeviceStatusWidget : public QWidget
 
   /*! \brief Build a status widget with default texts
    */
-  mdtDeviceStatusWidget(QWidget *parent = 0);
+  mdtPortStatusWidget(QWidget *parent = 0);
 
-  ~mdtDeviceStatusWidget();
-
-  /*! \brief Set device
-   *
-   * Will make some connections
-   *
-   * \pre device must be valid.
-   */
-  void setDevice(mdtDevice *device);
+  ~mdtPortStatusWidget();
 
   /*! \brief Enable the TX/RX LEDs
    *
@@ -115,15 +109,19 @@ class mdtDeviceStatusWidget : public QWidget
 
   /*! \brief Set state
    *
+   * States are defined in mdtPortManager
+   *
    * \param state A state as define in mdeDevice
    */
   void setState(int state);
 
-  /*! \brief
+  /*! \brief Used to show a message and details
    *
-   * \param state A state as define in mdeDevice
+   * \param message Message to show
+   * \param details Details to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
    */
-  void setState(int state, const QString &message, const QString &details);
+  void showMessage(const QString &message, const QString &details, int timeout = 0);
 
  private slots:
 
@@ -139,14 +137,21 @@ class mdtDeviceStatusWidget : public QWidget
    */
   void trigRxLed();
 
+  /*! \brief Re-display state text after timeout
+   *
+   * Used by showMessage()
+   */
+  void backToStateText();
+
  private:
 
-  Q_DISABLE_COPY(mdtDeviceStatusWidget);
+  Q_DISABLE_COPY(mdtPortStatusWidget);
 
   QGridLayout *pvLayout;
   QWidget *pvCustomWidget;
   mdtBlinkLed *ldState;
   QPushButton *pbDetails;
+  QMessageBox *mbDetails;
   QLabel *lbMessage;
   QLabel *lbTx;
   QLabel *lbRx;
@@ -157,6 +162,9 @@ class mdtDeviceStatusWidget : public QWidget
   QString pvDisconnectedText;
   QString pvConnectingText;
   QString pvBusyText;
+  QString pvCurrentStateText;
+  QTimer *pvBackToStateTextTimer;
+  bool pvShowingMessage;  // Set by showMessage()
   // Status colors
   mdtLed::color_t pvReadyColor;
   mdtLed::color_t pvConnectingColor;
@@ -166,4 +174,4 @@ class mdtDeviceStatusWidget : public QWidget
   mdtPortThread *pvRxThread;
 };
 
-#endif  // #ifndef MDT_DEVICE_STATUS_WIDGET_H
+#endif  // #ifndef MDT_PORT_STATUS_WIDGET_H

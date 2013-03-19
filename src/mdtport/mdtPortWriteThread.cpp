@@ -56,7 +56,7 @@ void mdtPortWriteThread::run()
   int interframeTime = 0;
   int writeMinWaitTime = 0;
   bool bytePerByteWrite = false;
-  mdtAbstractPort::error_t portError;
+  mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -69,6 +69,8 @@ void mdtPortWriteThread::run()
   bytePerByteWrite = pvPort->config().bytePerByteWrite();
   // Set the running flag
   pvRunning = true;
+  // Notify that we are ready
+  notifyError(mdtAbstractPort::NoError);
 
   // Run...
   while(1){
@@ -90,11 +92,15 @@ void mdtPortWriteThread::run()
     }
     // Write
     portError = writeToPort(frame, bytePerByteWrite, writeMinWaitTime);
-    if(portError != mdtAbstractPort::NoError){
+    if((portError != mdtAbstractPort::NoError)&&(portError != mdtAbstractPort::ErrorHandled)){
       // Stop
       break;
     }
   }
+
+  if(portError == mdtAbstractPort::NoError){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
+  pvRunning = false;
   pvPort->unlockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
 }

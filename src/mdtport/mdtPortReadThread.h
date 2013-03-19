@@ -51,11 +51,6 @@ class mdtPortReadThread : public mdtPortThread
 
  private:
 
-  // Get a new frame from RX frames pool
-  // If no frame is available, a null pointer is returned
-  // Note: this function handle not the serial port mutex
-  ///mdtFrame *getNewFrame();
-
   // Thread implementation
   void run();
 

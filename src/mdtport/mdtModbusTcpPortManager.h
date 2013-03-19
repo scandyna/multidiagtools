@@ -28,6 +28,7 @@
 #include <QList>
 #include <QHash>
 #include <QNetworkInterface>
+///#include <QVariant>
 
 /*! \brief MODBUS/TCP port manager
  *
@@ -135,6 +136,55 @@ class mdtModbusTcpPortManager : public mdtPortManager
    */
   QStringList readScanResult();
 
+  /*! \brief Get the hardware node ID
+   *
+   * The concept of node ID is specific to MultiDiagTools.
+   *  It was introduced to solve the problem of network IP configurations.
+   *
+   * Take a example: We have a application that needs several MODBUS/TCP nodes.
+   *  Each node has several I/O's.
+   *  Say that digital output 1 of node 1 is used to activate a lamp
+   *  and output 1 of node 2 must activate heating register.
+   *  We could choose to have static IP addresses in the network and configure the
+   *  application to activate the correct output of correct node.
+   *  But, this can be a problem when a node must be replaced.
+   *  More cumbersome case is a modular application that could manage several nodes,
+   *  and change his I/Os layout in a dynamic way regarding a context.
+   *
+   * A easy way to solve such problems is to have a DHCP server in the network and
+   *  all nodes configured as DHCP clients
+   *   (static addressing can still be a solution, but we not depend on it).
+   *  Then, for a given application, we can fix a number of digital inputs to play
+   *  the role of node address. Then, instead of using IP address as identification
+   *  (as in the example), we use node address.
+   *
+   * \param bitsCount Number of digital inputs that represents the hardware node address.
+   * \param startFrom First digital input that represents the hardware node address (is the LSB).
+   * \return Node address or value < 0 corresponding on mdtAbstractPort error_t.
+   * \pre Port manager must be connected and thread running before calling this method.
+   * \pre bitsCount must be > 0
+   * \pre startFrom must be >= 0
+   */
+  int getHardwareNodeAddress(int bitsCount, int startFrom = 0);
+
+  /*! \brief Helper method for register service
+   *
+   * Usefull to get resgister values (f.ex. configurations regsisters, ...).
+   *
+   * Note: to get analog I/O values, the mdtDevice API should be used.
+   *
+   * \return True on success. Values are the available with registerValues()
+   * \pre address and n must be > 0
+   */
+  bool getRegisterValues(int address, int n);
+
+  /*! \brief Helper method for register service
+   *
+   * Return result set by getRegisterValues().
+   * Note that values are keeped until next call of getRegisterValues().
+   */
+  const QList<int> &registerValues() const;
+
   /*! \brief Write PDU by copy
    *
    * \todo Obelete this version !
@@ -159,7 +209,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
    * \todo Delete default enqueueResponse !
    * \todo Obselete version with enqueueResponse
    */
-  int writeData(QByteArray pdu, bool enqueueResponse = false);
+  ///int writeData(QByteArray pdu, bool enqueueResponse = false);
 
   /*! \brief Write PDU by copy
    *
@@ -197,6 +247,8 @@ class mdtModbusTcpPortManager : public mdtPortManager
   quint16 pvTransactionId;
   QString pvKnownHostsFileName;
   bool pvAbortScan;
+  // Helper members for Register service
+  QList<int> pvRegisterValues;
 
   // Diseable copy
   Q_DISABLE_COPY(mdtModbusTcpPortManager);

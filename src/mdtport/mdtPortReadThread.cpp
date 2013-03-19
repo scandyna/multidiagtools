@@ -42,7 +42,7 @@ void mdtPortReadThread::run()
   Q_ASSERT(pvPort != 0);
 
   mdtFrame *frame;
-  mdtAbstractPort::error_t portError;
+  mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
   bool useReadTimeoutProtocol = false;
 
@@ -64,12 +64,16 @@ void mdtPortReadThread::run()
   if(frame == 0){
     return;
   }
+  // Notify that we are ready
+  notifyError(mdtAbstractPort::NoError);
+
   // Run...
   while(1){
     // Read thread state
     if(!pvRunning){
       break;
     }
+    Q_ASSERT(frame != 0);
     // Wait on Read event
     portError = pvPort->waitForReadyRead();
     if(portError != mdtAbstractPort::NoError){
@@ -77,10 +81,24 @@ void mdtPortReadThread::run()
       if(!pvRunning){
         break;
       }
-      if(portError != mdtAbstractPort::ReadTimeout){
-        // Unhandled error - notify and end
-        notifyError(portError);
-        break;
+      if((useReadTimeoutProtocol)&&(portError == mdtAbstractPort::ReadTimeout)){
+        // In timeout protocol, the current frame is considered complete
+        if(!frame->isEmpty()){
+          frame->setComplete();
+          pvPort->readenFrames().enqueue(frame);
+          // emit a Readen frame signal
+          emit newFrameReaden();
+          frame = getNewFrameRead();
+          if(frame == 0){
+            break;
+          }
+        }
+      }else{
+        portError = handleCommonReadErrors(portError, &frame);
+        if(portError != mdtAbstractPort::ErrorHandled){
+          // Unhandled error, stop
+          break;
+        }
       }
     }
     // Check about flush request
@@ -93,34 +111,18 @@ void mdtPortReadThread::run()
       }
       continue;
     }
-    // Event occured, get the data from port - Check timeout state first
-    if(pvPort->readTimeoutOccured()){
-      // In timeout protocol, the current frame is considered complete
-      if(useReadTimeoutProtocol){
-        if(frame != 0){
-          if(!frame->isEmpty()){
-            frame->setComplete();
-            pvPort->readenFrames().enqueue(frame);
-            // emit a Readen frame signal
-            emit newFrameReaden();
-            frame = getNewFrameRead();
-            if(frame == 0){
-              break;
-            }
-          }
-        }
-      }else{
-        notifyError(mdtAbstractPort::ReadTimeout);
-      }
-    }else{
-      // Read
-      n = readFromPort(&frame);
-      if(n < 0){
-        // Unhandled error -> notify and stop
-        notifyError(n);
+    // Read
+    n = readFromPort(&frame);
+    if(n < 0){
+      // Check about stopping
+      if(!pvRunning){
         break;
       }
-      Q_ASSERT(frame != 0);
+      portError = handleCommonReadErrors((mdtAbstractPort::error_t)n, &frame);
+      if(portError != mdtAbstractPort::ErrorHandled){
+        // Unhandled error, stop
+        break;
+      }
     }
   }
 
@@ -129,6 +131,9 @@ void mdtPortReadThread::run()
     pvPort->readFramesPool().enqueue(frame);
   }
 
+  if(portError == mdtAbstractPort::NoError){
+    notifyError(mdtAbstractPort::Disconnected);
+  }
+  pvRunning = false;
   pvPort->unlockMutex();
-  notifyError(mdtAbstractPort::Disconnected);
 }

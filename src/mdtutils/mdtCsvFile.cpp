@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,10 +19,12 @@
  **
  ****************************************************************************/
 #include "mdtCsvFile.h"
+#include "mdtError.h"
+#include "mdtAlgorithms.h"
 
 #include <QDebug>
 
-mdtCsvFile::mdtCsvFile(QObject *parent, QByteArray fileEncoding)
+mdtCsvFile::mdtCsvFile(QObject *parent, const QByteArray &fileEncoding)
  : QFile(parent)
 {
   pvCodec = QTextCodec::codecForName(fileEncoding);
@@ -34,6 +36,7 @@ mdtCsvFile::~mdtCsvFile()
   clear();
 }
 
+/**
 bool mdtCsvFile::readLines(QByteArray separator, QByteArray dataProtection, QByteArray comment)
 {
   Q_ASSERT(separator != dataProtection);
@@ -67,7 +70,53 @@ bool mdtCsvFile::readLines(QByteArray separator, QByteArray dataProtection, QByt
 
   return true;
 }
+*/
 
+///splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar = QChar());
+
+bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QString eol)
+{
+  Q_ASSERT(separator != dataProtection);
+  Q_ASSERT(separator != comment);
+  Q_ASSERT(dataProtection != comment);
+
+  QStringList lines;
+  QString line;
+  QStringList items;
+  int i;
+
+  // Check if file was open
+  if(!isOpen()){
+    mdtError e(MDT_FILE_IO_ERROR, "File " + fileName() + " is not open", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+    e.commit();
+    return false;
+  }
+  // Clear previous results
+  clear();
+  // If file was open with Text flag, EOL is allready converted
+  if(isTextModeEnabled()){
+    eol = "\n";
+  }
+  // Read the file and separate lines (not very efficient...)
+  ///lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, dataProtection, escapeChar);
+  lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, "", escapeChar);
+  for(i=0; i<lines.size(); i++){
+    line = lines.at(i).trimmed();
+    // Check if we have a commented line
+    if(line.size() > 0){
+      if((!comment.isEmpty())&&(line.startsWith(comment))){
+        continue;
+      }
+      // Parse the line
+      pvLines.append(mdtAlgorithms::splitString(line, separator, dataProtection, escapeChar));
+    }
+  }
+
+  return true;
+}
+
+/**
 QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &separator, const QByteArray &dataProtection)
 {
   bool parserEnabled;   // Used for data protection ( "data";"other ; data";0123 )
@@ -151,6 +200,7 @@ QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &sep
 
   return pvFields;
 }
+*/
 
 void mdtCsvFile::clear()
 {

@@ -156,15 +156,59 @@ class mdtPortThread : public QThread
 
  protected:
 
-   /*! \brief Handle common errors
+  /*! \brief Handle common read errors
    *
-   * Common errors are:
-   *  - mdtAbstractPort::Disconnected : will try to reconnect
+   * This is a helper class for port specific subclass.
    *
-   * \param portError Error to handle
-   * \return NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else.
+   * Handled errors are:
+   *  - mdtAbstractPort::Disconnected: will try to reconnect
+   *  - mdtAbstractPort::ReadCanceled.
+   *  - mdtAbstractPort::ReadTimeout.
+   *
+   * The current frame is cleared and the notification is sent.
+   *
+   * If this method is called by a non running thread, a warning will be logged.
+   *
+   * \param frame Current read frame. Note that another frame can be pointed after a call ofthis method (f.ex. after disconnection)
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * \pre frame must be a valid pointer.
+   * \pre port must be set with setPort().
+   * \post If frame is null, a UnhandledError is returned.
    */
-  mdtAbstractPort::error_t handleCommonErrors(mdtAbstractPort::error_t portError);
+  mdtAbstractPort::error_t handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+
+  /*! \brief Handle common write errors
+   *
+   * This is a helper class for port specific subclass.
+   *
+   * Handled errors are:
+   *  - mdtAbstractPort::Disconnected: will try to reconnect
+   *  - mdtAbstractPort::WriteCanceled.
+   *  - mdtAbstractPort::WriteTimeout.
+   *
+   * The current frame is put back to write pool and the notification is sent.
+   *
+   * If this method is called by a non running thread, a warning will be logged.
+   *
+   * \param frame Current write frame. Note that frame will be null after a call of this method.
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * \pre frame must be a valid pointer.
+   * \pre port must be set with setPort().
+   */
+  mdtAbstractPort::error_t handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+
+  /*! \brief Handle common read and write errors
+   *
+   * This is a helper class for port specific subclass.
+   *
+   * If readFrame is not null, handleCommonReadErrors() is called first.
+   *  If no error was handled, and writeFrame is not null, handleCommonWriteErrors() is called.
+   *
+   * \param readframe Current read frame. Note that another frame can be pointed after a call ofthis method (f.ex. after disconnection).
+   * \param writeFrame Current write frame. Note that frame can be null after a call of this method (if a write error occured).
+   * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   */
+  mdtAbstractPort::error_t handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
 
   /*! \brief Get a new frame for reading data from port
    *
@@ -214,7 +258,7 @@ class mdtPortThread : public QThread
    * \return The number of frames completed during the process.
    *          This can be helpful for query/reply protocols in witch the standard
    *          reply should be one frame.
-   *         On error, frame is put back into pool and one of the mdtAbstractPort::error_t is returned.
+   *         On error, one of the mdtAbstractPort::error_t is returned and thread must handle error itself.
    *
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
@@ -266,7 +310,7 @@ class mdtPortThread : public QThread
    *  Internally, it will call mdtAbstractPort::waitEventWriteReady()
    *   before writing.
    *
-   * Note that frame will be put back to write pool after complete write, cancel or flush.
+   * Note that frame will be put back to write pool after complete write, cancel, flush or error.
    *  That says that frame will not be valid after call of this method.
    *
    * Note about port mutex handling:<br>
@@ -282,7 +326,7 @@ class mdtPortThread : public QThread
    *                     this method will sleep some time an try a write call again until
    *                     write call works successfull or maxWriteTry is reached.
    *
-   * \return NoError on success or a mdtAbstractPort::error_t error.
+   * \return NoError on success or a mdtAbstractPort::error_t error (See also handleCommonWriteErrors() ).
    *
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).

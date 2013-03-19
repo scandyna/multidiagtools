@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>481</height>
+    <width>781</width>
+    <height>421</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MDT Port Terminal</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLabel" name="lbTerm">
@@ -46,7 +46,7 @@
       </item>
      </layout>
     </item>
-    <item>
+    <item row="1" column="0" colspan="3">
      <widget class="QTextEdit" name="teTerm">
       <property name="focusPolicy">
        <enum>Qt::ClickFocus</enum>
@@ -56,46 +56,29 @@
       </property>
      </widget>
     </item>
-    <item>
+    <item row="2" column="0">
      <widget class="QLabel" name="lbCmd">
       <property name="text">
-       <string>Command</string>
+       <string>Command:</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="3" column="0">
      <widget class="QLineEdit" name="leCmd"/>
     </item>
-    <item>
-     <layout class="QHBoxLayout" name="bottomHLayout">
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>398</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbSendCmdAbort">
-        <property name="text">
-         <string>Abort</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pbSendCmd">
-        <property name="text">
-         <string>Send</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+    <item row="3" column="1">
+     <widget class="QPushButton" name="pbSendCmdAbort">
+      <property name="text">
+       <string>Abort</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QPushButton" name="pbSendCmd">
+      <property name="text">
+       <string>Send</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -104,7 +87,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>647</width>
+     <width>781</width>
      <height>23</height>
     </rect>
    </property>

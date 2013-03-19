@@ -43,6 +43,7 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
 
   // Port setup
   pvPort->config().setFrameType(mdtFrame::FT_USBTMC);
+  pvPort->config().setReadTimeout(30000);
 
   // USBTMC specific
   pvCurrentWritebTag = 0;
@@ -53,9 +54,9 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   portThread = new mdtUsbtmcPortThread;
   connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
   ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
-  ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
   addThread(portThread);
   Q_ASSERT(pvThreads.size() == 1);
+  setObjectName("mdtUsbtmcPortManager");
 }
 
 mdtUsbtmcPortManager::~mdtUsbtmcPortManager()
@@ -484,15 +485,66 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 
 void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
 {
-  qDebug() << "USBTMC port manager, error Nb: " << error;
+  qDebug() << "mdtUsbtmcPortManager::onThreadsErrorOccured() , code: " << error;
+
   switch(error){
+    case mdtAbstractPort::NoError:
+      qDebug() << " -> PortManager: emit ready";
+      emit(ready());
+      break;
+    case mdtAbstractPort::Disconnected:
+      qDebug() << " -> PortManager: emit disconnected";
+      emit(disconnected());
+      break;
+    case mdtAbstractPort::Connecting:
+      qDebug() << " -> PortManager: emit connecting";
+      emit(connecting());
+      break;
+    case mdtAbstractPort::ReadPoolEmpty:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::WritePoolEmpty:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::WriteCanceled:
+      emit(handledError());
+      qDebug() << " -> PortManager: emit handledError";
+      break;
     case mdtAbstractPort::ReadCanceled:
-      // Thread has finish aborting a bulk IN, we can continue
-      qDebug() << "USBTMC port manager: cancel wait ...";
       cancelReadWait();
-      emit(errorStateChanged(error));
+      emit(handledError());
+      qDebug() << " -> PortManager: emit handledError";
+      break;
+    case mdtAbstractPort::ControlCanceled:
+      emit(handledError());
+      qDebug() << " -> PortManager: emit handledError";
+      break;
+    case mdtAbstractPort::ReadTimeout:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::WriteTimeout:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::ControlTimeout:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::UnhandledError:
+      emit(unhandledError());
+      qDebug() << " -> PortManager: emit unhandledError";
+      break;
+    case mdtAbstractPort::MessageInTimeout:
+      // Not implemented yet
+      break;
+    case mdtAbstractPort::MessageInCanceled:
+      // Not implemented yet
       break;
     default:
-      emit(errorStateChanged(error));
+      emit(unhandledError());
+      qDebug() << " -> PortManager: emit unhandledError";
   }
 }

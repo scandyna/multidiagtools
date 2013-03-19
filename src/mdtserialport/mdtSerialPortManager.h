@@ -83,19 +83,15 @@ class mdtSerialPortManager : public mdtPortManager
    */
   mdtAbstractSerialPort &port();
 
-  /*! \brief Get the write thread object
-   */
-  ///mdtPortWriteThread *writeThread();
-  ///mdtPortThread *writeThread();
-
-  /*! \brief Get the read thread object
-   */
-  ///mdtPortReadThread *readThread();
-  ///mdtPortThread *readThread();
-
   /*! \brief Get the modem lines thread object
    */
   mdtSerialPortCtlThread *ctlThread();
+
+ private slots:
+
+  /*! \brief Manage errors comming from port threads
+   */
+  void onThreadsErrorOccured(int error);
 
  private:
 
@@ -103,8 +99,6 @@ class mdtSerialPortManager : public mdtPortManager
   Q_DISABLE_COPY(mdtSerialPortManager);
 
   // Threads
-  ///mdtPortWriteThread *pvWriteThread;
-  ///mdtPortReadThread *pvReadThread;
   mdtSerialPortCtlThread *pvCtlThread;
 };
 

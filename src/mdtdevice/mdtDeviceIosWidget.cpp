@@ -63,26 +63,7 @@ void mdtDeviceIosWidget::setDeviceIos(mdtDeviceIos *ios)
   QList<mdtDigitalIo*> digitalOutputs;
 
   // Remove existing widgets
-  for(i=0; i<pvAnalogInputs.size(); i++){
-    pvLayout->removeWidget(pvAnalogInputs.at(i));
-    delete pvAnalogInputs.at(i);
-  }
-  pvAnalogInputs.clear();
-  for(i=0; i<pvAnalogOutputs.size(); i++){
-    pvLayout->removeWidget(pvAnalogOutputs.at(i));
-    delete pvAnalogOutputs.at(i);
-  }
-  pvAnalogOutputs.clear();
-  for(i=0; i<pvDigitalInputs.size(); i++){
-    pvLayout->removeWidget(pvDigitalInputs.at(i));
-    delete pvDigitalInputs.at(i);
-  }
-  pvDigitalInputs.clear();
-  for(i=0; i<pvDigitalOutputs.size(); i++){
-    pvLayout->removeWidget(pvDigitalOutputs.at(i));
-    delete pvDigitalOutputs.at(i);
-  }
-  pvDigitalOutputs.clear();
+  clearIoWidgets();
 
   pvIos = ios;
   row = 0;
@@ -163,3 +144,28 @@ void mdtDeviceIosWidget::setDeviceIos(mdtDeviceIos *ios)
 
 }
 
+void mdtDeviceIosWidget::clearIoWidgets()
+{
+  int i;
+
+  for(i=0; i<pvAnalogInputs.size(); i++){
+    pvLayout->removeWidget(pvAnalogInputs.at(i));
+    delete pvAnalogInputs.at(i);
+  }
+  pvAnalogInputs.clear();
+  for(i=0; i<pvAnalogOutputs.size(); i++){
+    pvLayout->removeWidget(pvAnalogOutputs.at(i));
+    delete pvAnalogOutputs.at(i);
+  }
+  pvAnalogOutputs.clear();
+  for(i=0; i<pvDigitalInputs.size(); i++){
+    pvLayout->removeWidget(pvDigitalInputs.at(i));
+    delete pvDigitalInputs.at(i);
+  }
+  pvDigitalInputs.clear();
+  for(i=0; i<pvDigitalOutputs.size(); i++){
+    pvLayout->removeWidget(pvDigitalOutputs.at(i));
+    delete pvDigitalOutputs.at(i);
+  }
+  pvDigitalOutputs.clear();
+}

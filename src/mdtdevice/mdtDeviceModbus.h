@@ -22,10 +22,12 @@
 #define MDT_DEVICE_MODBUS_H
 
 #include "mdtDevice.h"
+#include "mdtPortInfo.h"
 #include <QMap>
 #include <QVariant>
 #include <QList>
 #include <QByteArray>
+#include <QStringList>
 
 class mdtFrameCodecModbus;
 class mdtModbusTcpPortManager;
@@ -48,6 +50,46 @@ class mdtDeviceModbus : public mdtDevice
   /*! \brief Get internal port manager instance
    */
   mdtPortManager *portManager();
+
+  /*! \brief Get internal port manager instance
+   */
+  mdtModbusTcpPortManager *modbusTcpPortManager();
+
+  /*! \brief Search and connect to physical device.
+   *
+   * Will try to connect to device listed in scanResult until
+   *  hardwareNodeId is found.
+   *
+   * \param scanResult List of mdtPortInfo containing a port name in format host:port.
+   * \param hardwareNodeId See mdtModbusTcpPortManager::getHardwareNodeAddress().
+   * \param bitsCount See mdtModbusTcpPortManager::getHardwareNodeAddress().
+   * \param startFrom See mdtModbusTcpPortManager::getHardwareNodeAddress().
+   * \return A error listed in mdtAbstractPort::error_t (NoError on success).
+   * \pre scanResult must contain valid pointers.
+   * \pre Internal port manager not runnig and port must be closed before calling this method.
+   */
+  mdtAbstractPort::error_t connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom = 0);
+
+  /*! \brief Helper method for register service
+   *
+   * Usefull to get resgister values (f.ex. configurations regsisters, ...).
+   *
+   * Note: to get analog I/O values, the mdtDevice API should be used.
+   *
+   * \return True on success. Values are the available with registerValues()
+   * \pre address and n must be > 0
+   * \sa mdtModbusTcpPortManager::getRegisterValues()
+   */
+  bool getRegisterValues(int address, int n);
+
+  /*! \brief Helper method for register service
+   *
+   * Return result set by getRegisterValues().
+   * Note that values are keeped until next call of getRegisterValues().
+   *
+   * \sa mdtModbusTcpPortManager::registerValues()
+   */
+  const QList<int> &registerValues() const;
 
  private slots:
 

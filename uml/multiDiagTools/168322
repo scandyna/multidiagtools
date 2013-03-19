@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 26
+  revision 29
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1382,124 +1382,6 @@ ${inlines}
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
 "
 	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-    end
-
-    classdiagram 374658 "mdtPortConfigWidget"
-      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
-    end
-
-    class 369922 "ui_mdtPortConfigWidget"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-    end
-
-    class 370690 "mdtPortConfigWidget"
-      visibility package 
-      cpp_decl "${comment}${template}class ${name}${inherit} {
-${members}};
-${inlines}
-"
-      java_decl ""
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      classrelation 455042 // <generalisation>
-	relation 454786 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 455042 // <generalisation>
-	  b parent class_ref 316162 // QWidget
-      end
-
-      classrelation 455170 // <generalisation>
-	relation 454914 ---|>
-	  a public
-	    cpp default "${type}"
-	    classrelation_ref 455170 // <generalisation>
-	  b parent class_ref 369922 // ui_mdtPortConfigWidget
-      end
-
-      operation 721410 "mdtPortConfigWidget"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "parent" type class_ref 316162 // QWidget
-	    defaultvalue "0"
-	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
-"
-	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 721538 "displayConfig"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "config" type class_ref 256386 // mdtPortConfig
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      operation 721666 "updateConfig"
-	public explicit_return_type "void"
-	nparams 1
-	  param out name "config" type class_ref 256386 // mdtPortConfig
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
-      end
-
-      classrelation 455298 // <dependency>
-	relation 455042 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 455298 // <dependency>
-	  b parent class_ref 256386 // mdtPortConfig
-      end
-
-      operation 721794 "on_cbFrameType_currentIndexChanged"
-	stereotype "slot"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "index" explicit_type "int"
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
   ${body}}
 "
 	
@@ -3276,6 +3158,136 @@ ${inlines}
 	
 	
 	
+      end
+    end
+
+    state 142338 "mdtPortManagerStates"
+      stereotype "machine"
+      statediagram 581378 "mdtPortManagerStates"
+	package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+	show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+	size A3
+      end
+
+      state 142466 "Ready"
+	  uml_on_entry "setStateReady"
+	transition 151810 "busy"
+	  on state_ref 143106 // Busy
+	  external 
+	end
+
+	transition 152066 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 152578 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+
+	transition 153090 "handledError"
+	  on state_ref 142978 // Warning
+	  external 
+	end
+      end
+
+      state 142594 "Disconnected"
+	  uml_on_entry "setStateDisconnected"
+	transition 151298 "connecting"
+	  on state_ref 142722 // Connecting
+	  external 
+	end
+
+	transition 153346 "<transition>"
+	  on pseudostate_ref 148098 // final
+	  external 
+	end
+
+	transition 153602 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+      end
+
+      state 142722 "Connecting"
+	  uml_on_entry "setStateConnecting"
+	transition 151554 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 151682 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+
+	transition 152450 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+      end
+
+      state 142850 "Error"
+	  uml_on_entry "setStateError"
+	transition 153474 "<transition>"
+	  on pseudostate_ref 148226 // final
+	  external 
+	end
+      end
+
+      state 142978 "Warning"
+	  uml_on_entry "setStateWarning"
+	transition 152322 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 152834 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+
+	transition 153218 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+      end
+
+      state 143106 "Busy"
+	  uml_on_entry "setStateBusy"
+	transition 151938 "ready"
+	  on state_ref 142466 // Ready
+	  external 
+	end
+
+	transition 152194 "disconnected"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+
+	transition 152706 "unhandledError"
+	  on state_ref 142850 // Error
+	  external 
+	end
+
+	transition 152962 "handledError"
+	  on state_ref 142978 // Warning
+	  external 
+	end
+      end
+
+      pseudostate 147970 initial 
+	transition 151170 "<transition>"
+	  on state_ref 142594 // Disconnected
+	  external 
+	end
+      end
+
+      pseudostate 148098 final 
+      end
+
+      pseudostate 148226 final 
       end
     end
   end
@@ -5849,5 +5861,637 @@ ${inlines}
     end
   end
 
+  classview 372482 "mdtPortStatusWidget"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 311170 // mdtDeviceStatusWidget
+    classdiagram 534914 "mdtDeviceStatusWidget"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 558978 "mdtPortStatusWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 1086722 "mdtPortStatusWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1086850 "~mdtPortStatusWidget"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 664194 // <generalisation>
+	relation 655746 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 664194 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      operation 1086978 "setState"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "state" explicit_type "state_t"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1087234 "setState"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 3
+	  param in name "state" explicit_type "state_t"
+	  param in name "message" type class_ref 161026 // QString
+	  param in name "details" type class_ref 161026 // QString
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, const ${t2} & ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 664322 // ldState (<directional composition>)
+	relation 655874 *-->
+	  a role_name "ldState" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 664322 // ldState (<directional composition>)
+	  b parent class_ref 363138 // mdtBlinkLed
+      end
+
+      classrelation 664578 // pbDetails (<directional composition>)
+	relation 656130 *-->
+	  a role_name "pbDetails" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 664578 // pbDetails (<directional composition>)
+	  b parent class_ref 559106 // QPushButton
+      end
+
+      classrelation 664706 // lbMessage (<directional composition>)
+	relation 656258 *-->
+	  a role_name "lbMessage" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 664706 // lbMessage (<directional composition>)
+	  b parent class_ref 559234 // QLabel
+      end
+
+      classrelation 664834 // lbTx (<directional composition>)
+	relation 656386 *-->
+	  a role_name "lbTx" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 664834 // lbTx (<directional composition>)
+	  b parent class_ref 559234 // QLabel
+      end
+
+      classrelation 664962 // lbRx (<directional composition>)
+	relation 656514 *-->
+	  a role_name "lbRx" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 664962 // lbRx (<directional composition>)
+	  b parent class_ref 559234 // QLabel
+      end
+
+      classrelation 665090 // ldTx (<directional composition>)
+	relation 656642 *-->
+	  a role_name "ldTx" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 665090 // ldTx (<directional composition>)
+	  b parent class_ref 363138 // mdtBlinkLed
+      end
+
+      classrelation 665218 // ldRx (<directional composition>)
+	relation 656770 *-->
+	  a role_name "ldRx" multiplicity "1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	    classrelation_ref 665218 // ldRx (<directional composition>)
+	  b parent class_ref 363138 // mdtBlinkLed
+      end
+    end
+  end
+
   package_ref 155010 // linux
+
+  classview 411906 "SetupDialogs"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    associated_deployment_view deploymentview_ref 350338 // SetupDialogs
+    classdiagram 374658 "mdtPortConfigWidget"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 370690 "mdtPortConfigWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 455042 // <generalisation>
+	relation 454786 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 455042 // <generalisation>
+	  b parent class_ref 316162 // QWidget
+      end
+
+      classrelation 455170 // <generalisation>
+	relation 454914 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 455170 // <generalisation>
+	  b parent class_ref 369922 // ui_mdtPortConfigWidget
+      end
+
+      operation 721410 "mdtPortConfigWidget"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 721538 "displayConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "config" type class_ref 256386 // mdtPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 721666 "updateConfig"
+	public explicit_return_type "void"
+	nparams 1
+	  param out name "config" type class_ref 256386 // mdtPortConfig
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 455298 // <dependency>
+	relation 455042 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 455298 // <dependency>
+	  b parent class_ref 256386 // mdtPortConfig
+      end
+
+      operation 721794 "on_cbFrameType_currentIndexChanged"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "index" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 369922 "ui_mdtPortConfigWidget"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    classdiagram 594434 "mdtAbstractPortSetupDialog"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 598786 "mdtAbstractPortSetupDialog"
+      abstract visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 1161602 "mdtAbstractPortSetupDialog"
+	public explicit_return_type ""
+	nparams 1
+	  param in name "parent" type class_ref 316162 // QWidget
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${inline}${name}${(}const ${t0} & ${p0}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}const ${t0} & ${p0}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1161730 "~mdtAbstractPortSetupDialog"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${inline}${virtual}${name}${(}${)}${volatile}${throw};
+"
+	cpp_def "${comment}${inline}${class}::${name}${(}${)}${volatile}${throw} {
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1163010 "setPortManager"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "portManager" type class_ref 182018 // mdtPortManager
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1163522 "portManager"
+	public return_type class_ref 182018 // mdtPortManager
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 758146 // <generalisation>
+	relation 749698 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 758146 // <generalisation>
+	  b parent class_ref 370434 // QDialog
+      end
+
+      classrelation 758274 // <generalisation>
+	relation 749826 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 758274 // <generalisation>
+	  b parent class_ref 598914 // Ui::mdtAbstractPortSetupDialog
+      end
+
+      operation 1161858 "setStateFromPortManager"
+	stereotype "slot"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "state" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1161986 "setStateDisconnected"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1162114 "setStateConnecting"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1162242 "setStateReady"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1162370 "setStateBusy"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1162498 "setStateWarning"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1162626 "setStateError"
+	abstract cpp_virtual protected explicit_return_type "void"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1163394 "applySetup"
+	abstract cpp_virtual protected explicit_return_type "bool"
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	
+	
+	
+	
+      end
+
+      operation 1162754 "showStatusMessage"
+	protected explicit_return_type "void"
+	nparams 2
+	  param in name "message" type class_ref 161026 // QString
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 1162882 "showStatusMessage"
+	protected explicit_return_type "void"
+	nparams 3
+	  param in name "message" type class_ref 161026 // QString
+	  param in name "details" type class_ref 161026 // QString
+	  param in name "timeout" explicit_type "int"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}, const ${t1} & ${p1}, ${t2} ${p2}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 758402 // pvPortManager (<unidirectional association>)
+	relation 749954 --->
+	  a role_name "pvPortManager" multiplicity "0..1" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 758402 // pvPortManager (<unidirectional association>)
+	  b parent class_ref 182018 // mdtPortManager
+      end
+
+      operation 1163650 "on_buttonBox_clicked"
+	stereotype "slot"
+	private explicit_return_type "void"
+	nparams 1
+	  param in name "button" explicit_type "QAbstractButton"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}const ${t0} & ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+    end
+
+    class 598914 "Ui::mdtAbstractPortSetupDialog"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 679810 "buttonBox"
+	protected explicit_type "QDialogButtonBox"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 679938 "wStatus"
+	protected type class_ref 316162 // QWidget
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 680066 "twOptions"
+	protected type class_ref 370562 // QTabWidget
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 680194 "wHeader"
+	protected type class_ref 316162 // QWidget
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+  end
+
+  deploymentview 350338 "SetupDialogs"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 361474 "mdtAbstractPortSetupDialog"
+      stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
+      associated_classes
+	class_ref 598786 // mdtAbstractPortSetupDialog
+      end
+    end
+  end
 end

@@ -117,9 +117,9 @@ if(WIN32)
 endif(WIN32)
 
 # Output library
-add_library (mdtutils SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
-target_link_libraries(mdtutils ${QT_LIBRARIES})
-target_link_libraries(mdtutils "qtsingleapplication")
+add_library (mdtutils${MDTLIB_VERSION_SUFFIX} SHARED ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
+target_link_libraries(mdtutils${MDTLIB_VERSION_SUFFIX} "qtsingleapplication${MDTLIB_VERSION_SUFFIX}")
 
 # Static version of the library
 #if(MDT_BUILD_STATIC_LIBS)
@@ -145,18 +145,17 @@ file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtutils" COMPONENT dev)
 
 # Install targets
-install(TARGETS "mdtutils" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
-message("mdtutils SRC dir: ${PROJECT_SOURCE_DIR}")
+install(TARGETS "mdtutils${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
 
 # Strip library and put debug symbols into separate file
 if(UNIX)
-  add_custom_command(TARGET "mdtutils"
+  add_custom_command(TARGET "mdtutils${MDTLIB_VERSION_SUFFIX}"
                     POST_BUILD
-                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutils.so" "${PROJECT_SOURCE_DIR}/libmdtutils.dbg"
-                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutils.so"
-                    COMMAND objcopy --add-gnu-debuglink="libmdtutils.dbg" "${PROJECT_SOURCE_DIR}/libmdtutils.so"
-                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutils.dbg")
-  install(FILES "${PROJECT_SOURCE_DIR}/libmdtutils.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
+                    COMMAND objcopy --only-keep-debug "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so" "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg"
+                    COMMAND strip --strip-debug --strip-unneeded "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND objcopy --add-gnu-debuglink="libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.so"
+                    COMMAND chmod -x "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg")
+  install(FILES "${PROJECT_SOURCE_DIR}/libmdtutils${MDTLIB_VERSION_SUFFIX}.dbg" DESTINATION "${LIB_DEST_DIR}" COMPONENT dbg)
 endif(UNIX)
 
 

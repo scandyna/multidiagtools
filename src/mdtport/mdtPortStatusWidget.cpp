@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -18,13 +18,16 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#include "mdtDeviceStatusWidget.h"
+#include "mdtPortStatusWidget.h"
+#include "mdtPortManager.h"
 #include <QPushButton>
 #include <QLabel>
+#include <QTimer>
+#include <QMessageBox>
 
 #include <QDebug>
 
-mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
+mdtPortStatusWidget::mdtPortStatusWidget(QWidget *parent)
  : QWidget(parent)
 {
   pvLayout = new QGridLayout;
@@ -36,9 +39,13 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   lbRx = 0;
   ldTx = 0;
   ldRx = 0;
+  pvShowingMessage = false;
   // Add GUI elements
   pbDetails = new QPushButton("...");
   pbDetails->setEnabled(false);
+  mbDetails = new QMessageBox(this);
+  mbDetails->setStandardButtons(QMessageBox::Ok);
+  mbDetails->setIcon(QMessageBox::Warning);
   pvLayout->addWidget(pbDetails, 0, 0);
   ldState = new mdtBlinkLed;
   ldState->setFixedSize(15, 15);
@@ -50,23 +57,19 @@ mdtDeviceStatusWidget::mdtDeviceStatusWidget(QWidget *parent)
   // Set some default attributes
   setDefaultStateTexts();
   setDefaultStateColors();
+  // Setup back to state text timer
+  pvBackToStateTextTimer = new QTimer(this);
+  pvBackToStateTextTimer->setSingleShot(true);
+  connect(pvBackToStateTextTimer, SIGNAL(timeout()), this, SLOT(backToStateText()));
+  connect(pbDetails, SIGNAL(clicked()), mbDetails, SLOT(exec()));
 }
 
-mdtDeviceStatusWidget::~mdtDeviceStatusWidget()
+mdtPortStatusWidget::~mdtPortStatusWidget()
 {
   disableTxRxLeds();
 }
 
-void mdtDeviceStatusWidget::setDevice(mdtDevice *device)
-{
-  Q_ASSERT(device != 0);
-
-  ///connect(device, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
-  connect(device, SIGNAL(stateChanged(int, const QString&, const QString&)), this, SLOT(setState(int, const QString&, const QString&)));
-  setState(device->state());
-}
-
-void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
+void mdtPortStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThread *rxThread)
 {
   Q_ASSERT(pvLayout != 0);
   Q_ASSERT(txThread != 0);
@@ -96,7 +99,7 @@ void mdtDeviceStatusWidget::enableTxRxLeds(mdtPortThread *txThread, mdtPortThrea
   connect(pvRxThread, SIGNAL(readProcessBegin()), this, SLOT(trigRxLed()));
 }
 
-void mdtDeviceStatusWidget::disableTxRxLeds()
+void mdtPortStatusWidget::disableTxRxLeds()
 {
   Q_ASSERT(layout() != 0);
 
@@ -126,7 +129,7 @@ void mdtDeviceStatusWidget::disableTxRxLeds()
   }
 }
 
-void mdtDeviceStatusWidget::addCustomWidget(QWidget *widget)
+void mdtPortStatusWidget::addCustomWidget(QWidget *widget)
 {
   Q_ASSERT(pvLayout != 0);
   Q_ASSERT(widget != 0);
@@ -136,7 +139,7 @@ void mdtDeviceStatusWidget::addCustomWidget(QWidget *widget)
   pvLayout->addWidget(pvCustomWidget, 0, pvLayout->columnCount());
 }
 
-void mdtDeviceStatusWidget::removeCustomWidget()
+void mdtPortStatusWidget::removeCustomWidget()
 {
   Q_ASSERT(pvLayout != 0);
 
@@ -146,7 +149,7 @@ void mdtDeviceStatusWidget::removeCustomWidget()
   }
 }
 
-void mdtDeviceStatusWidget::setDefaultStateTexts()
+void mdtPortStatusWidget::setDefaultStateTexts()
 {
   pvReadyText = tr("Ready");
   pvDisconnectedText = tr("Disconnected");
@@ -154,111 +157,113 @@ void mdtDeviceStatusWidget::setDefaultStateTexts()
   pvBusyText = tr("Busy");
 }
 
-void mdtDeviceStatusWidget::setStateReadyText(const QString &text)
+void mdtPortStatusWidget::setStateReadyText(const QString &text)
 {
   pvReadyText = text;
 }
 
-void mdtDeviceStatusWidget::setStateDisconnectedText(const QString &text)
+void mdtPortStatusWidget::setStateDisconnectedText(const QString &text)
 {
   pvDisconnectedText = text;
 }
 
-void mdtDeviceStatusWidget::setStateConnectingText(const QString &text)
+void mdtPortStatusWidget::setStateConnectingText(const QString &text)
 {
   pvConnectingText = text;
 }
 
-void mdtDeviceStatusWidget::setStateBusyText(const QString &text)
+void mdtPortStatusWidget::setStateBusyText(const QString &text)
 {
   pvBusyText = text;
 }
 
-void mdtDeviceStatusWidget::setDefaultStateColors()
+void mdtPortStatusWidget::setDefaultStateColors()
 {
   pvReadyColor = mdtLed::LED_COLOR_GREEN;
   pvConnectingColor = mdtLed::LED_COLOR_ORANGE;
   pvBusyColor = mdtLed::LED_COLOR_ORANGE;
 }
 
-void mdtDeviceStatusWidget::setStateReadyColor(mdtLed::color_t color)
+void mdtPortStatusWidget::setStateReadyColor(mdtLed::color_t color)
 {
   pvReadyColor = color;
 }
 
-void mdtDeviceStatusWidget::setStateConnectingColor(mdtLed::color_t color)
+void mdtPortStatusWidget::setStateConnectingColor(mdtLed::color_t color)
 {
   pvConnectingColor = color;
 }
 
-void mdtDeviceStatusWidget::setStateBusyColor(mdtLed::color_t color)
+void mdtPortStatusWidget::setStateBusyColor(mdtLed::color_t color)
 {
   pvBusyColor = color;
 }
 
-void mdtDeviceStatusWidget::setState(int state)
+void mdtPortStatusWidget::setState(int state)
 {
-  if(state == mdtDevice::Ready){
+  if(state == mdtPortManager::Ready){
     ldState->setColor(pvReadyColor);
     ldState->setOn();
-    lbMessage->setText(pvReadyText);
-  }else if(state == mdtDevice::Disconnected){
+    pvCurrentStateText = pvReadyText;
+  }else if(state == mdtPortManager::Disconnected){
     ldState->setGreen();
     ldState->setOff();
-    lbMessage->setText(pvDisconnectedText);
-  }else if(state == mdtDevice::Connecting){
+    pvCurrentStateText = pvDisconnectedText;
+  }else if(state == mdtPortManager::Connecting){
     ldState->setColor(pvConnectingColor);
     ldState->setOn();
-    lbMessage->setText(pvConnectingText);
-  }else if(state == mdtDevice::Busy){
+    pvCurrentStateText = pvConnectingText;
+  }else if(state == mdtPortManager::Busy){
     ldState->setColor(pvBusyColor);
     ldState->setOn();
-    lbMessage->setText(pvBusyText);
+    pvCurrentStateText = pvBusyText;
   }else{
     ldState->setRed();
     ldState->setOn();
-    lbMessage->setText(tr("Unknown state"));
+    pvCurrentStateText = tr("Unknown state");
+  }
+  // Set state text
+  if(!pvShowingMessage){
+    lbMessage->setText(pvCurrentStateText);
   }
 }
 
-void mdtDeviceStatusWidget::setState(int state, const QString &message, const QString &details)
+void mdtPortStatusWidget::showMessage(const QString &message, const QString &details, int timeout)
 {
-  if(message.isEmpty()){
-    setState(state);
+  pvShowingMessage = true;
+  lbMessage->setText(message);
+  if(!details.isEmpty()){
+    mbDetails->setText(message);
+    mbDetails->setInformativeText(details);
+    pbDetails->setEnabled(true);
+    /// \todo Implement details !
   }else{
-    // Set LED color
-    if(state == mdtDevice::Ready){
-      ldState->setColor(pvReadyColor);
-      ldState->setOn();
-    }else if(state == mdtDevice::Disconnected){
-      ldState->setGreen();
-      ldState->setOff();
-    }else if(state == mdtDevice::Connecting){
-      ldState->setColor(pvConnectingColor);
-      ldState->setOn();
-    }else if(state == mdtDevice::Busy){
-      ldState->setColor(pvBusyColor);
-      ldState->setOn();
-    }else{
-      ldState->setRed();
-      ldState->setOn();
-    }
-    // Set text
-    lbMessage->setText(message);
+    mbDetails->setText("");
+    mbDetails->setInformativeText("");
+    pbDetails->setEnabled(false);
   }
-  /// \todo Implement details
+  if(timeout > 0){
+    pvBackToStateTextTimer->start(timeout);
+  }
 }
 
-void mdtDeviceStatusWidget::trigTxLed()
+void mdtPortStatusWidget::trigTxLed()
 {
   Q_ASSERT(ldTx != 0);
 
   ldTx->setOn(100);
 }
 
-void mdtDeviceStatusWidget::trigRxLed()
+void mdtPortStatusWidget::trigRxLed()
 {
   Q_ASSERT(ldRx != 0);
 
   ldRx->setOn(100);
+}
+
+void mdtPortStatusWidget::backToStateText()
+{
+  pvShowingMessage = false;
+  lbMessage->setText(pvCurrentStateText);
+  pbDetails->setEnabled(false);
 }

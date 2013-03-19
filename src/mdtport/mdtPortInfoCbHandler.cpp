@@ -24,6 +24,8 @@
 #include <QComboBox>
 #include <QVariant>
 
+#include <QDebug>
+
 mdtPortInfoCbHandler::mdtPortInfoCbHandler(QObject *parent)
  : QObject(parent)
 {
@@ -56,16 +58,20 @@ void mdtPortInfoCbHandler::setDevicesComboBox(QComboBox *comboBox)
 
 void mdtPortInfoCbHandler::fillComboBoxes(const QList<mdtPortInfo*> &portInfoList)
 {
+  Q_ASSERT(cbPorts != 0);
+
   int i;
   mdtPortInfo *portInfo;
-  QVariant var;
+  ///QVariant var;
 
   cbPorts->clear();
   for(i=0; i<portInfoList.size(); i++){
     portInfo = portInfoList.at(i);
     Q_ASSERT(portInfo != 0);
-    var.setValue(*portInfo);
-    cbPorts->addItem(portInfo->displayText(), var);
+    ///var.setValue(*portInfo);
+    ///var.setValue(portInfo->portName());
+    qDebug() << "mdtPortInfoCbHandler::fillComboBoxes(): add item, portName: " << portInfo->portName() << " , DT: " << portInfo->displayText();
+    cbPorts->addItem(portInfo->displayText(), portInfo->portName());
   }
 }
 
@@ -78,8 +84,11 @@ mdtPortInfo mdtPortInfoCbHandler::currentPortInfo()
   if(cbPorts->currentIndex() < 0){
     return portInfo;
   }
+  portInfo.setDisplayText(cbPorts->currentText());
+  portInfo.setPortName(cbPorts->itemData(cbPorts->currentIndex()).toString());
 
-  return cbPorts->itemData(cbPorts->currentIndex()).value<mdtPortInfo>();
+  return portInfo;
+  ///return cbPorts->itemData(cbPorts->currentIndex()).value<mdtPortInfo>();
 }
 
 mdtDeviceInfo mdtPortInfoCbHandler::currentDeviceInfo()

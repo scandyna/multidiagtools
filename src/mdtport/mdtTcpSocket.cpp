@@ -22,6 +22,16 @@
 #include "mdtError.h"
 #include "mdtTcpSocketThread.h"
 #include <QStringList>
+#include <QApplication>
+
+// We need a sleep function
+#ifdef Q_OS_UNIX
+ #define msleep(t) usleep(1000*t)
+#endif
+#ifdef Q_OS_WIN
+ #include <windows.h>
+ #define msleep(t) Sleep(t)
+#endif
 
 mdtTcpSocket::mdtTcpSocket(QObject *parent)
  : mdtAbstractPort(parent)
@@ -122,9 +132,12 @@ mdtAbstractPort::error_t mdtTcpSocket::waitForReadyRead()
   unlockMutex();
   ok = pvSocket->waitForReadyRead(pvReadTimeout);
   lockMutex();
-  if(ok){
-    updateReadTimeoutState(false);
-  }else{
+  if(!ok){
+    // Timeout error is probably due tu a connection loss
+    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
+      pvSocket->abort();
+      return Disconnected;
+    }
     return mapSocketError(pvSocket->error(), true);
   }
 
@@ -139,6 +152,11 @@ qint64 mdtTcpSocket::read(char *data, qint64 maxSize)
 
   n = pvSocket->read(data, maxSize);
   if(n < 0){
+    // Timeout error is probably due tu a connection loss
+    if(pvSocket->error() == QAbstractSocket::SocketTimeoutError){
+      pvSocket->abort();
+      return Disconnected;
+    }
     return mapSocketError(pvSocket->error(), true);
   }
 
@@ -159,9 +177,7 @@ mdtAbstractPort::error_t mdtTcpSocket::waitEventWriteReady()
   unlockMutex();
   ok = pvSocket->waitForBytesWritten(pvWriteTimeout);
   lockMutex();
-  if(ok){
-    updateReadTimeoutState(false);
-  }else{
+  if(!ok){
     return mapSocketError(pvSocket->error(), false);
   }
 
@@ -188,6 +204,9 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
 
   QStringList items;
   bool ok;
+  QTcpSocket socket;
+  int timeout = 5000; /// \todo Get a valid connection timeout
+  int maxIter;
 
   // Extract host name and port number from port name
   items = pvPortName.split(":");
@@ -201,6 +220,36 @@ mdtAbstractPort::error_t mdtTcpSocket::pvOpen()
   pvPeerPort = items.at(1).toUShort(&ok);
   if(!ok){
     mdtError e(MDT_TCP_IO_ERROR, "Cannot extract port in (format must be hostname:port) " + pvPortName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+    e.commit();
+    return SetupError;
+  }
+  // Try to connect
+  socket.connectToHost(pvPeerName, pvPeerPort);
+  maxIter = timeout / 50;
+  ok = false;
+  while(socket.state() != QAbstractSocket::ConnectedState){
+    if(maxIter <= 0){
+      break;
+    }
+    qApp->processEvents();
+    msleep(50);
+    maxIter--;
+  }
+  if(socket.state() != QAbstractSocket::UnconnectedState){
+    // Check if connection was successfull
+    if(socket.state() == QAbstractSocket::ConnectedState){
+      ok = true;
+    }
+    // Disconnect
+    socket.abort();
+    while((socket.state() != QAbstractSocket::ClosingState)&&(socket.state() != QAbstractSocket::UnconnectedState)){
+      qApp->processEvents();
+      msleep(50);
+    }
+  }
+  if(!ok){
+    mdtError e(MDT_TCP_IO_ERROR, "Cannot connect to " + pvPortName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
     e.commit();
     return SetupError;
@@ -226,8 +275,6 @@ mdtAbstractPort::error_t mdtTcpSocket::pvSetup()
   // Set R/W timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
-  // Init flags
-  ///pvCancelWrite = false;
 
   return NoError;
 }
@@ -238,34 +285,34 @@ void mdtTcpSocket::pvFlushIn()
 
 void mdtTcpSocket::pvFlushOut()
 {
-  ///pvCancelWrite = true;
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::mapSocketError(QAbstractSocket::SocketError error, bool byRead)
 {
-  if(error == QAbstractSocket::ConnectionRefusedError){
-    return PortAccess;
-  }else if(error == QAbstractSocket::RemoteHostClosedError){
-    return Disconnected;
-  }else if(error == QAbstractSocket::HostNotFoundError){
-    return PortNotFound;
-  }else if(error == QAbstractSocket::SocketAccessError){
-    return PortAccess;
-  }else if(error == QAbstractSocket::SocketTimeoutError){
-    if(byRead){
-      updateReadTimeoutState(true);
-      return ReadTimeout;
-    }else{
-      updateWriteTimeoutState(true);
-      return WriteTimeout;
-    }
-  }else if(error == QAbstractSocket::NetworkError){
-    return Disconnected;
-  }else{
-    mdtError e(MDT_TCP_IO_ERROR, "Unhandled socket error occured.", mdtError::Error);
-    e.setSystemError(error, pvSocket->errorString());
-    MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
-    e.commit();
-    return UnhandledError;
+  Q_ASSERT(pvSocket != 0);
+
+  switch(error){
+    case QAbstractSocket::ConnectionRefusedError:
+      return PortAccess;
+    case QAbstractSocket::RemoteHostClosedError:
+      return Disconnected;
+    case QAbstractSocket::HostNotFoundError:
+      return PortNotFound;
+    case QAbstractSocket::SocketAccessError:
+      return PortAccess;
+    case QAbstractSocket::SocketTimeoutError:
+      if(byRead){
+        return ReadTimeout;
+      }else{
+        return WriteTimeout;
+      }
+    case QAbstractSocket::NetworkError:
+      return Disconnected;
+    default:
+      mdtError e(MDT_TCP_IO_ERROR, "Unhandled socket error occured.", mdtError::Error);
+      e.setSystemError(error, pvSocket->errorString());
+      MDT_ERROR_SET_SRC(e, "mdtTcpSocket");
+      e.commit();
+      return UnhandledError;
   }
 }

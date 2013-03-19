@@ -33,7 +33,8 @@ mdtDeviceDSO1000A::mdtDeviceDSO1000A(QObject *parent)
   portManager()->config().setWriteFrameSize(512);
   portManager()->config().setWriteQueueSize(1);
   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
-  connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+  ///connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
+  connect(pvUsbtmcPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
 }
 
 mdtDeviceDSO1000A::~mdtDeviceDSO1000A()

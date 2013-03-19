@@ -37,9 +37,7 @@
 #include <QActionGroup>
 
 class QLabel;
-
-
-class mdtDeviceStatusWidget;
+class mdtPortStatusWidget;
 
 /*! \brief Mini port treminal
  */
@@ -54,7 +52,7 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
 
   /*! \brief Build the translations menu
    */
-  void setAvailableTranslations(QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
+  void setAvailableTranslations(const QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
 
  public slots:
 
@@ -103,19 +101,42 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Detach all ports
   void detachFromPorts();
 
-  // Update state on port manager notifications
-  void setStateFromPortError(int error);
-
-  // Set the running state
-  void setStateRunning(const QString &msg = tr("Ready"));
-
-  // Set the stopped state
-  void setStateStopped(const QString &msg = tr("Stopped"));
-
-  // Set the Error state
-  void setStateError(const QString &msg = tr("Error"));
+  /*! \brief Update current state
+   */
+  void setStateFromPortManager(int state);
 
  private:
+
+  /*! \brief Set the disconnected state
+   */
+  void setStateDisconnected();
+
+  /*! \brief Set the connecting state
+   */
+  void setStateConnecting();
+
+  /*! \brief Set the ready state
+   */
+  void setStateReady();
+
+  /*! \brief Set the busy state
+   */
+  void setStateBusy();
+
+  /*! \brief Set the warning state
+   */
+  void setStateWarning();
+
+  /*! \brief Set the error state
+   */
+  void setStateError();
+
+  /*! \brief Used to show a message in status bar
+   *
+   * \param message Message to show
+   * \param timeout If > 0, message will be cleared after timeout [ms]
+   */
+  void showStatusMessage(const QString &message, int timeout = 0);
 
   // Diseable copy
   Q_DISABLE_COPY(mdtPortTerm);
@@ -132,9 +153,11 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   // Port menu
   QActionGroup *pvPortSelectActionGroup;
   // Running flag (if true, command can be sent, ...)
-  bool pvRunning;
+  bool pvReady;
   // Status bar
-  mdtDeviceStatusWidget *pvStatusWidget;
+  mdtPortStatusWidget *pvStatusWidget;
+  // Term char or string
+  QByteArray pvCmdTermSequence;
 };
 
 #endif  // #ifndef MDT_PORT_TERM_H

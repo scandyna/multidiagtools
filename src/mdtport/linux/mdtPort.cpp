@@ -85,9 +85,8 @@ mdtAbstractPort::error_t mdtPort::waitForReadyRead()
   }
   pvMutex.lock();
   if(n == 0){
-    updateReadTimeoutState(true);
+    return ReadTimeout;
   }else{
-    updateReadTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
@@ -120,7 +119,6 @@ qint64 mdtPort::read(char *data, qint64 maxSize)
       case EAGAIN:      // No data available
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
-        updateReadTimeoutState(true);
         return ReadTimeout;
       default:
         mdtError e(MDT_UNDEFINED_ERROR, "read() call failed", mdtError::Error);
@@ -152,10 +150,8 @@ mdtAbstractPort::error_t mdtPort::waitEventWriteReady()
   }
   pvMutex.lock();
   if(n == 0){
-    updateWriteTimeoutState(true);
     return WriteTimeout;
   }else{
-    updateWriteTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:

@@ -21,6 +21,8 @@
 #include "mdtPortInfo.h"
 #include "mdtDeviceInfo.h"
 
+#include <QDebug>
+
 mdtPortInfo::mdtPortInfo()
 {
 }
@@ -94,6 +96,8 @@ bool mdtPortInfo::operator==(const mdtPortInfo &other)
 {
   int i;
 
+  qDebug() << "mdtPortInfo::operator==(): port name: " << pvPortName << ", " << other.pvPortName;
+  qDebug() << "mdtPortInfo::operator==(): dev info list size: " << pvDeviceInfoList.size() << ", " << other.pvDeviceInfoList.size();
   if(pvPortName != other.pvPortName){
     return false;
   }

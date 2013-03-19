@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -53,16 +53,20 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setLabelShort("Vin");
   ai.setUnit("V");
   ai.setRange(0, 10, 8);
-  QCOMPARE(ai.value(), 0.0);
+  ///QCOMPARE(ai.value(), 0.0);
+  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
   ai.setValueInt(0, true);
-  QCOMPARE(ai.value(), 0.0);
+  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
+  ///QCOMPARE(ai.value(), 0.0);
   QCOMPARE(ai.valueInt(), 0);
   ai.setValueInt(127, true);
-  QCOMPARE(ai.value(), (double)(10.0*127.0/255.0));
+  ///QCOMPARE(ai.value(), (double)(10.0*127.0/255.0));
+  MDT_COMPARE(ai.value(), 5.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 127);
   ai.setValueInt(255, true);
-  QCOMPARE(ai.value(), 10.0);
+  ///QCOMPARE(ai.value(), 10.0);
+  MDT_COMPARE(ai.value(), 10.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 255);
 
   // 4...20mA range with 8 bits resolution
@@ -72,16 +76,19 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setAddress(1246);
   ai.setUnit("mA");
   ai.setRange(4, 20, 8);
-  QCOMPARE(ai.value(), 4.0);
+  ///QCOMPARE(ai.value(), 4.0);
+  MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
   QCOMPARE(ai.valueInt(), 0);
   ai.setValueInt(0, true);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
   ai.setValueInt(127, true);
-  QCOMPARE(ai.value(), (double)(4.0+16.0*127.0/255.0));
+  ///QCOMPARE(ai.value(), (double)(4.0+16.0*127.0/255.0));
+  MDT_COMPARE(ai.value(), 12.0, 8, 4.0, 20.0);
   QCOMPARE(ai.valueInt(), 127);
   ai.setValueInt(255, true);
-  QCOMPARE(ai.value(), 20.0);
+  ///QCOMPARE(ai.value(), 20.0);
+  MDT_COMPARE(ai.value(), 20.0, 8, 4.0, 20.0);
   QCOMPARE(ai.valueInt(), 255);
 
   /*
@@ -121,26 +128,38 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   ai.setLabelShort("Vin");
   ai.setUnit("V");
   ai.setRange(0, 10, 8);
-  QCOMPARE(ao.value(), 0.0);
+  ///QCOMPARE(ao.value(), 0.0);
+  MDT_COMPARE(ao.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ao.valueInt(), 0);
-  QCOMPARE(ai.value(), 0.0);
+  ///QCOMPARE(ai.value(), 0.0);
+  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
   ao.setValueInt(0, true);
-  QCOMPARE(ao.value(), 0.0);
+  ///QCOMPARE(ao.value(), 0.0);
+  MDT_COMPARE(ao.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ao.valueInt(), 0);
-  QCOMPARE(ai.value(), 0.0);
+  ///QCOMPARE(ai.value(), 0.0);
+  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
   ao.setValueInt(127, true);
-  QVERIFY(qAbs(ao.value()-5.0) < (5.0/250.0));
-  QVERIFY(qAbs(ao.valueInt()-127) <= 1);
-  QVERIFY(qAbs(ai.value()-5.0) < (5.0/250.0));
-  QCOMPARE(ai.valueInt(), 127);
-  QVERIFY(qAbs(ai.valueInt()-127) <= 1);
+  ///QVERIFY(qAbs(ao.value()-5.0) < (5.0/250.0));
+  MDT_COMPARE(ao.value(), 5.0, 8, 0.0, 10.0);
+  ///QVERIFY(qAbs(ao.valueInt()-127) <= 1);  /// ??
+  MDT_COMPARE(ao.valueInt(), 127, 8, 0, 255);
+  ///QVERIFY(qAbs(ai.value()-5.0) < (5.0/250.0));
+  MDT_COMPARE(ai.value(), 5.0, 8, 0.0, 10.0);
+  ///QCOMPARE(ai.valueInt(), 127);
+  MDT_COMPARE(ai.valueInt(), 127, 8, 0, 255);
+  ///QVERIFY(qAbs(ai.valueInt()-127) <= 1);
   ao.setValueInt(255, true);
-  QCOMPARE(ao.value(), 10.0);
-  QCOMPARE(ao.valueInt(), 255);
-  QCOMPARE(ai.value(), 10.0);
-  QCOMPARE(ai.valueInt(), 255);
+  ///QCOMPARE(ao.value(), 10.0);
+  MDT_COMPARE(ao.value(), 10.0, 8, 0.0, 10.0);
+  ///QCOMPARE(ao.valueInt(), 255);
+  MDT_COMPARE(ao.valueInt(), 255, 8, 0, 255);
+  ///QCOMPARE(ai.value(), 10.0);
+  MDT_COMPARE(ai.value(), 10.0, 8, 0.0, 10.0);
+  ///QCOMPARE(ai.valueInt(), 255);
+  MDT_COMPARE(ai.valueInt(), 255, 8, 0, 255);
 
   // 4...20mA range with 8 bits resolution
   ao.setLabel("Output current of final stage");
@@ -149,25 +168,40 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   ai.setRange(4, 20, 8);
   ai.setLabelShort("Iin");
   ai.setUnit("mA");
-  QCOMPARE(ao.value(), 4.0);
-  QCOMPARE(ao.valueInt(), 0);
-  QCOMPARE(ai.value(), 4.0);
-  QCOMPARE(ai.valueInt(), 0);
+  ///QCOMPARE(ao.value(), 4.0);
+  MDT_COMPARE(ao.value(), 4.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ao.valueInt(), 0);
+  MDT_COMPARE(ao.valueInt(), 0, 8, 0, 255);
+  ///QCOMPARE(ai.value(), 4.0);
+  MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ai.valueInt(), 0, 8, 0, 255);
   ao.setValueInt(0, true);
-  QCOMPARE(ao.value(), 4.0);
-  QCOMPARE(ao.valueInt(), 0);
-  QCOMPARE(ai.value(), 4.0);
-  QCOMPARE(ai.valueInt(), 0);
+  ///QCOMPARE(ao.value(), 4.0);
+  MDT_COMPARE(ao.value(), 4.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ao.valueInt(), 0);
+  MDT_COMPARE(ao.valueInt(), 0, 8, 0, 255);
+  ///QCOMPARE(ai.value(), 4.0);
+  MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ai.valueInt(), 0, 8, 0, 255);
   ao.setValueInt(127, true);
   QVERIFY(qAbs(ao.value()-12.0) < (12.0/250.0));
-  QCOMPARE(ao.valueInt(), 127);
-  QVERIFY(qAbs(ai.value()-12.0) < (12.0/250.0));
-  QCOMPARE(ai.valueInt(), 127);
+  ///QCOMPARE(ao.valueInt(), 127);
+  MDT_COMPARE(ao.valueInt(), 127, 8, 0, 255);
+  ///QVERIFY(qAbs(ai.value()-12.0) < (12.0/250.0));
+  MDT_COMPARE(ai.value(), 12.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ai.valueInt(), 127);
+  MDT_COMPARE(ai.valueInt(), 127, 8, 0, 255);
   ao.setValueInt(255, true);
-  QCOMPARE(ao.value(), 20.0);
-  QCOMPARE(ao.valueInt(), 255);
-  QCOMPARE(ai.value(), 20.0);
-  QCOMPARE(ai.valueInt(), 255);
+  ///QCOMPARE(ao.value(), 20.0);
+  MDT_COMPARE(ao.value(), 20.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ao.valueInt(), 255);
+  MDT_COMPARE(ao.valueInt(), 255, 8, 0, 255);
+  ///QCOMPARE(ai.value(), 20.0);
+  MDT_COMPARE(ai.value(), 20.0, 8, 4.0, 20.0);
+  ///QCOMPARE(ai.valueInt(), 255);
+  MDT_COMPARE(ai.valueInt(), 255, 8, 0, 255);
 }
 
 void mdtIoWidgetTest::analogOutWidgetRecursifTest()

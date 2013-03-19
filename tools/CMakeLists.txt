@@ -13,3 +13,6 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/uicnumber")
 if(UNIX)
   add_subdirectory("${PROJECT_SOURCE_DIR}/mdtterm")
 endif(UNIX)
+
+# * MODBUS I/O Tool *
+add_subdirectory("${PROJECT_SOURCE_DIR}/mdtmodbusiotool")

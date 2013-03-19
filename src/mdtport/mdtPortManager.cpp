@@ -35,8 +35,12 @@ mdtPortManager::mdtPortManager(QObject *parent)
   pvPort = 0;
   pvReadThread = 0;
   pvWriteThread = 0;
+  pvTransactionsAllocatedCount = 0;
   // At default, transactions support and blocking mode are OFF
   setTransactionsDisabled(false);
+  // Setup state machine
+  pvStateMachine = 0;
+  buildStateMachine();
 }
 
 mdtPortManager::~mdtPortManager()
@@ -55,6 +59,7 @@ mdtPortManager::~mdtPortManager()
   pvTransactionsPending.clear();
   qDeleteAll(pvTransactionsDone);
   pvTransactionsDone.clear();
+  delete pvStateMachine;
 }
 
 QList<mdtPortInfo*> mdtPortManager::scan()
@@ -150,7 +155,9 @@ void mdtPortManager::removeThreads(bool releaseMemory)
 bool mdtPortManager::start()
 {
   Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvPort->isOpen());
 
+  qDebug() << "mdtPortManager::start() ...";
   int i;
 
   for(i=0; i<pvThreads.size(); i++){
@@ -158,6 +165,7 @@ bool mdtPortManager::start()
       return false;
     }
   }
+  qDebug() << "mdtPortManager::start() DONE";
 
   return true;
 }
@@ -186,9 +194,14 @@ void mdtPortManager::stop()
   qDebug() << "mdtPortManager::stop() ...";
   for(i=0; i<pvThreads.size(); i++){
     if(pvThreads.at(i)->isRunning()){
+      qDebug() << "mdtPortManager::stop() stopping thread ...";
       pvThreads.at(i)->stop();
+      qDebug() << "mdtPortManager::stop() stopping thread DONE";
     }
   }
+  // Threads have emited the Disconnected error.
+  //  We process events to be shure to receive it now(and not later, after a restart..)
+  qApp->processEvents();
   qDebug() << "mdtPortManager::stop() DONE";
 }
 
@@ -202,12 +215,18 @@ void mdtPortManager::setPortName(const QString &portName)
 void mdtPortManager::setPortInfo(mdtPortInfo info)
 {
   pvPortInfo = info;
+  qDebug() << "mdtPortManager::setPortInfo() : port name: " << pvPortInfo.portName();
   setPortName(pvPortInfo.portName());
 }
 
 mdtPortInfo mdtPortManager::portInfo()
 {
   return pvPortInfo;
+}
+
+QString mdtPortManager::portName() const
+{
+  return pvPortInfo.portName();
 }
 
 mdtPortConfig &mdtPortManager::config()
@@ -273,6 +292,14 @@ mdtPortTransaction *mdtPortManager::getNewTransaction()
 
   if(pvTransactionsPool.size() < 1){
     transaction = new mdtPortTransaction;
+    pvTransactionsAllocatedCount++;
+    // Check about memory leaks
+    if((pvTransactionsAllocatedCount - pvTransactionsPool.size() - pvTransactionsPending.size() - pvTransactionsRx.size() - pvTransactionsDone.size()) > 10){
+      mdtError e(MDT_PORT_IO_ERROR, "Transactions management produces memory leakage", mdtError::Warning);
+      MDT_ERROR_SET_SRC(e, "mdtPortManager");
+      e.commit();
+    }
+    qDebug() << "mdtPortManager::getNewTransaction(): create new transaction. DELTA: " << (pvTransactionsAllocatedCount - pvTransactionsPool.size() - pvTransactionsPending.size() - pvTransactionsRx.size() - pvTransactionsDone.size());
   }else{
     transaction = pvTransactionsPool.dequeue();
   }
@@ -280,6 +307,13 @@ mdtPortTransaction *mdtPortManager::getNewTransaction()
   transaction->clear();
 
   return transaction;
+}
+
+void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
+{
+  Q_ASSERT(!pvTransactionsPool.contains(transaction));
+
+  pvTransactionsPool.enqueue(transaction);
 }
 
 bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
@@ -322,6 +356,7 @@ bool mdtPortManager::waitOnWriteReady(int timeout, int granularity)
       qApp->processEvents();
     }
   }
+  emit(busy());
 
   return false;
 }
@@ -339,6 +374,7 @@ int mdtPortManager::writeData(QByteArray data)
     mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
+    emit(busy());
     return mdtAbstractPort::WritePoolEmpty;
   }
   frame = pvPort->writeFramesPool().dequeue();
@@ -432,6 +468,7 @@ bool mdtPortManager::waitOnFrame(int id, int timeout, int granularity)
     mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtPortManager");
     e.commit();
+    emit(unhandledError());
     return false;
   }
   // Try until success or timeout
@@ -644,6 +681,11 @@ void mdtPortManager::flush()
   flush(true, true);
 }
 
+mdtPortManager::state_t mdtPortManager::currentState() const
+{
+  return pvCurrentState;
+}
+
 void mdtPortManager::abort()
 {
   Q_ASSERT(pvPort != 0);
@@ -651,55 +693,10 @@ void mdtPortManager::abort()
   pvPort->flush();
 }
 
-void mdtPortManager::fromThreadNewFrameReaden()
-{
-  Q_ASSERT(pvPort != 0);
-
-  mdtFrame *frame;
-
-  // Get frames in readen queue
-  pvPort->lockMutex();
-  while(pvPort->readenFrames().size() > 0){
-    frame = pvPort->readenFrames().dequeue();
-    Q_ASSERT(frame != 0);
-    // Copy data
-    /// \todo Error on incomplete frame
-    if(frame->isComplete()){
-      QByteArray data;
-      data.append(frame->data(), frame->size());
-      pvReadenFrames.enqueue(data);
-    }
-    // Restore frame back into pool
-    pvPort->readFramesPool().enqueue(frame);
-  };
-  pvPort->unlockMutex();
-  // Commit
-  commitFrames();
-}
-
-/// \todo Error handling (in general ...)
-/// \todo On disconnect, should flush I/O ?
-void mdtPortManager::onThreadsErrorOccured(int error)
-{
-  bool ok;
-  int maxTry = 5;
-
-  qDebug() << "mdtPortManager::onThreadsErrorOccured() , code: " << error;
-  emit(errorStateChanged(error));
-
-  // Try to handle error
-
-  // On IO error, we try to re-open the port
-}
-
-void mdtPortManager::restoreTransaction(mdtPortTransaction *transaction)
-{
-  pvTransactionsPool.enqueue(transaction);
-}
-
 void mdtPortManager::addTransaction(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(!pvTransactionsPending.contains(transaction->id()));
 
   pvTransactionsPending.insert(transaction->id(), transaction);
   // Watch transactions size
@@ -743,6 +740,7 @@ void mdtPortManager::removeTransactionDone(int id)
 void mdtPortManager::enqueueTransactionDone(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(!pvTransactionsDone.contains(transaction->id()));
 
   pvTransactionsDone.insert(transaction->id(), transaction);
 }
@@ -750,6 +748,7 @@ void mdtPortManager::enqueueTransactionDone(mdtPortTransaction *transaction)
 void mdtPortManager::enqueueTransactionRx(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
+  Q_ASSERT(!pvTransactionsRx.contains(transaction->id()));
 
   pvTransactionsRx.insert(transaction->id(), transaction);
 }
@@ -782,6 +781,7 @@ void mdtPortManager::commitFrames()
       e.commit();
       qDeleteAll(pvTransactionsDone);
       pvTransactionsDone.clear();
+      emit(handledError());
     }
   }else{
     int i;
@@ -798,6 +798,7 @@ void mdtPortManager::commitFrames()
       MDT_ERROR_SET_SRC(e, "mdtPortManager");
       e.commit();
       pvReadenFrames.clear();
+      emit(handledError());
     }
   }
 }
@@ -814,4 +815,188 @@ bool mdtPortManager::readWaitCanceled()
     return true;
   }
   return false;
+}
+
+void mdtPortManager::fromThreadNewFrameReaden()
+{
+  Q_ASSERT(pvPort != 0);
+
+  mdtFrame *frame;
+
+  // Get frames in readen queue
+  pvPort->lockMutex();
+  while(pvPort->readenFrames().size() > 0){
+    frame = pvPort->readenFrames().dequeue();
+    Q_ASSERT(frame != 0);
+    // Copy data
+    /// \todo Error on incomplete frame
+    if(frame->isComplete()){
+      QByteArray data;
+      data.append(frame->data(), frame->size());
+      pvReadenFrames.enqueue(data);
+    }
+    // Restore frame back into pool
+    pvPort->readFramesPool().enqueue(frame);
+  };
+  pvPort->unlockMutex();
+  // Commit
+  commitFrames();
+}
+
+/// \todo On disconnect, should flush I/O ?
+void mdtPortManager::onThreadsErrorOccured(int error)
+{
+  qDebug() << "mdtPortManager::onThreadsErrorOccured() , code: " << error;
+  ///emit(errorStateChanged(error));
+
+  switch(error){
+    case mdtAbstractPort::NoError:
+      qDebug() << " -> PortManager: emit ready";
+      emit(ready());
+      break;
+    case mdtAbstractPort::Disconnected:
+      qDebug() << " -> PortManager: emit disconnected";
+      emit(disconnected());
+      break;
+    case mdtAbstractPort::Connecting:
+      qDebug() << " -> PortManager: emit connecting";
+      emit(connecting());
+      break;
+    case mdtAbstractPort::ReadPoolEmpty:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::WritePoolEmpty:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::WriteCanceled:
+      emit(handledError());
+      qDebug() << " -> PortManager: emit handledError";
+      break;
+    case mdtAbstractPort::ReadCanceled:
+      cancelReadWait();
+      emit(handledError());
+      qDebug() << " -> PortManager: emit handledError";
+      break;
+    case mdtAbstractPort::ControlCanceled:
+      emit(handledError());
+      qDebug() << " -> PortManager: emit handledError";
+      break;
+    case mdtAbstractPort::ReadTimeout:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::WriteTimeout:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::ControlTimeout:
+      emit(busy());
+      qDebug() << " -> PortManager: emit busy";
+      break;
+    case mdtAbstractPort::UnhandledError:
+      emit(unhandledError());
+      qDebug() << " -> PortManager: emit unhandledError";
+      break;
+    default:
+      emit(unhandledError());
+      qDebug() << " -> PortManager: emit unhandledError";
+  }
+}
+
+void mdtPortManager::setStateDisconnected()
+{
+  if(pvCurrentState != Disconnected){
+    pvCurrentState = Disconnected;
+    qDebug() << "mdtPortManager: new state is Disconnected";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtPortManager::setStateConnecting()
+{
+  if(pvCurrentState != Connecting){
+    pvCurrentState = Connecting;
+    qDebug() << "mdtPortManager: new state is Connecting";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtPortManager::setStateReady()
+{
+  if(pvCurrentState != Ready){
+    pvCurrentState = Ready;
+    qDebug() << "mdtPortManager: new state is Ready";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtPortManager::setStateBusy()
+{
+  if(pvCurrentState != Busy){
+    pvCurrentState = Busy;
+    qDebug() << "mdtPortManager: new state is Busy";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtPortManager::setStateWarning()
+{
+  if(pvCurrentState != Warning){
+    pvCurrentState = Warning;
+    qDebug() << "mdtPortManager: new state is Warning";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtPortManager::setStateError()
+{
+  if(pvCurrentState != Error){
+    pvCurrentState = Error;
+    qDebug() << "mdtPortManager: new state is Error";
+    emit(stateChanged(pvCurrentState));
+  }
+}
+
+void mdtPortManager::buildStateMachine()
+{
+  Q_ASSERT(pvStateMachine == 0);
+
+  pvStateMachine = new QStateMachine;
+  pvStateDisconnected = new QState;
+  pvStateConnecting = new QState;
+  pvStateReady = new QState;
+  pvStateBusy = new QState;
+  pvStateWarning = new QState;
+  pvStateError = new QState;
+  connect(pvStateDisconnected, SIGNAL(entered()), this, SLOT(setStateDisconnected()));
+  pvStateDisconnected->addTransition(this, SIGNAL(connecting()), pvStateConnecting);
+  pvStateDisconnected->addTransition(this, SIGNAL(ready()), pvStateReady);
+  connect(pvStateConnecting, SIGNAL(entered()), this, SLOT(setStateConnecting()));
+  pvStateConnecting->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateConnecting->addTransition(this, SIGNAL(unhandledError()), pvStateError);
+  pvStateConnecting->addTransition(this, SIGNAL(ready()), pvStateReady);
+  connect(pvStateReady, SIGNAL(entered()), this, SLOT(setStateReady()));
+  pvStateReady->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateReady->addTransition(this, SIGNAL(unhandledError()), pvStateError);
+  pvStateReady->addTransition(this, SIGNAL(handledError()), pvStateWarning);
+  pvStateReady->addTransition(this, SIGNAL(busy()), pvStateBusy);
+  connect(pvStateBusy, SIGNAL(entered()), this, SLOT(setStateBusy()));
+  pvStateBusy->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateBusy->addTransition(this, SIGNAL(ready()), pvStateReady);
+  pvStateBusy->addTransition(this, SIGNAL(unhandledError()), pvStateError);
+  pvStateBusy->addTransition(this, SIGNAL(handledError()), pvStateWarning);
+  connect(pvStateWarning, SIGNAL(entered()), this, SLOT(setStateWarning()));
+  pvStateWarning->addTransition(this, SIGNAL(disconnected()), pvStateDisconnected);
+  pvStateWarning->addTransition(this, SIGNAL(ready()), pvStateReady);
+  connect(pvStateError, SIGNAL(entered()), this, SLOT(setStateError()));
+  pvStateMachine->addState(pvStateDisconnected);
+  pvStateMachine->addState(pvStateConnecting);
+  pvStateMachine->addState(pvStateReady);
+  pvStateMachine->addState(pvStateBusy);
+  pvStateMachine->addState(pvStateWarning);
+  pvStateMachine->addState(pvStateError);
+  pvStateMachine->setInitialState(pvStateDisconnected);
+  pvStateMachine->start();
 }

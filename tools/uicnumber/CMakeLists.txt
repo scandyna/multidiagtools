@@ -25,10 +25,10 @@ QT4_WRAP_UI (UIC_HEADERS ${FORM_FILES})
 QT4_ADD_RESOURCES (RCC_FILES ${RESOURCE_FILES})
 
 # Executable
-add_executable (mdtuicnumber ${GUI_TYPE} ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
+add_executable (mdtuicnumber${MDTLIB_VERSION_SUFFIX} ${GUI_TYPE} ${SOURCES_FILES} ${MOC_HEADERS} ${UIC_HEADERS} ${RCC_FILES})
 # Libraries to link
-target_link_libraries(mdtuicnumber "mdtutils")
-target_link_libraries(mdtuicnumber ${QT_LIBRARIES})
+target_link_libraries(mdtuicnumber${MDTLIB_VERSION_SUFFIX} "mdtutils${MDTLIB_VERSION_SUFFIX}")
+target_link_libraries(mdtuicnumber${MDTLIB_VERSION_SUFFIX} ${QT_LIBRARIES})
 
 # Install targets
-install (TARGETS "mdtuicnumber" RUNTIME DESTINATION bin COMPONENT tools)
+install (TARGETS "mdtuicnumber${MDTLIB_VERSION_SUFFIX}" RUNTIME DESTINATION bin COMPONENT tools)

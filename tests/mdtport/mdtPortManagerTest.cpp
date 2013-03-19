@@ -312,11 +312,19 @@ void mdtPortManagerTest::modbusTcpPortTest()
   mdtModbusTcpPortManager m;
   QList<mdtPortInfo*> portInfoList;
   QList<mdtPortInfo*> portInfoList2;
+  mdtPortInfo validPortInfo;
+  mdtPortInfo invalidPortInfo;
   QStringList hosts;
   mdtFrameCodecModbus codec;
   QByteArray pdu;
   QHash<quint16, QByteArray> pdus;
   int tId1, tId2, tId3;
+  QString ipLeftPart;
+  QString ipRightPart;
+  QStringList ipParts;
+  QString portName;
+  bool found;
+  mdtPortTransaction *transaction;
 
   // Check scan with some invalid network setup
   QVERIFY(m.scan(QNetworkInterface()).size() < 1);
@@ -351,9 +359,29 @@ void mdtPortManagerTest::modbusTcpPortTest()
   portInfoList2 = m.scan(m.readScanResult());
   QCOMPARE(portInfoList2.size(), portInfoList.size());
 
-  // Init port manager
-  m.setPortInfo(*portInfoList.at(0));
-  QVERIFY(m.openPort());
+  // Set the valid port info
+  validPortInfo = *portInfoList.at(0);
+  // Set the invalid port info - Assume wa have 255.255.255.0 netmask..
+  ipParts = validPortInfo.portName().split(".");
+  QCOMPARE(ipParts.size(), 4);
+  ipLeftPart = ipParts.at(0) + "." + ipParts.at(1) + "." + ipParts.at(2) + ".";
+  for(int i=1; i<255; i++){
+    ipRightPart = QString::number(i);
+    portName = ipLeftPart + ipRightPart + ":502";
+    // See if this IP existe in scan result
+    found = false;
+    for(int j=0; j<portInfoList.size(); j++){
+      if(portInfoList.at(j)->portName() == portName){
+        found = true;
+        break;
+      }
+    }
+    if(!found){
+      invalidPortInfo.setPortName(portName);
+      break;
+    }
+  }
+  qDebug() << "Invalid port name: " << invalidPortInfo.portName();
 
   // We not need the scan result anymore, free memory
   qDeleteAll(portInfoList);
@@ -361,16 +389,76 @@ void mdtPortManagerTest::modbusTcpPortTest()
   qDeleteAll(portInfoList2);
   portInfoList2.clear();
 
-  // start threads
+  /*
+   * Open/close test with valid Host
+   */
+  m.setPortInfo(validPortInfo);
+  QVERIFY(m.openPort());
   QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+  m.stop();
+  QVERIFY(!m.isRunning());
+  QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+  m.closePort();
+  QVERIFY(!m.isRunning());
 
-  // "Check" direct PDU write in query/reply mode
+  /*
+   * Open/close test with invalid Host
+   */
+  m.setPortInfo(invalidPortInfo);
+  QVERIFY(!m.openPort());
+  QVERIFY(!m.isRunning());
+  m.stop();
+  QVERIFY(!m.isRunning());
+  m.closePort();
+  QVERIFY(!m.isRunning());
+
+  /*
+   * Open/close test with invalid + valid Host
+   */
+  m.setPortInfo(invalidPortInfo);
+  QVERIFY(!m.openPort());
+  QVERIFY(!m.isRunning());
+  m.setPortInfo(validPortInfo);
+  QVERIFY(m.openPort());
+  QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+  m.stop();
+  QVERIFY(!m.isRunning());
+
+  /*
+   * Communication test
+   */
+  m.setPortInfo(validPortInfo);
+  QVERIFY(m.openPort());
+  QVERIFY(m.start());
+  QVERIFY(m.isRunning());
+
+  /*
+   * "Check" direct PDU write in query/reply mode
+   */
   pdu = codec.encodeReadCoils(0, 3);
-  tId1 = m.writeData(pdu, true);
+  // Transaction 1
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId1 = m.writeData(pdu, true);
+  tId1 = m.writeData(pdu, transaction);
   QVERIFY(tId1 >= 0);
-  tId2 = m.writeData(pdu, true);
+  // Transaction 2
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId2 = m.writeData(pdu, true);
+  tId2 = m.writeData(pdu, transaction);
   QVERIFY(tId2 >= 0);
-  tId3 = m.writeData(pdu, true);
+  // Transaction 3
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId3 = m.writeData(pdu, true);
+  tId3 = m.writeData(pdu, transaction);
   QVERIFY(tId3 >= 0);
   QVERIFY(m.waitOnFrame(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
@@ -380,7 +468,11 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // If query/reply mode is diseabled, waitOnFrame() will timeout
   pdu = codec.encodeReadCoils(0, 3);
-  tId1 = m.writeData(pdu, false);
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(false);
+  ///tId1 = m.writeData(pdu, false);
+  tId1 = m.writeData(pdu, transaction);
   QVERIFY(!m.waitOnFrame(tId1));
 
   // All frames must be consumed
@@ -388,11 +480,18 @@ void mdtPortManagerTest::modbusTcpPortTest()
 
   // Check ReadDeviceIdentification
   pdu = codec.encodeReadDeviceIdentification(0, false);
-  tId1 = m.writeData(pdu, true);
+  transaction = m.getNewTransaction();
+  QVERIFY(transaction != 0);
+  transaction->setQueryReplyMode(true);
+  ///tId1 = m.writeData(pdu, true);
+  tId1 = m.writeData(pdu, transaction);
   QVERIFY(tId1 >= 0);
   QVERIFY(m.waitOnFrame(tId1));
   QVERIFY(!m.readenFrame(tId1).isEmpty());
   // Some devices not implement this FC, so we cannot check it..
+
+  // Try to get HW node address (we cannot check it, because we don't know witch hardware is used for tests..)
+  qDebug() << m.getHardwareNodeAddress(4);
 }
 
 int main(int argc, char **argv)

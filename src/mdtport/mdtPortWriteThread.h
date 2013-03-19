@@ -50,14 +50,6 @@ class mdtPortWriteThread : public mdtPortThread
    */
   bool isWriter() const;
 
- signals:
-
-  /*! \brief Emited when a complete frame was written
-   * \sa mdtPortManager
-   * \sa mdtPort
-   */
-  ///void frameWritten();
-
  private:
 
   // Thread implementation

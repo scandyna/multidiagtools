@@ -633,10 +633,8 @@ mdtAbstractPort::error_t mdtSerialPort::waitForReadyRead()
   }
   pvMutex.lock();
   if(n == 0){
-    updateReadTimeoutState(true);
     return ReadTimeout;
   }else{
-    updateReadTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
@@ -669,7 +667,6 @@ qint64 mdtSerialPort::read(char *data, qint64 maxSize)
       case EAGAIN:      // No data available
         return 0;
       case ETIMEDOUT:   // Read timeout (happens with USBTMC)
-        updateReadTimeoutState(true);
         return ReadTimeout;
       default:
         mdtError e(MDT_SERIAL_PORT_IO_ERROR, "read() call failed", mdtError::Error);
@@ -747,10 +744,8 @@ mdtAbstractPort::error_t mdtSerialPort::waitEventWriteReady()
   }
   pvMutex.lock();
   if(n == 0){
-    updateWriteTimeoutState(true);
     return WriteTimeout;
   }else{
-    updateWriteTimeoutState(false);
     if(n < 0){
       switch(errno){
         case EINTR:
@@ -1071,16 +1066,6 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
   // Set the read/write timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());
-
-  /**
-  qDebug() << "mdtSerialPort::pvSetup() setup:";
-  qDebug() << "-> Baudrate: " << baudRate();
-  qDebug() << "-> Data bits: " << dataBits();
-  qDebug() << "-> Stop bits: " << stopBits();
-  qDebug() << "-> parity: " << parity();
-  qDebug() << "-> Xon/Xoff: " << flowCtlXonXoffOn();
-  qDebug() << "-> CTS/RTS: " << flowCtlRtsCtsOn();
-  */
 
   return NoError;
 }

@@ -104,7 +104,7 @@ void mdtFileTest::csvFileReadTest()
       if((j>=0)&&(j<(refData.at(i).size()-1))){
         line << separator;
       }else{
-        line << "\n";
+        line << MDT_NATIVE_EOL;
       }
     }
     data << line;
@@ -126,7 +126,7 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.readLines(separator.toAscii(), dataProtection.toAscii()));
   for(int i=0; i<refData.size(); i++){
     for(int j=0; j<refData.at(i).size(); j++){
-      QVERIFY(csv.valueAt(i, j) == refData.at(i).at(j));
+      QCOMPARE(csv.valueAt(i, j), refData.at(i).at(j));
     }
   }
   csv.close();
@@ -148,9 +148,9 @@ void mdtFileTest::csvFileReadTest()
   // Read file and verify data
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
   QVERIFY(csv.readLines(";", "'"));
-  QVERIFY(csv.valueAt(0, 0) == "Valid data");
-  QVERIFY(csv.valueAt(0, 1) == "with data ; protection");
-  QVERIFY(csv.valueAt(0, 2) == "and without");
+  QCOMPARE(csv.valueAt(0, 0) , QString("Valid data"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("with data ; protection"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("and without"));
   csv.close();
 
   /*
@@ -164,10 +164,10 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
   // Read file and verify data
   QVERIFY(csv.readLines(";", "'"));
-  QVERIFY(csv.valueAt(0, 0) == "Some invalid");
-  QVERIFY(csv.valueAt(1, 0) == "And 2 seps");
-  QVERIFY(csv.valueAt(1, 1) == "");
-  QVERIFY(csv.valueAt(1, 2) == "With other data and no end of line at end");
+  QCOMPARE(csv.valueAt(0, 0) , QString("Some invalid"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("And 2 seps"));
+  QCOMPARE(csv.valueAt(1, 1) , QString(""));
+  QCOMPARE(csv.valueAt(1, 2) , QString("With other data and no end of line at end"));
 
   // Access invalid indexes - Must not crash, and value must be a empty string
   QVERIFY(csv.valueAt(-1, 0) == "");
@@ -198,12 +198,12 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
   // Read file and verify data
   QVERIFY(csv.readLines(";", "'", "#"));
-  QVERIFY(csv.valueAt(0, 0) == "Uncommented data");
-  QVERIFY(csv.valueAt(0, 1) == "Field with protection");
-  QVERIFY(csv.valueAt(0, 2) == "0123");
-  QVERIFY(csv.valueAt(1, 0) == "Uncommented data");
-  QVERIFY(csv.valueAt(1, 1) == "Some data");
-  QVERIFY(csv.valueAt(1, 2) == "987");
+  QCOMPARE(csv.valueAt(0, 0) , QString("Uncommented data"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("Field with protection"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("0123"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("Uncommented data"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("Some data"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("987"));
 }
 
 void mdtFileTest::csvFileReadTest_data()
@@ -304,6 +304,58 @@ void mdtFileTest::csvFileReadTest_data()
   line2 << "" << "1" << "data" << "JKLM";
   line3 << "JK" << "inni" << "Some data";
   QTest::newRow("Separator: <data> , dp: {REM} ") << line1 << line2 << line3 << "<data>" << "{REM}";
+}
+
+void mdtFileTest::csvFileReadEolTest()
+{
+  QTemporaryFile tmp, tmp2;
+  mdtCsvFile csv;
+
+  // Create a temporary file
+  QVERIFY(tmp.open());
+  QVERIFY(!tmp.isTextModeEnabled());
+
+  // Write a some data with \n EOL
+  QVERIFY(tmp.write("A;'B';C;'D'\n"));
+  QVERIFY(tmp.write("1;2;3;4\n"));
+  tmp.close();
+
+  // Read file and verify data
+  csv.setFileName(tmp.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "'", "#", '\0', "\n"));
+  QCOMPARE(csv.valueAt(0, 0) , QString("A"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("B"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("C"));
+  QCOMPARE(csv.valueAt(0, 3) , QString("D"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("1"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("2"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("3"));
+  QCOMPARE(csv.valueAt(1, 3) , QString("4"));
+  csv.close();
+
+  // Create a second temporary file
+  QVERIFY(tmp2.open());
+  QVERIFY(!tmp2.isTextModeEnabled());
+
+  // Write a some data with \r\n EOL
+  QVERIFY(tmp2.write("E;'F';G;'H'\r\n"));
+  QVERIFY(tmp2.write("5;6;7;8\r\n"));
+  tmp2.close();
+
+  // Read file and verify data
+  csv.setFileName(tmp2.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "'", "#", '\0', "\r\n"));
+  QCOMPARE(csv.valueAt(0, 0) , QString("E"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("F"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("G"));
+  QCOMPARE(csv.valueAt(0, 3) , QString("H"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("5"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("6"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("7"));
+  QCOMPARE(csv.valueAt(1, 3) , QString("8"));
+  csv.close();
 }
 
 void mdtFileTest::mdtPartitionAttributesTest()

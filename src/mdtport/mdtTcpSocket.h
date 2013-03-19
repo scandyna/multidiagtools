@@ -213,9 +213,6 @@ class mdtTcpSocket : public mdtAbstractPort
    *
    * Unhandled error is reported with mdtError and UnhandledError is returned.
    *
-   * If SocketTimeoutError occurs, timeout state will be set with updateReadTimeoutState(true),
-   *  but it's caller's responsability to unset it later.
-   *
    * \param error Error returned by QTcpSocket
    * \param byRead Error occured during waitForReadyRead or read, else during waitEventWriteReady or write
    */
