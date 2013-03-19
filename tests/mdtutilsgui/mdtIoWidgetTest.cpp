@@ -212,7 +212,7 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   // Simulate the physical device
   mdtAnalogIo plcAo;
 
-  // Setup
+  // Setup: range: 0-10, n = 12 bits
   ao.setLabelShort("AO1");
   ao.setRange(0.0, 10.0, 12);
   plcAo.setLabelShort("PLC");
@@ -224,45 +224,63 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   sl.show();
 
   // Initial states
-  QVERIFY(ao.value() < (1.0/4050.0));
-  QVERIFY(plcAo.value() < (1.0/4050.0));
+  ///QVERIFY(ao.value() < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 0.0, 12, 0.0, 10.0);
+  ///QVERIFY(plcAo.value() < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 0.0, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(1.0);
-  QVERIFY(qAbs(ao.value()-1.0) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-1.0) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-1.0) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-1.0) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 1.0, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
   ao.setValue(1.0, true, false);
-  QVERIFY(qAbs(ao.value()-1.0) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-1.0) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-1.0) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-1.0) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 1.0, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(2.0);
-  QVERIFY(qAbs(ao.value()-2.0) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-2.0) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-2.0) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 2.0, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-2.0) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 2.0, 12, 0.0, 10.0);
   // PLC (device) confirm a value that differs
   ao.setValue(1.5, true, false);
-  QVERIFY(qAbs(ao.value()-1.5) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-1.5) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 1.5, 12, 0.0, 10.0);
   // Check that PLC not receives the confirmation as new value
-  QVERIFY(qAbs(plcAo.value()-2.0) < (1.0/4050.0));
+  ///QVERIFY(qAbs(plcAo.value()-2.0) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 2.0, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(3.5);
-  QVERIFY(qAbs(ao.value()-3.5) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-3.5) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-3.5) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 3.5, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-3.5) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 3.5, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
   ao.setValue(3.5, true, false);
-  QVERIFY(qAbs(ao.value()-3.5) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-3.5) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-3.5) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 3.5, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-3.5) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 3.5, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(4.0);
-  QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 4.0, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 4.0, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
   ao.setValue(4.0, true, false);
-  QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
-  QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
+  ///QVERIFY(qAbs(ao.value()-4.0) < (1.0/4050.0));
+  MDT_COMPARE(ao.value(), 4.0, 12, 0.0, 10.0);
+  ///QVERIFY(qAbs(plcAo.value()-4.0) < (1.0/4050.0));
+  MDT_COMPARE(plcAo.value(), 4.0, 12, 0.0, 10.0);
 
   /*
   while(sl.isVisible()){
