@@ -74,6 +74,48 @@ bool mdtCsvFile::readLines(QByteArray separator, QByteArray dataProtection, QByt
 
 ///splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar = QChar());
 
+bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, const QString &dataProtection, const QChar &escapeChar, QString eol)
+{
+  QString str, item;
+  int i;
+
+  // Check if file was open
+  if(!isOpen()){
+    mdtError e(MDT_FILE_IO_ERROR, "File " + fileName() + " is not open", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+    e.commit();
+    return false;
+  }
+  // If file was open with Text flag, EOL is allways converted
+  if(isTextModeEnabled()){
+    eol = "\n";
+  }
+  // Get items, escape and write
+  for(i=0; i<line.size(); i++){
+    str += dataProtection;
+    if(!escapeChar.isNull()){
+      item = line.at(i);
+      item.replace(dataProtection, escapeChar + dataProtection);
+      str += item;
+    }else{
+      str += line.at(i);
+    }
+    str += dataProtection;
+    if(i < (line.size()-1)){
+      str += separator;
+    }
+  }
+  str += eol;
+  if(write(pvCodec->fromUnicode(str)) < 0){
+    mdtError e(MDT_FILE_IO_ERROR, "Write error occured on file " + fileName(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtCsvFile");
+    e.commit();
+    return false;
+  }
+
+  return true;
+}
+
 bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QString eol)
 {
   Q_ASSERT(separator != dataProtection);

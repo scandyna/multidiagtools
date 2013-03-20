@@ -63,6 +63,21 @@ class mdtCsvFile : public QFile
    */
   ///bool readLines(QByteArray separator = ";", QByteArray dataProtection = "", QByteArray comment = "#");
 
+  /*! \brief Write a line of data
+   *
+   * \param line List of strings containing line data.
+   * \param separator Separator to use (typical: ; )
+   * \param dataProtection Data protection (typical: " ).
+   *                        Note: current version does not support protected EOL.
+   * \param escapeChar Escape char (typical: \ ).
+   *                    If not empty, if a line item contains a same sequence than dataProtection will be prefixed with escapeChar.
+   *                    Note: separator is not escaped.
+   * \param eol End of line sequence. Usefull if given file is not supposed to be readen from running platform.
+   *             Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details).
+   * \return True on success
+   */
+  bool writeLine(const QStringList &line, const QString &separator = ";", const QString &dataProtection = "", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
+
   /*! \brief Read the file and store data
    *
    * \param separator Separator to use (typical: ; )

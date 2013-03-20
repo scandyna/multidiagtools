@@ -56,7 +56,7 @@ int mdtTest::randomValue(int min, int max)
   return (int)( (double)min + (int)((double)max*rand()/(RAND_MAX + (double)min)) );
 }
 
-void mdtTest::compareFloats(double x, double y, int n, double min, double max, const char *file, int line)
+void mdtTest::compare(double x, double y, int n, double min, double max, const char *file, int line)
 {
   Q_ASSERT(n >= 0);
 

@@ -36,6 +36,10 @@ class mdtDataTableTest : public mdtTest
 
   // Add/edit/remove data test
   void editDataTest();
+
+  // CSV export/import tests
+  void csvExportTest();
+  void csvImportTest();
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_TEST_H

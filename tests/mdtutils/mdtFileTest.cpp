@@ -39,7 +39,9 @@ void mdtFileTest::csvFileWriteTest()
 {
   QTemporaryFile tmp;
   mdtCsvFile csv;
+  QStringList line;
   QByteArray data;
+  QByteArray refData;
 
   // Create a temporary file
   QVERIFY(tmp.open());
@@ -47,26 +49,88 @@ void mdtFileTest::csvFileWriteTest()
 
   // Create a CSV file
   csv.setFileName(tmp.fileName());
-  QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
 
-  // Write data
-  data = "0123;ABCD";
-  data += "\n";
-  data += "UIJ;88";
-  QVERIFY(csv.write(data) == (qint64)data.size());
+  // Write some simple data - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "A" << "B" << "C" << "D";
+  QVERIFY(csv.writeLine(line, ";"));
+  line.clear();
   csv.close();
-
   // Check written data
+  refData = "A;B;C;D";
+  refData += MDT_NATIVE_EOL;
   QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
 
-#ifdef Q_OS_WIN
-  // On Windows, we reconstruct ref data with CRLF sequence
-  data = "0123;ABCD";
-  data += (char)0x0D; // CR
-  data += "\n";       // LF
-  data += "UIJ;88";
-#endif
-  QVERIFY(tmp.readAll() == data);
+  // Write some simple data - Use \n EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly));
+  line << "1" << "2" << "3" << "4";
+  QVERIFY(csv.writeLine(line, ";", "", '\0', "\n"));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "1;2;3;4";
+  refData += "\n";
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Write some simple data - Use \r\n EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly));
+  line << "E" << "F" << "G" << "H";
+  QVERIFY(csv.writeLine(line, ";", "", '\0', "\r\n"));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "E;F;G;H";
+  refData += "\r\n";
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Check data protection function - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "A" << "B" << "C" << "D";
+  QVERIFY(csv.writeLine(line, ";", "'", '\\'));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "'A';'B';'C';'D'";
+  refData += MDT_NATIVE_EOL;
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Check escape function - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "'A'" << "B" << "'C'" << "D";
+  QVERIFY(csv.writeLine(line, ";", "'", '\\'));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "'\\'A\\'';'B';'\\'C\\'';'D'";
+  refData += MDT_NATIVE_EOL;
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Write 2 lines of simple data - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "A" << "B" << "C" << "D";
+  QVERIFY(csv.writeLine(line, ";"));
+  line.clear();
+  line << "1" << "2" << "3" << "4";
+  QVERIFY(csv.writeLine(line, ";"));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "A;B;C;D";
+  refData += MDT_NATIVE_EOL;
+  refData += "1;2;3;4";
+  refData += MDT_NATIVE_EOL;
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
   tmp.close();
 }
 

@@ -132,11 +132,13 @@ class mdtDataTableModel : public QSqlTableModel
    */
   bool setData(int row, const QString &field, const QVariant &value, int role = Qt::EditRole);
 
-  /*! \brief
-   * 
-   *  mode.....
+  /*! \brief Export data to a CSV file
+   *
+   * \param filePath Path to CSV file
+   * \param mode Behaviour to adopt if CSV file allready exists.
+   * \return True on successfull export.
    */
-  bool exportToCsvFile(const QString &filePath);
+  bool exportToCsvFile(const QString &filePath, create_mode_t mode);
 
   /*! \brief
    */
