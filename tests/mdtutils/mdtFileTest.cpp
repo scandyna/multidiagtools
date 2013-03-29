@@ -147,7 +147,8 @@ void mdtFileTest::csvFileReadLineTest()
   // Write a some data with \n EOL
   QVERIFY(tmp.write("A;'B';C;'D'\n"));
   QVERIFY(tmp.write("1;2;3;4\n"));
-  QVERIFY(tmp.write("E;'F\nG';H\nKK"));
+  QVERIFY(tmp.write("E;'F\nG';H\n"));
+  QVERIFY(tmp.write("5;6;7;8"));
   tmp.close();
 
   // Check readLine() method with different buffer sizes
@@ -159,6 +160,7 @@ void mdtFileTest::csvFileReadLineTest()
     QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("A;'B';C;'D'"));
     QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("1;2;3;4"));
     QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("E;'F\nG';H"));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("5;6;7;8"));
     csv.close();
   }
 

@@ -132,98 +132,47 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
   int eolCursor;
   int dpCursor;
 
-  /**
-  // Append previously readen part after EOL
-  line.append(pvReadLineBuffer);
-  pvReadLineBuffer.clear();
-  // Check about EOL in previous readen data
-  eolCursor = line.indexOf(eol);
-  if(eolCursor > -1){
-    if(eolCursor == 0){
-      eolFound = true;
-    }else{
-      // Check if eol is in a protected section
-      if(!dataProtectionSectionBegins(line.left(line.indexOf(eol)), dataProtection, escapeChar)){
-        eolFound = true;
-      }
-    }
-  }
-  */
+  buffer = pvReadLineBuffer;
   // Read until EOL found or EOF
-  while((!eolFound)&&(!atEnd())){
-    ///buffer = read(pvReadLineBufferSize);
-    // Check about eol
+  ///while((!eolFound)&&(!atEnd())){
+  while(!eolFound){
+    qDebug() << "line (0): " << line << " , buffer (0): " << buffer;
     eolCursor = buffer.indexOf(eol);
-    qDebug() << "eolCursor: " << eolCursor << " , buffer: " << buffer;
-    if(eolCursor > -1){
+    qDebug() << "EOL cursor: " << eolCursor;
+    if(eolCursor < 0){
+      qDebug() << "buffer (1): " << buffer;
+      if(atEnd()){
+        line.append(buffer);
+        break;
+      }
+      buffer.append(read(pvReadLineBufferSize));
+    }else{
+      // A EOL was found, check if it is in a data protection or not
+      line.append(buffer.left(eolCursor));
+      buffer.remove(0, eolCursor+eol.size()-1);  /// \todo Will fail if eol size is > 1
+      qDebug() << "EOL found ? (1) , line: " << line << " , buffer: " << buffer;
       if(dataProtectionSectionBegins(line, dataProtection, escapeChar)){
         // Search until we find a closing data protrection to confirm that we found a opening one
+        qDebug() << "Read until DP ...";
         readUntilDataProtection(buffer, dpCursor, dataProtection, escapeChar);
         if(dpCursor < 0){
-          line.append(buffer);
+          qDebug() << "Parse error.. , buffer: " << buffer;
+          return "<PARSE ERROR: missing closing " + dataProtection.toAscii() + ">";
         }else{
-          qDebug() << "End of DP, dpCursor: " << dpCursor << " , buffer: " << buffer;
-          line.append(buffer.left(dpCursor+1));
-          buffer.remove(0, dpCursor);
+          qDebug() << "-> DONE, line (A): " << line << " , buffer: " << buffer;
+          line.append(buffer.left(dpCursor+dataProtection.size()));
+          buffer.remove(0, dpCursor+dataProtection.size());
+          qDebug() << "-> DONE, line (B): " << line << " , buffer: " << buffer;
         }
-        // First in current buffer
-        /**
-        for(i=0; i<buffer.size(); i++){
-          dpBuffer += buffer.at(i);
-          if(dpBuffer.right(dataProtection.size()) == dataProtection){
-            break;
-          }
-        }
-        */
-        // Read more if needed
-        ///while((dpBuffer != dataProtection)&&(!atEnd())){
-        /**
-        if(dpBuffer.right(dataProtection.size()) != dataProtection){
-          while(!atEnd()){
-            dpBuffer = read(dataProtection.size());
-            if(dpBuffer != dataProtection){
-              buffer.append(dpBuffer.toAscii());
-            }else{
-              break;
-            }
-          }
-        }
-        */
-        ///line.append(buffer);
       }else{
-        ///line.append(buffer.left(eolCursor+1));
         eolFound = true;
+        qDebug() << "Removing " << eol.size() << " items";
+        buffer.remove(0, eol.size());
       }
-    }else{
-      ///line.append(buffer);
-      buffer = read(pvReadLineBufferSize);
     }
-    /**
-    if( (eolCursor > -1) && (!dataProtectionSectionBegins(line, dataProtection, escapeChar)) ){
-      eolFound = true;
-    }else{
-      line.append(buffer);
-    }
-    */
   }
-  if(eolFound){
-    ///qDebug() << "eolFound, buffer: " << buffer;
-    line.append(buffer.left(eolCursor));
-    pvReadLineBuffer = buffer.right(buffer.size()-eolCursor-1);
-  }
-  /**
-  if(eolFound){
-    // Split left and right part of EOL
-    eolCursor = line.indexOf(eol);
-    if(line.size() > 1){
-      pvReadLineBuffer = line.right(line.size()-eolCursor-1);
-    }else{
-      pvReadLineBuffer.clear();
-    }
-    line.remove(eolCursor, line.size()-eolCursor);
-  }
-  */
-  qDebug() << "line: " << line << " , pvReadLineBuffer: " << pvReadLineBuffer;
+  pvReadLineBuffer = buffer;
+  qDebug() << "EOL found , line: " << line << " , pvReadLineBuffer: " << pvReadLineBuffer;
 
   return line;
 }
@@ -465,12 +414,19 @@ void mdtCsvFile::readUntilDataProtection(QByteArray &buffer, int &dpIndex, const
 {
   bool dpFound = false;
 
-  while((!dpFound)&&(!atEnd())){
+  while((!dpFound)/*&&(!atEnd())*/){
     dpIndex = buffer.indexOf(dataProtection);
     if(dpIndex > -1){
       dpFound = true;
     }else{
-      buffer.append(read(pvReadLineBufferSize));
+      if(atEnd()){
+        buffer.append(pvReadLineBuffer);
+        pvReadLineBuffer.clear();
+        dpIndex = buffer.indexOf(dataProtection);
+        break;
+      }else{
+        buffer.append(read(pvReadLineBufferSize));
+      }
     }
   }
 }
