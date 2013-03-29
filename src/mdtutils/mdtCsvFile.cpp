@@ -148,8 +148,9 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
       buffer.append(read(pvReadLineBufferSize));
     }else{
       // A EOL was found, check if it is in a data protection or not
+      qDebug() << "EOL found ? (0) , line: " << line << " , buffer: " << buffer;
       line.append(buffer.left(eolCursor));
-      buffer.remove(0, eolCursor+eol.size()-1);  /// \todo Will fail if eol size is > 1
+      buffer.remove(0, eolCursor/*+eol.size()-1*/);  /// \todo Will fail if eol size is > 1
       qDebug() << "EOL found ? (1) , line: " << line << " , buffer: " << buffer;
       if(dataProtectionSectionBegins(line, dataProtection, escapeChar)){
         // Search until we find a closing data protrection to confirm that we found a opening one
@@ -166,13 +167,14 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
         }
       }else{
         eolFound = true;
-        qDebug() << "Removing " << eol.size() << " items";
+        qDebug() << "buffer: " << buffer << " , removing " << eol.size() << " items";
         buffer.remove(0, eol.size());
+        qDebug() << "-> buffer: " << buffer;
       }
     }
   }
   pvReadLineBuffer = buffer;
-  qDebug() << "EOL found , line: " << line << " , pvReadLineBuffer: " << pvReadLineBuffer;
+  qDebug() << "EOL found (END) , line: " << line << " , pvReadLineBuffer: " << pvReadLineBuffer;
 
   return line;
 }
