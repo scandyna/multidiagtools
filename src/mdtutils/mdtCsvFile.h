@@ -53,6 +53,14 @@ class mdtCsvFile : public QFile
   mdtCsvFile(QObject *parent = 0, const QByteArray &fileEncoding = "UTF-8");
   ~mdtCsvFile();
 
+  /*! \brief Close
+   *
+   * Will do some cleanup and call QFile's close method.
+   *
+   * Note: readen data are not cleared. Call clear() explicitly for this.
+   */
+  void close();
+
   /*! \brief Read the file and store data
    * 
    * \param separator Separator to use (typical: ; )
@@ -78,12 +86,21 @@ class mdtCsvFile : public QFile
    */
   bool writeLine(const QStringList &line, const QString &separator = ";", const QString &dataProtection = "", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
 
+  /*! \brief Read a line of data
+   *
+   * \param dataProtection Data protection (typical: " ).
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   * \param eol End of line sequence. Usefull if given file was not written from running platform.
+   * \return Line of data. On error (or EOF), a empty byte array is returned.
+   */
+  QByteArray readLine(const QString &dataProtection = "", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+
   /*! \brief Read the file and store data
    *
    * \param separator Separator to use (typical: ; )
    * \param dataProtection Data protection (typical: " )
    *                        Note: current version does not support protected EOL.
-   * \param escapeChar Escape char (typical: \ )
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
    * \param comment Comment (typical: # )
    * \param eol End of line sequence. Usefull if given file was not written from running platform.
    *             Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details).
@@ -120,11 +137,39 @@ class mdtCsvFile : public QFile
    */
   QList<QStringList> &lines();
 
+  /*! \brief Set the readLine() method's buffer size
+   *
+   * Used by unit testing.
+   *  A value < 1 means default value (8192).
+   */
+  void setReadLineBufferSize(int size);
+
  private:
+
+  /*! \brief Check if a data protection section begins
+   *
+   * \param line Line of data to check about data protection beginning.
+   * \param dataProtection Data protection (typical: " )
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   */
+  bool dataProtectionSectionBegins(const QByteArray &line, const QString &dataProtection, const QChar &escapeChar);
+
+  /*! \brief Read until a data protection is reached
+   *
+   * \param buffer Buffer in witch data will be appended.
+   *                Note that data can be leave after possibly found data protection.
+   * \param dpIndex Index of found data protection. Will be -1 if never found.
+   * \param dataProtection Data protection (typical: " )
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   */
+  void readUntilDataProtection(QByteArray &buffer, int &dpIndex, const QString &dataProtection, const QChar &escapeChar);
 
   QList<QStringList> pvLines;
   ///QStringList pvFields;
   QTextCodec *pvCodec;
+  QByteArray pvReadLineBuffer;  // Used by readLine() to store what is after EOL
+  int pvReadLineBufferSize;     // Used by readLine()
+  /// \todo Overload open() to clear this buffer !
 };
 
 #endif  // #ifndef MDT_CSV_FILE_H

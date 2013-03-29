@@ -121,7 +121,7 @@ namespace mdtAlgorithms
    * \param str The input string to parse
    * \param separator Separator to use (typical: ; )
    * \param dataProtection Data protection (typical: " )
-   * \param escapeChar Escape char (typical: \ )
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
    * \return The list of found fields
    */
   QStringList splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar = QChar());

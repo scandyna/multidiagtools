@@ -134,6 +134,36 @@ void mdtFileTest::csvFileWriteTest()
   tmp.close();
 }
 
+void mdtFileTest::csvFileReadLineTest()
+{
+  QTemporaryFile tmp;
+  mdtCsvFile csv;
+  int bufferSize;
+
+  // Create a temporary file
+  QVERIFY(tmp.open());
+  QVERIFY(!tmp.isTextModeEnabled());
+
+  // Write a some data with \n EOL
+  QVERIFY(tmp.write("A;'B';C;'D'\n"));
+  QVERIFY(tmp.write("1;2;3;4\n"));
+  QVERIFY(tmp.write("E;'F\nG';H\nKK"));
+  tmp.close();
+
+  // Check readLine() method with different buffer sizes
+  for(bufferSize = 1; bufferSize < 17; bufferSize++){
+    // Read file and verify data
+    csv.setFileName(tmp.fileName());
+    csv.setReadLineBufferSize(bufferSize);
+    QVERIFY(csv.open(QIODevice::ReadOnly));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("A;'B';C;'D'"));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("1;2;3;4"));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("E;'F\nG';H"));
+    csv.close();
+  }
+
+}
+
 void mdtFileTest::csvFileReadTest()
 {
   QTemporaryFile tmp, tmpErr, tmpComment;

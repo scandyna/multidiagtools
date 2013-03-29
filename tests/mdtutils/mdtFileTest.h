@@ -31,6 +31,7 @@ class mdtFileTest : public mdtTest
 
   // CSV file read/write tests
   void csvFileWriteTest();
+  void csvFileReadLineTest();
   void csvFileReadTest();
   void csvFileReadTest_data();
   // CSV file: check cross-platform read

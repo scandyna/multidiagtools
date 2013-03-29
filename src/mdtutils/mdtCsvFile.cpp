@@ -29,11 +29,18 @@ mdtCsvFile::mdtCsvFile(QObject *parent, const QByteArray &fileEncoding)
 {
   pvCodec = QTextCodec::codecForName(fileEncoding);
   Q_ASSERT(pvCodec != 0);
+  pvReadLineBufferSize = 8192;
 }
 
 mdtCsvFile::~mdtCsvFile()
 {
   clear();
+}
+
+void mdtCsvFile::close()
+{
+  pvReadLineBuffer.clear();
+  QFile::close();
 }
 
 /**
@@ -114,6 +121,111 @@ bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, co
   }
 
   return true;
+}
+
+QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &escapeChar, QByteArray eol)
+{
+  QByteArray buffer;
+  QByteArray line;
+  QString dpBuffer;
+  bool eolFound = false;
+  int eolCursor;
+  int dpCursor;
+
+  /**
+  // Append previously readen part after EOL
+  line.append(pvReadLineBuffer);
+  pvReadLineBuffer.clear();
+  // Check about EOL in previous readen data
+  eolCursor = line.indexOf(eol);
+  if(eolCursor > -1){
+    if(eolCursor == 0){
+      eolFound = true;
+    }else{
+      // Check if eol is in a protected section
+      if(!dataProtectionSectionBegins(line.left(line.indexOf(eol)), dataProtection, escapeChar)){
+        eolFound = true;
+      }
+    }
+  }
+  */
+  // Read until EOL found or EOF
+  while((!eolFound)&&(!atEnd())){
+    ///buffer = read(pvReadLineBufferSize);
+    // Check about eol
+    eolCursor = buffer.indexOf(eol);
+    qDebug() << "eolCursor: " << eolCursor << " , buffer: " << buffer;
+    if(eolCursor > -1){
+      if(dataProtectionSectionBegins(line, dataProtection, escapeChar)){
+        // Search until we find a closing data protrection to confirm that we found a opening one
+        readUntilDataProtection(buffer, dpCursor, dataProtection, escapeChar);
+        if(dpCursor < 0){
+          line.append(buffer);
+        }else{
+          qDebug() << "End of DP, dpCursor: " << dpCursor << " , buffer: " << buffer;
+          line.append(buffer.left(dpCursor+1));
+          buffer.remove(0, dpCursor);
+        }
+        // First in current buffer
+        /**
+        for(i=0; i<buffer.size(); i++){
+          dpBuffer += buffer.at(i);
+          if(dpBuffer.right(dataProtection.size()) == dataProtection){
+            break;
+          }
+        }
+        */
+        // Read more if needed
+        ///while((dpBuffer != dataProtection)&&(!atEnd())){
+        /**
+        if(dpBuffer.right(dataProtection.size()) != dataProtection){
+          while(!atEnd()){
+            dpBuffer = read(dataProtection.size());
+            if(dpBuffer != dataProtection){
+              buffer.append(dpBuffer.toAscii());
+            }else{
+              break;
+            }
+          }
+        }
+        */
+        ///line.append(buffer);
+      }else{
+        ///line.append(buffer.left(eolCursor+1));
+        eolFound = true;
+      }
+    }else{
+      ///line.append(buffer);
+      buffer = read(pvReadLineBufferSize);
+    }
+    /**
+    if( (eolCursor > -1) && (!dataProtectionSectionBegins(line, dataProtection, escapeChar)) ){
+      eolFound = true;
+    }else{
+      line.append(buffer);
+    }
+    */
+  }
+  if(eolFound){
+    ///qDebug() << "eolFound, buffer: " << buffer;
+    line.append(buffer.left(eolCursor));
+    pvReadLineBuffer = buffer.right(buffer.size()-eolCursor-1);
+  }
+  /**
+  if(eolFound){
+    // Split left and right part of EOL
+    eolCursor = line.indexOf(eol);
+    if(line.size() > 1){
+      pvReadLineBuffer = line.right(line.size()-eolCursor-1);
+    }else{
+      pvReadLineBuffer.clear();
+    }
+    line.remove(eolCursor, line.size()-eolCursor);
+  }
+  */
+  qDebug() << "line: " << line << " , pvReadLineBuffer: " << pvReadLineBuffer;
+
+  return line;
 }
 
 bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QString eol)
@@ -271,3 +383,94 @@ QList<QStringList> &mdtCsvFile::lines()
   return pvLines;
 }
 
+void mdtCsvFile::setReadLineBufferSize(int size)
+{
+  pvReadLineBufferSize = size;
+}
+
+bool mdtCsvFile::dataProtectionSectionBegins(const QByteArray &line, const QString &dataProtection, const QChar &escapeChar)
+{
+  bool escapeEqualProtection = QString(escapeChar) == dataProtection;
+  int dpCursor = -1;
+  int dpCount = 0;
+  int start = 0;
+  int end = 0;
+
+  // If no data protection is given, we are never in a protected section
+  if(dataProtection.isEmpty()){
+    return false;
+  }
+  // Search..
+  while(end < line.size()){
+    // Get index of data protection
+    dpCursor = line.indexOf(dataProtection, start);
+    ///qDebug() << "dpCursor: " << dpCursor << " , line: " << line;
+    if(dpCursor < 0){
+      // Finish parsing
+      break;
+    }else{
+      if(escapeEqualProtection){
+        if(dpCursor < (line.size()-1)){
+          // check about escaped sequence
+          if(line.at(dpCursor+1) == escapeChar){
+            // Escaped sequence
+            end = dpCursor + 1;
+            start = dpCursor + dataProtection.size() + 1;
+          }else{
+            // No escaped
+            end = dpCursor;
+            start = dpCursor + dataProtection.size();
+            dpCount++;
+          }
+        }else{
+          end = dpCursor;
+          break;
+        }
+      }else{
+        if(dpCursor == 0){
+          // Just move start cursor after protection
+          start = dpCursor + dataProtection.size();
+          dpCount++;
+        }else{
+          if(line.at(dpCursor-1) == escapeChar){
+            // Escaped sequence
+            end = dpCursor-1;
+            start = dpCursor + dataProtection.size();
+          }else{
+            end = dpCursor;
+            start = dpCursor + dataProtection.size();
+            dpCount++;
+          }
+        }
+      }
+    }
+  }
+  // Result
+  qDebug() << "DPCHECK, dpCount: " << dpCount;
+  qDebug() << "In protected section ? " << (dpCount%2) << " , line: " << line;
+  return (dpCount%2);
+
+  /**
+  if(dpCount == 0){
+    qDebug() << "NOT in protected section, line: " << line;
+    return false;
+  }else{
+    qDebug() << "In protected section ? " << (dpCount%2) << " , line: " << line;
+    return (dpCount%2);
+  }
+  */
+}
+
+void mdtCsvFile::readUntilDataProtection(QByteArray &buffer, int &dpIndex, const QString &dataProtection, const QChar &escapeChar)
+{
+  bool dpFound = false;
+
+  while((!dpFound)&&(!atEnd())){
+    dpIndex = buffer.indexOf(dataProtection);
+    if(dpIndex > -1){
+      dpFound = true;
+    }else{
+      buffer.append(read(pvReadLineBufferSize));
+    }
+  }
+}
