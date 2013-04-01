@@ -35,11 +35,17 @@
 
 #include <QDebug>
 
+// We need a list of byte array for readLine data results
+typedef QList<QByteArray> byteArrayList;
+Q_DECLARE_METATYPE(byteArrayList);
+
 void mdtFileTest::csvFileWriteTest()
 {
   QTemporaryFile tmp;
   mdtCsvFile csv;
+  QStringList line;
   QByteArray data;
+  QByteArray refData;
 
   // Create a temporary file
   QVERIFY(tmp.open());
@@ -47,27 +53,696 @@ void mdtFileTest::csvFileWriteTest()
 
   // Create a CSV file
   csv.setFileName(tmp.fileName());
-  QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
 
-  // Write data
-  data = "0123;ABCD";
-  data += "\n";
-  data += "UIJ;88";
-  QVERIFY(csv.write(data) == (qint64)data.size());
+  // Write some simple data - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "A" << "B" << "C" << "D";
+  QVERIFY(csv.writeLine(line, ";"));
+  line.clear();
   csv.close();
-
   // Check written data
+  refData = "A;B;C;D";
+  refData += MDT_NATIVE_EOL;
   QVERIFY(tmp.open());
-
-#ifdef Q_OS_WIN
-  // On Windows, we reconstruct ref data with CRLF sequence
-  data = "0123;ABCD";
-  data += (char)0x0D; // CR
-  data += "\n";       // LF
-  data += "UIJ;88";
-#endif
-  QVERIFY(tmp.readAll() == data);
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
   tmp.close();
+
+  // Write some simple data - Use \n EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly));
+  line << "1" << "2" << "3" << "4";
+  QVERIFY(csv.writeLine(line, ";", "", '\0', "\n"));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "1;2;3;4";
+  refData += "\n";
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Write some simple data - Use \r\n EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly));
+  line << "E" << "F" << "G" << "H";
+  QVERIFY(csv.writeLine(line, ";", "", '\0', "\r\n"));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "E;F;G;H";
+  refData += "\r\n";
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Check data protection function - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "A" << "B" << "C" << "D";
+  QVERIFY(csv.writeLine(line, ";", "'", '\\'));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "'A';'B';'C';'D'";
+  refData += MDT_NATIVE_EOL;
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Check escape function - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "'A'" << "B" << "'C'" << "D";
+  QVERIFY(csv.writeLine(line, ";", "'", '\\'));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "'\\'A\\'';'B';'\\'C\\'';'D'";
+  refData += MDT_NATIVE_EOL;
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+
+  // Write 2 lines of simple data - Use native EOL
+  QVERIFY(csv.open(QIODevice::WriteOnly | QIODevice::Text));
+  line << "A" << "B" << "C" << "D";
+  QVERIFY(csv.writeLine(line, ";"));
+  line.clear();
+  line << "1" << "2" << "3" << "4";
+  QVERIFY(csv.writeLine(line, ";"));
+  line.clear();
+  csv.close();
+  // Check written data
+  refData = "A;B;C;D";
+  refData += MDT_NATIVE_EOL;
+  refData += "1;2;3;4";
+  refData += MDT_NATIVE_EOL;
+  QVERIFY(tmp.open());
+  QCOMPARE(QString(tmp.readAll()), QString(refData));
+  tmp.close();
+}
+
+void mdtFileTest::csvFileReadLineTest()
+{
+  QTemporaryFile tmp;
+  mdtCsvFile csv;
+  int bufferSize, i;
+  QFETCH(QByteArray, fileData);
+  QFETCH(QString, dataProtection);
+  QFETCH(QChar, escapeChar);
+  QFETCH(QByteArray, eol);
+  QFETCH(byteArrayList, result);
+
+  // Create a temporary file
+  QVERIFY(tmp.open());
+  QVERIFY(!tmp.isTextModeEnabled());
+
+  // Write test data
+  qDebug() << "File data: " << fileData;
+  if(fileData.size() > 0){
+    QVERIFY(tmp.write(fileData));
+  }
+  tmp.close();
+
+  QVERIFY(tmp.open());
+  qDebug() << "File: " << tmp.readAll();
+  tmp.close();
+  /**
+  QVERIFY(tmp.write("A;'B';C;'D'\n"));
+  QVERIFY(tmp.write("1;2;3;4\n"));
+  QVERIFY(tmp.write("E;'F\nG';H\n"));
+  QVERIFY(tmp.write("5;6;7;8\n"));
+  */
+  // Check readLine() method with different buffer sizes
+  for(bufferSize = 1; bufferSize < 17; bufferSize++){
+    // Read file and verify data
+    csv.setFileName(tmp.fileName());
+    csv.setReadLineBufferSize(bufferSize);
+    QVERIFY(csv.open(QIODevice::ReadOnly));
+    i=0;
+    while(csv.hasMoreLines()){
+      QVERIFY(i < result.size());
+      QCOMPARE(csv.readLine(dataProtection, escapeChar, eol), result.at(i));
+      i++;
+    }
+    QCOMPARE(i, result.size());
+    csv.close();
+    /**
+    // Read file and verify data
+    csv.setFileName(tmp.fileName());
+    csv.setReadLineBufferSize(bufferSize);
+    QVERIFY(csv.open(QIODevice::ReadOnly));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("A;'B';C;'D'"));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("1;2;3;4"));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("E;'F\nG';H"));
+    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("5;6;7;8"));
+    csv.close();
+    */
+  }
+
+
+}
+
+void mdtFileTest::csvFileReadLineTest_data()
+{
+  QTest::addColumn<QByteArray>("fileData");
+  QTest::addColumn<QString>("dataProtection");
+  QTest::addColumn<QChar>("escapeChar");
+  QTest::addColumn<QByteArray>("eol");
+  QTest::addColumn<byteArrayList>("result");
+
+  QByteArray fileData;
+  QString dataProtection;
+  QChar escapeChar;
+  QByteArray eol;
+  byteArrayList result;
+
+  /*
+   * Tests without data protection, without escape char
+   * EOL: \n
+   */
+  dataProtection = "";
+  escapeChar = '\0';
+  eol = "\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "B";
+  result.clear();
+  result << "B";
+  QTest::newRow("1 char miss. EOL (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\n";
+  result.clear();
+  result << "ABCD";
+  QTest::newRow("1 line (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD";
+  result.clear();
+  result << "ABCD";
+  QTest::newRow("1 line miss. EOL (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines miss. EOL (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    fileData += result.at(i);
+    fileData += "\n";
+  }
+  QTest::newRow("n lines (-,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  /*
+   * Tests without data protection, without escape char
+   * EOL: \r\n
+   */
+  dataProtection = "";
+  escapeChar = '\0';
+  eol = "\r\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\r\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "B";
+  result.clear();
+  result << "B";
+  QTest::newRow("1 char miss. EOL (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\n";
+  result.clear();
+  result << "ABCD";
+  QTest::newRow("1 line (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD";
+  result.clear();
+  result << "ABCD";
+  QTest::newRow("1 line miss. EOL (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\nEFGH\r\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\nEFGH";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines miss. EOL (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    fileData += result.at(i);
+    fileData += "\r\n";
+  }
+  QTest::newRow("n lines (-,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  /*
+   * Tests without escape char
+   * dataProtection: '
+   * EOL: \n
+   */
+  dataProtection = "'";
+  escapeChar = '\0';
+  eol = "\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines miss. EOL (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "''\n";
+  result.clear();
+  result << "''";
+  QTest::newRow("Only DP (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'A'\n";
+  result.clear();
+  result << "'A'";
+  QTest::newRow("1 char (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\nEFGH\n";
+  result.clear();
+  result << "'ABCD'" << "EFGH";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\n'EFGH'\n";
+  result.clear();
+  result << "ABCD" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\n'EFGH'\n";
+  result.clear();
+  result << "'ABCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'AB\nCD'\n'EFGH'\n";
+  result.clear();
+  result << "'AB\nCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\n'EF\nGH'\n";
+  result.clear();
+  result << "'ABCD'" << "'EF\nGH'";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'\nABCD'\n'EFGH'\n";
+  result.clear();
+  result << "'\nABCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\n'EFGH\n'\n";
+  result.clear();
+  result << "'ABCD'" << "'EFGH\n'";
+  QTest::newRow("2 lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("'ABCDEFGHIJKLMNOPQRSTUVWXYZ'");
+    fileData += result.at(i);
+    fileData += "\n";
+  }
+  QTest::newRow("n lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("'ABC\nDEFG\nHIJKLMNOPQRSTUVWXYZ'");
+    fileData += result.at(i);
+    fileData += "\n";
+  }
+  QTest::newRow("n lines (',-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  /*
+   * Tests without escape char
+   * dataProtection: '
+   * EOL: \r\n
+   */
+  dataProtection = "'";
+  escapeChar = '\0';
+  eol = "\r\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\r\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\nEFGH\r\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\nEFGH";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines miss. EOL (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "''\r\n";
+  result.clear();
+  result << "''";
+  QTest::newRow("Only DP (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'A'\r\n";
+  result.clear();
+  result << "'A'";
+  QTest::newRow("1 char (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\r\nEFGH\r\n";
+  result.clear();
+  result << "'ABCD'" << "EFGH";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\n'EFGH'\r\n";
+  result.clear();
+  result << "ABCD" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\r\n'EFGH'\r\n";
+  result.clear();
+  result << "'ABCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'AB\r\nCD'\r\n'EFGH'\r\n";
+  result.clear();
+  result << "'AB\r\nCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\r\n'EF\r\nGH'\r\n";
+  result.clear();
+  result << "'ABCD'" << "'EF\r\nGH'";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'\r\nABCD'\r\n'EF\r\nGH'\r\n";
+  result.clear();
+  result << "'\r\nABCD'" << "'EF\r\nGH'";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\r\n'EFGH\r\n'\r\n";
+  result.clear();
+  result << "'ABCD'" << "'EFGH\r\n'";
+  QTest::newRow("2 lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("'ABCDEFGHIJKLMNOPQRSTUVWXYZ'");
+    fileData += result.at(i);
+    fileData += "\r\n";
+  }
+  QTest::newRow("n lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("'ABC\r\nDEFGHIJ\r\nKLMNOPQRSTUVWXYZ'");
+    fileData += result.at(i);
+    fileData += "\r\n";
+  }
+  QTest::newRow("n lines (',-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  /*
+   * Tests without escape char
+   * dataProtection: <DP>
+   * EOL: \n
+   */
+  dataProtection = "<DP>";
+  escapeChar = '\0';
+  eol = "\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines miss. EOL (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP><DP>\n";
+  result.clear();
+  result << "<DP><DP>";
+  QTest::newRow("Only DP (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>A<DP>\n";
+  result.clear();
+  result << "<DP>A<DP>";
+  QTest::newRow("1 char (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\nEFGH\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "EFGH";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\n<DP>EFGH<DP>\n";
+  result.clear();
+  result << "ABCD" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\n<DP>EFGH<DP>\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>AB\nCD<DP>\n<DP>EFGH<DP>\n";
+  result.clear();
+  result << "<DP>AB\nCD<DP>" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\n<DP>EF\nGH<DP>\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "<DP>EF\nGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>\nABCD<DP>\n<DP>EFGH<DP>\n";
+  result.clear();
+  result << "<DP>\nABCD<DP>" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\n<DP>EFGH\n<DP>\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "<DP>EFGH\n<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("<DP>ABCDEFGHIJKLMNOPQRSTUVWXYZ<DP>");
+    fileData += result.at(i);
+    fileData += "\n";
+  }
+  QTest::newRow("n lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("<DP>ABC\nDEFG\nHIJKLMNOPQRSTUVWXYZ<DP>");
+    fileData += result.at(i);
+    fileData += "\n";
+  }
+  QTest::newRow("n lines (<DP>,-,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  /*
+   * Tests without escape char
+   * dataProtection: <DP>
+   * EOL: \r\n
+   */
+  dataProtection = "<DP>";
+  escapeChar = '\0';
+  eol = "\r\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\r\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\nEFGH\r\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\nEFGH";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines miss. EOL (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP><DP>\r\n";
+  result.clear();
+  result << "<DP><DP>";
+  QTest::newRow("Only DP (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>A<DP>\r\n";
+  result.clear();
+  result << "<DP>A<DP>";
+  QTest::newRow("1 char (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\r\nEFGH\r\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "EFGH";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\r\n<DP>EFGH<DP>\r\n";
+  result.clear();
+  result << "ABCD" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\r\n<DP>EFGH<DP>\r\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>AB\r\nCD<DP>\r\n<DP>EFGH<DP>\r\n";
+  result.clear();
+  result << "<DP>AB\r\nCD<DP>" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\r\n<DP>EF\r\nGH<DP>\r\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "<DP>EF\r\nGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>\r\nABCD<DP>\r\n<DP>EFGH<DP>\r\n";
+  result.clear();
+  result << "<DP>\r\nABCD<DP>" << "<DP>EFGH<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "<DP>ABCD<DP>\r\n<DP>EFGH\r\n<DP>\r\n";
+  result.clear();
+  result << "<DP>ABCD<DP>" << "<DP>EFGH\r\n<DP>";
+  QTest::newRow("2 lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("<DP>ABCDEFGHIJKLMNOPQRSTUVWXYZ<DP>");
+    fileData += result.at(i);
+    fileData += "\r\n";
+  }
+  QTest::newRow("n lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  result.clear();
+  fileData.clear();
+  for(int i=0; i<10; i++){
+    result.append("<DP>ABC\r\nDEFG\r\nHIJKLMNOPQRSTUVWXYZ<DP>");
+    fileData += result.at(i);
+    fileData += "\r\n";
+  }
+  QTest::newRow("n lines (<DP>,-,\\r\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  /*
+   * Tests
+   * dataProtection: '
+   * escapeChar: \
+   * EOL: \n
+   */
+  dataProtection = "'";
+  escapeChar = '\\';
+  eol = "\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "''\n";
+  result.clear();
+  result << "''";
+  QTest::newRow("1 char (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "\\'\\'\n";
+  result.clear();
+  result << "\\'\\'";
+  QTest::newRow("1 char (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "ABCD\nEFGH\n";
+  result.clear();
+  result << "ABCD" << "EFGH";
+  QTest::newRow("2 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'ABCD'\n'EFGH'\n";
+  result.clear();
+  result << "'ABCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'AB\\'CD'\n'EFGH'\n";
+  result.clear();
+  result << "'AB\\'CD'" << "'EFGH'";
+  QTest::newRow("2 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "'AB\nCD'\n'EFGH'\n";
+  result.clear();
+  result << "'AB\nCD'" << "'EFGH'";
+  QTest::newRow("2 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\\'B\nCD\nEFGH\n";
+  result.clear();
+  result << "A\\'B" << "CD" << "EFGH";
+  QTest::newRow("3 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\\'B\\'\nCD\nEFGH\n";
+  result.clear();
+  result << "A\\'B\\'" << "CD" << "EFGH";
+  QTest::newRow("3 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
+  fileData = "A\\'B\n\\'\nCD\nEFGH\n";
+  result.clear();
+  result << "A\\'B" << "\\'" << "CD" << "EFGH";
+  QTest::newRow("4 lines (',\\,\\n)") << fileData << dataProtection << escapeChar << eol << result;
+
 }
 
 void mdtFileTest::csvFileReadTest()
@@ -164,10 +839,12 @@ void mdtFileTest::csvFileReadTest()
   QVERIFY(csv.open(QIODevice::ReadWrite | QIODevice::Text));
   // Read file and verify data
   QVERIFY(csv.readLines(";", "'"));
+  /**
   QCOMPARE(csv.valueAt(0, 0) , QString("Some invalid"));
   QCOMPARE(csv.valueAt(1, 0) , QString("And 2 seps"));
   QCOMPARE(csv.valueAt(1, 1) , QString(""));
   QCOMPARE(csv.valueAt(1, 2) , QString("With other data and no end of line at end"));
+  */
 
   // Access invalid indexes - Must not crash, and value must be a empty string
   QVERIFY(csv.valueAt(-1, 0) == "");

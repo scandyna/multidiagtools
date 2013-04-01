@@ -32,7 +32,7 @@
 
 /*! \brief Compare 2 floats with considering n bits of resolution for a range from min to max
  */
-#define MDT_COMPARE(x, y, n, min, max) mdtTest::compareFloats(x, y, n, min, max, __FILE__, __LINE__);
+#define MDT_COMPARE(x, y, n, min, max) mdtTest::compare(x, y, n, min, max, __FILE__, __LINE__);
 
 using namespace std;
 
@@ -57,9 +57,8 @@ class mdtTest : public QObject
   int randomValue(int min, int max);
 
   /*! \brief Compare 2 floats with considering n bits of resolution
-   * \todo Add range, this influe the LSB !!! (LSB = range/n)
    */
-  static void compareFloats(double x, double y, int n, double min, double max, const char *file, int line);
+  static void compare(double x, double y, int n, double min, double max, const char *file, int line);
 };
 
 #endif  // ifdef MDT_TEST_H

@@ -190,7 +190,7 @@ bool mdtDataTableModel::setData(int row, const QString &field, const QVariant & 
   return setData(row, fieldIndex(field), value, role);
 }
 
-bool mdtDataTableModel::exportToCsvFile(const QString & filePath)
+bool mdtDataTableModel::exportToCsvFile(const QString & filePath, create_mode_t mode)
 {
   return false;
 }

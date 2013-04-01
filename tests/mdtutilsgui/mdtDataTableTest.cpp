@@ -333,6 +333,47 @@ void mdtDataTableTest::editDataTest()
   QCOMPARE(m.data(m.index(2, 2)), QVariant(88.4));
 }
 
+void mdtDataTableTest::csvExportTest()
+{
+  QTemporaryFile dbFile;
+  QFileInfo fileInfo;
+  QList<QSqlField> fields;
+  QSqlField field;
+  QSqlIndex pk;
+  QSqlDatabase db;
+  QString dataSetName;
+  QString dataSetTableName;
+  QMap<QString,QVariant> rowData;
+
+  // Build fields
+  pk.append(QSqlField("id_PK", QVariant::Int));
+  field.setName("signal");
+  field.setType(QVariant::String);
+  fields.append(field);
+  field.setName("value");
+  field.setType(QVariant::Double);
+  fields.append(field);
+  // Create data set
+  QVERIFY(dbFile.open());
+  fileInfo.setFile(dbFile);
+  dataSetName = fileInfo.fileName();
+  dataSetTableName = mdtDataTableModel::getTableName(dataSetName);
+  db = mdtDataTableModel::createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableModel::OverwriteExisting);
+  QVERIFY(db.isOpen());
+  // Set model and check that columns exists
+  mdtDataTableModel m(0, db);
+  m.setTable(dataSetTableName);
+  QCOMPARE(m.columnCount(), 3);
+  QCOMPARE(m.headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  QCOMPARE(m.headerData(1, Qt::Horizontal), QVariant("signal"));
+  QCOMPARE(m.headerData(2, Qt::Horizontal), QVariant("value"));
+
+}
+
+void mdtDataTableTest::csvImportTest()
+{
+}
+
 
 int main(int argc, char **argv)
 {
