@@ -134,15 +134,16 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
 
   buffer = pvReadLineBuffer;
   // Read until EOL found or EOF
-  ///while((!eolFound)&&(!atEnd())){
   while(!eolFound){
     qDebug() << "line (0): " << line << " , buffer (0): " << buffer;
+    
     eolCursor = buffer.indexOf(eol);
     qDebug() << "EOL cursor: " << eolCursor;
     if(eolCursor < 0){
       qDebug() << "buffer (1): " << buffer;
       if(atEnd()){
         line.append(buffer);
+        buffer.clear();
         break;
       }
       buffer.append(read(pvReadLineBufferSize));
@@ -150,7 +151,7 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
       // A EOL was found, check if it is in a data protection or not
       qDebug() << "EOL found ? (0) , line: " << line << " , buffer: " << buffer;
       line.append(buffer.left(eolCursor));
-      buffer.remove(0, eolCursor/*+eol.size()-1*/);  /// \todo Will fail if eol size is > 1
+      buffer.remove(0, eolCursor);
       qDebug() << "EOL found ? (1) , line: " << line << " , buffer: " << buffer;
       if(dataProtectionSectionBegins(line, dataProtection, escapeChar)){
         // Search until we find a closing data protrection to confirm that we found a opening one
@@ -179,6 +180,14 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
   return line;
 }
 
+bool mdtCsvFile::hasMoreLines() const
+{
+  if((pvReadLineBuffer.size() > 0)||(!atEnd())){
+    return true;
+  }
+  return false;
+}
+
 bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QString eol)
 {
   Q_ASSERT(separator != dataProtection);
@@ -203,6 +212,21 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
   if(isTextModeEnabled()){
     eol = "\n";
   }
+  // Read file and parse each line
+  while(hasMoreLines()){
+    line = pvCodec->toUnicode(readLine(dataProtection, escapeChar, eol.toAscii()));
+    // Check if we have a commented line
+    if(line.size() > 0){
+      if((comment.isEmpty())||(!line.startsWith(comment))){
+        continue;
+      }
+      // Parse the line
+      pvLines.append(mdtAlgorithms::splitString(line, separator, dataProtection, escapeChar));
+    }
+  }
+
+  return true;
+
   // Read the file and separate lines (not very efficient...)
   ///lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, dataProtection, escapeChar);
   lines = mdtAlgorithms::splitString(pvCodec->toUnicode(readAll()), eol, "", escapeChar);
