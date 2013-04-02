@@ -39,8 +39,6 @@
  * 
  * The default file encoding format is assumed UTF-8.
  * If another format is to use, give it at constructor.
- *
- * \todo Create a write from CSV method, and considere EOL problem.
  */
 class mdtCsvFile : public QFile
 {
@@ -60,16 +58,6 @@ class mdtCsvFile : public QFile
    * Note: readen data are not cleared. Call clear() explicitly for this.
    */
   void close();
-
-  /*! \brief Read the file and store data
-   * 
-   * \param separator Separator to use (typical: ; )
-   * \param protection Data protection (typical: " )
-   * \param comment Comment (typical: # )
-   * \return True on success, false else (see errorString() to know what happened in this case)
-   * \pre separator, dataProtection and comment must not be the same
-   */
-  ///bool readLines(QByteArray separator = ";", QByteArray dataProtection = "", QByteArray comment = "#");
 
   /*! \brief Write a line of data
    *
@@ -96,7 +84,6 @@ class mdtCsvFile : public QFile
    * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
    * \param eol End of line sequence. Usefull if given file was not written from running platform.
    * \return Line of data.
-   * \todo Add suport of commented lines
    */
   QByteArray readLine(const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
 

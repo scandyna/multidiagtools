@@ -155,21 +155,13 @@ void mdtFileTest::csvFileReadLineTest()
   QVERIFY(!tmp.isTextModeEnabled());
 
   // Write test data
-  qDebug() << "File data: " << fileData;
   if(fileData.size() > 0){
     QVERIFY(tmp.write(fileData));
   }
   tmp.close();
 
   QVERIFY(tmp.open());
-  qDebug() << "File: " << tmp.readAll();
   tmp.close();
-  /**
-  QVERIFY(tmp.write("A;'B';C;'D'\n"));
-  QVERIFY(tmp.write("1;2;3;4\n"));
-  QVERIFY(tmp.write("E;'F\nG';H\n"));
-  QVERIFY(tmp.write("5;6;7;8\n"));
-  */
   // Check readLine() method with different buffer sizes
   for(bufferSize = 1; bufferSize < 17; bufferSize++){
     // Read file and verify data
@@ -184,20 +176,7 @@ void mdtFileTest::csvFileReadLineTest()
     }
     QCOMPARE(i, result.size());
     csv.close();
-    /**
-    // Read file and verify data
-    csv.setFileName(tmp.fileName());
-    csv.setReadLineBufferSize(bufferSize);
-    QVERIFY(csv.open(QIODevice::ReadOnly));
-    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("A;'B';C;'D'"));
-    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("1;2;3;4"));
-    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("E;'F\nG';H"));
-    QCOMPARE(csv.readLine("'", '\0', "\n"), QByteArray("5;6;7;8"));
-    csv.close();
-    */
   }
-
-
 }
 
 void mdtFileTest::csvFileReadLineTest_data()
@@ -747,6 +726,40 @@ void mdtFileTest::csvFileReadLineTest_data()
   QTest::newRow("4 lines (',-,\\,\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
 
   /*
+   * Tests
+   * dataProtection: '
+   * escapeChar: '
+   * EOL: \n
+   */
+  dataProtection = "'";
+  escapeChar = '\'';
+  eol = "\n";
+
+  fileData = "";
+  result.clear();
+  QTest::newRow("Empty file (',-,',\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
+
+  fileData = "A\n";
+  result.clear();
+  result << "A";
+  QTest::newRow("1 char (',-,',\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
+
+  fileData = "''\n";
+  result.clear();
+  result << "''";
+  QTest::newRow("1 char (',-,',\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
+
+  fileData = "''''\n";
+  result.clear();
+  result << "''''";
+  QTest::newRow("1 char (',-,',\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
+
+  fileData = "'AB''CD'\n'EFGH'\n";
+  result.clear();
+  result << "'AB''CD'" << "'EFGH'";
+  QTest::newRow("2 lines (',-,',\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
+
+  /*
    * Check commented lines
    */
   dataProtection = "";
@@ -813,6 +826,11 @@ void mdtFileTest::csvFileReadLineTest_data()
   result << "ABCD" << "";
   QTest::newRow("2 lines (-,#,-,\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
 
+  fileData = "A#BCD\nEFGH#\n";
+  result.clear();
+  result << "A#BCD" << "EFGH#";
+  QTest::newRow("2 lines (-,#,-,\\n)") << fileData << dataProtection  << comment << escapeChar << eol << result;
+
   fileData = "ABCD\n#EFGH";
   result.clear();
   result << "ABCD" << "";
@@ -831,7 +849,7 @@ void mdtFileTest::csvFileReadLineTest_data()
 
 void mdtFileTest::csvFileReadTest()
 {
-  QTemporaryFile tmp, tmpErr, tmpComment;
+  QTemporaryFile tmp, tmpErr, tmpComment, tmpEscape;
   mdtCsvFile csv;
   QStringList line;
   QList<QStringList> data;
@@ -965,6 +983,47 @@ void mdtFileTest::csvFileReadTest()
   QCOMPARE(csv.valueAt(1, 0) , QString("Uncommented data"));
   QCOMPARE(csv.valueAt(1, 1) , QString("Some data"));
   QCOMPARE(csv.valueAt(1, 2) , QString("987"));
+  csv.close();
+
+  /*
+   * Data protection and escape test
+   *  DP: '
+   *  Escape: \
+   */
+  QVERIFY(tmpEscape.open());
+  QVERIFY(tmpEscape.write("ABCD;'EFGH'\n"));
+  QVERIFY(tmpEscape.write("'12\\'34';'5678'\n"));
+  tmpEscape.close();
+  // Open CSV file and check
+  csv.setFileName(tmpEscape.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "'", "#", '\\', MDT_NATIVE_EOL));
+  QCOMPARE(csv.valueAt(0, 0) , QString("ABCD"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("EFGH"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("12'34"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("5678"));
+  csv.close();
+
+  /*
+   * Data protection and escape test
+   *  DP: '
+   *  Escape: '
+   */
+  QVERIFY(tmpEscape.open());
+  QVERIFY(tmpEscape.resize(0));
+  QVERIFY(tmpEscape.write("ABCD;'EFGH'\n"));
+  QVERIFY(tmpEscape.write("'12''34';'5678'\n"));
+  tmpEscape.close();
+  // Open CSV file and check
+  csv.setFileName(tmpEscape.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "'", "#", '\'', MDT_NATIVE_EOL));
+  QCOMPARE(csv.valueAt(0, 0) , QString("ABCD"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("EFGH"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("12'34"));
+  QCOMPARE(csv.valueAt(1, 1) , QString("5678"));
+  csv.close();
+
 }
 
 void mdtFileTest::csvFileReadTest_data()
