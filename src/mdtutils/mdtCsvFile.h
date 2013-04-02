@@ -92,12 +92,13 @@ class mdtCsvFile : public QFile
    *  but hasMoreLines().
    *
    * \param dataProtection Data protection (typical: " ).
+   * \param comment Comment (typical: # ). Each line that beginns with comment is ignored.
    * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
    * \param eol End of line sequence. Usefull if given file was not written from running platform.
    * \return Line of data.
    * \todo Add suport of commented lines
    */
-  QByteArray readLine(const QString &dataProtection = "", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+  QByteArray readLine(const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
 
   /*! \brief Check if readLine() has more lines available
    */
@@ -171,6 +172,25 @@ class mdtCsvFile : public QFile
    * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
    */
   void readUntilDataProtection(QByteArray &buffer, int &dpIndex, const QString &dataProtection, const QChar &escapeChar);
+
+  /*! \brief Get index of the beginning of a commented line
+   *
+   * Example of buffer containing a start of a commented line (with # as comment):
+   *  - #ABCD
+   *  - \n#ABCD
+   *  - \\n #ABCD
+   *  - ABCD\n#EFGH
+   *  - ABCD\n #EFGH
+   * Example of buffer not containing a start of a commented line (with # as comment):
+   *  - "#ABCD
+   *  - A#BCD
+   *  - \\nA#BCD
+   *
+   * \param line Line to parse
+   * \param comment Comment (typical: # )
+   * \return Index of the beginning of a commented line, or -1 if not found.
+   */
+  int indexOfCommentedLineBeginning(const QByteArray &line, const QString &comment);
 
   QList<QStringList> pvLines;
   ///QStringList pvFields;

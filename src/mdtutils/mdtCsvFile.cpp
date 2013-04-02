@@ -21,7 +21,7 @@
 #include "mdtCsvFile.h"
 #include "mdtError.h"
 #include "mdtAlgorithms.h"
-
+#include <cctype>
 #include <QDebug>
 
 mdtCsvFile::mdtCsvFile(QObject *parent, const QByteArray &fileEncoding)
@@ -123,7 +123,7 @@ bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, co
   return true;
 }
 
-QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &escapeChar, QByteArray eol)
+QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
 {
   QByteArray buffer;
   QByteArray line;
@@ -133,10 +133,14 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
   int dpCursor;
 
   buffer = pvReadLineBuffer;
+  
+  /// Search if a part of buffer is start of beginning commented line
+  /// If true, read from comment until EOL (without worry about dataProtection
+  /// Keep left part of buffer and process
+  
   // Read until EOL found or EOF
   while(!eolFound){
     qDebug() << "line (0): " << line << " , buffer (0): " << buffer;
-    
     eolCursor = buffer.indexOf(eol);
     qDebug() << "EOL cursor: " << eolCursor;
     if(eolCursor < 0){
@@ -144,6 +148,10 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
       if(atEnd()){
         line.append(buffer);
         buffer.clear();
+        // Now check that line is not commented
+        if(indexOfCommentedLineBeginning(line, comment) > -1){
+          line.clear();
+        }
         break;
       }
       buffer.append(read(pvReadLineBufferSize));
@@ -167,10 +175,16 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QChar &esca
           qDebug() << "-> DONE, line (B): " << line << " , buffer: " << buffer;
         }
       }else{
-        eolFound = true;
+        // Here we found a EOL in a unprotected section.
         qDebug() << "buffer: " << buffer << " , removing " << eol.size() << " items";
         buffer.remove(0, eol.size());
         qDebug() << "-> buffer: " << buffer;
+        // Now check that line is not commented
+        if(indexOfCommentedLineBeginning(line, comment) > -1){
+          line.clear();
+        }else{
+          eolFound = true;
+        }
       }
     }
   }
@@ -214,12 +228,9 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
   }
   // Read file and parse each line
   while(hasMoreLines()){
-    line = pvCodec->toUnicode(readLine(dataProtection, escapeChar, eol.toAscii()));
+    line = pvCodec->toUnicode(readLine(dataProtection, comment, escapeChar, eol.toAscii()));
     // Check if we have a commented line
     if(line.size() > 0){
-      if((comment.isEmpty())||(!line.startsWith(comment))){
-        continue;
-      }
       // Parse the line
       pvLines.append(mdtAlgorithms::splitString(line, separator, dataProtection, escapeChar));
     }
@@ -455,4 +466,25 @@ void mdtCsvFile::readUntilDataProtection(QByteArray &buffer, int &dpIndex, const
       }
     }
   }
+}
+
+int mdtCsvFile::indexOfCommentedLineBeginning(const QByteArray &line, const QString &comment)
+{
+  int i;
+
+  if(comment.isEmpty()){
+    return -1;
+  }
+  for(i=0; i<line.size(); i++){
+    if(!isspace(line.at(i))){
+      // We are at first char position
+      if(line.indexOf(comment, i) == i){
+        return i;
+      }else{
+        return -1;
+      }
+    }
+  }
+
+  return -1;
 }
