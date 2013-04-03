@@ -48,6 +48,7 @@ set (HEADER_FILES
           mdtSqlTableModel.h
           mdtDataWidgetMapper.h
           mdtDataTableItemDelegate.h
+          mdtDataTableManager.h
           mdtDataTableModel.h
           # Essais
           mdtParentChildTableModel.h
@@ -69,6 +70,7 @@ set (SOURCES_FILES
           mdtSqlTableModel.cpp
           mdtDataWidgetMapper.cpp
           mdtDataTableItemDelegate.cpp
+          mdtDataTableManager.cpp
           mdtDataTableModel.cpp
           # Essais
           mdtParentChildTableModel.cpp
