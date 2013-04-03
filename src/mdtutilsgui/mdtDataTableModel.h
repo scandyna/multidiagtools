@@ -51,6 +51,13 @@ class mdtDataTableModel : public QSqlTableModel
    */
   ~mdtDataTableModel();
 
+  /*! \brief Set table name
+   *
+   * Will fetch some informations on fields and call
+   *  QSqlTableModel::setTable().
+   */
+  void setTable(const QString & tableName);
+
   /*! \brief Add a row of data in model
    *
    * This is a helper method wich uses QSqlTableModel's insert/setData methods.
@@ -61,6 +68,32 @@ class mdtDataTableModel : public QSqlTableModel
    * \return True on success. See QSqlTableModel for known errors.
    */
   bool addRow(const QMap<QString,QVariant> &data, int role = Qt::EditRole);
+
+  /*! \brief Add a row of data in model
+   *
+   * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   *
+   * \param data A list of data items for the row.
+   *              Note: if field order is unknow, use addRow(const QMap\<QString,QVariant>, int) .
+   * \param pkNotInData Set true if primary key is not contained in data (must also be auto generated).
+   * \param role See QSqlTableModel.
+   * \param submitRow If true, submit() is called internally.
+   * \return True on success. See QSqlTableModel for known errors.
+   */
+  bool addRow(const QList<QVariant> &data, bool pkNotInData, int role = Qt::EditRole, bool submitRow = true);
+
+  /*! \brief Add a row of data in model
+   *
+   * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   *
+   * \param data A list of data items for the row. Data will be converted to field's format.
+   *              Note: if field order is unknow, use addRow(const QMap\<QString,QVariant>, int) .
+   * \param pkNotInData Set true if primary key is not contained in data (must also be auto generated).
+   * \param role See QSqlTableModel.
+   * \param submitRow If true, submit() is called internally.
+   * \return True on success. False if a data conversion failed, or other error. See QSqlTableModel for known errors.
+   */
+  bool addRow(const QStringList &data, bool pkNotInData, int role = Qt::EditRole, bool submitRow = true);
 
   /*! \brief Set data for a given index in model
    *
@@ -89,6 +122,11 @@ class mdtDataTableModel : public QSqlTableModel
    *          See QSqlTableModel for details.
    */
   bool setData(int row, const QString &field, const QVariant &value, int role = Qt::EditRole);
+
+ private:
+
+  QList<int> pvPkIndexes; // Hold the (column) indexes of primary keys
+
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_MODEL_H

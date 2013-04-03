@@ -35,6 +35,18 @@ mdtDataTableModel::~mdtDataTableModel()
 {
 }
 
+void mdtDataTableModel::setTable(const QString & tableName)
+{
+  int i;
+
+  QSqlTableModel::setTable(tableName);
+  // Get indexes of the primary key
+  pvPkIndexes.clear();
+  for(i=0; i<primaryKey().count(); i++){
+    pvPkIndexes.append(fieldIndex(primaryKey().fieldName(i)));
+  }
+}
+
 bool mdtDataTableModel::addRow(const QMap<QString,QVariant> &data, int role)
 {
   QMap<QString,QVariant>::const_iterator it;
@@ -50,6 +62,69 @@ bool mdtDataTableModel::addRow(const QMap<QString,QVariant> &data, int role)
   }
 
   return submit();
+}
+
+bool mdtDataTableModel::addRow(const QList<QVariant> &data, bool pkNotInData, int role, bool submitRow)
+{
+  int dataColumnIndex;
+  int modelColumnIndex;
+
+  if(!insertRows(0, 1)){
+    return false;
+  }
+  modelColumnIndex = 0;
+  for(dataColumnIndex=0; dataColumnIndex<data.size(); dataColumnIndex++){
+    // If PK is not in data, we must remap indexes
+    if((pkNotInData)&&(pvPkIndexes.contains(modelColumnIndex))){
+      if(modelColumnIndex >= columnCount()){
+        revertRow(0);
+        return false;
+      }
+      modelColumnIndex++;
+    }
+    if(!QSqlTableModel::setData(index(0, modelColumnIndex), data.at(dataColumnIndex), role)){
+      revertRow(0);
+      return false;
+    }
+    modelColumnIndex++;
+  }
+  if(submitRow){
+    return submit();
+  }
+
+  return true;
+}
+
+bool mdtDataTableModel::addRow(const QStringList &data, bool pkNotInData, int role, bool submitRow)
+{
+  int dataColumnIndex;
+  int modelColumnIndex;
+
+  if(!insertRows(0, 1)){
+    return false;
+  }
+  modelColumnIndex = 0;
+  for(dataColumnIndex=0; dataColumnIndex<data.size(); dataColumnIndex++){
+    // If PK is not in data, we must remap indexes
+    if((pkNotInData)&&(pvPkIndexes.contains(modelColumnIndex))){
+      if(modelColumnIndex >= columnCount()){
+        revertRow(0);
+        return false;
+      }
+      modelColumnIndex++;
+    }
+    ///qDebug() << "Adding index" << index(0, modelColumnIndex) << " , data: " << data.at(dataColumnIndex);
+    if(!QSqlTableModel::setData(index(0, modelColumnIndex), data.at(dataColumnIndex), role)){
+      revertRow(0);
+      return false;
+    }
+    modelColumnIndex++;
+  }
+  if(submitRow){
+    return submit();
+  }
+
+  return true;
 }
 
 bool mdtDataTableModel::setData(int row, int column, const QVariant &value, int role)

@@ -133,6 +133,7 @@ void mdtDataTableTest::sandbox()
 void mdtDataTableTest::createDataSetTest()
 {
   mdtDataTableManager manager;
+  mdtDataTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
   QList<QSqlField> fields;
@@ -187,17 +188,20 @@ void mdtDataTableTest::createDataSetTest()
   QVERIFY(db.isOpen());
   */
 
-  // Set model and check that columns exists
+  // Get model and check that columns exists
   ///mdtDataTableModel m(0, db);
-  mdtDataTableModel m(0, manager.database());
-  m.setTable(dataSetTableName);
-  QCOMPARE(m.columnCount(), 3);
-  QCOMPARE(m.headerData(0, Qt::Horizontal), QVariant("id_PK"));
-  QCOMPARE(m.headerData(1, Qt::Horizontal), QVariant("value"));
-  QCOMPARE(m.headerData(2, Qt::Horizontal), QVariant("name"));
+  model = manager.model();
+  QVERIFY(model != 0);
+  ///mdtDataTableModel m(0, manager.database());
+  QCOMPARE(model->tableName(), dataSetTableName);
+  ///m.setTable(dataSetTableName);
+  QCOMPARE(model->columnCount(), 3);
+  QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("value"));
+  QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("name"));
   // Check that data set is empty
-  QVERIFY(m.select());
-  QCOMPARE(m.rowCount(), 0);
+  QVERIFY(model->select());
+  QCOMPARE(model->rowCount(), 0);
   // Insert some data
   ///QVERIFY(m.insertRows(0, 1));
   ///QVERIFY(, QVariant("A value")));
@@ -206,6 +210,7 @@ void mdtDataTableTest::createDataSetTest()
 void mdtDataTableTest::editDataTest()
 {
   mdtDataTableManager manager;
+  mdtDataTableModel *model;
   QTemporaryFile dbFile;
   QFileInfo fileInfo;
   QList<QSqlField> fields;
@@ -215,6 +220,8 @@ void mdtDataTableTest::editDataTest()
   QString dataSetName;
   QString dataSetTableName;
   QMap<QString,QVariant> rowData;
+  QList<QVariant> rowData2;
+  QStringList rowData3;
 
   // Build fields
   pk.append(QSqlField("id_PK", QVariant::Int));
@@ -230,117 +237,147 @@ void mdtDataTableTest::editDataTest()
   dataSetName = fileInfo.fileName();
   dataSetTableName = manager.getTableName(dataSetName);
   QVERIFY(manager.createDataSet(fileInfo.dir(), dataSetName, pk, fields, mdtDataTableManager::OverwriteExisting));
-  // Set model and check that columns exists
-  mdtDataTableModel m(0, manager.database());
-  m.setTable(dataSetTableName);
-  QCOMPARE(m.columnCount(), 3);
-  QCOMPARE(m.headerData(0, Qt::Horizontal), QVariant("id_PK"));
-  QCOMPARE(m.headerData(1, Qt::Horizontal), QVariant("signal"));
-  QCOMPARE(m.headerData(2, Qt::Horizontal), QVariant("value"));
+  // Get model and check that columns exists
+  ///mdtDataTableModel m(0, manager.database());
+  model = manager.model();
+  QVERIFY(model != 0);
+  ///m.setTable(dataSetTableName);
+  QCOMPARE(model->columnCount(), 3);
+  QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
+  QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
   // Check that data set is empty
-  QVERIFY(m.select());
-  QCOMPARE(m.rowCount(), 0);
+  QVERIFY(model->select());
+  QCOMPARE(model->rowCount(), 0);
   // Add a row with valid data - method A
   rowData.insert("signal", "Cmp. temp");
   rowData.insert("value", 25.4);
-  QVERIFY(m.addRow(rowData));
-  QCOMPARE(m.rowCount(), 1);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
+  QVERIFY(model->addRow(rowData));
+  QCOMPARE(model->rowCount(), 1);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
   // Add a row with to much fields - method A
   rowData.insert("fake", "??");
-  QVERIFY(!m.addRow(rowData));
-  QCOMPARE(m.rowCount(), 1);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
+  QVERIFY(!model->addRow(rowData));
+  QCOMPARE(model->rowCount(), 1);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
   // Add a row with "to" less fields (must work) - method A
   rowData.clear();
   rowData.insert("signal", "Temp. M1");
-  QVERIFY(m.addRow(rowData));
-  QCOMPARE(m.rowCount(), 2);
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
+  QVERIFY(model->addRow(rowData));
+  QCOMPARE(model->rowCount(), 2);
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
   // Add a row with wrong fields - method A
   rowData.clear();
   rowData.insert("wrongField", "????");
-  QVERIFY(!m.addRow(rowData));
-  QCOMPARE(m.rowCount(), 2);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
+  QVERIFY(!model->addRow(rowData));
+  QCOMPARE(model->rowCount(), 2);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
   // Add a row with valid data - method B
-  QVERIFY(m.insertRows(0, 1));
-  QVERIFY(m.setData(0, 1, "V soll"));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
+  QVERIFY(model->insertRows(0, 1));
+  QVERIFY(model->setData(0, 1, "V soll"));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
   // Add a row with invalid row - method B
-  QVERIFY(m.insertRows(0, 1));
-  QVERIFY(!m.setData(15, 1, "Fake..."));
-  m.revertRow(0);
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
+  QVERIFY(model->insertRows(0, 1));
+  QVERIFY(!model->setData(15, 1, "Fake..."));
+  model->revertRow(0);
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
   // Add a row with invalid column - method B
-  QVERIFY(m.insertRows(0, 1));
-  QVERIFY(!m.setData(0, 15, "Fake..."));
-  m.revertRow(0);
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
+  QVERIFY(model->insertRows(0, 1));
+  QVERIFY(!model->setData(0, 15, "Fake..."));
+  model->revertRow(0);
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
   // Edit a row with valid data - method A
-  QVERIFY(m.setData(2, 2, 56.4));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
-  QCOMPARE(m.data(m.index(2, 2)), QVariant(56.4));
+  QVERIFY(model->setData(2, 2, 56.4));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(56.4));
   // Edit a row with invalid row - method A
-  QVERIFY(!m.setData(20, 2, 44.2));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
-  QCOMPARE(m.data(m.index(2, 2)), QVariant(56.4));
+  QVERIFY(!model->setData(20, 2, 44.2));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(56.4));
   // Edit a row with invalid column - method A
-  QVERIFY(!m.setData(2, 21, 42.5));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
-  QCOMPARE(m.data(m.index(2, 2)), QVariant(56.4));
+  QVERIFY(!model->setData(2, 21, 42.5));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(56.4));
   // Edit a row with valid data - method B
-  QVERIFY(m.setData(2, "value", 88.4));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
-  QCOMPARE(m.data(m.index(2, 2)), QVariant(88.4));
+  QVERIFY(model->setData(2, "value", 88.4));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(88.4));
   // Edit a row with invalid row - method B
-  QVERIFY(!m.setData(25, "value", 78));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
-  QCOMPARE(m.data(m.index(2, 2)), QVariant(88.4));
+  QVERIFY(!model->setData(25, "value", 78));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(88.4));
   // Edit a row with invalid column - method B
-  QVERIFY(!m.setData(2, "fake..", 68.2));
-  QCOMPARE(m.rowCount(), 3);
-  QCOMPARE(m.data(m.index(0, 1)), QVariant("Cmp. temp"));
-  QCOMPARE(m.data(m.index(0, 2)), QVariant(25.4));
-  QCOMPARE(m.data(m.index(1, 1)), QVariant("Temp. M1"));
-  QCOMPARE(m.data(m.index(2, 1)), QVariant("V soll"));
-  QCOMPARE(m.data(m.index(2, 2)), QVariant(88.4));
+  QVERIFY(!model->setData(2, "fake..", 68.2));
+  QCOMPARE(model->rowCount(), 3);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(88.4));
+
+  // Add a row with valid data - method A2
+  rowData2.clear();
+  rowData2 << "V ist" << 92.1;
+  QVERIFY(model->addRow(rowData2, true));
+  QCOMPARE(model->rowCount(), 4);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(88.4));
+  QCOMPARE(model->data(model->index(3, 1)), QVariant("V ist"));
+  QCOMPARE(model->data(model->index(3, 2)), QVariant(92.1));
+  // Add a row with valid data - method A3
+  rowData3.clear();
+  rowData3 << "Temp. M2" << "125.4";
+  QVERIFY(model->addRow(rowData3, true));
+  QCOMPARE(model->rowCount(), 5);
+  QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
+  QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
+  QCOMPARE(model->data(model->index(1, 1)), QVariant("Temp. M1"));
+  QCOMPARE(model->data(model->index(2, 1)), QVariant("V soll"));
+  QCOMPARE(model->data(model->index(2, 2)), QVariant(88.4));
+  QCOMPARE(model->data(model->index(3, 1)), QVariant("V ist"));
+  QCOMPARE(model->data(model->index(3, 2)), QVariant(92.1));
+  QCOMPARE(model->data(model->index(4, 1)), QVariant("Temp. M2"));
+  QCOMPARE(model->data(model->index(4, 2)), QVariant(125.4));
+
 }
 
 void mdtDataTableTest::csvExportTest()
@@ -393,6 +430,19 @@ void mdtDataTableTest::csvImportTest()
 
   ///mdtDataTableModel m;
   QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtDataTableManager::AskUserIfExists));
+  QVERIFY(manager.model() != 0);
+
+  // View
+  QTableView v;
+  v.setModel(manager.model());
+  v.setEditTriggers(QAbstractItemView::NoEditTriggers);
+  v.resize(600, 600);
+  v.show();
+
+  while(v.isVisible()){
+    QTest::qWait(500);
+  }
+
 }
 
 

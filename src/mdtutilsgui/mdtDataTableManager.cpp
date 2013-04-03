@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtDataTableManager.h"
+#include "mdtDataTableModel.h"
 #include "mdtError.h"
 #include <QFileInfo>
 #include <QFile>
@@ -33,12 +34,14 @@ mdtDataTableManager::mdtDataTableManager(QObject *parent, QSqlDatabase db)
  : QObject(parent)
 {
   pvDb = db;
+  pvModel = 0;
   // Set a default CSV format
   setCsvFormat(";", "\"", "#", '\\', MDT_NATIVE_EOL);
 }
 
 mdtDataTableManager::~mdtDataTableManager()
 {
+  ///delete pvModel;
 }
 
 bool mdtDataTableManager::setDataSetDirectory(const QDir &dir)
@@ -69,100 +72,6 @@ QString mdtDataTableManager::getTableName(const QString &dataSetName)
 
   return tableName;
 }
-
-/**
-QSqlDatabase mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, create_mode_t mode)
-{
-  QFile file;
-  QFileInfo fileInfo;
-  QSqlDatabase db;
-  QString cnnName;  // Connection name
-  QString dbName;   // Database name
-  QString tableName;
-
-  // Set names
-  cnnName = name;
-  fileInfo.setFile(dir, name);
-  dbName = fileInfo.absoluteFilePath() + ".db";
-  tableName = mdtDataTableManager::getTableName(name);
-
-  // We check that data set directory exists
-  if(!dir.exists()){
-    mdtError e(MDT_FILE_IO_ERROR, "Directory not found, path: " + dir.absolutePath(), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-    e.commit();
-    return db;
-  }
-  // Check if we are allready connected
-  db = QSqlDatabase::database(cnnName);
-  if(db.isOpen()){
-    // Check that we are connected to the correct database
-    if(db.databaseName() != dbName){
-      mdtError e(MDT_DATABASE_ERROR, "A connection to dataset " + name + " exists, but contains wrong database", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-      e.commit();
-      db.close();
-      return db;
-    }
-  }else{
-    // Try to open/connect
-    db = QSqlDatabase::addDatabase("QSQLITE", cnnName);
-    if(!db.isValid()){
-      mdtError e(MDT_DATABASE_ERROR, "Cannot create database connection (probably plugin/driver problem)", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-      e.commit();
-      return db;
-    }
-    db.setDatabaseName(dbName);
-    if(!db.open()){
-      mdtError e(MDT_DATABASE_ERROR, "Cannot open database " + dbName, mdtError::Error);
-      e.setSystemError(db.lastError().number(), db.lastError().text());
-      MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-      e.commit();
-      return db;
-    }
-  }
-  // Here, we are connected
-  Q_ASSERT(db.isValid());
-  Q_ASSERT(db.isOpen());
-  // Check if table exists
-  if(db.tables().contains(tableName)){
-    switch(mode){
-      case OverwriteExisting:
-        // If we cannot drop expected table, it's possibly a other file
-        if(!mdtDataTableManager::dropDatabaseTable(tableName, db)){
-          db.close();
-          return db;
-        }
-        break;
-      case KeepExisting:
-        // Nothing else to do
-        return db;
-      case FailIfExists:
-        db.close();
-        return db;
-      case AskUserIfExists:
-        if(userChooseToOverwrite(dir, fileInfo.fileName() + ".db")){
-          // If we cannot drop expected table, it's possibly a other file
-          if(!mdtDataTableManager::dropDatabaseTable(tableName, db)){
-            db.close();
-            return db;
-          }
-        }
-        break;
-    }
-  }
-  // Here, we must create database table
-  if(!createDatabaseTable(tableName, primaryKey, fields, db)){
-    mdtError e(MDT_DATABASE_ERROR, "Cannot create database table for data set " + name, mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-    e.commit();
-    db.close();
-  }
-  // Finished
-  return db;
-}
-*/
 
 bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, create_mode_t mode)
 {
@@ -252,6 +161,10 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, co
     pvDb.close();
   }
   // Finished
+  delete pvModel;
+  pvModel = new mdtDataTableModel(this, pvDb);
+  pvModel->setTable(tableName);
+
   return true;
 }
 
@@ -280,6 +193,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QDir dbDir;
   mdtCsvFile csvFile(0, "ISO 8859-15");
   QStringList header;
+  QStringList line;
   QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
@@ -344,112 +258,53 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   dataSetName = fileInfo.baseName();
   dataSetTableName = getTableName(dataSetName);
   ///db = createDataSet(dbDir, dataSetName, pk, fields, mode);
-  if(!db.isOpen()){
+  if(!createDataSet(dbDir, dataSetName, pk, fields, mode)){
     csvFile.close();
     return false;
   }
+  // Check that model could be set
+  if(model() == 0){
+    mdtError e(MDT_DATABASE_ERROR, "Cannot create model for data set " + dataSetName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    csvFile.close();
+    pvDb.close();
+    return false;
+  }
   ///qDebug() << "Header: " << header;
-  qDebug() << "Fields: " << fields;
-  qDebug() << "/HEADER\nData:" << csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol).size();
+  ///qDebug() << "Fields: " << fields;
+  ///qDebug() << "/HEADER\nData:" << csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol).size();
+  // Store data
+  while(csvFile.hasMoreLines()){
+    line = csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol);
+    while(line.size() > fields.size()){
+      qDebug() << "Line contains more columns than fields !";
+      if(!line.last().isEmpty()){
+        qDebug() << "WWW loosing data !!";
+      }
+      line.removeLast();
+    }
+    ///qDebug() << "Line: " << line;
+    if(!model()->addRow(line, true, Qt::EditRole, true)){
+      mdtError e(MDT_DATABASE_ERROR, "Unable to add  row in model, data set: " + dataSetName, mdtError::Error);
+      MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+      e.commit();
+      csvFile.close();
+      pvDb.close();
+      return false;
+    }
+  }
 
   csvFile.close();
   
   
-  return false;
-}
-
-/**
-bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, const QSqlDatabase &db)
-{
-  Q_ASSERT(db.isValid());
-  Q_ASSERT(db.isOpen());
-
-  QString sql;
-  int i;
-
-  // Build SQL query
-  sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (";
-  // Add primary key fields
-  for(i=0; i<primaryKey.count(); i++){
-    sql += primaryKey.field(i).name() + " ";
-    switch(primaryKey.field(i).type()){
-      case QVariant::Int:
-        sql += " INTEGER ";
-        break;
-      case QVariant::String:
-        sql += " TEXT ";
-        break;
-      default:
-        {
-        mdtError e(MDT_DATABASE_ERROR, "Unsupported field type for primary key, database " + db.databaseName(), mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-        e.commit();
-        }
-    }
-    if(i < (primaryKey.count()-1)){
-      sql += ", ";
-    }
-  }
-  // Add other fields
-  if(fields.size() > 0){
-    sql += ", ";
-  }
-  for(i=0; i<fields.size(); i++){
-    sql += fields.at(i).name() + " ";
-    switch(fields.at(i).type()){
-      case QVariant::Int:
-        sql += " INTEGER ";
-        break;
-      case QVariant::Double:
-        sql += " REAL ";
-        break;
-      case QVariant::String:
-        sql += " TEXT ";
-        break;
-      default:
-        {
-        mdtError e(MDT_DATABASE_ERROR, "Unsupported field type, database " + db.databaseName(), mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-        e.commit();
-        }
-    }
-    if(i < (fields.size()-1)){
-      sql += ", ";
-    }
-  }
-  // Add primary key constraint
-  if(primaryKey.count() > 0){
-    sql += " , CONSTRAINT ";
-    if(primaryKey.name().isEmpty()){
-      sql += tableName + "_PK ";
-    }else{
-      sql += primaryKey.name() + " ";
-    }
-    sql += " PRIMARY KEY (";
-    for(i=0; i<primaryKey.count(); i++){
-      sql += primaryKey.field(i).name() + " ";
-      if(i < (primaryKey.count()-1)){
-        sql += ", ";
-      }
-    }
-    sql += ")";
-  }
-  sql += ")";
-  // Run query
-  QSqlQuery query(sql, db);
-  if(!query.exec()){
-    ///mdtError e(MDT_DATABASE_ERROR, "Cannot create table " + tableName, mdtError::Error);
-    mdtError e(MDT_DATABASE_ERROR, "Cannot create table " + tableName + ": " + query.lastError().databaseText(), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-    ///e.setSystemError(query.lastError().number(), query.lastError().text());
-    e.setSystemError(query.lastError().number(), query.lastError().driverText());
-    e.commit();
-    return false;
-  }
-
   return true;
 }
-*/
+
+mdtDataTableModel *mdtDataTableManager::model()
+{
+  return pvModel;
+}
 
 bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields)
 {

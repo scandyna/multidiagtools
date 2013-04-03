@@ -36,6 +36,8 @@
 #include <QSqlField>
 #include <QSqlIndex>
 
+class mdtDataTableModel;
+
 /*! \brief Create/manage data sets
  */
 class mdtDataTableManager : public QObject
@@ -59,6 +61,9 @@ class mdtDataTableManager : public QObject
   mdtDataTableManager(QObject *parent = 0, QSqlDatabase db = QSqlDatabase());
 
   /*! \brief
+   *
+   * Note: this will delete internal model.
+   *  Be avare when referencing pointer returned by model().
    */
   ~mdtDataTableManager();
 
@@ -81,24 +86,8 @@ class mdtDataTableManager : public QObject
    *
    * Internally, Sqlite is used to store data.
    *
-   * \param dir Path or QDir object to directory in witch to store data.
-   * \param name Name of the database, connection name (see QSqlDatabase) and file.
-   * \param primaryKey Contains fields that are part of the primary key.
-   *                    If a name is set with QSqlIndex::setName(), it will be used,
-   *                    else a name (tableName_PK) is generated.
-   * \param fields List of fields, excluding primary key, to create in table.
-   *                Note that only a fiew parameters of QSqlField are supported:
-   *                 - type: map QVariant type to Sqlite type
-   *                 - name: field's name
-   * \param mode Behaviour to adopt during database/file creation.
-   * \return A valid and open database object on success. See QSqlDatabase::isOpen() for details.
-   * \todo Obselete !
-   */
-  ///static QSqlDatabase createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, create_mode_t mode);
-
-  /*! \brief Create database and table
-   *
-   * Internally, Sqlite is used to store data.
+   * Note: this will delete internal model and create a new one.
+   *  Be avare when referencing pointer returned by model().
    *
    * \param dir Path or QDir object to directory in witch to store data.
    * \param name Name of the database, connection name (see QSqlDatabase) and file.
@@ -140,11 +129,23 @@ class mdtDataTableManager : public QObject
 
   /*! \brief Import a CSV file
    *
+   * Note: this will delete internal model and create a new one.
+   *  Be avare when referencing pointer returned by model().
+   *
    * \param csvFilePath Path to the CSV file.
    * \param mode Behaviour to adopt when data table allready exists.
    * \param dir Destination of the database file. If not defined, csvFilePath's directory is used.
    */
   bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString());
+
+  /*! \brief Get instance of current model
+   *
+   * Note that this pointer changes when some
+   *  of methods are called.
+   *
+   * \return Pointer to current model, or 0 if it was not set.
+   */
+  mdtDataTableModel *model();
 
  private:
 
@@ -153,20 +154,7 @@ class mdtDataTableManager : public QObject
    * \see createDataSet()
    * \pre db must be valid and open
    */
-  ///static bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, const QSqlDatabase &db);
-
-  /*! \brief Create database table
-   *
-   * \see createDataSet()
-   * \pre db must be valid and open
-   */
   bool createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields);
-
-  /*! \brief Drop database table
-   *
-   * \pre db must be valid and open
-   */
-  ///static bool dropDatabaseTable(const QString &tableName, const QSqlDatabase &db);
 
   /*! \brief Drop database table
    *
@@ -182,6 +170,7 @@ class mdtDataTableManager : public QObject
 
   QString pvDataSetName;
   QDir pvDataSetDirectory;
+  mdtDataTableModel *pvModel;
   // Database specific members
   QSqlDatabase pvDb;
   // CSV specific members
