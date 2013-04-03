@@ -87,6 +87,20 @@ class mdtCsvFile : public QFile
    */
   QByteArray readLine(const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
 
+  /*! \brief Read a line of data
+   *
+   * Note: do not use atEnd() to check if data are available anymore,
+   *  but hasMoreLines().
+   *
+   * \param line Line data will be put into this array.
+   * \param dataProtection Data protection (typical: " ).
+   * \param comment Comment (typical: # ). Each line that beginns with comment is ignored.
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   * \param eol End of line sequence. Usefull if given file was not written from running platform.
+   * \return True on success.
+   */
+  bool readLine(QByteArray &line, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol);
+
   /*! \brief Check if readLine() has more lines available
    */
   bool hasMoreLines() const;
