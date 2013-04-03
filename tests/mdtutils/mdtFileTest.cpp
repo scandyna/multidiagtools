@@ -855,6 +855,7 @@ void mdtFileTest::csvFileReadTest()
   QList<QStringList> data;
   QList<QStringList> refData;
   QString str;
+  QStringList refHeaders;
 
   // Get data
   QFETCH(QStringList, refLine1);
@@ -1022,6 +1023,15 @@ void mdtFileTest::csvFileReadTest()
   QCOMPARE(csv.valueAt(0, 1) , QString("EFGH"));
   QCOMPARE(csv.valueAt(1, 0) , QString("12'34"));
   QCOMPARE(csv.valueAt(1, 1) , QString("5678"));
+  csv.close();
+  // Check header read
+  refHeaders.clear();
+  refHeaders << "ABCD" << "EFGH";
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QCOMPARE(csv.readHeader(";", "'", "#", '\'', MDT_NATIVE_EOL), refHeaders);
+  QVERIFY(csv.readLines(";", "'", "#", '\'', MDT_NATIVE_EOL));
+  QCOMPARE(csv.valueAt(0, 0) , QString("12'34"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("5678"));
   csv.close();
 
   /*

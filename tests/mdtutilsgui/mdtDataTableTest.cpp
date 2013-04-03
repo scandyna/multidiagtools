@@ -372,6 +372,16 @@ void mdtDataTableTest::csvExportTest()
 
 void mdtDataTableTest::csvImportTest()
 {
+  QTemporaryFile csvFile;
+
+  // Write CSV file that contains a primary key
+  QVERIFY(csvFile.open());
+  QVERIFY(csvFile.write("id_PK;signal;value\n") > 0);
+  QVERIFY(csvFile.write("1;Temp. M1;125.0\n") > 0);
+  csvFile.close();
+
+  mdtDataTableModel m;
+  QVERIFY(m.importFromCsvFile("/tmp/example_dwn.csv", mdtDataTableModel::AskUserIfExists));
 }
 
 

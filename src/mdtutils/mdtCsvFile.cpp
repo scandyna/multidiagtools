@@ -86,6 +86,11 @@ bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, co
   return true;
 }
 
+QStringList mdtCsvFile::readHeader(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
+{
+  return readLine(separator, dataProtection, comment, escapeChar, eol);
+}
+
 QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
 {
   QByteArray line;
@@ -95,6 +100,18 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QString &co
   }
 
   return "";
+}
+
+QStringList mdtCsvFile::readLine(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
+{
+  QByteArray line;
+  QStringList items;
+
+  if(readLine(line, dataProtection, comment, escapeChar, eol)){
+    items = mdtAlgorithms::splitString(pvCodec->toUnicode(line), separator, dataProtection, escapeChar);
+  }
+
+  return items;
 }
 
 bool mdtCsvFile::readLine(QByteArray &line, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)

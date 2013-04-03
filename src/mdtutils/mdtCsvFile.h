@@ -56,6 +56,7 @@ class mdtCsvFile : public QFile
    * Will do some cleanup and call QFile's close method.
    *
    * Note: readen data are not cleared. Call clear() explicitly for this.
+   * \sa valueAt()
    */
   void close();
 
@@ -74,6 +75,22 @@ class mdtCsvFile : public QFile
    */
   bool writeLine(const QStringList &line, const QString &separator = ";", const QString &dataProtection = "", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
 
+  /*! \brief Get CSV file's header
+   *
+   * Will read the first line and get it's fields.
+   *  After this call, readLine() methods will begin at next line.
+   *
+   * \param separator Separator to use (typical: ; )
+   * \param dataProtection Data protection (typical: " )
+   *                        Note: current version does not support protected EOL.
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   * \param comment Comment (typical: # )
+   * \param eol End of line sequence. Usefull if given file was not written from running platform.
+   *             Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details).
+   * \return A list containing the headers.
+   */
+  QStringList readHeader(const QString &separator = ";", const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+
   /*! \brief Read a line of data
    *
    * Note: do not use atEnd() to check if data are available anymore,
@@ -86,6 +103,19 @@ class mdtCsvFile : public QFile
    * \return Line of data.
    */
   QByteArray readLine(const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+
+  /*! \brief Read a line of data
+   *
+   * Note: do not use atEnd() to check if data are available anymore,
+   *  but hasMoreLines().
+   *
+   * \param dataProtection Data protection (typical: " ).
+   * \param comment Comment (typical: # ). Each line that beginns with comment is ignored.
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   * \param eol End of line sequence. Usefull if given file was not written from running platform.
+   * \return Line of data.
+   */
+  QStringList readLine(const QString &separator = ";", const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
 
   /*! \brief Read a line of data
    *
@@ -109,7 +139,6 @@ class mdtCsvFile : public QFile
    *
    * \param separator Separator to use (typical: ; )
    * \param dataProtection Data protection (typical: " )
-   *                        Note: current version does not support protected EOL.
    * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
    * \param comment Comment (typical: # )
    * \param eol End of line sequence. Usefull if given file was not written from running platform.

@@ -25,12 +25,15 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QStringList>
 
 #include <QDebug>
 
 mdtDataTableModel::mdtDataTableModel(QObject *parent, QSqlDatabase db)
  : QSqlTableModel(parent, db)
 {
+  // Set a default CSV format
+  setCsvFormat(";", "\"", "#", '\\', MDT_NATIVE_EOL);
 }
 
 mdtDataTableModel::~mdtDataTableModel()
@@ -190,13 +193,101 @@ bool mdtDataTableModel::setData(int row, const QString &field, const QVariant & 
   return setData(row, fieldIndex(field), value, role);
 }
 
+void mdtDataTableModel::setCsvFormat(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
+{
+  pvCsvSeparator = separator;
+  pvCsvDataProtection = dataProtection;
+  pvCsvComment = comment;
+  pvCsvEscapeChar = escapeChar;
+  pvCsvEol = eol;
+}
+
 bool mdtDataTableModel::exportToCsvFile(const QString & filePath, create_mode_t mode)
 {
   return false;
 }
 
-bool mdtDataTableModel::importFromCsvFile(const QString & filePath)
+bool mdtDataTableModel::importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir)
 {
+  QFileInfo fileInfo(csvFilePath);
+  QDir dbDir;
+  mdtCsvFile csvFile(0, "ISO 8859-15");
+  QStringList header;
+  QSqlDatabase db;
+  QString dataSetName;
+  QString dataSetTableName;
+  
+  QSqlIndex pk;
+  
+  QString fieldName;
+  QSqlField field;
+  QList<QSqlField> fields;
+  int i;
+
+  // Set DB directory
+  if(dir.isEmpty()){
+    dbDir = fileInfo.absoluteDir();
+  }else{
+    dbDir.setPath(dir);
+  }
+  if(!dbDir.exists()){
+    mdtError e(MDT_FILE_IO_ERROR, "Directory not found: " + dbDir.path(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
+    e.commit();
+    return false;
+  }
+  // Open CSV file
+  csvFile.setFileName(fileInfo.absoluteFilePath());
+  if(!csvFile.open(QIODevice::ReadOnly)){
+    mdtError e(MDT_FILE_IO_ERROR, "Cannot open CSV file: " + fileInfo.absoluteFilePath(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
+    e.commit();
+    return false;
+  }
+  setCsvFormat(";", "", "", '\0', "\r\n");
+  // Read header and create fields
+  header = csvFile.readHeader(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol);
+  if(header.isEmpty()){
+    mdtError e(MDT_FILE_IO_ERROR, "No header found in CSV file: " + fileInfo.absoluteFilePath(), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableModel");
+    e.commit();
+    csvFile.close();
+    return false;
+  }
+  
+  pk.append(QSqlField("id_PK", QVariant::Int));
+  
+  for(i=0; i<header.size(); i++){
+    fieldName = header.at(i).trimmed();
+    fieldName.replace(" ", "_");
+    fieldName.replace("(", "_");
+    fieldName.replace(")", "_");
+    fieldName.replace("%", "_");
+    fieldName.replace("?", "_");
+    fieldName.replace("+", "_");
+    fieldName.replace("/", "_");
+    if(!fieldName.isEmpty()){
+      qDebug() << "Creating field " << fieldName << " ...";
+      field.setName(fieldName);
+      field.setType(QVariant::String);
+      fields.append(field);
+    }
+  }
+  // Create data set
+  dataSetName = fileInfo.baseName();
+  dataSetTableName = getTableName(dataSetName);
+  db = createDataSet(dbDir, dataSetName, pk, fields, mode);
+  if(!db.isOpen()){
+    csvFile.close();
+    return false;
+  }
+  ///qDebug() << "Header: " << header;
+  qDebug() << "Fields: " << fields;
+  qDebug() << "/HEADER\nData:" << csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol).size();
+
+  csvFile.close();
+  
+  
   return false;
 }
 

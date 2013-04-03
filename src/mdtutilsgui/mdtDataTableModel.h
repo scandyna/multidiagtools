@@ -21,11 +21,14 @@
 #ifndef MDT_DATA_TABLE_MODEL_H
 #define MDT_DATA_TABLE_MODEL_H
 
+#include "mdtCsvFile.h"
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QObject>
 #include <QMap>
+#include <QByteArray>
 #include <QString>
+#include <QChar>
 #include <QStringList>
 #include <QVariant>
 #include <QDir>
@@ -132,6 +135,16 @@ class mdtDataTableModel : public QSqlTableModel
    */
   bool setData(int row, const QString &field, const QVariant &value, int role = Qt::EditRole);
 
+  /*! \brief Set CSV import/export format
+   *
+   * \param separator Separator to use (typical: ; )
+   * \param dataProtection Data protection (typical: " )
+   * \param comment Comment (typical: # )
+   * \param escapeChar Escape char (typical: \ ). Note: has only effect to escape dataProtection.
+   * \param eol End of line sequence. Usefull if given file was not written from running platform.
+   */
+  void setCsvFormat(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol = MDT_NATIVE_EOL);
+
   /*! \brief Export data to a CSV file
    *
    * \param filePath Path to CSV file
@@ -142,9 +155,13 @@ class mdtDataTableModel : public QSqlTableModel
    */
   bool exportToCsvFile(const QString &filePath, create_mode_t mode);
 
-  /*! \brief
+  /*! \brief Import a CSV file
+   *
+   * \param csvFilePath Path to the CSV file.
+   * \param mode Behaviour to adopt when data table allready exists.
+   * \param dir Destination of the database file. If not defined, csvFilePath's directory is used.
    */
-  bool importFromCsvFile(const QString &filePath);
+  bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString());
 
  private:
 
@@ -169,6 +186,12 @@ class mdtDataTableModel : public QSqlTableModel
 
   QString pvDataSetName;
   QDir pvDataSetDirectory;
+  // CSV specific members
+  QString pvCsvSeparator;
+  QString pvCsvDataProtection;
+  QChar pvCsvEscapeChar;
+  QString pvCsvComment;
+  QByteArray pvCsvEol;
 };
 
 #endif  // #ifndef MDT_DATA_TABLE_MODEL_H
