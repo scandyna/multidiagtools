@@ -849,7 +849,7 @@ void mdtFileTest::csvFileReadLineTest_data()
 
 void mdtFileTest::csvFileReadTest()
 {
-  QTemporaryFile tmp, tmpErr, tmpComment, tmpEscape;
+  QTemporaryFile tmp, tmpErr, tmpComment, tmpEscape, tmpW;
   mdtCsvFile csv;
   QStringList line;
   QList<QStringList> data;
@@ -1024,6 +1024,28 @@ void mdtFileTest::csvFileReadTest()
   QCOMPARE(csv.valueAt(1, 1) , QString("5678"));
   csv.close();
 
+  /*
+   * Check with fr Wikipedia example
+   */
+  QVERIFY(tmpW.open());
+  QVERIFY(tmpW.write("\"Michel\";\"Durand\";\"av. de la Ferme, 89\"\n"));
+  QVERIFY(tmpW.write("\"Michel \"\"Michele\"\"\";\"Durand\";\"av. de la Ferme, 89\"\n"));
+  QVERIFY(tmpW.write("\"Michel;Michele\";\"Durand\";\"av. de la Ferme, 89\""));
+  tmpW.close();
+  // Open CSV file and check
+  csv.setFileName(tmpW.fileName());
+  QVERIFY(csv.open(QIODevice::ReadOnly));
+  QVERIFY(csv.readLines(";", "\"", "", '"', MDT_NATIVE_EOL));
+  QCOMPARE(csv.valueAt(0, 0) , QString("Michel"));
+  QCOMPARE(csv.valueAt(0, 1) , QString("Durand"));
+  QCOMPARE(csv.valueAt(0, 2) , QString("av. de la Ferme, 89"));
+  QCOMPARE(csv.valueAt(1, 0) , QString("Michel \"Michele\""));
+  QCOMPARE(csv.valueAt(1, 1) , QString("Durand"));
+  QCOMPARE(csv.valueAt(1, 2) , QString("av. de la Ferme, 89"));
+  QCOMPARE(csv.valueAt(2, 0) , QString("Michel;Michele"));
+  QCOMPARE(csv.valueAt(2, 1) , QString("Durand"));
+  QCOMPARE(csv.valueAt(2, 2) , QString("av. de la Ferme, 89"));
+  csv.close();
 }
 
 void mdtFileTest::csvFileReadTest_data()

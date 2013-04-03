@@ -116,8 +116,6 @@ class mdtCsvFile : public QFile
    *             Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details).
    * \return True on success
    * \pre separator, dataProtection and comment must not be the same
-   * \todo Check if precondition is needed (see mdtAlgorithm).
-   * \todo Fix problem with protected EOL (must also modify mdtAlgorithm)
    */
   bool readLines(const QString &separator = ";", const QString &dataProtection = "", const QString &comment = "#", const QChar &escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
 

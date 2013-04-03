@@ -22,7 +22,8 @@
 #include "mdtError.h"
 #include "mdtAlgorithms.h"
 #include <cctype>
-#include <QDebug>
+
+//#include <QDebug>
 
 mdtCsvFile::mdtCsvFile(QObject *parent, const QByteArray &fileEncoding)
  : QFile(parent)
@@ -42,44 +43,6 @@ void mdtCsvFile::close()
   pvReadLineBuffer.clear();
   QFile::close();
 }
-
-/**
-bool mdtCsvFile::readLines(QByteArray separator, QByteArray dataProtection, QByteArray comment)
-{
-  Q_ASSERT(separator != dataProtection);
-  Q_ASSERT(separator != comment);
-  Q_ASSERT(dataProtection != comment);
-
-  QByteArray line;
-
-  // Check if file was open
-  if(!isOpen()){
-    setErrorString(tr("mdtCsvFile::readLines(): file is not open"));
-    return false;
-  }
-  // Clear previous results
-  clear();
-  // Travel the file
-  while(!atEnd()){
-    // Read a line
-    line = readLine();
-    // Remove begin and end whit space, end of line, etc...
-    line = line.trimmed();
-    if(line.size() > 0){
-      // Check about comments
-      if((comment.size() > 0)&&(line.startsWith(comment))){
-        continue;
-      }
-      // Parse the block
-      pvLines << parseLine(line, separator, dataProtection);
-    }
-  }
-
-  return true;
-}
-*/
-
-///splitString(const QString &str, const QString &separator, const QString &dataProtection, const QChar &escapeChar = QChar());
 
 bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, const QString &dataProtection, const QChar &escapeChar, QString eol)
 {
@@ -123,63 +86,6 @@ bool mdtCsvFile::writeLine(const QStringList &line, const QString &separator, co
   return true;
 }
 
-/**
-QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
-{
-  QByteArray buffer;
-  QByteArray line;
-  QString dpBuffer;
-  bool eolFound = false;
-  int eolCursor;
-  int dpCursor;
-
-  buffer = pvReadLineBuffer;
-  // Read until EOL found or EOF
-  while(!eolFound){
-    eolCursor = buffer.indexOf(eol);
-    if(eolCursor < 0){
-      if(atEnd()){
-        line.append(buffer);
-        buffer.clear();
-        // Now check that line is not commented
-        if(indexOfCommentedLineBeginning(line, comment) > -1){
-          line.clear();
-        }
-        break;
-      }
-      buffer.append(read(pvReadLineBufferSize));
-    }else{
-      // A EOL was found, check if it is in a data protection or not
-      line.append(buffer.left(eolCursor));
-      buffer.remove(0, eolCursor);
-      if(dataProtectionSectionBegins(line, dataProtection, escapeChar)){
-        // Search until we find a closing data protrection to confirm that we found a opening one
-        readUntilDataProtection(buffer, dpCursor, dataProtection, escapeChar);
-        if(dpCursor < 0){
-          qDebug() << "PARSE ERROR";
-          return "<PARSE ERROR: missing closing " + dataProtection.toAscii() + ">";
-        }else{
-          line.append(buffer.left(dpCursor+dataProtection.size()));
-          buffer.remove(0, dpCursor+dataProtection.size());
-        }
-      }else{
-        // Here we found a EOL in a unprotected section.
-        buffer.remove(0, eol.size());
-        // Now check that line is not commented
-        if(indexOfCommentedLineBeginning(line, comment) > -1){
-          line.clear();
-        }else{
-          eolFound = true;
-        }
-      }
-    }
-  }
-  pvReadLineBuffer = buffer;
-
-  return line;
-}
-*/
-
 QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
 {
   QByteArray line;
@@ -194,7 +100,6 @@ QByteArray mdtCsvFile::readLine(const QString &dataProtection, const QString &co
 bool mdtCsvFile::readLine(QByteArray &line, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
 {
   QByteArray buffer;
-  QString dpBuffer;
   bool eolFound = false;
   int eolCursor;
   int dpCursor;
@@ -261,10 +166,8 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
   Q_ASSERT(separator != comment);
   Q_ASSERT(dataProtection != comment);
 
-  ///QStringList lines;
   QString line;
   QByteArray lineBa;
-  ///QStringList items;
 
   // Check if file was open
   if(!isOpen()){
@@ -289,103 +192,10 @@ bool mdtCsvFile::readLines(const QString &separator, const QString &dataProtecti
         pvLines.append(mdtAlgorithms::splitString(line, separator, dataProtection, escapeChar));
       }
     }
-    /**
-    line = pvCodec->toUnicode(readLine(dataProtection, comment, escapeChar, eol.toAscii()));
-    if(line.size() > 0){
-      // Parse the line
-      pvLines.append(mdtAlgorithms::splitString(line, separator, dataProtection, escapeChar));
-    }
-    */
   }
 
   return true;
 }
-
-/**
-QStringList &mdtCsvFile::parseLine(const QByteArray &line, const QByteArray &separator, const QByteArray &dataProtection)
-{
-  bool parserEnabled;   // Used for data protection ( "data";"other ; data";0123 )
-  QByteArray tmpStr;
-  int sepCursor = 0;    // Cursor in line string for separator
-  int dpCursor = 0;     // Cursor in line string for dataProtection
-  QByteArray field;
-
-  // As default, parser is enabled
-  parserEnabled = true;
-
-  pvFields.clear();
-  tmpStr = line;
-  while(tmpStr.size() > 0){
-    field.clear();
-    // Find first occurence of dataProtection in line string
-    if(dataProtection.size() > 0){
-      dpCursor = tmpStr.indexOf(dataProtection);
-    }else{
-      dpCursor = -1;
-    }
-    // If parser is enabled, react to keys
-    if(parserEnabled){
-      // Find first occurence of separator in line string
-      sepCursor = tmpStr.indexOf(separator);
-      // See if we have a data protection
-      if(dpCursor >= 0){
-        // See if we have a separator
-        if(sepCursor >= 0){
-          // Have both, see if data protection is first occurence
-          if(dpCursor < sepCursor){
-            // Begin of data protection - Diseable parser and remove data protection
-            parserEnabled = false;
-            tmpStr.remove(0, dataProtection.size());
-          }else{
-            // Copy into field
-            field.append(tmpStr.left(sepCursor));
-            pvFields << pvCodec->toUnicode(field);
-            // Remove separator
-            tmpStr.remove(0, sepCursor+separator.size());
-          }
-        }else{
-          // Have only data protection - remove protection and put data into field
-          tmpStr.remove(0, dataProtection.size());
-          Q_ASSERT((tmpStr.size()-dataProtection.size()) >= 0);
-          field.append(tmpStr.left(tmpStr.size()-dataProtection.size()));
-          pvFields << pvCodec->toUnicode(field);
-          break;
-        }
-      }else{
-        // Data protection not found , see about separator
-        if(sepCursor >= 0){
-          // Copy into field
-          field.append(tmpStr.left(sepCursor));
-          pvFields << pvCodec->toUnicode(field);
-          // Remove separator
-          tmpStr.remove(0, sepCursor+separator.size());
-        }else{
-          // Nothing found - Just copy all data into field
-          field.append(tmpStr);
-          pvFields << pvCodec->toUnicode(field);
-          break;
-        }
-      }
-    }else{
-      // Parser diseabled, see if we must enable it
-      if(dpCursor >= 0){
-        parserEnabled = true;
-        // Store data -> cursor
-        field.append(tmpStr.left(dpCursor));
-        pvFields << pvCodec->toUnicode(field);
-        tmpStr.remove(0, dpCursor+dataProtection.size()+separator.size());
-      }else{
-        // Simply store the data into field
-        field.append(tmpStr);
-        pvFields << pvCodec->toUnicode(field);
-        break;
-      }
-    }
-  }
-
-  return pvFields;
-}
-*/
 
 void mdtCsvFile::clear()
 {
