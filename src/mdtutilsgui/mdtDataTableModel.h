@@ -61,7 +61,7 @@ class mdtDataTableModel : public QSqlTableModel
   /*! \brief Add a row of data in model
    *
    * This is a helper method wich uses QSqlTableModel's insert/setData methods.
-   * Note: submit() is done internally.
+   * Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
    *
    * \param data A map with field name as key and associate data to add.
    * \param role See QSqlTableModel.
@@ -72,33 +72,48 @@ class mdtDataTableModel : public QSqlTableModel
   /*! \brief Add a row of data in model
    *
    * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   * Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
    *
    * \param data A list of data items for the row.
    *              Note: if field order is unknow, use addRow(const QMap\<QString,QVariant>, int) .
    * \param pkNotInData Set true if primary key is not contained in data (must also be auto generated).
    * \param role See QSqlTableModel.
-   * \param submitRow If true, submit() is called internally.
    * \return True on success. See QSqlTableModel for known errors.
    */
-  bool addRow(const QList<QVariant> &data, bool pkNotInData, int role = Qt::EditRole, bool submitRow = true);
+  bool addRow(const QList<QVariant> &data, bool pkNotInData, int role = Qt::EditRole);
 
   /*! \brief Add a row of data in model
    *
    * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   * Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
    *
    * \param data A list of data items for the row. Data will be converted to field's format.
    *              Note: if field order is unknow, use addRow(const QMap\<QString,QVariant>, int) .
    * \param pkNotInData Set true if primary key is not contained in data (must also be auto generated).
    * \param role See QSqlTableModel.
-   * \param submitRow If true, submit() is called internally.
    * \return True on success. False if a data conversion failed, or other error. See QSqlTableModel for known errors.
    */
-  bool addRow(const QStringList &data, bool pkNotInData, int role = Qt::EditRole, bool submitRow = true);
+  bool addRow(const QStringList &data, bool pkNotInData, int role = Qt::EditRole);
+
+  /*! \brief Add some rows of data in model
+   *
+   * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   * Notes:
+   *  - submitAll() is done internally when all rows are stored in model.
+   *  - This method will fail if edit strategy is not OnManualSubmit (See QSqlTableModel documentations for details).
+   *
+   * \param dataList A list of rows containing data items (columns). Data will be converted to field's format.
+   *              Note: if field order is unknow, use addRow(const QList\<QMap\<QString,QVariant> >, int) . \todo not implemented yet
+   * \param pkNotInData Set true if primary key is not contained in data (must also be auto generated).
+   * \param role See QSqlTableModel.
+   * \return True on success. False if a data conversion failed, or other error. See QSqlTableModel for known errors.
+   */
+  bool addRows(const QList<QStringList> &dataList, bool pkNotInData, int role = Qt::EditRole);
 
   /*! \brief Set data for a given index in model
    *
    * This is a helper method wich uses QSqlTableModel's setData methods.
-   * Note: submit() is done internally.
+   * Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
    *
    * \param row Row to update.
    * \param column Column to update.
@@ -112,7 +127,7 @@ class mdtDataTableModel : public QSqlTableModel
   /*! \brief Set data for a given index in model
    *
    * This is a helper method wich uses QSqlTableModel's setData methods.
-   * Note: submit() is done internally.
+   * Note: submit() or submitAll() (for OnManualSubmit strategy) is done internally.
    *
    * \param row Row to update.
    * \param field Name of field to update.
@@ -124,6 +139,10 @@ class mdtDataTableModel : public QSqlTableModel
   bool setData(int row, const QString &field, const QVariant &value, int role = Qt::EditRole);
 
  private:
+
+  /*! \brief Call submit() or submitAll() depending on current edit strategy
+   */
+  bool doSubmit();
 
   QList<int> pvPkIndexes; // Hold the (column) indexes of primary keys
 

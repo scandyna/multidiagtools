@@ -197,6 +197,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QSqlDatabase db;
   QString dataSetName;
   QString dataSetTableName;
+  QList<QStringList> rows;
   
   QSqlIndex pk;
   
@@ -204,6 +205,8 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QSqlField field;
   QList<QSqlField> fields;
   int i;
+  
+  QSqlTableModel::EditStrategy originalEditStrategy;;
 
   // Set DB directory
   if(dir.isEmpty()){
@@ -274,30 +277,95 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   ///qDebug() << "Header: " << header;
   ///qDebug() << "Fields: " << fields;
   ///qDebug() << "/HEADER\nData:" << csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol).size();
+  // For multiple rows inserstion, we need OnManualSubmit edit strategy
+  originalEditStrategy = model()->editStrategy();
+  if(originalEditStrategy != QSqlTableModel::OnManualSubmit){
+    model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
+  }
   // Store data
+  i=0;
   while(csvFile.hasMoreLines()){
     line = csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol);
     while(line.size() > fields.size()){
-      qDebug() << "Line contains more columns than fields !";
+      ///qDebug() << "Line contains more columns than fields !";
       if(!line.last().isEmpty()){
         qDebug() << "WWW loosing data !!";
       }
       line.removeLast();
     }
-    ///qDebug() << "Line: " << line;
-    if(!model()->addRow(line, true, Qt::EditRole, true)){
-      mdtError e(MDT_DATABASE_ERROR, "Unable to add  row in model, data set: " + dataSetName, mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-      e.commit();
-      csvFile.close();
-      pvDb.close();
-      return false;
+    rows.append(line);
+    if(i>50){
+      qDebug() << "Commit...";
+      // Begin transaction (without, insertions are very slow)
+      if(!pvDb.transaction()){
+        mdtError e(MDT_DATABASE_ERROR, "Unable to begin transaction, data set: " + dataSetName, mdtError::Error);
+        e.setSystemError(pvDb.lastError().number(), pvDb.lastError().text());
+        MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+        e.commit();
+        csvFile.close();
+        pvDb.close();
+        return false;
+      }
+      // Commit some lines
+      if(!model()->addRows(rows, true, Qt::EditRole)){
+        mdtError e(MDT_DATABASE_ERROR, "Unable to add some rows in model, data set: " + dataSetName, mdtError::Error);
+        e.setSystemError(model()->lastError().number(), model()->lastError().text());
+        MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+        e.commit();
+        csvFile.close();
+        pvDb.close();
+        return false;
+      }
+      // Commit transaction
+      if(!pvDb.commit()){
+        mdtError e(MDT_DATABASE_ERROR, "Unable to commit transaction, data set: " + dataSetName, mdtError::Error);
+        e.setSystemError(pvDb.lastError().number(), pvDb.lastError().text());
+        MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+        e.commit();
+        csvFile.close();
+        pvDb.close();
+        return false;
+      }
+      rows.clear();
+      i=0;
     }
+    i++;
+  }
+  // Commit last lines
+  qDebug() << "Commit last " << rows.size() << " lines...";
+  if(!pvDb.transaction()){
+    mdtError e(MDT_DATABASE_ERROR, "Unable to begin transaction, data set: " + dataSetName, mdtError::Error);
+    e.setSystemError(pvDb.lastError().number(), pvDb.lastError().text());
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    csvFile.close();
+    pvDb.close();
+    return false;
+  }
+  if(!model()->addRows(rows, true, Qt::EditRole)){
+    mdtError e(MDT_DATABASE_ERROR, "Unable to add some rows in model, data set: " + dataSetName, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    csvFile.close();
+    pvDb.close();
+    return false;
+  }
+  if(!pvDb.commit()){
+    mdtError e(MDT_DATABASE_ERROR, "Unable to commit transaction, data set: " + dataSetName, mdtError::Error);
+    e.setSystemError(pvDb.lastError().number(), pvDb.lastError().text());
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    csvFile.close();
+    pvDb.close();
+    return false;
   }
 
   csvFile.close();
-  
-  
+  // Restore edit strategy
+  if(originalEditStrategy != QSqlTableModel::OnManualSubmit){
+    model()->setEditStrategy(originalEditStrategy);
+  }
+
   return true;
 }
 
