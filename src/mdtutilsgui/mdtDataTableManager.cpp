@@ -21,12 +21,17 @@
 #include "mdtDataTableManager.h"
 #include "mdtDataTableModel.h"
 #include "mdtError.h"
+#include <QSqlTableModel>
 #include <QFileInfo>
 #include <QFile>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QMessageBox>
 #include <QStringList>
+#include <QProgressDialog>
+#include <QApplication>
+#include <QTextCodec>
 
 #include <QDebug>
 
@@ -35,8 +40,9 @@ mdtDataTableManager::mdtDataTableManager(QObject *parent, QSqlDatabase db)
 {
   pvDb = db;
   pvModel = 0;
+  pvProgressDialogEnabled = false;
   // Set a default CSV format
-  setCsvFormat(";", "\"", "#", '\\', MDT_NATIVE_EOL);
+  setCsvFormat(";", "\"", "#", '\\', MDT_NATIVE_EOL, "UTF-8");
 }
 
 mdtDataTableManager::~mdtDataTableManager()
@@ -67,13 +73,75 @@ QString mdtDataTableManager::getTableName(const QString &dataSetName)
   QString tableName;
 
   tableName = dataSetName.trimmed();
+  tableName.replace(" ", "_");
+  tableName.replace("+", "_");
+  tableName.replace("-", "_");
+  tableName.replace("*", "_");
+  tableName.replace("/", "_");
+  tableName.replace("<", "_");
+  tableName.replace(">", "_");
+  tableName.replace("=", "_");
+  tableName.replace("~", "_");
+  tableName.replace("!", "_");
+  tableName.replace("@", "_");
+  tableName.replace("#", "_");
+  tableName.replace("%", "_");
+  tableName.replace("^", "_");
+  tableName.replace("&", "_");
+  tableName.replace("|", "_");
+  tableName.replace("`", "_");
+  tableName.replace("?", "_");
+  tableName.replace("$", "_");
+  tableName.replace("(", "_");
+  tableName.replace(")", "_");
+  tableName.replace("[", "_");
+  tableName.replace("]", "_");
+  tableName.replace(",", "_");
+  tableName.replace(";", "_");
+  tableName.replace(":", "_");
   tableName.replace(".", "_");
   tableName += "_tbl";
 
   return tableName;
 }
 
-bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, const QList<QSqlField> &fields, create_mode_t mode)
+QString mdtDataTableManager::getFieldName(const QString &columnName)
+{
+  QString fieldName;
+
+  fieldName = columnName.trimmed();
+  fieldName.replace(" ", "_");
+  fieldName.replace("+", "_");
+  fieldName.replace("-", "_");
+  fieldName.replace("*", "_");
+  fieldName.replace("/", "_");
+  fieldName.replace("<", "_");
+  fieldName.replace(">", "_");
+  fieldName.replace("=", "_");
+  fieldName.replace("~", "_");
+  fieldName.replace("!", "_");
+  fieldName.replace("@", "_");
+  fieldName.replace("#", "_");
+  fieldName.replace("%", "_");
+  fieldName.replace("^", "_");
+  fieldName.replace("&", "_");
+  fieldName.replace("|", "_");
+  fieldName.replace("`", "_");
+  fieldName.replace("?", "_");
+  fieldName.replace("$", "_");
+  fieldName.replace("(", "_");
+  fieldName.replace(")", "_");
+  fieldName.replace("[", "_");
+  fieldName.replace("]", "_");
+  fieldName.replace(",", "_");
+  fieldName.replace(";", "_");
+  fieldName.replace(":", "_");
+  fieldName.replace(".", "_");
+
+  return fieldName;
+}
+
+bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields, create_mode_t mode)
 {
   QFile file;
   QFileInfo fileInfo;
@@ -149,16 +217,20 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, co
             pvDb.close();
             return false;
           }
+        }else{
+          pvDb.close();
+          return false;
         }
         break;
     }
   }
   // Here, we must create database table
-  if(!createDatabaseTable(tableName, primaryKey, fields)){
+  if(!createDatabaseTable(tableName, primaryKey, createPrimaryKeyFields, fields)){
     mdtError e(MDT_DATABASE_ERROR, "Cannot create database table for data set " + name, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
     pvDb.close();
+    return false;
   }
   // Finished
   delete pvModel;
@@ -173,13 +245,28 @@ QSqlDatabase mdtDataTableManager::database() const
   return pvDb;
 }
 
-void mdtDataTableManager::setCsvFormat(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol)
+void mdtDataTableManager::enableProgressDialog(bool enable)
+{
+  pvProgressDialogEnabled = enable;
+}
+
+void mdtDataTableManager::setCsvFormat(const QString &separator, const QString &dataProtection, const QString &comment, const QChar &escapeChar, QByteArray eol, const QByteArray &encoding)
 {
   pvCsvSeparator = separator;
   pvCsvDataProtection = dataProtection;
   pvCsvComment = comment;
   pvCsvEscapeChar = escapeChar;
   pvCsvEol = eol;
+  if(!QTextCodec::availableCodecs().contains(encoding)){
+    QTextCodec *codec = QTextCodec::codecForLocale();
+    Q_ASSERT(codec != 0);
+    pvEncoding = codec->name();
+    mdtError e(MDT_FILE_IO_ERROR, "Encoding not found: " + encoding + " , using " + pvEncoding, mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+  }else{
+    pvEncoding = encoding;
+  }
 }
 
 bool mdtDataTableManager::exportToCsvFile(const QString & filePath, create_mode_t mode)
@@ -187,11 +274,11 @@ bool mdtDataTableManager::exportToCsvFile(const QString & filePath, create_mode_
   return false;
 }
 
-bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir)
+bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir, const QStringList &pkFields)
 {
   QFileInfo fileInfo(csvFilePath);
   QDir dbDir;
-  mdtCsvFile csvFile(0, "ISO 8859-15");
+  mdtCsvFile csvFile(0, pvEncoding);
   QStringList header;
   QStringList line;
   QSqlDatabase db;
@@ -200,11 +287,15 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QList<QStringList> rows;
   
   QSqlIndex pk;
+  bool pkNotInCsvData;
   
   QString fieldName;
   QSqlField field;
   QList<QSqlField> fields;
   int i;
+  QProgressDialog *progress = 0;
+  int lineCount;
+  int dataLossCount;
   
   QSqlTableModel::EditStrategy originalEditStrategy;;
 
@@ -228,7 +319,6 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     e.commit();
     return false;
   }
-  setCsvFormat(";", "", "", '\0', "\r\n");
   // Read header and create fields
   header = csvFile.readHeader(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol);
   if(header.isEmpty()){
@@ -239,32 +329,40 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     return false;
   }
   
-  pk.append(QSqlField("id_PK", QVariant::Int));
+  pvDbAndCsvHeader.clear();
+  // Create primary key
+  if(pkFields.isEmpty()){
+    pkNotInCsvData = true;
+    pk.append(QSqlField("id_PK", QVariant::Int));
+    pvDbAndCsvHeader.insert("id_PK", "");
+  }else{
+    pkNotInCsvData = false;
+    for(i=0; i<pkFields.size(); i++){
+      pk.append(getFieldName(pkFields.at(i)));
+    }
+  }
+
   
+  // Replace unalowed chars and create fields
   for(i=0; i<header.size(); i++){
-    fieldName = header.at(i).trimmed();
-    fieldName.replace(" ", "_");
-    fieldName.replace("(", "_");
-    fieldName.replace(")", "_");
-    fieldName.replace("%", "_");
-    fieldName.replace("?", "_");
-    fieldName.replace("+", "_");
-    fieldName.replace("/", "_");
+    fieldName = getFieldName(header.at(i));
     if(!fieldName.isEmpty()){
       qDebug() << "Creating field " << fieldName << " ...";
       field.setName(fieldName);
       field.setType(QVariant::String);
       fields.append(field);
+      pvDbAndCsvHeader.insert(fieldName, header.at(i));
     }
   }
+
   // Create data set
   dataSetName = fileInfo.baseName();
   dataSetTableName = getTableName(dataSetName);
-  ///db = createDataSet(dbDir, dataSetName, pk, fields, mode);
-  if(!createDataSet(dbDir, dataSetName, pk, fields, mode)){
+  if(!createDataSet(dbDir, dataSetName, pk, pkNotInCsvData, fields, mode)){
     csvFile.close();
     return false;
   }
+  qDebug() << "data set created, name: " << dataSetName;
   // Check that model could be set
   if(model() == 0){
     mdtError e(MDT_DATABASE_ERROR, "Cannot create model for data set " + dataSetName, mdtError::Error);
@@ -283,19 +381,29 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     model()->setEditStrategy(QSqlTableModel::OnManualSubmit);
   }
   // Store data
+  if(pvProgressDialogEnabled){
+    lineCount = 0;
+    progress = new QProgressDialog;
+    progress->setWindowTitle(tr("CSV import progress"));
+    progress->setMinimum(0);
+    progress->setMaximum(0);
+    ///progress->setMinimumDuration(500);
+    progress->show();
+  }
   i=0;
+  dataLossCount = 0;
   while(csvFile.hasMoreLines()){
     line = csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol);
+    // On some parse error, it can happen that we have to much columns
+    // Common known issue is the ending ; with no more data, but we don't loose data in this case.
     while(line.size() > fields.size()){
-      ///qDebug() << "Line contains more columns than fields !";
       if(!line.last().isEmpty()){
-        qDebug() << "WWW loosing data !!";
+        dataLossCount++;
       }
       line.removeLast();
     }
     rows.append(line);
     if(i>50){
-      qDebug() << "Commit...";
       // Begin transaction (without, insertions are very slow)
       if(!pvDb.transaction()){
         mdtError e(MDT_DATABASE_ERROR, "Unable to begin transaction, data set: " + dataSetName, mdtError::Error);
@@ -307,7 +415,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
         return false;
       }
       // Commit some lines
-      if(!model()->addRows(rows, true, Qt::EditRole)){
+      if(!model()->addRows(rows, pkNotInCsvData, Qt::EditRole)){
         mdtError e(MDT_DATABASE_ERROR, "Unable to add some rows in model, data set: " + dataSetName, mdtError::Error);
         e.setSystemError(model()->lastError().number(), model()->lastError().text());
         MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
@@ -326,6 +434,13 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
         pvDb.close();
         return false;
       }
+      // Update progress dialog
+      if(progress != 0){
+        lineCount += rows.size();
+        qDebug() << "Commit..., line count: " << lineCount;
+        progress->setLabelText(tr("Importing line ") + QString::number(lineCount));
+        qApp->processEvents();
+      }
       rows.clear();
       i=0;
     }
@@ -342,7 +457,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     pvDb.close();
     return false;
   }
-  if(!model()->addRows(rows, true, Qt::EditRole)){
+  if(!model()->addRows(rows, pkNotInCsvData, Qt::EditRole)){
     mdtError e(MDT_DATABASE_ERROR, "Unable to add some rows in model, data set: " + dataSetName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
@@ -365,6 +480,60 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   if(originalEditStrategy != QSqlTableModel::OnManualSubmit){
     model()->setEditStrategy(originalEditStrategy);
   }
+  if(progress != 0){
+    delete progress;
+  }
+  // Log a warning if some data were lost
+  if(dataLossCount > 0){
+    mdtError e(MDT_FILE_IO_ERROR, "Some data has been lost during import of CSV file: " + fileInfo.absoluteFilePath(), mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+  }
+
+  return true;
+}
+
+QStringList mdtDataTableManager::csvHeader() const
+{
+  QStringList header;
+  QString value;
+  QSqlRecord record;
+  int i;
+
+  if(pvModel == 0){
+    mdtError e(MDT_GUI_ERROR, "Model is null", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    return header;
+  }
+  record = pvModel->record();
+  for(i=0; i<record.count(); i++){
+    value = pvDbAndCsvHeader.value(record.field(i).name());
+    if(!value.isEmpty()){
+      header << value;
+    }
+  }
+
+  return header;
+}
+
+bool mdtDataTableManager::setCsvHeaderToModel()
+{
+  int i;
+  QString value;
+
+  if(pvModel == 0){
+    mdtError e(MDT_GUI_ERROR, "Model is null", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    return false;
+  }
+  for(i=0; i<pvModel->columnCount(); i++){
+    value = pvDbAndCsvHeader.value(pvModel->headerData(i, Qt::Horizontal).toString());
+    if(!value.isEmpty()){
+      pvModel->setHeaderData(i, Qt::Horizontal, value);
+    }
+  }
 
   return true;
 }
@@ -374,7 +543,7 @@ mdtDataTableModel *mdtDataTableManager::model()
   return pvModel;
 }
 
-bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, const QList<QSqlField> &fields)
+bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QSqlIndex &primaryKey, bool createPrimaryKeyFields, const QList<QSqlField> &fields)
 {
   Q_ASSERT(pvDb.isValid());
   Q_ASSERT(pvDb.isOpen());
@@ -384,30 +553,32 @@ bool mdtDataTableManager::createDatabaseTable(const QString &tableName, const QS
 
   // Build SQL query
   sql = "CREATE TABLE IF NOT EXISTS " + tableName + " (";
-  // Add primary key fields
-  for(i=0; i<primaryKey.count(); i++){
-    sql += primaryKey.field(i).name() + " ";
-    switch(primaryKey.field(i).type()){
-      case QVariant::Int:
-        sql += " INTEGER ";
-        break;
-      case QVariant::String:
-        sql += " TEXT ";
-        break;
-      default:
-        {
-        mdtError e(MDT_DATABASE_ERROR, "Unsupported field type for primary key, database " + pvDb.databaseName(), mdtError::Error);
-        MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
-        e.commit();
-        }
+  // Add primary key fields if needed
+  if(createPrimaryKeyFields){
+    for(i=0; i<primaryKey.count(); i++){
+      sql += primaryKey.field(i).name() + " ";
+      switch(primaryKey.field(i).type()){
+        case QVariant::Int:
+          sql += " INTEGER ";
+          break;
+        case QVariant::String:
+          sql += " TEXT ";
+          break;
+        default:
+          {
+          mdtError e(MDT_DATABASE_ERROR, "Unsupported field type for primary key, database " + pvDb.databaseName(), mdtError::Error);
+          MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+          e.commit();
+          }
+      }
+      if(i < (primaryKey.count()-1)){
+        sql += ", ";
+      }
     }
-    if(i < (primaryKey.count()-1)){
+    // Add other fields
+    if(fields.size() > 0){
       sql += ", ";
     }
-  }
-  // Add other fields
-  if(fields.size() > 0){
-    sql += ", ";
   }
   for(i=0; i<fields.size(); i++){
     sql += fields.at(i).name() + " ";
