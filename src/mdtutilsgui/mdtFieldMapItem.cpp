@@ -81,20 +81,6 @@ QString mdtFieldMapItem::sourceFieldName() const
   return pvSourceFieldName;
 }
 
-/**
-void mdtFieldMapItem::setSourceFieldDisplayText(const QString &value)
-{
-  pvSourceFieldDisplayText = value;
-}
-*/
-
-/**
-QString mdtFieldMapItem::sourceFieldDisplayText() const
-{
-  return pvSourceFieldDisplayText;
-}
-*/
-
 void mdtFieldMapItem::setSourceFieldDataStartOffset(int offset)
 {
   pvSourceFieldDataStartOffset = offset;

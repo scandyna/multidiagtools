@@ -27,6 +27,7 @@
 #include <QVariant>
 #include <QList>
 #include <QHash>
+#include <QMultiHash>
 
 /*! \brief Map fields between a source and a destination data set
  *
@@ -95,26 +96,19 @@ class mdtFieldMap
    */
   mdtFieldMapItem *itemAtDisplayText(const QString &text);
 
-  /*! \brief Get the item for given source index
+  /*! \brief Get the items for given source index
    *
    * \param index In above example, it's the index of field in CSV header.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  mdtFieldMapItem *itemAtSourceFieldIndex(int index);
+  QList<mdtFieldMapItem*> itemsAtSourceFieldIndex(int index);
 
-  /*! \brief Get the item for given source field name
+  /*! \brief Get the items for given source field name
    *
    * \param name In above example, it's the technical field name in CSV header.
    * \return Pointer to item if found, else 0 (null pointer).
    */
-  mdtFieldMapItem *itemAtSourceFieldName(const QString &name);
-
-  /*! \brief Get the item for given source field display text
-   *
-   * \param text In above example, it's the field name in CSV header.
-   * \return Pointer to item if found, else 0 (null pointer).
-   */
-  ///mdtFieldMapItem *itemAtSourceFieldDisplayText(const QString &text);
+  QList<mdtFieldMapItem*> itemsAtSourceFieldName(const QString &name);
 
   /*! \brief Get data for a given index in source data
    *
@@ -154,14 +148,11 @@ class mdtFieldMap
    */
   QString dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName);
 
-  /*! \brief Get source data for given source field display text
-   *
-   * \param data In above example it's the data in model.
-   * \param sourceFieldDisplayText In above example, it's the name of field in a CSV file's line.
-   */
-  ///QString dataForSourceFieldDisplayText(const QList<QVariant> &data, const QString &sourceFieldDisplayText);
-
  private:
+
+  /*! \brief Insert data into string regarding item's source data offsets
+   */
+  void insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item);
 
   Q_DISABLE_COPY(mdtFieldMap);
 
@@ -169,8 +160,8 @@ class mdtFieldMap
   QHash<int, mdtFieldMapItem*> pvItemsByFieldIndex;
   QHash<QString, mdtFieldMapItem*> pvItemsByFieldName;
   QHash<QString, mdtFieldMapItem*> pvItemsByDisplayText;
-  QHash<int, mdtFieldMapItem*> pvItemsBySourceFieldIndex;
-  QHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
+  QMultiHash<int, mdtFieldMapItem*> pvItemsBySourceFieldIndex;
+  QMultiHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
 };
 
 #endif  // #ifndef MDT_FIEL_DMAP_H

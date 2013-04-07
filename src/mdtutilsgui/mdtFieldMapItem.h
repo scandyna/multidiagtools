@@ -84,14 +84,6 @@ class mdtFieldMapItem
    */
   QString sourceFieldName() const;
 
-  /*! \brief Set source field display text
-   */
-  ///void setSourceFieldDisplayText(const QString &value);
-
-  /*! \brief Get field display text
-   */
-  ///QString sourceFieldDisplayText() const;
-
   /*! \brief Set source data start offset
    *
    * If offset is < 0, the entiere left part os end offset is considered.
@@ -127,7 +119,6 @@ class mdtFieldMapItem
   QString pvFieldDisplayText;
   int pvSourceFieldIndex;
   QString pvSourceFieldName;
-  ///QString pvSourceFieldDisplayText;
   int pvSourceFieldDataStartOffset;
   int pvSourceFieldDataEndOffset;
   QVariant::Type pvDataType;

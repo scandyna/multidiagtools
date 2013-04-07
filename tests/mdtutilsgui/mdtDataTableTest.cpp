@@ -559,12 +559,19 @@ void mdtDataTableTest::fieldMapTest()
 {
   mdtFieldMap map;
   mdtFieldMapItem *item;
+  QList<mdtFieldMapItem*> items;
   QStringList csvHeader;
+  QStringList csvLine;
   QStringList modelHeader;
+  ///QStringList modelRow;
+  QList<QVariant> modelRow;
 
-  // Build source and model fields
+  // Build source fields and data
   csvHeader << "A" << "B" << "Group1" << "C" << "Group2";
+  csvLine << "A data" << "B data" << "12Name 12" << "C data" << "123Na123Value123";
+  // Build model fields and data
   modelHeader << "A" << "B" << "Sub1Id" << "Sub1Name" << "C" << "Sub2Id" << "Sub2Name" << "Sub2Value";
+  modelRow << "A data" << "B data" << "12" << "Name 12" << "C data" << "123" << "Na123" << "Value123";
   // Build the map
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(0);
@@ -634,17 +641,84 @@ void mdtDataTableTest::fieldMapTest()
   map.addItem(item);
   // Check that fields are correctly mapped
   for(int i=0; i<csvHeader.size(); i++){
-    item = map.itemAtSourceFieldIndex(i);
-    QVERIFY(item != 0);
-    QCOMPARE(item->sourceFieldIndex(), i);
-    QCOMPARE(item->sourceFieldName(), csvHeader.at(i));
+    items = map.itemsAtSourceFieldIndex(i);
+    for(int j=0; j<items.size(); j++){
+      item = items.at(j);
+      QVERIFY(item != 0);
+      QCOMPARE(item->sourceFieldIndex(), i);
+      QCOMPARE(item->sourceFieldName(), csvHeader.at(i));
+    }
+    items = map.itemsAtSourceFieldName(csvHeader.at(i));
+    for(int j=0; j<items.size(); j++){
+      item = items.at(j);
+      QVERIFY(item != 0);
+      QCOMPARE(item->sourceFieldIndex(), i);
+      QCOMPARE(item->sourceFieldName(), csvHeader.at(i));
+    }
   }
   for(int i=0; i<modelHeader.size(); i++){
     item = map.itemAtFieldIndex(i);
     QVERIFY(item != 0);
     QCOMPARE(item->fieldIndex(), i);
     QCOMPARE(item->fieldName(), modelHeader.at(i));
+    item = map.itemAtFieldName(modelHeader.at(i));
+    QVERIFY(item != 0);
+    QCOMPARE(item->fieldIndex(), i);
+    QCOMPARE(item->fieldName(), modelHeader.at(i));
   }
+  // Check Group1 split
+  item = map.itemAtFieldName("Sub1Id");
+  QVERIFY(item != 0);
+  QCOMPARE(item->fieldIndex(), 2);
+  QCOMPARE(item->fieldName(), QString("Sub1Id"));
+  QCOMPARE(item->fieldDisplayText(), QString("Grp 1 ID"));
+  QCOMPARE(item->sourceFieldIndex(), 2);
+  QCOMPARE(item->sourceFieldName(), QString("Group1"));
+  QCOMPARE(item->sourceFieldDataStartOffset(), 0);
+  QCOMPARE(item->sourceFieldDataEndOffset(), 1);
+  item = map.itemAtFieldName("Sub1Name");
+  QVERIFY(item != 0);
+  QCOMPARE(item->fieldIndex(), 3);
+  QCOMPARE(item->fieldName(), QString("Sub1Name"));
+  QCOMPARE(item->fieldDisplayText(), QString("Grp 1 Name"));
+  QCOMPARE(item->sourceFieldIndex(), 2);
+  QCOMPARE(item->sourceFieldName(), QString("Group1"));
+  // Check Group2 split
+  item = map.itemAtFieldName("Sub2Id");
+  QVERIFY(item != 0);
+  QCOMPARE(item->fieldIndex(), 5);
+  QCOMPARE(item->fieldName(), QString("Sub2Id"));
+  QCOMPARE(item->fieldDisplayText(), QString("Grp 2 ID"));
+  QCOMPARE(item->sourceFieldIndex(), 4);
+  QCOMPARE(item->sourceFieldName(), QString("Group2"));
+  item = map.itemAtFieldName("Sub2Name");
+  QVERIFY(item != 0);
+  QCOMPARE(item->fieldIndex(), 6);
+  QCOMPARE(item->fieldName(), QString("Sub2Name"));
+  QCOMPARE(item->fieldDisplayText(), QString("Grp 2 Name"));
+  QCOMPARE(item->sourceFieldIndex(), 4);
+  QCOMPARE(item->sourceFieldName(), QString("Group2"));
+  item = map.itemAtFieldName("Sub2Value");
+  QVERIFY(item != 0);
+  QCOMPARE(item->fieldIndex(), 7);
+  QCOMPARE(item->fieldName(), QString("Sub2Value"));
+  QCOMPARE(item->fieldDisplayText(), QString("Grp 2 Value"));
+  QCOMPARE(item->sourceFieldIndex(), 4);
+  QCOMPARE(item->sourceFieldName(), QString("Group2"));
+  // Check data map
+  QCOMPARE(modelHeader.size(), modelRow.size());
+  for(int i=0; i<modelRow.size(); i++){
+    QCOMPARE(map.dataForFieldIndex(csvLine, i), QVariant(modelRow.at(i)));
+    QCOMPARE(map.dataForFieldName(csvLine, modelHeader.at(i)), QVariant(modelRow.at(i)));
+  }
+  QCOMPARE(map.dataForDisplayText(csvLine, "Grp 2 Name"), QVariant("Na123"));
+  QCOMPARE(csvHeader.size(), csvLine.size());
+  for(int i=0; i<csvLine.size(); i++){
+    qDebug() << "Test...";
+    QCOMPARE(map.dataForSourceFieldIndex(modelRow, i), csvLine.at(i));
+    QCOMPARE(map.dataForSourceFieldName(modelRow, csvHeader.at(i)), csvLine.at(i));
+  }
+
 }
 
 void mdtDataTableTest::csvExportTest()

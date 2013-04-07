@@ -20,6 +20,8 @@
  ****************************************************************************/
 #include "mdtFieldMap.h"
 
+#include <QDebug>
+
 mdtFieldMap::mdtFieldMap()
 {
 }
@@ -65,44 +67,127 @@ mdtFieldMapItem *mdtFieldMap::itemAtDisplayText(const QString &text)
   return pvItemsByDisplayText.value(text, 0);
 }
 
-mdtFieldMapItem *mdtFieldMap::itemAtSourceFieldIndex(int index)
+QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index)
 {
-  return pvItemsBySourceFieldIndex.value(index, 0);
+  return pvItemsBySourceFieldIndex.values(index);
 }
 
-mdtFieldMapItem *mdtFieldMap::itemAtSourceFieldName(const QString &name)
+QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
 {
-  return pvItemsBySourceFieldName.value(name, 0);
+  qDebug() << "items for source field name: " << name << " : " << pvItemsBySourceFieldName.values(name);
+  return pvItemsBySourceFieldName.values(name);
 }
 
-/**
-mdtFieldMapItem *mdtFieldMap::itemAtSourceFieldDisplayText(const QString &text)
-{
-}
-*/
-
+/// \todo add conversion
 QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex)
 {
+  mdtFieldMapItem *item = pvItemsByFieldIndex.value(fieldIndex, 0);
+  if(item == 0){
+    return QVariant();
+  }
+  if(item->sourceFieldIndex() < 0){
+    return QVariant();
+  }
+  if(item->sourceFieldIndex() >= sourceData.size()){
+    return QVariant();
+  }
+  if((item->sourceFieldDataStartOffset()<0)&&(item->sourceFieldDataEndOffset()<0)){
+    return sourceData.at(item->sourceFieldIndex());
+  }
+  if(item->sourceFieldDataStartOffset()<0){
+    QString src = sourceData.at(item->sourceFieldIndex()).left(item->sourceFieldDataEndOffset()+1);
+    return src;
+  }
+  if(item->sourceFieldDataEndOffset()<0){
+    QString src = sourceData.at(item->sourceFieldIndex());
+    src = src.right(src.size() - item->sourceFieldDataStartOffset());
+    return src;
+  }
+  QString src = sourceData.at(item->sourceFieldIndex());
+  src = src.mid(item->sourceFieldDataStartOffset(), item->sourceFieldDataEndOffset() - item->sourceFieldDataStartOffset() + 1);
+  return src;
 }
 
 QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName)
 {
+  mdtFieldMapItem *item = pvItemsByFieldName.value(fieldName, 0);
+  if(item == 0){
+    return QVariant();
+  }
+  return dataForFieldIndex(sourceData, item->fieldIndex());
 }
 
 QVariant mdtFieldMap::dataForDisplayText(const QStringList &sourceData, const QString &displayText)
 {
+  mdtFieldMapItem *item = pvItemsByDisplayText.value(displayText, 0);
+  if(item == 0){
+    return QVariant();
+  }
+  return dataForFieldIndex(sourceData, item->fieldIndex());
 }
 
 QString mdtFieldMap::dataForSourceFieldIndex(const QList<QVariant> &data, int sourceFieldIndex)
 {
+  int i;
+  QString str;
+  QList<mdtFieldMapItem*> items = pvItemsBySourceFieldIndex.values(sourceFieldIndex);
+  mdtFieldMapItem *item;
+
+  for(i=0; i<items.size(); i++){
+    item = items.at(i);
+    Q_ASSERT(item != 0);
+    if((item->fieldIndex()>=0)&&(item->fieldIndex()<data.size())){
+      insertDataIntoSourceString(str, data.at(item->fieldIndex()), item);
+    }
+  }
+
+  return str;
 }
 
 QString mdtFieldMap::dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName)
 {
+  int i;
+  QString str;
+  QList<mdtFieldMapItem*> items = pvItemsBySourceFieldName.values(sourceFieldName);
+  mdtFieldMapItem *item;
+
+  for(i=0; i<items.size(); i++){
+    item = items.at(i);
+    Q_ASSERT(item != 0);
+    if((item->fieldIndex()>=0)&&(item->fieldIndex()<data.size())){
+      insertDataIntoSourceString(str, data.at(item->fieldIndex()), item);
+    }
+  }
+
+  return str;
 }
 
-/**
-QString mdtFieldMap::dataForSourceFieldDisplayText(const QList<QVariant> &data, const QString &sourceFieldDisplayText)
+void mdtFieldMap::insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item)
 {
+  Q_ASSERT(item != 0);
+
+  int start, end;
+  QString strData = data.toString();
+
+  qDebug() << "editing, str: " << str << " , data: " << data;
+  if((item->sourceFieldDataStartOffset()<0)&&(item->sourceFieldDataEndOffset()<0)){
+    str = strData;
+    return;
+  }
+  start = item->sourceFieldDataStartOffset();
+  if(start<0){
+    start = 0;
+  }
+  end = item->sourceFieldDataEndOffset();
+  if(end<0){
+    end = start + strData.size()-1;
+  }
+  qDebug() << "editing, start: " << start << " , end: " << end << " , str: " << str << " , data: " << strData;
+  ///strData = strData.left(end-start+1);
+  ///str.insert(start, strData);
+  if(str.size() < (end+1)){
+    str.resize(end+1);
+  }
+  str.replace(start, end-start+1, strData);
+  qDebug() << "edited, start: " << start << " , end: " << end << " , str: " << str << " , data: " << strData;
 }
-*/
