@@ -204,6 +204,8 @@ class mdtDataTableManager : public QObject
    */
   static bool userChooseToOverwrite(const QDir &dir, const QString &fileName);
 
+  Q_DISABLE_COPY(mdtDataTableManager);
+
   QString pvDataSetName;
   QDir pvDataSetDirectory;
   mdtDataTableModel *pvModel;

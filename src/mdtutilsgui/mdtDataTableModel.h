@@ -144,6 +144,8 @@ class mdtDataTableModel : public QSqlTableModel
    */
   bool doSubmit();
 
+  Q_DISABLE_COPY(mdtDataTableModel);
+
   QList<int> pvPkIndexes; // Hold the (column) indexes of primary keys
 
 };

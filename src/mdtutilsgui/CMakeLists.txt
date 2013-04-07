@@ -72,6 +72,8 @@ set (SOURCES_FILES
           mdtDataTableItemDelegate.cpp
           mdtDataTableManager.cpp
           mdtDataTableModel.cpp
+          mdtFieldMap.cpp
+          mdtFieldMapItem.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

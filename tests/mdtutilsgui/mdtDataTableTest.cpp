@@ -23,6 +23,8 @@
 #include "mdtDataTableModel.h"
 #include "mdtApplication.h"
 #include "mdtDataTableItemDelegate.h"
+#include "mdtFieldMap.h"
+#include "mdtFieldMapItem.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QString>
@@ -553,6 +555,98 @@ void mdtDataTableTest::editDataTest()
   QCOMPARE(model->data(model->index(6, 2)), QVariant(89.7));
 }
 
+void mdtDataTableTest::fieldMapTest()
+{
+  mdtFieldMap map;
+  mdtFieldMapItem *item;
+  QStringList csvHeader;
+  QStringList modelHeader;
+
+  // Build source and model fields
+  csvHeader << "A" << "B" << "Group1" << "C" << "Group2";
+  modelHeader << "A" << "B" << "Sub1Id" << "Sub1Name" << "C" << "Sub2Id" << "Sub2Name" << "Sub2Value";
+  // Build the map
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(0);
+  item->setSourceFieldName("A");
+  item->setFieldIndex(0);
+  item->setFieldName("A");
+  item->setFieldDisplayText("A");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(1);
+  item->setSourceFieldName("B");
+  item->setFieldIndex(1);
+  item->setFieldName("B");
+  item->setFieldDisplayText("B");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(2);
+  item->setSourceFieldName("Group1");
+  item->setSourceFieldDataStartOffset(0);
+  item->setSourceFieldDataEndOffset(1);
+  item->setFieldIndex(2);
+  item->setFieldName("Sub1Id");
+  item->setFieldDisplayText("Grp 1 ID");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(2);
+  item->setSourceFieldName("Group1");
+  item->setSourceFieldDataStartOffset(2);
+  item->setSourceFieldDataEndOffset(-1);
+  item->setFieldIndex(3);
+  item->setFieldName("Sub1Name");
+  item->setFieldDisplayText("Grp 1 Name");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(3);
+  item->setSourceFieldName("C");
+  item->setFieldIndex(4);
+  item->setFieldName("C");
+  item->setFieldDisplayText("C");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(4);
+  item->setSourceFieldName("Group2");
+  item->setSourceFieldDataStartOffset(0);
+  item->setSourceFieldDataEndOffset(2);
+  item->setFieldIndex(5);
+  item->setFieldName("Sub2Id");
+  item->setFieldDisplayText("Grp 2 ID");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(4);
+  item->setSourceFieldName("Group2");
+  item->setSourceFieldDataStartOffset(3);
+  item->setSourceFieldDataEndOffset(7);
+  item->setFieldIndex(6);
+  item->setFieldName("Sub2Name");
+  item->setFieldDisplayText("Grp 2 Name");
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldIndex(4);
+  item->setSourceFieldName("Group2");
+  item->setSourceFieldDataStartOffset(8);
+  item->setSourceFieldDataEndOffset(15);
+  item->setFieldIndex(7);
+  item->setFieldName("Sub2Value");
+  item->setFieldDisplayText("Grp 2 Value");
+  map.addItem(item);
+  // Check that fields are correctly mapped
+  for(int i=0; i<csvHeader.size(); i++){
+    item = map.itemAtSourceFieldIndex(i);
+    QVERIFY(item != 0);
+    QCOMPARE(item->sourceFieldIndex(), i);
+    QCOMPARE(item->sourceFieldName(), csvHeader.at(i));
+  }
+  for(int i=0; i<modelHeader.size(); i++){
+    item = map.itemAtFieldIndex(i);
+    QVERIFY(item != 0);
+    QCOMPARE(item->fieldIndex(), i);
+    QCOMPARE(item->fieldName(), modelHeader.at(i));
+  }
+}
+
 void mdtDataTableTest::csvExportTest()
 {
   mdtDataTableManager manager;
@@ -606,6 +700,7 @@ void mdtDataTableTest::csvImportTest()
   QVERIFY(manager.importFromCsvFile(csvFile1.fileName(), mdtDataTableManager::OverwriteExisting, "", QStringList("id_PK")));
   model = manager.model();
   QVERIFY(model != 0);
+  /// Check CSV headers
   // Check imported data
   QCOMPARE(model->rowCount(), 1);
   QCOMPARE(model->data(model->index(0, 0)), QVariant(1));
