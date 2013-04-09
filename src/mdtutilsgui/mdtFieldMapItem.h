@@ -35,6 +35,8 @@ class mdtFieldMapItem
   /*! \brief Create a item with default parameters
    *
    * Default parameters are:
+   *  - fieldIndex set to -1
+   *  - sourceFieldIndex set to -1
    *  - Empty values/strings
    *  - sourceFieldDataStartOffset set to -1
    *  - sourceFieldDataEndOffset set to -1

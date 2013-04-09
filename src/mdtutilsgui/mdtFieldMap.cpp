@@ -52,6 +52,42 @@ void mdtFieldMap::clear()
   pvItemsBySourceFieldName.clear();
 }
 
+bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
+{
+  Q_ASSERT(item != 0);
+
+  QList<mdtFieldMapItem*> items;
+
+  if(item->fieldIndex() > -1){
+    pvItemsByFieldIndex.insert(item->fieldIndex(), item);
+  }
+  if(!item->fieldName().isEmpty()){
+    pvItemsByFieldName.insert(item->fieldName(), item);
+  }
+  if(!item->fieldDisplayText().isEmpty()){
+    pvItemsByDisplayText.insert(item->fieldDisplayText(), item);
+  }
+  if(item->sourceFieldIndex() > -1){
+    items = pvItemsBySourceFieldIndex.values(item->sourceFieldIndex());
+    if(items.size() > 0){
+      Q_ASSERT(items.at(0) != 0);
+      pvItemsBySourceFieldIndex.remove(items.at(0)->sourceFieldIndex());
+    }
+    pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), item);
+  }
+  
+  if(!item->sourceFieldName().isEmpty()){
+    items = pvItemsBySourceFieldName.values(item->sourceFieldName());
+    if(items.size() > 0){
+      Q_ASSERT(items.at(0) != 0);
+      pvItemsBySourceFieldName.remove(items.at(0)->sourceFieldName());
+    }
+    pvItemsBySourceFieldName.insert(item->sourceFieldName(), item);
+  }
+
+  return true;
+}
+
 mdtFieldMapItem *mdtFieldMap::itemAtFieldIndex(int index)
 {
   return pvItemsByFieldIndex.value(index, 0);
@@ -74,17 +110,18 @@ QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldIndex(int index)
 
 QList<mdtFieldMapItem*> mdtFieldMap::itemsAtSourceFieldName(const QString &name)
 {
-  qDebug() << "items for source field name: " << name << " : " << pvItemsBySourceFieldName.values(name);
   return pvItemsBySourceFieldName.values(name);
 }
 
 /// \todo add conversion
 QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int fieldIndex)
 {
+  ///qDebug() << "REQ data for index " << fieldIndex << " , sourceData: " << sourceData;
   mdtFieldMapItem *item = pvItemsByFieldIndex.value(fieldIndex, 0);
   if(item == 0){
     return QVariant();
   }
+  ///qDebug() << "Found item, source index: " << item->sourceFieldIndex();
   if(item->sourceFieldIndex() < 0){
     return QVariant();
   }
@@ -105,7 +142,8 @@ QVariant mdtFieldMap::dataForFieldIndex(const QStringList &sourceData, int field
   }
   QString src = sourceData.at(item->sourceFieldIndex());
   src = src.mid(item->sourceFieldDataStartOffset(), item->sourceFieldDataEndOffset() - item->sourceFieldDataStartOffset() + 1);
-  return src;
+  ///return src;
+  return QVariant(src).convert(item->dataType());
 }
 
 QVariant mdtFieldMap::dataForFieldName(const QStringList &sourceData, const QString &fieldName)
@@ -169,7 +207,6 @@ void mdtFieldMap::insertDataIntoSourceString(QString &str, const QVariant &data,
   int start, end;
   QString strData = data.toString();
 
-  qDebug() << "editing, str: " << str << " , data: " << data;
   if((item->sourceFieldDataStartOffset()<0)&&(item->sourceFieldDataEndOffset()<0)){
     str = strData;
     return;
@@ -182,12 +219,8 @@ void mdtFieldMap::insertDataIntoSourceString(QString &str, const QVariant &data,
   if(end<0){
     end = start + strData.size()-1;
   }
-  qDebug() << "editing, start: " << start << " , end: " << end << " , str: " << str << " , data: " << strData;
-  ///strData = strData.left(end-start+1);
-  ///str.insert(start, strData);
   if(str.size() < (end+1)){
     str.resize(end+1);
   }
   str.replace(start, end-start+1, strData);
-  qDebug() << "edited, start: " << start << " , end: " << end << " , str: " << str << " , data: " << strData;
 }

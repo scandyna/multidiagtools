@@ -22,6 +22,8 @@
 
 mdtFieldMapItem::mdtFieldMapItem()
 {
+  pvFieldIndex = -1;
+  pvSourceFieldIndex = -1;
   pvSourceFieldDataStartOffset = -1;
   pvSourceFieldDataEndOffset = -1;
   pvDataType = QVariant::Invalid;

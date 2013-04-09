@@ -127,6 +127,7 @@ bool mdtDataTableModel::addRow(const QStringList &data, bool pkNotInData, int ro
 }
 
 bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotInData, int role)
+///bool mdtDataTableModel::addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role)
 {
   int dataRowIndex;
   int modelRowIndex;

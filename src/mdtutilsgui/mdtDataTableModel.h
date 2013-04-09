@@ -109,6 +109,7 @@ class mdtDataTableModel : public QSqlTableModel
    * \return True on success. False if a data conversion failed, or other error. See QSqlTableModel for known errors.
    */
   bool addRows(const QList<QStringList> &dataList, bool pkNotInData, int role = Qt::EditRole);
+  ///bool addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role = Qt::EditRole);
 
   /*! \brief Set data for a given index in model
    *

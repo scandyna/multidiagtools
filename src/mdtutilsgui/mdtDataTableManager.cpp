@@ -21,6 +21,7 @@
 #include "mdtDataTableManager.h"
 #include "mdtDataTableModel.h"
 #include "mdtError.h"
+#include "mdtFieldMapItem.h"
 #include <QSqlTableModel>
 #include <QFileInfo>
 #include <QFile>
@@ -292,13 +293,18 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QString fieldName;
   QSqlField field;
   QList<QSqlField> fields;
-  int i;
+  int i, j;
   QProgressDialog *progress = 0;
   int lineCount;
   int dataLossCount;
   
   QSqlTableModel::EditStrategy originalEditStrategy;;
 
+  mdtFieldMapItem *mapItem;
+  QList<mdtFieldMapItem*> mapItems;
+  QList<QVariant> lineData;
+  QSqlRecord record;
+  
   // Set DB directory
   if(dir.isEmpty()){
     dbDir = fileInfo.absoluteDir();
@@ -342,8 +348,35 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     }
   }
 
+  // Create fields regarding field map
+  for(i=0; i<header.size(); i++){
+    mapItems = pvFieldMap.itemsAtSourceFieldName(header.at(i));
+    if(mapItems.isEmpty()){
+      // No mapping for this header item, generate one
+      addFieldMapping(header.at(i), getFieldName(header.at(i)), header.at(i), QVariant::String);
+      mapItems = pvFieldMap.itemsAtSourceFieldName(header.at(i));
+      if(mapItems.isEmpty()){
+        csvFile.close();
+        pvDb.close();
+        return false;
+      }
+    }
+    // Create fields
+    for(j=0; j<mapItems.size(); j++){
+      mapItem = mapItems.at(j);
+      Q_ASSERT(mapItem != 0);
+      mapItem->setSourceFieldIndex(i);
+      pvFieldMap.updateItem(mapItem);
+      qDebug() << "Creating field " << mapItem->fieldName() << " ...";
+      field.setName(mapItem->fieldName());
+      field.setType(mapItem->dataType());
+      fields.append(field);
+    }
+  }
+  
   
   // Replace unalowed chars and create fields
+  /**
   for(i=0; i<header.size(); i++){
     fieldName = getFieldName(header.at(i));
     if(!fieldName.isEmpty()){
@@ -354,6 +387,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
       pvDbAndCsvHeader.insert(fieldName, header.at(i));
     }
   }
+  */
 
   // Create data set
   dataSetName = fileInfo.baseName();
@@ -371,6 +405,16 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     csvFile.close();
     pvDb.close();
     return false;
+  }
+  // Get index of each created field and add them to field map
+  record = model()->record();
+  for(i=0; i<record.count(); i++){
+    mapItem = pvFieldMap.itemAtFieldName(record.field(i).name());
+    Q_ASSERT(mapItem != 0);
+    mapItem->setFieldIndex(i);
+    pvFieldMap.updateItem(mapItem);
+    qDebug() << "Field: " << record.field(i);
+    qDebug() << "Map , index: " << mapItem->fieldIndex() << " , field: " << mapItem->fieldName();
   }
   ///qDebug() << "Header: " << header;
   ///qDebug() << "Fields: " << fields;
@@ -402,6 +446,14 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
       }
       line.removeLast();
     }
+    // Map data and add to rows
+    qDebug() << "Line: " << line;
+    lineData.clear();
+    for(j=0; j<line.size(); j++){
+      lineData.append(pvFieldMap.dataForFieldIndex(line, j));
+    }
+    qDebug() << "Line data: " << lineData;
+    
     rows.append(line);
     if(i>50){
       // Begin transaction (without, insertions are very slow)
@@ -491,6 +543,31 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   }
 
   return true;
+}
+
+void mdtDataTableManager::addFieldMapping(const QString &csvHeaderItem, const QString &fieldName, const QString &displayText, QVariant::Type dataType, int csvDataItemStartOffset, int csvDataItemEndOffset)
+{
+  mdtFieldMapItem *item;
+
+  item = new mdtFieldMapItem;
+  if(item == 0){
+    mdtError e(MDT_MEMORY_ALLOC_ERROR, "Unable to create a mdtFieldMapItem (memory allocation failed)", mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
+    e.commit();
+    return;
+  }
+  item->setSourceFieldName(csvHeaderItem);
+  item->setFieldName(fieldName);
+  item->setFieldDisplayText(displayText);
+  item->setDataType(dataType);
+  item->setSourceFieldDataStartOffset(csvDataItemStartOffset);
+  item->setSourceFieldDataEndOffset(csvDataItemEndOffset);
+  pvFieldMap.addItem(item);
+}
+
+void mdtDataTableManager::clearFieldMap()
+{
+  pvFieldMap.clear();
 }
 
 QStringList mdtDataTableManager::csvHeader() const

@@ -563,7 +563,6 @@ void mdtDataTableTest::fieldMapTest()
   QStringList csvHeader;
   QStringList csvLine;
   QStringList modelHeader;
-  ///QStringList modelRow;
   QList<QVariant> modelRow;
 
   // Build source fields and data
@@ -579,6 +578,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(0);
   item->setFieldName("A");
   item->setFieldDisplayText("A");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(1);
@@ -586,6 +586,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(1);
   item->setFieldName("B");
   item->setFieldDisplayText("B");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(2);
@@ -595,6 +596,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(2);
   item->setFieldName("Sub1Id");
   item->setFieldDisplayText("Grp 1 ID");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(2);
@@ -604,6 +606,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(3);
   item->setFieldName("Sub1Name");
   item->setFieldDisplayText("Grp 1 Name");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(3);
@@ -611,6 +614,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(4);
   item->setFieldName("C");
   item->setFieldDisplayText("C");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(4);
@@ -620,6 +624,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(5);
   item->setFieldName("Sub2Id");
   item->setFieldDisplayText("Grp 2 ID");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(4);
@@ -629,6 +634,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(6);
   item->setFieldName("Sub2Name");
   item->setFieldDisplayText("Grp 2 Name");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
   item->setSourceFieldIndex(4);
@@ -638,6 +644,7 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(7);
   item->setFieldName("Sub2Value");
   item->setFieldDisplayText("Grp 2 Value");
+  item->setDataType(QVariant::String);
   map.addItem(item);
   // Check that fields are correctly mapped
   for(int i=0; i<csvHeader.size(); i++){
@@ -714,10 +721,120 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(map.dataForDisplayText(csvLine, "Grp 2 Name"), QVariant("Na123"));
   QCOMPARE(csvHeader.size(), csvLine.size());
   for(int i=0; i<csvLine.size(); i++){
-    qDebug() << "Test...";
     QCOMPARE(map.dataForSourceFieldIndex(modelRow, i), csvLine.at(i));
     QCOMPARE(map.dataForSourceFieldName(modelRow, csvHeader.at(i)), csvLine.at(i));
   }
+  /*
+   * Check that index update works
+   */
+  /**
+  csvHeader.clear();
+  csvLine.clear();
+  modelHeader.clear();
+  modelRow.clear();
+  // Build source fields and data
+  csvHeader << "A" << "B" << "C";
+  csvLine << "data A" << "data B" << "data C";
+  // Build model fields and data
+  modelHeader << "a" << "b" << "c";
+  modelRow << "data A" << "data B" << "data C";
+  */
+  map.clear();
+  // Build the map without specifing indexes
+  item = new mdtFieldMapItem;
+  item->setSourceFieldName("A");
+  item->setFieldName("a");
+  item->setFieldDisplayText("A");
+  item->setDataType(QVariant::String);
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldName("B");
+  item->setFieldName("b");
+  item->setFieldDisplayText("B");
+  item->setDataType(QVariant::String);
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldName("C");
+  item->setFieldName("c");
+  item->setFieldDisplayText("C");
+  item->setDataType(QVariant::String);
+  map.addItem(item);
+  // Check the mapping
+  item = map.itemAtFieldName("a");
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldName(), QString("A"));
+  QCOMPARE(item->fieldName(), QString("a"));
+  QCOMPARE(item->fieldDisplayText(), QString("A"));
+  item = map.itemAtFieldName("b");
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldName(), QString("B"));
+  QCOMPARE(item->fieldName(), QString("b"));
+  QCOMPARE(item->fieldDisplayText(), QString("B"));
+  item = map.itemAtFieldName("c");
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldName(), QString("C"));
+  QCOMPARE(item->fieldName(), QString("c"));
+  QCOMPARE(item->fieldDisplayText(), QString("C"));
+  // Update indexes
+  item = map.itemAtFieldName("a");
+  QVERIFY(item != 0);
+  item->setSourceFieldIndex(1);
+  item->setFieldIndex(11);
+  map.updateItem(item);
+  item = map.itemAtFieldName("b");
+  QVERIFY(item != 0);
+  item->setSourceFieldIndex(2);
+  item->setFieldIndex(12);
+  map.updateItem(item);
+  item = map.itemAtFieldName("c");
+  QVERIFY(item != 0);
+  item->setSourceFieldIndex(3);
+  item->setFieldIndex(13);
+  map.updateItem(item);
+  // Check the mapping - search by field index
+  item = map.itemAtFieldIndex(11);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 1);
+  QCOMPARE(item->sourceFieldName(), QString("A"));
+  QCOMPARE(item->fieldIndex(), 11);
+  QCOMPARE(item->fieldName(), QString("a"));
+  item = map.itemAtFieldIndex(12);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 2);
+  QCOMPARE(item->sourceFieldName(), QString("B"));
+  QCOMPARE(item->fieldIndex(), 12);
+  QCOMPARE(item->fieldName(), QString("b"));
+  item = map.itemAtFieldIndex(13);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 3);
+  QCOMPARE(item->sourceFieldName(), QString("C"));
+  QCOMPARE(item->fieldIndex(), 13);
+  QCOMPARE(item->fieldName(), QString("c"));
+  // Check the mapping - search by source field index
+  items = map.itemsAtSourceFieldIndex(1);
+  QVERIFY(items.size() == 1);
+  item = items.at(0);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 1);
+  QCOMPARE(item->sourceFieldName(), QString("A"));
+  QCOMPARE(item->fieldIndex(), 11);
+  QCOMPARE(item->fieldName(), QString("a"));
+  items = map.itemsAtSourceFieldIndex(2);
+  QVERIFY(items.size() == 1);
+  item = items.at(0);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 2);
+  QCOMPARE(item->sourceFieldName(), QString("B"));
+  QCOMPARE(item->fieldIndex(), 12);
+  QCOMPARE(item->fieldName(), QString("b"));
+  items = map.itemsAtSourceFieldIndex(3);
+  QVERIFY(items.size() == 1);
+  item = items.at(0);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 3);
+  QCOMPARE(item->sourceFieldName(), QString("C"));
+  QCOMPARE(item->fieldIndex(), 13);
+  QCOMPARE(item->fieldName(), QString("c"));
 
 }
 
@@ -799,6 +916,8 @@ void mdtDataTableTest::csvImportTest()
 
   qDebug() << "CSV headers: " << manager.csvHeader();
 
+  return;
+  
   /*
    * Playing ...
    */

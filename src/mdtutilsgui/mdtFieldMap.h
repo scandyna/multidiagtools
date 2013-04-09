@@ -75,6 +75,17 @@ class mdtFieldMap
    */
   void clear();
 
+  /*! \brief Update a item
+   *
+   * Whenn updating a item, it's important to call this method,
+   *  else internal keys are not updated.
+   *
+   * \param item item to update
+   * \return True on success, false if item was not found
+   * \pre Item must be a valid pointer
+   */
+  bool updateItem(mdtFieldMapItem *item);
+
   /*! \brief Get the item for a given index
    *
    * \param index In above example, it's the model column index.

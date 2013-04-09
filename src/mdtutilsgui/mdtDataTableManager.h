@@ -22,6 +22,7 @@
 #define MDT_DATA_TABLE_MANAGER_H
 
 #include "mdtCsvFile.h"
+#include "mdtFieldMap.h"
 #include <QSqlDatabase>
 #include <QObject>
 #include <QMap>
@@ -157,6 +158,44 @@ class mdtDataTableManager : public QObject
    */
   bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
 
+  /*! \brief Add a mapping between CSV header part (item) and model field
+   *
+   * Field mapping is used for relationship between CSV header,
+   *  model's field name and texts to display in model's header.
+   *  Internally, mdtFieldMap class is used for this.
+   *
+   * During CSV import, all unspecified maps are automatically created as follow:
+   *  - Data are imported as string (type: QVariant::String)
+   *  - Field name is based on CSV header item, but unalowed chars are replaced by '_'
+   *  - Display text is the CSV header item.
+   *  - One field is created in model for one CSV header item (column).
+   *
+   * If some of this default behaviour is not what is needed for some fields,
+   *  it's possible to add a mapping with this method befor calling importFromCsvFile().
+   *
+   * It's also possible to split a CSV header item to many model fields.
+   *  To do this, add several mapping with same csvHeaderItem, but using
+   *  each time another fieldName. To know wich part of a CSV data item must
+   *  be stored in witch field, csvDataItemStartOffset and csvDataItemEndOffset
+   *  must be specified.
+   *
+   * \param csvHeaderItem CSV heaer part (column).
+   * \param fieldName Model's field name to create.
+   * \param displayText Text to display in model's header.
+   * \param dataType Data will be converted to this data type during import.
+   * \param csvDataItemStartOffset If >= 0, only data starting at this offset will be imported from CSV data item into model's field.
+   * \param csvDataItemEndOffset If >= 0, only data until this offset will be imported from CSV data item into model's field.
+   * \sa mdtFieldMap
+   * \sa mdtFieldMapItem
+   */
+  void addFieldMapping(const QString &csvHeaderItem, const QString &fieldName, const QString &displayText, QVariant::Type dataType, int csvDataItemStartOffset = -1, int csvDataItemEndOffset = -1);
+
+  /*! \brief Clear fields mapping
+   *
+   * \sa addFieldMapping()
+   */
+  void clearFieldMap();
+
   /*! \brief Get the CSV file's headers
    *
    * During CSV import, internal field name are created,
@@ -209,6 +248,7 @@ class mdtDataTableManager : public QObject
   QString pvDataSetName;
   QDir pvDataSetDirectory;
   mdtDataTableModel *pvModel;
+  mdtFieldMap pvFieldMap;
   // Database specific members
   QSqlDatabase pvDb;
   // CSV specific members
