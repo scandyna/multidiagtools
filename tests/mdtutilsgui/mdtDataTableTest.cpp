@@ -743,8 +743,14 @@ void mdtDataTableTest::fieldMapTest()
   // Build the map without specifing indexes
   item = new mdtFieldMapItem;
   item->setSourceFieldName("A");
-  item->setFieldName("a");
-  item->setFieldDisplayText("A");
+  item->setFieldName("a1");
+  item->setFieldDisplayText("A 1");
+  item->setDataType(QVariant::String);
+  map.addItem(item);
+  item = new mdtFieldMapItem;
+  item->setSourceFieldName("A");
+  item->setFieldName("a2");
+  item->setFieldDisplayText("A 2");
   item->setDataType(QVariant::String);
   map.addItem(item);
   item = new mdtFieldMapItem;
@@ -760,11 +766,16 @@ void mdtDataTableTest::fieldMapTest()
   item->setDataType(QVariant::String);
   map.addItem(item);
   // Check the mapping
-  item = map.itemAtFieldName("a");
+  item = map.itemAtFieldName("a1");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("A"));
-  QCOMPARE(item->fieldName(), QString("a"));
-  QCOMPARE(item->fieldDisplayText(), QString("A"));
+  QCOMPARE(item->fieldName(), QString("a1"));
+  QCOMPARE(item->fieldDisplayText(), QString("A 1"));
+  item = map.itemAtFieldName("a2");
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldName(), QString("A"));
+  QCOMPARE(item->fieldName(), QString("a2"));
+  QCOMPARE(item->fieldDisplayText(), QString("A 2"));
   item = map.itemAtFieldName("b");
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldName(), QString("B"));
@@ -776,7 +787,12 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(item->fieldName(), QString("c"));
   QCOMPARE(item->fieldDisplayText(), QString("C"));
   // Update indexes
-  item = map.itemAtFieldName("a");
+  item = map.itemAtFieldName("a1");
+  QVERIFY(item != 0);
+  item->setSourceFieldIndex(1);
+  item->setFieldIndex(10);
+  map.updateItem(item);
+  item = map.itemAtFieldName("a2");
   QVERIFY(item != 0);
   item->setSourceFieldIndex(1);
   item->setFieldIndex(11);
@@ -792,12 +808,18 @@ void mdtDataTableTest::fieldMapTest()
   item->setFieldIndex(13);
   map.updateItem(item);
   // Check the mapping - search by field index
+  item = map.itemAtFieldIndex(10);
+  QVERIFY(item != 0);
+  QCOMPARE(item->sourceFieldIndex(), 1);
+  QCOMPARE(item->sourceFieldName(), QString("A"));
+  QCOMPARE(item->fieldIndex(), 10);
+  QCOMPARE(item->fieldName(), QString("a1"));
   item = map.itemAtFieldIndex(11);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
   QCOMPARE(item->fieldIndex(), 11);
-  QCOMPARE(item->fieldName(), QString("a"));
+  QCOMPARE(item->fieldName(), QString("a2"));
   item = map.itemAtFieldIndex(12);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 2);
@@ -812,13 +834,30 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(item->fieldName(), QString("c"));
   // Check the mapping - search by source field index
   items = map.itemsAtSourceFieldIndex(1);
-  QVERIFY(items.size() == 1);
+  QVERIFY(items.size() == 2);
   item = items.at(0);
   QVERIFY(item != 0);
   QCOMPARE(item->sourceFieldIndex(), 1);
   QCOMPARE(item->sourceFieldName(), QString("A"));
-  QCOMPARE(item->fieldIndex(), 11);
-  QCOMPARE(item->fieldName(), QString("a"));
+  // We don't know how items are ordered by field index
+  if(item->fieldIndex() == 10){
+    QCOMPARE(item->fieldName(), QString("a1"));
+    item = items.at(1);
+    QVERIFY(item != 0);
+    QCOMPARE(item->sourceFieldIndex(), 1);
+    QCOMPARE(item->sourceFieldName(), QString("A"));
+    QCOMPARE(item->fieldIndex(), 11);
+    QCOMPARE(item->fieldName(), QString("a2"));
+  }else if(item->fieldIndex() == 11){
+    QCOMPARE(item->fieldName(), QString("a2"));
+    item = items.at(1);
+    QVERIFY(item != 0);
+    QCOMPARE(item->sourceFieldIndex(), 1);
+    QCOMPARE(item->sourceFieldName(), QString("A"));
+    QCOMPARE(item->fieldIndex(), 10);
+    QCOMPARE(item->fieldName(), QString("a1"));
+
+  }
   items = map.itemsAtSourceFieldIndex(2);
   QVERIFY(items.size() == 1);
   item = items.at(0);

@@ -44,6 +44,7 @@ void mdtFieldMap::addItem(mdtFieldMapItem *item)
 
 void mdtFieldMap::clear()
 {
+  qDebug() << "clear() , deleting: " << pvItemsByFieldIndex;
   qDeleteAll(pvItemsByFieldIndex);
   pvItemsByFieldIndex.clear();
   pvItemsByFieldName.clear();
@@ -57,6 +58,7 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
   Q_ASSERT(item != 0);
 
   QList<mdtFieldMapItem*> items;
+  int i;
 
   if(item->fieldIndex() > -1){
     pvItemsByFieldIndex.insert(item->fieldIndex(), item);
@@ -70,17 +72,32 @@ bool mdtFieldMap::updateItem(mdtFieldMapItem *item)
   if(item->sourceFieldIndex() > -1){
     items = pvItemsBySourceFieldIndex.values(item->sourceFieldIndex());
     if(items.size() > 0){
-      Q_ASSERT(items.at(0) != 0);
-      pvItemsBySourceFieldIndex.remove(items.at(0)->sourceFieldIndex());
+      ///Q_ASSERT(items.at(0) != 0);
+      ///pvItemsBySourceFieldIndex.remove(items.at(0)->sourceFieldIndex());
+      qDebug() << "Edit by SRC FLD IDX, items (0): " << pvItemsBySourceFieldIndex;
+      pvItemsBySourceFieldIndex.remove(item->sourceFieldIndex());
+      for(i=0; i<items.size(); i++){
+        Q_ASSERT(items.at(i) != 0);
+        items.at(i)->setSourceFieldIndex(item->sourceFieldIndex());
+        pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), items.at(i));
+      }
+      qDebug() << "Edit by SRC FLD IDX, items (1): " << pvItemsBySourceFieldIndex;
     }
     pvItemsBySourceFieldIndex.insert(item->sourceFieldIndex(), item);
   }
-  
   if(!item->sourceFieldName().isEmpty()){
     items = pvItemsBySourceFieldName.values(item->sourceFieldName());
     if(items.size() > 0){
-      Q_ASSERT(items.at(0) != 0);
-      pvItemsBySourceFieldName.remove(items.at(0)->sourceFieldName());
+      ///Q_ASSERT(items.at(0) != 0);
+      ///pvItemsBySourceFieldName.remove(items.at(0)->sourceFieldName());
+      qDebug() << "Edit by SRC FLD NAME, items (0): " << pvItemsBySourceFieldName;
+      pvItemsBySourceFieldName.remove(item->sourceFieldName());
+      for(i=0; i<items.size(); i++){
+        Q_ASSERT(items.at(i) != 0);
+        items.at(i)->setSourceFieldName(item->sourceFieldName());
+        pvItemsBySourceFieldName.insert(item->sourceFieldName(), items.at(i));
+      }
+      qDebug() << "Edit by SRC FLD NAME, items (1): " << pvItemsBySourceFieldName;
     }
     pvItemsBySourceFieldName.insert(item->sourceFieldName(), item);
   }
