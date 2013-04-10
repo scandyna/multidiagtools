@@ -37,6 +37,9 @@ class mdtDataTableTest : public mdtTest
   // Add/edit/remove data test
   void editDataTest();
 
+  // Field map test
+  void fieldMapTest();
+
   // CSV export/import tests
   void csvExportTest();
   void csvImportTest();

@@ -47,6 +47,7 @@ class mdtCsvFile : public QFile
   /*! \brief Constructor.
    *
    * \param fileEncoding File encoding format. Note that this does not affect QFile's methods.
+   * \pre fileEncoding must be supported by the system.
    */
   mdtCsvFile(QObject *parent = 0, const QByteArray &fileEncoding = "UTF-8");
   ~mdtCsvFile();
