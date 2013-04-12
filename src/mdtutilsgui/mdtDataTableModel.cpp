@@ -126,8 +126,8 @@ bool mdtDataTableModel::addRow(const QStringList &data, bool pkNotInData, int ro
   return doSubmit();
 }
 
-bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotInData, int role)
-///bool mdtDataTableModel::addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role)
+///bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotInData, int role)
+bool mdtDataTableModel::addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role)
 {
   int dataRowIndex;
   int modelRowIndex;
@@ -157,6 +157,39 @@ bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotIn
         return false;
       }
       modelColumnIndex++;
+    }
+    modelRowIndex++;
+  }
+
+  return doSubmit();
+}
+
+bool mdtDataTableModel::addRows(const QList<QStringList> &rows, const mdtFieldMap &fieldMap, int role)
+{
+  int dataRowIndex;
+  int modelRowIndex;
+  ///int dataColumnIndex;
+  int modelColumnIndex;
+  QVariant data;
+
+  modelRowIndex = rowCount();
+  if(!insertRows(modelRowIndex, rows.size())){
+    qDebug() << "Cannot insert rows, n: " << rows.size();
+    return false;
+  }
+  for(dataRowIndex=0; dataRowIndex<rows.size(); dataRowIndex++){
+    // Add data of each column
+    for(modelColumnIndex=0; modelColumnIndex<columnCount(); modelColumnIndex++){
+      data = fieldMap.dataForFieldIndex(rows.at(dataRowIndex), modelColumnIndex);
+      ///qDebug() << "Inserting data: " << data;
+      // If data is empty, it's possible that we have auto values
+      if(data.isValid()){
+        if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data, role)){
+          qDebug() << "setData() failed for index " << index(modelRowIndex, modelColumnIndex);
+          revertRow(modelRowIndex);
+          return false;
+        }
+      }
     }
     modelRowIndex++;
   }

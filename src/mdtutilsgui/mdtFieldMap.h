@@ -127,7 +127,7 @@ class mdtFieldMap
    * \param fieldIndex In above example, it's the model column index.
    * \return Converted data, or invalid QVariant if index was not found, or on failed conversion.
    */
-  QVariant dataForFieldIndex(const QStringList &sourceData, int fieldIndex);
+  QVariant dataForFieldIndex(const QStringList &sourceData, int fieldIndex) const;
 
   /*! \brief Get data for a given field name in source data
    *
@@ -167,6 +167,8 @@ class mdtFieldMap
 
   Q_DISABLE_COPY(mdtFieldMap);
 
+  // Main container
+  QList<mdtFieldMapItem*> pvItems;
   // To have a fast access, we refer items by several QHash containers
   QHash<int, mdtFieldMapItem*> pvItemsByFieldIndex;
   QHash<QString, mdtFieldMapItem*> pvItemsByFieldName;

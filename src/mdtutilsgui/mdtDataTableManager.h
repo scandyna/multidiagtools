@@ -155,6 +155,7 @@ class mdtDataTableManager : public QObject
    * \param dir Destination of the database file. If not defined, csvFilePath's directory is used.
    * \param pkFields List of fields to considere as part of primary key.
    *                  If list is empty, one named id_PK will be created.
+   * \pre All given CSV header items to use as part of primary key must exit in CSV file (See pkFields argument).
    */
   bool importFromCsvFile(const QString &csvFilePath, create_mode_t mode, const QString &dir = QString(), const QStringList &pkFields = QStringList());
 
@@ -259,7 +260,7 @@ class mdtDataTableManager : public QObject
   QByteArray pvCsvEol;
   QByteArray pvEncoding;
   ///QStringList pvCsvHeader;        // Header as the are in CSV file
-  QMap<QString, QString> pvDbAndCsvHeader;  // Key: field name, value: CSV header name
+  ///QMap<QString, QString> pvDbAndCsvHeader;  // Key: field name, value: CSV header name
   // Some GUI specific members
   bool pvProgressDialogEnabled;   // If true, some method will show a progress dialog
 };

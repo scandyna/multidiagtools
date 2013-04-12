@@ -156,6 +156,8 @@ bool mdtDataTableManager::createDataSet(const QDir &dir, const QString &name, co
   dbName = fileInfo.absoluteFilePath() + ".db";
   tableName = mdtDataTableManager::getTableName(name);
 
+  qDebug() << "Creating dataset ...";
+  
   // We check that data set directory exists
   if(!dir.exists()){
     mdtError e(MDT_FILE_IO_ERROR, "Directory not found, path: " + dir.absolutePath(), mdtError::Error);
@@ -288,7 +290,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   QList<QStringList> rows;
   
   QSqlIndex pk;
-  bool pkNotInCsvData;
+  ///bool pkNotInCsvData;
   
   QString fieldName;
   QSqlField field;
@@ -303,7 +305,11 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   mdtFieldMapItem *mapItem;
   QList<mdtFieldMapItem*> mapItems;
   QList<QVariant> lineData;
+  ///QList<QList<QVariant> > rows;
   QSqlRecord record;
+  
+  int csvFieldIndex;
+  int modelFieldIndex;
   
   // Set DB directory
   if(dir.isEmpty()){
@@ -335,42 +341,63 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     return false;
   }
   
-  pvDbAndCsvHeader.clear();
+  ///pvDbAndCsvHeader.clear();
+  // Start creating fields
+  modelFieldIndex = 0;
   // Create primary key
   if(pkFields.isEmpty()){
-    pkNotInCsvData = true;
+    // Primary key is not in CSV file, generate a field and add to PK constraint list
+    qDebug() << "No PK given, generating id_PK ...";
+    // Add primary key to field map
+    mapItem = new mdtFieldMapItem;
+    mapItem->setFieldIndex(0);
+    mapItem->setFieldName("id_PK");
+    mapItem->setFieldDisplayText("id_PK");
+    mapItem->setDataType(QVariant::Int);
+    pvFieldMap.addItem(mapItem);
     pk.append(QSqlField("id_PK", QVariant::Int));
-    pvDbAndCsvHeader.insert("id_PK", "");
+    // Create primary key field
+    field.setName("id_PK");
+    field.setType(QVariant::Int);
+    field.setAutoValue(true);
+    fields.append(field);
+    modelFieldIndex++;
   }else{
-    pkNotInCsvData = false;
+    // Primary key is one of the CSV header
     for(i=0; i<pkFields.size(); i++){
+      Q_ASSERT(header.contains(pkFields.at(i)));
       pk.append(getFieldName(pkFields.at(i)));
     }
   }
-
+  qDebug() << "PK: " << pk;
   // Create fields regarding field map
-  for(i=0; i<header.size(); i++){
-    mapItems = pvFieldMap.itemsAtSourceFieldName(header.at(i));
-    if(mapItems.isEmpty()){
-      // No mapping for this header item, generate one
-      addFieldMapping(header.at(i), getFieldName(header.at(i)), header.at(i), QVariant::String);
-      mapItems = pvFieldMap.itemsAtSourceFieldName(header.at(i));
+  for(csvFieldIndex=0; csvFieldIndex<header.size(); csvFieldIndex++){
+    if(!header.at(csvFieldIndex).isEmpty()){
+      mapItems = pvFieldMap.itemsAtSourceFieldName(header.at(csvFieldIndex));
       if(mapItems.isEmpty()){
-        csvFile.close();
-        pvDb.close();
-        return false;
+        // No mapping for this header item, generate one
+        mapItem = new mdtFieldMapItem;
+        mapItem->setFieldName(getFieldName(header.at(csvFieldIndex)));
+        mapItem->setFieldDisplayText(header.at(csvFieldIndex));
+        mapItem->setSourceFieldName(header.at(csvFieldIndex));
+        mapItem->setDataType(QVariant::String);
+        pvFieldMap.addItem(mapItem);
+        mapItems.append(mapItem);
       }
-    }
-    // Create fields
-    for(j=0; j<mapItems.size(); j++){
-      mapItem = mapItems.at(j);
-      Q_ASSERT(mapItem != 0);
-      mapItem->setSourceFieldIndex(i);
-      pvFieldMap.updateItem(mapItem);
-      qDebug() << "Creating field " << mapItem->fieldName() << " ...";
-      field.setName(mapItem->fieldName());
-      field.setType(mapItem->dataType());
-      fields.append(field);
+      // Create fields
+      for(i=0; i<mapItems.size(); i++){
+        // Update field map indexes
+        mapItem = mapItems.at(i);
+        Q_ASSERT(mapItem != 0);
+        mapItem->setSourceFieldIndex(csvFieldIndex);
+        mapItem->setFieldIndex(modelFieldIndex);
+        pvFieldMap.updateItem(mapItem);
+        field.setName(mapItem->fieldName());
+        field.setType(mapItem->dataType());
+        fields.append(field);
+        qDebug() << "Creating field " << field << " ...";
+        modelFieldIndex++;
+      }
     }
   }
   
@@ -392,7 +419,8 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
   // Create data set
   dataSetName = fileInfo.baseName();
   dataSetTableName = getTableName(dataSetName);
-  if(!createDataSet(dbDir, dataSetName, pk, pkNotInCsvData, fields, mode)){
+  ///if(!createDataSet(dbDir, dataSetName, pk, pkNotInCsvData, fields, mode)){
+  if(!createDataSet(dbDir, dataSetName, pk, false, fields, mode)){
     csvFile.close();
     return false;
   }
@@ -407,15 +435,22 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     return false;
   }
   // Get index of each created field and add them to field map
+  /**
   record = model()->record();
   for(i=0; i<record.count(); i++){
     mapItem = pvFieldMap.itemAtFieldName(record.field(i).name());
-    Q_ASSERT(mapItem != 0);
-    mapItem->setFieldIndex(i);
-    pvFieldMap.updateItem(mapItem);
     qDebug() << "Field: " << record.field(i);
-    qDebug() << "Map , index: " << mapItem->fieldIndex() << " , field: " << mapItem->fieldName();
+    if(mapItem != 0){
+      mapItem->setFieldIndex(i);
+      if((pkNotInCsvData)&&(pk.contains(mapItem->fieldName()))){
+        mapItem->setSourceFieldIndex(-1);
+      }
+      pvFieldMap.updateItem(mapItem);
+      qDebug() << "Map , index: " << mapItem->fieldIndex() << " , field: " << mapItem->fieldName() << " , SRC field index: " << mapItem->sourceFieldIndex();
+    }
+    qDebug() << "Field: " << record.field(i);
   }
+  */
   ///qDebug() << "Header: " << header;
   ///qDebug() << "Fields: " << fields;
   ///qDebug() << "/HEADER\nData:" << csvFile.readLine(pvCsvSeparator, pvCsvDataProtection, pvCsvComment, pvCsvEscapeChar, pvCsvEol).size();
@@ -447,14 +482,17 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
       line.removeLast();
     }
     // Map data and add to rows
+    /**
     qDebug() << "Line: " << line;
     lineData.clear();
     for(j=0; j<line.size(); j++){
       lineData.append(pvFieldMap.dataForFieldIndex(line, j));
     }
     qDebug() << "Line data: " << lineData;
+    */
     
     rows.append(line);
+    ///rows.append(lineData);
     if(i>50){
       // Begin transaction (without, insertions are very slow)
       if(!pvDb.transaction()){
@@ -467,7 +505,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
         return false;
       }
       // Commit some lines
-      if(!model()->addRows(rows, pkNotInCsvData, Qt::EditRole)){
+      ///if(!model()->addRows(rows, pkNotInCsvData, Qt::EditRole)){
+      ///if(!model()->addRows(rows, false, Qt::EditRole)){
+      if(!model()->addRows(rows, pvFieldMap, Qt::EditRole)){
         mdtError e(MDT_DATABASE_ERROR, "Unable to add some rows in model, data set: " + dataSetName, mdtError::Error);
         e.setSystemError(model()->lastError().number(), model()->lastError().text());
         MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
@@ -509,7 +549,9 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
     pvDb.close();
     return false;
   }
-  if(!model()->addRows(rows, pkNotInCsvData, Qt::EditRole)){
+  ///if(!model()->addRows(rows, pkNotInCsvData, Qt::EditRole)){
+  ///if(!model()->addRows(rows, false, Qt::EditRole)){
+  if(!model()->addRows(rows, pvFieldMap, Qt::EditRole)){
     mdtError e(MDT_DATABASE_ERROR, "Unable to add some rows in model, data set: " + dataSetName, mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDataTableManager");
     e.commit();
@@ -585,7 +627,7 @@ QStringList mdtDataTableManager::csvHeader() const
   }
   record = pvModel->record();
   for(i=0; i<record.count(); i++){
-    value = pvDbAndCsvHeader.value(record.field(i).name());
+    ///value = pvDbAndCsvHeader.value(record.field(i).name());
     if(!value.isEmpty()){
       header << value;
     }
@@ -598,6 +640,7 @@ bool mdtDataTableManager::setCsvHeaderToModel()
 {
   int i;
   QString value;
+  mdtFieldMapItem *mapItem;
 
   if(pvModel == 0){
     mdtError e(MDT_GUI_ERROR, "Model is null", mdtError::Error);
@@ -606,7 +649,11 @@ bool mdtDataTableManager::setCsvHeaderToModel()
     return false;
   }
   for(i=0; i<pvModel->columnCount(); i++){
-    value = pvDbAndCsvHeader.value(pvModel->headerData(i, Qt::Horizontal).toString());
+    mapItem = pvFieldMap.itemAtFieldIndex(i);
+    if(mapItem != 0){
+      pvModel->setHeaderData(i, Qt::Horizontal, mapItem->fieldDisplayText());
+    }
+    ///value = pvDbAndCsvHeader.value(pvModel->headerData(i, Qt::Horizontal).toString());
     if(!value.isEmpty()){
       pvModel->setHeaderData(i, Qt::Horizontal, value);
     }

@@ -22,6 +22,7 @@
 #define MDT_DATA_TABLE_MODEL_H
 
 #include "mdtCsvFile.h"
+#include "mdtFieldMap.h"
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 #include <QObject>
@@ -108,8 +109,22 @@ class mdtDataTableModel : public QSqlTableModel
    * \param role See QSqlTableModel.
    * \return True on success. False if a data conversion failed, or other error. See QSqlTableModel for known errors.
    */
-  bool addRows(const QList<QStringList> &dataList, bool pkNotInData, int role = Qt::EditRole);
-  ///bool addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role = Qt::EditRole);
+  ///bool addRows(const QList<QStringList> &dataList, bool pkNotInData, int role = Qt::EditRole);
+  bool addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role = Qt::EditRole);
+
+  /*! \brief Add some rows of data in model
+   *
+   * This is a helper method wich uses QSqlTableModel's insert/setData methods.
+   * Notes:
+   *  - submitAll() is done internally when all rows are stored in model.
+   *  - This method will fail if edit strategy is not OnManualSubmit (See QSqlTableModel documentations for details).
+   *
+   * \param rows A list of rows containing data items (columns). Data will be converted regarding fieldMap.
+   * \param fieldMap Correspondence between rows field indexes and model indexes. See mdtFieldMap for details.
+   * \param role See QSqlTableModel.
+   * \return True on success, false else. See QSqlTableModel for known errors.
+   */
+  bool addRows(const QList<QStringList> &rows, const mdtFieldMap &fieldMap, int role = Qt::EditRole);
 
   /*! \brief Set data for a given index in model
    *

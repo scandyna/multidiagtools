@@ -226,8 +226,12 @@ void mdtDataTableTest::editDataTest()
   QString dataSetTableName;
   QMap<QString,QVariant> rowData;
   QList<QVariant> rowData2;
+  mdtFieldMap fieldMap;
+  mdtFieldMapItem *mapItem;
   QStringList rowData3;
+  ///QList<QVariant> rowData3;
   QList<QStringList> rowsData4;
+  ///QList<QList<QVariant> > rowsData4;
 
   // Build fields
   pk.append(QSqlField("id_PK", QVariant::Int));
@@ -530,7 +534,29 @@ void mdtDataTableTest::editDataTest()
   QCOMPARE(model->data(model->index(3, 2)), QVariant(92.1));
   QCOMPARE(model->data(model->index(4, 1)), QVariant("Temp. M2"));
   QCOMPARE(model->data(model->index(4, 2)), QVariant(125.4));
-  // Add a rows with valid data - method A4
+  // Add a rows with valid data - method A4 - PK is not given in rows
+  fieldMap.clear();
+  mapItem = new mdtFieldMapItem;
+  mapItem->setFieldIndex(0);
+  mapItem->setFieldName("id_PK");
+  mapItem->setSourceFieldIndex(-1);
+  mapItem->setSourceFieldName("id_PK");
+  mapItem->setDataType(QVariant::Int);
+  fieldMap.addItem(mapItem);
+  mapItem = new mdtFieldMapItem;
+  mapItem->setFieldIndex(1);
+  mapItem->setFieldName("signal");
+  mapItem->setSourceFieldIndex(0);
+  mapItem->setSourceFieldName("signal");
+  mapItem->setDataType(QVariant::String);
+  fieldMap.addItem(mapItem);
+  mapItem = new mdtFieldMapItem;
+  mapItem->setFieldIndex(2);
+  mapItem->setFieldName("value");
+  mapItem->setSourceFieldIndex(1);
+  mapItem->setSourceFieldName("value");
+  mapItem->setDataType(QVariant::Double);
+  fieldMap.addItem(mapItem);
   rowsData4.clear();
   rowData3.clear();
   rowData3 << "Temp. M3" << "123.2";
@@ -538,7 +564,7 @@ void mdtDataTableTest::editDataTest()
   rowData3.clear();
   rowData3 << "Temp. M4" << "89.7";
   rowsData4 << rowData3;
-  QVERIFY(model->addRows(rowsData4, true));
+  QVERIFY(model->addRows(rowsData4, fieldMap));
   QCOMPARE(model->rowCount(), 7);
   QCOMPARE(model->data(model->index(0, 1)), QVariant("Cmp. temp"));
   QCOMPARE(model->data(model->index(0, 2)), QVariant(25.4));
@@ -955,13 +981,21 @@ void mdtDataTableTest::csvImportTest()
 
   qDebug() << "CSV headers: " << manager.csvHeader();
 
-  return;
+  ///return;
   
   /*
    * Playing ...
    */
+  manager.clearFieldMap();
   manager.enableProgressDialog(true);
   manager.setCsvFormat(";", "\"", "", '"', "\r\n", "ISO-8859-15");
+  ///void addFieldMapping(const QString &csvHeaderItem, const QString &fieldName, const QString &displayText, QVariant::Type dataType, int csvDataItemStartOffset = -1, int csvDataItemEndOffset = -1);
+  manager.addFieldMapping("Logici 1", "digital1", "Logique 1", QVariant::String);
+  manager.addFieldMapping("Logici 1", "fakeDJstate", "Fake DJ state", QVariant::String, 0, 0);
+  manager.addFieldMapping("Logici 1", "fakeIRstate", "Fake IR state", QVariant::String, 1, 1);
+  manager.addFieldMapping("Logici 1", "fakePanto1state", "Fake panto 1 state", QVariant::String, 2, 2);
+  manager.addFieldMapping("Logici 1", "fakePanto2state", "Fake panto 2 state", QVariant::String, 3, 3);
+  
   QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtDataTableManager::AskUserIfExists));
   ///manager.setCsvFormat(";", "\"", "", '"', "\r\n", "UTF-8");
   ///QVERIFY(manager.importFromCsvFile("/tmp/example_unicontrol.csv", mdtDataTableManager::AskUserIfExists));
