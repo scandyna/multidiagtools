@@ -93,9 +93,6 @@ Collaboration diagram for mdtUsbtmcPortManager:</div>
 Public Slots</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea">fromThreadNewFrameReaden</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the thread whenn a frame was readen.  <a href="#aca42b343ae1f6a324e6e45968f03bbea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2e58a1ba341ff9f984aaef16fd665db"></a><!-- doxytag: member="mdtUsbtmcPortManager::onThreadsErrorOccured" ref="aa2e58a1ba341ff9f984aaef16fd665db" args="(int error)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#aa2e58a1ba341ff9f984aaef16fd665db">onThreadsErrorOccured</a> (int error)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Manage errors comming from port threads. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7">mdtUsbtmcPortManager</a> (QObject *parent=0)</td></tr>
@@ -125,13 +122,12 @@ Public Member Functions</h2></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>USBTMC port manager. </p>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>abortBulkIn() does not work properly </dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>Write a USBTMC port thread </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>abortBulkIn() does not work properly </dd></dl>
 <p>This is the easiest way to use the USBTMC port API.</p>
 <p>All needed object are created by constructor. To alter configuration, use <a class="el" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config()</a>. To access the usb port object, use port().</p>
 <p>Use <a class="el" href="classmdt_port_manager.html#af1fb103ffafc227337a59c7e82f44fbc" title="Start threads.">start()</a> to begin read/write and stop to end. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8h_source.html#l00045">45</a> of file <a class="el" href="mdt_usbtmc_port_manager_8h_source.html">mdtUsbtmcPortManager.h</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8h_source.html#l00044">44</a> of file <a class="el" href="mdt_usbtmc_port_manager_8h_source.html">mdtUsbtmcPortManager.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a99a24e4360e70ffc63677dbe888513f7"></a><!-- doxytag: member="mdtUsbtmcPortManager::mdtUsbtmcPortManager" ref="a99a24e4360e70ffc63677dbe888513f7" args="(QObject *parent=0)" -->
 <div class="memitem">
@@ -151,7 +147,7 @@ Public Member Functions</h2></td></tr>
 <p>Construct a USBTMC port manager. </p>
 <p>Create a thread and setup port. </p>
 
-<p><p>connect(portThread, SIGNAL(messageInReaden()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">fromThreadMessageInReaden()</a>)); connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a8f53dc5445b7f8f4a077f3cc25880b5d" title="Called by thread when the read until a short packet process is finished.">fromThreadReadUntilShortPacketReceivedFinished()</a>)); </p>
+<p><p>connect(portThread, SIGNAL(messageInReaden()), this, SLOT(<a class="el" href="classmdt_usb_port_manager.html#a9b7154590a4eb267aff4e11ba53dd7aa" title="Called from USB thread when a message IN was received ( on additionnal interrupt IN endpoint)...">fromThreadMessageInReaden()</a>)); </p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
@@ -175,7 +171,7 @@ Public Member Functions</h2></td></tr>
 <p>Destructor. </p>
 <p>Stop the manager (if running), and close the port (if open). All internal objects (port, config and threads) are deleted here. </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -198,12 +194,12 @@ Public Member Functions</h2></td></tr>
 <p>Abort bulk OUT. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 on success. </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>port must be set before call of this method</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000047">Todo:</a></b></dt><dd>Finish and test </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000041">Todo:</a></b></dt><dd>Finish and test </dd></dl>
 
-<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000048">Todo:</a></b></dt><dd>Implement clear halt </dd></dl>
+<p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000042">Todo:</a></b></dt><dd>Implement clear halt </dd></dl>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00267">267</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00268">268</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,11 +218,11 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Called by the thread whenn a frame was readen. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000049">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000043">Todo:</a></b></dt><dd>On complete frame, check bTag/bTagInverse, and INITIATE_CLEAR on error. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a4fcc8f0699b655156e661bb3de6056cc">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00429">429</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00430">430</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,7 +246,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmdt_usb_port_manager.html#a3a2370c3a2d0353a880bf9b777728c3b">mdtUsbPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00065">65</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -273,7 +269,7 @@ Public Member Functions</h2></td></tr>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a" title="Abort bulk OUT.">abortBulkOut()</a> </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00397">397</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00398">398</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -314,7 +310,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00092">92</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00093">93</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -337,7 +333,7 @@ Public Member Functions</h2></td></tr>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a" title="Abort bulk OUT.">abortBulkOut()</a> </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00366">366</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00367">367</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -389,7 +385,7 @@ Public Member Functions</h2></td></tr>
 <p>qDebug() &lt;&lt; "mdtUsbtmcPortManager::sendQuery() , bTag: " &lt;&lt; bTag &lt;&lt; " , query: " &lt;&lt; query; </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00102">102</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00103">103</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -421,7 +417,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 transaction must be a valid pointer </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00181">181</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00182">182</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -448,10 +444,10 @@ transaction must be a valid pointer </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000051">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000044">Todo:</a></b></dt><dd>SigName is emited. In blocking mode, data must (additionally) be enqueued until there are readen. So, for blocking mode ("script"), set this parameter true. </dd></dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag ID on success or value &lt; 0 if write queue is full. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00223">223</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -471,12 +467,12 @@ transaction must be a valid pointer </dd></dl>
 
 <p>Send a READ_STATUS_BYTE request thru the control endpoint. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success or WriteQueueEmpty on error.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000046">Todo:</a></b></dt><dd>finish ! </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000040">Todo:</a></b></dt><dd>finish ! </dd></dl>
 
 <p><p>m.sendControlRequest(f); End Sandbox ! </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00234">234</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00235">235</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -508,7 +504,7 @@ transaction must be a valid pointer </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b">mdtPortManager</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00144">144</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html#l00145">145</a> of file <a class="el" href="mdt_usbtmc_port_manager_8cpp_source.html">mdtUsbtmcPortManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -531,7 +527,7 @@ transaction must be a valid pointer </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

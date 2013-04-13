@@ -91,52 +91,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QStringList&gt;</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QList&gt;</span>
 <a name="l00031"></a>00031 
-<a name="l00034"></a>00034 
-<a name="l00045"></a><a class="code" href="classmdt_usbtmc_port_manager.html">00045</a> <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> : <span class="keyword">public</span> <a class="code" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API.">mdtUsbPortManager</a>
-<a name="l00046"></a>00046 {
-<a name="l00047"></a>00047  Q_OBJECT
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049  <span class="keyword">public</span>:
-<a name="l00050"></a>00050 
-<a name="l00055"></a>00055   <a class="code" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7" title="Construct a USBTMC port manager.">mdtUsbtmcPortManager</a>(QObject *parent = 0);
-<a name="l00056"></a>00056 
-<a name="l00062"></a>00062   <a class="code" href="classmdt_usbtmc_port_manager.html#aad6b2eef9b5cfb5c324affb6962a463b" title="Destructor.">~mdtUsbtmcPortManager</a>();
-<a name="l00063"></a>00063 
-<a name="l00071"></a>00071   QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">scan</a>();
-<a name="l00072"></a>00072 
-<a name="l00087"></a>00087   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#aaab645cfcafbac7a83a69f2084900246" title="Send a command to device.">sendCommand</a>(<span class="keyword">const</span> QByteArray &amp;command, <span class="keywordtype">int</span> timeout = 0);
-<a name="l00088"></a>00088 
-<a name="l00105"></a>00105   QByteArray <a class="code" href="classmdt_usbtmc_port_manager.html#a858590909ce63319a3390140c4d0a6ca" title="Send a query to device.">sendQuery</a>(<span class="keyword">const</span> QByteArray &amp;query, <span class="keywordtype">int</span> writeTimeout = 0, <span class="keywordtype">int</span> readTimeout = 0);
-<a name="l00106"></a>00106 
-<a name="l00117"></a>00117   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(QByteArray data);
-<a name="l00118"></a>00118 
-<a name="l00130"></a>00130   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
-<a name="l00131"></a>00131 
-<a name="l00143"></a>00143   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest</a>(<span class="keywordtype">bool</span> enqueueResponse);
-<a name="l00144"></a>00144 
-<a name="l00149"></a>00149   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a7bcc280bd4a26ed523832550b1e61553" title="Send a READ_STATUS_BYTE request thru the control endpoint.">sendReadStatusByteRequest</a>();
-<a name="l00150"></a>00150 
-<a name="l00156"></a>00156   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a" title="Abort bulk OUT.">abortBulkOut</a>(quint8 bTag);
-<a name="l00157"></a>00157 
-<a name="l00163"></a>00163   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a987b71d620dac06be85567a92f272f6b" title="Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint.">sendInitiateAbortBulkOutRequest</a>(quint8 bTag);
-<a name="l00164"></a>00164 
-<a name="l00170"></a>00170   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a724a999c11ab0458f53427fbb6862d62" title="Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint.">sendCheckAbortBulkOutStatusRequest</a>(quint8 bTag);
-<a name="l00171"></a>00171 
-<a name="l00172"></a>00172  <span class="keyword">public</span> slots:
-<a name="l00173"></a>00173 
-<a name="l00176"></a>00176   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea" title="Called by the thread whenn a frame was readen.">fromThreadNewFrameReaden</a>();
-<a name="l00177"></a>00177 
-<a name="l00180"></a>00180   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port_manager.html#aa2e58a1ba341ff9f984aaef16fd665db" title="Manage errors comming from port threads.">onThreadsErrorOccured</a>(<span class="keywordtype">int</span> error);
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182  <span class="keyword">private</span>:
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184   quint8 pvCurrentWritebTag;  <span class="comment">// USBTMC&#39;s frame bTag</span>
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186   <span class="comment">// Diseable copy</span>
-<a name="l00187"></a>00187   Q_DISABLE_COPY(<a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>);
-<a name="l00188"></a>00188 };
-<a name="l00189"></a>00189 
-<a name="l00190"></a>00190 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_MANAGER_H</span>
+<a name="l00033"></a>00033 
+<a name="l00044"></a><a class="code" href="classmdt_usbtmc_port_manager.html">00044</a> <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> : <span class="keyword">public</span> <a class="code" href="classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API.">mdtUsbPortManager</a>
+<a name="l00045"></a>00045 {
+<a name="l00046"></a>00046  Q_OBJECT
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048  <span class="keyword">public</span>:
+<a name="l00049"></a>00049 
+<a name="l00054"></a>00054   <a class="code" href="classmdt_usbtmc_port_manager.html#a99a24e4360e70ffc63677dbe888513f7" title="Construct a USBTMC port manager.">mdtUsbtmcPortManager</a>(QObject *parent = 0);
+<a name="l00055"></a>00055 
+<a name="l00061"></a>00061   <a class="code" href="classmdt_usbtmc_port_manager.html#aad6b2eef9b5cfb5c324affb6962a463b" title="Destructor.">~mdtUsbtmcPortManager</a>();
+<a name="l00062"></a>00062 
+<a name="l00070"></a>00070   QList&lt;mdtPortInfo*&gt; <a class="code" href="classmdt_usbtmc_port_manager.html#a992d1227810186d3c7dc166452e2e3b6" title="Scan for available ports with a USBTMC compatible device attached.">scan</a>();
+<a name="l00071"></a>00071 
+<a name="l00086"></a>00086   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#aaab645cfcafbac7a83a69f2084900246" title="Send a command to device.">sendCommand</a>(<span class="keyword">const</span> QByteArray &amp;command, <span class="keywordtype">int</span> timeout = 0);
+<a name="l00087"></a>00087 
+<a name="l00104"></a>00104   QByteArray <a class="code" href="classmdt_usbtmc_port_manager.html#a858590909ce63319a3390140c4d0a6ca" title="Send a query to device.">sendQuery</a>(<span class="keyword">const</span> QByteArray &amp;query, <span class="keywordtype">int</span> writeTimeout = 0, <span class="keywordtype">int</span> readTimeout = 0);
+<a name="l00105"></a>00105 
+<a name="l00116"></a>00116   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">writeData</a>(QByteArray data);
+<a name="l00117"></a>00117 
+<a name="l00129"></a>00129   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction);
+<a name="l00130"></a>00130 
+<a name="l00142"></a>00142   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a2920bdd6b189f198f132de9e5555a78b" title="Send a read request to device.">sendReadRequest</a>(<span class="keywordtype">bool</span> enqueueResponse);
+<a name="l00143"></a>00143 
+<a name="l00148"></a>00148   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a7bcc280bd4a26ed523832550b1e61553" title="Send a READ_STATUS_BYTE request thru the control endpoint.">sendReadStatusByteRequest</a>();
+<a name="l00149"></a>00149 
+<a name="l00155"></a>00155   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#af412ba1b1e7e56ebecd2e59cb6bf607a" title="Abort bulk OUT.">abortBulkOut</a>(quint8 bTag);
+<a name="l00156"></a>00156 
+<a name="l00162"></a>00162   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a987b71d620dac06be85567a92f272f6b" title="Send a INITIATE_ABORT_BULK_OUT request thru the control endpoint.">sendInitiateAbortBulkOutRequest</a>(quint8 bTag);
+<a name="l00163"></a>00163 
+<a name="l00169"></a>00169   <span class="keywordtype">int</span> <a class="code" href="classmdt_usbtmc_port_manager.html#a724a999c11ab0458f53427fbb6862d62" title="Send a CHECK_ABORT_BULK_OUT_STATUS request thru the control endpoint.">sendCheckAbortBulkOutStatusRequest</a>(quint8 bTag);
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171  <span class="keyword">public</span> slots:
+<a name="l00172"></a>00172 
+<a name="l00175"></a>00175   <span class="keywordtype">void</span> <a class="code" href="classmdt_usbtmc_port_manager.html#aca42b343ae1f6a324e6e45968f03bbea" title="Called by the thread whenn a frame was readen.">fromThreadNewFrameReaden</a>();
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177  <span class="keyword">private</span> slots:
+<a name="l00178"></a>00178 
+<a name="l00181"></a>00181   <span class="keywordtype">void</span> onThreadsErrorOccured(<span class="keywordtype">int</span> error);
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183  <span class="keyword">private</span>:
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   quint8 pvCurrentWritebTag;  <span class="comment">// USBTMC&#39;s frame bTag</span>
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187   <span class="comment">// Diseable copy</span>
+<a name="l00188"></a>00188   Q_DISABLE_COPY(<a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>);
+<a name="l00189"></a>00189 };
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_MANAGER_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -153,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

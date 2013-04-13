@@ -69,7 +69,9 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ab31cbe1a85aa830cd368654d1f806326">errorOccured</a>(int error)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc">getNewFrameRead</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105">getNewFrameWrite</a>()</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ab87390447ace7e893661ae492b9d5994">handleCommonErrors</a>(mdtAbstractPort::error_t portError)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a584ee47549b0cb3a9c5de0a1ea496694">handleCommonReadErrors</a>(mdtAbstractPort::error_t portError, mdtFrame **frame)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a1e775d0d943ef7502ae991918155a756">handleCommonReadWriteErrors</a>(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a3ce5b18606f026a8df33ae97a42399b1">handleCommonWriteErrors</a>(mdtAbstractPort::error_t portError, mdtFrame **frame)</td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#a55d7ef615447823bf9878492a2c88fd4">isFinished</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_tcp_socket_thread.html#a3224f12c8ff8d695975030f3f6215010">isReader</a>() const </td><td><a class="el" href="classmdt_tcp_socket_thread.html">mdtTcpSocketThread</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_port_thread.html#ae1becf17263dd9fbf5dfcc6c51eddd72">isRunning</a>() const </td><td><a class="el" href="classmdt_port_thread.html">mdtPortThread</a></td><td></td></tr>
@@ -108,7 +110,7 @@ This is the complete list of members for <a class="el" href="classmdt_tcp_socket
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:59 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

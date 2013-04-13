@@ -71,11 +71,13 @@ void \hyperlink{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{removeCu
 \item 
 static \hyperlink{classmdt_application}{mdtApplication} $\ast$ \hyperlink{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{instance} ()
 \begin{DoxyCompactList}\small\item\em Get the instance of \hyperlink{classmdt_application}{mdtApplication}. \end{DoxyCompactList}\item 
-\hypertarget{classmdt_application_af17bb16e420c91af3d0ad1970714388c}{
-static QString \hyperlink{classmdt_application_af17bb16e420c91af3d0ad1970714388c}{systemDataDirPath} ()}
-\label{classmdt_application_af17bb16e420c91af3d0ad1970714388c}
-
+static QString \hyperlink{classmdt_application_af17bb16e420c91af3d0ad1970714388c}{systemDataDirPath} ()
 \begin{DoxyCompactList}\small\item\em Get data dir path. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_application_a936beeeb6d56d5d669a478f248d80c7d}{
+static const QDir \hyperlink{classmdt_application_a936beeeb6d56d5d669a478f248d80c7d}{cacheDir} ()}
+\label{classmdt_application_a936beeeb6d56d5d669a478f248d80c7d}
+
+\begin{DoxyCompactList}\small\item\em Get cache directory. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_application_ad5318086812dad2c2870e294703caa51}{
 static QString \hyperlink{classmdt_application_ad5318086812dad2c2870e294703caa51}{mdtLibVersion} ()}
 \label{classmdt_application_ad5318086812dad2c2870e294703caa51}
@@ -118,7 +120,7 @@ The \hyperlink{classmdt_error_out}{mdtErrorOut} system must be initialized befor
 \end{DoxyPrecond}
 
 
-Definition at line 138 of file mdtApplication.cpp.
+Definition at line 149 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_a9ce5b5c3ca36a76ad0acc3913ce8f89a}{
 \index{mdtApplication@{mdtApplication}!availableTranslations@{availableTranslations}}
@@ -135,7 +137,27 @@ Get the list of available translations.
 
 The key contains the language suffix, like en , that can be reused with \hyperlink{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{changeLanguage()}. The list is built during \hyperlink{classmdt_application_a3b8798416e730f85e419566442adb77b}{init()}. 
 
-Definition at line 151 of file mdtApplication.cpp.
+Definition at line 162 of file mdtApplication.cpp.
+
+\hypertarget{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}{
+\index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
+\index{changeLanguage@{changeLanguage}!mdtApplication@{mdtApplication}}
+\subsubsection[{changeLanguage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::changeLanguage (
+\begin{DoxyParamCaption}
+\item[{QAction $\ast$}]{action}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
+\label{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}
+
+
+Change the application language (overload) 
+
+To make this slot work, the QAction must contain the language key (like en, fr, de, ...) in the data section. \begin{DoxyPrecond}{Precondition}
+action must be a valid pointer. 
+\end{DoxyPrecond}
+
+
+Definition at line 210 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_a60cf66d3ebe17d1e60a7dcc26410494d}{
 \index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
@@ -157,27 +179,7 @@ The error system must be initalized before using this method (this is done by \h
 \end{DoxyPrecond}
 
 
-Definition at line 180 of file mdtApplication.cpp.
-
-\hypertarget{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}{
-\index{mdtApplication@{mdtApplication}!changeLanguage@{changeLanguage}}
-\index{changeLanguage@{changeLanguage}!mdtApplication@{mdtApplication}}
-\subsubsection[{changeLanguage}]{\setlength{\rightskip}{0pt plus 5cm}void mdtApplication::changeLanguage (
-\begin{DoxyParamCaption}
-\item[{QAction $\ast$}]{action}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}slot\mbox{]}}}}
-\label{classmdt_application_a7eec3fbe97863cb4a938fa58a5135b1b}
-
-
-Change the application language (overload) 
-
-To make this slot work, the QAction must contain the language key (like en, fr, de, ...) in the data section. \begin{DoxyPrecond}{Precondition}
-action must be a valid pointer. 
-\end{DoxyPrecond}
-
-
-Definition at line 199 of file mdtApplication.cpp.
+Definition at line 191 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_a531e64266be58b3a10608b21ae6afedb}{
 \index{mdtApplication@{mdtApplication}!currentTranslationKey@{currentTranslationKey}}
@@ -194,7 +196,7 @@ Get the current translation key.
 
 The translation key could be en, de, fr, ... 
 
-Definition at line 156 of file mdtApplication.cpp.
+Definition at line 167 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_a3b8798416e730f85e419566442adb77b}{
 \index{mdtApplication@{mdtApplication}!init@{init}}
@@ -212,9 +214,10 @@ Some initializations.
 
 Several things are done here:
 \begin{DoxyItemize}
-\item Search the system data directory
-\item Init the error system
 \item Check if another instance is running (if allowMultipleInstances Instance is false)
+\item Search the system data directory
+\item Init the home directories structure
+\item Init the error system
 \item Load translation files and set language according system settings. 
 \begin{DoxyParams}{Parameters}
 {\em allowMultipleInstances} & If true, multiple instance of application is allowed (but NOT multiple instance of \hyperlink{classmdt_application}{mdtApplication} in program !) \\
@@ -229,6 +232,16 @@ Several things are done here:
 \end{DoxySeeAlso}
 
 \end{DoxyItemize}
+
+qDebug() $<$$<$ \char`\"{}mdtApplication , data dir: \char`\"{} $<$$<$ pvSystemDataDirPath;
+
+qDebug() $<$$<$ \char`\"{}mdtApplication , log dir: \char`\"{} $<$$<$ pvLogDirPath;
+
+if(!mdtErrorOut::init(pvLogDirPath + \char`\"{}/\char`\"{} + logFileName))\{
+
+addTranslationsDirectory(pvSystemDataDirPath + \char`\"{}/i18n\char`\"{}); 
+
+
 
 Definition at line 44 of file mdtApplication.cpp.
 
@@ -250,7 +263,7 @@ translator must point to a valid object.
 \end{DoxyPrecond}
 
 
-Definition at line 161 of file mdtApplication.cpp.
+Definition at line 172 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{
 \index{mdtApplication@{mdtApplication}!instance@{instance}}
@@ -267,7 +280,7 @@ Get the instance of \hyperlink{classmdt_application}{mdtApplication}.
 
 This function, and returned pointer, should be used with care in multi-\/thread applicatopn ! 
 
-Definition at line 121 of file mdtApplication.cpp.
+Definition at line 126 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_ae83acc410a132b9972d6e961e0c79b0d}{
 \index{mdtApplication@{mdtApplication}!removeCurrentTranslators@{removeCurrentTranslators}}
@@ -287,7 +300,7 @@ This will romove all translators installed with \hyperlink{classmdt_application_
 \end{DoxySeeAlso}
 
 
-Definition at line 169 of file mdtApplication.cpp.
+Definition at line 180 of file mdtApplication.cpp.
 
 \hypertarget{classmdt_application_a79dbb5f3d889d7cd9b8909a4eb8bcce1}{
 \index{mdtApplication@{mdtApplication}!setApplicationVersion@{setApplicationVersion}}
@@ -306,7 +319,28 @@ Build the application version with numeric values.
 
 Create a string with versionMajor.versionMinor.versionMicro , and calls QApplication::setApplicationVersion(). 
 
-Definition at line 107 of file mdtApplication.cpp.
+Definition at line 112 of file mdtApplication.cpp.
+
+\hypertarget{classmdt_application_af17bb16e420c91af3d0ad1970714388c}{
+\index{mdtApplication@{mdtApplication}!systemDataDirPath@{systemDataDirPath}}
+\index{systemDataDirPath@{systemDataDirPath}!mdtApplication@{mdtApplication}}
+\subsubsection[{systemDataDirPath}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtApplication::systemDataDirPath (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classmdt_application_af17bb16e420c91af3d0ad1970714388c}
+
+
+Get data dir path. 
+
+
+
+return \hyperlink{classmdt_application_a365ac79934070b0e5a42d2c7cd9b076d}{instance()}-\/$>$pvSystemDataDirPath; 
+
+
+
+Definition at line 133 of file mdtApplication.cpp.
 
 
 

@@ -1,0 +1,454 @@
+\hypertarget{classmdt_field_map}{
+\section{mdtFieldMap Class Reference}
+\label{classmdt_field_map}\index{mdtFieldMap@{mdtFieldMap}}
+}
+
+
+Map fields between a source and a destination data set.  
+
+
+
+
+{\ttfamily \#include $<$mdtFieldMap.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_field_map_a7e255a2c818c495fe0b8c09ee1317bcd}{
+\hyperlink{classmdt_field_map_a7e255a2c818c495fe0b8c09ee1317bcd}{mdtFieldMap} ()}
+\label{classmdt_field_map_a7e255a2c818c495fe0b8c09ee1317bcd}
+
+\begin{DoxyCompactList}\small\item\em Create a empty field map. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_field_map_acb3e39f5f9cbc6047871000ae561a35e}{$\sim$mdtFieldMap} ()
+\begin{DoxyCompactList}\small\item\em Destroy field map. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_field_map_a6914818142ea30f7bce6a012be9fb69f}{addItem} (\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$item)
+\begin{DoxyCompactList}\small\item\em Add a item. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_field_map_ac7b6c8d9467614a9b9f72c5a504f74fe}{clear} ()
+\begin{DoxyCompactList}\small\item\em Delete all items. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_field_map_aa0584d8f48751fe0b330b0c019a1ffe2}{updateItem} (\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$item)
+\begin{DoxyCompactList}\small\item\em Update a item. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$ \hyperlink{classmdt_field_map_aea299348705593f64bb15c3432b6cbf6}{itemAtFieldIndex} (int index)
+\begin{DoxyCompactList}\small\item\em Get the item for a given index. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$ \hyperlink{classmdt_field_map_ac13b4067aa6ac4d796bd8fd38a0d6572}{itemAtFieldName} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Get the item for a given filed name. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$ \hyperlink{classmdt_field_map_af1c0de37b2f02224eb4ff7f9af8caef5}{itemAtDisplayText} (const QString \&text)
+\begin{DoxyCompactList}\small\item\em Get the item for a given display text. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_field_map_a83a1783e11f71b3e0fcea57eaebf97d5}{sourceFieldNameAtFieldIndex} (int index) const 
+\begin{DoxyCompactList}\small\item\em Get the source field name for a given field index. \end{DoxyCompactList}\item 
+QList$<$ \hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$ $>$ \hyperlink{classmdt_field_map_a295dc53404eae6b62abaf6ee4fff581b}{itemsAtSourceFieldIndex} (int index)
+\begin{DoxyCompactList}\small\item\em Get the items for given source index. \end{DoxyCompactList}\item 
+QList$<$ \hyperlink{classmdt_field_map_item}{mdtFieldMapItem} $\ast$ $>$ \hyperlink{classmdt_field_map_a1f84addb64c690fab8fd2c3c48dc91b6}{itemsAtSourceFieldName} (const QString \&name)
+\begin{DoxyCompactList}\small\item\em Get the items for given source field name. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_field_map_af9b345ba9bc0b08c149fbd10bad8a818}{dataForFieldIndex} (const QStringList \&sourceData, int fieldIndex) const 
+\begin{DoxyCompactList}\small\item\em Get data for a given index in source data. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_field_map_ae5f9e06f49e9bb4d34583da4d342b897}{dataForFieldName} (const QStringList \&sourceData, const QString \&fieldName)
+\begin{DoxyCompactList}\small\item\em Get data for a given field name in source data. \end{DoxyCompactList}\item 
+QVariant \hyperlink{classmdt_field_map_a62b1087ac4beb5edab79105078f5b91b}{dataForDisplayText} (const QStringList \&sourceData, const QString \&displayText)
+\begin{DoxyCompactList}\small\item\em Get data for a given field display text in source data. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_field_map_aea457e5e7a7ea43f80c963a03fccd4d3}{dataForSourceFieldIndex} (const QList$<$ QVariant $>$ \&data, int sourceFieldIndex)
+\begin{DoxyCompactList}\small\item\em Get source data for given source field index. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_field_map_a76e6ebfa8cd611b36e3a3c2e8e0d58da}{dataForSourceFieldName} (const QList$<$ QVariant $>$ \&data, const QString \&sourceFieldName)
+\begin{DoxyCompactList}\small\item\em Get source data for given source field name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Map fields between a source and a destination data set. 
+
+To explain this class, we take a example. We have to import data from a CSV file into a table model. The problem is that some data are grouped in one field, we call it \char`\"{}Group1\char`\"{}. To display the data to a conveniant way, we have to split Group1's data and header. We know that Group1 contains 3 fileds:
+\begin{DoxyItemize}
+\item SubID: index 0 to 1
+\item SubName: index 2 to 5
+\item SubValue: index 6 to 9
+\end{DoxyItemize}
+
+During import, we have to create 3 fields in model, called SubID, SubName and SubValue, and store correct part of Group1 into each created field.
+
+This class was made to help solving such problem. 
+
+Definition at line 48 of file mdtFieldMap.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_field_map_acb3e39f5f9cbc6047871000ae561a35e}{
+\index{mdtFieldMap@{mdtFieldMap}!$\sim$mdtFieldMap@{$\sim$mdtFieldMap}}
+\index{$\sim$mdtFieldMap@{$\sim$mdtFieldMap}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{$\sim$mdtFieldMap}]{\setlength{\rightskip}{0pt plus 5cm}mdtFieldMap::$\sim$mdtFieldMap (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_acb3e39f5f9cbc6047871000ae561a35e}
+
+
+Destroy field map. 
+
+All items are deleted. Take care that items pointers will become invalid after destroying this object. 
+
+Definition at line 29 of file mdtFieldMap.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_field_map_a6914818142ea30f7bce6a012be9fb69f}{
+\index{mdtFieldMap@{mdtFieldMap}!addItem@{addItem}}
+\index{addItem@{addItem}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{addItem}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFieldMap::addItem (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtFieldMapItem} $\ast$}]{item}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_a6914818142ea30f7bce6a012be9fb69f}
+
+
+Add a item. 
+
+A item contains map informations
+
+\begin{DoxyPrecond}{Precondition}
+Item must be a valid pointer 
+\end{DoxyPrecond}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} 
+\end{DoxySeeAlso}
+
+
+Definition at line 34 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_ac7b6c8d9467614a9b9f72c5a504f74fe}{
+\index{mdtFieldMap@{mdtFieldMap}!clear@{clear}}
+\index{clear@{clear}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void mdtFieldMap::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_ac7b6c8d9467614a9b9f72c5a504f74fe}
+
+
+Delete all items. 
+
+Take care that items pointers will become invalid after calling this method. 
+
+Definition at line 44 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_a62b1087ac4beb5edab79105078f5b91b}{
+\index{mdtFieldMap@{mdtFieldMap}!dataForDisplayText@{dataForDisplayText}}
+\index{dataForDisplayText@{dataForDisplayText}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{dataForDisplayText}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFieldMap::dataForDisplayText (
+\begin{DoxyParamCaption}
+\item[{const QStringList \&}]{sourceData, }
+\item[{const QString \&}]{displayText}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_a62b1087ac4beb5edab79105078f5b91b}
+
+
+Get data for a given field display text in source data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sourceData} & In above example, it's a line in CSV file. \\
+\hline
+{\em displayText} & In above example, it's the model header text. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted data, or invalid QVariant if index was not found, or on failed conversion. 
+\end{DoxyReturn}
+
+
+Definition at line 182 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_af9b345ba9bc0b08c149fbd10bad8a818}{
+\index{mdtFieldMap@{mdtFieldMap}!dataForFieldIndex@{dataForFieldIndex}}
+\index{dataForFieldIndex@{dataForFieldIndex}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{dataForFieldIndex}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFieldMap::dataForFieldIndex (
+\begin{DoxyParamCaption}
+\item[{const QStringList \&}]{sourceData, }
+\item[{int}]{fieldIndex}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_field_map_af9b345ba9bc0b08c149fbd10bad8a818}
+
+
+Get data for a given index in source data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sourceData} & In above example, it's a line in CSV file. \\
+\hline
+{\em fieldIndex} & In above example, it's the model column index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted data, or invalid QVariant if index was not found, or on failed conversion. 
+\end{DoxyReturn}
+
+
+Definition at line 131 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_ae5f9e06f49e9bb4d34583da4d342b897}{
+\index{mdtFieldMap@{mdtFieldMap}!dataForFieldName@{dataForFieldName}}
+\index{dataForFieldName@{dataForFieldName}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{dataForFieldName}]{\setlength{\rightskip}{0pt plus 5cm}QVariant mdtFieldMap::dataForFieldName (
+\begin{DoxyParamCaption}
+\item[{const QStringList \&}]{sourceData, }
+\item[{const QString \&}]{fieldName}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_ae5f9e06f49e9bb4d34583da4d342b897}
+
+
+Get data for a given field name in source data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sourceData} & In above example, it's a line in CSV file. \\
+\hline
+{\em fieldName} & Technical field name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Converted data, or invalid QVariant if name was not found, or on failed conversion. 
+\end{DoxyReturn}
+
+
+Definition at line 173 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_aea457e5e7a7ea43f80c963a03fccd4d3}{
+\index{mdtFieldMap@{mdtFieldMap}!dataForSourceFieldIndex@{dataForSourceFieldIndex}}
+\index{dataForSourceFieldIndex@{dataForSourceFieldIndex}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{dataForSourceFieldIndex}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtFieldMap::dataForSourceFieldIndex (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ QVariant $>$ \&}]{data, }
+\item[{int}]{sourceFieldIndex}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_aea457e5e7a7ea43f80c963a03fccd4d3}
+
+
+Get source data for given source field index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & In above example it's the data in model. \\
+\hline
+{\em sourceFieldIndex} & In above example, it's the index in a CSV file's line. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 191 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_a76e6ebfa8cd611b36e3a3c2e8e0d58da}{
+\index{mdtFieldMap@{mdtFieldMap}!dataForSourceFieldName@{dataForSourceFieldName}}
+\index{dataForSourceFieldName@{dataForSourceFieldName}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{dataForSourceFieldName}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtFieldMap::dataForSourceFieldName (
+\begin{DoxyParamCaption}
+\item[{const QList$<$ QVariant $>$ \&}]{data, }
+\item[{const QString \&}]{sourceFieldName}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_a76e6ebfa8cd611b36e3a3c2e8e0d58da}
+
+
+Get source data for given source field name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & In above example it's the data in model. \\
+\hline
+{\em sourceFieldName} & In above example, it's the technical name of field in a CSV file's line. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 209 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_af1c0de37b2f02224eb4ff7f9af8caef5}{
+\index{mdtFieldMap@{mdtFieldMap}!itemAtDisplayText@{itemAtDisplayText}}
+\index{itemAtDisplayText@{itemAtDisplayText}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{itemAtDisplayText}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFieldMapItem} $\ast$ mdtFieldMap::itemAtDisplayText (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{text}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_af1c0de37b2f02224eb4ff7f9af8caef5}
+
+
+Get the item for a given display text. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & In above example, it's the model header text. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to item if found, else 0 (null pointer). 
+\end{DoxyReturn}
+
+
+Definition at line 103 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_aea299348705593f64bb15c3432b6cbf6}{
+\index{mdtFieldMap@{mdtFieldMap}!itemAtFieldIndex@{itemAtFieldIndex}}
+\index{itemAtFieldIndex@{itemAtFieldIndex}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{itemAtFieldIndex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFieldMapItem} $\ast$ mdtFieldMap::itemAtFieldIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_aea299348705593f64bb15c3432b6cbf6}
+
+
+Get the item for a given index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & In above example, it's the model column index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to item if found, else 0 (null pointer). 
+\end{DoxyReturn}
+
+
+Definition at line 93 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_ac13b4067aa6ac4d796bd8fd38a0d6572}{
+\index{mdtFieldMap@{mdtFieldMap}!itemAtFieldName@{itemAtFieldName}}
+\index{itemAtFieldName@{itemAtFieldName}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{itemAtFieldName}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFieldMapItem} $\ast$ mdtFieldMap::itemAtFieldName (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{name}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_ac13b4067aa6ac4d796bd8fd38a0d6572}
+
+
+Get the item for a given filed name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Technical field name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to item if found, else 0 (null pointer). 
+\end{DoxyReturn}
+
+
+Definition at line 98 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_a295dc53404eae6b62abaf6ee4fff581b}{
+\index{mdtFieldMap@{mdtFieldMap}!itemsAtSourceFieldIndex@{itemsAtSourceFieldIndex}}
+\index{itemsAtSourceFieldIndex@{itemsAtSourceFieldIndex}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{itemsAtSourceFieldIndex}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtFieldMapItem} $\ast$ $>$ mdtFieldMap::itemsAtSourceFieldIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_a295dc53404eae6b62abaf6ee4fff581b}
+
+
+Get the items for given source index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & In above example, it's the index of field in CSV header. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to item if found, else 0 (null pointer). 
+\end{DoxyReturn}
+
+
+Definition at line 121 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_a1f84addb64c690fab8fd2c3c48dc91b6}{
+\index{mdtFieldMap@{mdtFieldMap}!itemsAtSourceFieldName@{itemsAtSourceFieldName}}
+\index{itemsAtSourceFieldName@{itemsAtSourceFieldName}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{itemsAtSourceFieldName}]{\setlength{\rightskip}{0pt plus 5cm}QList$<$ {\bf mdtFieldMapItem} $\ast$ $>$ mdtFieldMap::itemsAtSourceFieldName (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{name}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_a1f84addb64c690fab8fd2c3c48dc91b6}
+
+
+Get the items for given source field name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & In above example, it's the technical field name in CSV header. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to item if found, else 0 (null pointer). 
+\end{DoxyReturn}
+
+
+Definition at line 126 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_a83a1783e11f71b3e0fcea57eaebf97d5}{
+\index{mdtFieldMap@{mdtFieldMap}!sourceFieldNameAtFieldIndex@{sourceFieldNameAtFieldIndex}}
+\index{sourceFieldNameAtFieldIndex@{sourceFieldNameAtFieldIndex}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{sourceFieldNameAtFieldIndex}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtFieldMap::sourceFieldNameAtFieldIndex (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_field_map_a83a1783e11f71b3e0fcea57eaebf97d5}
+
+
+Get the source field name for a given field index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & In above example, it's the model column index. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Source field name, or a empty string if field index was not found. 
+\end{DoxyReturn}
+
+
+Definition at line 108 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_aa0584d8f48751fe0b330b0c019a1ffe2}{
+\index{mdtFieldMap@{mdtFieldMap}!updateItem@{updateItem}}
+\index{updateItem@{updateItem}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{updateItem}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtFieldMap::updateItem (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtFieldMapItem} $\ast$}]{item}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_field_map_aa0584d8f48751fe0b330b0c019a1ffe2}
+
+
+Update a item. 
+
+Whenn updating a item, it's important to call this method, else internal keys are not updated.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & item to update \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success, false if item was not found 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+Item must be a valid pointer 
+\end{DoxyPrecond}
+
+
+Definition at line 55 of file mdtFieldMap.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtFieldMap.h\item 
+src/mdtutilsgui/mdtFieldMap.cpp\end{DoxyCompactItemize}

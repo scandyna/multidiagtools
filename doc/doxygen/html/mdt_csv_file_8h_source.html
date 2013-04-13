@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -84,36 +84,67 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_CSV_FILE_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QString&gt;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QTextCodec&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QStringList&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QList&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QFile&gt;</span>
-<a name="l00029"></a>00029 
-<a name="l00035"></a><a class="code" href="classmdt_csv_file.html">00035</a> <span class="keyword">class </span><a class="code" href="classmdt_csv_file.html" title="Read and write CSV file.">mdtCsvFile</a> : <span class="keyword">public</span> QFile
-<a name="l00036"></a>00036 {
-<a name="l00037"></a>00037  <span class="keyword">public</span>:
-<a name="l00038"></a>00038 
-<a name="l00041"></a>00041   <a class="code" href="classmdt_csv_file.html#a8c9f24190d83f32672f360f0fcc53d2f" title="Constructor.">mdtCsvFile</a>(QObject *parent = 0, QByteArray fileEncoding = <span class="stringliteral">&quot;UTF-8&quot;</span>);
-<a name="l00042"></a>00042   ~<a class="code" href="classmdt_csv_file.html" title="Read and write CSV file.">mdtCsvFile</a>();
-<a name="l00043"></a>00043 
-<a name="l00052"></a>00052   <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">readLines</a>(QByteArray separator = <span class="stringliteral">&quot;;&quot;</span>, QByteArray dataProtection = <span class="stringliteral">&quot;&quot;</span>, QByteArray comment = <span class="stringliteral">&quot;#&quot;</span>);
-<a name="l00053"></a>00053 
-<a name="l00062"></a>00062   QStringList &amp;<a class="code" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc" title="Parse a string (considered as a line in a CSV file)">parseLine</a>(<span class="keyword">const</span> QByteArray &amp;line, <span class="keyword">const</span> QByteArray &amp;separator, <span class="keyword">const</span> QByteArray &amp;dataProtection);
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QChar&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;QTextCodec&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QStringList&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QList&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QFile&gt;</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="comment">// Set OS native End Of Line sequence</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#ifdef Q_OS_WIN</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span><span class="preprocessor"> #define MDT_NATIVE_EOL &quot;\r\n&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor"></span><span class="preprocessor">#else</span>
+<a name="l00035"></a>00035 <span class="preprocessor"></span><span class="preprocessor"> #define MDT_NATIVE_EOL &quot;\n&quot;</span>
+<a name="l00036"></a>00036 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00037"></a>00037 <span class="preprocessor"></span>
+<a name="l00043"></a><a class="code" href="classmdt_csv_file.html">00043</a> <span class="keyword">class </span><a class="code" href="classmdt_csv_file.html" title="Read and write CSV file.">mdtCsvFile</a> : <span class="keyword">public</span> QFile
+<a name="l00044"></a>00044 {
+<a name="l00045"></a>00045  <span class="keyword">public</span>:
+<a name="l00046"></a>00046 
+<a name="l00052"></a>00052   <a class="code" href="classmdt_csv_file.html#aaca142b18a4f436548e17fbef755e2d5" title="Constructor.">mdtCsvFile</a>(QObject *parent = 0, <span class="keyword">const</span> QByteArray &amp;fileEncoding = <span class="stringliteral">&quot;UTF-8&quot;</span>);
+<a name="l00053"></a>00053   ~<a class="code" href="classmdt_csv_file.html" title="Read and write CSV file.">mdtCsvFile</a>();
+<a name="l00054"></a>00054 
+<a name="l00062"></a>00062   <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">close</a>();
 <a name="l00063"></a>00063 
-<a name="l00066"></a>00066   <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Clear readen data.">clear</a>();
-<a name="l00067"></a>00067 
-<a name="l00074"></a>00074   QString <a class="code" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee" title="Get a value.">valueAt</a>(<span class="keywordtype">int</span> line, <span class="keywordtype">int</span> column);
-<a name="l00075"></a>00075 
-<a name="l00078"></a>00078   QList&lt;QStringList&gt; &amp;<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">lines</a>();
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080  <span class="keyword">private</span>:
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   QList&lt;QStringList&gt; pvLines;
-<a name="l00083"></a>00083   QStringList pvFields;
-<a name="l00084"></a>00084   QTextCodec *pvCodec;
-<a name="l00085"></a>00085 };
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087 <span class="preprocessor">#endif  // #ifndef MDT_CSV_FILE_H</span>
+<a name="l00077"></a>00077   <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#a0e85f46ffdc4e44c8974c485abcc48b8" title="Write a line of data.">writeLine</a>(<span class="keyword">const</span> QStringList &amp;line, <span class="keyword">const</span> QString &amp;separator = <span class="stringliteral">&quot;;&quot;</span>, <span class="keyword">const</span> QString &amp;dataProtection = <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QChar &amp;escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
+<a name="l00078"></a>00078 
+<a name="l00093"></a>00093   QStringList <a class="code" href="classmdt_csv_file.html#a4010d76497d8f5d2a85171025d31f100" title="Get CSV file&#39;s header.">readHeader</a>(<span class="keyword">const</span> QString &amp;separator = <span class="stringliteral">&quot;;&quot;</span>, <span class="keyword">const</span> QString &amp;dataProtection = <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QString &amp;comment = <span class="stringliteral">&quot;#&quot;</span>, <span class="keyword">const</span> QChar &amp;escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+<a name="l00094"></a>00094 
+<a name="l00106"></a>00106   QByteArray <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(<span class="keyword">const</span> QString &amp;dataProtection = <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QString &amp;comment = <span class="stringliteral">&quot;#&quot;</span>, <span class="keyword">const</span> QChar &amp;escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+<a name="l00107"></a>00107 
+<a name="l00119"></a>00119   QStringList <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(<span class="keyword">const</span> QString &amp;separator = <span class="stringliteral">&quot;;&quot;</span>, <span class="keyword">const</span> QString &amp;dataProtection = <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QString &amp;comment = <span class="stringliteral">&quot;#&quot;</span>, <span class="keyword">const</span> QChar &amp;escapeChar = QChar(), QByteArray eol = MDT_NATIVE_EOL);
+<a name="l00120"></a>00120 
+<a name="l00133"></a>00133   <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(QByteArray &amp;line, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QString &amp;comment, <span class="keyword">const</span> QChar &amp;escapeChar, QByteArray eol);
+<a name="l00134"></a>00134 
+<a name="l00137"></a>00137   <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b" title="Check if readLine() has more lines available.">hasMoreLines</a>() <span class="keyword">const</span>;
+<a name="l00138"></a>00138 
+<a name="l00150"></a>00150   <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">readLines</a>(<span class="keyword">const</span> QString &amp;separator = <span class="stringliteral">&quot;;&quot;</span>, <span class="keyword">const</span> QString &amp;dataProtection = <span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QString &amp;comment = <span class="stringliteral">&quot;#&quot;</span>, <span class="keyword">const</span> QChar &amp;escapeChar = QChar(), QString eol = MDT_NATIVE_EOL);
+<a name="l00151"></a>00151 
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161 
+<a name="l00164"></a>00164   <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Parse a string (considered as a line in a CSV file)">clear</a>();
+<a name="l00165"></a>00165 
+<a name="l00172"></a>00172   QString <a class="code" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee" title="Get a value.">valueAt</a>(<span class="keywordtype">int</span> line, <span class="keywordtype">int</span> column);
+<a name="l00173"></a>00173 
+<a name="l00176"></a>00176   QList&lt;QStringList&gt; &amp;<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">lines</a>();
+<a name="l00177"></a>00177 
+<a name="l00183"></a>00183   <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#a27751812bf6625d6264bdce4bd43167c" title="Set the readLine() method&#39;s buffer size.">setReadLineBufferSize</a>(<span class="keywordtype">int</span> size);
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185  <span class="keyword">private</span>:
+<a name="l00186"></a>00186 
+<a name="l00193"></a>00193   <span class="keywordtype">bool</span> dataProtectionSectionBegins(<span class="keyword">const</span> QByteArray &amp;line, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QChar &amp;escapeChar);
+<a name="l00194"></a>00194 
+<a name="l00203"></a>00203   <span class="keywordtype">void</span> readUntilDataProtection(QByteArray &amp;buffer, <span class="keywordtype">int</span> &amp;dpIndex, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QChar &amp;escapeChar);
+<a name="l00204"></a>00204 
+<a name="l00222"></a>00222   <span class="keywordtype">int</span> indexOfCommentedLineBeginning(<span class="keyword">const</span> QByteArray &amp;line, <span class="keyword">const</span> QString &amp;comment);
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224   QList&lt;QStringList&gt; pvLines;
+<a name="l00226"></a>00226   QTextCodec *pvCodec;
+<a name="l00227"></a>00227   QByteArray pvReadLineBuffer;  <span class="comment">// Used by readLine() to store what is after EOL</span>
+<a name="l00228"></a>00228   <span class="keywordtype">int</span> pvReadLineBufferSize;     <span class="comment">// Used by readLine()</span>
+<a name="l00230"></a>00230 <span class="comment"></span>};
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232 <span class="preprocessor">#endif  // #ifndef MDT_CSV_FILE_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -130,7 +161,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

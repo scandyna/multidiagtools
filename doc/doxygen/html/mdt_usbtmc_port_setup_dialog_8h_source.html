@@ -83,66 +83,79 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a>00021 <span class="preprocessor">#ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H</span>
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define MDT_USBTMC_PORT_SETUP_DIALOG_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;ui_mdtUsbtmcPortSetupDialog.h&quot;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &quot;mdtPortConfigWidget.h&quot;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;mdtPortInfoCbHandler.h&quot;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &quot;mdtPortInfo.h&quot;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QDialog&gt;</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>;
-<a name="l00031"></a>00031 <span class="keyword">class </span>QWidget;
-<a name="l00032"></a>00032 <span class="keyword">class </span>QAbstractButton;
+<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;mdtPortConfigWidget.h&quot;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &quot;mdtPortInfoCbHandler.h&quot;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &quot;mdtPortInfo.h&quot;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QDialog&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;QComboBox&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;QLabel&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;QPushButton&gt;</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="preprocessor">#include &quot;mdtAbstractPortSetupDialog.h&quot;</span>
 <a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="classmdt_usbtmc_port_setup_dialog.html">00034</a> <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a> : <span class="keyword">public</span> QDialog, Ui_mdtUsbtmcPortSetupDialog
-<a name="l00035"></a>00035 {
-<a name="l00036"></a>00036  Q_OBJECT
+<a name="l00034"></a>00034 <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a>;
+<a name="l00035"></a>00035 <span class="keyword">class </span>QWidget;
+<a name="l00036"></a>00036 <span class="keyword">class </span>QAbstractButton;
 <a name="l00037"></a>00037 
-<a name="l00038"></a>00038  <span class="keyword">public</span>:
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   <a class="code" href="classmdt_usbtmc_port_setup_dialog.html#afdfb9303c8c2a1c9da8ecb19d5c19610">mdtUsbtmcPortSetupDialog</a>(QWidget *parent = 0);
-<a name="l00041"></a>00041   ~<a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a>();
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043   <span class="keywordtype">void</span> setPortManager(<a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> *manager);
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045  <span class="keyword">private</span> slots:
+<a name="l00038"></a><a class="code" href="classmdt_usbtmc_port_setup_dialog.html">00038</a> <span class="keyword">class </span><a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a> : <span class="keyword">public</span> <a class="code" href="classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog.">mdtAbstractPortSetupDialog</a>
+<a name="l00039"></a>00039 {
+<a name="l00040"></a>00040  Q_OBJECT
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042  <span class="keyword">public</span>:
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   <a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a>(QWidget *parent = 0);
+<a name="l00045"></a>00045   ~<a class="code" href="classmdt_usbtmc_port_setup_dialog.html">mdtUsbtmcPortSetupDialog</a>();
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047   <span class="comment">// Read the configuration and update GUI</span>
-<a name="l00048"></a>00048   <span class="keywordtype">void</span> displayConfig();
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <span class="comment">// Read options from GUI and update configuration</span>
-<a name="l00051"></a>00051   <span class="keywordtype">void</span> updateConfig();
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="comment">// Rescan for available ports with attached USBTMC device</span>
-<a name="l00054"></a>00054   <span class="keywordtype">void</span> on_pbRescan_clicked();
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="comment">// Open selected port (if manager was set)</span>
-<a name="l00057"></a>00057   <span class="keywordtype">void</span> on_cbInterface_currentIndexChanged(<span class="keywordtype">int</span> index);
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="comment">// Called when setup is accepted/canceled from user</span>
-<a name="l00060"></a>00060   <span class="keywordtype">void</span> on_buttonBox_clicked(QAbstractButton *button);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062  <span class="keyword">private</span>:
+<a name="l00047"></a>00047  <span class="keyword">private</span> slots:
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="comment">// Read the configuration and update GUI</span>
+<a name="l00050"></a>00050   <span class="keywordtype">void</span> displayConfig();
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="comment">// Read options from GUI and update configuration</span>
+<a name="l00053"></a>00053   <span class="keywordtype">void</span> updateConfig();
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055   <span class="comment">// Close port</span>
+<a name="l00056"></a>00056   <span class="keywordtype">void</span> closePort();
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="comment">// Rescan</span>
+<a name="l00059"></a>00059   <span class="keywordtype">void</span> rescan();
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   <span class="comment">// Open port</span>
+<a name="l00062"></a>00062   <span class="keywordtype">void</span> openPort();
 <a name="l00063"></a>00063 
-<a name="l00064"></a>00064   <span class="comment">// Set the running state</span>
-<a name="l00065"></a>00065   <span class="keywordtype">void</span> setStateRunning();
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067   <span class="comment">// Set the stopped state</span>
-<a name="l00068"></a>00068   <span class="keywordtype">void</span> setStateStopped();
+<a name="l00064"></a>00064  <span class="keyword">private</span>:
+<a name="l00065"></a>00065 
+<a name="l00068"></a>00068   <span class="keywordtype">void</span> portManagerSet();
 <a name="l00069"></a>00069 
-<a name="l00070"></a>00070   <span class="comment">// Set the Error state</span>
-<a name="l00071"></a>00071   <span class="keywordtype">void</span> setStateError(QString msg = tr(<span class="stringliteral">&quot;Error&quot;</span>));
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="comment">// Enable/diseable the apply buttons (Ok, Apply)</span>
-<a name="l00074"></a>00074   <span class="keywordtype">void</span> diseableApplyButtons();
-<a name="l00075"></a>00075   <span class="keywordtype">void</span> enableApplyButtons();
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   <a class="code" href="classmdt_usbtmc_port_manager.html" title="USBTMC port manager.">mdtUsbtmcPortManager</a> * pvPortManager;
-<a name="l00078"></a>00078   <a class="code" href="classmdt_port_config_widget.html">mdtPortConfigWidget</a> pvPortConfigWidget;
-<a name="l00079"></a>00079   <a class="code" href="classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox.">mdtPortInfoCbHandler</a> pvPortInfoCbHandler;
-<a name="l00080"></a>00080   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> pvCurrentPortInfo;
-<a name="l00081"></a>00081 };
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H</span>
+<a name="l00072"></a>00072   <span class="keywordtype">void</span> setStateDisconnected();
+<a name="l00073"></a>00073 
+<a name="l00076"></a>00076   <span class="keywordtype">void</span> setStateConnecting();
+<a name="l00077"></a>00077 
+<a name="l00080"></a>00080   <span class="keywordtype">void</span> setStateReady();
+<a name="l00081"></a>00081 
+<a name="l00084"></a>00084   <span class="keywordtype">void</span> setStateBusy();
+<a name="l00085"></a>00085 
+<a name="l00088"></a>00088   <span class="keywordtype">void</span> setStateWarning();
+<a name="l00089"></a>00089 
+<a name="l00092"></a>00092   <span class="keywordtype">void</span> setStateError();
+<a name="l00093"></a>00093 
+<a name="l00096"></a>00096   <span class="keywordtype">bool</span> applySetup();
+<a name="l00097"></a>00097 
+<a name="l00099"></a>00099   <a class="code" href="classmdt_port_info_cb_handler.html" title="Handle the port info comboBox and the device info comboBox.">mdtPortInfoCbHandler</a> pvPortInfoCbHandler;
+<a name="l00100"></a>00100   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> pvCurrentPortInfo;
+<a name="l00101"></a>00101   QPushButton *pbOpen;
+<a name="l00102"></a>00102   QPushButton *pbClose;
+<a name="l00103"></a>00103   QPushButton *pbRescan;
+<a name="l00104"></a>00104   QComboBox *cbPort;
+<a name="l00105"></a>00105   QComboBox *cbInterface;
+<a name="l00106"></a>00106   QWidget *pvDeviceInfoWidget;
+<a name="l00107"></a>00107   QLabel *lbManufacturer;
+<a name="l00108"></a>00108   QLabel *lbModel;
+<a name="l00109"></a>00109   QLabel *lbSerial;
+<a name="l00110"></a>00110   QLabel *lbFirmware;
+<a name="l00111"></a>00111 };
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 <span class="preprocessor">#endif  // #ifndef MDT_USBTMC_PORT_SETUP_DIALOG_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -159,7 +172,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

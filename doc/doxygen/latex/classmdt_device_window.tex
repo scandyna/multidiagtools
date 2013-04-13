@@ -9,7 +9,7 @@ Collaboration diagram for mdtDeviceWindow:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=346pt]{classmdt_device_window__coll__graph}
+\includegraphics[width=344pt]{classmdt_device_window__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -24,7 +24,7 @@ void \hyperlink{classmdt_device_window_a63df49a9f0cafc2f72e097aa0cf26baa}{setIos
 \label{classmdt_device_window_a63df49a9f0cafc2f72e097aa0cf26baa}
 
 \begin{DoxyCompactList}\small\item\em Set the I/O's widget. \end{DoxyCompactList}\item 
-\hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} $\ast$ \hyperlink{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}{statusWidget} ()
+\hyperlink{classmdt_port_status_widget}{mdtPortStatusWidget} $\ast$ \hyperlink{classmdt_device_window_a5bad625542c9df270d31d4beec4c9e95}{statusWidget} ()
 \begin{DoxyCompactList}\small\item\em Get status widget. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_device_window_a8b884e389fa27f85742642193d18b8f9}{enableTranslations} ()
 \begin{DoxyCompactList}\small\item\em Enable translations. \end{DoxyCompactList}\item 
@@ -61,7 +61,7 @@ Definition at line 34 of file mdtDeviceWindow.h.
 
 Construct a device window. 
 
-Will create a new \hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} and add it as status bar. 
+Will create a new \hyperlink{classmdt_port_status_widget}{mdtPortStatusWidget} and add it as status bar. 
 
 Definition at line 27 of file mdtDeviceWindow.cpp.
 
@@ -88,7 +88,7 @@ The loop must be started with a \hyperlink{classmdt_application}{mdtApplication}
 \end{DoxyPrecond}
 
 
-Definition at line 63 of file mdtDeviceWindow.cpp.
+Definition at line 66 of file mdtDeviceWindow.cpp.
 
 \hypertarget{classmdt_device_window_a708333e7fa347f5020d014c21a991e15}{
 \index{mdtDeviceWindow@{mdtDeviceWindow}!retranslate@{retranslate}}
@@ -105,7 +105,7 @@ Retranslate.
 
 This slot is called by \hyperlink{classmdt_application}{mdtApplication} when language has changed 
 
-Definition at line 94 of file mdtDeviceWindow.cpp.
+Definition at line 97 of file mdtDeviceWindow.cpp.
 
 \hypertarget{classmdt_device_window_ac3bed35b2eeb88b2483c18e3b9bb918d}{
 \index{mdtDeviceWindow@{mdtDeviceWindow}!setDevice@{setDevice}}
@@ -120,6 +120,8 @@ Definition at line 94 of file mdtDeviceWindow.cpp.
 
 Set the device. 
 
+If device contains a port manager, \hyperlink{classmdt_port_manager_a1c9e1848373831962b7ec83fd4fe5d35}{mdtPortManager::stateChanged()} and \hyperlink{classmdt_port_manager_a6f6c6f8a8430d8631a08c765565db9ab}{mdtPortManager::statusMessageChanged()} signals are connected to status widget.
+
 \begin{DoxyPrecond}{Precondition}
 device must be a valid pointer. 
 \end{DoxyPrecond}
@@ -127,22 +129,22 @@ device must be a valid pointer.
 
 Definition at line 41 of file mdtDeviceWindow.cpp.
 
-\hypertarget{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}{
+\hypertarget{classmdt_device_window_a5bad625542c9df270d31d4beec4c9e95}{
 \index{mdtDeviceWindow@{mdtDeviceWindow}!statusWidget@{statusWidget}}
 \index{statusWidget@{statusWidget}!mdtDeviceWindow@{mdtDeviceWindow}}
-\subsubsection[{statusWidget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDeviceStatusWidget} $\ast$ mdtDeviceWindow::statusWidget (
+\subsubsection[{statusWidget}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtPortStatusWidget} $\ast$ mdtDeviceWindow::statusWidget (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}}
-\label{classmdt_device_window_af7c367a12c59300935a31ac379b6ad8e}
+\label{classmdt_device_window_a5bad625542c9df270d31d4beec4c9e95}
 
 
 Get status widget. 
 
 Usefull for setup 
 
-Definition at line 56 of file mdtDeviceWindow.cpp.
+Definition at line 59 of file mdtDeviceWindow.cpp.
 
 
 

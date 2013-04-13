@@ -104,7 +104,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00042"></a>00042   Q_ASSERT(pvPort != 0);
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044   <a class="code" href="classmdt_frame.html" title="Provide an array of bytes.">mdtFrame</a> *frame;
-<a name="l00045"></a>00045   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
+<a name="l00045"></a>00045   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
 <a name="l00046"></a>00046   <span class="keywordtype">int</span> n;
 <a name="l00047"></a>00047   <span class="keywordtype">bool</span> useReadTimeoutProtocol = <span class="keyword">false</span>;
 <a name="l00048"></a>00048 
@@ -126,74 +126,79 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00064"></a>00064   <span class="keywordflow">if</span>(frame == 0){
 <a name="l00065"></a>00065     <span class="keywordflow">return</span>;
 <a name="l00066"></a>00066   }
-<a name="l00067"></a>00067   <span class="comment">// Run...</span>
-<a name="l00068"></a>00068   <span class="keywordflow">while</span>(1){
-<a name="l00069"></a>00069     <span class="comment">// Read thread state</span>
-<a name="l00070"></a>00070     <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00071"></a>00071       <span class="keywordflow">break</span>;
-<a name="l00072"></a>00072     }
-<a name="l00073"></a>00073     <span class="comment">// Wait on Read event</span>
-<a name="l00074"></a>00074     portError = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead</a>();
-<a name="l00075"></a>00075     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00076"></a>00076       <span class="comment">// Read thread state</span>
-<a name="l00077"></a>00077       <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00078"></a>00078         <span class="keywordflow">break</span>;
-<a name="l00079"></a>00079       }
-<a name="l00080"></a>00080       <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">mdtAbstractPort::ReadTimeout</a>){
-<a name="l00081"></a>00081         <span class="comment">// Unhandled error - notify and end</span>
-<a name="l00082"></a>00082         <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(portError);
-<a name="l00083"></a>00083         <span class="keywordflow">break</span>;
-<a name="l00084"></a>00084       }
-<a name="l00085"></a>00085     }
-<a name="l00086"></a>00086     <span class="comment">// Check about flush request</span>
-<a name="l00087"></a>00087     <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a54b7bfb725c91b2c292a39275b877207" title="Check if a flush in request is pending.">flushInRequestPending</a>()){
-<a name="l00088"></a>00088       <span class="comment">// Put current frame back to pool, get new one and return idle</span>
-<a name="l00089"></a>00089       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(frame);
-<a name="l00090"></a>00090       frame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
-<a name="l00091"></a>00091       <span class="keywordflow">if</span>(frame == 0){
-<a name="l00092"></a>00092         <span class="keywordflow">break</span>;
-<a name="l00093"></a>00093       }
-<a name="l00094"></a>00094       <span class="keywordflow">continue</span>;
-<a name="l00095"></a>00095     }
-<a name="l00096"></a>00096     <span class="comment">// Event occured, get the data from port - Check timeout state first</span>
-<a name="l00097"></a>00097     <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#aec94143165e486cbbe6e0979be887c7e" title="Returns read timeout state.">readTimeoutOccured</a>()){
-<a name="l00098"></a>00098       <span class="comment">// In timeout protocol, the current frame is considered complete</span>
-<a name="l00099"></a>00099       <span class="keywordflow">if</span>(useReadTimeoutProtocol){
-<a name="l00100"></a>00100         <span class="keywordflow">if</span>(frame != 0){
-<a name="l00101"></a>00101           <span class="keywordflow">if</span>(!frame-&gt;isEmpty()){
-<a name="l00102"></a>00102             frame-&gt;<a class="code" href="classmdt_frame.html#ab8db9882c095091109115afb8e448b37" title="Set the frame as complete.">setComplete</a>();
-<a name="l00103"></a>00103             pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().enqueue(frame);
-<a name="l00104"></a>00104             <span class="comment">// emit a Readen frame signal</span>
-<a name="l00105"></a>00105             emit <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
-<a name="l00106"></a>00106             frame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
-<a name="l00107"></a>00107             <span class="keywordflow">if</span>(frame == 0){
-<a name="l00108"></a>00108               <span class="keywordflow">break</span>;
-<a name="l00109"></a>00109             }
-<a name="l00110"></a>00110           }
-<a name="l00111"></a>00111         }
-<a name="l00112"></a>00112       }<span class="keywordflow">else</span>{
-<a name="l00113"></a>00113         <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">mdtAbstractPort::ReadTimeout</a>);
-<a name="l00114"></a>00114       }
-<a name="l00115"></a>00115     }<span class="keywordflow">else</span>{
-<a name="l00116"></a>00116       <span class="comment">// Read</span>
-<a name="l00117"></a>00117       n = <a class="code" href="classmdt_port_thread.html#a8756fe2a26bf267376b4003a2896ff48" title="Read data from port.">readFromPort</a>(&amp;frame);
-<a name="l00118"></a>00118       <span class="keywordflow">if</span>(n &lt; 0){
-<a name="l00119"></a>00119         <span class="comment">// Unhandled error -&gt; notify and stop</span>
-<a name="l00120"></a>00120         <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(n);
-<a name="l00121"></a>00121         <span class="keywordflow">break</span>;
-<a name="l00122"></a>00122       }
-<a name="l00123"></a>00123       Q_ASSERT(frame != 0);
-<a name="l00124"></a>00124     }
-<a name="l00125"></a>00125   }
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127   <span class="comment">// Put current frame into pool</span>
-<a name="l00128"></a>00128   <span class="keywordflow">if</span>(frame != 0){
-<a name="l00129"></a>00129     pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(frame);
-<a name="l00130"></a>00130   }
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00133"></a>00133   <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>);
-<a name="l00134"></a>00134 }
+<a name="l00067"></a>00067   <span class="comment">// Notify that we are ready</span>
+<a name="l00068"></a>00068   <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>);
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="comment">// Run...</span>
+<a name="l00071"></a>00071   <span class="keywordflow">while</span>(1){
+<a name="l00072"></a>00072     <span class="comment">// Read thread state</span>
+<a name="l00073"></a>00073     <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00074"></a>00074       <span class="keywordflow">break</span>;
+<a name="l00075"></a>00075     }
+<a name="l00076"></a>00076     Q_ASSERT(frame != 0);
+<a name="l00077"></a>00077     <span class="comment">// Wait on Read event</span>
+<a name="l00078"></a>00078     portError = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#aeda364cb191da1038a22dd1fc06a1d49" title="Wait until data is available on port.">waitForReadyRead</a>();
+<a name="l00079"></a>00079     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00080"></a>00080       <span class="comment">// Read thread state</span>
+<a name="l00081"></a>00081       <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00082"></a>00082         <span class="keywordflow">break</span>;
+<a name="l00083"></a>00083       }
+<a name="l00084"></a>00084       <span class="keywordflow">if</span>((useReadTimeoutProtocol)&amp;&amp;(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5">mdtAbstractPort::ReadTimeout</a>)){
+<a name="l00085"></a>00085         <span class="comment">// In timeout protocol, the current frame is considered complete</span>
+<a name="l00086"></a>00086         <span class="keywordflow">if</span>(!frame-&gt;isEmpty()){
+<a name="l00087"></a>00087           frame-&gt;<a class="code" href="classmdt_frame.html#ab8db9882c095091109115afb8e448b37" title="Set the frame as complete.">setComplete</a>();
+<a name="l00088"></a>00088           pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a05356a33dc546a11d2794a0419d749e0" title="Get the readen frames Queue.">readenFrames</a>().enqueue(frame);
+<a name="l00089"></a>00089           <span class="comment">// emit a Readen frame signal</span>
+<a name="l00090"></a>00090           emit <a class="code" href="classmdt_port_thread.html#a7fc2245c753fd65e1beffec211c41461" title="Emited when a new frame is available.">newFrameReaden</a>();
+<a name="l00091"></a>00091           frame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
+<a name="l00092"></a>00092           <span class="keywordflow">if</span>(frame == 0){
+<a name="l00093"></a>00093             <span class="keywordflow">break</span>;
+<a name="l00094"></a>00094           }
+<a name="l00095"></a>00095         }
+<a name="l00096"></a>00096       }<span class="keywordflow">else</span>{
+<a name="l00097"></a>00097         portError = <a class="code" href="classmdt_port_thread.html#a584ee47549b0cb3a9c5de0a1ea496694" title="Handle common read errors.">handleCommonReadErrors</a>(portError, &amp;frame);
+<a name="l00098"></a>00098         <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d">mdtAbstractPort::ErrorHandled</a>){
+<a name="l00099"></a>00099           <span class="comment">// Unhandled error, stop</span>
+<a name="l00100"></a>00100           <span class="keywordflow">break</span>;
+<a name="l00101"></a>00101         }
+<a name="l00102"></a>00102       }
+<a name="l00103"></a>00103     }
+<a name="l00104"></a>00104     <span class="comment">// Check about flush request</span>
+<a name="l00105"></a>00105     <span class="keywordflow">if</span>(pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a54b7bfb725c91b2c292a39275b877207" title="Check if a flush in request is pending.">flushInRequestPending</a>()){
+<a name="l00106"></a>00106       <span class="comment">// Put current frame back to pool, get new one and return idle</span>
+<a name="l00107"></a>00107       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(frame);
+<a name="l00108"></a>00108       frame = <a class="code" href="classmdt_port_thread.html#a611211e56620ec9c699019452716e4fc" title="Get a new frame for reading data from port.">getNewFrameRead</a>();
+<a name="l00109"></a>00109       <span class="keywordflow">if</span>(frame == 0){
+<a name="l00110"></a>00110         <span class="keywordflow">break</span>;
+<a name="l00111"></a>00111       }
+<a name="l00112"></a>00112       <span class="keywordflow">continue</span>;
+<a name="l00113"></a>00113     }
+<a name="l00114"></a>00114     <span class="comment">// Read</span>
+<a name="l00115"></a>00115     n = <a class="code" href="classmdt_port_thread.html#a8756fe2a26bf267376b4003a2896ff48" title="Read data from port.">readFromPort</a>(&amp;frame);
+<a name="l00116"></a>00116     <span class="keywordflow">if</span>(n &lt; 0){
+<a name="l00117"></a>00117       <span class="comment">// Check about stopping</span>
+<a name="l00118"></a>00118       <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00119"></a>00119         <span class="keywordflow">break</span>;
+<a name="l00120"></a>00120       }
+<a name="l00121"></a>00121       portError = <a class="code" href="classmdt_port_thread.html#a584ee47549b0cb3a9c5de0a1ea496694" title="Handle common read errors.">handleCommonReadErrors</a>((<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>)n, &amp;frame);
+<a name="l00122"></a>00122       <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d">mdtAbstractPort::ErrorHandled</a>){
+<a name="l00123"></a>00123         <span class="comment">// Unhandled error, stop</span>
+<a name="l00124"></a>00124         <span class="keywordflow">break</span>;
+<a name="l00125"></a>00125       }
+<a name="l00126"></a>00126     }
+<a name="l00127"></a>00127   }
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129   <span class="comment">// Put current frame into pool</span>
+<a name="l00130"></a>00130   <span class="keywordflow">if</span>(frame != 0){
+<a name="l00131"></a>00131     pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3850ab819a8fc5dad22af14b74c45274" title="Get the read frames Queue pool.">readFramesPool</a>().enqueue(frame);
+<a name="l00132"></a>00132   }
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134   <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00135"></a>00135     <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>);
+<a name="l00136"></a>00136   }
+<a name="l00137"></a>00137   pvRunning = <span class="keyword">false</span>;
+<a name="l00138"></a>00138   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00139"></a>00139 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -210,7 +215,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

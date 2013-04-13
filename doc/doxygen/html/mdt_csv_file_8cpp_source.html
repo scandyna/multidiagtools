@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -81,166 +81,320 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00019"></a>00019 <span class="comment"> **</span>
 <a name="l00020"></a>00020 <span class="comment"> ****************************************************************************/</span>
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtCsvFile.h&quot;</span>
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;QDebug&gt;</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a><a class="code" href="classmdt_csv_file.html#a8c9f24190d83f32672f360f0fcc53d2f">00025</a> <a class="code" href="classmdt_csv_file.html#a8c9f24190d83f32672f360f0fcc53d2f" title="Constructor.">mdtCsvFile::mdtCsvFile</a>(QObject *parent, QByteArray fileEncoding)
-<a name="l00026"></a>00026  : QFile(parent)
-<a name="l00027"></a>00027 {
-<a name="l00028"></a>00028   pvCodec = QTextCodec::codecForName(fileEncoding);
-<a name="l00029"></a>00029   Q_ASSERT(pvCodec != 0);
-<a name="l00030"></a>00030 }
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 mdtCsvFile::~mdtCsvFile()
-<a name="l00033"></a>00033 {
-<a name="l00034"></a>00034   <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Clear readen data.">clear</a>();
-<a name="l00035"></a>00035 }
-<a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797">00037</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">mdtCsvFile::readLines</a>(QByteArray separator, QByteArray dataProtection, QByteArray comment)
-<a name="l00038"></a>00038 {
-<a name="l00039"></a>00039   Q_ASSERT(separator != dataProtection);
-<a name="l00040"></a>00040   Q_ASSERT(separator != comment);
-<a name="l00041"></a>00041   Q_ASSERT(dataProtection != comment);
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043   QByteArray line;
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <span class="comment">// Check if file was open</span>
-<a name="l00046"></a>00046   <span class="keywordflow">if</span>(!isOpen()){
-<a name="l00047"></a>00047     setErrorString(tr(<span class="stringliteral">&quot;mdtCsvFile::readLines(): file is not open&quot;</span>));
-<a name="l00048"></a>00048     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00049"></a>00049   }
-<a name="l00050"></a>00050   <span class="comment">// Clear previous results</span>
-<a name="l00051"></a>00051   <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Clear readen data.">clear</a>();
-<a name="l00052"></a>00052   <span class="comment">// Travel the file</span>
-<a name="l00053"></a>00053   <span class="keywordflow">while</span>(!atEnd()){
-<a name="l00054"></a>00054     <span class="comment">// Read a line</span>
-<a name="l00055"></a>00055     line = readLine();
-<a name="l00056"></a>00056     <span class="comment">// Remove begin and end whit space, end of line, etc...</span>
-<a name="l00057"></a>00057     line = line.trimmed();
-<a name="l00058"></a>00058     <span class="keywordflow">if</span>(line.size() &gt; 0){
-<a name="l00059"></a>00059       <span class="comment">// Check about comments</span>
-<a name="l00060"></a>00060       <span class="keywordflow">if</span>((comment.size() &gt; 0)&amp;&amp;(line.startsWith(comment))){
-<a name="l00061"></a>00061         <span class="keywordflow">continue</span>;
-<a name="l00062"></a>00062       }
-<a name="l00063"></a>00063       <span class="comment">// Parse the block</span>
-<a name="l00064"></a>00064       pvLines &lt;&lt; <a class="code" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc" title="Parse a string (considered as a line in a CSV file)">parseLine</a>(line, separator, dataProtection);
-<a name="l00065"></a>00065     }
-<a name="l00066"></a>00066   }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00069"></a>00069 }
-<a name="l00070"></a>00070 
-<a name="l00071"></a><a class="code" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc">00071</a> QStringList &amp;<a class="code" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc" title="Parse a string (considered as a line in a CSV file)">mdtCsvFile::parseLine</a>(<span class="keyword">const</span> QByteArray &amp;line, <span class="keyword">const</span> QByteArray &amp;separator, <span class="keyword">const</span> QByteArray &amp;dataProtection)
-<a name="l00072"></a>00072 {
-<a name="l00073"></a>00073   <span class="keywordtype">bool</span> parserEnabled;   <span class="comment">// Used for data protection ( &quot;data&quot;;&quot;other ; data&quot;;0123 )</span>
-<a name="l00074"></a>00074   QByteArray tmpStr;
-<a name="l00075"></a>00075   <span class="keywordtype">int</span> sepCursor = 0;    <span class="comment">// Cursor in line string for separator</span>
-<a name="l00076"></a>00076   <span class="keywordtype">int</span> dpCursor = 0;     <span class="comment">// Cursor in line string for dataProtection</span>
-<a name="l00077"></a>00077   QByteArray field;
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="comment">// As default, parser is enabled</span>
-<a name="l00080"></a>00080   parserEnabled = <span class="keyword">true</span>;
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   pvFields.clear();
-<a name="l00083"></a>00083   tmpStr = line;
-<a name="l00084"></a>00084   <span class="keywordflow">while</span>(tmpStr.size() &gt; 0){
-<a name="l00085"></a>00085     field.clear();
-<a name="l00086"></a>00086     <span class="comment">// Find first occurence of dataProtection in line string</span>
-<a name="l00087"></a>00087     <span class="keywordflow">if</span>(dataProtection.size() &gt; 0){
-<a name="l00088"></a>00088       dpCursor = tmpStr.indexOf(dataProtection);
-<a name="l00089"></a>00089     }<span class="keywordflow">else</span>{
-<a name="l00090"></a>00090       dpCursor = -1;
-<a name="l00091"></a>00091     }
-<a name="l00092"></a>00092     <span class="comment">// If parser is enabled, react to keys</span>
-<a name="l00093"></a>00093     <span class="keywordflow">if</span>(parserEnabled){
-<a name="l00094"></a>00094       <span class="comment">// Find first occurence of separator in line string</span>
-<a name="l00095"></a>00095       sepCursor = tmpStr.indexOf(separator);
-<a name="l00096"></a>00096       <span class="comment">// See if we have a data protection</span>
-<a name="l00097"></a>00097       <span class="keywordflow">if</span>(dpCursor &gt;= 0){
-<a name="l00098"></a>00098         <span class="comment">// See if we have a separator</span>
-<a name="l00099"></a>00099         <span class="keywordflow">if</span>(sepCursor &gt;= 0){
-<a name="l00100"></a>00100           <span class="comment">// Have both, see if data protection is first occurence</span>
-<a name="l00101"></a>00101           <span class="keywordflow">if</span>(dpCursor &lt; sepCursor){
-<a name="l00102"></a>00102             <span class="comment">// Begin of data protection - Diseable parser and remove data protection</span>
-<a name="l00103"></a>00103             parserEnabled = <span class="keyword">false</span>;
-<a name="l00104"></a>00104             tmpStr.remove(0, dataProtection.size());
-<a name="l00105"></a>00105           }<span class="keywordflow">else</span>{
-<a name="l00106"></a>00106             <span class="comment">// Copy into field</span>
-<a name="l00107"></a>00107             field.append(tmpStr.left(sepCursor));
-<a name="l00108"></a>00108             pvFields &lt;&lt; pvCodec-&gt;toUnicode(field);
-<a name="l00109"></a>00109             <span class="comment">// Remove separator</span>
-<a name="l00110"></a>00110             tmpStr.remove(0, sepCursor+separator.size());
-<a name="l00111"></a>00111           }
-<a name="l00112"></a>00112         }<span class="keywordflow">else</span>{
-<a name="l00113"></a>00113           <span class="comment">// Have only data protection - remove protection and put data into field</span>
-<a name="l00114"></a>00114           tmpStr.remove(0, dataProtection.size());
-<a name="l00115"></a>00115           Q_ASSERT((tmpStr.size()-dataProtection.size()) &gt;= 0);
-<a name="l00116"></a>00116           field.append(tmpStr.left(tmpStr.size()-dataProtection.size()));
-<a name="l00117"></a>00117           pvFields &lt;&lt; pvCodec-&gt;toUnicode(field);
-<a name="l00118"></a>00118           <span class="keywordflow">break</span>;
-<a name="l00119"></a>00119         }
-<a name="l00120"></a>00120       }<span class="keywordflow">else</span>{
-<a name="l00121"></a>00121         <span class="comment">// Data protection not found , see about separator</span>
-<a name="l00122"></a>00122         <span class="keywordflow">if</span>(sepCursor &gt;= 0){
-<a name="l00123"></a>00123           <span class="comment">// Copy into field</span>
-<a name="l00124"></a>00124           field.append(tmpStr.left(sepCursor));
-<a name="l00125"></a>00125           pvFields &lt;&lt; pvCodec-&gt;toUnicode(field);
-<a name="l00126"></a>00126           <span class="comment">// Remove separator</span>
-<a name="l00127"></a>00127           tmpStr.remove(0, sepCursor+separator.size());
-<a name="l00128"></a>00128         }<span class="keywordflow">else</span>{
-<a name="l00129"></a>00129           <span class="comment">// Nothing found - Just copy all data into field</span>
-<a name="l00130"></a>00130           field.append(tmpStr);
-<a name="l00131"></a>00131           pvFields &lt;&lt; pvCodec-&gt;toUnicode(field);
-<a name="l00132"></a>00132           <span class="keywordflow">break</span>;
-<a name="l00133"></a>00133         }
-<a name="l00134"></a>00134       }
-<a name="l00135"></a>00135     }<span class="keywordflow">else</span>{
-<a name="l00136"></a>00136       <span class="comment">// Parser diseabled, see if we must enable it</span>
-<a name="l00137"></a>00137       <span class="keywordflow">if</span>(dpCursor &gt;= 0){
-<a name="l00138"></a>00138         parserEnabled = <span class="keyword">true</span>;
-<a name="l00139"></a>00139         <span class="comment">// Store data -&gt; cursor</span>
-<a name="l00140"></a>00140         field.append(tmpStr.left(dpCursor));
-<a name="l00141"></a>00141         pvFields &lt;&lt; pvCodec-&gt;toUnicode(field);
-<a name="l00142"></a>00142         tmpStr.remove(0, dpCursor+dataProtection.size()+separator.size());
-<a name="l00143"></a>00143       }<span class="keywordflow">else</span>{
-<a name="l00144"></a>00144         <span class="comment">// Simply store the data into field</span>
-<a name="l00145"></a>00145         field.append(tmpStr);
-<a name="l00146"></a>00146         pvFields &lt;&lt; pvCodec-&gt;toUnicode(field);
-<a name="l00147"></a>00147         <span class="keywordflow">break</span>;
-<a name="l00148"></a>00148       }
-<a name="l00149"></a>00149     }
-<a name="l00150"></a>00150   }
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152   <span class="keywordflow">return</span> pvFields;
-<a name="l00153"></a>00153 }
-<a name="l00154"></a>00154 
-<a name="l00155"></a><a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">00155</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Clear readen data.">mdtCsvFile::clear</a>()
-<a name="l00156"></a>00156 {
-<a name="l00157"></a>00157   pvLines.clear();
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-<a name="l00160"></a><a class="code" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee">00160</a> QString <a class="code" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee" title="Get a value.">mdtCsvFile::valueAt</a>(<span class="keywordtype">int</span> line, <span class="keywordtype">int</span> column)
-<a name="l00161"></a>00161 {
-<a name="l00162"></a>00162   <span class="keywordflow">if</span>((line &lt; 0)||(column &lt; 0)){
-<a name="l00163"></a>00163     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00164"></a>00164   }
-<a name="l00165"></a>00165   <span class="keywordflow">if</span>(pvLines.size() &lt; 1){
-<a name="l00166"></a>00166     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00167"></a>00167   }
-<a name="l00168"></a>00168   <span class="keywordflow">if</span>(line &gt;= pvLines.size()){
-<a name="l00169"></a>00169     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00170"></a>00170   }
-<a name="l00171"></a>00171   <span class="keywordflow">if</span>(column &gt;= pvLines.at(line).size()){
-<a name="l00172"></a>00172     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00173"></a>00173   }
-<a name="l00174"></a>00174   <span class="keywordflow">return</span> pvLines.at(line).at(column);
-<a name="l00175"></a>00175 }
-<a name="l00176"></a>00176 
-<a name="l00177"></a><a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261">00177</a> QList&lt;QStringList&gt; &amp;<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">mdtCsvFile::lines</a>()
-<a name="l00178"></a>00178 {
-<a name="l00179"></a>00179   <span class="keywordflow">return</span> pvLines;
-<a name="l00180"></a>00180 }
-<a name="l00181"></a>00181 
+<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtError.h&quot;</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;mdtAlgorithms.h&quot;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;cctype&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="comment">//#include &lt;QDebug&gt;</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a><a class="code" href="classmdt_csv_file.html#aaca142b18a4f436548e17fbef755e2d5">00028</a> <a class="code" href="classmdt_csv_file.html#aaca142b18a4f436548e17fbef755e2d5" title="Constructor.">mdtCsvFile::mdtCsvFile</a>(QObject *parent, <span class="keyword">const</span> QByteArray &amp;fileEncoding)
+<a name="l00029"></a>00029  : QFile(parent)
+<a name="l00030"></a>00030 {
+<a name="l00031"></a>00031   pvCodec = QTextCodec::codecForName(fileEncoding);
+<a name="l00032"></a>00032   Q_ASSERT(pvCodec != 0);
+<a name="l00033"></a>00033   pvReadLineBufferSize = 8192;
+<a name="l00034"></a>00034 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 mdtCsvFile::~mdtCsvFile()
+<a name="l00037"></a>00037 {
+<a name="l00038"></a>00038   <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Parse a string (considered as a line in a CSV file)">clear</a>();
+<a name="l00039"></a>00039 }
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c">00041</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">mdtCsvFile::close</a>()
+<a name="l00042"></a>00042 {
+<a name="l00043"></a>00043   pvReadLineBuffer.clear();
+<a name="l00044"></a>00044   <a class="code" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c" title="Close.">QFile::close</a>();
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="classmdt_csv_file.html#a0e85f46ffdc4e44c8974c485abcc48b8">00047</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#a0e85f46ffdc4e44c8974c485abcc48b8" title="Write a line of data.">mdtCsvFile::writeLine</a>(<span class="keyword">const</span> QStringList &amp;line, <span class="keyword">const</span> QString &amp;separator, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QChar &amp;escapeChar, QString eol)
+<a name="l00048"></a>00048 {
+<a name="l00049"></a>00049   QString str, item;
+<a name="l00050"></a>00050   <span class="keywordtype">int</span> i;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="comment">// Check if file was open</span>
+<a name="l00053"></a>00053   <span class="keywordflow">if</span>(!isOpen()){
+<a name="l00054"></a>00054     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FILE_IO_ERROR, <span class="stringliteral">&quot;File &quot;</span> + fileName() + <span class="stringliteral">&quot; is not open&quot;</span>, mdtError::Error);
+<a name="l00055"></a>00055     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtCsvFile&quot;</span>);
+<a name="l00056"></a>00056     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00057"></a>00057     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00058"></a>00058   }
+<a name="l00059"></a>00059   <span class="comment">// If file was open with Text flag, EOL is allways converted</span>
+<a name="l00060"></a>00060   <span class="keywordflow">if</span>(isTextModeEnabled()){
+<a name="l00061"></a>00061     eol = <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00062"></a>00062   }
+<a name="l00063"></a>00063   <span class="comment">// Get items, escape and write</span>
+<a name="l00064"></a>00064   <span class="keywordflow">for</span>(i=0; i&lt;line.size(); i++){
+<a name="l00065"></a>00065     str += dataProtection;
+<a name="l00066"></a>00066     <span class="keywordflow">if</span>(!escapeChar.isNull()){
+<a name="l00067"></a>00067       item = line.at(i);
+<a name="l00068"></a>00068       item.replace(dataProtection, escapeChar + dataProtection);
+<a name="l00069"></a>00069       str += item;
+<a name="l00070"></a>00070     }<span class="keywordflow">else</span>{
+<a name="l00071"></a>00071       str += line.at(i);
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073     str += dataProtection;
+<a name="l00074"></a>00074     <span class="keywordflow">if</span>(i &lt; (line.size()-1)){
+<a name="l00075"></a>00075       str += separator;
+<a name="l00076"></a>00076     }
+<a name="l00077"></a>00077   }
+<a name="l00078"></a>00078   str += eol;
+<a name="l00079"></a>00079   <span class="keywordflow">if</span>(write(pvCodec-&gt;fromUnicode(str)) &lt; 0){
+<a name="l00080"></a>00080     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FILE_IO_ERROR, <span class="stringliteral">&quot;Write error occured on file &quot;</span> + fileName(), mdtError::Error);
+<a name="l00081"></a>00081     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtCsvFile&quot;</span>);
+<a name="l00082"></a>00082     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00083"></a>00083     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00084"></a>00084   }
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00087"></a>00087 }
+<a name="l00088"></a>00088 
+<a name="l00089"></a><a class="code" href="classmdt_csv_file.html#a4010d76497d8f5d2a85171025d31f100">00089</a> QStringList <a class="code" href="classmdt_csv_file.html#a4010d76497d8f5d2a85171025d31f100" title="Get CSV file&#39;s header.">mdtCsvFile::readHeader</a>(<span class="keyword">const</span> QString &amp;separator, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QString &amp;comment, <span class="keyword">const</span> QChar &amp;escapeChar, QByteArray eol)
+<a name="l00090"></a>00090 {
+<a name="l00091"></a>00091   <span class="keywordflow">return</span> <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(separator, dataProtection, comment, escapeChar, eol);
+<a name="l00092"></a>00092 }
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3">00094</a> QByteArray <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">mdtCsvFile::readLine</a>(<span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QString &amp;comment, <span class="keyword">const</span> QChar &amp;escapeChar, QByteArray eol)
+<a name="l00095"></a>00095 {
+<a name="l00096"></a>00096   QByteArray line;
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   <span class="keywordflow">if</span>(<a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(line, dataProtection, comment, escapeChar, eol)){
+<a name="l00099"></a>00099     <span class="keywordflow">return</span> line;
+<a name="l00100"></a>00100   }
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102   <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00103"></a>00103 }
+<a name="l00104"></a>00104 
+<a name="l00105"></a><a class="code" href="classmdt_csv_file.html#a0c16f0024802eb675872aef129317eb8">00105</a> QStringList <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">mdtCsvFile::readLine</a>(<span class="keyword">const</span> QString &amp;separator, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QString &amp;comment, <span class="keyword">const</span> QChar &amp;escapeChar, QByteArray eol)
+<a name="l00106"></a>00106 {
+<a name="l00107"></a>00107   QByteArray line;
+<a name="l00108"></a>00108   QStringList items;
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   <span class="keywordflow">if</span>(<a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(line, dataProtection, comment, escapeChar, eol)){
+<a name="l00111"></a>00111     items = <a class="code" href="namespacemdt_algorithms.html#a28d7d5eb9578936c950039fa2f86a1bf" title="Split a string reagrding a separator and data protection.">mdtAlgorithms::splitString</a>(pvCodec-&gt;toUnicode(line), separator, dataProtection, escapeChar);
+<a name="l00112"></a>00112   }
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114   <span class="keywordflow">return</span> items;
+<a name="l00115"></a>00115 }
+<a name="l00116"></a>00116 
+<a name="l00117"></a><a class="code" href="classmdt_csv_file.html#a56c5d054c044cba2e4d617f5185a13ed">00117</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">mdtCsvFile::readLine</a>(QByteArray &amp;line, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QString &amp;comment, <span class="keyword">const</span> QChar &amp;escapeChar, QByteArray eol)
+<a name="l00118"></a>00118 {
+<a name="l00119"></a>00119   QByteArray buffer;
+<a name="l00120"></a>00120   <span class="keywordtype">bool</span> eolFound = <span class="keyword">false</span>;
+<a name="l00121"></a>00121   <span class="keywordtype">int</span> eolCursor;
+<a name="l00122"></a>00122   <span class="keywordtype">int</span> dpCursor;
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124   buffer = pvReadLineBuffer;
+<a name="l00125"></a>00125   <span class="comment">// Read until EOL found or EOF</span>
+<a name="l00126"></a>00126   <span class="keywordflow">while</span>(!eolFound){
+<a name="l00127"></a>00127     eolCursor = buffer.indexOf(eol);
+<a name="l00128"></a>00128     <span class="keywordflow">if</span>(eolCursor &lt; 0){
+<a name="l00129"></a>00129       <span class="keywordflow">if</span>(atEnd()){
+<a name="l00130"></a>00130         line.append(buffer);
+<a name="l00131"></a>00131         buffer.clear();
+<a name="l00132"></a>00132         <span class="comment">// Now check that line is not commented</span>
+<a name="l00133"></a>00133         <span class="keywordflow">if</span>(indexOfCommentedLineBeginning(line, comment) &gt; -1){
+<a name="l00134"></a>00134           line.clear();
+<a name="l00135"></a>00135         }
+<a name="l00136"></a>00136         <span class="keywordflow">break</span>;
+<a name="l00137"></a>00137       }
+<a name="l00138"></a>00138       buffer.append(read(pvReadLineBufferSize));
+<a name="l00139"></a>00139     }<span class="keywordflow">else</span>{
+<a name="l00140"></a>00140       <span class="comment">// A EOL was found, check if it is in a data protection or not</span>
+<a name="l00141"></a>00141       line.append(buffer.left(eolCursor));
+<a name="l00142"></a>00142       buffer.remove(0, eolCursor);
+<a name="l00143"></a>00143       <span class="keywordflow">if</span>(dataProtectionSectionBegins(line, dataProtection, escapeChar)){
+<a name="l00144"></a>00144         <span class="comment">// Search until we find a closing data protrection to confirm that we found a opening one</span>
+<a name="l00145"></a>00145         readUntilDataProtection(buffer, dpCursor, dataProtection, escapeChar);
+<a name="l00146"></a>00146         <span class="keywordflow">if</span>(dpCursor &lt; 0){
+<a name="l00147"></a>00147           <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FILE_IO_ERROR, <span class="stringliteral">&quot;In file &quot;</span> + fileName() + <span class="stringliteral">&quot; : format error (missing a closing &quot;</span> + dataProtection + <span class="stringliteral">&quot;)&quot;</span>, mdtError::Error);
+<a name="l00148"></a>00148           MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtCsvFile&quot;</span>);
+<a name="l00149"></a>00149           e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00150"></a>00150           <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00151"></a>00151         }<span class="keywordflow">else</span>{
+<a name="l00152"></a>00152           line.append(buffer.left(dpCursor+dataProtection.size()));
+<a name="l00153"></a>00153           buffer.remove(0, dpCursor+dataProtection.size());
+<a name="l00154"></a>00154         }
+<a name="l00155"></a>00155       }<span class="keywordflow">else</span>{
+<a name="l00156"></a>00156         <span class="comment">// Here we found a EOL in a unprotected section.</span>
+<a name="l00157"></a>00157         buffer.remove(0, eol.size());
+<a name="l00158"></a>00158         <span class="comment">// Now check that line is not commented</span>
+<a name="l00159"></a>00159         <span class="keywordflow">if</span>(indexOfCommentedLineBeginning(line, comment) &gt; -1){
+<a name="l00160"></a>00160           line.clear();
+<a name="l00161"></a>00161         }<span class="keywordflow">else</span>{
+<a name="l00162"></a>00162           eolFound = <span class="keyword">true</span>;
+<a name="l00163"></a>00163         }
+<a name="l00164"></a>00164       }
+<a name="l00165"></a>00165     }
+<a name="l00166"></a>00166   }
+<a name="l00167"></a>00167   pvReadLineBuffer = buffer;
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00170"></a>00170 }
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b">00172</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b" title="Check if readLine() has more lines available.">mdtCsvFile::hasMoreLines</a>()<span class="keyword"> const</span>
+<a name="l00173"></a>00173 <span class="keyword"></span>{
+<a name="l00174"></a>00174   <span class="keywordflow">if</span>((pvReadLineBuffer.size() &gt; 0)||(!atEnd())){
+<a name="l00175"></a>00175     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00176"></a>00176   }
+<a name="l00177"></a>00177   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00178"></a>00178 }
+<a name="l00179"></a>00179 
+<a name="l00180"></a><a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b">00180</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">mdtCsvFile::readLines</a>(<span class="keyword">const</span> QString &amp;separator, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QString &amp;comment, <span class="keyword">const</span> QChar &amp;escapeChar, QString eol)
+<a name="l00181"></a>00181 {
+<a name="l00182"></a>00182   Q_ASSERT(separator != dataProtection);
+<a name="l00183"></a>00183   Q_ASSERT(separator != comment);
+<a name="l00184"></a>00184   Q_ASSERT(dataProtection != comment);
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186   QString line;
+<a name="l00187"></a>00187   QByteArray lineBa;
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189   <span class="comment">// Check if file was open</span>
+<a name="l00190"></a>00190   <span class="keywordflow">if</span>(!isOpen()){
+<a name="l00191"></a>00191     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_FILE_IO_ERROR, <span class="stringliteral">&quot;File &quot;</span> + fileName() + <span class="stringliteral">&quot; is not open&quot;</span>, mdtError::Error);
+<a name="l00192"></a>00192     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtCsvFile&quot;</span>);
+<a name="l00193"></a>00193     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00194"></a>00194     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00195"></a>00195   }
+<a name="l00196"></a>00196   <span class="comment">// Clear previous results</span>
+<a name="l00197"></a>00197   <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Parse a string (considered as a line in a CSV file)">clear</a>();
+<a name="l00198"></a>00198   <span class="comment">// If file was open with Text flag, EOL is allready converted</span>
+<a name="l00199"></a>00199   <span class="keywordflow">if</span>(isTextModeEnabled()){
+<a name="l00200"></a>00200     eol = <span class="stringliteral">&quot;\n&quot;</span>;
+<a name="l00201"></a>00201   }
+<a name="l00202"></a>00202   <span class="comment">// Read file and parse each line</span>
+<a name="l00203"></a>00203   <span class="keywordflow">while</span>(<a class="code" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b" title="Check if readLine() has more lines available.">hasMoreLines</a>()){
+<a name="l00204"></a>00204     lineBa.clear();
+<a name="l00205"></a>00205     <span class="keywordflow">if</span>(<a class="code" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine</a>(lineBa, dataProtection, comment, escapeChar, eol.toAscii())){
+<a name="l00206"></a>00206       line = pvCodec-&gt;toUnicode(lineBa);
+<a name="l00207"></a>00207       <span class="keywordflow">if</span>(line.size() &gt; 0){
+<a name="l00208"></a>00208         <span class="comment">// Parse the line</span>
+<a name="l00209"></a>00209         pvLines.append(<a class="code" href="namespacemdt_algorithms.html#a28d7d5eb9578936c950039fa2f86a1bf" title="Split a string reagrding a separator and data protection.">mdtAlgorithms::splitString</a>(line, separator, dataProtection, escapeChar));
+<a name="l00210"></a>00210       }
+<a name="l00211"></a>00211     }
+<a name="l00212"></a>00212   }
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00215"></a>00215 }
+<a name="l00216"></a>00216 
+<a name="l00217"></a><a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">00217</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Parse a string (considered as a line in a CSV file)">mdtCsvFile::clear</a>()
+<a name="l00218"></a>00218 {
+<a name="l00219"></a>00219   pvLines.clear();
+<a name="l00220"></a>00220 }
+<a name="l00221"></a>00221 
+<a name="l00222"></a><a class="code" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee">00222</a> QString <a class="code" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee" title="Get a value.">mdtCsvFile::valueAt</a>(<span class="keywordtype">int</span> line, <span class="keywordtype">int</span> column)
+<a name="l00223"></a>00223 {
+<a name="l00224"></a>00224   <span class="keywordflow">if</span>((line &lt; 0)||(column &lt; 0)){
+<a name="l00225"></a>00225     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00226"></a>00226   }
+<a name="l00227"></a>00227   <span class="keywordflow">if</span>(pvLines.size() &lt; 1){
+<a name="l00228"></a>00228     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00229"></a>00229   }
+<a name="l00230"></a>00230   <span class="keywordflow">if</span>(line &gt;= pvLines.size()){
+<a name="l00231"></a>00231     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00232"></a>00232   }
+<a name="l00233"></a>00233   <span class="keywordflow">if</span>(column &gt;= pvLines.at(line).size()){
+<a name="l00234"></a>00234     <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00235"></a>00235   }
+<a name="l00236"></a>00236   <span class="keywordflow">return</span> pvLines.at(line).at(column);
+<a name="l00237"></a>00237 }
+<a name="l00238"></a>00238 
+<a name="l00239"></a><a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261">00239</a> QList&lt;QStringList&gt; &amp;<a class="code" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261" title="Get content of entire file.">mdtCsvFile::lines</a>()
+<a name="l00240"></a>00240 {
+<a name="l00241"></a>00241   <span class="keywordflow">return</span> pvLines;
+<a name="l00242"></a>00242 }
+<a name="l00243"></a>00243 
+<a name="l00244"></a><a class="code" href="classmdt_csv_file.html#a27751812bf6625d6264bdce4bd43167c">00244</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_csv_file.html#a27751812bf6625d6264bdce4bd43167c" title="Set the readLine() method&#39;s buffer size.">mdtCsvFile::setReadLineBufferSize</a>(<span class="keywordtype">int</span> size)
+<a name="l00245"></a>00245 {
+<a name="l00246"></a>00246   pvReadLineBufferSize = size;
+<a name="l00247"></a>00247 }
+<a name="l00248"></a>00248 
+<a name="l00249"></a>00249 <span class="keywordtype">bool</span> mdtCsvFile::dataProtectionSectionBegins(<span class="keyword">const</span> QByteArray &amp;line, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QChar &amp;escapeChar)
+<a name="l00250"></a>00250 {
+<a name="l00251"></a>00251   <span class="keywordtype">bool</span> escapeEqualProtection = QString(escapeChar) == dataProtection;
+<a name="l00252"></a>00252   QByteArray escapedDataProtection;
+<a name="l00253"></a>00253   <span class="keywordtype">int</span> dpCount;
+<a name="l00254"></a>00254   <span class="keywordtype">int</span> esDpCount;
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256   <span class="comment">// If no data protection is given, we are never in a protected section</span>
+<a name="l00257"></a>00257   <span class="keywordflow">if</span>(dataProtection.isEmpty()){
+<a name="l00258"></a>00258     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00259"></a>00259   }
+<a name="l00260"></a>00260   <span class="comment">// Build the escaped data protection version</span>
+<a name="l00261"></a>00261   escapedDataProtection.append(escapeChar.toAscii());
+<a name="l00262"></a>00262   escapedDataProtection += dataProtection.toAscii();
+<a name="l00263"></a>00263   <span class="comment">// Count data protection occurences</span>
+<a name="l00264"></a>00264   dpCount = line.count(dataProtection.toAscii());
+<a name="l00265"></a>00265   <span class="comment">// Count escaped data protection occurences</span>
+<a name="l00266"></a>00266   <span class="keywordflow">if</span>(escapeEqualProtection){
+<a name="l00267"></a>00267     esDpCount = 0;
+<a name="l00268"></a>00268   }<span class="keywordflow">else</span>{
+<a name="l00269"></a>00269     esDpCount = line.count(escapedDataProtection);
+<a name="l00270"></a>00270   }
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272   <span class="keywordflow">return</span> ((dpCount-esDpCount)%2);
+<a name="l00273"></a>00273 }
+<a name="l00274"></a>00274 
+<a name="l00275"></a>00275 <span class="keywordtype">void</span> mdtCsvFile::readUntilDataProtection(QByteArray &amp;buffer, <span class="keywordtype">int</span> &amp;dpIndex, <span class="keyword">const</span> QString &amp;dataProtection, <span class="keyword">const</span> QChar &amp;escapeChar)
+<a name="l00276"></a>00276 {
+<a name="l00277"></a>00277   <span class="keywordtype">bool</span> dpFound = <span class="keyword">false</span>;
+<a name="l00278"></a>00278   <span class="keywordtype">bool</span> escapeEqualProtection = QString(escapeChar) == dataProtection;
+<a name="l00279"></a>00279   <span class="keywordtype">char</span> es = escapeChar.toAscii();
+<a name="l00280"></a>00280   <span class="keywordtype">int</span> start = 0;
+<a name="l00281"></a>00281 
+<a name="l00282"></a>00282   <span class="keywordflow">while</span>((!dpFound)<span class="comment">/*&amp;&amp;(!atEnd())*/</span>){
+<a name="l00283"></a>00283     <span class="comment">// Search data protection</span>
+<a name="l00284"></a>00284     dpIndex = buffer.indexOf(dataProtection, start);
+<a name="l00285"></a>00285     <span class="keywordflow">if</span>(escapeEqualProtection){
+<a name="l00286"></a>00286       <span class="keywordflow">if</span>(dpIndex &gt; -1){
+<a name="l00287"></a>00287         <span class="comment">// We need enougth elements to check about escape</span>
+<a name="l00288"></a>00288         <span class="keywordflow">if</span>(buffer.size() &gt; (dpIndex+1)){
+<a name="l00289"></a>00289           <span class="comment">// Check that data protection is not escaped</span>
+<a name="l00290"></a>00290           <span class="keywordflow">if</span>(buffer.at(dpIndex+1) == es){
+<a name="l00291"></a>00291             <span class="comment">// Escaped data protection</span>
+<a name="l00292"></a>00292             start = dpIndex+2;
+<a name="l00293"></a>00293             dpIndex = -1;
+<a name="l00294"></a>00294           }
+<a name="l00295"></a>00295         }<span class="keywordflow">else</span>{
+<a name="l00296"></a>00296           <span class="comment">// Not enougth data, read more</span>
+<a name="l00297"></a>00297           dpIndex = -1;
+<a name="l00298"></a>00298         }
+<a name="l00299"></a>00299       }
+<a name="l00300"></a>00300     }
+<a name="l00301"></a>00301     <span class="keywordflow">if</span>(dpIndex &gt; -1){
+<a name="l00302"></a>00302       dpFound = <span class="keyword">true</span>;
+<a name="l00303"></a>00303     }<span class="keywordflow">else</span>{
+<a name="l00304"></a>00304       <span class="keywordflow">if</span>(atEnd()){
+<a name="l00305"></a>00305         buffer.append(pvReadLineBuffer);
+<a name="l00306"></a>00306         pvReadLineBuffer.clear();
+<a name="l00307"></a>00307         dpIndex = buffer.indexOf(dataProtection);
+<a name="l00308"></a>00308         <span class="keywordflow">break</span>;
+<a name="l00309"></a>00309       }<span class="keywordflow">else</span>{
+<a name="l00310"></a>00310         buffer.append(read(pvReadLineBufferSize));
+<a name="l00311"></a>00311       }
+<a name="l00312"></a>00312     }
+<a name="l00313"></a>00313   }
+<a name="l00314"></a>00314 }
+<a name="l00315"></a>00315 
+<a name="l00316"></a>00316 <span class="keywordtype">int</span> mdtCsvFile::indexOfCommentedLineBeginning(<span class="keyword">const</span> QByteArray &amp;line, <span class="keyword">const</span> QString &amp;comment)
+<a name="l00317"></a>00317 {
+<a name="l00318"></a>00318   <span class="keywordtype">int</span> i;
+<a name="l00319"></a>00319 
+<a name="l00320"></a>00320   <span class="keywordflow">if</span>(comment.isEmpty()){
+<a name="l00321"></a>00321     <span class="keywordflow">return</span> -1;
+<a name="l00322"></a>00322   }
+<a name="l00323"></a>00323   <span class="keywordflow">for</span>(i=0; i&lt;line.size(); i++){
+<a name="l00324"></a>00324     <span class="keywordflow">if</span>(!isspace(line.at(i))){
+<a name="l00325"></a>00325       <span class="comment">// We are at first char position</span>
+<a name="l00326"></a>00326       <span class="keywordflow">if</span>(line.indexOf(comment, i) == i){
+<a name="l00327"></a>00327         <span class="keywordflow">return</span> i;
+<a name="l00328"></a>00328       }<span class="keywordflow">else</span>{
+<a name="l00329"></a>00329         <span class="keywordflow">return</span> -1;
+<a name="l00330"></a>00330       }
+<a name="l00331"></a>00331     }
+<a name="l00332"></a>00332   }
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334   <span class="keywordflow">return</span> -1;
+<a name="l00335"></a>00335 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -257,7 +411,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

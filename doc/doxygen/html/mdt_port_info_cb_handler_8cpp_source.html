@@ -86,109 +86,114 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QComboBox&gt;</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;QVariant&gt;</span>
 <a name="l00026"></a>00026 
-<a name="l00027"></a>00027 mdtPortInfoCbHandler::mdtPortInfoCbHandler(QObject *parent)
-<a name="l00028"></a>00028  : QObject(parent)
-<a name="l00029"></a>00029 {
-<a name="l00030"></a>00030   cbPorts = 0;
-<a name="l00031"></a>00031   cbDevices = 0;
-<a name="l00032"></a>00032 }
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 mdtPortInfoCbHandler::~mdtPortInfoCbHandler()
-<a name="l00035"></a>00035 {
-<a name="l00036"></a>00036 }
-<a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="classmdt_port_info_cb_handler.html#a06f9b5e8127e61026911691827f3203a">00038</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info_cb_handler.html#a06f9b5e8127e61026911691827f3203a" title="Set the comboBox that must display ports.">mdtPortInfoCbHandler::setPortsComboBox</a>(QComboBox *comboBox)
-<a name="l00039"></a>00039 {
-<a name="l00040"></a>00040   Q_ASSERT(comboBox != 0);
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042   cbPorts = comboBox;
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="classmdt_port_info_cb_handler.html#a59fc2180a69119e17cfa24cf84a9c96f">00045</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info_cb_handler.html#a59fc2180a69119e17cfa24cf84a9c96f" title="Set the comboBox that must display devices.">mdtPortInfoCbHandler::setDevicesComboBox</a>(QComboBox *comboBox)
-<a name="l00046"></a>00046 {
-<a name="l00047"></a>00047   Q_ASSERT(comboBox != 0);
-<a name="l00048"></a>00048   Q_ASSERT(cbPorts != 0);
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <span class="keywordflow">if</span>(cbDevices != 0){
-<a name="l00051"></a>00051     disconnect(cbPorts, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateDevicesCb(<span class="keywordtype">int</span>)));
-<a name="l00052"></a>00052   }
-<a name="l00053"></a>00053   cbDevices = comboBox;
-<a name="l00054"></a>00054   connect(cbPorts, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateDevicesCb(<span class="keywordtype">int</span>)));
-<a name="l00055"></a>00055 }
-<a name="l00056"></a>00056 
-<a name="l00057"></a><a class="code" href="classmdt_port_info_cb_handler.html#a82c84a3eb52cd5d941377a64788a28ef">00057</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info_cb_handler.html#a82c84a3eb52cd5d941377a64788a28ef" title="Fill the comboboxes with a scan result.">mdtPortInfoCbHandler::fillComboBoxes</a>(<span class="keyword">const</span> QList&lt;mdtPortInfo*&gt; &amp;portInfoList)
-<a name="l00058"></a>00058 {
-<a name="l00059"></a>00059   <span class="keywordtype">int</span> i;
-<a name="l00060"></a>00060   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *portInfo;
-<a name="l00061"></a>00061   QVariant var;
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;QDebug&gt;</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 mdtPortInfoCbHandler::mdtPortInfoCbHandler(QObject *parent)
+<a name="l00030"></a>00030  : QObject(parent)
+<a name="l00031"></a>00031 {
+<a name="l00032"></a>00032   cbPorts = 0;
+<a name="l00033"></a>00033   cbDevices = 0;
+<a name="l00034"></a>00034 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 mdtPortInfoCbHandler::~mdtPortInfoCbHandler()
+<a name="l00037"></a>00037 {
+<a name="l00038"></a>00038 }
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="classmdt_port_info_cb_handler.html#a06f9b5e8127e61026911691827f3203a">00040</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info_cb_handler.html#a06f9b5e8127e61026911691827f3203a" title="Set the comboBox that must display ports.">mdtPortInfoCbHandler::setPortsComboBox</a>(QComboBox *comboBox)
+<a name="l00041"></a>00041 {
+<a name="l00042"></a>00042   Q_ASSERT(comboBox != 0);
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   cbPorts = comboBox;
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="classmdt_port_info_cb_handler.html#a59fc2180a69119e17cfa24cf84a9c96f">00047</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info_cb_handler.html#a59fc2180a69119e17cfa24cf84a9c96f" title="Set the comboBox that must display devices.">mdtPortInfoCbHandler::setDevicesComboBox</a>(QComboBox *comboBox)
+<a name="l00048"></a>00048 {
+<a name="l00049"></a>00049   Q_ASSERT(comboBox != 0);
+<a name="l00050"></a>00050   Q_ASSERT(cbPorts != 0);
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="keywordflow">if</span>(cbDevices != 0){
+<a name="l00053"></a>00053     disconnect(cbPorts, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateDevicesCb(<span class="keywordtype">int</span>)));
+<a name="l00054"></a>00054   }
+<a name="l00055"></a>00055   cbDevices = comboBox;
+<a name="l00056"></a>00056   connect(cbPorts, SIGNAL(currentIndexChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(updateDevicesCb(<span class="keywordtype">int</span>)));
+<a name="l00057"></a>00057 }
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="classmdt_port_info_cb_handler.html#a82c84a3eb52cd5d941377a64788a28ef">00059</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_port_info_cb_handler.html#a82c84a3eb52cd5d941377a64788a28ef" title="Fill the comboboxes with a scan result.">mdtPortInfoCbHandler::fillComboBoxes</a>(<span class="keyword">const</span> QList&lt;mdtPortInfo*&gt; &amp;portInfoList)
+<a name="l00060"></a>00060 {
+<a name="l00061"></a>00061   Q_ASSERT(cbPorts != 0);
 <a name="l00062"></a>00062 
-<a name="l00063"></a>00063   cbPorts-&gt;clear();
-<a name="l00064"></a>00064   <span class="keywordflow">for</span>(i=0; i&lt;portInfoList.size(); i++){
-<a name="l00065"></a>00065     portInfo = portInfoList.at(i);
-<a name="l00066"></a>00066     Q_ASSERT(portInfo != 0);
-<a name="l00067"></a>00067     var.setValue(*portInfo);
-<a name="l00068"></a>00068     cbPorts-&gt;addItem(portInfo-&gt;<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>(), var);
-<a name="l00069"></a>00069   }
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351">00072</a> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> <a class="code" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351" title="Get the selected port info object.">mdtPortInfoCbHandler::currentPortInfo</a>()
-<a name="l00073"></a>00073 {
-<a name="l00074"></a>00074   Q_ASSERT(cbPorts != 0);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> portInfo;
+<a name="l00063"></a>00063   <span class="keywordtype">int</span> i;
+<a name="l00064"></a>00064   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *portInfo;
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   cbPorts-&gt;clear();
+<a name="l00068"></a>00068   <span class="keywordflow">for</span>(i=0; i&lt;portInfoList.size(); i++){
+<a name="l00069"></a>00069     portInfo = portInfoList.at(i);
+<a name="l00070"></a>00070     Q_ASSERT(portInfo != 0);
+<a name="l00073"></a>00073     qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtPortInfoCbHandler::fillComboBoxes(): add item, portName: &quot;</span> &lt;&lt; portInfo-&gt;<a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">portName</a>() &lt;&lt; <span class="stringliteral">&quot; , DT: &quot;</span> &lt;&lt; portInfo-&gt;<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>();
+<a name="l00074"></a>00074     cbPorts-&gt;addItem(portInfo-&gt;<a class="code" href="classmdt_port_info.html#a38bcac67372782228a91d8e7dbf49211" title="Get the display text.">displayText</a>(), portInfo-&gt;<a class="code" href="classmdt_port_info.html#ad456aac33dccc9b0583ed8aa4796cdf0" title="Get the port name.">portName</a>());
+<a name="l00075"></a>00075   }
+<a name="l00076"></a>00076 }
 <a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="keywordflow">if</span>(cbPorts-&gt;currentIndex() &lt; 0){
-<a name="l00079"></a>00079     <span class="keywordflow">return</span> portInfo;
-<a name="l00080"></a>00080   }
+<a name="l00078"></a><a class="code" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351">00078</a> <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> <a class="code" href="classmdt_port_info_cb_handler.html#a5723df72c4f1eda572c04e377dde9351" title="Get the selected port info object.">mdtPortInfoCbHandler::currentPortInfo</a>()
+<a name="l00079"></a>00079 {
+<a name="l00080"></a>00080   Q_ASSERT(cbPorts != 0);
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="keywordflow">return</span> cbPorts-&gt;itemData(cbPorts-&gt;currentIndex()).value&lt;mdtPortInfo&gt;();
-<a name="l00083"></a>00083 }
-<a name="l00084"></a>00084 
-<a name="l00085"></a><a class="code" href="classmdt_port_info_cb_handler.html#a266598f7f403e21730ff5ee50e6a6e5f">00085</a> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> <a class="code" href="classmdt_port_info_cb_handler.html#a266598f7f403e21730ff5ee50e6a6e5f" title="Get the selected device info object.">mdtPortInfoCbHandler::currentDeviceInfo</a>()
-<a name="l00086"></a>00086 {
-<a name="l00087"></a>00087   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> deviceInfo;
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089   <span class="comment">// Devices comboBox is optional</span>
-<a name="l00090"></a>00090   <span class="keywordflow">if</span>(cbDevices == 0){
-<a name="l00091"></a>00091     <span class="keywordflow">return</span> deviceInfo;
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093   <span class="keywordflow">if</span>(cbDevices-&gt;currentIndex() &lt; 0){
-<a name="l00094"></a>00094     <span class="keywordflow">return</span> deviceInfo;
-<a name="l00095"></a>00095   }
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097   <span class="keywordflow">return</span> cbDevices-&gt;itemData(cbDevices-&gt;currentIndex()).value&lt;mdtDeviceInfo&gt;();
-<a name="l00098"></a>00098 }
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100 <span class="keywordtype">void</span> mdtPortInfoCbHandler::updateDevicesCb(<span class="keywordtype">int</span> portsCbIndex)
-<a name="l00101"></a>00101 {
-<a name="l00102"></a>00102   Q_ASSERT(cbPorts != 0);
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   <span class="keywordtype">int</span> i;
-<a name="l00105"></a>00105   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> portInfo;
-<a name="l00106"></a>00106   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *deviceInfo;
-<a name="l00107"></a>00107   QVariant var;
+<a name="l00082"></a>00082   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> portInfo;
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   <span class="keywordflow">if</span>(cbPorts-&gt;currentIndex() &lt; 0){
+<a name="l00085"></a>00085     <span class="keywordflow">return</span> portInfo;
+<a name="l00086"></a>00086   }
+<a name="l00087"></a>00087   portInfo.<a class="code" href="classmdt_port_info.html#aad09e261bafcdc72ef6b2479ec37fbe8" title="Set the display text.">setDisplayText</a>(cbPorts-&gt;currentText());
+<a name="l00088"></a>00088   portInfo.<a class="code" href="classmdt_port_info.html#a5de494f20c68f61332761909756f5a33" title="Set the port name.">setPortName</a>(cbPorts-&gt;itemData(cbPorts-&gt;currentIndex()).toString());
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090   <span class="keywordflow">return</span> portInfo;
+<a name="l00092"></a>00092 }
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="classmdt_port_info_cb_handler.html#a266598f7f403e21730ff5ee50e6a6e5f">00094</a> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> <a class="code" href="classmdt_port_info_cb_handler.html#a266598f7f403e21730ff5ee50e6a6e5f" title="Get the selected device info object.">mdtPortInfoCbHandler::currentDeviceInfo</a>()
+<a name="l00095"></a>00095 {
+<a name="l00096"></a>00096   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> deviceInfo;
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   <span class="comment">// Devices comboBox is optional</span>
+<a name="l00099"></a>00099   <span class="keywordflow">if</span>(cbDevices == 0){
+<a name="l00100"></a>00100     <span class="keywordflow">return</span> deviceInfo;
+<a name="l00101"></a>00101   }
+<a name="l00102"></a>00102   <span class="keywordflow">if</span>(cbDevices-&gt;currentIndex() &lt; 0){
+<a name="l00103"></a>00103     <span class="keywordflow">return</span> deviceInfo;
+<a name="l00104"></a>00104   }
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   <span class="keywordflow">return</span> cbDevices-&gt;itemData(cbDevices-&gt;currentIndex()).value&lt;mdtDeviceInfo&gt;();
+<a name="l00107"></a>00107 }
 <a name="l00108"></a>00108 
-<a name="l00109"></a>00109   <span class="comment">// Devices comboBox is optional</span>
-<a name="l00110"></a>00110   <span class="keywordflow">if</span>(cbDevices == 0){
-<a name="l00111"></a>00111     <span class="keywordflow">return</span>;
-<a name="l00112"></a>00112   }
-<a name="l00113"></a>00113   cbDevices-&gt;clear();
-<a name="l00114"></a>00114   <span class="comment">// On invalid index we have nothing to fill devices comboBox</span>
-<a name="l00115"></a>00115   <span class="keywordflow">if</span>(portsCbIndex &lt; 0){
-<a name="l00116"></a>00116     <span class="keywordflow">return</span>;
-<a name="l00117"></a>00117   }
-<a name="l00118"></a>00118   <span class="comment">// Get ports comboBox current item</span>
-<a name="l00119"></a>00119   var = cbPorts-&gt;itemData(portsCbIndex);
-<a name="l00120"></a>00120   portInfo = var.value&lt;<a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>&gt;();
-<a name="l00121"></a>00121   <span class="comment">// Fill devices comboBox</span>
-<a name="l00122"></a>00122   <span class="keywordflow">for</span>(i=0; i&lt;portInfo.<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().size(); i++){
-<a name="l00123"></a>00123     deviceInfo = portInfo.<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().at(i);
-<a name="l00124"></a>00124     Q_ASSERT(deviceInfo != 0);
-<a name="l00125"></a>00125     var.setValue(*deviceInfo);
-<a name="l00126"></a>00126     cbDevices-&gt;addItem(deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#ad005eb082bd00b4da0883508b64935dd" title="Get the display text.">displayText</a>(), var);
-<a name="l00127"></a>00127   }
-<a name="l00128"></a>00128 }
-<a name="l00129"></a>00129 
+<a name="l00109"></a>00109 <span class="keywordtype">void</span> mdtPortInfoCbHandler::updateDevicesCb(<span class="keywordtype">int</span> portsCbIndex)
+<a name="l00110"></a>00110 {
+<a name="l00111"></a>00111   Q_ASSERT(cbPorts != 0);
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113   <span class="keywordtype">int</span> i;
+<a name="l00114"></a>00114   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> portInfo;
+<a name="l00115"></a>00115   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *deviceInfo;
+<a name="l00116"></a>00116   QVariant var;
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118   <span class="comment">// Devices comboBox is optional</span>
+<a name="l00119"></a>00119   <span class="keywordflow">if</span>(cbDevices == 0){
+<a name="l00120"></a>00120     <span class="keywordflow">return</span>;
+<a name="l00121"></a>00121   }
+<a name="l00122"></a>00122   cbDevices-&gt;clear();
+<a name="l00123"></a>00123   <span class="comment">// On invalid index we have nothing to fill devices comboBox</span>
+<a name="l00124"></a>00124   <span class="keywordflow">if</span>(portsCbIndex &lt; 0){
+<a name="l00125"></a>00125     <span class="keywordflow">return</span>;
+<a name="l00126"></a>00126   }
+<a name="l00127"></a>00127   <span class="comment">// Get ports comboBox current item</span>
+<a name="l00128"></a>00128   var = cbPorts-&gt;itemData(portsCbIndex);
+<a name="l00129"></a>00129   portInfo = var.value&lt;<a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a>&gt;();
+<a name="l00130"></a>00130   <span class="comment">// Fill devices comboBox</span>
+<a name="l00131"></a>00131   <span class="keywordflow">for</span>(i=0; i&lt;portInfo.<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().size(); i++){
+<a name="l00132"></a>00132     deviceInfo = portInfo.<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().at(i);
+<a name="l00133"></a>00133     Q_ASSERT(deviceInfo != 0);
+<a name="l00134"></a>00134     var.setValue(*deviceInfo);
+<a name="l00135"></a>00135     cbDevices-&gt;addItem(deviceInfo-&gt;<a class="code" href="classmdt_device_info.html#ad005eb082bd00b4da0883508b64935dd" title="Get the display text.">displayText</a>(), var);
+<a name="l00136"></a>00136   }
+<a name="l00137"></a>00137 }
+<a name="l00138"></a>00138 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -205,7 +210,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

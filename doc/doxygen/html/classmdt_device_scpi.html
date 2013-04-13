@@ -146,7 +146,7 @@ Protected Attributes</h2></td></tr>
 <p>Construct a SCPI device. </p>
 <p>Will create and configure a USBTMC port manager. </p>
 
-<p><p>connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(<a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame(mdtPortTransaction)</a>)); </p>
+<p><p>connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(<a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame(mdtPortTransaction)</a>)); connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&amp;, const QString&amp;)), this, SLOT(setStateFromPortError(int, const QString&amp;, const QString&amp;))); </p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
@@ -177,7 +177,7 @@ Protected Attributes</h2></td></tr>
 <p><p>transaction-&gt;setType(MDT_FC_SCPI_ERR); </p>
 </p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00164">164</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00165">165</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -208,14 +208,14 @@ Protected Attributes</h2></td></tr>
 
 <p><p><a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;</p>
 <p>device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
 
 <p>Reimplemented in <a class="el" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">mdtDeviceDSO1000A</a>, and <a class="el" href="classmdt_device_u3606_a.html#acf3b48b13bc179ad4f94b3011b7d607a">mdtDeviceU3606A</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00061">61</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00062">62</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -246,7 +246,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="post"><dt><b>Postcondition:</b></dt><dd>If internal codec has &lt; 2 values, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is not called. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00197">197</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00198">198</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>Internal codec has at least 2 values. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00247">247</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00248">248</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -345,7 +345,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00254">254</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00255">255</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -387,7 +387,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00126">126</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -432,7 +432,7 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
@@ -442,7 +442,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00131">131</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -482,7 +482,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>interval &gt; 0 </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00136">136</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00137">137</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
 </div>
 </div>
@@ -505,7 +505,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:57 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

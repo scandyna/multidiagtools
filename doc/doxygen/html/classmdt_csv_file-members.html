@@ -66,11 +66,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_csv_file.html">mdtCsvFile</a>, including all inherited members.<table>
   <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">clear</a>()</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c">close</a>()</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b">hasMoreLines</a>() const </td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261">lines</a>()</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a8c9f24190d83f32672f360f0fcc53d2f">mdtCsvFile</a>(QObject *parent=0, QByteArray fileEncoding=&quot;UTF-8&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc">parseLine</a>(const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797">readLines</a>(QByteArray separator=&quot;;&quot;, QByteArray dataProtection=&quot;&quot;, QByteArray comment=&quot;#&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#aaca142b18a4f436548e17fbef755e2d5">mdtCsvFile</a>(QObject *parent=0, const QByteArray &amp;fileEncoding=&quot;UTF-8&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a4010d76497d8f5d2a85171025d31f100">readHeader</a>(const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3">readLine</a>(const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a0c16f0024802eb675872aef129317eb8">readLine</a>(const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a56c5d054c044cba2e4d617f5185a13ed">readLine</a>(QByteArray &amp;line, const QString &amp;dataProtection, const QString &amp;comment, const QChar &amp;escapeChar, QByteArray eol)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b">readLines</a>(const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QString eol=&quot;\n&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a27751812bf6625d6264bdce4bd43167c">setReadLineBufferSize</a>(int size)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee">valueAt</a>(int line, int column)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_csv_file.html#a0e85f46ffdc4e44c8974c485abcc48b8">writeLine</a>(const QStringList &amp;line, const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QChar &amp;escapeChar=QChar(), QString eol=&quot;\n&quot;)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtCsvFile</b>() (defined in <a class="el" href="classmdt_csv_file.html">mdtCsvFile</a>)</td><td><a class="el" href="classmdt_csv_file.html">mdtCsvFile</a></td><td></td></tr>
 </table></div>
 <!-- window showing the filter options -->
@@ -87,7 +94,7 @@ This is the complete list of members for <a class="el" href="classmdt_csv_file.h
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:57 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

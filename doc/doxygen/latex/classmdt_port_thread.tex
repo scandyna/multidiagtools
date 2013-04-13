@@ -4,8 +4,7 @@
 }
 
 
-Inheritance diagram for mdtPortThread:
-\nopagebreak
+Inheritance diagram for mdtPortThread:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -59,8 +58,12 @@ virtual bool \hyperlink{classmdt_port_thread_a0122a12262052cf3643241a3eaa31c58}{
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_ab87390447ace7e893661ae492b9d5994}{handleCommonErrors} (\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} portError)
-\begin{DoxyCompactList}\small\item\em Handle common errors. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_a584ee47549b0cb3a9c5de0a1ea496694}{handleCommonReadErrors} (\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} portError, \hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$frame)
+\begin{DoxyCompactList}\small\item\em Handle common read errors. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_a3ce5b18606f026a8df33ae97a42399b1}{handleCommonWriteErrors} (\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} portError, \hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$frame)
+\begin{DoxyCompactList}\small\item\em Handle common write errors. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} \hyperlink{classmdt_port_thread_a1e775d0d943ef7502ae991918155a756}{handleCommonReadWriteErrors} (\hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} portError, \hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$readFrame, \hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$writeFrame)
+\begin{DoxyCompactList}\small\item\em Handle common read and write errors. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_frame}{mdtFrame} $\ast$ \hyperlink{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{getNewFrameRead} ()
 \begin{DoxyCompactList}\small\item\em Get a new frame for reading data from port. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_port_thread_a8756fe2a26bf267376b4003a2896ff48}{readFromPort} (\hyperlink{classmdt_frame}{mdtFrame} $\ast$$\ast$frame, bool emitNewFrameReaden=true)
@@ -191,7 +194,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxyPrecond}
 
 
-Definition at line 212 of file mdtPortThread.cpp.
+Definition at line 299 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_acba4fce38a633da68ec23fe191ba6105}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameWrite@{getNewFrameWrite}}
@@ -224,37 +227,131 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxySeeAlso}
 
 
-Definition at line 318 of file mdtPortThread.cpp.
+Definition at line 406 of file mdtPortThread.cpp.
 
-\hypertarget{classmdt_port_thread_ab87390447ace7e893661ae492b9d5994}{
-\index{mdtPortThread@{mdtPortThread}!handleCommonErrors@{handleCommonErrors}}
-\index{handleCommonErrors@{handleCommonErrors}!mdtPortThread@{mdtPortThread}}
-\subsubsection[{handleCommonErrors}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::handleCommonErrors (
+\hypertarget{classmdt_port_thread_a584ee47549b0cb3a9c5de0a1ea496694}{
+\index{mdtPortThread@{mdtPortThread}!handleCommonReadErrors@{handleCommonReadErrors}}
+\index{handleCommonReadErrors@{handleCommonReadErrors}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{handleCommonReadErrors}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::handleCommonReadErrors (
 \begin{DoxyParamCaption}
-\item[{{\bf mdtAbstractPort::error\_\-t}}]{portError}
+\item[{{\bf mdtAbstractPort::error\_\-t}}]{portError, }
+\item[{{\bf mdtFrame} $\ast$$\ast$}]{frame}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{classmdt_port_thread_ab87390447ace7e893661ae492b9d5994}
+\label{classmdt_port_thread_a584ee47549b0cb3a9c5de0a1ea496694}
 
 
-Handle common errors. 
+Handle common read errors. 
 
-Common errors are:
+This is a helper class for port specific subclass.
+
+Handled errors are:
 \begin{DoxyItemize}
-\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected} : will try to reconnect
+\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected}: will try to reconnect
+\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eac910ca649b9eaa64e290be41945a61dc}{mdtAbstractPort::ReadCanceled}.
+\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea487558758ab0d582d6cf497a785e40c5}{mdtAbstractPort::ReadTimeout}.
 \end{DoxyItemize}
+
+The current frame is cleared and the notification is sent.
+
+If this method is called by a non running thread, a warning will be logged.
 
 
 \begin{DoxyParams}{Parameters}
-{\em portError} & Error to handle \\
+{\em frame} & Current read frame. Note that another frame can be pointed after a call ofthis method (f.ex. after disconnection) \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-NoError if error could be handled, UnhadledError if a known error fails to be solved, given portError else. 
+ErrorHandled if error could be handled or other error (most of cases a UnhandledError). 
 \end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+frame must be a valid pointer. 
+
+port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()}. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+If frame is null, a UnhandledError is returned. 
+\end{DoxyPostcond}
 
 
 Definition at line 198 of file mdtPortThread.cpp.
+
+\hypertarget{classmdt_port_thread_a1e775d0d943ef7502ae991918155a756}{
+\index{mdtPortThread@{mdtPortThread}!handleCommonReadWriteErrors@{handleCommonReadWriteErrors}}
+\index{handleCommonReadWriteErrors@{handleCommonReadWriteErrors}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{handleCommonReadWriteErrors}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::handleCommonReadWriteErrors (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAbstractPort::error\_\-t}}]{portError, }
+\item[{{\bf mdtFrame} $\ast$$\ast$}]{readFrame, }
+\item[{{\bf mdtFrame} $\ast$$\ast$}]{writeFrame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_thread_a1e775d0d943ef7502ae991918155a756}
+
+
+Handle common read and write errors. 
+
+This is a helper class for port specific subclass.
+
+If readFrame is not null, \hyperlink{classmdt_port_thread_a584ee47549b0cb3a9c5de0a1ea496694}{handleCommonReadErrors()} is called first. If no error was handled, and writeFrame is not null, \hyperlink{classmdt_port_thread_a3ce5b18606f026a8df33ae97a42399b1}{handleCommonWriteErrors()} is called.
+
+
+\begin{DoxyParams}{Parameters}
+{\em readframe} & Current read frame. Note that another frame can be pointed after a call ofthis method (f.ex. after disconnection). \\
+\hline
+{\em writeFrame} & Current write frame. Note that frame can be null after a call of this method (if a write error occured). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ErrorHandled if error could be handled or other error (most of cases a UnhandledError). 
+\end{DoxyReturn}
+
+
+Definition at line 281 of file mdtPortThread.cpp.
+
+\hypertarget{classmdt_port_thread_a3ce5b18606f026a8df33ae97a42399b1}{
+\index{mdtPortThread@{mdtPortThread}!handleCommonWriteErrors@{handleCommonWriteErrors}}
+\index{handleCommonWriteErrors@{handleCommonWriteErrors}!mdtPortThread@{mdtPortThread}}
+\subsubsection[{handleCommonWriteErrors}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::handleCommonWriteErrors (
+\begin{DoxyParamCaption}
+\item[{{\bf mdtAbstractPort::error\_\-t}}]{portError, }
+\item[{{\bf mdtFrame} $\ast$$\ast$}]{frame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classmdt_port_thread_a3ce5b18606f026a8df33ae97a42399b1}
+
+
+Handle common write errors. 
+
+This is a helper class for port specific subclass.
+
+Handled errors are:
+\begin{DoxyItemize}
+\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c}{mdtAbstractPort::Disconnected}: will try to reconnect
+\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eae50ff4a9393507ad39005ddc7d5be42f}{mdtAbstractPort::WriteCanceled}.
+\item \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85eac3a5cee51d4fb0b3bfb7c49604059c6a}{mdtAbstractPort::WriteTimeout}.
+\end{DoxyItemize}
+
+The current frame is put back to write pool and the notification is sent.
+
+If this method is called by a non running thread, a warning will be logged.
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Current write frame. Note that frame will be null after a call of this method. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ErrorHandled if error could be handled or other error (most of cases a UnhandledError). 
+\end{DoxyReturn}
+\begin{DoxyPrecond}{Precondition}
+frame must be a valid pointer. 
+
+port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()}. 
+\end{DoxyPrecond}
+
+
+Definition at line 243 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a55d7ef615447823bf9878492a2c88fd4}{
 \index{mdtPortThread@{mdtPortThread}!isFinished@{isFinished}}
@@ -394,7 +491,7 @@ Emit the \hyperlink{classmdt_port_thread_ab31cbe1a85aa830cd368654d1f806326}{erro
 \end{DoxyParams}
 
 
-Definition at line 495 of file mdtPortThread.cpp.
+Definition at line 563 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a8756fe2a26bf267376b4003a2896ff48}{
 \index{mdtPortThread@{mdtPortThread}!readFromPort@{readFromPort}}
@@ -423,18 +520,20 @@ Note about port mutex handling:\par
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-The number of frames completed during the process. This can be helpful for query/reply protocols in witch the standard reply should be one frame. On error, frame is put back into pool and one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} is returned.
+The number of frames completed during the process. This can be helpful for query/reply protocols in witch the standard reply should be one frame. On error, one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} is returned and thread must handle error itself.
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
 
-frame must be a valid pointer (not Null).
+frame must be a valid pointer (not Null). 
 \end{DoxyPrecond}
-\begin{Desc}
-\item[\hyperlink{todo__todo000030}{Todo}]Handle timeout error ? \end{Desc}
 
 
-Definition at line 247 of file mdtPortThread.cpp.
+pvPort-\/$>$readFramesPool().enqueue($\ast$frame); 
+
+
+
+Definition at line 333 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_abb7234a12814f5c7c98bd6c1c2ccb776}{
 \index{mdtPortThread@{mdtPortThread}!readProcessBegin@{readProcessBegin}}
@@ -479,7 +578,7 @@ Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc
 \end{DoxyPrecond}
 
 
-Definition at line 450 of file mdtPortThread.cpp.
+Definition at line 515 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{
 \index{mdtPortThread@{mdtPortThread}!setPort@{setPort}}
@@ -518,7 +617,7 @@ qDebug() $<$$<$ \char`\"{}mdtPortThread::sigactionHandle() called, TID: \char`\"
 
 
 
-Definition at line 505 of file mdtPortThread.cpp.
+Definition at line 573 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_a9c45f260b8d58b7475151df79b3d8510}{
 \index{mdtPortThread@{mdtPortThread}!start@{start}}
@@ -604,7 +703,7 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-Definition at line 335 of file mdtPortThread.cpp.
+Definition at line 423 of file mdtPortThread.cpp.
 
 \hypertarget{classmdt_port_thread_aa01aac7e1a26deb823be40e6cb01b255}{
 \index{mdtPortThread@{mdtPortThread}!writeProcessBegin@{writeProcessBegin}}
@@ -637,7 +736,7 @@ Write a complete frame to port.
 
 This is a helper method for subclass to write a frame to the port. Internally, it will call \hyperlink{classmdt_abstract_port_a35e4686f50e2c53c7e3618cf2c485d92}{mdtAbstractPort::waitEventWriteReady()} before writing.
 
-Note that frame will be put back to write pool after complete write, cancel or flush. That says that frame will not be valid after call of this method.
+Note that frame will be put back to write pool after complete write, cancel, flush or error. That says that frame will not be valid after call of this method.
 
 Note about port mutex handling:\par
  The port mutex must be locked before calling this method. Internally, it will be unlocked during wait, and will be locked again. So, the port mutex is allways locked when this method returns.
@@ -654,7 +753,7 @@ Note about port mutex handling:\par
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-NoError on success or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} error.
+NoError on success or a \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t} error (See also \hyperlink{classmdt_port_thread_a3ce5b18606f026a8df33ae97a42399b1}{handleCommonWriteErrors()} ).
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 Port must be set with \hyperlink{classmdt_port_thread_acd51474c3a2683676423317bc9cb31b2}{setPort()} before using this method. 
@@ -663,7 +762,7 @@ frame must be a valid pointer (not Null).
 \end{DoxyPrecond}
 
 
-Definition at line 361 of file mdtPortThread.cpp.
+Definition at line 449 of file mdtPortThread.cpp.
 
 
 

@@ -1,3 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port." alt="" coords="7,5,177,35"/>
+<area shape="rect" id="node1" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="7,59,124,88"/>
+<area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_manager.html" title="#include &lt;QVariant&gt;" alt="" coords="173,5,360,35"/>
+<area shape="rect" id="node5" href="$classmdt_serial_port_manager.html" title="Serial port manager class." alt="" coords="192,59,341,88"/>
+<area shape="rect" id="node7" href="$classmdt_usb_port_manager.html" title="Helper class that simplify access to USB port API." alt="" coords="196,112,337,141"/>
+<area shape="rect" id="node9" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="409,112,572,141"/>
 </map>

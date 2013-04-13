@@ -72,7 +72,7 @@ Collaboration diagram for mdtDeviceWindow:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device_window__coll__graph.png" border="0" usemap="#mdt_device_window_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_device_window_coll__map" id="mdt_device_window_coll__map">
-<area shape="rect" id="node2" href="classmdt_device_status_widget.html" title="mdtDeviceStatusWidget" alt="" coords="80,328,243,357"/><area shape="rect" id="node4" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="5,197,99,227"/><area shape="rect" id="node6" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="20,101,84,131"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="123,197,229,227"/><area shape="rect" id="node10" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="117,101,235,131"/><area shape="rect" id="node12" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="123,5,229,35"/><area shape="rect" id="node14" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="267,328,352,357"/><area shape="rect" id="node16" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="259,197,360,227"/></map>
+<area shape="rect" id="node2" href="classmdt_port_status_widget.html" title="mdtPortStatusWidget" alt="" coords="93,328,240,357"/><area shape="rect" id="node4" href="classmdt_blink_led.html" title="Blinking LED." alt="" coords="5,197,99,227"/><area shape="rect" id="node6" href="classmdt_led.html" title="mdtLED is a widget witch displays a LED" alt="" coords="20,101,84,131"/><area shape="rect" id="node8" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="123,197,229,227"/><area shape="rect" id="node10" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="117,101,235,131"/><area shape="rect" id="node12" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="123,5,229,35"/><area shape="rect" id="node14" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="264,328,349,357"/><area shape="rect" id="node16" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="256,197,357,227"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_device_window-members.html">List of all members.</a></p>
@@ -86,8 +86,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63df49a9f0cafc2f72e097aa0cf26baa"></a><!-- doxytag: member="mdtDeviceWindow::setIosWidget" ref="a63df49a9f0cafc2f72e097aa0cf26baa" args="(QWidget *widget)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_window.html#a63df49a9f0cafc2f72e097aa0cf26baa">setIosWidget</a> (QWidget *widget)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the I/O's widget. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_device_status_widget.html">mdtDeviceStatusWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_window.html#af7c367a12c59300935a31ac379b6ad8e">statusWidget</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status widget.  <a href="#af7c367a12c59300935a31ac379b6ad8e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_port_status_widget.html">mdtPortStatusWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_window.html#a5bad625542c9df270d31d4beec4c9e95">statusWidget</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status widget.  <a href="#a5bad625542c9df270d31d4beec4c9e95"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_window.html#a8b884e389fa27f85742642193d18b8f9">enableTranslations</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable translations.  <a href="#a8b884e389fa27f85742642193d18b8f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a781a7511b7fbf586fcd39e2aa44e91fd"></a><!-- doxytag: member="mdtDeviceWindow::setAvailableTranslations" ref="a781a7511b7fbf586fcd39e2aa44e91fd" args="(QMap&lt; QString, QString &gt; &amp;avaliableTranslations, const QString &amp;currentTranslationKey)" -->
@@ -118,7 +118,7 @@ Protected Slots</h2></td></tr>
 <div class="memdoc">
 
 <p>Construct a device window. </p>
-<p>Will create a new <a class="el" href="classmdt_device_status_widget.html">mdtDeviceStatusWidget</a> and add it as status bar. </p>
+<p>Will create a new <a class="el" href="classmdt_port_status_widget.html">mdtPortStatusWidget</a> and add it as status bar. </p>
 
 <p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00027">27</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
@@ -143,7 +143,7 @@ Protected Slots</h2></td></tr>
 <p>Will use <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> to get the list of available translations and connect to retranslate slot.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>The loop must be started with a <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> instance (mdtApp must be valid). </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00063">63</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00066">66</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -164,7 +164,7 @@ Protected Slots</h2></td></tr>
 <p>Retranslate. </p>
 <p>This slot is called by <a class="el" href="classmdt_application.html" title="Main application.">mdtApplication</a> when language has changed </p>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00097">97</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -184,18 +184,19 @@ Protected Slots</h2></td></tr>
 <div class="memdoc">
 
 <p>Set the device. </p>
+<p>If device contains a port manager, <a class="el" href="classmdt_port_manager.html#a1c9e1848373831962b7ec83fd4fe5d35" title="Emitted when state has changed.">mdtPortManager::stateChanged()</a> and <a class="el" href="classmdt_port_manager.html#a6f6c6f8a8430d8631a08c765565db9ab" title="Emitted when a new status message is to display.">mdtPortManager::statusMessageChanged()</a> signals are connected to status widget.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>device must be a valid pointer. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af7c367a12c59300935a31ac379b6ad8e"></a><!-- doxytag: member="mdtDeviceWindow::statusWidget" ref="af7c367a12c59300935a31ac379b6ad8e" args="()" -->
+<a class="anchor" id="a5bad625542c9df270d31d4beec4c9e95"></a><!-- doxytag: member="mdtDeviceWindow::statusWidget" ref="a5bad625542c9df270d31d4beec4c9e95" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmdt_device_status_widget.html">mdtDeviceStatusWidget</a> * mdtDeviceWindow::statusWidget </td>
+          <td class="memname"><a class="el" href="classmdt_port_status_widget.html">mdtPortStatusWidget</a> * mdtDeviceWindow::statusWidget </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -207,7 +208,7 @@ Protected Slots</h2></td></tr>
 <p>Get status widget. </p>
 <p>Usefull for setup </p>
 
-<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00056">56</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_window_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_device_window_8cpp_source.html">mdtDeviceWindow.cpp</a>.</p>
 
 </div>
 </div>
@@ -230,7 +231,7 @@ Protected Slots</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:57 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

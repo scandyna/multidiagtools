@@ -55,9 +55,11 @@ T \hyperlink{classmdt_buffer_a690e3f41a62175de48bc73c19f69208d}{takeOne} ()
 
 Stockage d'éléments basé sur le principe du tampon circulaire. 
 
+\#if USE\_\-ASSERT == 1 \#undef NDEBUG \#else \#define NDEBUG \#endif
+
 Stockage d'éléments basé sur le principe du tampon circulaire Idéal pour le stockage temporaire si une taille maximale est connue. Evite de nombreuses allocations/libération mémoire 
 
-Definition at line 37 of file mdtBuffer.h.
+Definition at line 39 of file mdtBuffer.h.
 
 
 
@@ -77,7 +79,7 @@ Constructeur.
 
 Constructeur, utiliser \hyperlink{classmdt_buffer_a9d081b06f666fec3ff6e12ec94b2a4fd}{init()} avant tout autre opération 
 
-Definition at line 6 of file mdtBuffer.cpp.
+Definition at line 7 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a4d6c140c02257fffb37016d019e412cf}{
 \index{mdtBuffer@{mdtBuffer}!mdtBuffer@{mdtBuffer}}
@@ -94,7 +96,7 @@ Constructeur de copie.
 
 Constructeur de copie. Effectue une copie des données vers l'autre instance 
 
-Definition at line 15 of file mdtBuffer.cpp.
+Definition at line 16 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a54de4cebee3cab7b8c1b86bfc3bdad4f}{
 \index{mdtBuffer@{mdtBuffer}!$\sim$mdtBuffer@{$\sim$mdtBuffer}}
@@ -111,7 +113,7 @@ Destructeur.
 
 Destructeur 
 
-Definition at line 50 of file mdtBuffer.cpp.
+Definition at line 59 of file mdtBuffer.cpp.
 
 
 
@@ -136,7 +138,7 @@ Le nombre d'éléments qu'il est possible de lire
 \end{DoxyReturn}
 
 
-Definition at line 227 of file mdtBuffer.cpp.
+Definition at line 236 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_aa6eddf7ccc533da855ebd112202a656f}{
 \index{mdtBuffer@{mdtBuffer}!capacity@{capacity}}
@@ -158,7 +160,7 @@ La capacité totale du tampon
 \end{DoxyReturn}
 
 
-Definition at line 212 of file mdtBuffer.cpp.
+Definition at line 221 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a697920838a6c786209607c2b6ac0858a}{
 \index{mdtBuffer@{mdtBuffer}!clear@{clear}}
@@ -175,7 +177,7 @@ Efface le contenu du tampon.
 
 Efface le contenu du tampon. La quantité disponible ainsi que la capacité restante sont aussi ré-\/initialisés 
 
-Definition at line 79 of file mdtBuffer.cpp.
+Definition at line 88 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a63e2b6b5e7656a5285d0ea1d152ea499}{
 \index{mdtBuffer@{mdtBuffer}!full@{full}}
@@ -197,7 +199,7 @@ True si le tampon est plein
 \end{DoxyReturn}
 
 
-Definition at line 222 of file mdtBuffer.cpp.
+Definition at line 231 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a123a85c9cd59f80623aba5589709050e}{
 \index{mdtBuffer@{mdtBuffer}!get@{get}}
@@ -227,7 +229,7 @@ Le nombre d'éléments effectivement lus
 \end{DoxyReturn}
 
 
-Definition at line 232 of file mdtBuffer.cpp.
+Definition at line 241 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a9d081b06f666fec3ff6e12ec94b2a4fd}{
 \index{mdtBuffer@{mdtBuffer}!init@{init}}
@@ -254,7 +256,7 @@ false en cas de problème d'allocation mémoire (true si tout s'est bien passé)
 \end{DoxyReturn}
 
 
-Definition at line 57 of file mdtBuffer.cpp.
+Definition at line 66 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_aba9a31eb29a39a2721205f13f80c1d8d}{
 \index{mdtBuffer@{mdtBuffer}!operator=@{operator=}}
@@ -271,7 +273,7 @@ Opérateur de copie.
 
 Opérateur de copie. Effectue une copie des données vers l'autre instance 
 
-Definition at line 33 of file mdtBuffer.cpp.
+Definition at line 38 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_abe03f0413ff7512d63d8df1408c66f63}{
 \index{mdtBuffer@{mdtBuffer}!put@{put}}
@@ -301,7 +303,7 @@ Le nombre d'éléments effectivement stockés
 \end{DoxyReturn}
 
 
-Definition at line 98 of file mdtBuffer.cpp.
+Definition at line 107 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a2b9fd3a6b593c2e874249aba5c305e34}{
 \index{mdtBuffer@{mdtBuffer}!putOne@{putOne}}
@@ -328,7 +330,7 @@ True si Ok, false en cas d'erreur
 \end{DoxyReturn}
 
 
-Definition at line 146 of file mdtBuffer.cpp.
+Definition at line 155 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a01d74092785c9442014ee34624ffa96f}{
 \index{mdtBuffer@{mdtBuffer}!putUntil@{putUntil}}
@@ -364,7 +366,7 @@ Le nombre d'éléments effectivement stockés
 \end{DoxyReturn}
 
 
-Definition at line 166 of file mdtBuffer.cpp.
+Definition at line 175 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a78e8317b6ba09e9c4e26358e27f75fd6}{
 \index{mdtBuffer@{mdtBuffer}!remainCapacity@{remainCapacity}}
@@ -386,7 +388,7 @@ Le nombre d'éléments qu'il est encore possible de stocker
 \end{DoxyReturn}
 
 
-Definition at line 217 of file mdtBuffer.cpp.
+Definition at line 226 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_ad4756dea3500741363092d5a85ef858e}{
 \index{mdtBuffer@{mdtBuffer}!take@{take}}
@@ -416,7 +418,7 @@ Le nombre d'éléments effectivement retirés
 \end{DoxyReturn}
 
 
-Definition at line 271 of file mdtBuffer.cpp.
+Definition at line 280 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a690e3f41a62175de48bc73c19f69208d}{
 \index{mdtBuffer@{mdtBuffer}!takeOne@{takeOne}}
@@ -438,7 +440,7 @@ Un élément, ou 0 si aucune disponibilité
 \end{DoxyReturn}
 
 
-Definition at line 317 of file mdtBuffer.cpp.
+Definition at line 326 of file mdtBuffer.cpp.
 
 \hypertarget{classmdt_buffer_a6ddc3c27c154fbfd077f83d5bfe82a19}{
 \index{mdtBuffer@{mdtBuffer}!tokenReached@{tokenReached}}
@@ -460,7 +462,7 @@ True si l'élément de fin à été atteint
 \end{DoxyReturn}
 
 
-Definition at line 207 of file mdtBuffer.cpp.
+Definition at line 216 of file mdtBuffer.cpp.
 
 
 

@@ -118,7 +118,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00056"></a>00056   <span class="keywordtype">int</span> interframeTime = 0;
 <a name="l00057"></a>00057   <span class="keywordtype">int</span> writeMinWaitTime = 0;
 <a name="l00058"></a>00058   <span class="keywordtype">bool</span> bytePerByteWrite = <span class="keyword">false</span>;
-<a name="l00059"></a>00059   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError;
+<a name="l00059"></a>00059   <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> portError = <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>;
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
 <a name="l00062"></a>00062 <span class="preprocessor">#ifdef Q_OS_UNIX</span>
@@ -131,35 +131,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00069"></a>00069   bytePerByteWrite = pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3d105c90696f7c40f29c24fe9b6e4481" title="Get the stored configuration.">config</a>().<a class="code" href="classmdt_port_config.html#a9b5041ba740a5918e5e1323e61d3bbdc" title="Get byte per byte write flag (On/Off)">bytePerByteWrite</a>();
 <a name="l00070"></a>00070   <span class="comment">// Set the running flag</span>
 <a name="l00071"></a>00071   pvRunning = <span class="keyword">true</span>;
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="comment">// Run...</span>
-<a name="l00074"></a>00074   <span class="keywordflow">while</span>(1){
-<a name="l00075"></a>00075     <span class="comment">// Read thread state</span>
-<a name="l00076"></a>00076     <span class="keywordflow">if</span>(!pvRunning){
-<a name="l00077"></a>00077       <span class="keywordflow">break</span>;
-<a name="l00078"></a>00078     }
-<a name="l00079"></a>00079     <span class="comment">// Wait for interframe time if needed</span>
-<a name="l00080"></a>00080     <span class="keywordflow">if</span>(interframeTime &gt; 0){
-<a name="l00081"></a>00081       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00082"></a>00082       msleep(interframeTime);
-<a name="l00083"></a>00083       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
-<a name="l00084"></a>00084     }
-<a name="l00085"></a>00085     <span class="comment">// Get a frame - will block if nothing is to write</span>
-<a name="l00086"></a>00086     frame = <a class="code" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105" title="Get a new frame for writing data to port.">getNewFrameWrite</a>();
-<a name="l00087"></a>00087     <span class="comment">// If thread is stopping, it can happen that a Null pointer is returned</span>
-<a name="l00088"></a>00088     <span class="keywordflow">if</span>(frame == 0){
-<a name="l00089"></a>00089       <span class="keywordflow">break</span>;
-<a name="l00090"></a>00090     }
-<a name="l00091"></a>00091     <span class="comment">// Write</span>
-<a name="l00092"></a>00092     portError = <a class="code" href="classmdt_port_thread.html#a2658d7f1a04ef10eb09d575d8d7eda43" title="Write a complete frame to port.">writeToPort</a>(frame, bytePerByteWrite, writeMinWaitTime);
-<a name="l00093"></a>00093     <span class="keywordflow">if</span>(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
-<a name="l00094"></a>00094       <span class="comment">// Stop</span>
-<a name="l00095"></a>00095       <span class="keywordflow">break</span>;
-<a name="l00096"></a>00096     }
-<a name="l00097"></a>00097   }
-<a name="l00098"></a>00098   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
-<a name="l00099"></a>00099   <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>);
-<a name="l00100"></a>00100 }
+<a name="l00072"></a>00072   <span class="comment">// Notify that we are ready</span>
+<a name="l00073"></a>00073   <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>);
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075   <span class="comment">// Run...</span>
+<a name="l00076"></a>00076   <span class="keywordflow">while</span>(1){
+<a name="l00077"></a>00077     <span class="comment">// Read thread state</span>
+<a name="l00078"></a>00078     <span class="keywordflow">if</span>(!pvRunning){
+<a name="l00079"></a>00079       <span class="keywordflow">break</span>;
+<a name="l00080"></a>00080     }
+<a name="l00081"></a>00081     <span class="comment">// Wait for interframe time if needed</span>
+<a name="l00082"></a>00082     <span class="keywordflow">if</span>(interframeTime &gt; 0){
+<a name="l00083"></a>00083       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00084"></a>00084       msleep(interframeTime);
+<a name="l00085"></a>00085       pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a6bf2ecdcf894da3929a22eb8793a9fe3" title="Lock the mutex.">lockMutex</a>();
+<a name="l00086"></a>00086     }
+<a name="l00087"></a>00087     <span class="comment">// Get a frame - will block if nothing is to write</span>
+<a name="l00088"></a>00088     frame = <a class="code" href="classmdt_port_thread.html#acba4fce38a633da68ec23fe191ba6105" title="Get a new frame for writing data to port.">getNewFrameWrite</a>();
+<a name="l00089"></a>00089     <span class="comment">// If thread is stopping, it can happen that a Null pointer is returned</span>
+<a name="l00090"></a>00090     <span class="keywordflow">if</span>(frame == 0){
+<a name="l00091"></a>00091       <span class="keywordflow">break</span>;
+<a name="l00092"></a>00092     }
+<a name="l00093"></a>00093     <span class="comment">// Write</span>
+<a name="l00094"></a>00094     portError = <a class="code" href="classmdt_port_thread.html#a2658d7f1a04ef10eb09d575d8d7eda43" title="Write a complete frame to port.">writeToPort</a>(frame, bytePerByteWrite, writeMinWaitTime);
+<a name="l00095"></a>00095     <span class="keywordflow">if</span>((portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>)&amp;&amp;(portError != <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab0a372501b8916e3953897dc82fd3b3d">mdtAbstractPort::ErrorHandled</a>)){
+<a name="l00096"></a>00096       <span class="comment">// Stop</span>
+<a name="l00097"></a>00097       <span class="keywordflow">break</span>;
+<a name="l00098"></a>00098     }
+<a name="l00099"></a>00099   }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101   <span class="keywordflow">if</span>(portError == <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85eab898bd273effe5cb4ed1a399a2d4baad">mdtAbstractPort::NoError</a>){
+<a name="l00102"></a>00102     <a class="code" href="classmdt_port_thread.html#a37883c167ec85ff7a4996ffea5288ffe" title="Emit the errorOccured() signal if new error is different from current.">notifyError</a>(<a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85ea8b70726d03f75a691ac4ad65722a5f3c">mdtAbstractPort::Disconnected</a>);
+<a name="l00103"></a>00103   }
+<a name="l00104"></a>00104   pvRunning = <span class="keyword">false</span>;
+<a name="l00105"></a>00105   pvPort-&gt;<a class="code" href="classmdt_abstract_port.html#a3523c72a06e4d950338f91e56c286e84" title="Unlock the mutex.">unlockMutex</a>();
+<a name="l00106"></a>00106 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -176,7 +182,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

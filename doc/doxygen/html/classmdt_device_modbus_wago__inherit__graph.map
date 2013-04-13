@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$classmdt_device_modbus.html" title="Represent a MODBUS device." alt="" coords="23,83,153,112"/>
+<area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="45,5,131,35"/>
+</map>

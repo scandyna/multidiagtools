@@ -167,7 +167,9 @@ Specify the range of values and bits decodes parameters.
 
 Store the new range and set the value to the minimum. The \hyperlink{classmdt_analog_io_ad658090469cc6b69fa92d9bca73d8a16}{valueChanged()} signal is emitted.
 
-It can happen that a I/O module returns, f.ex., a integer value in a 16 bits packet, but with some additional flags. (example: Wago 750-\/457). In such case, the value is, f.ex., encoded in 12 bits only. Take example of Wago 750-\/457:
+It can happen that a I/O module returns, f.ex., a integer value in a 16 bits packet, but with some additional flags. (example: Wago 750-\/457). In such case, the value is, f.ex., encoded in 12 bits only.
+
+Take example of Wago 750-\/457:
 \begin{DoxyItemize}
 \item Value + flags are encoded in a 16 bits word
 \item Value is encoded in 12 bits, from b3 to b14 + 1 sign bit, b15

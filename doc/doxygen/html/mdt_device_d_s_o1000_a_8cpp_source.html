@@ -84,40 +84,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtDeviceInfo.h&quot;</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include &quot;mdtPortTransaction.h&quot;</span>
 <a name="l00024"></a>00024 
-<a name="l00025"></a>00025 mdtDeviceDSO1000A::mdtDeviceDSO1000A(QObject *parent)
+<a name="l00025"></a><a class="code" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">00025</a> <a class="code" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A::mdtDeviceDSO1000A</a>(QObject *parent)
 <a name="l00026"></a>00026  : <a class="code" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments.">mdtDeviceScpi</a>(parent)
 <a name="l00027"></a>00027 {
 <a name="l00028"></a>00028   pvCodec = <span class="keyword">new</span> <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>;
 <a name="l00029"></a>00029   <span class="comment">// Setup port manager</span>
-<a name="l00030"></a>00030   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a02f3c9744b0d7a61853ab58467278bbc" title="Set the read frame size.">setReadFrameSize</a>(10000);
-<a name="l00031"></a>00031   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634" title="Set the read Queue size.">setReadQueueSize</a>(5);
-<a name="l00032"></a>00032   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585" title="Set the read timeout.">setReadTimeout</a>(30000);
-<a name="l00033"></a>00033   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a9539cef9e33d564c7c70902a6380be04" title="Set the write frame size.">setWriteFrameSize</a>(512);
-<a name="l00034"></a>00034   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5" title="Set the read Queue size.">setWriteQueueSize</a>(1);
-<a name="l00035"></a>00035   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a>)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a>)));
-<a name="l00036"></a>00036   connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_device.html#ab77eb4c1bb50201e97a4dbd8b538659a" title="Update device state regarding port error.">setStateFromPortError</a>(<span class="keywordtype">int</span>)));
-<a name="l00037"></a>00037 }
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 mdtDeviceDSO1000A::~mdtDeviceDSO1000A()
-<a name="l00040"></a>00040 {
-<a name="l00041"></a>00041   <span class="keyword">delete</span> pvCodec;
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">00044</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72" title="Search and connect to physical device.">mdtDeviceDSO1000A::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo)
-<a name="l00045"></a>00045 {
-<a name="l00046"></a>00046   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048   <span class="comment">// Setup device info</span>
-<a name="l00049"></a>00049   device = devInfo;
-<a name="l00050"></a>00050   device.<a class="code" href="classmdt_device_info.html#a3b56cda14d31f3288353480a15731ebb" title="Set vendor ID.">setVendorId</a>(0x0957);
-<a name="l00051"></a>00051   device.<a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(0x0588);
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72" title="Search and connect to physical device.">mdtDeviceScpi::connectToDevice</a>(device);
-<a name="l00054"></a>00054 }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keywordtype">void</span> mdtDeviceDSO1000A::decodeReadenFrame(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> transaction)
-<a name="l00057"></a>00057 {
-<a name="l00058"></a>00058 }
+<a name="l00030"></a>00030   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a02f3c9744b0d7a61853ab58467278bbc" title="Set the read frame size.">setReadFrameSize</a>(10000);
+<a name="l00031"></a>00031   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634" title="Set the read Queue size.">setReadQueueSize</a>(5);
+<a name="l00032"></a>00032   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a1028f6c9d7073a6591fa59fc907f0585" title="Set the read timeout.">setReadTimeout</a>(30000);
+<a name="l00033"></a>00033   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a9539cef9e33d564c7c70902a6380be04" title="Set the write frame size.">setWriteFrameSize</a>(512);
+<a name="l00034"></a>00034   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a8a99771f7acfeb546d1d89d3671407e5" title="Set the read Queue size.">setWriteQueueSize</a>(1);
+<a name="l00035"></a>00035   connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a>)), <span class="keyword">this</span>, SLOT(decodeReadenFrame(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a>)));
+<a name="l00037"></a>00037   connect(pvUsbtmcPortManager, SIGNAL(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(setStateFromPortManager(<span class="keywordtype">int</span>)));
+<a name="l00038"></a>00038 }
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040 mdtDeviceDSO1000A::~mdtDeviceDSO1000A()
+<a name="l00041"></a>00041 {
+<a name="l00042"></a>00042   <span class="keyword">delete</span> pvCodec;
+<a name="l00043"></a>00043 }
+<a name="l00044"></a>00044 
+<a name="l00045"></a><a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72">00045</a> <a class="code" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> <a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72" title="Search and connect to physical device.">mdtDeviceDSO1000A::connectToDevice</a>(<span class="keyword">const</span> <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> &amp;devInfo)
+<a name="l00046"></a>00046 {
+<a name="l00047"></a>00047   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="comment">// Setup device info</span>
+<a name="l00050"></a>00050   device = devInfo;
+<a name="l00051"></a>00051   device.<a class="code" href="classmdt_device_info.html#a3b56cda14d31f3288353480a15731ebb" title="Set vendor ID.">setVendorId</a>(0x0957);
+<a name="l00052"></a>00052   device.<a class="code" href="classmdt_device_info.html#a91ca6f02bfe86656073599c8d3d79da7" title="Set product ID.">setProductId</a>(0x0588);
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054   <span class="keywordflow">return</span> <a class="code" href="classmdt_device_d_s_o1000_a.html#a84431cf929750a8a25d5218893736c72" title="Search and connect to physical device.">mdtDeviceScpi::connectToDevice</a>(device);
+<a name="l00055"></a>00055 }
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057 <span class="keywordtype">void</span> mdtDeviceDSO1000A::decodeReadenFrame(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> transaction)
+<a name="l00058"></a>00058 {
+<a name="l00059"></a>00059 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -134,7 +134,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

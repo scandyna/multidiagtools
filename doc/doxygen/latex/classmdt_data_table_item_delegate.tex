@@ -1,0 +1,72 @@
+\hypertarget{classmdt_data_table_item_delegate}{
+\section{mdtDataTableItemDelegate Class Reference}
+\label{classmdt_data_table_item_delegate}\index{mdtDataTableItemDelegate@{mdtDataTableItemDelegate}}
+}
+
+
+Delegate to display table items in custom way.  
+
+
+
+
+{\ttfamily \#include $<$mdtDataTableItemDelegate.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_data_table_item_delegate_a3b09cdefe25ed24d764202949e12d315}{
+\hyperlink{classmdt_data_table_item_delegate_a3b09cdefe25ed24d764202949e12d315}{mdtDataTableItemDelegate} (QWidget $\ast$parent=0)}
+\label{classmdt_data_table_item_delegate_a3b09cdefe25ed24d764202949e12d315}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_data_table_item_delegate_ae48959402e09daae5e6e102c025c43bd}{
+\hyperlink{classmdt_data_table_item_delegate_ae48959402e09daae5e6e102c025c43bd}{$\sim$mdtDataTableItemDelegate} ()}
+\label{classmdt_data_table_item_delegate_ae48959402e09daae5e6e102c025c43bd}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_data_table_item_delegate_ae10a1b1d19910be11276e8a132fa145b}{paint} (QPainter $\ast$painter, const QStyleOptionViewItem \&option, const QModelIndex \&index) const 
+\item 
+\hypertarget{classmdt_data_table_item_delegate_a38e292efffe36a5a983ff7876c1fc19c}{
+QSize {\bfseries sizeHint} (const QStyleOptionViewItem \&option, const QModelIndex \&index) const }
+\label{classmdt_data_table_item_delegate_a38e292efffe36a5a983ff7876c1fc19c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Delegate to display table items in custom way. 
+
+Definition at line 34 of file mdtDataTableItemDelegate.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_data_table_item_delegate_ae10a1b1d19910be11276e8a132fa145b}{
+\index{mdtDataTableItemDelegate@{mdtDataTableItemDelegate}!paint@{paint}}
+\index{paint@{paint}!mdtDataTableItemDelegate@{mdtDataTableItemDelegate}}
+\subsubsection[{paint}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableItemDelegate::paint (
+\begin{DoxyParamCaption}
+\item[{QPainter $\ast$}]{painter, }
+\item[{const QStyleOptionViewItem \&}]{option, }
+\item[{const QModelIndex \&}]{index}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_data_table_item_delegate_ae10a1b1d19910be11276e8a132fa145b}
+
+
+qDebug() $<$$<$ \char`\"{}index: \char`\"{} $<$$<$ index;
+
+Q\_\-ASSERT(index.model() != 0);
+
+if(index.model()-\/$>$data(index.model()-\/$>$index(index.row(), 1)) == \char`\"{}Test 1\char`\"{})\{ 
+
+
+
+Definition at line 37 of file mdtDataTableItemDelegate.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtDataTableItemDelegate.h\item 
+src/mdtutilsgui/mdtDataTableItemDelegate.cpp\end{DoxyCompactItemize}

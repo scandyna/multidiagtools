@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classmdt_modbus_tcp_port_setup_dialog.html" title="mdtModbusTcpPortSetupDialog" alt="" coords="5,83,211,112"/>
+<area shape="rect" id="node5" href="$classmdt_serial_port_setup_dialog.html" title="Setup dialog for serial port." alt="" coords="235,83,405,112"/>
+<area shape="rect" id="node7" href="$classmdt_usbtmc_port_setup_dialog.html" title="mdtUsbtmcPortSetupDialog" alt="" coords="429,83,613,112"/>
+</map>

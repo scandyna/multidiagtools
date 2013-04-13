@@ -1,0 +1,518 @@
+\hypertarget{classmdt_data_table_manager}{
+\section{mdtDataTableManager Class Reference}
+\label{classmdt_data_table_manager}\index{mdtDataTableManager@{mdtDataTableManager}}
+}
+
+
+Create/manage data sets.  
+
+
+
+
+{\ttfamily \#include $<$mdtDataTableManager.h$>$}
+
+
+
+Collaboration diagram for mdtDataTableManager:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{classmdt_data_table_manager__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8}{create\_\-mode\_\-t} \{ \hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8aa6a9a7bbd0b4003b3fb560b40b80912d}{OverwriteExisting}, 
+\hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8acfd291caff4d096492815d1709b7a3fe}{KeepExisting}, 
+\hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8a8d950620af815a15cfefe6843a848f78}{FailIfExists}, 
+\hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8a6f1c53b5c2a4fb195fb6c8fa1a536e8c}{AskUserIfExists}
+ \}
+\begin{DoxyCompactList}\small\item\em Dataset creation mode. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_data_table_manager_ae63e559f597ae48a36e149afde3a8396}{
+{\bfseries mdtDataTableManager} (QObject $\ast$parent=0, QSqlDatabase db=QSqlDatabase())}
+\label{classmdt_data_table_manager_ae63e559f597ae48a36e149afde3a8396}
+
+\item 
+\hyperlink{classmdt_data_table_manager_a3a1c225b1aeedad8fc89b126147971ca}{$\sim$mdtDataTableManager} ()
+\begin{DoxyCompactList}\small\item\em Note: this will delete internal model. Be avare when referencing pointer returned by \hyperlink{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{model()}. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_data_table_manager_a1e19b3f34c1b0a91bcae4396731efc57}{setDataSetDirectory} (const QDir \&dir)
+\begin{DoxyCompactList}\small\item\em Set dataset directory. \end{DoxyCompactList}\item 
+QDir \hyperlink{classmdt_data_table_manager_a8fa0924a76e8f3fec9617f690cc4e148}{dataSetDirectory} () const 
+\begin{DoxyCompactList}\small\item\em Set dataset directory. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_data_table_manager_a6d07e713a18c4d1d3f0c005dd9f77ade}{createDataSet} (const QDir \&dir, const QString \&name, const QSqlIndex \&primaryKey, bool createPrimaryKeyFields, const QList$<$ QSqlField $>$ \&fields, \hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8}{create\_\-mode\_\-t} mode)
+\begin{DoxyCompactList}\small\item\em Create database and table. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_data_table_manager_a9026c9d3d102246af243b68c815fba04}{
+QSqlDatabase \hyperlink{classmdt_data_table_manager_a9026c9d3d102246af243b68c815fba04}{database} () const }
+\label{classmdt_data_table_manager_a9026c9d3d102246af243b68c815fba04}
+
+\begin{DoxyCompactList}\small\item\em Get internal database instance. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_data_table_manager_a139611cc21836438053226b1d7576201}{enableProgressDialog} (bool enable)
+\begin{DoxyCompactList}\small\item\em Enable/disable progress dialog. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_data_table_manager_a755ea0471525645157f4d4843b6a4e8a}{setCsvFormat} (const QString \&separator, const QString \&dataProtection, const QString \&comment, const QChar \&escapeChar, QByteArray eol=\char`\"{}$\backslash$n\char`\"{}, const QByteArray \&encoding=\char`\"{}UTF-\/8\char`\"{})
+\begin{DoxyCompactList}\small\item\em Set CSV import/export format. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_data_table_manager_ac2da29f8f8920eed8cca78aa6cc0d8da}{exportToCsvFile} (const QString \&filePath, \hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8}{create\_\-mode\_\-t} mode)
+\begin{DoxyCompactList}\small\item\em Export data to a CSV file. \end{DoxyCompactList}\item 
+bool \hyperlink{classmdt_data_table_manager_aac9ba371ee9e6d111fb7544bb9241161}{importFromCsvFile} (const QString \&csvFilePath, \hyperlink{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8}{create\_\-mode\_\-t} mode, const QString \&dir=QString(), const QStringList \&pkFields=QStringList())
+\begin{DoxyCompactList}\small\item\em Import a CSV file. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_data_table_manager_a2b38e6a8157183fcbce0770d12e9aa9d}{addFieldMapping} (const QString \&csvHeaderItem, const QString \&fieldName, const QString \&displayText, QVariant::Type dataType, int csvDataItemStartOffset=-\/1, int csvDataItemEndOffset=-\/1)
+\begin{DoxyCompactList}\small\item\em Add a mapping between CSV header part (item) and model field. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_data_table_manager_a10c9f9d57d6c35fa5721906c79376ec4}{clearFieldMap} ()
+\begin{DoxyCompactList}\small\item\em Clear fields mapping. \end{DoxyCompactList}\item 
+QStringList \hyperlink{classmdt_data_table_manager_a785fbce3537e9e75ecdd49d29a6e8959}{csvHeader} () const 
+\begin{DoxyCompactList}\small\item\em Get the CSV file's headers. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_data_table_manager_a87e9b26f462165c93a64f8ac6080b13d}{setDisplayTextsToModelHeader} ()
+\begin{DoxyCompactList}\small\item\em Set the display texts to model's header. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_data_table_model}{mdtDataTableModel} $\ast$ \hyperlink{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{model} ()
+\begin{DoxyCompactList}\small\item\em Get instance of current model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_data_table_manager_aba53817fb6bd1df5850f53424708ffba}{
+static QString \hyperlink{classmdt_data_table_manager_aba53817fb6bd1df5850f53424708ffba}{getTableName} (const QString \&dataSetName)}
+\label{classmdt_data_table_manager_aba53817fb6bd1df5850f53424708ffba}
+
+\begin{DoxyCompactList}\small\item\em Remove unalowed chars and suffixe \_\-tbl to name to give a table name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_data_table_manager_a1536b620cfabb8b76e0f5b840cd30bd3}{
+static QString \hyperlink{classmdt_data_table_manager_a1536b620cfabb8b76e0f5b840cd30bd3}{getFieldName} (const QString \&columnName)}
+\label{classmdt_data_table_manager_a1536b620cfabb8b76e0f5b840cd30bd3}
+
+\begin{DoxyCompactList}\small\item\em Remove unalowed chars to give a field name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Create/manage data sets. 
+
+Definition at line 44 of file mdtDataTableManager.h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8}{
+\index{mdtDataTableManager@{mdtDataTableManager}!create\_\-mode\_\-t@{create\_\-mode\_\-t}}
+\index{create\_\-mode\_\-t@{create\_\-mode\_\-t}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{create\_\-mode\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mdtDataTableManager::create\_\-mode\_\-t}}}
+\label{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8}
+
+
+Dataset creation mode. 
+
+\begin{Desc}
+\item[Enumerator: ]\par
+\begin{description}
+\index{OverwriteExisting@{OverwriteExisting}!mdtDataTableManager@{mdtDataTableManager}}\index{mdtDataTableManager@{mdtDataTableManager}!OverwriteExisting@{OverwriteExisting}}\item[{\em 
+\hypertarget{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8aa6a9a7bbd0b4003b3fb560b40b80912d}{
+OverwriteExisting}
+\label{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8aa6a9a7bbd0b4003b3fb560b40b80912d}
+}]If file/database allready exists, it will be overwritten \index{KeepExisting@{KeepExisting}!mdtDataTableManager@{mdtDataTableManager}}\index{mdtDataTableManager@{mdtDataTableManager}!KeepExisting@{KeepExisting}}\item[{\em 
+\hypertarget{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8acfd291caff4d096492815d1709b7a3fe}{
+KeepExisting}
+\label{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8acfd291caff4d096492815d1709b7a3fe}
+}]If file/database allready exists, it will simply be open \index{FailIfExists@{FailIfExists}!mdtDataTableManager@{mdtDataTableManager}}\index{mdtDataTableManager@{mdtDataTableManager}!FailIfExists@{FailIfExists}}\item[{\em 
+\hypertarget{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8a8d950620af815a15cfefe6843a848f78}{
+FailIfExists}
+\label{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8a8d950620af815a15cfefe6843a848f78}
+}]If file/database allready exists, create method will fail \index{AskUserIfExists@{AskUserIfExists}!mdtDataTableManager@{mdtDataTableManager}}\index{mdtDataTableManager@{mdtDataTableManager}!AskUserIfExists@{AskUserIfExists}}\item[{\em 
+\hypertarget{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8a6f1c53b5c2a4fb195fb6c8fa1a536e8c}{
+AskUserIfExists}
+\label{classmdt_data_table_manager_a2bccf081737f3237ecdbe346dba559a8a6f1c53b5c2a4fb195fb6c8fa1a536e8c}
+}]If file/database allready exists, a dialog box will ask the user if it must be overwritten or not \end{description}
+\end{Desc}
+
+
+
+Definition at line 52 of file mdtDataTableManager.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classmdt_data_table_manager_a3a1c225b1aeedad8fc89b126147971ca}{
+\index{mdtDataTableManager@{mdtDataTableManager}!$\sim$mdtDataTableManager@{$\sim$mdtDataTableManager}}
+\index{$\sim$mdtDataTableManager@{$\sim$mdtDataTableManager}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{$\sim$mdtDataTableManager}]{\setlength{\rightskip}{0pt plus 5cm}mdtDataTableManager::$\sim$mdtDataTableManager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a3a1c225b1aeedad8fc89b126147971ca}
+
+
+Note: this will delete internal model. Be avare when referencing pointer returned by \hyperlink{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{model()}. 
+
+
+
+delete pvModel; 
+
+
+
+Definition at line 49 of file mdtDataTableManager.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_data_table_manager_a2b38e6a8157183fcbce0770d12e9aa9d}{
+\index{mdtDataTableManager@{mdtDataTableManager}!addFieldMapping@{addFieldMapping}}
+\index{addFieldMapping@{addFieldMapping}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{addFieldMapping}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableManager::addFieldMapping (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{csvHeaderItem, }
+\item[{const QString \&}]{fieldName, }
+\item[{const QString \&}]{displayText, }
+\item[{QVariant::Type}]{dataType, }
+\item[{int}]{csvDataItemStartOffset = {\ttfamily -\/1}, }
+\item[{int}]{csvDataItemEndOffset = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a2b38e6a8157183fcbce0770d12e9aa9d}
+
+
+Add a mapping between CSV header part (item) and model field. 
+
+Field mapping is used for relationship between CSV header, model's field name and texts to display in model's header. Internally, \hyperlink{classmdt_field_map}{mdtFieldMap} class is used for this.
+
+During CSV import, all unspecified maps are automatically created as follow:
+\begin{DoxyItemize}
+\item Data are imported as string (type: QVariant::String)
+\item Field name is based on CSV header item, but unalowed chars are replaced by '\_\-'
+\item Display text is the CSV header item.
+\item One field is created in model for one CSV header item (column).
+\end{DoxyItemize}
+
+If some of this default behaviour is not what is needed for some fields, it's possible to add a mapping with this method befor calling \hyperlink{classmdt_data_table_manager_aac9ba371ee9e6d111fb7544bb9241161}{importFromCsvFile()}.
+
+It's also possible to split a CSV header item to many model fields. To do this, add several mapping with same csvHeaderItem, but using each time another fieldName. To know wich part of a CSV data item must be stored in witch field, csvDataItemStartOffset and csvDataItemEndOffset must be specified.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csvHeaderItem} & CSV heaer part (column). \\
+\hline
+{\em fieldName} & Model's field name to create. \\
+\hline
+{\em displayText} & Text to display in model's header. \\
+\hline
+{\em dataType} & Data will be converted to this data type during import. \\
+\hline
+{\em csvDataItemStartOffset} & If $>$= 0, only data starting at this offset will be imported from CSV data item into model's field. \\
+\hline
+{\em csvDataItemEndOffset} & If $>$= 0, only data until this offset will be imported from CSV data item into model's field. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_field_map}{mdtFieldMap} 
+
+\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} 
+\end{DoxySeeAlso}
+
+
+Definition at line 482 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a10c9f9d57d6c35fa5721906c79376ec4}{
+\index{mdtDataTableManager@{mdtDataTableManager}!clearFieldMap@{clearFieldMap}}
+\index{clearFieldMap@{clearFieldMap}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{clearFieldMap}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableManager::clearFieldMap (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a10c9f9d57d6c35fa5721906c79376ec4}
+
+
+Clear fields mapping. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classmdt_data_table_manager_a2b38e6a8157183fcbce0770d12e9aa9d}{addFieldMapping()} 
+\end{DoxySeeAlso}
+
+
+Definition at line 502 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a6d07e713a18c4d1d3f0c005dd9f77ade}{
+\index{mdtDataTableManager@{mdtDataTableManager}!createDataSet@{createDataSet}}
+\index{createDataSet@{createDataSet}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{createDataSet}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableManager::createDataSet (
+\begin{DoxyParamCaption}
+\item[{const QDir \&}]{dir, }
+\item[{const QString \&}]{name, }
+\item[{const QSqlIndex \&}]{primaryKey, }
+\item[{bool}]{createPrimaryKeyFields, }
+\item[{const QList$<$ QSqlField $>$ \&}]{fields, }
+\item[{{\bf create\_\-mode\_\-t}}]{mode}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a6d07e713a18c4d1d3f0c005dd9f77ade}
+
+
+Create database and table. 
+
+Internally, Sqlite is used to store data.
+
+Note: this will delete internal model and create a new one. Be avare when referencing pointer returned by \hyperlink{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{model()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & Path or QDir object to directory in witch to store data. \\
+\hline
+{\em name} & Name of the database, connection name (see QSqlDatabase) and file. \\
+\hline
+{\em primaryKey} & Contains fields that are part of the primary key. If a name is set with QSqlIndex::setName(), it will be used, else a name (tableName\_\-PK) is generated. \\
+\hline
+{\em createPrimaryKeyFields} & If true, fields contained in primaryKey will be created, else only the constraint is added. \\
+\hline
+\end{DoxyParams}
+\begin{Desc}
+\item[\hyperlink{todo__todo000058}{Todo}]NOT implemeted yet !! \end{Desc}
+
+\begin{DoxyParams}{Parameters}
+{\em fields} & List of fields, excluding primary key, to create in table. Note that only a fiew parameters of QSqlField are supported:
+\begin{DoxyItemize}
+\item type: map QVariant type to Sqlite type
+\item name: field's name 
+\end{DoxyItemize}\\
+\hline
+{\em mode} & Behaviour to adopt during database/file creation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on success. 
+\end{DoxyReturn}
+
+
+Definition at line 145 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a785fbce3537e9e75ecdd49d29a6e8959}{
+\index{mdtDataTableManager@{mdtDataTableManager}!csvHeader@{csvHeader}}
+\index{csvHeader@{csvHeader}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{csvHeader}]{\setlength{\rightskip}{0pt plus 5cm}QStringList mdtDataTableManager::csvHeader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_data_table_manager_a785fbce3537e9e75ecdd49d29a6e8959}
+
+
+Get the CSV file's headers. 
+
+During CSV import, internal field name are created, because some chars are not allowed in a database field name. Use this method to get the headers as readen in CSV file. The fields are returned ordered as in the model.
+
+Note: will return headers only after \hyperlink{classmdt_data_table_manager_aac9ba371ee9e6d111fb7544bb9241161}{importFromCsvFile()} was called. 
+
+Definition at line 507 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a8fa0924a76e8f3fec9617f690cc4e148}{
+\index{mdtDataTableManager@{mdtDataTableManager}!dataSetDirectory@{dataSetDirectory}}
+\index{dataSetDirectory@{dataSetDirectory}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{dataSetDirectory}]{\setlength{\rightskip}{0pt plus 5cm}QDir mdtDataTableManager::dataSetDirectory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_data_table_manager_a8fa0924a76e8f3fec9617f690cc4e148}
+
+
+Set dataset directory. 
+
+\begin{Desc}
+\item[\hyperlink{todo__todo000057}{Todo}]Not used yet. \end{Desc}
+
+
+Definition at line 67 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a139611cc21836438053226b1d7576201}{
+\index{mdtDataTableManager@{mdtDataTableManager}!enableProgressDialog@{enableProgressDialog}}
+\index{enableProgressDialog@{enableProgressDialog}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{enableProgressDialog}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableManager::enableProgressDialog (
+\begin{DoxyParamCaption}
+\item[{bool}]{enable}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a139611cc21836438053226b1d7576201}
+
+
+Enable/disable progress dialog. 
+
+If progress dialog is enabled, some methods will show her progress in a dialog. 
+
+Definition at line 251 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_ac2da29f8f8920eed8cca78aa6cc0d8da}{
+\index{mdtDataTableManager@{mdtDataTableManager}!exportToCsvFile@{exportToCsvFile}}
+\index{exportToCsvFile@{exportToCsvFile}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{exportToCsvFile}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableManager::exportToCsvFile (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{filePath, }
+\item[{{\bf create\_\-mode\_\-t}}]{mode}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_ac2da29f8f8920eed8cca78aa6cc0d8da}
+
+
+Export data to a CSV file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filePath} & Path to CSV file \\
+\hline
+{\em mode} & Behaviour to adopt if CSV file allready exists. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True on successfull export.
+\end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000059}{Todo}]Add: separator, data protection, escape char, EOL \end{Desc}
+
+
+Definition at line 275 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_aac9ba371ee9e6d111fb7544bb9241161}{
+\index{mdtDataTableManager@{mdtDataTableManager}!importFromCsvFile@{importFromCsvFile}}
+\index{importFromCsvFile@{importFromCsvFile}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{importFromCsvFile}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableManager::importFromCsvFile (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{csvFilePath, }
+\item[{{\bf create\_\-mode\_\-t}}]{mode, }
+\item[{const QString \&}]{dir = {\ttfamily QString()}, }
+\item[{const QStringList \&}]{pkFields = {\ttfamily QStringList()}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_aac9ba371ee9e6d111fb7544bb9241161}
+
+
+Import a CSV file. 
+
+Note: this will delete internal model and create a new one. Be avare when referencing pointer returned by \hyperlink{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{model()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em csvFilePath} & Path to the CSV file. \\
+\hline
+{\em mode} & Behaviour to adopt when data table allready exists. \\
+\hline
+{\em dir} & Destination of the database file. If not defined, csvFilePath's directory is used. \\
+\hline
+{\em pkFields} & List of fields to considere as part of primary key. If list is empty, one named id\_\-PK will be created. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPrecond}{Precondition}
+All given CSV header items to use as part of primary key must exit in CSV file (See pkFields argument). 
+\end{DoxyPrecond}
+
+
+Definition at line 280 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{
+\index{mdtDataTableManager@{mdtDataTableManager}!model@{model}}
+\index{model@{model}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{model}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDataTableModel} $\ast$ mdtDataTableManager::model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}
+
+
+Get instance of current model. 
+
+Note that this pointer changes when some of methods are called.
+
+\begin{DoxyReturn}{Returns}
+Pointer to current model, or 0 if it was not set. 
+\end{DoxyReturn}
+
+
+Definition at line 546 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a755ea0471525645157f4d4843b6a4e8a}{
+\index{mdtDataTableManager@{mdtDataTableManager}!setCsvFormat@{setCsvFormat}}
+\index{setCsvFormat@{setCsvFormat}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{setCsvFormat}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableManager::setCsvFormat (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{separator, }
+\item[{const QString \&}]{dataProtection, }
+\item[{const QString \&}]{comment, }
+\item[{const QChar \&}]{escapeChar, }
+\item[{QByteArray}]{eol = {\ttfamily \char`\"{}$\backslash$n\char`\"{}}, }
+\item[{const QByteArray \&}]{encoding = {\ttfamily \char`\"{}UTF-\/8\char`\"{}}}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a755ea0471525645157f4d4843b6a4e8a}
+
+
+Set CSV import/export format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em separator} & Separator to use (typical: ; ) \\
+\hline
+{\em dataProtection} & Data protection (typical: " ) \\
+\hline
+{\em comment} & Comment (typical: \# ) \\
+\hline
+{\em escapeChar} & Escape char (typical: $\backslash$ ). Note: has only effect to escape dataProtection. \\
+\hline
+{\em eol} & End of line sequence. Usefull if given file was not written from running platform. \\
+\hline
+{\em encoding} & Name of the encoding format, for example, UTF-\/8 If given encoding is not available, UTF-\/8 is choosen. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 256 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a1e19b3f34c1b0a91bcae4396731efc57}{
+\index{mdtDataTableManager@{mdtDataTableManager}!setDataSetDirectory@{setDataSetDirectory}}
+\index{setDataSetDirectory@{setDataSetDirectory}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{setDataSetDirectory}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDataTableManager::setDataSetDirectory (
+\begin{DoxyParamCaption}
+\item[{const QDir \&}]{dir}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a1e19b3f34c1b0a91bcae4396731efc57}
+
+
+Set dataset directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dir} & Path or QDir object to directory. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if directory exists. 
+\end{DoxyReturn}
+\begin{Desc}
+\item[\hyperlink{todo__todo000056}{Todo}]Not used yet. \end{Desc}
+
+
+Definition at line 54 of file mdtDataTableManager.cpp.
+
+\hypertarget{classmdt_data_table_manager_a87e9b26f462165c93a64f8ac6080b13d}{
+\index{mdtDataTableManager@{mdtDataTableManager}!setDisplayTextsToModelHeader@{setDisplayTextsToModelHeader}}
+\index{setDisplayTextsToModelHeader@{setDisplayTextsToModelHeader}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{setDisplayTextsToModelHeader}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDataTableManager::setDisplayTextsToModelHeader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_data_table_manager_a87e9b26f462165c93a64f8ac6080b13d}
+
+
+Set the display texts to model's header. 
+
+\begin{DoxyPrecond}{Precondition}
+Model must be valid. 
+\end{DoxyPrecond}
+
+
+Definition at line 531 of file mdtDataTableManager.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtDataTableManager.h\item 
+src/mdtutilsgui/mdtDataTableManager.cpp\end{DoxyCompactItemize}

@@ -76,54 +76,89 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c9f24190d83f32672f360f0fcc53d2f"></a><!-- doxytag: member="mdtCsvFile::mdtCsvFile" ref="a8c9f24190d83f32672f360f0fcc53d2f" args="(QObject *parent=0, QByteArray fileEncoding=&quot;UTF&#45;8&quot;)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a8c9f24190d83f32672f360f0fcc53d2f">mdtCsvFile</a> (QObject *parent=0, QByteArray fileEncoding=&quot;UTF-8&quot;)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. <br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797">readLines</a> (QByteArray separator=&quot;;&quot;, QByteArray dataProtection=&quot;&quot;, QByteArray comment=&quot;#&quot;)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the file and store data.  <a href="#ab2d9754e50db179825813081bb129797"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">QStringList &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#af44de864675351a6f22b176e64a4cecc">parseLine</a> (const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a string (considered as a line in a CSV file)  <a href="#af44de864675351a6f22b176e64a4cecc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe815d4fbdc08c442c9b1dce447cda75"></a><!-- doxytag: member="mdtCsvFile::clear" ref="afe815d4fbdc08c442c9b1dce447cda75" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear readen data. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#aaca142b18a4f436548e17fbef755e2d5">mdtCsvFile</a> (QObject *parent=0, const QByteArray &amp;fileEncoding=&quot;UTF-8&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aaca142b18a4f436548e17fbef755e2d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#abfe09c325401ac9ca39c9d2329d6bc9c">close</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close.  <a href="#abfe09c325401ac9ca39c9d2329d6bc9c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a0e85f46ffdc4e44c8974c485abcc48b8">writeLine</a> (const QStringList &amp;line, const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QChar &amp;escapeChar=QChar(), QString eol=&quot;\n&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a line of data.  <a href="#a0e85f46ffdc4e44c8974c485abcc48b8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a4010d76497d8f5d2a85171025d31f100">readHeader</a> (const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get CSV file's header.  <a href="#a4010d76497d8f5d2a85171025d31f100"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3">readLine</a> (const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a line of data.  <a href="#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QStringList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a0c16f0024802eb675872aef129317eb8">readLine</a> (const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a line of data.  <a href="#a0c16f0024802eb675872aef129317eb8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a56c5d054c044cba2e4d617f5185a13ed">readLine</a> (QByteArray &amp;line, const QString &amp;dataProtection, const QString &amp;comment, const QChar &amp;escapeChar, QByteArray eol)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a line of data.  <a href="#a56c5d054c044cba2e4d617f5185a13ed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e8fa47acbbbf4e5fc7715e80e20d59b"></a><!-- doxytag: member="mdtCsvFile::hasMoreLines" ref="a1e8fa47acbbbf4e5fc7715e80e20d59b" args="() const " -->
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b">hasMoreLines</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if <a class="el" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine()</a> has more lines available. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b">readLines</a> (const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QString eol=&quot;\n&quot;)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the file and store data.  <a href="#adeb771789de28feb5c1ec326b179e83b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a string (considered as a line in a CSV file)  <a href="#afe815d4fbdc08c442c9b1dce447cda75"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee">valueAt</a> (int line, int column)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a value.  <a href="#af2d0917f92dd0d0d8100edccf1d3e4ee"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a089e82f55982a40587f3d9e53c7ff261"></a><!-- doxytag: member="mdtCsvFile::lines" ref="a089e82f55982a40587f3d9e53c7ff261" args="()" -->
 QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a089e82f55982a40587f3d9e53c7ff261">lines</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get content of entire file. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_csv_file.html#a27751812bf6625d6264bdce4bd43167c">setReadLineBufferSize</a> (int size)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine()</a> method's buffer size.  <a href="#a27751812bf6625d6264bdce4bd43167c"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Read and write CSV file. </p>
 <p>The default file encoding format is assumed UTF-8. If another format is to use, give it at constructor. </p>
 
-<p>Definition at line <a class="el" href="mdt_csv_file_8h_source.html#l00035">35</a> of file <a class="el" href="mdt_csv_file_8h_source.html">mdtCsvFile.h</a>.</p>
-</div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="af44de864675351a6f22b176e64a4cecc"></a><!-- doxytag: member="mdtCsvFile::parseLine" ref="af44de864675351a6f22b176e64a4cecc" args="(const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection)" -->
+<p>Definition at line <a class="el" href="mdt_csv_file_8h_source.html#l00043">43</a> of file <a class="el" href="mdt_csv_file_8h_source.html">mdtCsvFile.h</a>.</p>
+</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aaca142b18a4f436548e17fbef755e2d5"></a><!-- doxytag: member="mdtCsvFile::mdtCsvFile" ref="aaca142b18a4f436548e17fbef755e2d5" args="(QObject *parent=0, const QByteArray &amp;fileEncoding=&quot;UTF&#45;8&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">QStringList &amp; mdtCsvFile::parseLine </td>
+          <td class="memname">mdtCsvFile::mdtCsvFile </td>
           <td>(</td>
-          <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>line</em>, </td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>separator</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const QByteArray &amp;&#160;</td>
-          <td class="paramname"><em>dataProtection</em>&#160;</td>
+          <td class="paramname"><em>fileEncoding</em> = <code>&quot;UTF-8&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Constructor. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileEncoding</td><td>File encoding format. Note that this does not affect QFile's methods. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>fileEncoding must be supported by the system. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00028">28</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="afe815d4fbdc08c442c9b1dce447cda75"></a><!-- doxytag: member="mdtCsvFile::clear" ref="afe815d4fbdc08c442c9b1dce447cda75" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtCsvFile::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -138,33 +173,306 @@ QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bott
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The list of found fields</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000058">Todo:</a></b></dt><dd>Check new function in mdtAlgorithm </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000050">Todo:</a></b></dt><dd>Check new function in mdtAlgorithm </dd></dl>
+<p>QStringList &amp;parseLine(const QByteArray &amp;line, const QByteArray &amp;separator, const QByteArray &amp;dataProtection);</p>
+<p>Clear readen data </p>
 
-<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00071">71</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00217">217</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab2d9754e50db179825813081bb129797"></a><!-- doxytag: member="mdtCsvFile::readLines" ref="ab2d9754e50db179825813081bb129797" args="(QByteArray separator=&quot;;&quot;, QByteArray dataProtection=&quot;&quot;, QByteArray comment=&quot;#&quot;)" -->
+<a class="anchor" id="abfe09c325401ac9ca39c9d2329d6bc9c"></a><!-- doxytag: member="mdtCsvFile::close" ref="abfe09c325401ac9ca39c9d2329d6bc9c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtCsvFile::close </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Close. </p>
+<p>Will do some cleanup and call QFile's close method.</p>
+<p>Note: readen data are not cleared. Call <a class="el" href="classmdt_csv_file.html#afe815d4fbdc08c442c9b1dce447cda75" title="Parse a string (considered as a line in a CSV file)">clear()</a> explicitly for this. </p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_csv_file.html#af2d0917f92dd0d0d8100edccf1d3e4ee" title="Get a value.">valueAt()</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00041">41</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4010d76497d8f5d2a85171025d31f100"></a><!-- doxytag: member="mdtCsvFile::readHeader" ref="a4010d76497d8f5d2a85171025d31f100" args="(const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QStringList mdtCsvFile::readHeader </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>separator</em> = <code>&quot;;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>dataProtection</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>comment</em> = <code>&quot;#&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QChar &amp;&#160;</td>
+          <td class="paramname"><em>escapeChar</em> = <code>QChar()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>eol</em> = <code>&quot;\n&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get CSV file's header. </p>
+<p>Will read the first line and get it's fields. After this call, <a class="el" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine()</a> methods will begin at next line.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">separator</td><td>Separator to use (typical: ; ) </td></tr>
+    <tr><td class="paramname">dataProtection</td><td>Data protection (typical: " ) Note: current version does not support protected EOL. </td></tr>
+    <tr><td class="paramname">escapeChar</td><td>Escape char (typical: \ ). Note: has only effect to escape dataProtection. </td></tr>
+    <tr><td class="paramname">comment</td><td>Comment (typical: # ) </td></tr>
+    <tr><td class="paramname">eol</td><td>End of line sequence. Usefull if given file was not written from running platform. Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A list containing the headers. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00089">89</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa7d5e7ab9d6d71f7ca1c9fe7bea043a3"></a><!-- doxytag: member="mdtCsvFile::readLine" ref="aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" args="(const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QByteArray mdtCsvFile::readLine </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>dataProtection</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>comment</em> = <code>&quot;#&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QChar &amp;&#160;</td>
+          <td class="paramname"><em>escapeChar</em> = <code>QChar()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>eol</em> = <code>&quot;\n&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read a line of data. </p>
+<p>Note: do not use atEnd() to check if data are available anymore, but <a class="el" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b" title="Check if readLine() has more lines available.">hasMoreLines()</a>.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dataProtection</td><td>Data protection (typical: " ). </td></tr>
+    <tr><td class="paramname">comment</td><td>Comment (typical: # ). Each line that beginns with comment is ignored. </td></tr>
+    <tr><td class="paramname">escapeChar</td><td>Escape char (typical: \ ). Note: has only effect to escape dataProtection. </td></tr>
+    <tr><td class="paramname">eol</td><td>End of line sequence. Usefull if given file was not written from running platform. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Line of data. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0c16f0024802eb675872aef129317eb8"></a><!-- doxytag: member="mdtCsvFile::readLine" ref="a0c16f0024802eb675872aef129317eb8" args="(const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QByteArray eol=&quot;\n&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QStringList mdtCsvFile::readLine </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>separator</em> = <code>&quot;;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>dataProtection</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>comment</em> = <code>&quot;#&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QChar &amp;&#160;</td>
+          <td class="paramname"><em>escapeChar</em> = <code>QChar()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>eol</em> = <code>&quot;\n&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read a line of data. </p>
+<p>Note: do not use atEnd() to check if data are available anymore, but <a class="el" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b" title="Check if readLine() has more lines available.">hasMoreLines()</a>.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dataProtection</td><td>Data protection (typical: " ). </td></tr>
+    <tr><td class="paramname">comment</td><td>Comment (typical: # ). Each line that beginns with comment is ignored. </td></tr>
+    <tr><td class="paramname">escapeChar</td><td>Escape char (typical: \ ). Note: has only effect to escape dataProtection. </td></tr>
+    <tr><td class="paramname">eol</td><td>End of line sequence. Usefull if given file was not written from running platform. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Line of data. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00105">105</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a56c5d054c044cba2e4d617f5185a13ed"></a><!-- doxytag: member="mdtCsvFile::readLine" ref="a56c5d054c044cba2e4d617f5185a13ed" args="(QByteArray &amp;line, const QString &amp;dataProtection, const QString &amp;comment, const QChar &amp;escapeChar, QByteArray eol)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtCsvFile::readLine </td>
+          <td>(</td>
+          <td class="paramtype">QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>dataProtection</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>comment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QChar &amp;&#160;</td>
+          <td class="paramname"><em>escapeChar</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>eol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Read a line of data. </p>
+<p>Note: do not use atEnd() to check if data are available anymore, but <a class="el" href="classmdt_csv_file.html#a1e8fa47acbbbf4e5fc7715e80e20d59b" title="Check if readLine() has more lines available.">hasMoreLines()</a>.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>Line data will be put into this array. </td></tr>
+    <tr><td class="paramname">dataProtection</td><td>Data protection (typical: " ). </td></tr>
+    <tr><td class="paramname">comment</td><td>Comment (typical: # ). Each line that beginns with comment is ignored. </td></tr>
+    <tr><td class="paramname">escapeChar</td><td>Escape char (typical: \ ). Note: has only effect to escape dataProtection. </td></tr>
+    <tr><td class="paramname">eol</td><td>End of line sequence. Usefull if given file was not written from running platform. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00117">117</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adeb771789de28feb5c1ec326b179e83b"></a><!-- doxytag: member="mdtCsvFile::readLines" ref="adeb771789de28feb5c1ec326b179e83b" args="(const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QString &amp;comment=&quot;#&quot;, const QChar &amp;escapeChar=QChar(), QString eol=&quot;\n&quot;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool mdtCsvFile::readLines </td>
           <td>(</td>
-          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>separator</em> = <code>&quot;;&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>dataProtection</em> = <code>&quot;&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">QByteArray&#160;</td>
-          <td class="paramname"><em>comment</em> = <code>&quot;#&quot;</code>&#160;</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>comment</em> = <code>&quot;#&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QChar &amp;&#160;</td>
+          <td class="paramname"><em>escapeChar</em> = <code>QChar()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>eol</em> = <code>&quot;\n&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -179,15 +487,39 @@ QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bott
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">separator</td><td>Separator to use (typical: ; ) </td></tr>
-    <tr><td class="paramname">protection</td><td>Data protection (typical: " ) </td></tr>
+    <tr><td class="paramname">dataProtection</td><td>Data protection (typical: " ) </td></tr>
+    <tr><td class="paramname">escapeChar</td><td>Escape char (typical: \ ). Note: has only effect to escape dataProtection. </td></tr>
     <tr><td class="paramname">comment</td><td>Comment (typical: # ) </td></tr>
+    <tr><td class="paramname">eol</td><td>End of line sequence. Usefull if given file was not written from running platform. Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>True on success, false else (see errorString() to know what happened in this case) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>separator, dataProtection and comment must not be the same </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00037">37</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00180">180</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a27751812bf6625d6264bdce4bd43167c"></a><!-- doxytag: member="mdtCsvFile::setReadLineBufferSize" ref="a27751812bf6625d6264bdce4bd43167c" args="(int size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mdtCsvFile::setReadLineBufferSize </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Set the <a class="el" href="classmdt_csv_file.html#aa7d5e7ab9d6d71f7ca1c9fe7bea043a3" title="Read a line of data.">readLine()</a> method's buffer size. </p>
+<p>Used by unit testing. A value &lt; 1 means default value (8192). </p>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00244">244</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -217,9 +549,69 @@ QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bott
 <div class="memdoc">
 
 <p>Get a value. </p>
-<p>No value is available before <a class="el" href="classmdt_csv_file.html#ab2d9754e50db179825813081bb129797" title="Read the file and store data.">readLines()</a> was called. If requested index (line, column) is empty, or does not exists, a empty string is returned. The index check is done internally. </p>
+<p>No value is available before <a class="el" href="classmdt_csv_file.html#adeb771789de28feb5c1ec326b179e83b" title="Read the file and store data.">readLines()</a> was called. If requested index (line, column) is empty, or does not exists, a empty string is returned. The index check is done internally. </p>
 
-<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00160">160</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00222">222</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0e85f46ffdc4e44c8974c485abcc48b8"></a><!-- doxytag: member="mdtCsvFile::writeLine" ref="a0e85f46ffdc4e44c8974c485abcc48b8" args="(const QStringList &amp;line, const QString &amp;separator=&quot;;&quot;, const QString &amp;dataProtection=&quot;&quot;, const QChar &amp;escapeChar=QChar(), QString eol=&quot;\n&quot;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mdtCsvFile::writeLine </td>
+          <td>(</td>
+          <td class="paramtype">const QStringList &amp;&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>separator</em> = <code>&quot;;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>dataProtection</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QChar &amp;&#160;</td>
+          <td class="paramname"><em>escapeChar</em> = <code>QChar()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QString&#160;</td>
+          <td class="paramname"><em>eol</em> = <code>&quot;\n&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Write a line of data. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>List of strings containing line data. </td></tr>
+    <tr><td class="paramname">separator</td><td>Separator to use (typical: ; ) </td></tr>
+    <tr><td class="paramname">dataProtection</td><td>Data protection (typical: " ). Note: current version does not support protected EOL. </td></tr>
+    <tr><td class="paramname">escapeChar</td><td>Escape char (typical: \ ). If not empty, if a line item contains a same sequence than dataProtection will be prefixed with escapeChar. Note: separator is not escaped. </td></tr>
+    <tr><td class="paramname">eol</td><td>End of line sequence. Usefull if given file is not supposed to be readen from running platform. Note that file must not be open with Text flag if this parameter is needed (se QFile::open() for details). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>True on success </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_csv_file_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_csv_file_8cpp_source.html">mdtCsvFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -242,7 +634,7 @@ QList&lt; QStringList &gt; &amp;&#160;</td><td class="memItemRight" valign="bott
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:57 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

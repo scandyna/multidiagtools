@@ -99,18 +99,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052  <span class="keyword">private</span>:
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <span class="comment">// Get a new frame from RX frames pool</span>
-<a name="l00055"></a>00055   <span class="comment">// If no frame is available, a null pointer is returned</span>
-<a name="l00056"></a>00056   <span class="comment">// Note: this function handle not the serial port mutex</span>
-<a name="l00058"></a>00058 <span class="comment"></span>
-<a name="l00059"></a>00059   <span class="comment">// Thread implementation</span>
-<a name="l00060"></a>00060   <span class="keywordtype">void</span> run();
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keywordtype">bool</span> pvTransmissionSuspended; <span class="comment">// Flag used to remeber if a transmission suspend was request.</span>
-<a name="l00063"></a>00063   <span class="keywordtype">int</span> pvMinPoolSizeBeforeReadSuspend;
-<a name="l00064"></a>00064 };
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 <span class="preprocessor">#endif  // #ifndef MDT_PORT_READ_THREAD_H</span>
+<a name="l00054"></a>00054   <span class="comment">// Thread implementation</span>
+<a name="l00055"></a>00055   <span class="keywordtype">void</span> run();
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <span class="keywordtype">bool</span> pvTransmissionSuspended; <span class="comment">// Flag used to remeber if a transmission suspend was request.</span>
+<a name="l00058"></a>00058   <span class="keywordtype">int</span> pvMinPoolSizeBeforeReadSuspend;
+<a name="l00059"></a>00059 };
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061 <span class="preprocessor">#endif  // #ifndef MDT_PORT_READ_THREAD_H</span>
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -127,7 +123,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

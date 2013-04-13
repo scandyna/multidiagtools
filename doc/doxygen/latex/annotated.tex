@@ -3,6 +3,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_abstract_io}{mdtAbstractIo} (Base class for I/O handling on (G)UI )}{\pageref{classmdt_abstract_io}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_io_widget}{mdtAbstractIoWidget} (Base class for I/O widgets )}{\pageref{classmdt_abstract_io_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_port}{mdtAbstractPort} (Base class for port I/O )}{\pageref{classmdt_abstract_port}}{}
+\item\contentsline{section}{\hyperlink{classmdt_abstract_port_setup_dialog}{mdtAbstractPortSetupDialog} (Base class to build a port setup dialog )}{\pageref{classmdt_abstract_port_setup_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_abstract_serial_port}{mdtAbstractSerialPort} (NOTE: )}{\pageref{classmdt_abstract_serial_port}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_in_widget}{mdtAnalogInWidget} (Representation of a analog input )}{\pageref{classmdt_analog_in_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_analog_io}{mdtAnalogIo} (Representation of a analog I/O )}{\pageref{classmdt_analog_io}}{}
@@ -11,6 +12,9 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_blink_led}{mdtBlinkLed} (Blinking LED )}{\pageref{classmdt_blink_led}}{}
 \item\contentsline{section}{\hyperlink{classmdt_buffer}{mdtBuffer$<$ T $>$} (Stockage d'éléments basé sur le principe du tampon circulaire )}{\pageref{classmdt_buffer}}{}
 \item\contentsline{section}{\hyperlink{classmdt_csv_file}{mdtCsvFile} (Read and write CSV file )}{\pageref{classmdt_csv_file}}{}
+\item\contentsline{section}{\hyperlink{classmdt_data_table_item_delegate}{mdtDataTableItemDelegate} (Delegate to display table items in custom way )}{\pageref{classmdt_data_table_item_delegate}}{}
+\item\contentsline{section}{\hyperlink{classmdt_data_table_manager}{mdtDataTableManager} (Create/manage data sets )}{\pageref{classmdt_data_table_manager}}{}
+\item\contentsline{section}{\hyperlink{classmdt_data_table_model}{mdtDataTableModel} }{\pageref{classmdt_data_table_model}}{}
 \item\contentsline{section}{\hyperlink{classmdt_data_widget_mapper}{mdtDataWidgetMapper} (DataWidget mapper )}{\pageref{classmdt_data_widget_mapper}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device}{mdtDevice} (Base class for a device connected to a port )}{\pageref{classmdt_device}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_d_s_o1000_a}{mdtDeviceDSO1000A} }{\pageref{classmdt_device_d_s_o1000_a}}{}
@@ -18,8 +22,8 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_device_ios}{mdtDeviceIos} (Container for a set of I/O's )}{\pageref{classmdt_device_ios}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_ios_widget}{mdtDeviceIosWidget} (Display a set of I/O's )}{\pageref{classmdt_device_ios_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_modbus}{mdtDeviceModbus} (Represent a MODBUS device )}{\pageref{classmdt_device_modbus}}{}
+\item\contentsline{section}{\hyperlink{classmdt_device_modbus_wago}{mdtDeviceModbusWago} }{\pageref{classmdt_device_modbus_wago}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_scpi}{mdtDeviceScpi} (Base class for SCPI based instruments )}{\pageref{classmdt_device_scpi}}{}
-\item\contentsline{section}{\hyperlink{classmdt_device_status_widget}{mdtDeviceStatusWidget} }{\pageref{classmdt_device_status_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_u3606_a}{mdtDeviceU3606A} (Representation of a Agilent U3606A )}{\pageref{classmdt_device_u3606_a}}{}
 \item\contentsline{section}{\hyperlink{classmdt_device_u3606_a_widget}{mdtDeviceU3606AWidget} }{\pageref{classmdt_device_u3606_a_widget}}{}
 \item\contentsline{section}{\hyperlink{class_ui_1_1mdt_device_u3606_a_widget}{Ui::mdtDeviceU3606AWidget} }{\pageref{class_ui_1_1mdt_device_u3606_a_widget}}{}
@@ -30,6 +34,8 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_error}{mdtError} }{\pageref{classmdt_error}}{}
 \item\contentsline{section}{\hyperlink{classmdt_error_out}{mdtErrorOut} (Error output system Helper for error output. Outputs are the stderr output (console), a GUI messagebox and a logfile )}{\pageref{classmdt_error_out}}{}
 \item\contentsline{section}{\hyperlink{classmdt_error_out_logger}{mdtErrorOutLogger} (Put errors in the log file )}{\pageref{classmdt_error_out_logger}}{}
+\item\contentsline{section}{\hyperlink{classmdt_field_map}{mdtFieldMap} (Map fields between a source and a destination data set )}{\pageref{classmdt_field_map}}{}
+\item\contentsline{section}{\hyperlink{classmdt_field_map_item}{mdtFieldMapItem} (Provide informations for \hyperlink{classmdt_field_map}{mdtFieldMap} )}{\pageref{classmdt_field_map_item}}{}
 \item\contentsline{section}{\hyperlink{classmdt_file_copier}{mdtFileCopier} (Helper class for file copy )}{\pageref{classmdt_file_copier}}{}
 \item\contentsline{section}{\hyperlink{classmdt_file_copier_item}{mdtFileCopierItem} (This is a container class used by \hyperlink{classmdt_file_copier}{mdtFileCopier} )}{\pageref{classmdt_file_copier_item}}{}
 \item\contentsline{section}{\hyperlink{classmdt_frame}{mdtFrame} (Provide an array of bytes )}{\pageref{classmdt_frame}}{}
@@ -44,7 +50,9 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_frame_usb_control}{mdtFrameUsbControl} (USB Control frame )}{\pageref{classmdt_frame_usb_control}}{}
 \item\contentsline{section}{\hyperlink{classmdt_frame_usb_tmc}{mdtFrameUsbTmc} (USBTMC frame )}{\pageref{classmdt_frame_usb_tmc}}{}
 \item\contentsline{section}{\hyperlink{classmdt_led}{mdtLed} (MdtLED is a widget witch displays a LED )}{\pageref{classmdt_led}}{}
-\item\contentsline{section}{\hyperlink{classmdt_modbus_tcp_port_manager}{mdtModbusTcpPortManager} (MODBUS/TCP port manager )}{\pageref{classmdt_modbus_tcp_port_manager}}{}
+\item\contentsline{section}{\hyperlink{classmdt_modbus_io_tool}{mdtModbusIoTool} (Minimal tool for MODBUS I/O )}{\pageref{classmdt_modbus_io_tool}}{}
+\item\contentsline{section}{\hyperlink{classmdt_modbus_tcp_port_manager}{mdtModbusTcpPortManager} (\#include $<$QVariant$>$ )}{\pageref{classmdt_modbus_tcp_port_manager}}{}
+\item\contentsline{section}{\hyperlink{classmdt_modbus_tcp_port_setup_dialog}{mdtModbusTcpPortSetupDialog} }{\pageref{classmdt_modbus_tcp_port_setup_dialog}}{}
 \item\contentsline{section}{\hyperlink{classmdt_parent_child_table_item}{mdtParentChildTableItem} }{\pageref{classmdt_parent_child_table_item}}{}
 \item\contentsline{section}{\hyperlink{classmdt_parent_child_table_model}{mdtParentChildTableModel} }{\pageref{classmdt_parent_child_table_model}}{}
 \item\contentsline{section}{\hyperlink{classmdt_partition_attributes}{mdtPartitionAttributes} (Get some attributes of a file system partition )}{\pageref{classmdt_partition_attributes}}{}
@@ -56,6 +64,7 @@ Here are the classes, structs, unions and interfaces with brief descriptions:\be
 \item\contentsline{section}{\hyperlink{classmdt_port_lock}{mdtPortLock} (NOTE: )}{\pageref{classmdt_port_lock}}{}
 \item\contentsline{section}{\hyperlink{classmdt_port_manager}{mdtPortManager} (Port manager base class )}{\pageref{classmdt_port_manager}}{}
 \item\contentsline{section}{\hyperlink{classmdt_port_read_thread}{mdtPortReadThread} (Reader thread for port I/O )}{\pageref{classmdt_port_read_thread}}{}
+\item\contentsline{section}{\hyperlink{classmdt_port_status_widget}{mdtPortStatusWidget} }{\pageref{classmdt_port_status_widget}}{}
 \item\contentsline{section}{\hyperlink{classmdt_port_term}{mdtPortTerm} (Mini port treminal )}{\pageref{classmdt_port_term}}{}
 \item\contentsline{section}{\hyperlink{classmdt_port_thread}{mdtPortThread} }{\pageref{classmdt_port_thread}}{}
 \item\contentsline{section}{\hyperlink{classmdt_port_transaction}{mdtPortTransaction} (Store port transaction identifications data )}{\pageref{classmdt_port_transaction}}{}

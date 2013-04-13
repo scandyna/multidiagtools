@@ -124,13 +124,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00063"></a>00063 
 <a name="l00064"></a>00064   QList&lt;mdtPortInfo*&gt; portInfoList;
 <a name="l00065"></a>00065   <a class="code" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> *deviceInfo;
-<a name="l00066"></a>00066   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>;
+<a name="l00066"></a>00066   <a class="code" href="classmdt_port_info.html" title="Contains informations about a port.">mdtPortInfo</a> *<a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get current port info.">portInfo</a>;
 <a name="l00067"></a>00067   libusb_context *ctx;
 <a name="l00068"></a>00068   libusb_device **devicesList;
 <a name="l00069"></a>00069   <a class="code" href="classmdt_usb_device_descriptor.html" title="USB device descriptor.">mdtUsbDeviceDescriptor</a> deviceDescriptor;
 <a name="l00070"></a>00070   <a class="code" href="classmdt_usb_config_descriptor.html" title="USB configuration descriptor.">mdtUsbConfigDescriptor</a> *configDescriptor;
 <a name="l00071"></a>00071   <a class="code" href="classmdt_usb_interface_descriptor.html" title="USB interface descriptor.">mdtUsbInterfaceDescriptor</a> *ifaceDescriptor;
-<a name="l00072"></a>00072   QString portName;
+<a name="l00072"></a>00072   QString <a class="code" href="classmdt_port_manager.html#af4fcab6aaad98d74aeabfc972da1d406" title="Get current port name.">portName</a>;
 <a name="l00073"></a>00073   libusb_device *device;
 <a name="l00074"></a>00074   ssize_t devicesCount;
 <a name="l00075"></a>00075   ssize_t i;
@@ -212,7 +212,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00151"></a>00151     }
 <a name="l00152"></a>00152     <span class="comment">// If port info has no device, delete it, else add it to list</span>
 <a name="l00153"></a>00153     <span class="keywordflow">if</span>(portInfo-&gt;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().size() &lt; 1){
-<a name="l00154"></a>00154       <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get port info.">portInfo</a>;
+<a name="l00154"></a>00154       <span class="keyword">delete</span> <a class="code" href="classmdt_port_manager.html#a88109b455fc5a5f5adf0636f7450143e" title="Get current port info.">portInfo</a>;
 <a name="l00155"></a>00155     }<span class="keywordflow">else</span>{
 <a name="l00156"></a>00156       <span class="comment">// Build port name</span>
 <a name="l00157"></a>00157       deviceInfo = portInfo-&gt;<a class="code" href="classmdt_port_info.html#a22013ea9e2de1d12cef673a2452d5b80" title="Get the list of devices informations.">deviceInfoList</a>().at(0);
@@ -424,7 +424,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:43 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

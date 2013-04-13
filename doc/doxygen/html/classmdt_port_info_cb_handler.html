@@ -114,7 +114,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the selected device info object. </p>
 <p>Can return a empty object if nothing was set, or nothing valid is selected or device combobox was not set. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00085">85</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00094">94</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -135,7 +135,10 @@ Public Member Functions</h2></td></tr>
 <p>Get the selected port info object. </p>
 <p>Can return a empty object if nothing was set, or nothing valid is selected. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00072">72</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p><p>return cbPorts-&gt;itemData(cbPorts-&gt;currentIndex()).value&lt;mdtPortInfo&gt;(); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00078">78</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -157,7 +160,11 @@ Public Member Functions</h2></td></tr>
 <p>Fill the comboboxes with a scan result. </p>
 <p>All ports in list ares added to the ports combobox. If the devices combobox was set, it will be updated at each ports combobox index change. </p>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00057">57</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p><p>QVariant var;</p>
+<p>var.setValue(*portInfo); var.setValue(portInfo-&gt;portName()); </p>
+</p>
+
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00059">59</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -182,7 +189,7 @@ Public Member Functions</h2></td></tr>
 <dd>
 Ports combobox must be set before with <a class="el" href="classmdt_port_info_cb_handler.html#a06f9b5e8127e61026911691827f3203a" title="Set the comboBox that must display ports.">setPortsComboBox()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00045">45</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00047">47</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -205,7 +212,7 @@ Ports combobox must be set before with <a class="el" href="classmdt_port_info_cb
 <p>Note that comboBox object will not be deleted by this clas.</p>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>comboBox must be a valid object. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00038">38</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html#l00040">40</a> of file <a class="el" href="mdt_port_info_cb_handler_8cpp_source.html">mdtPortInfoCbHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -228,7 +235,7 @@ Ports combobox must be set before with <a class="el" href="classmdt_port_info_cb
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Wed Feb 6 2013 20:31:44 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:58 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>
