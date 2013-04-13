@@ -699,6 +699,16 @@ void mdtDataTableTest::fieldMapTest()
     QCOMPARE(item->fieldIndex(), i);
     QCOMPARE(item->fieldName(), modelHeader.at(i));
   }
+  // Check map direct access
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(0), QString("A"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(1), QString("B"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(2), QString("Group1"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(3), QString("Group1"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(4), QString("C"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(5), QString("Group2"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(6), QString("Group2"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(7), QString("Group2"));
+  QCOMPARE(map.sourceFieldNameAtFieldIndex(8), QString(""));
   // Check Group1 split
   item = map.itemAtFieldName("Sub1Id");
   QVERIFY(item != 0);
@@ -753,18 +763,6 @@ void mdtDataTableTest::fieldMapTest()
   /*
    * Check that index update works
    */
-  /**
-  csvHeader.clear();
-  csvLine.clear();
-  modelHeader.clear();
-  modelRow.clear();
-  // Build source fields and data
-  csvHeader << "A" << "B" << "C";
-  csvLine << "data A" << "data B" << "data C";
-  // Build model fields and data
-  modelHeader << "a" << "b" << "c";
-  modelRow << "data A" << "data B" << "data C";
-  */
   map.clear();
   // Build the map without specifing indexes
   item = new mdtFieldMapItem;
@@ -942,9 +940,10 @@ void mdtDataTableTest::csvExportTest()
 
 void mdtDataTableTest::csvImportTest()
 {
-  QTemporaryFile csvFile1, csvFile2;
+  QTemporaryFile csvFile1, csvFile2, csvFile3;
   mdtDataTableManager manager;
   mdtDataTableModel *model;
+  QStringList csvHeader;
 
   // Write CSV file that contains a primary key
   QVERIFY(csvFile1.open());
@@ -956,7 +955,16 @@ void mdtDataTableTest::csvImportTest()
   QVERIFY(manager.importFromCsvFile(csvFile1.fileName(), mdtDataTableManager::OverwriteExisting, "", QStringList("id_PK")));
   model = manager.model();
   QVERIFY(model != 0);
-  /// Check CSV headers
+  // Check model's header
+  QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
+  QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
+  // Check CSV headers
+  csvHeader = manager.csvHeader();
+  QCOMPARE(csvHeader.size(), 3);
+  QCOMPARE(csvHeader.at(0), QString("id_PK"));
+  QCOMPARE(csvHeader.at(1), QString("signal"));
+  QCOMPARE(csvHeader.at(2), QString("value"));
   // Check imported data
   QCOMPARE(model->rowCount(), 1);
   QCOMPARE(model->data(model->index(0, 0)), QVariant(1));
@@ -969,20 +977,92 @@ void mdtDataTableTest::csvImportTest()
   QVERIFY(csvFile2.write("Temp. M2;126.0\n") > 0);
   csvFile2.close();
   // Configure manager and import CSV
+  manager.clearFieldMap();
   manager.setCsvFormat(";", "", "", '\0');
   QVERIFY(manager.importFromCsvFile(csvFile2.fileName(), mdtDataTableManager::OverwriteExisting));
   model = manager.model();
   QVERIFY(model != 0);
+  // Check model's header
+  QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("signal"));
+  QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("value"));
+  // Check CSV headers
+  csvHeader = manager.csvHeader();
+  QCOMPARE(csvHeader.size(), 2);
+  QCOMPARE(csvHeader.at(0), QString("signal"));
+  QCOMPARE(csvHeader.at(1), QString("value"));
   // Check imported data
   QCOMPARE(model->rowCount(), 1);
   QCOMPARE(model->data(model->index(0, 0)), QVariant(1));
   QCOMPARE(model->data(model->index(0, 1)), QVariant("Temp. M2"));
   QCOMPARE(model->data(model->index(0, 2)), QVariant("126.0"));
 
-  qDebug() << "CSV headers: " << manager.csvHeader();
+  /*
+   * Check field mapping
+   */
 
-  ///return;
-  
+  // Write CSV file that contains no primary key
+  QVERIFY(csvFile3.open());
+  QVERIFY(csvFile3.write("bin I/O;signal;value\n") > 0);
+  QVERIFY(csvFile3.write("10;Rpm M2;55.0\n") > 0);
+  csvFile3.close();
+  // Configure manager and import CSV
+  manager.clearFieldMap();
+  manager.setCsvFormat(";", "", "", '\0');
+  manager.addFieldMapping("bin I/O", "powerState", "Power state", QVariant::String, 0, 0);
+  manager.addFieldMapping("bin I/O", "cpuState", "CPU state", QVariant::String, 1, 1);
+  manager.addFieldMapping("value", "value", "Value", QVariant::Double);
+  QVERIFY(manager.importFromCsvFile(csvFile3.fileName(), mdtDataTableManager::OverwriteExisting));
+  model = manager.model();
+  QVERIFY(model != 0);
+  // Check model's header. Note: we don't know in witch order field splitting is done
+  QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  if(model->headerData(1, Qt::Horizontal) == QVariant("powerState")){
+    QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("cpuState"));
+  }else{
+    QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("cpuState"));
+    QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("powerState"));
+  }
+  QCOMPARE(model->headerData(3, Qt::Horizontal), QVariant("signal"));
+  QCOMPARE(model->headerData(4, Qt::Horizontal), QVariant("value"));
+  // Check CSV headers
+  csvHeader = manager.csvHeader();
+  QCOMPARE(csvHeader.size(), 3);
+  QCOMPARE(csvHeader.at(0), QString("bin I/O"));
+  QCOMPARE(csvHeader.at(1), QString("signal"));
+  QCOMPARE(csvHeader.at(2), QString("value"));
+  // Check imported data
+  QCOMPARE(model->rowCount(), 1);
+  QCOMPARE(model->data(model->index(0, 0)), QVariant(1));
+  if(model->headerData(1, Qt::Horizontal) == QVariant("powerState")){
+    QCOMPARE(model->data(model->index(0, 1)), QVariant("1"));
+    QCOMPARE(model->data(model->index(0, 2)), QVariant("0"));
+  }else{
+    QCOMPARE(model->data(model->index(0, 1)), QVariant("0"));
+    QCOMPARE(model->data(model->index(0, 2)), QVariant("1"));
+  }
+  QCOMPARE(model->data(model->index(0, 3)), QVariant("Rpm M2"));
+  QCOMPARE(model->data(model->index(0, 4)), QVariant(55.0));
+  // Set display texts to model header
+  manager.setDisplayTextsToModelHeader();
+  // Check model's header. Note: we don't know in witch order field splitting is done
+  QCOMPARE(model->headerData(0, Qt::Horizontal), QVariant("id_PK"));
+  if(model->headerData(1, Qt::Horizontal) == QVariant("powerState")){
+    QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("Power state"));
+    QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("CPU state"));
+  }else{
+    QCOMPARE(model->headerData(1, Qt::Horizontal), QVariant("CPU state"));
+    QCOMPARE(model->headerData(2, Qt::Horizontal), QVariant("Power state"));
+  }
+  QCOMPARE(model->headerData(3, Qt::Horizontal), QVariant("signal"));
+  QCOMPARE(model->headerData(4, Qt::Horizontal), QVariant("Value"));
+  // Check CSV headers
+  csvHeader = manager.csvHeader();
+  QCOMPARE(csvHeader.size(), 3);
+  QCOMPARE(csvHeader.at(0), QString("bin I/O"));
+  QCOMPARE(csvHeader.at(1), QString("signal"));
+  QCOMPARE(csvHeader.at(2), QString("value"));
+
   /*
    * Playing ...
    */
@@ -995,13 +1075,17 @@ void mdtDataTableTest::csvImportTest()
   manager.addFieldMapping("Logici 1", "fakeIRstate", "Fake IR state", QVariant::String, 1, 1);
   manager.addFieldMapping("Logici 1", "fakePanto1state", "Fake panto 1 state", QVariant::String, 2, 2);
   manager.addFieldMapping("Logici 1", "fakePanto2state", "Fake panto 2 state", QVariant::String, 3, 3);
+  manager.addFieldMapping("Logici 1", "fakePanto3state", "Fake panto 3 state", QVariant::String, 4, 4);
+  manager.addFieldMapping("Logici 1", "fakePanto4state", "Fake panto 4 state", QVariant::String, 5, 5);
+  manager.addFieldMapping("Logici 1", "fakePanto5state", "Fake panto 5 state", QVariant::String, 6, 6);
+  manager.addFieldMapping("Logici 1", "fakePanto6state", "Fake panto 6 state", QVariant::String, 7, 7);
   
   QVERIFY(manager.importFromCsvFile("/tmp/example_dwn.csv", mdtDataTableManager::AskUserIfExists));
   ///manager.setCsvFormat(";", "\"", "", '"', "\r\n", "UTF-8");
   ///QVERIFY(manager.importFromCsvFile("/tmp/example_unicontrol.csv", mdtDataTableManager::AskUserIfExists));
   ///QVERIFY(manager.importFromCsvFile("/media/PS_MBS/example_dwn.csv", mdtDataTableManager::AskUserIfExists));
   QVERIFY(manager.model() != 0);
-  QVERIFY(manager.setCsvHeaderToModel());
+  manager.setDisplayTextsToModelHeader();
 
   // View
   QTableView v;

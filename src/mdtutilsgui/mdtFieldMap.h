@@ -18,8 +18,8 @@
  ** along with multiDiagTools.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
-#ifndef MDT_FIEL_DMAP_H
-#define MDT_FIEL_DMAP_H
+#ifndef MDT_FIELD_MAP_H
+#define MDT_FIELD_MAP_H
 
 #include "mdtFieldMapItem.h"
 #include <QString>
@@ -107,6 +107,13 @@ class mdtFieldMap
    */
   mdtFieldMapItem *itemAtDisplayText(const QString &text);
 
+  /*! \brief Get the source field name for a given field index
+   *
+   * \param index In above example, it's the model column index.
+   * \return Source field name, or a empty string if field index was not found.
+   */
+  QString sourceFieldNameAtFieldIndex(int index) const;
+
   /*! \brief Get the items for given source index
    *
    * \param index In above example, it's the index of field in CSV header.
@@ -177,4 +184,4 @@ class mdtFieldMap
   QMultiHash<QString, mdtFieldMapItem*> pvItemsBySourceFieldName;
 };
 
-#endif  // #ifndef MDT_FIEL_DMAP_H
+#endif  // #ifndef MDT_FIELD_MAP_H

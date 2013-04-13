@@ -20,11 +20,8 @@
  ****************************************************************************/
 #include "mdtDataTableModel.h"
 #include "mdtError.h"
-///#include <QSqlError>
-///#include <QSqlQuery>
-///#include <QStringList>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtDataTableModel::mdtDataTableModel(QObject *parent, QSqlDatabase db)
  : QSqlTableModel(parent, db)
@@ -126,66 +123,24 @@ bool mdtDataTableModel::addRow(const QStringList &data, bool pkNotInData, int ro
   return doSubmit();
 }
 
-///bool mdtDataTableModel::addRows(const QList<QStringList> &dataList, bool pkNotInData, int role)
-bool mdtDataTableModel::addRows(const QList<QList<QVariant> > &dataList, bool pkNotInData, int role)
-{
-  int dataRowIndex;
-  int modelRowIndex;
-  int dataColumnIndex;
-  int modelColumnIndex;
-
-  modelRowIndex = rowCount();
-  if(!insertRows(modelRowIndex, dataList.size())){
-    qDebug() << "Cannot insert rows, n: " << dataList.size();
-    return false;
-  }
-  for(dataRowIndex=0; dataRowIndex<dataList.size(); dataRowIndex++){
-    // Add data of each column
-    modelColumnIndex = 0;
-    for(dataColumnIndex=0; dataColumnIndex<dataList.at(dataRowIndex).size(); dataColumnIndex++){
-      // If PK is not in data, we must remap indexes
-      if((pkNotInData)&&(pvPkIndexes.contains(modelColumnIndex))){
-        if(modelColumnIndex >= columnCount()){
-          revertRow(modelRowIndex);
-          return false;
-        }
-        modelColumnIndex++;
-      }
-      if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), dataList.at(dataRowIndex).at(dataColumnIndex), role)){
-        qDebug() << "setData() failed for index " << index(modelRowIndex, modelColumnIndex);
-        revertRow(modelRowIndex);
-        return false;
-      }
-      modelColumnIndex++;
-    }
-    modelRowIndex++;
-  }
-
-  return doSubmit();
-}
-
 bool mdtDataTableModel::addRows(const QList<QStringList> &rows, const mdtFieldMap &fieldMap, int role)
 {
   int dataRowIndex;
   int modelRowIndex;
-  ///int dataColumnIndex;
   int modelColumnIndex;
   QVariant data;
 
   modelRowIndex = rowCount();
   if(!insertRows(modelRowIndex, rows.size())){
-    qDebug() << "Cannot insert rows, n: " << rows.size();
     return false;
   }
   for(dataRowIndex=0; dataRowIndex<rows.size(); dataRowIndex++){
     // Add data of each column
     for(modelColumnIndex=0; modelColumnIndex<columnCount(); modelColumnIndex++){
       data = fieldMap.dataForFieldIndex(rows.at(dataRowIndex), modelColumnIndex);
-      ///qDebug() << "Inserting data: " << data;
       // If data is empty, it's possible that we have auto values
       if(data.isValid()){
         if(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data, role)){
-          qDebug() << "setData() failed for index " << index(modelRowIndex, modelColumnIndex);
           revertRow(modelRowIndex);
           return false;
         }
