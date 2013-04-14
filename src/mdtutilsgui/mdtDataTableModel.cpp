@@ -21,7 +21,7 @@
 #include "mdtDataTableModel.h"
 #include "mdtError.h"
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtDataTableModel::mdtDataTableModel(QObject *parent, QSqlDatabase db)
  : QSqlTableModel(parent, db)

@@ -25,8 +25,10 @@
 #include "mdtDataTableItemDelegate.h"
 #include "mdtFieldMap.h"
 #include "mdtFieldMapItem.h"
+#include "mdtSqlQueryWidget.h"
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlQueryModel>
 #include <QString>
 #include <QStringList>
 #include <QSqlTableModel>
@@ -40,6 +42,7 @@
 #include <QTemporaryFile>
 #include <QFileInfo>
 #include <QMap>
+#include <QHash>
 
 #include <QDebug>
 
@@ -590,6 +593,7 @@ void mdtDataTableTest::fieldMapTest()
   QStringList csvLine;
   QStringList modelHeader;
   QList<QVariant> modelRow;
+  QHash<QString, QString> displayTextsByFieldNames;
 
   // Build source fields and data
   csvHeader << "A" << "B" << "Group1" << "C" << "Group2";
@@ -898,7 +902,13 @@ void mdtDataTableTest::fieldMapTest()
   QCOMPARE(item->sourceFieldName(), QString("C"));
   QCOMPARE(item->fieldIndex(), 13);
   QCOMPARE(item->fieldName(), QString("c"));
-
+  // Check display texts by field names
+  displayTextsByFieldNames = map.displayTextsByFieldNames();
+  QCOMPARE(displayTextsByFieldNames.size(), 4);
+  QCOMPARE(displayTextsByFieldNames.value("a1"), QString("A 1"));
+  QCOMPARE(displayTextsByFieldNames.value("a2"), QString("A 2"));
+  QCOMPARE(displayTextsByFieldNames.value("b"), QString("B"));
+  QCOMPARE(displayTextsByFieldNames.value("c"), QString("C"));
 }
 
 void mdtDataTableTest::csvExportTest()
@@ -1087,17 +1097,44 @@ void mdtDataTableTest::csvImportTest()
   QVERIFY(manager.model() != 0);
   manager.setDisplayTextsToModelHeader();
 
+  ///QString sql;
+  ///QSqlQueryModel qm;
+
+  ///qDebug() << "Available fields: " << manager.database().record(model->tableName());
+  /**
+  sql = "SELECT * FROM " + model->tableName() + ";";
+  ///sql = "SELECT * id_PK, digital1, fakeDJstate FROM " + model->tableName() + ";";
+  qDebug() << "SQL: " << sql;
+  qm.setQuery(sql, manager.database());
+  */
+  
   // View
   QTableView v;
   v.setModel(manager.model());
+  ///v.setModel(&qm);
   v.setEditTriggers(QAbstractItemView::NoEditTriggers);
   v.resize(600, 600);
   v.setSortingEnabled(true);
   v.horizontalHeader()->setMovable(true);
   v.show();
 
+  
+  mdtSqlQueryWidget qw;
+  qw.setDatabase(manager.database());
+  qw.setHeaderTextsByFieldNames(manager.displayTextsByFieldNames());
+  qw.show();
+  
+  /**
+  QTest::qWait(10000);
+  sql = "SELECT id_PK, digital1, fakeDJstate FROM " + model->tableName() + ";";
+  qDebug() << "SQL: " << sql;
+  qm.setQuery(sql, manager.database());
+  v.setModel(&qm);
+  */
+
+  
   while(v.isVisible()){
-    QTest::qWait(500);
+    QTest::qWait(1000);
   }
 
 }

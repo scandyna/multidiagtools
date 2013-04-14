@@ -224,6 +224,21 @@ QString mdtFieldMap::dataForSourceFieldName(const QList<QVariant> &data, const Q
   return str;
 }
 
+QHash<QString, QString> mdtFieldMap::displayTextsByFieldNames() const
+{
+  QHash<QString, QString> result;
+  mdtFieldMapItem *item;
+  int i;
+
+  for(i=0; i<pvItems.size(); ++i){
+    item = pvItems.at(i);
+    Q_ASSERT(item != 0);
+    result.insert(item->fieldName(), item->fieldDisplayText());
+  }
+
+  return result;
+}
+
 void mdtFieldMap::insertDataIntoSourceString(QString &str, const QVariant &data, mdtFieldMapItem *item)
 {
   Q_ASSERT(item != 0);

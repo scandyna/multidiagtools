@@ -436,7 +436,7 @@ bool mdtDataTableManager::importFromCsvFile(const QString &csvFilePath, create_m
       line.removeLast();
     }
     rows.append(line);
-    if(lineCount>50){
+    if(lineCount>100){
       if(!commitRowsToModel(rows)){
         csvFile.close();
         pvDb.close();
@@ -541,6 +541,11 @@ void mdtDataTableManager::setDisplayTextsToModelHeader()
       pvModel->setHeaderData(i, Qt::Horizontal, mapItem->fieldDisplayText());
     }
   }
+}
+
+QHash<QString, QString> mdtDataTableManager::displayTextsByFieldNames() const
+{
+  return pvFieldMap.displayTextsByFieldNames();
 }
 
 mdtDataTableModel *mdtDataTableManager::model()

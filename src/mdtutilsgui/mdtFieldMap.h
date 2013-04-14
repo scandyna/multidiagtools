@@ -166,6 +166,12 @@ class mdtFieldMap
    */
   QString dataForSourceFieldName(const QList<QVariant> &data, const QString &sourceFieldName);
 
+  /*! \brief Get display texts referenced by field names
+   *
+   * \return QHash with fieldName as key and displayText as value.
+   */
+  QHash<QString, QString> displayTextsByFieldNames() const;
+
  private:
 
   /*! \brief Insert data into string regarding item's source data offsets

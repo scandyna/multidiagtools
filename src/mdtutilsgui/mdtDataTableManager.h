@@ -29,10 +29,10 @@
 #include <QByteArray>
 #include <QString>
 #include <QChar>
-///#include <QStringList>
 #include <QVariant>
 #include <QDir>
 #include <QList>
+#include <QHash>
 #include <QSqlField>
 #include <QSqlIndex>
 
@@ -213,6 +213,12 @@ class mdtDataTableManager : public QObject
    * \pre Model must be valid.
    */
   void setDisplayTextsToModelHeader();
+
+  /*! \brief Get display texts referenced by field names
+   *
+   * \return QHash with fieldName as key and displayText as value.
+   */
+  QHash<QString, QString> displayTextsByFieldNames() const;
 
   /*! \brief Get instance of current model
    *

@@ -50,6 +50,8 @@ set (HEADER_FILES
           mdtDataTableItemDelegate.h
           mdtDataTableManager.h
           mdtDataTableModel.h
+          mdtSqlQueryWidget.h
+          mdtItemsSelectorDialog.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -74,6 +76,8 @@ set (SOURCES_FILES
           mdtDataTableModel.cpp
           mdtFieldMap.cpp
           mdtFieldMapItem.cpp
+          mdtSqlQueryWidget.cpp
+          mdtItemsSelectorDialog.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp
@@ -81,7 +85,8 @@ set (SOURCES_FILES
 
 # Liste des fichiers ui
 set (FORM_FILES
-
+          mdtSqlQueryWidget.ui
+          mdtItemsSelectorDialog.ui
     )
 
 # Liste des fichiers rcc (ressources)
