@@ -51,6 +51,9 @@ mdtItemsSelectorDialog::mdtItemsSelectorDialog(QWidget *parent)
   connect(pbUnselectAllSelectedItems, SIGNAL(clicked()), this, SLOT(unselectAllSelectedItems()));
   connect(pbUp, SIGNAL(clicked()), this, SLOT(moveSelectedItemsInSelectedItemsListUp()));
   connect(pbDown, SIGNAL(clicked()), this, SLOT(moveSelectedItemsInSelectedItemsListDown()));
+  Q_ASSERT(lwSelectedItems->selectionModel() != 0);
+  ///connect(lwSelectedItems->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),\
+            this, SLOT(updateCbSortOrderBySelectedItem(const QModelIndex&, const QModelIndex&)));
 }
 
 mdtItemsSelectorDialog::~mdtItemsSelectorDialog()
@@ -262,6 +265,16 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListDown()
   unselectAllSelectedItems();
   lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
 }
+
+/**
+void mdtItemsSelectorDialog::updateCbSortOrderBySelectedItem(const QModelIndex &current, const QModelIndex &previous)
+{
+  if(!current.isValid()){
+    cbSortOrder->setEnabled(false);
+    return;
+  }
+}
+*/
 
 bool mdtItemsSelectorDialog::addItemToSelectedItemsModel(const QVariant &data)
 {

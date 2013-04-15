@@ -82,17 +82,17 @@ void mdtSqlQueryWidget::select()
       sql += ",";
     }
   }
-  if(!pvSortedFieldsWithOrder.isEmpty()){
+  if(!pvSortingFieldsWithOrder.isEmpty()){
     sql += " ORDER BY ";
-    for(i=0; i<pvSortedFieldsWithOrder.size(); ++i){
-      sortItem = pvSortedFieldsWithOrder.at(i);
+    for(i=0; i<pvSortingFieldsWithOrder.size(); ++i){
+      sortItem = pvSortingFieldsWithOrder.at(i);
       sql += " \"" + sortItem.first + "\" ";
       if(sortItem.second == Qt::AscendingOrder){
         sql += " ASC ";
       }else{
         sql += " DESC ";
       }
-      if(i < (pvSortedFieldsWithOrder.size()-1)){
+      if(i < (pvSortingFieldsWithOrder.size()-1)){
         sql += ",";
       }
     }
@@ -197,6 +197,7 @@ void mdtSqlQueryWidget::chooseFields()
       pvFieldNamesBySelectorDisplayTexts.insert(fieldDisplayText, fieldName);
       pvFields.append(fieldName);
     }
+    removeNonExistantFieldsInSortingFields();
     ///qDebug() << "Selected fields: " << pvFields;
     ///select();
   }
@@ -204,6 +205,7 @@ void mdtSqlQueryWidget::chooseFields()
   delete dialog;
 }
 
+/// \bug If fields are removed, they percist in sort list
 void mdtSqlQueryWidget::chooseFieldsSort()
 {
   mdtItemsSelectorDialog *dialog;
@@ -217,7 +219,7 @@ void mdtSqlQueryWidget::chooseFieldsSort()
 
   // Build the existing fields list
   for(fieldIndex=0; fieldIndex<pvFields.size(); ++fieldIndex){
-    if(!pvSortedFields.contains(pvFields.at(fieldIndex))){
+    if(!pvSortingFields.contains(pvFields.at(fieldIndex))){
       fieldDisplayText = pvHeaderTextsByFieldNames.value(pvFields.at(fieldIndex));
       existingFields.append(fieldDisplayText);
     }
@@ -226,14 +228,14 @@ void mdtSqlQueryWidget::chooseFieldsSort()
     return;
   }
   // Build the allready sorted fields list
-  for(fieldIndex=0; fieldIndex<pvSortedFields.size(); ++fieldIndex){
-    fieldDisplayText = pvHeaderTextsByFieldNames.value(pvSortedFields.at(fieldIndex));
+  for(fieldIndex=0; fieldIndex<pvSortingFields.size(); ++fieldIndex){
+    fieldDisplayText = pvHeaderTextsByFieldNames.value(pvSortingFields.at(fieldIndex));
     sortedFields.append(fieldDisplayText);
   }
   // Setup and show dialog
   dialog = new mdtItemsSelectorDialog(this);
   dialog->setWindowTitle(tr("Fields sort"));
-  dialog->setSortOptionEnabled(true);
+  dialog->setSortOptionEnabled(false);
   dialog->setAvailableItemsLabelText(tr("Existing fields"));
   dialog->setAvailableItems(existingFields);
   dialog->setSelectedItemsLabelText(tr("Sorted fields"));
@@ -242,16 +244,16 @@ void mdtSqlQueryWidget::chooseFieldsSort()
   if(retval == QDialog::Accepted){
     // Store selected items in sort fields (with technical names)
     sortedFields = dialog->selectedItems();
-    pvSortedFields.clear();
-    pvSortedFieldsWithOrder.clear();
+    pvSortingFields.clear();
+    pvSortingFieldsWithOrder.clear();
     for(fieldIndex=0; fieldIndex<sortedFields.size(); ++fieldIndex){
       fieldDisplayText = sortedFields.at(fieldIndex);
       fieldName = pvFieldNamesBySelectorDisplayTexts.value(fieldDisplayText);
       /// \todo Add sort order
-      pvSortedFields.append(fieldName);
-      pvSortedFieldsWithOrder.append(QPair<QString, int>(fieldName, Qt::AscendingOrder));
+      pvSortingFields.append(fieldName);
+      pvSortingFieldsWithOrder.append(QPair<QString, int>(fieldName, Qt::AscendingOrder));
     }
-    qDebug() << "Selected sorting: " << pvSortedFieldsWithOrder;
+    qDebug() << "Selected sorting: " << pvSortingFieldsWithOrder;
   }
   delete dialog;
 }
@@ -267,6 +269,27 @@ void mdtSqlQueryWidget::updateHeaderTexts()
     value = pvHeaderTextsByFieldNames.value(rec.fieldName(i));
     if(value.isValid()){
       pvModel->setHeaderData(i, Qt::Horizontal, value);
+    }
+  }
+}
+
+void mdtSqlQueryWidget::removeNonExistantFieldsInSortingFields()
+{
+  QMutableStringListIterator it1(pvSortingFields);
+  QMutableListIterator<QPair<QString, int> > it2(pvSortingFieldsWithOrder);
+  QPair<QString, int> item;
+
+  while(it1.hasNext()){
+    it1.next();
+    if(!pvFields.contains(it1.value())){
+      it1.remove();
+    }
+  }
+  while(it2.hasNext()){
+    it2.next();
+    item = it2.value();
+    if(!pvFields.contains(item.first)){
+      it2.remove();
     }
   }
 }

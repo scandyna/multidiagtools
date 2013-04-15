@@ -27,6 +27,8 @@
 #include <QString>
 #include <QStringList>
 #include <QVariant>
+#include <QList>
+#include <QPair>
 
 class QStringListModel;
 
@@ -104,6 +106,11 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
    */
   void moveSelectedItemsInSelectedItemsListDown();
 
+  /*! \brief Update cbSortOrder (enable/diseable and sort order regarding in selected list)
+   */
+  ///void updateSortOrderInSelectedItemsList(const QModelIndex &current, const QModelIndex &previous);
+  ///void updateCbSortOrderBySelectedItem(const QModelIndex &current, const QModelIndex &previous);
+
  private:
 
   /*! \brief Helper method to adda row into selected items model
@@ -118,6 +125,7 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
 
   QStringListModel *pvAvailableItemsModel;
   QStringListModel *pvSelectedItemsModel;
+  QList<QPair<QString, int> > pvSelectedItemsWithSortOrder; // Used to store sort order (ASC, DESC)
 };
 
 #endif  // #ifndef MDT_ITEMS_SELECTOR_DIALOG_H

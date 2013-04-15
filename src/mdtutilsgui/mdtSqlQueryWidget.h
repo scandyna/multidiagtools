@@ -84,6 +84,13 @@ class mdtSqlQueryWidget : public QWidget, Ui::mdtSqlQueryWidget
    */
   void updateHeaderTexts();
 
+  /*! \brief Remove sorting fields that are not in selected fields
+   *
+   * When remove fields in pvFields, call this method to remove them
+   *  in pvSortingFields and pvSortingFieldsWithOrder.
+   */
+  void removeNonExistantFieldsInSortingFields();
+
   Q_DISABLE_COPY(mdtSqlQueryWidget);
 
   QSqlQueryModel *pvModel;
@@ -91,9 +98,9 @@ class mdtSqlQueryWidget : public QWidget, Ui::mdtSqlQueryWidget
   QHash<QString, QString> pvHeaderTextsByFieldNames;  // For model's header
   QHash<QString, QString> pvFieldNamesBySelectorDisplayTexts; // Used with selector dialog
   QStringList pvTables;
-  QStringList pvFields;       // Fields (technical) name in correct (display) order
-  QStringList pvSortedFields;           // Fields (technical) name in correct sort order
-  QList<QPair<QString, int> > pvSortedFieldsWithOrder;  // Fields (technical) name and sort order (ASC, DESC), in correct sort order
+  QStringList pvFields;         // Fields (technical) name in correct (display) order
+  QStringList pvSortingFields;  // Fields (technical) name in correct sort order
+  QList<QPair<QString, int> > pvSortingFieldsWithOrder;  // Fields (technical) name and sort order (ASC, DESC), in correct sort order
 };
 
 #endif  // #ifndef MDT_SQL_QUERY_WIDGET_H
