@@ -76,6 +76,7 @@ set(QT_USE_QTTEST TRUE)
 set(QT_USE_QTSQL TRUE)
 set(QT_USE_QTNETWORK TRUE)
 find_package(Qt4 REQUIRED)
+#find_package(Qt REQUIRED)
 include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 

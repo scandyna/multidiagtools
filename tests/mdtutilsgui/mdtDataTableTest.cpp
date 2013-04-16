@@ -957,8 +957,8 @@ void mdtDataTableTest::csvImportTest()
 
   // Write CSV file that contains a primary key
   QVERIFY(csvFile1.open());
-  QVERIFY(csvFile1.write("id_PK;signal;value\n") > 0);
-  QVERIFY(csvFile1.write("1;Temp. M1;125.0\n") > 0);
+  QVERIFY(csvFile1.write("id_PK;signal;value" + QByteArray(MDT_NATIVE_EOL)) > 0);
+  QVERIFY(csvFile1.write("1;Temp. M1;125.0" + QByteArray(MDT_NATIVE_EOL)) > 0);
   csvFile1.close();
   // Configure manager and import CSV
   manager.setCsvFormat(";", "", "", '\0');
@@ -983,8 +983,8 @@ void mdtDataTableTest::csvImportTest()
 
   // Write CSV file that contains no primary key
   QVERIFY(csvFile2.open());
-  QVERIFY(csvFile2.write("signal;value\n") > 0);
-  QVERIFY(csvFile2.write("Temp. M2;126.0\n") > 0);
+  QVERIFY(csvFile2.write("signal;value" + QByteArray(MDT_NATIVE_EOL)) > 0);
+  QVERIFY(csvFile2.write("Temp. M2;126.0" + QByteArray(MDT_NATIVE_EOL)) > 0);
   csvFile2.close();
   // Configure manager and import CSV
   manager.clearFieldMap();
@@ -1013,8 +1013,8 @@ void mdtDataTableTest::csvImportTest()
 
   // Write CSV file that contains no primary key
   QVERIFY(csvFile3.open());
-  QVERIFY(csvFile3.write("bin I/O;signal;value\n") > 0);
-  QVERIFY(csvFile3.write("10;Rpm M2;55.0\n") > 0);
+  QVERIFY(csvFile3.write("bin I/O;signal;value" + QByteArray(MDT_NATIVE_EOL)) > 0);
+  QVERIFY(csvFile3.write("10;Rpm M2;55.0" + QByteArray(MDT_NATIVE_EOL)) > 0);
   csvFile3.close();
   // Configure manager and import CSV
   manager.clearFieldMap();
