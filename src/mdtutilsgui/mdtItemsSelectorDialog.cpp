@@ -50,10 +50,11 @@ mdtItemsSelectorDialog::mdtItemsSelectorDialog(QWidget *parent)
   connect(pbSelectAllSelectedItems, SIGNAL(clicked()), this, SLOT(selectAllSelectedItems()));
   connect(pbUnselectAllSelectedItems, SIGNAL(clicked()), this, SLOT(unselectAllSelectedItems()));
   connect(pbUp, SIGNAL(clicked()), this, SLOT(moveSelectedItemsInSelectedItemsListUp()));
+  connect(pbTop, SIGNAL(clicked()), this, SLOT(moveSelectedItemsInSelectedItemsListOnTop()));
   connect(pbDown, SIGNAL(clicked()), this, SLOT(moveSelectedItemsInSelectedItemsListDown()));
   Q_ASSERT(lwSelectedItems->selectionModel() != 0);
   ///connect(lwSelectedItems->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),\
-            this, SLOT(updateCbSortOrderBySelectedItem(const QModelIndex&, const QModelIndex&)));
+  ///          this, SLOT(updateCbSortOrderBySelectedItem(const QModelIndex&, const QModelIndex&)));
 }
 
 mdtItemsSelectorDialog::~mdtItemsSelectorDialog()
@@ -233,6 +234,41 @@ void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListUp()
   // Update selection
   unselectAllSelectedItems();
   lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+}
+
+void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListOnTop()
+{
+  Q_ASSERT(lwSelectedItems->selectionModel() != 0);
+
+  QModelIndex index;
+  QVariant itemData;
+  int row;
+
+  while(1){
+    index = lwSelectedItems->selectionModel()->currentIndex();
+    if(!index.isValid()){
+      return;
+    }
+    row = index.row();
+    if(row < 1){
+      // Update selection
+      unselectAllSelectedItems();
+      lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+      return;
+    }
+    // Move item up
+    itemData = pvSelectedItemsModel->data(index, Qt::DisplayRole);
+    if(!pvSelectedItemsModel->removeRow(row)){
+      return;
+    }
+    --row;
+    if(!pvSelectedItemsModel->insertRow(row)){
+      return;
+    }
+    index = pvSelectedItemsModel->index(row, 0);
+    pvSelectedItemsModel->setData(index, itemData);
+    lwSelectedItems->selectionModel()->setCurrentIndex(index, QItemSelectionModel::Select);
+  }
 }
 
 void mdtItemsSelectorDialog::moveSelectedItemsInSelectedItemsListDown()

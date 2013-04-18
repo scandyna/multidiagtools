@@ -34,7 +34,7 @@ endif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
 # Project version
 set(MDTLIB_VERSION_MAJOR 0)
 set(MDTLIB_VERSION_MINOR 2)
-set(MDTLIB_VERSION_MICRO 8)
+set(MDTLIB_VERSION_MICRO 9)
 
 # Library version suffix:
 #  Since version 0.2.8, naming convension has changed.
@@ -113,10 +113,12 @@ endif(UNIX)
 # Libraries and headers install directories
 if(WIN32)
   set(LIB_DEST_DIR "bin")
-  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  #set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  set(HEADERS_DEST_DIR "include/mdt/mdt${MDTLIB_VERSION_SUFFIX}")
 else(WIN32)
   set(LIB_DEST_DIR "lib/${CMAKE_LIBRARY_ARCHITECTURE}")
-  set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  #set(HEADERS_DEST_DIR "include/mdt/${MDTLIB_VERSION_MAJOR}.${MDTLIB_VERSION_MINOR}")
+  set(HEADERS_DEST_DIR "include/mdt/mdt${MDTLIB_VERSION_SUFFIX}")
 endif(WIN32)
 
 # * QtSolutions *

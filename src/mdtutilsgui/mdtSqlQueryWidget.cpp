@@ -139,6 +139,7 @@ void mdtSqlQueryWidget::chooseTables()
   delete dialog;
 }
 
+/// \bug Allready selected fields are displayed in disorder in selected items list in chooser
 void mdtSqlQueryWidget::chooseFields()
 {
   mdtItemsSelectorDialog *dialog;
@@ -177,7 +178,11 @@ void mdtSqlQueryWidget::chooseFields()
     }
   }
   // Build selected fields list
-  selectedFields = pvFieldNamesBySelectorDisplayTexts.keys();
+  for(fieldIndex=0; fieldIndex<pvFields.size(); ++fieldIndex){
+    fieldDisplayText = pvFieldSelectorDisplayTextsByNames.value(pvFields.at(fieldIndex));
+    selectedFields.append(fieldDisplayText);
+  }
+  ///selectedFields = pvFieldNamesBySelectorDisplayTexts.keys();
   // Setup and show dialog
   dialog = new mdtItemsSelectorDialog(this);
   dialog->setWindowTitle(tr("Choose fields"));
@@ -191,10 +196,12 @@ void mdtSqlQueryWidget::chooseFields()
     selectedFields = dialog->selectedItems();
     pvFields.clear();
     pvFieldNamesBySelectorDisplayTexts.clear();
+    pvFieldSelectorDisplayTextsByNames.clear();
     for(fieldIndex=0; fieldIndex<selectedFields.size(); ++fieldIndex){
       fieldDisplayText = selectedFields.at(fieldIndex);
       fieldName = tmpFieldNamesBySelectorDisplayTexts.value(fieldDisplayText);
       pvFieldNamesBySelectorDisplayTexts.insert(fieldDisplayText, fieldName);
+      pvFieldSelectorDisplayTextsByNames.insert(fieldName, fieldDisplayText);
       pvFields.append(fieldName);
     }
     removeNonExistantFieldsInSortingFields();
@@ -205,7 +212,6 @@ void mdtSqlQueryWidget::chooseFields()
   delete dialog;
 }
 
-/// \bug If fields are removed, they percist in sort list
 void mdtSqlQueryWidget::chooseFieldsSort()
 {
   mdtItemsSelectorDialog *dialog;

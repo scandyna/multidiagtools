@@ -48,6 +48,8 @@
 
 void mdtDataTableTest::sandbox()
 {
+  QSKIP("Just a sanbox test", SkipAll);
+
   QSqlDatabase db;
   QString sql;
   double value;
@@ -1072,6 +1074,8 @@ void mdtDataTableTest::csvImportTest()
   QCOMPARE(csvHeader.at(0), QString("bin I/O"));
   QCOMPARE(csvHeader.at(1), QString("signal"));
   QCOMPARE(csvHeader.at(2), QString("value"));
+
+  return;
 
   /*
    * Playing ...

@@ -102,6 +102,10 @@ class mdtItemsSelectorDialog : public QDialog, Ui::mdtItemsSelectorDialog
    */
   void moveSelectedItemsInSelectedItemsListUp();
 
+  /*! \brief Move selected items in selected list on top
+   */
+  void moveSelectedItemsInSelectedItemsListOnTop();
+
   /*! \brief Move selected items in selected list down
    */
   void moveSelectedItemsInSelectedItemsListDown();

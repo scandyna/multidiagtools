@@ -337,7 +337,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
   mdtSerialPortCtlThread ctlThd;
   mdtFrame *frame;
   QByteArray portName;
-  QByteArray rxData;
+  ///QByteArray rxData;
+  QString rxData;
 
   // Get data set
   QFETCH(QString, data);
@@ -418,7 +419,8 @@ void mdtSerialPortTest::mdtSerialPortTxRxBinaryTest()
     sp.readFramesPool().enqueue(frame);
   }
   sp.unlockMutex();
-  QVERIFY(rxData == data);
+  ///QVERIFY(rxData == data);
+  QCOMPARE(rxData, data);
 
   // Stop threads and close port
   rxThd.stop();

@@ -97,6 +97,7 @@ class mdtSqlQueryWidget : public QWidget, Ui::mdtSqlQueryWidget
   QSqlDatabase pvDb;
   QHash<QString, QString> pvHeaderTextsByFieldNames;  // For model's header
   QHash<QString, QString> pvFieldNamesBySelectorDisplayTexts; // Used with selector dialog
+  QHash<QString, QString> pvFieldSelectorDisplayTextsByNames; // Used with selector dialog
   QStringList pvTables;
   QStringList pvFields;         // Fields (technical) name in correct (display) order
   QStringList pvSortingFields;  // Fields (technical) name in correct sort order
