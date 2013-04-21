@@ -13,8 +13,7 @@ Base class for a device connected to a port.
 
 
 
-Inheritance diagram for mdtDevice:
-\nopagebreak
+Inheritance diagram for mdtDevice:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -98,7 +97,7 @@ void \hyperlink{classmdt_device_adc7ff8f01d68506283a3d0cc6bc25407}{stop} ()}
 
 \begin{DoxyCompactList}\small\item\em Stop periodic device querying. \end{DoxyCompactList}\item 
 QVariant \hyperlink{classmdt_device_ab28a8276ce07524c351b8e9ebdc6ce1e}{getAnalogInputValue} (int address, bool realValue, bool queryDevice, bool waitOnReply)
-\begin{DoxyCompactList}\small\item\em Read one analog input on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Get analog input value. \end{DoxyCompactList}\item 
 int \hyperlink{classmdt_device_a585cc32f6aac4d5788928ecf1fdacf51}{getAnalogInputs} (int timeout)
 \begin{DoxyCompactList}\small\item\em Read all analog inputs on physical device and update (G)UI representation. \end{DoxyCompactList}\item 
 QVariant \hyperlink{classmdt_device_a7085491cf2d96fd2afd3004de6caef0d}{getAnalogOutputValue} (int address, int timeout, bool realValue=true)
@@ -332,13 +331,12 @@ Definition at line 68 of file mdtDevice.cpp.
 
 Decode incoming frames. 
 
-Subclass notes:\par
-
+Subclass notes:
 \begin{DoxyItemize}
 \item This default implementation does nothing.
 \item This slot should be connected with \hyperlink{classmdt_port_manager_a915ff3372cccd5f412b828cc81a3381f}{mdtPortManager::newReadenFrame(mdtPortTransaction)} signal.
 \item In this class, this connection is not made, it is the sublcass responsability to do this.
-\item To update (G)UI, \hyperlink{classmdt_device_ios_a82850ee99957ec5a787de71299ad785b}{mdtDeviceIos::updateAnalogInputValues()} should be used. 
+\item The (G)UI should be updated using transaction's I/O (see \hyperlink{classmdt_port_transaction}{mdtPortTransaction}). 
 \end{DoxyItemize}
 
 Definition at line 777 of file mdtDevice.cpp.
@@ -394,11 +392,7 @@ Definition at line 211 of file mdtDevice.cpp.
 \label{classmdt_device_ab28a8276ce07524c351b8e9ebdc6ce1e}
 
 
-Read one analog input on physical device and update (G)UI representation. 
-
-Will call \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{readAnalogInput()}, witch also sends the request to device. Depending on result, device's state can be updated.
-
-Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{readAnalogInput()} for details).
+Get analog input value. 
 
 Once result is available, the internal analog input is updated. (See \hyperlink{classmdt_device_ios}{mdtDeviceIos} for details).
 
@@ -408,7 +402,7 @@ Once result is available, the internal analog input is updated. (See \hyperlink{
 \hline
 {\em realValue} & If true, the real value (as double) is returned, else the device's specific integer value (see \hyperlink{classmdt_analog_io_a55d3e346dd13a580dc4ac77e8e946b01}{mdtAnalogIo::value()} for details). \\
 \hline
-{\em queryDevice} & If true, value is readen from device, else cached value is returned. \\
+{\em queryDevice} & If true, value is readen from device by calling \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{readAnalogInput()}, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}{readAnalogInput()} for details). \\
 \hline
 {\em waitOnReply} & If true, this method will wait until reply comes in, or timeout (See \hyperlink{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{waitTransactionDone()} ), else it will return immediately after the query was sent.\\
 \hline
@@ -1493,7 +1487,11 @@ Definition at line 134 of file mdtDevice.cpp.
 
 Emitted when state has changed. 
 
-Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{
+Typically used with mdtDeviceStatusWidget 
+
+Definition at line 128 of file moc\_\-mdtDevice.cxx.
+
+\hypertarget{classmdt_device_a3fbc6e71241e2e9daa2d8557f870c03c}{
 \index{mdtDevice@{mdtDevice}!statusMessageChanged@{statusMessageChanged}}
 \index{statusMessageChanged@{statusMessageChanged}!mdtDevice@{mdtDevice}}
 \subsubsection[{statusMessageChanged}]{\setlength{\rightskip}{0pt plus 5cm}void mdtDevice::statusMessageChanged (
@@ -1508,7 +1506,11 @@ Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_a3fbc6e71
 
 Emitted when a new status message is to display. 
 
-Typically used with mdtDeviceStatusWidget \hypertarget{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{
+Typically used with mdtDeviceStatusWidget 
+
+Definition at line 135 of file moc\_\-mdtDevice.cxx.
+
+\hypertarget{classmdt_device_ab67f2da4f294482dd39ce6294ada8bc4}{
 \index{mdtDevice@{mdtDevice}!waitTransactionDone@{waitTransactionDone}}
 \index{waitTransactionDone@{waitTransactionDone}!mdtDevice@{mdtDevice}}
 \subsubsection[{waitTransactionDone}]{\setlength{\rightskip}{0pt plus 5cm}bool mdtDevice::waitTransactionDone (
@@ -1714,4 +1716,5 @@ Definition at line 836 of file mdtDevice.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/mdtDevice.h\item 
-src/mdtdevice/mdtDevice.cpp\end{DoxyCompactItemize}
+src/mdtdevice/mdtDevice.cpp\item 
+src/mdtdevice/moc\_\-mdtDevice.cxx\end{DoxyCompactItemize}

@@ -82,35 +82,49 @@ void mdtDeviceTest::deviceIosTest()
   // Check analog inputs
   QVERIFY(ios.analogInputAt(11) == 0);
   QVERIFY(ios.analogInputAt(12) != 0);
-  QVERIFY(ios.analogInputAt(12)->address() == 12);
+  QCOMPARE(ios.analogInputAt(12)->address() , 12);
+  ios.analogInputAt(12)->setLabelShort("Temp. M12");
+  QVERIFY(ios.analogInputWithLabelShort("") == 0);
+  QVERIFY(ios.analogInputWithLabelShort("Temp. M12") != 0);
+  QCOMPARE(ios.analogInputWithLabelShort("Temp. M12")->address(), 12);
+  QCOMPARE(ios.analogInputWithLabelShort("Temp. M12")->labelShort(), QString("Temp. M12"));
   aIoList = ios.analogInputs();
-  for(int i=0; i<aIoList.size(); i++){
-    qDebug() << "Analog input, adr: " << aIoList.at(i)->address();
-  }
+  QCOMPARE(aIoList.size(), 1);
   // Check analog outputs
   QVERIFY(ios.analogOutputAt(13) == 0);
   QVERIFY(ios.analogOutputAt(15) != 0);
-  QVERIFY(ios.analogOutputAt(15)->address() == 15);
+  QCOMPARE(ios.analogOutputAt(15)->address() , 15);
+  ios.analogOutputAt(15)->setLabelShort("Setpoint 15");
+  QVERIFY(ios.analogOutputWithLabelShort("") == 0);
+  QVERIFY(ios.analogOutputWithLabelShort("Setpoint 15") != 0);
+  QCOMPARE(ios.analogOutputWithLabelShort("Setpoint 15")->address(), 15);
+  QCOMPARE(ios.analogOutputWithLabelShort("Setpoint 15")->labelShort(), QString("Setpoint 15"));
   aIoList = ios.analogOutputs();
-  for(int i=0; i<aIoList.size(); i++){
-    qDebug() << "Analog output, adr: " << aIoList.at(i)->address();
-  }
+  QCOMPARE(aIoList.size() , 1);
   // Check digital inputs
   QVERIFY(ios.digitalInputAt(11) == 0);
   QVERIFY(ios.digitalInputAt(17) != 0);
   QVERIFY(ios.digitalInputAt(17)->address() == 17);
+  ios.digitalInputAt(17)->setLabelShort("DI17");
+  QVERIFY(ios.digitalInputWithLabelShort("") == 0);
+  QVERIFY(ios.digitalInputWithLabelShort("DI17") != 0);
+  QCOMPARE(ios.digitalInputWithLabelShort("DI17")->address(), 17);
+  QCOMPARE(ios.digitalInputWithLabelShort("DI17")->labelShort(), QString("DI17"));
   dIoList = ios.digitalInputs();
-  for(int i=0; i<dIoList.size(); i++){
-    qDebug() << "Digital input, adr: " << dIoList.at(i)->address();
-  }
+  QCOMPARE(dIoList.size(), 1);
+
   // Check digital outputs
   QVERIFY(ios.digitalOutputAt(19) == 0);
   QVERIFY(ios.digitalOutputAt(20) != 0);
   QVERIFY(ios.digitalOutputAt(20)->address() == 20);
+  ios.digitalOutputAt(20)->setLabelShort("K20");
+  QVERIFY(ios.digitalOutputWithLabelShort("") == 0);
+  QVERIFY(ios.digitalOutputWithLabelShort("K20") != 0);
+  QCOMPARE(ios.digitalOutputWithLabelShort("K20")->address(), 20);
+  QCOMPARE(ios.digitalOutputWithLabelShort("K20")->labelShort(), QString("K20"));
   dIoList = ios.digitalOutputs();
-  for(int i=0; i<dIoList.size(); i++){
-    qDebug() << "Digital output, adr: " << dIoList.at(i)->address();
-  }
+  QCOMPARE(dIoList.size(), 1);
+
 }
 
 void mdtDeviceTest::deviceIosWidgetTest()
@@ -210,7 +224,6 @@ void mdtDeviceTest::modbusTest()
   mdtDeviceModbus d;
   mdtModbusTcpPortManager *m = d.modbusTcpPortManager();
   QList<mdtPortInfo*> portInfoList;
-  int i;
   int hwNodeId = 3;
   mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
@@ -274,10 +287,6 @@ void mdtDeviceTest::modbusWagoTest()
   mdtDeviceModbusWago d;
   mdtDeviceIos ios;
   mdtDeviceIosWidget *iosw;
-  mdtAnalogIo *ai;
-  mdtAnalogIo *ao;
-  mdtDigitalIo *di;
-  mdtDigitalIo *dout;
   mdtDeviceWindow dw;
 
   /*
@@ -313,13 +322,9 @@ void mdtDeviceTest::modbusWagoTest()
    */
 
   // Analog inputs
-  ///QVERIFY(d.getAnalogInputValue(0, 500, true).isValid());
   QVERIFY(d.getAnalogInputValue(0, true, true, true).isValid());
-  ///QVERIFY(!d.getAnalogInputValue(0, 0, true).isValid());
   QVERIFY(!d.getAnalogInputValue(0, true, true, false).isValid());
-  ///QVERIFY(d.getAnalogInputValue(1, 500, true).isValid());
   QVERIFY(d.getAnalogInputValue(1, true, true, true).isValid());
-  ///QVERIFY(!d.getAnalogInputValue(1, 0, true).isValid());
   QVERIFY(d.getAnalogInputValue(1, true, false, false).isValid());
   QVERIFY(d.getAnalogInputs(500) >= 0);
 
@@ -348,8 +353,9 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(!d.getDigitalOutputState(0, 0).isValid());
   QVERIFY(d.getDigitalOutputState(0, 500).isValid());
   // Grouped query
-  QVERIFY(d.setDigitalOutputState(0, true, -1) == 0);
-  QVERIFY(d.setDigitalOutputState(8, true, -1) == 0);
+  QVERIFY(d.setDigitalOutputState(0, true, false, false) == 0);
+  QVERIFY(d.setDigitalOutputState("DO2", true, false, false) == 0);
+  QVERIFY(d.setDigitalOutputState(8, true, false, false) == 0);
   QVERIFY(d.setDigitalOutputs(500) >= 0);
 
   ///QVERIFY(d.getDigitalInputs(500) >= 0);

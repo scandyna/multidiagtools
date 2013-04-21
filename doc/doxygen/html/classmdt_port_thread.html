@@ -206,6 +206,8 @@ struct sigaction&#160;</td><td class="memItemRight" valign="bottom"><b>pvSigacti
 <p>The error is one of the <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a>.</p>
 <p><a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> uses this signal. </p>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00107">107</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a611211e56620ec9c699019452716e4fc"></a><!-- doxytag: member="mdtPortThread::getNewFrameRead" ref="a611211e56620ec9c699019452716e4fc" args="()" -->
@@ -529,6 +531,8 @@ port must be set with <a class="el" href="classmdt_port_thread.html#acd51474c3a2
 <dd>
 <a class="el" href="classmdt_port.html">mdtPort</a> </dd></dl>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00101">101</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a37883c167ec85ff7a4996ffea5288ffe"></a><!-- doxytag: member="mdtPortThread::notifyError" ref="a37883c167ec85ff7a4996ffea5288ffe" args="(int error, bool renotifySameError=false)" -->
@@ -632,6 +636,8 @@ frame must be a valid pointer (not Null). </dd></dl>
 
 <p>Emitted when a read process begins. </p>
 <p>This can be used to display read state. Please consider that this signal is emitted each time the read process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
+
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00089">89</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
 
 </div>
 </div>
@@ -820,6 +826,8 @@ frame must be a valid pointer (not Null). </dd></dl>
 <p>Emitted when a write process begins. </p>
 <p>This can be used to display write state. Please consider that this signal is emitted each time the write process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 [ms]) </p>
 
+<p>Definition at line <a class="el" href="moc__mdt_port_thread_8cxx_source.html#l00095">95</a> of file <a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a2658d7f1a04ef10eb09d575d8d7eda43"></a><!-- doxytag: member="mdtPortThread::writeToPort" ref="a2658d7f1a04ef10eb09d575d8d7eda43" args="(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry=10)" -->
@@ -885,6 +893,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8h_source.html">mdtPortThread.h</a></li>
 <li>src/mdtport/<a class="el" href="mdt_port_thread_8cpp_source.html">mdtPortThread.cpp</a></li>
+<li>src/mdtport/<a class="el" href="moc__mdt_port_thread_8cxx_source.html">moc_mdtPortThread.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -901,7 +910,7 @@ frame must be a valid pointer (not Null). </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:59 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 21 2013 17:41:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

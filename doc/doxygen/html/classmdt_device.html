@@ -152,7 +152,7 @@ QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#adc7ff8f01d68506283a3d0cc6bc25407">stop</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop periodic device querying. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#ab28a8276ce07524c351b8e9ebdc6ce1e">getAnalogInputValue</a> (int address, bool realValue, bool queryDevice, bool waitOnReply)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read one analog input on physical device and update (G)UI representation.  <a href="#ab28a8276ce07524c351b8e9ebdc6ce1e"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get analog input value.  <a href="#ab28a8276ce07524c351b8e9ebdc6ce1e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51">getAnalogInputs</a> (int timeout)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all analog inputs on physical device and update (G)UI representation.  <a href="#a585cc32f6aac4d5788928ecf1fdacf51"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QVariant&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device.html#a7085491cf2d96fd2afd3004de6caef0d">getAnalogOutputValue</a> (int address, int timeout, bool realValue=true)</td></tr>
@@ -227,7 +227,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Base class for a device connected to a port. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Adapt get...() methods like <a class="el" href="classmdt_device.html#ab28a8276ce07524c351b8e9ebdc6ce1e" title="Read one analog input on physical device and update (G)UI representation.">getAnalogInputValue()</a> </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Adapt get...() methods like <a class="el" href="classmdt_device.html#ab28a8276ce07524c351b8e9ebdc6ce1e" title="Get analog input value.">getAnalogInputValue()</a> </dd></dl>
 <p>Querying a device can be done several ways. Some devices sends a confirmation after each query.</p>
 <p>Some queries (f.ex. read a input value or state) give a result after query. In some applications, we need to display the reult priodically. In other application, we need to send the query and wait on result before we can continue. This base class gives a interface for these two cases.</p>
 <p>At basis, all query methods are not blocking by default. The normal way is to connect <a class="el" href="classmdt_port_manager.html#a77ef4a432306638f5b0f91df7863ac62" title="Try to.">mdtPortManager::newReadenFrame()</a> to <a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame()</a> slot (must be done in subclass). This way, a query will be sent to device and method returns. When device returns a result, <a class="el" href="classmdt_port_manager.html" title="Port manager base class.">mdtPortManager</a> will send the newReadenFrame() signal, and decoding will be processed in <a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame()</a> and I/O's are updated.</p>
@@ -356,13 +356,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 <div class="memdoc">
 
 <p>Decode incoming frames. </p>
-<p>Subclass notes:<br/>
-</p>
+<p>Subclass notes:</p>
 <ul>
 <li>This default implementation does nothing.</li>
 <li>This slot should be connected with <a class="el" href="classmdt_port_manager.html#a915ff3372cccd5f412b828cc81a3381f" title="Emitted when new frame was readen.">mdtPortManager::newReadenFrame(mdtPortTransaction)</a> signal.</li>
 <li>In this class, this connection is not made, it is the sublcass responsability to do this.</li>
-<li>To update (G)UI, <a class="el" href="classmdt_device_ios.html#a82850ee99957ec5a787de71299ad785b" title="Update (G)UI&#39;s value for a set of analog inputs.">mdtDeviceIos::updateAnalogInputValues()</a> should be used. </li>
+<li>The (G)UI should be updated using transaction's I/O (see <a class="el" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a>). </li>
 </ul>
 
 <p>Definition at line <a class="el" href="mdt_device_8cpp_source.html#l00777">777</a> of file <a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a>.</p>
@@ -441,15 +440,13 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pvAnalogOutputAddressO
 </div>
 <div class="memdoc">
 
-<p>Read one analog input on physical device and update (G)UI representation. </p>
-<p>Will call <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">readAnalogInput()</a>, witch also sends the request to device. Depending on result, device's state can be updated.</p>
-<p>Behaviour of this method can vary, depending on device specific subclass. (See sublcass <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">readAnalogInput()</a> for details).</p>
+<p>Get analog input value. </p>
 <p>Once result is available, the internal analog input is updated. (See <a class="el" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s.">mdtDeviceIos</a> for details).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>Depending on device organisation and protocol, this can be a relative or absolute address (f.ex. MODBUS queries), a input number, etc... </td></tr>
     <tr><td class="paramname">realValue</td><td>If true, the real value (as double) is returned, else the device's specific integer value (see <a class="el" href="classmdt_analog_io.html#a55d3e346dd13a580dc4ac77e8e946b01" title="Get value (set with setValue() )">mdtAnalogIo::value()</a> for details). </td></tr>
-    <tr><td class="paramname">queryDevice</td><td>If true, value is readen from device, else cached value is returned. </td></tr>
+    <tr><td class="paramname">queryDevice</td><td>If true, value is readen from device by calling <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">readAnalogInput()</a>, else cached value is returned. Behaviour of this method can vary, depending on device specific subclass. (See sublcass <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">readAnalogInput()</a> for details). </td></tr>
     <tr><td class="paramname">waitOnReply</td><td>If true, this method will wait until reply comes in, or timeout (See <a class="el" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone()</a> ), else it will return immediately after the query was sent.</td></tr>
   </table>
   </dd>
@@ -1600,6 +1597,8 @@ transaction must be a valid pointer. </dd></dl>
 <p>Emitted when state has changed. </p>
 <p>Typically used with mdtDeviceStatusWidget </p>
 
+<p>Definition at line <a class="el" href="moc__mdt_device_8cxx_source.html#l00128">128</a> of file <a class="el" href="moc__mdt_device_8cxx_source.html">moc_mdtDevice.cxx</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a3fbc6e71241e2e9daa2d8557f870c03c"></a><!-- doxytag: member="mdtDevice::statusMessageChanged" ref="a3fbc6e71241e2e9daa2d8557f870c03c" args="(const QString &amp;message, const QString &amp;details, int timeout)" -->
@@ -1635,6 +1634,8 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Emitted when a new status message is to display. </p>
 <p>Typically used with mdtDeviceStatusWidget </p>
+
+<p>Definition at line <a class="el" href="moc__mdt_device_8cxx_source.html#l00135">135</a> of file <a class="el" href="moc__mdt_device_8cxx_source.html">moc_mdtDevice.cxx</a>.</p>
 
 </div>
 </div>
@@ -1854,6 +1855,7 @@ transaction must be a valid pointer. </dd></dl>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/mdtdevice/<a class="el" href="mdt_device_8h_source.html">mdtDevice.h</a></li>
 <li>src/mdtdevice/<a class="el" href="mdt_device_8cpp_source.html">mdtDevice.cpp</a></li>
+<li>src/mdtdevice/<a class="el" href="moc__mdt_device_8cxx_source.html">moc_mdtDevice.cxx</a></li>
 </ul>
 </div>
 <!-- window showing the filter options -->
@@ -1870,7 +1872,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:57 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 21 2013 17:41:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

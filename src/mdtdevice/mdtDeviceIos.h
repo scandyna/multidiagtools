@@ -87,6 +87,15 @@ class mdtDeviceIos : public QObject
    */
   mdtAnalogIo *analogInputAt(int address);
 
+  /*! \brief Get analog input with a given short label
+   *
+   * If no object exists at given short label,
+   *  a null pointer is returned.
+   *  If more than one object exists with the same short label,
+   *  the first found is returned.
+   */
+  mdtAnalogIo *analogInputWithLabelShort(const QString &labelShort);
+
   /*! \brief Get a list containing all analog inputs
    */
   QList<mdtAnalogIo*> analogInputs();
@@ -107,6 +116,15 @@ class mdtDeviceIos : public QObject
    *  a null pointer is returned.
    */
   mdtAnalogIo *analogOutputAt(int address);
+
+  /*! \brief Get analog output with a given short label
+   *
+   * If no object exists at given short label,
+   *  a null pointer is returned.
+   *  If more than one object exists with the same short label,
+   *  the first found is returned.
+   */
+  mdtAnalogIo *analogOutputWithLabelShort(const QString &labelShort);
 
   /*! \brief Get a list containing all analog outputs
    */
@@ -137,6 +155,15 @@ class mdtDeviceIos : public QObject
    */
   mdtDigitalIo *digitalInputAt(int address);
 
+  /*! \brief Get digital input with a given short label
+   *
+   * If no object exists at given short label,
+   *  a null pointer is returned.
+   *  If more than one object exists with the same short label,
+   *  the first found is returned.
+   */
+  mdtDigitalIo *digitalInputWithLabelShort(const QString &labelShort);
+
   /*! \brief Get a list containing all digital inputs
    */
   QList<mdtDigitalIo*> digitalInputs();
@@ -157,6 +184,15 @@ class mdtDeviceIos : public QObject
    *  a null pointer is returned.
    */
   mdtDigitalIo *digitalOutputAt(int address);
+
+  /*! \brief Get digital output with a given short label
+   *
+   * If no object exists at given short label,
+   *  a null pointer is returned.
+   *  If more than one object exists with the same short label,
+   *  the first found is returned.
+   */
+  mdtDigitalIo *digitalOutputWithLabelShort(const QString &labelShort);
 
   /*! \brief Get a list containing all digital outputs
    */

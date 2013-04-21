@@ -13,8 +13,7 @@ Create/manage data sets.
 
 
 
-Collaboration diagram for mdtDataTableManager:
-\nopagebreak
+Collaboration diagram for mdtDataTableManager:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -67,6 +66,8 @@ QStringList \hyperlink{classmdt_data_table_manager_a785fbce3537e9e75ecdd49d29a6e
 \begin{DoxyCompactList}\small\item\em Get the CSV file's headers. \end{DoxyCompactList}\item 
 void \hyperlink{classmdt_data_table_manager_a87e9b26f462165c93a64f8ac6080b13d}{setDisplayTextsToModelHeader} ()
 \begin{DoxyCompactList}\small\item\em Set the display texts to model's header. \end{DoxyCompactList}\item 
+QHash$<$ QString, QString $>$ \hyperlink{classmdt_data_table_manager_ac8884e4e2d58c6f7e3db180aca5a2772}{displayTextsByFieldNames} () const 
+\begin{DoxyCompactList}\small\item\em Get display texts referenced by field names. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_data_table_model}{mdtDataTableModel} $\ast$ \hyperlink{classmdt_data_table_manager_a4033591be8c92f6806363515bad9413f}{model} ()
 \begin{DoxyCompactList}\small\item\em Get instance of current model. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
@@ -321,6 +322,26 @@ Set dataset directory.
 
 Definition at line 67 of file mdtDataTableManager.cpp.
 
+\hypertarget{classmdt_data_table_manager_ac8884e4e2d58c6f7e3db180aca5a2772}{
+\index{mdtDataTableManager@{mdtDataTableManager}!displayTextsByFieldNames@{displayTextsByFieldNames}}
+\index{displayTextsByFieldNames@{displayTextsByFieldNames}!mdtDataTableManager@{mdtDataTableManager}}
+\subsubsection[{displayTextsByFieldNames}]{\setlength{\rightskip}{0pt plus 5cm}QHash$<$ QString, QString $>$ mdtDataTableManager::displayTextsByFieldNames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_data_table_manager_ac8884e4e2d58c6f7e3db180aca5a2772}
+
+
+Get display texts referenced by field names. 
+
+\begin{DoxyReturn}{Returns}
+QHash with fieldName as key and displayText as value. 
+\end{DoxyReturn}
+
+
+Definition at line 546 of file mdtDataTableManager.cpp.
+
 \hypertarget{classmdt_data_table_manager_a139611cc21836438053226b1d7576201}{
 \index{mdtDataTableManager@{mdtDataTableManager}!enableProgressDialog@{enableProgressDialog}}
 \index{enableProgressDialog@{enableProgressDialog}!mdtDataTableManager@{mdtDataTableManager}}
@@ -424,7 +445,7 @@ Pointer to current model, or 0 if it was not set.
 \end{DoxyReturn}
 
 
-Definition at line 546 of file mdtDataTableManager.cpp.
+Definition at line 551 of file mdtDataTableManager.cpp.
 
 \hypertarget{classmdt_data_table_manager_a755ea0471525645157f4d4843b6a4e8a}{
 \index{mdtDataTableManager@{mdtDataTableManager}!setCsvFormat@{setCsvFormat}}

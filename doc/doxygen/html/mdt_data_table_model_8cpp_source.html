@@ -83,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00021"></a>00021 <span class="preprocessor">#include &quot;mdtDataTableModel.h&quot;</span>
 <a name="l00022"></a>00022 <span class="preprocessor">#include &quot;mdtError.h&quot;</span>
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="comment">//#include &lt;QDebug&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;QDebug&gt;</span>
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 mdtDataTableModel::mdtDataTableModel(QObject *parent, QSqlDatabase db)
 <a name="l00027"></a>00027  : QSqlTableModel(parent, db)
@@ -117,126 +117,125 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00055"></a>00055   }
 <a name="l00056"></a>00056   <span class="keywordflow">for</span>(it = data.constBegin(); it != data.constEnd(); it++){
 <a name="l00057"></a>00057     <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, fieldIndex(it.key())) , it.value(), role)){
-<a name="l00058"></a>00058       revertRow(modelRowIndex);
-<a name="l00059"></a>00059       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00060"></a>00060     }
-<a name="l00061"></a>00061   }
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063   <span class="keywordflow">return</span> doSubmit();
-<a name="l00064"></a>00064 }
-<a name="l00065"></a>00065 
-<a name="l00066"></a><a class="code" href="classmdt_data_table_model.html#a9c83ac307174ed88eb2204b336d38ee2">00066</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a42046e42fdca91fe77fe48e70fed4d18" title="Add a row of data in model.">mdtDataTableModel::addRow</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;data, <span class="keywordtype">bool</span> pkNotInData, <span class="keywordtype">int</span> role)
-<a name="l00067"></a>00067 {
-<a name="l00068"></a>00068   <span class="keywordtype">int</span> modelRowIndex;
-<a name="l00069"></a>00069   <span class="keywordtype">int</span> dataColumnIndex;
-<a name="l00070"></a>00070   <span class="keywordtype">int</span> modelColumnIndex;
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   modelRowIndex = rowCount();
-<a name="l00073"></a>00073   <span class="keywordflow">if</span>(!insertRows(modelRowIndex, 1)){
-<a name="l00074"></a>00074     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00075"></a>00075   }
-<a name="l00076"></a>00076   modelColumnIndex = 0;
-<a name="l00077"></a>00077   <span class="keywordflow">for</span>(dataColumnIndex=0; dataColumnIndex&lt;data.size(); dataColumnIndex++){
-<a name="l00078"></a>00078     <span class="comment">// If PK is not in data, we must remap indexes</span>
-<a name="l00079"></a>00079     <span class="keywordflow">if</span>((pkNotInData)&amp;&amp;(pvPkIndexes.contains(modelColumnIndex))){
-<a name="l00080"></a>00080       <span class="keywordflow">if</span>(modelColumnIndex &gt;= columnCount()){
-<a name="l00081"></a>00081         revertRow(modelRowIndex);
-<a name="l00082"></a>00082         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00083"></a>00083       }
-<a name="l00084"></a>00084       modelColumnIndex++;
-<a name="l00085"></a>00085     }
-<a name="l00086"></a>00086     <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data.at(dataColumnIndex), role)){
-<a name="l00087"></a>00087       revertRow(modelRowIndex);
-<a name="l00088"></a>00088       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00089"></a>00089     }
-<a name="l00090"></a>00090     modelColumnIndex++;
-<a name="l00091"></a>00091   }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <span class="keywordflow">return</span> doSubmit();
-<a name="l00094"></a>00094 }
+<a name="l00059"></a>00059       revertRow(modelRowIndex);
+<a name="l00060"></a>00060       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00061"></a>00061     }
+<a name="l00062"></a>00062   }
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064   <span class="keywordflow">return</span> doSubmit();
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="classmdt_data_table_model.html#a9c83ac307174ed88eb2204b336d38ee2">00067</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a42046e42fdca91fe77fe48e70fed4d18" title="Add a row of data in model.">mdtDataTableModel::addRow</a>(<span class="keyword">const</span> QList&lt;QVariant&gt; &amp;data, <span class="keywordtype">bool</span> pkNotInData, <span class="keywordtype">int</span> role)
+<a name="l00068"></a>00068 {
+<a name="l00069"></a>00069   <span class="keywordtype">int</span> modelRowIndex;
+<a name="l00070"></a>00070   <span class="keywordtype">int</span> dataColumnIndex;
+<a name="l00071"></a>00071   <span class="keywordtype">int</span> modelColumnIndex;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073   modelRowIndex = rowCount();
+<a name="l00074"></a>00074   <span class="keywordflow">if</span>(!insertRows(modelRowIndex, 1)){
+<a name="l00075"></a>00075     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00076"></a>00076   }
+<a name="l00077"></a>00077   modelColumnIndex = 0;
+<a name="l00078"></a>00078   <span class="keywordflow">for</span>(dataColumnIndex=0; dataColumnIndex&lt;data.size(); dataColumnIndex++){
+<a name="l00079"></a>00079     <span class="comment">// If PK is not in data, we must remap indexes</span>
+<a name="l00080"></a>00080     <span class="keywordflow">if</span>((pkNotInData)&amp;&amp;(pvPkIndexes.contains(modelColumnIndex))){
+<a name="l00081"></a>00081       <span class="keywordflow">if</span>(modelColumnIndex &gt;= columnCount()){
+<a name="l00083"></a>00083         revertRow(modelRowIndex);
+<a name="l00084"></a>00084         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00085"></a>00085       }
+<a name="l00086"></a>00086       modelColumnIndex++;
+<a name="l00087"></a>00087     }
+<a name="l00088"></a>00088     <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data.at(dataColumnIndex), role)){
+<a name="l00090"></a>00090       revertRow(modelRowIndex);
+<a name="l00091"></a>00091       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00092"></a>00092     }
+<a name="l00093"></a>00093     modelColumnIndex++;
+<a name="l00094"></a>00094   }
 <a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="classmdt_data_table_model.html#a2834bc9663aa478bac5147d2ca7e16ee">00096</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a42046e42fdca91fe77fe48e70fed4d18" title="Add a row of data in model.">mdtDataTableModel::addRow</a>(<span class="keyword">const</span> QStringList &amp;data, <span class="keywordtype">bool</span> pkNotInData, <span class="keywordtype">int</span> role)
-<a name="l00097"></a>00097 {
-<a name="l00098"></a>00098   <span class="keywordtype">int</span> modelRowIndex;
-<a name="l00099"></a>00099   <span class="keywordtype">int</span> dataColumnIndex;
-<a name="l00100"></a>00100   <span class="keywordtype">int</span> modelColumnIndex;
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102   modelRowIndex = rowCount();
-<a name="l00103"></a>00103   <span class="keywordflow">if</span>(!insertRows(modelRowIndex, 1)){
-<a name="l00104"></a>00104     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00105"></a>00105   }
-<a name="l00106"></a>00106   modelColumnIndex = 0;
-<a name="l00107"></a>00107   <span class="keywordflow">for</span>(dataColumnIndex=0; dataColumnIndex&lt;data.size(); dataColumnIndex++){
-<a name="l00108"></a>00108     <span class="comment">// If PK is not in data, we must remap indexes</span>
-<a name="l00109"></a>00109     <span class="keywordflow">if</span>((pkNotInData)&amp;&amp;(pvPkIndexes.contains(modelColumnIndex))){
-<a name="l00110"></a>00110       <span class="keywordflow">if</span>(modelColumnIndex &gt;= columnCount()){
-<a name="l00111"></a>00111         revertRow(modelRowIndex);
-<a name="l00112"></a>00112         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00113"></a>00113       }
-<a name="l00114"></a>00114       modelColumnIndex++;
-<a name="l00115"></a>00115     }
-<a name="l00116"></a>00116     <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data.at(dataColumnIndex), role)){
-<a name="l00117"></a>00117       revertRow(modelRowIndex);
-<a name="l00118"></a>00118       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00096"></a>00096   <span class="keywordflow">return</span> doSubmit();
+<a name="l00097"></a>00097 }
+<a name="l00098"></a>00098 
+<a name="l00099"></a><a class="code" href="classmdt_data_table_model.html#a2834bc9663aa478bac5147d2ca7e16ee">00099</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a42046e42fdca91fe77fe48e70fed4d18" title="Add a row of data in model.">mdtDataTableModel::addRow</a>(<span class="keyword">const</span> QStringList &amp;data, <span class="keywordtype">bool</span> pkNotInData, <span class="keywordtype">int</span> role)
+<a name="l00100"></a>00100 {
+<a name="l00101"></a>00101   <span class="keywordtype">int</span> modelRowIndex;
+<a name="l00102"></a>00102   <span class="keywordtype">int</span> dataColumnIndex;
+<a name="l00103"></a>00103   <span class="keywordtype">int</span> modelColumnIndex;
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   modelRowIndex = rowCount();
+<a name="l00106"></a>00106   <span class="keywordflow">if</span>(!insertRows(modelRowIndex, 1)){
+<a name="l00107"></a>00107     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00108"></a>00108   }
+<a name="l00109"></a>00109   modelColumnIndex = 0;
+<a name="l00110"></a>00110   <span class="keywordflow">for</span>(dataColumnIndex=0; dataColumnIndex&lt;data.size(); dataColumnIndex++){
+<a name="l00111"></a>00111     <span class="comment">// If PK is not in data, we must remap indexes</span>
+<a name="l00112"></a>00112     <span class="keywordflow">if</span>((pkNotInData)&amp;&amp;(pvPkIndexes.contains(modelColumnIndex))){
+<a name="l00113"></a>00113       <span class="keywordflow">if</span>(modelColumnIndex &gt;= columnCount()){
+<a name="l00115"></a>00115         revertRow(modelRowIndex);
+<a name="l00116"></a>00116         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00117"></a>00117       }
+<a name="l00118"></a>00118       modelColumnIndex++;
 <a name="l00119"></a>00119     }
-<a name="l00120"></a>00120     modelColumnIndex++;
-<a name="l00121"></a>00121   }
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123   <span class="keywordflow">return</span> doSubmit();
-<a name="l00124"></a>00124 }
-<a name="l00125"></a>00125 
-<a name="l00126"></a><a class="code" href="classmdt_data_table_model.html#a359a37d1719c0f56110875888466e331">00126</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a359a37d1719c0f56110875888466e331" title="Add some rows of data in model.">mdtDataTableModel::addRows</a>(<span class="keyword">const</span> QList&lt;QStringList&gt; &amp;rows, <span class="keyword">const</span> <a class="code" href="classmdt_field_map.html" title="Map fields between a source and a destination data set.">mdtFieldMap</a> &amp;fieldMap, <span class="keywordtype">int</span> role)
-<a name="l00127"></a>00127 {
-<a name="l00128"></a>00128   <span class="keywordtype">int</span> dataRowIndex;
-<a name="l00129"></a>00129   <span class="keywordtype">int</span> modelRowIndex;
-<a name="l00130"></a>00130   <span class="keywordtype">int</span> modelColumnIndex;
-<a name="l00131"></a>00131   QVariant data;
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133   modelRowIndex = rowCount();
-<a name="l00134"></a>00134   <span class="keywordflow">if</span>(!insertRows(modelRowIndex, rows.size())){
-<a name="l00135"></a>00135     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00136"></a>00136   }
-<a name="l00137"></a>00137   <span class="keywordflow">for</span>(dataRowIndex=0; dataRowIndex&lt;rows.size(); dataRowIndex++){
-<a name="l00138"></a>00138     <span class="comment">// Add data of each column</span>
-<a name="l00139"></a>00139     <span class="keywordflow">for</span>(modelColumnIndex=0; modelColumnIndex&lt;columnCount(); modelColumnIndex++){
-<a name="l00140"></a>00140       data = fieldMap.<a class="code" href="classmdt_field_map.html#af9b345ba9bc0b08c149fbd10bad8a818" title="Get data for a given index in source data.">dataForFieldIndex</a>(rows.at(dataRowIndex), modelColumnIndex);
-<a name="l00141"></a>00141       <span class="comment">// If data is empty, it&#39;s possible that we have auto values</span>
-<a name="l00142"></a>00142       <span class="keywordflow">if</span>(data.isValid()){
-<a name="l00143"></a>00143         <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data, role)){
-<a name="l00144"></a>00144           revertRow(modelRowIndex);
-<a name="l00145"></a>00145           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00146"></a>00146         }
-<a name="l00147"></a>00147       }
-<a name="l00148"></a>00148     }
-<a name="l00149"></a>00149     modelRowIndex++;
-<a name="l00150"></a>00150   }
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152   <span class="keywordflow">return</span> doSubmit();
-<a name="l00153"></a>00153 }
-<a name="l00154"></a>00154 
-<a name="l00155"></a><a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046">00155</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046" title="Set data for a given index in model.">mdtDataTableModel::setData</a>(<span class="keywordtype">int</span> row, <span class="keywordtype">int</span> column, <span class="keyword">const</span> QVariant &amp;value, <span class="keywordtype">int</span> role)
-<a name="l00156"></a>00156 {
-<a name="l00157"></a>00157   <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(row, column), value, role)){
-<a name="l00158"></a>00158     revertRow(row);
-<a name="l00159"></a>00159     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00160"></a>00160   }
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162   <span class="keywordflow">return</span> doSubmit();
-<a name="l00163"></a>00163 }
-<a name="l00164"></a>00164 
-<a name="l00165"></a><a class="code" href="classmdt_data_table_model.html#ac819eaaee0cb3251658dd0865abdd5f7">00165</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046" title="Set data for a given index in model.">mdtDataTableModel::setData</a>(<span class="keywordtype">int</span> row, <span class="keyword">const</span> QString &amp;field, <span class="keyword">const</span> QVariant &amp; value, <span class="keywordtype">int</span> role)
-<a name="l00166"></a>00166 {
-<a name="l00167"></a>00167   <span class="keywordflow">return</span> <a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046" title="Set data for a given index in model.">setData</a>(row, fieldIndex(field), value, role);
-<a name="l00168"></a>00168 }
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="keywordtype">bool</span> mdtDataTableModel::doSubmit()
-<a name="l00171"></a>00171 {
-<a name="l00172"></a>00172   <span class="keywordflow">if</span>(editStrategy() == QSqlTableModel::OnManualSubmit){
-<a name="l00173"></a>00173     <span class="keywordflow">return</span> submitAll();
-<a name="l00174"></a>00174   }<span class="keywordflow">else</span>{
-<a name="l00175"></a>00175     <span class="keywordflow">return</span> submit();
-<a name="l00176"></a>00176   }
-<a name="l00177"></a>00177 }
+<a name="l00120"></a>00120     <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data.at(dataColumnIndex), role)){
+<a name="l00122"></a>00122       revertRow(modelRowIndex);
+<a name="l00123"></a>00123       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00124"></a>00124     }
+<a name="l00125"></a>00125     modelColumnIndex++;
+<a name="l00126"></a>00126   }
+<a name="l00127"></a>00127 
+<a name="l00128"></a>00128   <span class="keywordflow">return</span> doSubmit();
+<a name="l00129"></a>00129 }
+<a name="l00130"></a>00130 
+<a name="l00131"></a><a class="code" href="classmdt_data_table_model.html#a359a37d1719c0f56110875888466e331">00131</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a359a37d1719c0f56110875888466e331" title="Add some rows of data in model.">mdtDataTableModel::addRows</a>(<span class="keyword">const</span> QList&lt;QStringList&gt; &amp;rows, <span class="keyword">const</span> <a class="code" href="classmdt_field_map.html" title="Map fields between a source and a destination data set.">mdtFieldMap</a> &amp;fieldMap, <span class="keywordtype">int</span> role)
+<a name="l00132"></a>00132 {
+<a name="l00133"></a>00133   <span class="keywordtype">int</span> dataRowIndex;
+<a name="l00134"></a>00134   <span class="keywordtype">int</span> modelRowIndex;
+<a name="l00135"></a>00135   <span class="keywordtype">int</span> modelColumnIndex;
+<a name="l00136"></a>00136   QVariant data;
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138   modelRowIndex = rowCount();
+<a name="l00139"></a>00139   <span class="keywordflow">if</span>(!insertRows(modelRowIndex, rows.size())){
+<a name="l00140"></a>00140     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00141"></a>00141   }
+<a name="l00142"></a>00142   <span class="keywordflow">for</span>(dataRowIndex=0; dataRowIndex&lt;rows.size(); dataRowIndex++){
+<a name="l00143"></a>00143     <span class="comment">// Add data of each column</span>
+<a name="l00144"></a>00144     <span class="keywordflow">for</span>(modelColumnIndex=0; modelColumnIndex&lt;columnCount(); modelColumnIndex++){
+<a name="l00145"></a>00145       data = fieldMap.<a class="code" href="classmdt_field_map.html#af9b345ba9bc0b08c149fbd10bad8a818" title="Get data for a given index in source data.">dataForFieldIndex</a>(rows.at(dataRowIndex), modelColumnIndex);
+<a name="l00146"></a>00146       <span class="comment">// If data is empty, it&#39;s possible that we have auto values</span>
+<a name="l00147"></a>00147       <span class="keywordflow">if</span>(data.isValid()){
+<a name="l00148"></a>00148         <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(modelRowIndex, modelColumnIndex), data, role)){
+<a name="l00150"></a>00150           revertRow(modelRowIndex);
+<a name="l00151"></a>00151           <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00152"></a>00152         }
+<a name="l00153"></a>00153       }
+<a name="l00154"></a>00154     }
+<a name="l00155"></a>00155     modelRowIndex++;
+<a name="l00156"></a>00156   }
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158   <span class="keywordflow">return</span> doSubmit();
+<a name="l00159"></a>00159 }
+<a name="l00160"></a>00160 
+<a name="l00161"></a><a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046">00161</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046" title="Set data for a given index in model.">mdtDataTableModel::setData</a>(<span class="keywordtype">int</span> row, <span class="keywordtype">int</span> column, <span class="keyword">const</span> QVariant &amp;value, <span class="keywordtype">int</span> role)
+<a name="l00162"></a>00162 {
+<a name="l00163"></a>00163   <span class="keywordflow">if</span>(!QSqlTableModel::setData(index(row, column), value, role)){
+<a name="l00166"></a>00166     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00167"></a>00167   }
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169   <span class="keywordflow">return</span> doSubmit();
+<a name="l00170"></a>00170 }
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="classmdt_data_table_model.html#ac819eaaee0cb3251658dd0865abdd5f7">00172</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046" title="Set data for a given index in model.">mdtDataTableModel::setData</a>(<span class="keywordtype">int</span> row, <span class="keyword">const</span> QString &amp;field, <span class="keyword">const</span> QVariant &amp; value, <span class="keywordtype">int</span> role)
+<a name="l00173"></a>00173 {
+<a name="l00174"></a>00174   <span class="keywordflow">return</span> <a class="code" href="classmdt_data_table_model.html#a2f502214413e2f12e8df7252ba5f9046" title="Set data for a given index in model.">setData</a>(row, fieldIndex(field), value, role);
+<a name="l00175"></a>00175 }
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177 <span class="keywordtype">bool</span> mdtDataTableModel::doSubmit()
+<a name="l00178"></a>00178 {
+<a name="l00179"></a>00179   <span class="keywordflow">if</span>(editStrategy() == QSqlTableModel::OnManualSubmit){
+<a name="l00180"></a>00180     <span class="keywordflow">return</span> submitAll();
+<a name="l00181"></a>00181   }<span class="keywordflow">else</span>{
+<a name="l00182"></a>00182     <span class="keywordflow">return</span> submit();
+<a name="l00183"></a>00183   }
+<a name="l00184"></a>00184 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -253,7 +252,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:56 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 21 2013 17:41:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

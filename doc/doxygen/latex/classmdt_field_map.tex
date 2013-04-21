@@ -48,7 +48,9 @@ QVariant \hyperlink{classmdt_field_map_a62b1087ac4beb5edab79105078f5b91b}{dataFo
 QString \hyperlink{classmdt_field_map_aea457e5e7a7ea43f80c963a03fccd4d3}{dataForSourceFieldIndex} (const QList$<$ QVariant $>$ \&data, int sourceFieldIndex)
 \begin{DoxyCompactList}\small\item\em Get source data for given source field index. \end{DoxyCompactList}\item 
 QString \hyperlink{classmdt_field_map_a76e6ebfa8cd611b36e3a3c2e8e0d58da}{dataForSourceFieldName} (const QList$<$ QVariant $>$ \&data, const QString \&sourceFieldName)
-\begin{DoxyCompactList}\small\item\em Get source data for given source field name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Get source data for given source field name. \end{DoxyCompactList}\item 
+QHash$<$ QString, QString $>$ \hyperlink{classmdt_field_map_ad772f68130bd2e535f598b1d091a7b53}{displayTextsByFieldNames} () const 
+\begin{DoxyCompactList}\small\item\em Get display texts referenced by field names. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -265,6 +267,26 @@ Get source data for given source field name.
 
 
 Definition at line 209 of file mdtFieldMap.cpp.
+
+\hypertarget{classmdt_field_map_ad772f68130bd2e535f598b1d091a7b53}{
+\index{mdtFieldMap@{mdtFieldMap}!displayTextsByFieldNames@{displayTextsByFieldNames}}
+\index{displayTextsByFieldNames@{displayTextsByFieldNames}!mdtFieldMap@{mdtFieldMap}}
+\subsubsection[{displayTextsByFieldNames}]{\setlength{\rightskip}{0pt plus 5cm}QHash$<$ QString, QString $>$ mdtFieldMap::displayTextsByFieldNames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_field_map_ad772f68130bd2e535f598b1d091a7b53}
+
+
+Get display texts referenced by field names. 
+
+\begin{DoxyReturn}{Returns}
+QHash with fieldName as key and displayText as value. 
+\end{DoxyReturn}
+
+
+Definition at line 227 of file mdtFieldMap.cpp.
 
 \hypertarget{classmdt_field_map_af1c0de37b2f02224eb4ff7f9af8caef5}{
 \index{mdtFieldMap@{mdtFieldMap}!itemAtDisplayText@{itemAtDisplayText}}

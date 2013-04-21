@@ -109,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get source data for given source field index.  <a href="#aea457e5e7a7ea43f80c963a03fccd4d3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_field_map.html#a76e6ebfa8cd611b36e3a3c2e8e0d58da">dataForSourceFieldName</a> (const QList&lt; QVariant &gt; &amp;data, const QString &amp;sourceFieldName)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get source data for given source field name.  <a href="#a76e6ebfa8cd611b36e3a3c2e8e0d58da"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_field_map.html#ad772f68130bd2e535f598b1d091a7b53">displayTextsByFieldNames</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get display texts referenced by field names.  <a href="#ad772f68130bd2e535f598b1d091a7b53"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Map fields between a source and a destination data set. </p>
@@ -383,6 +385,27 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ad772f68130bd2e535f598b1d091a7b53"></a><!-- doxytag: member="mdtFieldMap::displayTextsByFieldNames" ref="ad772f68130bd2e535f598b1d091a7b53" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QHash&lt; QString, QString &gt; mdtFieldMap::displayTextsByFieldNames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get display texts referenced by field names. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>QHash with fieldName as key and displayText as value. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_field_map_8cpp_source.html#l00227">227</a> of file <a class="el" href="mdt_field_map_8cpp_source.html">mdtFieldMap.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="af1c0de37b2f02224eb4ff7f9af8caef5"></a><!-- doxytag: member="mdtFieldMap::itemAtDisplayText" ref="af1c0de37b2f02224eb4ff7f9af8caef5" args="(const QString &amp;text)" -->
 <div class="memitem">
 <div class="memproto">
@@ -600,7 +623,7 @@ Public Member Functions</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:58 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 21 2013 17:41:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

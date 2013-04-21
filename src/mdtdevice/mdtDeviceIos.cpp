@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtDeviceIos.h"
+#include <QMapIterator>
 
 #include <QDebug>
 
@@ -65,6 +66,21 @@ mdtAnalogIo *mdtDeviceIos::analogInputAt(int address)
   return pvAnalogInputs.value(address, 0);
 }
 
+mdtAnalogIo *mdtDeviceIos::analogInputWithLabelShort(const QString &labelShort)
+{
+  QMapIterator<int, mdtAnalogIo*> it(pvAnalogInputs);
+
+  while(it.hasNext()){
+    it.next();
+    Q_ASSERT(it.value() != 0);
+    if(it.value()->labelShort() == labelShort){
+      return it.value();
+    }
+  }
+
+  return 0;
+}
+
 QList<mdtAnalogIo*> mdtDeviceIos::analogInputs()
 {
   return pvAnalogInputs.values();
@@ -86,6 +102,21 @@ void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao)
 mdtAnalogIo *mdtDeviceIos::analogOutputAt(int address)
 {
   return pvAnalogOutputs.value(address, 0);
+}
+
+mdtAnalogIo *mdtDeviceIos::analogOutputWithLabelShort(const QString &labelShort)
+{
+  QMapIterator<int, mdtAnalogIo*> it(pvAnalogOutputs);
+
+  while(it.hasNext()){
+    it.next();
+    Q_ASSERT(it.value() != 0);
+    if(it.value()->labelShort() == labelShort){
+      return it.value();
+    }
+  }
+
+  return 0;
 }
 
 QList<mdtAnalogIo*> mdtDeviceIos::analogOutputs()
@@ -137,6 +168,21 @@ mdtDigitalIo *mdtDeviceIos::digitalInputAt(int address)
   return pvDigitalInputs.value(address, 0);
 }
 
+mdtDigitalIo *mdtDeviceIos::digitalInputWithLabelShort(const QString &labelShort)
+{
+  QMapIterator<int, mdtDigitalIo*> it(pvDigitalInputs);
+
+  while(it.hasNext()){
+    it.next();
+    Q_ASSERT(it.value() != 0);
+    if(it.value()->labelShort() == labelShort){
+      return it.value();
+    }
+  }
+
+  return 0;
+}
+
 QList<mdtDigitalIo*> mdtDeviceIos::digitalInputs()
 {
   return pvDigitalInputs.values();
@@ -158,6 +204,21 @@ void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout)
 mdtDigitalIo *mdtDeviceIos::digitalOutputAt(int address)
 {
   return pvDigitalOutputs.value(address, 0);
+}
+
+mdtDigitalIo *mdtDeviceIos::digitalOutputWithLabelShort(const QString &labelShort)
+{
+  QMapIterator<int, mdtDigitalIo*> it(pvDigitalOutputs);
+
+  while(it.hasNext()){
+    it.next();
+    Q_ASSERT(it.value() != 0);
+    if(it.value()->labelShort() == labelShort){
+      return it.value();
+    }
+  }
+
+  return 0;
 }
 
 QList<mdtDigitalIo*> mdtDeviceIos::digitalOutputs()

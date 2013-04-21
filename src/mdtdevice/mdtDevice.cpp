@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -161,10 +161,6 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
     e.commit();
     return QVariant();
   }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIo(ai, true);
-  transaction->setAddress(address);
   // Check if only cached value is requested
   if(!queryDevice){
     // Return value
@@ -174,6 +170,10 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
       return QVariant(ai->valueInt());
     }
   }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  transaction->setIo(ai, true);
+  transaction->setAddress(address);
   // Send query
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -612,7 +612,9 @@ int mdtDevice::getDigitalOutputs(int timeout)
   return transactionId;
 }
 
-int mdtDevice::setDigitalOutputState(int address, bool state, int timeout)
+
+
+int mdtDevice::setDigitalOutputState(int address, bool state, bool writeToDevice, bool waitOnReply)
 {
   int transactionId;
   mdtDigitalIo *dout;
@@ -629,41 +631,51 @@ int mdtDevice::setDigitalOutputState(int address, bool state, int timeout)
     e.commit();
     return -1;
   }
-  ///qDebug() << "mdtDevice::setDigitalOutputState(): Out " << address << " : " << dout->isOn();
   dout->setOn(QVariant(state), false);
-  ///qDebug() << "mdtDevice::setDigitalOutputState(): Out " << address << " : " << dout->isOn();
-  // Check if query must be sent
-  if(timeout < 0){
+  if(!writeToDevice){
     return 0;
   }
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setIo(dout, false);
   transaction->setAddress(address);
-  // Disable output - subclass must enable it again wehen data comes in
-  dout->setEnabled(false);
-  // Send query and wait if requested
-  if(timeout == 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = writeDigitalOutput(state, transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return -1;
-    }
-  }else{
+  // Send query
+  if(waitOnReply){
     transaction->setQueryReplyMode(true);
     transactionId = writeDigitalOutput(state, transaction);
     if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
       return -1;
     }
-    if(!waitTransactionDone(transactionId, timeout)){
+    if(!waitTransactionDone(transactionId)){
+      return -1;
+    }
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = writeDigitalOutput(state, transaction);
+    if(transactionId < 0){
       return -1;
     }
   }
 
   return transactionId;
 }
+
+int mdtDevice::setDigitalOutputState(const QString &labelShort, bool state, bool writeToDevice, bool waitOnReply)
+{
+  mdtDigitalIo *dout;
+
+  if(pvIos == 0){
+    return -1;
+  }
+  // Get I/O object
+  dout = pvIos->digitalOutputWithLabelShort(labelShort);
+  if(dout == 0){
+    return -1;
+  }
+
+  return setDigitalOutputState(dout->address(), state, writeToDevice, waitOnReply);
+}
+
 
 int mdtDevice::setDigitalOutputs(int timeout)
 {
@@ -747,7 +759,7 @@ void mdtDevice::setDigitalOutputState(int address)
     return;
   }
   // Send query
-  setDigitalOutputState(address, dout->isOn(), 0);
+  setDigitalOutputState(address, dout->isOn(), true, false);
 }
 
 void mdtDevice::runQueries()

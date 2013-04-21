@@ -162,7 +162,11 @@ When a error occurs, this signal is emited.
 
 The error is one of the \hyperlink{classmdt_abstract_port_ad4121bb930c95887e77f8bafa065a85e}{mdtAbstractPort::error\_\-t}.
 
-\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. \hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
+\hyperlink{classmdt_port_manager}{mdtPortManager} uses this signal. 
+
+Definition at line 107 of file moc\_\-mdtPortThread.cxx.
+
+\hypertarget{classmdt_port_thread_a611211e56620ec9c699019452716e4fc}{
 \index{mdtPortThread@{mdtPortThread}!getNewFrameRead@{getNewFrameRead}}
 \index{getNewFrameRead@{getNewFrameRead}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{getNewFrameRead}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtFrame} $\ast$ mdtPortThread::getNewFrameRead (
@@ -470,6 +474,10 @@ It's also possible to use \hyperlink{classmdt_port}{mdtPort}, but this solution 
 
 \hyperlink{classmdt_port}{mdtPort} 
 \end{DoxySeeAlso}
+
+
+Definition at line 101 of file moc\_\-mdtPortThread.cxx.
+
 \hypertarget{classmdt_port_thread_a37883c167ec85ff7a4996ffea5288ffe}{
 \index{mdtPortThread@{mdtPortThread}!notifyError@{notifyError}}
 \index{notifyError@{notifyError}!mdtPortThread@{mdtPortThread}}
@@ -548,7 +556,11 @@ Definition at line 333 of file mdtPortThread.cpp.
 
 Emitted when a read process begins. 
 
-This can be used to display read state. Please consider that this signal is emitted each time the read process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_abee1d2f9b67ca37cfd13e108ca978b36}{
+This can be used to display read state. Please consider that this signal is emitted each time the read process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) 
+
+Definition at line 89 of file moc\_\-mdtPortThread.cxx.
+
+\hypertarget{classmdt_port_thread_abee1d2f9b67ca37cfd13e108ca978b36}{
 \index{mdtPortThread@{mdtPortThread}!reconnect@{reconnect}}
 \index{reconnect@{reconnect}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{reconnect}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::reconnect (
@@ -718,7 +730,11 @@ Definition at line 423 of file mdtPortThread.cpp.
 
 Emitted when a write process begins. 
 
-This can be used to display write state. Please consider that this signal is emitted each time the write process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) \hypertarget{classmdt_port_thread_a2658d7f1a04ef10eb09d575d8d7eda43}{
+This can be used to display write state. Please consider that this signal is emitted each time the write process begins, and not when it ends. This is because asynch I/O calls are fast, and nothing will be seen from user if we update state before/after I/O call. To handle this, use this signal as trigger, and hold the state some stime (f.ex. 100 \mbox{[}ms\mbox{]}) 
+
+Definition at line 95 of file moc\_\-mdtPortThread.cxx.
+
+\hypertarget{classmdt_port_thread_a2658d7f1a04ef10eb09d575d8d7eda43}{
 \index{mdtPortThread@{mdtPortThread}!writeToPort@{writeToPort}}
 \index{writeToPort@{writeToPort}!mdtPortThread@{mdtPortThread}}
 \subsubsection[{writeToPort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAbstractPort::error\_\-t} mdtPortThread::writeToPort (
@@ -769,4 +785,5 @@ Definition at line 449 of file mdtPortThread.cpp.
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtport/mdtPortThread.h\item 
-src/mdtport/mdtPortThread.cpp\end{DoxyCompactItemize}
+src/mdtport/mdtPortThread.cpp\item 
+src/mdtport/moc\_\-mdtPortThread.cxx\end{DoxyCompactItemize}

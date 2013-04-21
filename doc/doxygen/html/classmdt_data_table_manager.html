@@ -122,6 +122,8 @@ QSqlDatabase&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the CSV file's headers.  <a href="#a785fbce3537e9e75ecdd49d29a6e8959"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a87e9b26f462165c93a64f8ac6080b13d">setDisplayTextsToModelHeader</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the display texts to model's header.  <a href="#a87e9b26f462165c93a64f8ac6080b13d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#ac8884e4e2d58c6f7e3db180aca5a2772">displayTextsByFieldNames</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get display texts referenced by field names.  <a href="#ac8884e4e2d58c6f7e3db180aca5a2772"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmdt_data_table_model.html">mdtDataTableModel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_data_table_manager.html#a4033591be8c92f6806363515bad9413f">model</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get instance of current model.  <a href="#a4033591be8c92f6806363515bad9413f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
@@ -418,6 +420,27 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
+<a class="anchor" id="ac8884e4e2d58c6f7e3db180aca5a2772"></a><!-- doxytag: member="mdtDataTableManager::displayTextsByFieldNames" ref="ac8884e4e2d58c6f7e3db180aca5a2772" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QHash&lt; QString, QString &gt; mdtDataTableManager::displayTextsByFieldNames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get display texts referenced by field names. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>QHash with fieldName as key and displayText as value. </dd></dl>
+
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00546">546</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a139611cc21836438053226b1d7576201"></a><!-- doxytag: member="mdtDataTableManager::enableProgressDialog" ref="a139611cc21836438053226b1d7576201" args="(bool enable)" -->
 <div class="memitem">
 <div class="memproto">
@@ -552,7 +575,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <p>Note that this pointer changes when some of methods are called.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Pointer to current model, or 0 if it was not set. </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00546">546</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_data_table_manager_8cpp_source.html#l00551">551</a> of file <a class="el" href="mdt_data_table_manager_8cpp_source.html">mdtDataTableManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -691,7 +714,7 @@ static QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sat Apr 13 2013 09:27:57 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 21 2013 17:41:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,0 +1,110 @@
+\hypertarget{classmdt_sql_relation_item}{
+\section{mdtSqlRelationItem Class Reference}
+\label{classmdt_sql_relation_item}\index{mdtSqlRelationItem@{mdtSqlRelationItem}}
+}
+
+
+Keep informations about a parent/child SQL relation.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlRelationItem.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}{
+\hyperlink{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}{mdtSqlRelationItem} ()}
+\label{classmdt_sql_relation_item_a110c3a684a857767534829ac9f24cc54}
+
+\begin{DoxyCompactList}\small\item\em Build a empty relation item. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}{
+\hyperlink{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}{$\sim$mdtSqlRelationItem} ()}
+\label{classmdt_sql_relation_item_a6ebcdbb9adbb8dbbd353e77176989d1b}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}{
+void \hyperlink{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}{setParentField} (const QSqlField \&field)}
+\label{classmdt_sql_relation_item_a235cd2088688f36330938e6fdbd2ed18}
+
+\begin{DoxyCompactList}\small\item\em Set parent field. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}{
+void \hyperlink{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}{setParentFieldIndex} (int index)}
+\label{classmdt_sql_relation_item_a63328f85e0b70aa1e588071f071a69b5}
+
+\begin{DoxyCompactList}\small\item\em Set parent field index. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}{
+void \hyperlink{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}{setChildField} (const QSqlField \&field)}
+\label{classmdt_sql_relation_item_a9a2ad2ee2590c1dea371e6b64c026a73}
+
+\begin{DoxyCompactList}\small\item\em Set child field. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}{
+void \hyperlink{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}{setChildFieldIndex} (int index)}
+\label{classmdt_sql_relation_item_a870cfae68f4913225e0ae48554c3163f}
+
+\begin{DoxyCompactList}\small\item\em Set child field index. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}{
+QString \hyperlink{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}{parentFieldName} () const }
+\label{classmdt_sql_relation_item_aa660ce6575b4ce9ad9d551d0b284e528}
+
+\begin{DoxyCompactList}\small\item\em Get parent field name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}{
+int \hyperlink{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}{parentFieldIndex} () const }
+\label{classmdt_sql_relation_item_a18d078e5e784de2d0e14cbb6238155f9}
+
+\begin{DoxyCompactList}\small\item\em Get parent field index. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}{
+QString \hyperlink{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}{childFieldName} () const }
+\label{classmdt_sql_relation_item_a8cd667086a4ace612b009b0eb7494a1c}
+
+\begin{DoxyCompactList}\small\item\em Get child field name. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{
+int \hyperlink{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}{childFieldIndex} () const }
+\label{classmdt_sql_relation_item_a89f5e403c31df53c56ddfc4448d8b91d}
+
+\begin{DoxyCompactList}\small\item\em Get child field index. \end{DoxyCompactList}\item 
+QString \hyperlink{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{dataProtection} () const 
+\begin{DoxyCompactList}\small\item\em Get data protection. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{
+QVariant::Type \hyperlink{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}{dataType} () const }
+\label{classmdt_sql_relation_item_a8df1470c61b71ade740266b528f7b9a3}
+
+\begin{DoxyCompactList}\small\item\em Get data type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Keep informations about a parent/child SQL relation. 
+
+Definition at line 30 of file mdtSqlRelationItem.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}{
+\index{mdtSqlRelationItem@{mdtSqlRelationItem}!dataProtection@{dataProtection}}
+\index{dataProtection@{dataProtection}!mdtSqlRelationItem@{mdtSqlRelationItem}}
+\subsubsection[{dataProtection}]{\setlength{\rightskip}{0pt plus 5cm}QString mdtSqlRelationItem::dataProtection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}
+\label{classmdt_sql_relation_item_a46f16fdee2f8fba86ed82e7f7194751b}
+
+
+Get data protection. 
+
+Typical data protections are:
+\begin{DoxyItemize}
+\item ' for string type
+\item nothing for numeric type 
+\end{DoxyItemize}
+
+Definition at line 85 of file mdtSqlRelationItem.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlRelationItem.h\item 
+src/mdtutilsgui/mdtSqlRelationItem.cpp\end{DoxyCompactItemize}

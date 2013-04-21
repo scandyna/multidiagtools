@@ -1,0 +1,89 @@
+\hypertarget{classmdt_sql_query_widget}{
+\section{mdtSqlQueryWidget Class Reference}
+\label{classmdt_sql_query_widget}\index{mdtSqlQueryWidget@{mdtSqlQueryWidget}}
+}
+
+
+Widget for data queriyng.  
+
+
+
+
+{\ttfamily \#include $<$mdtSqlQueryWidget.h$>$}
+
+
+
+Inheritance diagram for mdtSqlQueryWidget:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classmdt_sql_query_widget__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mdtSqlQueryWidget:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{classmdt_sql_query_widget__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}{
+\hyperlink{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}{mdtSqlQueryWidget} (QWidget $\ast$parent=0)}
+\label{classmdt_sql_query_widget_a164c6ea31fd4499109c6422f7a8f2bdf}
+
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}{
+\hyperlink{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}{$\sim$mdtSqlQueryWidget} ()}
+\label{classmdt_sql_query_widget_a03a4c8f444655f35d91b1a1b58a13b85}
+
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\hypertarget{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}{
+void \hyperlink{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}{setDatabase} (QSqlDatabase db)}
+\label{classmdt_sql_query_widget_a69de231c33149a9f01df0215a91cf0bd}
+
+\begin{DoxyCompactList}\small\item\em Set database. \end{DoxyCompactList}\item 
+void \hyperlink{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}{setHeaderTextsByFieldNames} (const QHash$<$ QString, QString $>$ \&mapping)
+\begin{DoxyCompactList}\small\item\em Set correspondence between fields name and texts to display in header. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Widget for data queriyng. 
+
+Definition at line 37 of file mdtSqlQueryWidget.h.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}{
+\index{mdtSqlQueryWidget@{mdtSqlQueryWidget}!setHeaderTextsByFieldNames@{setHeaderTextsByFieldNames}}
+\index{setHeaderTextsByFieldNames@{setHeaderTextsByFieldNames}!mdtSqlQueryWidget@{mdtSqlQueryWidget}}
+\subsubsection[{setHeaderTextsByFieldNames}]{\setlength{\rightskip}{0pt plus 5cm}void mdtSqlQueryWidget::setHeaderTextsByFieldNames (
+\begin{DoxyParamCaption}
+\item[{const QHash$<$ QString, QString $>$ \&}]{mapping}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_sql_query_widget_a8ca0e1fbf8be78fe178ee1f2fc15522c}
+
+
+Set correspondence between fields name and texts to display in header. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mapping} & Map containing field name as keys and display text as values \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 55 of file mdtSqlQueryWidget.cpp.
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/mdtutilsgui/mdtSqlQueryWidget.h\item 
+src/mdtutilsgui/mdtSqlQueryWidget.cpp\end{DoxyCompactItemize}
