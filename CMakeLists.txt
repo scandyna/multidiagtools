@@ -190,8 +190,6 @@ add_test (mdtFrameTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframetest)
 add_test (mdtFrameCodecTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtframecodectest)
 # mdtUicNumberTest
 add_test (mdtUicNumberTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtuicnumbertest)
-# mdtDatabaseTest
-add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtdatabasetest)
 # mdtFileTest
 add_test (mdtFileTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutils/mdtfiletest)
 # mdtIoTest
@@ -204,6 +202,9 @@ add_test (mdtIoWidgetTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtiowid
 
 # mdtDataTableTest
 add_test (mdtDataTableTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatatabletest)
+
+# mdtDatabaseTest
+add_test (mdtDatabaseTest ${CMAKE_CURRENT_BINARY_DIR}/tests/mdtutilsgui/mdtdatabasetest)
 
 # NOTE: Support Windows pas terminé
 if(UNIX)

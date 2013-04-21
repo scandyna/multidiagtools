@@ -52,6 +52,7 @@ set (HEADER_FILES
           mdtDataTableModel.h
           mdtSqlQueryWidget.h
           mdtItemsSelectorDialog.h
+          mdtSqlRelation.h
           # Essais
           mdtParentChildTableModel.h
           mdtParentChildTableItem.h
@@ -78,6 +79,8 @@ set (SOURCES_FILES
           mdtFieldMapItem.cpp
           mdtSqlQueryWidget.cpp
           mdtItemsSelectorDialog.cpp
+          mdtSqlRelation.cpp
+          mdtSqlRelationItem.cpp
           # Essais
           mdtParentChildTableModel.cpp
           mdtParentChildTableItem.cpp

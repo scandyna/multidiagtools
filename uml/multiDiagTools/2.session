@@ -1,14 +1,18 @@
-window_sizes 1280 1001 304 970 803 120
+window_sizes 1280 1001 281 993 923 0
 diagrams
-  active  classdiagram_ref 627202 // mdtSqlQueryWidget
-    970 803 100 4 0 0
+  active  classdiagram_ref 640258 // mdtSqlRelation
+    993 923 100 4 108 0
 end
 show_stereotypes
-selected operation_ref 1215874 // ~mdtSqlQueryWidget
+selected operation_ref 1225474 // generateChildModelFilter
 open
-  classview_ref 273666 // mdtCsvFile
-  class_ref 638210 // mdtSqlQueryWidget
-  class_ref 605570 // QStyledItemDelegate
-  class_ref 174210 // QSqlTableModel
+  classview_ref 286978 // mdtDatabase
+  classview_ref 424962 // mdtSqlQueryWidget
+  operation_ref 1223426 // setParentModel
+  operation_ref 1223554 // setChildModel
+  operation_ref 1223042 // addRelation
+  operation_ref 1222786 // clear
+  operation_ref 1224962 // setParentCurrentIndex
+  attribute_ref 718722 // pvParentFieldIndex
 end
 end

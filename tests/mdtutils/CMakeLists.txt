@@ -41,13 +41,6 @@ add_executable(mdtuicnumbertest "mdtUicNumberTest.cpp" ${MDT_UIC_NUMBER_TEST_MOC
 target_link_libraries(mdtuicnumbertest "mdtutils${MDTLIB_VERSION_SUFFIX}")
 target_link_libraries(mdtuicnumbertest "mdttest")
 
-# * mdtDatabaseTest executable *
-QT4_WRAP_CPP(MDT_DATABASE_TEST_MOC "mdtDatabaseTest.h")
-add_executable(mdtdatabasetest "mdtDatabaseTest.cpp" ${MDT_DATABASE_TEST_MOC})
-target_link_libraries(mdtdatabasetest "mdtutils${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtdatabasetest "mdtutilsgui${MDTLIB_VERSION_SUFFIX}")
-target_link_libraries(mdtdatabasetest "mdttest")
-
 # * mdtFileTest executable *
 QT4_WRAP_CPP(MDT_FILE_TEST_MOC "mdtFileTest.h")
 add_executable(mdtfiletest "mdtFileTest.cpp" ${MDT_FILE_TEST_MOC})
