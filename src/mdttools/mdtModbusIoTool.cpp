@@ -184,7 +184,7 @@ void mdtModbusIoTool::connectToNode()
     if(!m->saveScanResult(portInfoList)){
       showStatusMessage(tr("Cannot save scan result in cache file"), 3000);
     }
-    // We no lobger need portInfoList
+    // We no longer need portInfoList
     qDeleteAll(portInfoList);
     portInfoList.clear();
   }

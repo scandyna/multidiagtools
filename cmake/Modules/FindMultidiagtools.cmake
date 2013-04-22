@@ -36,7 +36,7 @@ endforeach(LIB ${Multidiagtools_FIND_COMPONENTS})
 unset(HDR_DIR_PATH CACHE)
 find_path(HDR_DIR_PATH
 	  NAMES "config.h"
-	  PATH_SUFFIXES "mdt/${MULTIDIAGTOOLS_VERSION_SUFFIX}"
+	  PATH_SUFFIXES "mdt/mdt${MULTIDIAGTOOLS_VERSION_SUFFIX}"
 	  PATHS "/usr/local/include" "/usr/include" "$ENV{ProgramFiles}/multidiagtools${MULTIDIAGTOOLS_VERSION_SUFFIX}" "C:/multidiagtools${MULTIDIAGTOOLS_VERSION_SUFFIX}"
 	  DOC "Header directory for ${HDR_DIR}"
 	)
@@ -46,7 +46,7 @@ list(APPEND HEADERS ${HDR_DIR_PATH})
 unset(HDR_DIR_PATH CACHE)
 find_path(HDR_DIR_PATH
 	  NAMES "qtsingleapplication.h"
-	  PATH_SUFFIXES "mdt/${MULTIDIAGTOOLS_VERSION_SUFFIX}/qtsolutions"
+	  PATH_SUFFIXES "mdt/mdt${MULTIDIAGTOOLS_VERSION_SUFFIX}/qtsolutions"
 	  PATHS "/usr/local/include" "/usr/include" "$ENV{ProgramFiles}/multidiagtools${MULTIDIAGTOOLS_VERSION_SUFFIX}" "C:/multidiagtools${MULTIDIAGTOOLS_VERSION_SUFFIX}"
 	  DOC "Header directory for ${HDR_DIR}"
 	)
@@ -85,7 +85,7 @@ foreach(HDR_DIR ${Multidiagtools_FIND_COMPONENTS})
   unset(HDR_DIR_PATH CACHE)
   find_path(HDR_DIR_PATH
 	    NAMES ${HDR_FILE}
-	    PATH_SUFFIXES "mdt/${MULTIDIAGTOOLS_VERSION_SUFFIX}/${HDR_DIR}"
+	    PATH_SUFFIXES "mdt/mdt${MULTIDIAGTOOLS_VERSION_SUFFIX}/${HDR_DIR}"
 	    PATHS "/usr/local/include" "/usr/include" "$ENV{ProgramFiles}/multidiagtools${MULTIDIAGTOOLS_VERSION_SUFFIX}" "C:/multidiagtools${MULTIDIAGTOOLS_VERSION_SUFFIX}"
 	    DOC "Header directory for ${HDR_DIR}"
 	  )

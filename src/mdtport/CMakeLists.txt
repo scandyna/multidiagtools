@@ -133,6 +133,7 @@ endforeach(FRMFILE)
 # Headers to install
 file(GLOB INSTALL_HEADERS *.h)
 install(FILES ${INSTALL_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtport" COMPONENT dev)
+install(FILES ${UIC_HEADERS} DESTINATION "${HEADERS_DEST_DIR}/mdtport" COMPONENT dev)
 
 # Destinations
 install(TARGETS "mdtport${MDTLIB_VERSION_SUFFIX}" DESTINATION "${LIB_DEST_DIR}" COMPONENT lib)
