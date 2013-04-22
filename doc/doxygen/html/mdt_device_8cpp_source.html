@@ -62,7 +62,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/****************************************************************************</span>
 <a name="l00002"></a>00002 <span class="comment"> **</span>
-<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2012 Philippe Steinmann.</span>
+<a name="l00003"></a>00003 <span class="comment"> ** Copyright (C) 2011-2013 Philippe Steinmann.</span>
 <a name="l00004"></a>00004 <span class="comment"> **</span>
 <a name="l00005"></a>00005 <span class="comment"> ** This file is part of multiDiagTools library.</span>
 <a name="l00006"></a>00006 <span class="comment"> **</span>
@@ -148,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00088"></a>00088     digitalOutputs = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a8a72f1844f794d4b5cb7bfede8bcef99" title="Get a list containing all digital outputs.">digitalOutputs</a>();
 <a name="l00089"></a>00089     <span class="keywordflow">for</span>(i=0; i&lt;digitalOutputs.size(); i++){
 <a name="l00090"></a>00090       Q_ASSERT(digitalOutputs.at(i) != 0);
-<a name="l00091"></a>00091       disconnect(digitalOutputs.at(i), SIGNAL(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(<span class="keywordtype">int</span>)));
+<a name="l00091"></a>00091       disconnect(digitalOutputs.at(i), SIGNAL(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">setDigitalOutputState</a>(<span class="keywordtype">int</span>)));
 <a name="l00092"></a>00092     }
 <a name="l00093"></a>00093     <span class="keywordflow">if</span>(pvIos != ios){
 <a name="l00094"></a>00094       pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a272fc1fa86e1b66e6af0e58b130939e0" title="Delete all I/O objects.">deleteIos</a>();
@@ -166,7 +166,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00106"></a>00106     digitalOutputs = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a8a72f1844f794d4b5cb7bfede8bcef99" title="Get a list containing all digital outputs.">digitalOutputs</a>();
 <a name="l00107"></a>00107     <span class="keywordflow">for</span>(i=0; i&lt;digitalOutputs.size(); i++){
 <a name="l00108"></a>00108       Q_ASSERT(digitalOutputs.at(i) != 0);
-<a name="l00109"></a>00109       connect(digitalOutputs.at(i), SIGNAL(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(<span class="keywordtype">int</span>)));
+<a name="l00109"></a>00109       connect(digitalOutputs.at(i), SIGNAL(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(<span class="keywordtype">int</span>)), <span class="keyword">this</span>, SLOT(<a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">setDigitalOutputState</a>(<span class="keywordtype">int</span>)));
 <a name="l00110"></a>00110     }
 <a name="l00111"></a>00111   }
 <a name="l00112"></a>00112 }
@@ -651,375 +651,391 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00612"></a>00612   <span class="keywordflow">return</span> transactionId;
 <a name="l00613"></a>00613 }
 <a name="l00614"></a>00614 
-<a name="l00615"></a><a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83">00615</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">mdtDevice::setDigitalOutputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">bool</span> state, <span class="keywordtype">int</span> timeout)
-<a name="l00616"></a>00616 {
-<a name="l00617"></a>00617   <span class="keywordtype">int</span> transactionId;
-<a name="l00618"></a>00618   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout;
-<a name="l00619"></a>00619   <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction;
-<a name="l00620"></a>00620 
-<a name="l00621"></a>00621   <span class="keywordflow">if</span>(pvIos == 0){
-<a name="l00622"></a>00622     <span class="keywordflow">return</span> -1;
-<a name="l00623"></a>00623   }
-<a name="l00624"></a>00624   <span class="comment">// Get I/O object</span>
-<a name="l00625"></a>00625   dout = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ac2fed299f5ba1884c01adde195c5b007" title="Get digital output at given address.">digitalOutputAt</a>(address);
-<a name="l00626"></a>00626   <span class="keywordflow">if</span>(dout == 0){
-<a name="l00627"></a>00627     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no digital output assigned to address &quot;</span> + QString::number(address), mdtError::Error);
-<a name="l00628"></a>00628     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
-<a name="l00629"></a>00629     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
-<a name="l00630"></a>00630     <span class="keywordflow">return</span> -1;
-<a name="l00631"></a>00631   }
-<a name="l00633"></a>00633   dout-&gt;<a class="code" href="classmdt_digital_io.html#a0a9ae15796ca74638af2d6c5addfdb6f" title="Set I/O state (On or OFF)">setOn</a>(QVariant(state), <span class="keyword">false</span>);
-<a name="l00635"></a>00635   <span class="comment">// Check if query must be sent</span>
-<a name="l00636"></a>00636   <span class="keywordflow">if</span>(timeout &lt; 0){
-<a name="l00637"></a>00637     <span class="keywordflow">return</span> 0;
-<a name="l00638"></a>00638   }
-<a name="l00639"></a>00639   <span class="comment">// Get a new transaction</span>
-<a name="l00640"></a>00640   transaction = <a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">getNewTransaction</a>();
-<a name="l00641"></a>00641   transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a122a98e4e93295c9907ed7cd0bde1f19" title="Set the concerned analog I/O.">setIo</a>(dout, <span class="keyword">false</span>);
-<a name="l00642"></a>00642   transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a7f43ee802c0dee3ee77b45188378f86e" title="Set address.">setAddress</a>(address);
-<a name="l00643"></a>00643   <span class="comment">// Disable output - subclass must enable it again wehen data comes in</span>
-<a name="l00644"></a>00644   dout-&gt;<a class="code" href="classmdt_abstract_io.html#a64f31b1d9abdec6d0b0cc05a2fe1f31b" title="Set enabled state.">setEnabled</a>(<span class="keyword">false</span>);
-<a name="l00645"></a>00645   <span class="comment">// Send query and wait if requested</span>
-<a name="l00646"></a>00646   <span class="keywordflow">if</span>(timeout == 0){
-<a name="l00647"></a>00647     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">false</span>);
-<a name="l00648"></a>00648     transactionId = <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">writeDigitalOutput</a>(state, transaction);
-<a name="l00649"></a>00649     <span class="keywordflow">if</span>(transactionId &lt; 0){
-<a name="l00651"></a>00651       <span class="keywordflow">return</span> -1;
-<a name="l00652"></a>00652     }
-<a name="l00653"></a>00653   }<span class="keywordflow">else</span>{
-<a name="l00654"></a>00654     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">true</span>);
-<a name="l00655"></a>00655     transactionId = <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">writeDigitalOutput</a>(state, transaction);
-<a name="l00656"></a>00656     <span class="keywordflow">if</span>(transactionId &lt; 0){
-<a name="l00658"></a>00658       <span class="keywordflow">return</span> -1;
-<a name="l00659"></a>00659     }
-<a name="l00660"></a>00660     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone</a>(transactionId, timeout)){
-<a name="l00661"></a>00661       <span class="keywordflow">return</span> -1;
-<a name="l00662"></a>00662     }
-<a name="l00663"></a>00663   }
-<a name="l00664"></a>00664 
-<a name="l00665"></a>00665   <span class="keywordflow">return</span> transactionId;
-<a name="l00666"></a>00666 }
-<a name="l00667"></a>00667 
-<a name="l00668"></a><a class="code" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98">00668</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98" title="Write all digital outputs to physical device and update (G)UI representation.">mdtDevice::setDigitalOutputs</a>(<span class="keywordtype">int</span> timeout)
-<a name="l00669"></a>00669 {
-<a name="l00670"></a>00670   <span class="keywordtype">int</span> transactionId;
-<a name="l00671"></a>00671   <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction;
-<a name="l00672"></a>00672 
-<a name="l00673"></a>00673   <span class="keywordflow">if</span>(pvIos == 0){
-<a name="l00674"></a>00674     <span class="keywordflow">return</span> -1;
-<a name="l00675"></a>00675   }
-<a name="l00676"></a>00676   <span class="comment">// Get a new transaction</span>
-<a name="l00677"></a>00677   transaction = <a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">getNewTransaction</a>();
-<a name="l00678"></a>00678   transaction-&gt;<a class="code" href="classmdt_port_transaction.html#ad375898319b7118ab485070314da238d" title="Set if the transaction concerns multiple I/O&#39;s.">setForMultipleIos</a>(<span class="keyword">true</span>);
-<a name="l00679"></a>00679   <span class="comment">// Send query and wait if requested</span>
-<a name="l00680"></a>00680   <span class="keywordflow">if</span>(timeout &lt;= 0){
-<a name="l00681"></a>00681     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">false</span>);
-<a name="l00682"></a>00682     transactionId = <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs</a>(transaction);
-<a name="l00683"></a>00683     <span class="keywordflow">if</span>(transactionId &lt; 0){
-<a name="l00685"></a>00685       <span class="keywordflow">return</span> transactionId;
-<a name="l00686"></a>00686     }
-<a name="l00687"></a>00687   }<span class="keywordflow">else</span>{
-<a name="l00688"></a>00688     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">true</span>);
-<a name="l00689"></a>00689     transactionId = <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs</a>(transaction);
-<a name="l00690"></a>00690     <span class="keywordflow">if</span>(transactionId &lt; 0){
-<a name="l00692"></a>00692       <span class="keywordflow">return</span> transactionId;
-<a name="l00693"></a>00693     }
-<a name="l00694"></a>00694     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone</a>(transactionId, timeout)){
-<a name="l00695"></a>00695       <span class="keywordflow">return</span> -1;
-<a name="l00696"></a>00696     }
-<a name="l00697"></a>00697   }
-<a name="l00698"></a>00698 
-<a name="l00699"></a>00699   <span class="keywordflow">return</span> transactionId;
-<a name="l00700"></a>00700 }
-<a name="l00701"></a>00701 
-<a name="l00702"></a><a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc">00702</a> <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">mdtDevice::state_t</a> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">mdtDevice::state</a>()<span class="keyword"> const</span>
-<a name="l00703"></a>00703 <span class="keyword"></span>{
-<a name="l00704"></a>00704   <span class="keywordflow">return</span> pvCurrentState;
-<a name="l00705"></a>00705 }
-<a name="l00706"></a>00706 
-<a name="l00707"></a><a class="code" href="classmdt_device.html#a40234a70a37b097baa48bdfbb402cdc4">00707</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">mdtDevice::setAnalogOutputValue</a>(<span class="keywordtype">int</span> address)
-<a name="l00708"></a>00708 {
-<a name="l00709"></a>00709   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ao;
+<a name="l00615"></a>00615 
+<a name="l00616"></a>00616 
+<a name="l00617"></a><a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4">00617</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">mdtDevice::setDigitalOutputState</a>(<span class="keywordtype">int</span> address, <span class="keywordtype">bool</span> state, <span class="keywordtype">bool</span> writeToDevice, <span class="keywordtype">bool</span> waitOnReply)
+<a name="l00618"></a>00618 {
+<a name="l00619"></a>00619   <span class="keywordtype">int</span> transactionId;
+<a name="l00620"></a>00620   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout;
+<a name="l00621"></a>00621   <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction;
+<a name="l00622"></a>00622 
+<a name="l00623"></a>00623   <span class="keywordflow">if</span>(pvIos == 0){
+<a name="l00624"></a>00624     <span class="keywordflow">return</span> -1;
+<a name="l00625"></a>00625   }
+<a name="l00626"></a>00626   <span class="comment">// Get I/O object</span>
+<a name="l00627"></a>00627   dout = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ac2fed299f5ba1884c01adde195c5b007" title="Get digital output at given address.">digitalOutputAt</a>(address);
+<a name="l00628"></a>00628   <span class="keywordflow">if</span>(dout == 0){
+<a name="l00629"></a>00629     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no digital output assigned to address &quot;</span> + QString::number(address), mdtError::Error);
+<a name="l00630"></a>00630     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
+<a name="l00631"></a>00631     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00632"></a>00632     <span class="keywordflow">return</span> -1;
+<a name="l00633"></a>00633   }
+<a name="l00634"></a>00634   dout-&gt;<a class="code" href="classmdt_digital_io.html#a0a9ae15796ca74638af2d6c5addfdb6f" title="Set I/O state (On or OFF)">setOn</a>(QVariant(state), <span class="keyword">false</span>);
+<a name="l00635"></a>00635   <span class="keywordflow">if</span>(!writeToDevice){
+<a name="l00636"></a>00636     <span class="keywordflow">return</span> 0;
+<a name="l00637"></a>00637   }
+<a name="l00638"></a>00638   <span class="comment">// Get a new transaction</span>
+<a name="l00639"></a>00639   transaction = <a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">getNewTransaction</a>();
+<a name="l00640"></a>00640   transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a122a98e4e93295c9907ed7cd0bde1f19" title="Set the concerned analog I/O.">setIo</a>(dout, <span class="keyword">false</span>);
+<a name="l00641"></a>00641   transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a7f43ee802c0dee3ee77b45188378f86e" title="Set address.">setAddress</a>(address);
+<a name="l00642"></a>00642   <span class="comment">// Send query</span>
+<a name="l00643"></a>00643   <span class="keywordflow">if</span>(waitOnReply){
+<a name="l00644"></a>00644     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">true</span>);
+<a name="l00645"></a>00645     transactionId = <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">writeDigitalOutput</a>(state, transaction);
+<a name="l00646"></a>00646     <span class="keywordflow">if</span>(transactionId &lt; 0){
+<a name="l00647"></a>00647       <span class="keywordflow">return</span> -1;
+<a name="l00648"></a>00648     }
+<a name="l00649"></a>00649     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone</a>(transactionId)){
+<a name="l00650"></a>00650       <span class="keywordflow">return</span> -1;
+<a name="l00651"></a>00651     }
+<a name="l00652"></a>00652   }<span class="keywordflow">else</span>{
+<a name="l00653"></a>00653     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">false</span>);
+<a name="l00654"></a>00654     transactionId = <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">writeDigitalOutput</a>(state, transaction);
+<a name="l00655"></a>00655     <span class="keywordflow">if</span>(transactionId &lt; 0){
+<a name="l00656"></a>00656       <span class="keywordflow">return</span> -1;
+<a name="l00657"></a>00657     }
+<a name="l00658"></a>00658   }
+<a name="l00659"></a>00659 
+<a name="l00660"></a>00660   <span class="keywordflow">return</span> transactionId;
+<a name="l00661"></a>00661 }
+<a name="l00662"></a>00662 
+<a name="l00663"></a><a class="code" href="classmdt_device.html#a6861fc09ea20f3636745402629b4d572">00663</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">mdtDevice::setDigitalOutputState</a>(<span class="keyword">const</span> QString &amp;labelShort, <span class="keywordtype">bool</span> state, <span class="keywordtype">bool</span> writeToDevice, <span class="keywordtype">bool</span> waitOnReply)
+<a name="l00664"></a>00664 {
+<a name="l00665"></a>00665   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout;
+<a name="l00666"></a>00666 
+<a name="l00667"></a>00667   <span class="keywordflow">if</span>(pvIos == 0){
+<a name="l00668"></a>00668     <span class="keywordflow">return</span> -1;
+<a name="l00669"></a>00669   }
+<a name="l00670"></a>00670   <span class="comment">// Get I/O object</span>
+<a name="l00671"></a>00671   dout = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#acecc7f9abb21613fed90212eef4d4dda" title="Get digital output with a given short label.">digitalOutputWithLabelShort</a>(labelShort);
+<a name="l00672"></a>00672   <span class="keywordflow">if</span>(dout == 0){
+<a name="l00673"></a>00673     <span class="keywordflow">return</span> -1;
+<a name="l00674"></a>00674   }
+<a name="l00675"></a>00675 
+<a name="l00676"></a>00676   <span class="keywordflow">return</span> <a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">setDigitalOutputState</a>(dout-&gt;<a class="code" href="classmdt_abstract_io.html#a52f071b6c1098e74f82eade9ead5382a" title="Get the I/O address.">address</a>(), <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">state</a>, writeToDevice, waitOnReply);
+<a name="l00677"></a>00677 }
+<a name="l00678"></a>00678 
+<a name="l00679"></a>00679 
+<a name="l00680"></a><a class="code" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98">00680</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98" title="Write all digital outputs to physical device and update (G)UI representation.">mdtDevice::setDigitalOutputs</a>(<span class="keywordtype">int</span> timeout)
+<a name="l00681"></a>00681 {
+<a name="l00682"></a>00682   <span class="keywordtype">int</span> transactionId;
+<a name="l00683"></a>00683   <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction;
+<a name="l00684"></a>00684 
+<a name="l00685"></a>00685   <span class="keywordflow">if</span>(pvIos == 0){
+<a name="l00686"></a>00686     <span class="keywordflow">return</span> -1;
+<a name="l00687"></a>00687   }
+<a name="l00688"></a>00688   <span class="comment">// Get a new transaction</span>
+<a name="l00689"></a>00689   transaction = <a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">getNewTransaction</a>();
+<a name="l00690"></a>00690   transaction-&gt;<a class="code" href="classmdt_port_transaction.html#ad375898319b7118ab485070314da238d" title="Set if the transaction concerns multiple I/O&#39;s.">setForMultipleIos</a>(<span class="keyword">true</span>);
+<a name="l00691"></a>00691   <span class="comment">// Send query and wait if requested</span>
+<a name="l00692"></a>00692   <span class="keywordflow">if</span>(timeout &lt;= 0){
+<a name="l00693"></a>00693     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">false</span>);
+<a name="l00694"></a>00694     transactionId = <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs</a>(transaction);
+<a name="l00695"></a>00695     <span class="keywordflow">if</span>(transactionId &lt; 0){
+<a name="l00697"></a>00697       <span class="keywordflow">return</span> transactionId;
+<a name="l00698"></a>00698     }
+<a name="l00699"></a>00699   }<span class="keywordflow">else</span>{
+<a name="l00700"></a>00700     transaction-&gt;<a class="code" href="classmdt_port_transaction.html#a6bd68a89059c790f475b8ff78c943656" title="Set query/reply mode.">setQueryReplyMode</a>(<span class="keyword">true</span>);
+<a name="l00701"></a>00701     transactionId = <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">writeDigitalOutputs</a>(transaction);
+<a name="l00702"></a>00702     <span class="keywordflow">if</span>(transactionId &lt; 0){
+<a name="l00704"></a>00704       <span class="keywordflow">return</span> transactionId;
+<a name="l00705"></a>00705     }
+<a name="l00706"></a>00706     <span class="keywordflow">if</span>(!<a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">waitTransactionDone</a>(transactionId, timeout)){
+<a name="l00707"></a>00707       <span class="keywordflow">return</span> -1;
+<a name="l00708"></a>00708     }
+<a name="l00709"></a>00709   }
 <a name="l00710"></a>00710 
-<a name="l00711"></a>00711   <span class="keywordflow">if</span>(pvIos == 0){
-<a name="l00712"></a>00712     <span class="keywordflow">return</span>;
-<a name="l00713"></a>00713   }
-<a name="l00714"></a>00714   <span class="keywordflow">if</span>(pvCurrentState != <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
-<a name="l00715"></a>00715     <span class="comment">// Device busy, cannot threat query , try later</span>
-<a name="l00716"></a>00716     <span class="keywordflow">return</span>;
-<a name="l00717"></a>00717   }
-<a name="l00718"></a>00718   <span class="comment">// Get I/O object</span>
-<a name="l00719"></a>00719   ao = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a70eba4430604bc30841ddb72664a0e98" title="Get analog output at given address.">analogOutputAt</a>(address);
-<a name="l00720"></a>00720   <span class="keywordflow">if</span>(ao == 0){
-<a name="l00721"></a>00721     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no analog output assigned to address &quot;</span> + QString::number(address), mdtError::Error);
-<a name="l00722"></a>00722     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
-<a name="l00723"></a>00723     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00711"></a>00711   <span class="keywordflow">return</span> transactionId;
+<a name="l00712"></a>00712 }
+<a name="l00713"></a>00713 
+<a name="l00714"></a><a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc">00714</a> <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1e" title="State of device.">mdtDevice::state_t</a> <a class="code" href="classmdt_device.html#afde11f7cb1d6a932db3824011f7ccccc" title="Get device state.">mdtDevice::state</a>()<span class="keyword"> const</span>
+<a name="l00715"></a>00715 <span class="keyword"></span>{
+<a name="l00716"></a>00716   <span class="keywordflow">return</span> pvCurrentState;
+<a name="l00717"></a>00717 }
+<a name="l00718"></a>00718 
+<a name="l00719"></a><a class="code" href="classmdt_device.html#a40234a70a37b097baa48bdfbb402cdc4">00719</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">mdtDevice::setAnalogOutputValue</a>(<span class="keywordtype">int</span> address)
+<a name="l00720"></a>00720 {
+<a name="l00721"></a>00721   <a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *ao;
+<a name="l00722"></a>00722 
+<a name="l00723"></a>00723   <span class="keywordflow">if</span>(pvIos == 0){
 <a name="l00724"></a>00724     <span class="keywordflow">return</span>;
 <a name="l00725"></a>00725   }
-<a name="l00726"></a>00726   <span class="comment">// Send query</span>
-<a name="l00727"></a>00727   <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue</a>(address, ao-&gt;<a class="code" href="classmdt_analog_io.html#a7594e94e059dd3b1db9d8277c7426fb2" title="Get the integer value.">valueInt</a>(), 0);
-<a name="l00728"></a>00728 }
-<a name="l00729"></a>00729 
-<a name="l00730"></a><a class="code" href="classmdt_device.html#a83b170f1805a05101409bb6d8e15d03a">00730</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">mdtDevice::setDigitalOutputState</a>(<span class="keywordtype">int</span> address)
-<a name="l00731"></a>00731 {
-<a name="l00732"></a>00732   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout;
-<a name="l00733"></a>00733 
-<a name="l00734"></a>00734   <span class="keywordflow">if</span>(pvIos == 0){
-<a name="l00735"></a>00735     <span class="keywordflow">return</span>;
-<a name="l00736"></a>00736   }
-<a name="l00737"></a>00737   <span class="keywordflow">if</span>(pvCurrentState != <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
-<a name="l00738"></a>00738     <span class="comment">// Device busy, cannot threat query , try later</span>
-<a name="l00739"></a>00739     <span class="keywordflow">return</span>;
-<a name="l00740"></a>00740   }
-<a name="l00741"></a>00741   <span class="comment">// Get I/O object</span>
-<a name="l00742"></a>00742   dout = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ac2fed299f5ba1884c01adde195c5b007" title="Get digital output at given address.">digitalOutputAt</a>(address);
-<a name="l00743"></a>00743   <span class="keywordflow">if</span>(dout == 0){
-<a name="l00744"></a>00744     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no digital output assigned to address &quot;</span> + QString::number(address), mdtError::Error);
-<a name="l00745"></a>00745     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
-<a name="l00746"></a>00746     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00726"></a>00726   <span class="keywordflow">if</span>(pvCurrentState != <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
+<a name="l00727"></a>00727     <span class="comment">// Device busy, cannot threat query , try later</span>
+<a name="l00728"></a>00728     <span class="keywordflow">return</span>;
+<a name="l00729"></a>00729   }
+<a name="l00730"></a>00730   <span class="comment">// Get I/O object</span>
+<a name="l00731"></a>00731   ao = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#a70eba4430604bc30841ddb72664a0e98" title="Get analog output at given address.">analogOutputAt</a>(address);
+<a name="l00732"></a>00732   <span class="keywordflow">if</span>(ao == 0){
+<a name="l00733"></a>00733     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no analog output assigned to address &quot;</span> + QString::number(address), mdtError::Error);
+<a name="l00734"></a>00734     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
+<a name="l00735"></a>00735     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00736"></a>00736     <span class="keywordflow">return</span>;
+<a name="l00737"></a>00737   }
+<a name="l00738"></a>00738   <span class="comment">// Send query</span>
+<a name="l00739"></a>00739   <a class="code" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue</a>(address, ao-&gt;<a class="code" href="classmdt_analog_io.html#a7594e94e059dd3b1db9d8277c7426fb2" title="Get the integer value.">valueInt</a>(), 0);
+<a name="l00740"></a>00740 }
+<a name="l00741"></a>00741 
+<a name="l00742"></a><a class="code" href="classmdt_device.html#a83b170f1805a05101409bb6d8e15d03a">00742</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">mdtDevice::setDigitalOutputState</a>(<span class="keywordtype">int</span> address)
+<a name="l00743"></a>00743 {
+<a name="l00744"></a>00744   <a class="code" href="classmdt_digital_io.html" title="Representation of a digital I/O.">mdtDigitalIo</a> *dout;
+<a name="l00745"></a>00745 
+<a name="l00746"></a>00746   <span class="keywordflow">if</span>(pvIos == 0){
 <a name="l00747"></a>00747     <span class="keywordflow">return</span>;
 <a name="l00748"></a>00748   }
-<a name="l00749"></a>00749   <span class="comment">// Send query</span>
-<a name="l00750"></a>00750   <a class="code" href="classmdt_device.html#a702a5f49680b03f04a9f58ae6906bf83" title="Write one digital output to physical device and update (G)UI representation.">setDigitalOutputState</a>(address, dout-&gt;<a class="code" href="classmdt_digital_io.html#a2bd703bced41720f1569c4e7b26059a1" title="Get current I/O state.">isOn</a>(), 0);
-<a name="l00751"></a>00751 }
-<a name="l00752"></a>00752 
-<a name="l00753"></a><a class="code" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05">00753</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05" title="Queries to send periodically.">mdtDevice::runQueries</a>()
-<a name="l00754"></a>00754 {
-<a name="l00755"></a>00755   <span class="keywordflow">if</span>(pvCurrentState != <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
-<a name="l00756"></a>00756     <span class="keywordflow">return</span>;
-<a name="l00757"></a>00757   }
-<a name="l00758"></a>00758 
-<a name="l00759"></a>00759   <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically.">queriesSequence</a>();
-<a name="l00760"></a>00760 }
-<a name="l00761"></a>00761 
-<a name="l00762"></a><a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">00762</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically.">mdtDevice::queriesSequence</a>()
-<a name="l00763"></a>00763 {
-<a name="l00764"></a>00764   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00765"></a>00765 }
-<a name="l00766"></a>00766 
-<a name="l00767"></a><a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44">00767</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44" title="Used to show a message in status bar.">mdtDevice::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keywordtype">int</span> timeout)
-<a name="l00768"></a>00768 {
-<a name="l00769"></a>00769   emit(<a class="code" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c" title="Emitted when a new status message is to display.">statusMessageChanged</a>(message, QString(), timeout));
-<a name="l00770"></a>00770 }
-<a name="l00771"></a>00771 
-<a name="l00772"></a><a class="code" href="classmdt_device.html#a52a13e5692fccb5aea1f7c3c991823f3">00772</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44" title="Used to show a message in status bar.">mdtDevice::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout)
-<a name="l00773"></a>00773 {
-<a name="l00774"></a>00774   emit(<a class="code" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c" title="Emitted when a new status message is to display.">statusMessageChanged</a>(message, details, timeout));
-<a name="l00775"></a>00775 }
-<a name="l00776"></a>00776 
-<a name="l00777"></a><a class="code" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e">00777</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">mdtDevice::decodeReadenFrame</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> transaction)
-<a name="l00778"></a>00778 {
-<a name="l00779"></a>00779 }
-<a name="l00780"></a>00780 
-<a name="l00781"></a><a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746">00781</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">mdtDevice::readAnalogInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00782"></a>00782 {
-<a name="l00783"></a>00783   <span class="keywordflow">return</span> -1;
-<a name="l00784"></a>00784 }
-<a name="l00785"></a>00785 
-<a name="l00786"></a><a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e">00786</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e" title="Read all analog inputs on physical device.">mdtDevice::readAnalogInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00787"></a>00787 {
-<a name="l00788"></a>00788   <span class="keywordflow">return</span> -1;
-<a name="l00789"></a>00789 }
-<a name="l00790"></a>00790 
-<a name="l00791"></a><a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a">00791</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a" title="Read one analog output on physical device.">mdtDevice::readAnalogOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00792"></a>00792 {
-<a name="l00793"></a>00793   <span class="keywordflow">return</span> -1;
-<a name="l00794"></a>00794 }
-<a name="l00795"></a>00795 
-<a name="l00796"></a><a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291">00796</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291" title="Read all analog outputs on physical device.">mdtDevice::readAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00797"></a>00797 {
-<a name="l00798"></a>00798   <span class="keywordflow">return</span> -1;
-<a name="l00799"></a>00799 }
-<a name="l00800"></a>00800 
-<a name="l00801"></a><a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">00801</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f" title="Write value on a analog output to physical device.">mdtDevice::writeAnalogOutput</a>(<span class="keywordtype">int</span> value, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00802"></a>00802 {
-<a name="l00803"></a>00803   <span class="keywordflow">return</span> -1;
-<a name="l00804"></a>00804 }
-<a name="l00805"></a>00805 
-<a name="l00806"></a><a class="code" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">00806</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245" title="Write all analog outputs to physical device.">mdtDevice::writeAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00807"></a>00807 {
-<a name="l00808"></a>00808   <span class="keywordflow">return</span> -1;
-<a name="l00809"></a>00809 }
-<a name="l00810"></a>00810 
-<a name="l00811"></a><a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015">00811</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015" title="Read one digital input on physical device.">mdtDevice::readDigitalInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00812"></a>00812 {
-<a name="l00813"></a>00813   <span class="keywordflow">return</span> -1;
-<a name="l00814"></a>00814 }
-<a name="l00815"></a>00815 
-<a name="l00816"></a><a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14">00816</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14" title="Read all digital inputs on physical device.">mdtDevice::readDigitalInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00817"></a>00817 {
-<a name="l00818"></a>00818   <span class="keywordflow">return</span> -1;
-<a name="l00819"></a>00819 }
-<a name="l00820"></a>00820 
-<a name="l00821"></a><a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501">00821</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501" title="Read one digital output on physical device.">mdtDevice::readDigitalOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00822"></a>00822 {
-<a name="l00823"></a>00823   <span class="keywordflow">return</span> -1;
-<a name="l00824"></a>00824 }
-<a name="l00825"></a>00825 
-<a name="l00826"></a><a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02">00826</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02" title="Read all digital outputs on physical device.">mdtDevice::readDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00827"></a>00827 {
-<a name="l00828"></a>00828   <span class="keywordflow">return</span> -1;
-<a name="l00829"></a>00829 }
-<a name="l00830"></a>00830 
-<a name="l00831"></a><a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">00831</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">mdtDevice::writeDigitalOutput</a>(<span class="keywordtype">bool</span> state, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00832"></a>00832 {
-<a name="l00833"></a>00833   <span class="keywordflow">return</span> -1;
-<a name="l00834"></a>00834 }
-<a name="l00835"></a>00835 
-<a name="l00836"></a><a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1">00836</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">mdtDevice::writeDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00837"></a>00837 {
-<a name="l00838"></a>00838   <span class="keywordflow">return</span> -1;
-<a name="l00839"></a>00839 }
-<a name="l00840"></a>00840 
-<a name="l00841"></a>00841 
-<a name="l00842"></a><a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e">00842</a> <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *<a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">mdtDevice::getNewTransaction</a>()
-<a name="l00843"></a>00843 {
-<a name="l00844"></a>00844   Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>() != 0);
-<a name="l00845"></a>00845 
-<a name="l00846"></a>00846   <span class="keywordflow">return</span> <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4" title="Get a new transaction.">getNewTransaction</a>();
-<a name="l00847"></a>00847 }
-<a name="l00848"></a>00848 
-<a name="l00849"></a><a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92">00849</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92" title="Restore a transaction into pool.">mdtDevice::restoreTransaction</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
-<a name="l00850"></a>00850 {
-<a name="l00851"></a>00851   Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>() != 0);
+<a name="l00749"></a>00749   <span class="keywordflow">if</span>(pvCurrentState != <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
+<a name="l00750"></a>00750     <span class="comment">// Device busy, cannot threat query , try later</span>
+<a name="l00751"></a>00751     <span class="keywordflow">return</span>;
+<a name="l00752"></a>00752   }
+<a name="l00753"></a>00753   <span class="comment">// Get I/O object</span>
+<a name="l00754"></a>00754   dout = pvIos-&gt;<a class="code" href="classmdt_device_ios.html#ac2fed299f5ba1884c01adde195c5b007" title="Get digital output at given address.">digitalOutputAt</a>(address);
+<a name="l00755"></a>00755   <span class="keywordflow">if</span>(dout == 0){
+<a name="l00756"></a>00756     <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot;: no digital output assigned to address &quot;</span> + QString::number(address), mdtError::Error);
+<a name="l00757"></a>00757     MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
+<a name="l00758"></a>00758     e.<a class="code" href="classmdt_error.html#ad3cccf7c7f7d4bdabdcb4e60794bb9cb" title="Send error to output.">commit</a>();
+<a name="l00759"></a>00759     <span class="keywordflow">return</span>;
+<a name="l00760"></a>00760   }
+<a name="l00761"></a>00761   <span class="comment">// Send query</span>
+<a name="l00762"></a>00762   <a class="code" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">setDigitalOutputState</a>(address, dout-&gt;<a class="code" href="classmdt_digital_io.html#a2bd703bced41720f1569c4e7b26059a1" title="Get current I/O state.">isOn</a>(), <span class="keyword">true</span>, <span class="keyword">false</span>);
+<a name="l00763"></a>00763 }
+<a name="l00764"></a>00764 
+<a name="l00765"></a><a class="code" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05">00765</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a14634fec6cd6bae810562b3bd88a5c05" title="Queries to send periodically.">mdtDevice::runQueries</a>()
+<a name="l00766"></a>00766 {
+<a name="l00767"></a>00767   <span class="keywordflow">if</span>(pvCurrentState != <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
+<a name="l00768"></a>00768     <span class="keywordflow">return</span>;
+<a name="l00769"></a>00769   }
+<a name="l00770"></a>00770 
+<a name="l00771"></a>00771   <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically.">queriesSequence</a>();
+<a name="l00772"></a>00772 }
+<a name="l00773"></a>00773 
+<a name="l00774"></a><a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">00774</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f" title="Sequence of queries to send periodically.">mdtDevice::queriesSequence</a>()
+<a name="l00775"></a>00775 {
+<a name="l00776"></a>00776   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00777"></a>00777 }
+<a name="l00778"></a>00778 
+<a name="l00779"></a><a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44">00779</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44" title="Used to show a message in status bar.">mdtDevice::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keywordtype">int</span> timeout)
+<a name="l00780"></a>00780 {
+<a name="l00781"></a>00781   emit(<a class="code" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c" title="Emitted when a new status message is to display.">statusMessageChanged</a>(message, QString(), timeout));
+<a name="l00782"></a>00782 }
+<a name="l00783"></a>00783 
+<a name="l00784"></a><a class="code" href="classmdt_device.html#a52a13e5692fccb5aea1f7c3c991823f3">00784</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44" title="Used to show a message in status bar.">mdtDevice::showStatusMessage</a>(<span class="keyword">const</span> QString &amp;message, <span class="keyword">const</span> QString &amp;details, <span class="keywordtype">int</span> timeout)
+<a name="l00785"></a>00785 {
+<a name="l00786"></a>00786   emit(<a class="code" href="classmdt_device.html#a3fbc6e71241e2e9daa2d8557f870c03c" title="Emitted when a new status message is to display.">statusMessageChanged</a>(message, details, timeout));
+<a name="l00787"></a>00787 }
+<a name="l00788"></a>00788 
+<a name="l00789"></a><a class="code" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e">00789</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">mdtDevice::decodeReadenFrame</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> transaction)
+<a name="l00790"></a>00790 {
+<a name="l00791"></a>00791 }
+<a name="l00792"></a>00792 
+<a name="l00793"></a><a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746">00793</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746" title="Read one analog input on physical device.">mdtDevice::readAnalogInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00794"></a>00794 {
+<a name="l00795"></a>00795   <span class="keywordflow">return</span> -1;
+<a name="l00796"></a>00796 }
+<a name="l00797"></a>00797 
+<a name="l00798"></a><a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e">00798</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e" title="Read all analog inputs on physical device.">mdtDevice::readAnalogInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00799"></a>00799 {
+<a name="l00800"></a>00800   <span class="keywordflow">return</span> -1;
+<a name="l00801"></a>00801 }
+<a name="l00802"></a>00802 
+<a name="l00803"></a><a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a">00803</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a" title="Read one analog output on physical device.">mdtDevice::readAnalogOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00804"></a>00804 {
+<a name="l00805"></a>00805   <span class="keywordflow">return</span> -1;
+<a name="l00806"></a>00806 }
+<a name="l00807"></a>00807 
+<a name="l00808"></a><a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291">00808</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291" title="Read all analog outputs on physical device.">mdtDevice::readAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00809"></a>00809 {
+<a name="l00810"></a>00810   <span class="keywordflow">return</span> -1;
+<a name="l00811"></a>00811 }
+<a name="l00812"></a>00812 
+<a name="l00813"></a><a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">00813</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f" title="Write value on a analog output to physical device.">mdtDevice::writeAnalogOutput</a>(<span class="keywordtype">int</span> value, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00814"></a>00814 {
+<a name="l00815"></a>00815   <span class="keywordflow">return</span> -1;
+<a name="l00816"></a>00816 }
+<a name="l00817"></a>00817 
+<a name="l00818"></a><a class="code" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">00818</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245" title="Write all analog outputs to physical device.">mdtDevice::writeAnalogOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00819"></a>00819 {
+<a name="l00820"></a>00820   <span class="keywordflow">return</span> -1;
+<a name="l00821"></a>00821 }
+<a name="l00822"></a>00822 
+<a name="l00823"></a><a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015">00823</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#af128b606050035abaf8d049bb2227015" title="Read one digital input on physical device.">mdtDevice::readDigitalInput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00824"></a>00824 {
+<a name="l00825"></a>00825   <span class="keywordflow">return</span> -1;
+<a name="l00826"></a>00826 }
+<a name="l00827"></a>00827 
+<a name="l00828"></a><a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14">00828</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14" title="Read all digital inputs on physical device.">mdtDevice::readDigitalInputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00829"></a>00829 {
+<a name="l00830"></a>00830   <span class="keywordflow">return</span> -1;
+<a name="l00831"></a>00831 }
+<a name="l00832"></a>00832 
+<a name="l00833"></a><a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501">00833</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501" title="Read one digital output on physical device.">mdtDevice::readDigitalOutput</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00834"></a>00834 {
+<a name="l00835"></a>00835   <span class="keywordflow">return</span> -1;
+<a name="l00836"></a>00836 }
+<a name="l00837"></a>00837 
+<a name="l00838"></a><a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02">00838</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02" title="Read all digital outputs on physical device.">mdtDevice::readDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00839"></a>00839 {
+<a name="l00840"></a>00840   <span class="keywordflow">return</span> -1;
+<a name="l00841"></a>00841 }
+<a name="l00842"></a>00842 
+<a name="l00843"></a><a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">00843</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1" title="Write state on a digital output to physical device.">mdtDevice::writeDigitalOutput</a>(<span class="keywordtype">bool</span> state, <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00844"></a>00844 {
+<a name="l00845"></a>00845   <span class="keywordflow">return</span> -1;
+<a name="l00846"></a>00846 }
+<a name="l00847"></a>00847 
+<a name="l00848"></a><a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1">00848</a> <span class="keywordtype">int</span> <a class="code" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1" title="Write all digital outputs to physical device.">mdtDevice::writeDigitalOutputs</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00849"></a>00849 {
+<a name="l00850"></a>00850   <span class="keywordflow">return</span> -1;
+<a name="l00851"></a>00851 }
 <a name="l00852"></a>00852 
-<a name="l00853"></a>00853   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a5fea4a9b8e94d38e8ec699dba05c7ca8" title="Restore a transaction into pool.">restoreTransaction</a>(transaction);
-<a name="l00854"></a>00854 }
-<a name="l00855"></a>00855 
-<a name="l00856"></a><a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4">00856</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">mdtDevice::waitTransactionDone</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> granularity)
-<a name="l00857"></a>00857 {
-<a name="l00858"></a>00858   Q_ASSERT(granularity &gt; 0);
-<a name="l00859"></a>00859   Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>() != 0);
+<a name="l00853"></a>00853 
+<a name="l00854"></a><a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e">00854</a> <a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *<a class="code" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">mdtDevice::getNewTransaction</a>()
+<a name="l00855"></a>00855 {
+<a name="l00856"></a>00856   Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>() != 0);
+<a name="l00857"></a>00857 
+<a name="l00858"></a>00858   <span class="keywordflow">return</span> <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a75ebd3d1859e3ed38b9558981e53aac4" title="Get a new transaction.">getNewTransaction</a>();
+<a name="l00859"></a>00859 }
 <a name="l00860"></a>00860 
-<a name="l00861"></a>00861   <span class="keywordtype">bool</span> ok;
-<a name="l00862"></a>00862 
-<a name="l00863"></a>00863   ok = <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">waitOnFrame</a>(<span class="keywordtype">id</span>, timeout, granularity);
-<a name="l00864"></a>00864   <span class="comment">// We must remove frame from done queue</span>
-<a name="l00865"></a>00865   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID.">readenFrame</a>(<span class="keywordtype">id</span>);
-<a name="l00866"></a>00866 
-<a name="l00867"></a>00867   <span class="keywordflow">return</span> ok;
-<a name="l00868"></a>00868 }
-<a name="l00869"></a>00869 
-<a name="l00870"></a>00870 <span class="keywordtype">void</span> mdtDevice::setStateFromPortManager(<span class="keywordtype">int</span> portManagerState)
-<a name="l00871"></a>00871 {
-<a name="l00872"></a>00872   <span class="keywordflow">switch</span>(portManagerState){
-<a name="l00873"></a>00873     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>:
-<a name="l00874"></a>00874       setStateDisconnected();
-<a name="l00875"></a>00875       <span class="keywordflow">break</span>;
-<a name="l00876"></a>00876     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>:
-<a name="l00877"></a>00877       setStateConnecting();
-<a name="l00878"></a>00878       <span class="keywordflow">break</span>;
-<a name="l00879"></a>00879     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>:
-<a name="l00880"></a>00880       setStateReady();
-<a name="l00881"></a>00881       <span class="keywordflow">break</span>;
-<a name="l00882"></a>00882     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>:
-<a name="l00883"></a>00883       setStateBusy();
-<a name="l00884"></a>00884       <span class="keywordflow">break</span>;
-<a name="l00885"></a>00885     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa8ca72085e29c5c6745294e58684e5d3c">mdtPortManager::Warning</a>:
-<a name="l00886"></a>00886       setStateWarning();
+<a name="l00861"></a><a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92">00861</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_device.html#a4619d8be240cafe48865a89f7424de92" title="Restore a transaction into pool.">mdtDevice::restoreTransaction</a>(<a class="code" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction)
+<a name="l00862"></a>00862 {
+<a name="l00863"></a>00863   Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>() != 0);
+<a name="l00864"></a>00864 
+<a name="l00865"></a>00865   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a5fea4a9b8e94d38e8ec699dba05c7ca8" title="Restore a transaction into pool.">restoreTransaction</a>(transaction);
+<a name="l00866"></a>00866 }
+<a name="l00867"></a>00867 
+<a name="l00868"></a><a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4">00868</a> <span class="keywordtype">bool</span> <a class="code" href="classmdt_device.html#ab67f2da4f294482dd39ce6294ada8bc4" title="Wait until a transaction is done without break the GUI&#39;s event loop.">mdtDevice::waitTransactionDone</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> timeout, <span class="keywordtype">int</span> granularity)
+<a name="l00869"></a>00869 {
+<a name="l00870"></a>00870   Q_ASSERT(granularity &gt; 0);
+<a name="l00871"></a>00871   Q_ASSERT(<a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>() != 0);
+<a name="l00872"></a>00872 
+<a name="l00873"></a>00873   <span class="keywordtype">bool</span> ok;
+<a name="l00874"></a>00874 
+<a name="l00875"></a>00875   ok = <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a680546498a0cd486c4fc16d28f44e4c6" title="Wait on readen frame with defined ID.">waitOnFrame</a>(<span class="keywordtype">id</span>, timeout, granularity);
+<a name="l00876"></a>00876   <span class="comment">// We must remove frame from done queue</span>
+<a name="l00877"></a>00877   <a class="code" href="classmdt_device.html#a06d9178b4133fd7b23084e712af20976" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a830ae182d06dd6a52c43a7f45b9240ac" title="Get data by frame ID.">readenFrame</a>(<span class="keywordtype">id</span>);
+<a name="l00878"></a>00878 
+<a name="l00879"></a>00879   <span class="keywordflow">return</span> ok;
+<a name="l00880"></a>00880 }
+<a name="l00881"></a>00881 
+<a name="l00882"></a>00882 <span class="keywordtype">void</span> mdtDevice::setStateFromPortManager(<span class="keywordtype">int</span> portManagerState)
+<a name="l00883"></a>00883 {
+<a name="l00884"></a>00884   <span class="keywordflow">switch</span>(portManagerState){
+<a name="l00885"></a>00885     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa4004253e25d51b1e628bb5006dbbd153">mdtPortManager::Disconnected</a>:
+<a name="l00886"></a>00886       setStateDisconnected();
 <a name="l00887"></a>00887       <span class="keywordflow">break</span>;
-<a name="l00888"></a>00888     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa687598301ad573e51cafaa209da72718">mdtPortManager::Error</a>:
-<a name="l00889"></a>00889       setStateError();
+<a name="l00888"></a>00888     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa89e805c9c75c39ecc8371d5f38131227">mdtPortManager::Connecting</a>:
+<a name="l00889"></a>00889       setStateConnecting();
 <a name="l00890"></a>00890       <span class="keywordflow">break</span>;
-<a name="l00891"></a>00891     <span class="keywordflow">default</span>:
-<a name="l00892"></a>00892       setStateError();
-<a name="l00893"></a>00893       <a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44" title="Used to show a message in status bar.">showStatusMessage</a>(tr(<span class="stringliteral">&quot;Received a unknown state&quot;</span>));
-<a name="l00894"></a>00894   }
-<a name="l00895"></a>00895 }
-<a name="l00896"></a>00896 
-<a name="l00897"></a>00897 <span class="keywordtype">void</span> mdtDevice::setStateDisconnected()
-<a name="l00898"></a>00898 {
-<a name="l00899"></a>00899   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a>){
-<a name="l00900"></a>00900     <span class="keywordflow">return</span>;
-<a name="l00901"></a>00901   }
-<a name="l00902"></a>00902   <span class="comment">// Stop auto queries if running</span>
-<a name="l00903"></a>00903   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
-<a name="l00904"></a>00904     pvQueryTimer-&gt;stop();
-<a name="l00905"></a>00905   }
-<a name="l00906"></a>00906   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a>;
-<a name="l00907"></a>00907   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Disconnected&quot;</span>;
-<a name="l00908"></a>00908   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
-<a name="l00909"></a>00909 }
-<a name="l00910"></a>00910 
-<a name="l00911"></a>00911 <span class="keywordtype">void</span> mdtDevice::setStateConnecting(<span class="comment">/*const QString &amp;message*/</span>)
-<a name="l00912"></a>00912 {
-<a name="l00913"></a>00913   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">Connecting</a>){
-<a name="l00914"></a>00914     <span class="keywordflow">return</span>;
-<a name="l00915"></a>00915   }
-<a name="l00916"></a>00916   <span class="comment">// Stop auto queries if running</span>
-<a name="l00917"></a>00917   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
-<a name="l00918"></a>00918     pvQueryTimer-&gt;stop();
-<a name="l00919"></a>00919   }
-<a name="l00920"></a>00920   <span class="comment">// Thread will notify the ready (or disconnected) state, cancel retry timer</span>
-<a name="l00921"></a>00921   pvBackToReadyStateTimer-&gt;stop();
-<a name="l00922"></a>00922   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">Connecting</a>;
-<a name="l00923"></a>00923   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Connecting&quot;</span>;
-<a name="l00924"></a>00924   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
-<a name="l00925"></a>00925 }
-<a name="l00926"></a>00926 
-<a name="l00927"></a>00927 <span class="keywordtype">void</span> mdtDevice::setStateReady()
-<a name="l00928"></a>00928 {
-<a name="l00929"></a>00929   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
-<a name="l00930"></a>00930     <span class="keywordflow">return</span>;
+<a name="l00891"></a>00891     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daaf2ba40e19587c3a98235ee96a4acf20e">mdtPortManager::Ready</a>:
+<a name="l00892"></a>00892       setStateReady();
+<a name="l00893"></a>00893       <span class="keywordflow">break</span>;
+<a name="l00894"></a>00894     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa5da3fa5dd98a264ecb4a37a1983ea0ff">mdtPortManager::Busy</a>:
+<a name="l00895"></a>00895       setStateBusy();
+<a name="l00896"></a>00896       <span class="keywordflow">break</span>;
+<a name="l00897"></a>00897     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa8ca72085e29c5c6745294e58684e5d3c">mdtPortManager::Warning</a>:
+<a name="l00898"></a>00898       setStateWarning();
+<a name="l00899"></a>00899       <span class="keywordflow">break</span>;
+<a name="l00900"></a>00900     <span class="keywordflow">case</span> <a class="code" href="classmdt_port_manager.html#a9448339d7f08ca5e18b904df25b382daa687598301ad573e51cafaa209da72718">mdtPortManager::Error</a>:
+<a name="l00901"></a>00901       setStateError();
+<a name="l00902"></a>00902       <span class="keywordflow">break</span>;
+<a name="l00903"></a>00903     <span class="keywordflow">default</span>:
+<a name="l00904"></a>00904       setStateError();
+<a name="l00905"></a>00905       <a class="code" href="classmdt_device.html#aef41742272cbf069890ea95605f41d44" title="Used to show a message in status bar.">showStatusMessage</a>(tr(<span class="stringliteral">&quot;Received a unknown state&quot;</span>));
+<a name="l00906"></a>00906   }
+<a name="l00907"></a>00907 }
+<a name="l00908"></a>00908 
+<a name="l00909"></a>00909 <span class="keywordtype">void</span> mdtDevice::setStateDisconnected()
+<a name="l00910"></a>00910 {
+<a name="l00911"></a>00911   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a>){
+<a name="l00912"></a>00912     <span class="keywordflow">return</span>;
+<a name="l00913"></a>00913   }
+<a name="l00914"></a>00914   <span class="comment">// Stop auto queries if running</span>
+<a name="l00915"></a>00915   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
+<a name="l00916"></a>00916     pvQueryTimer-&gt;stop();
+<a name="l00917"></a>00917   }
+<a name="l00918"></a>00918   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1eae06fa1b4e5872df7470aeed0878a2947">Disconnected</a>;
+<a name="l00919"></a>00919   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Disconnected&quot;</span>;
+<a name="l00920"></a>00920   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
+<a name="l00921"></a>00921 }
+<a name="l00922"></a>00922 
+<a name="l00923"></a>00923 <span class="keywordtype">void</span> mdtDevice::setStateConnecting(<span class="comment">/*const QString &amp;message*/</span>)
+<a name="l00924"></a>00924 {
+<a name="l00925"></a>00925   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">Connecting</a>){
+<a name="l00926"></a>00926     <span class="keywordflow">return</span>;
+<a name="l00927"></a>00927   }
+<a name="l00928"></a>00928   <span class="comment">// Stop auto queries if running</span>
+<a name="l00929"></a>00929   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
+<a name="l00930"></a>00930     pvQueryTimer-&gt;stop();
 <a name="l00931"></a>00931   }
-<a name="l00932"></a>00932   <span class="comment">// Check if we have to restart query timer</span>
-<a name="l00933"></a>00933   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
-<a name="l00934"></a>00934     pvQueryTimer-&gt;start();
-<a name="l00935"></a>00935   }
-<a name="l00936"></a>00936   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>;
-<a name="l00937"></a>00937   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Ready&quot;</span>;
-<a name="l00938"></a>00938   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
-<a name="l00939"></a>00939 }
-<a name="l00940"></a>00940 
-<a name="l00941"></a>00941 <span class="keywordtype">void</span> mdtDevice::setStateBusy()
-<a name="l00942"></a>00942 {
-<a name="l00943"></a>00943   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a>){
-<a name="l00944"></a>00944     <span class="keywordflow">return</span>;
-<a name="l00945"></a>00945   }
-<a name="l00946"></a>00946   <span class="comment">// Stop auto queries if running</span>
-<a name="l00947"></a>00947   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
-<a name="l00948"></a>00948     pvQueryTimer-&gt;stop();
-<a name="l00949"></a>00949   }
-<a name="l00950"></a>00950   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a>;
-<a name="l00951"></a>00951   qDebug() &lt;&lt; <span class="stringliteral">&quot;**** mdtDevice: new state is Busy&quot;</span>;
-<a name="l00952"></a>00952   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
-<a name="l00953"></a>00953   <span class="comment">// Set state ready if requested</span>
-<a name="l00954"></a>00954   <span class="keywordflow">if</span>(pvBackToReadyStateTimeout &gt;= 0){
-<a name="l00955"></a>00955     pvBackToReadyStateTimer-&gt;start(pvBackToReadyStateTimeout);
+<a name="l00932"></a>00932   <span class="comment">// Thread will notify the ready (or disconnected) state, cancel retry timer</span>
+<a name="l00933"></a>00933   pvBackToReadyStateTimer-&gt;stop();
+<a name="l00934"></a>00934   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ead8adc8658ebaa24f7525fe18558de4c1">Connecting</a>;
+<a name="l00935"></a>00935   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Connecting&quot;</span>;
+<a name="l00936"></a>00936   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
+<a name="l00937"></a>00937 }
+<a name="l00938"></a>00938 
+<a name="l00939"></a>00939 <span class="keywordtype">void</span> mdtDevice::setStateReady()
+<a name="l00940"></a>00940 {
+<a name="l00941"></a>00941   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>){
+<a name="l00942"></a>00942     <span class="keywordflow">return</span>;
+<a name="l00943"></a>00943   }
+<a name="l00944"></a>00944   <span class="comment">// Check if we have to restart query timer</span>
+<a name="l00945"></a>00945   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
+<a name="l00946"></a>00946     pvQueryTimer-&gt;start();
+<a name="l00947"></a>00947   }
+<a name="l00948"></a>00948   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea577f509c27c399a211c5dc18c0235b69">Ready</a>;
+<a name="l00949"></a>00949   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Ready&quot;</span>;
+<a name="l00950"></a>00950   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
+<a name="l00951"></a>00951 }
+<a name="l00952"></a>00952 
+<a name="l00953"></a>00953 <span class="keywordtype">void</span> mdtDevice::setStateBusy()
+<a name="l00954"></a>00954 {
+<a name="l00955"></a>00955   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a>){
+<a name="l00956"></a>00956     <span class="keywordflow">return</span>;
 <a name="l00957"></a>00957   }
-<a name="l00958"></a>00958 }
-<a name="l00959"></a>00959 
-<a name="l00960"></a>00960 <span class="keywordtype">void</span> mdtDevice::setStateWarning()
-<a name="l00961"></a>00961 {
-<a name="l00962"></a>00962   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92">Warning</a>){
-<a name="l00963"></a>00963     <span class="keywordflow">return</span>;
-<a name="l00964"></a>00964   }
-<a name="l00965"></a>00965   <span class="comment">// Stop auto queries if running</span>
-<a name="l00966"></a>00966   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
-<a name="l00967"></a>00967     pvQueryTimer-&gt;stop();
-<a name="l00968"></a>00968   }
-<a name="l00969"></a>00969   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92">Warning</a>;
-<a name="l00970"></a>00970   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Warning&quot;</span>;
-<a name="l00971"></a>00971   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
-<a name="l00972"></a>00972 }
-<a name="l00973"></a>00973 
-<a name="l00974"></a>00974 <span class="keywordtype">void</span> mdtDevice::setStateError()
-<a name="l00975"></a>00975 {
-<a name="l00976"></a>00976   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de">Error</a>){
-<a name="l00977"></a>00977     <span class="keywordflow">return</span>;
-<a name="l00978"></a>00978   }
-<a name="l00979"></a>00979   <span class="comment">// Stop auto queries if running</span>
-<a name="l00980"></a>00980   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
-<a name="l00981"></a>00981     pvQueryTimer-&gt;stop();
-<a name="l00982"></a>00982   }
-<a name="l00983"></a>00983   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de">Error</a>;
-<a name="l00984"></a>00984   <span class="comment">// Add a error</span>
-<a name="l00985"></a>00985   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot; goes to error state&quot;</span>, mdtError::Error);
-<a name="l00986"></a>00986   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
-<a name="l00987"></a>00987   e.commit();
-<a name="l00988"></a>00988   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Error&quot;</span>;
-<a name="l00989"></a>00989   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
-<a name="l00990"></a>00990 }
+<a name="l00958"></a>00958   <span class="comment">// Stop auto queries if running</span>
+<a name="l00959"></a>00959   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
+<a name="l00960"></a>00960     pvQueryTimer-&gt;stop();
+<a name="l00961"></a>00961   }
+<a name="l00962"></a>00962   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea4a064f3dc9a486991b3ec09127b1c42a">Busy</a>;
+<a name="l00963"></a>00963   qDebug() &lt;&lt; <span class="stringliteral">&quot;**** mdtDevice: new state is Busy&quot;</span>;
+<a name="l00964"></a>00964   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
+<a name="l00965"></a>00965   <span class="comment">// Set state ready if requested</span>
+<a name="l00966"></a>00966   <span class="keywordflow">if</span>(pvBackToReadyStateTimeout &gt;= 0){
+<a name="l00967"></a>00967     pvBackToReadyStateTimer-&gt;start(pvBackToReadyStateTimeout);
+<a name="l00969"></a>00969   }
+<a name="l00970"></a>00970 }
+<a name="l00971"></a>00971 
+<a name="l00972"></a>00972 <span class="keywordtype">void</span> mdtDevice::setStateWarning()
+<a name="l00973"></a>00973 {
+<a name="l00974"></a>00974   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92">Warning</a>){
+<a name="l00975"></a>00975     <span class="keywordflow">return</span>;
+<a name="l00976"></a>00976   }
+<a name="l00977"></a>00977   <span class="comment">// Stop auto queries if running</span>
+<a name="l00978"></a>00978   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
+<a name="l00979"></a>00979     pvQueryTimer-&gt;stop();
+<a name="l00980"></a>00980   }
+<a name="l00981"></a>00981   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea2f51ec62521e93aad70fe1071e32fa92">Warning</a>;
+<a name="l00982"></a>00982   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Warning&quot;</span>;
+<a name="l00983"></a>00983   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
+<a name="l00984"></a>00984 }
+<a name="l00985"></a>00985 
+<a name="l00986"></a>00986 <span class="keywordtype">void</span> mdtDevice::setStateError()
+<a name="l00987"></a>00987 {
+<a name="l00988"></a>00988   <span class="keywordflow">if</span>(pvCurrentState == <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de">Error</a>){
+<a name="l00989"></a>00989     <span class="keywordflow">return</span>;
+<a name="l00990"></a>00990   }
+<a name="l00991"></a>00991   <span class="comment">// Stop auto queries if running</span>
+<a name="l00992"></a>00992   <span class="keywordflow">if</span>(pvAutoQueryEnabled){
+<a name="l00993"></a>00993     pvQueryTimer-&gt;stop();
+<a name="l00994"></a>00994   }
+<a name="l00995"></a>00995   pvCurrentState = <a class="code" href="classmdt_device.html#a39c301b1fda803dba0c9ab98164a9d1ea68b5596661e1489134e11545e92274de">Error</a>;
+<a name="l00996"></a>00996   <span class="comment">// Add a error</span>
+<a name="l00997"></a>00997   <a class="code" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, <span class="stringliteral">&quot;Device &quot;</span> + <a class="code" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name</a>() + <span class="stringliteral">&quot; goes to error state&quot;</span>, mdtError::Error);
+<a name="l00998"></a>00998   MDT_ERROR_SET_SRC(e, <span class="stringliteral">&quot;mdtDevice&quot;</span>);
+<a name="l00999"></a>00999   e.commit();
+<a name="l01000"></a>01000   qDebug() &lt;&lt; <span class="stringliteral">&quot;mdtDevice: new state is Error&quot;</span>;
+<a name="l01001"></a>01001   emit(<a class="code" href="classmdt_device.html#aecd2d9d2cc3665f2084d0fd20eb3db2d" title="Emitted when state has changed.">stateChanged</a>(pvCurrentState));
+<a name="l01002"></a>01002 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -1036,7 +1052,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Sun Apr 21 2013 17:41:42 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 22 2013 20:11:47 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

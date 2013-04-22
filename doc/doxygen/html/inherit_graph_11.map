@@ -1,3 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="7,5,108,35"/>
+<area shape="rect" id="node1" href="$classmdt_device_info.html" title="Contains informations about a device (attached to a port)" alt="" coords="5,5,112,35"/>
 </map>

@@ -50,6 +50,8 @@ void \hyperlink{classmdt_device_ios_a0e2683630eff9410003a36ae5af76b52}{addAnalog
 \begin{DoxyCompactList}\small\item\em Add a analog input. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}{analogInputAt} (int address)
 \begin{DoxyCompactList}\small\item\em Get analog input at given address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_ae31753e23d7ab14073f852dca85c2f9e}{analogInputWithLabelShort} (const QString \&labelShort)
+\begin{DoxyCompactList}\small\item\em Get analog input with a given short label. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_a8635bcc71baa140b87be9edb41e5e61b}{
 QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_a8635bcc71baa140b87be9edb41e5e61b}{analogInputs} ()}
 \label{classmdt_device_ios_a8635bcc71baa140b87be9edb41e5e61b}
@@ -64,6 +66,8 @@ void \hyperlink{classmdt_device_ios_aeed1140ed869866a6edc738d3b2a6d0b}{addAnalog
 \begin{DoxyCompactList}\small\item\em Add a analog output. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_a70eba4430604bc30841ddb72664a0e98}{analogOutputAt} (int address)
 \begin{DoxyCompactList}\small\item\em Get analog output at given address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ \hyperlink{classmdt_device_ios_aab2b2b1f8c887eb9f439cf495ec95fbd}{analogOutputWithLabelShort} (const QString \&labelShort)
+\begin{DoxyCompactList}\small\item\em Get analog output with a given short label. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_aa53fc12adeac76a039f005e72776362c}{
 QList$<$ \hyperlink{classmdt_analog_io}{mdtAnalogIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_aa53fc12adeac76a039f005e72776362c}{analogOutputs} ()}
 \label{classmdt_device_ios_aa53fc12adeac76a039f005e72776362c}
@@ -88,6 +92,8 @@ void \hyperlink{classmdt_device_ios_a023571f5d77bd0874c08b53890a56381}{addDigita
 \begin{DoxyCompactList}\small\item\em Add a digital input. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}{digitalInputAt} (int address)
 \begin{DoxyCompactList}\small\item\em Get digital input at given address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_abcde6de5a0ca6d642af04c21250d6555}{digitalInputWithLabelShort} (const QString \&labelShort)
+\begin{DoxyCompactList}\small\item\em Get digital input with a given short label. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_ab70374d3ad06739f91388526d4203def}{
 QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_ab70374d3ad06739f91388526d4203def}{digitalInputs} ()}
 \label{classmdt_device_ios_ab70374d3ad06739f91388526d4203def}
@@ -102,6 +108,8 @@ void \hyperlink{classmdt_device_ios_af1f41d3c60f1030fb303436820417d14}{addDigita
 \begin{DoxyCompactList}\small\item\em Add a digital output. \end{DoxyCompactList}\item 
 \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_ac2fed299f5ba1884c01adde195c5b007}{digitalOutputAt} (int address)
 \begin{DoxyCompactList}\small\item\em Get digital output at given address. \end{DoxyCompactList}\item 
+\hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ \hyperlink{classmdt_device_ios_acecc7f9abb21613fed90212eef4d4dda}{digitalOutputWithLabelShort} (const QString \&labelShort)
+\begin{DoxyCompactList}\small\item\em Get digital output with a given short label. \end{DoxyCompactList}\item 
 \hypertarget{classmdt_device_ios_a8a72f1844f794d4b5cb7bfede8bcef99}{
 QList$<$ \hyperlink{classmdt_digital_io}{mdtDigitalIo} $\ast$ $>$ \hyperlink{classmdt_device_ios_a8a72f1844f794d4b5cb7bfede8bcef99}{digitalOutputs} ()}
 \label{classmdt_device_ios_a8a72f1844f794d4b5cb7bfede8bcef99}
@@ -163,7 +171,7 @@ ai must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 56 of file mdtDeviceIos.cpp.
+Definition at line 57 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_aeed1140ed869866a6edc738d3b2a6d0b}{
 \index{mdtDeviceIos@{mdtDeviceIos}!addAnalogOutput@{addAnalogOutput}}
@@ -183,7 +191,7 @@ ao must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 78 of file mdtDeviceIos.cpp.
+Definition at line 94 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a023571f5d77bd0874c08b53890a56381}{
 \index{mdtDeviceIos@{mdtDeviceIos}!addDigitalInput@{addDigitalInput}}
@@ -203,7 +211,7 @@ di must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 128 of file mdtDeviceIos.cpp.
+Definition at line 159 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_af1f41d3c60f1030fb303436820417d14}{
 \index{mdtDeviceIos@{mdtDeviceIos}!addDigitalOutput@{addDigitalOutput}}
@@ -223,7 +231,7 @@ dout must be a valid pointer
 \end{DoxyPrecond}
 
 
-Definition at line 150 of file mdtDeviceIos.cpp.
+Definition at line 196 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a70a3d979ec5d44297e8195e37596d5bc}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogInputAt@{analogInputAt}}
@@ -240,7 +248,24 @@ Get analog input at given address.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 63 of file mdtDeviceIos.cpp.
+Definition at line 64 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_ae31753e23d7ab14073f852dca85c2f9e}{
+\index{mdtDeviceIos@{mdtDeviceIos}!analogInputWithLabelShort@{analogInputWithLabelShort}}
+\index{analogInputWithLabelShort@{analogInputWithLabelShort}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{analogInputWithLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAnalogIo} $\ast$ mdtDeviceIos::analogInputWithLabelShort (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{labelShort}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_ae31753e23d7ab14073f852dca85c2f9e}
+
+
+Get analog input with a given short label. 
+
+If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
+
+Definition at line 69 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a70eba4430604bc30841ddb72664a0e98}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputAt@{analogOutputAt}}
@@ -257,7 +282,7 @@ Get analog output at given address.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 86 of file mdtDeviceIos.cpp.
+Definition at line 102 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a78918905dc0b04976cdc826c0fd582c1}{
 \index{mdtDeviceIos@{mdtDeviceIos}!analogOutputValueChanged@{analogOutputValueChanged}}
@@ -272,9 +297,22 @@ Definition at line 86 of file mdtDeviceIos.cpp.
 
 This signal is emited when a analog output value has changed. 
 
-This signal is used to notify \hyperlink{classmdt_device}{mdtDevice} that a analog output must be set on device. 
+This signal is used to notify \hyperlink{classmdt_device}{mdtDevice} that a analog output must be set on device. \hypertarget{classmdt_device_ios_aab2b2b1f8c887eb9f439cf495ec95fbd}{
+\index{mdtDeviceIos@{mdtDeviceIos}!analogOutputWithLabelShort@{analogOutputWithLabelShort}}
+\index{analogOutputWithLabelShort@{analogOutputWithLabelShort}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{analogOutputWithLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtAnalogIo} $\ast$ mdtDeviceIos::analogOutputWithLabelShort (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{labelShort}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_aab2b2b1f8c887eb9f439cf495ec95fbd}
 
-Definition at line 102 of file moc\_\-mdtDeviceIos.cxx.
+
+Get analog output with a given short label. 
+
+If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
+
+Definition at line 107 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a272fc1fa86e1b66e6af0e58b130939e0}{
 \index{mdtDeviceIos@{mdtDeviceIos}!deleteIos@{deleteIos}}
@@ -291,7 +329,7 @@ Delete all I/O objects.
 
 Will free all stored I/O objects. 
 
-Definition at line 44 of file mdtDeviceIos.cpp.
+Definition at line 45 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a78f68d0efeac0a23628f133121f28df8}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalInputAt@{digitalInputAt}}
@@ -308,7 +346,24 @@ Get digital input at given address.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 135 of file mdtDeviceIos.cpp.
+Definition at line 166 of file mdtDeviceIos.cpp.
+
+\hypertarget{classmdt_device_ios_abcde6de5a0ca6d642af04c21250d6555}{
+\index{mdtDeviceIos@{mdtDeviceIos}!digitalInputWithLabelShort@{digitalInputWithLabelShort}}
+\index{digitalInputWithLabelShort@{digitalInputWithLabelShort}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{digitalInputWithLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDigitalIo} $\ast$ mdtDeviceIos::digitalInputWithLabelShort (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{labelShort}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_abcde6de5a0ca6d642af04c21250d6555}
+
+
+Get digital input with a given short label. 
+
+If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
+
+Definition at line 171 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_ac2fed299f5ba1884c01adde195c5b007}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputAt@{digitalOutputAt}}
@@ -325,7 +380,7 @@ Get digital output at given address.
 
 If no object exists at given address, a null pointer is returned. 
 
-Definition at line 158 of file mdtDeviceIos.cpp.
+Definition at line 204 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a45be7941f710e63a7d54020dee38e2ec}{
 \index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputStateChanged@{digitalOutputStateChanged}}
@@ -340,9 +395,22 @@ Definition at line 158 of file mdtDeviceIos.cpp.
 
 This signal is emited when a digital output state has changed. 
 
-This signal is used to notify \hyperlink{classmdt_device}{mdtDevice} that a digital output must be set on device. 
+This signal is used to notify \hyperlink{classmdt_device}{mdtDevice} that a digital output must be set on device. \hypertarget{classmdt_device_ios_acecc7f9abb21613fed90212eef4d4dda}{
+\index{mdtDeviceIos@{mdtDeviceIos}!digitalOutputWithLabelShort@{digitalOutputWithLabelShort}}
+\index{digitalOutputWithLabelShort@{digitalOutputWithLabelShort}!mdtDeviceIos@{mdtDeviceIos}}
+\subsubsection[{digitalOutputWithLabelShort}]{\setlength{\rightskip}{0pt plus 5cm}{\bf mdtDigitalIo} $\ast$ mdtDeviceIos::digitalOutputWithLabelShort (
+\begin{DoxyParamCaption}
+\item[{const QString \&}]{labelShort}
+\end{DoxyParamCaption}
+)}}
+\label{classmdt_device_ios_acecc7f9abb21613fed90212eef4d4dda}
 
-Definition at line 109 of file moc\_\-mdtDeviceIos.cxx.
+
+Get digital output with a given short label. 
+
+If no object exists at given short label, a null pointer is returned. If more than one object exists with the same short label, the first found is returned. 
+
+Definition at line 209 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_af771f8080ce4a7260baa0acccacae0e1}{
 \index{mdtDeviceIos@{mdtDeviceIos}!setAutoDeleteIos@{setAutoDeleteIos}}
@@ -361,7 +429,7 @@ If true, all internal I/O's will be deleted when this object is deleted.
 
 By default, this flag is true. 
 
-Definition at line 39 of file mdtDeviceIos.cpp.
+Definition at line 40 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a82850ee99957ec5a787de71299ad785b}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateAnalogInputValues@{updateAnalogInputValues}}
@@ -384,7 +452,7 @@ Note:
 \item If type value is of type integer, \hyperlink{classmdt_analog_io_a011fba645b655bdb3f7f8740c327e624}{mdtAnalogIo::setValueInt()} is used, else \hyperlink{classmdt_analog_io_a3c8a10c66650728d1878415032543e8a}{mdtAnalogIo::setValue()} is used. 
 \end{DoxyItemize}
 
-Definition at line 188 of file mdtDeviceIos.cpp.
+Definition at line 249 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a2c40cf4749cff1ade292bdd81bc195e9}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateAnalogOutputValues@{updateAnalogOutputValues}}
@@ -411,7 +479,7 @@ ao-\/$>$setEnabled(true);
 
 
 
-Definition at line 202 of file mdtDeviceIos.cpp.
+Definition at line 263 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_a9a7582771eca2b54261ff00212c09146}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateDigitalInputStates@{updateDigitalInputStates}}
@@ -433,7 +501,7 @@ Note:
 \item If one value is invalid, concerned input will be set invalid. 
 \end{DoxyItemize}
 
-Definition at line 228 of file mdtDeviceIos.cpp.
+Definition at line 289 of file mdtDeviceIos.cpp.
 
 \hypertarget{classmdt_device_ios_ae9542163fedce98b11e2d9fd0e2e7d78}{
 \index{mdtDeviceIos@{mdtDeviceIos}!updateDigitalOutputStates@{updateDigitalOutputStates}}
@@ -455,12 +523,11 @@ Note:
 \item If one value is invalid, concerned input will be set invalid. 
 \end{DoxyItemize}
 
-Definition at line 242 of file mdtDeviceIos.cpp.
+Definition at line 303 of file mdtDeviceIos.cpp.
 
 
 
 The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
 src/mdtdevice/mdtDeviceIos.h\item 
-src/mdtdevice/mdtDeviceIos.cpp\item 
-src/mdtdevice/moc\_\-mdtDeviceIos.cxx\end{DoxyCompactItemize}
+src/mdtdevice/mdtDeviceIos.cpp\end{DoxyCompactItemize}
