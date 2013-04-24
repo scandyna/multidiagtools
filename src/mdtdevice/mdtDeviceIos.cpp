@@ -31,6 +31,9 @@ mdtDeviceIos::mdtDeviceIos(QObject *parent)
   pvAnalogInputsFirstAddressRead = 0;
   pvAnalogOutputsFirstAddressRead = 0;
   pvAnalogOutputsFirstAddressWrite = 0;
+  pvDigitalInputsFirstAddressRead = 0;
+  pvDigitalOutputsFirstAddressRead = 0;
+  pvDigitalOutputsFirstAddressWrite = 0;
 }
 
 mdtDeviceIos::~mdtDeviceIos()
@@ -48,19 +51,27 @@ void mdtDeviceIos::setAutoDeleteIos(bool autoDelete)
 
 void mdtDeviceIos::deleteIos()
 {
-    qDeleteAll(pvAnalogInputs);
-    pvAnalogInputs.clear();
-    pvAnalogInputsByAddressRead.clear();
-    
-    qDeleteAll(pvAnalogOutputs);
-    pvAnalogOutputs.clear();
-    pvAnalogOutputsByAddressRead.clear();
-    pvAnalogOutputsByAddressWrite.clear();
-    
-    qDeleteAll(pvDigitalInputs);
-    pvDigitalInputs.clear();
-    qDeleteAll(pvDigitalOutputs);
-    pvDigitalOutputs.clear();
+  qDeleteAll(pvAnalogInputs);
+  pvAnalogInputs.clear();
+  pvAnalogInputsByAddressRead.clear();
+  pvAnalogInputsFirstAddressRead = 0;
+  qDeleteAll(pvAnalogOutputs);
+  pvAnalogOutputs.clear();
+  pvAnalogOutputsByAddressRead.clear();
+  pvAnalogOutputsByAddressWrite.clear();
+  pvAnalogOutputsFirstAddressRead = 0;
+  pvAnalogOutputsFirstAddressWrite = 0;
+  qDeleteAll(pvDigitalInputs);
+  pvDigitalInputs.clear();
+  pvDigitalInputsByAddressRead.clear();
+  pvDigitalInputsFirstAddressRead = 0;
+  
+  qDeleteAll(pvDigitalOutputs);
+  pvDigitalOutputs.clear();
+  pvDigitalOutputsByAddressRead.clear();
+  pvDigitalOutputsByAddressWrite.clear();
+  pvDigitalOutputsFirstAddressRead = 0;
+  pvDigitalOutputsFirstAddressWrite = 0;
 }
 
 void mdtDeviceIos::addAnalogInput(mdtAnalogIo *ai)
@@ -73,8 +84,6 @@ void mdtDeviceIos::addAnalogInput(mdtAnalogIo *ai)
   Q_ASSERT(pvAnalogInputsByAddressRead.values().at(0) != 0);
   // QMap returns a list sorted by keys, ascending
   pvAnalogInputsFirstAddressRead = pvAnalogInputsByAddressRead.values().at(0)->addressRead();
-
-  ///pvAnalogInputsByAddressWrite.insert(ai->addressWrite(), ai);
 }
 
 mdtAnalogIo *mdtDeviceIos::analogInputAt(int address)
@@ -93,24 +102,11 @@ mdtAnalogIo *mdtDeviceIos::analogInputWithLabelShort(const QString &labelShort)
     }
   }
 
-  /**
-  QMapIterator<int, mdtAnalogIo*> it(pvAnalogInputs);
-
-  while(it.hasNext()){
-    it.next();
-    Q_ASSERT(it.value() != 0);
-    if(it.value()->labelShort() == labelShort){
-      return it.value();
-    }
-  }
-  */
-
   return 0;
 }
 
 const QList<mdtAnalogIo*> mdtDeviceIos::analogInputs() const
 {
-  ///return pvAnalogInputs.values();
   return pvAnalogInputs;
 }
 
@@ -139,11 +135,7 @@ void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao)
   Q_ASSERT(pvAnalogOutputsByAddressWrite.values().size() > 0);
   Q_ASSERT(pvAnalogOutputsByAddressWrite.values().at(0) != 0);
   // QMap returns a list sorted by keys, ascending
-  pvAnalogOutputsFirstAddressWrite = pvAnalogOutputsByAddressWrite.values().at(0)->addressRead();
-
-  
-  /// \note : utile ??
-  ///connect(ao, SIGNAL(valueChanged(int)), this, SIGNAL(analogOutputValueChanged(int)));
+  pvAnalogOutputsFirstAddressWrite = pvAnalogOutputsByAddressWrite.values().at(0)->addressWrite();
 }
 
 mdtAnalogIo *mdtDeviceIos::analogOutputAtAddressRead(int address)
@@ -166,17 +158,6 @@ mdtAnalogIo *mdtDeviceIos::analogOutputWithLabelShort(const QString &labelShort)
       return pvAnalogOutputs.at(i);
     }
   }
-  /**
-  QMapIterator<int, mdtAnalogIo*> it(pvAnalogOutputs);
-
-  while(it.hasNext()){
-    it.next();
-    Q_ASSERT(it.value() != 0);
-    if(it.value()->labelShort() == labelShort){
-      return it.value();
-    }
-  }
-  */
 
   return 0;
 }
@@ -224,33 +205,36 @@ void mdtDeviceIos::setAnalogOutputsValue(QVariant value)
     Q_ASSERT(pvAnalogOutputs.at(i) != 0);
     pvAnalogOutputs.at(i)->setValue(value);
   }
-
-  /**
-  QList<mdtAnalogIo*> aos;
-  int i;
-
-  aos = pvAnalogOutputs.values();
-  for(i=0; i<aos.size(); i++){
-    Q_ASSERT(aos.at(i) != 0);
-    aos.at(i)->setValue(value);
-  }
-  */
 }
 
 void mdtDeviceIos::addDigitalInput(mdtDigitalIo *di)
 {
   Q_ASSERT(di != 0);
 
-  pvDigitalInputs.insert(di->address(), di);
+  pvDigitalInputs.append(di);
+  pvDigitalInputsByAddressRead.insert(di->address(), di);
+  // QMap returns a list sorted by keys, ascending
+  Q_ASSERT(pvDigitalInputsByAddressRead.values().size() > 0);
+  Q_ASSERT(pvDigitalInputsByAddressRead.values().at(0) != 0);
+  pvDigitalInputsFirstAddressRead = pvDigitalInputsByAddressRead.values().at(0)->addressRead();
 }
 
 mdtDigitalIo *mdtDeviceIos::digitalInputAt(int address)
 {
-  return pvDigitalInputs.value(address, 0);
+  return pvDigitalInputsByAddressRead.value(address, 0);
 }
 
 mdtDigitalIo *mdtDeviceIos::digitalInputWithLabelShort(const QString &labelShort)
 {
+  int i;
+
+  for(i=0; i<pvDigitalInputs.size(); ++i){
+    Q_ASSERT(pvDigitalInputs.at(i) != 0);
+    if(pvDigitalInputs.at(i)->labelShort() == labelShort){
+      return pvDigitalInputs.at(i);
+    }
+  }
+  /**
   QMapIterator<int, mdtDigitalIo*> it(pvDigitalInputs);
 
   while(it.hasNext()){
@@ -260,13 +244,19 @@ mdtDigitalIo *mdtDeviceIos::digitalInputWithLabelShort(const QString &labelShort
       return it.value();
     }
   }
+  */
 
   return 0;
 }
 
-QList<mdtDigitalIo*> mdtDeviceIos::digitalInputs()
+const QList<mdtDigitalIo*> mdtDeviceIos::digitalInputs() const
 {
-  return pvDigitalInputs.values();
+  return pvDigitalInputs;
+}
+
+int mdtDeviceIos::digitalInputsFirstAddress() const
+{
+  return pvDigitalInputsFirstAddressRead;
 }
 
 int mdtDeviceIos::digitalInputsCount() const
@@ -278,17 +268,41 @@ void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout)
 {
   Q_ASSERT(dout != 0);
 
-  pvDigitalOutputs.insert(dout->address(), dout);
-  connect(dout, SIGNAL(stateChanged(int)), this, SIGNAL(digitalOutputStateChanged(int)));
+  pvDigitalOutputs.append(dout);
+  pvDigitalOutputsByAddressRead.insert(dout->addressRead(), dout);
+  pvDigitalOutputsByAddressWrite.insert(dout->addressWrite(), dout);
+  // Get first addresses for read and write access
+  Q_ASSERT(pvDigitalOutputsByAddressRead.values().size() > 0);
+  Q_ASSERT(pvDigitalOutputsByAddressRead.values().at(0) != 0);
+  // QMap returns a list sorted by keys, ascending
+  pvDigitalOutputsFirstAddressRead = pvDigitalOutputsByAddressRead.values().at(0)->addressRead();
+  Q_ASSERT(pvDigitalOutputsByAddressWrite.values().size() > 0);
+  Q_ASSERT(pvDigitalOutputsByAddressWrite.values().at(0) != 0);
+  // QMap returns a list sorted by keys, ascending
+  pvDigitalOutputsFirstAddressWrite = pvDigitalOutputsByAddressWrite.values().at(0)->addressWrite();
 }
 
-mdtDigitalIo *mdtDeviceIos::digitalOutputAt(int address)
+mdtDigitalIo *mdtDeviceIos::digitalOutputAtAddressRead(int address)
 {
-  return pvDigitalOutputs.value(address, 0);
+  return pvDigitalOutputsByAddressRead.value(address, 0);
+}
+
+mdtDigitalIo *mdtDeviceIos::digitalOutputAtAddressWrite(int address)
+{
+  return pvDigitalOutputsByAddressWrite.value(address, 0);
 }
 
 mdtDigitalIo *mdtDeviceIos::digitalOutputWithLabelShort(const QString &labelShort)
 {
+  int i;
+
+  for(i=0; i<pvDigitalOutputs.size(); ++i){
+    Q_ASSERT(pvDigitalOutputs.at(i) != 0);
+    if(pvDigitalOutputs.at(i)->labelShort() == labelShort){
+      return pvDigitalOutputs.at(i);
+    }
+  }
+  /**
   QMapIterator<int, mdtDigitalIo*> it(pvDigitalOutputs);
 
   while(it.hasNext()){
@@ -298,13 +312,24 @@ mdtDigitalIo *mdtDeviceIos::digitalOutputWithLabelShort(const QString &labelShor
       return it.value();
     }
   }
+  */
 
   return 0;
 }
 
-QList<mdtDigitalIo*> mdtDeviceIos::digitalOutputs()
+const QList<mdtDigitalIo*> mdtDeviceIos::digitalOutputs() const
 {
-  return pvDigitalOutputs.values();
+  return pvDigitalOutputs;
+}
+
+int mdtDeviceIos::digitalOutputsFirstAddressRead() const
+{
+  return pvDigitalOutputsFirstAddressRead;
+}
+
+int mdtDeviceIos::digitalOutputsFirstAddressWrite() const
+{
+  return pvDigitalOutputsFirstAddressWrite;
 }
 
 int mdtDeviceIos::digitalOutputsCount() const
@@ -312,13 +337,13 @@ int mdtDeviceIos::digitalOutputsCount() const
   return pvDigitalOutputs.size();
 }
 
-const QList<bool> mdtDeviceIos::digitalOutputsStates() const
+QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
 {
   QList<bool> states;
   QList<mdtDigitalIo*> dos;
   int i;
 
-  dos = pvDigitalOutputs.values();
+  dos = pvDigitalOutputsByAddressWrite.values();
   for(i=0; i<dos.size(); i++){
     Q_ASSERT(dos.at(i) != 0);
     states.append(dos.at(i)->isOn());
@@ -330,7 +355,6 @@ const QList<bool> mdtDeviceIos::digitalOutputsStates() const
 void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
 {
   int i, max;
-  ///mdtAnalogIo *ai;
   QList<mdtAnalogIo*> lst;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
@@ -340,22 +364,11 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
     Q_ASSERT(lst.at(i) != 0);
     lst.at(i)->setValue(values.at(i), false);
   }
-
-  /**
-  for(i=0; i<values.size(); i++){
-    // Get I/O and store value
-    ai = analogInputAt(i);
-    if(ai != 0){
-      ai->setValue(values.at(i), false);
-    }
-  }
-  */
 }
 
 void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
 {
   int i, max;
-  ///mdtAnalogIo *ao;
   QList<mdtAnalogIo*> lst;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
@@ -365,16 +378,6 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
     Q_ASSERT(lst.at(i) != 0);
     lst.at(i)->setValue(values.at(i), false);
   }
-
-  /**
-  for(i=0; i<values.size(); i++){
-    // Get I/O and store value
-    ao = analogOutputAt(i);
-    if(ao != 0){
-      ao->setValue(values.at(i), false);
-    }
-  }
-  */
 }
 
 void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
@@ -385,22 +388,23 @@ void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
     Q_ASSERT(pvAnalogOutputs.at(i) != 0);
     pvAnalogOutputs.at(i)->setEnabled(enabled);
   }
-  /**
-  QMapIterator<int, mdtAnalogIo*> it(pvAnalogOutputs);
-
-  while(it.hasNext()){
-    it.next();
-    Q_ASSERT(it.value() != 0);
-    it.value()->setEnabled(enabled);
-  }
-  */
 }
 
 void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
 {
-  int i;
-  mdtDigitalIo *di;
+  int i, max;
+  QList<mdtDigitalIo*> lst;
+  ///mdtDigitalIo *di;
 
+  // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
+  lst = pvDigitalInputsByAddressRead.values();
+  max = qMin(values.size(), lst.size());
+  for(i=0; i<max; ++i){
+    Q_ASSERT(lst.at(i) != 0);
+    lst.at(i)->setOn(values.at(i), false);
+  }
+
+  /**
   for(i=0; i<values.size(); i++){
     // Get I/O and store value
     di = digitalInputAt(i);
@@ -408,13 +412,24 @@ void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
       di->setOn(values.at(i), false);
     }
   }
+  */
 }
 
 void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
 {
-  int i;
-  mdtDigitalIo *dout;
+  int i, max;
+  ///mdtDigitalIo *dout;
+  QList<mdtDigitalIo*> lst;
 
+  // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
+  lst = pvDigitalOutputsByAddressRead.values();  // We update (G)UI, so we read from device
+  max = qMin(values.size(), lst.size());
+  for(i=0; i<max; ++i){
+    Q_ASSERT(lst.at(i) != 0);
+    lst.at(i)->setOn(values.at(i), false);
+  }
+
+  /**
   for(i=0; i<values.size(); i++){
     // Get I/O and store value
     dout = digitalOutputAt(i);
@@ -423,4 +438,5 @@ void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
       dout->setEnabled(true);
     }
   }
+  */
 }

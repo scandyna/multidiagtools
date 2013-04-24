@@ -508,7 +508,8 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
   // Setup MODBUS PDU
   ///qDebug() << "mdtDeviceModbus::writeDigitalOutputs(): states: " << pvIos->digitalOutputsStates();
   ///pdu = pvCodec->encodeWriteMultipleCoils(pvDigitalOutputAddressOffset, pvIos->digitalOutputsStates());
-  pdu = pvCodec->encodeWriteMultipleCoils(0, pvIos->digitalOutputsStates());
+  ///pdu = pvCodec->encodeWriteMultipleCoils(0, pvIos->digitalOutputsStates());
+  pdu = pvCodec->encodeWriteMultipleCoils(pvIos->digitalOutputsFirstAddressWrite(), pvIos->digitalOutputsStatesByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }

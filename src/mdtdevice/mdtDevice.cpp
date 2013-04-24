@@ -535,7 +535,7 @@ QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
     return QVariant();
   }
   // Get I/O object
-  dout = pvIos->digitalOutputAt(address);
+  dout = pvIos->digitalOutputAtAddressRead(address);
   if(dout == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
@@ -624,7 +624,7 @@ int mdtDevice::setDigitalOutputState(int address, bool state, bool writeToDevice
     return -1;
   }
   // Get I/O object
-  dout = pvIos->digitalOutputAt(address);
+  dout = pvIos->digitalOutputAtAddressWrite(address);
   if(dout == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
@@ -752,7 +752,7 @@ void mdtDevice::setDigitalOutputState(int address)
     return;
   }
   // Get I/O object
-  dout = pvIos->digitalOutputAt(address);
+  dout = pvIos->digitalOutputAtAddressWrite(address);
   if(dout == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");

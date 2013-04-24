@@ -196,8 +196,14 @@ class mdtDeviceIos : public QObject
   mdtDigitalIo *digitalInputWithLabelShort(const QString &labelShort);
 
   /*! \brief Get a list containing all digital inputs
+   *
+   * Note: the returned list is not sorted
    */
-  QList<mdtDigitalIo*> digitalInputs();
+  const QList<mdtDigitalIo*> digitalInputs() const;
+
+  /*! \brief Get address of the first digital input
+   */
+  int digitalInputsFirstAddress() const;
 
   /*! \brief Get the number of digital inputs
    */
@@ -209,12 +215,19 @@ class mdtDeviceIos : public QObject
    */
   void addDigitalOutput(mdtDigitalIo *dout);
 
-  /*! \brief Get digital output at given address
+  /*! \brief Get digital output at given address for read access
    *
    * If no object exists at given address,
    *  a null pointer is returned.
    */
-  mdtDigitalIo *digitalOutputAt(int address);
+  mdtDigitalIo *digitalOutputAtAddressRead(int address);
+
+  /*! \brief Get digital output at given address for write access
+   *
+   * If no object exists at given address,
+   *  a null pointer is returned.
+   */
+  mdtDigitalIo *digitalOutputAtAddressWrite(int address);
 
   /*! \brief Get digital output with a given short label
    *
@@ -226,30 +239,26 @@ class mdtDeviceIos : public QObject
   mdtDigitalIo *digitalOutputWithLabelShort(const QString &labelShort);
 
   /*! \brief Get a list containing all digital outputs
+   *
+   * Note: the returned list is not sorted
    */
-  QList<mdtDigitalIo*> digitalOutputs();
+  const QList<mdtDigitalIo*> digitalOutputs() const;
+
+  /*! \brief Get address for read access of the first digital output
+   */
+  int digitalOutputsFirstAddressRead() const;
+
+  /*! \brief Get address for write access of the first digital output
+   */
+  int digitalOutputsFirstAddressWrite() const;
 
   /*! \brief Get the number of digital outputs
    */
   int digitalOutputsCount() const;
 
-  /*! \brief Get all digital outputs states
+  /*! \brief Get all digital outputs states sorted by address for write access
    */
-  const QList<bool> digitalOutputsStates() const;
-
- signals:
-
-  /*! \brief This signal is emited when a analog output value has changed
-   *
-   * This signal is used to notify mdtDevice that a analog output must be set on device.
-   */
-  ///void analogOutputValueChanged(int address);
-
-  /*! \brief This signal is emited when a digital output state has changed
-   *
-   * This signal is used to notify mdtDevice that a digital output must be set on device.
-   */
-  void digitalOutputStateChanged(int address);
+  QList<bool> digitalOutputsStatesByAddressWrite() const;
 
  public slots:
 
@@ -302,21 +311,27 @@ class mdtDeviceIos : public QObject
   Q_DISABLE_COPY(mdtDeviceIos);
 
   bool pvAutoDeleteIos;
-  
+  // Analog inputs members
   QList<mdtAnalogIo*> pvAnalogInputs;
   QMap<int, mdtAnalogIo*> pvAnalogInputsByAddressRead;
   int pvAnalogInputsFirstAddressRead;
-  ///QMap<int, mdtAnalogIo*> pvAnalogInputsByAddressWrite; NOTE: not write address for inputs !
-  
+  // Analog outputs members
   QList<mdtAnalogIo*> pvAnalogOutputs;
   QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressRead;
   QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressWrite;
   int pvAnalogOutputsFirstAddressRead;
   int pvAnalogOutputsFirstAddressWrite;
+  // Digital inputs members
+  QList<mdtDigitalIo*> pvDigitalInputs;
+  QMap<int, mdtDigitalIo*> pvDigitalInputsByAddressRead;
+  int pvDigitalInputsFirstAddressRead;
   
-  
-  QMap<int, mdtDigitalIo*> pvDigitalInputs;
-  QMap<int, mdtDigitalIo*> pvDigitalOutputs;
+  // Digital outputs members
+  QList<mdtDigitalIo*> pvDigitalOutputs;
+  QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressRead;
+  QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressWrite;
+  int pvDigitalOutputsFirstAddressRead;
+  int pvDigitalOutputsFirstAddressWrite;
 };
 
 #endif  // #ifndef MDT_DEVICE_IOS_H
