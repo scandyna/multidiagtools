@@ -69,7 +69,8 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setLabel("Input current");
   ai.setLabelShort("Iin");
   ai.setDetails("Input current that is used for M1 setpoint.\nShema: 10E");
-  ai.setAddress(1246);
+  ai.setAddressRead(1246);
+  ai.setAddressWrite(564);
   ai.setUnit("mA");
   ai.setRange(4, 20, 8);
   MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);

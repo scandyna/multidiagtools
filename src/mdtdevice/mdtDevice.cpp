@@ -255,7 +255,7 @@ QVariant mdtDevice::getAnalogOutputValue(int address, int timeout, bool realValu
     return QVariant();
   }
   // Get internal I/O object
-  ao = pvIos->analogOutputAt(address);
+  ao = pvIos->analogOutputAtAddressRead(address);
   if(ao == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
@@ -352,7 +352,7 @@ int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
     return -1;
   }
   // Get I/O object
-  ao = pvIos->analogOutputAt(address);
+  ao = pvIos->analogOutputAtAddressWrite(address);
   if(ao == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog output assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");
@@ -716,6 +716,7 @@ mdtDevice::state_t mdtDevice::state() const
   return pvCurrentState;
 }
 
+/// \todo We double search I/O object, could be splitted ?
 void mdtDevice::setAnalogOutputValue(int address)
 {
   mdtAnalogIo *ao;
@@ -728,7 +729,7 @@ void mdtDevice::setAnalogOutputValue(int address)
     return;
   }
   // Get I/O object
-  ao = pvIos->analogOutputAt(address);
+  ao = pvIos->analogOutputAtAddressWrite(address);
   if(ao == 0){
     mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog output assigned to address " + QString::number(address), mdtError::Error);
     MDT_ERROR_SET_SRC(e, "mdtDevice");

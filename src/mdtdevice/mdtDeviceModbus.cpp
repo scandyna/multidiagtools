@@ -344,7 +344,7 @@ int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  pdu = pvCodec->encodeReadInputRegisters(0, pvIos->analogInputsCount());
+  pdu = pvCodec->encodeReadInputRegisters(pvIos->analogInputsFirstAddress(), pvIos->analogInputsCount());
   if(pdu.isEmpty()){
     return -1;
   }
@@ -407,7 +407,8 @@ int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  pdu = pvCodec->encodeWriteMultipleRegisters(pvAnalogOutputAddressOffset, pvIos->analogOutputsValuesInt());
+  ///pdu = pvCodec->encodeWriteMultipleRegisters(pvAnalogOutputAddressOffset, pvIos->analogOutputsValuesInt());
+  pdu = pvCodec->encodeWriteMultipleRegisters(pvIos->analogOutputsFirstAddressWrite(), pvIos->analogOutputsValuesIntByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }

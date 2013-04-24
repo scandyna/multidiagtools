@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -29,7 +29,8 @@
 mdtAbstractIoWidget::mdtAbstractIoWidget(QWidget *parent)
  : QWidget(parent)
 {
-  pvAddress = 0;
+  pvAddressRead = 0;
+  pvAddressWrite = 0;
   // Create label widgets
   lbLabel = new QLabel;
   lbLabel->setFrameStyle(QFrame::Panel | QFrame::Plain);
@@ -54,12 +55,12 @@ void mdtAbstractIoWidget::setIo(mdtAbstractIo *io)
   Q_ASSERT(io != 0);
 
   // Signals/slots from io to widget
-  connect(io, SIGNAL(addressChangedForUi(int)), this, SLOT(setAddress(int)));
+  connect(io, SIGNAL(addressChangedForUi(int, int)), this, SLOT(setAddress(int, int)));
   connect(io, SIGNAL(labelShortChangedForUi(const QString&)), this, SLOT(setLabelShort(const QString&)));
   connect(io, SIGNAL(labelChangedForUi(const QString&)), this, SLOT(setLabel(const QString&)));
   connect(io, SIGNAL(detailsChangedForUi(const QString&)), this, SLOT(setDetails(const QString&)));
   // Get initial data
-  setAddress(io->address());
+  setAddress(io->addressRead(), io->addressWrite());
   setLabelShort(io->labelShort());
   setLabel(io->label());
   setDetails(io->details());
@@ -83,24 +84,45 @@ void mdtAbstractIoWidget::showIoInformations()
   str += tr("Label: ");
   str += lbLabel->toolTip();
   str += "\n";
-  str += tr("Address: 0x");
-  str += QString::number(pvAddress, 16);
-  str += " (dec: ";
-  str += QString::number(pvAddress, 10);
-  str += ")";
+  if(pvAddressRead == pvAddressWrite){
+    str += tr("Address: 0x");
+    str += QString::number(pvAddressRead, 16);
+    str += " (dec: ";
+    str += QString::number(pvAddressRead, 10);
+    str += ")";
+  }else{
+    str += tr("Address (read): 0x");
+    str += QString::number(pvAddressRead, 16);
+    str += " (dec: ";
+    str += QString::number(pvAddressRead, 10);
+    str += ")";
+    str += "\n";
+    str += tr("Address (write): 0x");
+    str += QString::number(pvAddressWrite, 16);
+    str += " (dec: ";
+    str += QString::number(pvAddressWrite, 10);
+    str += ")";
+    str += "\n";
+  }
   pvMessageBox->setInformativeText(str);
   pvMessageBox->setIcon(QMessageBox::Information);
   pvMessageBox->exec();
 }
 
-void mdtAbstractIoWidget::setAddress(int address)
+void mdtAbstractIoWidget::setAddress(int addressRead, int addressWrite)
 {
-  pvAddress = address;
+  pvAddressRead = addressRead;
+  pvAddressWrite = addressWrite;
 }
 
 void mdtAbstractIoWidget::setLabelShort(const QString &text)
 {
   lbLabel->setText(text);
+  if(qApp->applicationName().isEmpty()){
+    pvMessageBox->setWindowTitle(tr("I/O informations for ") + text);
+  }else{
+    pvMessageBox->setWindowTitle(qApp->applicationName() + tr(" - I/O informations for ") + text);
+  }
 }
 
 void mdtAbstractIoWidget::setLabel(const QString & text)

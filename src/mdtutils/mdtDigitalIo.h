@@ -84,7 +84,7 @@ class mdtDigitalIo : public mdtAbstractIo
    *
    * This signal is used by mdtDeviceIos to notify mdtDevice.
    */
-  void stateChanged(int address);
+  void stateChanged(int addressWrite);
 
   /*
    * This signal is emited every time

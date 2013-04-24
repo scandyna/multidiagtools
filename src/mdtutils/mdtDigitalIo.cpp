@@ -63,7 +63,7 @@ void mdtDigitalIo::setOn(bool on, bool isValid, bool emitValueChanged)
     pvIsOn = on;
     if(emitValueChanged){
       emit(stateChanged(pvIsOn));
-      emit(stateChanged(pvAddress));
+      emit(stateChanged(addressWrite()));
     }
   }
   if(notifyUi){
@@ -82,6 +82,6 @@ void mdtDigitalIo::setStateFromUi(bool on)
     pvHasValidData = true;
     pvIsOn = on;
     emit(stateChanged(pvIsOn));
-    emit(stateChanged(pvAddress));
+    emit(stateChanged(addressWrite()));
   }
 }

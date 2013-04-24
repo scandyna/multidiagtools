@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -49,6 +49,14 @@
  *  - Memory address of physical device
  *
  * You can choose to use this address as simple index.
+ *
+ * Note: if a address is changed by accessing directly by mdtAnalogIo or mdtDigitalIo,
+ *   this will not be reflected, and stored I/O's will become incoherent.
+ *   The address must allways be set before adding the I/O to this container.
+ *   Example:
+ *    - mdtAnalogIo *analogIn = new mdtAnalogIo;
+ *    - analogIn->setAddress(25);
+ *    - ios.addAnalogInput(analogIn);
  */
 class mdtDeviceIos : public QObject
 {
@@ -97,8 +105,14 @@ class mdtDeviceIos : public QObject
   mdtAnalogIo *analogInputWithLabelShort(const QString &labelShort);
 
   /*! \brief Get a list containing all analog inputs
+   *
+   * Note: the returned list is not sorted
    */
-  QList<mdtAnalogIo*> analogInputs();
+  const QList<mdtAnalogIo*> analogInputs() const;
+
+  /*! \brief Get address of the first analog input
+   */
+  int analogInputsFirstAddress() const;
 
   /*! \brief Get the number of analog inputs
    */
@@ -110,12 +124,19 @@ class mdtDeviceIos : public QObject
    */
   void addAnalogOutput(mdtAnalogIo *ao);
 
-  /*! \brief Get analog output at given address
+  /*! \brief Get analog output at given address for read access
    *
    * If no object exists at given address,
    *  a null pointer is returned.
    */
-  mdtAnalogIo *analogOutputAt(int address);
+  mdtAnalogIo *analogOutputAtAddressRead(int address);
+
+  /*! \brief Get analog output at given address for write access
+   *
+   * If no object exists at given address,
+   *  a null pointer is returned.
+   */
+  mdtAnalogIo *analogOutputAtAddressWrite(int address);
 
   /*! \brief Get analog output with a given short label
    *
@@ -127,16 +148,26 @@ class mdtDeviceIos : public QObject
   mdtAnalogIo *analogOutputWithLabelShort(const QString &labelShort);
 
   /*! \brief Get a list containing all analog outputs
+   *
+   * Note: the returned list is not sorted
    */
-  QList<mdtAnalogIo*> analogOutputs();
+  const QList<mdtAnalogIo*> analogOutputs() const;
+
+  /*! \brief Get address for read access of the first analog output
+   */
+  int analogOutputsFirstAddressRead() const;
+
+  /*! \brief Get address for write access of the first analog output
+   */
+  int analogOutputsFirstAddressWrite() const;
 
   /*! \brief Get the number of analog outputs
    */
   int analogOutputsCount() const;
 
-  /*! \brief Get all analog outputs values in device specific format
+  /*! \brief Get all analog outputs values in device specific format sorted by address for write access
    */
-  const QList<int> analogOutputsValuesInt() const;
+  QList<int> analogOutputsValuesIntByAddressWrite() const;
 
   /*! \brief Set a value and validity for all analog outputs
    */
@@ -212,7 +243,7 @@ class mdtDeviceIos : public QObject
    *
    * This signal is used to notify mdtDevice that a analog output must be set on device.
    */
-  void analogOutputValueChanged(int address);
+  ///void analogOutputValueChanged(int address);
 
   /*! \brief This signal is emited when a digital output state has changed
    *
@@ -225,7 +256,7 @@ class mdtDeviceIos : public QObject
   /*! \brief Update (G)UI's value for a set of analog inputs
    *
    * Note:
-   *  - Here, it is assumed that values are stored from address 0 to N-1
+   *  - Here, it is assumed that values are sorted from address min to address max
    *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned input will be set invalid.
    *  - If type value is of type integer, mdtAnalogIo::setValueInt() is used,
@@ -236,9 +267,9 @@ class mdtDeviceIos : public QObject
   /*! \brief Update (G)UI's value for a set of analog outputs
    *
    * Note:
-   *  - Here, it is assumed that values are stored from address 0 to N-1
+   *  - Here, it is assumed that values are stored from address min to address max
    *  - If one address not exists, nothing will happen for this address.
-   *  - If one value is invalid, concerned input will be set invalid.
+   *  - If one value is invalid, concerned output will be set invalid.
    *  - If type value is of type integer, mdtAnalogIo::setValueInt() is used,
    *     else mdtAnalogIo::setValue() is used.
    */
@@ -271,8 +302,19 @@ class mdtDeviceIos : public QObject
   Q_DISABLE_COPY(mdtDeviceIos);
 
   bool pvAutoDeleteIos;
-  QMap<int, mdtAnalogIo*> pvAnalogInputs;
-  QMap<int, mdtAnalogIo*> pvAnalogOutputs;
+  
+  QList<mdtAnalogIo*> pvAnalogInputs;
+  QMap<int, mdtAnalogIo*> pvAnalogInputsByAddressRead;
+  int pvAnalogInputsFirstAddressRead;
+  ///QMap<int, mdtAnalogIo*> pvAnalogInputsByAddressWrite; NOTE: not write address for inputs !
+  
+  QList<mdtAnalogIo*> pvAnalogOutputs;
+  QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressRead;
+  QMap<int, mdtAnalogIo*> pvAnalogOutputsByAddressWrite;
+  int pvAnalogOutputsFirstAddressRead;
+  int pvAnalogOutputsFirstAddressWrite;
+  
+  
   QMap<int, mdtDigitalIo*> pvDigitalInputs;
   QMap<int, mdtDigitalIo*> pvDigitalOutputs;
 };

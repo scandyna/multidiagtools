@@ -42,11 +42,18 @@ void mdtIoTest::mdtAbstractIoTest()
   io.setLabelShort("Label short");
   io.setLabel("A label");
   io.setDetails("Details");
-  QVERIFY(io.address() == 25);
+  QCOMPARE(io.addressRead(), 25);
+  QCOMPARE(io.addressWrite(), 25);
+  QCOMPARE(io.address(), 25);
   QVERIFY(io.labelShort() == "Label short");
   QVERIFY(io.label() == "A label");
   QVERIFY(io.details() == "Details");
   QVERIFY(!io.hasValidData());
+  // Check address R/W
+  io.setAddressRead(12);
+  io.setAddressWrite(15);
+  QCOMPARE(io.addressRead(), 12);
+  QCOMPARE(io.addressWrite(), 15);
 }
 
 void mdtIoTest::analogIoTest()

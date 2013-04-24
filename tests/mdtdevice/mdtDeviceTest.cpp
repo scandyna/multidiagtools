@@ -58,15 +58,26 @@ void mdtDeviceTest::deviceIosTest()
   mdtDigitalIo *di;
   QList<mdtDigitalIo*> dIoList;
   mdtDigitalIo *dout;
+  QList<QVariant> values;
 
   // Add analog inputs
   ai = new mdtAnalogIo;
   ai->setAddress(12);
   ios.addAnalogInput(ai);
+  ai = new mdtAnalogIo;
+  ai->setAddress(10);
+  ai->setLabelShort("AI10");
+  ios.addAnalogInput(ai);
 
   // Add analog outputs
   ao = new mdtAnalogIo;
-  ao->setAddress(15);
+  ao->setAddressRead(15);
+  ao->setAddressWrite(115);
+  ios.addAnalogOutput(ao);
+  ao = new mdtAnalogIo;
+  ao->setAddressRead(8);
+  ao->setAddressWrite(108);
+  ao->setLabelShort("AO8");
   ios.addAnalogOutput(ao);
 
   // Add digital inputs
@@ -80,6 +91,13 @@ void mdtDeviceTest::deviceIosTest()
   ios.addDigitalOutput(dout);
 
   // Check analog inputs
+  QCOMPARE(ios.analogInputsCount(), 2);
+  QCOMPARE(ios.analogInputsFirstAddress(), 10);
+  QVERIFY(ios.analogInputAt(10) != 0);
+  QCOMPARE(ios.analogInputAt(10)->address() , 10);
+  QVERIFY(ios.analogInputWithLabelShort("AI10") != 0);
+  QCOMPARE(ios.analogInputWithLabelShort("AI10")->address(), 10);
+  QCOMPARE(ios.analogInputWithLabelShort("AI10")->labelShort(), QString("AI10"));
   QVERIFY(ios.analogInputAt(11) == 0);
   QVERIFY(ios.analogInputAt(12) != 0);
   QCOMPARE(ios.analogInputAt(12)->address() , 12);
@@ -89,18 +107,38 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(ios.analogInputWithLabelShort("Temp. M12")->address(), 12);
   QCOMPARE(ios.analogInputWithLabelShort("Temp. M12")->labelShort(), QString("Temp. M12"));
   aIoList = ios.analogInputs();
-  QCOMPARE(aIoList.size(), 1);
+  QCOMPARE(aIoList.size(), 2);
+  values.clear();
+  values << 1.0 << 12.5;
+  ios.updateAnalogInputValues(values);
+  QCOMPARE(ios.analogInputAt(10)->value() , 1.0);
+  QCOMPARE(ios.analogInputAt(12)->value() , 12.5);
   // Check analog outputs
-  QVERIFY(ios.analogOutputAt(13) == 0);
-  QVERIFY(ios.analogOutputAt(15) != 0);
-  QCOMPARE(ios.analogOutputAt(15)->address() , 15);
-  ios.analogOutputAt(15)->setLabelShort("Setpoint 15");
+  QVERIFY(ios.analogOutputAtAddressRead(13) == 0);
+  QVERIFY(ios.analogOutputAtAddressWrite(13) == 0);
+  QVERIFY(ios.analogOutputAtAddressRead(15) != 0);
+  QCOMPARE(ios.analogOutputAtAddressRead(15)->addressRead() , 15);
+  QCOMPARE(ios.analogOutputAtAddressRead(15)->addressWrite() , 115);
+  QVERIFY(ios.analogOutputAtAddressWrite(15) == 0);
+  QVERIFY(ios.analogOutputAtAddressWrite(115) != 0);
+  QCOMPARE(ios.analogOutputAtAddressWrite(115)->addressRead() , 15);
+  QCOMPARE(ios.analogOutputAtAddressWrite(115)->addressWrite() , 115);
+  ios.analogOutputAtAddressRead(15)->setLabelShort("Setpoint 15");
   QVERIFY(ios.analogOutputWithLabelShort("") == 0);
   QVERIFY(ios.analogOutputWithLabelShort("Setpoint 15") != 0);
-  QCOMPARE(ios.analogOutputWithLabelShort("Setpoint 15")->address(), 15);
+  QCOMPARE(ios.analogOutputWithLabelShort("Setpoint 15")->addressRead(), 15);
+  QCOMPARE(ios.analogOutputWithLabelShort("Setpoint 15")->addressWrite(), 115);
   QCOMPARE(ios.analogOutputWithLabelShort("Setpoint 15")->labelShort(), QString("Setpoint 15"));
+  QVERIFY(ios.analogOutputAtAddressRead(8) != 0);
+  QCOMPARE(ios.analogOutputAtAddressRead(8)->addressRead() , 8);
+  QCOMPARE(ios.analogOutputAtAddressRead(8)->addressWrite() , 108);
+  QCOMPARE(ios.analogOutputAtAddressRead(8)->labelShort() , QString("AO8"));
+  QVERIFY(ios.analogOutputAtAddressWrite(108) != 0);
+  QCOMPARE(ios.analogOutputAtAddressWrite(108)->addressRead() , 8);
+  QCOMPARE(ios.analogOutputAtAddressWrite(108)->addressWrite() , 108);
+  QCOMPARE(ios.analogOutputAtAddressWrite(108)->labelShort() , QString("AO8"));
   aIoList = ios.analogOutputs();
-  QCOMPARE(aIoList.size() , 1);
+  QCOMPARE(aIoList.size() , 2);
   // Check digital inputs
   QVERIFY(ios.digitalInputAt(11) == 0);
   QVERIFY(ios.digitalInputAt(17) != 0);

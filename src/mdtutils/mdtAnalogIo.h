@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -196,7 +196,7 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * This signal is used by mdtDeviceIos to notify mdtDevice.
    */
-  void valueChanged(int address);
+  void valueChanged(int addressWrite);
 
   /*
    * These signals are emited every time
