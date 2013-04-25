@@ -65,7 +65,6 @@ void mdtDeviceIos::deleteIos()
   pvDigitalInputs.clear();
   pvDigitalInputsByAddressRead.clear();
   pvDigitalInputsFirstAddressRead = 0;
-  
   qDeleteAll(pvDigitalOutputs);
   pvDigitalOutputs.clear();
   pvDigitalOutputsByAddressRead.clear();
@@ -234,17 +233,6 @@ mdtDigitalIo *mdtDeviceIos::digitalInputWithLabelShort(const QString &labelShort
       return pvDigitalInputs.at(i);
     }
   }
-  /**
-  QMapIterator<int, mdtDigitalIo*> it(pvDigitalInputs);
-
-  while(it.hasNext()){
-    it.next();
-    Q_ASSERT(it.value() != 0);
-    if(it.value()->labelShort() == labelShort){
-      return it.value();
-    }
-  }
-  */
 
   return 0;
 }
@@ -302,17 +290,6 @@ mdtDigitalIo *mdtDeviceIos::digitalOutputWithLabelShort(const QString &labelShor
       return pvDigitalOutputs.at(i);
     }
   }
-  /**
-  QMapIterator<int, mdtDigitalIo*> it(pvDigitalOutputs);
-
-  while(it.hasNext()){
-    it.next();
-    Q_ASSERT(it.value() != 0);
-    if(it.value()->labelShort() == labelShort){
-      return it.value();
-    }
-  }
-  */
 
   return 0;
 }
@@ -394,7 +371,6 @@ void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
 {
   int i, max;
   QList<mdtDigitalIo*> lst;
-  ///mdtDigitalIo *di;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvDigitalInputsByAddressRead.values();
@@ -403,22 +379,11 @@ void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
     Q_ASSERT(lst.at(i) != 0);
     lst.at(i)->setOn(values.at(i), false);
   }
-
-  /**
-  for(i=0; i<values.size(); i++){
-    // Get I/O and store value
-    di = digitalInputAt(i);
-    if(di != 0){
-      di->setOn(values.at(i), false);
-    }
-  }
-  */
 }
 
 void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
 {
   int i, max;
-  ///mdtDigitalIo *dout;
   QList<mdtDigitalIo*> lst;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
@@ -428,15 +393,4 @@ void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
     Q_ASSERT(lst.at(i) != 0);
     lst.at(i)->setOn(values.at(i), false);
   }
-
-  /**
-  for(i=0; i<values.size(); i++){
-    // Get I/O and store value
-    dout = digitalOutputAt(i);
-    if(dout != 0){
-      dout->setOn(values.at(i), false);
-      dout->setEnabled(true);
-    }
-  }
-  */
 }

@@ -160,14 +160,14 @@ class mdtDevice : public QObject
    * Some devices has a offset for output addresses.
    * F.ex. the Wago 750 system has a offset of 0x0200
    */
-  void setAnalogOutputAddressOffset(int offset);
+  ///void setAnalogOutputAddressOffset(int offset);
 
   /*! \brief Set digital output address offset
    *
    * Some devices has a offset for output addresses.
    * F.ex. the Wago 750 system has a offset of 0x0200
    */
-  void setDigitalOutputAddressOffset(int offset);
+  ///void setDigitalOutputAddressOffset(int offset);
 
   /*! \brief Get internal port manager instance
    *
@@ -749,8 +749,8 @@ class mdtDevice : public QObject
   bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
-  int pvDigitalOutputAddressOffset;
-  int pvAnalogOutputAddressOffset;
+  ///int pvDigitalOutputAddressOffset;
+  ///int pvAnalogOutputAddressOffset;
 
  public slots:
 

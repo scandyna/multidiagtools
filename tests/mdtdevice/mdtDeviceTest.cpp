@@ -404,28 +404,28 @@ void mdtDeviceTest::modbusWagoTest()
 
   // Analog outputs
   QVERIFY(d.setAnalogOutputValue(0, 2.5, 500) >= 0);
-  QVERIFY(d.getAnalogOutputValue(0, 500, true).isValid());
+  QVERIFY(d.getAnalogOutputValue(0x200, 500, true).isValid());
   QVERIFY(d.getAnalogOutputs(500) >= 0);
   QVERIFY(d.setAnalogOutputValue(0, 2.5, 500) >= 0);
-  QVERIFY(d.getAnalogOutputValue(0, 500, true).isValid());
-  QVERIFY(qAbs(d.getAnalogOutputValue(0, 500, true).toDouble()-2.5) < (10.0/4050.0));
-  QVERIFY(!d.getAnalogOutputValue(0, 0, true).isValid());
+  QVERIFY(d.getAnalogOutputValue(0x200, 500, true).isValid());
+  QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).toDouble()-2.5) < (10.0/4050.0));
+  QVERIFY(!d.getAnalogOutputValue(0x200, 0, true).isValid());
   // Grouped query
   QVERIFY(d.setAnalogOutputValue(0, 1.5, -1) == 0);
   QVERIFY(d.setAnalogOutputValue(1, 2.5, -1) == 0);
   QVERIFY(d.setAnalogOutputs(500) >= 0);
-  QVERIFY(qAbs(d.getAnalogOutputValue(0, 500, true).toDouble()-1.5) < (10.0/4050.0));
-  QVERIFY(qAbs(d.getAnalogOutputValue(1, 500, true).toDouble()-2.5) < (10.0/4050.0));
+  QVERIFY(qAbs(d.getAnalogOutputValue(0x200, 500, true).toDouble()-1.5) < (10.0/4050.0));
+  QVERIFY(qAbs(d.getAnalogOutputValue(0x201, 500, true).toDouble()-2.5) < (10.0/4050.0));
 
   // Digital inputs
-  QVERIFY(!d.getDigitalInputState(0, 0).isValid());
+  QVERIFY(!d.getDigitalInputState(0x200, 0).isValid());
   ///QVERIFY(d.getDigitalInputState(0, 500).isValid());
   ///QTest::qWait(500);
   qDebug() << "State: " << d.getDigitalInputState(0, 500);
 
   // Digital outputs
-  QVERIFY(!d.getDigitalOutputState(0, 0).isValid());
-  QVERIFY(d.getDigitalOutputState(0, 500).isValid());
+  QVERIFY(!d.getDigitalOutputState(0x200, 0).isValid());
+  QVERIFY(d.getDigitalOutputState(0x200, 500).isValid());
   // Grouped query
   QVERIFY(d.setDigitalOutputState(0, true, false, false) == 0);
   QVERIFY(d.setDigitalOutputState("DO2", true, false, false) == 0);
@@ -508,8 +508,8 @@ void mdtDeviceTest::modbusBeckhoffTest()
 
   // Setup device
   d.setIos(&ios, true);
-  d.setAnalogOutputAddressOffset(0x0800);
-  d.setDigitalOutputAddressOffset(0);
+  ///d.setAnalogOutputAddressOffset(0x0800);
+  ///d.setDigitalOutputAddressOffset(0);
   dw.setIosWidget(iosw);
   dw.show();
 

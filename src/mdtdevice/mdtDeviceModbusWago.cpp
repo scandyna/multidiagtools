@@ -37,8 +37,8 @@
 mdtDeviceModbusWago::mdtDeviceModbusWago(QObject *parent)
  : mdtDeviceModbus(parent)
 {
-  setAnalogOutputAddressOffset(0x0200);
-  setDigitalOutputAddressOffset(0x0200);
+  ///setAnalogOutputAddressOffset(0x0200);
+  ///setDigitalOutputAddressOffset(0x0200);
 }
 
 mdtDeviceModbusWago::~mdtDeviceModbusWago()
@@ -360,7 +360,9 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   for(i=0; i<analogOutputs.size(); i++){
     aio = analogOutputs.at(i);
     Q_ASSERT(aio != 0);
-    aio->setAddress(i);
+    ///aio->setAddress(i);
+    aio->setAddressRead(i+0x0200);
+    aio->setAddressWrite(i);
     aio->setLabelShort("AO" + QString::number(i+1));
     ios->addAnalogOutput(aio);
   }
@@ -374,7 +376,9 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
   for(i=0; i<digitalOutputs.size(); i++){
     dio = digitalOutputs.at(i);
     Q_ASSERT(dio != 0);
-    dio->setAddress(i);
+    ///dio->setAddress(i);
+    dio->setAddressRead(i+0x0200);
+    dio->setAddressWrite(i);
     dio->setLabelShort("DO" + QString::number(i+1));
     ios->addDigitalOutput(dio);
   }

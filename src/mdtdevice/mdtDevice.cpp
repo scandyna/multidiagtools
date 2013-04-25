@@ -32,8 +32,8 @@ mdtDevice::mdtDevice(QObject *parent)
 {
   qDebug() << "mdtDevice::mdtDevice() ...";
   pvIos = 0;
-  pvDigitalOutputAddressOffset = 0;
-  pvAnalogOutputAddressOffset = 0;
+  ///pvDigitalOutputAddressOffset = 0;
+  ///pvAnalogOutputAddressOffset = 0;
   pvBackToReadyStateTimeout = -1;
   pvBackToReadyStateTimer = new QTimer(this);
   Q_ASSERT(pvBackToReadyStateTimer != 0);
@@ -116,15 +116,19 @@ void mdtDevice::setBackToReadyStateTimeout(int timeout)
   pvBackToReadyStateTimeout = timeout;
 }
 
+/**
 void mdtDevice::setAnalogOutputAddressOffset(int offset)
 {
   pvAnalogOutputAddressOffset = offset;
 }
+*/
 
+/**
 void mdtDevice::setDigitalOutputAddressOffset(int offset)
 {
   pvDigitalOutputAddressOffset = offset;
 }
+*/
 
 mdtPortManager *mdtDevice::portManager()
 {
@@ -673,7 +677,7 @@ int mdtDevice::setDigitalOutputState(const QString &labelShort, bool state, bool
     return -1;
   }
 
-  return setDigitalOutputState(dout->address(), state, writeToDevice, waitOnReply);
+  return setDigitalOutputState(dout->addressWrite(), state, writeToDevice, waitOnReply);
 }
 
 

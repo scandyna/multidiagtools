@@ -325,7 +325,6 @@ class mdtDeviceIos : public QObject
   QList<mdtDigitalIo*> pvDigitalInputs;
   QMap<int, mdtDigitalIo*> pvDigitalInputsByAddressRead;
   int pvDigitalInputsFirstAddressRead;
-  
   // Digital outputs members
   QList<mdtDigitalIo*> pvDigitalOutputs;
   QMap<int, mdtDigitalIo*> pvDigitalOutputsByAddressRead;
