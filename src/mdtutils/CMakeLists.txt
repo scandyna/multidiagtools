@@ -57,6 +57,8 @@ set (SOURCES_FILES
           mdtAbstractIo.cpp
           mdtAnalogIo.cpp
           mdtDigitalIo.cpp
+          # Value
+          mdtValue.cpp
           # Main application
           mdtApplication.cpp
     )

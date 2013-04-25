@@ -23,8 +23,193 @@
 #include "mdtAbstractIo.h"
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
+#include "mdtValue.h"
 
 //#include <QDebug>
+
+void mdtIoTest::mdtValueTest()
+{
+  mdtValue v1;
+  // Initial values/flags
+  QVERIFY(!v1.isValid());
+  QVERIFY(!v1.hasValueDouble());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 0.0);
+  QCOMPARE(v1.valueInt(), 0);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a double value
+  v1.setValue(1.0);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 1.0);
+  QCOMPARE(v1.valueInt(), 0);
+  QCOMPARE(v1.valueBool(), false);
+  // Check clear
+  v1.clear();
+  QVERIFY(!v1.isValid());
+  QVERIFY(!v1.hasValueDouble());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 0.0);
+  QCOMPARE(v1.valueInt(), 0);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a double value with -OL flag
+  v1.setValue(-1.1, true);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), -1.1);
+  QCOMPARE(v1.valueInt(), 0);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a double value with +OL flag
+  v1.setValue(1.1, false, true);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 1.1);
+  QCOMPARE(v1.valueInt(), 0);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a int value , OL flags are overwritten
+  v1.setValue(10);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 1.1);
+  QCOMPARE(v1.valueInt(), 10);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a int value with -OL flag
+  v1.setValue(-11, true);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(v1.hasValueInt());
+  QVERIFY(v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 1.1);
+  QCOMPARE(v1.valueInt(), -11);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a int value with +OL flag
+  v1.setValue(11, false, true);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 1.1);
+  QCOMPARE(v1.valueInt(), 11);
+  QCOMPARE(v1.valueBool(), false);
+  // Set a bool value , OL flags are not changed
+  v1.setValue(true);
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueDouble());
+  QVERIFY(v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(v1.isPlusOl());
+  QVERIFY(v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 1.1);
+  QCOMPARE(v1.valueInt(), 11);
+  QCOMPARE(v1.valueBool(), true);
+  // Check clear
+  v1.clear();
+  QVERIFY(!v1.isValid());
+  QVERIFY(!v1.hasValueDouble());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(!v1.isMinusOl());
+  QVERIFY(!v1.isPlusOl());
+  QVERIFY(!v1.hasValueBool());
+  QCOMPARE(v1.valueDouble(), 0.0);
+  QCOMPARE(v1.valueInt(), 0);
+  QCOMPARE(v1.valueBool(), false);
+
+  mdtValue v2(2.0);
+  // Initial values/flags
+  QVERIFY(v2.isValid());
+  QVERIFY(v2.hasValueDouble());
+  QVERIFY(!v2.hasValueInt());
+  QVERIFY(!v2.isMinusOl());
+  QVERIFY(!v2.isPlusOl());
+  QVERIFY(!v2.hasValueBool());
+  QCOMPARE(v2.valueDouble(), 2.0);
+  QCOMPARE(v2.valueInt(), 0);
+  QCOMPARE(v2.valueBool(), false);
+
+  mdtValue v3(3);
+  // Initial values/flags
+  QVERIFY(v3.isValid());
+  QVERIFY(!v3.hasValueDouble());
+  QVERIFY(v3.hasValueInt());
+  QVERIFY(!v3.isMinusOl());
+  QVERIFY(!v3.isPlusOl());
+  QVERIFY(!v3.hasValueBool());
+  QCOMPARE(v3.valueDouble(), 0.0);
+  QCOMPARE(v3.valueInt(), 3);
+  QCOMPARE(v3.valueBool(), false);
+
+  mdtValue v4(true);
+  // Initial values/flags
+  QVERIFY(v4.isValid());
+  QVERIFY(!v4.hasValueDouble());
+  QVERIFY(!v4.hasValueInt());
+  QVERIFY(!v4.isMinusOl());
+  QVERIFY(!v4.isPlusOl());
+  QVERIFY(v4.hasValueBool());
+  QCOMPARE(v4.valueDouble(), 0.0);
+  QCOMPARE(v4.valueInt(), 0);
+  QCOMPARE(v4.valueBool(), true);
+
+  // Comparaison test
+  QVERIFY(v2 != v3);
+  QVERIFY(!(v2 == v3));
+  QVERIFY(v2 != v4);
+  QVERIFY(!(v2 == v4));
+
+  // Check copy constructor
+  mdtValue v5(v4);
+  QVERIFY(v5.isValid());
+  QVERIFY(!v5.hasValueDouble());
+  QVERIFY(!v5.hasValueInt());
+  QVERIFY(!v5.isMinusOl());
+  QVERIFY(!v5.isPlusOl());
+  QVERIFY(v5.hasValueBool());
+  QCOMPARE(v5.valueDouble(), 0.0);
+  QCOMPARE(v5.valueInt(), 0);
+  QCOMPARE(v5.valueBool(), true);
+  QVERIFY(v4 == v5);
+  QVERIFY(!(v4 != v5));
+  QVERIFY(v5 != v2);
+
+  // Check copy operator
+  v5 = v2;
+  QVERIFY(v5.isValid());
+  QVERIFY(v5.hasValueDouble());
+  QVERIFY(!v5.hasValueInt());
+  QVERIFY(!v5.isMinusOl());
+  QVERIFY(!v5.isPlusOl());
+  QVERIFY(!v5.hasValueBool());
+  QCOMPARE(v5.valueDouble(), 2.0);
+  QCOMPARE(v5.valueInt(), 0);
+  QCOMPARE(v5.valueBool(), false);
+  QVERIFY(v5 == v2);
+}
 
 void mdtIoTest::mdtAbstractIoTest()
 {

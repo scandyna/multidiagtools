@@ -29,6 +29,9 @@ class mdtIoTest : public mdtTest
 
  private slots:
 
+  // mdtValue container test
+  void mdtValueTest();
+
   // Basic abstract I/O class test
   void mdtAbstractIoTest();
 
