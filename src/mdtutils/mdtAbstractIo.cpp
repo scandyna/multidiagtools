@@ -26,6 +26,7 @@ mdtAbstractIo::mdtAbstractIo(QObject *parent)
   pvAddressRead = 0;
   pvAddressWrite = 0;
   ///pvHasValidData = false;
+  pvNotifyUi = false;
 }
 
 mdtAbstractIo::~mdtAbstractIo()
@@ -108,4 +109,9 @@ bool mdtAbstractIo::hasValidData() const
 void mdtAbstractIo::setEnabled(bool enabled)
 {
   emit(enabledStateChangedForUi(enabled));
+}
+
+const mdtValue &mdtAbstractIo::value() const
+{
+  return pvValue;
 }

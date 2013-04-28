@@ -44,7 +44,6 @@ mdtTestSlider::mdtTestSlider(QWidget *parent)
 
 void mdtTestSlider::setValue(const mdtValue &value)
 {
-  ///qDebug() << "mdtTestSlider::setValue(): Setting value " << value;
   QwtSlider::setValue(value.valueDouble());
 }
 
@@ -62,25 +61,25 @@ void mdtIoWidgetTest::analogInWidgetTest()
 
   // Initial state
   QVERIFY(!ai.hasValidData());
-  QCOMPARE(ai.value(), 0.0);
-  QCOMPARE(ai.valueInt(), 0);
+  QCOMPARE(ai.value().valueDouble(), 0.0);
+  QCOMPARE(ai.value().valueInt(), 0);
 
   // 0...10V range with 8 bits resolution
   ai.setLabel("Input voltage");
   ai.setLabelShort("Vin");
   ai.setUnit("V");
   ai.setRange(0, 10, 8);
-  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
-  QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ai.value().valueDouble(), 0.0, 8, 0.0, 10.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   ai.setValueInt(0, true, false);
-  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
-  QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ai.value().valueDouble(), 0.0, 8, 0.0, 10.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   ai.setValueInt(127, true, false);
-  MDT_COMPARE(ai.value(), 5.0, 8, 0.0, 10.0);
-  QCOMPARE(ai.valueInt(), 127);
+  MDT_COMPARE(ai.value().valueDouble(), 5.0, 8, 0.0, 10.0);
+  QCOMPARE(ai.value().valueInt(), 127);
   ai.setValueInt(255, true, false);
-  MDT_COMPARE(ai.value(), 10.0, 8, 0.0, 10.0);
-  QCOMPARE(ai.valueInt(), 255);
+  MDT_COMPARE(ai.value().valueDouble(), 10.0, 8, 0.0, 10.0);
+  QCOMPARE(ai.value().valueInt(), 255);
 
   // 4...20mA range with 8 bits resolution
   ai.setLabel("Input current");
@@ -90,17 +89,17 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setAddressWrite(564);
   ai.setUnit("mA");
   ai.setRange(4, 20, 8);
-  MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
-  QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ai.value().valueDouble(), 4.0, 8, 4.0, 20.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   ai.setValueInt(0, true, false);
-  QCOMPARE(ai.value(), 4.0);
-  QCOMPARE(ai.valueInt(), 0);
+  QCOMPARE(ai.value().valueDouble(), 4.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   ai.setValueInt(127, true, false);
-  MDT_COMPARE(ai.value(), 12.0, 8, 4.0, 20.0);
-  QCOMPARE(ai.valueInt(), 127);
+  MDT_COMPARE(ai.value().valueDouble(), 12.0, 8, 4.0, 20.0);
+  QCOMPARE(ai.value().valueInt(), 127);
   ai.setValueInt(255, true, false);
-  MDT_COMPARE(ai.value(), 20.0, 8, 4.0, 20.0);
-  QCOMPARE(ai.valueInt(), 255);
+  MDT_COMPARE(ai.value().valueDouble(), 20.0, 8, 4.0, 20.0);
+  QCOMPARE(ai.value().valueInt(), 255);
 
   /**
   while(w.isVisible()){
@@ -126,11 +125,11 @@ void mdtIoWidgetTest::analogOutWidgetTest()
 
   // Initial state
   QVERIFY(!ai.hasValidData());
-  QCOMPARE(ai.value(), 0.0);
-  QCOMPARE(ai.valueInt(), 0);
+  QCOMPARE(ai.value().valueDouble(), 0.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   QVERIFY(!ao.hasValidData());
-  QCOMPARE(ao.value(), 0.0);
-  QCOMPARE(ao.valueInt(), 0);
+  QCOMPARE(ao.value().valueDouble(), 0.0);
+  QCOMPARE(ao.value().valueInt(), 0);
 
   // 0...10V range with 8 bits resolution
   ao.setLabel("Output voltage of final stage");
@@ -140,25 +139,25 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   ai.setLabelShort("Vin");
   ai.setUnit("V");
   ai.setRange(0, 10, 8);
-  MDT_COMPARE(ao.value(), 0.0, 8, 0.0, 10.0);
-  QCOMPARE(ao.valueInt(), 0);
-  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
-  QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ao.value().valueDouble(), 0.0, 8, 0.0, 10.0);
+  QCOMPARE(ao.value().valueInt(), 0);
+  MDT_COMPARE(ai.value().valueDouble(), 0.0, 8, 0.0, 10.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   ao.setValueInt(0, true, true);
-  MDT_COMPARE(ao.value(), 0.0, 8, 0.0, 10.0);
-  QCOMPARE(ao.valueInt(), 0);
-  MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
-  QCOMPARE(ai.valueInt(), 0);
+  MDT_COMPARE(ao.value().valueDouble(), 0.0, 8, 0.0, 10.0);
+  QCOMPARE(ao.value().valueInt(), 0);
+  MDT_COMPARE(ai.value().valueDouble(), 0.0, 8, 0.0, 10.0);
+  QCOMPARE(ai.value().valueInt(), 0);
   ao.setValueInt(127, true, true);
-  MDT_COMPARE(ao.value(), 5.0, 8, 0.0, 10.0);
-  MDT_COMPARE(ao.valueInt(), 127, 8, 0, 255);
-  MDT_COMPARE(ai.value(), 5.0, 8, 0.0, 10.0);
-  MDT_COMPARE(ai.valueInt(), 127, 8, 0, 255);
+  MDT_COMPARE(ao.value().valueDouble(), 5.0, 8, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueInt(), 127, 8, 0, 255);
+  MDT_COMPARE(ai.value().valueDouble(), 5.0, 8, 0.0, 10.0);
+  MDT_COMPARE(ai.value().valueInt(), 127, 8, 0, 255);
   ao.setValueInt(255, true, true);
-  MDT_COMPARE(ao.value(), 10.0, 8, 0.0, 10.0);
-  MDT_COMPARE(ao.valueInt(), 255, 8, 0, 255);
-  MDT_COMPARE(ai.value(), 10.0, 8, 0.0, 10.0);
-  MDT_COMPARE(ai.valueInt(), 255, 8, 0, 255);
+  MDT_COMPARE(ao.value().valueDouble(), 10.0, 8, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueInt(), 255, 8, 0, 255);
+  MDT_COMPARE(ai.value().valueDouble(), 10.0, 8, 0.0, 10.0);
+  MDT_COMPARE(ai.value().valueInt(), 255, 8, 0, 255);
 
   // 4...20mA range with 8 bits resolution
   ao.setLabel("Output current of final stage");
@@ -167,25 +166,25 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   ai.setRange(4, 20, 8);
   ai.setLabelShort("Iin");
   ai.setUnit("mA");
-  MDT_COMPARE(ao.value(), 4.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ao.valueInt(), 0, 8, 0, 255);
-  MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ai.valueInt(), 0, 8, 0, 255);
+  MDT_COMPARE(ao.value().valueDouble(), 4.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ao.value().valueInt(), 0, 8, 0, 255);
+  MDT_COMPARE(ai.value().valueDouble(), 4.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ai.value().valueInt(), 0, 8, 0, 255);
   ao.setValueInt(0, true, true);
-  MDT_COMPARE(ao.value(), 4.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ao.valueInt(), 0, 8, 0, 255);
-  MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ai.valueInt(), 0, 8, 0, 255);
+  MDT_COMPARE(ao.value().valueDouble(), 4.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ao.value().valueInt(), 0, 8, 0, 255);
+  MDT_COMPARE(ai.value().valueDouble(), 4.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ai.value().valueInt(), 0, 8, 0, 255);
   ao.setValueInt(127, true, true);
-  QVERIFY(qAbs(ao.value()-12.0) < (12.0/250.0));
-  MDT_COMPARE(ao.valueInt(), 127, 8, 0, 255);
-  MDT_COMPARE(ai.value(), 12.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ai.valueInt(), 127, 8, 0, 255);
+  QVERIFY(qAbs(ao.value().valueDouble()-12.0) < (12.0/250.0));
+  MDT_COMPARE(ao.value().valueInt(), 127, 8, 0, 255);
+  MDT_COMPARE(ai.value().valueDouble(), 12.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ai.value().valueInt(), 127, 8, 0, 255);
   ao.setValueInt(255, true, true);
-  MDT_COMPARE(ao.value(), 20.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ao.valueInt(), 255, 8, 0, 255);
-  MDT_COMPARE(ai.value(), 20.0, 8, 4.0, 20.0);
-  MDT_COMPARE(ai.valueInt(), 255, 8, 0, 255);
+  MDT_COMPARE(ao.value().valueDouble(), 20.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ao.value().valueInt(), 255, 8, 0, 255);
+  MDT_COMPARE(ai.value().valueDouble(), 20.0, 8, 4.0, 20.0);
+  MDT_COMPARE(ai.value().valueInt(), 255, 8, 0, 255);
 }
 
 void mdtIoWidgetTest::analogOutWidgetRecursifTest()
@@ -211,59 +210,59 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   sl.show();
 
   // Initial states
-  MDT_COMPARE(ao.value(), 0.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 0.0, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 0.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 0.0, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(1.0);
-  MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 1.0, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 1.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 1.0, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
   ao.setValue(1.0, false);
-  MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 1.0, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 1.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 1.0, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(2.0);
-  MDT_COMPARE(ao.value(), 2.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 2.0, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 2.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 2.0, 12, 0.0, 10.0);
   // PLC (device) confirm a value that differs
   ao.setValue(1.5, false);
-  MDT_COMPARE(ao.value(), 1.5, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 1.5, 12, 0.0, 10.0);
   // Check that PLC not receives the confirmation as new value
-  MDT_COMPARE(plcAo.value(), 2.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 2.0, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(3.5);
-  MDT_COMPARE(ao.value(), 3.5, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 3.5, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 3.5, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 3.5, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
   ao.setValue(3.5, false);
-  MDT_COMPARE(ao.value(), 3.5, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 3.5, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 3.5, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 3.5, 12, 0.0, 10.0);
 
   // User change the value
   sl.setValue(4.0);
-  MDT_COMPARE(ao.value(), 4.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 4.0, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 4.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 4.0, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
   ao.setValue(4.0, false);
-  MDT_COMPARE(ao.value(), 4.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 4.0, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 4.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 4.0, 12, 0.0, 10.0);
 
   // We change the value from application
   ao.setValue(2.6, true);
   // PLC (device) confirm the same value
   ao.setValue(2.6, false);
-  MDT_COMPARE(ao.value(), 2.6, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 2.6, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 2.6, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 2.6, 12, 0.0, 10.0);
 
   // We change the value from application
   ao.setValue(1.3, true);
   // PLC (device) confirm another value
   ao.setValue(1.0, false);
-  MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
-  MDT_COMPARE(plcAo.value(), 1.3, 12, 0.0, 10.0);
+  MDT_COMPARE(ao.value().valueDouble(), 1.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value().valueDouble(), 1.3, 12, 0.0, 10.0);
 
   /*
   while(sl.isVisible()){

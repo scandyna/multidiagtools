@@ -124,7 +124,7 @@ class mdtAnalogIo : public mdtAbstractIo
    * 
    * \todo Obselete this (no flags available)
    */
-  double value() const;
+  ///double value() const;
 
   /*! \brief Set the integer value
    *
@@ -149,39 +149,9 @@ class mdtAnalogIo : public mdtAbstractIo
    *
    * \todo Obselete this (no flags available)
    */
-  int valueInt() const;
-
-  /*! \brief Set the value to update display
-   *
-   * Store the value and emit valueChanged() if
-   *  new value is different from current.
-   *
-   * \param value The value to store.
-   *               If value is of type int, conversion is done. (see setEncodeBitSettings() ).
-   *               If value is invalid, the validity flag is updated.
-   *               See setValue(double, bool, bool) for details.
-   * \param emitValueChanged If true, valueChanged(int, int) and valueChanged(double) will be emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal valueChangedForUi() is emited
-   */
-  ///void setValue(QVariant value, bool emitValueChanged);
+  ///int valueInt() const;
 
  public slots:
-
-  /*! \brief Set the value to update display
-   *
-   * Store the value and emit valueChanged() if
-   *  new value is different from current.
-   *
-   * \param value The value to store
-   * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
-   * \param emitValueChanged If true, valueChanged(int, int) and valueChanged(double) will be emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal valueChangedForUi() is emited
-   */
-  ///void setValue(double value, bool isValid, bool emitValueChanged = true);
 
   /*! \brief Set the value to update display
    *
@@ -196,24 +166,7 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   void setValue(const mdtValue &value, bool emitValueChanged = false);
 
-  /*! \brief Set the value to update display
-   *
-   * Overloaded method that calls setValue(double, bool)
-   *  with isValid = true.
-   */
-  ///void setValue(double value);
-
  signals:
-
-  /*! \brief This signal is emitted whenever the value is changed
-   */
-  ///void valueChanged(double newValue);
-
-  /*! \brief This signal is emitted whenever the value is changed
-   *
-   * This signal is used by mdtDeviceIos to notify mdtDevice.
-   */
-  ///void valueChanged(int addressWrite);
 
   /*
    * These signals are emited every time
@@ -223,15 +176,11 @@ class mdtAnalogIo : public mdtAbstractIo
   void unitChangedForUi(const QString &unit);
   void rangeChangedForUi(double min, double max);
 
-  /// \todo remove
-  ///void valueChangedForUi(double newValue);
-
  private slots:
 
   // Used from UI to update internal value.
   //  The valueChangedForUi() signal will not be emitted with this call.
   void setValueFromUi(double value);
-  ///void setValueFromUi(const mdtValue &value);
 
  private:
 
@@ -256,13 +205,11 @@ class mdtAnalogIo : public mdtAbstractIo
   Q_DISABLE_COPY(mdtAnalogIo);
 
   QString pvUnit;
-  ///double pvValue;
   double pvMinimum;
   double pvMaximum;
   double pvStep;
   double pvStepInverse;
-  ///bool pvUpdatingUi;
-  bool pvNotifyUi;
+  ///bool pvNotifyUi;
   // Members used for integer <-> float value conversion
   int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
   int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()

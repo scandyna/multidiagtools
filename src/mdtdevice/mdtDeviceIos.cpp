@@ -190,7 +190,8 @@ QList<int> mdtDeviceIos::analogOutputsValuesIntByAddressWrite() const
   aos = pvAnalogOutputsByAddressWrite.values();
   for(i=0; i<aos.size(); i++){
     Q_ASSERT(aos.at(i) != 0);
-    values.append(aos.at(i)->valueInt());
+    ///values.append(aos.at(i)->valueInt());
+    values.append(aos.at(i)->value().valueInt());
   }
 
   return values;

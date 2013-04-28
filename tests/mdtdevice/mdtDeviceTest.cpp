@@ -121,8 +121,8 @@ void mdtDeviceTest::deviceIosTest()
   values.clear();
   values << 1.0 << 12.5;
   ios.updateAnalogInputValues(values);
-  QCOMPARE(ios.analogInputAt(10)->value() , 1.0);
-  QCOMPARE(ios.analogInputAt(12)->value() , 12.5);
+  QCOMPARE(ios.analogInputAt(10)->value().valueDouble() , 1.0);
+  QCOMPARE(ios.analogInputAt(12)->value().valueDouble() , 12.5);
   // Check analog outputs
   QVERIFY(ios.analogOutputAtAddressRead(13) == 0);
   QVERIFY(ios.analogOutputAtAddressWrite(13) == 0);

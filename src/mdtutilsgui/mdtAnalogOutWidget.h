@@ -63,7 +63,6 @@ class mdtAnalogOutWidget : public mdtAbstractIoWidget
   // Used to update GUI from mdtAnalogIo object.
   void setUnit(const QString &unit);
   void setRange(double min, double max);
-  ///void setValue(double value);
   void setEnabled(bool enabled);
 
   /*! \brief Update displayed value

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -59,12 +59,10 @@ void mdtAnalogOutWidget::setIo(mdtAnalogIo *io)
   // Signals/slots from io to widget
   connect(io, SIGNAL(unitChangedForUi(const QString&)), this, SLOT(setUnit(const QString&)));
   connect(io, SIGNAL(rangeChangedForUi(double, double)), this, SLOT(setRange(double, double)));
-  ///connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
   connect(io, SIGNAL(valueChangedForUi(const mdtValue&)), this, SLOT(setValue(const mdtValue&)));
   connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Signals/slots from widget to io
   connect(slValue, SIGNAL(valueChanged(double)), io, SLOT(setValueFromUi(double)));
-  ///connect(slValue, SIGNAL(sliderMoved(double)), io, SLOT(setValueFromUi(double)));
   // Set initial data
   setUnit(io->unit());
   setRange(io->minimum(), io->maximum());
@@ -81,13 +79,6 @@ void mdtAnalogOutWidget::setRange(double min, double max)
   slValue->setRange(min, max);
   sbValue->setRange(min, max);
 }
-
-/**
-void mdtAnalogOutWidget::setValue(double value)
-{
-  sbValue->setValue(value);
-}
-*/
 
 void mdtAnalogOutWidget::setValue(const mdtValue &value)
 {

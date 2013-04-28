@@ -129,6 +129,10 @@ class mdtAbstractIo : public QObject
    */
   void setEnabled(bool enabled);
 
+  /*! \brief Get current value
+   */
+  const mdtValue &value() const;
+
  signals:
 
   /*
@@ -147,6 +151,10 @@ class mdtAbstractIo : public QObject
   void valueChanged(const mdtValue &value);
 
   /*! \brief This signal is emitted whenever the value is changed
+   */
+  void valueChanged(mdtAbstractIo *io);
+
+  /*! \brief This signal is emitted whenever the value is changed
    *
    * Use it only for (G-)UI update
    */
@@ -156,6 +164,7 @@ class mdtAbstractIo : public QObject
 
   bool pvHasValidData;  /// \todo Obeslete this flag (use mdtValue's flag )
   mdtValue pvValue;
+  bool pvNotifyUi;
 
  private:
 

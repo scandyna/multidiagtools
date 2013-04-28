@@ -167,9 +167,11 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
   if(!queryDevice){
     // Return value
     if(realValue){
-      return QVariant(ai->value());
+      ///return QVariant(ai->value());
+      return QVariant(ai->value().valueDouble());
     }else{
-      return QVariant(ai->valueInt());
+      ///return QVariant(ai->valueInt());
+      return QVariant(ai->value().valueInt());
     }
   }
   // Get a new transaction
@@ -191,9 +193,11 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
     }
     // Return value
     if(realValue){
-      return QVariant(ai->value());
+      ///return QVariant(ai->value());
+      return QVariant(ai->value().valueDouble());
     }else{
-      return QVariant(ai->valueInt());
+      ///return QVariant(ai->valueInt());
+      return QVariant(ai->value().valueInt());
     }
   }else{
     transaction->setQueryReplyMode(false);
@@ -263,6 +267,7 @@ int mdtDevice::getAnalogInputs(int timeout)
   return transactionId;
 }
 
+/// \todo move to mdtValue
 QVariant mdtDevice::getAnalogOutputValue(int address, int timeout, bool realValue)
 {
   int transactionId;
@@ -284,9 +289,11 @@ QVariant mdtDevice::getAnalogOutputValue(int address, int timeout, bool realValu
   if(timeout < 0){
     // Return value
     if(realValue){
-      return QVariant(ao->value());
+      ///return QVariant(ao->value());
+      return QVariant(ao->value().valueDouble());
     }else{
-      return QVariant(ao->valueInt());
+      ///return QVariant(ao->valueInt());
+      return QVariant(ao->value().valueInt());
     }
   }
   // Get a transaction
@@ -313,9 +320,11 @@ QVariant mdtDevice::getAnalogOutputValue(int address, int timeout, bool realValu
     }
     // Return value
     if(realValue){
-      return QVariant(ao->value());
+      ///return QVariant(ao->value());
+      return QVariant(ao->value().valueDouble());
     }else{
-      return QVariant(ao->valueInt());
+      ///return QVariant(ao->valueInt());
+      return QVariant(ao->value().valueInt());
     }
   }
 
@@ -404,14 +413,16 @@ int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
   // Send query and wait if requested
   if(timeout == 0){
     transaction->setQueryReplyMode(false);
-    transactionId = writeAnalogOutput(ao->valueInt(), transaction);
+    ///transactionId = writeAnalogOutput(ao->valueInt(), transaction);
+    transactionId = writeAnalogOutput(ao->value().valueInt(), transaction);
     if(transactionId < 0){
       ///setStateFromPortError(transactionId);
       return -1;
     }
   }else{
     transaction->setQueryReplyMode(true);
-    transactionId = writeAnalogOutput(ao->valueInt(), transaction);
+    ///transactionId = writeAnalogOutput(ao->valueInt(), transaction);
+    transactionId = writeAnalogOutput(ao->value().valueInt(), transaction);
     if(transactionId < 0){
       ///setStateFromPortError(transactionId);
       return -1;
@@ -759,7 +770,8 @@ void mdtDevice::setAnalogOutputValue(int address)
     return;
   }
   // Send query
-  setAnalogOutputValue(address, ao->valueInt(), 0);
+  ///setAnalogOutputValue(address, ao->valueInt(), 0);
+  setAnalogOutputValue(address, ao->value().valueInt(), 0);
 }
 
 void mdtDevice::setDigitalOutputState(int address)

@@ -28,8 +28,6 @@
 mdtAnalogIo::mdtAnalogIo(QObject *parent)
  : mdtAbstractIo(parent)
 {
-  ///pvValue = 0.0;
-  pvNotifyUi = false;
   pvMinimum = 0.0;
   pvMaximum = 0.0;
   pvStep = 1.0;
@@ -115,7 +113,6 @@ bool mdtAnalogIo::setRange(double min, double max, int intValueBitsCount, int in
   pvValue.setDefaultValue(pvValue.valueDouble());
   pvValue.setDefaultValue(pvValue.valueInt());
   pvValue.clear();
-  ///pvUpdatingUi = false;
 
   return true;
 }
@@ -170,36 +167,10 @@ double mdtAnalogIo::maximum() const
   return pvMaximum;
 }
 
+/**
 double mdtAnalogIo::value() const
 {
   return pvValue.valueDouble();
-}
-
-/**
-void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
-{
-  double x;
-
-  if(!isValid){
-    setValue(pvMinimum, false, emitValueChanged);
-    return;
-  }
-  // Extract bits in correct range
-  value = value >> pvIntValueLsbIndex;
-  value &= pvIntValueMask;
-  // Apply C1 and negate if sign bit is present
-  if(value & pvIntValueSignMask){
-    value = ( (~value) & pvIntValueMask );
-    value = -value;
-  }
-  // Make conversion
-  if(pvIntValueSigned){
-    x = pvStep*(double)value;
-  }else{
-    x = pvStep*(double)value + pvMinimum;
-  }
-
-  setValue(x, true, emitValueChanged);
 }
 */
 
@@ -217,100 +188,7 @@ void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
 /**
 int mdtAnalogIo::valueInt() const
 {
-  int m;
-  double value = pvValue.valueDouble();
-
-  // Make conversion
-  if(pvIntValueSigned){
-    m = pvStepInverse * pvValue;
-  }else{
-    m = pvStepInverse * (pvValue - pvMinimum);
-  }
-  // Apply C1 and negate if value < 0
-  if(pvIntValueSigned && (pvValue < 0.0)){
-    m = -m;
-    m = (~m) & pvIntValueMaskEnc;
-  }
-  m &= pvIntValueMaskEnc;
-  m = m << pvIntValueLsbIndexEnc;
-
-  return m;
-}
-*/
-
-int mdtAnalogIo::valueInt() const
-{
   return pvValue.valueInt();
-}
-
-/**
-void mdtAnalogIo::setValue(QVariant value, bool emitValueChanged)
-{
-  if(!value.isValid()){
-    setValue(0.0, false, emitValueChanged);
-    return;
-  }
-  // Check type and update
-  if(value.type() == QVariant::Double){
-    setValue(value.toDouble(), true, emitValueChanged);
-  }else if(value.type() == QVariant::Int){
-    setValueInt(value.toInt(), true, emitValueChanged);
-  }else{
-    setValue(0.0, false, emitValueChanged);
-  }
-}
-*/
-
-/**
-void mdtAnalogIo::setValue(QVariant value, bool emitValueChanged)
-{
-  mdtValue v;
-
-  if(!value.isValid()){
-    setValueFromDouble(v, emitValueChanged);
-    return;
-  }
-  // Check type and update
-  if(value.type() == QVariant::Double){
-    v.setValue(value.toDouble());
-    setValueFromDouble(v, emitValueChanged);
-  }else if(value.type() == QVariant::Int){
-    v.setValue(value.toInt());
-    setValueFromInt(v, emitValueChanged);
-  }else{
-    setValueFromDouble(v, emitValueChanged);
-  }
-}
-*/
-
-/**
-void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
-{
-  pvHasValidData = isValid;
-  if(!pvHasValidData){
-    value = pvMinimum;
-  }
-  if(fabs(value - pvValue) >= pvStep){
-    pvValue = value;
-    if(emitValueChanged){
-      emit(valueChanged(addressWrite()));
-      emit(valueChanged(pvValue));
-    }
-    pvUpdatingUi = true;
-    emit(valueChangedForUi(value));
-  }
-}
-*/
-
-/**
-void mdtAnalogIo::setValue(double value, bool isValid, bool emitValueChanged)
-{
-  mdtValue v;
-
-  if(isValid){
-    v.setValue(value);
-  }
-  setValueFromDouble(v, emitValueChanged);
 }
 */
 
@@ -324,13 +202,6 @@ void mdtAnalogIo::setValue(const mdtValue &value, bool emitValueChanged)
   }
 }
 
-/**
-void mdtAnalogIo::setValue(double value)
-{
-  setValue(value, true);
-}
-*/
-
 void mdtAnalogIo::setValueFromUi(double value)
 {
   mdtValue v;
@@ -340,24 +211,9 @@ void mdtAnalogIo::setValueFromUi(double value)
   //  it can happen that these same UI emit their signal valueChanged()
   //  and cause finaly the call of this method (with altered precision).
   // We not want this, so check the flag before update.
-  /**
-  if(pvUpdatingUi){
-    pvUpdatingUi = false;
-    return;
-  }
-  */
   v.setValue(value);
   pvNotifyUi = false;
   setValueFromDouble(v, true);
-  ///setValueFromDouble(value, true);
-  /**
-  if(fabs(value - pvValue) >= pvStep){
-    pvValue = value;
-    pvHasValidData = true;
-    emit(valueChanged(addressWrite()));
-    emit(valueChanged(pvValue));
-  }
-  */
 }
 
 void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChanged)
@@ -389,24 +245,14 @@ void mdtAnalogIo::setValueFromDouble(const mdtValue &value, bool emitValueChange
     pvValue.setValue(x, value.isMinusOl(), value.isPlusOl());
   }else{
     pvValue.clear();
-    ///x = pvValue.valueDouble();
   }
-  ///qDebug() << "New value from double " << pvValue;
   // Check if new value has changed
-  /**
-  if(fabs(x - pvValue.valueDouble()) <= pvStep){
-    return;
-  }
-  */
   // Notify
-  ///pvUpdatingUi = true;
   if(pvNotifyUi){
     emit(valueChangedForUi(pvValue));
   }
   if(emitValueChanged){
-    ///qDebug() << "New value from double: emit valueChanged()";
-    ///emit(valueChanged(addressWrite()));
-    ///emit(valueChanged(x));
+    emit(valueChanged(this));
     emit(valueChanged(pvValue));
   }
 }
@@ -444,22 +290,12 @@ void mdtAnalogIo::setValueFromInt(const mdtValue &value, bool emitValueChanged)
     pvValue.clear();
     x = pvValue.valueDouble();
   }
-  ///qDebug() << "New value from int: " << pvValue;
-  // Check if new value has changed
-  /**
-  if(fabs(x - pvValue.valueDouble()) <= pvStep){
-    return;
-  }
-  */
   // Notify
-  ///pvUpdatingUi = true;
   if(pvNotifyUi){
     emit(valueChangedForUi(pvValue));
   }
   if(emitValueChanged){
-    ///qDebug() << "New value from int: emit valueChanged()";
-    ///emit(valueChanged(addressWrite()));
-    ///emit(valueChanged(x));
+    emit(valueChanged(this));
     emit(valueChanged(pvValue));
   }
 }
