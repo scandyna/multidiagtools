@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,6 +22,7 @@
 #define MDT_ANALOG_IN_WIDGET_H
 
 #include "mdtAbstractIoWidget.h"
+#include "mdtValue.h"
 #include <QString>
 
 class QwtThermo;
@@ -62,8 +63,14 @@ class mdtAnalogInWidget : public mdtAbstractIoWidget
   // Used to update GUI from mdtAnalogIo object.
   void setUnit(const QString &unit);
   void setRange(double min, double max);
-  void setValue(double value);
+  ///void setValue(double value);
   void setEnabled(bool enabled);
+
+  /*! \brief Update displayed value
+   *
+   * \pre If value is valid, it must contain double value.
+   */
+  void setValue(const mdtValue &value);
 
  private:
 
@@ -73,7 +80,7 @@ class mdtAnalogInWidget : public mdtAbstractIoWidget
   QLabel *lbValue;
   QLabel *lbUnit;
   QString pvUnit;
-  mdtAnalogIo *pvIo;
+  ///mdtAnalogIo *pvIo;
 };
 
 #endif  // #ifndef MDT_ANALOG_IN_WIDGET_H

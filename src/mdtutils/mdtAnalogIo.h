@@ -50,7 +50,7 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   QString unit() const;
 
-  /*! \brief Specify the range of values and bits decodes parameters
+  /*! \brief Specify the range of values and bits decode parameters
    *
    * Store the new range and set the value to the minimum.
    *  The valueChanged() signal is emitted.
@@ -121,6 +121,8 @@ class mdtAnalogIo : public mdtAbstractIo
   double maximum() const;
 
   /*! \brief Get value (set with setValue() )
+   * 
+   * \todo Obselete this (no flags available)
    */
   double value() const;
 
@@ -138,12 +140,14 @@ class mdtAnalogIo : public mdtAbstractIo
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValueInt(int value, bool isValid, bool emitValueChanged = true);
+  void setValueInt(int value, bool isValid, bool emitValueChanged);
 
   /*! \brief Get the integer value
    *
    * The integer value depend on value and resolution.
    *  The resolution is set with setRange() (steps parameter)
+   *
+   * \todo Obselete this (no flags available)
    */
   int valueInt() const;
 
@@ -161,7 +165,7 @@ class mdtAnalogIo : public mdtAbstractIo
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValue(QVariant value, bool emitValueChanged = true);
+  ///void setValue(QVariant value, bool emitValueChanged);
 
  public slots:
 
@@ -177,26 +181,39 @@ class mdtAnalogIo : public mdtAbstractIo
    * Note for UI developpers:
    *  - The signal valueChangedForUi() is emited
    */
-  void setValue(double value, bool isValid, bool emitValueChanged = true);
+  ///void setValue(double value, bool isValid, bool emitValueChanged = true);
+
+  /*! \brief Set the value to update display
+   *
+   * Store the value and emit valueChanged() if
+   *  new value is different from current.
+   *
+   * \param value The value to store
+   * \param emitValueChanged If true, valueChanged(const mdtValue&) will be emitted.
+   *
+   * Note for UI developpers:
+   *  - The signal valueChangedForUi() is emited
+   */
+  void setValue(const mdtValue &value, bool emitValueChanged = false);
 
   /*! \brief Set the value to update display
    *
    * Overloaded method that calls setValue(double, bool)
    *  with isValid = true.
    */
-  void setValue(double value);
+  ///void setValue(double value);
 
  signals:
 
   /*! \brief This signal is emitted whenever the value is changed
    */
-  void valueChanged(double newValue);
+  ///void valueChanged(double newValue);
 
   /*! \brief This signal is emitted whenever the value is changed
    *
    * This signal is used by mdtDeviceIos to notify mdtDevice.
    */
-  void valueChanged(int addressWrite);
+  ///void valueChanged(int addressWrite);
 
   /*
    * These signals are emited every time
@@ -205,25 +222,47 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   void unitChangedForUi(const QString &unit);
   void rangeChangedForUi(double min, double max);
-  void valueChangedForUi(double newValue);
+
+  /// \todo remove
+  ///void valueChangedForUi(double newValue);
 
  private slots:
 
   // Used from UI to update internal value.
   //  The valueChangedForUi() signal will not be emitted with this call.
   void setValueFromUi(double value);
+  ///void setValueFromUi(const mdtValue &value);
 
  private:
+
+  /*! \brief Store double part, calculate integer part and store it
+   *
+   * If given value is different than stored one:
+   *  - Conversion and storage are done
+   *  - valueChangedForUi() is emitted
+   *  - If emitValueChanged is true, valueChanged() is emitted
+   */
+  void setValueFromDouble(const mdtValue &value, bool emitValueChanged);
+
+  /*! \brief Store integer part, calculate double part and store it
+   *
+   * If given value is different than stored one:
+   *  - Conversion and storage are done
+   *  - valueChangedForUi() is emitted
+   *  - If emitValueChanged is true, valueChanged() is emitted
+   */
+  void setValueFromInt(const mdtValue &value, bool emitValueChanged);
 
   Q_DISABLE_COPY(mdtAnalogIo);
 
   QString pvUnit;
-  double pvValue;
+  ///double pvValue;
   double pvMinimum;
   double pvMaximum;
   double pvStep;
   double pvStepInverse;
-  bool pvUpdatingUi;
+  ///bool pvUpdatingUi;
+  bool pvNotifyUi;
   // Members used for integer <-> float value conversion
   int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
   int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()

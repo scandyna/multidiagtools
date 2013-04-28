@@ -25,7 +25,7 @@ mdtAbstractIo::mdtAbstractIo(QObject *parent)
 {
   pvAddressRead = 0;
   pvAddressWrite = 0;
-  pvHasValidData = false;
+  ///pvHasValidData = false;
 }
 
 mdtAbstractIo::~mdtAbstractIo()
@@ -101,7 +101,8 @@ QString mdtAbstractIo::details() const
 
 bool mdtAbstractIo::hasValidData() const
 {
-  return pvHasValidData;
+  ///return pvHasValidData;
+  return pvValue.isValid();
 }
 
 void mdtAbstractIo::setEnabled(bool enabled)

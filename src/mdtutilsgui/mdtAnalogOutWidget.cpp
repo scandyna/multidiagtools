@@ -59,7 +59,8 @@ void mdtAnalogOutWidget::setIo(mdtAnalogIo *io)
   // Signals/slots from io to widget
   connect(io, SIGNAL(unitChangedForUi(const QString&)), this, SLOT(setUnit(const QString&)));
   connect(io, SIGNAL(rangeChangedForUi(double, double)), this, SLOT(setRange(double, double)));
-  connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
+  ///connect(io, SIGNAL(valueChangedForUi(double)), this, SLOT(setValue(double)));
+  connect(io, SIGNAL(valueChangedForUi(const mdtValue&)), this, SLOT(setValue(const mdtValue&)));
   connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Signals/slots from widget to io
   connect(slValue, SIGNAL(valueChanged(double)), io, SLOT(setValueFromUi(double)));
@@ -81,9 +82,16 @@ void mdtAnalogOutWidget::setRange(double min, double max)
   sbValue->setRange(min, max);
 }
 
+/**
 void mdtAnalogOutWidget::setValue(double value)
 {
   sbValue->setValue(value);
+}
+*/
+
+void mdtAnalogOutWidget::setValue(const mdtValue &value)
+{
+  sbValue->setValue(value.valueDouble());
 }
 
 void mdtAnalogOutWidget::setEnabled(bool enabled)

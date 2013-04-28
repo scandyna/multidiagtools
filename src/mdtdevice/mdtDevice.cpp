@@ -32,8 +32,6 @@ mdtDevice::mdtDevice(QObject *parent)
 {
   qDebug() << "mdtDevice::mdtDevice() ...";
   pvIos = 0;
-  ///pvDigitalOutputAddressOffset = 0;
-  ///pvAnalogOutputAddressOffset = 0;
   pvBackToReadyStateTimeout = -1;
   pvBackToReadyStateTimer = new QTimer(this);
   Q_ASSERT(pvBackToReadyStateTimer != 0);
@@ -210,6 +208,22 @@ QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryD
 }
 
 
+mdtValue mdtDevice::getAnalogInputValue(mdtAnalogIo *analogInput, bool queryDevice, bool waitOnReply)
+{
+  Q_ASSERT(analogInput != 0);
+
+  int transactionId;
+  mdtAnalogIo *ai;
+  mdtPortTransaction *transaction;
+  mdtValue value;
+
+  if(pvIos == 0){
+    return value;
+  }
+
+
+}
+
 
 
 int mdtDevice::getAnalogInputs(int timeout)
@@ -346,6 +360,7 @@ int mdtDevice::getAnalogOutputs(int timeout)
   return transactionId;
 }
 
+/// \todo Update to mdtValue
 int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
 {
   int transactionId;
@@ -364,6 +379,7 @@ int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
     return -1;
   }
   // Check value and set it to I/O
+  /**
   if(value.type() == QVariant::Int){
     ao->setValueInt(value.toInt(), true, false);
   }else if(value.type() == QVariant::Double){
@@ -374,6 +390,8 @@ int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
     e.commit();
     return -1;
   }
+  */
+  ao->setValue(value.toDouble(), false);
   if(timeout < 0){
     return 0;
   }

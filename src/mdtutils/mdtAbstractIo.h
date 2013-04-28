@@ -21,6 +21,7 @@
 #ifndef MDT_ABSTRACT_IO_H
 #define MDT_ABSTRACT_IO_H
 
+#include "mdtValue.h"
 #include <QObject>
 #include <QString>
 
@@ -140,10 +141,21 @@ class mdtAbstractIo : public QObject
   void labelChangedForUi(const QString &text);
   void detailsChangedForUi(const QString &text);
   void enabledStateChangedForUi(bool enabled);
+  /// NEW
+  /*! \brief This signal is emitted whenever the value is changed
+   */
+  void valueChanged(const mdtValue &value);
+
+  /*! \brief This signal is emitted whenever the value is changed
+   *
+   * Use it only for (G-)UI update
+   */
+  void valueChangedForUi(const mdtValue &value);
 
  protected:
 
-  bool pvHasValidData;
+  bool pvHasValidData;  /// \todo Obeslete this flag (use mdtValue's flag )
+  mdtValue pvValue;
 
  private:
 

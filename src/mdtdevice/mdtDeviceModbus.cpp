@@ -158,6 +158,7 @@ const QList<int> &mdtDeviceModbus::registerValues() const
   return pvTcpPortManager->registerValues();
 }
 
+/// \todo Update to mdtValue
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
 {
   ///Q_ASSERT(pvIos != 0);
@@ -209,9 +210,10 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
         // Update analog output if present and decoded value is ok
         if(transaction.analogIo() != 0){
           if(pvCodec->values().size() == 1){
-            transaction.analogIo()->setValue(pvCodec->values().at(0), false);
+            transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
           }else{
-            transaction.analogIo()->setValue(QVariant(), false);
+            ///transaction.analogIo()->setValue(QVariant(), false);
+            transaction.analogIo()->setValue(mdtValue(), false);
           }
         }
       }
@@ -224,9 +226,9 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
         // Update analog input if present and decoded value is Ok
         if(transaction.analogIo() != 0){
           if(pvCodec->values().size() == 1){
-            transaction.analogIo()->setValue(pvCodec->values().at(0), false);
+            transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
           }else{
-            transaction.analogIo()->setValue(QVariant(), false);
+            transaction.analogIo()->setValue(mdtValue(), false);
           }
         }
       }
@@ -252,7 +254,8 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
           mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of values from device", mdtError::Error);
           MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
           e.commit();
-          transaction.analogIo()->setValue(0.0, false, false);
+          ///transaction.analogIo()->setValue(0.0, false, false);
+          transaction.analogIo()->setValue(mdtValue(), false);
           transaction.analogIo()->setEnabled(true);
           break;
         }
@@ -260,12 +263,13 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
           mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received invalid value from device", mdtError::Error);
           MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
           e.commit();
-          transaction.analogIo()->setValue(0.0, false, false);
+          ///transaction.analogIo()->setValue(0.0, false, false);
+          transaction.analogIo()->setValue(mdtValue(), false);
           transaction.analogIo()->setEnabled(true);
           break;
         }
         // Update (G)UI
-        transaction.analogIo()->setValue(pvCodec->values().at(1), false);
+        transaction.analogIo()->setValue(pvCodec->values().at(1).toDouble(), false);
         transaction.analogIo()->setEnabled(true);
       }
       break;

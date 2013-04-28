@@ -25,9 +25,12 @@
 #include "mdtAbstractPort.h"
 #include "mdtPortManager.h"
 #include "mdtDeviceInfo.h"
+
+#include "mdtValue.h"
+#include <QVariant>
+
 #include <QObject>
 #include <QByteArray>
-#include <QVariant>
 #include <QString>
 #include <QStringList>
 
@@ -155,20 +158,6 @@ class mdtDevice : public QObject
    */
   void setBackToReadyStateTimeout(int timeout);
 
-  /*! \brief Set analog output address offset
-   *
-   * Some devices has a offset for output addresses.
-   * F.ex. the Wago 750 system has a offset of 0x0200
-   */
-  ///void setAnalogOutputAddressOffset(int offset);
-
-  /*! \brief Set digital output address offset
-   *
-   * Some devices has a offset for output addresses.
-   * F.ex. the Wago 750 system has a offset of 0x0200
-   */
-  ///void setDigitalOutputAddressOffset(int offset);
-
   /*! \brief Get internal port manager instance
    *
    * Note that port manager is set by subclass,
@@ -188,6 +177,7 @@ class mdtDevice : public QObject
   /*! \brief Stop periodic device querying
    */
   void stop();
+
 
   /*! \brief Get analog input value
    *
@@ -210,6 +200,27 @@ class mdtDevice : public QObject
    */
   QVariant getAnalogInputValue(int address, bool realValue, bool queryDevice, bool waitOnReply);
 
+  
+  /*! \brief Get analog input value
+   *
+   * Once result is available, the internal analog input is updated.
+   *  (See mdtDeviceIos for details).
+   *
+   * \param analogInput Pointer to a analog input object.
+   * \param queryDevice If true, value is readen from device by calling readAnalogInput(), else cached value is returned.
+   *                      Behaviour of this method can vary, depending on device specific subclass.
+   *                      (See sublcass readAnalogInput() for details).
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
+   * \return A mdtValue with valueDouble as real value and valueInt as device specific encoded fromat.
+   *          See mdtValue documentation for details about validity and other flags.
+   * \pre analogInput must be valid.
+   */
+  mdtValue getAnalogInputValue(mdtAnalogIo *analogInput, bool queryDevice, bool waitOnReply);
+
+  
+  
+  
   /*! \brief Read all analog inputs on physical device and update (G)UI representation
    *
    * Will call readAnalogInputs(), witch also sends the request to device.
@@ -749,8 +760,6 @@ class mdtDevice : public QObject
   bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
 
   mdtDeviceIos *pvIos;    // I/O's container
-  ///int pvDigitalOutputAddressOffset;
-  ///int pvAnalogOutputAddressOffset;
 
  public slots:
 

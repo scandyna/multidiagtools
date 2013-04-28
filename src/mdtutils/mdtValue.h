@@ -21,6 +21,8 @@
 #ifndef MDT_VALUE_H
 #define MDT_VALUE_H
 
+#include <QDebug>
+
 /*! \brief Conatins a value with some attributes
  *
  * Most of cases, using standard C++ types are sufficent.
@@ -68,9 +70,27 @@ class mdtValue
    */
   mdtValue(bool value);
 
-  /*! \brief Clear values and unset validity flag
+  /*! \brief Clear values (set default values) and unset validity flag
    */
   void clear();
+
+  /*! \brief Set default value for double format
+   *
+   * \param value Value to store as default
+   */
+  void setDefaultValue(double value);
+
+  /*! \brief Set default value for int format
+   *
+   * \param value Value to store as default
+   */
+  void setDefaultValue(int value);
+
+  /*! \brief Set default value for bool format
+   *
+   * \param value Value to store as default
+   */
+  void setDefaultValue(bool value);
 
   /*! \brief Set value with double format
    *
@@ -154,6 +174,10 @@ class mdtValue
   double pvValueDouble;
   int pvValueInt;
   bool pvValueBool;
+  // Default values
+  double pvDefaultValueDouble;
+  int pvDefaultValueInt;
+  bool pvDefaultValueBool;
   // Flags
   bool pvIsValid;
   bool pvHasValueDouble;
@@ -162,5 +186,7 @@ class mdtValue
   bool pvHasValueInt;
   bool pvHasValueBool;
 };
+
+QDebug operator<<(QDebug dbg, const mdtValue &value);
 
 #endif  // #ifndef MDT_VALUE_H

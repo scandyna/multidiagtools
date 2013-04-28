@@ -61,6 +61,7 @@ void mdtDeviceU3606A::onStateChanged(int state)
   qDebug() << "mdtDeviceU3606A::onStateChanged() ...";
 }
 
+/// \todo Update to mdtValue
 void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction transaction)
 {
   bool ok;
@@ -78,9 +79,9 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction transaction)
       }else{
         ok = pvCodec->decodeValues(transaction.data());
         if(ok && (pvCodec->values().size() == 1)){
-          transaction.analogIo()->setValue(pvCodec->values().at(0), false);
+          transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
         }else{
-          transaction.analogIo()->setValue(QVariant(), false);
+          transaction.analogIo()->setValue(mdtValue(), false);
         }
       }
       break;
@@ -90,7 +91,7 @@ void mdtDeviceU3606A::decodeReadenFrame(mdtPortTransaction transaction)
         MDT_ERROR_SET_SRC(e, "mdtDeviceU3606A");
         e.commit();
       }else{
-        transaction.analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction.data()), false);
+        transaction.analogIo()->setValue(pvCodec->decodeSingleValueDouble(transaction.data()).toDouble(), false);
       }
       break;
     ///case MDT_FC_SCPI_ERR:

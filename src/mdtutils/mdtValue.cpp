@@ -24,38 +24,65 @@
 
 mdtValue::mdtValue()
 {
+  setDefaultValue(0.0);
+  setDefaultValue(0);
+  setDefaultValue(false);
   clear();
 }
 
 mdtValue::mdtValue(double value, bool isMinusOl, bool isPlusOl)
 {
+  setDefaultValue(0.0);
+  setDefaultValue(0);
+  setDefaultValue(false);
   clear();
   setValue(value, isMinusOl, isPlusOl);
 }
 
 mdtValue::mdtValue(int value, bool isMinusOl, bool isPlusOl)
 {
+  setDefaultValue(0.0);
+  setDefaultValue(0);
+  setDefaultValue(false);
   clear();
   setValue(value, isMinusOl, isPlusOl);
 }
 
 mdtValue::mdtValue(bool value)
 {
+  setDefaultValue(0.0);
+  setDefaultValue(0);
+  setDefaultValue(false);
   clear();
   setValue(value);
 }
 
 void mdtValue::clear()
 {
-  pvValueDouble = 0.0;
-  pvValueInt = 0;
-  pvValueBool = false;
+  pvValueDouble = pvDefaultValueDouble;
+  pvValueInt = pvDefaultValueInt;
+  pvValueBool = pvDefaultValueBool;
   pvIsValid = false;
   pvHasValueDouble = false;
   pvIsMinusOl = false;
   pvIsPlusOl = false;
   pvHasValueInt = false;
   pvHasValueBool = false;
+}
+
+void mdtValue::setDefaultValue(double value)
+{
+  pvDefaultValueDouble = value;
+}
+
+void mdtValue::setDefaultValue(int value)
+{
+  pvDefaultValueInt = value;
+}
+
+void mdtValue::setDefaultValue(bool value)
+{
+  pvDefaultValueBool = value;
 }
 
 void mdtValue::setValue(double value, bool isMinusOl, bool isPlusOl)
@@ -163,4 +190,11 @@ bool mdtValue::operator==(const mdtValue &other) const
 bool mdtValue::operator!=(const mdtValue &other) const
 {
   return !(operator==(other));
+}
+
+QDebug operator<<(QDebug dbg, const mdtValue &value)
+{
+  return dbg.nospace() << "mdtValue(isValid: " << value.isValid() \
+                        << ", Double: " << value.valueDouble() << ", Int: " << value.valueInt() << ", Bool: " << value.valueBool() \
+                        << ", -OL: " << value.isMinusOl() << ", +OL: " << value.isPlusOl() << ")";
 }

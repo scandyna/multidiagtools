@@ -30,10 +30,27 @@
 #include <QString>
 #include <QVariant>
 #include <QPushButton>
-#include <qwt_slider.h>
 #include "mdtApplication.h"
 
 #include <QDebug>
+
+/*
+ * mdtTestSlider class
+ */
+mdtTestSlider::mdtTestSlider(QWidget *parent)
+ : QwtSlider(parent)
+{
+}
+
+void mdtTestSlider::setValue(const mdtValue &value)
+{
+  ///qDebug() << "mdtTestSlider::setValue(): Setting value " << value;
+  QwtSlider::setValue(value.valueDouble());
+}
+
+/*
+ * Tests
+ */
 
 void mdtIoWidgetTest::analogInWidgetTest()
 {
@@ -55,13 +72,13 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setRange(0, 10, 8);
   MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(0, true);
+  ai.setValueInt(0, true, false);
   MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(127, true);
+  ai.setValueInt(127, true, false);
   MDT_COMPARE(ai.value(), 5.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 127);
-  ai.setValueInt(255, true);
+  ai.setValueInt(255, true, false);
   MDT_COMPARE(ai.value(), 10.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 255);
 
@@ -75,17 +92,17 @@ void mdtIoWidgetTest::analogInWidgetTest()
   ai.setRange(4, 20, 8);
   MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(0, true);
+  ai.setValueInt(0, true, false);
   QCOMPARE(ai.value(), 4.0);
   QCOMPARE(ai.valueInt(), 0);
-  ai.setValueInt(127, true);
+  ai.setValueInt(127, true, false);
   MDT_COMPARE(ai.value(), 12.0, 8, 4.0, 20.0);
   QCOMPARE(ai.valueInt(), 127);
-  ai.setValueInt(255, true);
+  ai.setValueInt(255, true, false);
   MDT_COMPARE(ai.value(), 20.0, 8, 4.0, 20.0);
   QCOMPARE(ai.valueInt(), 255);
 
-  /*
+  /**
   while(w.isVisible()){
     QTest::qWait(1000);
   }
@@ -101,7 +118,8 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   // Setup
   wAi.setIo(&ai);
   wAo.setIo(&ao);
-  QObject::connect(&ao, SIGNAL(valueChanged(double)), &ai, SLOT(setValue(double)));
+  ///QObject::connect(&ao, SIGNAL(valueChanged(double)), &ai, SLOT(setValue(double)));
+  QObject::connect(&ao, SIGNAL(valueChanged(const mdtValue&)), &ai, SLOT(setValue(const mdtValue&)));
 
   wAi.show();
   wAo.show();
@@ -126,17 +144,17 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   QCOMPARE(ao.valueInt(), 0);
   MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
-  ao.setValueInt(0, true);
+  ao.setValueInt(0, true, true);
   MDT_COMPARE(ao.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ao.valueInt(), 0);
   MDT_COMPARE(ai.value(), 0.0, 8, 0.0, 10.0);
   QCOMPARE(ai.valueInt(), 0);
-  ao.setValueInt(127, true);
+  ao.setValueInt(127, true, true);
   MDT_COMPARE(ao.value(), 5.0, 8, 0.0, 10.0);
   MDT_COMPARE(ao.valueInt(), 127, 8, 0, 255);
   MDT_COMPARE(ai.value(), 5.0, 8, 0.0, 10.0);
   MDT_COMPARE(ai.valueInt(), 127, 8, 0, 255);
-  ao.setValueInt(255, true);
+  ao.setValueInt(255, true, true);
   MDT_COMPARE(ao.value(), 10.0, 8, 0.0, 10.0);
   MDT_COMPARE(ao.valueInt(), 255, 8, 0, 255);
   MDT_COMPARE(ai.value(), 10.0, 8, 0.0, 10.0);
@@ -153,17 +171,17 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   MDT_COMPARE(ao.valueInt(), 0, 8, 0, 255);
   MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
   MDT_COMPARE(ai.valueInt(), 0, 8, 0, 255);
-  ao.setValueInt(0, true);
+  ao.setValueInt(0, true, true);
   MDT_COMPARE(ao.value(), 4.0, 8, 4.0, 20.0);
   MDT_COMPARE(ao.valueInt(), 0, 8, 0, 255);
   MDT_COMPARE(ai.value(), 4.0, 8, 4.0, 20.0);
   MDT_COMPARE(ai.valueInt(), 0, 8, 0, 255);
-  ao.setValueInt(127, true);
+  ao.setValueInt(127, true, true);
   QVERIFY(qAbs(ao.value()-12.0) < (12.0/250.0));
   MDT_COMPARE(ao.valueInt(), 127, 8, 0, 255);
   MDT_COMPARE(ai.value(), 12.0, 8, 4.0, 20.0);
   MDT_COMPARE(ai.valueInt(), 127, 8, 0, 255);
-  ao.setValueInt(255, true);
+  ao.setValueInt(255, true, true);
   MDT_COMPARE(ao.value(), 20.0, 8, 4.0, 20.0);
   MDT_COMPARE(ao.valueInt(), 255, 8, 0, 255);
   MDT_COMPARE(ai.value(), 20.0, 8, 4.0, 20.0);
@@ -174,8 +192,9 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
 {
   // GUI (program)
   mdtAnalogIo ao;
-  QwtSlider sl(0);
-  // Simulate the physical device
+  ///QwtSlider sl(0);
+  mdtTestSlider sl(0);
+  // Simulate the physical device (test that signal valueChanged() is emitted)
   mdtAnalogIo plcAo;
 
   // Setup: range: 0-10, n = 12 bits
@@ -185,8 +204,10 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   plcAo.setRange(0.0, 10.0, 12);
   sl.setRange(0.0, 10.0);
   QObject::connect(&sl, SIGNAL(valueChanged(double)), &ao, SLOT(setValueFromUi(double)));
-  QObject::connect(&ao, SIGNAL(valueChangedForUi(double)), &sl, SLOT(setValue(double)));
-  QObject::connect(&ao, SIGNAL(valueChanged(double)), &plcAo, SLOT(setValue(double)));
+  ///QObject::connect(&ao, SIGNAL(valueChangedForUi(double)), &sl, SLOT(setValue(double)));
+  QObject::connect(&ao, SIGNAL(valueChangedForUi(const mdtValue&)), &sl, SLOT(setValue(const mdtValue&)));
+  ///QObject::connect(&ao, SIGNAL(valueChanged(double)), &plcAo, SLOT(setValue(double)));
+  QObject::connect(&ao, SIGNAL(valueChanged(const mdtValue&)), &plcAo, SLOT(setValue(const mdtValue&)));
   sl.show();
 
   // Initial states
@@ -198,7 +219,7 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 1.0, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
-  ao.setValue(1.0, true, false);
+  ao.setValue(1.0, false);
   MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 1.0, 12, 0.0, 10.0);
 
@@ -207,7 +228,7 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   MDT_COMPARE(ao.value(), 2.0, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 2.0, 12, 0.0, 10.0);
   // PLC (device) confirm a value that differs
-  ao.setValue(1.5, true, false);
+  ao.setValue(1.5, false);
   MDT_COMPARE(ao.value(), 1.5, 12, 0.0, 10.0);
   // Check that PLC not receives the confirmation as new value
   MDT_COMPARE(plcAo.value(), 2.0, 12, 0.0, 10.0);
@@ -217,7 +238,7 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   MDT_COMPARE(ao.value(), 3.5, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 3.5, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
-  ao.setValue(3.5, true, false);
+  ao.setValue(3.5, false);
   MDT_COMPARE(ao.value(), 3.5, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 3.5, 12, 0.0, 10.0);
 
@@ -226,9 +247,23 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   MDT_COMPARE(ao.value(), 4.0, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 4.0, 12, 0.0, 10.0);
   // PLC (device) confirm the same value
-  ao.setValue(4.0, true, false);
+  ao.setValue(4.0, false);
   MDT_COMPARE(ao.value(), 4.0, 12, 0.0, 10.0);
   MDT_COMPARE(plcAo.value(), 4.0, 12, 0.0, 10.0);
+
+  // We change the value from application
+  ao.setValue(2.6, true);
+  // PLC (device) confirm the same value
+  ao.setValue(2.6, false);
+  MDT_COMPARE(ao.value(), 2.6, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value(), 2.6, 12, 0.0, 10.0);
+
+  // We change the value from application
+  ao.setValue(1.3, true);
+  // PLC (device) confirm another value
+  ao.setValue(1.0, false);
+  MDT_COMPARE(ao.value(), 1.0, 12, 0.0, 10.0);
+  MDT_COMPARE(plcAo.value(), 1.3, 12, 0.0, 10.0);
 
   /*
   while(sl.isVisible()){
