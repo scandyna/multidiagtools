@@ -471,6 +471,7 @@ int mdtDevice::setAnalogOutputs(int timeout)
   return transactionId;
 }
 
+/// Move to mdtValue
 QVariant mdtDevice::getDigitalInputState(int address, int timeout)
 {
   int transactionId;
@@ -490,7 +491,8 @@ QVariant mdtDevice::getDigitalInputState(int address, int timeout)
   }
   // Check if only cached state is requested
   if(timeout < 0){
-    return QVariant(di->isOn());
+    ///return QVariant(di->isOn());
+    return QVariant(di->value().valueBool());
   }
   // Get a new transaction
   transaction = getNewTransaction();
@@ -515,7 +517,8 @@ QVariant mdtDevice::getDigitalInputState(int address, int timeout)
       return QVariant();
     }
     // Return value
-    return QVariant(di->isOn());
+    ///return QVariant(di->isOn());
+    return QVariant(di->value().valueBool());
   }
 
   return QVariant();
@@ -577,7 +580,8 @@ QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
   }
   // Check if only cached state is requested
   if(timeout < 0){
-    return QVariant(dout->isOn());
+    ///return QVariant(dout->isOn());
+    return QVariant(dout->value().valueBool());
   }
   // Get a new transaction
   transaction = getNewTransaction();
@@ -602,7 +606,8 @@ QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
       return QVariant();
     }
     // Return value
-    return QVariant(dout->isOn());
+    ///return QVariant(dout->isOn());
+    return QVariant(dout->value().valueBool());
   }
 
   return QVariant();
@@ -795,7 +800,8 @@ void mdtDevice::setDigitalOutputState(int address)
     return;
   }
   // Send query
-  setDigitalOutputState(address, dout->isOn(), true, false);
+  ///setDigitalOutputState(address, dout->isOn(), true, false);
+  setDigitalOutputState(address, dout->value().valueBool(), true, false);
 }
 
 void mdtDevice::runQueries()

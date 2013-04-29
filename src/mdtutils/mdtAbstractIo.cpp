@@ -25,7 +25,6 @@ mdtAbstractIo::mdtAbstractIo(QObject *parent)
 {
   pvAddressRead = 0;
   pvAddressWrite = 0;
-  ///pvHasValidData = false;
   pvNotifyUi = false;
 }
 
@@ -102,7 +101,6 @@ QString mdtAbstractIo::details() const
 
 bool mdtAbstractIo::hasValidData() const
 {
-  ///return pvHasValidData;
   return pvValue.isValid();
 }
 

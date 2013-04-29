@@ -187,7 +187,6 @@ class mdtAnalogIo : public mdtAbstractIo
   double pvMaximum;
   double pvStep;
   double pvStepInverse;
-  ///bool pvNotifyUi;
   // Members used for integer <-> float value conversion
   int pvIntValueLsbIndex;     // Index of least significant bit, used in setValueInt()
   int pvIntValueLsbIndexEnc;  // Index of least significant bit, used in valueInt()

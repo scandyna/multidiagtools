@@ -325,7 +325,8 @@ QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
   dos = pvDigitalOutputsByAddressWrite.values();
   for(i=0; i<dos.size(); i++){
     Q_ASSERT(dos.at(i) != 0);
-    states.append(dos.at(i)->isOn());
+    ///states.append(dos.at(i)->isOn());
+    states.append(dos.at(i)->value().valueBool());
   }
 
   return states;

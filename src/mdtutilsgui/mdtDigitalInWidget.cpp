@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -30,7 +30,6 @@ mdtDigitalInWidget::mdtDigitalInWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
-  ///pvIo = 0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   ldState = new mdtLed;
@@ -51,36 +50,14 @@ void mdtDigitalInWidget::setIo(mdtDigitalIo *io)
 {
   Q_ASSERT(io != 0);
 
-  ///pvIo = io;
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
-  ///connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
   connect(io, SIGNAL(valueChangedForUi(const mdtValue&)), this, SLOT(setValue(const mdtValue&)));
   connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Set initial data
-  ///setOn(io->isOn());
   setValue(io->value());
 }
-
-/**
-void mdtDigitalInWidget::setOn(bool on)
-{
-  Q_ASSERT(pvIo != 0);
-
-  if(pvIo->hasValidData()){
-    ldState->setOn(on);
-    if(on){
-      lbState->setText(tr("On"));
-    }else{
-      lbState->setText(tr("Off"));
-    }
-  }else{
-    ldState->setOn(false);
-    lbState->setText("??");
-  }
-}
-*/
 
 void mdtDigitalInWidget::setEnabled(bool enabled)
 {

@@ -25,30 +25,12 @@
 mdtDigitalIo::mdtDigitalIo(QObject *parent)
  : mdtAbstractIo(parent)
 {
-  ///pvIsOn = false;
 }
 
 mdtDigitalIo::~mdtDigitalIo()
 {
 }
 
-bool mdtDigitalIo::isOn() const
-{
-  ///return pvIsOn;
-}
-
-/**
-void mdtDigitalIo::setOn(QVariant on, bool emitValueChanged)
-{
-  if((!on.isValid())||(on.type() != QVariant::Bool)){
-    setOn(false, false, emitValueChanged);
-  }else{
-    setOn(on.toBool(), true, emitValueChanged);
-  }
-}
-*/
-
-/// \todo Implement this and suppress setOn()
 void mdtDigitalIo::setValue(const mdtValue &value, bool emitValueChanged)
 {
   // Check if state has changed
@@ -69,40 +51,6 @@ void mdtDigitalIo::setValue(const mdtValue &value, bool emitValueChanged)
   }
 }
 
-/**
-void mdtDigitalIo::setOn(bool on, bool isValid, bool emitValueChanged)
-{
-  bool notifyUi = false;
-
-  // Check if UI must be updated
-  if((on != pvIsOn)||(isValid != pvHasValidData)){
-    notifyUi = true;
-  }
-  // Check validity
-  pvHasValidData = isValid;
-  if(!pvHasValidData){
-    on = false;
-  }
-  if(pvIsOn != on){
-    pvIsOn = on;
-    if(emitValueChanged){
-      emit(stateChanged(pvIsOn));
-      emit(stateChanged(addressWrite()));
-    }
-  }
-  if(notifyUi){
-    emit(stateChangedForUi(pvIsOn));
-  }
-}
-*/
-
-/**
-void mdtDigitalIo::setOn(bool on)
-{
-  setOn(on, true);
-}
-*/
-
 void mdtDigitalIo::setStateFromUi(bool on)
 {
   // Check if state has changed
@@ -113,13 +61,4 @@ void mdtDigitalIo::setStateFromUi(bool on)
   pvValue.setValue(on);
   emit(valueChanged(this));
   emit(valueChanged(pvValue));
-
-  /**
-  if(pvIsOn != on){
-    ///pvHasValidData = true;
-    pvIsOn = on;
-    emit(stateChanged(pvIsOn));
-    emit(stateChanged(addressWrite()));
-  }
-  */
 }

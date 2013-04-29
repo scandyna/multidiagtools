@@ -101,7 +101,7 @@ void mdtIoWidgetTest::analogInWidgetTest()
   MDT_COMPARE(ai.value().valueDouble(), 20.0, 8, 4.0, 20.0);
   QCOMPARE(ai.value().valueInt(), 255);
 
-  /**
+  /*
   while(w.isVisible()){
     QTest::qWait(1000);
   }
@@ -117,7 +117,6 @@ void mdtIoWidgetTest::analogOutWidgetTest()
   // Setup
   wAi.setIo(&ai);
   wAo.setIo(&ao);
-  ///QObject::connect(&ao, SIGNAL(valueChanged(double)), &ai, SLOT(setValue(double)));
   QObject::connect(&ao, SIGNAL(valueChanged(const mdtValue&)), &ai, SLOT(setValue(const mdtValue&)));
 
   wAi.show();
@@ -191,7 +190,6 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
 {
   // GUI (program)
   mdtAnalogIo ao;
-  ///QwtSlider sl(0);
   mdtTestSlider sl(0);
   // Simulate the physical device (test that signal valueChanged() is emitted)
   mdtAnalogIo plcAo;
@@ -203,9 +201,7 @@ void mdtIoWidgetTest::analogOutWidgetRecursifTest()
   plcAo.setRange(0.0, 10.0, 12);
   sl.setRange(0.0, 10.0);
   QObject::connect(&sl, SIGNAL(valueChanged(double)), &ao, SLOT(setValueFromUi(double)));
-  ///QObject::connect(&ao, SIGNAL(valueChangedForUi(double)), &sl, SLOT(setValue(double)));
   QObject::connect(&ao, SIGNAL(valueChangedForUi(const mdtValue&)), &sl, SLOT(setValue(const mdtValue&)));
-  ///QObject::connect(&ao, SIGNAL(valueChanged(double)), &plcAo, SLOT(setValue(double)));
   QObject::connect(&ao, SIGNAL(valueChanged(const mdtValue&)), &plcAo, SLOT(setValue(const mdtValue&)));
   sl.show();
 
@@ -285,18 +281,13 @@ void mdtIoWidgetTest::digitalInWidgetTest()
   di.setDetails("Used for drive M on");
 
   // Initial state
-  ///QVERIFY(!di.isOn());
   QCOMPARE(di.value().valueBool(), false);
   QVERIFY(!di.hasValidData());
 
   // Toggle ...
-  ///di.setOn(true, true);
   di.setValue(true);
-  ///QVERIFY(di.isOn());
   QCOMPARE(di.value().valueBool(), true);
-  ///di.setOn(false, true);
   di.setValue(false);
-  ///QVERIFY(!di.isOn());
   QCOMPARE(di.value().valueBool(), false);
 }
 
@@ -316,33 +307,24 @@ void mdtIoWidgetTest::digitalOutWidgetTest()
   dout.setLabel("Output 3 (AC1 Ok)");
   dout.setDetails("Send confirmation that AC1 (3P var out for comp.) is Ok");
   wDo.setIo(&dout);
-  ///QObject::connect(&dout, SIGNAL(stateChanged(bool)), &di, SLOT(setOn(bool)));
   QObject::connect(&dout, SIGNAL(valueChanged(const mdtValue&)), &di, SLOT(setValue(const mdtValue&)));
 
   wDo.show();
   wDi.show();
 
   // Initial state
-  ///QVERIFY(!di.isOn());
   QCOMPARE(di.value().valueBool(), false);
-  ///QVERIFY(!dout.isOn());
   QCOMPARE(dout.value().valueBool(), false);
   QVERIFY(!di.hasValidData());
   QVERIFY(!dout.hasValidData());
   wDo.show();
   wDi.show();
   // Toggle ...
-  ///dout.setOn(true, true);
   dout.setValue(true, true);
-  ///QVERIFY(dout.isOn());
   QCOMPARE(dout.value().valueBool(), true);
-  ///QVERIFY(di.isOn());
   QCOMPARE(di.value().valueBool(), true);
-  ///dout.setOn(false, true);
   dout.setValue(false, true);
-  ///QVERIFY(!dout.isOn());
   QCOMPARE(dout.value().valueBool(), false);
-  ///QVERIFY(!di.isOn());
   QCOMPARE(di.value().valueBool(), false);
 
   /*
@@ -366,7 +348,6 @@ void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
   QVERIFY(doW.internalPushButton()->text() == "??");
 
   // A request was sent to PLC, and confirm arrives
-  ///dout.setOn(false);
   dout.setValue(false);
   QVERIFY(!doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "OFF");
@@ -376,7 +357,6 @@ void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
   QVERIFY(doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "ON");
   // Request was sent to PLC and confirmation arrives with same state (On)
-  ///dout.setOn(QVariant(true), false);
   dout.setValue(true);
   QVERIFY(doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "ON");
@@ -386,7 +366,6 @@ void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
   QVERIFY(!doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "OFF");
   // Request was sent to PLC and confirmation arrives with same state (Off)
-  ///dout.setOn(QVariant(false), false);
   dout.setValue(false);
   QVERIFY(!doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "OFF");
@@ -397,7 +376,6 @@ void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
   QVERIFY(doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "ON");
   // Request was sent to PLC and confirmation arrives with other state (Off)
-  ///dout.setOn(QVariant(false), false);
   dout.setValue(false);
   dout.setEnabled(true);
   QVERIFY(!doW.internalPushButton()->isChecked());
@@ -408,7 +386,6 @@ void mdtIoWidgetTest::digitalOutWidgetRecursifTest()
   QVERIFY(doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "ON");
   // Request was sent to PLC but a error occured
-  ///dout.setOn(QVariant(), false);
   dout.setValue(mdtValue());
   QVERIFY(!doW.internalPushButton()->isChecked());
   QVERIFY(doW.internalPushButton()->text() == "??");

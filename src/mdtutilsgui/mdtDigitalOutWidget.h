@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -53,9 +53,6 @@ class mdtDigitalOutWidget : public mdtAbstractIoWidget
   QPushButton *internalPushButton();
 
  private slots:
-
-  // Used to update GUI from mdtDigitalIo object.
-  ///void setOn(bool on);
 
   /*! \brief Update displayed value
    *

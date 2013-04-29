@@ -22,7 +22,6 @@
 #define MDT_DIGITAL_IO_H
 
 #include "mdtAbstractIo.h"
-#include <QVariant>
 
 /*! \brief Representation of a digital I/O
  *
@@ -41,16 +40,6 @@ class mdtDigitalIo : public mdtAbstractIo
 
   ~mdtDigitalIo();
 
-  /*! \brief Get current I/O state
-   */
-  bool isOn() const;
-
-  /*! \brief Set I/O state (On or OFF)
-   *
-   * Internally, setOn(bool, bool) is used.
-   */
-  ///void setOn(QVariant on, bool emitValueChanged = true);
-
  public slots:
 
   /*! \brief Set the value to update display
@@ -58,46 +47,6 @@ class mdtDigitalIo : public mdtAbstractIo
    * \sa mdtAbstractIo::setValue(const mdtValue&, bool)
    */
   void setValue(const mdtValue &value, bool emitValueChanged = false);
-
-  /*! \brief Set I/O state (On or OFF)
-   *
-   * Store the state and emit stateChanged() if 
-   *  new state state different from current.
-   *
-   * \param on The state to store
-   * \param isValid The validity flag. This flag is later avaliable with mdtAbstractIo::hasValidData()
-   * \param emitValueChanged If true, stateChanged(int, bool) and stateChanged(bool) will be emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal stateChangedForUi() is emited
-   */
-  ///void setOn(bool on, bool isValid, bool emitValueChanged = true);
-
-  /*! \brief Set I/O state (On or OFF)
-   *
-   * Overloaded method that calls setOn(bool, bool)
-   *  with isValid = true.
-   */
-  ///void setOn(bool on);
-
- signals:
-
-  /*! \brief This signal is emitted whenever the state is changed
-   */
-  ///void stateChanged(bool on);
-
-  /*! \brief This signal is emitted whenever the state is changed
-   *
-   * This signal is used by mdtDeviceIos to notify mdtDevice.
-   */
-  ///void stateChanged(int addressWrite);
-
-  /*
-   * This signal is emited every time
-   *  a member is set with a setter method.
-   * Usefull to update the UI (should not be used for other purpose)
-   */
-  ///void stateChangedForUi(bool on);
 
  private slots:
 
@@ -108,8 +57,6 @@ class mdtDigitalIo : public mdtAbstractIo
  private:
 
   Q_DISABLE_COPY(mdtDigitalIo);
-
-  ///bool pvIsOn;
 };
 
 #endif  // #ifndef MDT_DIGITAL_IO_H

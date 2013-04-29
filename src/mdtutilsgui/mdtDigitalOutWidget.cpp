@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -24,7 +24,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtDigitalOutWidget::mdtDigitalOutWidget(QWidget *parent)
  : mdtAbstractIoWidget(parent)
@@ -55,7 +55,6 @@ void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
-  ///connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
   connect(io, SIGNAL(valueChangedForUi(const mdtValue&)), this, SLOT(setValue(const mdtValue&)));
   connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Signals/slots from widget to io
@@ -63,7 +62,6 @@ void mdtDigitalOutWidget::setIo(mdtDigitalIo *io)
   // Internal signals/slots
   connect(pbState, SIGNAL(toggled(bool)), this, SLOT(updateText(bool)));
   // Set initial data
-  ///setOn(io->isOn());
   setValue(io->value());
 }
 
@@ -71,14 +69,6 @@ QPushButton *mdtDigitalOutWidget::internalPushButton()
 {
   return pbState;
 }
-
-/**
-void mdtDigitalOutWidget::setOn(bool on)
-{
-  pbState->setChecked(on);
-  updateText(on);
-}
-*/
 
 void mdtDigitalOutWidget::setValue(const mdtValue &value)
 {
