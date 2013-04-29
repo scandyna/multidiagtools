@@ -133,6 +133,23 @@ class mdtAbstractIo : public QObject
    */
   const mdtValue &value() const;
 
+ public slots:
+
+  /*! \brief Set the value to update display
+   *
+   * Store the value and emit valueChanged() if
+   *  new value is different from current.
+   *
+   * \param value The value to store
+   * \param emitValueChanged If true, valueChanged(const mdtValue&) will be emitted.
+   *
+   * Note: this default implementation does nothing.
+   *
+   * Note for UI developpers:
+   *  - The signal valueChangedForUi() is emited
+   */
+  virtual void setValue(const mdtValue &value, bool emitValueChanged = false);
+
  signals:
 
   /*
@@ -162,7 +179,7 @@ class mdtAbstractIo : public QObject
 
  protected:
 
-  bool pvHasValidData;  /// \todo Obeslete this flag (use mdtValue's flag )
+  ///bool pvHasValidData;  /// \todo Obeslete this flag (use mdtValue's flag )
   mdtValue pvValue;
   bool pvNotifyUi;
 

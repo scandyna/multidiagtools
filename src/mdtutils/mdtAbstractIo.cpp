@@ -115,3 +115,7 @@ const mdtValue &mdtAbstractIo::value() const
 {
   return pvValue;
 }
+
+void mdtAbstractIo::setValue(const mdtValue &value, bool emitValueChanged)
+{
+}

@@ -371,6 +371,7 @@ void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
   }
 }
 
+/// \todo move to mdtValue
 void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
 {
   int i, max;
@@ -381,7 +382,8 @@ void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
   max = qMin(values.size(), lst.size());
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    lst.at(i)->setOn(values.at(i), false);
+    ///lst.at(i)->setOn(values.at(i), false);
+    lst.at(i)->setValue(values.at(i).toBool(), false);
   }
 }
 
@@ -395,6 +397,7 @@ void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
   max = qMin(values.size(), lst.size());
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    lst.at(i)->setOn(values.at(i), false);
+    ///lst.at(i)->setOn(values.at(i), false);
+    lst.at(i)->setValue(values.at(i).toBool(), false);
   }
 }

@@ -22,6 +22,7 @@
 #define MDT_DIGITAL_IN_WIDGET_H
 
 #include "mdtAbstractIoWidget.h"
+#include "mdtValue.h"
 
 class mdtLed;
 class QLabel;
@@ -54,8 +55,14 @@ class mdtDigitalInWidget : public mdtAbstractIoWidget
  private slots:
 
   // Used to update GUI from mdtDigitalIo object.
-  void setOn(bool on);
+  ///void setOn(bool on);
   void setEnabled(bool enabled);
+
+  /*! \brief Update displayed value
+   *
+   * \pre If value is valid, it must contain double value.
+   */
+  void setValue(const mdtValue &value);
 
  private:
 
@@ -63,7 +70,7 @@ class mdtDigitalInWidget : public mdtAbstractIoWidget
 
   mdtLed *ldState;
   QLabel *lbState;
-  mdtDigitalIo *pvIo;
+  ///mdtDigitalIo *pvIo;
 };
 
 #endif  // #ifndef MDT_DIGITAL_IN_WIDGET_H

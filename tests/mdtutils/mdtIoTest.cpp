@@ -503,29 +503,42 @@ void mdtIoTest::digitalIoTest()
   QVERIFY(!io.hasValidData());
 
   // Toggle
-  io.setOn(true, true);
+  ///io.setOn(true, true);
+  io.setValue(true);
   QVERIFY(io.hasValidData());
-  QVERIFY(io.isOn());
-  io.setOn(false, true);
+  ///QVERIFY(io.isOn());
+  QCOMPARE(io.value().valueBool(), true);
+  ///io.setOn(false, true);
+  io.setValue(false);
   QVERIFY(io.hasValidData());
-  QVERIFY(!io.isOn());
+  ///QVERIFY(!io.isOn());
+  QCOMPARE(io.value().valueBool(), false);
   // Set invalid state
-  io.setOn(true, false);
+  ///io.setOn(true, false);
+  io.setValue(mdtValue());
   QVERIFY(!io.hasValidData());
-  QVERIFY(!io.isOn());
+  ///QVERIFY(!io.isOn());
+  QCOMPARE(io.value().valueBool(), false);
   // Set valid state
-  io.setOn(true, true);
+  ///io.setOn(true, true);
+  io.setValue(true);
   QVERIFY(io.hasValidData());
-  QVERIFY(io.isOn());
+  ///QVERIFY(io.isOn());
+  QCOMPARE(io.value().valueBool(), true);
   // Check setOn(QVariant)
-  io.setOn(QVariant());
+  ///io.setOn(QVariant());
+  io.setValue(mdtValue());
   QVERIFY(!io.hasValidData());
-  io.setOn(QVariant(true));
+  ///io.setOn(QVariant(true));
+  io.setValue(true);
   QVERIFY(io.hasValidData());
-  QVERIFY(io.isOn());
-  io.setOn(QVariant(false));
+  ///QVERIFY(io.isOn());
+  QCOMPARE(io.value().valueBool(), true);
+  ///io.setOn(QVariant(false));
+  io.setValue(false);
   QVERIFY(io.hasValidData());
-  QVERIFY(!io.isOn());
+  ///QVERIFY(!io.isOn());
+  QCOMPARE(io.value().valueBool(), false);
 }
 
 

@@ -664,7 +664,8 @@ int mdtDevice::setDigitalOutputState(int address, bool state, bool writeToDevice
     e.commit();
     return -1;
   }
-  dout->setOn(QVariant(state), false);
+  ///dout->setOn(QVariant(state), false);
+  dout->setValue(state, false);
   if(!writeToDevice){
     return 0;
   }

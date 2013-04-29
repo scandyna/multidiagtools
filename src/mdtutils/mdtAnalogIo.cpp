@@ -167,13 +167,6 @@ double mdtAnalogIo::maximum() const
   return pvMaximum;
 }
 
-/**
-double mdtAnalogIo::value() const
-{
-  return pvValue.valueDouble();
-}
-*/
-
 void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
 {
   mdtValue v;
@@ -184,13 +177,6 @@ void mdtAnalogIo::setValueInt(int value, bool isValid, bool emitValueChanged)
   pvNotifyUi = true;
   setValueFromInt(v, emitValueChanged);
 }
-
-/**
-int mdtAnalogIo::valueInt() const
-{
-  return pvValue.valueInt();
-}
-*/
 
 void mdtAnalogIo::setValue(const mdtValue &value, bool emitValueChanged)
 {

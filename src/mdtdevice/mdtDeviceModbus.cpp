@@ -179,9 +179,11 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
         // Update digital input if present and decoded value if ok
         if(transaction.digitalIo() != 0){
           if(pvCodec->values().size() == 1){
-            transaction.digitalIo()->setOn(pvCodec->values().at(0), false);
+            ///transaction.digitalIo()->setOn(pvCodec->values().at(0), false);
+            transaction.digitalIo()->setValue(pvCodec->values().at(0).toBool(), false);
           }else{
-            transaction.digitalIo()->setOn(QVariant(), false);
+            ///transaction.digitalIo()->setOn(QVariant(), false);
+            transaction.digitalIo()->setValue(mdtValue(), false);
           }
         }
       }
@@ -195,9 +197,11 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
         // Update digital input if present and decoded value is ok
         if(transaction.digitalIo() != 0){
           if(pvCodec->values().size() == 1){
-            transaction.digitalIo()->setOn(pvCodec->values().at(0), false);
+            ///transaction.digitalIo()->setOn(pvCodec->values().at(0), false);
+            transaction.digitalIo()->setValue(pvCodec->values().at(0).toBool(), false);
           }else{
-            transaction.digitalIo()->setOn(QVariant(), false);
+            ///transaction.digitalIo()->setOn(QVariant(), false);
+            transaction.digitalIo()->setValue(mdtValue(), false);
           }
         }
       }
@@ -240,10 +244,12 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
           mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of states from device", mdtError::Error);
           MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
           e.commit();
-          transaction.digitalIo()->setOn(QVariant(), false);
+          ///transaction.digitalIo()->setOn(QVariant(), false);
+          transaction.digitalIo()->setValue(mdtValue(), false);
           break;
         }
-        transaction.digitalIo()->setOn(pvCodec->values().at(1), false);
+        ///transaction.digitalIo()->setOn(pvCodec->values().at(1), false);
+        transaction.digitalIo()->setValue(pvCodec->values().at(1).toBool(), false);
         transaction.digitalIo()->setEnabled(true);
       }
       break;

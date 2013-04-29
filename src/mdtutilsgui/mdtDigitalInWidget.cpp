@@ -30,7 +30,7 @@ mdtDigitalInWidget::mdtDigitalInWidget(QWidget *parent)
 {
   QGridLayout *l = new QGridLayout;
 
-  pvIo = 0;
+  ///pvIo = 0;
   // Setup GUI
   l->addWidget(lbLabel, 0, 0);
   ldState = new mdtLed;
@@ -51,16 +51,19 @@ void mdtDigitalInWidget::setIo(mdtDigitalIo *io)
 {
   Q_ASSERT(io != 0);
 
-  pvIo = io;
+  ///pvIo = io;
   // Base Signals/slots connections
   mdtAbstractIoWidget::setIo(io);
   // Signals/slots from io to widget
-  connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
+  ///connect(io, SIGNAL(stateChangedForUi(bool)), this, SLOT(setOn(bool)));
+  connect(io, SIGNAL(valueChangedForUi(const mdtValue&)), this, SLOT(setValue(const mdtValue&)));
   connect(io, SIGNAL(enabledStateChangedForUi(bool)), this, SLOT(setEnabled(bool)));
   // Set initial data
-  setOn(io->isOn());
+  ///setOn(io->isOn());
+  setValue(io->value());
 }
 
+/**
 void mdtDigitalInWidget::setOn(bool on)
 {
   Q_ASSERT(pvIo != 0);
@@ -77,8 +80,27 @@ void mdtDigitalInWidget::setOn(bool on)
     lbState->setText("??");
   }
 }
+*/
 
 void mdtDigitalInWidget::setEnabled(bool enabled)
 {
   ldState->setEnabled(enabled);
+}
+
+void mdtDigitalInWidget::setValue(const mdtValue &value)
+{
+  bool on;
+
+  if(value.isValid()){
+    on = value.valueBool();
+    ldState->setOn(on);
+    if(on){
+      lbState->setText(tr("On"));
+    }else{
+      lbState->setText(tr("Off"));
+    }
+  }else{
+    ldState->setOn(false);
+    lbState->setText("??");
+  }
 }

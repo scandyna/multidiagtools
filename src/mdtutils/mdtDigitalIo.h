@@ -49,9 +49,15 @@ class mdtDigitalIo : public mdtAbstractIo
    *
    * Internally, setOn(bool, bool) is used.
    */
-  void setOn(QVariant on, bool emitValueChanged = true);
+  ///void setOn(QVariant on, bool emitValueChanged = true);
 
  public slots:
+
+  /*! \brief Set the value to update display
+   *
+   * \sa mdtAbstractIo::setValue(const mdtValue&, bool)
+   */
+  void setValue(const mdtValue &value, bool emitValueChanged = false);
 
   /*! \brief Set I/O state (On or OFF)
    *
@@ -65,33 +71,33 @@ class mdtDigitalIo : public mdtAbstractIo
    * Note for UI developpers:
    *  - The signal stateChangedForUi() is emited
    */
-  void setOn(bool on, bool isValid, bool emitValueChanged = true);
+  ///void setOn(bool on, bool isValid, bool emitValueChanged = true);
 
   /*! \brief Set I/O state (On or OFF)
    *
    * Overloaded method that calls setOn(bool, bool)
    *  with isValid = true.
    */
-  void setOn(bool on);
+  ///void setOn(bool on);
 
  signals:
 
   /*! \brief This signal is emitted whenever the state is changed
    */
-  void stateChanged(bool on);
+  ///void stateChanged(bool on);
 
   /*! \brief This signal is emitted whenever the state is changed
    *
    * This signal is used by mdtDeviceIos to notify mdtDevice.
    */
-  void stateChanged(int addressWrite);
+  ///void stateChanged(int addressWrite);
 
   /*
    * This signal is emited every time
    *  a member is set with a setter method.
    * Usefull to update the UI (should not be used for other purpose)
    */
-  void stateChangedForUi(bool on);
+  ///void stateChangedForUi(bool on);
 
  private slots:
 
@@ -103,7 +109,7 @@ class mdtDigitalIo : public mdtAbstractIo
 
   Q_DISABLE_COPY(mdtDigitalIo);
 
-  bool pvIsOn;
+  ///bool pvIsOn;
 };
 
 #endif  // #ifndef MDT_DIGITAL_IO_H

@@ -120,12 +120,6 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   double maximum() const;
 
-  /*! \brief Get value (set with setValue() )
-   * 
-   * \todo Obselete this (no flags available)
-   */
-  ///double value() const;
-
   /*! \brief Set the integer value
    *
    * Will calculate the real value depending on resolution and update display.
@@ -142,27 +136,11 @@ class mdtAnalogIo : public mdtAbstractIo
    */
   void setValueInt(int value, bool isValid, bool emitValueChanged);
 
-  /*! \brief Get the integer value
-   *
-   * The integer value depend on value and resolution.
-   *  The resolution is set with setRange() (steps parameter)
-   *
-   * \todo Obselete this (no flags available)
-   */
-  ///int valueInt() const;
-
  public slots:
 
   /*! \brief Set the value to update display
    *
-   * Store the value and emit valueChanged() if
-   *  new value is different from current.
-   *
-   * \param value The value to store
-   * \param emitValueChanged If true, valueChanged(const mdtValue&) will be emitted.
-   *
-   * Note for UI developpers:
-   *  - The signal valueChangedForUi() is emited
+   * \sa mdtAbstractIo::setValue(const mdtValue&, bool)
    */
   void setValue(const mdtValue &value, bool emitValueChanged = false);
 
