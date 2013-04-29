@@ -148,7 +148,7 @@ class mdtDeviceScpi : public mdtDevice
    * \param decodedValues See mdtFrameCodecScpi::decodeError().
    * \post If internal codec has < 2 values, handleDeviceSpecificError() is not called.
    */
-  void handleDeviceError(QList<QVariant> &decodedValues);
+  void handleDeviceError(const QList<QVariant> &decodedValues);
 
   /*! \brief Handle device's specific error
    *

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -46,7 +46,8 @@ mdtFrameCodecScpi::~mdtFrameCodecScpi()
 bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
 {
   int i;
-  QVariant value;
+  QVariant var;
+  mdtValue value;
   ///double fltValue;
 
   // Clear previous results
@@ -69,9 +70,26 @@ bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
       continue;
     }
     // Convert node
-    value = convertData(pvNodes.at(i));
+    var = convertData(pvNodes.at(i));
     // Check limits if type is double
-    if(value.type() == QVariant::Double){
+    switch(var.type()){
+      case QVariant::Double:
+        value = checkFloatingValueValidity(var.toDouble());
+        var.setValue(value);
+        break;
+      case QVariant::Int:
+        value = var.toInt();
+        var.setValue(value);
+        break;
+      case QVariant::Bool:
+        value = var.toBool();
+        var.setValue(value);
+        break;
+      default:
+        // Nothing to do
+        ;
+    }
+    if(var.type() == QVariant::Double){
       /**
       fltValue = value.toDouble();
       // Check about Nan
@@ -84,15 +102,17 @@ bool mdtFrameCodecScpi::decodeValues(const QByteArray &data, QString sep)
         }
       }
       */
-      value = checkFloatingValueValidity(value.toDouble());
+      ///value = checkFloatingValueValidity(value.toDouble());
+      ///value.setValue(checkFloatingValueValidity(value.toDouble()));
     }
     // Add converted value
-    pvValues.append(value);
+    pvValues.append(var);
   }
 
   return true;
 }
 
+/**
 QVariant mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &data)
 {
   QVariant value;
@@ -116,13 +136,47 @@ QVariant mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &data)
   value = pvAsciiData;
   if(value.canConvert(QVariant::Double)){
     if(value.convert(QVariant::Double)){
-      return checkFloatingValueValidity(value.toDouble());
+      value.setValue(checkFloatingValueValidity(value.toDouble()));
+      return value;
+      ///return checkFloatingValueValidity(value.toDouble());
     }
   }
 
   return QVariant();
 }
+*/
 
+mdtValue mdtFrameCodecScpi::decodeSingleValueDouble(const QByteArray &data)
+{
+  QVariant value;
+
+  // Store raw data in local QString constainer
+  pvAsciiData = data;
+  // Remove white spaces at begin and end
+  trim();
+  // remove EofSeq
+  if(!removeEofSeq()){
+    return mdtValue();
+  }
+  // Case of no data
+  if(pvAsciiData.size() < 1){
+    mdtError e(MDT_FRAME_DECODE_ERROR, "Frame contains no data" , mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtFrameCodecScpi");
+    e.commit();
+    return mdtValue();
+  }
+  // Convert and check
+  value = pvAsciiData;
+  if(value.canConvert(QVariant::Double)){
+    if(value.convert(QVariant::Double)){
+      return checkFloatingValueValidity(value.toDouble());
+    }
+  }
+
+  return mdtValue();
+}
+
+/**
 QVariant mdtFrameCodecScpi::checkFloatingValueValidity(double x) const
 {
   // Check about NaN
@@ -135,6 +189,30 @@ QVariant mdtFrameCodecScpi::checkFloatingValueValidity(double x) const
   }
 
   return x;
+}
+*/
+
+mdtValue mdtFrameCodecScpi::checkFloatingValueValidity(double x) const
+{
+  mdtValue value;
+  bool isMinusOl = false;
+  bool isPlusOl = false;
+
+  // Check about NaN
+  if(qAbs(x - pvNan) <= FLT_EPSILON){
+    return value;
+  }
+  // Check about -OL
+  if(x <= (pvNinfinity+FLT_EPSILON)){
+    isMinusOl = true;
+  }
+  // Check about +OL
+  if(x >= (pvInfinity-FLT_EPSILON)){
+    isPlusOl = true;
+  }
+  value.setValue(x, isMinusOl, isPlusOl);
+
+  return value;
 }
 
 bool mdtFrameCodecScpi::decodeFunctionParameters(const QByteArray &data)
@@ -190,7 +268,8 @@ bool mdtFrameCodecScpi::decodeFunctionParameters(const QByteArray &data)
       value = convertData(pvNodes.at(i));
       // Check limits if type is double
       if(value.type() == QVariant::Double){
-        value = checkFloatingValueValidity(value.toDouble());
+        ///value = checkFloatingValueValidity(value.toDouble());
+        value.setValue(checkFloatingValueValidity(value.toDouble()));
       }
       // Add converted value
       pvValues.append(value);

@@ -21,6 +21,7 @@
 #ifndef MDT_VALUE_H
 #define MDT_VALUE_H
 
+#include <QMetaType>
 #include <QDebug>
 
 /*! \brief Conatins a value with some attributes
@@ -186,6 +187,8 @@ class mdtValue
   bool pvHasValueInt;
   bool pvHasValueBool;
 };
+
+Q_DECLARE_METATYPE(mdtValue)
 
 QDebug operator<<(QDebug dbg, const mdtValue &value);
 

@@ -195,7 +195,7 @@ int mdtDeviceScpi::checkDeviceError()
   return 0;
 }
 
-void mdtDeviceScpi::handleDeviceError(QList<QVariant> &decodedValues)
+void mdtDeviceScpi::handleDeviceError(const QList<QVariant> &decodedValues)
 {
   int errNum;
   QString errText;

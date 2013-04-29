@@ -24,11 +24,14 @@
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
 #include "mdtValue.h"
+#include <QVariant>
 
 //#include <QDebug>
 
 void mdtIoTest::mdtValueTest()
 {
+  QVariant var;
+
   mdtValue v1;
   // Initial values/flags
   QVERIFY(!v1.isValid());
@@ -225,6 +228,41 @@ void mdtIoTest::mdtValueTest()
   QCOMPARE(v5.valueInt(), 0);
   QCOMPARE(v5.valueBool(), false);
   QVERIFY(v5 == v2);
+
+  // Check QVariant storage
+  var.setValue(v5);
+  QVERIFY(var.value<mdtValue>().isValid());
+  QVERIFY(var.value<mdtValue>().hasValueDouble());
+  QVERIFY(!var.value<mdtValue>().hasValueInt());
+  QVERIFY(!var.value<mdtValue>().isMinusOl());
+  QVERIFY(!var.value<mdtValue>().isPlusOl());
+  QVERIFY(!var.value<mdtValue>().hasValueBool());
+  QCOMPARE(var.value<mdtValue>().valueDouble(), 2.0);
+  QCOMPARE(var.value<mdtValue>().valueInt(), 0);
+  QCOMPARE(var.value<mdtValue>().valueBool(), false);
+  QVERIFY(var.value<mdtValue>() == v2);
+
+  v1.clear();
+  QVERIFY(!v1.isValid());
+  v1 = 5;
+  QVERIFY(v1.isValid());
+  QVERIFY(!v1.hasValueBool());
+  QVERIFY(v1.hasValueInt());
+  QVERIFY(!v1.hasValueDouble());
+  QCOMPARE(v1.valueInt(), 5);
+  v1 = 1.2;
+  QVERIFY(v1.isValid());
+  QVERIFY(!v1.hasValueBool());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(v1.hasValueDouble());
+  QCOMPARE(v1.valueDouble(), 1.2);
+  v1 = true;
+  QVERIFY(v1.isValid());
+  QVERIFY(v1.hasValueBool());
+  QVERIFY(!v1.hasValueInt());
+  QVERIFY(!v1.hasValueDouble());
+  QCOMPARE(v1.valueBool(), true);
+
 }
 
 void mdtIoTest::mdtAbstractIoTest()

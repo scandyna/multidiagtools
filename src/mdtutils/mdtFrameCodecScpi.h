@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -22,36 +22,8 @@
 #define MDT_FRAME_CODEC_SCPI_H
 
 #include "mdtFrameCodecAscii.h"
-#include <QVariant>
+///#include <QVariant>
 #include <QString>
-
-/*
- * Helper defines for some mdtDevice subclasses
- */
-/* \brief Some helper macros ...
- * \relates mdtFrameCodecScpi
- *
- * Some details .........
- *
- * - MDT_FC_SCPI_UNKNOW 
- * 
- * 
- * 
- */
-
-/*! \enum MYenum Description...
- * \relates mdtFrameCodecScpi
- *
- * - jdalkjkasjdlkj
- * - njshjhjshd
- */
-/**
-#define MDT_FC_SCPI_UNKNOW 0
-#define MDT_FC_SCPI_VALUE  1
-#define MDT_FC_SCPI_IDN    2
-#define MDT_FC_SCPI_ERR    3
-#define MDT_FC_SCPI_LAST_TYPE  127
-*/
 
 /*! \brief Decode SCPI data
  */
@@ -73,9 +45,9 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
   /*! \brief Format of waveform data
    */
   enum waveform_format_t {
-                        WORD, /*!< 16 bit data resolution */
-                        BYTE, /*!< 8 bit data resolution */
-                        ASCII /*!< ASCII float represented data */
+                        WORD,   /*!< 16 bit data resolution */
+                        BYTE,   /*!< 8 bit data resolution */
+                        ASCII   /*!< ASCII float represented data */
                         };
 
   mdtFrameCodecScpi();
@@ -109,7 +81,8 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    * \return A Qvariant of type Double if decode and conversion to double could be done,
    *          else a invalid QVariant.
    */
-  QVariant decodeSingleValueDouble(const QByteArray &data);
+  ///QVariant decodeSingleValueDouble(const QByteArray &data);
+  mdtValue decodeSingleValueDouble(const QByteArray &data);
 
   /*! \brief Check the validity of a floating value
    *
@@ -117,7 +90,8 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *
    * \return A valid QVariant of type double if Ok, else a invalid QVariant.
    */
-  QVariant checkFloatingValueValidity(double x) const;
+  ///QVariant checkFloatingValueValidity(double x) const;
+  mdtValue checkFloatingValueValidity(double x) const;
 
   /*! \brief Decode reply of type function/parameter
    *
