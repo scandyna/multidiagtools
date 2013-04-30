@@ -78,8 +78,8 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *  If value is not valid, the QVariant is cleared,
    *  so it is possible to check this with QVariant::isValid().
    *
-   * \return A Qvariant of type Double if decode and conversion to double could be done,
-   *          else a invalid QVariant.
+   * \return A mdtValue that contains data of type Double if decode and conversion to double could be done,
+   *          else a invalid mdtValue.
    */
   ///QVariant decodeSingleValueDouble(const QByteArray &data);
   mdtValue decodeSingleValueDouble(const QByteArray &data);
@@ -88,7 +88,7 @@ class mdtFrameCodecScpi : public mdtFrameCodecAscii
    *
    * Check validity regarding SCPI-99, sections 7.2.1.4 (-infinity, +infinity) and 7.2.1.5 (NaN).
    *
-   * \return A valid QVariant of type double if Ok, else a invalid QVariant.
+   * \return A mdtValue that contains data of type Double. If x is NaN, a invalid mdtValue is returned.
    */
   ///QVariant checkFloatingValueValidity(double x) const;
   mdtValue checkFloatingValueValidity(double x) const;

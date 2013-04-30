@@ -332,18 +332,31 @@ QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
   return states;
 }
 
-/// \todo Update to mdtValue
 void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
 {
   int i, max;
   QList<mdtAnalogIo*> lst;
+  QVariant var;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvAnalogInputsByAddressRead.values();
   max = qMin(values.size(), lst.size());
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    lst.at(i)->setValue(values.at(i).toDouble(), false);
+    var = values.at(i);
+    switch(var.type()){
+      case QVariant::Double:
+        lst.at(i)->setValue(var.toDouble(), false);
+        break;
+      case QVariant::Int:
+        lst.at(i)->setValue(var.toInt(), false);
+        break;
+      case QVariant::Bool:
+        lst.at(i)->setValue(var.toBool(), false);
+        break;
+      default:
+        lst.at(i)->setValue(var.value<mdtValue>(), false);
+    }
   }
 }
 
@@ -352,13 +365,29 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
 {
   int i, max;
   QList<mdtAnalogIo*> lst;
+  QVariant var;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvAnalogOutputsByAddressRead.values();  // We update (G)UI, so we read from device
   max = qMin(values.size(), lst.size());
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    lst.at(i)->setValue(values.at(i).toDouble(), false);
+    var = values.at(i);
+    qDebug() << "mdtDeviceIos::updateAnalogOutputValues() var: " << var;
+    switch(var.type()){
+      case QVariant::Double:
+        lst.at(i)->setValue(var.toDouble(), false);
+        break;
+      case QVariant::Int:
+        lst.at(i)->setValue(var.toInt(), false);
+        break;
+      case QVariant::Bool:
+        lst.at(i)->setValue(var.toBool(), false);
+        break;
+      default:
+        lst.at(i)->setValue(var.value<mdtValue>(), false);
+    }
+    qDebug() << "mdtDeviceIos::updateAnalogOutputValues() I/O address: " << lst.at(i)->addressRead() << " , value: " << lst.at(i)->value();
   }
 }
 

@@ -513,9 +513,9 @@ bool mdtFrameCodecModbus::decodeReadInputRegisters()
     return false;
   }
   // Get the values
-  for(i=2; i<pvPdu.size(); i++){
+  for(i=2; i<pvPdu.size(); ++i){
     value = (quint8)pvPdu.at(i) << 8;
-    i++;
+    ++i;
     value |= (quint8)pvPdu.at(i);
     pvValues.append(value);
   }

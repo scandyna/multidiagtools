@@ -148,7 +148,7 @@ int mdtDeviceU3606A::readAnalogInput(mdtPortTransaction *transaction)
 
 bool mdtDeviceU3606A::queriesSequence()
 {
-  getAnalogInputValue(0, true, true, true);
+  getAnalogInputValue(0, true, true);
 
   return true;
 }

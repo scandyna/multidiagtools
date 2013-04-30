@@ -23,6 +23,7 @@
 
 #include "mdtAnalogIo.h"
 #include "mdtDigitalIo.h"
+#include "mdtValue.h"
 #include <QObject>
 #include <QList>
 #include <QMap>
@@ -268,8 +269,7 @@ class mdtDeviceIos : public QObject
    *  - Here, it is assumed that values are sorted from address min to address max
    *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned input will be set invalid.
-   *  - If type value is of type integer, mdtAnalogIo::setValueInt() is used,
-   *     else mdtAnalogIo::setValue() is used.
+   *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
    */
   void updateAnalogInputValues(const QList<QVariant> &values);
 
@@ -279,8 +279,7 @@ class mdtDeviceIos : public QObject
    *  - Here, it is assumed that values are stored from address min to address max
    *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned output will be set invalid.
-   *  - If type value is of type integer, mdtAnalogIo::setValueInt() is used,
-   *     else mdtAnalogIo::setValue() is used.
+   *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
    */
   void updateAnalogOutputValues(const QList<QVariant> &values);
 

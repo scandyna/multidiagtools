@@ -158,7 +158,7 @@ const QList<int> &mdtDeviceModbus::registerValues() const
   return pvTcpPortManager->registerValues();
 }
 
-/// \todo Update to mdtValue
+/// \todo Update to mdtValue - And don't forget to move also modbus frame codec to mdtValue ..
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
 {
   ///Q_ASSERT(pvIos != 0);
@@ -209,12 +209,16 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
     case 0x03:  // Read holding registers
       // Check if we have just one or all outputs to update
       if(transaction.forMultipleIos()){
+        qDebug() << "RX var: " << pvCodec->values();
         pvIos->updateAnalogOutputValues(pvCodec->values());
       }else{
         // Update analog output if present and decoded value is ok
         if(transaction.analogIo() != 0){
           if(pvCodec->values().size() == 1){
-            transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
+            // Codec only get raw data, so let I/O do needed conversions
+            ///qDebug() << "RX var: " << pvCodec->values().at(0);
+            transaction.analogIo()->setValue(pvCodec->values().at(0).toInt(), false);
+            ///transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
           }else{
             ///transaction.analogIo()->setValue(QVariant(), false);
             transaction.analogIo()->setValue(mdtValue(), false);
@@ -227,10 +231,12 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
       if(transaction.forMultipleIos()){
         pvIos->updateAnalogInputValues(pvCodec->values());
       }else{
-        // Update analog input if present and decoded value is Ok
+        // Update analog input if present and decoded value if Ok
         if(transaction.analogIo() != 0){
           if(pvCodec->values().size() == 1){
-            transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
+            // Codec only get raw data, so let I/O do needed conversions
+            transaction.analogIo()->setValue(pvCodec->values().at(0).toInt(), false);
+            ///transaction.analogIo()->setValue(pvCodec->values().at(0).toDouble(), false);
           }else{
             transaction.analogIo()->setValue(mdtValue(), false);
           }
@@ -274,8 +280,9 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
           transaction.analogIo()->setEnabled(true);
           break;
         }
-        // Update (G)UI
-        transaction.analogIo()->setValue(pvCodec->values().at(1).toDouble(), false);
+        // Update (G)UI - Codec only get raw data, so let I/O do needed conversions
+        ///transaction.analogIo()->setValue(pvCodec->values().at(1).toDouble(), false);
+        transaction.analogIo()->setValue(pvCodec->values().at(1).toInt(), false);
         transaction.analogIo()->setEnabled(true);
       }
       break;
@@ -285,7 +292,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
         mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of values from device", mdtError::Error);
         MDT_ERROR_SET_SRC(e, "mdtDeviceModbus");
         e.commit();
-        pvIos->setAnalogOutputsValue(QVariant());
+        pvIos->setAnalogOutputsValue(QVariant()); /// \todo move to mdtValue
         break;
       }
       pvIos->setAnalogOutputsEnabled(true);
@@ -389,6 +396,7 @@ int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
 
   // Setup MODBUS PDU
   ///pdu = pvCodec->encodeReadHoldingRegisters(pvAnalogOutputAddressOffset, pvIos->analogOutputsCount());
+  qDebug() << "readAnalogOutputs() from adr " << pvIos->analogOutputsFirstAddressRead() << ", n: " << pvIos->analogOutputsCount();
   pdu = pvCodec->encodeReadHoldingRegisters(pvIos->analogOutputsFirstAddressRead(), pvIos->analogOutputsCount());
   if(pdu.isEmpty()){
     return -1;

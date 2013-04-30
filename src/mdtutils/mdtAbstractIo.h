@@ -25,6 +25,9 @@
 #include <QObject>
 #include <QString>
 
+class mdtAnalogIo;
+class mdtDigitalIo;
+
 /*! \brief Base class for I/O handling on (G)UI
  *
  * Can be used with mdtAbstractIoWidget and subclasses.
@@ -169,7 +172,8 @@ class mdtAbstractIo : public QObject
 
   /*! \brief This signal is emitted whenever the value is changed
    */
-  void valueChanged(mdtAbstractIo *io);
+  void valueChanged(mdtAnalogIo *io);
+  void valueChanged(mdtDigitalIo *io);
 
   /*! \brief This signal is emitted whenever the value is changed
    *
