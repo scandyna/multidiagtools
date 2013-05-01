@@ -348,7 +348,11 @@ void mdtDeviceTest::modbusTest()
   }
 
   // Make some queries
-  QVERIFY(!d.getDigitalInputState(0, 0).isValid());
+  QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
+  QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(!d.getDigitalInputValue(0, true, false).isValid());
+  ///QVERIFY(!d.getDigitalInputState(0, 0).isValid());
   QVERIFY(d.getDigitalOutputs(500) >= 0);
   d.start(100);
   while(dw.isVisible()){
@@ -416,7 +420,6 @@ void mdtDeviceTest::modbusWagoTest()
   QVERIFY(!d.getAnalogOutputValue(0x200, true, false).isValid());
   QVERIFY(d.setAnalogOutputValue(0, 2.5, true, true) >= 0);
   QVERIFY(d.getAnalogOutputValue(0x200, true, true).isValid());
-  qDebug() << "TEST analog out 0x200 (512): " << d.getAnalogOutputValue(0x200, true, true);
   QVERIFY(d.getAnalogOutputs(true) >= 0);
   QVERIFY(d.getAnalogOutputValue(0x200, false, false).isValid());
   MDT_COMPARE(d.getAnalogOutputValue(0x200, false, false).valueDouble(), 2.5, 12, -10.0, 10.0);
@@ -437,23 +440,54 @@ void mdtDeviceTest::modbusWagoTest()
   MDT_COMPARE(d.getAnalogOutputValue("AO2", true, true).valueDouble(), 2.5, 12, -10.0, 10.0);
 
   // Digital inputs
-  QVERIFY(!d.getDigitalInputState(0x200, 0).isValid());
+  QVERIFY(!d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(d.getDigitalInputValue(0, true, true).isValid());
+  QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
+  QVERIFY(!d.getDigitalInputValue(0, true, false).isValid());
+  QVERIFY(d.getDigitalInputs(true) >= 0);
+  QVERIFY(d.getDigitalInputValue(0, false, false).isValid());
+  
+  ///QVERIFY(!d.getDigitalInputState(0x200, 0).isValid());
   ///QVERIFY(d.getDigitalInputState(0, 500).isValid());
   ///QTest::qWait(500);
-  qDebug() << "State: " << d.getDigitalInputState(0, 500);
 
   // Digital outputs
-  QVERIFY(!d.getDigitalOutputState(0x200, 0).isValid());
-  QVERIFY(d.getDigitalOutputState(0x200, 500).isValid());
+  QVERIFY(!d.getDigitalOutputValue(0x200, false, false).isValid());
+  QVERIFY(d.getDigitalOutputValue(0x200, true, true).isValid());
+  QVERIFY(d.getDigitalOutputValue(0x200, false, false).isValid());
+  QVERIFY(!d.getDigitalOutputValue(0x200, true, false).isValid());
+  QVERIFY(d.getDigitalOutputs(true) >= 0);
+  QVERIFY(d.getDigitalOutputValue(0x200, false, false).isValid());
+  QVERIFY(d.setDigitalOutputValue(0, true, true, true) >= 0);
+  QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), true);
+  QVERIFY(d.setDigitalOutputValue(0, false, true, true) >= 0);
+  QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), false);
+  QVERIFY(d.setDigitalOutputValue("DO1", true, true, true) >= 0);
+  QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), true);
+  QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), true);
+  QVERIFY(d.setDigitalOutputValue("DO1", false, true, true) >= 0);
+  QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), false);
+  QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), false);
+  ///QVERIFY(!d.getDigitalOutputState(0x200, 0).isValid());
+  ///qDebug() << "TEST , getDigitalOutputState() ...";
+  ///QVERIFY(d.getDigitalOutputState(0x200, 500).isValid());
   // Grouped query
-  QVERIFY(d.setDigitalOutputState(0, true, false, false) == 0);
-  QVERIFY(d.setDigitalOutputState("DO2", true, false, false) == 0);
-  QVERIFY(d.setDigitalOutputState(8, true, false, false) == 0);
-  QVERIFY(d.setDigitalOutputs(500) >= 0);
+  QVERIFY(d.setDigitalOutputValue(0, true, false, false) == 0);
+  QVERIFY(d.setDigitalOutputValue("DO2", true, false, false) == 0);
+  QVERIFY(d.setDigitalOutputs(true) >= 0);
+  QCOMPARE(d.getDigitalOutputValue("DO1", true, true).valueBool(), true);
+  QCOMPARE(d.getDigitalOutputValue(0x200, true, true).valueBool(), true);
+
+  
+  ///QVERIFY(d.setDigitalOutputState(0, true, false, false) == 0);
+  ///QVERIFY(d.setDigitalOutputState("DO2", true, false, false) == 0);
+  ///QVERIFY(d.setDigitalOutputState(8, true, false, false) == 0);
+
+  
 
   ///QVERIFY(d.getDigitalInputs(500) >= 0);
-  QVERIFY(d.getAnalogOutputs(500) >= 0);
-  QVERIFY(d.getDigitalOutputs(500) >= 0);
+  ///QVERIFY(d.getAnalogOutputs(500) >= 0);
+  ///QVERIFY(d.getDigitalOutputs(500) >= 0);
   ///d.start(100);
   while(dw.isVisible()){
     QTest::qWait(1000);

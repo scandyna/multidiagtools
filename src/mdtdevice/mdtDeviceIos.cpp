@@ -119,6 +119,16 @@ int mdtDeviceIos::analogInputsCount() const
   return pvAnalogInputs.size();
 }
 
+void mdtDeviceIos::setAnalogInputsValue(const mdtValue &value)
+{
+  int i;
+
+  for(i=0; i<pvAnalogInputs.size(); ++i){
+    Q_ASSERT(pvAnalogInputs.at(i) != 0);
+    pvAnalogInputs.at(i)->setValue(value);
+  }
+}
+
 void mdtDeviceIos::addAnalogOutput(mdtAnalogIo *ao)
 {
   Q_ASSERT(ao != 0);
@@ -190,21 +200,19 @@ QList<int> mdtDeviceIos::analogOutputsValuesIntByAddressWrite() const
   aos = pvAnalogOutputsByAddressWrite.values();
   for(i=0; i<aos.size(); i++){
     Q_ASSERT(aos.at(i) != 0);
-    ///values.append(aos.at(i)->valueInt());
     values.append(aos.at(i)->value().valueInt());
   }
 
   return values;
 }
 
-/// \todo Update to mdtValue
-void mdtDeviceIos::setAnalogOutputsValue(QVariant value)
+void mdtDeviceIos::setAnalogOutputsValue(const mdtValue &value)
 {
   int i;
 
   for(i=0; i<pvAnalogOutputs.size(); ++i){
     Q_ASSERT(pvAnalogOutputs.at(i) != 0);
-    pvAnalogOutputs.at(i)->setValue(value.toDouble(), false);
+    pvAnalogOutputs.at(i)->setValue(value, false);
   }
 }
 
@@ -252,6 +260,16 @@ int mdtDeviceIos::digitalInputsFirstAddress() const
 int mdtDeviceIos::digitalInputsCount() const
 {
   return pvDigitalInputs.size();
+}
+
+void mdtDeviceIos::setDigitalInputsValue(const mdtValue &value)
+{
+  int i;
+
+  for(i=0; i<pvDigitalInputs.size(); ++i){
+    Q_ASSERT(pvDigitalInputs.at(i) != 0);
+    pvDigitalInputs.at(i)->setValue(value);
+  }
 }
 
 void mdtDeviceIos::addDigitalOutput(mdtDigitalIo *dout)
@@ -316,6 +334,16 @@ int mdtDeviceIos::digitalOutputsCount() const
   return pvDigitalOutputs.size();
 }
 
+void mdtDeviceIos::setDigitalOutputsValue(const mdtValue &value)
+{
+  int i;
+
+  for(i=0; i<pvDigitalOutputs.size(); ++i){
+    Q_ASSERT(pvDigitalOutputs.at(i) != 0);
+    pvDigitalOutputs.at(i)->setValue(value);
+  }
+}
+
 QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
 {
   QList<bool> states;
@@ -325,7 +353,6 @@ QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
   dos = pvDigitalOutputsByAddressWrite.values();
   for(i=0; i<dos.size(); i++){
     Q_ASSERT(dos.at(i) != 0);
-    ///states.append(dos.at(i)->isOn());
     states.append(dos.at(i)->value().valueBool());
   }
 
@@ -360,7 +387,6 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
   }
 }
 
-/// \todo Update to mdtValue
 void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
 {
   int i, max;
@@ -373,7 +399,6 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
     var = values.at(i);
-    qDebug() << "mdtDeviceIos::updateAnalogOutputValues() var: " << var;
     switch(var.type()){
       case QVariant::Double:
         lst.at(i)->setValue(var.toDouble(), false);
@@ -387,7 +412,6 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
       default:
         lst.at(i)->setValue(var.value<mdtValue>(), false);
     }
-    qDebug() << "mdtDeviceIos::updateAnalogOutputValues() I/O address: " << lst.at(i)->addressRead() << " , value: " << lst.at(i)->value();
   }
 }
 
@@ -401,8 +425,7 @@ void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
   }
 }
 
-/// \todo move to mdtValue
-void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
+void mdtDeviceIos::updateDigitalInputValues(const QList<QVariant> &values)
 {
   int i, max;
   QList<mdtDigitalIo*> lst;
@@ -412,12 +435,11 @@ void mdtDeviceIos::updateDigitalInputStates(const QList<QVariant> &values)
   max = qMin(values.size(), lst.size());
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    ///lst.at(i)->setOn(values.at(i), false);
     lst.at(i)->setValue(values.at(i).toBool(), false);
   }
 }
 
-void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
+void mdtDeviceIos::updateDigitalOutputValues(const QList<QVariant> &values)
 {
   int i, max;
   QList<mdtDigitalIo*> lst;
@@ -427,7 +449,16 @@ void mdtDeviceIos::updateDigitalOutputStates(const QList<QVariant> &values)
   max = qMin(values.size(), lst.size());
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    ///lst.at(i)->setOn(values.at(i), false);
     lst.at(i)->setValue(values.at(i).toBool(), false);
+  }
+}
+
+void mdtDeviceIos::setDigitalOutputsEnabled(bool enabled)
+{
+  int i;
+
+  for(i=0; i<pvDigitalOutputs.size(); ++i){
+    Q_ASSERT(pvDigitalOutputs.at(i) != 0);
+    pvDigitalOutputs.at(i)->setEnabled(enabled);
   }
 }

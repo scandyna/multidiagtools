@@ -119,6 +119,10 @@ class mdtDeviceIos : public QObject
    */
   int analogInputsCount() const;
 
+  /*! \brief Set a value and validity for all analog inputs
+   */
+  void setAnalogInputsValue(const mdtValue &value);
+
   /*! \brief Add a analog output
    *
    * \pre ao must be a valid pointer
@@ -172,7 +176,7 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Set a value and validity for all analog outputs
    */
-  void setAnalogOutputsValue(QVariant value);
+  void setAnalogOutputsValue(const mdtValue &value);
 
   /*! \brief Add a digital input
    *
@@ -209,6 +213,10 @@ class mdtDeviceIos : public QObject
   /*! \brief Get the number of digital inputs
    */
   int digitalInputsCount() const;
+
+  /*! \brief Set a value and validity for all digital inputs
+   */
+  void setDigitalInputsValue(const mdtValue &value);
 
   /*! \brief Add a digital output
    *
@@ -257,6 +265,10 @@ class mdtDeviceIos : public QObject
    */
   int digitalOutputsCount() const;
 
+  /*! \brief Set a value and validity for all digital outputs
+   */
+  void setDigitalOutputsValue(const mdtValue &value);
+
   /*! \brief Get all digital outputs states sorted by address for write access
    */
   QList<bool> digitalOutputsStatesByAddressWrite() const;
@@ -294,7 +306,7 @@ class mdtDeviceIos : public QObject
    *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned input will be set invalid.
    */
-  void updateDigitalInputStates(const QList<QVariant> &values);
+  void updateDigitalInputValues(const QList<QVariant> &values);
 
   /*! \brief Update (G)UI's state for a set of digital outputs
    *
@@ -303,7 +315,11 @@ class mdtDeviceIos : public QObject
    *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned input will be set invalid.
    */
-  void updateDigitalOutputStates(const QList<QVariant> &values);
+  void updateDigitalOutputValues(const QList<QVariant> &values);
+
+  /*! \brief Enable/disable (G)UI's digital outputs
+   */
+  void setDigitalOutputsEnabled(bool enabled);
 
  private:
 

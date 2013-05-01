@@ -405,7 +405,7 @@ bool mdtFrameCodecModbus::decodeReadCoils()
   }
   // Get the values
   for(i=2; i<pvPdu.size(); i++){
-    qDebug() << "RD coils, PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);
+    ///qDebug() << "RD coils, PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);
     appendValuesBitsFromByte(pvPdu.at(i));
   }
 
@@ -434,6 +434,7 @@ bool mdtFrameCodecModbus::decodeReadDiscreteInputs()
     e.commit();
     return false;
   }
+  ///qDebug() << "PDU[1] (BytesCount): 0x" << hex << (int)pvPdu.at(1);
   // Get the values
   for(i=2; i<pvPdu.size(); i++){
     ///qDebug() << "PDU[" << i << "]: 0x" << hex << (int)pvPdu.at(i);

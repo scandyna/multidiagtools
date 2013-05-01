@@ -81,13 +81,13 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
     analogOutputs = pvIos->analogOutputs();
     for(i=0; i<analogOutputs.size(); i++){
       Q_ASSERT(analogOutputs.at(i) != 0);
-      ///disconnect(analogOutputs.at(i), SIGNAL(valueChanged(int)), this, SLOT(setAnalogOutputValue(int)));
       disconnect(analogOutputs.at(i), SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
     }
     digitalOutputs = pvIos->digitalOutputs();
     for(i=0; i<digitalOutputs.size(); i++){
       Q_ASSERT(digitalOutputs.at(i) != 0);
-      disconnect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
+      ///disconnect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
+      disconnect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
     }
     if(pvIos != ios){
       pvIos->deleteIos();
@@ -100,13 +100,13 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
     analogOutputs = pvIos->analogOutputs();
     for(i=0; i<analogOutputs.size(); i++){
       Q_ASSERT(analogOutputs.at(i) != 0);
-      ///connect(analogOutputs.at(i), SIGNAL(valueChanged(int)), this, SLOT(setAnalogOutputValue(int)));
       connect(analogOutputs.at(i), SIGNAL(valueChanged(mdtAnalogIo*)), this, SLOT(setAnalogOutputValue(mdtAnalogIo*)));
     }
     digitalOutputs = pvIos->digitalOutputs();
     for(i=0; i<digitalOutputs.size(); i++){
       Q_ASSERT(digitalOutputs.at(i) != 0);
-      connect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
+      ///connect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
+      connect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
     }
   }
 }
@@ -115,20 +115,6 @@ void mdtDevice::setBackToReadyStateTimeout(int timeout)
 {
   pvBackToReadyStateTimeout = timeout;
 }
-
-/**
-void mdtDevice::setAnalogOutputAddressOffset(int offset)
-{
-  pvAnalogOutputAddressOffset = offset;
-}
-*/
-
-/**
-void mdtDevice::setDigitalOutputAddressOffset(int offset)
-{
-  pvDigitalOutputAddressOffset = offset;
-}
-*/
 
 mdtPortManager *mdtDevice::portManager()
 {
@@ -147,74 +133,6 @@ void mdtDevice::stop()
   pvAutoQueryEnabled = false;
   pvQueryTimer->stop();
 }
-
-/**
-QVariant mdtDevice::getAnalogInputValue(int address, bool realValue, bool queryDevice, bool waitOnReply)
-{
-  int transactionId;
-  mdtAnalogIo *ai;
-  mdtPortTransaction *transaction;
-
-  if(pvIos == 0){
-    return QVariant();
-  }
-  // Get internal I/O object
-  ai = pvIos->analogInputAt(address);
-  if(ai == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return QVariant();
-  }
-  // Check if only cached value is requested
-  if(!queryDevice){
-    // Return value
-    if(realValue){
-      ///return QVariant(ai->value());
-      return QVariant(ai->value().valueDouble());
-    }else{
-      ///return QVariant(ai->valueInt());
-      return QVariant(ai->value().valueInt());
-    }
-  }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIo(ai, true);
-  transaction->setAddress(address);
-  // Send query
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = readAnalogInput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      /// \todo Restore transaction ???
-      return QVariant();
-    }
-    // Wait on result (use device's defined timeout)
-    if(!waitTransactionDone(transactionId)){
-      return QVariant();
-    }
-    // Return value
-    if(realValue){
-      ///return QVariant(ai->value());
-      return QVariant(ai->value().valueDouble());
-    }else{
-      ///return QVariant(ai->valueInt());
-      return QVariant(ai->value().valueInt());
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = readAnalogInput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-  }
-
-  return QVariant();
-}
-*/
-
 
 mdtValue mdtDevice::getAnalogInputValue(mdtAnalogIo *analogInput, bool queryDevice, bool waitOnReply)
 {
@@ -317,91 +235,25 @@ int mdtDevice::getAnalogInputs(bool waitOnReply)
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogInputs(transaction);
     if(transactionId < 0){
-      /// \todo Set analog inputs to invalid values
+      pvIos->setAnalogInputsValue(mdtValue());
       return transactionId;
     }
     // Wait on result (use device's defined timeout)
     if(!waitTransactionDone(transactionId)){
-      /// \todo Set analog inputs to invalid values
+      pvIos->setAnalogInputsValue(mdtValue());
       return -1;
     }
   }else{
     transaction->setQueryReplyMode(false);
     transactionId = readAnalogInputs(transaction);
     if(transactionId < 0){
-      /// \todo Set analog inputs to invalid values
+      pvIos->setAnalogInputsValue(mdtValue());
       return transactionId;
     }
   }
 
   return transactionId;
 }
-
-/// \todo move to mdtValue
-/**
-QVariant mdtDevice::getAnalogOutputValue(int address, int timeout, bool realValue)
-{
-  int transactionId;
-  mdtAnalogIo *ao;
-  mdtPortTransaction *transaction;
-
-  if(pvIos == 0){
-    return QVariant();
-  }
-  // Get internal I/O object
-  ao = pvIos->analogOutputAtAddressRead(address);
-  if(ao == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog input assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return QVariant();
-  }
-  // Check if only cached value is requested
-  if(timeout < 0){
-    // Return value
-    if(realValue){
-      ///return QVariant(ao->value());
-      return QVariant(ao->value().valueDouble());
-    }else{
-      ///return QVariant(ao->valueInt());
-      return QVariant(ao->value().valueInt());
-    }
-  }
-  // Get a transaction
-  transaction = getNewTransaction();
-  transaction->setIo(ao, false);
-  transaction->setAddress(address);
-  // Send query and wait if requested
-  if(timeout == 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = readAnalogOutput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-  }else{
-    transaction->setQueryReplyMode(true);
-    transactionId = readAnalogOutput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-    if(!waitTransactionDone(transactionId, timeout)){
-      return QVariant();
-    }
-    // Return value
-    if(realValue){
-      ///return QVariant(ao->value());
-      return QVariant(ao->value().valueDouble());
-    }else{
-      ///return QVariant(ao->valueInt());
-      return QVariant(ao->value().valueInt());
-    }
-  }
-
-  return QVariant();
-}
-*/
 
 mdtValue mdtDevice::getAnalogOutputValue(mdtAnalogIo *analogOutput, bool queryDevice, bool waitOnReply)
 {
@@ -503,93 +355,25 @@ int mdtDevice::getAnalogOutputs(bool waitOnReply)
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogOutputs(transaction);
     if(transactionId < 0){
-      /// \todo Update I/O values
+      pvIos->setAnalogOutputsValue(mdtValue());
       return transactionId;
     }
     // Wait on result (use device's defined timeout)
     if(!waitTransactionDone(transactionId)){
-      /// \todo Update I/O values
+      pvIos->setAnalogOutputsValue(mdtValue());
       return -1;
     }
   }else{
     transaction->setQueryReplyMode(false);
     transactionId = readAnalogOutputs(transaction);
     if(transactionId < 0){
-      /// \todo Update I/O values
+      pvIos->setAnalogOutputsValue(mdtValue());
       return transactionId;
     }
   }
 
   return transactionId;
 }
-
-/// \todo Update to mdtValue
-/**
-int mdtDevice::setAnalogOutputValue(int address, QVariant value, int timeout)
-{
-  int transactionId;
-  mdtAnalogIo *ao;
-  mdtPortTransaction *transaction;
-
-  if(pvIos == 0){
-    return -1;
-  }
-  // Get I/O object
-  ao = pvIos->analogOutputAtAddressWrite(address);
-  if(ao == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog output assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return -1;
-  }
-  // Check value and set it to I/O
-  
-  if(value.type() == QVariant::Int){
-    ao->setValueInt(value.toInt(), true, false);
-  }else if(value.type() == QVariant::Double){
-    ao->setValue(value.toDouble(), true, false);
-  }else{
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": invalid value for address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return -1;
-  }
-  
-  ao->setValue(value.toDouble(), false);
-  if(timeout < 0){
-    return 0;
-  }
-  // Disable I/O - Must be re-enabled by subclass once data are in
-  ao->setEnabled(false);
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIo(ao, false);
-  transaction->setAddress(address);
-  // Send query and wait if requested
-  if(timeout == 0){
-    transaction->setQueryReplyMode(false);
-    ///transactionId = writeAnalogOutput(ao->valueInt(), transaction);
-    transactionId = writeAnalogOutput(ao->value().valueInt(), transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(true);
-    ///transactionId = writeAnalogOutput(ao->valueInt(), transaction);
-    transactionId = writeAnalogOutput(ao->value().valueInt(), transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return -1;
-    }
-    if(!waitTransactionDone(transactionId, timeout)){
-      return -1;
-    }
-  }
-
-  return transactionId;
-}
-*/
 
 int mdtDevice::setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
@@ -690,19 +474,19 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
     transaction->setQueryReplyMode(true);
     transactionId = writeAnalogOutputs(transaction);
     if(transactionId < 0){
-      /// \todo Update I/Os on error
+      pvIos->setAnalogOutputsValue(mdtValue());
       return transactionId;
     }
     // Wait on result (use device's defined timeout)
     if(!waitTransactionDone(transactionId)){
-      /// \todo Update I/Os on error
+      pvIos->setAnalogOutputsValue(mdtValue());
       return -1;
     }
   }else{
     transaction->setQueryReplyMode(false);
     transactionId = writeAnalogOutputs(transaction);
     if(transactionId < 0){
-      /// \todo Update I/Os on error
+      pvIos->setAnalogOutputsValue(mdtValue());
       return transactionId;
     }
   }
@@ -710,7 +494,9 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
   return transactionId;
 }
 
+
 /// Move to mdtValue
+/**
 QVariant mdtDevice::getDigitalInputState(int address, int timeout)
 {
   int transactionId;
@@ -762,8 +548,89 @@ QVariant mdtDevice::getDigitalInputState(int address, int timeout)
 
   return QVariant();
 }
+*/
 
-int mdtDevice::getDigitalInputs(int timeout)
+mdtValue mdtDevice::getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply)
+{
+  Q_ASSERT(digitalInput != 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+
+  // Check if only cached value is requested
+  if(!queryDevice){
+    return digitalInput->value();
+  }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  transaction->setIo(digitalInput, true);
+  transaction->setAddress(digitalInput->addressRead());
+  // Send query and wait if requested
+  if(waitOnReply){
+    transaction->setQueryReplyMode(true);
+    transactionId = readDigitalInput(transaction);
+    if(transactionId < 0){
+      digitalInput->setValue(mdtValue());
+      return mdtValue();
+    }
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
+      digitalInput->setValue(mdtValue());
+      return mdtValue();
+    }
+    // Return value
+    return digitalInput->value();
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = readDigitalInput(transaction);
+    if(transactionId < 0){
+      digitalInput->setValue(mdtValue());
+      return mdtValue();
+    }
+  }
+
+  return mdtValue();
+}
+
+mdtValue mdtDevice::getDigitalInputValue(int address, bool queryDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalInput;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Get I/O object
+  digitalInput = pvIos->digitalInputAt(address);
+  if(digitalInput == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital input assigned to address " + QString::number(address), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return mdtValue();
+  }
+
+  return getDigitalInputValue(digitalInput, queryDevice, waitOnReply);
+}
+
+mdtValue mdtDevice::getDigitalInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalInput;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Get I/O object
+  digitalInput = pvIos->digitalInputWithLabelShort(labelShort);
+  if(digitalInput == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital input found with label short " + labelShort, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return mdtValue();
+  }
+
+  return getDigitalInputValue(digitalInput, queryDevice, waitOnReply);
+}
+
+int mdtDevice::getDigitalInputs(bool waitOnReply)
 {
   int transactionId;
   mdtPortTransaction *transaction;
@@ -778,28 +645,31 @@ int mdtDevice::getDigitalInputs(int timeout)
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
   // Send query and wait if requested
-  if(timeout >= 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = readDigitalInputs(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return transactionId;
-    }
-  }else{
+  if(waitOnReply){
     transaction->setQueryReplyMode(true);
     transactionId = readDigitalInputs(transaction);
     if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
+      pvIos->setDigitalInputsValue(mdtValue());
       return transactionId;
     }
-    if(!waitTransactionDone(transactionId, timeout)){
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
+      pvIos->setDigitalInputsValue(mdtValue());
       return -1;
+    }
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = readDigitalInputs(transaction);
+    if(transactionId < 0){
+      pvIos->setDigitalInputsValue(mdtValue());
+      return transactionId;
     }
   }
 
   return transactionId;
 }
 
+/**
 QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
 {
   int transactionId;
@@ -851,8 +721,89 @@ QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
 
   return QVariant();
 }
+*/
 
-int mdtDevice::getDigitalOutputs(int timeout)
+mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply)
+{
+  Q_ASSERT(digitalOutput != 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+
+  // Check if only cached state is requested
+  if(!queryDevice){
+    return digitalOutput->value();
+  }
+  // Get a new transaction
+  transaction = getNewTransaction();
+  transaction->setIo(digitalOutput, false);
+  transaction->setAddress(digitalOutput->addressRead());
+  // Send query and wait on result if requested
+  if(waitOnReply){
+    transaction->setQueryReplyMode(true);
+    transactionId = readDigitalOutput(transaction);
+    if(transactionId < 0){
+      digitalOutput->setValue(mdtValue());
+      return mdtValue();
+    }
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
+      digitalOutput->setValue(mdtValue());
+      return mdtValue();
+    }
+    // Return value
+    return digitalOutput->value();
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = readDigitalOutput(transaction);
+    if(transactionId < 0){
+      digitalOutput->setValue(mdtValue());
+      return mdtValue();
+    }
+  }
+
+  return mdtValue();
+}
+
+mdtValue mdtDevice::getDigitalOutputValue(int addressRead, bool queryDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalOutput;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Get I/O object
+  digitalOutput = pvIos->digitalOutputAtAddressRead(addressRead);
+  if(digitalOutput == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(addressRead), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return mdtValue();
+  }
+
+  return getDigitalOutputValue(digitalOutput, queryDevice, waitOnReply);
+}
+
+mdtValue mdtDevice::getDigitalOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalOutput;
+
+  if(pvIos == 0){
+    return mdtValue();
+  }
+  // Get I/O object
+  digitalOutput = pvIos->digitalOutputWithLabelShort(labelShort);
+  if(digitalOutput == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output found with label short " + labelShort, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return mdtValue();
+  }
+
+  return getDigitalOutputValue(digitalOutput, queryDevice, waitOnReply);
+}
+
+int mdtDevice::getDigitalOutputs(bool waitOnReply)
 {
   int transactionId;
   mdtPortTransaction *transaction;
@@ -867,22 +818,24 @@ int mdtDevice::getDigitalOutputs(int timeout)
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
   // Send query and wait if requested
-  if(timeout <= 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = readDigitalOutputs(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return transactionId;
-    }
-  }else{
+  if(waitOnReply){
     transaction->setQueryReplyMode(true);
     transactionId = readDigitalOutputs(transaction);
     if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
+      pvIos->setDigitalOutputsValue(mdtValue());
       return transactionId;
     }
-    if(!waitTransactionDone(transactionId, timeout)){
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
+      pvIos->setDigitalOutputsValue(mdtValue());
       return -1;
+    }
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = readDigitalOutputs(transaction);
+    if(transactionId < 0){
+      pvIos->setDigitalOutputsValue(mdtValue());
+      return transactionId;
     }
   }
 
@@ -890,7 +843,7 @@ int mdtDevice::getDigitalOutputs(int timeout)
 }
 
 
-
+/**
 int mdtDevice::setDigitalOutputState(int address, bool state, bool writeToDevice, bool waitOnReply)
 {
   int transactionId;
@@ -937,7 +890,91 @@ int mdtDevice::setDigitalOutputState(int address, bool state, bool writeToDevice
 
   return transactionId;
 }
+*/
 
+int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+{
+  Q_ASSERT(digitalOutput != 0);
+
+  int transactionId;
+  mdtPortTransaction *transaction;
+
+  digitalOutput->setValue(value, false);
+  if(!sendToDevice){
+    return 0;
+  }
+  // Disable I/O - Must be re-enabled by subclass once data are available or timeout
+  digitalOutput->setEnabled(false);
+  // Get a new transaction
+  transaction = getNewTransaction();
+  transaction->setIo(digitalOutput, false);
+  transaction->setAddress(digitalOutput->addressWrite());
+  // Send query
+  if(waitOnReply){
+    transaction->setQueryReplyMode(true);
+    transactionId = writeDigitalOutput(value.valueBool(), transaction);
+    if(transactionId < 0){
+      digitalOutput->setValue(mdtValue());
+      return -1;
+    }
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
+      digitalOutput->setValue(mdtValue());
+      return -1;
+    }
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = writeDigitalOutput(value.valueBool(), transaction);
+    if(transactionId < 0){
+      digitalOutput->setValue(mdtValue());
+      return -1;
+    }
+  }
+
+  return transactionId;
+}
+
+int mdtDevice::setDigitalOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalOutput;
+
+  if(pvIos == 0){
+    return -1;
+  }
+  // Get I/O object
+  digitalOutput = pvIos->digitalOutputAtAddressWrite(addressWrite);
+  if(digitalOutput == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(addressWrite), mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return -1;
+  }
+
+  return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
+}
+
+int mdtDevice::setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply)
+{
+  mdtDigitalIo *digitalOutput;
+
+  if(pvIos == 0){
+    return -1;
+  }
+  // Get I/O object
+  digitalOutput = pvIos->digitalOutputWithLabelShort(labelShort);
+  if(digitalOutput == 0){
+    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output found with label short " + labelShort, mdtError::Error);
+    MDT_ERROR_SET_SRC(e, "mdtDevice");
+    e.commit();
+    return -1;
+  }
+
+  return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
+}
+
+
+
+/**
 int mdtDevice::setDigitalOutputState(const QString &labelShort, bool state, bool writeToDevice, bool waitOnReply)
 {
   mdtDigitalIo *dout;
@@ -953,9 +990,10 @@ int mdtDevice::setDigitalOutputState(const QString &labelShort, bool state, bool
 
   return setDigitalOutputState(dout->addressWrite(), state, writeToDevice, waitOnReply);
 }
+*/
 
 
-int mdtDevice::setDigitalOutputs(int timeout)
+int mdtDevice::setDigitalOutputs(bool waitOnReply)
 {
   int transactionId;
   mdtPortTransaction *transaction;
@@ -963,26 +1001,30 @@ int mdtDevice::setDigitalOutputs(int timeout)
   if(pvIos == 0){
     return -1;
   }
+  // Disable I/Os - Must be re-enabled by subclass once data are in
+  pvIos->setDigitalOutputsEnabled(false);
   // Get a new transaction
   transaction = getNewTransaction();
   transaction->setForMultipleIos(true);
   // Send query and wait if requested
-  if(timeout <= 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = writeDigitalOutputs(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return transactionId;
-    }
-  }else{
+  if(waitOnReply){
     transaction->setQueryReplyMode(true);
     transactionId = writeDigitalOutputs(transaction);
     if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
+      pvIos->setDigitalOutputsValue(mdtValue());
       return transactionId;
     }
-    if(!waitTransactionDone(transactionId, timeout)){
+    // Wait on result (use device's defined timeout)
+    if(!waitTransactionDone(transactionId)){
+      pvIos->setDigitalOutputsValue(mdtValue());
       return -1;
+    }
+  }else{
+    transaction->setQueryReplyMode(false);
+    transactionId = writeDigitalOutputs(transaction);
+    if(transactionId < 0){
+      pvIos->setDigitalOutputsValue(mdtValue());
+      return transactionId;
     }
   }
 
@@ -993,33 +1035,6 @@ mdtDevice::state_t mdtDevice::state() const
 {
   return pvCurrentState;
 }
-
-/// \todo We double search I/O object, could be splitted ?
-/**
-void mdtDevice::setAnalogOutputValue(int address)
-{
-  mdtAnalogIo *ao;
-
-  if(pvIos == 0){
-    return;
-  }
-  if(pvCurrentState != Ready){
-    // Device busy, cannot threat query , try later
-    return;
-  }
-  // Get I/O object
-  ao = pvIos->analogOutputAtAddressWrite(address);
-  if(ao == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no analog output assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return;
-  }
-  // Send query
-  ///setAnalogOutputValue(address, ao->valueInt(), 0);
-  setAnalogOutputValue(address, ao->value().valueInt(), 0);
-}
-*/
 
 void mdtDevice::setAnalogOutputValue(mdtAnalogIo* analogOutput)
 {
@@ -1032,6 +1047,7 @@ void mdtDevice::setAnalogOutputValue(mdtAnalogIo* analogOutput)
   setAnalogOutputValue(analogOutput, analogOutput->value(), true, false);
 }
 
+/**
 void mdtDevice::setDigitalOutputState(int address)
 {
   mdtDigitalIo *dout;
@@ -1055,6 +1071,20 @@ void mdtDevice::setDigitalOutputState(int address)
   ///setDigitalOutputState(address, dout->isOn(), true, false);
   setDigitalOutputState(address, dout->value().valueBool(), true, false);
 }
+*/
+
+
+void mdtDevice::setDigitalOutputValue(mdtDigitalIo* digitalOutput)
+{
+  Q_ASSERT(digitalOutput != 0);
+
+  if(pvCurrentState != Ready){
+    // Device busy, cannot threat query , try later
+    return;
+  }
+  setDigitalOutputValue(digitalOutput, digitalOutput->value(), true, false);
+}
+
 
 void mdtDevice::runQueries()
 {

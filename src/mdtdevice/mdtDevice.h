@@ -178,29 +178,6 @@ class mdtDevice : public QObject
    */
   void stop();
 
-
-  /*! \brief Get analog input value
-   *
-   * Once result is available, the internal analog input is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
-   * \param realValue If true, the real value (as double) is returned, else the device's specific integer value
-   *                   (see mdtAnalogIo::value() for details).
-   * \param queryDevice If true, value is readen from device by calling readAnalogInput(), else cached value is returned.
-   *                      Behaviour of this method can vary, depending on device specific subclass.
-   *                      (See sublcass readAnalogInput() for details).
-   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * 
-   * \return A valid value if timeout is > 0 and on successfull query/reply process.
-   *          (See the Qt's QVariant documentation to know how to check validity).
-   */
-  ///QVariant getAnalogInputValue(int address, bool realValue, bool queryDevice, bool waitOnReply);
-
-  
   /*! \brief Get analog input value
    *
    * Get device or internal analog value.
@@ -253,32 +230,6 @@ class mdtDevice : public QObject
    */
   int getAnalogInputs(bool waitOnReply);
 
-  
-  /*! \brief Read one analog output on physical device and update (G)UI representation
-   *
-   * Will call readAnalogOutput(), witch also sends the request to device.
-   *  Depending on result, device's state can be updated.
-   *
-   * Behaviour of this method can vary, depending on device specific subclass.
-   *  (See sublcass readAnalogOutput() for details).
-   *
-   * Once result is available, the internal analog output is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 If < 0, no query is sent to device and cached value is returned.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
-   * \param realValue If true, the real value (as double) is returned, else the device's specific integer value
-   *                   (see mdtAnalogIo::value() for details).
-   * \return A valid value if timeout is > 0 and on successfull query/reply process.
-   *          (See the Qt's QVariant documentation to know how to check validity).
-   */
-  ///QVariant getAnalogOutputValue(int address, int timeout, bool realValue = true);
-
   /*! \brief Get analog output value
    *
    * Get device or internal analog value.
@@ -302,7 +253,7 @@ class mdtDevice : public QObject
    *
    * \param addressRead Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
+   *                 a output number, etc...
    */
   mdtValue getAnalogOutputValue(int addressRead, bool queryDevice, bool waitOnReply);
 
@@ -331,32 +282,6 @@ class mdtDevice : public QObject
    */
   int getAnalogOutputs(bool waitOnReply);
 
-  
-  
-  /*! \brief Write one analog output to physical device and update (G)UI representation
-   *
-   * Will call writeAnalogOutput(), witch also sends the request to device.
-   *  Depending on result, device's state can be updated.
-   *
-   * Behaviour of this method can vary, depending on device specific subclass.
-   *  (See sublcass writeAnalogOutput() for details).
-   *
-   * Once result is available, the internal analog output is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 If < 0, the analog output is updated, but no query is sent to device.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
-   * \param value The value to set. If type is a integer, value will be passed as is.
-   *               If type is bool, it will be converted by mdtAnalogIo.
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a output number, etc...
-   * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
-   */
-  ///int setAnalogOutputValue(int address, QVariant value, int timeout);
-
   /*! \brief Set analog output value
    *
    * Set device or internal analog value.
@@ -380,7 +305,7 @@ class mdtDevice : public QObject
    *
    * \param addressWrite Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
+   *                 a output number, etc...
    */
   int setAnalogOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply);
 
@@ -413,30 +338,40 @@ class mdtDevice : public QObject
    */
   int setAnalogOutputs(bool waitOnReply);
 
-  
-  
-  /*! \brief Read one digital input on physical device and update (G)UI representation
+  /*! \brief Get digital input value
    *
-   * Will call readDigitalInput(), witch also sends the request to device.
-   *  Depending on result, device's state can be updated.
+   * Get device or internal digital value.
+   *  Internal value is updated if queryDevice is set.
    *
-   * Behaviour of this method can vary, depending on device specific subclass.
-   *  (See sublcass readDigitalInput() for details).
+   * \param digitalInput Pointer to a digital input.
+   * \param queryDevice If true, value is readen from device by calling readDigitalInput(), else cached value is returned.
+   *                      Behaviour of this method can vary, depending on device specific subclass.
+   *                      (See sublcass readDigitalInput() for details).
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
+   * \return A mdtValue with valueBool. See mdtValue documentation for details about validity and other flags.
+   * \pre digitalInput must be valid.
+   */
+  ///QVariant getDigitalInputState(int address, int timeout);
+  mdtValue getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get digital input value
    *
-   * Once result is available, the internal digital input is updated.
-   *  (See mdtDeviceIos for details).
+   * \overload getDigitalInputValue(mdtDigitalIo*, bool, bool)
    *
    * \param address Depending on device organisation and protocol,
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a input number, etc...
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 If < 0, no query will be sent to device and the cached state is returned.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
-   * \return A valid state if timeout is > 0 and on successfull query/reply process.
-   *          (See the Qt's QVariant documentation to know how to check validity).
    */
-  QVariant getDigitalInputState(int address, int timeout);
+  mdtValue getDigitalInputValue(int address, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get digital input value
+   *
+   * \overload getDigitalInputValue(mdtDigitalIo*, bool, bool)
+   *
+   * \param labelShort Short label set in I/O (see mdtDigitalIo for details).
+   */
+  mdtValue getDigitalInputValue(const QString &labelShort, bool queryDevice, bool waitOnReply);
 
   /*! \brief Read all digital inputs on physical device and update (G)UI representation
    *
@@ -449,35 +384,43 @@ class mdtDevice : public QObject
    * Once results are available, the internal digital inputs are updated.
    *  (See mdtDeviceIos for details).
    *
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
    * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
    */
-  int getDigitalInputs(int timeout);
+  int getDigitalInputs(bool waitOnReply);
 
-  /*! \brief Read one digital output on physical device and update (G)UI representation
+  /*! \brief Get digital output value
    *
-   * Will call readDigitalOutput(), witch also sends the request to device.
-   *  Depending on result, device's state can be updated.
-   *
-   * Behaviour of this method can vary, depending on device specific subclass.
-   *  (See sublcass readDigitalOutput() for details).
-   *
-   * Once result is available, the internal digital output is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 If < 0, no query will be sent to device and the cached state is returned.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
-   * \return A valid state if timeout is > 0 and on successfull query/reply process.
-   *          (See the Qt's QVariant documentation to know how to check validity).
+   * \param digitalOutput Pointer to a digital output.
+   * \param queryDevice If true, value is readen from device by calling readDigitalOutput(), else cached value is returned.
+   *                      Behaviour of this method can vary, depending on device specific subclass.
+   *                      (See sublcass readDigitalOutput() for details).
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
+   * \return A mdtValue with valueBool. See mdtValue documentation for details about validity and other flags.
+   * \pre digitalOutput must be valid.
    */
-  QVariant getDigitalOutputState(int address, int timeout);
+  ///QVariant getDigitalOutputState(int address, int timeout);
+  mdtValue getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get digital output value
+   *
+   * \overload getDigitalOutputValue(mdtDigitalIo*, bool, bool)
+   *
+   * \param addressRead Depending on device organisation and protocol,
+   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
+   *                 a output number, etc...
+   */
+  mdtValue getDigitalOutputValue(int addressRead, bool queryDevice, bool waitOnReply);
+
+  /*! \brief Get digital output value
+   *
+   * \overload getDigitalOutputValue(mdtDigitalIo*, bool, bool)
+   *
+   * \param labelShort Short label set in I/O (see mdtDigitalIo for details).
+   */
+  mdtValue getDigitalOutputValue(const QString &labelShort, bool queryDevice, bool waitOnReply);
 
   /*! \brief Read all digital outputs on physical device and update (G)UI representation
    *
@@ -490,33 +433,56 @@ class mdtDevice : public QObject
    * Once results are available, the internal digital outputs are updated.
    *  (See mdtDeviceIos for details).
    *
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
    * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
    */
-  int getDigitalOutputs(int timeout);
+  int getDigitalOutputs(bool waitOnReply);
 
   
   
-  /*! \brief Set a digital output state
+  
+  
+  
+  /*! \brief Set a digital output value
    *
-   * Once result is available, the internal digital output is updated.
-   *  (See mdtDeviceIos for details).
+   * Set device or internal digital value.
+   *  Internal value is updated if queryDevice is set.
    *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a input number, etc...
-   * \param state State to set (ON/OFF).
-   * \param writeToDevice If true, value is written to device by calling writeDigitalOutput(), else state is only cached.
+   * \param digitalOutput Pointer to a digital output object.
+   * \param value Value to send/store.
+   * \param sendToDevice If true, value is sent device by calling writeDigitalOutput(), else value is only cached.
    *                      Behaviour of this method can vary, depending on device specific subclass.
    *                      (See sublcass writeDigitalOutput() for details).
    * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
    *                     else it will return immediately after the query was sent.
    * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
+   * \pre digitalOutput must be valid.
    */
-  int setDigitalOutputState(int address, bool state, bool writeToDevice, bool waitOnReply);
+  ///int setDigitalOutputState(int address, bool state, bool writeToDevice, bool waitOnReply);
+  int setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply);
 
+  /*! \brief Set digital output value
+   *
+   * \overload setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
+   *
+   * \param addressWrite Depending on device organisation and protocol,
+   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
+   *                 a output number, etc...
+   */
+  int setDigitalOutputValue(int addressWrite, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+
+  /*! \brief Set digital output value
+   *
+   * \overload setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool)
+   *
+   * \param labelShort Short label set in I/O (see mdtDigitalIo for details).
+   */
+  int setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply);
+
+  
+  
+  
   /*! \brief Set a digital output state
    *
    * Once result is available, the internal digital output is updated.
@@ -531,7 +497,7 @@ class mdtDevice : public QObject
    *                     else it will return immediately after the query was sent.
    * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
    */
-  int setDigitalOutputState(const QString &labelShort, bool state, bool writeToDevice, bool waitOnReply);
+  ///int setDigitalOutputState(const QString &labelShort, bool state, bool writeToDevice, bool waitOnReply);
 
   
   
@@ -550,39 +516,18 @@ class mdtDevice : public QObject
    * Once results are available, the internal digital outputs are updated.
    *  (See mdtDeviceIos for details).
    *
-   * \param timeout If 0, the request is sent and this method returns immediately.
-   *                 Else it will wait until a reply comes in, or timeout.
-   *                 (See waitTransactionDone() ).
+   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
+   *                     else it will return immediately after the query was sent.
    * \return 0 or a ID on success. If no I/O's are set, on timeout ar other error, a value < 0 is returned.
    */
-  int setDigitalOutputs(int timeout);
+  int setDigitalOutputs(bool waitOnReply);
 
+  
   /*! \brief Get device state
    */
   state_t state() const;
 
  public slots:
-
-  /*! \brief Set value on a analog output on physical device
-   *
-   * Checks device's state and send request if Ready.
-   *
-   * This slot is used by mdtDeviceIos to notify that a value has changed.
-   *
-   * Will call writeAnalogOutput(), witch also sends the request to device.
-   *  Depending on result, device's state can be updated.
-   *
-   * Behaviour of this method can vary, depending on device specific subclass.
-   *  (See sublcass writeAnalogOutput() for details).
-   *
-   * Once result is available, the internal analog output is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a output number, etc...
-   */
-  ///void setAnalogOutputValue(int address);
 
   /*! \brief Set value on a analog output on physical device
    *
@@ -613,8 +558,21 @@ class mdtDevice : public QObject
    *                 this can be a relative or absolute address (f.ex. MODBUS queries),
    *                 a output number, etc...
    */
-  void setDigitalOutputState(int address);
+  ///void setDigitalOutputState(int address);
 
+  
+  /*! \brief Set value on a digital output on physical device
+   *
+   * Checks device's state and send request if Ready.
+   *
+   * This slot is used by mdtDeviceIos to notify that a value has changed.
+   *
+   * See setDigitalOutputValue(mdtDigitalIo*, const mdtValue&, bool, bool) for details.
+   */
+  void setDigitalOutputValue(mdtDigitalIo* digitalOutput);
+
+  
+  
   /*! \brief Queries to send periodically
    *
    * This slot is periodically called after a call of start().
