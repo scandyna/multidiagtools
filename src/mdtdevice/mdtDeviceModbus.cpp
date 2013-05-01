@@ -414,6 +414,7 @@ int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transactio
 
   // Setup MODBUS PDU
   ///pdu = pvCodec->encodeWriteSingleRegister(transaction->address() + pvAnalogOutputAddressOffset, value);
+  qDebug() << "mdtDeviceModbus::writeAnalogOutput() adr: " << transaction->address() << " , value (INT): " << value;
   pdu = pvCodec->encodeWriteSingleRegister(transaction->address(), value);
   if(pdu.isEmpty()){
     return -1;

@@ -599,8 +599,8 @@ int mdtDevice::setAnalogOutputValue(mdtAnalogIo *analogOutput, const mdtValue &v
   mdtPortTransaction *transaction;
 
   // Store value
+  analogOutput->setValue(value, false);
   if(!sendToDevice){
-    analogOutput->setValue(value, false);
     return 0;
   }
   // Disable I/O - Must be re-enabled by subclass once data are available or timeout
