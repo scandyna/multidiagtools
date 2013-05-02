@@ -86,7 +86,6 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
     digitalOutputs = pvIos->digitalOutputs();
     for(i=0; i<digitalOutputs.size(); i++){
       Q_ASSERT(digitalOutputs.at(i) != 0);
-      ///disconnect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
       disconnect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
     }
     if(pvIos != ios){
@@ -105,7 +104,6 @@ void mdtDevice::setIos(mdtDeviceIos *ios, bool autoOutputUpdate)
     digitalOutputs = pvIos->digitalOutputs();
     for(i=0; i<digitalOutputs.size(); i++){
       Q_ASSERT(digitalOutputs.at(i) != 0);
-      ///connect(digitalOutputs.at(i), SIGNAL(stateChanged(int)), this, SLOT(setDigitalOutputState(int)));
       connect(digitalOutputs.at(i), SIGNAL(valueChanged(mdtDigitalIo*)), this, SLOT(setDigitalOutputValue(mdtDigitalIo*)));
     }
   }
@@ -229,7 +227,7 @@ int mdtDevice::getAnalogInputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  transaction->setForMultipleIos(true);
+  ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -349,7 +347,7 @@ int mdtDevice::getAnalogOutputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  transaction->setForMultipleIos(true);
+  ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -468,7 +466,7 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
   pvIos->setAnalogOutputsEnabled(false);
   // Get a new transaction
   transaction = getNewTransaction();
-  transaction->setForMultipleIos(true);
+  ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -493,62 +491,6 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
 
   return transactionId;
 }
-
-
-/// Move to mdtValue
-/**
-QVariant mdtDevice::getDigitalInputState(int address, int timeout)
-{
-  int transactionId;
-  mdtDigitalIo *di;
-  mdtPortTransaction *transaction;
-
-  if(pvIos == 0){
-    return QVariant();
-  }
-  // Get I/O object
-  di = pvIos->digitalInputAt(address);
-  if(di == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital input assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return QVariant();
-  }
-  // Check if only cached state is requested
-  if(timeout < 0){
-    ///return QVariant(di->isOn());
-    return QVariant(di->value().valueBool());
-  }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIo(di, true);
-  transaction->setAddress(address);
-  // Send query and wait if requested
-  if(timeout == 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = readDigitalInput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-  }else{
-    transaction->setQueryReplyMode(true);
-    transactionId = readDigitalInput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-    if(!waitTransactionDone(transactionId, timeout)){
-      return QVariant();
-    }
-    // Return value
-    ///return QVariant(di->isOn());
-    return QVariant(di->value().valueBool());
-  }
-
-  return QVariant();
-}
-*/
 
 mdtValue mdtDevice::getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply)
 {
@@ -643,7 +585,7 @@ int mdtDevice::getDigitalInputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  transaction->setForMultipleIos(true);
+  ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -668,60 +610,6 @@ int mdtDevice::getDigitalInputs(bool waitOnReply)
 
   return transactionId;
 }
-
-/**
-QVariant mdtDevice::getDigitalOutputState(int address, int timeout)
-{
-  int transactionId;
-  mdtDigitalIo *dout;
-  mdtPortTransaction *transaction;
-
-  if(pvIos == 0){
-    return QVariant();
-  }
-  // Get I/O object
-  dout = pvIos->digitalOutputAtAddressRead(address);
-  if(dout == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return QVariant();
-  }
-  // Check if only cached state is requested
-  if(timeout < 0){
-    ///return QVariant(dout->isOn());
-    return QVariant(dout->value().valueBool());
-  }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIo(dout, false);
-  transaction->setAddress(address);
-  // Send query and wait on result if requested
-  if(timeout == 0){
-    transaction->setQueryReplyMode(false);
-    transactionId = readDigitalOutput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-  }else{
-    transaction->setQueryReplyMode(true);
-    transactionId = readDigitalOutput(transaction);
-    if(transactionId < 0){
-      ///setStateFromPortError(transactionId);
-      return QVariant();
-    }
-    if(!waitTransactionDone(transactionId, timeout)){
-      return QVariant();
-    }
-    // Return value
-    ///return QVariant(dout->isOn());
-    return QVariant(dout->value().valueBool());
-  }
-
-  return QVariant();
-}
-*/
 
 mdtValue mdtDevice::getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply)
 {
@@ -816,7 +704,9 @@ int mdtDevice::getDigitalOutputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  transaction->setForMultipleIos(true);
+  ///transaction->setForMultipleIos(true);
+  transaction->setAddress(pvIos->digitalOutputsFirstAddressRead());
+  transaction->setIoCount(pvIos->digitalOutputsCount());
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -841,56 +731,6 @@ int mdtDevice::getDigitalOutputs(bool waitOnReply)
 
   return transactionId;
 }
-
-
-/**
-int mdtDevice::setDigitalOutputState(int address, bool state, bool writeToDevice, bool waitOnReply)
-{
-  int transactionId;
-  mdtDigitalIo *dout;
-  mdtPortTransaction *transaction;
-
-  if(pvIos == 0){
-    return -1;
-  }
-  // Get I/O object
-  dout = pvIos->digitalOutputAtAddressWrite(address);
-  if(dout == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return -1;
-  }
-  ///dout->setOn(QVariant(state), false);
-  dout->setValue(state, false);
-  if(!writeToDevice){
-    return 0;
-  }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  transaction->setIo(dout, false);
-  transaction->setAddress(address);
-  // Send query
-  if(waitOnReply){
-    transaction->setQueryReplyMode(true);
-    transactionId = writeDigitalOutput(state, transaction);
-    if(transactionId < 0){
-      return -1;
-    }
-    if(!waitTransactionDone(transactionId)){
-      return -1;
-    }
-  }else{
-    transaction->setQueryReplyMode(false);
-    transactionId = writeDigitalOutput(state, transaction);
-    if(transactionId < 0){
-      return -1;
-    }
-  }
-
-  return transactionId;
-}
-*/
 
 int mdtDevice::setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply)
 {
@@ -972,27 +812,6 @@ int mdtDevice::setDigitalOutputValue(const QString &labelShort, const mdtValue &
   return setDigitalOutputValue(digitalOutput, value, sendToDevice, waitOnReply);
 }
 
-
-
-/**
-int mdtDevice::setDigitalOutputState(const QString &labelShort, bool state, bool writeToDevice, bool waitOnReply)
-{
-  mdtDigitalIo *dout;
-
-  if(pvIos == 0){
-    return -1;
-  }
-  // Get I/O object
-  dout = pvIos->digitalOutputWithLabelShort(labelShort);
-  if(dout == 0){
-    return -1;
-  }
-
-  return setDigitalOutputState(dout->addressWrite(), state, writeToDevice, waitOnReply);
-}
-*/
-
-
 int mdtDevice::setDigitalOutputs(bool waitOnReply)
 {
   int transactionId;
@@ -1005,7 +824,7 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
   pvIos->setDigitalOutputsEnabled(false);
   // Get a new transaction
   transaction = getNewTransaction();
-  transaction->setForMultipleIos(true);
+  ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -1047,33 +866,6 @@ void mdtDevice::setAnalogOutputValue(mdtAnalogIo* analogOutput)
   setAnalogOutputValue(analogOutput, analogOutput->value(), true, false);
 }
 
-/**
-void mdtDevice::setDigitalOutputState(int address)
-{
-  mdtDigitalIo *dout;
-
-  if(pvIos == 0){
-    return;
-  }
-  if(pvCurrentState != Ready){
-    // Device busy, cannot threat query , try later
-    return;
-  }
-  // Get I/O object
-  dout = pvIos->digitalOutputAtAddressWrite(address);
-  if(dout == 0){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": no digital output assigned to address " + QString::number(address), mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDevice");
-    e.commit();
-    return;
-  }
-  // Send query
-  ///setDigitalOutputState(address, dout->isOn(), true, false);
-  setDigitalOutputState(address, dout->value().valueBool(), true, false);
-}
-*/
-
-
 void mdtDevice::setDigitalOutputValue(mdtDigitalIo* digitalOutput)
 {
   Q_ASSERT(digitalOutput != 0);
@@ -1084,7 +876,6 @@ void mdtDevice::setDigitalOutputValue(mdtDigitalIo* digitalOutput)
   }
   setDigitalOutputValue(digitalOutput, digitalOutput->value(), true, false);
 }
-
 
 void mdtDevice::runQueries()
 {
@@ -1239,6 +1030,15 @@ void mdtDevice::setStateDisconnected()
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
   }
+  // Update I/Os
+  if(pvIos != 0){
+    pvIos->setAnalogInputsValue(mdtValue());
+    pvIos->setAnalogOutputsValue(mdtValue());
+    pvIos->setAnalogOutputsEnabled(false);
+    pvIos->setDigitalInputsValue(mdtValue());
+    pvIos->setDigitalOutputsValue(mdtValue());
+    pvIos->setDigitalOutputsEnabled(false);
+  }
   pvCurrentState = Disconnected;
   qDebug() << "mdtDevice: new state is Disconnected";
   emit(stateChanged(pvCurrentState));
@@ -1252,6 +1052,15 @@ void mdtDevice::setStateConnecting(/*const QString &message*/)
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
+  }
+  // Update I/Os
+  if(pvIos != 0){
+    pvIos->setAnalogInputsValue(mdtValue());
+    pvIos->setAnalogOutputsValue(mdtValue());
+    pvIos->setAnalogOutputsEnabled(false);
+    pvIos->setDigitalInputsValue(mdtValue());
+    pvIos->setDigitalOutputsValue(mdtValue());
+    pvIos->setDigitalOutputsEnabled(false);
   }
   // Thread will notify the ready (or disconnected) state, cancel retry timer
   pvBackToReadyStateTimer->stop();
@@ -1270,6 +1079,13 @@ void mdtDevice::setStateReady()
   if(pvAutoQueryEnabled){
     pvQueryTimer->start();
   }
+  // Update I/Os
+  if(pvIos != 0){
+    getAnalogInputs(true);
+    getAnalogOutputs(true);
+    getDigitalInputs(true);
+    getDigitalOutputs(true);
+  }
   pvCurrentState = Ready;
   qDebug() << "mdtDevice: new state is Ready";
   emit(stateChanged(pvCurrentState));
@@ -1283,6 +1099,15 @@ void mdtDevice::setStateBusy()
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
+  }
+  // Update I/Os
+  if(pvIos != 0){
+    pvIos->setAnalogInputsValue(mdtValue());
+    pvIos->setAnalogOutputsValue(mdtValue());
+    pvIos->setAnalogOutputsEnabled(false);
+    pvIos->setDigitalInputsValue(mdtValue());
+    pvIos->setDigitalOutputsValue(mdtValue());
+    pvIos->setDigitalOutputsEnabled(false);
   }
   pvCurrentState = Busy;
   qDebug() << "**** mdtDevice: new state is Busy";
@@ -1303,6 +1128,15 @@ void mdtDevice::setStateWarning()
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
   }
+  // Update I/Os
+  if(pvIos != 0){
+    pvIos->setAnalogInputsValue(mdtValue());
+    pvIos->setAnalogOutputsValue(mdtValue());
+    pvIos->setAnalogOutputsEnabled(false);
+    pvIos->setDigitalInputsValue(mdtValue());
+    pvIos->setDigitalOutputsValue(mdtValue());
+    pvIos->setDigitalOutputsEnabled(false);
+  }
   pvCurrentState = Warning;
   qDebug() << "mdtDevice: new state is Warning";
   emit(stateChanged(pvCurrentState));
@@ -1316,6 +1150,15 @@ void mdtDevice::setStateError()
   // Stop auto queries if running
   if(pvAutoQueryEnabled){
     pvQueryTimer->stop();
+  }
+  // Update I/Os
+  if(pvIos != 0){
+    pvIos->setAnalogInputsValue(mdtValue());
+    pvIos->setAnalogOutputsValue(mdtValue());
+    pvIos->setAnalogOutputsEnabled(false);
+    pvIos->setDigitalInputsValue(mdtValue());
+    pvIos->setDigitalOutputsValue(mdtValue());
+    pvIos->setDigitalOutputsEnabled(false);
   }
   pvCurrentState = Error;
   // Add a error

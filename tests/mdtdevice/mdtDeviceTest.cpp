@@ -198,6 +198,38 @@ void mdtDeviceTest::deviceIosTest()
   QCOMPARE(dIoList.size(), 2);
   QCOMPARE(ios.digitalOutputsFirstAddressRead(), 20);
   QCOMPARE(ios.digitalOutputsFirstAddressWrite(), 120);
+  // Check multiple digital outputs update - List contains the correct number of items
+  values.clear();
+  values << false << true;
+  ios.updateDigitalOutputValues(values, -1, -1);
+  QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
+  values.clear();
+  values << true;
+  ios.updateDigitalOutputValues(values, -1, 1);
+  QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
+  values.clear();
+  values << false;
+  ios.updateDigitalOutputValues(values, 30, 1);
+  QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
+  // Check multiple digital outputs update - List contains the to much items
+  values.clear();
+  values << false << true;
+  ios.updateDigitalOutputValues(values, -1, -1);
+  QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), false);
+  QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
+  values.clear();
+  values << true << false;
+  ios.updateDigitalOutputValues(values, -1, 1);
+  QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), true);
+  values.clear();
+  values << false << false;
+  ios.updateDigitalOutputValues(values, 30, 1);
+  QCOMPARE(ios.digitalOutputAtAddressRead(20)->value().valueBool(), true);
+  QCOMPARE(ios.digitalOutputAtAddressRead(30)->value().valueBool(), false);
 
 }
 

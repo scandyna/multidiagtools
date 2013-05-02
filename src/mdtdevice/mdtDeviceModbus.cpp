@@ -167,22 +167,30 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
   }
 
   int fc;
+  QVariant var;
 
   // Decode readen frame and update I/O's
   fc = pvCodec->decode(transaction.data());
   switch(fc){
     case 0x01:  // Read coils
+      ///qDebug() << "mdtDeviceModbus::decodeReadenFrame(): FC 0x01 (ReadCoils):\n->ADR: " << transaction.address() << " , I/O count: " << transaction.ioCount() << "\n-> values: " << pvCodec->values();
       // Check if we have just one or all outputs to update
-      if(transaction.forMultipleIos()){
-        pvIos->updateDigitalOutputValues(pvCodec->values());
+      if(transaction.ioCount() > 1){
+        // Transaction contains first I/O address (for read access) and qty of I/Os
+        pvIos->updateDigitalOutputValues(pvCodec->values(), transaction.address(), transaction.ioCount());
+        pvIos->setDigitalOutputsEnabled(true);
       }else{
         // Update digital input if present and decoded value if ok
         if(transaction.digitalIo() != 0){
-          if(pvCodec->values().size() == 8){  // If one DO was requested, 1 byte is returned with just first bit set
-            ///transaction.digitalIo()->setOn(pvCodec->values().at(0), false);
-            transaction.digitalIo()->setValue(pvCodec->values().at(0).toBool(), false);
+          // If one DO was requested, 1 byte is returned with just first bit set
+          if(pvCodec->values().size() == 8){
+            var = pvCodec->values().at(0);
+            if((var.isValid())&&(var.type() == QVariant::Bool)){
+              transaction.digitalIo()->setValue(var.toBool(), false);
+            }else{
+              transaction.digitalIo()->setValue(mdtValue(), false);
+            }
           }else{
-            ///transaction.digitalIo()->setOn(QVariant(), false);
             transaction.digitalIo()->setValue(mdtValue(), false);
           }
           transaction.digitalIo()->setEnabled(true);
@@ -191,9 +199,11 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
       break;
     case 0x02:  // Read discrete inputs
       // Check if we have just one or all inputs to update
+      /**
       if(transaction.forMultipleIos()){
         pvIos->updateDigitalInputValues(pvCodec->values());
       }else{
+        */
         // Update digital input if present and decoded value is ok
         if(transaction.digitalIo() != 0){
           if(pvCodec->values().size() == 8){  // If one DI was requested, 1 byte is returned with just first bit set
@@ -205,13 +215,15 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
             transaction.digitalIo()->setValue(mdtValue(), false);
           }
         }
-      }
+      ///}
       break;
     case 0x03:  // Read holding registers
       // Check if we have just one or all outputs to update
+      /**
       if(transaction.forMultipleIos()){
         pvIos->updateAnalogOutputValues(pvCodec->values());
       }else{
+        */
         // Update analog output if present and decoded value is ok
         if(transaction.analogIo() != 0){
           if(pvCodec->values().size() == 1){
@@ -221,13 +233,15 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
             transaction.analogIo()->setValue(mdtValue(), false);
           }
         }
-      }
+      ///}
       break;
     case 0x04:  // Read input registers
       // Check if we have just one or all inputs to update
+      /**
       if(transaction.forMultipleIos()){
         pvIos->updateAnalogInputValues(pvCodec->values());
       }else{
+        */
         // Update analog input if present and decoded value if Ok
         if(transaction.analogIo() != 0){
           if(pvCodec->values().size() == 1){
@@ -237,7 +251,7 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
             transaction.analogIo()->setValue(mdtValue(), false);
           }
         }
-      }
+      ///}
       break;
     case 0x05:  // Write single coil reply
       if(transaction.digitalIo() != 0){
@@ -458,6 +472,7 @@ int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
   ///pdu = pvCodec->encodeReadDiscreteInputs(pvDigitalOutputAddressOffset, pvIos->digitalInputsCount());
   ///pdu = pvCodec->encodeReadDiscreteInputs(0, pvIos->digitalInputsCount());
   pdu = pvCodec->encodeReadDiscreteInputs(pvIos->digitalInputsFirstAddress(), pvIos->digitalInputsCount());
+  ///pdu = pvCodec->encodeReadDiscreteInputs(transaction->address(), transaction->ioCount());
   if(pdu.isEmpty()){
     return -1;
   }
@@ -491,7 +506,8 @@ int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
 
   // Setup MODBUS PDU
   ///pdu = pvCodec->encodeReadCoils(pvDigitalOutputAddressOffset, pvIos->digitalOutputsCount());
-  pdu = pvCodec->encodeReadCoils(pvIos->digitalOutputsFirstAddressRead(), pvIos->digitalOutputsCount());
+  ///pdu = pvCodec->encodeReadCoils(pvIos->digitalOutputsFirstAddressRead(), pvIos->digitalOutputsCount());
+  pdu = pvCodec->encodeReadCoils(transaction->address(), transaction->ioCount());
   if(pdu.isEmpty()){
     return -1;
   }

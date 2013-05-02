@@ -310,12 +310,13 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Update (G)UI's state for a set of digital outputs
    *
-   * Note:
-   *  - Here, it is assumed that values are stored from address 0 to N-1
-   *  - If one address not exists, nothing will happen for this address.
-   *  - If one value is invalid, concerned input will be set invalid.
+   * \param values The values of outputs, must be sorted by address, ascending.
+   *                If a value is invalid, concerned output will be set invalid.
+   * \param firstAddressRead Address (for device read access) of first output to update.
+   *                          If < 0, the internal first address is considered.
+   * \param n Quantity of outputs to update. If < 0, the internal quantity is considered.
    */
-  void updateDigitalOutputValues(const QList<QVariant> &values);
+  void updateDigitalOutputValues(const QList<QVariant> &values, int firstAddressRead, int n);
 
   /*! \brief Enable/disable (G)UI's digital outputs
    */

@@ -352,7 +352,6 @@ class mdtDevice : public QObject
    * \return A mdtValue with valueBool. See mdtValue documentation for details about validity and other flags.
    * \pre digitalInput must be valid.
    */
-  ///QVariant getDigitalInputState(int address, int timeout);
   mdtValue getDigitalInputValue(mdtDigitalIo *digitalInput, bool queryDevice, bool waitOnReply);
 
   /*! \brief Get digital input value
@@ -401,7 +400,6 @@ class mdtDevice : public QObject
    * \return A mdtValue with valueBool. See mdtValue documentation for details about validity and other flags.
    * \pre digitalOutput must be valid.
    */
-  ///QVariant getDigitalOutputState(int address, int timeout);
   mdtValue getDigitalOutputValue(mdtDigitalIo *digitalOutput, bool queryDevice, bool waitOnReply);
 
   /*! \brief Get digital output value
@@ -439,11 +437,6 @@ class mdtDevice : public QObject
    */
   int getDigitalOutputs(bool waitOnReply);
 
-  
-  
-  
-  
-  
   /*! \brief Set a digital output value
    *
    * Set device or internal digital value.
@@ -459,7 +452,6 @@ class mdtDevice : public QObject
    * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
    * \pre digitalOutput must be valid.
    */
-  ///int setDigitalOutputState(int address, bool state, bool writeToDevice, bool waitOnReply);
   int setDigitalOutputValue(mdtDigitalIo *digitalOutput, const mdtValue &value, bool sendToDevice, bool waitOnReply);
 
   /*! \brief Set digital output value
@@ -480,32 +472,13 @@ class mdtDevice : public QObject
    */
   int setDigitalOutputValue(const QString &labelShort, const mdtValue &value, bool sendToDevice, bool waitOnReply);
 
-  
-  
-  
-  /*! \brief Set a digital output state
-   *
-   * Once result is available, the internal digital output is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param labelShort I/O's short label.
-   * \param state State to set (ON/OFF).
-   * \param writeToDevice If true, value is written to device by calling writeDigitalOutput(), else state is only cached.
-   *                      Behaviour of this method can vary, depending on device specific subclass.
-   *                      (See sublcass writeDigitalOutput() for details).
-   * \param waitOnReply If true, this method will wait until reply comes in, or timeout (See waitTransactionDone() ),
-   *                     else it will return immediately after the query was sent.
-   * \return 0 or a ID on success. If no I/O's are set, on timeout, on invalid value or other error, a value < 0 is returned.
-   */
-  ///int setDigitalOutputState(const QString &labelShort, bool state, bool writeToDevice, bool waitOnReply);
-
-  
-  
   /*! \brief Write all digital outputs to physical device and update (G)UI representation
    *
-   * To send the digital outputs states once, it's possible to set them without sending query.
+   * To send the digital outputs values once.
+   *  It's possible to use setDigitalOutputValue() without sending the query to device,
+   *  then using this method to commit all values once.
+   *
    *  See mdtDeviceIos and mdtDigitalIo for details.
-   *  Then, call this method to sent all digital outputs states to device.
    *
    * writeDigitalOutputs() will be called, witch also sends the request to device.
    *  Depending on result, device's state can be updated.
@@ -522,7 +495,6 @@ class mdtDevice : public QObject
    */
   int setDigitalOutputs(bool waitOnReply);
 
-  
   /*! \brief Get device state
    */
   state_t state() const;
@@ -539,28 +511,6 @@ class mdtDevice : public QObject
    */
   void setAnalogOutputValue(mdtAnalogIo* analogOutput);
 
-  /*! \brief Set state on a digital output on physical device
-   *
-   * Checks device's state and send request if Ready.
-   *
-   * This slot is used by mdtDeviceIos to notify that a state has changed.
-   *
-   * Will call writeDigitalOutput(), witch also sends the request to device.
-   *  Depending on result, device's state can be updated.
-   *
-   * Behaviour of this method can vary, depending on device specific subclass.
-   *  (See sublcass writeDigitalOutput() for details).
-   *
-   * Once result is available, the internal digital output is updated.
-   *  (See mdtDeviceIos for details).
-   *
-   * \param address Depending on device organisation and protocol,
-   *                 this can be a relative or absolute address (f.ex. MODBUS queries),
-   *                 a output number, etc...
-   */
-  ///void setDigitalOutputState(int address);
-
-  
   /*! \brief Set value on a digital output on physical device
    *
    * Checks device's state and send request if Ready.
@@ -571,8 +521,6 @@ class mdtDevice : public QObject
    */
   void setDigitalOutputValue(mdtDigitalIo* digitalOutput);
 
-  
-  
   /*! \brief Queries to send periodically
    *
    * This slot is periodically called after a call of start().
@@ -683,9 +631,12 @@ class mdtDevice : public QObject
    * This is the device specific implementation to send the query.
    *  If device handled by subclass has digital inputs, this method should be implemented.
    *
-   * This method is called from getDigitalInputState().
+   * This method is called from getDigitalInputValue().
    *
-   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \param transaction Contains:
+   *                      - digitalIo object
+   *                      - QueryReplyMode flag
+   *                      - addressRead
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.
@@ -699,7 +650,10 @@ class mdtDevice : public QObject
    *
    * This method is called from getDigitalInputs().
    *
-   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \param transaction Contains:
+   *                      - \todo Complete !
+   *                      - address : first I/O address to considere
+   *                      - QueryReplyMode flag
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.
@@ -711,7 +665,7 @@ class mdtDevice : public QObject
    * This is the device specific implementation to send the query.
    *  If device handled by subclass has digital outputs, this method should be implemented.
    *
-   * This method is called from getDigitalOutputState().
+   * This method is called from getDigitalOutputValue().
    *
    * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
@@ -727,7 +681,10 @@ class mdtDevice : public QObject
    *
    * This method is called from getDigitalOutputs().
    *
-   * \param transaction Contains some flags used during query/reply process (address, id, I/O object, ...).
+   * \param transaction Contains:
+   *                      - ioCount : number of I/Os to get
+   *                      - address : first I/O address (for read access) to considere
+   *                      - QueryReplyMode flag
    * \return 0 or a ID on success, value < 0 on error (see mdtPortManager::writeData() for details)
    * \pre I/O's must be set with setIos().
    * \pre transaction must be a valid pointer.

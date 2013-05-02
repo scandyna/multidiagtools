@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -57,7 +57,7 @@ class mdtPortTransaction
    *  - type: 0
    *  - analogIo: Null
    *  - digitalIo: Null
-   *  - forMultipleIos: false
+   *  - ioCount: 0
    *  - isInput: false
    *  - isOutput: false
    *  - data: empty
@@ -126,13 +126,13 @@ class mdtPortTransaction
    * A example using this member is MODBUS.
    *  See mdtDeviceModbus for details.
    */
-  void setForMultipleIos(bool forMultipleIos);
+  ///void setForMultipleIos(bool forMultipleIos);
 
   /*! \brief Check if the transaction concerns multiple I/O's
    *
    * See setForMultipleIos() for details.
    */
-  bool forMultipleIos() const;
+  ///bool forMultipleIos() const;
 
   /*! \brief Set the isInput flag
    */
@@ -179,18 +179,27 @@ class mdtPortTransaction
    */
   int address() const;
 
+  /*! \brief Set the number of I/Os concerned by transaction
+   */
+  void setIoCount(int n);
+
+  /*! \brief Get the number of I/Os concerned by transaction
+   */
+  int ioCount() const;
+
  private:
 
   int pvId;
   mdtAnalogIo *pvAnalogIo;
   mdtDigitalIo *pvDigitalIo;
   int pvType;
-  bool pvForMultipleIos;
+  ///bool pvForMultipleIos;
   bool pvIsInput;
   bool pvIsOutput;
   QByteArray pvData;
   bool pvIsQueryReplyMode;
   int pvAddress;
+  int pvIoCount;
 };
 
 Q_DECLARE_METATYPE(mdtPortTransaction);

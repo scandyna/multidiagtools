@@ -20,6 +20,7 @@
  ****************************************************************************/
 #include "mdtDeviceIos.h"
 #include <QMapIterator>
+#include <QMutableListIterator>
 #include <QtGlobal>
 
 #include <QDebug>
@@ -439,17 +440,37 @@ void mdtDeviceIos::updateDigitalInputValues(const QList<QVariant> &values)
   }
 }
 
-void mdtDeviceIos::updateDigitalOutputValues(const QList<QVariant> &values)
+void mdtDeviceIos::updateDigitalOutputValues(const QList<QVariant> &values, int firstAddressRead, int n)
 {
   int i, max;
   QList<mdtDigitalIo*> lst;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvDigitalOutputsByAddressRead.values();  // We update (G)UI, so we read from device
-  max = qMin(values.size(), lst.size());
+  // Remove items with addressRead < firstAddressRead
+  if((firstAddressRead > -1)&&(firstAddressRead > digitalOutputsFirstAddressRead())){
+    QMutableListIterator<mdtDigitalIo*> it(lst);
+    while(it.hasNext()){
+      it.next();
+      Q_ASSERT(it.value() != 0);
+      if(it.value()->addressRead() >= firstAddressRead){
+        break;
+      }
+      it.remove();
+    }
+  }
+  // Fix quantity of outputs and update outputs
+  if(n < 0){
+    n = lst.size();
+  }
+  max = qMin(values.size(), n);
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    lst.at(i)->setValue(values.at(i).toBool(), false);
+    if((values.at(i).isValid())&&(values.at(i).type() == QVariant::Bool)){
+      lst.at(i)->setValue(values.at(i).toBool(), false);
+    }else{
+      lst.at(i)->setValue(mdtValue());
+    }
   }
 }
 
