@@ -107,7 +107,7 @@ void mdtPortManagerTest::transactionIdTest()
   QVERIFY(t.data().isEmpty());
   QVERIFY(!t.isQueryReplyMode());
 
-  // Copy test
+  // Copy test AIO
   // Note: I/O pointers reference the same objects, this is wat we need.
   t.setIo(ai1, true);
   QCOMPARE(t.ioCount(), 1);
@@ -127,6 +127,27 @@ void mdtPortManagerTest::transactionIdTest()
   QVERIFY(t2.analogIo() == ai1);
   QCOMPARE(t2.id(), 1);
   QCOMPARE(t2.data(), QByteArray("t"));
+  // Copy test DIO
+  // Note: I/O pointers reference the same objects, this is wat we need.
+  t.setIo(di1, true);
+  QCOMPARE(t.ioCount(), 1);
+  t.setId(11);
+  t.setData("tt");
+  QVERIFY(t.digitalIo() == di1);
+  QCOMPARE(t.id(), 11);
+  QCOMPARE(t.data(), QByteArray("tt"));
+  t2 = t;
+  QVERIFY(t2.digitalIo() == di1);
+  QCOMPARE(t2.id(), 11);
+  QCOMPARE(t2.data(), QByteArray("tt"));
+  t.clear();
+  QCOMPARE(t.id(), 0);
+  QVERIFY(t.digitalIo() == 0);
+  QVERIFY(t.data().isEmpty());
+  QVERIFY(t2.digitalIo() == di1);
+  QCOMPARE(t2.id(), 11);
+  QCOMPARE(t2.ioCount(), 1);
+  QCOMPARE(t2.data(), QByteArray("tt"));
 
   // Cleanup
   delete ai1;

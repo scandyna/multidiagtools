@@ -350,7 +350,7 @@ bool mdtDeviceModbusWago::detectIos(mdtDeviceIos *ios)
     return false;
   }
   // Add I/Os to container
-  for(i=0; i<analogInputs.size(); i++){
+  for(i=0; i<analogInputs.size(); ++i){
     aio = analogInputs.at(i);
     Q_ASSERT(aio != 0);
     aio->setAddress(i);

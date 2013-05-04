@@ -360,7 +360,7 @@ QList<bool> mdtDeviceIos::digitalOutputsStatesByAddressWrite() const
   return states;
 }
 
-void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
+void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n)
 {
   int i, max;
   QList<mdtAnalogIo*> lst;
@@ -368,7 +368,23 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvAnalogInputsByAddressRead.values();
-  max = qMin(values.size(), lst.size());
+  // Remove items with address < firstAddress
+  if((firstAddress > -1)&&(firstAddress > analogInputsFirstAddress())){
+    QMutableListIterator<mdtAnalogIo*> it(lst);
+    while(it.hasNext()){
+      it.next();
+      Q_ASSERT(it.value() != 0);
+      if(it.value()->address() >= firstAddress){
+        break;
+      }
+      it.remove();
+    }
+  }
+  // Fix quantity of inputs and update inputs
+  if(n < 0){
+    n = lst.size();
+  }
+  max = qMin(values.size(), n);
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
     var = values.at(i);
@@ -378,9 +394,6 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
         break;
       case QVariant::Int:
         lst.at(i)->setValue(var.toInt(), false);
-        break;
-      case QVariant::Bool:
-        lst.at(i)->setValue(var.toBool(), false);
         break;
       default:
         lst.at(i)->setValue(var.value<mdtValue>(), false);
@@ -388,7 +401,7 @@ void mdtDeviceIos::updateAnalogInputValues(const QList<QVariant> &values)
   }
 }
 
-void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
+void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values, int firstAddressRead, int n)
 {
   int i, max;
   QList<mdtAnalogIo*> lst;
@@ -396,7 +409,23 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvAnalogOutputsByAddressRead.values();  // We update (G)UI, so we read from device
-  max = qMin(values.size(), lst.size());
+  // Remove items with address < firstAddressRead
+  if((firstAddressRead > -1)&&(firstAddressRead > analogOutputsFirstAddressRead())){
+    QMutableListIterator<mdtAnalogIo*> it(lst);
+    while(it.hasNext()){
+      it.next();
+      Q_ASSERT(it.value() != 0);
+      if(it.value()->addressRead() >= firstAddressRead){
+        break;
+      }
+      it.remove();
+    }
+  }
+  // Fix quantity of outputs and update outputs
+  if(n < 0){
+    n = lst.size();
+  }
+  max = qMin(values.size(), n);
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
     var = values.at(i);
@@ -406,9 +435,6 @@ void mdtDeviceIos::updateAnalogOutputValues(const QList<QVariant> &values)
         break;
       case QVariant::Int:
         lst.at(i)->setValue(var.toInt(), false);
-        break;
-      case QVariant::Bool:
-        lst.at(i)->setValue(var.toBool(), false);
         break;
       default:
         lst.at(i)->setValue(var.value<mdtValue>(), false);
@@ -426,17 +452,37 @@ void mdtDeviceIos::setAnalogOutputsEnabled(bool enabled)
   }
 }
 
-void mdtDeviceIos::updateDigitalInputValues(const QList<QVariant> &values)
+void mdtDeviceIos::updateDigitalInputValues(const QList<QVariant> &values, int firstAddress, int n)
 {
   int i, max;
   QList<mdtDigitalIo*> lst;
 
   // Get the list from address conatiner, so we have it sorted by address (QMap returns a sorted list, by keys, ascending)
   lst = pvDigitalInputsByAddressRead.values();
-  max = qMin(values.size(), lst.size());
+  // Remove items with address < firstAddress
+  if((firstAddress > -1)&&(firstAddress > digitalInputsFirstAddress())){
+    QMutableListIterator<mdtDigitalIo*> it(lst);
+    while(it.hasNext()){
+      it.next();
+      Q_ASSERT(it.value() != 0);
+      if(it.value()->address() >= firstAddress){
+        break;
+      }
+      it.remove();
+    }
+  }
+  // Fix quantity of inputs and update inputs
+  if(n < 0){
+    n = lst.size();
+  }
+  max = qMin(values.size(), n);
   for(i=0; i<max; ++i){
     Q_ASSERT(lst.at(i) != 0);
-    lst.at(i)->setValue(values.at(i).toBool(), false);
+    if((values.at(i).isValid())&&(values.at(i).type() == QVariant::Bool)){
+      lst.at(i)->setValue(values.at(i).toBool(), false);
+    }else{
+      lst.at(i)->setValue(mdtValue(), false);
+    }
   }
 }
 

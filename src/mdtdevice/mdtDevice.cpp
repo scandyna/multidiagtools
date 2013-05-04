@@ -228,6 +228,8 @@ int mdtDevice::getAnalogInputs(bool waitOnReply)
   // Get a new transaction
   transaction = getNewTransaction();
   ///transaction->setForMultipleIos(true);
+  transaction->setIoCount(pvIos->analogInputsCount());
+  transaction->setAddress(pvIos->analogInputsFirstAddress());
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -347,6 +349,8 @@ int mdtDevice::getAnalogOutputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
+  transaction->setIoCount(pvIos->analogOutputsCount());
+  transaction->setAddress(pvIos->analogOutputsFirstAddressRead());
   ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
@@ -467,6 +471,8 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
   // Get a new transaction
   transaction = getNewTransaction();
   ///transaction->setForMultipleIos(true);
+  transaction->setIoCount(pvIos->analogOutputsCount());
+  transaction->setAddress(pvIos->analogOutputsFirstAddressWrite());
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -586,6 +592,8 @@ int mdtDevice::getDigitalInputs(bool waitOnReply)
   // Get a new transaction
   transaction = getNewTransaction();
   ///transaction->setForMultipleIos(true);
+  transaction->setIoCount(pvIos->digitalInputsCount());
+  transaction->setAddress(pvIos->digitalInputsFirstAddress());
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -825,6 +833,8 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
   // Get a new transaction
   transaction = getNewTransaction();
   ///transaction->setForMultipleIos(true);
+  transaction->setIoCount(pvIos->digitalOutputsCount());
+  transaction->setAddress(pvIos->digitalOutputsFirstAddressWrite());
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);

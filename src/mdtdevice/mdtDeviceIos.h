@@ -277,23 +277,31 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Update (G)UI's value for a set of analog inputs
    *
+   * \param values The values of inputs, must be sorted by address, ascending.
+   *                If a value is invalid, concerned input will be set invalid.
+   * \param firstAddress Address of first inputs to update.
+   *                          If < 0, the internal first address is considered.
+   * \param n Quantity of inputs to update. If < 0, the internal quantity is considered.
+   *
    * Note:
-   *  - Here, it is assumed that values are sorted from address min to address max
-   *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned input will be set invalid.
    *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
    */
-  void updateAnalogInputValues(const QList<QVariant> &values);
+  void updateAnalogInputValues(const QList<QVariant> &values, int firstAddress, int n);
 
   /*! \brief Update (G)UI's value for a set of analog outputs
    *
+   * \param values The values of outputs, must be sorted by address, ascending.
+   *                If a value is invalid, concerned output will be set invalid.
+   * \param firstAddressRead Address (for device read access) of first output to update.
+   *                          If < 0, the internal first address is considered.
+   * \param n Quantity of outputs to update. If < 0, the internal quantity is considered.
+   *
    * Note:
-   *  - Here, it is assumed that values are stored from address min to address max
-   *  - If one address not exists, nothing will happen for this address.
    *  - If one value is invalid, concerned output will be set invalid.
    *  - Regarding on internal values type (double, int, ...), conversions will be done by internal mdtAnalogIo.
    */
-  void updateAnalogOutputValues(const QList<QVariant> &values);
+  void updateAnalogOutputValues(const QList<QVariant> &values, int firstAddressRead, int n);
 
   /*! \brief Enable/disable (G)UI's analog outputs
    */
@@ -301,12 +309,13 @@ class mdtDeviceIos : public QObject
 
   /*! \brief Update (G)UI's state for a set of digital inputs
    *
-   * Note:
-   *  - Here, it is assumed that values are stored from address 0 to N-1
-   *  - If one address not exists, nothing will happen for this address.
-   *  - If one value is invalid, concerned input will be set invalid.
+   * \param values The values of inputs, must be sorted by address, ascending.
+   *                If a value is invalid, concerned input will be set invalid.
+   * \param firstAddress Address of first input to update.
+   *                          If < 0, the internal first address is considered.
+   * \param n Quantity of inputs to update. If < 0, the internal quantity is considered.
    */
-  void updateDigitalInputValues(const QList<QVariant> &values);
+  void updateDigitalInputValues(const QList<QVariant> &values, int firstAddress, int n);
 
   /*! \brief Update (G)UI's state for a set of digital outputs
    *

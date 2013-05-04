@@ -79,6 +79,7 @@ void mdtPortTransaction::setIo(mdtDigitalIo *io, bool isInput)
   pvAnalogIo = 0;
   pvIsInput = isInput;
   pvIsOutput = !isInput;
+  pvIoCount = 1;
 }
 
 mdtAnalogIo *mdtPortTransaction::analogIo()
