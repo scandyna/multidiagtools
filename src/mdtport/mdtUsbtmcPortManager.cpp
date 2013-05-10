@@ -214,7 +214,7 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   pvPort->addFrameToWrite(frame);
   // Add transaction
   transaction->setId(pvCurrentWritebTag);
-  addTransaction(transaction);
+  addTransactionPending(transaction);
   pvPort->unlockMutex();
 
   return pvCurrentWritebTag;
@@ -450,7 +450,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
       continue;
     }
     // If we have a pending transaction, remove it
-    transaction = pendingTransaction(frame->bTag());
+    transaction = transactionPending(frame->bTag());
     if(transaction == 0){
       mdtError e(MDT_USB_IO_ERROR, "Received a frame with unexpected bTag (Should be handled by thread, this is a bug)", mdtError::Warning);
       MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
@@ -473,7 +473,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
     // Here we should have a valid frame
     transaction->setId(frame->bTag());
     transaction->setData(frame->messageData());
-    enqueueTransactionRx(transaction);
+    ///enqueueTransactionRx(transaction);
     // Put frame back into pool
     pvPort->readFramesPool().enqueue(frame);
   }

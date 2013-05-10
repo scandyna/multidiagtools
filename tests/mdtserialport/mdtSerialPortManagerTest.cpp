@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -51,7 +51,8 @@ void mdtSerialPortManagerTest::simpleTest()
   }
 
   // Init port manager
-  m.setTransactionsDisabled(true);
+  ///m.setTransactionsDisabled(true);
+  m.setKeepTransactionsDone(true);
   m.port().config().setFrameType(mdtFrame::FT_ASCII);
   m.port().config().setEndOfFrameSeq("$");
   m.setPortName(portInfoList.at(0)->portName());
@@ -75,7 +76,9 @@ void mdtSerialPortManagerTest::simpleTest()
   QVERIFY(m.writeData("Test$") >= 0);
 
   // Wait on answer - Timout: 500 [ms]
-  QVERIFY(m.waitReadenFrame(500));
+  ///QVERIFY(m.waitReadenFrame(500));
+  // Wait until a transction is done
+  QVERIFY(m.waitOneTransactionDone());
 
   // Verify received data
   frames = m.readenFrames();
@@ -101,7 +104,8 @@ void mdtSerialPortManagerTest::transferTest()
    */
 
   // Init port manager
-  m.setTransactionsDisabled(true);
+  ///m.setTransactionsDisabled(true);
+  m.setKeepTransactionsDone(true);
   portInfoList = m.scan();
   if(portInfoList.size() < 1){
     QSKIP("No serial port found, or other error", SkipAll);
@@ -135,7 +139,9 @@ void mdtSerialPortManagerTest::transferTest()
   // Get incomming data
   while(receivedData.size() < data.size()){
     // Wait on answer - Timout: 500 [ms]
-    QVERIFY(m.waitReadenFrame(500));
+    ///QVERIFY(m.waitReadenFrame(500));
+    // Wait until a transction is done
+    QVERIFY(m.waitOneTransactionDone());
     // Copy data
     frames = m.readenFrames();
     for(int i=0; i<frames.size(); i++){

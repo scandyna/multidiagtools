@@ -486,7 +486,7 @@ int mdtModbusTcpPortManager::writeData(QByteArray pdu, mdtPortTransaction *trans
   frame->encode();
   pvPort->addFrameToWrite(frame);
   transaction->setId(pvTransactionId);
-  addTransaction(transaction);
+  addTransactionPending(transaction);
   pvPort->unlockMutex();
 
   return pvTransactionId;
@@ -513,7 +513,7 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
     /// \todo Error on incomplete frame
     if(frame->isComplete()){
       // If we have a pending transaction, remove it
-      transaction = pendingTransaction(frame->transactionId());
+      transaction = transactionPending(frame->transactionId());
       if(transaction == 0){
         mdtError e(MDT_TCP_IO_ERROR, "Received a frame with unexpected transaction ID", mdtError::Warning);
         MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
@@ -521,7 +521,7 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
       }else{
         transaction->setId(frame->transactionId());
         transaction->setData(frame->getPdu());
-        enqueueTransactionRx(transaction);
+        ///enqueueTransactionRx(transaction);
       }
     }
     // Put frame back into pool

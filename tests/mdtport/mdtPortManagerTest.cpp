@@ -176,7 +176,8 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.readThread() == 0);
   QVERIFY(m.writeThread() == 0);
   m.setPort(port);
-  m.setTransactionsDisabled(true);
+  ///m.setTransactionsDisabled(true);
+  m.setKeepTransactionsDone(true);
   thread = new mdtPortWriteThread;
   m.addThread(thread);
   QVERIFY(m.writeThread() == thread);
@@ -191,10 +192,11 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.isRunning());
 
   // Check the wait function without available data
-  QVERIFY(!m.waitReadenFrame());
+  ///QVERIFY(!m.waitReadenFrame());
+  QVERIFY(!m.waitOneTransactionDone());
 
   // Send some data
-  QVERIFY(m.writeData("ABCD\nEFGH\n") == 0);
+  QCOMPARE(m.writeData("ABCD\nEFGH\n"), 1);
 
   // We must re-open the file, else nothing will be readen
   QTest::qWait(100);
@@ -202,12 +204,13 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.openPort());
   QVERIFY(m.start());
   // Get readen data
-  QVERIFY(m.waitReadenFrame());
+  ///QVERIFY(m.waitReadenFrame());
+  QVERIFY(m.waitOneTransactionDone());
   // Try to get a frame by ID (will not work, but must not crash"
-  m.readenFrame(0);
+  ///m.readenFrame(0);
   // Check readen data
   frames = m.readenFrames();
-  QVERIFY(frames.size() == 2);
+  QCOMPARE(frames.size(), 2);
   QCOMPARE(frames.at(0), QByteArray("ABCD"));
   QCOMPARE(frames.at(1), QByteArray("EFGH"));
 
