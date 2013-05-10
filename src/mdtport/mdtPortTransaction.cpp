@@ -35,7 +35,6 @@ void mdtPortTransaction::clear()
   pvAnalogIo = 0;
   pvDigitalIo = 0;
   pvType = 0;
-  ///pvForMultipleIos = false;
   pvIoCount = 0;
   pvIsInput = false;
   pvIsOutput = false;
@@ -91,20 +90,6 @@ mdtDigitalIo *mdtPortTransaction::digitalIo()
 {
   return pvDigitalIo;
 }
-
-/**
-void mdtPortTransaction::setForMultipleIos(bool forMultipleIos)
-{
-  pvForMultipleIos = forMultipleIos;
-}
-*/
-
-/**
-bool mdtPortTransaction::forMultipleIos() const
-{
-  return pvForMultipleIos;
-}
-*/
 
 void mdtPortTransaction::setIsInput(bool isInput)
 {

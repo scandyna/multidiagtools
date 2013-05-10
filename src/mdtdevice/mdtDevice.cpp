@@ -227,7 +227,6 @@ int mdtDevice::getAnalogInputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  ///transaction->setForMultipleIos(true);
   transaction->setIoCount(pvIos->analogInputsCount());
   transaction->setAddress(pvIos->analogInputsFirstAddress());
   // Send query and wait if requested
@@ -351,7 +350,6 @@ int mdtDevice::getAnalogOutputs(bool waitOnReply)
   transaction = getNewTransaction();
   transaction->setIoCount(pvIos->analogOutputsCount());
   transaction->setAddress(pvIos->analogOutputsFirstAddressRead());
-  ///transaction->setForMultipleIos(true);
   // Send query and wait if requested
   if(waitOnReply){
     transaction->setQueryReplyMode(true);
@@ -470,7 +468,6 @@ int mdtDevice::setAnalogOutputs(bool waitOnReply)
   pvIos->setAnalogOutputsEnabled(false);
   // Get a new transaction
   transaction = getNewTransaction();
-  ///transaction->setForMultipleIos(true);
   transaction->setIoCount(pvIos->analogOutputsCount());
   transaction->setAddress(pvIos->analogOutputsFirstAddressWrite());
   // Send query and wait if requested
@@ -591,7 +588,6 @@ int mdtDevice::getDigitalInputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  ///transaction->setForMultipleIos(true);
   transaction->setIoCount(pvIos->digitalInputsCount());
   transaction->setAddress(pvIos->digitalInputsFirstAddress());
   // Send query and wait if requested
@@ -712,7 +708,6 @@ int mdtDevice::getDigitalOutputs(bool waitOnReply)
   }
   // Get a new transaction
   transaction = getNewTransaction();
-  ///transaction->setForMultipleIos(true);
   transaction->setAddress(pvIos->digitalOutputsFirstAddressRead());
   transaction->setIoCount(pvIos->digitalOutputsCount());
   // Send query and wait if requested
@@ -832,7 +827,6 @@ int mdtDevice::setDigitalOutputs(bool waitOnReply)
   pvIos->setDigitalOutputsEnabled(false);
   // Get a new transaction
   transaction = getNewTransaction();
-  ///transaction->setForMultipleIos(true);
   transaction->setIoCount(pvIos->digitalOutputsCount());
   transaction->setAddress(pvIos->digitalOutputsFirstAddressWrite());
   // Send query and wait if requested
@@ -1079,7 +1073,6 @@ void mdtDevice::setStateConnecting(/*const QString &message*/)
   emit(stateChanged(pvCurrentState));
 }
 
-/// \todo Re-enable all I/O !!!
 void mdtDevice::setStateReady()
 {
   if(pvCurrentState == Ready){

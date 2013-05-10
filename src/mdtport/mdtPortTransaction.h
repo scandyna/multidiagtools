@@ -121,19 +121,6 @@ class mdtPortTransaction
    */
   mdtDigitalIo *digitalIo();
 
-  /*! \brief Set if the transaction concerns multiple I/O's
-   *
-   * A example using this member is MODBUS.
-   *  See mdtDeviceModbus for details.
-   */
-  ///void setForMultipleIos(bool forMultipleIos);
-
-  /*! \brief Check if the transaction concerns multiple I/O's
-   *
-   * See setForMultipleIos() for details.
-   */
-  ///bool forMultipleIos() const;
-
   /*! \brief Set the isInput flag
    */
   void setIsInput(bool isInput);
@@ -193,7 +180,6 @@ class mdtPortTransaction
   mdtAnalogIo *pvAnalogIo;
   mdtDigitalIo *pvDigitalIo;
   int pvType;
-  ///bool pvForMultipleIos;
   bool pvIsInput;
   bool pvIsOutput;
   QByteArray pvData;

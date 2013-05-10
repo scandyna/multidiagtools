@@ -66,7 +66,6 @@ void mdtPortManagerTest::transactionIdTest()
   QCOMPARE(t.type(), 0);
   QVERIFY(t.analogIo() == 0);
   QVERIFY(t.digitalIo() == 0);
-  ///QCOMPARE(t.forMultipleIos(), false);
   QCOMPARE(t.isInput(), false);
   QCOMPARE(t.isOutput(), false);
   QVERIFY(t.data().isEmpty());
@@ -100,7 +99,6 @@ void mdtPortManagerTest::transactionIdTest()
   QCOMPARE(t.type(), 0);
   QVERIFY(t.analogIo() == 0);
   QVERIFY(t.digitalIo() == 0);
-  ///QCOMPARE(t.forMultipleIos(), false);
   QCOMPARE(t.ioCount(), 0);
   QCOMPARE(t.isInput(), false);
   QCOMPARE(t.isOutput(), false);

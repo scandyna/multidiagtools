@@ -118,7 +118,7 @@ class mdtDevice : public QObject
   /*! \brief Search and connect to physical device.
    *
    * Will scan available ports and open the first port that
-   *  has device attached maching request.
+   *  has device attached matching request.
    *
    * \param devInfo Requested device's informations.
    * \return A error listed in mdtAbstractPort::error_t (NoError on success)
@@ -766,7 +766,7 @@ class mdtDevice : public QObject
    *
    * This is a helper method that provide a blocking wait.
    *  Internally, a couple of sleep and event processing
-   *  is done, avoiding freesing the GUI.
+   *  is done, avoiding freezing the GUI.
    *
    * Internally, mdtPortManager::waitOnFrame() is called.
    *
@@ -774,7 +774,7 @@ class mdtDevice : public QObject
    * \param timeout Timeout [ms]
    *                 If 0, device's defined read timeout is used (see mdtPortManager::waitOnFrame(int, int, int) for details).
    * \param granularity Sleep time between each call of event processing [ms]<br>
-   *                     A little value needs more CPU and big value can freese the GUI.
+   *                     A little value needs more CPU and big value can freeze the GUI.
    *                     Should be between 50 and 100, and must be > 0.
    *                     Note that msecs must be a multiple of granularity.
    * \return True on success, false on timeout. If id was not found in transactions list,
