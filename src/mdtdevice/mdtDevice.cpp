@@ -905,7 +905,7 @@ void mdtDevice::showStatusMessage(const QString &message, const QString &details
   emit(statusMessageChanged(message, details, timeout));
 }
 
-void mdtDevice::decodeReadenFrame(mdtPortTransaction transaction)
+void mdtDevice::decodeReadenFrame(mdtPortTransaction *transaction)
 {
 }
 
@@ -991,7 +991,8 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
 
   bool ok;
 
-  ok = portManager()->waitOnFrame(id, timeout, granularity);
+  ///ok = portManager()->waitOnFrame(id, timeout, granularity);
+  ok = portManager()->waitTransactionDone(id, timeout, granularity);
   // We must remove frame from done queue
   portManager()->readenFrame(id);
 

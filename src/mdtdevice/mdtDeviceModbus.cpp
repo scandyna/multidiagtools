@@ -34,7 +34,8 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
 
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
-  connect(pvTcpPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
+  ///connect(pvTcpPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
+  connect(pvTcpPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
   ///connect(pvTcpPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
   connect(pvTcpPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
   
@@ -159,8 +160,9 @@ const QList<int> &mdtDeviceModbus::registerValues() const
 }
 
 /// \todo Update to mdtValue - And don't forget to move also modbus frame codec to mdtValue ..
-void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
+void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
 {
+  Q_ASSERT(transaction != 0);
   ///Q_ASSERT(pvIos != 0);
   if(pvIos == 0){
     return;
@@ -170,133 +172,133 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
   QVariant var;
 
   // Decode readen frame and update I/O's
-  fc = pvCodec->decode(transaction.data());
+  fc = pvCodec->decode(transaction->data());
   switch(fc){
     case 0x01:  // Read coils
       // Check if we have a answer for a single I/O or multiple I/Os
-      if((transaction.ioCount() == 1)&&(transaction.digitalIo() != 0)){
+      if((transaction->ioCount() == 1)&&(transaction->digitalIo() != 0)){
         // If one DO was requested, 1 byte is returned with just first bit set
         if(pvCodec->values().size() == 8){
           var = pvCodec->values().at(0);
           if((var.isValid())&&(var.type() == QVariant::Bool)){
-            transaction.digitalIo()->setValue(var.toBool(), false);
+            transaction->digitalIo()->setValue(var.toBool(), false);
           }else{
-            transaction.digitalIo()->setValue(mdtValue(), false);
+            transaction->digitalIo()->setValue(mdtValue(), false);
           }
         }else{
-          transaction.digitalIo()->setValue(mdtValue(), false);
+          transaction->digitalIo()->setValue(mdtValue(), false);
         }
-        transaction.digitalIo()->setEnabled(true);
+        transaction->digitalIo()->setEnabled(true);
       }else{
         // Transaction contains first I/O address (for read access) and qty of I/Os
-        pvIos->updateDigitalOutputValues(pvCodec->values(), transaction.address(), transaction.ioCount());
+        pvIos->updateDigitalOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
         pvIos->setDigitalOutputsEnabled(true);
       }
       break;
     case 0x02:  // Read discrete inputs
       // Check if we have a answer for a single I/O or multiple I/Os
-      if((transaction.ioCount() == 1)&&(transaction.digitalIo() != 0)){
+      if((transaction->ioCount() == 1)&&(transaction->digitalIo() != 0)){
         // If one DI was requested, 1 byte is returned with just first bit set
         if(pvCodec->values().size() == 8){
           var = pvCodec->values().at(0);
           if((var.isValid())&&(var.type() == QVariant::Bool)){
-            transaction.digitalIo()->setValue(var.toBool(), false);
+            transaction->digitalIo()->setValue(var.toBool(), false);
           }else{
-            transaction.digitalIo()->setValue(mdtValue(), false);
+            transaction->digitalIo()->setValue(mdtValue(), false);
           }
         }else{
-          transaction.digitalIo()->setValue(mdtValue(), false);
+          transaction->digitalIo()->setValue(mdtValue(), false);
         }
       }else{
         // Transaction contains first I/O address and qty of I/Os
-        pvIos->updateDigitalInputValues(pvCodec->values(), transaction.address(), transaction.ioCount());
+        pvIos->updateDigitalInputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
       }
       break;
     case 0x03:  // Read holding registers
       // Check if we have a answer for a single I/O or multiple I/Os
-      if((transaction.ioCount() == 1)&&(transaction.analogIo() != 0)){
+      if((transaction->ioCount() == 1)&&(transaction->analogIo() != 0)){
         // Single I/O reply
         if(pvCodec->values().size() == 1){
           var = pvCodec->values().at(0);
           if((var.isValid())&&(var.type() == QVariant::Int)){
             // Codec only get raw data, so let I/O do needed conversions
-            transaction.analogIo()->setValue(var.toInt(), false);
+            transaction->analogIo()->setValue(var.toInt(), false);
           }else{
-            transaction.analogIo()->setValue(mdtValue(), false);
+            transaction->analogIo()->setValue(mdtValue(), false);
           }
         }else{
-          transaction.analogIo()->setValue(mdtValue(), false);
+          transaction->analogIo()->setValue(mdtValue(), false);
         }
-        transaction.analogIo()->setEnabled(true);
+        transaction->analogIo()->setEnabled(true);
       }else{
         // Multiple I/O reply
-        pvIos->updateAnalogOutputValues(pvCodec->values(), transaction.address(), transaction.ioCount());
+        pvIos->updateAnalogOutputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
         pvIos->setAnalogOutputsEnabled(true);
       }
       break;
     case 0x04:  // Read input registers
       // Check if we have a answer for a single I/O or multiple I/Os
-      if((transaction.ioCount() == 1)&&(transaction.analogIo() != 0)){
+      if((transaction->ioCount() == 1)&&(transaction->analogIo() != 0)){
         // Single I/O reply
         if(pvCodec->values().size() == 1){
           var = pvCodec->values().at(0);
           if((var.isValid())&&(var.type() == QVariant::Int)){
             // Codec only get raw data, so let I/O do needed conversions
-            transaction.analogIo()->setValue(var.toInt(), false);
+            transaction->analogIo()->setValue(var.toInt(), false);
           }else{
-            transaction.analogIo()->setValue(mdtValue(), false);
+            transaction->analogIo()->setValue(mdtValue(), false);
           }
         }else{
-          transaction.analogIo()->setValue(mdtValue(), false);
+          transaction->analogIo()->setValue(mdtValue(), false);
         }
       }else{
         // Multiple I/O reply
-        pvIos->updateAnalogInputValues(pvCodec->values(), transaction.address(), transaction.ioCount());
+        pvIos->updateAnalogInputValues(pvCodec->values(), transaction->address(), transaction->ioCount());
       }
       break;
     case 0x05:  // Write single coil reply
-      if(transaction.digitalIo() != 0){
+      if(transaction->digitalIo() != 0){
         // Check validity and update
         if(pvCodec->values().size() == 2){
           // Address
           var = pvCodec->values().at(0);
-          if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction.digitalIo()->addressWrite())){
+          if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction->digitalIo()->addressWrite())){
             // Value
             var = pvCodec->values().at(1);
             if((var.isValid())&&(var.type() == QVariant::Bool)){
-              transaction.digitalIo()->setValue(var.toBool(), false);
+              transaction->digitalIo()->setValue(var.toBool(), false);
             }else{
-              transaction.digitalIo()->setValue(mdtValue(), false);
+              transaction->digitalIo()->setValue(mdtValue(), false);
             }
           }else{
-            transaction.digitalIo()->setValue(mdtValue(), false);
+            transaction->digitalIo()->setValue(mdtValue(), false);
           }
         }else{
-          transaction.digitalIo()->setValue(mdtValue(), false);
+          transaction->digitalIo()->setValue(mdtValue(), false);
         }
-        transaction.digitalIo()->setEnabled(true);
+        transaction->digitalIo()->setEnabled(true);
       }
       break;
     case 0x06:  // Write single register reply
-      if(transaction.analogIo() != 0){
+      if(transaction->analogIo() != 0){
         // Check validity and update
         if(pvCodec->values().size() == 2){
           // Address
           var = pvCodec->values().at(0);
-          if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction.analogIo()->addressWrite())){
+          if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction->analogIo()->addressWrite())){
             // Value
             var = pvCodec->values().at(1);
             if((var.isValid())&&(var.type() == QVariant::Int)){
               // Update (G)UI - Codec only get raw data, so let I/O do needed conversions
-              transaction.analogIo()->setValue(var.toInt(), false);
+              transaction->analogIo()->setValue(var.toInt(), false);
             }
           }else{
-            transaction.analogIo()->setValue(mdtValue(), false);
+            transaction->analogIo()->setValue(mdtValue(), false);
           }
         }else{
-          transaction.analogIo()->setValue(mdtValue(), false);
+          transaction->analogIo()->setValue(mdtValue(), false);
         }
-        transaction.analogIo()->setEnabled(true);
+        transaction->analogIo()->setEnabled(true);
       }
       break;
     case 0x0F:  // Write multiple coils
@@ -304,10 +306,10 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
       if(pvCodec->values().size() == 2){
         // Start address
         var = pvCodec->values().at(0);
-        if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction.address())){
+        if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction->address())){
           // Qty of outputs set
           var = pvCodec->values().at(1);
-          if((!var.isValid())||(var.type() != QVariant::Int)||(var.toInt() != transaction.ioCount())){
+          if((!var.isValid())||(var.type() != QVariant::Int)||(var.toInt() != transaction->ioCount())){
             pvIos->setDigitalOutputsValue(mdtValue());
           }
         }else{
@@ -322,10 +324,10 @@ void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction transaction)
       if(pvCodec->values().size() == 2){
         // Start address
         var = pvCodec->values().at(0);
-        if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction.address())){
+        if((var.isValid())&&(var.type() == QVariant::Int)&&(var.toInt() == transaction->address())){
           // Qty of outputs set
           var = pvCodec->values().at(1);
-          if((!var.isValid())||(var.type() != QVariant::Int)||(var.toInt() != transaction.ioCount())){
+          if((!var.isValid())||(var.type() != QVariant::Int)||(var.toInt() != transaction->ioCount())){
             pvIos->setAnalogOutputsValue(mdtValue());
           }
         }else{
@@ -392,7 +394,9 @@ int mdtDeviceModbus::readAnalogInput(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
@@ -409,7 +413,9 @@ int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
@@ -425,7 +431,9 @@ int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
@@ -442,7 +450,9 @@ int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transaction)
@@ -458,7 +468,9 @@ int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transactio
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
@@ -475,7 +487,9 @@ int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
@@ -493,7 +507,9 @@ int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
@@ -512,7 +528,9 @@ int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
@@ -529,7 +547,9 @@ int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
@@ -547,7 +567,9 @@ int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transaction)
@@ -564,7 +586,9 @@ int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transact
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }
 
 int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
@@ -584,5 +608,7 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  return pvTcpPortManager->writeData(pdu, transaction);
+  ///return pvTcpPortManager->writeData(pdu, transaction);
+  transaction->setData(pdu);
+  return pvTcpPortManager->writeData(transaction);
 }

@@ -533,11 +533,11 @@ class mdtDevice : public QObject
    *
    * Subclass notes:
    *  - This default implementation does nothing.
-   *  - This slot should be connected with mdtPortManager::newReadenFrame(mdtPortTransaction) signal.
+   *  - This slot should be connected with mdtPortManager::newTransactionDone(mdtPortTransaction*) signal.
    *  - In this class, this connection is not made, it is the sublcass responsability to do this.
    *  - The (G)UI should be updated using transaction's I/O (see mdtPortTransaction).
    */
-  virtual void decodeReadenFrame(mdtPortTransaction transaction);
+  virtual void decodeReadenFrame(mdtPortTransaction *transaction);
 
  protected:
 
@@ -768,11 +768,11 @@ class mdtDevice : public QObject
    *  Internally, a couple of sleep and event processing
    *  is done, avoiding freezing the GUI.
    *
-   * Internally, mdtPortManager::waitOnFrame() is called.
+   * Internally, mdtPortManager::waitTransactionDone() is called.
    *
    * \param id Id returned by query method
    * \param timeout Timeout [ms]
-   *                 If 0, device's defined read timeout is used (see mdtPortManager::waitOnFrame(int, int, int) for details).
+   *                 If 0, device's defined read timeout is used (see mdtPortManager::waitTransactionDone(int, int, int) for details).
    * \param granularity Sleep time between each call of event processing [ms]<br>
    *                     A little value needs more CPU and big value can freeze the GUI.
    *                     Should be between 50 and 100, and must be > 0.

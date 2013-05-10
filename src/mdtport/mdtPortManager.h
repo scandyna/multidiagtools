@@ -388,7 +388,7 @@ class mdtPortManager : public QThread
    * 
    * \todo Obselete
    */
-  void setTransactionsEnabled();
+  ///void setTransactionsEnabled();
 
   /*! \brief Diseable transactions support
    *
@@ -407,7 +407,7 @@ class mdtPortManager : public QThread
    * 
    * \todo Obselete
    */
-  void setTransactionsDisabled(bool enqueueIncommingFrames);
+  ///void setTransactionsDisabled(bool enqueueIncommingFrames);
 
   /*! \brief Force transactions done to be keeped
    *
@@ -584,7 +584,7 @@ class mdtPortManager : public QThread
    *           a warning will be generated in mdtError system, and false will be returned.
    * \todo Obselete
    */
-  bool waitOnFrame(int id, int timeout = 0, int granularity = 50);
+  ///bool waitOnFrame(int id, int timeout = 0, int granularity = 50);
 
   /*! \brief Wait until a transaction is done
    *
@@ -604,8 +604,9 @@ class mdtPortManager : public QThread
    *                     A little value needs more CPU and big value can freese the GUI.
    *                     Should be between 50 and 100, and must be > 0.
    *                     Note that timeout must be a multiple of granularity.
-   * \return True if Ok, false on timeout or other error. If id was not found in transactions lists,
+   * \return True if Ok, false on timeout or other error. If id was not found in transactions pending lists,
    *           a warning will be generated in mdtError system, and false will be returned.
+   *           On failure, transaction is restored to pool.
    */
   bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
 
@@ -1027,11 +1028,12 @@ class mdtPortManager : public QThread
   int pvTransactionsAllocatedCount;                     // Used to watch how many transactions are allocated (memory leack watcher)
   QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
   ///QMap<int, mdtPortTransaction*> pvTransactionsRx;      // Used when transaction's response was received
-  QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used for query/reply mode transactions
+  QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used to store done transactions
+  QList<mdtPortTransaction*> pvTransactionsDoneList;    // Transactions done in order that tey arrived. Used to avoid bugs when reaching transaction ID max
   ///QQueue<QByteArray> pvReadenFrames;                    // Used if transactions are OFF
 
-  bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
-  bool pvTransactionsEnabled;
+  ///bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
+  ///bool pvTransactionsEnabled;
   bool pvCancelReadWait;
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;

@@ -613,7 +613,7 @@ void mdtDeviceTest::modbusWagoTest()
   ///QVERIFY(d.getDigitalInputs(500) >= 0);
   ///QVERIFY(d.getAnalogOutputs(500) >= 0);
   ///QVERIFY(d.getDigitalOutputs(500) >= 0);
-  ///d.start(100);
+  d.start(100);
   while(dw.isVisible()){
     QTest::qWait(1000);
   }

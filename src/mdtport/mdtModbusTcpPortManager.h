@@ -230,7 +230,38 @@ class mdtModbusTcpPortManager : public mdtPortManager
    *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
    * \pre Port must be set with setPort() before use of this method.
    */
-  int writeData(QByteArray pdu, mdtPortTransaction *transaction);
+  ///int writeData(QByteArray pdu, mdtPortTransaction *transaction);
+
+  /*! \brief Write PDU by copy
+   *
+   * Data will be encoded regarding MODBUS/TCP standard and passed to the mdtTcpSocket's write queue by copy.
+   *  This method returns immediatly after enqueue,
+   *  and don't wait until data was written.
+   *
+   * Internally, the transaction ID is incremented at each request and returned.
+   *
+   * \param pdu MODBUS PDU (see the MODBUS Application Protocol Specification for details)
+   * \param transaction A valid pointer to a mdtPortTransaction object. The id is set internally.
+   *                     Transaction's data is get as PDU.
+   *                     If isQueryReplyMode is set true, transaction will be keeped in done queue
+   *                     until readenFrame(int) is called. For all cases, signal newReadenFrame(mdtPortTransaction*)
+   *                     is emitted when data comes in.
+   * \return Transaction ID on success.
+   *          If the maximum of authorized transactions are reached, mdtAbstractPort::WriteQueueEmpty (< 0) is returned.
+   *          Note: internally, the writeFramesPool size of mdtAbstractPort is used to fix maximum transactions, and
+   *                this is configurable in mdtPortConfig. See mdtPortManager::config() .
+   *                On failure, the transaction is restored to pool.
+   * \pre Port must be set with setPort() before use of this method.
+   */
+  int writeData(mdtPortTransaction *transaction);
+
+  /*! \brief Write PDU by copy
+   *
+   * Will get a new transaction,
+   *  setup it with pdu as data and queryReplyMode flag,
+   *  then send it with writeData(mdtPortTransaction*).
+   */
+  int writeData(const QByteArray &pdu, bool queryReplyMode = false);
 
  public slots:
 
@@ -244,7 +275,7 @@ class mdtModbusTcpPortManager : public mdtPortManager
 
  private:
 
-  quint16 pvTransactionId;
+  ///quint16 pvTransactionId;
   QString pvKnownHostsFileName;
   bool pvAbortScan;
   // Helper members for Register service

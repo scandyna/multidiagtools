@@ -51,7 +51,6 @@ void mdtSerialPortManagerTest::simpleTest()
   }
 
   // Init port manager
-  ///m.setTransactionsDisabled(true);
   m.setKeepTransactionsDone(true);
   m.port().config().setFrameType(mdtFrame::FT_ASCII);
   m.port().config().setEndOfFrameSeq("$");
@@ -75,8 +74,6 @@ void mdtSerialPortManagerTest::simpleTest()
   // Send some data
   QVERIFY(m.writeData("Test$") >= 0);
 
-  // Wait on answer - Timout: 500 [ms]
-  ///QVERIFY(m.waitReadenFrame(500));
   // Wait until a transction is done
   QVERIFY(m.waitOneTransactionDone());
 
@@ -84,7 +81,6 @@ void mdtSerialPortManagerTest::simpleTest()
   frames = m.readenFrames();
   QVERIFY(frames.size() == 1);
   QVERIFY(frames.at(0) == "Test");
-  ///m.clearReadenFrames();
 }
 
 void mdtSerialPortManagerTest::transferTest()
@@ -104,7 +100,6 @@ void mdtSerialPortManagerTest::transferTest()
    */
 
   // Init port manager
-  ///m.setTransactionsDisabled(true);
   m.setKeepTransactionsDone(true);
   portInfoList = m.scan();
   if(portInfoList.size() < 1){
@@ -138,8 +133,6 @@ void mdtSerialPortManagerTest::transferTest()
 
   // Get incomming data
   while(receivedData.size() < data.size()){
-    // Wait on answer - Timout: 500 [ms]
-    ///QVERIFY(m.waitReadenFrame(500));
     // Wait until a transction is done
     QVERIFY(m.waitOneTransactionDone());
     // Copy data
@@ -147,7 +140,6 @@ void mdtSerialPortManagerTest::transferTest()
     for(int i=0; i<frames.size(); i++){
       receivedData += frames.at(i);
     }
-    ///m.clearReadenFrames();
   }
   // Verify received data
   QVERIFY(receivedData == data);

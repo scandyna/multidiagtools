@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -49,7 +49,10 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   pvCurrentWritebTag = 0;
 
   // Enable transactions support
-  setTransactionsEnabled();
+  ///setTransactionsEnabled();
+
+  // We not want to keep each incomming frame
+  setKeepTransactionsDone(false);
 
   portThread = new mdtUsbtmcPortThread;
   connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
@@ -134,7 +137,8 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   ///qDebug() << "mdtUsbtmcPortManager::sendQuery() , bTag: " << bTag << " , query: " << query;
   // Wait on response
   qDebug() << "mdtUsbtmcPortManager::sendQuery() , waiting ...";
-  if(!waitOnFrame(bTag, readTimeout)){
+  ///if(!waitOnFrame(bTag, readTimeout)){
+  if(!waitTransactionDone(bTag, readTimeout)){
     return QByteArray();
   }
   qDebug() << "mdtUsbtmcPortManager::sendQuery() , DONE";
