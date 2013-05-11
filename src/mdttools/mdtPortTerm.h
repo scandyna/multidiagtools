@@ -23,8 +23,6 @@
 
 #include "ui_mdtPortTerm.h"
 #include "mdtPortManager.h"
-#include "mdtUsbtmcPortManager.h"
-#include "mdtSerialPortManager.h"
 #include "mdtSerialPortSetupDialog.h"
 #include "mdtSerialPortCtlWidget.h"
 #include <QWidget>
@@ -38,6 +36,8 @@
 
 class QLabel;
 class mdtPortStatusWidget;
+class mdtSerialPortManager;
+class mdtUsbtmcPortManager;
 
 /*! \brief Mini port treminal
  */
@@ -55,10 +55,6 @@ class mdtPortTerm : public QMainWindow, public Ui::mdtPortTerm
   void setAvailableTranslations(const QMap<QString, QString> &avaliableTranslations, const QString &currentTranslationKey);
 
  public slots:
-
-  /*! \brief Append incomming data to terminal
-   */
-  ///void appendReadenData(QByteArray data);
 
   /*! \brief Append incomming data to terminal
    */
