@@ -881,8 +881,7 @@ class mdtPortManager : public QThread
   QQueue<mdtPortTransaction*> pvTransactionsPool;
   int pvTransactionsAllocatedCount;                     // Used to watch how many transactions are allocated (memory leack watcher)
   QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
-  ///QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used to store done transactions
-  QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions done in order that tey arrived. Used to avoid bugs when reaching transaction ID max
+  QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions for data that are received from device
 
   bool pvCancelReadWait;
   // Instance of reader and writer thread

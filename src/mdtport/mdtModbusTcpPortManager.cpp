@@ -55,12 +55,9 @@ mdtModbusTcpPortManager::mdtModbusTcpPortManager(QObject *parent)
   addThread(new mdtTcpSocketThread);
 
   // Some flags
-  ///pvTransactionId = 0;
-  pvKnownHostsFileName = "modbus_tcp_konown_hosts";
+  pvKnownHostsFileName = "modbus_tcp_known_hosts";
   pvAbortScan = false;
 
-  // Enable transactions support
-  ///setTransactionsEnabled();
   // We not want to keep each incomming frame
   setKeepTransactionsDone(false);
 }
@@ -227,7 +224,6 @@ bool mdtModbusTcpPortManager::tryToConnect(const QString &hostName, quint16 port
   int maxIter;
   bool ok = false;
 
-  ///emit(errorStateChanged(mdtAbstractPort::Connecting, tr("Trying ") + hostName));
   emit(statusMessageChanged(tr("Trying host ") + hostName + "  , port " + QString::number(port), "", 500));
   socket.connectToHost(hostName, port);
   maxIter = timeout / 50;
@@ -335,19 +331,15 @@ int mdtModbusTcpPortManager::getHardwareNodeAddress(int bitsCount, int startFrom
   // Send query
   transaction->setQueryReplyMode(true);
   transaction->setData(pdu);
-  ///transactionId = writeData(pdu, transaction);
   transactionId = writeData(transaction);
   if(transactionId < 0){
-    ///restoreTransaction(transaction);
     return transactionId;
   }
   // Wait on result (use device's defined timeout)
-  ///if(!waitOnFrame(transactionId)){
-  if(waitTransactionDone(transactionId)){
-    ///restoreTransaction(transaction);
+  if(!waitTransactionDone(transactionId)){
     return (int)mdtAbstractPort::ReadTimeout;
   }
-  // At this state, transaction will be restored by readenFrame()
+  // Get reply and decode
   if(codec.decode(readenFrame(transactionId)) != 0x02){
     return (int)mdtAbstractPort::UnhandledError;
   }
@@ -358,7 +350,6 @@ int mdtModbusTcpPortManager::getHardwareNodeAddress(int bitsCount, int startFrom
     e.commit();
     return (int)mdtAbstractPort::UnhandledError;
   }
-  ///qDebug() << "NODE ID: " << codec.values();
   // Ok, have the states, let's decode ID
   id = 0;
   for(i=0; i<bitsCount; i++){
@@ -393,19 +384,15 @@ bool mdtModbusTcpPortManager::getRegisterValues(int address, int n)
   // Send query
   transaction->setQueryReplyMode(true);
   transaction->setData(pdu);
-  ///transactionId = writeData(pdu, transaction);
   transactionId = writeData(transaction);
   if(transactionId < 0){
-    ///restoreTransaction(transaction);
     return false;
   }
   // Wait on result (use device's defined timeout)
-  ///if(!waitOnFrame(transactionId)){
   if(!waitTransactionDone(transactionId)){
-    ///restoreTransaction(transaction);
     return false;
   }
-  // At this state, transaction will be restored by readenFrame()
+  // Get reply and decode
   if(codec.decode(readenFrame(transactionId)) < 0){
     return false;
   }
@@ -427,80 +414,6 @@ const QList<int> &mdtModbusTcpPortManager::registerValues() const
 {
   return pvRegisterValues;
 }
-
-/**
-int mdtModbusTcpPortManager::writeData(QByteArray pdu, bool enqueueResponse)
-{
-  Q_ASSERT(pvPort != 0);
-
-  mdtFrameModbusTcp *frame;
-
-  // Get a frame in pool
-  pvPort->lockMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
-    e.commit();
-    emit(busy());
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data and add frame to write queue
-  ///frame->setWaitAnAnswer(false);
-  pvTransactionId++;
-  frame->setTransactionId(pvTransactionId);
-  frame->setUnitId(0);    /// \todo Handle this ?
-  frame->setPdu(pdu);
-  frame->encode();
-  pvPort->addFrameToWrite(frame);
-  addTransaction(pvTransactionId, enqueueResponse);
-  ///addTransaction(transaction);
-  pvPort->unlockMutex();
-
-  return pvTransactionId;
-}
-*/
-
-/**
-int mdtModbusTcpPortManager::writeData(QByteArray pdu, mdtPortTransaction *transaction)
-{
-  Q_ASSERT(pvPort != 0);
-  Q_ASSERT(transaction != 0);
-
-  mdtFrameModbusTcp *frame;
-
-  // Get a frame in pool
-  pvPort->lockMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
-    e.commit();
-    emit(busy());
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  frame = dynamic_cast<mdtFrameModbusTcp*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data and add frame to write queue
-  pvTransactionId++;
-  frame->setTransactionId(pvTransactionId);
-  frame->setUnitId(0);    /// \todo Handle this ?
-  frame->setPdu(pdu);
-  frame->encode();
-  pvPort->addFrameToWrite(frame);
-  transaction->setId(pvTransactionId);
-  addTransactionPending(transaction);
-  pvPort->unlockMutex();
-
-  return pvTransactionId;
-}
-*/
 
 int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
 {
@@ -525,9 +438,7 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
   frame->clear();
   frame->clearSub();
   // Store data and add frame to write queue
-  ///pvTransactionId++;
   incrementCurrentTransactionId(0, 65535);
-  ///frame->setTransactionId(pvTransactionId);
   frame->setTransactionId(currentTransactionId());
   frame->setUnitId(0);    /// \todo Handle this ?
   frame->setPdu(transaction->data());
@@ -537,7 +448,6 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
   addTransactionPending(transaction);
   pvPort->unlockMutex();
 
-  ///return pvTransactionId;
   return transaction->id();
 }
 
