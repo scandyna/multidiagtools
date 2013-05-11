@@ -152,7 +152,6 @@ mdtValue mdtDevice::getAnalogInputValue(mdtAnalogIo *analogInput, bool queryDevi
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogInput(transaction);
     if(transactionId < 0){
-      /// \todo Restore transaction ???
       analogInput->setValue(mdtValue());
       return mdtValue();
     }
@@ -274,7 +273,6 @@ mdtValue mdtDevice::getAnalogOutputValue(mdtAnalogIo *analogOutput, bool queryDe
     transaction->setQueryReplyMode(true);
     transactionId = readAnalogOutput(transaction);
     if(transactionId < 0){
-      /// \todo Restore transaction ???
       analogOutput->setValue(mdtValue());
       return mdtValue();
     }
@@ -980,6 +978,7 @@ mdtPortTransaction *mdtDevice::getNewTransaction()
 void mdtDevice::restoreTransaction(mdtPortTransaction *transaction)
 {
   Q_ASSERT(portManager() != 0);
+  Q_ASSERT(transaction != 0);
 
   portManager()->restoreTransaction(transaction);
 }
@@ -991,9 +990,15 @@ bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
 
   bool ok;
 
-  ///ok = portManager()->waitOnFrame(id, timeout, granularity);
   ok = portManager()->waitTransactionDone(id, timeout, granularity);
-  // We must remove frame from done queue
+  /*
+   * Request was send, response arrived,
+   * subclass has decoded response and updated I/O.
+   * So, we have to remove transaction from done queue and restore it to pool
+   * In mdtPortManager it was choosen to not let access
+   * to transaction queues management, so we call readenFrame()
+   * witch does all the needed job.
+   */
   portManager()->readenFrame(id);
 
   return ok;

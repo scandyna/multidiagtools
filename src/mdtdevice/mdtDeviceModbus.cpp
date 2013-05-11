@@ -34,7 +34,6 @@ mdtDeviceModbus::mdtDeviceModbus(QObject *parent)
 
   pvTcpPortManager = new mdtModbusTcpPortManager;
   pvCodec = new mdtFrameCodecModbus;
-  ///connect(pvTcpPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction)));
   connect(pvTcpPortManager, SIGNAL(newTransactionDone(mdtPortTransaction*)), this, SLOT(decodeReadenFrame(mdtPortTransaction*)));
   ///connect(pvTcpPortManager, SIGNAL(errorStateChanged(int, const QString&, const QString&)), this, SLOT(setStateFromPortError(int, const QString&, const QString&)));
   connect(pvTcpPortManager, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
@@ -105,53 +104,6 @@ mdtAbstractPort::error_t mdtDeviceModbus::connectToDevice(const QList<mdtPortInf
 bool mdtDeviceModbus::getRegisterValues(int address, int n)
 {
   return pvTcpPortManager->getRegisterValues(address, n);
-  /**
-  Q_ASSERT(address >= 0);
-  Q_ASSERT(n > 0);
-
-  int transactionId;
-  mdtPortTransaction *transaction;
-  QByteArray pdu;
-  int i;
-
-  // Clear previous results
-  pvRegisterValues.clear();
-  // Setup MODBUS PDU
-  pdu = pvCodec->encodeReadInputRegisters(address, n);
-  if(pdu.isEmpty()){
-    return false;
-  }
-  // Get a new transaction
-  transaction = getNewTransaction();
-  // Send query
-  transaction->setQueryReplyMode(true);
-  transactionId = pvTcpPortManager->writeData(pdu, transaction);
-  if(transactionId < 0){
-    restoreTransaction(transaction);
-    return false;
-  }
-  // Wait on result (use device's defined timeout)
-  if(!pvTcpPortManager->waitOnFrame(transactionId)){
-    restoreTransaction(transaction);
-    return false;
-  }
-  // At this state, transaction will be restored by readenFrame()
-  if(pvCodec->decode(pvTcpPortManager->readenFrame(transactionId)) < 0){
-    return false;
-  }
-  // Store values
-  if(pvCodec->values().size() != n){
-    mdtError e(MDT_DEVICE_ERROR, "Device " + name() + ": received unexptected count of values", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago");
-    e.commit();
-    return false;
-  }
-  for(i=0; i<n; i++){
-    pvRegisterValues.append(pvCodec->values().at(i).toInt());
-  }
-
-  return true;
-  */
 }
 
 const QList<int> &mdtDeviceModbus::registerValues() const
@@ -159,11 +111,9 @@ const QList<int> &mdtDeviceModbus::registerValues() const
   return pvTcpPortManager->registerValues();
 }
 
-/// \todo Update to mdtValue - And don't forget to move also modbus frame codec to mdtValue ..
 void mdtDeviceModbus::decodeReadenFrame(mdtPortTransaction *transaction)
 {
   Q_ASSERT(transaction != 0);
-  ///Q_ASSERT(pvIos != 0);
   if(pvIos == 0){
     return;
   }
@@ -394,7 +344,6 @@ int mdtDeviceModbus::readAnalogInput(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -407,13 +356,11 @@ int mdtDeviceModbus::readAnalogInputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeReadInputRegisters(pvIos->analogInputsFirstAddress(), pvIos->analogInputsCount());
   pdu = pvCodec->encodeReadInputRegisters(transaction->address(), transaction->ioCount());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -431,7 +378,6 @@ int mdtDeviceModbus::readAnalogOutput(mdtPortTransaction *transaction)
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -444,13 +390,11 @@ int mdtDeviceModbus::readAnalogOutputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeReadHoldingRegisters(pvIos->analogOutputsFirstAddressRead(), pvIos->analogOutputsCount());
   pdu = pvCodec->encodeReadHoldingRegisters(transaction->address(), transaction->ioCount());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -468,7 +412,6 @@ int mdtDeviceModbus::writeAnalogOutput(int value, mdtPortTransaction *transactio
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -481,13 +424,11 @@ int mdtDeviceModbus::writeAnalogOutputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeWriteMultipleRegisters(pvIos->analogOutputsFirstAddressWrite(), pvIos->analogOutputsValuesIntByAddressWrite());
   pdu = pvCodec->encodeWriteMultipleRegisters(transaction->address(), pvIos->analogOutputsValuesIntByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -500,14 +441,12 @@ int mdtDeviceModbus::readDigitalInput(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeReadDiscreteInputs(transaction->address()+pvDigitalOutputAddressOffset, 1);
   pdu = pvCodec->encodeReadDiscreteInputs(transaction->address(), 1);
   qDebug() << "mdtDeviceModbus::readDigitalInput() adr: " << transaction->address();
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -520,15 +459,11 @@ int mdtDeviceModbus::readDigitalInputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeReadDiscreteInputs(pvDigitalOutputAddressOffset, pvIos->digitalInputsCount());
-  ///pdu = pvCodec->encodeReadDiscreteInputs(0, pvIos->digitalInputsCount());
-  ///pdu = pvCodec->encodeReadDiscreteInputs(pvIos->digitalInputsFirstAddress(), pvIos->digitalInputsCount());
   pdu = pvCodec->encodeReadDiscreteInputs(transaction->address(), transaction->ioCount());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -541,13 +476,11 @@ int mdtDeviceModbus::readDigitalOutput(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeReadCoils(transaction->address()+pvDigitalOutputAddressOffset, 1);
   pdu = pvCodec->encodeReadCoils(transaction->address(), 1);
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -560,14 +493,11 @@ int mdtDeviceModbus::readDigitalOutputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeReadCoils(pvDigitalOutputAddressOffset, pvIos->digitalOutputsCount());
-  ///pdu = pvCodec->encodeReadCoils(pvIos->digitalOutputsFirstAddressRead(), pvIos->digitalOutputsCount());
   pdu = pvCodec->encodeReadCoils(transaction->address(), transaction->ioCount());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -580,13 +510,11 @@ int mdtDeviceModbus::writeDigitalOutput(bool state, mdtPortTransaction *transact
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///pdu = pvCodec->encodeWriteSingleCoil(transaction->address()+pvDigitalOutputAddressOffset, state);
   pdu = pvCodec->encodeWriteSingleCoil(transaction->address(), state);
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }
@@ -599,16 +527,11 @@ int mdtDeviceModbus::writeDigitalOutputs(mdtPortTransaction *transaction)
   QByteArray pdu;
 
   // Setup MODBUS PDU
-  ///qDebug() << "mdtDeviceModbus::writeDigitalOutputs(): states: " << pvIos->digitalOutputsStates();
-  ///pdu = pvCodec->encodeWriteMultipleCoils(pvDigitalOutputAddressOffset, pvIos->digitalOutputsStates());
-  ///pdu = pvCodec->encodeWriteMultipleCoils(0, pvIos->digitalOutputsStates());
-  ///pdu = pvCodec->encodeWriteMultipleCoils(pvIos->digitalOutputsFirstAddressWrite(), pvIos->digitalOutputsStatesByAddressWrite());
   pdu = pvCodec->encodeWriteMultipleCoils(transaction->address(), pvIos->digitalOutputsStatesByAddressWrite());
   if(pdu.isEmpty()){
     return -1;
   }
   // Send request
-  ///return pvTcpPortManager->writeData(pdu, transaction);
   transaction->setData(pdu);
   return pvTcpPortManager->writeData(transaction);
 }

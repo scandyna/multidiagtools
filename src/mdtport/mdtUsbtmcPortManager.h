@@ -117,24 +117,6 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
    */
   int writeData(const QByteArray &data);
 
-  /*! \brief Write data by copy
-   *
-   * Data will be encoded regarding USBTMC standard and passed to the mdtUsbPort's write queue by copy.
-   *  This method returns immediatly after enqueue,
-   *  and don't wait until data was written.
-   *
-   * \param transaction Transaction used to send data. Following members are used by this method:
-   *                     - id : bTag
-   *                     - data : will be sent to device.
-   *                     - isQueryReplyMode : if true, the transaction will be keeped in transactions done queue
-   *                                          until readenFrame() or readenFrames() is called.
-   * \return bTag ID on success or mdtAbstractPort::WriteQueueEmpty (< 0).
-   *          On failure, the transaction is restored to pool.
-   * \pre Port must be set with setPort() before use of this method.
-   * \pre transaction must be a valid pointer, and not allready exists in transactions pending or transactions done queue.
-   */
-  ///int writeData(mdtPortTransaction *transaction);
-
   /*! \brief Send a read request to device
    *
    * USBTMC standard need that a read request is sent to device
@@ -202,8 +184,6 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
   void onThreadsErrorOccured(int error);
 
  private:
-
-  ///quint8 pvCurrentWritebTag;  // USBTMC's frame bTag
 
   // Diseable copy
   Q_DISABLE_COPY(mdtUsbtmcPortManager);

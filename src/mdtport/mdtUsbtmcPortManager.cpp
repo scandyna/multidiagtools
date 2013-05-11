@@ -46,7 +46,6 @@ mdtUsbtmcPortManager::mdtUsbtmcPortManager(QObject *parent)
   pvPort->config().setReadTimeout(30000);
 
   // USBTMC specific
-  ///pvCurrentWritebTag = 0;
   setCurrentTransactionId(0);
 
   // We not want to keep each incomming frame
@@ -101,9 +100,9 @@ int mdtUsbtmcPortManager::sendCommand(const QByteArray &command, int timeout)
   return writeData(command);
 }
 
+/// \todo Remove timeouts
 QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTimeout, int readTimeout)
 {
-  qDebug() << "mdtUsbtmcPortManager::sendQuery() called, query: " << query;
   int bTag;
   mdtPortTransaction *transaction;
 
@@ -122,24 +121,17 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
   }
   // Setup transaction
   transaction = getNewTransaction();
-  ///transaction->setType(MDT_FC_SCPI_UNKNOW);
   transaction->setType(mdtFrameCodecScpi::QT_UNKNOW);
   transaction->setQueryReplyMode(true);
-  qDebug() << "mdtUsbtmcPortManager::sendQuery() , sending read request ... ";
   // Send read request
   bTag = sendReadRequest(transaction);
   if(bTag < 0){
     return QByteArray();
   }
-  qDebug() << "mdtUsbtmcPortManager::sendQuery() , sending read request DONE, bTag " << bTag;
-  ///qDebug() << "mdtUsbtmcPortManager::sendQuery() , bTag: " << bTag << " , query: " << query;
   // Wait on response
-  qDebug() << "mdtUsbtmcPortManager::sendQuery() , waiting ...";
-  ///if(!waitOnFrame(bTag, readTimeout)){
   if(!waitTransactionDone(bTag, readTimeout)){
     return QByteArray();
   }
-  qDebug() << "mdtUsbtmcPortManager::sendQuery() , DONE";
 
   return readenFrame(bTag);
 }
@@ -169,13 +161,6 @@ int mdtUsbtmcPortManager::writeData(const QByteArray &data)
   frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
   // Increment bTag and enshure it's in correct range (1-255)
   incrementCurrentTransactionId(1, 255);
-  /**
-  pvCurrentWritebTag++;
-  if(pvCurrentWritebTag == 0){
-    pvCurrentWritebTag++;
-  }
-  */
-  ///frame->setbTag(pvCurrentWritebTag);
   frame->setbTag(currentTransactionId());
   frame->setMessageData(data);
   frame->setEOM(true);
@@ -183,50 +168,8 @@ int mdtUsbtmcPortManager::writeData(const QByteArray &data)
   pvPort->addFrameToWrite(frame);
   pvPort->unlockMutex();
 
-  ///return pvCurrentWritebTag;
   return currentTransactionId();
 }
-
-/**
-int mdtUsbtmcPortManager::writeData(mdtPortTransaction *transaction)
-{
-  Q_ASSERT(pvPort != 0);
-  Q_ASSERT(transaction != 0);
-  ///Q_ASSERT(!pvTransactionsPending.contains(transaction->id()));
-  Q_ASSERT(!transactionsDoneContains(transaction->id()));
-
-  mdtFrameUsbTmc *frame;
-
-  // Get a frame in pool
-  pvPort->lockMutex();
-  if(pvPort->writeFramesPool().size() < 1){
-    pvPort->unlockMutex();
-    mdtError e(MDT_PORT_IO_ERROR, "No frame available in write frames pool", mdtError::Error);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortManager");
-    e.commit();
-    restoreTransaction(transaction);
-    emit(busy());
-    return mdtAbstractPort::WritePoolEmpty;
-  }
-  frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->writeFramesPool().dequeue());
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
-  // Store data and add frame to write queue
-  frame->setWaitAnAnswer(false);
-  frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_OUT);
-  // Increment bTag and enshure it's in correct range (1-255)
-  incrementCurrentTransactionId(1, 255);
-  frame->setbTag(currentTransactionId());
-  frame->setMessageData(transaction->data());
-  frame->setEOM(true);
-  frame->encode();
-  pvPort->addFrameToWrite(frame);
-  pvPort->unlockMutex();
-
-  return currentTransactionId();
-}
-*/
 
 int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
 {
@@ -256,24 +199,15 @@ int mdtUsbtmcPortManager::sendReadRequest(mdtPortTransaction *transaction)
   frame->setMsgID(mdtFrameUsbTmc::DEV_DEP_MSG_IN);
   // Increment bTag and enshure it's in correct range (1-255)
   incrementCurrentTransactionId(1, 255);
-  /**
-  pvCurrentWritebTag++;
-  if(pvCurrentWritebTag == 0){
-    pvCurrentWritebTag++;
-  }
-  */
-  ///frame->setbTag(pvCurrentWritebTag);
   frame->setbTag(currentTransactionId());
   frame->setTransferSize(config().readFrameSize()-13);
   frame->encode();
   pvPort->addFrameToWrite(frame);
   // Add transaction
-  ///transaction->setId(pvCurrentWritebTag);
   transaction->setId(currentTransactionId());
   addTransactionPending(transaction);
   pvPort->unlockMutex();
 
-  ///return pvCurrentWritebTag;
   return currentTransactionId();
 }
 
@@ -302,15 +236,6 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
   frame.setbRequest(128); // READ_STATUS_BYTE
   // Ajust bTag to:  2 <= bTag <= 127
   incrementCurrentTransactionId(2, 127);
-  /**
-  if(pvCurrentWritebTag > 127){
-    pvCurrentWritebTag = 2;
-  }
-  while(pvCurrentWritebTag < 2){
-    pvCurrentWritebTag++;
-  }
-  */
-  ///frame.setwValue(pvCurrentWritebTag);
   frame.setwValue(currentTransactionId());
   frame.setwLength(0x3);
   frame.encode();
@@ -319,7 +244,6 @@ int mdtUsbtmcPortManager::sendReadStatusByteRequest()
   if(retVal < 0){
     return retVal;
   }
-  ///return pvCurrentWritebTag;
   return currentTransactionId();
   ///m.sendControlRequest(f);
   /// End Sandbox !
@@ -499,7 +423,6 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 
   // Get frames in readen queue
   pvPort->lockMutex();
-  qDebug() << "USBTMC Port Manager: queue size: " << pvPort->readenFrames().size();
   while(pvPort->readenFrames().size() > 0){
     frame = dynamic_cast<mdtFrameUsbTmc*> (pvPort->readenFrames().dequeue());
     Q_ASSERT(frame != 0);
@@ -537,7 +460,6 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
     // Here we should have a valid frame
     transaction->setId(frame->bTag());
     transaction->setData(frame->messageData());
-    ///enqueueTransactionRx(transaction);
     // Put frame back into pool and enqueue transaction in done queue
     pvPort->readFramesPool().enqueue(frame);
     addTransactionDone(transaction);
@@ -546,7 +468,6 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   pvPort->unlockMutex();
   // Commit
   if(framesCount > 0){
-    qDebug() << "USBTMC Port Manager: commit frames";
     commitFrames();
   }
 }
