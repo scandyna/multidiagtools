@@ -13,6 +13,6 @@
 <area shape="rect" id="node34" href="$classmdt_device_ios_widget.html" title="Display a set of I/O&#39;s." alt="" coords="233,477,377,507"/>
 <area shape="rect" id="node22" href="$classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="395,424,560,453"/>
 <area shape="rect" id="node24" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="419,328,536,357"/>
-<area shape="rect" id="node26" href="$classmdt_modbus_tcp_port_manager.html" title="#include &lt;QVariant&gt;" alt="" coords="584,424,771,453"/>
+<area shape="rect" id="node26" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="584,424,771,453"/>
 <area shape="rect" id="node31" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="556,197,647,227"/>
 </map>

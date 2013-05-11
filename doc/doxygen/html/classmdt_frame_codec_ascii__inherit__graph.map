@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="29,160,173,189"/>
+<area shape="rect" id="node5" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;" alt="" coords="29,160,173,189"/>
 <area shape="rect" id="node2" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="43,5,160,35"/>
 <area shape="rect" id="node7" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="5,237,197,267"/>
 </map>

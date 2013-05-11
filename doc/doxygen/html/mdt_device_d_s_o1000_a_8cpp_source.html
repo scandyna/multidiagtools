@@ -87,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a><a class="code" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">00025</a> <a class="code" href="classmdt_device_d_s_o1000_a.html#a3c4cd1418250864589284a3540353fdb">mdtDeviceDSO1000A::mdtDeviceDSO1000A</a>(QObject *parent)
 <a name="l00026"></a>00026  : <a class="code" href="classmdt_device_scpi.html" title="Base class for SCPI based instruments.">mdtDeviceScpi</a>(parent)
 <a name="l00027"></a>00027 {
-<a name="l00028"></a>00028   pvCodec = <span class="keyword">new</span> <a class="code" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a>;
+<a name="l00028"></a>00028   pvCodec = <span class="keyword">new</span> <a class="code" href="classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;">mdtFrameCodecScpi</a>;
 <a name="l00029"></a>00029   <span class="comment">// Setup port manager</span>
 <a name="l00030"></a>00030   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a02f3c9744b0d7a61853ab58467278bbc" title="Set the read frame size.">setReadFrameSize</a>(10000);
 <a name="l00031"></a>00031   <a class="code" href="classmdt_device_scpi.html#a7dc5ab8856a766a45bcc7e9cba0f54ca" title="Get internal port manager instance.">portManager</a>()-&gt;<a class="code" href="classmdt_port_manager.html#a9cf3ea2da38f81682695b37448712ffd" title="Get the port&#39;s config object.">config</a>().<a class="code" href="classmdt_port_config.html#a04d8e81844deaff20a890ea24e2f9634" title="Set the read Queue size.">setReadQueueSize</a>(5);
@@ -134,7 +134,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 22 2013 20:11:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 11 2013 22:03:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

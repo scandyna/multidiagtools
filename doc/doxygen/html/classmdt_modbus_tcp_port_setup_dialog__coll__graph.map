@@ -1,7 +1,7 @@
 <map id="G" name="G">
 <area shape="rect" id="node2" href="$classmdt_abstract_port_setup_dialog.html" title="Base class to build a port setup dialog." alt="" coords="24,424,211,453"/>
 <area shape="rect" id="node4" href="$classmdt_port_manager.html" title="Port manager base class." alt="" coords="272,328,389,357"/>
-<area shape="rect" id="node22" href="$classmdt_modbus_tcp_port_manager.html" title="#include &lt;QVariant&gt;" alt="" coords="235,424,421,453"/>
+<area shape="rect" id="node22" href="$classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="235,424,421,453"/>
 <area shape="rect" id="node6" href="$classmdt_port_thread.html" title="mdtPortThread" alt="" coords="173,197,280,227"/>
 <area shape="rect" id="node15" href="$classmdt_port_status_widget.html" title="mdtPortStatusWidget" alt="" coords="24,328,171,357"/>
 <area shape="rect" id="node8" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="243,101,360,131"/>

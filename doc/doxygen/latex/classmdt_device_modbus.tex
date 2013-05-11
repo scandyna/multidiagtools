@@ -22,7 +22,8 @@ Inheritance diagram for mdtDeviceModbus:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbus:\nopagebreak
+Collaboration diagram for mdtDeviceModbus:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -209,16 +210,6 @@ address and n must be $>$ 0
 \end{DoxySeeAlso}
 
 
-Q\_\-ASSERT(address $>$= 0); Q\_\-ASSERT(n $>$ 0);
-
-int transactionId; \hyperlink{classmdt_port_transaction}{mdtPortTransaction} $\ast$transaction; QByteArray pdu; int i;
-
-Clear previous results pvRegisterValues.clear(); Setup MODBUS PDU pdu = pvCodec-\/$>$encodeReadInputRegisters(address, n); if(pdu.isEmpty())\{ return false; \} Get a new transaction transaction = \hyperlink{classmdt_device_a0e57cc8b749581cff447d514b9a1ff8e}{getNewTransaction()}; Send query transaction-\/$>$setQueryReplyMode(true); transactionId = pvTcpPortManager-\/$>$writeData(pdu, transaction); if(transactionId $<$ 0)\{ restoreTransaction(transaction); return false; \} Wait on result (use device's defined timeout) if(!pvTcpPortManager-\/$>$waitOnFrame(transactionId))\{ restoreTransaction(transaction); return false; \} At this state, transaction will be restored by readenFrame() if(pvCodec-\/$>$decode(pvTcpPortManager-\/$>$readenFrame(transactionId)) $<$ 0)\{ return false; \} Store values if(pvCodec-\/$>$values().size() != n)\{ \hyperlink{classmdt_error}{mdtError} e(MDT\_\-DEVICE\_\-ERROR, \char`\"{}Device \char`\"{} + \hyperlink{classmdt_device_a7ad893c6885dbaef5a6cb980bfe627e0}{name()} + \char`\"{}: received unexptected count of values\char`\"{}, mdtError::Error); MDT\_\-ERROR\_\-SET\_\-SRC(e, \char`\"{}mdtDeviceModbusWago\char`\"{}); e.commit(); return false; \} for(i=0; i$<$n; i++)\{ pvRegisterValues.append(pvCodec-\/$>$values().at(i).toInt()); \}
-
-return true;
-
-
-
 Definition at line 104 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a3b83b926ed1f9c3bdf7024de2745c285}{
@@ -250,7 +241,7 @@ Reimplemented from \hyperlink{classmdt_device_acba50968d201ad95c4eaa2ab2ed48b4f}
 
 
 
-Definition at line 312 of file mdtDeviceModbus.cpp.
+Definition at line 322 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_aa2a024793ae2a5e81c7e92260a70cd9e}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInput@{readAnalogInput}}
@@ -275,7 +266,7 @@ This method is called from getAnalogInput().
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details). 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details). 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -288,7 +279,7 @@ Reimplemented from \hyperlink{classmdt_device_acecf7934ce29b3a957accb0f4c98c746}
 
 
 
-Definition at line 324 of file mdtDeviceModbus.cpp.
+Definition at line 334 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a846af6dbf80bbf747f3f966420ef6f92}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogInputs@{readAnalogInputs}}
@@ -305,7 +296,7 @@ Read all analog inputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a585cc32f6aac4d5788928ecf1fdacf51}{getAnalogInputs()}.
+This method is called from \hyperlink{classmdt_device_a98cba3132db15317daf54eb701388e91}{getAnalogInputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -313,7 +304,7 @@ This method is called from \hyperlink{classmdt_device_a585cc32f6aac4d5788928ecf1
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -326,7 +317,7 @@ Reimplemented from \hyperlink{classmdt_device_a40674e7bf0c367bb3edb407d73a5bd8e}
 
 
 
-Definition at line 340 of file mdtDeviceModbus.cpp.
+Definition at line 351 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a30c815cbe5e603e8114dcbc09849e322}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutput@{readAnalogOutput}}
@@ -343,7 +334,7 @@ Read one analog output on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a7085491cf2d96fd2afd3004de6caef0d}{getAnalogOutputValue()}.
+This method is called from \hyperlink{classmdt_device_a163ee286d905feafe50b3e4351d4bf41}{getAnalogOutputValue()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -351,7 +342,7 @@ This method is called from \hyperlink{classmdt_device_a7085491cf2d96fd2afd3004de
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -364,7 +355,7 @@ Reimplemented from \hyperlink{classmdt_device_a7934063c3f41a742515f1232c9598c2a}
 
 
 
-Definition at line 355 of file mdtDeviceModbus.cpp.
+Definition at line 368 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_ae02dd44f1d873fcc15ff75d781b62b0b}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readAnalogOutputs@{readAnalogOutputs}}
@@ -381,7 +372,7 @@ Read all analog outputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a7085491cf2d96fd2afd3004de6caef0d}{getAnalogOutputValue()}.
+This method is called from \hyperlink{classmdt_device_a163ee286d905feafe50b3e4351d4bf41}{getAnalogOutputValue()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -389,7 +380,7 @@ This method is called from \hyperlink{classmdt_device_a7085491cf2d96fd2afd3004de
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -400,7 +391,7 @@ Reimplemented from \hyperlink{classmdt_device_ab0232ac83c38bc93d3bc2aa91d94c291}
 
 
 
-Definition at line 371 of file mdtDeviceModbus.cpp.
+Definition at line 385 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a9dd05e51223ee5bb79970fbe84c501f9}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInput@{readDigitalInput}}
@@ -417,7 +408,7 @@ Read one digital input on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_aad589d5c8c769299fdf0ea4e34d3bc0a}{getDigitalInputState()}.
+This method is called from getDigitalInputState().
 
 
 \begin{DoxyParams}{Parameters}
@@ -425,7 +416,7 @@ This method is called from \hyperlink{classmdt_device_aad589d5c8c769299fdf0ea4e3
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -438,7 +429,7 @@ Reimplemented from \hyperlink{classmdt_device_af128b606050035abaf8d049bb2227015}
 
 
 
-Definition at line 418 of file mdtDeviceModbus.cpp.
+Definition at line 436 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a3fba9e113092f9da187cf684fb62b132}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalInputs@{readDigitalInputs}}
@@ -455,7 +446,7 @@ Read all digital inputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_ae482b28263b2ce61735f42f1245c1e99}{getDigitalInputs()}.
+This method is called from \hyperlink{classmdt_device_a6e338b959c86591b6b3401f925c49050}{getDigitalInputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -463,7 +454,7 @@ This method is called from \hyperlink{classmdt_device_ae482b28263b2ce61735f42f12
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -472,17 +463,11 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-pdu = pvCodec-\/$>$encodeReadDiscreteInputs(pvDigitalOutputAddressOffset, pvIos-\/$>$digitalInputsCount());
-
-pdu = pvCodec-\/$>$encodeReadDiscreteInputs(0x0000, 16); 
-
-
-
 Reimplemented from \hyperlink{classmdt_device_a150e3abae6db5bf1ad11017bf2b76c14}{mdtDevice}.
 
 
 
-Definition at line 434 of file mdtDeviceModbus.cpp.
+Definition at line 454 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a13a334ac86135751893f37064d8f548d}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutput@{readDigitalOutput}}
@@ -499,7 +484,7 @@ Read one digital output on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a719401fec13501047ffdf7f51583937c}{getDigitalOutputState()}.
+This method is called from getDigitalOutputState().
 
 
 \begin{DoxyParams}{Parameters}
@@ -507,7 +492,7 @@ This method is called from \hyperlink{classmdt_device_a719401fec13501047ffdf7f51
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -520,7 +505,7 @@ Reimplemented from \hyperlink{classmdt_device_a1faee6ab31b094731211ea0943544501}
 
 
 
-Definition at line 452 of file mdtDeviceModbus.cpp.
+Definition at line 471 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a8915a036472bff0f356756992c1eae51}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!readDigitalOutputs@{readDigitalOutputs}}
@@ -537,7 +522,7 @@ Read all digital outputs on physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a6bd6ad4f8d07121dd8b988594927e9c8}{getDigitalOutputs()}.
+This method is called from \hyperlink{classmdt_device_ab35b81b8eb68e161ac06ae882be39a25}{getDigitalOutputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -545,7 +530,7 @@ This method is called from \hyperlink{classmdt_device_a6bd6ad4f8d07121dd8b988594
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -558,7 +543,7 @@ Reimplemented from \hyperlink{classmdt_device_aac038c24c3b91757584bdf0d09fb8b02}
 
 
 
-Definition at line 468 of file mdtDeviceModbus.cpp.
+Definition at line 488 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a83cb2a28111653fbcbbe748f7a1a2e3d}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!registerValues@{registerValues}}
@@ -580,7 +565,7 @@ Return result set by \hyperlink{classmdt_device_modbus_a89d41c6b33a3dd2a92a0956d
 \end{DoxySeeAlso}
 
 
-Definition at line 156 of file mdtDeviceModbus.cpp.
+Definition at line 109 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_ac63297a31205759622f341525c34251f}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutput@{writeAnalogOutput}}
@@ -598,7 +583,7 @@ Write value on a analog output to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a4b01925cfbbb62e32a3e85a9c4b1538a}{setAnalogOutputValue()}.
+This method is called from \hyperlink{classmdt_device_a766d9adcf8c2274f61f120a4a5c5c6d9}{setAnalogOutputValue()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -608,7 +593,7 @@ This method is called from \hyperlink{classmdt_device_a4b01925cfbbb62e32a3e85a9c
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -619,7 +604,7 @@ Reimplemented from \hyperlink{classmdt_device_ae764634bba2b321ac2b4731c0353e45f}
 
 
 
-Definition at line 386 of file mdtDeviceModbus.cpp.
+Definition at line 402 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a87af02c83cede03d6ee988c678e0fc00}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeAnalogOutputs@{writeAnalogOutputs}}
@@ -636,7 +621,7 @@ Write all analog outputs to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_ae45c39c2ef38b5952171fdc1c3284748}{setAnalogOutputs()}.
+This method is called from \hyperlink{classmdt_device_a57e1cee7e670469035c57e3bd2ff4c9d}{setAnalogOutputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -644,7 +629,7 @@ This method is called from \hyperlink{classmdt_device_ae45c39c2ef38b5952171fdc1c
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -657,7 +642,7 @@ Reimplemented from \hyperlink{classmdt_device_abc52b797df29945bf0a6358aab1b7245}
 
 
 
-Definition at line 402 of file mdtDeviceModbus.cpp.
+Definition at line 419 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_a6950c10fc521b193fb3c754223879694}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutput@{writeDigitalOutput}}
@@ -675,7 +660,7 @@ Write state on a digital output to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_a3927aed78d8086fd58bc6c7602833bf4}{setDigitalOutputState()}.
+This method is called from setDigitalOutputState().
 
 
 \begin{DoxyParams}{Parameters}
@@ -685,7 +670,7 @@ This method is called from \hyperlink{classmdt_device_a3927aed78d8086fd58bc6c760
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -698,7 +683,7 @@ Reimplemented from \hyperlink{classmdt_device_a0fbe57503d86554829e708b2b83d73f1}
 
 
 
-Definition at line 484 of file mdtDeviceModbus.cpp.
+Definition at line 505 of file mdtDeviceModbus.cpp.
 
 \hypertarget{classmdt_device_modbus_aad3ce85a19307e3056b940da99fe512b}{
 \index{mdtDeviceModbus@{mdtDeviceModbus}!writeDigitalOutputs@{writeDigitalOutputs}}
@@ -715,7 +700,7 @@ Write all digital outputs to physical device.
 
 This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.
 
-This method is called from \hyperlink{classmdt_device_ae68a400d5f27fe142d41b674f473bf98}{setDigitalOutputs()}.
+This method is called from \hyperlink{classmdt_device_a7b86a816e55a91f0d62426e1741437c6}{setDigitalOutputs()}.
 
 
 \begin{DoxyParams}{Parameters}
@@ -723,7 +708,7 @@ This method is called from \hyperlink{classmdt_device_ae68a400d5f27fe142d41b674f
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a8b60d53d6e553f15dedec916f9c1614b}{mdtPortManager::writeData()} for details) 
+0 or a ID on success, value $<$ 0 on error (see \hyperlink{classmdt_port_manager_a328abc7f5f2677c19ea11567df6597da}{mdtPortManager::writeData()} for details) 
 \end{DoxyReturn}
 \begin{DoxyPrecond}{Precondition}
 I/O's must be set with \hyperlink{classmdt_device_a9f1de62ef54974b0636dee673bd819e2}{setIos()}. 
@@ -732,15 +717,11 @@ transaction must be a valid pointer.
 \end{DoxyPrecond}
 
 
-qDebug() $<$$<$ \char`\"{}mdtDeviceModbus::writeDigitalOutputs(): states: \char`\"{} $<$$<$ pvIos-\/$>$digitalOutputsStates(); pdu = pvCodec-\/$>$encodeWriteMultipleCoils(pvDigitalOutputAddressOffset, pvIos-\/$>$digitalOutputsStates()); 
-
-
-
 Reimplemented from \hyperlink{classmdt_device_aa9e8ae7b4ff2455b4105d280d8523fc1}{mdtDevice}.
 
 
 
-Definition at line 500 of file mdtDeviceModbus.cpp.
+Definition at line 522 of file mdtDeviceModbus.cpp.
 
 
 

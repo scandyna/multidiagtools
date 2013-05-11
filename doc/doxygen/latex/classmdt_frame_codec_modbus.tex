@@ -182,11 +182,11 @@ Definition at line 47 of file mdtFrameCodecModbus.h.
 
 Decode a MODBUS PDU. 
 
-This should reconize the function code in PDU, and call the appropriate decode methode (internal). Once decode is done, the values are available with \hyperlink{classmdt_frame_codec_a2c0cc0f9d9b72ef2295b7ec7eca72ea7}{mdtFrameCodec::values()}. To know what was decoded, the function code is returned.
+This should reconize the function code in PDU, and call the appropriate decode methode (internal). Once decode is done, the values are available with \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{mdtFrameCodec::values()}. To know what was decoded, the function code is returned.
 
 The values are stored in a QList$<$QVariant$>$ , with format depending of the function code:
 \begin{DoxyItemize}
-\item FC 1 (0x01), ReadCoils reply: digital output states as bool, sorted by ascending addresses.
+\item FC 1 (0x01), ReadCoils reply: digital outputs (coils) states as bool, sorted by ascending addresses. Note: the PDU contains the number of bytes returned by device, it's also not possible to know how many coils are concerned. For example, if a request was made for 5 coils, 1 byte is returned from device, \hyperlink{classmdt_frame_codec_af3353b74e1ab64ad7cc764dcaf22e7e8}{values()} will also contain 8 items.
 \item FC 2 (0x02), ReadDiscreteInputs reply: digital input states as bool, sorted by ascending addresses.
 \item FC 3 (0x03), ReadHoldingRegisters reply: analog output values as quint16, sorted by ascending addresses.
 \item FC 4 (0x04), ReadInputRegisters reply: analog input values as quint16, sorted by ascending addresses.

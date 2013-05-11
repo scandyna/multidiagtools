@@ -109,8 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query device about error.  <a href="#a65c6f747ac6c6fe727a7359f78139168"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a480697b6b78665bfc59fd2bffcf4b566">handleDeviceError</a> (QList&lt; QVariant &gt; &amp;decodedValues)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle device error.  <a href="#a480697b6b78665bfc59fd2bffcf4b566"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181">handleDeviceError</a> (const QList&lt; QVariant &gt; &amp;decodedValues)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle device error.  <a href="#a16b6b0c77b1078da285f9d8d9ba52181"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637">handleDeviceSpecificError</a> (int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle device's specific error.  <a href="#af1cc7d9c99832fa3a7b3c5764588c637"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmdt_device_scpi.html#a00d25c16acb20c909210bc5278f713fa">logDeviceError</a> (int errNum, const QString &amp;errText, const QList&lt; QString &gt; &amp;deviceSpecificTexts, mdtError::level_t level)</td></tr>
@@ -146,7 +146,7 @@ Protected Attributes</h2></td></tr>
 <p>Construct a SCPI device. </p>
 <p>Will create and configure a USBTMC port manager. </p>
 
-<p><p>connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(<a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame(mdtPortTransaction)</a>)); connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&amp;, const QString&amp;)), this, SLOT(setStateFromPortError(int, const QString&amp;, const QString&amp;))); </p>
+<p><p>connect(pvUsbtmcPortManager, SIGNAL(newReadenFrame(mdtPortTransaction)), this, SLOT(decodeReadenFrame(mdtPortTransaction))); connect(pvUsbtmcPortManager, SIGNAL(errorStateChanged(int, const QString&amp;, const QString&amp;)), this, SLOT(setStateFromPortError(int, const QString&amp;, const QString&amp;))); </p>
 </p>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00030">30</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
@@ -171,7 +171,7 @@ Protected Attributes</h2></td></tr>
 <p>Query device about error. </p>
 <p>Will send the SYST:ERR? and return.</p>
 <p>Subclass notes:<br/>
- The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT_FC_SCPI_ERR. When subclass receives such transaction type, it should call <a class="el" href="classmdt_device_scpi.html#a480697b6b78665bfc59fd2bffcf4b566" title="Handle device error.">handleDeviceError()</a> without decoding frame.</p>
+ The SYST:ERR? query is sent to device. A new transaction is initalized, with type MDT_FC_SCPI_ERR. When subclass receives such transaction type, it should call <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error.">handleDeviceError()</a> without decoding frame.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 if query could be sent or a error of type <a class="el" href="classmdt_abstract_port.html#ad4121bb930c95887e77f8bafa065a85e" title="Error.">mdtAbstractPort::error_t</a> else. Note: returned error is not device's error. </dd></dl>
 
 <p><p>transaction-&gt;setType(MDT_FC_SCPI_ERR); </p>
@@ -208,7 +208,7 @@ Protected Attributes</h2></td></tr>
 
 <p><p><a class="el" href="classmdt_device_info.html" title="Contains informations about a device (attached to a port)">mdtDeviceInfo</a> device;</p>
 <p>device = devInfo; device.setVendorId(0x0957); device.setProductId(0x4d18);</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>Add DeviceNotFound error ? </dd></dl>
 </p>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abab1b6e45af527880ce469ae318474c0">mdtDevice</a>.</p>
@@ -219,14 +219,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a480697b6b78665bfc59fd2bffcf4b566"></a><!-- doxytag: member="mdtDeviceScpi::handleDeviceError" ref="a480697b6b78665bfc59fd2bffcf4b566" args="(QList&lt; QVariant &gt; &amp;decodedValues)" -->
+<a class="anchor" id="a16b6b0c77b1078da285f9d8d9ba52181"></a><!-- doxytag: member="mdtDeviceScpi::handleDeviceError" ref="a16b6b0c77b1078da285f9d8d9ba52181" args="(const QList&lt; QVariant &gt; &amp;decodedValues)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void mdtDeviceScpi::handleDeviceError </td>
           <td>(</td>
-          <td class="paramtype">QList&lt; QVariant &gt; &amp;&#160;</td>
+          <td class="paramtype">const QList&lt; QVariant &gt; &amp;&#160;</td>
           <td class="paramname"><em>decodedValues</em></td><td>)</td>
           <td><code> [protected]</code></td>
         </tr>
@@ -235,7 +235,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Handle device error. </p>
-<p>This method is called from subclass's <a class="el" href="classmdt_device.html#a5556423c2e2b3a3adcca5d4efb5af04e" title="Decode incoming frames.">decodeReadenFrame(mdtPortTransaction)</a> method when a frame of type MDT_FC_SCPI_ERR was received.</p>
+<p>This method is called from subclass's decodeReadenFrame(mdtPortTransaction) method when a frame of type MDT_FC_SCPI_ERR was received.</p>
 <p>Errors &lt;= 0 are handled directly. If error is &gt; 0, <a class="el" href="classmdt_device_scpi.html#af1cc7d9c99832fa3a7b3c5764588c637" title="Handle device&#39;s specific error.">handleDeviceSpecificError()</a> is called.</p>
 <p>See the SCPI99 standard for more details.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -282,7 +282,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Handle device's specific error. </p>
-<p>This method is called from <a class="el" href="classmdt_device_scpi.html#a480697b6b78665bfc59fd2bffcf4b566" title="Handle device error.">handleDeviceError()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device_scpi.html#a16b6b0c77b1078da285f9d8d9ba52181" title="Handle device error.">handleDeviceError()</a>.</p>
 <p>This default implementation simply log the error (with <a class="el" href="classmdt_error.html">mdtError</a> system).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -385,7 +385,7 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#ab7229e9d519e80a6509bec90dc9239b3" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>bTag on success, or a error &lt; 0 (see <a class="el" href="classmdt_usbtmc_port_manager.html#a58fbe73aad9b42214335187f8d21e3c6" title="Write data by copy.">mdtUsbtmcPortManager::writeData()</a> for details). </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00127">127</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
@@ -432,7 +432,7 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000007">Todo:</a></b></dt><dd>adjust write timeout </dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">writeTimeout</td><td>Write timeout [ms] If 0, internal defined timeout is used (see <a class="el" href="classmdt_port_manager.html#a9d6782be514745a1b1392216d17d41df" title="Adjust a requested timeout to minimal timeout.">mdtPortManager::adjustedWriteTimeout()</a> for details). </td></tr>
@@ -440,7 +440,7 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="Decode SCPI data.">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>Result as string (empty string on error) Note that <a class="el" href="classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;">mdtFrameCodecScpi</a> can be helpful to decode returned result. </dd></dl>
 
 <p>Definition at line <a class="el" href="mdt_device_scpi_8cpp_source.html#l00132">132</a> of file <a class="el" href="mdt_device_scpi_8cpp_source.html">mdtDeviceScpi.cpp</a>.</p>
 
@@ -505,7 +505,7 @@ Protected Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 22 2013 20:11:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 11 2013 22:03:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

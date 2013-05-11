@@ -94,76 +94,79 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00032"></a>00032 {
 <a name="l00033"></a>00033   QGridLayout *l = <span class="keyword">new</span> QGridLayout;
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035   pvIo = 0;
-<a name="l00036"></a>00036   <span class="comment">// Setup GUI</span>
-<a name="l00037"></a>00037   l-&gt;addWidget(lbLabel, 0, 0, 1, 2);
-<a name="l00038"></a>00038   thValue = <span class="keyword">new</span> QwtThermo;
-<a name="l00039"></a>00039   l-&gt;addWidget(thValue, 1, 0, 1, 2);
-<a name="l00040"></a>00040   lbValue = <span class="keyword">new</span> QLabel;
-<a name="l00041"></a>00041   lbValue-&gt;setAlignment(Qt::AlignLeft);
-<a name="l00042"></a>00042   l-&gt;addWidget(lbValue, 2, 0, 1, 1);
-<a name="l00043"></a>00043   lbUnit = <span class="keyword">new</span> QLabel;
-<a name="l00044"></a>00044   l-&gt;addWidget(lbUnit, 2, 1, 1, 1);
-<a name="l00045"></a>00045   l-&gt;addWidget(pbDetails, 3, 0, 1, 2);
-<a name="l00046"></a>00046   setLayout(l);
-<a name="l00047"></a>00047 }
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 mdtAnalogInWidget::~mdtAnalogInWidget()
-<a name="l00050"></a>00050 {
-<a name="l00051"></a>00051 }
-<a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a">00053</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a" title="Set the I/O object.">mdtAnalogInWidget::setIo</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *io)
-<a name="l00054"></a>00054 {
-<a name="l00055"></a>00055   Q_ASSERT(io != 0);
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057   pvIo = io;
-<a name="l00058"></a>00058   <span class="comment">// Base Signals/slots connections</span>
-<a name="l00059"></a>00059   <a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a" title="Set the I/O object.">mdtAbstractIoWidget::setIo</a>(io);
-<a name="l00060"></a>00060   <span class="comment">// Signals/slots from io to widget</span>
-<a name="l00061"></a>00061   connect(io, SIGNAL(unitChangedForUi(<span class="keyword">const</span> QString&amp;)), <span class="keyword">this</span>, SLOT(setUnit(<span class="keyword">const</span> QString&amp;)));
-<a name="l00062"></a>00062   connect(io, SIGNAL(rangeChangedForUi(<span class="keywordtype">double</span>, <span class="keywordtype">double</span>)), <span class="keyword">this</span>, SLOT(setRange(<span class="keywordtype">double</span>, <span class="keywordtype">double</span>)));
-<a name="l00063"></a>00063   connect(io, SIGNAL(valueChangedForUi(<span class="keywordtype">double</span>)), <span class="keyword">this</span>, SLOT(setValue(<span class="keywordtype">double</span>)));
-<a name="l00064"></a>00064   connect(io, SIGNAL(enabledStateChangedForUi(<span class="keywordtype">bool</span>)), <span class="keyword">this</span>, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
-<a name="l00065"></a>00065   <span class="comment">// Set initial data</span>
-<a name="l00066"></a>00066   setUnit(io-&gt;<a class="code" href="classmdt_analog_io.html#a126d5b9bf4a0bb9ce9f2ff6a010fef0e" title="Get unit.">unit</a>());
-<a name="l00067"></a>00067   setRange(io-&gt;<a class="code" href="classmdt_analog_io.html#acd2b8cb33d5d42abf23672ad7675825e" title="Get the minimum value of the range.">minimum</a>(), io-&gt;<a class="code" href="classmdt_analog_io.html#a61e312bc7921a6ca097ea6babf3281a5" title="Get the maximum value of the range.">maximum</a>());
-<a name="l00068"></a>00068   <span class="comment">// Set a minimum width for lbValue</span>
-<a name="l00069"></a>00069   lbValue-&gt;setMinimumWidth(lbValue-&gt;fontMetrics().width(<span class="stringliteral">&quot;-0.000e-00 &quot;</span>));
-<a name="l00070"></a>00070   setValue(io-&gt;<a class="code" href="classmdt_analog_io.html#a55d3e346dd13a580dc4ac77e8e946b01" title="Get value (set with setValue() )">value</a>());
-<a name="l00071"></a>00071 }
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073 <span class="keywordtype">void</span> mdtAnalogInWidget::setUnit(<span class="keyword">const</span> QString &amp;unit)
-<a name="l00074"></a>00074 {
-<a name="l00075"></a>00075   pvUnit = unit;
-<a name="l00076"></a>00076   lbUnit-&gt;setText(pvUnit);
-<a name="l00077"></a>00077 }
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 <span class="keywordtype">void</span> mdtAnalogInWidget::setRange(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max)
-<a name="l00080"></a>00080 {
-<a name="l00081"></a>00081   thValue-&gt;setRange(min, max);
-<a name="l00082"></a>00082 }
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084 <span class="keywordtype">void</span> mdtAnalogInWidget::setValue(<span class="keywordtype">double</span> value)
-<a name="l00085"></a>00085 {
-<a name="l00086"></a>00086   Q_ASSERT(pvIo != 0);
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088   QString sValue;
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   sValue.setNum(value, <span class="charliteral">&#39;g&#39;</span>, 4);
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   thValue-&gt;setValue(value);
-<a name="l00094"></a>00094   <span class="keywordflow">if</span>(pvIo-&gt;<a class="code" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76" title="Returns true if a valid value or state was set.">hasValidData</a>()){
-<a name="l00095"></a>00095     lbValue-&gt;setText(sValue);
-<a name="l00096"></a>00096   }<span class="keywordflow">else</span>{
-<a name="l00097"></a>00097     lbValue-&gt;setText(<span class="stringliteral">&quot;??&quot;</span>);
-<a name="l00098"></a>00098   }
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 <span class="keywordtype">void</span> mdtAnalogInWidget::setEnabled(<span class="keywordtype">bool</span> enabled)
-<a name="l00102"></a>00102 {
-<a name="l00103"></a>00103   lbValue-&gt;setEnabled(enabled);
-<a name="l00104"></a>00104   thValue-&gt;setEnabled(enabled);
-<a name="l00105"></a>00105 }
+<a name="l00035"></a>00035   <span class="comment">// Setup GUI</span>
+<a name="l00036"></a>00036   l-&gt;addWidget(lbLabel, 0, 0, 1, 2);
+<a name="l00037"></a>00037   thValue = <span class="keyword">new</span> QwtThermo;
+<a name="l00038"></a>00038   l-&gt;addWidget(thValue, 1, 0, 1, 2);
+<a name="l00039"></a>00039   lbValue = <span class="keyword">new</span> QLabel;
+<a name="l00040"></a>00040   lbValue-&gt;setAlignment(Qt::AlignLeft);
+<a name="l00041"></a>00041   l-&gt;addWidget(lbValue, 2, 0, 1, 1);
+<a name="l00042"></a>00042   lbUnit = <span class="keyword">new</span> QLabel;
+<a name="l00043"></a>00043   l-&gt;addWidget(lbUnit, 2, 1, 1, 1);
+<a name="l00044"></a>00044   l-&gt;addWidget(pbDetails, 3, 0, 1, 2);
+<a name="l00045"></a>00045   setLayout(l);
+<a name="l00046"></a>00046 }
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 mdtAnalogInWidget::~mdtAnalogInWidget()
+<a name="l00049"></a>00049 {
+<a name="l00050"></a>00050 }
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a">00052</a> <span class="keywordtype">void</span> <a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a" title="Set the I/O object.">mdtAnalogInWidget::setIo</a>(<a class="code" href="classmdt_analog_io.html" title="Representation of a analog I/O.">mdtAnalogIo</a> *io)
+<a name="l00053"></a>00053 {
+<a name="l00054"></a>00054   Q_ASSERT(io != 0);
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056   <span class="comment">// Base Signals/slots connections</span>
+<a name="l00057"></a>00057   <a class="code" href="classmdt_analog_in_widget.html#a20a1943b4e2087f861e319d5bdb7180a" title="Set the I/O object.">mdtAbstractIoWidget::setIo</a>(io);
+<a name="l00058"></a>00058   <span class="comment">// Signals/slots from io to widget</span>
+<a name="l00059"></a>00059   connect(io, SIGNAL(unitChangedForUi(<span class="keyword">const</span> QString&amp;)), <span class="keyword">this</span>, SLOT(setUnit(<span class="keyword">const</span> QString&amp;)));
+<a name="l00060"></a>00060   connect(io, SIGNAL(rangeChangedForUi(<span class="keywordtype">double</span>, <span class="keywordtype">double</span>)), <span class="keyword">this</span>, SLOT(setRange(<span class="keywordtype">double</span>, <span class="keywordtype">double</span>)));
+<a name="l00061"></a>00061   connect(io, SIGNAL(valueChangedForUi(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a>&amp;)), <span class="keyword">this</span>, SLOT(setValue(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a>&amp;)));
+<a name="l00062"></a>00062   connect(io, SIGNAL(enabledStateChangedForUi(<span class="keywordtype">bool</span>)), <span class="keyword">this</span>, SLOT(setEnabled(<span class="keywordtype">bool</span>)));
+<a name="l00063"></a>00063   <span class="comment">// Set initial data</span>
+<a name="l00064"></a>00064   setUnit(io-&gt;<a class="code" href="classmdt_analog_io.html#a126d5b9bf4a0bb9ce9f2ff6a010fef0e" title="Get unit.">unit</a>());
+<a name="l00065"></a>00065   setRange(io-&gt;<a class="code" href="classmdt_analog_io.html#acd2b8cb33d5d42abf23672ad7675825e" title="Get the minimum value of the range.">minimum</a>(), io-&gt;<a class="code" href="classmdt_analog_io.html#a61e312bc7921a6ca097ea6babf3281a5" title="Get the maximum value of the range.">maximum</a>());
+<a name="l00066"></a>00066   <span class="comment">// Set a minimum width for lbValue</span>
+<a name="l00067"></a>00067   lbValue-&gt;setMinimumWidth(lbValue-&gt;fontMetrics().width(<span class="stringliteral">&quot;-0.000e-00 &quot;</span>));
+<a name="l00068"></a>00068   setValue(io-&gt;<a class="code" href="classmdt_abstract_io.html#a839b0d3a4a1d4616e5b20d744c5f75a1" title="Get current value.">value</a>());
+<a name="l00069"></a>00069 }
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071 <span class="keywordtype">void</span> mdtAnalogInWidget::setUnit(<span class="keyword">const</span> QString &amp;unit)
+<a name="l00072"></a>00072 {
+<a name="l00073"></a>00073   pvUnit = unit;
+<a name="l00074"></a>00074   lbUnit-&gt;setText(pvUnit);
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077 <span class="keywordtype">void</span> mdtAnalogInWidget::setRange(<span class="keywordtype">double</span> min, <span class="keywordtype">double</span> max)
+<a name="l00078"></a>00078 {
+<a name="l00079"></a>00079   thValue-&gt;setRange(min, max);
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 <span class="keywordtype">void</span> mdtAnalogInWidget::setValue(<span class="keyword">const</span> <a class="code" href="classmdt_value.html" title="Conatins a value with some attributes.">mdtValue</a> &amp;value)
+<a name="l00083"></a>00083 {
+<a name="l00084"></a>00084   QString sValue;
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value.html#a472996d8c32ce70e9332509151d6aed1" title="Get the validity flag.">isValid</a>()){
+<a name="l00087"></a>00087     Q_ASSERT(value.<a class="code" href="classmdt_value.html#a83d56329f2fd051f3cc32fd32f758e24" title="Check if value as double format is available.">hasValueDouble</a>());
+<a name="l00088"></a>00088     thValue-&gt;setValue(value.<a class="code" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0" title="Get the value stored in double format.">valueDouble</a>());
+<a name="l00089"></a>00089     <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value.html#a4de0d0c8a02cdd4c02adace4108db326" title="Check if value is -OL.">isMinusOl</a>()){
+<a name="l00090"></a>00090       lbValue-&gt;setText(<span class="stringliteral">&quot;-OL&quot;</span>);
+<a name="l00091"></a>00091     }<span class="keywordflow">else</span> <span class="keywordflow">if</span>(value.<a class="code" href="classmdt_value.html#a033ad1d20812dddf38530a5f190033da" title="Check if value is +OL.">isPlusOl</a>()){
+<a name="l00092"></a>00092       lbValue-&gt;setText(<span class="stringliteral">&quot;+OL&quot;</span>);
+<a name="l00093"></a>00093     }<span class="keywordflow">else</span>{
+<a name="l00094"></a>00094       sValue.setNum(value.<a class="code" href="classmdt_value.html#aceae9e2ab20910c47272d523735b16e0" title="Get the value stored in double format.">valueDouble</a>(), <span class="charliteral">&#39;g&#39;</span>, 4);
+<a name="l00095"></a>00095       lbValue-&gt;setText(sValue);
+<a name="l00096"></a>00096     }
+<a name="l00097"></a>00097   }<span class="keywordflow">else</span>{
+<a name="l00098"></a>00098     thValue-&gt;setValue(thValue-&gt;minValue());
+<a name="l00099"></a>00099     lbValue-&gt;setText(<span class="stringliteral">&quot;??&quot;</span>);
+<a name="l00100"></a>00100   }
+<a name="l00101"></a>00101 }
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103 <span class="keywordtype">void</span> mdtAnalogInWidget::setEnabled(<span class="keywordtype">bool</span> enabled)
+<a name="l00104"></a>00104 {
+<a name="l00105"></a>00105   lbValue-&gt;setEnabled(enabled);
+<a name="l00106"></a>00106   thValue-&gt;setEnabled(enabled);
+<a name="l00107"></a>00107 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -180,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 22 2013 20:11:47 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 11 2013 22:03:42 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

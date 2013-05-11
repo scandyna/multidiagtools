@@ -85,7 +85,7 @@ Collaboration diagram for mdtDeviceModbus:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmdt_device_modbus__coll__graph.png" border="0" usemap="#mdt_device_modbus_coll__map" alt="Collaboration graph"/></div>
 <map name="mdt_device_modbus_coll__map" id="mdt_device_modbus_coll__map">
-<area shape="rect" id="node2" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="13,405,99,435"/><area shape="rect" id="node4" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,309,107,339"/><area shape="rect" id="node6" href="classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="123,405,288,435"/><area shape="rect" id="node8" href="classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="147,309,264,339"/><area shape="rect" id="node10" href="classmdt_modbus_tcp_port_manager.html" title="#include &lt;QVariant&gt;" alt="" coords="312,405,499,435"/><area shape="rect" id="node12" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="347,309,464,339"/><area shape="rect" id="node14" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="352,197,459,227"/><area shape="rect" id="node16" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="271,101,388,131"/><area shape="rect" id="node18" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="276,5,383,35"/><area shape="rect" id="node20" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="483,197,573,227"/></map>
+<area shape="rect" id="node2" href="classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="13,405,99,435"/><area shape="rect" id="node4" href="classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,309,107,339"/><area shape="rect" id="node6" href="classmdt_frame_codec_modbus.html" title="Encode and decode MODBUS PDU NOTE: stockage des adresses durant Q/R ?" alt="" coords="123,405,288,435"/><area shape="rect" id="node8" href="classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="147,309,264,339"/><area shape="rect" id="node10" href="classmdt_modbus_tcp_port_manager.html" title="MODBUS/TCP port manager." alt="" coords="312,405,499,435"/><area shape="rect" id="node12" href="classmdt_port_manager.html" title="Port manager base class." alt="" coords="347,309,464,339"/><area shape="rect" id="node14" href="classmdt_port_thread.html" title="mdtPortThread" alt="" coords="352,197,459,227"/><area shape="rect" id="node16" href="classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="271,101,388,131"/><area shape="rect" id="node18" href="classmdt_port_config.html" title="mdtPortConfig" alt="" coords="276,5,383,35"/><area shape="rect" id="node20" href="classmdt_port_info.html" title="Contains informations about a port." alt="" coords="483,197,573,227"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="classmdt_device_modbus-members.html">List of all members.</a></p>
@@ -266,12 +266,6 @@ Internal port manager not runnig and port must be closed before calling this met
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>address and n must be &gt; 0 </dd></dl>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#ab5e780409492b5f56326a870bc4262ec" title="Helper method for register service.">mdtModbusTcpPortManager::getRegisterValues()</a> </dd></dl>
 
-<p><p>Q_ASSERT(address &gt;= 0); Q_ASSERT(n &gt; 0);</p>
-<p>int transactionId; <a class="el" href="classmdt_port_transaction.html" title="Store port transaction identifications data.">mdtPortTransaction</a> *transaction; QByteArray pdu; int i;</p>
-<p>Clear previous results pvRegisterValues.clear(); Setup MODBUS PDU pdu = pvCodec-&gt;encodeReadInputRegisters(address, n); if(pdu.isEmpty()){ return false; } Get a new transaction transaction = <a class="el" href="classmdt_device.html#a0e57cc8b749581cff447d514b9a1ff8e" title="Get a new transaction.">getNewTransaction()</a>; Send query transaction-&gt;setQueryReplyMode(true); transactionId = pvTcpPortManager-&gt;writeData(pdu, transaction); if(transactionId &lt; 0){ restoreTransaction(transaction); return false; } Wait on result (use device's defined timeout) if(!pvTcpPortManager-&gt;waitOnFrame(transactionId)){ restoreTransaction(transaction); return false; } At this state, transaction will be restored by readenFrame() if(pvCodec-&gt;decode(pvTcpPortManager-&gt;readenFrame(transactionId)) &lt; 0){ return false; } Store values if(pvCodec-&gt;values().size() != n){ <a class="el" href="classmdt_error.html">mdtError</a> e(MDT_DEVICE_ERROR, "Device " + <a class="el" href="classmdt_device.html#a7ad893c6885dbaef5a6cb980bfe627e0" title="Get device name.">name()</a> + ": received unexptected count of values", mdtError::Error); MDT_ERROR_SET_SRC(e, "mdtDeviceModbusWago"); e.commit(); return false; } for(i=0; i&lt;n; i++){ pvRegisterValues.append(pvCodec-&gt;values().at(i).toInt()); }</p>
-<p>return true;</p>
-</p>
-
 <p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00104">104</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
@@ -302,7 +296,7 @@ Internal port manager not runnig and port must be closed before calling this met
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#acba50968d201ad95c4eaa2ab2ed48b4f">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00312">312</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00322">322</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -330,14 +324,14 @@ Internal port manager not runnig and port must be closed before calling this met
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details). </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details). </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#acecf7934ce29b3a957accb0f4c98c746">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00324">324</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00334">334</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -358,21 +352,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read all analog inputs on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a585cc32f6aac4d5788928ecf1fdacf51" title="Read all analog inputs on physical device and update (G)UI representation.">getAnalogInputs()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a98cba3132db15317daf54eb701388e91" title="Read all analog inputs on physical device and update (G)UI representation.">getAnalogInputs()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a40674e7bf0c367bb3edb407d73a5bd8e">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00340">340</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00351">351</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -393,21 +387,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read one analog output on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a7085491cf2d96fd2afd3004de6caef0d" title="Read one analog output on physical device and update (G)UI representation.">getAnalogOutputValue()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41" title="Get analog output value.">getAnalogOutputValue()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a7934063c3f41a742515f1232c9598c2a">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00355">355</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00368">368</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -428,19 +422,19 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read all analog outputs on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has analog inputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a7085491cf2d96fd2afd3004de6caef0d" title="Read one analog output on physical device and update (G)UI representation.">getAnalogOutputValue()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a163ee286d905feafe50b3e4351d4bf41" title="Get analog output value.">getAnalogOutputValue()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#ab0232ac83c38bc93d3bc2aa91d94c291">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00371">371</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00385">385</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -461,21 +455,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read one digital input on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#aad589d5c8c769299fdf0ea4e34d3bc0a" title="Read one digital input on physical device and update (G)UI representation.">getDigitalInputState()</a>.</p>
+<p>This method is called from getDigitalInputState().</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#af128b606050035abaf8d049bb2227015">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00418">418</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00436">436</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -496,25 +490,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read all digital inputs on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has digital inputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#ae482b28263b2ce61735f42f1245c1e99" title="Read all digital inputs on physical device and update (G)UI representation.">getDigitalInputs()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a6e338b959c86591b6b3401f925c49050" title="Read all digital inputs on physical device and update (G)UI representation.">getDigitalInputs()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p><p>pdu = pvCodec-&gt;encodeReadDiscreteInputs(pvDigitalOutputAddressOffset, pvIos-&gt;digitalInputsCount());</p>
-<p>pdu = pvCodec-&gt;encodeReadDiscreteInputs(0x0000, 16); </p>
-</p>
-
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a150e3abae6db5bf1ad11017bf2b76c14">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00434">434</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00454">454</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -535,21 +525,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read one digital output on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a719401fec13501047ffdf7f51583937c" title="Read one digital output on physical device and update (G)UI representation.">getDigitalOutputState()</a>.</p>
+<p>This method is called from getDigitalOutputState().</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a1faee6ab31b094731211ea0943544501">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00452">452</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00471">471</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -570,21 +560,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Read all digital outputs on physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a6bd6ad4f8d07121dd8b988594927e9c8" title="Read all digital outputs on physical device and update (G)UI representation.">getDigitalOutputs()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#ab35b81b8eb68e161ac06ae882be39a25" title="Read all digital outputs on physical device and update (G)UI representation.">getDigitalOutputs()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#aac038c24c3b91757584bdf0d09fb8b02">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00468">468</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00488">488</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -606,7 +596,7 @@ transaction must be a valid pointer. </dd></dl>
 <p>Return result set by <a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues()</a>. Note that values are keeped until next call of <a class="el" href="classmdt_device_modbus.html#a89d41c6b33a3dd2a92a0956d8e6b3b14" title="Helper method for register service.">getRegisterValues()</a>.</p>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="classmdt_modbus_tcp_port_manager.html#a99a13b5250a8523aa63869991581e56a" title="Helper method for register service.">mdtModbusTcpPortManager::registerValues()</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00156">156</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00109">109</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -637,7 +627,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Write value on a analog output to physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a4b01925cfbbb62e32a3e85a9c4b1538a" title="Write one analog output to physical device and update (G)UI representation.">setAnalogOutputValue()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a766d9adcf8c2274f61f120a4a5c5c6d9" title="Set analog output value.">setAnalogOutputValue()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>Value encoded regarding device format. </td></tr>
@@ -645,12 +635,12 @@ transaction must be a valid pointer. </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#ae764634bba2b321ac2b4731c0353e45f">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00386">386</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00402">402</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -671,21 +661,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Write all analog outputs to physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has analog outputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#ae45c39c2ef38b5952171fdc1c3284748" title="Write all analog outputs on physical device and update (G)UI representation.">setAnalogOutputs()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a57e1cee7e670469035c57e3bd2ff4c9d" title="Write all analog outputs on physical device and update (G)UI representation.">setAnalogOutputs()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#abc52b797df29945bf0a6358aab1b7245">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00402">402</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00419">419</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -716,7 +706,7 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Write state on a digital output to physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#a3927aed78d8086fd58bc6c7602833bf4" title="Set a digital output state.">setDigitalOutputState()</a>.</p>
+<p>This method is called from setDigitalOutputState().</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">state</td><td>State (ON/OFF). </td></tr>
@@ -724,14 +714,14 @@ transaction must be a valid pointer. </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classmdt_device.html#a0fbe57503d86554829e708b2b83d73f1">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00484">484</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00505">505</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -752,24 +742,21 @@ transaction must be a valid pointer. </dd></dl>
 
 <p>Write all digital outputs to physical device. </p>
 <p>This is the device specific implementation to send the query. If device handled by subclass has digital outputs, this method should be implemented.</p>
-<p>This method is called from <a class="el" href="classmdt_device.html#ae68a400d5f27fe142d41b674f473bf98" title="Write all digital outputs to physical device and update (G)UI representation.">setDigitalOutputs()</a>.</p>
+<p>This method is called from <a class="el" href="classmdt_device.html#a7b86a816e55a91f0d62426e1741437c6" title="Write all digital outputs to physical device and update (G)UI representation.">setDigitalOutputs()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">transaction</td><td>Contains some flags used during query/reply process (address, id, I/O object, ...). </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a8b60d53d6e553f15dedec916f9c1614b" title="Write data by copy.">mdtPortManager::writeData()</a> for details) </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>0 or a ID on success, value &lt; 0 on error (see <a class="el" href="classmdt_port_manager.html#a328abc7f5f2677c19ea11567df6597da" title="Write data to port.">mdtPortManager::writeData()</a> for details) </dd></dl>
 <dl class="pre"><dt><b>Precondition:</b></dt><dd>I/O's must be set with <a class="el" href="classmdt_device.html#a9f1de62ef54974b0636dee673bd819e2" title="Set the I/O&#39;s container.">setIos()</a>. </dd>
 <dd>
 transaction must be a valid pointer. </dd></dl>
 
-<p><p>qDebug() &lt;&lt; "mdtDeviceModbus::writeDigitalOutputs(): states: " &lt;&lt; pvIos-&gt;digitalOutputsStates(); pdu = pvCodec-&gt;encodeWriteMultipleCoils(pvDigitalOutputAddressOffset, pvIos-&gt;digitalOutputsStates()); </p>
-</p>
-
 <p>Reimplemented from <a class="el" href="classmdt_device.html#aa9e8ae7b4ff2455b4105d280d8523fc1">mdtDevice</a>.</p>
 
-<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00500">500</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mdt_device_modbus_8cpp_source.html#l00522">522</a> of file <a class="el" href="mdt_device_modbus_8cpp_source.html">mdtDeviceModbus.cpp</a>.</p>
 
 </div>
 </div>
@@ -792,7 +779,7 @@ transaction must be a valid pointer. </dd></dl>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 22 2013 20:11:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 11 2013 22:03:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

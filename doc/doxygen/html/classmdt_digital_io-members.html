@@ -66,31 +66,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 This is the complete list of members for <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a>, including all inherited members.<table>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a52f071b6c1098e74f82eade9ead5382a">address</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>addressChangedForUi</b>(int adr) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>addressChangedForUi</b>(int addressRead, int addressWrite) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a710119785e128ca39092e99593bc7dac">addressRead</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#aa62d29a8f8f97b3c8e382ad608048ab4">addressWrite</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a6e0b36f1563a045a23417145290fdf41">details</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>detailsChangedForUi</b>(const QString &amp;text) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>enabledStateChangedForUi</b>(bool enabled) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a61d96045087fe92a0b455693970b1e76">hasValidData</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#a2bd703bced41720f1569c4e7b26059a1">isOn</a>() const </td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a8d21d147ce526f9ad9f65bde7c68b7d9">label</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>labelChangedForUi</b>(const QString &amp;text) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#ad6490f8dda6df55cc3d1811348d0155e">labelShort</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>labelShortChangedForUi</b>(const QString &amp;text) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#ac138b89890471e0412f2b15f2c53f1f9">mdtAbstractIo</a>(QObject *parent=0)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>mdtDigitalIo</b>(QObject *parent=0) (defined in <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a>)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a45f50dbd2bafc248428e59f2c4c6272b">pvAddress</a></td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [protected]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>pvHasValidData</b> (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvNotifyUi</b> (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [protected]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>pvValue</b> (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [protected]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a1f3bfa0472c7e0bd4cd9a5b865c460a2">setAddress</a>(int address)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#ac2eecb238c3eb41d124c79e6dd363424">setAddressRead</a>(int address)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a34082150ca24fe27245ceb515de1168b">setAddressWrite</a>(int address)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a9844c14b0e64858c62604039681ab885">setDetails</a>(const QString &amp;text)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a64f31b1d9abdec6d0b0cc05a2fe1f31b">setEnabled</a>(bool enabled)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#ae614f78829c59cb7b7d8265dd59e2164">setLabel</a>(const QString &amp;text)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a0f0a70927942f793ce93c7f0c013a39e">setLabelShort</a>(const QString &amp;text)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#a0a9ae15796ca74638af2d6c5addfdb6f">setOn</a>(QVariant on, bool emitValueChanged=true)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#a8feb155c430f67589ba776b7b03758d9">setOn</a>(bool on, bool isValid, bool emitValueChanged=true)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td><code> [slot]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#a88308968532c1e23f695c43a62a3be40">setOn</a>(bool on)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td><code> [slot]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#a69c20119906682c0bd90833598127328">stateChanged</a>(bool on)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td><code> [signal]</code></td></tr>
-  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#aa23bf21e08f0b0d82e430e88ac03aba8">stateChanged</a>(int address)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td><code> [signal]</code></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>stateChangedForUi</b>(bool on) (defined in <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a>)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_digital_io.html#a5bb40caa30bd967fdacd16d9f6654fd3">setValue</a>(const mdtValue &amp;value, bool emitValueChanged=false)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td><code> [virtual, slot]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a839b0d3a4a1d4616e5b20d744c5f75a1">value</a>() const </td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a43feaa62996af78f64aea084122f1370">valueChanged</a>(const mdtValue &amp;value)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a741fe409fdbe68002fdca3e7f7fdbac1">valueChanged</a>(mdtAnalogIo *io)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>valueChanged</b>(mdtDigitalIo *io) (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="classmdt_abstract_io.html#a0241183736b9bc3abb021868b9bf4273">valueChangedForUi</a>(const mdtValue &amp;value)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [signal]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtAbstractIo</b>() (defined in <a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a>)</td><td><a class="el" href="classmdt_abstract_io.html">mdtAbstractIo</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~mdtDigitalIo</b>() (defined in <a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a>)</td><td><a class="el" href="classmdt_digital_io.html">mdtDigitalIo</a></td><td></td></tr>
 </table></div>
@@ -108,7 +111,7 @@ This is the complete list of members for <a class="el" href="classmdt_digital_io
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Apr 22 2013 20:11:48 for Multi diag tools by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sat May 11 2013 22:03:43 for Multi diag tools by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments." alt="" coords="149,581,259,611"/>
+<area shape="rect" id="node2" href="$classmdt_device_scpi.html" title="Base class for SCPI based instruments." alt="" coords="149,597,259,627"/>
 <area shape="rect" id="node4" href="$classmdt_device.html" title="Base class for a device connected to a port." alt="" coords="13,485,99,515"/>
 <area shape="rect" id="node6" href="$classmdt_device_ios.html" title="Container for a set of I/O&#39;s." alt="" coords="5,389,107,419"/>
 <area shape="rect" id="node8" href="$classmdt_usbtmc_port_manager.html" title="USBTMC port manager." alt="" coords="123,485,285,515"/>
@@ -9,8 +9,9 @@
 <area shape="rect" id="node16" href="$classmdt_abstract_port.html" title="Base class for port I/O." alt="" coords="69,101,187,131"/>
 <area shape="rect" id="node18" href="$classmdt_port_config.html" title="mdtPortConfig" alt="" coords="75,5,181,35"/>
 <area shape="rect" id="node20" href="$classmdt_port_info.html" title="Contains informations about a port." alt="" coords="281,197,372,227"/>
-<area shape="rect" id="node23" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="283,581,475,611"/>
-<area shape="rect" id="node25" href="$classmdt_frame_codec_scpi.html" title="Decode SCPI data." alt="" coords="309,485,453,515"/>
+<area shape="rect" id="node23" href="$classmdt_frame_codec_scpi_u3606_a.html" title="Decode Agilent U3606A SCPI data." alt="" coords="285,597,477,627"/>
+<area shape="rect" id="node25" href="$classmdt_frame_codec_scpi.html" title="#include &lt;QVariant&gt;" alt="" coords="309,485,453,515"/>
 <area shape="rect" id="node27" href="$classmdt_frame_codec_ascii.html" title="mdtFrameCodecAscii" alt="" coords="308,389,455,419"/>
 <area shape="rect" id="node29" href="$classmdt_frame_codec.html" title="mdtFrameCodec" alt="" coords="323,309,440,339"/>
+<area shape="rect" id="node31" href="$classmdt_value.html" title="Conatins a value with some attributes." alt="" coords="477,485,555,515"/>
 </map>
