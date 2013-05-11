@@ -366,49 +366,6 @@ class mdtPortManager : public QThread
    */
   void closePort();
 
-  /*! \brief Enable transactions support
-   *
-   * Transaction is usefull for protocols wich supports
-   *  frame identification (like transaction ID in MODBUS/TCP
-   *  or bTag in USBTMC).
-   *
-   * If transaction support is enabled, port manager can
-   *  work on both event (signal) and blocking mode "on the fly".
-   *  Each time a frame comes in, the newReadenFrame(mdtPortTransaction) signal is emited.
-   *  Optionnaly, it's possible to request that a frame
-   *  must be enqueued for a given transaction (regarding a specific ID),
-   *  witch is requierd for blocking mode (see waitOnFrame() ).
-   *
-   * Note that not all port manager support transactions.
-   *  For example, this default implementation cannot work with transactions.
-   *  By default, they are disabled, and no frame is enqueued (see setTransactionsDisabled()).
-   *  See specific subclass for details.
-   *
-   * \pre Port manager must not running when this method is called.
-   * 
-   * \todo Obselete
-   */
-  ///void setTransactionsEnabled();
-
-  /*! \brief Diseable transactions support
-   *
-   * See setTransactionsEnabled() for details about transactions.
-   *
-   * If transactions are disabled, it's only possible to choose
-   *  once if blocking mode is supported.
-   *  Each time a frame comes in, the newReadenFrame(int, QByteArray) signal is emited.
-   *
-   * In this mode, waitOnFrame() will allways timeout.
-   *
-   * \param enqueueIncommingFrames If true, each incomming frame is enqueued (usefull for blocking mode).
-   *                                Note: if true, don't forget to take each frame with readenFrame() or readenFrames().
-   *
-   * \pre Port manager must not running when this method is called.
-   * 
-   * \todo Obselete
-   */
-  ///void setTransactionsDisabled(bool enqueueIncommingFrames);
-
   /*! \brief Force transactions done to be keeped
    *
    * If keep is true, commitFrames() will
@@ -516,75 +473,6 @@ class mdtPortManager : public QThread
    * \sa writeData(mdtPortTransaction*)
    */
   virtual int writeData(const QByteArray &data, bool queryReplyMode = false);
-
-  /// \todo adjust write timeout
-  /*! \brief Write data by copy
-   *
-   * Data will be passed to the mdtPort's write queue by copy.
-   *  This method returns immediatly after enqueue,
-   *  and don't wait until data was written.
-   *
-   * \param data Data to write
-   * \return 0 on success or value < 0 on error. In this implementation,
-   *          the only possible error is mdtAbstractPort::WriteQueueEmpty .
-   *          Some subclass can return a frame ID on success,
-   *          or a other error. See subclass documentation for details.
-   * \pre Port must be set with setPort() before use of this method.
-   *
-   * Subclass notes:<br>
-   *  This method can be reimplemented in subclass if needed.
-   *  Typically usefull if some encoding is needed before the
-   *  frame is submitted to port.
-   *  A frame must be taken from port's write frames pool with mdtAbstractPort::writeFramesPool()
-   *  dequeue() method (see Qt's QQueue documentation for more details on dequeue() ),
-   *  then added to port's write queue with mdtAbstractPort::addFrameToWrite() .
-   *  If protocol supports frame identification (like MODBUS's transaction ID or USBTMC's bTag),
-   *   it should be returned here and incremented.
-   */
-  ///virtual int writeData(QByteArray data);
-
-  /*! \brief Wait until a complete frame is available
-   *
-   * This method will return when a complete frame was readen.
-   *  This is usefull for query/answer protocols.
-   *
-   * Internally, a couple of sleep and process event are called, so 
-   * Qt's event loop will not be broken.
-   *
-   * This method can return if timeout occurs, or for other
-   *  reason depending on specific port (port timeout, read cancelled, ...).
-   *
-   * \param timeout Maximum wait time [ms]. Must be a multiple of 50 [ms]
-   *                 If 0, the minimal timeout will be used (see adjustedReadTimeout() ).
-   * \return True if Ok, false on timeout
-   * \sa newReadenFrame()
-   */
-  ///bool waitReadenFrame(int timeout = 0);
-
-  /*! \brief Wait on readen frame with defined ID
-   *
-   * Will return when frame with given ID was read or after timeout.
-   *
-   * Internally, a couple of sleep and process event are called, so 
-   * Qt's event loop will not be broken.
-   *
-   * This method can return if timeout occurs, or for other
-   *  reason depending on specific port (port timeout, read cancelled, ...).
-   *
-   * Note: transactions are not handled here. The caller is responsible of transactions management.
-   *
-   * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of granularity [ms]
-   *                 If 0, the minimal timeout will be used (see adjustedReadTimeout() ).
-   * \param granularity Sleep time between each call of event processing [ms]<br>
-   *                     A little value needs more CPU and big value can freese the GUI.
-   *                     Should be between 50 and 100, and must be > 0.
-   *                     Note that timeout must be a multiple of granularity.
-   * \return True if Ok, false on timeout. If id was not found in transactions lists,
-   *           a warning will be generated in mdtError system, and false will be returned.
-   * \todo Obselete
-   */
-  ///bool waitOnFrame(int id, int timeout = 0, int granularity = 50);
 
   /*! \brief Wait until a transaction is done
    *
@@ -772,20 +660,6 @@ class mdtPortManager : public QThread
    */
   void newTransactionDone(mdtPortTransaction *transaction);
 
-  /*! \brief Emitted when new frame was readen
-   *
-   * This variant is sent when transactions support is OFF.
-   *  (See setTransactionsDisabled() for details).
-   */
-  ///void newReadenFrame(QByteArray data);
-
-  /*! \brief Emitted when new frame was readen
-   *
-   * This variant is sent when transactions support is ON.
-   *  (See setTransactionsDisabled() for details).
-   */
-  ///void newReadenFrame(mdtPortTransaction transaction);
-
   /*! \brief Emitted when error number has changed
    *
    * The error is one of the mdtAbstractPort::error_t.
@@ -862,18 +736,6 @@ class mdtPortManager : public QThread
    */
   void addTransactionPending(mdtPortTransaction *transaction);
 
-  /*! \brief Add a transaction to pending queue
-   *
-   * Will get a new transaction and add it to pending transactions queue.
-   *
-   * \param id Frame ID (f.ex. transaction ID in MODBUS/TCP, bTag in USBTMC)
-   * \param queryReplyMode If true, transaction will be keeped in transactions done
-   *                        queue until readenFrame() or readenFrames() is called.
-   *                        If false, transaction will be removed from transactions done
-   *                        queue just after newReadenFrame(mdtPortTransaction) is emited.
-   */
-  ///void addTransaction(int id, bool queryReplyMode);
-
   /*! \brief Take pending transaction matching id
    *
    * \return A valid transaction if exists, else a Null pointer.
@@ -884,17 +746,15 @@ class mdtPortManager : public QThread
    */
   void flushTransactionsPending();
 
-  /*! \brief Remove a transaction from DONE queue and restore it to pool
-   *
-   * If transaction not exists in DONE queue, this method simply makes nothing.
-   */
-  ///void removeTransactionDone(int id);
-
   /*! \brief Add a transaction to the DONE queue
    *
    * \pre transaction must be a valid pointer.
    */
   void addTransactionDone(mdtPortTransaction *transaction);
+
+  /*! \brief Check if a transaction with given ID exists in done queue
+   */
+  bool transactionsDoneContains(int id) const;
 
   /*! \brief Take transaction from DONE queue matching id
    *
@@ -905,12 +765,6 @@ class mdtPortManager : public QThread
   /*! \brief Restore all transactions done to pool
    */
   void flushTransactionsDone();
-
-  /*! \brief Add a transaction to the RX queue
-   *
-   * \pre transaction must be a valid pointer.
-   */
-  ///void enqueueTransactionRx(mdtPortTransaction *transaction);
 
   /*! \brief Emit signals for each done transactions
    *
@@ -1027,13 +881,9 @@ class mdtPortManager : public QThread
   QQueue<mdtPortTransaction*> pvTransactionsPool;
   int pvTransactionsAllocatedCount;                     // Used to watch how many transactions are allocated (memory leack watcher)
   QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
-  ///QMap<int, mdtPortTransaction*> pvTransactionsRx;      // Used when transaction's response was received
-  QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used to store done transactions
-  QList<mdtPortTransaction*> pvTransactionsDoneList;    // Transactions done in order that tey arrived. Used to avoid bugs when reaching transaction ID max
-  ///QQueue<QByteArray> pvReadenFrames;                    // Used if transactions are OFF
+  ///QMap<int, mdtPortTransaction*> pvTransactionsDone;    // Used to store done transactions
+  QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions done in order that tey arrived. Used to avoid bugs when reaching transaction ID max
 
-  ///bool pvEnqueueAllReadenFrames;  // See setTransactionsDisabled()
-  ///bool pvTransactionsEnabled;
   bool pvCancelReadWait;
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;
