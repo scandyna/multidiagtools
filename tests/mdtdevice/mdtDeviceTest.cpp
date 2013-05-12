@@ -30,6 +30,7 @@
 #include "mdtDeviceDSO1000A.h"
 #include "mdtDeviceWindow.h"
 #include "mdtPortInfo.h"
+#include "mdtPortManager.h"
 
 #include "mdtFrameCodecScpi.h"
 
@@ -44,7 +45,8 @@ void mdtDeviceTest::deviceBaseTest()
   mdtDevice dev;
 
   // Initial states
-  QVERIFY(dev.state() == mdtDevice::Disconnected);
+  ///QVERIFY(dev.state() == mdtDevice::Disconnected);
+  QVERIFY(dev.state() == mdtPortManager::Disconnected);
 
   dev.start(100);
 }

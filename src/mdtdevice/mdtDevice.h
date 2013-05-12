@@ -25,7 +25,6 @@
 #include "mdtAbstractPort.h"
 #include "mdtPortManager.h"
 #include "mdtDeviceInfo.h"
-
 #include "mdtValue.h"
 #include <QVariant>
 
@@ -36,7 +35,6 @@
 
 class QTimer;
 
-/// \todo Adapt get...() methods like getAnalogInputValue() 
 /*! \brief Base class for a device connected to a port
  *
  * Querying a device can be done several ways.
@@ -50,24 +48,23 @@ class QTimer;
  *  these two cases.
  *
  * At basis, all query methods are not blocking by default.
- *  The normal way is to connect mdtPortManager::newReadenFrame()
+ *  The normal way is to connect mdtPortManager::newTransactionDone()
  *  to decodeReadenFrame() slot (must be done in subclass).
  *  This way, a query will be sent to device and method returns.
  *  When device returns a result, mdtPortManager will send
- *  the newReadenFrame() signal, and decoding will be processed
+ *  the newTransactionDone() signal, and decoding will be processed
  *  in decodeReadenFrame() and I/O's are updated.
  *
  * Because the blocking behaviour is sometimes needed, the concept
- *  of transaction is implemented. At first, we tell the query method
- *  that we will wait on a reply by passing a timeout > 0.
+ *  of transaction was implemented in mdtPortManager.
+ *  At first, we tell the query method (for example getAnalogInputValue() )
+ *  that we will wait on a reply by setting the waitOnReply flag.
  *  Then, the query is sent to device and a transaction ID is added
- *  to a list with addTransaction(). At next, waitTransactionDone()
+ *  to a list (see mdtPortManager for details). At next, waitTransactionDone()
  *  is called, and finally result is returned.
  *  Note that waitTransactionDone() will not breack the Qt's event loop
  *  because it uses the mdtPortManager::wait() method (see documentation 
  *  of mdtPortManager for details).
- * 
- * Give some helper methods for event handling, ....
  *
  * If it is needed to continiusly update the representation
  *  of device's inputs (digital/analog I/O, voltage, temperature, ...),
@@ -79,13 +76,15 @@ class QTimer;
  * A other usage is automated sequence. In this case, the sequence will tell when it need
  *  to set a output and when a input value is reuqierd.
  *
- * A device can accept one or many request befor results must be read. This depends most case
+ * A device can accept one or many request before results must be read. This depends most case
  *  on used port and protocol.
  *
  * It can be useful to find on witch port a device is attached (f.ex. setup of a automated test application).
+ *  For this, connectToDevice() was introduced.
  *
  * A device can have several states (ready, busy, disconnected, ...). To help the application programmer
- *  to keep coherence, this states are updated in this class.
+ *  to keep consistency, this states are updated in this class using mdtPortManager 's state machine.
+ *  This state machine is based on QStateMachine.
  */
 class mdtDevice : public QObject
 {
@@ -94,17 +93,27 @@ class mdtDevice : public QObject
  public:
 
   /*! \brief State of device
+   * 
+   * \todo Check if possible to obselete this, mdtPortManager has the same enum !
    */
-  enum state_t {
-                Ready = 0,              /*!< Device is connected and ready to receive queries */
-                Disconnected,           /*!< Device is not connected */
-                Connecting,             /*!< Trying to connect to device */
-                Busy,                   /*!< Device is connected but cannot accept requests for the moment */
-                Warning,                /*!< Device or port communication handled error occured */
-                Error                   /*!< Device or port communication unhandled error occured */
-               };
+  ///enum state_t {
+  ///              Ready = 0,              /*!< Device is connected and ready to receive queries */
+  ///              Disconnected,           /*!< Device is not connected */
+  ///              Connecting,             /*!< Trying to connect to device */
+  ///              Busy,                   /*!< Device is connected but cannot accept requests for the moment */
+  ///              Warning,                /*!< Device or port communication handled error occured */
+  ///              Error                   /*!< Device or port communication unhandled error occured */
+  ///             };
 
+  /*! \brief Construct a device object.
+   */
   mdtDevice(QObject *parent = 0);
+
+  /*! \brief Destructor
+   *
+   * If queries sequence is running,
+   *  it will be stopped (see stop() ).
+   */
   virtual ~mdtDevice();
 
   /*! \brief Set the device name
@@ -497,7 +506,8 @@ class mdtDevice : public QObject
 
   /*! \brief Get device state
    */
-  state_t state() const;
+  ///state_t state() const;
+  mdtPortManager::state_t state() const;
 
  public slots:
 
@@ -535,7 +545,9 @@ class mdtDevice : public QObject
    *  - This default implementation does nothing.
    *  - This slot should be connected with mdtPortManager::newTransactionDone(mdtPortTransaction*) signal.
    *  - In this class, this connection is not made, it is the sublcass responsability to do this.
-   *  - The (G)UI should be updated using transaction's I/O (see mdtPortTransaction).
+   *  - Once decoding was done, the concerned I/O(s) sould be updated with new value,
+   *     or set to invalid value on error (see mdtValue class).
+   *     Doing so will keep (G)UI consistency.
    */
   virtual void decodeReadenFrame(mdtPortTransaction *transaction);
 
@@ -792,7 +804,7 @@ class mdtDevice : public QObject
    * \param message Message to show
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
-  void showStatusMessage(const QString &message, int timeout = 0);
+  ///void showStatusMessage(const QString &message, int timeout = 0);
 
   /*! \brief Used to show a message and details in status bar
    *
@@ -800,13 +812,16 @@ class mdtDevice : public QObject
    * \param details Details to show
    * \param timeout If > 0, message will be cleared after timeout [ms]
    */
-  void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
+  ///void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
 
  signals:
 
   /*! \brief Emitted when state has changed
    *
-   * Typically used with mdtDeviceStatusWidget
+   * See setStateFromPortManager() for some details.
+   *
+   * This signal should be used by application developpers,
+   *  and not directly mdtPortManager::stateChanged().
    */
   void stateChanged(int state);
 
@@ -819,6 +834,16 @@ class mdtDevice : public QObject
  private slots:
 
   /*! \brief Set the device state from port manager state
+   *
+   * Internal port manager handles a state machine.
+   *  When a event occurs, it will emit mdtPortManager::stateChanged().
+   *  If port manager's signal is connected to this slot,
+   *  some things are made in mdtDevice, and
+   *  stateChanged() will be emitted.
+   *
+   * Note for subclass developpers:
+   *  The connection between port manager and mdtDevice
+   *  must be done in subclass.
    */
   void setStateFromPortManager(int portManagerState);
 
@@ -869,7 +894,8 @@ class mdtDevice : public QObject
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
   // State flag
-  state_t pvCurrentState;
+  ///state_t pvCurrentState;
+  mdtPortManager::state_t pvCurrentState;
 };
 
 #endif  // #ifndef MDT_DEVICE_H

@@ -13,8 +13,7 @@ Inheritance diagram for mdtDeviceModbusWago:\nopagebreak
 \end{figure}
 
 
-Collaboration diagram for mdtDeviceModbusWago:
-\nopagebreak
+Collaboration diagram for mdtDeviceModbusWago:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -115,7 +114,7 @@ Number of analog inputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 181 of file mdtDeviceModbusWago.cpp.
+Definition at line 186 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a0d7cafa60ab353363ccd8127ab8ad084}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleIosCount@{analogIoModuleIosCount}}
@@ -140,7 +139,7 @@ Number of I/O's or -\/1 for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 461 of file mdtDeviceModbusWago.cpp.
+Definition at line 466 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ae52341831cea60bd89471352b16e9eaa}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleIsInput@{analogIoModuleIsInput}}
@@ -165,7 +164,7 @@ True if module is a input, false if module is a output. For a unknown module, a 
 \end{DoxyReturn}
 
 
-Definition at line 449 of file mdtDeviceModbusWago.cpp.
+Definition at line 454 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a7c8333a5f74412a8ff0ad366387df96b}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleUnit@{analogIoModuleUnit}}
@@ -190,7 +189,7 @@ Unit of module, or a empty string for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 473 of file mdtDeviceModbusWago.cpp.
+Definition at line 478 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a9b991f58c2cffba8c7dcdaf347495655}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueBitsCount@{analogIoModuleValueBitsCount}}
@@ -217,7 +216,7 @@ bits count used for value, or -\/1 for a unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 413 of file mdtDeviceModbusWago.cpp.
+Definition at line 418 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ad463bb479d6270dc3124a978e30b1231}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueLsbIndex@{analogIoModuleValueLsbIndex}}
@@ -244,7 +243,7 @@ Index of LSB of value, or -\/1 for unknown module.
 \end{DoxyReturn}
 
 
-Definition at line 425 of file mdtDeviceModbusWago.cpp.
+Definition at line 430 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a2a1c3cf2a830a819d906775eea9633c1}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueMax@{analogIoModuleValueMax}}
@@ -269,7 +268,7 @@ The max. value in floating format. If partNumber is unknow, a invalid QVariant i
 \end{DoxyReturn}
 
 
-Definition at line 401 of file mdtDeviceModbusWago.cpp.
+Definition at line 406 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ac416f77ab0f21d967adfbd6ca92adc9f}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueMin@{analogIoModuleValueMin}}
@@ -294,7 +293,7 @@ The min. value in floating format. If partNumber is unknow, a invalid QVariant i
 \end{DoxyReturn}
 
 
-Definition at line 389 of file mdtDeviceModbusWago.cpp.
+Definition at line 394 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_abc8b4190ba582f545a9178fec07d9f75}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogIoModuleValueSigned@{analogIoModuleValueSigned}}
@@ -319,7 +318,7 @@ True if module's representation is signed, false if not. For a unknown module, a
 \end{DoxyReturn}
 
 
-Definition at line 437 of file mdtDeviceModbusWago.cpp.
+Definition at line 442 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ad812b7ee3a2f2677cddde205da5ec787}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!analogOutputsCount@{analogOutputsCount}}
@@ -341,7 +340,7 @@ Number of analog outputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 170 of file mdtDeviceModbusWago.cpp.
+Definition at line 175 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a12ad1f1ef34b16be5903d1d6232a7c6d}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!connectToDevice@{connectToDevice}}
@@ -360,6 +359,10 @@ Definition at line 170 of file mdtDeviceModbusWago.cpp.
 Search and connect to physical device. 
 
 Work as \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{mdtDeviceModbus::connectToDevice()} , but checks that device is a Wago 750 fieldbus coupler. 
+
+Q\_\-ASSERT(!pvTcpPortManager-\/$>$isRunning()); 
+
+
 
 Reimplemented from \hyperlink{classmdt_device_modbus_a323b16687f448a4e45eb0b313635b77f}{mdtDeviceModbus}.
 
@@ -433,7 +436,7 @@ dio-\/$>$setAddress(i);
 
 
 
-Definition at line 214 of file mdtDeviceModbusWago.cpp.
+Definition at line 219 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_ad51fd45858e62c597ba8fc2bf3e877bd}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalInputsCount@{digitalInputsCount}}
@@ -455,7 +458,7 @@ Number of digital inputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 203 of file mdtDeviceModbusWago.cpp.
+Definition at line 208 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_afbe8797aa0f84ca8cb1d5c4245dfb849}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalIoModuleIosCount@{digitalIoModuleIosCount}}
@@ -480,7 +483,7 @@ Number of I/O's or -\/1 for unknown description.
 \end{DoxyReturn}
 
 
-Definition at line 505 of file mdtDeviceModbusWago.cpp.
+Definition at line 510 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a82c7e7bc27693a077280ed95e523e328}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalIoModuleIsInput@{digitalIoModuleIsInput}}
@@ -505,7 +508,7 @@ True if module is a input, false if module is a output. For a unknown or uncoher
 \end{DoxyReturn}
 
 
-Definition at line 485 of file mdtDeviceModbusWago.cpp.
+Definition at line 490 of file mdtDeviceModbusWago.cpp.
 
 \hypertarget{classmdt_device_modbus_wago_a6711c4e486c3b103b187102685e091cc}{
 \index{mdtDeviceModbusWago@{mdtDeviceModbusWago}!digitalOutputsCount@{digitalOutputsCount}}
@@ -527,7 +530,7 @@ Number of digital outputs, or $<$ 0 on error
 \end{DoxyReturn}
 
 
-Definition at line 192 of file mdtDeviceModbusWago.cpp.
+Definition at line 197 of file mdtDeviceModbusWago.cpp.
 
 
 

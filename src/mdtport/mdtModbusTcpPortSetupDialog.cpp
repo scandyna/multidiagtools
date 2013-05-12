@@ -108,14 +108,9 @@ void mdtModbusTcpPortSetupDialog::displayConfig()
 
   // Set current port in devices list
   if(!portManager()->portName().isEmpty()){
-    ///index = cbDevices->findData(portManager()->portName());
-    ///index = cbDevices->findData(portManager()->portInfo());
     index = pvPortInfoCbHandler.indexOfPortInfo(portManager()->portInfo());
     if(index < 0){
-      ///cbDevices->addItem(portManager()->portInfo().displayText(), portManager()->portName());
       pvPortInfoCbHandler.addPortInfo(portManager()->portInfo());
-      ///index = cbDevices->findData(portManager()->portName());
-      ///index = cbDevices->findData(portManager()->portInfo());
       index = pvPortInfoCbHandler.indexOfPortInfo(portManager()->portInfo());
     }
     cbDevices->setCurrentIndex(index);

@@ -24,6 +24,7 @@
 #include "mdtApplication.h"
 #include "mdtDeviceInfo.h"
 #include "mdtPortStatusWidget.h"
+#include "mdtPortManager.h"
 #include "mdtModbusTcpPortManager.h"
 #include "mdtModbusTcpPortSetupDialog.h"
 #include "mdtPortInfo.h"
@@ -45,7 +46,7 @@ mdtModbusIoTool::mdtModbusIoTool(QWidget *parent, Qt::WindowFlags flags)
   // Setup device
   pvDeviceModbusWago = new mdtDeviceModbusWago(this);
   pvDeviceModbusWago->setName("Wago I/O 750");
-  connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setStateFromPortManager(int)));
+  connect(pvDeviceModbusWago, SIGNAL(stateChanged(int)), this, SLOT(setState(int)));
   connect(pvDeviceModbusWago, SIGNAL(statusMessageChanged(const QString&, const QString&, int)), this, SLOT(showStatusMessage(const QString&, const QString&, int)));
 
   // Set some flags
@@ -103,26 +104,26 @@ void mdtModbusIoTool::retranslate()
   retranslateUi(this);
 }
 
-void mdtModbusIoTool::setStateFromPortManager(int state)
+void mdtModbusIoTool::setState(int state)
 {
   pvStatusWidget->setState(state);
   switch(state){
-    case mdtDevice::Disconnected:
+    case mdtPortManager::Disconnected:
       setStateDisconnected();
       break;
-    case mdtDevice::Connecting:
+    case mdtPortManager::Connecting:
       setStateConnecting();
       break;
-    case mdtDevice::Ready:
+    case mdtPortManager::Ready:
       setStateReady();
       break;
-    case mdtDevice::Busy:
+    case mdtPortManager::Busy:
       setStateBusy();
       break;
-    case mdtDevice::Warning:
+    case mdtPortManager::Warning:
       setStateWarning();
       break;
-    case mdtDevice::Error:
+    case mdtPortManager::Error:
       setStateError();
       break;
     default:

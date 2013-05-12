@@ -65,7 +65,7 @@ class mdtModbusIoTool : public QMainWindow, public Ui::mdtModbusIoTool
 
   /*! \brief Update current state
    */
-  void setStateFromPortManager(int state);
+  void setState(int state);
 
   /*! \brief Call setup dialog
    */

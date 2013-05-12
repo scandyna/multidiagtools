@@ -13,8 +13,7 @@ Minimal tool for MODBUS I/O.
 
 
 
-Collaboration diagram for mdtModbusIoTool:
-\nopagebreak
+Collaboration diagram for mdtModbusIoTool:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -69,6 +68,8 @@ Construct a \hyperlink{classmdt_modbus_io_tool}{mdtModbusIoTool} object.
 
 pvDeviceModbusWago-\/$>$connectToDevice(mdtDeviceInfo()); pvDeviceModbusWago-\/$>$detectIos(pvDeviceIos); pvDeviceModbusWago-\/$>$setIos(pvDeviceIos, true); pvDeviceIosWidget-\/$>$setDeviceIos(pvDeviceIos);
 
+setStateFromPortManager(pvDeviceModbusWago-\/$>$modbusTcpPortManager()-\/$>$currentState()); 
+
 
 
 Definition at line 32 of file mdtModbusIoTool.cpp.
@@ -91,7 +92,7 @@ Retranslate.
 
 This slot is called by \hyperlink{classmdt_application}{mdtApplication} when language has changed 
 
-Definition at line 99 of file mdtModbusIoTool.cpp.
+Definition at line 101 of file mdtModbusIoTool.cpp.
 
 
 
