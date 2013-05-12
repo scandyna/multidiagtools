@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -62,33 +62,54 @@ void mdtPortInfoCbHandler::fillComboBoxes(const QList<mdtPortInfo*> &portInfoLis
 
   int i;
   mdtPortInfo *portInfo;
-  ///QVariant var;
+  QVariant var;
 
   cbPorts->clear();
   for(i=0; i<portInfoList.size(); i++){
     portInfo = portInfoList.at(i);
     Q_ASSERT(portInfo != 0);
-    ///var.setValue(*portInfo);
+    var.setValue(*portInfo);
     ///var.setValue(portInfo->portName());
-    qDebug() << "mdtPortInfoCbHandler::fillComboBoxes(): add item, portName: " << portInfo->portName() << " , DT: " << portInfo->displayText();
-    cbPorts->addItem(portInfo->displayText(), portInfo->portName());
+    ///qDebug() << "mdtPortInfoCbHandler::fillComboBoxes(): add item, portName: " << portInfo->portName() << " , DT: " << portInfo->displayText();
+    ///cbPorts->addItem(portInfo->displayText(), portInfo->portName());
+    cbPorts->addItem(portInfo->displayText(), var);
   }
+}
+
+mdtPortInfo mdtPortInfoCbHandler::portInfoAt(int index)
+{
+  Q_ASSERT(cbPorts != 0);
+
+  mdtPortInfo portInfo;
+
+  // Check range
+  if(index < 0){
+    return portInfo;
+  }
+  if(index >= cbPorts->count()){
+    return portInfo;
+  }
+
+  return cbPorts->itemData(index).value<mdtPortInfo>();
 }
 
 mdtPortInfo mdtPortInfoCbHandler::currentPortInfo()
 {
   Q_ASSERT(cbPorts != 0);
 
+  /**
   mdtPortInfo portInfo;
 
   if(cbPorts->currentIndex() < 0){
     return portInfo;
   }
-  portInfo.setDisplayText(cbPorts->currentText());
-  portInfo.setPortName(cbPorts->itemData(cbPorts->currentIndex()).toString());
+  */
+  ///portInfo.setDisplayText(cbPorts->currentText());
+  ///portInfo.setPortName(cbPorts->itemData(cbPorts->currentIndex()).toString());
 
-  return portInfo;
+  ///return portInfo;
   ///return cbPorts->itemData(cbPorts->currentIndex()).value<mdtPortInfo>();
+  return portInfoAt(cbPorts->currentIndex());
 }
 
 mdtDeviceInfo mdtPortInfoCbHandler::currentDeviceInfo()

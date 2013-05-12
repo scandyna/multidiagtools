@@ -54,6 +54,7 @@ mdtModbusTcpPortSetupDialog::mdtModbusTcpPortSetupDialog(QWidget *parent)
   sbPort = new QSpinBox;
   sbPort->setMinimum(500);
   sbPort->setMaximum(50000);
+  sbPort->setValue(502);
   QWidget *wHeader = new QWidget;
   QGridLayout *layout = new QGridLayout;
   layout->addWidget(pbRescan, 0, 0);
@@ -138,7 +139,8 @@ void mdtModbusTcpPortSetupDialog::displayHostPort(int cbDevicesIndex)
     sbPort->setValue(502);
     return;
   }
-  portName = cbDevices->itemData(cbDevicesIndex).toString();
+  ///portName = cbDevices->itemData(cbDevicesIndex).toString();
+  portName = pvPortInfoCbHandler.portInfoAt(cbDevicesIndex).portName();
   portNameItems = portName.split(":");
   if(portNameItems.size() == 2){
     leHost->setText(portNameItems.at(0));
@@ -180,11 +182,15 @@ void mdtModbusTcpPortSetupDialog::rescan()
   leHost->setEnabled(false);
   sbPort->setEnabled(false);
   pvPortInfoCbHandler.fillComboBoxes(pvModbusTcpPortManager->scan(QNetworkInterface::allInterfaces(), 502, 100));
+  // Display selected host and port (if one exists)
+  displayHostPort(cbDevices->currentIndex());
   // Display current port
+  /**
   index = cbDevices->findData(portManager()->portInfo().portName());
   if(index >= 0){
     cbDevices->setCurrentIndex(index);
   }
+  */
   pbAbort->setEnabled(false);
   pbRescan->setEnabled(true);
   pbConnect->setEnabled(true);

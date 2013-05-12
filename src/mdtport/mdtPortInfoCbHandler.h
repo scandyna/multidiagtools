@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -76,6 +76,13 @@ class mdtPortInfoCbHandler : public QObject
    *  at each ports combobox index change.
    */
   void fillComboBoxes(const QList<mdtPortInfo*> &portInfoList);
+
+  /*! \brief Get the port info object at given index.
+   *
+   * Can return a empty object if nothing was set,
+   *  or index is out of range.
+   */
+  mdtPortInfo portInfoAt(int index);
 
   /*! \brief Get the selected port info object.
    *
