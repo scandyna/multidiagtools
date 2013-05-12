@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -255,7 +255,7 @@ void mdtPortInfoTest::comboboxTest()
   QComboBox cbDevices;
   mdtPortInfoCbHandler cbHandler;
   mdtPortInfo pi;
-  mdtPortInfo *portInfo;
+  mdtPortInfo *portInfo1, *portInfo2, *portInfo3;
   QList<mdtPortInfo*> portInfoList;
   mdtDeviceInfo *devi;
   mdtDeviceInfo di;
@@ -263,54 +263,58 @@ void mdtPortInfoTest::comboboxTest()
   // Init the combobox handler
   cbHandler.setPortsComboBox(&cbPorts);
   cbHandler.setDevicesComboBox(&cbDevices);
+  QCOMPARE(cbHandler.indexOfPortInfo(mdtPortInfo()), -1);
 
   /*
    * Scan
    */
 
   // Setup port 1
-  portInfo = new mdtPortInfo;
-  portInfo->setPortName("port1");
+  portInfo1 = new mdtPortInfo;
+  portInfo1->setPortName("port1");
   // Add some devices
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x101);
   devi->setProductId(0x111);
-  portInfo->addDevice(devi);
+  portInfo1->addDevice(devi);
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x102);
   devi->setProductId(0x122);
-  portInfo->addDevice(devi);
+  portInfo1->addDevice(devi);
   // Add port 1 to list
-  portInfoList.append(portInfo);
+  portInfoList.append(portInfo1);
 
   // Setup port 2
-  portInfo = new mdtPortInfo;
-  portInfo->setPortName("port2");
+  portInfo2 = new mdtPortInfo;
+  portInfo2->setPortName("port2");
   // Add some devices
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x201);
   devi->setProductId(0x211);
-  portInfo->addDevice(devi);
+  portInfo2->addDevice(devi);
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x202);
   devi->setProductId(0x222);
-  portInfo->addDevice(devi);
+  portInfo2->addDevice(devi);
   // Add port 2 to list
-  portInfoList.append(portInfo);
+  portInfoList.append(portInfo2);
 
   // Setup port 3
-  portInfo = new mdtPortInfo;
-  portInfo->setPortName("port3");
+  portInfo3 = new mdtPortInfo;
+  portInfo3->setPortName("port3");
   // Add some devices
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x301);
   devi->setProductId(0x311);
-  portInfo->addDevice(devi);
+  portInfo3->addDevice(devi);
   // Add port 3 to list
-  portInfoList.append(portInfo);
+  portInfoList.append(portInfo3);
 
   // Fill comboboxes
   cbHandler.fillComboBoxes(portInfoList);
+  QCOMPARE(cbHandler.indexOfPortInfo(*portInfo1), 0);
+  QCOMPARE(cbHandler.indexOfPortInfo(*portInfo2), 1);
+  QCOMPARE(cbHandler.indexOfPortInfo(*portInfo3), 2);
 
   // After fill, we must have port 1/device 1 selected
   pi = cbHandler.currentPortInfo();
@@ -354,41 +358,43 @@ void mdtPortInfoTest::comboboxTest()
   portInfoList.clear();
 
   // Setup port 1
-  portInfo = new mdtPortInfo;
-  portInfo->setPortName("port10");
+  portInfo1 = new mdtPortInfo;
+  portInfo1->setPortName("port10");
   // Add some devices
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x1101);
   devi->setProductId(0x1111);
-  portInfo->addDevice(devi);
+  portInfo1->addDevice(devi);
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x1102);
   devi->setProductId(0x1122);
-  portInfo->addDevice(devi);
+  portInfo1->addDevice(devi);
   // Add port 1 to list
-  portInfoList.append(portInfo);
+  portInfoList.append(portInfo1);
 
   // Setup port 2
-  portInfo = new mdtPortInfo;
-  portInfo->setPortName("port20");
+  portInfo2 = new mdtPortInfo;
+  portInfo2->setPortName("port20");
   // Add some devices
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x2201);
   devi->setProductId(0x2211);
-  portInfo->addDevice(devi);
+  portInfo2->addDevice(devi);
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x2202);
   devi->setProductId(0x2222);
-  portInfo->addDevice(devi);
+  portInfo2->addDevice(devi);
   devi = new mdtDeviceInfo;
   devi->setVendorId(0x2203);
   devi->setProductId(0x2223);
-  portInfo->addDevice(devi);
+  portInfo2->addDevice(devi);
   // Add port 2 to list
-  portInfoList.append(portInfo);
+  portInfoList.append(portInfo2);
 
   // Fill comboboxes
   cbHandler.fillComboBoxes(portInfoList);
+  QCOMPARE(cbHandler.indexOfPortInfo(*portInfo1), 0);
+  QCOMPARE(cbHandler.indexOfPortInfo(*portInfo2), 1);
 
   // After fill, we must have port 1/device 1 selected
   pi = cbHandler.currentPortInfo();

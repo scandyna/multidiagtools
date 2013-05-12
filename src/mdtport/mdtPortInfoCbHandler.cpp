@@ -24,7 +24,7 @@
 #include <QComboBox>
 #include <QVariant>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPortInfoCbHandler::mdtPortInfoCbHandler(QObject *parent)
  : QObject(parent)
@@ -62,18 +62,26 @@ void mdtPortInfoCbHandler::fillComboBoxes(const QList<mdtPortInfo*> &portInfoLis
 
   int i;
   mdtPortInfo *portInfo;
-  QVariant var;
+  ///QVariant var;
 
   cbPorts->clear();
   for(i=0; i<portInfoList.size(); i++){
     portInfo = portInfoList.at(i);
     Q_ASSERT(portInfo != 0);
-    var.setValue(*portInfo);
-    ///var.setValue(portInfo->portName());
-    ///qDebug() << "mdtPortInfoCbHandler::fillComboBoxes(): add item, portName: " << portInfo->portName() << " , DT: " << portInfo->displayText();
-    ///cbPorts->addItem(portInfo->displayText(), portInfo->portName());
-    cbPorts->addItem(portInfo->displayText(), var);
+    ///var.setValue(*portInfo);
+    ///cbPorts->addItem(portInfo->displayText(), var);
+    addPortInfo(*portInfo);
   }
+}
+
+void mdtPortInfoCbHandler::addPortInfo(const mdtPortInfo &portInfo)
+{
+  Q_ASSERT(cbPorts != 0);
+
+  QVariant var;
+
+  var.setValue(portInfo);
+  cbPorts->addItem(portInfo.displayText(), var);
 }
 
 mdtPortInfo mdtPortInfoCbHandler::portInfoAt(int index)
@@ -97,19 +105,22 @@ mdtPortInfo mdtPortInfoCbHandler::currentPortInfo()
 {
   Q_ASSERT(cbPorts != 0);
 
-  /**
-  mdtPortInfo portInfo;
-
-  if(cbPorts->currentIndex() < 0){
-    return portInfo;
-  }
-  */
-  ///portInfo.setDisplayText(cbPorts->currentText());
-  ///portInfo.setPortName(cbPorts->itemData(cbPorts->currentIndex()).toString());
-
-  ///return portInfo;
-  ///return cbPorts->itemData(cbPorts->currentIndex()).value<mdtPortInfo>();
   return portInfoAt(cbPorts->currentIndex());
+}
+
+int mdtPortInfoCbHandler::indexOfPortInfo(const mdtPortInfo &portInfo) const
+{
+  Q_ASSERT(cbPorts != 0);
+
+  int i;
+
+  for(i=0; i<cbPorts->count(); ++i){
+    if(cbPorts->itemData(i).value<mdtPortInfo>() == portInfo){
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 mdtDeviceInfo mdtPortInfoCbHandler::currentDeviceInfo()
@@ -156,4 +167,3 @@ void mdtPortInfoCbHandler::updateDevicesCb(int portsCbIndex)
     cbDevices->addItem(deviceInfo->displayText(), var);
   }
 }
-

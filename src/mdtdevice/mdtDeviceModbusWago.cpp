@@ -112,10 +112,15 @@ mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const mdtDeviceInf
 
 mdtAbstractPort::error_t mdtDeviceModbusWago::connectToDevice(const QList<mdtPortInfo*> &scanResult, int hardwareNodeId, int bitsCount, int startFrom)
 {
-  Q_ASSERT(!pvTcpPortManager->isRunning());
+  ///Q_ASSERT(!pvTcpPortManager->isRunning());
 
   int i;
 
+  // Check that port manager is not running
+  if(pvTcpPortManager->isRunning()){
+    qDebug() << "mdtDeviceModbusWago::connectToDevice() : stopping ...";
+    pvTcpPortManager->stop();
+  }
   for(i=0; i<scanResult.size(); i++){
     Q_ASSERT(scanResult.at(i) != 0);
     // Try to connect
