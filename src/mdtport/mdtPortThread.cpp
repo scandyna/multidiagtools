@@ -168,6 +168,11 @@ bool mdtPortThread::isRunning() const
   return false;
 }
 
+bool mdtPortThread::runningFlagSet() const
+{
+  return pvRunning;
+}
+
 bool mdtPortThread::isFinished() const
 {
   ///Q_ASSERT(pvPort != 0);
@@ -193,6 +198,15 @@ bool mdtPortThread::isReader() const
 bool mdtPortThread::isWriter() const
 {
   return false;
+}
+
+void mdtPortThread::notifyError(int error, bool renotifySameError)
+{
+  if((error != pvCurrentError)||(renotifySameError)){
+    qDebug() << "mdtPortThread::notifyError(): error " << error << " occured";
+    pvCurrentError = error;
+    emit(errorOccured(error));
+  }
 }
 
 mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
@@ -558,15 +572,6 @@ mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
   }
 
   return mdtAbstractPort::UnhandledError;
-}
-
-void mdtPortThread::notifyError(int error, bool renotifySameError)
-{
-  if((error != pvCurrentError)||(renotifySameError)){
-    qDebug() << "mdtPortThread::notifyError(): error " << error << " occured";
-    pvCurrentError = error;
-    emit(errorOccured(error));
-  }
 }
 
 #ifdef Q_OS_UNIX

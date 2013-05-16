@@ -9,8 +9,9 @@ project (multidiagtools)
 set (HEADER_FILES 
           # Port I/O
           mdtAbstractPort.h
-          # mdtUsbPort.h
           mdtPortThread.h
+          mdtPortThreadHelper.h
+          #mdtPortThreadHelperPort.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
           mdtTcpSocket.h
@@ -40,6 +41,8 @@ set (SOURCES_FILES
           mdtAbstractPort.cpp
           mdtUsbPort.cpp
           mdtUsbPortThread.cpp
+          mdtPortThreadHelper.cpp
+          mdtPortThreadHelperPort.cpp
           mdtUsbtmcPortThread.cpp
           mdtUsbDeviceDescriptor.cpp
           mdtUsbConfigDescriptor.cpp

@@ -79,6 +79,15 @@ class mdtPortThread : public QThread
    */
   bool isRunning() const;
 
+  /*! \brief Get the running flag
+   *
+   * This method is used by mdtPortThreadHelper
+   *  and should not be used directly.
+   *
+   * Port's mutex is not handled in this method.
+   */
+  bool runningFlagSet() const;
+
   /*! \brief Returns false if the thread is running
    *  \see isRunning()
    */
@@ -103,6 +112,13 @@ class mdtPortThread : public QThread
    * Default implementation returns false
    */
   virtual bool isWriter() const;
+
+  /*! \brief Emit the errorOccured() signal if new error is different from current
+   *
+   * \param renotifySameError For some cases, the same error must be notified each time it happens.
+   *                           If this flag is true, signal is emitted without checking previous error.
+   */
+  void notifyError(int error, bool renotifySameError = false);
 
  signals:
 
@@ -158,7 +174,7 @@ class mdtPortThread : public QThread
 
   /*! \brief Handle common read errors
    *
-   * This is a helper class for port specific subclass.
+   * This is a helper method for port specific subclass.
    *
    * Handled errors are:
    *  - mdtAbstractPort::Disconnected: will try to reconnect
@@ -350,13 +366,6 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    */
   mdtAbstractPort::error_t reconnect(bool notify = true);
-
-  /*! \brief Emit the errorOccured() signal if new error is different from current
-   *
-   * \param renotifySameError For some cases, the same error must be notified each time it happens.
-   *                           If this flag is true, signal is emitted without checking previous error.
-   */
-  void notifyError(int error, bool renotifySameError = false);
 
   volatile bool pvRunning;
   mdtAbstractPort *pvPort;
