@@ -42,7 +42,6 @@ void mdtPortReadThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  ///mdtFrame *frame;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
   bool useReadTimeoutProtocol = false;
@@ -64,13 +63,6 @@ void mdtPortReadThread::run()
   // Set the running flag and get a read frame
   pvRunning = true;
   // Get frame
-  ///frame = getNewFrameRead();
-  /**
-  frame = threadHelper.getNewFrameRead();
-  if(frame == 0){
-    return;
-  }
-  */
   if(!threadHelper.getNewFrameRead()){
     return;
   }
@@ -83,7 +75,6 @@ void mdtPortReadThread::run()
     if(!pvRunning){
       break;
     }
-    ///Q_ASSERT(frame != 0);
     Q_ASSERT(threadHelper.currentReadFrame() != 0);
     // Wait on Read event
     portError = pvPort->waitForReadyRead();
@@ -94,19 +85,6 @@ void mdtPortReadThread::run()
       }
       if((useReadTimeoutProtocol)&&(portError == mdtAbstractPort::ReadTimeout)){
         // In timeout protocol, the current frame is considered complete
-        /**
-        if(!frame->isEmpty()){
-          frame->setComplete();
-          pvPort->readenFrames().enqueue(frame);
-          // emit a Readen frame signal
-          emit newFrameReaden();
-          ///frame = getNewFrameRead();
-          frame = threadHelper.getNewFrameRead();
-          if(frame == 0){
-            break;
-          }
-        }
-        */
         if(!threadHelper.currentReadFrame()->isEmpty()){
           threadHelper.currentReadFrame()->setComplete();
           // Submit frame and notify newFrameReaden
@@ -116,7 +94,6 @@ void mdtPortReadThread::run()
           }
         }
       }else{
-        ///portError = handleCommonReadErrors(portError, &frame);
         portError = threadHelper.handleCommonReadErrors(portError);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error, stop
@@ -127,29 +104,19 @@ void mdtPortReadThread::run()
     // Check about flush request
     if(pvPort->flushInRequestPending()){
       // Put current frame back to pool, get new one and return idle
-      ///pvPort->readFramesPool().enqueue(frame);
       threadHelper.restoreCurrentReadFrameToPool();
-      ///frame = getNewFrameRead();
-      /**
-      frame = threadHelper.getNewFrameRead();
-      if(frame == 0){
-        break;
-      }
-      */
       if(!threadHelper.getNewFrameRead()){
         break;
       }
       continue;
     }
     // Read
-    ///n = readFromPort(&frame);
     n = threadHelper.readFromPort(true);
     if(n < 0){
       // Check about stopping
       if(!pvRunning){
         break;
       }
-      ///portError = handleCommonReadErrors((mdtAbstractPort::error_t)n, &frame);
       portError = threadHelper.handleCommonReadErrors((mdtAbstractPort::error_t)n);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error, stop
@@ -157,14 +124,6 @@ void mdtPortReadThread::run()
       }
     }
   }
-
-  // Put current frame into pool
-  /**
-  frame = threadHelper.currentReadFrame();
-  if(frame != 0){
-    pvPort->readFramesPool().enqueue(frame);
-  }
-  */
 
   if(portError == mdtAbstractPort::NoError){
     notifyError(mdtAbstractPort::Disconnected);

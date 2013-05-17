@@ -59,19 +59,8 @@ int mdtPortThreadHelperPort::readFromPort(bool emitNewFrameReaden)
   Q_ASSERT(pvThread != 0);
 
   int readen;
-  ///mdtFrame *frame = currentReadFrame();
 
   // Check if a new frame is needed
-  /**
-  if(frame == 0){
-    frame = getNewFrameRead();
-    if(frame == 0){
-      return mdtAbstractPort::ReadPoolEmpty;
-    }
-  }
-  Q_ASSERT(frame == currentReadFrame());
-  Q_ASSERT(frame != 0);
-  */
   if(currentReadFrame() == 0){
     if(!getNewFrameRead()){
       return mdtAbstractPort::ReadPoolEmpty;
@@ -148,9 +137,12 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
     // Check about flush request
     if(pvPort->flushOutRequestPending()){
       // Restore frame to pool and return
+      /**
       qDebug() << "mdtPortThreadHelperPort::writeToPort(): flush out request";
       pvPort->writeFramesPool().enqueue(frame);
       setCurrentWriteFrame(0);
+      */
+      restoreCurrentWriteFrameToPool();
       return mdtAbstractPort::NoError;
     }
     if(portError != mdtAbstractPort::NoError){
@@ -177,8 +169,11 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
         if(pvThread->runningFlagSet()){
           notifyError(mdtAbstractPort::WriteTimeout);
         }
+        /**
         pvPort->writeFramesPool().enqueue(frame);
         setCurrentWriteFrame(0);
+        */
+        restoreCurrentWriteFrameToPool();
         // Thread has nothing else to do
         return mdtAbstractPort::ErrorHandled;
       }
@@ -196,8 +191,11 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
   }
   // Here, frame is completly sent
   Q_ASSERT(frame->isEmpty());
+  /**
   pvPort->writeFramesPool().enqueue(frame);
   setCurrentWriteFrame(0);
+  */
+  restoreCurrentWriteFrameToPool();
 
   return mdtAbstractPort::NoError;
 }

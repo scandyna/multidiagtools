@@ -48,6 +48,7 @@ class mdtPortThreadHelper : public QObject
    *
    * Will call:
    *  - restoreCurrentReadFrameToPool()
+   *  - restoreCurrentWriteFrameToPool();
    */
   virtual ~mdtPortThreadHelper();
 
@@ -143,15 +144,11 @@ class mdtPortThreadHelper : public QObject
    *
    * Note: internally, currentReadFrame is updated.
    *
-   * \return A pointer to a new frame. This frame is cleared (with mdtFrame::clear() and mdtFrame::clearSub() ).
-   *          If the thread's runnig flag becomes false, a Null pointer is returned, and thread
-   *          should stop.
    * \return True on success, false if thread is stopping.
    * \pre Port must be set with setPort().
    * \pre Thread must be set with setThread().
    * \post If this method returns true, currentReadFrame() will return a valid pointer.
    */
-  ///mdtFrame *getNewFrameRead();
   bool getNewFrameRead();
 
   /*! \brief Submit current read frame
@@ -215,7 +212,7 @@ class mdtPortThreadHelper : public QObject
   /*! \brief Get a new frame for writing data to port
    *
    * This is a helper method to get a new frame
-   *  in port's write frames.
+   *  in port's write frames pool.
    *
    * If no frame is available for write, this method
    *  will block the caller thread until one is avaliable.
@@ -228,13 +225,29 @@ class mdtPortThreadHelper : public QObject
    *
    *  Note: internally, currentWriteFrame is updated.
    *
-   * \return A pointer to a new frame, or Null on stop request.
+   * \return True on success, false if thread is stopping.
    *
    * \pre Port must be set with setPort().
    * \pre Thread must be set with setThread().
+   * \post If this method returns true, currentWriteFrame() will return a valid pointer.
    * \sa mdtAbstractPort
    */
-  mdtFrame *getNewFrameWrite();
+  bool getNewFrameWrite();
+
+  /*! \brief Restore current write frame to pool
+   *
+   * currentWriteFrame will be enqueued in port's
+   *  writeFramesPool queue.
+   *
+   * If currentWriteFrame is null, nothing happens.
+   *
+   * After this call, currentWriteFrame() will return a null pointer.
+   *
+   * \pre Port must be set with setPort().
+   * \pre Thread must be set with setThread().
+   * \pre Port's writeFramesPool queue must not allready contain currentWriteFrame.
+   */
+  void restoreCurrentWriteFrameToPool();
 
   /*! \brief Set current read frame
    */

@@ -53,7 +53,7 @@ void mdtPortWriteThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtFrame *frame = 0;
+  ///mdtFrame *frame = 0;
   int interframeTime = 0;
   int interByteTime = 0;
   bool bytePerByteWrite = false;
@@ -90,9 +90,14 @@ void mdtPortWriteThread::run()
     }
     // Get a frame - will block if nothing is to write
     ///frame = getNewFrameWrite();
+    /**
     frame = threadHelper.getNewFrameWrite();
     // If thread is stopping, it can happen that a Null pointer is returned
     if(frame == 0){
+      break;
+    }
+    */
+    if(!threadHelper.getNewFrameWrite()){
       break;
     }
     // Write

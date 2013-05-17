@@ -22,9 +22,8 @@
 #include "mdtPortThread.h"
 #include "mdtError.h"
 #include "mdtFrame.h"
-///#include <QCoreApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 // We need a sleep function
 #ifdef Q_OS_UNIX
@@ -46,10 +45,8 @@ mdtPortThreadHelper::mdtPortThreadHelper(QObject *parent)
 
 mdtPortThreadHelper::~mdtPortThreadHelper()
 {
-  qDebug() << "mdtPortThreadHelper::~mdtPortThreadHelper() ...";
-  ///QCoreApplication::processEvents();
   restoreCurrentReadFrameToPool();
-  qDebug() << "mdtPortThreadHelper::~mdtPortThreadHelper() DONE";
+  restoreCurrentWriteFrameToPool();
 }
 
 void mdtPortThreadHelper::setPort(mdtAbstractPort *port)
@@ -92,7 +89,6 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadErrors(mdtAbstract
   switch(portError){
     case mdtAbstractPort::Disconnected:
       // We must restore the frame because port will be closed
-      ///pvPort->readFramesPool().enqueue(pvCurrentReadFrame);
       restoreCurrentReadFrameToPool();
       // Try to reconnect
       portError = reconnect(true);
@@ -100,12 +96,6 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadErrors(mdtAbstract
         pvCurrentReadFrame = 0;
         return mdtAbstractPort::UnhandledError;
       }
-      /**
-      pvCurrentReadFrame = getNewFrameRead();
-      if(pvCurrentReadFrame == 0){
-        return mdtAbstractPort::UnhandledError;
-      }
-      */
       if(!getNewFrameRead()){
         return mdtAbstractPort::UnhandledError;
       }
@@ -142,8 +132,11 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonWriteErrors(mdtAbstrac
     e.commit();
     return mdtAbstractPort::UnhandledError;
   }
+  /**
   pvPort->writeFramesPool().enqueue(pvCurrentWriteFrame);
   pvCurrentWriteFrame = 0;
+  */
+  restoreCurrentWriteFrameToPool();
   notifyError(portError);
 
   switch(portError){
@@ -187,13 +180,10 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadWriteErrors(mdtAbs
   }
 }
 
-///mdtFrame *mdtPortThreadHelper::getNewFrameRead()
 bool mdtPortThreadHelper::getNewFrameRead()
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
-
-  ///mdtFrame *frame;
 
   if(pvPort->readFramesPool().size() < 1){
     mdtError e(MDT_PORT_QUEUE_EMPTY_ERROR, "Read frames pool is empty", mdtError::Warning);
@@ -269,12 +259,6 @@ int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitN
     while(toStore > 0){
       // Check for new frame if needed
       if(pvCurrentReadFrame == 0){
-        /**
-        pvCurrentReadFrame = getNewFrameRead();
-        if(pvCurrentReadFrame == 0){
-          return mdtAbstractPort::UnhandledError;
-        }
-        */
         if(!getNewFrameRead()){
           return mdtAbstractPort::UnhandledError;
         }
@@ -289,7 +273,6 @@ int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitN
         if(emitNewFrameReaden){
           emit newFrameReaden();
         }
-        ///pvCurrentReadFrame = getNewFrameRead();
         if(!getNewFrameRead()){
           return mdtAbstractPort::UnhandledError;
         }
@@ -310,23 +293,35 @@ int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitN
   return completeFrames;
 }
 
-mdtFrame *mdtPortThreadHelper::getNewFrameWrite()
+bool mdtPortThreadHelper::getNewFrameWrite()
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
-
-  ///mdtFrame *frame;
 
   // Wait until a frame is available, or stopping
   do{
     if(!pvThread->runningFlagSet()){
       pvCurrentWriteFrame = 0;
-      return 0;
+      return false;
     }
     pvCurrentWriteFrame = pvPort->getFrameToWrite();
   }while(pvCurrentWriteFrame == 0);
+  Q_ASSERT(pvCurrentWriteFrame != 0);
 
-  return pvCurrentWriteFrame;
+  return true;
+}
+
+void mdtPortThreadHelper::restoreCurrentWriteFrameToPool()
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvThread != 0);
+
+  if(pvCurrentWriteFrame == 0){
+    return;
+  }
+  Q_ASSERT(!pvPort->writeFramesPool().contains(pvCurrentWriteFrame));
+  pvPort->writeFramesPool().enqueue(pvCurrentWriteFrame);
+  pvCurrentWriteFrame = 0;
 }
 
 void mdtPortThreadHelper::setCurrentReadFrame(mdtFrame *frame)
