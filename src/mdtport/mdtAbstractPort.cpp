@@ -34,6 +34,7 @@ mdtAbstractPort::mdtAbstractPort(QObject *parent)
 
 mdtAbstractPort::~mdtAbstractPort()
 {
+  qDebug() << "mdtAbstractPort::~mdtAbstractPort()";
 }
 
 void mdtAbstractPort::setPortName(const QString &portName)
@@ -70,6 +71,7 @@ mdtAbstractPort::error_t mdtAbstractPort::open()
 
 void mdtAbstractPort::close()
 {
+  qDebug() << "mdtAbstractPort::close() ...";
   if(!isOpen()){
     return;
   }
@@ -79,15 +81,20 @@ void mdtAbstractPort::close()
   // Call system close method
   pvClose();
   // Delete queues
+  qDebug() << "mdtAbstractPort::close() deleting read pool queues ...";
   qDeleteAll(pvReadFramesPool);
   pvReadFramesPool.clear();
+  qDebug() << "mdtAbstractPort::close() deleting readen queues ...";
   qDeleteAll(pvReadenFrames);
   pvReadenFrames.clear();
+  qDebug() << "mdtAbstractPort::close() deleting write pool queues ...";
   qDeleteAll(pvWriteFramesPool);
   pvWriteFramesPool.clear();
+  qDebug() << "mdtAbstractPort::close() deleting to write ...";
   qDeleteAll(pvWriteFrames);
   pvWriteFrames.clear();
   pvIsOpen = false;
+  qDebug() << "mdtAbstractPort::close() DONE";
 }
 
 void mdtAbstractPort::setConfig(mdtPortConfig *cfg)

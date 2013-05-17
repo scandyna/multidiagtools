@@ -22,8 +22,9 @@
 #include "mdtPortThread.h"
 #include "mdtError.h"
 #include "mdtFrame.h"
+///#include <QCoreApplication>
 
-//#include <QDebug>
+#include <QDebug>
 
 // We need a sleep function
 #ifdef Q_OS_UNIX
@@ -45,6 +46,10 @@ mdtPortThreadHelper::mdtPortThreadHelper(QObject *parent)
 
 mdtPortThreadHelper::~mdtPortThreadHelper()
 {
+  qDebug() << "mdtPortThreadHelper::~mdtPortThreadHelper() ...";
+  ///QCoreApplication::processEvents();
+  restoreCurrentReadFrameToPool();
+  qDebug() << "mdtPortThreadHelper::~mdtPortThreadHelper() DONE";
 }
 
 void mdtPortThreadHelper::setPort(mdtAbstractPort *port)
@@ -86,15 +91,22 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadErrors(mdtAbstract
 
   switch(portError){
     case mdtAbstractPort::Disconnected:
-      pvPort->readFramesPool().enqueue(pvCurrentReadFrame);
+      // We must restore the frame because port will be closed
+      ///pvPort->readFramesPool().enqueue(pvCurrentReadFrame);
+      restoreCurrentReadFrameToPool();
       // Try to reconnect
       portError = reconnect(true);
       if(portError != mdtAbstractPort::NoError){
         pvCurrentReadFrame = 0;
         return mdtAbstractPort::UnhandledError;
       }
+      /**
       pvCurrentReadFrame = getNewFrameRead();
       if(pvCurrentReadFrame == 0){
+        return mdtAbstractPort::UnhandledError;
+      }
+      */
+      if(!getNewFrameRead()){
         return mdtAbstractPort::UnhandledError;
       }
       portError = mdtAbstractPort::ErrorHandled;
@@ -175,12 +187,13 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadWriteErrors(mdtAbs
   }
 }
 
-mdtFrame *mdtPortThreadHelper::getNewFrameRead()
+///mdtFrame *mdtPortThreadHelper::getNewFrameRead()
+bool mdtPortThreadHelper::getNewFrameRead()
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
 
-  mdtFrame *frame;
+  ///mdtFrame *frame;
 
   if(pvPort->readFramesPool().size() < 1){
     mdtError e(MDT_PORT_QUEUE_EMPTY_ERROR, "Read frames pool is empty", mdtError::Warning);
@@ -193,7 +206,8 @@ mdtFrame *mdtPortThreadHelper::getNewFrameRead()
       msleep(100);
       pvPort->lockMutex();
       if(!pvThread->runningFlagSet()){
-        return 0;
+        pvCurrentReadFrame = 0;
+        return false;
       }
     }
     // Put info into log that a frame is available again
@@ -202,12 +216,39 @@ mdtFrame *mdtPortThreadHelper::getNewFrameRead()
     e2.commit();
     notifyError(mdtAbstractPort::NoError);
   }
-  frame = pvPort->readFramesPool().dequeue();
-  Q_ASSERT(frame != 0);
-  frame->clear();
-  frame->clearSub();
+  Q_ASSERT(!pvPort->readFramesPool().isEmpty());
+  pvCurrentReadFrame = pvPort->readFramesPool().dequeue();
+  Q_ASSERT(pvCurrentReadFrame != 0);
+  pvCurrentReadFrame->clear();
+  pvCurrentReadFrame->clearSub();
 
-  return frame;
+  return true;
+}
+
+void mdtPortThreadHelper::submitCurrentReadFrame(bool notify)
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvThread != 0);
+
+  if(pvCurrentReadFrame == 0){
+    return;
+  }
+  Q_ASSERT(!pvPort->readenFrames().contains(pvCurrentReadFrame));
+  pvPort->readenFrames().enqueue(pvCurrentReadFrame);
+  pvCurrentReadFrame = 0;
+}
+
+void mdtPortThreadHelper::restoreCurrentReadFrameToPool()
+{
+  Q_ASSERT(pvPort != 0);
+  Q_ASSERT(pvThread != 0);
+
+  if(pvCurrentReadFrame == 0){
+    return;
+  }
+  Q_ASSERT(!pvPort->readFramesPool().contains(pvCurrentReadFrame));
+  pvPort->readFramesPool().enqueue(pvCurrentReadFrame);
+  pvCurrentReadFrame = 0;
 }
 
 int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitNewFrameReaden)
@@ -228,8 +269,13 @@ int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitN
     while(toStore > 0){
       // Check for new frame if needed
       if(pvCurrentReadFrame == 0){
+        /**
         pvCurrentReadFrame = getNewFrameRead();
         if(pvCurrentReadFrame == 0){
+          return mdtAbstractPort::UnhandledError;
+        }
+        */
+        if(!getNewFrameRead()){
           return mdtAbstractPort::UnhandledError;
         }
       }
@@ -243,7 +289,10 @@ int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitN
         if(emitNewFrameReaden){
           emit newFrameReaden();
         }
-        pvCurrentReadFrame = getNewFrameRead();
+        ///pvCurrentReadFrame = getNewFrameRead();
+        if(!getNewFrameRead()){
+          return mdtAbstractPort::UnhandledError;
+        }
         ++completeFrames;
       }
       // When frame becomes full and EOF seq was not reached, stored will be to big
@@ -266,22 +315,33 @@ mdtFrame *mdtPortThreadHelper::getNewFrameWrite()
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
 
-  mdtFrame *frame;
+  ///mdtFrame *frame;
 
   // Wait until a frame is available, or stopping
   do{
     if(!pvThread->runningFlagSet()){
+      pvCurrentWriteFrame = 0;
       return 0;
     }
-    frame = pvPort->getFrameToWrite();
-  }while(frame == 0);
+    pvCurrentWriteFrame = pvPort->getFrameToWrite();
+  }while(pvCurrentWriteFrame == 0);
 
-  return frame;
+  return pvCurrentWriteFrame;
+}
+
+void mdtPortThreadHelper::setCurrentReadFrame(mdtFrame *frame)
+{
+  pvCurrentReadFrame = frame;
 }
 
 mdtFrame *mdtPortThreadHelper::currentReadFrame()
 {
   return pvCurrentReadFrame;
+}
+
+void mdtPortThreadHelper::setCurrentWriteFrame(mdtFrame *frame)
+{
+  pvCurrentWriteFrame = frame;
 }
 
 mdtFrame *mdtPortThreadHelper::currentWriteFrame()
@@ -300,15 +360,6 @@ mdtAbstractPort::error_t mdtPortThreadHelper::reconnect(bool notify)
 {
   return mdtAbstractPort::UnhandledError;
 }
-
-/**
-void mdtPortThreadHelper::setCurrentReadFrame(mdtFrame *frame)
-{
-  Q_ASSERT(frame != 0);
-
-  pvCurrentReadFrame = frame;
-}
-*/
 
 void mdtPortThreadHelper::requestWrite()
 {

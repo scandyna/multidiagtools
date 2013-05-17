@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -42,8 +42,9 @@ class mdtPortConfig
    *  - Write timout: -1 (infinite)
    *  - Frame type: RAW
    *  - En of frame sequence: LF (ASCII 0x0A)
-   *  - Byte per byte write: Off
    *  - Write interframe time: 0 [ms]
+   *  - Byte per byte write: Off
+   *  - Write interbyte time: 0 [ms]
    *  - Connect timeout: 5000 [ms]
    *  - Connect max try: 10
    */
@@ -115,7 +116,7 @@ class mdtPortConfig
    *
    * \note used ??
    */
-  void setWriteMinWaitTime(int minWaitTime);
+  ///void setWriteMinWaitTime(int minWaitTime);
 
   /*! \brief Get the minimal time to wait before try to write
    *
@@ -123,7 +124,7 @@ class mdtPortConfig
    *
    * \note used ??
    */
-  int writeMinWaitTime() const;
+  ///int writeMinWaitTime() const;
 
   /*! \brief Set the write interframe time
    *
@@ -235,6 +236,12 @@ class mdtPortConfig
    */
   bool bytePerByteWrite() const;
 
+  /*! \brief Get the write time between bytes [ms]
+   *
+   * \sa setBytePerByteWrite()
+   */
+  int writeInterbyteTime() const;
+
   /*! \brief Set the connection timeout
    *
    * \param timeout [ms]
@@ -275,7 +282,8 @@ class mdtPortConfig
   int pvReadTimeout;              // Maximum time before reading data [ms]
   int pvWriteFrameSize;           // Maximum data length to store before a frame is considered invalid
   int pvWriteQueueSize;           // Maximum number of frames that can be stored
-  int pvWriteMinWaitTime;         // Minimum time to wait before write call
+  ///int pvWriteMinWaitTime;         // Minimum time to wait before write call
+  int pvWriteInterbyteTime;       // Minimum time  to wait before write call
   int pvWriteInterframeTime;      // Time between each sended frame [ms]
   int pvWriteTimeout;             // Maximum time before port must be ready for writing data [ms]
   mdtFrame::type_t pvFrameType;

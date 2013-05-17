@@ -517,8 +517,10 @@ void mdtPortTest::readRawTest()
   rdThd.setPort(&port);
 
   // Start
+  qDebug() << "TEST: starting thd...";
   QVERIFY(rdThd.start());
   QVERIFY(rdThd.isRunning());
+  qDebug() << "TEST: thd started";
 
   // Write data to file and verify that data was written
   QVERIFY(file.write(data.toAscii()) == data.size());
@@ -551,7 +553,9 @@ void mdtPortTest::readRawTest()
   port.unlockMutex();
 
   // End
+  qDebug() << "TEST: END, stopping thd...";
   rdThd.stop();
+  qDebug() << "TEST: END";
 }
 
 void mdtPortTest::readRawTest_data()

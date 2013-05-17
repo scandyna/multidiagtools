@@ -48,7 +48,9 @@ mdtPortThreadHelperPort::mdtPortThreadHelperPort(QObject *parent)
 
 mdtPortThreadHelperPort::~mdtPortThreadHelperPort()
 {
+  qDebug() << "mdtPortThreadHelperPort::~mdtPortThreadHelperPort() delete pvReadBuffer ...";
   delete[] pvReadBuffer;
+  qDebug() << "mdtPortThreadHelperPort::~mdtPortThreadHelperPort() delete pvReadBuffer OK";
 }
 
 int mdtPortThreadHelperPort::readFromPort(bool emitNewFrameReaden)
@@ -57,19 +59,28 @@ int mdtPortThreadHelperPort::readFromPort(bool emitNewFrameReaden)
   Q_ASSERT(pvThread != 0);
 
   int readen;
+  ///mdtFrame *frame = currentReadFrame();
 
   // Check if a new frame is needed
-  if(pvCurrentReadFrame == 0){
-    pvCurrentReadFrame = getNewFrameRead();
-    if(pvCurrentReadFrame == 0){
+  /**
+  if(frame == 0){
+    frame = getNewFrameRead();
+    if(frame == 0){
       return mdtAbstractPort::ReadPoolEmpty;
     }
   }
-  Q_ASSERT(pvCurrentReadFrame != 0);
+  Q_ASSERT(frame == currentReadFrame());
+  Q_ASSERT(frame != 0);
+  */
+  if(currentReadFrame() == 0){
+    if(!getNewFrameRead()){
+      return mdtAbstractPort::ReadPoolEmpty;
+    }
+  }
   // Alloc local buffer if needed
-  if(pvReadBufferSize < pvCurrentReadFrame->capacity()){
+  if(pvReadBufferSize < currentReadFrame()->capacity()){
     delete[] pvReadBuffer;
-    pvReadBufferSize = pvCurrentReadFrame->capacity();
+    pvReadBufferSize = currentReadFrame()->capacity();
     pvReadBuffer = new char[pvReadBufferSize];
     if(pvReadBuffer == 0){
       pvReadBufferSize = 0;
@@ -118,7 +129,7 @@ int mdtPortThreadHelperPort::writeDataToPort(int maxSize)
   return written;
 }
 
-mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWrite, int maxWriteTry, int interByteTime)
+mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWrite, int interByteTime, int maxWriteTry)
 {
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
@@ -139,7 +150,7 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
       // Restore frame to pool and return
       qDebug() << "mdtPortThreadHelperPort::writeToPort(): flush out request";
       pvPort->writeFramesPool().enqueue(frame);
-      pvCurrentWriteFrame = 0;
+      setCurrentWriteFrame(0);
       return mdtAbstractPort::NoError;
     }
     if(portError != mdtAbstractPort::NoError){
@@ -167,7 +178,7 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
           notifyError(mdtAbstractPort::WriteTimeout);
         }
         pvPort->writeFramesPool().enqueue(frame);
-        pvCurrentWriteFrame = 0;
+        setCurrentWriteFrame(0);
         // Thread has nothing else to do
         return mdtAbstractPort::ErrorHandled;
       }
@@ -186,7 +197,7 @@ mdtAbstractPort::error_t mdtPortThreadHelperPort::writeToPort(bool bytePerByteWr
   // Here, frame is completly sent
   Q_ASSERT(frame->isEmpty());
   pvPort->writeFramesPool().enqueue(frame);
-  pvCurrentWriteFrame = 0;
+  setCurrentWriteFrame(0);
 
   return mdtAbstractPort::NoError;
 }

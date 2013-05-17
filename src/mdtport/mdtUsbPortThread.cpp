@@ -280,7 +280,7 @@ void mdtUsbPortThread::run()
     if(n < 0){
       // Unhandled error: notify and stop
       portError = (mdtAbstractPort::error_t)n;
-      notifyError(n);
+      notifyError(n); /// \todo ???
       break;
     }
     // Reset waitAnAnswer flag if a frame was received

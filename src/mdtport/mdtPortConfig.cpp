@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -37,7 +37,8 @@ void mdtPortConfig::setDefault()
   pvWriteFrameSize = 1024;
   pvWriteQueueSize = 10;
   pvWriteInterframeTime = 0;
-  pvWriteMinWaitTime = 0;
+  ///pvWriteMinWaitTime = 0;
+  pvWriteInterbyteTime = 0;
   pvWriteTimeout = -1;
   pvFrameType = mdtFrame::FT_RAW;
   pvEndOfFrameSeq.clear();
@@ -91,6 +92,7 @@ int mdtPortConfig::readTimeout() const
   return pvReadTimeout;
 }
 
+/**
 void mdtPortConfig::setWriteMinWaitTime(int minWaitTime)
 {
   pvWriteMinWaitTime = minWaitTime;
@@ -100,6 +102,7 @@ int mdtPortConfig::writeMinWaitTime() const
 {
   return pvWriteMinWaitTime;
 }
+*/
 
 void mdtPortConfig::setWriteInterframeTime(int time)
 {
@@ -174,7 +177,8 @@ QByteArray mdtPortConfig::endOfFrameSeq() const
 void mdtPortConfig::setBytePerByteWrite(bool on, int waitTime)
 {
   pvBytePerByteWrite = on;
-  pvWriteMinWaitTime = waitTime;
+  ///pvWriteMinWaitTime = waitTime;
+  pvWriteInterbyteTime = waitTime;
 }
 
 bool mdtPortConfig::bytePerByteWrite() const
@@ -182,6 +186,10 @@ bool mdtPortConfig::bytePerByteWrite() const
   return pvBytePerByteWrite;
 }
 
+int mdtPortConfig::writeInterbyteTime() const
+{
+  return pvWriteInterbyteTime;
+}
 
 void mdtPortConfig::setConnectTimeout(int timeout)
 {
@@ -243,6 +251,9 @@ bool mdtPortConfig::matches(const mdtPortConfig &other)
     return false;
   }
   if(pvConnectMaxTry != other.pvConnectMaxTry){
+    return false;
+  }
+  if(pvWriteInterbyteTime != other.pvWriteInterbyteTime){
     return false;
   }
 

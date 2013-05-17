@@ -225,17 +225,17 @@
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="lbWriteMinWaitTime">
+           <widget class="QLabel" name="lbWriteInterbyteWaitTime">
             <property name="text">
-             <string>Wait time [ms]</string>
+             <string>Inter byte time [ms]</string>
             </property>
             <property name="buddy">
-             <cstring>sbWriteMinWaitTime</cstring>
+             <cstring>sbWriteInterbyteWaitTime</cstring>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QSpinBox" name="sbWriteMinWaitTime">
+           <widget class="QSpinBox" name="sbWriteInterbyteWaitTime">
             <property name="toolTip">
              <string>Time to wait before sending a byte if &quot;Write byte per byte&quot; option is set.</string>
             </property>
@@ -303,7 +303,7 @@
   <tabstop>sbWriteFrameSize</tabstop>
   <tabstop>sbWriteQueueSize</tabstop>
   <tabstop>sbWriteTimeout</tabstop>
-  <tabstop>sbWriteMinWaitTime</tabstop>
+  <tabstop>sbWriteInterbyteWaitTime</tabstop>
   <tabstop>sbWriteInterframeTime</tabstop>
   <tabstop>cbBytePerByteWrite</tabstop>
  </tabstops>

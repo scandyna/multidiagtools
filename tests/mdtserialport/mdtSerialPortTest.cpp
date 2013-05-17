@@ -162,7 +162,7 @@ void mdtSerialPortTest::openCloseTest()
 #ifdef Q_OS_UNIX
   /*
    * It can happen that device file /dev/ttyXXX exists, but that no port
-   *  is really avalable.
+   *  is really available.
    * In that case, library had a bug with lockfiles management.
    */
 

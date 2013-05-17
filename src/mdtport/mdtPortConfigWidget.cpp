@@ -65,7 +65,7 @@ void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
   sbWriteFrameSize->setValue(config.writeFrameSize());
   sbWriteQueueSize->setValue(config.writeQueueSize());
   sbWriteTimeout->setValue(config.writeTimeout());
-  sbWriteMinWaitTime->setValue(config.writeMinWaitTime());
+  sbWriteInterbyteWaitTime->setValue(config.writeInterbyteTime());
   cbBytePerByteWrite->setChecked(config.bytePerByteWrite());
   sbWriteInterframeTime->setValue(config.writeInterframeTime());
 }
@@ -107,8 +107,7 @@ void mdtPortConfigWidget::updateConfig(mdtPortConfig &config)
   config.setWriteFrameSize(sbWriteFrameSize->value());
   config.setWriteQueueSize(sbWriteQueueSize->value());
   config.setWriteTimeout(sbWriteTimeout->value());
-  config.setWriteMinWaitTime(sbWriteMinWaitTime->value());
-  config.setBytePerByteWrite(cbBytePerByteWrite->isChecked(), sbWriteMinWaitTime->value());
+  config.setBytePerByteWrite(cbBytePerByteWrite->isChecked(), sbWriteInterbyteWaitTime->value());
   config.setWriteInterframeTime(sbWriteInterframeTime->value());
 
   // Display real applied setup

@@ -106,7 +106,7 @@ class mdtPortThreadHelperPort : public mdtPortThreadHelper
    * \pre Port must be set with mdtPortThreadHelper::setPort().
    * \pre Thread must be set with mdtPortThreadHelper::setThread().
    */
-  mdtAbstractPort::error_t writeToPort(bool bytePerByteWrite, int maxWriteTry, int interByteTime);
+  mdtAbstractPort::error_t writeToPort(bool bytePerByteWrite, int interByteTime, int maxWriteTry = 10);
 
  private:
 

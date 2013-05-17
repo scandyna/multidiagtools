@@ -45,6 +45,9 @@ class mdtPortThreadHelper : public QObject
   mdtPortThreadHelper(QObject *parent = 0);
 
   /*! \brief Destructor
+   *
+   * Will call:
+   *  - restoreCurrentReadFrameToPool()
    */
   virtual ~mdtPortThreadHelper();
 
@@ -72,7 +75,8 @@ class mdtPortThreadHelper : public QObject
    *  - mdtAbstractPort::ReadCanceled.
    *  - mdtAbstractPort::ReadTimeout.
    *
-   * For all cases, the current frame is cleared and the notification is sent.
+   * For all cases, except Disconnected, the current frame is cleared and the notification is sent.
+   *  For Disconnected, the frame is restored to port's readFramesPool pool.
    *
    * If this method is called by a non running thread, a warning will be logged.
    *
@@ -137,13 +141,49 @@ class mdtPortThreadHelper : public QObject
    *  locked again. So, the port mutex is allways locked when this
    *  method returns.
    *
+   * Note: internally, currentReadFrame is updated.
+   *
    * \return A pointer to a new frame. This frame is cleared (with mdtFrame::clear() and mdtFrame::clearSub() ).
    *          If the thread's runnig flag becomes false, a Null pointer is returned, and thread
    *          should stop.
+   * \return True on success, false if thread is stopping.
    * \pre Port must be set with setPort().
    * \pre Thread must be set with setThread().
+   * \post If this method returns true, currentReadFrame() will return a valid pointer.
    */
-  mdtFrame *getNewFrameRead();
+  ///mdtFrame *getNewFrameRead();
+  bool getNewFrameRead();
+
+  /*! \brief Submit current read frame
+   *
+   * currentReadFrame will be enqueued in port's
+   *  readenFrames queue.
+   *
+   * If currentReadFrame is null, nothing happens.
+   *
+   * After this call, currentReadFrame() will return a null pointer.
+   *
+   * \param notify If true, newFrameReaden() signal is emitted.
+   * \pre Port must be set with setPort().
+   * \pre Thread must be set with setThread().
+   * \pre Port's readenFrames queue must not allready contain currentReadFrame.
+   */
+  void submitCurrentReadFrame(bool notify);
+
+  /*! \brief Restore current read frame to pool
+   *
+   * currentReadFrame will be enqueued in port's
+   *  readFramesPool queue.
+   *
+   * If currentReadFrame is null, nothing happens.
+   *
+   * After this call, currentReadFrame() will return a null pointer.
+   *
+   * \pre Port must be set with setPort().
+   * \pre Thread must be set with setThread().
+   * \pre Port's readFramesPool queue must not allready contain currentReadFrame.
+   */
+  void restoreCurrentReadFrameToPool();
 
   /*! \brief Store readen data into frame
    *
@@ -186,6 +226,8 @@ class mdtPortThreadHelper : public QObject
    *  locked again. So, the port mutex is allways locked when this
    *  method returns.
    *
+   *  Note: internally, currentWriteFrame is updated.
+   *
    * \return A pointer to a new frame, or Null on stop request.
    *
    * \pre Port must be set with setPort().
@@ -194,11 +236,19 @@ class mdtPortThreadHelper : public QObject
    */
   mdtFrame *getNewFrameWrite();
 
+  /*! \brief Set current read frame
+   */
+  void setCurrentReadFrame(mdtFrame *frame);
+
   /*! \brief Get current read frame
    *
    * Can return a null pointer.
    */
   mdtFrame *currentReadFrame();
+
+  /*! \brief Set current write frame
+   */
+  void setCurrentWriteFrame(mdtFrame *frame);
 
   /*! \brief Get current write frame
    *
@@ -246,12 +296,15 @@ class mdtPortThreadHelper : public QObject
 
   mdtAbstractPort *pvPort;
   mdtPortThread *pvThread;
-  mdtFrame *pvCurrentReadFrame;
-  mdtFrame *pvCurrentWriteFrame;
 
  protected slots:
 
   virtual void requestWrite();
+
+ private:
+
+  mdtFrame *pvCurrentReadFrame;
+  mdtFrame *pvCurrentWriteFrame;
 };
 #endif
 

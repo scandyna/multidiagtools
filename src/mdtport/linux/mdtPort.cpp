@@ -29,7 +29,7 @@
 #include <pthread.h>
 #include <signal.h>
 
-//#include <QDebug>
+#include <QDebug>
 
 mdtPort::mdtPort(QObject *parent)
  : mdtAbstractPort(parent)
@@ -43,6 +43,7 @@ mdtPort::~mdtPort()
 {
   close();
   delete pvPortLock;
+  qDebug() << "mdtPort::~mdtPort()";
 }
 
 void mdtPort::setReadTimeout(int timeout)

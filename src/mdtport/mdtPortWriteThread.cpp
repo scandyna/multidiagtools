@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtPortWriteThread.h"
+#include "mdtPortThreadHelperPort.h"
 #include "mdtAbstractPort.h"
 #include "mdtFrame.h"
 #include <QApplication>
@@ -54,9 +55,12 @@ void mdtPortWriteThread::run()
 
   mdtFrame *frame = 0;
   int interframeTime = 0;
-  int writeMinWaitTime = 0;
+  int interByteTime = 0;
   bool bytePerByteWrite = false;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
+  mdtPortThreadHelperPort threadHelper;
+  threadHelper.setPort(pvPort);
+  threadHelper.setThread(this);
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -65,7 +69,7 @@ void mdtPortWriteThread::run()
 #endif
   // Get setup
   interframeTime = pvPort->config().writeInterframeTime();
-  writeMinWaitTime = pvPort->config().writeMinWaitTime();
+  interByteTime = pvPort->config().writeInterbyteTime();
   bytePerByteWrite = pvPort->config().bytePerByteWrite();
   // Set the running flag
   pvRunning = true;
@@ -85,13 +89,15 @@ void mdtPortWriteThread::run()
       pvPort->lockMutex();
     }
     // Get a frame - will block if nothing is to write
-    frame = getNewFrameWrite();
+    ///frame = getNewFrameWrite();
+    frame = threadHelper.getNewFrameWrite();
     // If thread is stopping, it can happen that a Null pointer is returned
     if(frame == 0){
       break;
     }
     // Write
-    portError = writeToPort(frame, bytePerByteWrite, writeMinWaitTime);
+    ///portError = writeToPort(frame, bytePerByteWrite, writeMinWaitTime);
+    portError = threadHelper.writeToPort(bytePerByteWrite, interByteTime);
     if((portError != mdtAbstractPort::NoError)&&(portError != mdtAbstractPort::ErrorHandled)){
       // Stop
       break;
