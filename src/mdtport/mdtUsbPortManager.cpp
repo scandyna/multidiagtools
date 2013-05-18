@@ -41,7 +41,7 @@ mdtUsbPortManager::mdtUsbPortManager(QObject *parent)
   setPort(port);
   ///pvReadUntilShortPacketReceivedFinished = false;
 
-  // Threads setup is done in openPort()
+  // Threads setup is done in start()
 }
 
 mdtUsbPortManager::~mdtUsbPortManager()
@@ -175,6 +175,7 @@ QList<mdtPortInfo*> mdtUsbPortManager::scan(int bDeviceClass, int bDeviceSubClas
   return portInfoList;
 }
 
+/**
 bool mdtUsbPortManager::openPort()
 {
   mdtUsbPortThread *portThread;
@@ -188,6 +189,22 @@ bool mdtUsbPortManager::openPort()
   }
 
   return mdtPortManager::openPort();
+}
+*/
+
+bool mdtUsbPortManager::start()
+{
+  mdtUsbPortThread *portThread;
+
+  if(pvThreads.size() < 1){
+    portThread = new mdtUsbPortThread;
+    connect(portThread, SIGNAL(controlResponseReaden()), this, SLOT(fromThreadControlResponseReaden()));
+    ///connect(portThread, SIGNAL(messageInReaden()), this, SLOT(fromThreadMessageInReaden()));
+    ///connect(portThread, SIGNAL(readUntilShortPacketReceivedFinished()), this, SLOT(fromThreadReadUntilShortPacketReceivedFinished()));
+    addThread(portThread);
+  }
+
+  return mdtPortManager::start();
 }
 
 void mdtUsbPortManager::readUntilShortPacketReceived()
@@ -347,5 +364,6 @@ void mdtUsbPortManager::fromThreadMessageInReaden()
 
 void mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()
 {
+  qDebug() << " ** mdtUsbPortManager::fromThreadReadUntilShortPacketReceivedFinished()";
   pvReadUntilShortPacketReceivedFinished = true;
 }

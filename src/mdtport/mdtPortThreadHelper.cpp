@@ -232,6 +232,9 @@ void mdtPortThreadHelper::submitCurrentReadFrame(bool notify)
   qDebug() << "Current read frame submitted";
   qDebug() << "-> Read queue: " << pvPort->readenFrames();
   pvCurrentReadFrame = 0;
+  if(notify){
+    emit newFrameReaden();
+  }
 }
 
 void mdtPortThreadHelper::restoreCurrentReadFrameToPool()

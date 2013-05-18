@@ -176,7 +176,6 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.readThread() == 0);
   QVERIFY(m.writeThread() == 0);
   m.setPort(port);
-  ///m.setTransactionsDisabled(true);
   m.setKeepTransactionsDone(true);
   thread = new mdtPortWriteThread;
   m.addThread(thread);
@@ -192,7 +191,6 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.isRunning());
 
   // Check the wait function without available data
-  ///QVERIFY(!m.waitReadenFrame());
   QVERIFY(!m.waitOneTransactionDone());
 
   // Send some data
@@ -204,7 +202,6 @@ void mdtPortManagerTest::portTest()
   QVERIFY(m.openPort());
   QVERIFY(m.start());
   // Get readen data
-  ///QVERIFY(m.waitReadenFrame());
   QVERIFY(m.waitOneTransactionDone());
   // Try to get a frame by ID (will not work, but must not crash"
   ///m.readenFrame(0);

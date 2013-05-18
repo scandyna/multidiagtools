@@ -287,11 +287,13 @@ class mdtPortManager : public QThread
    * \pre Port must be set with setPort() before use of this method.
    * \pre Port must be open with openPort() before using this method
    */
-  bool start();
+  virtual bool start();
 
   /*! \brief Get the running state
    *
-   * If one of the threads is running, true is returned.
+   * If all threads are running, true is returned.
+   *
+   *  If no thread was set, false is returned.
    *
    * If port was not set, it returns false.
    */
@@ -838,6 +840,12 @@ class mdtPortManager : public QThread
    *
    * Emit stateChanged() if current state was not Ready.
    * Used by internal state machine.
+   *
+   * If more than one thread was set,
+   *  port manager enters only to ready state
+   *  if all threads are not in error state.
+   *
+   * \pre Port must be set with setPort().
    */
   void setStateReady();
 
@@ -872,6 +880,10 @@ class mdtPortManager : public QThread
 
   // Setup state machine
   void buildStateMachine();
+
+  /*! \brief Wait until ready state
+   */
+  bool waitOnReadyState();
 
   mdtPortInfo pvPortInfo;
 

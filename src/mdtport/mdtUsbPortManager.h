@@ -82,7 +82,19 @@ class mdtUsbPortManager : public mdtPortManager
    *
    * Internally, mdtPortManager::openPort() is called.
    */
-  bool openPort();
+  ///bool openPort();
+
+  /*! \brief Open the port
+   *
+   * Overloads mdtPortManager::start().
+   *
+   * Will construct the thread if not allready exists.
+   *  This is because mdtUsbtmcPortManager uses a different thread,
+   *  so this task can not be done in constructor.
+   *
+   * Internally, mdtPortManager::start() is called.
+   */
+  bool start();
 
   /*! \brief Request port to read until a short frame is received
    *

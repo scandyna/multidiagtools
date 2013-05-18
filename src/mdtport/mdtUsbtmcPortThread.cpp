@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtUsbtmcPortThread.h"
+#include "mdtPortThreadHelperPort.h"
 #include "mdtUsbPort.h"
 #include "mdtError.h"
 #include "mdtFrameUsbTmc.h"

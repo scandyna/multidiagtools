@@ -474,7 +474,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
 
 void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
 {
-  qDebug() << "mdtUsbtmcPortManager::onThreadsErrorOccured() , code: " << error;
+  qDebug() << "mdtUsbtmcPortManager::onThreadsErrorOccured() , code: " << (mdtAbstractPort::error_t)error;
 
   switch(error){
     case mdtAbstractPort::NoError:

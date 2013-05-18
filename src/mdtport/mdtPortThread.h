@@ -121,6 +121,14 @@ class mdtPortThread : public QThread
   ///void notifyError(int error, bool renotifySameError = false);
   void notifyError(mdtAbstractPort::error_t error, bool renotifySameError = false);
 
+  /*! \brief Get current error
+   *
+   * This is used by mdtPortManager.
+   *
+   * Port's mutex is not handled by this method.
+   */
+  mdtAbstractPort::error_t currentError() const;
+
  signals:
 
   /*! \brief Emitted when a read process begins

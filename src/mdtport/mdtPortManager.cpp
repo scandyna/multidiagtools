@@ -161,6 +161,9 @@ bool mdtPortManager::start()
       return false;
     }
   }
+  if(!waitOnReadyState()){
+    return false;
+  }
   qDebug() << "mdtPortManager::start() DONE";
 
   return true;
@@ -173,14 +176,16 @@ bool mdtPortManager::isRunning()
   if(pvPort == 0){
     return false;
   }
-
+  if(pvThreads.size() < 1){
+    return false;
+  }
   for(i=0; i<pvThreads.size(); i++){
-    if(pvThreads.at(i)->isRunning()){
-      return true;
+    if(!pvThreads.at(i)->isRunning()){
+      return false;
     }
   }
 
-  return false;
+  return true;
 }
 
 void mdtPortManager::stop()
@@ -789,8 +794,10 @@ void mdtPortManager::fromThreadNewFrameReaden()
   mdtPortTransaction *transaction;
   int framesCount = 0;
 
+  
   // Get frames in readen queue
   pvPort->lockMutex();
+  qDebug() << "mdtPortManager::fromThreadNewFrameReaden(), queue: " << pvPort->readenFrames();
   while(pvPort->readenFrames().size() > 0){
     frame = pvPort->readenFrames().dequeue();
     Q_ASSERT(frame != 0);
@@ -826,62 +833,49 @@ void mdtPortManager::fromThreadNewFrameReaden()
 /// \todo On disconnect, should flush I/O ?
 void mdtPortManager::onThreadsErrorOccured(int error)
 {
-  qDebug() << "mdtPortManager::onThreadsErrorOccured() , code: " << error;
+  qDebug() << "mdtPortManager::onThreadsErrorOccured() , code: " << (mdtAbstractPort::error_t)error;
   ///emit(errorStateChanged(error));
 
   switch(error){
     case mdtAbstractPort::NoError:
-      qDebug() << " -> PortManager: emit ready";
       emit(ready());
       break;
     case mdtAbstractPort::Disconnected:
-      qDebug() << " -> PortManager: emit disconnected";
       emit(disconnected());
       break;
     case mdtAbstractPort::Connecting:
-      qDebug() << " -> PortManager: emit connecting";
       emit(connecting());
       break;
     case mdtAbstractPort::ReadPoolEmpty:
       emit(busy());
-      qDebug() << " -> PortManager: emit busy";
       break;
     case mdtAbstractPort::WritePoolEmpty:
       emit(busy());
-      qDebug() << " -> PortManager: emit busy";
       break;
     case mdtAbstractPort::WriteCanceled:
       emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
       break;
     case mdtAbstractPort::ReadCanceled:
       cancelReadWait();
       emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
       break;
     case mdtAbstractPort::ControlCanceled:
       emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
       break;
     case mdtAbstractPort::ReadTimeout:
       emit(busy());
-      qDebug() << " -> PortManager: emit busy";
       break;
     case mdtAbstractPort::WriteTimeout:
       emit(busy());
-      qDebug() << " -> PortManager: emit busy";
       break;
     case mdtAbstractPort::ControlTimeout:
       emit(busy());
-      qDebug() << " -> PortManager: emit busy";
       break;
     case mdtAbstractPort::UnhandledError:
       emit(unhandledError());
-      qDebug() << " -> PortManager: emit unhandledError";
       break;
     default:
       emit(unhandledError());
-      qDebug() << " -> PortManager: emit unhandledError";
   }
 }
 
@@ -905,7 +899,22 @@ void mdtPortManager::setStateConnecting()
 
 void mdtPortManager::setStateReady()
 {
+  Q_ASSERT(pvPort != 0);
+
+  int i;
+
   if(pvCurrentState != Ready){
+    // Check that all threads are ready
+    if(pvThreads.size() > 1){
+      for(i=0; i<pvThreads.size(); i++){
+        pvPort->lockMutex();
+        if(pvThreads.at(i)->currentError() != mdtAbstractPort::NoError){
+          pvPort->unlockMutex();
+          return;
+        }
+        pvPort->unlockMutex();
+      }
+    }
     pvCurrentState = Ready;
     qDebug() << "mdtPortManager: new state is Ready";
     emit(stateChanged(pvCurrentState));
@@ -979,4 +988,13 @@ void mdtPortManager::buildStateMachine()
   pvStateMachine->addState(pvStateError);
   pvStateMachine->setInitialState(pvStateDisconnected);
   pvStateMachine->start();
+}
+
+bool mdtPortManager::waitOnReadyState()
+{
+  while(pvCurrentState != Ready){
+    wait(100, 50);
+  }
+
+  return true;
 }

@@ -81,6 +81,7 @@ bool mdtPortThread::start()
   pvReconnectTimeout = pvPort->config().connectTimeout();
   pvReconnectMaxTry = pvPort->config().connectMaxTry();
   // Start..
+  pvCurrentError = mdtAbstractPort::UnhandledError;
   QThread::start();
 
   // Wait until the thread started
@@ -115,6 +116,7 @@ void mdtPortThread::stop()
     return;
   }
   pvRunning = false;
+  pvCurrentError = mdtAbstractPort::UnhandledError;
   if(isWriter()){
     pvPort->abortFrameToWriteWait();
   }
@@ -208,6 +210,11 @@ void mdtPortThread::notifyError(mdtAbstractPort::error_t error, bool renotifySam
     pvCurrentError = error;
     emit(errorOccured(error));
   }
+}
+
+mdtAbstractPort::error_t mdtPortThread::currentError() const
+{
+  return pvCurrentError;
 }
 
 mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
