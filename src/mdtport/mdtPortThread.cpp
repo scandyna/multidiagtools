@@ -200,10 +200,11 @@ bool mdtPortThread::isWriter() const
   return false;
 }
 
-void mdtPortThread::notifyError(int error, bool renotifySameError)
+///void mdtPortThread::notifyError(int error, bool renotifySameError)
+void mdtPortThread::notifyError(mdtAbstractPort::error_t error, bool renotifySameError)
 {
   if((error != pvCurrentError)||(renotifySameError)){
-    qDebug() << "mdtPortThread::notifyError(): error " << error << " occured";
+    qDebug() << "mdtPortThread::notifyError(): error " << error;
     pvCurrentError = error;
     emit(errorOccured(error));
   }

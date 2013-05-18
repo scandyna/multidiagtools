@@ -19,9 +19,9 @@
  **
  ****************************************************************************/
 #include "mdtPortReadThread.h"
+#include "mdtPortThreadHelperPort.h"
 #include "mdtError.h"
 #include "mdtAbstractPort.h"
-#include "mdtPortThreadHelperPort.h"
 #include <QApplication>
 
 #include <QDebug>

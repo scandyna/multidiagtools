@@ -19,6 +19,7 @@
  **
  ****************************************************************************/
 #include "mdtTcpSocketThread.h"
+#include "mdtPortThreadHelperPort.h"
 #include "mdtTcpSocket.h"
 #include "mdtError.h"
 #include <QApplication>
@@ -45,11 +46,15 @@ void mdtTcpSocketThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtTcpSocket *port;
-  mdtFrame *writeFrame = 0;
-  mdtFrame *readFrame = 0;
+  mdtTcpSocket *port = 0;
+  ///mdtFrame *writeFrame = 0;
+  ///mdtFrame *readFrame = 0;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int completeFrames;
+  mdtPortThreadHelperPort threadHelper;
+  threadHelper.setPort(pvPort);
+  threadHelper.setThread(this);
+
 
   pvPort->lockMutex();
 #ifdef Q_OS_UNIX
@@ -68,10 +73,17 @@ void mdtTcpSocketThread::run()
   // Set the running flag
   pvRunning = true;
   // Get frames
+  if(!threadHelper.getNewFrameRead()){
+    pvRunning = false;
+    notifyError(mdtAbstractPort::Disconnected);
+    return;
+  }
+  /**
   readFrame = getNewFrameRead();
   if(readFrame == 0){
     return;
   }
+  */
   qDebug() << "TCPTHD: starting ...";
   // Run...
   while(1){
@@ -90,6 +102,10 @@ void mdtTcpSocketThread::run()
       }
     }
     // Wait on next request
+    if(!threadHelper.getNewFrameWrite()){
+      break;
+    }
+    /**
     writeFrame = getNewFrameWrite();
     // Read thread state
     if(!pvRunning){
@@ -99,8 +115,10 @@ void mdtTcpSocketThread::run()
     if(writeFrame == 0){
       break;
     }
+    */
     // Write
-    portError = writeToPort(writeFrame, false, 0);
+    ///portError = writeToPort(writeFrame, false, 0);
+    portError = threadHelper.writeToPort(false, 0);
     if(portError != mdtAbstractPort::NoError){
       // Check about stopping
       if(!pvRunning){
@@ -129,19 +147,25 @@ void mdtTcpSocketThread::run()
       // Check about flush request
       if(pvPort->flushInRequestPending()){
         // Put current frame back to pool, get new one and return idle
+        threadHelper.restoreCurrentReadFrameToPool();
+        // We don't need to check returned value, because it's false whenn pvRunning is allready false
+        threadHelper.getNewFrameRead();
+        /**
         pvPort->readFramesPool().enqueue(readFrame);
         readFrame = getNewFrameRead();
         if(readFrame == 0){
           pvRunning = false;
         }
-        break;
+        */
+        break;  // go out of while(completeFrames < 1)
       }
       if(portError != mdtAbstractPort::NoError){
         // Check about stopping
         if(!pvRunning){
           break;
         }
-        portError = handleCommonReadErrors(portError, &readFrame);
+        ///portError = handleCommonReadErrors(portError, &readFrame);
+        portError = threadHelper.handleCommonReadErrors(portError);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error - stop
           pvRunning = false;
@@ -151,13 +175,16 @@ void mdtTcpSocketThread::run()
         break;
       }
       // Read ...
-      completeFrames = readFromPort(&readFrame);
+      ///completeFrames = readFromPort(&readFrame);
+      completeFrames = threadHelper.readFromPort(true);
+      qDebug() << "TCPTHD, completeFrames: " << completeFrames;
       if(completeFrames < 0){
         // Check about stopping
         if(!pvRunning){
           break;
         }
-        portError = handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames, &readFrame);
+        ///portError = handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames, &readFrame);
+        portError = threadHelper.handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error - stop
           pvRunning = false;
@@ -173,21 +200,28 @@ void mdtTcpSocketThread::run()
         // Check about flush request
         if(pvPort->flushInRequestPending()){
           // Put current frame back to pool, get new one and return idle
+          threadHelper.restoreCurrentReadFrameToPool();
+          // We don't need to check returned value, because it's false whenn pvRunning is allready false
+          threadHelper.getNewFrameRead();
+          /**
           pvPort->readFramesPool().enqueue(readFrame);
           readFrame = getNewFrameRead();
           if(readFrame == 0){
             pvRunning = false;
           }
+          */
           break;
         }
         // Read ...
-        completeFrames = readFromPort(&readFrame);
+        ///completeFrames = readFromPort(&readFrame);
+        completeFrames = threadHelper.readFromPort(true);
         if(completeFrames < 0){
           // Check about stopping
           if(!pvRunning){
             break;
           }
-          portError = handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames, &readFrame);
+          ///portError = handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames, &readFrame);
+          portError = threadHelper.handleCommonReadErrors((mdtAbstractPort::error_t)completeFrames);
           if(portError != mdtAbstractPort::ErrorHandled){
             // Unhandled error - stop
             pvRunning = false;
@@ -200,9 +234,11 @@ void mdtTcpSocketThread::run()
     }
   }
   // Put current frame into pool
+  /**
   if(readFrame != 0){
     pvPort->readFramesPool().enqueue(readFrame);
   }
+  */
   // End connection
   if(pvSocket->state() == QAbstractSocket::ConnectedState){
     pvSocket->disconnectFromHost();

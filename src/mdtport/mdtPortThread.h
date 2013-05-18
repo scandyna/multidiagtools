@@ -118,7 +118,8 @@ class mdtPortThread : public QThread
    * \param renotifySameError For some cases, the same error must be notified each time it happens.
    *                           If this flag is true, signal is emitted without checking previous error.
    */
-  void notifyError(int error, bool renotifySameError = false);
+  ///void notifyError(int error, bool renotifySameError = false);
+  void notifyError(mdtAbstractPort::error_t error, bool renotifySameError = false);
 
  signals:
 
@@ -382,7 +383,8 @@ class mdtPortThread : public QThread
   // Members used by readFromPort()
   char *pvReadBuffer;
   qint64 pvReadBufferSize;
-  int pvCurrentError;
+  ///int pvCurrentError;
+  mdtAbstractPort::error_t pvCurrentError;
   int pvReconnectTimeout;
   int pvReconnectMaxTry;
 };

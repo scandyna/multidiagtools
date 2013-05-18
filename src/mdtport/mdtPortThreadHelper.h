@@ -298,7 +298,7 @@ class mdtPortThreadHelper : public QObject
    *
    * \pre Thread must be set with setThread().
    */
-  void notifyError(int error, bool renotifySameError = false);
+  void notifyError(mdtAbstractPort::error_t error, bool renotifySameError = false);
 
   /*! \brief Call subclass reconnect() method
    *

@@ -23,7 +23,7 @@
 #include "mdtError.h"
 #include "mdtFrame.h"
 
-//#include <QDebug>
+#include <QDebug>
 
 // We need a sleep function
 #ifdef Q_OS_UNIX
@@ -71,6 +71,8 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonReadErrors(mdtAbstract
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
 
+  qDebug() << "mdtPortThreadHelper::handleCommonReadErrors(): " << portError;
+  
   if(!pvThread->runningFlagSet()){
     mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
@@ -121,6 +123,8 @@ mdtAbstractPort::error_t mdtPortThreadHelper::handleCommonWriteErrors(mdtAbstrac
   Q_ASSERT(pvPort != 0);
   Q_ASSERT(pvThread != 0);
 
+  qDebug() << "mdtPortThreadHelper::handleCommonWriteErrors(): " << portError;
+  
   if(!pvThread->runningFlagSet()){
     mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
     MDT_ERROR_SET_SRC(e, "mdtPortThread");
@@ -225,6 +229,8 @@ void mdtPortThreadHelper::submitCurrentReadFrame(bool notify)
   }
   Q_ASSERT(!pvPort->readenFrames().contains(pvCurrentReadFrame));
   pvPort->readenFrames().enqueue(pvCurrentReadFrame);
+  qDebug() << "Current read frame submitted";
+  qDebug() << "-> Read queue: " << pvPort->readenFrames();
   pvCurrentReadFrame = 0;
 }
 
@@ -268,11 +274,14 @@ int mdtPortThreadHelper::submitReadenData(const char *data, int size, bool emitN
       // If frame is full, enqueue to readen frames and get a new one
       if(pvCurrentReadFrame->bytesToStore() == 0){
         stored += pvCurrentReadFrame->eofSeqLen();
+        submitCurrentReadFrame(emitNewFrameReaden);
+        /**
         pvPort->readenFrames().enqueue(pvCurrentReadFrame);
         // emit a Readen frame signal
         if(emitNewFrameReaden){
           emit newFrameReaden();
         }
+        */
         if(!getNewFrameRead()){
           return mdtAbstractPort::UnhandledError;
         }
@@ -344,7 +353,7 @@ mdtFrame *mdtPortThreadHelper::currentWriteFrame()
   return pvCurrentWriteFrame;
 }
 
-void mdtPortThreadHelper::notifyError(int error, bool renotifySameError)
+void mdtPortThreadHelper::notifyError(mdtAbstractPort::error_t error, bool renotifySameError)
 {
   Q_ASSERT(pvThread != 0);
 
