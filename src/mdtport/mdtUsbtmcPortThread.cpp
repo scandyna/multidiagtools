@@ -41,6 +41,7 @@ bool mdtUsbtmcPortThread::isWriter() const
   return true;
 }
 
+/**
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)
 {
   Q_ASSERT(readFrame != 0);
@@ -174,6 +175,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstract
 
   return portError;
 }
+*/
 
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper)
 {
@@ -302,10 +304,12 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstract
 }
 
 /// \todo Implement !
+/**
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
 {
   return handleCommonWriteErrors(portError, frame);
 }
+*/
 
 /// \todo Implement !
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper)
@@ -317,6 +321,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcWriteErrors(mdtAbstrac
 }
 
 /// \bug On disconnection, close/open will be called, and frames pools will be re-allocated again !
+/**
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)
 {
   Q_ASSERT(readFrame != 0);
@@ -334,6 +339,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbs
     return handleUsbtmcWriteErrors(portError, writeFrame);
   }
 }
+*/
 
 /// \bug On disconnection, close/open will be called, and frames pools will be re-allocated again !
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper)
@@ -353,6 +359,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbs
   }
 }
 
+/**
 mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags)
 {
   Q_ASSERT(writeFrame != 0);
@@ -415,6 +422,7 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtFrame **writeFrame,
 
   return mdtAbstractPort::NoError;
 }
+*/
 
 mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags)
 {

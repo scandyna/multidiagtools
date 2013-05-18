@@ -67,20 +67,12 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    *
    * If this method is called by a non running thread, a warning will be logged.
    *
-   * \param readFrame Current read frame. Note that another frame can be pointed after a call of this method (f.ex. after disconnection).
-   * \param writeFrame Current write frame. Note that frame can be null after a call of this method.
-   *
-   * 
-   * 
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
-   * 
-   * \pre frame must be a valid pointer.
-   * 
    * \pre threadHelper's currentReadFrame() must be valid.
    * \pre port must be set with setPort().
    * \post If readFrame is null, a UnhandledError is returned.
    */
-  mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
+  ///mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
   mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Handle USBTMC write errors
@@ -98,16 +90,11 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    *
    * If this method is called by a non running thread, a warning will be logged.
    *
-   * \param frame Current write frame. Note that frame can be null after a call of this method (if a write error occured).
-   * 
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
-   * 
-   * \pre frame must be a valid pointer.
-   * 
    * \pre threadHelper must contain a valid currentWriteFrame.
    * \pre port must be set with setPort().
    */
-  mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+  ///mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
   mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Handle USBTMC read and write errors
@@ -123,7 +110,7 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
    * \pre port must be set with setPort().
    */
-  mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
+  ///mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
   mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief USBTMC write process
@@ -143,7 +130,7 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \pre port must be set with setPort().
    * \pre waitAnAnswer must be a valid pointer.
    */
-  mdtAbstractPort::error_t usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
+  ///mdtAbstractPort::error_t usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
   mdtAbstractPort::error_t usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
 
   /*! \brief Abort bulk IN
