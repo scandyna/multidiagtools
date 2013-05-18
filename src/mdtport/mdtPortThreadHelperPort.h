@@ -119,6 +119,8 @@ class mdtPortThreadHelperPort : public mdtPortThreadHelper
 
   char *pvReadBuffer;
   int pvReadBufferSize;
+
+  Q_DISABLE_COPY(mdtPortThreadHelperPort);
 };
 
 #endif // #ifndef MDT_PORT_THREAD_HELPER_PORT_H

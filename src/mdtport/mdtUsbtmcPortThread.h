@@ -29,6 +29,7 @@
 #include "mdtUsbPortThread.h"
 #include "mdtFrame.h"
 #include "mdtFrameUsbControl.h"
+#include "mdtPortThreadHelperPort.h"
 
 class mdtUsbPort;
 class mdtFrameUsbTmc;
@@ -68,12 +69,19 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    *
    * \param readFrame Current read frame. Note that another frame can be pointed after a call of this method (f.ex. after disconnection).
    * \param writeFrame Current write frame. Note that frame can be null after a call of this method.
+   *
+   * 
+   * 
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * 
    * \pre frame must be a valid pointer.
+   * 
+   * \pre threadHelper's currentReadFrame() must be valid.
    * \pre port must be set with setPort().
    * \post If readFrame is null, a UnhandledError is returned.
    */
   mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
+  mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Handle USBTMC write errors
    *
@@ -91,36 +99,52 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * If this method is called by a non running thread, a warning will be logged.
    *
    * \param frame Current write frame. Note that frame can be null after a call of this method (if a write error occured).
+   * 
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * 
    * \pre frame must be a valid pointer.
+   * 
+   * \pre threadHelper must contain a valid currentWriteFrame.
    * \pre port must be set with setPort().
    */
   mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+  mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Handle USBTMC read and write errors
-   *
-   * This is a helper class for port specific subclass.
    *
    * If readFrame is not null, handleUsbtmcReadErrors() is called first.
    *  If no error was handled, and writeFrame is not null, handleUsbtmcWriteErrors() is called.
    *
    * \param readFrame Current read frame. Note that another frame can be pointed after a call of this method (f.ex. after disconnection).
    * \param writeFrame Current write frame. Note that frame can be null after a call of this method.
+   * 
+   * 
+   * 
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
+   * \pre port must be set with setPort().
    */
   mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
+  mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief USBTMC write process
    *
+   * 
    * \param writeFrame Pointer that points to frame (if null, this method will check if a new frame is to write).
    *                    Note: when this method returns, it's possible that
    *                          pointed frame pointer is null (no more data to write).
+   * 
+   * 
+   * \param threadHelper If threadHelper's currentWriteFrame is null,
+   *                      it will be checked if a new frame is to write.
    * \param waitAnAnswer If a frame is completly written, and an answer is expected (ex. read request), this flag
    *                      will be updated.
    * \param expectedBulkInbTags If a answer is expected, the bTag will be appended to this list.
    * \return NoError or a fatal error (handled erros are handled internally and notifications are done).
+   * \pre port must be set with setPort().
+   * \pre waitAnAnswer must be a valid pointer.
    */
   mdtAbstractPort::error_t usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
+  mdtAbstractPort::error_t usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
 
   /*! \brief Abort bulk IN
    *
@@ -135,8 +159,10 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    *
    * \return NoError or a error of type mdtAbstractPort::error_t.
    * \pre port must be set before call of this method
+   * \pre threadHelper must contain a valid currentWriteFrame
    */
   mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtFrame **writeFrame);
+  mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint
    *

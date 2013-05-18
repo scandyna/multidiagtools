@@ -318,6 +318,8 @@ class mdtPortThreadHelper : public QObject
 
   mdtFrame *pvCurrentReadFrame;
   mdtFrame *pvCurrentWriteFrame;
+
+  Q_DISABLE_COPY(mdtPortThreadHelper);
 };
 #endif
 
