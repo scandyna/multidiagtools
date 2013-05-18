@@ -1025,8 +1025,8 @@ void mdtUsbtmcPortThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  mdtFrame *writeFrame = 0;
-  mdtFrame *readFrame = 0;
+  ///mdtFrame *writeFrame = 0;
+  ///mdtFrame *readFrame = 0;
   mdtFrameUsbTmc *usbtmcFrame;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
@@ -1077,7 +1077,8 @@ void mdtUsbtmcPortThread::run()
       if(!pvRunning){
         break;
       }
-      portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
+      ///portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
+      portError = handleUsbtmcReadWriteErrors(portError, threadHelper);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error - stop
         break;
@@ -1098,7 +1099,8 @@ void mdtUsbtmcPortThread::run()
         // mdtUsbPort does the job, we just have to notify the error
         notifyError(mdtAbstractPort::ControlCanceled);
       }else{
-        portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
+        ///portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
+        portError = handleUsbtmcReadWriteErrors(portError, threadHelper);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error - stop
           pvRunning = false;
@@ -1129,7 +1131,8 @@ void mdtUsbtmcPortThread::run()
       if(!pvRunning){
         break;
       }
-      portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
+      ///portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
+      portError = handleUsbtmcReadWriteErrors(portError, threadHelper);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error - stop
         break;
@@ -1138,7 +1141,8 @@ void mdtUsbtmcPortThread::run()
       continue;
     }
     // Write ...
-    portError = usbtmcWrite(&writeFrame, &waitAnAnswer, expectedBulkInbTags);
+    ///portError = usbtmcWrite(&writeFrame, &waitAnAnswer, expectedBulkInbTags);
+    portError = usbtmcWrite(threadHelper, &waitAnAnswer, expectedBulkInbTags);
     if(portError != mdtAbstractPort::NoError){
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error - stop
@@ -1153,8 +1157,10 @@ void mdtUsbtmcPortThread::run()
       break;
     }
     // read/store available data
-    Q_ASSERT(readFrame != 0);
-    n = readFromPort(&readFrame);
+    Q_ASSERT(threadHelper.currentReadFrame() != 0);
+    ///Q_ASSERT(readFrame != 0);
+    ///n = readFromPort(&readFrame);
+    n = threadHelper.readFromPort(true);
     if(n < 0){
       // Unhandled error: notify and stop
       portError = (mdtAbstractPort::error_t)n;
@@ -1170,13 +1176,15 @@ void mdtUsbtmcPortThread::run()
     // - Current read frame is not complete
     if((waitAnAnswer)&&(n == 0)){
       // Init a new read transfer (will only init if not pending)
-      portError = port->initReadTransfer(readFrame->bytesToStore());
+      ///portError = port->initReadTransfer(readFrame->bytesToStore());
+      portError = port->initReadTransfer(threadHelper.currentReadFrame()->bytesToStore());
       if(portError != mdtAbstractPort::NoError){
         // Check about stoping
         if(!pvRunning){
           break;
         }
-        portError = handleUsbtmcReadErrors(portError, &readFrame, &writeFrame);
+        ///portError = handleUsbtmcReadErrors(portError, &readFrame, &writeFrame);
+        portError = handleUsbtmcReadErrors(portError, threadHelper);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error - stop
           break;
@@ -1215,7 +1223,8 @@ void mdtUsbtmcPortThread::run()
         // We must abort bulk IN
         qDebug() << "USBTMCTHD: Abort bulk IN after frame check error ...";
         Q_ASSERT(usbtmcFrame != 0);
-        portError = abortBulkIn(usbtmcFrame->bTag(), &writeFrame);
+        ///portError = abortBulkIn(usbtmcFrame->bTag(), &writeFrame);
+        portError = abortBulkIn(usbtmcFrame->bTag(), threadHelper);
         if(portError != mdtAbstractPort::NoError){
           if(!pvRunning){
             break;
@@ -1248,9 +1257,11 @@ void mdtUsbtmcPortThread::run()
   }
 
   // Put current frame into pool
+  /**
   if(readFrame != 0){
     port->readFramesPool().enqueue(readFrame);
   }
+  */
 
   port->cancelTransfers();
 
