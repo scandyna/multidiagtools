@@ -38,6 +38,11 @@ bool mdtPortReadThread::isReader() const
   return true;
 }
 
+bool mdtPortReadThread::handlesTimeout() const
+{
+  return false;
+}
+
 void mdtPortReadThread::run()
 {
   Q_ASSERT(pvPort != 0);
@@ -59,6 +64,16 @@ void mdtPortReadThread::run()
   pvMinPoolSizeBeforeReadSuspend = pvPort->config().readQueueSize() / 4;
   if((pvMinPoolSizeBeforeReadSuspend < 1)&&(pvPort->config().readQueueSize() > 0)){
     pvMinPoolSizeBeforeReadSuspend = 1;
+  }
+  /*
+   * Check read timeout:
+   *  - For this thread, read timeout has only sense for read timeout protocol
+   *  - For other protocol, port manager must handle read timeout itself if needed (query/reply)
+   * So, if useReadTimeoutProtocol is not set, we set port's readTimeout to infinite.
+   * Port manager will use config's readTimeout, so we not change it here.
+   */
+  if((!useReadTimeoutProtocol)&&(pvPort->config().readTimeout() > -1)){
+    pvPort->setReadTimeout(-1);
   }
   // Set the running flag and get a read frame
   pvRunning = true;

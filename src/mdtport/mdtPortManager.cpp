@@ -36,6 +36,8 @@ mdtPortManager::mdtPortManager(QObject *parent)
   pvPort = 0;
   pvReadThread = 0;
   pvWriteThread = 0;
+  pvThreadHandlesReadTimeout = false;
+  pvCurrentState = Error;
   pvTransactionsAllocatedCount = 0;
   // As default, we not keep all incoming frames
   setKeepTransactionsDone(false);
@@ -107,6 +109,7 @@ void mdtPortManager::addThread(mdtPortThread *thread)
   if(thread->isReader()){
     connect(thread, SIGNAL(newFrameReaden()), this, SLOT(fromThreadNewFrameReaden()));
     pvReadThread = thread;
+    pvThreadHandlesReadTimeout = pvReadThread->handlesTimeout();
   }
   if(thread->isWriter()){
     pvWriteThread = thread;
@@ -252,7 +255,7 @@ bool mdtPortManager::openPort()
     return false;
   }
   // Initialize flags
-  pvCancelReadWait = false;
+  ///pvCancelReadWait = false;
   setCurrentTransactionId(0);
 
   return true;
@@ -408,6 +411,7 @@ int mdtPortManager::writeData(const QByteArray &data, bool queryReplyMode)
   return writeData(transaction);
 }
 
+/**
 bool mdtPortManager::waitTransactionDone(int id, int timeout, int granularity)
 {
   Q_ASSERT(granularity > 0);
@@ -455,7 +459,62 @@ bool mdtPortManager::waitTransactionDone(int id, int timeout, int granularity)
 
   return true;
 }
+*/
 
+bool mdtPortManager::waitTransactionDone(int id)
+{
+  Q_ASSERT(pvPort != 0);
+
+  int maxIter;
+
+  // Check if transaction exists in pending queue
+  // Note: we check also done queue, because it's possible that transaction was done
+  if((!pvTransactionsPending.contains(id))&&(!transactionsDoneContains(id))){
+    mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
+    MDT_ERROR_SET_SRC(e, "mdtPortManager");
+    e.commit();
+    emit(unhandledError());
+    return false;
+  }
+  // Try until success or timeout/error
+  if(pvThreadHandlesReadTimeout){
+    // Thread handles timeout itself
+    while(!transactionsDoneContains(id)){
+      // Check about timeout or other error
+      if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
+        // Transactions are restored by onThreadsErrorOccured()
+        return false;
+      }
+      // Wait
+      qApp->processEvents();
+      msleep(50);
+    }
+  }else{
+    // Thread does not handle timeout itself
+    maxIter = config().readTimeout() / 50;
+    while(!transactionsDoneContains(id)){
+      // Check about error
+      if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
+        // Transactions are restored by onThreadsErrorOccured()
+        return false;
+      }
+      // Check about timeout
+      if(maxIter <= 0){
+        flushTransactionsPending();
+        flushTransactionsDone();
+        return false;
+      }
+      // Wait
+      qApp->processEvents();
+      msleep(50);
+      maxIter--;
+    }
+  }
+
+  return true;
+}
+
+/**
 bool mdtPortManager::waitOneTransactionDone(int timeout, int granularity)
 {
   Q_ASSERT(granularity > 0);
@@ -481,6 +540,56 @@ bool mdtPortManager::waitOneTransactionDone(int timeout, int granularity)
     qApp->processEvents();
     msleep(granularity);
     maxIter--;
+  }
+
+  return true;
+}
+*/
+
+bool mdtPortManager::waitOneTransactionDone()
+{
+  Q_ASSERT(pvPort != 0);
+
+  int maxIter;
+
+  qDebug() << "mdtPortManager::waitOneTransactionDone() Thread handles read timeout ?: " << pvThreadHandlesReadTimeout;
+  // Try until success or timeout/error
+  if(pvThreadHandlesReadTimeout){
+    // Thread handles timeout itself
+    while(pvTransactionsDone.isEmpty()){
+      // Check about timeout or other error
+      if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
+        // Transactions are restored by onThreadsErrorOccured()
+        return false;
+      }
+      // Wait
+      qApp->processEvents();
+      msleep(50);
+    }
+  }else{
+    // Thread does not handle timeout itself
+    maxIter = config().readTimeout() / 50;
+    qDebug() << "mdtPortManager::waitOneTransactionDone() timeout: " << config().readTimeout();
+    while(pvTransactionsDone.isEmpty()){
+      qDebug() << "mdtPortManager::waitOneTransactionDone() wait ...";
+      qDebug() << "-> Pending queue: " << pvTransactionsPending;
+      qDebug() << "-> DONE queue: " << pvTransactionsDone;
+      // Check about error
+      if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
+        // Transactions are restored by onThreadsErrorOccured()
+        return false;
+      }
+      // Check about timeout
+      if(maxIter <= 0){
+        flushTransactionsPending();
+        flushTransactionsDone();
+        return false;
+      }
+      // Wait
+      qApp->processEvents();
+      msleep(50);
+      maxIter--;
+    }
   }
 
   return true;
@@ -772,11 +881,13 @@ void mdtPortManager::commitFrames()
   }
 }
 
+/**
 void mdtPortManager::cancelReadWait()
 {
   pvCancelReadWait = true;
 }
-
+*/
+/**
 bool mdtPortManager::readWaitCanceled()
 {
   if(pvCancelReadWait){
@@ -785,6 +896,7 @@ bool mdtPortManager::readWaitCanceled()
   }
   return false;
 }
+*/
 
 void mdtPortManager::fromThreadNewFrameReaden()
 {
@@ -817,6 +929,8 @@ void mdtPortManager::fromThreadNewFrameReaden()
       data.append(frame->data(), frame->size());
       transaction->setData(data);
       // Add to transactions done queue
+      qDebug() << "-> add 1 frame to DONE queue";
+      qDebug() << "-> DONE queue: " << pvTransactionsDone;
       addTransactionDone(transaction);
       ++framesCount;
     }
@@ -841,6 +955,8 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       emit(ready());
       break;
     case mdtAbstractPort::Disconnected:
+      flushTransactionsPending();
+      flushTransactionsDone();
       emit(disconnected());
       break;
     case mdtAbstractPort::Connecting:
@@ -853,28 +969,42 @@ void mdtPortManager::onThreadsErrorOccured(int error)
       emit(busy());
       break;
     case mdtAbstractPort::WriteCanceled:
+      flushTransactionsPending();
       emit(handledError());
       break;
     case mdtAbstractPort::ReadCanceled:
-      cancelReadWait();
+      flushTransactionsPending();
+      flushTransactionsDone();
+      ///cancelReadWait();
       emit(handledError());
       break;
+      /**
     case mdtAbstractPort::ControlCanceled:
       emit(handledError());
       break;
+      */
     case mdtAbstractPort::ReadTimeout:
+      flushTransactionsPending();
+      flushTransactionsDone();
       emit(busy());
       break;
     case mdtAbstractPort::WriteTimeout:
+      flushTransactionsPending();
       emit(busy());
       break;
+      /**
     case mdtAbstractPort::ControlTimeout:
       emit(busy());
       break;
+      */
+      /**
     case mdtAbstractPort::UnhandledError:
       emit(unhandledError());
       break;
+      */
     default:
+      flushTransactionsPending();
+      flushTransactionsDone();
       emit(unhandledError());
   }
 }
@@ -902,7 +1032,6 @@ void mdtPortManager::setStateReady()
   Q_ASSERT(pvPort != 0);
 
   int i;
-
   if(pvCurrentState != Ready){
     // Check that all threads are ready
     if(pvThreads.size() > 1){
@@ -910,7 +1039,7 @@ void mdtPortManager::setStateReady()
         pvPort->lockMutex();
         if(pvThreads.at(i)->currentError() != mdtAbstractPort::NoError){
           pvPort->unlockMutex();
-          return;
+          emit connecting();
         }
         pvPort->unlockMutex();
       }

@@ -41,142 +41,6 @@ bool mdtUsbtmcPortThread::isWriter() const
   return true;
 }
 
-/**
-mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)
-{
-  Q_ASSERT(readFrame != 0);
-  Q_ASSERT(*readFrame != 0);
-  Q_ASSERT(writeFrame != 0);
-  Q_ASSERT(pvPort != 0);
-
-  quint8 readFramebTag;
-  bool readFrameIsEmpty;
-  mdtFrameUsbTmc *usbtmcReadFrame = static_cast<mdtFrameUsbTmc*>(*readFrame);
-
-  if(!pvRunning){
-    mdtError e(MDT_PORT_IO_ERROR, "Non running thread wants to check about errors", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortThread");
-    e.commit();
-  }
-
-  notifyError(portError);
-  readFramebTag = usbtmcReadFrame->bTag();
-  readFrameIsEmpty = usbtmcReadFrame->isEmpty();
-  // We don't need this pointer anymore
-  usbtmcReadFrame = 0;
-
-  switch(portError){
-    case mdtAbstractPort::Disconnected:
-      pvPort->readFramesPool().enqueue(*readFrame);
-      *readFrame = 0;
-      // Try to reconnect
-      portError = reconnect(true);
-      if(portError != mdtAbstractPort::NoError){
-        return mdtAbstractPort::UnhandledError;
-      }
-      // Abort current frame
-      if((!readFrameIsEmpty)&&(readFramebTag > 0)){
-        portError = abortBulkIn(readFramebTag, writeFrame);
-        if(portError != mdtAbstractPort::NoError){
-          if(portError == mdtAbstractPort::Disconnected){
-            portError = reconnect(true);
-            if(portError != mdtAbstractPort::NoError){
-              return mdtAbstractPort::UnhandledError;
-            }
-          }else if(portError == mdtAbstractPort::UnhandledError){
-            notifyError(mdtAbstractPort::UnhandledError);
-            return mdtAbstractPort::UnhandledError;
-          }else{
-            notifyError(portError);
-          }
-        }
-      }
-      // Get a new read frame
-      *readFrame = getNewFrameRead();
-      if(readFrame == 0){
-        return mdtAbstractPort::UnhandledError;
-      }
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    case mdtAbstractPort::ReadCanceled:
-      // Clear read frame
-      (*readFrame)->clear();
-      (*readFrame)->clearSub();
-      // Abort current frame
-      if((!readFrameIsEmpty)&&(readFramebTag > 0)){
-        portError = abortBulkIn(readFramebTag, writeFrame);
-        if(portError != mdtAbstractPort::NoError){
-          if(portError == mdtAbstractPort::Disconnected){
-            // Restore current read frame
-            pvPort->readFramesPool().enqueue(*readFrame);
-            *readFrame = 0;
-            // Try to reconnect
-            portError = reconnect(true);
-            if(portError != mdtAbstractPort::NoError){
-              return mdtAbstractPort::UnhandledError;
-            }
-            // Get a new read frame
-            *readFrame = getNewFrameRead();
-            if(*readFrame == 0){
-              return mdtAbstractPort::UnhandledError;
-            }
-          }else if(portError == mdtAbstractPort::UnhandledError){
-            notifyError(mdtAbstractPort::UnhandledError);
-            return mdtAbstractPort::UnhandledError;
-          }else{
-            notifyError(portError);
-          }
-        }
-      }
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    case mdtAbstractPort::ReadTimeout:
-      // Clear read frame
-      (*readFrame)->clear();
-      (*readFrame)->clearSub();
-      // Abort current frame
-      if((!readFrameIsEmpty)&&(readFramebTag > 0)){
-        portError = abortBulkIn(readFramebTag, writeFrame);
-        if(portError != mdtAbstractPort::NoError){
-          if(portError == mdtAbstractPort::Disconnected){
-            // Restore current read frame
-            pvPort->readFramesPool().enqueue(*readFrame);
-            *readFrame = 0;
-            // Try to reconnect
-            portError = reconnect(true);
-            if(portError != mdtAbstractPort::NoError){
-              return mdtAbstractPort::UnhandledError;
-            }
-            // Get a new read frame
-            *readFrame = getNewFrameRead();
-            if(*readFrame == 0){
-              return mdtAbstractPort::UnhandledError;
-            }
-          }else if(portError == mdtAbstractPort::UnhandledError){
-            notifyError(mdtAbstractPort::UnhandledError);
-            return mdtAbstractPort::UnhandledError;
-          }else{
-            notifyError(portError);
-          }
-        }
-      }
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    case mdtAbstractPort::MessageInTimeout:
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    case mdtAbstractPort::MessageInCanceled:
-      portError = mdtAbstractPort::ErrorHandled;
-      break;
-    default:
-      portError = mdtAbstractPort::UnhandledError;
-      break;
-  }
-
-  return portError;
-}
-*/
-
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper)
 {
   Q_ASSERT(pvPort != 0);
@@ -304,14 +168,6 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadErrors(mdtAbstract
 }
 
 /// \todo Implement !
-/**
-mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
-{
-  return handleCommonWriteErrors(portError, frame);
-}
-*/
-
-/// \todo Implement !
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper)
 {
   Q_ASSERT(pvPort != 0);
@@ -319,27 +175,6 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcWriteErrors(mdtAbstrac
 
   return threadHelper.handleCommonWriteErrors(portError);
 }
-
-/// \bug On disconnection, close/open will be called, and frames pools will be re-allocated again !
-/**
-mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)
-{
-  Q_ASSERT(readFrame != 0);
-  Q_ASSERT(writeFrame != 0);
-
-  if((*readFrame != 0)&&(*writeFrame != 0)){
-    portError = handleUsbtmcReadErrors(portError, readFrame, writeFrame);
-    if(portError != mdtAbstractPort::ErrorHandled){
-      portError = handleUsbtmcWriteErrors(portError, writeFrame);
-    }
-    return portError;
-  }else if(*readFrame != 0){
-    return handleUsbtmcReadErrors(portError, readFrame, writeFrame);
-  }else{
-    return handleUsbtmcWriteErrors(portError, writeFrame);
-  }
-}
-*/
 
 /// \bug On disconnection, close/open will be called, and frames pools will be re-allocated again !
 mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper)
@@ -358,71 +193,6 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::handleUsbtmcReadWriteErrors(mdtAbs
     return handleUsbtmcWriteErrors(portError, threadHelper);
   }
 }
-
-/**
-mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags)
-{
-  Q_ASSERT(writeFrame != 0);
-  Q_ASSERT(waitAnAnswer != 0);
-  Q_ASSERT(pvPort != 0);
-
-  qint64 written;
-  mdtAbstractPort::error_t portError;
-  mdtUsbPort *port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
-
-  // Check if we have something to write
-  if(*writeFrame == 0){
-    if(port->writeFrames().size() < 1){
-      return mdtAbstractPort::NoError;
-    }
-    *writeFrame = port->writeFrames().dequeue();
-  }
-  Q_ASSERT(*writeFrame != 0);
-  emit(writeProcessBegin());
-  // Write (will simply do nothing and return 0 if transfer is pending)
-  written = writeDataToPort(*writeFrame);
-  if(written < 0){
-    // Check about stoping
-    if(!pvRunning){
-      return mdtAbstractPort::UnhandledError;
-    }
-    return handleUsbtmcWriteErrors((mdtAbstractPort::error_t)written, writeFrame);
-  }
-  // Check if frame was completly written
-  if((*writeFrame)->isEmpty()){
-    ///qDebug() << "USBPTHD: frame written";
-    // Update waitAnAnswer flag and add bTag to the incomming expeced ones
-    *waitAnAnswer = (*writeFrame)->waitAnAnswer();
-    if(*waitAnAnswer){
-      expectedBulkInbTags.append((static_cast<mdtFrameUsbTmc*>(*writeFrame))->bTag());
-    }
-    // Restore frame to pool
-    port->writeFramesPool().enqueue(*writeFrame);
-    // Check if a new frame is to write
-    if(port->writeFrames().size() > 0){
-      *writeFrame = port->writeFrames().dequeue();
-      Q_ASSERT(*writeFrame != 0);
-    }else{
-      *writeFrame = 0;
-    }
-  }
-  // Here, if frame is not Null, we have to init a new transfer
-  if(*writeFrame != 0){
-    // Init a new write transfer (will only init if not pending)
-    portError = port->initWriteTransfer((*writeFrame)->data(), (*writeFrame)->size());
-    if(portError != mdtAbstractPort::NoError){
-      // Check about stoping
-      if(!pvRunning){
-        return mdtAbstractPort::UnhandledError;
-      }
-      return handleUsbtmcWriteErrors((mdtAbstractPort::error_t)written, writeFrame);
-    }
-  }
-
-  return mdtAbstractPort::NoError;
-}
-*/
 
 mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags)
 {
@@ -481,233 +251,6 @@ mdtAbstractPort::error_t mdtUsbtmcPortThread::usbtmcWrite(mdtPortThreadHelperPor
     }
   }
 
-  return mdtAbstractPort::NoError;
-}
-
-mdtAbstractPort::error_t mdtUsbtmcPortThread::abortBulkIn(quint8 bTag, mdtFrame **writeFrame)
-{
-  qDebug() << "mdtUsbtmcPortThread::abortBulkIn() ...";
-
-  Q_ASSERT(pvPort != 0);
-  Q_ASSERT(writeFrame != 0);
-
-  mdtUsbPort *port;
-  mdtAbstractPort::error_t portError;
-  QQueue<mdtFrameUsbControl*> ctlFramesPoolCopy;
-  mdtFrameUsbControl *ctlFrame;
-  quint8 status;
-  int maxTry;
-
-  // We need a mdtUsbPort object
-  port = dynamic_cast<mdtUsbPort*>(pvPort);
-  Q_ASSERT(port != 0);
-
-  // Check if a query is pending
-  if(*writeFrame != 0){
-    if((*writeFrame)->waitAnAnswer()){
-      portError = port->cancelWriteTransfer();
-      if(portError != mdtAbstractPort::NoError){
-        return portError;
-      }
-      port->writeFramesPool().enqueue(*writeFrame);
-      *writeFrame = 0;
-    }
-  }
-  // Flush pending control frames
-  while(port->controlQueryFrames().size() > 0){
-    // Warn and remove frame
-    mdtError e(MDT_USB_IO_ERROR, "Aborting a pending control transfer", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-    e.commit();
-    port->controlFramesPool().enqueue(port->controlQueryFrames().dequeue());
-  }
-  // Cancel possibly running control transfer
-  portError = port->cancelControlTransfer();
-  if(portError != mdtAbstractPort::NoError){
-    return portError;
-  }
-  while(port->controlResponseFrames().size() > 0){
-    // Warn and remove frame
-    mdtError e(MDT_USB_IO_ERROR, "Aborting a pending control transfer", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-    e.commit();
-    port->controlFramesPool().enqueue(port->controlResponseFrames().dequeue());
-  }
-  // Get a control frame for working
-  Q_ASSERT(port->controlFramesPool().size() > 0);
-  ctlFrame = port->controlFramesPool().dequeue();
-  Q_ASSERT(ctlFrame != 0);
-  // Take all control frames from pool, so port manager cannot init a control transfer
-  while(port->controlFramesPool().size() > 0){
-    ctlFramesPoolCopy.enqueue(port->controlFramesPool().dequeue());
-  }
-  // Send the INITIATE_ABORT_BULK_IN request and wait on response
-  status = 0x81;  // STATUS_TRANSFER_NOT_IN_PROGRESS
-  maxTry = 5;
-  while((status == 0x81)&&(maxTry > 0)){
-    // Check about stoping
-    if(!pvRunning){
-      // restore frames and return noerror
-      port->controlFramesPool().enqueue(ctlFrame);
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return mdtAbstractPort::NoError;
-    }
-    // Send INITIATE_ABORT_BULK_IN request
-    ///qDebug() << "*-* send INITIATE_ABORT_BULK_IN ...";
-    portError = sendInitiateAbortBulkInRequest(bTag, ctlFrame);
-    if(portError != mdtAbstractPort::NoError){
-      // restore frames and abort
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return portError;
-    }
-    // more than 1 frame available should only happen if device had a control response queued
-    if(port->controlResponseFrames().size() != 1){
-      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected amount of responses", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-      e.commit();
-      // restore frames and abort
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return mdtAbstractPort::UnhandledError;
-    }
-    ctlFrame = port->controlResponseFrames().dequeue();
-    if(ctlFrame->size() != 2){
-      mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN returned unexpected response size (expected 2, received " + QString::number(ctlFrame->size()) + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-      e.commit();
-      // Restore frames and abort
-      port->controlFramesPool().enqueue(ctlFrame);
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return mdtAbstractPort::UnhandledError;
-    }
-    // Check status
-    status = ctlFrame->at(0);
-    ///qDebug() << "*-* abortBulkIn() , status: 0x" << hex << status;
-    if(status == 0x81){ // STATUS_TRANSFER_NOT_IN_PROGRESS
-      msleep(500);
-    }
-    maxTry--;
-  }
-  if(maxTry < 1){
-    mdtError e(MDT_USB_IO_ERROR, "INITIATE_ABORT_BULK_IN still pending after 10 try", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-    e.commit();
-    // Continue working (possibly, nothing was to abort)
-    port->controlFramesPool().enqueue(ctlFrame);
-    while(ctlFramesPoolCopy.size() > 0){
-      port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-    }
-    if(pvRunning){
-      notifyError(mdtAbstractPort::ReadCanceled, true);
-    }
-    return mdtAbstractPort::NoError;
-  }
-  // Check returned status
-  if(status != 0x01){ // 0x01: STATUS_SUCCESS
-    // No transfer in progress (device FIFO empty)
-    port->controlFramesPool().enqueue(ctlFrame);
-    while(ctlFramesPoolCopy.size() > 0){
-      port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-    }
-    portError = port->cancelReadTransfer();
-    if(portError != mdtAbstractPort::NoError){
-      return portError;
-    }
-    if(pvRunning){
-      notifyError(mdtAbstractPort::ReadCanceled, true);
-    }
-    return mdtAbstractPort::NoError;
-  }
-  // Flush device
-  portError = readUntilShortPacketReceived(100);
-  if(portError != mdtAbstractPort::NoError){
-    // restore frames and abort
-    port->controlFramesPool().enqueue(ctlFrame);
-    while(ctlFramesPoolCopy.size() > 0){
-      port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-    }
-    return portError;
-  }
-  // Send the CHECK_ABORT_BULK_IN_STATUS request and wait on response
-  status = 0x02;  // STATUS_PENDING
-  maxTry = 10;
-  while((status == 0x02)&&(maxTry > 0)){
-    // Send CHECK_ABORT_BULK_IN_STATUS
-    ///qDebug() << "*-* send CHECK_ABORT_BULK_IN_STATUS ...";
-    portError = sendCheckAbortBulkInStatusRequest(bTag, ctlFrame);
-    if(portError != mdtAbstractPort::NoError){
-      // restore frames and abort
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return portError;
-    }
-    // more than 1 frame available should only happen if device had a control response queued
-    if(port->controlResponseFrames().size() != 1){
-      mdtError e(MDT_USB_IO_ERROR, "CHECK_ABORT_BULK_IN_STATUS returned unexpected amount of responses", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-      e.commit();
-      // restore frames and abort
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return mdtAbstractPort::UnhandledError;
-    }
-    ctlFrame = port->controlResponseFrames().dequeue();
-    if(ctlFrame->size() != 8){
-      mdtError e(MDT_USB_IO_ERROR, "CHECK_ABORT_BULK_IN_STATUS returned unexpected response size (expected 8, received " + QString::number(ctlFrame->size()) + ")", mdtError::Error);
-      MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-      e.commit();
-      // restore frames and abort
-      port->controlFramesPool().enqueue(ctlFrame);
-      while(ctlFramesPoolCopy.size() > 0){
-        port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-      }
-      return mdtAbstractPort::UnhandledError;
-    }
-    // Check status
-    status = ctlFrame->at(0);
-    if(status == 0x02){ // STATUS_PENDING
-      // Check bmAbortBulkIn.D0
-      if((quint8)ctlFrame->at(1) & 0x01){
-        qDebug() << "*-* Flushing device ...";
-        // Flush device
-        portError = readUntilShortPacketReceived(100);
-        if(portError != mdtAbstractPort::NoError){
-          // restore frames and abort
-          port->controlFramesPool().enqueue(ctlFrame);
-          while(ctlFramesPoolCopy.size() > 0){
-            port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-          }
-          return portError;
-        }
-      }
-      wait(1000);
-    }
-    maxTry--;
-  }
-  if(maxTry < 1){
-    mdtError e(MDT_USB_IO_ERROR, "CHECK_ABORT_BULK_IN_STATUS still pending after 10 try", mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtUsbtmcPortThread");
-    e.commit();
-  }
-  // End, restore frames and notify port manager
-  port->controlFramesPool().enqueue(ctlFrame);
-  while(ctlFramesPoolCopy.size() > 0){
-    port->controlFramesPool().enqueue(ctlFramesPoolCopy.dequeue());
-  }
-  if(pvRunning){
-    notifyError(mdtAbstractPort::ReadCanceled, true);
-  }
-
-  ///qDebug() << "*-* abortBulkIn() DONE";
   return mdtAbstractPort::NoError;
 }
 
@@ -1033,8 +576,6 @@ void mdtUsbtmcPortThread::run()
 {
   Q_ASSERT(pvPort != 0);
 
-  ///mdtFrame *writeFrame = 0;
-  ///mdtFrame *readFrame = 0;
   mdtFrameUsbTmc *usbtmcFrame;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int n;
@@ -1063,12 +604,6 @@ void mdtUsbtmcPortThread::run()
     pvRunning = false;
     notifyError(mdtAbstractPort::Disconnected);
   }
-  /**
-  readFrame = getNewFrameRead();
-  if(readFrame == 0){
-    return;
-  }
-  */
   // Notify that we are ready
   notifyError(mdtAbstractPort::NoError);
 
@@ -1085,7 +620,6 @@ void mdtUsbtmcPortThread::run()
       if(!pvRunning){
         break;
       }
-      ///portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
       portError = handleUsbtmcReadWriteErrors(portError, threadHelper);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error - stop
@@ -1107,7 +641,6 @@ void mdtUsbtmcPortThread::run()
         // mdtUsbPort does the job, we just have to notify the error
         notifyError(mdtAbstractPort::ControlCanceled);
       }else{
-        ///portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
         portError = handleUsbtmcReadWriteErrors(portError, threadHelper);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error - stop
@@ -1139,7 +672,6 @@ void mdtUsbtmcPortThread::run()
       if(!pvRunning){
         break;
       }
-      ///portError = handleUsbtmcReadWriteErrors(portError, &readFrame, &writeFrame);
       portError = handleUsbtmcReadWriteErrors(portError, threadHelper);
       if(portError != mdtAbstractPort::ErrorHandled){
         // Unhandled error - stop
@@ -1149,7 +681,6 @@ void mdtUsbtmcPortThread::run()
       continue;
     }
     // Write ...
-    ///portError = usbtmcWrite(&writeFrame, &waitAnAnswer, expectedBulkInbTags);
     portError = usbtmcWrite(threadHelper, &waitAnAnswer, expectedBulkInbTags);
     if(portError != mdtAbstractPort::NoError){
       if(portError != mdtAbstractPort::ErrorHandled){
@@ -1166,8 +697,6 @@ void mdtUsbtmcPortThread::run()
     }
     // read/store available data
     Q_ASSERT(threadHelper.currentReadFrame() != 0);
-    ///Q_ASSERT(readFrame != 0);
-    ///n = readFromPort(&readFrame);
     n = threadHelper.readFromPort(true);
     if(n < 0){
       // Unhandled error: notify and stop
@@ -1184,14 +713,12 @@ void mdtUsbtmcPortThread::run()
     // - Current read frame is not complete
     if((waitAnAnswer)&&(n == 0)){
       // Init a new read transfer (will only init if not pending)
-      ///portError = port->initReadTransfer(readFrame->bytesToStore());
       portError = port->initReadTransfer(threadHelper.currentReadFrame()->bytesToStore());
       if(portError != mdtAbstractPort::NoError){
         // Check about stoping
         if(!pvRunning){
           break;
         }
-        ///portError = handleUsbtmcReadErrors(portError, &readFrame, &writeFrame);
         portError = handleUsbtmcReadErrors(portError, threadHelper);
         if(portError != mdtAbstractPort::ErrorHandled){
           // Unhandled error - stop
@@ -1231,7 +758,6 @@ void mdtUsbtmcPortThread::run()
         // We must abort bulk IN
         qDebug() << "USBTMCTHD: Abort bulk IN after frame check error ...";
         Q_ASSERT(usbtmcFrame != 0);
-        ///portError = abortBulkIn(usbtmcFrame->bTag(), &writeFrame);
         portError = abortBulkIn(usbtmcFrame->bTag(), threadHelper);
         if(portError != mdtAbstractPort::NoError){
           if(!pvRunning){
@@ -1263,13 +789,6 @@ void mdtUsbtmcPortThread::run()
       }
     }
   }
-
-  // Put current frame into pool
-  /**
-  if(readFrame != 0){
-    port->readFramesPool().enqueue(readFrame);
-  }
-  */
 
   port->cancelTransfers();
 

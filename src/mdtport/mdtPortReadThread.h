@@ -49,6 +49,10 @@ class mdtPortReadThread : public mdtPortThread
    */
   bool isReader() const;
 
+  /*! \brief Retunrs false
+   */
+  bool handlesTimeout() const;
+
  private:
 
   // Thread implementation

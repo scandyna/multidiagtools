@@ -129,7 +129,8 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
     return QByteArray();
   }
   // Wait on response
-  if(!waitTransactionDone(bTag, readTimeout)){
+  ///if(!waitTransactionDone(bTag, readTimeout)){
+  if(!waitTransactionDone(bTag)){
     return QByteArray();
   }
 
@@ -458,6 +459,7 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
       continue;
     }
     // Here we should have a valid frame
+    /// \todo Check ID coherence ? Should be a assertion ?
     transaction->setId(frame->bTag());
     transaction->setData(frame->messageData());
     // Put frame back into pool and enqueue transaction in done queue
@@ -472,6 +474,8 @@ void mdtUsbtmcPortManager::fromThreadNewFrameReaden()
   }
 }
 
+/// \todo Move to USB port manager for control and message IN error handling
+/**
 void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
 {
   qDebug() << "mdtUsbtmcPortManager::onThreadsErrorOccured() , code: " << (mdtAbstractPort::error_t)error;
@@ -537,3 +541,4 @@ void mdtUsbtmcPortManager::onThreadsErrorOccured(int error)
       qDebug() << " -> PortManager: emit unhandledError";
   }
 }
+*/

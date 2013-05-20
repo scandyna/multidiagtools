@@ -202,6 +202,11 @@ bool mdtPortThread::isWriter() const
   return false;
 }
 
+bool mdtPortThread::handlesTimeout() const
+{
+  return false;
+}
+
 ///void mdtPortThread::notifyError(int error, bool renotifySameError)
 void mdtPortThread::notifyError(mdtAbstractPort::error_t error, bool renotifySameError)
 {

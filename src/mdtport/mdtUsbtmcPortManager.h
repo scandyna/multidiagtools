@@ -181,7 +181,7 @@ class mdtUsbtmcPortManager : public mdtUsbPortManager
 
   /*! \brief Manage errors comming from port threads
    */
-  void onThreadsErrorOccured(int error);
+  ///void onThreadsErrorOccured(int error);
 
  private:
 

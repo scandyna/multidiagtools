@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -158,64 +158,4 @@ mdtSerialPortCtlThread *mdtSerialPortManager::ctlThread()
   Q_ASSERT(pvCtlThread != 0);
 
   return pvCtlThread;
-}
-
-void mdtSerialPortManager::onThreadsErrorOccured(int error)
-{
-  qDebug() << "mdtSerialPortManager::onThreadsErrorOccured() , code: " << error;
-
-  switch(error){
-    case mdtAbstractPort::NoError:
-      qDebug() << " -> PortManager: emit ready";
-      emit(ready());
-      break;
-    case mdtAbstractPort::Disconnected:
-      qDebug() << " -> PortManager: emit disconnected";
-      emit(disconnected());
-      break;
-    case mdtAbstractPort::Connecting:
-      qDebug() << " -> PortManager: emit connecting";
-      emit(connecting());
-      break;
-    case mdtAbstractPort::ReadPoolEmpty:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::WritePoolEmpty:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::WriteCanceled:
-      emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
-      break;
-    case mdtAbstractPort::ReadCanceled:
-      cancelReadWait();
-      emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
-      break;
-    case mdtAbstractPort::ControlCanceled:
-      emit(handledError());
-      qDebug() << " -> PortManager: emit handledError";
-      break;
-    case mdtAbstractPort::ReadTimeout:
-      ///emit(busy());
-      ///qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::WriteTimeout:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::ControlTimeout:
-      emit(busy());
-      qDebug() << " -> PortManager: emit busy";
-      break;
-    case mdtAbstractPort::UnhandledError:
-      emit(unhandledError());
-      qDebug() << " -> PortManager: emit unhandledError";
-      break;
-    default:
-      emit(unhandledError());
-      qDebug() << " -> PortManager: emit unhandledError";
-  }
 }

@@ -987,14 +987,16 @@ void mdtDevice::restoreTransaction(mdtPortTransaction *transaction)
   portManager()->restoreTransaction(transaction);
 }
 
-bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
+///bool mdtDevice::waitTransactionDone(int id, int timeout, int granularity)
+bool mdtDevice::waitTransactionDone(int id)
 {
-  Q_ASSERT(granularity > 0);
+  ///Q_ASSERT(granularity > 0);
   Q_ASSERT(portManager() != 0);
 
   bool ok;
 
-  ok = portManager()->waitTransactionDone(id, timeout, granularity);
+  ///ok = portManager()->waitTransactionDone(id, timeout, granularity);
+  ok = portManager()->waitTransactionDone(id);
   /*
    * Request was send, response arrived,
    * subclass has decoded response and updated I/O.

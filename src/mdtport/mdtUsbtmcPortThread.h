@@ -72,7 +72,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \pre port must be set with setPort().
    * \post If readFrame is null, a UnhandledError is returned.
    */
-  ///mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
   mdtAbstractPort::error_t handleUsbtmcReadErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Handle USBTMC write errors
@@ -94,7 +93,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \pre threadHelper must contain a valid currentWriteFrame.
    * \pre port must be set with setPort().
    */
-  ///mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
   mdtAbstractPort::error_t handleUsbtmcWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Handle USBTMC read and write errors
@@ -110,7 +108,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
    * \pre port must be set with setPort().
    */
-  ///mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
   mdtAbstractPort::error_t handleUsbtmcReadWriteErrors(mdtAbstractPort::error_t portError, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief USBTMC write process
@@ -130,7 +127,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \pre port must be set with setPort().
    * \pre waitAnAnswer must be a valid pointer.
    */
-  ///mdtAbstractPort::error_t usbtmcWrite(mdtFrame **writeFrame, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
   mdtAbstractPort::error_t usbtmcWrite(mdtPortThreadHelperPort &threadHelper, bool *waitAnAnswer, QList<quint8> &expectedBulkInbTags);
 
   /*! \brief Abort bulk IN
@@ -148,7 +144,6 @@ class mdtUsbtmcPortThread : public mdtUsbPortThread
    * \pre port must be set before call of this method
    * \pre threadHelper must contain a valid currentWriteFrame
    */
-  mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtFrame **writeFrame);
   mdtAbstractPort::error_t abortBulkIn(quint8 bTag, mdtPortThreadHelperPort &threadHelper);
 
   /*! \brief Send a INITIATE_ABORT_BULK_IN request thru the control endpoint

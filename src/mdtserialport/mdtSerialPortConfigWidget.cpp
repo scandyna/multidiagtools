@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -21,7 +21,7 @@
 #include "mdtSerialPortConfigWidget.h"
 #include <QString>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtSerialPortConfigWidget::mdtSerialPortConfigWidget(QWidget *parent)
  : QWidget(parent)

@@ -793,7 +793,8 @@ class mdtDevice : public QObject
    *           a warning will be generated in mdtError system, and false will be returned.
    * \pre granularity must be > 0.
    */
-  bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
+  ///bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
+  bool waitTransactionDone(int id);
 
   mdtDeviceIos *pvIos;    // I/O's container
 

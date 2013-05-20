@@ -113,6 +113,17 @@ class mdtPortThread : public QThread
    */
   virtual bool isWriter() const;
 
+  /*! \brief Returns true is thread handles timeout(s) itself.
+   *
+   * For example, mdtUsbPortThread and subclasses handles timeout
+   *  itself. mdtPortReadThread does not.
+   *
+   * mdtPortManager uses this flag to know how to deal with timeouts.
+   *
+   * This implementation returns false.
+   */
+  virtual bool handlesTimeout() const;
+
   /*! \brief Emit the errorOccured() signal if new error is different from current
    *
    * \param renotifySameError For some cases, the same error must be notified each time it happens.
@@ -377,6 +388,7 @@ class mdtPortThread : public QThread
   mdtAbstractPort::error_t reconnect(bool notify = true);
 
   volatile bool pvRunning;
+  ///volatile bool pvHandlesTimeout;   // Set true if timeout is/are handled here (example: USBTMC thread handles timeouts iteself)
   mdtAbstractPort *pvPort;
 #ifdef Q_OS_UNIX
   // Members needed to abort blocking

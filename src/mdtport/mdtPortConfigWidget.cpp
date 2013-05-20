@@ -22,7 +22,13 @@
 #include "mdtFrame.h"
 #include <QVariant>
 
-#include <QDebug>
+//#include <QDebug>
+
+/**
+ * \todo Must adapt for better coherence regarding port type:
+ *  - On serial port, read timeout has only sense with read timeout protocol
+ *  - hmm... must study this together with mdtPortManager, because ..
+ */
 
 mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
  : QWidget(parent)

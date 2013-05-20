@@ -41,6 +41,11 @@ bool mdtUsbPortThread::isWriter() const
   return true;
 }
 
+bool mdtUsbPortThread::handlesTimeout() const
+{
+  return true;
+}
+
 mdtAbstractPort::error_t mdtUsbPortThread::readUntilShortPacketReceived(int maxReadTransfers)
 {
   Q_ASSERT(pvPort != 0);

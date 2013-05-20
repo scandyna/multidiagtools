@@ -266,6 +266,7 @@ int mdtUsbPortManager::sendControlRequest(const mdtFrameUsbControl &request, boo
   return 0;
 }
 
+/// \todo Adapt using internal timeouts + errors system
 bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
 {
   int maxIter;
@@ -278,9 +279,11 @@ bool mdtUsbPortManager::waitReadenControlResponse(int timeout)
   maxIter = timeout / 50;
 
   while(pvReadenControlResponses.size() < 1){
+    /**
     if(readWaitCanceled()){
       return false;
     }
+    */
     if(maxIter <= 0){
       return false;
     }

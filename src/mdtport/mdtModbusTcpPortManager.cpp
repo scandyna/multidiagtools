@@ -493,6 +493,7 @@ void mdtModbusTcpPortManager::fromThreadNewFrameReaden()
         MDT_ERROR_SET_SRC(e, "mdtModbusTcpPortManager");
         e.commit();
       }else{
+        /// \todo check about transaction ID ? Should be a assertion ?
         transaction->setId(frame->transactionId());
         transaction->setData(frame->getPdu());
         // Add to transactions done queue

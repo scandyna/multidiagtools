@@ -498,7 +498,24 @@ class mdtPortManager : public QThread
    *           a warning will be generated in mdtError system, and false will be returned.
    *           On failure, transaction is restored to pool.
    */
-  bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
+  ///bool waitTransactionDone(int id, int timeout, int granularity = 50);
+
+  /*! \brief Wait until a transaction is done
+   *
+   * Will return when transaction with given id is done or after timeout.
+   *
+   * Internally, a couple of sleep and process event are called, so 
+   * Qt's event loop will not be broken.
+   *
+   * This method can return if timeout occurs, or for other
+   *  reason depending on specific port (port timeout, read cancelled, ...).
+   *
+   * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
+   * \return True if Ok, false on timeout or other error. If id was not found in transactions pending lists,
+   *           a warning will be generated in mdtError system, and false will be returned.
+   *           On failure, transaction is restored to pool (see onThreadsErrorOccured() for details).
+   */
+  bool waitTransactionDone(int id);
 
   /*! \brief Wait until current transaction is done
    *
@@ -517,7 +534,8 @@ class mdtPortManager : public QThread
    *                     Note that timeout must be a multiple of granularity.
    * \return True if Ok, false on timeout or other error.
    */
-  bool waitOneTransactionDone(int timeout = 0, int granularity = 50);
+  ///bool waitOneTransactionDone(int timeout = 0, int granularity = 50);
+  bool waitOneTransactionDone();
 
   /*! \brief Get data by frame ID
    *
@@ -588,7 +606,7 @@ class mdtPortManager : public QThread
 
   /*! \brief Flush input buffers
    *
-   * \param flushPortManagerBuffers If true, port manager buffers will be cleared.
+   * \param flushPortManagerBuffers If true, port manager buffers (transactions done and pending) will be cleared.
    * \param flushPortBuffers If true, port's buffers will be cleared.
    * \pre Port must be set with setPort() before calling this method.
    */
@@ -785,13 +803,13 @@ class mdtPortManager : public QThread
    *
    * Note: this will not cancel anything in port or port threads.
    */
-  void cancelReadWait();
+  ///void cancelReadWait();
 
   /*! \brief Get the wait cancel flag
    *
    * After a call, the flag will be reset.
    */
-  bool readWaitCanceled();
+  ///bool readWaitCanceled();
 
  protected slots:
 
@@ -812,10 +830,30 @@ class mdtPortManager : public QThread
 
   /*! \brief Manage errors comming from port threads
    *
-   * This implementation simply change the current state
-   *  emiting transistions signal.
-   *  Subclass can reimplement this method to handle
-   *  port specific error.
+   * This implementation will handle some common errors,
+   *  change the current state emiting transistion signal.
+   *  If state has changed, stateChanged() signal is emited.
+   *
+   * Handled errors are:
+   *  - NoError: go to ready state.
+   *  - WriteCanceled: flush pending transaction with flushTransactionsPending() and go to warning state.
+   *  - WriteTimeout: flush pending transaction with flushTransactionsPending() and go to busy state.
+   *  - WritePoolEmpty: go to busy state.
+   *  - ReadCanceled: flush pending transaction with flushTransactionsPending(),
+   *                    done transactions with flushTransactionsDone() and go to warning state.
+   *  - ReadTimeout: flush pending transaction with flushTransactionsPending(),
+   *                    done transactions with flushTransactionsDone() and go to busy state.
+   *  - ReadPoolEmpty: go to busy state.
+   *  - Disconnected: flush pending transaction with flushTransactionsPending(),
+   *                    done transactions with flushTransactionsDone() and go to disconnected state.
+   *  - Connecting: go to connecting state.
+   *
+   * For other errors, including UnhandledError,
+   *  pending transactions are flushed with flushTransactionsPending(),
+   *  done transactions are flushed with flushTransactionsDone()
+   *  and state will become error state.
+   *
+   * For other cases, the subclass can reimplement this method.
    *  Dont forget to emit transistion signals.
    */
   virtual void onThreadsErrorOccured(int error);
@@ -895,7 +933,8 @@ class mdtPortManager : public QThread
   QMap<int, mdtPortTransaction*> pvTransactionsPending; // Used for query that are sent to device
   QQueue<mdtPortTransaction*> pvTransactionsDone;       // Transactions for data that are received from device
 
-  bool pvCancelReadWait;
+  ///bool pvCancelReadWait;
+  bool pvThreadHandlesReadTimeout;  // Used by waitOneTransactionDone()
   // Instance of reader and writer thread
   mdtPortThread *pvReadThread;
   mdtPortThread *pvWriteThread;
