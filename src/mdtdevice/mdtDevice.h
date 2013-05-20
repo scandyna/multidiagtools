@@ -92,19 +92,6 @@ class mdtDevice : public QObject
 
  public:
 
-  /*! \brief State of device
-   * 
-   * \todo Check if possible to obselete this, mdtPortManager has the same enum !
-   */
-  ///enum state_t {
-  ///              Ready = 0,              /*!< Device is connected and ready to receive queries */
-  ///              Disconnected,           /*!< Device is not connected */
-  ///              Connecting,             /*!< Trying to connect to device */
-  ///              Busy,                   /*!< Device is connected but cannot accept requests for the moment */
-  ///              Warning,                /*!< Device or port communication handled error occured */
-  ///              Error                   /*!< Device or port communication unhandled error occured */
-  ///             };
-
   /*! \brief Construct a device object.
    */
   mdtDevice(QObject *parent = 0);
@@ -506,7 +493,6 @@ class mdtDevice : public QObject
 
   /*! \brief Get device state
    */
-  ///state_t state() const;
   mdtPortManager::state_t state() const;
 
  public slots:
@@ -783,37 +769,13 @@ class mdtDevice : public QObject
    * Internally, mdtPortManager::waitTransactionDone() is called.
    *
    * \param id Id returned by query method
-   * \param timeout Timeout [ms]
-   *                 If 0, device's defined read timeout is used (see mdtPortManager::waitTransactionDone(int, int, int) for details).
-   * \param granularity Sleep time between each call of event processing [ms]<br>
-   *                     A little value needs more CPU and big value can freeze the GUI.
-   *                     Should be between 50 and 100, and must be > 0.
-   *                     Note that msecs must be a multiple of granularity.
    * \return True on success, false on timeout. If id was not found in transactions list,
    *           a warning will be generated in mdtError system, and false will be returned.
    * \pre granularity must be > 0.
    */
-  ///bool waitTransactionDone(int id, int timeout = 0, int granularity = 50);
   bool waitTransactionDone(int id);
 
   mdtDeviceIos *pvIos;    // I/O's container
-
- public slots:
-
-  /*! \brief Used to show a message in status bar
-   *
-   * \param message Message to show
-   * \param timeout If > 0, message will be cleared after timeout [ms]
-   */
-  ///void showStatusMessage(const QString &message, int timeout = 0);
-
-  /*! \brief Used to show a message and details in status bar
-   *
-   * \param message Message to show
-   * \param details Details to show
-   * \param timeout If > 0, message will be cleared after timeout [ms]
-   */
-  ///void showStatusMessage(const QString &message, const QString &details, int timeout = 0);
 
  signals:
 
@@ -895,7 +857,6 @@ class mdtDevice : public QObject
   int pvBackToReadyStateTimeout;
   QTimer *pvBackToReadyStateTimer;
   // State flag
-  ///state_t pvCurrentState;
   mdtPortManager::state_t pvCurrentState;
 };
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -153,7 +153,6 @@ void mdtPortThread::stop()
 
 bool mdtPortThread::isRunning() const
 {
-  ///Q_ASSERT(pvPort != 0);
   if(pvPort == 0){
     return QThread::isRunning();
   }
@@ -177,7 +176,6 @@ bool mdtPortThread::runningFlagSet() const
 
 bool mdtPortThread::isFinished() const
 {
-  ///Q_ASSERT(pvPort != 0);
   if(pvPort == 0){
     return QThread::isFinished();
   }
@@ -207,7 +205,6 @@ bool mdtPortThread::handlesTimeout() const
   return false;
 }
 
-///void mdtPortThread::notifyError(int error, bool renotifySameError)
 void mdtPortThread::notifyError(mdtAbstractPort::error_t error, bool renotifySameError)
 {
   if((error != pvCurrentError)||(renotifySameError)){
@@ -222,6 +219,7 @@ mdtAbstractPort::error_t mdtPortThread::currentError() const
   return pvCurrentError;
 }
 
+/**
 mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
 {
   Q_ASSERT(frame != 0);
@@ -266,7 +264,9 @@ mdtAbstractPort::error_t mdtPortThread::handleCommonReadErrors(mdtAbstractPort::
   Q_ASSERT(*frame != 0);
   return portError;
 }
+*/
 
+/**
 mdtAbstractPort::error_t mdtPortThread::handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame)
 {
   Q_ASSERT(frame != 0);
@@ -304,7 +304,9 @@ mdtAbstractPort::error_t mdtPortThread::handleCommonWriteErrors(mdtAbstractPort:
 
   return portError;
 }
+*/
 
+/**
 mdtAbstractPort::error_t mdtPortThread::handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame)
 {
   Q_ASSERT(readFrame != 0);
@@ -322,7 +324,9 @@ mdtAbstractPort::error_t mdtPortThread::handleCommonReadWriteErrors(mdtAbstractP
     return handleCommonWriteErrors(portError, writeFrame);
   }
 }
+*/
 
+/**
 mdtFrame *mdtPortThread::getNewFrameRead()
 {
   Q_ASSERT(pvPort != 0);
@@ -356,7 +360,9 @@ mdtFrame *mdtPortThread::getNewFrameRead()
 
   return frame;
 }
+*/
 
+/**
 int mdtPortThread::readFromPort(mdtFrame **frame, bool emitNewFrameReaden)
 {
   Q_ASSERT(pvPort != 0);
@@ -429,7 +435,8 @@ int mdtPortThread::readFromPort(mdtFrame **frame, bool emitNewFrameReaden)
 
   return completeFrames;
 }
-
+*/
+/**
 mdtFrame *mdtPortThread::getNewFrameWrite()
 {
   Q_ASSERT(pvPort != 0);
@@ -446,7 +453,8 @@ mdtFrame *mdtPortThread::getNewFrameWrite()
 
   return frame;
 }
-
+*/
+/**
 qint64 mdtPortThread::writeDataToPort(mdtFrame *frame, int maxSize)
 {
   Q_ASSERT(pvPort != 0);
@@ -472,7 +480,8 @@ qint64 mdtPortThread::writeDataToPort(mdtFrame *frame, int maxSize)
 
   return written;
 }
-
+*/
+/**
 mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry)
 {
   Q_ASSERT(pvPort != 0);
@@ -538,7 +547,7 @@ mdtAbstractPort::error_t mdtPortThread::writeToPort(mdtFrame *frame, bool bytePe
 
   return mdtAbstractPort::NoError;
 }
-
+*/
 mdtAbstractPort::error_t mdtPortThread::reconnect(bool notify)
 {
   Q_ASSERT(pvPort != 0);

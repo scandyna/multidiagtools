@@ -129,7 +129,6 @@ QByteArray mdtUsbtmcPortManager::sendQuery(const QByteArray &query, int writeTim
     return QByteArray();
   }
   // Wait on response
-  ///if(!waitTransactionDone(bTag, readTimeout)){
   if(!waitTransactionDone(bTag)){
     return QByteArray();
   }

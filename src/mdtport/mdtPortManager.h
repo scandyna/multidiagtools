@@ -487,30 +487,6 @@ class mdtPortManager : public QThread
    *  reason depending on specific port (port timeout, read cancelled, ...).
    *
    * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
-   * \param timeout Maximum wait time [ms]. Must be a multiple of granularity [ms]
-   *                 Will be adjusted to a minimal timeout regarding configuration (see adjustedReadTimeout() ).
-   *                 If 0, the configuration's read timeout will be used.
-   * \param granularity Sleep time between each call of event processing [ms]<br>
-   *                     A little value needs more CPU and big value can freese the GUI.
-   *                     Should be between 50 and 100, and must be > 0.
-   *                     Note that timeout must be a multiple of granularity.
-   * \return True if Ok, false on timeout or other error. If id was not found in transactions pending lists,
-   *           a warning will be generated in mdtError system, and false will be returned.
-   *           On failure, transaction is restored to pool.
-   */
-  ///bool waitTransactionDone(int id, int timeout, int granularity = 50);
-
-  /*! \brief Wait until a transaction is done
-   *
-   * Will return when transaction with given id is done or after timeout.
-   *
-   * Internally, a couple of sleep and process event are called, so 
-   * Qt's event loop will not be broken.
-   *
-   * This method can return if timeout occurs, or for other
-   *  reason depending on specific port (port timeout, read cancelled, ...).
-   *
-   * \param id Frame ID. Depending on protocol, this can be a transaction ID or what else.
    * \return True if Ok, false on timeout or other error. If id was not found in transactions pending lists,
    *           a warning will be generated in mdtError system, and false will be returned.
    *           On failure, transaction is restored to pool (see onThreadsErrorOccured() for details).
@@ -525,16 +501,8 @@ class mdtPortManager : public QThread
    * Internally, it will wait until one transaction is available
    *  in done queue.
    *
-   * \param timeout Maximum wait time [ms]. Must be a multiple of granularity [ms]
-   *                 Will be adjusted to a minimal timeout regarding configuration (see adjustedReadTimeout() ).
-   *                 If 0, the configuration's read timeout will be used.
-   * \param granularity Sleep time between each call of event processing [ms]<br>
-   *                     A little value needs more CPU and big value can freese the GUI.
-   *                     Should be between 50 and 100, and must be > 0.
-   *                     Note that timeout must be a multiple of granularity.
    * \return True if Ok, false on timeout or other error.
    */
-  ///bool waitOneTransactionDone(int timeout = 0, int granularity = 50);
   bool waitOneTransactionDone();
 
   /*! \brief Get data by frame ID

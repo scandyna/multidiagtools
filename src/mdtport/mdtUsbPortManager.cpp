@@ -306,8 +306,6 @@ QList<mdtFrameUsbControl> mdtUsbPortManager::readenControlResponses()
   return frames;
 }
 
-  QQueue<mdtFrameUsbControl> pvReadenControlResponses;  // Copy of received control responses
-
 void mdtUsbPortManager::flushIn(bool flushPortManagerBuffers, bool flushPortBuffers)
 {
   Q_ASSERT(pvPort != 0);

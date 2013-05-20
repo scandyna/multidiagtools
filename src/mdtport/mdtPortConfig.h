@@ -105,27 +105,6 @@ class mdtPortConfig
    */
   int readTimeout() const;
 
-  /*! \brief Set the minimal time to wait before try to write
-   *
-   * Internally, the event system is used for write calls.<br>
-   * It can be usefull (or important) to delay the write call.
-   * In this case, set a minWaitTime > 0
-   *
-   * \param minWaitTime Wait time before write [ms]
-   * \sa mdtDeviceFileWriteThread
-   *
-   * \note used ??
-   */
-  ///void setWriteMinWaitTime(int minWaitTime);
-
-  /*! \brief Get the minimal time to wait before try to write
-   *
-   * \sa setWriteMinWaitTime()
-   *
-   * \note used ??
-   */
-  ///int writeMinWaitTime() const;
-
   /*! \brief Set the write interframe time
    *
    * If this time is > 0 , the mdtPortWriteThread will
@@ -282,7 +261,6 @@ class mdtPortConfig
   int pvReadTimeout;              // Maximum time before reading data [ms]
   int pvWriteFrameSize;           // Maximum data length to store before a frame is considered invalid
   int pvWriteQueueSize;           // Maximum number of frames that can be stored
-  ///int pvWriteMinWaitTime;         // Minimum time to wait before write call
   int pvWriteInterbyteTime;       // Minimum time  to wait before write call
   int pvWriteInterframeTime;      // Time between each sended frame [ms]
   int pvWriteTimeout;             // Maximum time before port must be ready for writing data [ms]

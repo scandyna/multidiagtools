@@ -37,7 +37,6 @@ void mdtPortConfig::setDefault()
   pvWriteFrameSize = 1024;
   pvWriteQueueSize = 10;
   pvWriteInterframeTime = 0;
-  ///pvWriteMinWaitTime = 0;
   pvWriteInterbyteTime = 0;
   pvWriteTimeout = -1;
   pvFrameType = mdtFrame::FT_RAW;
@@ -91,18 +90,6 @@ int mdtPortConfig::readTimeout() const
 {
   return pvReadTimeout;
 }
-
-/**
-void mdtPortConfig::setWriteMinWaitTime(int minWaitTime)
-{
-  pvWriteMinWaitTime = minWaitTime;
-}
-
-int mdtPortConfig::writeMinWaitTime() const
-{
-  return pvWriteMinWaitTime;
-}
-*/
 
 void mdtPortConfig::setWriteInterframeTime(int time)
 {
@@ -177,7 +164,6 @@ QByteArray mdtPortConfig::endOfFrameSeq() const
 void mdtPortConfig::setBytePerByteWrite(bool on, int waitTime)
 {
   pvBytePerByteWrite = on;
-  ///pvWriteMinWaitTime = waitTime;
   pvWriteInterbyteTime = waitTime;
 }
 

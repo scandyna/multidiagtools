@@ -1,6 +1,6 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2012 Philippe Steinmann.
+ ** Copyright (C) 2011-2013 Philippe Steinmann.
  **
  ** This file is part of multiDiagTools library.
  **
@@ -129,7 +129,6 @@ class mdtPortThread : public QThread
    * \param renotifySameError For some cases, the same error must be notified each time it happens.
    *                           If this flag is true, signal is emitted without checking previous error.
    */
-  ///void notifyError(int error, bool renotifySameError = false);
   void notifyError(mdtAbstractPort::error_t error, bool renotifySameError = false);
 
   /*! \brief Get current error
@@ -211,7 +210,7 @@ class mdtPortThread : public QThread
    * \pre port must be set with setPort().
    * \post If frame is null, a UnhandledError is returned.
    */
-  mdtAbstractPort::error_t handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+  ///mdtAbstractPort::error_t handleCommonReadErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
 
   /*! \brief Handle common write errors
    *
@@ -231,7 +230,7 @@ class mdtPortThread : public QThread
    * \pre frame must be a valid pointer.
    * \pre port must be set with setPort().
    */
-  mdtAbstractPort::error_t handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
+  ///mdtAbstractPort::error_t handleCommonWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **frame);
 
   /*! \brief Handle common read and write errors
    *
@@ -244,7 +243,7 @@ class mdtPortThread : public QThread
    * \param writeFrame Current write frame. Note that frame can be null after a call of this method (if a write error occured).
    * \return ErrorHandled if error could be handled or other error (most of cases a UnhandledError).
    */
-  mdtAbstractPort::error_t handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
+  ///mdtAbstractPort::error_t handleCommonReadWriteErrors(mdtAbstractPort::error_t portError, mdtFrame **readFrame, mdtFrame **writeFrame);
 
   /*! \brief Get a new frame for reading data from port
    *
@@ -271,7 +270,7 @@ class mdtPortThread : public QThread
    *
    * \pre Port must be set with setPort() before using this method.
    */
-  mdtFrame *getNewFrameRead();
+  ///mdtFrame *getNewFrameRead();
 
   /*! \brief Read data from port
    *
@@ -299,7 +298,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  int readFromPort(mdtFrame **frame, bool emitNewFrameReaden = true);
+  ///int readFromPort(mdtFrame **frame, bool emitNewFrameReaden = true);
 
   /*! \brief Get a new frame for writing data to port
    *
@@ -320,7 +319,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \sa mdtAbstractPort
    */
-  mdtFrame *getNewFrameWrite();
+  ///mdtFrame *getNewFrameWrite();
 
   /*! \brief Write data to port
    *
@@ -337,7 +336,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  qint64 writeDataToPort(mdtFrame *frame, int maxSize = -1);
+  ///qint64 writeDataToPort(mdtFrame *frame, int maxSize = -1);
 
   /*! \brief Write a complete frame to port
    *
@@ -367,7 +366,7 @@ class mdtPortThread : public QThread
    * \pre Port must be set with setPort() before using this method.
    * \pre frame must be a valid pointer (not Null).
    */
-  mdtAbstractPort::error_t writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry = 10);
+  ///mdtAbstractPort::error_t writeToPort(mdtFrame *frame, bool bytePerByteWrite, int interByteTime, int maxWriteTry = 10);
 
   /*! \brief Try to reconnect to device/peer
    *

@@ -411,56 +411,6 @@ int mdtPortManager::writeData(const QByteArray &data, bool queryReplyMode)
   return writeData(transaction);
 }
 
-/**
-bool mdtPortManager::waitTransactionDone(int id, int timeout, int granularity)
-{
-  Q_ASSERT(granularity > 0);
-
-  int maxIter;
-  mdtPortTransaction *transaction;
-
-  if(timeout == 0){
-    timeout = adjustedReadTimeout(timeout, false);
-  }else{
-    timeout = adjustedReadTimeout(timeout);
-  }
-  maxIter = timeout / granularity;
-  // Check if transaction exists in pending queue
-  // Note: we check also done queue, because it's possible that transaction was done
-  if((!pvTransactionsPending.contains(id))&&(!transactionsDoneContains(id))){
-    mdtError e(MDT_PORT_IO_ERROR, "Wait on a frame that was never added to pending queue, id: " + QString::number(id), mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtPortManager");
-    e.commit();
-    emit(unhandledError());
-    return false;
-  }
-  // Try until success or timeout/error
-  while(!transactionsDoneContains(id)){
-    if(readWaitCanceled()){
-      transaction = transactionPending(id);
-      if(transaction != 0){
-        restoreTransaction(transaction);
-      }
-      return false;
-    }
-    // Check about timeout
-    if(maxIter <= 0){
-      transaction = transactionPending(id);
-      if(transaction != 0){
-        restoreTransaction(transaction);
-      }
-      return false;
-    }
-    // Wait
-    qApp->processEvents();
-    msleep(granularity);
-    maxIter--;
-  }
-
-  return true;
-}
-*/
-
 bool mdtPortManager::waitTransactionDone(int id)
 {
   Q_ASSERT(pvPort != 0);
@@ -514,45 +464,12 @@ bool mdtPortManager::waitTransactionDone(int id)
   return true;
 }
 
-/**
-bool mdtPortManager::waitOneTransactionDone(int timeout, int granularity)
-{
-  Q_ASSERT(granularity > 0);
-
-  int maxIter;
-
-  if(timeout == 0){
-    timeout = adjustedReadTimeout(timeout, false);
-  }else{
-    timeout = adjustedReadTimeout(timeout);
-  }
-  maxIter = timeout / granularity;
-  // Try until success or timeout/error
-  while(pvTransactionsDone.isEmpty()){
-    if(readWaitCanceled()){
-      return false;
-    }
-    // Check about timeout
-    if(maxIter <= 0){
-      return false;
-    }
-    // Wait
-    qApp->processEvents();
-    msleep(granularity);
-    maxIter--;
-  }
-
-  return true;
-}
-*/
-
 bool mdtPortManager::waitOneTransactionDone()
 {
   Q_ASSERT(pvPort != 0);
 
   int maxIter;
 
-  qDebug() << "mdtPortManager::waitOneTransactionDone() Thread handles read timeout ?: " << pvThreadHandlesReadTimeout;
   // Try until success or timeout/error
   if(pvThreadHandlesReadTimeout){
     // Thread handles timeout itself
@@ -569,11 +486,7 @@ bool mdtPortManager::waitOneTransactionDone()
   }else{
     // Thread does not handle timeout itself
     maxIter = config().readTimeout() / 50;
-    qDebug() << "mdtPortManager::waitOneTransactionDone() timeout: " << config().readTimeout();
     while(pvTransactionsDone.isEmpty()){
-      qDebug() << "mdtPortManager::waitOneTransactionDone() wait ...";
-      qDebug() << "-> Pending queue: " << pvTransactionsPending;
-      qDebug() << "-> DONE queue: " << pvTransactionsDone;
       // Check about error
       if((pvCurrentState != Ready)&&(pvCurrentState != Busy)){
         // Transactions are restored by onThreadsErrorOccured()
@@ -881,23 +794,6 @@ void mdtPortManager::commitFrames()
   }
 }
 
-/**
-void mdtPortManager::cancelReadWait()
-{
-  pvCancelReadWait = true;
-}
-*/
-/**
-bool mdtPortManager::readWaitCanceled()
-{
-  if(pvCancelReadWait){
-    pvCancelReadWait = false;
-    return true;
-  }
-  return false;
-}
-*/
-
 void mdtPortManager::fromThreadNewFrameReaden()
 {
   Q_ASSERT(pvPort != 0);
@@ -975,7 +871,6 @@ void mdtPortManager::onThreadsErrorOccured(int error)
     case mdtAbstractPort::ReadCanceled:
       flushTransactionsPending();
       flushTransactionsDone();
-      ///cancelReadWait();
       emit(handledError());
       break;
       /**

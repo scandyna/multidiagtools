@@ -319,8 +319,6 @@ void mdtPortManagerTest::usbTmcPortTest()
   QVERIFY(m.waitOnWriteReady(1000));
   bTag = m.sendReadRequest(true);
   QVERIFY(bTag > 0);
-  ///QVERIFY(m.waitOnFrame(bTag, 20000));
-  ///QVERIFY(m.waitTransactionDone(bTag, 20000));
   QVERIFY(m.waitTransactionDone(bTag));
   frames = m.readenFrames();
   QVERIFY(frames.size() > 0);
