@@ -802,10 +802,8 @@ void mdtPortManager::fromThreadNewFrameReaden()
   mdtPortTransaction *transaction;
   int framesCount = 0;
 
-  
   // Get frames in readen queue
   pvPort->lockMutex();
-  qDebug() << "mdtPortManager::fromThreadNewFrameReaden(), queue: " << pvPort->readenFrames();
   while(pvPort->readenFrames().size() > 0){
     frame = pvPort->readenFrames().dequeue();
     Q_ASSERT(frame != 0);
@@ -825,8 +823,6 @@ void mdtPortManager::fromThreadNewFrameReaden()
       data.append(frame->data(), frame->size());
       transaction->setData(data);
       // Add to transactions done queue
-      qDebug() << "-> add 1 frame to DONE queue";
-      qDebug() << "-> DONE queue: " << pvTransactionsDone;
       addTransactionDone(transaction);
       ++framesCount;
     }

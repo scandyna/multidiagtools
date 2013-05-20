@@ -595,7 +595,6 @@ bool mdtSerialPort::flowCtlXonXoffOn()
 
 void mdtSerialPort::setReadTimeout(int timeout)
 {
-  qDebug() << "mdtSerialPort::setReadTimeout() , timeout: " << timeout;
   if(timeout == -1){
     pvReadTimeout.tv_sec = -1;
     pvReadTimeout.tv_usec = 0;
@@ -1064,15 +1063,6 @@ mdtAbstractPort::error_t mdtSerialPort::pvSetup()
     e.commit();
     return SetupError;
   }
-  // Check readTimeout and readTimeoutProtocol
-  /**
-  if((!config().useReadTimeoutProtocol())&&(config().readTimeout() > -1)){
-    mdtError e(MDT_SERIAL_PORT_IO_ERROR, "Read timeout is only supported with timeout protocol, will set it to infinite. Port: " + pvPortName, mdtError::Warning);
-    MDT_ERROR_SET_SRC(e, "mdtSerialPort");
-    e.commit();
-    config().setReadTimeout(-1);
-  }
-  */
   // Set the read/write timeouts
   setReadTimeout(config().readTimeout());
   setWriteTimeout(config().writeTimeout());

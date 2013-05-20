@@ -283,10 +283,8 @@ void mdtSerialPortTest::ctlSignalsTest()
 
   // Setup
 #ifdef Q_OS_UNIX
-  ///QVERIFY(sp.setAttributes("/dev/ttyS0"));
   sp.setPortName("/dev/ttyS0");
 #elif defined Q_OS_WIN
-  ///QVERIFY(sp.setAttributes("COM1"));
   sp.setPortName("COM1");
 #endif
   QVERIFY(sp.open() == mdtAbstractPort::NoError);

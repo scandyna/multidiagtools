@@ -24,7 +24,7 @@
 #include "mdtAbstractPort.h"
 #include <QApplication>
 
-#include <QDebug>
+//#include <QDebug>
 
 mdtPortReadThread::mdtPortReadThread(QObject *parent)
  : mdtPortThread(parent)
@@ -145,5 +145,4 @@ void mdtPortReadThread::run()
   }
   pvRunning = false;
   pvPort->unlockMutex();
-  qDebug() << "RTHD: end";
 }

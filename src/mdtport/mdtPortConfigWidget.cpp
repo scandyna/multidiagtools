@@ -21,14 +21,9 @@
 #include "mdtPortConfigWidget.h"
 #include "mdtFrame.h"
 #include <QVariant>
+#include <QByteArray>
 
 //#include <QDebug>
-
-/**
- * \todo Must adapt for better coherence regarding port type:
- *  - On serial port, read timeout has only sense with read timeout protocol
- *  - hmm... must study this together with mdtPortManager, because ..
- */
 
 mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
  : QWidget(parent)
@@ -39,6 +34,7 @@ mdtPortConfigWidget::mdtPortConfigWidget(QWidget *parent)
 void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
 {
   int index;
+  QByteArray ba;
 
   // Frame type
   if(cbFrameType->count() < 1){
@@ -54,11 +50,24 @@ void mdtPortConfigWidget::displayConfig(mdtPortConfig &config)
   }
   // End of frame sequence
   if(cbEndOfFrameSeq->count() < 1){
-    cbEndOfFrameSeq->addItem("");
-    cbEndOfFrameSeq->addItem("*");
-    cbEndOfFrameSeq->addItem("$");
+    cbEndOfFrameSeq->addItem("", QByteArray());
+    cbEndOfFrameSeq->addItem("*", QByteArray("*"));
+    cbEndOfFrameSeq->addItem("$", QByteArray("$"));
+    ba.clear();
+    ba.append((char)0x04);
+    cbEndOfFrameSeq->addItem("EOT (0x04)", ba);
+    ba.clear();
+    ba.append((char)0x0A);
+    cbEndOfFrameSeq->addItem("LF (0x0A, \\n)", ba);
+    ba.clear();
+    ba.append((char)0x0D);
+    cbEndOfFrameSeq->addItem("CR (0x0D, \\r)", ba);
+    ba.clear();
+    ba.append((char)0x17);
+    cbEndOfFrameSeq->addItem("ETB (0x17)", ba);
+
   }
-  index = cbEndOfFrameSeq->findText(config.endOfFrameSeq());
+  index = cbEndOfFrameSeq->findData(config.endOfFrameSeq());
   if(index >= 0){
     cbEndOfFrameSeq->setCurrentIndex(index);
   }
@@ -100,7 +109,10 @@ void mdtPortConfigWidget::updateConfig(mdtPortConfig &config)
   }
   // End of frame sequence - Only for ASCII frame type
   if(config.frameType() == mdtFrame::FT_ASCII){
-    config.setEndOfFrameSeq(cbEndOfFrameSeq->currentText().toAscii());
+    index = cbEndOfFrameSeq->currentIndex();
+    if(index > -1){
+      config.setEndOfFrameSeq(cbEndOfFrameSeq->itemData(index).toByteArray());
+    }
   }else{
     config.setEndOfFrameSeq("");
   }
