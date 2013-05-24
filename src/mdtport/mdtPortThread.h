@@ -79,6 +79,15 @@ class mdtPortThread : public QThread
    */
   bool isRunning() const;
 
+  /*! \brief Set the running flag
+   *
+   * This method is used by mdtPortThreadHelper
+   *  and should not be used directly.
+   *
+   * Port's mutex is not handled in this method.
+   */
+  void setRunningFlag(bool running);
+
   /*! \brief Get the running flag
    *
    * This method is used by mdtPortThreadHelper

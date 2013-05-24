@@ -19,7 +19,10 @@
  **
  ****************************************************************************/
 #include "mdtTcpSocketThread.h"
+#include "mdtPortThreadHelperSocket.h"
+
 #include "mdtPortThreadHelperPort.h"
+
 #include "mdtTcpSocket.h"
 #include "mdtError.h"
 #include <QApplication>
@@ -51,9 +54,9 @@ void mdtTcpSocketThread::run()
   ///mdtFrame *readFrame = 0;
   mdtAbstractPort::error_t portError = mdtAbstractPort::NoError;
   int completeFrames;
-  mdtPortThreadHelperPort threadHelper;
-  threadHelper.setPort(pvPort);
-  threadHelper.setThread(this);
+  ///mdtPortThreadHelperPort threadHelper;
+
+  mdtPortThreadHelperSocket threadHelper;
 
 
   pvPort->lockMutex();
@@ -63,19 +66,28 @@ void mdtTcpSocketThread::run()
 #endif
 
   // Create a Tcp socket
-  pvSocket = new QTcpSocket;
+  pvSocket = new QTcpSocket;  /// \todo Check about delete !
   Q_ASSERT(pvSocket != 0);
   // We must pass this socket object to pvPort
   // pvPort must be a instance of mdtTcpSocket
   port = dynamic_cast<mdtTcpSocket*>(pvPort);
   Q_ASSERT(port != 0);
   port->setThreadObjects(pvSocket, this);
+  
+  
+  ///pvPort->unlockMutex();
+  
+  threadHelper.setPort(pvPort);
+  threadHelper.setThread(this);
+  threadHelper.setSocket(pvSocket);
+  
   // Set the running flag
-  pvRunning = true;
+  ///pvRunning = true;
   // Get frames
   if(!threadHelper.getNewFrameRead()){
     pvRunning = false;
     notifyError(mdtAbstractPort::Disconnected);
+    /// \todo Cleanup
     return;
   }
   /**
@@ -85,7 +97,14 @@ void mdtTcpSocketThread::run()
   }
   */
   qDebug() << "TCPTHD: starting ...";
+  pvPort->unlockMutex();
+  ///threadHelper.reconnect(true);
   // Run...
+  exec();
+  /// \todo Cleanup
+  qDebug() << "TCPTHD: starting exec() END";
+  return;
+  
   while(1){
     // Read thread state
     if(!pvRunning){
@@ -118,7 +137,7 @@ void mdtTcpSocketThread::run()
     */
     // Write
     ///portError = writeToPort(writeFrame, false, 0);
-    portError = threadHelper.writeToPort(false, 0);
+    ///portError = threadHelper.writeToPort(false, 0);
     if(portError != mdtAbstractPort::NoError){
       // Check about stopping
       if(!pvRunning){
@@ -176,7 +195,7 @@ void mdtTcpSocketThread::run()
       }
       // Read ...
       ///completeFrames = readFromPort(&readFrame);
-      completeFrames = threadHelper.readFromPort(true);
+      ///completeFrames = threadHelper.readFromPort(true);
       qDebug() << "TCPTHD, completeFrames: " << completeFrames;
       if(completeFrames < 0){
         // Check about stopping
@@ -214,7 +233,7 @@ void mdtTcpSocketThread::run()
         }
         // Read ...
         ///completeFrames = readFromPort(&readFrame);
-        completeFrames = threadHelper.readFromPort(true);
+        ///completeFrames = threadHelper.readFromPort(true);
         if(completeFrames < 0){
           // Check about stopping
           if(!pvRunning){

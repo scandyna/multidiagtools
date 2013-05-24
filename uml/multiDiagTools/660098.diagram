@@ -1,0 +1,77 @@
+format 76
+
+classinstance 128002 class_ref 355970 // main
+  name ""   xyz 28 4 2005 life_line_z 2000
+classinstance 128130 class_ref 336130 // mdtTcpSocketThread
+  name ""   xyz 125 12 2005 life_line_z 2000
+classinstance 128258 class_ref 329602 // mdtTcpSocket
+  name ""   xyz 328 12 2005 life_line_z 2000
+classinstance 128386 class_ref 665730 // mdtPortThreadHelperSocket
+  name ""   xyz 477 17 2005 life_line_z 2000
+classinstance 128514 class_ref 329474 // QTcpSocket
+  name ""   xyz 694 24 2010 life_line_z 2000
+durationcanvas 128642 classinstance_ref 128002 // :main
+  xyzwh 47 195 2010 11 40
+end
+durationcanvas 128770 classinstance_ref 128130 // :mdtTcpSocketThread
+  xyzwh 196 199 2010 11 260
+  overlappingdurationcanvas 129538
+    xyzwh 202 340 2020 11 82
+  end
+  overlappingdurationcanvas 130306
+    xyzwh 202 294 2020 11 25
+  end
+end
+durationcanvas 129026 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 377 206 2010 11 25
+end
+durationcanvas 129282 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 377 251 2010 11 25
+end
+durationcanvas 129794 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 377 357 2010 11 25
+end
+durationcanvas 130050 classinstance_ref 128258 // :mdtTcpSocket
+  xyzwh 377 403 2010 11 25
+end
+msg 128898 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128770
+  yz 199 2015 msg operation_ref 619138 // "stop() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 103 182
+msg 129154 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 129026
+  yz 209 2020 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 253 192
+msg 129410 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 129282
+  yz 253 2015 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 245 236
+reflexivemsg 129666 synchronous
+  to durationcanvas_ref 129538
+  yz 340 2025 msg operation_ref 351106 // "isFinished() : bool"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 183 323
+msg 129922 synchronous
+  from durationcanvas_ref 129538
+  to durationcanvas_ref 129794
+  yz 370 2025 msg operation_ref 434690 // "lockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 256 353
+msg 130178 synchronous
+  from durationcanvas_ref 129538
+  to durationcanvas_ref 130050
+  yz 404 2025 msg operation_ref 434818 // "unlockMutex() : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 248 387
+reflexivemsg 130434 synchronous
+  to durationcanvas_ref 130306
+  yz 294 2025 msg operation_ref 1256066 // "setRunningFlag(in running : bool) : void"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 166 277
+end

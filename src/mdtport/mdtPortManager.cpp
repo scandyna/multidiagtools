@@ -1013,6 +1013,7 @@ void mdtPortManager::buildStateMachine()
 bool mdtPortManager::waitOnReadyState()
 {
   while(pvCurrentState != Ready){
+    /// \todo Should add a timeout check (read? write? connect?)
     wait(100, 50);
   }
 

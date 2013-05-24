@@ -94,6 +94,16 @@ mdtAbstractPort::error_t mdtTcpSocket::reconnect(int timeout)
   return Disconnected;
 }
 
+QString mdtTcpSocket::peerName() const
+{
+  return pvPeerName;
+}
+
+quint16 mdtTcpSocket::peerPort() const
+{
+  return pvPeerPort;
+}
+
 void mdtTcpSocket::setThreadObjects(QTcpSocket *socket, mdtTcpSocketThread *thread)
 {
   Q_ASSERT(socket != 0);
@@ -196,6 +206,14 @@ qint64 mdtTcpSocket::write(const char *data, qint64 maxSize)
   }
 
   return n;
+}
+
+void mdtTcpSocket::addFrameToWrite(mdtFrame *frame)
+{
+  Q_ASSERT(frame != 0);
+
+  pvWriteFrames.enqueue(frame);
+  emit newFrameToWrite();
 }
 
 mdtAbstractPort::error_t mdtTcpSocket::pvOpen()

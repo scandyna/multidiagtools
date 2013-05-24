@@ -137,6 +137,8 @@ void mdtPortThread::stop()
 #endif
   pvPort->unlockMutex();
 
+  /// \todo A vérifier ...
+  exit();
   // Wait the end of the thread
   while(!isFinished()){
     qApp->processEvents();
@@ -161,6 +163,11 @@ bool mdtPortThread::isRunning() const
   }
   pvPort->unlockMutex();
   return false;
+}
+
+void mdtPortThread::setRunningFlag(bool running)
+{
+  pvRunning = running;
 }
 
 bool mdtPortThread::runningFlagSet() const

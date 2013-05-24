@@ -52,6 +52,24 @@ class mdtTcpSocket : public mdtAbstractPort
    */
   error_t reconnect(int timeout);
 
+  /*! \brief Get peer host or IP
+   *
+   * Returns the host part set by setPortName()
+   *
+   * Mutex is not handled by this method,
+   *  it should be locked before calling this method.
+   */
+  QString peerName() const;
+
+  /*! \brief Get peer port number
+   *
+   * Returns the port part set by setPortName()
+   *
+   * Mutex is not handled by this method,
+   *  it should be locked before calling this method.
+   */
+  quint16 peerPort() const;
+
   /*! \brief Set the socket
    *
    * QTcpSocket must be created from thread on witch it will be used.
@@ -149,6 +167,26 @@ class mdtTcpSocket : public mdtAbstractPort
    * \return Number of bytes written, or a error < 0 (one of the mdtAbstractPort::error_t)
    */
   qint64 write(const char *data, qint64 maxSize);
+
+  /*! \brief Add a frame to write
+   *
+   * Once the frame is added to the write queue,
+   *  newFrameToWrite() is emitted.
+   *
+   * The mutex must be locked before calling this method,
+   *  and still locked inside.
+   *
+   * \pre frame must be a valid pointer.
+   */
+  void addFrameToWrite(mdtFrame *frame);
+
+ signals:
+
+  /*! \brief Emitted when a new frame is available to write
+   *
+   * See addFrameToWrite().
+   */
+  void newFrameToWrite();
 
  private:
 

@@ -83,6 +83,7 @@ class mdtPortConfig
    * 
    * An example of read timeout protocol is MODBUS (over serial lines) RTU mode
    * The mdtPortReadThread will use this parameter.
+   *
    * \param use If true, read timeout protocol will be used.
    */
   void setUseReadTimeoutProtocol(bool use);
@@ -122,13 +123,13 @@ class mdtPortConfig
   int writeInterframeTime() const;
 
   /*! \brief Set the write timeout
-   * 
+   *
    * \param timeout Write timout [ms]
    */
   void setWriteTimeout(int timeout);
 
   /*! \brief Get write timeout
-   * 
+   *
    * \returns Write timout [ms]
    */
   int writeTimeout() const;
@@ -154,6 +155,7 @@ class mdtPortConfig
    * A queue contain several frames.
    * This parameter gives a limit of the number
    * of frame that can be enqueued to serial port output.
+   *
    * \pre size must be a positive value
    */
   void setWriteQueueSize(int size);

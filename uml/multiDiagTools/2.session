@@ -1,30 +1,22 @@
 window_sizes 1280 1001 281 993 923 0
 diagrams
-  active  classdiagram_ref 646786 // ABCDE
-    993 923 90 3 0 0
+  sequencediagram_ref 653314 // TCPsocketStart
+    993 923 100 3 0 0
+  sequencediagram_ref 659970 // TCPsocketWrite
+    794 738 100 4 0 0
+  active  sequencediagram_ref 660098 // TCPsocketStop
+    993 923 100 4 0 0
 end
 show_stereotypes
-selected operation_ref 1233154 // handleCommonReadErrors
+selected sequencediagram_ref 660098 // TCPsocketStop
 open
   classview_ref 181634 // mdtFrame
-  classview_ref 201218 // mdtPort
-  classrelation_ref 812546 // pvCurrentReadFrame (<unidirectional association>)
-  operation_ref 1234562 // setPort
-  operation_ref 1234818 // setThread
-  operation_ref 1233154 // handleCommonReadErrors
-  operation_ref 1233026 // reconnect
-  operation_ref 1234050 // writeToPort
-  attribute_ref 726146 // pvConnected
-  operation_ref 1234690 // setSocket
-  operation_ref 1232002 // onSocketConnected
-  operation_ref 1232642 // onSocketClosing
-  operation_ref 1232258 // onSocketError
-  operation_ref 1232514 // onSocketStateChanged
-  operation_ref 1232770 // onSocketBytesWritten
-  operation_ref 1234946 // mapSocketError
-  attribute_ref 733314 // pvConnectionTimeout
-  attribute_ref 733442 // pvReadTimeout
-  attribute_ref 733570 // pvWriteTimeout
-  attribute_ref 733186 // pvWriteTimeoutTimer
+  operation_ref 1256066 // setRunningFlag
+  operation_ref 1255938 // runningFlagSet
+  classrelation_ref 812930 // <association>
+  classview_ref 247298 // mdtTcpSocket
+  classview_ref 444546 // mdtPortThreadHelper
+  classview_ref 451074 // TCPsocketSeq
+  class_ref 672258 // QEventLoop
 end
 end

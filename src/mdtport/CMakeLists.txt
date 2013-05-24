@@ -11,6 +11,7 @@ set (HEADER_FILES
           mdtAbstractPort.h
           mdtPortThread.h
           mdtPortThreadHelper.h
+          mdtPortThreadHelperSocket.h
           #mdtPortThreadHelperPort.h
           mdtPortReadThread.h
           mdtPortWriteThread.h
@@ -43,6 +44,7 @@ set (SOURCES_FILES
           mdtUsbPortThread.cpp
           mdtPortThreadHelper.cpp
           mdtPortThreadHelperPort.cpp
+          mdtPortThreadHelperSocket.cpp
           mdtUsbtmcPortThread.cpp
           mdtUsbDeviceDescriptor.cpp
           mdtUsbConfigDescriptor.cpp

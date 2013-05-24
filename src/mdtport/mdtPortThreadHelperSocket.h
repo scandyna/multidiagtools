@@ -21,64 +21,203 @@
 #ifndef MDT_PORT_THREAD_HELPER_SOCKET_H
 #define MDT_PORT_THREAD_HELPER_SOCKET_H
 
-
 #include "mdtPortThreadHelper.h"
+#include <QTcpSocket>
+#include <QObject>
 
-class mdtPortThreadHelperSocket : public mdtPortThreadHelper {
-  private:
-    bool pvConnected;
+class QTimer;
 
+/*! \brief Help the usage of QTcpSocket's asynchrone API
+ */
+class mdtPortThreadHelperSocket : public mdtPortThreadHelper
+{
+ Q_OBJECT
 
-  public:
-    void setSocket(const QAbstractSocket & socket);
+ public:
 
+  /*! \brief Constructor
+   */
+  mdtPortThreadHelperSocket(QObject *parent = 0);
 
-  private:
-    void onSocketConnected();
+  /*! \brief Destructor
+   */
+  ~mdtPortThreadHelperSocket();
 
-    void onSocketDisconnected();
+  /*! \brief Set socket
+   *
+   * Take some parameters in port and port's config
+   *  and make all needed signal/slot connections.
+   *
+   * Parameters that are used by port's config are:
+   *  - connectTimeout
+   *  - connectMaxTry
+   *  - readTimeout
+   *  - writeTimeout
+   *
+   * See mdtPortConfig for details.
+   *
+   * Port's mutex is not handled by this method,
+   *  it should be locked before call.
+   *
+   * \pre socket must be a valid pointer.
+   * \pre port must be set with mdtPortThreadHelper::setPort().
+   */
+  void setSocket(QTcpSocket *socket);
 
-    void onSocketClosing();
+ private slots:
 
-    void onSocketError(const QAbstractSocket & socketError);
+  /*! \brief Notify the connected state
+   *
+   * Uses mdtPortThreadHelper::notifyError() with mdtAbstractPort::NoError.
+   */
+  void onSocketConnected();
 
-    void onSocketHostFound();
+  /*! \brief Notify the disconnected state
+   *
+   * Uses mdtPortThreadHelper::notifyError() with mdtAbstractPort::Disconnected.
+   */
+  void onSocketDisconnected();
 
-    void onSocketStateChanged(const QAbstractSocket::SocketState & socketState);
+  /*! \brief Utile ??????
+   */
+  void onSocketClosing();
 
-    void onSocketReadyRead();
+  /*! \brief Map socket error to mdtAbstractPort error and notify it
+   *
+   * \pre Port must be set with mdtPortThreadHelper::setPort().
+   * \pre Thread must be set with mdtPortThreadHelper::setThread().
+   * \pre socket must be set with setSocket().
+   */
+  void onSocketError(QAbstractSocket::SocketError socketError);
 
-    void onSocketBytesWritten(const qInt64 & bytes);
+  /*! \brief  Utile ??
+   */
+  void onSocketHostFound();
 
-    void onConnectionTimeout();
+  /*! \brief Some states are mapped to mdtAbstractPort error and notified
+   *
+   * We try to not interfer with onSocketError(),
+   *  so only a few QAbstractSocket states are notified.
+   */
+  void onSocketStateChanged(QAbstractSocket::SocketState socketState);
 
-    void onReadTimeout();
+  /*! \brief
+   */
+  void onSocketReadyRead();
 
-    void onWriteTimeout();
+  /*! \brief
+   */
+  void onSocketBytesWritten(qint64 bytes);
 
-    virtual void requestWrite();
+  /*! \brief
+   */
+  void onConnectionTimeout();
 
-    mdtAbstractPort::error_t writeToSocket();
+  /*! \brief
+   */
+  void onReadTimeout();
 
-    mdtAbstractPort::error_t mapSocketError(const QAbstractSocket::SocketError & error, bool byRead);
+  /*! \brief
+   */
+  void onWriteTimeout();
 
-    QString pvHost;
+  /*! \brief Called by mdtTcpSocket when a new frame is to write
+   *
+   * \pre Port must be set with mdtPortThreadHelper::setPort().
+   * \pre Thread must be set with mdtPortThreadHelper::setThread().
+   * \pre socket must be set with setSocket().
+   */
+  void requestWrite();
 
-    quint16 pvPort;
+ private:
 
-    int pvConnectionTimeout;
+  /*! \brief Read data from port
+   *
+   * This is a helper method to read data from socket and
+   *  to store chunk of data into a frame.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutex must be locked before calling this method.
+   *
+   * newFrameReaden() will be emitted each time a complete frame was generated.
+   *
+   * \return NoError on success or a mdtAbstractPort::error_t error (See also mdtPortThreadHelper::handleCommonReadErrors() ).
+   *
+   * \pre Port must be set with mdtPortThreadHelper::setPort().
+   * \pre Thread must be set with mdtPortThreadHelper::setThread().
+   * \pre socket must be set with setSocket().
+   */
+  mdtAbstractPort::error_t readFromSocket();
 
-    QTimer pvConnectionTimeoutTimer;
+  /*! \brief Write a complete frame to socket
+   *
+   * This is a helper method
+   *  to write a frame to the socket.
+   *
+   * Note that currentWriteFrame will be put back to write pool after complete write, cancel, flush or error.
+   *  That says that frame will not be valid after call of this method.
+   *
+   * Note about port mutex handling:<br>
+   *  The port mutex must be locked before calling this method.
+   *
+   * \return NoError on success or a mdtAbstractPort::error_t error (See also mdtPortThreadHelper::handleCommonWriteErrors() ).
+   *
+   * \pre Port must be set with mdtPortThreadHelper::setPort().
+   * \pre Thread must be set with mdtPortThreadHelper::setThread().
+   * \pre socket must be set with setSocket().
+   */
+  mdtAbstractPort::error_t writeToSocket();
 
-    int pvReadTimeout;
+  
+public:
+  
+  
+  /*! \brief Try to (re-)connect to host
+   *
+   * Each time this method is called,
+   *  the internal connections counter will be decremented.
+   *  On success, it is reset to initial value (set by setSocket() ).
+   *  If a counter reaches 0, UnhandledError will be returned and
+   *  a message is logged with mdtError system.
+   *
+   * \param notify If true, errors are notified (using mdtPortThreadHelper::notifyError() ).
+   *
+   * \pre port must be set with mdtPortThreadHelper::setPort().
+   * \pre thread must be set with mdtPortThreadHelper::setThread().
+   * \pre socket must be set with setSocket().
+   */
+  mdtAbstractPort::error_t reconnect(bool notify);
 
-    QTimer pvReadTimeoutTimer;
+  
+private:
+  
+  
+  /*! \brief Map error returned by QTcpSocket to mdtAbstractPort error.
+   *
+   * Unhandled error is reported with mdtError and UnhandledError is returned.
+   *
+   * \param error Error returned by QTcpSocket
+   * \param byRead Error occured during waitForReadyRead or read, else during waitEventWriteReady or write
+   * \pre socket must be set with setSocket().
+   */
+  mdtAbstractPort::error_t mapSocketError(QAbstractSocket::SocketError error, bool byRead);
 
-    int pvWriteTimeout;
+  QString pvHost;
+  quint16 pvPortNumber;
+  int pvConnectionTimeout;
+  int pvConnectMaxTry;
+  int pvConnectTryLeft;
+  char *pvReadBuffer;
+  int pvReadBufferSize;
 
-    QTimer pvWriteTimeoutTimer;
+  int pvReadTimeout;
+  QTimer *pvReadTimeoutTimer;
+  int pvWriteTimeout;
+  QTimer *pvWriteTimeoutTimer;
+  QTcpSocket * pvSocket;
+  bool pvConnected;
 
-    QAbstractSocket * pvSocket;
+  Q_DISABLE_COPY(mdtPortThreadHelperSocket);
 };
 
 #endif

@@ -21,6 +21,8 @@
 #include "mdtTcpServer.h"
 #include "mdtTcpServerThread.h"
 
+#include <QDebug>
+
 mdtTcpServer::mdtTcpServer(QObject *parent)
  : QTcpServer(parent)
 {
@@ -35,6 +37,7 @@ void mdtTcpServer::setResponseData(const QStringList &data)
 
 void mdtTcpServer::incomingConnection(int socketDescriptor)
 {
+  qDebug() << "*SRV mdtTcpServer::incomingConnection() ...";
   // Init a new TCP thread and start it
   pvMutex.lock();
   mdtTcpServerThread *tcpThd = new mdtTcpServerThread(socketDescriptor, pvResponses, this);

@@ -147,8 +147,10 @@ void mdtTcpSocketTest::writeReadTest()
     responses[i].append("*");
   }
 
+  qDebug() << "TEST setting response data (1) ...";
   // Set TCP server data
   tcpServer.setResponseData(responses);
+  QVERIFY(tcpServer.isListening());
 
   // Send data to server
   s.lockMutex();
@@ -168,6 +170,7 @@ void mdtTcpSocketTest::writeReadTest()
   s.unlockMutex();
 
   // Wait some time and verify that data was exchanged
+  qDebug() << "TEST wait (1) ...";
   QTest::qWait(100);
 
   // Check received data
@@ -184,8 +187,10 @@ void mdtTcpSocketTest::writeReadTest()
   // Check that all works again after a flush
   s.flush();
 
+  qDebug() << "TEST setting response data (2) ...";
   // Set TCP server data
   tcpServer.setResponseData(responses);
+  QVERIFY(tcpServer.isListening());
 
   // Send data to server
   s.lockMutex();
@@ -205,6 +210,7 @@ void mdtTcpSocketTest::writeReadTest()
   s.unlockMutex();
 
   // Wait some time and verify that data was exchanged
+  qDebug() << "TEST wait (2) ...";
   QTest::qWait(100);
 
   // Check received data
