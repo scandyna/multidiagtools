@@ -443,6 +443,8 @@ int mdtModbusTcpPortManager::writeData(mdtPortTransaction *transaction)
   frame->setUnitId(0);    /// \todo Handle this ?
   frame->setPdu(transaction->data());
   frame->encode();
+  // We enable waitAnAnswer , used by mdtTcpSocketThread for timeout detection
+  frame->setWaitAnAnswer(true);
   pvPort->addFrameToWrite(frame);
   transaction->setId(currentTransactionId());
   addTransactionPending(transaction);

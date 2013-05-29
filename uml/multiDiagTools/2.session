@@ -2,20 +2,15 @@ window_sizes 1280 1001 281 993 923 0
 diagrams
   sequencediagram_ref 653314 // TCPsocketStart
     993 923 100 3 0 0
-  sequencediagram_ref 659970 // TCPsocketWrite
-    794 738 100 4 0 0
-  active  sequencediagram_ref 660098 // TCPsocketStop
+  active  sequencediagram_ref 659970 // TCPsocketWrite
     993 923 100 4 0 0
+  sequencediagram_ref 660098 // TCPsocketStop
+    993 923 100 4 12 0
 end
 show_stereotypes
-selected sequencediagram_ref 660098 // TCPsocketStop
+selected sequencediagram_ref 659970 // TCPsocketWrite
 open
   classview_ref 181634 // mdtFrame
-  operation_ref 1256066 // setRunningFlag
-  operation_ref 1255938 // runningFlagSet
-  classrelation_ref 812930 // <association>
-  classview_ref 247298 // mdtTcpSocket
-  classview_ref 444546 // mdtPortThreadHelper
   classview_ref 451074 // TCPsocketSeq
   class_ref 672258 // QEventLoop
 end

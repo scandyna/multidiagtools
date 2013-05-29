@@ -102,7 +102,8 @@ void mdtTcpSocketThread::run()
   // Run...
   exec();
   /// \todo Cleanup
-  qDebug() << "TCPTHD: starting exec() END";
+  notifyError(mdtAbstractPort::Disconnected);
+  qDebug() << "TCPTHD: exec() END";
   return;
   
   while(1){

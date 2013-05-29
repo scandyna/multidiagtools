@@ -137,7 +137,7 @@ void mdtPortThread::stop()
 #endif
   pvPort->unlockMutex();
 
-  /// \todo A vérifier ...
+  // Exit event loop (for subclass that use a event loop)
   exit();
   // Wait the end of the thread
   while(!isFinished()){

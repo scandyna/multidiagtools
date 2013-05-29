@@ -1,6 +1,6 @@
 format 76
 "mdtport" // mdtport
-  revision 35
+  revision 37
   modified_by 2 "philippe"
   // class settings
   //class diagram settings
@@ -1706,6 +1706,22 @@ ${inlines}
 
       classrelation 812930 // <association>
 	relation_ref 804354 // <association>
+      end
+
+      operation 1262594 "exit"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "returnCode" explicit_type "int"
+	    defaultvalue "0"
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${t0} ${p0}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 

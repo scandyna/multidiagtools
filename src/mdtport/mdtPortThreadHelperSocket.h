@@ -113,11 +113,11 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   void onConnectionTimeout();
 
-  /*! \brief
+  /*! \brief Handle read timeout
    */
   void onReadTimeout();
 
-  /*! \brief
+  /*! \brief Handle write timeout
    */
   void onWriteTimeout();
 
@@ -141,7 +141,7 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    *
    * newFrameReaden() will be emitted each time a complete frame was generated.
    *
-   * \return NoError on success or a mdtAbstractPort::error_t error (See also mdtPortThreadHelper::handleCommonReadErrors() ).
+   * \return NoError on success or a mdtAbstractPort::error_t error.
    *
    * \pre Port must be set with mdtPortThreadHelper::setPort().
    * \pre Thread must be set with mdtPortThreadHelper::setThread().
@@ -168,10 +168,6 @@ class mdtPortThreadHelperSocket : public mdtPortThreadHelper
    */
   mdtAbstractPort::error_t writeToSocket();
 
-  
-public:
-  
-  
   /*! \brief Try to (re-)connect to host
    *
    * Each time this method is called,
@@ -186,12 +182,8 @@ public:
    * \pre thread must be set with mdtPortThreadHelper::setThread().
    * \pre socket must be set with setSocket().
    */
-  mdtAbstractPort::error_t reconnect(bool notify);
+  ///mdtAbstractPort::error_t reconnect(bool notify);
 
-  
-private:
-  
-  
   /*! \brief Map error returned by QTcpSocket to mdtAbstractPort error.
    *
    * Unhandled error is reported with mdtError and UnhandledError is returned.
@@ -204,15 +196,16 @@ private:
 
   QString pvHost;
   quint16 pvPortNumber;
-  int pvConnectionTimeout;
+  ///int pvConnectionTimeout;
   int pvConnectMaxTry;
   int pvConnectTryLeft;
   char *pvReadBuffer;
   int pvReadBufferSize;
 
-  int pvReadTimeout;
+  QTimer *pvConnectionTimeoutTimer;
+  ///int pvReadTimeout;
   QTimer *pvReadTimeoutTimer;
-  int pvWriteTimeout;
+  ///int pvWriteTimeout;
   QTimer *pvWriteTimeoutTimer;
   QTcpSocket * pvSocket;
   bool pvConnected;
