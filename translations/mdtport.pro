@@ -7,6 +7,7 @@ SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbPort.cp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbPortThread.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortThreadHelper.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortThreadHelperPort.cpp
+SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtPortThreadHelperSocket.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbtmcPortThread.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbDeviceDescriptor.cpp
 SOURCES += /home/philippe/programmation/multiDiagTools/src/mdtport/mdtUsbConfigDescriptor.cpp
